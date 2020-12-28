@@ -26,11 +26,15 @@ function DashboardDetailView() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        getDashboard();
+        loadData();
+      }, []);
+
+    const loadData = () => {
+      getDashboard();
         if (tab) {
             setActiveTab(tab);
           }
-      }, []);
+    }
 
     const handleTabClick = (tabSelection) => async e => {
         e.preventDefault();

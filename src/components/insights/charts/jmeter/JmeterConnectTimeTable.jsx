@@ -42,7 +42,7 @@ function JMeterConnectTimeTable({ date }) {
     const postBody = {
       "data": [
         {
-          "request": "jenkinsBuildsByUser",
+          "request": "jmeterConnectTime",
           "metric": "bar"
         }        
       ]

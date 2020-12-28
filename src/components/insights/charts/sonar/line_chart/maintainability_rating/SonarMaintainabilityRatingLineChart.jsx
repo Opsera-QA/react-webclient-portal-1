@@ -53,7 +53,7 @@ function SonarMaintainabilityRatingLineChart({ persona, date }) {
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].sonarMaintainabilityRating : [];
+      let dataObject = res && res.data ? res.data.data[0].sonarMaintainability : [];
       setData(dataObject);
       setLoading(false);
     } catch (err) {
