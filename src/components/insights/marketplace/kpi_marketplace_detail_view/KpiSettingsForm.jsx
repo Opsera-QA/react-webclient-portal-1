@@ -12,6 +12,8 @@ import {kpiDateFilterMetadata, kpiTagsFilterMetadata} from "../kpi-configuration
 import Model from "../../../../core/data_model/model";
 import dashboardsActions from "../../dashboards/dashboards-actions";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
+import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+
 
 function KpiSettingsForm({kpiConfiguration, dashboardData, index, setView}) {
     const { getAccessToken } = useContext(AuthContext);
@@ -54,6 +56,12 @@ function KpiSettingsForm({kpiConfiguration, dashboardData, index, setView}) {
         setKpiSettings(dashboardData.getData("configuration")[index]);
         setView("chart");
     }
+
+    const deleteKpi = async () => {
+        dashboardData.getData("configuration").splice(index, 1);
+        setView("chart");
+        return await dashboardsActions.update(dashboardData, getAccessToken);
+    }
     
     return (
         <EditorPanelContainer isLoading={false} showRequiredFieldsMessage={false}>
@@ -64,6 +72,11 @@ function KpiSettingsForm({kpiConfiguration, dashboardData, index, setView}) {
             </div>
         )}
         <SaveButtonContainer>
+        <ActionBarDeleteButton2
+              relocationPath={`/insights/dashboards/${dashboardData.getData("_id")}`}
+              dataObject={dashboardData}
+              handleDelete={deleteKpi}
+            />
         <LenientSaveButton
             recordDto={kpiSettings}
             updateRecord={saveKpiSettings}
