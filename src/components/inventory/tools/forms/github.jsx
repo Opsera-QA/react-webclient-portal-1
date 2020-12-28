@@ -137,7 +137,7 @@ function GithubToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVaul
 
         {!formData.twoFactorAuthentication &&
           <Form.Group controlId="password">
-            <Form.Label>Password*</Form.Label>
+            <Form.Label>Personal Access Token*</Form.Label>
             <Form.Control maxLength="256" type="password" placeholder="" value={formData.accountPassword || ""} onChange={e => setFormData({ ...formData, accountPassword: e.target.value.trim() })} />
             <Form.Text className="text-muted">These credentials will be securely stored in vault.</Form.Text>
           </Form.Group>
