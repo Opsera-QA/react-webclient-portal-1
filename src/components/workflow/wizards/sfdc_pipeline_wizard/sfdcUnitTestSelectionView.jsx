@@ -92,7 +92,6 @@ const SfdcUnitTestSelectionView = ({
   const handleStepClick = async (step) => {
     // console.log("clicked step id ", step._id);
     let isSfdc = fromSFDC || fromDestinationSFDC ? true : false;
-    setSelectedStep(step);
     await getTestClasses(step, isSfdc);
   }
 
@@ -115,7 +114,7 @@ const SfdcUnitTestSelectionView = ({
         toastContext.showLoadingErrorDialog(res.data.message);
         return;
       }
-
+      setSelectedStep(unitStep);
     } catch (error) {
       console.error("Error getting API Data: ", error);
       toastContext.showLoadingErrorDialog(error);
