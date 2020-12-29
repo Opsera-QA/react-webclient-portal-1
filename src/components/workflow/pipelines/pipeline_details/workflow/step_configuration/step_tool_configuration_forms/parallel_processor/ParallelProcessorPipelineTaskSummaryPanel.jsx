@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import DateTimeField from "../../../../../../../common/form_fields/DateTimeField";
+import DateTimeField from "components/common/form_fields/DateTimeField";
 import ParallelPipelineTaskSummariesField from "./parallel_pipeline/ParallelPipelineTaskSummariesField";
-import TextFieldBase from "../../../../../../../common/form_fields/TextFieldBase";
-import SummaryPanelContainer from "../../../../../../../common/panels/detail_view/SummaryPanelContainer";
-import PipelineStateField from "../../../../../../../common/form_fields/pipelines/state/PipelineStateField";
+import TextFieldBase from "components/common/form_fields/TextFieldBase";
+import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import PipelineTaskSummaryMessageField
-  from "../../../../../../../common/form_fields/pipelines/activity/PipelineTaskSummaryMessageField";
+  from "components/common/form_fields/pipelines/activity/PipelineTaskSummaryMessageField";
+import PipelineTaskStateField from "components/common/form_fields/pipelines/PipelineTaskStateField";
 
 function ParallelProcessorPipelineTaskSummaryPanel({ pipelineTaskData }) {
   return (
@@ -34,7 +34,7 @@ function ParallelProcessorPipelineTaskSummaryPanel({ pipelineTaskData }) {
           <DateTimeField dataObject={pipelineTaskData} fieldName={"createdAt"}/>
         </Col>
         <Col md={6} className="p-1">
-          <PipelineStateField dataObject={pipelineTaskData} fieldName={"state"}/>
+          <PipelineTaskStateField dataObject={pipelineTaskData} fieldName={"status"}/>
         </Col>
         <Col md={12} className="px-1">
           <PipelineTaskSummaryMessageField fieldName={"api_response.apiResponse.message.message"} dataObject={pipelineTaskData} />
