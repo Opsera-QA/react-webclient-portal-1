@@ -84,11 +84,11 @@ function CypressResultsTable({ date }) {
   const columns = useMemo(
     () => [
       {
-        Header: "Job Id",
+        Header: "Job",
         accessor: "jenkinsId",
       },
       {
-        Header: "Run Count",
+        Header: "Run",
         accessor: "run_count"
       },
       {
@@ -96,17 +96,21 @@ function CypressResultsTable({ date }) {
         accessor: "timestamp"
       },
       {
-        Header: "Tests Passed",
+        Header: "Tests",
+        accessor: "total"
+      },
+      {
+        Header: "Passed",
         accessor: "passed",
       },
       {
-        Header: "Tests Failed",
+        Header: "Failed",
         accessor: "failed",
       },
       {
-        Header: "Duration (seconds)",
+        Header: "Duration(s)",
         accessor: "duration"
-      },
+      }
     ],
     []
   );
