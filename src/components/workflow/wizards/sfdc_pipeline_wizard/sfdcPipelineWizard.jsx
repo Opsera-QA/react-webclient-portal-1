@@ -72,7 +72,7 @@ const SfdcPipelineWizard = ({
       );
     } else {
       console.log("step ID: ", steps[stepArrayIndex]._id);
-      console.log("uniTest indexes: ", getCustomUnitTestSteps(steps));
+      // console.log("uniTest indexes: ", getCustomUnitTestSteps(steps));
       setUnitTestSteps(getCustomUnitTestSteps(steps));
       setStepId(steps[stepArrayIndex]._id);
       setStepToolConfig(steps[stepArrayIndex].tool.configuration);
@@ -84,7 +84,7 @@ const SfdcPipelineWizard = ({
   };
 
   const getCustomUnitTestSteps = (steps) => {
-    return steps.map((step, idx) => (step.tool.configuration.jobType === "SFDC VALIDATE PACKAGE XML" || step.tool.configuration.jobType === "SFDC UNIT TESTING" || step.tool.configuration.jobType === "SFDC DEPLOY") && step.tool.configuration.sfdcUnitTestType === "RunSpecifiedTests" ? step : '').filter(String);
+    return steps.map((step, idx) => (step.tool.configuration.jobType === "SFDC VALIDATE PACKAGE XML" || step.tool.configuration.jobType === "SFDC UNIT TESTING" || step.tool.configuration.jobType === "SFDC DEPLOY") && step.tool.configuration.sfdcUnitTestType === "RunSpecifiedTests" && step.active ? step : '').filter(String);
   }
 
   const createJenkinsJob = async () => {

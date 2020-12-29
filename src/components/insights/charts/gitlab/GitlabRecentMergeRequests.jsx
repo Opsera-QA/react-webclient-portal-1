@@ -45,7 +45,7 @@ function GitlabRecentMergeRequestsTable({ date }) {
   const columns = useMemo(
     () => [
       {
-        Header: "Author Name",
+        Header: "Author",
         accessor: "AuthorName",
         // class: "cell-center no-wrap-inline",
         // Cell: (props) => {
@@ -79,25 +79,23 @@ function GitlabRecentMergeRequestsTable({ date }) {
         // },
       },
       {
-        Header: "Merge Request Title",
+        Header: "Merge Request",
         accessor: "MergeRequestTitle",
       },
       {
-        Header: "Time taken to merge (Hours)",
+        Header: "Merge Time (H)",
         accessor: "MergeRequestTimeTaken",
-        class: "cell-center no-wrap-inline",
       },
       {
-        Header: "Push Time (Hours)",
+        Header: "Push Time (H)",
         accessor: "PushCodeTime",
-        class: "cell-center no-wrap-inline",
       },
       {
-        Header: "Branch Name",
+        Header: "Branch",
         accessor: "BranchName",
       },
       {
-        Header: "Project Name",
+        Header: "Project",
         accessor: "ProjectName",
       },
       {

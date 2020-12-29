@@ -11,15 +11,13 @@ function KPIInfoModal({kpiItem, dashboardData, setShowModal, showModal }) {
   }
 
   return (
-    <Modal size="lg" show={showModal} onHide={setShowModal} backdrop="static" centered>
+    <Modal size="lg" show={showModal} onHide={setShowModal} backdrop="static" centered className={"modal-overflow"}>
       <Modal.Header closeButton>
         <Modal.Title>KPI Details</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="content-block-shaded m-3 h-75">
-          <div className="p-3">
+        <div className="content-block-shaded m-3 p-3">
             <KPIInfoView data={kpiItem} dashboardData={dashboardData} setShowModal={setShowModal} />
-          </div>
         </div>
       </Modal.Body>
       <Modal.Footer>

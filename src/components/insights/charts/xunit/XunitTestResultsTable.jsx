@@ -80,27 +80,34 @@ function XunitResultsTable({ date }) {
   const columns = useMemo(
     () => [
       {
-        Header: "Job Id",
+        Header: "Job",
         accessor: "buildId"
       },
       {
-        Header: "Run Count",
+        Header: "Run",
         accessor: "run_count"
       },
       {
         Header: "Timestamp",
-        accessor: "timestamp"
+        accessor: "timestamp",
+        Cell: (props) => {
+          return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
+        }
       },
       {
-        Header: "Tests Passed",
+        Header: "Tests",
+        accessor: "Executed Tests",
+      },
+      {
+        Header: "Passed",
         accessor: "Passed",
       },
       {
-        Header: "Tests Failed",
+        Header: "Failed",
         accessor: "Failed",
       },
       {
-        Header: "Duration (seconds)",
+        Header: "Duration(s)",
         accessor: "Total Duration"
       }
     ],

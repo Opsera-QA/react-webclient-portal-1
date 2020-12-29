@@ -797,6 +797,14 @@ a.nav-link {
 }
 
 /* Ensure dropdown does not get cut off. */
+
+/*TODO: This can probably be applied everywhere, but I don't want to break anything so in next release test all modals and change to
+   .modal instead of .modal-overflow
+*/
+.modal-overflow div.modal-dialog div.modal-content {
+    overflow: visible !important;
+}
+
 .rw-popup-container {
   z-index: 1200;
 }
