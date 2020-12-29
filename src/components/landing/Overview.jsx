@@ -90,7 +90,7 @@ function OverviewLanding() {
   };
 
   if (!accessRoleData) {
-    return (<LoadingView size="sm"/>);
+    return (<LoadingView size="sm" message={"Loading user data"}/>);
   } else if (process.env.REACT_APP_STACK === "free-trial") {
     return (<FreeTrialLandingView/>);
   } else {

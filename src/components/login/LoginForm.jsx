@@ -11,8 +11,8 @@ import InformationDialog from "../common/status_notifications/info";
 import { faArrowLeft } from "@fortawesome/pro-solid-svg-icons";
 
 
-const LoginForm = () => {
-  const { authService } = useOktaAuth();
+const LoginForm = ({authClient}) => {
+  const { oktaAuth } = useOktaAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [resetEmailAddress, setResetEmailAddress] = useState("");
@@ -35,25 +35,13 @@ const LoginForm = () => {
     e.preventDefault();
     setLoading(true);
 
-    const authClient = new OktaAuth({
-      issuer: process.env.REACT_APP_OKTA_ISSUER,
-      clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
-      redirectUri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
-      tokenManager: {
-        autoRenew: true,
-        expireEarlySeconds: 160
-      }
-    });
-
-    //const oktaAuth = new OktaAuth({ issuer: issuer });
     authClient.signIn({ username, password })
       .then(res => {
         setLoading(false);
         setErrorMessage(false);
         setMessage(false);
         const sessionToken = res.sessionToken;
-        // sessionToken is a one-use token, so make sure this is only called once
-        authService.redirect({ sessionToken });
+        oktaAuth.signInWithRedirect({ sessionToken })
       })
       .catch(err => {
         console.log("Found an error", err);

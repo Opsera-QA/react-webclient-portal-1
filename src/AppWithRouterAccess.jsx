@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Route, useHistory } from "react-router-dom";
-import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
-import useAxios, { configure } from "axios-hooks";
+//import useAxios, { configure } from "axios-hooks";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/status_notifications/loading";
 import Home from "./Home";
@@ -84,17 +83,20 @@ import ToolsUsedInPipelineReport from "./components/reports/tools/pipelines/Tool
 import Insights from "./components/insights/dashboards/Insights";
 import DashboardDetailView from "./components/insights/dashboards/dashboard_details/DashboardDetailView";
 
-const OktaAuth = require("@okta/okta-auth-js");
-const config = require("./config");
-
+import { OktaAuth } from "@okta/okta-auth-js";
+import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
+import { axiosApiService } from "./api/apiService";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [authenticatedState, setAuthenticatedState] = useState(false);
+  const [data, setData] = useState(null);
+
   const history = useHistory();
   const onAuthRequired = (authService) => {
     console.log("onAuthRequired being called!");
-    console.log(authService._authState);
-
     if (authService && !authService.isAuthenticated) {
       history.push("/login");
     }
@@ -104,35 +106,27 @@ const AppWithRouterAccess = () => {
     issuer: process.env.REACT_APP_OKTA_ISSUER,
     client_id: process.env.REACT_APP_OKTA_CLIENT_ID,
     redirect_uri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
-    disableHttpsCheck: false,
-    pkce: true,
-    onAuthRequired: onAuthRequired,
   };
 
   const authClient = new OktaAuth({
     issuer: OKTA_CONFIG.issuer,
     clientId: OKTA_CONFIG.client_id,
     redirectUri: OKTA_CONFIG.redirect_uri,
+    responseMode: "fragment",
     tokenManager: {
       autoRenew: true,
       expireEarlySeconds: 160,
     },
   });
 
-// Triggered when a token has expired
   authClient.tokenManager.on("expired", function(key, expiredToken) {
     console.log("Token with key", key, " has expired:");
-    //console.log("could this trigger getting new token here?");
-    //authClient.getAccessToken();
-    //console.log(expiredToken);
   });
-// Triggered when a token has been renewed
+
   authClient.tokenManager.on("renewed", function(key, newToken, oldToken) {
     console.log("Token with key", key, "has been renewed");
-    //console.log("Old token:", oldToken);
-    //console.log("New token:", newToken);
   });
-// Triggered when an OAuthError is returned via the API (typically during token renew)
+
   authClient.tokenManager.on("error", function(err) {
     console.log("TokenManager error:", err);
     window.location.reload(false);
@@ -145,36 +139,41 @@ const AppWithRouterAccess = () => {
   });
 
 
-  const axios = Axios.create({
-    baseURL: config.apiServerUrl,
-  });
+  authClient.authStateManager.subscribe(async (authState) => {
+    console.log("Statue manager subscription event: ", authState);
+    setAuthenticatedState(authState.isAuthenticated);
 
-  axios.interceptors.request.use(async (config) => {
-      try {
-        const tokenObject = await authClient.tokenManager.get("accessToken");
-        if (tokenObject && tokenObject.accessToken) {
-          config.headers["authorization"] = `Bearer ${tokenObject.accessToken}`;
-          config.headers["cache-control"] = `no-cache`;
-        }
-        return config;
-      } catch (err) {
-        console.error("Error in authClient.tokenManager via Users Axios.interceptors");
-        console.error(err);
-      }
-    },
-    function(error) {
-      return Promise.reject(error);
-    },
-  );
-  configure({ axios });
-  const [{ data, loading, error }, refetch] = useAxios(
-    "/users",
-  );
+    if (!authState.isAuthenticated) {
+      setHideSideBar(true);
+      setData(null);
+      history.push("/login");
+      return;
+    }
+
+    if (authState.isAuthenticated && !authState.isPending && !data) {
+      setLoading(true);
+      await loadUsersData(authState.accessToken.value);
+    }
+
+  });
 
   useEffect(() => {
     enableSideBar(history.location.pathname);
-  }, [data, history.location.pathname]);
+  }, [authenticatedState, history.location.pathname]);
 
+  const loadUsersData = async (token) => {
+    console.log("token: ", token);
+    try {
+      let apiUrl = "/users";
+      const response = await axiosApiService(token).get(apiUrl, {});
+      setData(response.data);
+    } catch (err) {
+      console.log(err.message);
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const enableSideBar = (path) => {
     if (path === "/login" || path === "/signup" || path === "/registration" || path === "/trial/registration") {
@@ -184,22 +183,24 @@ const AppWithRouterAccess = () => {
     }
   };
 
-  const refreshToken = () => {
-    refetch();
+  const refreshToken = async () => {
+    const tokens = authClient.tokenManager.getTokens();
+    await loadUsersData(tokens.accessToken.value);
   };
 
-  const redirectFromLogin = () => {
+  /*const redirectFromLogin = async () => {
     console.log("redirectFromLogin called");
-    refetch();
+    const tokens = authClient.tokenManager.getTokens();
+    await loadUsersData(tokens.accessToken.value);
     history.push("/");
   };
-
+*/
 
   if (!data && loading && !error) {
     return (<LoadingDialog/>);
   } else {
     return (
-      <Security {...OKTA_CONFIG}>
+      <Security oktaAuth={authClient} onAuthRequired={onAuthRequired}>
         {
           (error &&
             !error.message.includes("401") &&
@@ -216,10 +217,7 @@ const AppWithRouterAccess = () => {
 
                 <div className="w-100 pt-4 pb-4">
                   <Route path="/" exact component={Home}/>
-                  {/*<SecureRoute path="/" exact component={Overview}/>*/}
-
-                  <Route path='/login' render={(authClient) => <Login redirectFromLogin={redirectFromLogin}
-                                                                      authClient={authClient}/>}/>
+                  <Route path='/login' render={() => <Login authClient={authClient}/>}/>
                   <Route path='/implicit/callback' component={LoginCallback}/>
                   <Route path="/logout" exact component={Logout}/>
 
@@ -246,12 +244,13 @@ const AppWithRouterAccess = () => {
                   {/* Reports */}
                   <SecureRoute path="/reports" exact component={Reports}/>
                   <SecureRoute path="/reports/registry" exact component={ToolReports}/>
-                  <SecureRoute path="/reports/registry/tools-used-in-pipeline" exact component={ToolsUsedInPipelineReport}/>
+                  <SecureRoute path="/reports/registry/tools-used-in-pipeline" exact
+                               component={ToolsUsedInPipelineReport}/>
                   <SecureRoute path="/reports/pipelines" exact component={PipelineReports}/>
                   <SecureRoute path="/reports/tags" exact component={TagReports}/>
 
                   { /*Notifications */}
-                  <SecureRoute path="/notifications" exact component={Notifications} />
+                  <SecureRoute path="/notifications" exact component={Notifications}/>
 
                   {/* marketplace */}
                   <SecureRoute path="/insights/marketplace" component={Marketplace}/>
@@ -274,7 +273,8 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/admin/templates/details/:templateId" exact component={TemplateDetailView}/>
                   <SecureRoute path="/admin/reports" exact component={Reports_Old}/>
                   <SecureRoute path="/admin/site-notifications" exact component={SiteNotificationManagement}/>
-                  <SecureRoute path="/admin/site-notifications/details/:id" exact component={SiteNotificationDetailView}/>
+                  <SecureRoute path="/admin/site-notifications/details/:id" exact
+                               component={SiteNotificationDetailView}/>
 
                   {/* Ldap Account Pages */}
                   <SecureRoute path="/admin/organizations" exact component={LdapOrganizationsView}/>
@@ -319,7 +319,9 @@ const AppWithRouterAccess = () => {
                 </div>
               </div>
               <div className="row fixed-row-footer-bottom">
-                <div className="col text-center m-1" style={{ padding: 0, margin: 0, fontSize: ".6em" }}>© 2020 Opsera, Inc. The Continuous Orchestration Platform™
+                <div className="col text-center m-1" style={{ padding: 0, margin: 0, fontSize: ".6em" }}>© 2020
+                  Opsera,
+                  Inc. The Continuous Orchestration Platform™
                 </div>
               </div>
             </div>

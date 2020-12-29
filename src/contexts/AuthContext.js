@@ -5,10 +5,18 @@ import moment from "moment";
 const AuthContextProvider = (props) => {
     const { userData, refreshToken, authClient } = props;
 
-    const logoutUserContext = () => {
-      authClient.closeSession();
+    const logoutUserContext = async () => {
       authClient.tokenManager.clear();
-      window.location = "/";
+      await authClient.revokeAccessToken();
+      authClient.closeSession()
+        .then(() => {
+          //window.location.reload(); // optional
+        })
+        .catch(e => {
+          if (e.xhr && e.xhr.status === 429) {
+            // Too many requests
+          }
+        })
     };
 
     const loginUserContext = () => {
