@@ -83,7 +83,7 @@ function KpiSettingsForm({kpiConfiguration, dashboardData, index, setView}) {
         </SaveButtonContainer>
         <ActionBarDeleteButton2
             relocationPath={`/insights/dashboards/${dashboardData.getData("_id")}`}
-            dataObject={dashboardData}
+            dataObject={kpiSettings}
             handleDelete={deleteKpi}
             />
         </EditorPanelContainer>
