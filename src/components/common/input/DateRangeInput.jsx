@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { DateRangePicker } from "react-date-range";
+import { DateRange } from "react-date-range";
 import InputLabel from "../form_fields/input/InputLabel";
 import InfoText from "../form_fields/input/InfoText";
 import { Button } from "react-bootstrap";
@@ -53,11 +53,11 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
   };
 
   return (
-    <div className="form-group m-2">
+    <div className="form-group m-2 max-content-width">
       <div>
         <InputLabel field={field} />
       </div>
-      <DateRangePicker
+      <DateRange
         startDatePlaceholder="Start Date"
         endDatePlaceholder="End Date"
         showSelectionPreview={true}
