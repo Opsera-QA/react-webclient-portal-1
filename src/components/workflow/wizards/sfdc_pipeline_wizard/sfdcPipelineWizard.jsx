@@ -72,7 +72,7 @@ const SfdcPipelineWizard = ({
       );
     } else {
       console.log("step ID: ", steps[stepArrayIndex]._id);
-      console.log("uniTest indexes: ", getCustomUnitTestSteps(steps));
+      // console.log("uniTest indexes: ", getCustomUnitTestSteps(steps));
       setUnitTestSteps(getCustomUnitTestSteps(steps));
       setStepId(steps[stepArrayIndex]._id);
       setStepToolConfig(steps[stepArrayIndex].tool.configuration);
@@ -133,7 +133,7 @@ const SfdcPipelineWizard = ({
   } else {
     return (
       <>
-        {view === 5 && (
+        {view === 1 && (
           <SfdcPipelineComponents
             pipelineId={pipelineId}
             stepId={stepId}
@@ -234,7 +234,7 @@ const SfdcPipelineWizard = ({
           />
         )}
         
-        {view === 1 && (
+        {view === 5 && (
          <SfdcUnitTestSelectionView
           pipelineId={pipelineId}
           stepId={stepId}
