@@ -89,7 +89,10 @@ function XunitResultsTable({ date }) {
       },
       {
         Header: "Timestamp",
-        accessor: "timestamp"
+        accessor: "timestamp",
+        Cell: (props) => {
+          return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
+        }
       },
       {
         Header: "Tests",
@@ -106,10 +109,6 @@ function XunitResultsTable({ date }) {
       {
         Header: "Duration(s)",
         accessor: "Total Duration"
-      },
-      {
-        Header: "Pass%",
-        accessor: "pass_rate"
       }
     ],
     []

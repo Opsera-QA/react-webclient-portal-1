@@ -93,7 +93,10 @@ function CypressResultsTable({ date }) {
       },
       {
         Header: "Timestamp",
-        accessor: "timestamp"
+        accessor: "timestamp",
+        Cell: (props) => {
+          return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
+        }
       },
       {
         Header: "Tests",

@@ -85,12 +85,10 @@ function GitlabRecentMergeRequestsTable({ date }) {
       {
         Header: "Merge Time (H)",
         accessor: "MergeRequestTimeTaken",
-        class: "cell-center no-wrap-inline",
       },
       {
         Header: "Push Time (H)",
         accessor: "PushCodeTime",
-        class: "cell-center no-wrap-inline",
       },
       {
         Header: "Branch",
