@@ -60,6 +60,14 @@ import DatabricksNotebookPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/databricks_notebook/DatabricksNotebookPipelineStepConfigurationSummaryPanel";
 import databricksNotebookPipelineStepConfigurationMetadata
   from "./step_tool_configuration_forms/databricks_notebook/databricksNotebookPipelineStepConfigurationMetadata";
+import SummaryPanelContainer from "../../../../../common/panels/detail_view/SummaryPanelContainer";
+import ElasticBeanstalkDeployPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/elastic_beanstalk_deploy/ElasticBeanstalkDeployPipelineStepConfigurationSummaryPanel";
+import elasticBeanstalkDeployPipelineStepConfigurationMetadata
+  from "./step_tool_configuration_forms/elastic_beanstalk_deploy/elasticBeanstalkDeployPipelineStepConfigurationMetadata";
+import ElasticBeanstalkPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/ebs/ElasticBeanstalkPipelineStepConfigurationSummaryPanel";
+import ebsStepFormMetadata from "./step_tool_configuration_forms/ebs/ebs-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -124,6 +132,13 @@ function PipelineStepConfigurationSummary({
           <DatabricksNotebookPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             databricksNotebookPipelineStepData={getModelWrappedObject(databricksNotebookPipelineStepConfigurationMetadata)}
+          />
+        );
+      case "elastic-beanstalk":
+        return (
+          <ElasticBeanstalkPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            elasticBeanstalkPipelineStepData={getModelWrappedObject(ebsStepFormMetadata)}
           />
         );
       case "mock-step":
@@ -196,9 +211,12 @@ function PipelineStepConfigurationSummary({
       case "cypress":
       case "docker-push":
       case "sfdc-configurator":
-      case "elastic-beanstalk":
       default:
-        return <ReactJson src={pipelineData?.tool} enableClipboard={false} displayDataTypes={false} collapsed={false}/>;
+        return (
+          <SummaryPanelContainer>
+            <ReactJson src={pipelineData?.tool} enableClipboard={false} displayDataTypes={false} collapsed={false}/>
+          </SummaryPanelContainer>
+        );
     }
   }
 
