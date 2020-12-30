@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Button, Modal} from "react-bootstrap";
-import PipelineStepConfigurationSummary from "./PipelineStepConfigurationSummary";
+import PipelineStepTabPanel from "./PipelineStepTabPanel";
 
-function PipelineStepConfigurationSummaryModal({ setShowModal, showModal, pipelineData }) {
+function PipelineStepConfigurationSummaryModal({ setShowModal, showModal, pipelineStepData }) {
   const handleClose = () => {
     // loadData();
     setShowModal(false);
@@ -12,13 +12,11 @@ function PipelineStepConfigurationSummaryModal({ setShowModal, showModal, pipeli
   return (
     <Modal size="lg" show={showModal} onHide={handleClose} backdrop="static">
       <Modal.Header closeButton>
-        <Modal.Title>Pipeline Step Summary [{pipelineData?.name}]</Modal.Title>
+        <Modal.Title>[{pipelineStepData?.name}] Pipeline Step Summary</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="shaded-panel m-3">
-          <div>
-            <PipelineStepConfigurationSummary pipelineData={pipelineData} />
-          </div>
+          <PipelineStepTabPanel pipelineStepData={pipelineStepData}/>
         </div>
       </Modal.Body>
       <Modal.Footer>
@@ -31,7 +29,7 @@ function PipelineStepConfigurationSummaryModal({ setShowModal, showModal, pipeli
 PipelineStepConfigurationSummaryModal.propTypes = {
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
-  pipelineData: PropTypes.object
+  pipelineStepData: PropTypes.object
 };
 
 export default PipelineStepConfigurationSummaryModal;

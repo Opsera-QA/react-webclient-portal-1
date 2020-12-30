@@ -52,6 +52,10 @@ import ConditionalOperationPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/conditional_operation/ConditionalOperationPipelineStepConfigurationSummaryPanel";
 import conditionalOperationStepConfigurationMetadata
   from "./step_tool_configuration_forms/conditional_operation/conditional-operation-step-configuration-metadata";
+import AwsDeployPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/aws_deploy/AwsDeployPipelineStepConfigurationSummaryPanel";
+import awsDeployPipelineStepConfigurationMetadata
+  from "./step_tool_configuration_forms/aws_deploy/aws-deploy-step-configuration-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -88,6 +92,13 @@ function PipelineStepConfigurationSummary({
           <ArgoCDPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             argoCdPipelineDataObject={getModelWrappedObject(ArgoCDStepFormMetadata)}
+          />
+        );
+      case "aws-deploy":
+        return (
+          <AwsDeployPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            awsDeployPipelineDataObject={getModelWrappedObject(awsDeployPipelineStepConfigurationMetadata)}
           />
         );
       case "child-pipeline":
@@ -168,7 +179,6 @@ function PipelineStepConfigurationSummary({
       case "jmeter":
       case "selenium":
       case "twistlock":
-      case "aws-deploy":
       case "gcp-deploy":
       case "s3":
       case "databricks-notebook":

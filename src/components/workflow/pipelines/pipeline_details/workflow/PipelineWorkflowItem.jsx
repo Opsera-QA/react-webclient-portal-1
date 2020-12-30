@@ -438,7 +438,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
 
 
       <PipelineStepConfigurationSummaryModal
-        pipelineData={item}
+        pipelineStepData={item}
         setShowModal={setShowSummaryModal}
         showModal={showSummaryModal}
       />

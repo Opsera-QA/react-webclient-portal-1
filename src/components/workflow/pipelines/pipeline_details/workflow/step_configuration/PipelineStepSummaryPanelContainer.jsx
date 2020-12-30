@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Col, Row} from "react-bootstrap";
-import TextField from "../../../../../common/form_fields/text-field";
-import SummaryPanelContainer from "../../../../../common/panels/detail_view/SummaryPanelContainer";
-import ReactJson from "react-json-view";
+import TextField from "components/common/form_fields/text-field";
+import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 
 function PipelineStepSummaryPanelContainer({ pipelineData, setActiveTab, children }) {
   return (
@@ -22,11 +21,6 @@ function PipelineStepSummaryPanelContainer({ pipelineData, setActiveTab, childre
       {/*  <DtoJsonField dataObject={childPipelineDataObject} fieldName={"threshold"}/>*/}
       {/*</Col>*/}
       {children}
-      <Row className={"mt-2"}>
-        <Col>
-          <ReactJson src={pipelineData?.tool} enableClipboard={false} displayDataTypes={false} collapsed={false}/>
-        </Col>
-      </Row>
     </SummaryPanelContainer>
   );
 }
