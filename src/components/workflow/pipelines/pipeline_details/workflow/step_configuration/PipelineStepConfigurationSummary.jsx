@@ -68,6 +68,10 @@ import elasticBeanstalkDeployPipelineStepConfigurationMetadata
 import ElasticBeanstalkPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/ebs/ElasticBeanstalkPipelineStepConfigurationSummaryPanel";
 import ebsStepFormMetadata from "./step_tool_configuration_forms/ebs/ebs-stepForm-metadata";
+import GcpPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/gcp/GcpPipelineStepConfigurationSummaryPanel";
+import gcpPipelineStepConfigurationMetadata
+  from "./step_tool_configuration_forms/gcp/gcpPipelineStepConfigurationMetadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -141,6 +145,13 @@ function PipelineStepConfigurationSummary({
             elasticBeanstalkPipelineStepData={getModelWrappedObject(ebsStepFormMetadata)}
           />
         );
+      case "gcp-deploy":
+        return (
+          <GcpPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            gcpPipelineStepData={getModelWrappedObject(gcpPipelineStepConfigurationMetadata)}
+          />
+        );
       case "mock-step":
         return (
           <MockPipelineStepConfigurationSummaryPanel
@@ -205,7 +216,6 @@ function PipelineStepConfigurationSummary({
       case "jmeter":
       case "selenium":
       case "twistlock":
-      case "gcp-deploy":
       case "s3":
       case "ssh-upload":
       case "cypress":
