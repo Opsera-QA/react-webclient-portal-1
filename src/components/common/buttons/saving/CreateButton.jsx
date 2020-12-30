@@ -36,16 +36,16 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
   const getAddAnotherCheckbox = () => {
     if (addAnotherOption) {
       return (
-        <div className="d-flex mr-2 mb-2">
+        <div className="d-flex mr-3 mt-auto">
           <div><span className="text-muted mr-2">Add Another</span></div>
-          <div><input className="mt-1" type="checkbox" checked={addAnother} onClick={() => setAddAnother(!addAnother)} /></div>
+          <div><input className="mt-1" type="checkbox" checked={addAnother} onChange={() => setAddAnother(!addAnother)} /></div>
         </div>
       );
     }
   };
 
   return (
-    <div className="px-2">
+    <div className="px-2 d-flex">
       {getAddAnotherCheckbox()}
       <Button size="sm" variant="primary" disabled={isSaving || disable} onClick={() => persistRecord()}>
         {getLabel()}
