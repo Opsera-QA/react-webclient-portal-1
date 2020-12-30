@@ -56,12 +56,16 @@ import AwsDeployPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/aws_deploy/AwsDeployPipelineStepConfigurationSummaryPanel";
 import awsDeployPipelineStepConfigurationMetadata
   from "./step_tool_configuration_forms/aws_deploy/aws-deploy-step-configuration-metadata";
+import DatabricksNotebookPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/databricks_notebook/DatabricksNotebookPipelineStepConfigurationSummaryPanel";
+import databricksNotebookPipelineStepConfigurationMetadata
+  from "./step_tool_configuration_forms/databricks_notebook/databricksNotebookPipelineStepConfigurationMetadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
 }) {
   const getModelWrappedObject = (metaData) => {
-    return (new Model({...pipelineData.tool.configuration}, metaData, false))
+    return (new Model({...pipelineData?.tool?.configuration}, metaData, false))
   };
   // TODO: Pass in already wrapped data object?
   const getStepConfigurationSummary = () => {
@@ -113,6 +117,13 @@ function PipelineStepConfigurationSummary({
           <ConditionalOperationPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             conditionalOperationDataObject={getModelWrappedObject(conditionalOperationStepConfigurationMetadata)}
+          />
+        );
+      case "databricks-notebook":
+        return (
+          <DatabricksNotebookPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            databricksNotebookPipelineStepData={getModelWrappedObject(databricksNotebookPipelineStepConfigurationMetadata)}
           />
         );
       case "mock-step":
@@ -181,7 +192,6 @@ function PipelineStepConfigurationSummary({
       case "twistlock":
       case "gcp-deploy":
       case "s3":
-      case "databricks-notebook":
       case "ssh-upload":
       case "cypress":
       case "docker-push":
