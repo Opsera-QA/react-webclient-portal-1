@@ -72,6 +72,10 @@ import GcpPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/gcp/GcpPipelineStepConfigurationSummaryPanel";
 import gcpPipelineStepConfigurationMetadata
   from "./step_tool_configuration_forms/gcp/gcpPipelineStepConfigurationMetadata";
+import JenkinsPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/jenkins/JenkinsPipelineStepConfigurationSummaryPanel";
+import jenkinsPipelineStepConfigurationMetadata
+  from "./step_tool_configuration_forms/jenkins/jenkinsPipelineStepConfigurationMetadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -152,6 +156,13 @@ function PipelineStepConfigurationSummary({
             gcpPipelineStepData={getModelWrappedObject(gcpPipelineStepConfigurationMetadata)}
           />
         );
+      case "jenkins":
+        return (
+          <JenkinsPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            jenkinsPipelineStepData={getModelWrappedObject(jenkinsPipelineStepConfigurationMetadata)}
+          />
+        );
       case "mock-step":
         return (
           <MockPipelineStepConfigurationSummaryPanel
@@ -208,7 +219,6 @@ function PipelineStepConfigurationSummary({
             terraformPipelineDataObject={getModelWrappedObject(TerraformStepFormMetadata)}
           />
         );
-      case "jenkins":
       case "junit":
       case "xunit":
       case "sonar":
