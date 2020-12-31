@@ -5,10 +5,11 @@ import modelHelpers from "components/common/model/modelHelpers";
 import ToolConfigurationEditorPanelContainer
   from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Col from "react-bootstrap/Col";
-import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import anchoreIntegratorConnectionMetadata from "./anchore-integrator-connection-metadata";
 import {AuthContext} from "contexts/AuthContext";
 import toolsActions from "components/inventory/tools/tools-actions";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 
 function AnchoreIntegratorToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -38,9 +39,9 @@ function AnchoreIntegratorToolConfiguration({ toolData }) {
     >
       <Row>
         <Col sm={12}>
-          <DtoTextInput dataObject={anchoreIntegratorConfigurationDto} setDataObject={setAnchoreIntegratorConfigurationDto} fieldName={"toolURL"} />
-          <DtoTextInput dataObject={anchoreIntegratorConfigurationDto} setDataObject={setAnchoreIntegratorConfigurationDto} fieldName={"accountUsername"} />
-          <DtoTextInput type={"password"} dataObject={anchoreIntegratorConfigurationDto} setDataObject={setAnchoreIntegratorConfigurationDto} fieldName={"accountPassword"} />
+          <TextInputBase dataObject={anchoreIntegratorConfigurationDto} setDataObject={setAnchoreIntegratorConfigurationDto} fieldName={"toolURL"} />
+          <TextInputBase dataObject={anchoreIntegratorConfigurationDto} setDataObject={setAnchoreIntegratorConfigurationDto} fieldName={"accountUsername"} />
+          <VaultTextInput dataObject={anchoreIntegratorConfigurationDto} setDataObject={setAnchoreIntegratorConfigurationDto} fieldName={"accountPassword"} />
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>

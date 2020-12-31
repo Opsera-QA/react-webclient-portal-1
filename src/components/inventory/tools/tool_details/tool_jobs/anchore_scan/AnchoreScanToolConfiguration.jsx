@@ -6,9 +6,10 @@ import anchoreScanConnectionMetadata from "./anchore-scan-connection-metadata";
 import ToolConfigurationEditorPanelContainer
   from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Col from "react-bootstrap/Col";
-import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import {AuthContext} from "contexts/AuthContext";
 import toolsActions from "components/inventory/tools/tools-actions";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 
 function AnchoreScanToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -38,9 +39,9 @@ function AnchoreScanToolConfiguration({ toolData }) {
     >
       <Row>
         <Col sm={12}>
-          <DtoTextInput dataObject={anchoreScanConfigurationDto} setDataObject={setAnchoreScanConfigurationDto} fieldName={"toolURL"} />
-          <DtoTextInput dataObject={anchoreScanConfigurationDto} setDataObject={setAnchoreScanConfigurationDto} fieldName={"accountUsername"} />
-          <DtoTextInput type={"password"} dataObject={anchoreScanConfigurationDto} setDataObject={setAnchoreScanConfigurationDto} fieldName={"accountPassword"} />
+          <TextInputBase dataObject={anchoreScanConfigurationDto} setDataObject={setAnchoreScanConfigurationDto} fieldName={"toolURL"} />
+          <TextInputBase dataObject={anchoreScanConfigurationDto} setDataObject={setAnchoreScanConfigurationDto} fieldName={"accountUsername"} />
+          <VaultTextInput dataObject={anchoreScanConfigurationDto} setDataObject={setAnchoreScanConfigurationDto} fieldName={"accountPassword"} />
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>

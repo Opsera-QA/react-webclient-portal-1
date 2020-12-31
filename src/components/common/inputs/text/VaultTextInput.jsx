@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
+import InputLabel from "components/common/form_fields/input/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
-import InputLabel from "components/common/fields/input/InputLabel";
-import InfoText from "components/common/fields/input/InfoText";
+import VaultInfoText from "components/common/fields/input/vault/VaultInfoText";
 
-function TextInputBase({ fieldName, dataObject, setDataObject, disabled, type }) {
+function VaultTextInput({fieldName, dataObject, setDataObject, disabled}) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -15,27 +15,30 @@ function TextInputBase({ fieldName, dataObject, setDataObject, disabled, type })
     setDataObject({...newDataObject});
   };
 
+  const isStoredInVault = () => {
+    return typeof dataObject.getData(fieldName) === "object";
+  };
+
   return (
     <InputContainer>
       <InputLabel field={field}/>
       <input
-        type={type}
+        type={"password"}
         disabled={disabled}
         value={dataObject.getData(fieldName)}
         onChange={(event) => validateAndSetData(event.target.value)}
         className="form-control"
       />
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <VaultInfoText storedInVault={isStoredInVault()} errorMessage={errorMessage}/>
     </InputContainer>
   );
 }
 
-TextInputBase.propTypes = {
-  type: PropTypes.string,
+VaultTextInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool
 };
 
-export default TextInputBase;
+export default VaultTextInput;
