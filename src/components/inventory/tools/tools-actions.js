@@ -1,5 +1,6 @@
 import {axiosApiService} from "../../../api/apiService";
 import baseActions from "../../../utils/actionsBase";
+import PipelineActions from "../../workflow/pipeline-actions";
 const toolsActions = {};
 
 toolsActions.checkToolConnectivity = async (toolId, toolName, getAccessToken) => {
@@ -126,6 +127,26 @@ toolsActions.updateToolConfiguration = async (toolData, getAccessToken) => {
 toolsActions.installJiraApp = async (toolId, getAccessToken) => {
   const apiUrl = `/connectors/jira/${toolId}/app/install`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+// TODO: Should this be in a different area considering it's used in more places than just tools?
+toolsActions.savePasswordToVault = async (toolData, fieldName, value, getAccessToken) => {
+  if (toolData.isChanged(fieldName) && value != null && typeof(value) === "string") {
+    const toolId = toolData.getData("_id");
+    const toolIdentifier = toolData.getData("tool_identifier");
+    const keyName = `${toolId}-${toolIdentifier}-${fieldName}`;
+    const body = { "key": `${keyName}`, "value": value };
+    const response = await PipelineActions.saveToVault(body, getAccessToken);
+    return response.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : "";
+  }
+
+  return toolData.getData(fieldName);
+};
+
+toolsActions.saveToolConfiguration = async (toolData, configurationItem, getAccessToken) => {
+  let newToolData = toolData.getPersistData();
+  newToolData["configuration"] = configurationItem.configuration;
+  return await toolsActions.updateToolConfiguration(newToolData, getAccessToken);
 };
 
 export default toolsActions;

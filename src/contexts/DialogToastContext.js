@@ -186,7 +186,7 @@ function ToastContextProvider ({ children }) {
 
   const showFormValidationErrorDialog = (errorMessage = "") => {
     let id = generateUUID();
-    let errorToast = getErrorToast(`WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`, id);
+    let errorToast = getErrorToast(undefined, id,`WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`);
     addToast(errorToast, id, notificationTypes.FORM);
   };
 

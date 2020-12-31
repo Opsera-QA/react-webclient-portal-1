@@ -7,7 +7,6 @@ import GitlabToolConfiguration from "../forms/gitlab";
 import BitbucketToolConfiguration from "../forms/bitbucket";
 import CypressToolConfiguration from "../forms/cypress";
 import ArgoToolConfiguration from "./tool_jobs/argo/ArgoToolConfiguration";
-import AnchoreIntegratorToolConfiguration from "../forms/anchore-integrator";
 import AWSToolConfiguration from "../forms/aws";
 import SFDCToolConfiguration from "../forms/sfdc";
 import PipelineActions from "../../../workflow/pipeline-actions";
@@ -22,6 +21,7 @@ import OctopusToolConfiguration from "./tool_jobs/octopus/OctopusToolConfigurati
 import SlackToolConfiguration from "./tool_jobs/slack/SlackToolConfiguration";
 import SonarToolConfiguration from "./tool_jobs/sonar/SonarToolConfiguration";
 import SpinnakerToolConfiguration from "./tool_jobs/spinnaker/SpinnakerToolConfiguration";
+import AnchoreIntegratorToolConfiguration from "./tool_jobs/anchore_integrator/AnchoreIntegratorToolConfiguration";
 import AnchoreScanToolConfiguration from "./tool_jobs/anchore_scan/AnchoreScanToolConfiguration";
 
 function ToolConfigurationPanel({ toolData }) {
@@ -63,9 +63,9 @@ function ToolConfigurationPanel({ toolData }) {
       case "argo":
         return <ArgoToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "anchore-scan":
-        return <AnchoreScanToolConfiguration toolId={toolData._id} toolData={toolData.data} saveToolConfiguration={saveToolConfiguration} saveToVault={saveToVault} />;
+        return <AnchoreScanToolConfiguration toolData={toolData} />;
       case "anchore-integrator":
-        return <AnchoreIntegratorToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
+        return <AnchoreIntegratorToolConfiguration toolData={toolData} />;
       case "sonar":
         return <SonarToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "aws_account":
