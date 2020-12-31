@@ -130,8 +130,8 @@ toolsActions.installJiraApp = async (toolId, getAccessToken) => {
 };
 
 // TODO: Should this be in a different area considering it's used in more places than just tools?
-toolsActions.savePasswordToVault = async (toolData, fieldName, value, getAccessToken) => {
-  if (toolData.isChanged(fieldName) && value != null && typeof(value) === "string") {
+toolsActions.savePasswordToVault = async (toolData, toolConfigurationData, fieldName, value, getAccessToken) => {
+  if (toolConfigurationData.isChanged(fieldName) && value != null && typeof(value) === "string") {
     const toolId = toolData.getData("_id");
     const toolIdentifier = toolData.getData("tool_identifier");
     const keyName = `${toolId}-${toolIdentifier}-${fieldName}`;

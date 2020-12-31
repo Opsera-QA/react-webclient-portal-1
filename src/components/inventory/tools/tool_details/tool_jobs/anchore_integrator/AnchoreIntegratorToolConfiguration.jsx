@@ -7,8 +7,8 @@ import ToolConfigurationEditorPanelContainer
 import Col from "react-bootstrap/Col";
 import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import anchoreIntegratorConnectionMetadata from "./anchore-integrator-connection-metadata";
-import toolsActions from "../../../tools-actions";
-import {AuthContext} from "../../../../../../contexts/AuthContext";
+import {AuthContext} from "contexts/AuthContext";
+import toolsActions from "components/inventory/tools/tools-actions";
 
 function AnchoreIntegratorToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -24,7 +24,7 @@ function AnchoreIntegratorToolConfiguration({ toolData }) {
 
   const saveAnchoreToolConfiguration = async () => {
       let newConfiguration = anchoreIntegratorConfigurationDto.getPersistData();
-      newConfiguration.accountPassword = await toolsActions.savePasswordToVault(toolData, "accountPassword", newConfiguration.accountPassword, getAccessToken);
+      newConfiguration.accountPassword = await toolsActions.savePasswordToVault(toolData, anchoreIntegratorConfigurationDto,"accountPassword", newConfiguration.accountPassword, getAccessToken);
       const item = { configuration: newConfiguration };
       return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };
