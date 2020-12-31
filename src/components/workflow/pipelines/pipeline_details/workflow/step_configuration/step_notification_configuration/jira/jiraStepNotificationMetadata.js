@@ -75,8 +75,8 @@ const jiraStepNotificationMetadata = {
   ],
   newObjectFields: {
     type: "jira",
+    event: "all",
     jiraBoard: "",
-    jiraNotificationLevel: "all",
     jiraToolId: "",
     jiraProject: "",
     jiraPriority: "",

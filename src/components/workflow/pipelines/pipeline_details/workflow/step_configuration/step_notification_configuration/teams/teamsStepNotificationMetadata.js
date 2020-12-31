@@ -18,6 +18,7 @@ const teamsStepNotificationMetadata = {
   ],
   newObjectFields: {
     type: "teams",
+    event: "all",
     toolId: "",
     enabled: false,
   }
