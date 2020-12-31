@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import {Row} from "react-bootstrap";
-import modelHelpers from "../../../../../common/model/modelHelpers";
+import modelHelpers from "components/common/model/modelHelpers";
 import anchoreScanConnectionMetadata from "./anchore-scan-connection-metadata";
 import ToolConfigurationEditorPanelContainer
-  from "../../../../../common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+  from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Col from "react-bootstrap/Col";
-import DtoTextInput from "../../../../../common/input/dto_input/dto-text-input";
+import DtoTextInput from "components/common/input/dto_input/dto-text-input";
+import toolsActions from "../../../tools-actions";
+import {AuthContext} from "../../../../../../contexts/AuthContext";
 
-
-function AnchoreScanToolConfiguration({ toolData, toolId, saveToolConfiguration, saveToVault }) {
+function AnchoreScanToolConfiguration({ toolData }) {
+  const { getAccessToken } = useContext(AuthContext);
   const [anchoreScanConfigurationDto, setAnchoreScanConfigurationDto] = useState(undefined);
 
   useEffect(() => {
@@ -17,35 +19,14 @@ function AnchoreScanToolConfiguration({ toolData, toolId, saveToolConfiguration,
   }, []);
 
   const loadData = async () => {
-    setAnchoreScanConfigurationDto(modelHelpers.getToolConfigurationModel(toolData["configuration"], anchoreScanConnectionMetadata));
+    setAnchoreScanConfigurationDto(modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), anchoreScanConnectionMetadata));
   };
 
   const saveAnchoreToolConfiguration = async () => {
-      let newConfiguration = anchoreScanConfigurationDto.getPersistData();
-      
-      if (anchoreScanConfigurationDto.isChanged("accountPassword") && typeof(newConfiguration.accountPassword) === "string") {
-        newConfiguration.accountPassword = await savePasswordToVault(toolId, toolData.tool_identifier, "secretKey", "Vault Secured Key", newConfiguration.accountPassword);
-      }
-
-      const item = {
-        configuration: newConfiguration
-      };
-      return await saveToolConfiguration(item);
-  };
-
-  // TODO: If all of these are the same, we should put it in parent component
-  const savePasswordToVault = async (toolId, toolIdentifier, key, name, value) => {
-    const keyName = `${toolId}-${toolIdentifier}`;
-    const body = {
-      "key": keyName,
-      "value": value
-    };
-    const response = await saveToVault(body);
-    if (response.status === 200 ) {
-      return { name: name, vaultKey: keyName };
-    } else {
-      return "";
-    }
+    let newConfiguration = anchoreScanConfigurationDto.getPersistData();
+    newConfiguration.accountPassword = toolsActions.savePasswordToVault(toolData, "accountPassword", newConfiguration.accountPassword, getAccessToken);
+    const item = {configuration: newConfiguration};
+    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };
 
   return (
@@ -68,9 +49,6 @@ function AnchoreScanToolConfiguration({ toolData, toolId, saveToolConfiguration,
 
 AnchoreScanToolConfiguration.propTypes = {
   toolData: PropTypes.object,
-  toolId:  PropTypes.string,
-  saveToolConfiguration: PropTypes.func,
-  saveToVault: PropTypes.func
 };
 
 export default AnchoreScanToolConfiguration;
