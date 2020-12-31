@@ -4,6 +4,7 @@ import { Form } from "react-bootstrap";
 import InfoText from "../form_fields/input/InfoText";
 import InputLabel from "../form_fields/input/InputLabel";
 
+// TODO: Move into /boolean in a separate request
 function BooleanToggleInput({ fieldName, dataObject, setDataObject, disabled }) {
     const [field] = useState(dataObject.getFieldById(fieldName));
 
