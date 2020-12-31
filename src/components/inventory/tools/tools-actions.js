@@ -140,7 +140,7 @@ toolsActions.savePasswordToVault = async (toolData, toolConfigurationData, field
     return response.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : "";
   }
 
-  return toolData.getData(fieldName);
+  return toolConfigurationData.getData(fieldName);
 };
 
 toolsActions.saveToolConfiguration = async (toolData, configurationItem, getAccessToken) => {

@@ -53,6 +53,8 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
     return await toolsActions.updateTool(toolDataDto, getAccessToken);
   };
 
+  // TODO: When we update tool identifier, we should also set configuration to default empty object,
+  //  as the configuration fields change depending on tool identifier
   const handleToolIdentifierChange = (fieldName, value) => {
     let newDataObject = toolDataDto;
     newDataObject.setData("tool_identifier", value.identifier);
