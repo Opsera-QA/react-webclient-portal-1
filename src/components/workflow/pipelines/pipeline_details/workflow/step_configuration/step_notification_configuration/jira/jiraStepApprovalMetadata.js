@@ -75,6 +75,7 @@ const jiraStepApprovalMetadata = {
   newObjectFields: {
     type: "jira",
     jiraBoard: "",
+    event: "all",
     jiraNotificationLevel: "all",
     jiraToolId: "",
     jiraProject: "",
