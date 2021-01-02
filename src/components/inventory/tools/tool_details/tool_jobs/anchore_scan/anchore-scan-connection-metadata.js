@@ -18,7 +18,7 @@ const anchoreScanConnectionMetadata = {
       isRequired: true
     },
   ],
-  newModelBase:
+  newObjectFields:
     {
       toolURL: "",
       accountUsername: "",

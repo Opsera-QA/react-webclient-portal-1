@@ -23,9 +23,10 @@ function AnchoreScanToolConfiguration({ toolData }) {
     setAnchoreScanConfigurationDto(modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), anchoreScanConnectionMetadata));
   };
 
-  const saveAnchoreToolConfiguration = async () => {
+  const saveAnchoreScanToolConfiguration = async () => {
     let newConfiguration = anchoreScanConfigurationDto.getPersistData();
-    newConfiguration.accountPassword = await toolsActions.savePasswordToVault(toolData, anchoreScanConfigurationDto, "accountPassword", newConfiguration.accountPassword, getAccessToken);
+    const vaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`;
+    newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(anchoreScanConfigurationDto, "accountPassword", newConfiguration.accountPassword, vaultKey, getAccessToken);
     const item = {configuration: newConfiguration};
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };
@@ -33,7 +34,7 @@ function AnchoreScanToolConfiguration({ toolData }) {
   return (
     <ToolConfigurationEditorPanelContainer
       recordDto={anchoreScanConfigurationDto}
-      persistRecord={saveAnchoreToolConfiguration}
+      persistRecord={saveAnchoreScanToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Anchore"}
     >

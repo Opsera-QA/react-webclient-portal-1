@@ -23,9 +23,10 @@ function AnchoreIntegratorToolConfiguration({ toolData }) {
     setAnchoreIntegratorConfigurationDto(modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), anchoreIntegratorConnectionMetadata));
   };
 
-  const saveAnchoreToolConfiguration = async () => {
+  const saveAnchoreIntegratorToolConfiguration = async () => {
       let newConfiguration = anchoreIntegratorConfigurationDto.getPersistData();
-      newConfiguration.accountPassword = await toolsActions.savePasswordToVault(toolData, anchoreIntegratorConfigurationDto,"accountPassword", newConfiguration.accountPassword, getAccessToken);
+      const vaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`;
+      newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(anchoreIntegratorConfigurationDto, "accountPassword", newConfiguration.accountPassword, vaultKey, getAccessToken);
       const item = { configuration: newConfiguration };
       return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };
@@ -33,7 +34,7 @@ function AnchoreIntegratorToolConfiguration({ toolData }) {
   return (
     <ToolConfigurationEditorPanelContainer
       recordDto={anchoreIntegratorConfigurationDto}
-      persistRecord={saveAnchoreToolConfiguration}
+      persistRecord={saveAnchoreIntegratorToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Anchore"}
     >

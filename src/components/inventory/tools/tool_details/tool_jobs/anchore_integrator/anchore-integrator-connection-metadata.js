@@ -18,7 +18,7 @@ const anchoreIntegratorConnectionMetadata = {
       isRequired: true
     },
   ],
-  newModelBase:
+  newObjectFields:
     {
       toolURL: "",
       accountUsername: "",
