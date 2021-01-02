@@ -143,6 +143,17 @@ toolsActions.savePasswordToVault = async (toolData, toolConfigurationData, field
   return toolConfigurationData.getData(fieldName);
 };
 
+toolsActions.saveKeyPasswordToVault = async (toolConfigurationData, fieldName, value, key, getAccessToken) => {
+  if (toolConfigurationData.isChanged(fieldName) && value != null && typeof(value) === "string") {
+    const body = { "key": key, "value": value };
+    const response = await PipelineActions.saveToVault(body, getAccessToken);
+    return response.status === 200 ? { name: "Vault Secured Key", vaultKey: key } : "";
+  }
+
+  return toolConfigurationData.getData(fieldName);
+};
+
+
 toolsActions.saveToolConfiguration = async (toolData, configurationItem, getAccessToken) => {
   let newToolData = toolData.getPersistData();
   newToolData["configuration"] = configurationItem.configuration;
