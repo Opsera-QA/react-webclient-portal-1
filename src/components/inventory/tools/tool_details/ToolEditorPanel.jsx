@@ -3,19 +3,18 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
-import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
-import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
-import DtoMultipleInput from "../../../common/input/dto_input/dto-multiple-input";
-import toolsActions from "../tools-actions";
-import SaveButton from "../../../common/buttons/SaveButton";
-import LoadingDialog from "../../../common/status_notifications/loading";
-import DtoTagManagerInput from "../../../common/input/dto_input/dto-tag-manager-input";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
-import PersistButtonContainer from "../../../common/buttons/saving/containers/PersistButtonContainer";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import toolsActions from "components/inventory/tools/tools-actions";
+import LoadingDialog from "components/common/status_notifications/loading";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import DtoTextInput from "components/common/input/dto_input/dto-text-input";
+import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
+import DtoTagManagerInput from "components/common/input/dto_input/dto-tag-manager-input";
 import ToolClassificationSelectInput
-  from "../../../common/list_of_values_input/inventory/ToolClassificationSelectInput";
+  from "components/common/list_of_values_input/inventory/ToolClassificationSelectInput";
+import DtoMultipleInput from "components/common/input/dto_input/dto-multiple-input";
+import DtoToggleInput from "components/common/input/dto_input/dto-toggle-input";
+import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 
 function ToolEditorPanel({ toolData, setToolData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -53,12 +52,11 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
     return await toolsActions.updateTool(toolDataDto, getAccessToken);
   };
 
-  // TODO: When we update tool identifier, we should also set configuration to default empty object,
-  //  as the configuration fields change depending on tool identifier
   const handleToolIdentifierChange = (fieldName, value) => {
     let newDataObject = toolDataDto;
     newDataObject.setData("tool_identifier", value.identifier);
     newDataObject.setData("tool_type_identifier", value.tool_type_identifier);
+    newDataObject.setData("configuration", {});
     setToolDataDto({...newDataObject});
   };
 
