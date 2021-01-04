@@ -1,4 +1,4 @@
-import {validateData, validateField} from "./modelValidation";
+import {validateData, validateField} from "core/data_model/modelValidation";
 
 export const DataState = {
   LOADED: 0,
@@ -31,7 +31,7 @@ export class Model {
         this.defineProperty(id);
       }
     }
-  }
+  };
 
   defineProperty = (id) => {
     Object.defineProperty(this, id, {
@@ -46,7 +46,7 @@ export class Model {
       },
       // configurable: true
     })
-  }
+  };
 
   /**
    * Retrieve nested item from object/array
@@ -74,12 +74,12 @@ export class Model {
 
   getData = (fieldName) => {
     return fieldName.includes('.') ? this.getNestedData(fieldName) : this.data[fieldName];
-  }
+  };
 
   setData = (fieldName, newValue) => {
       this.propertyChange(fieldName, newValue, this.getData(fieldName));
       this.data[fieldName] = newValue;
-  }
+  };
 
   setTextData = (fieldName, newValue) => {
     const field = this.getFieldById(fieldName);
@@ -110,23 +110,25 @@ export class Model {
 
   isModelValid = () => {
     return validateData(this);
-  }
+  };
 
   // TODO Replace top method with getErrors and rename this
   isModelValid2 = () => {
+    // Trim strings before testing validity
+    this.trimStrings();
     let isValid = validateData(this);
     return isValid === true;
-  }
+  };
 
   isFieldValid = (fieldName) => {
     return validateField(this, this.getFieldById(fieldName));
-  }
+  };
 
   // Returns first error if exists
   getFieldError = (fieldName) => {
     let errors = validateField(this, this.getFieldById(fieldName));
     return errors != null ? errors[0] : "";
-  }
+  };
 
   propertyChange = (id, newValue, oldValue) => {
     if (!this.changeMap.has(id)) {
@@ -152,9 +154,12 @@ export class Model {
 
   // TODO: Only send changemap for updates after getting everything else working
   getPersistData = () => {
+    return this.trimStrings();
+  };
+
+  trimStrings = () => {
     let data = this.data;
 
-    // Trim strings before sending to node
     // TODO: this is only at the top level, add support for trimming inner objects
     try {
       Object.keys(data).forEach(key => {
@@ -162,19 +167,21 @@ export class Model {
           data[key] = data[key].trim();
         }
       });
+
+      // save trimmed strings in data
+      this.data = data;
     }
     catch (error) {
       console.error("Could not parse object's strings. Sending unparsed data.");
       return this.data;
     }
 
-
     return data;
-  }
+  };
 
   isNew = () => {
     return this.newModel;
-  }
+  };
 
   isChanged = (field) => {
     if (field) {
@@ -268,7 +275,7 @@ export class Model {
 
   clone = () => {
     return new Model(JSON.parse(JSON.stringify(this.data)), this.metaData, this.newModel);
-  }
+  };
 }
 
 export default Model;
