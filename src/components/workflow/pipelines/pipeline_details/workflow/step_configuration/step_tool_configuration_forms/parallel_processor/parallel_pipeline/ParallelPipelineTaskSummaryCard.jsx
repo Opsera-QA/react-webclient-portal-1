@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
-import PipelineSummaryCardContainer from "../../../../../pipeline_activity/PipelineSummaryCardContainer";
-import TextFieldBase from "../../../../../../../../common/form_fields/TextFieldBase";
-import DateFieldBase from "../../../../../../../../common/form_fields/DateFieldBase";
-import PipelineLinkButton from "../../../../../../../../common/buttons/pipeline/PipelineLinkButton";
-import PipelineStateField from "../../../../../../../../common/form_fields/pipelines/state/PipelineStateField";
+import PipelineSummaryCardContainer
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCardContainer";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import PipelineStateField from "components/common/form_fields/pipelines/state/PipelineStateField";
+import DateFieldBase from "components/common/form_fields/DateFieldBase";
+import PipelineLinkButton from "components/common/buttons/pipeline/PipelineLinkButton";
 
 function ParallelPipelineTaskSummaryCard({ pipelineData }) {
   return (
@@ -20,7 +21,7 @@ function ParallelPipelineTaskSummaryCard({ pipelineData }) {
       <div className="d-flex justify-content-between align-items-end">
         <DateFieldBase dataObject={pipelineData} fieldName={"createdAt"}/>
         <DateFieldBase dataObject={pipelineData} fieldName={"updatedAt"}/>
-        <PipelineLinkButton pipelineId={pipelineData.getData("_id")}/>
+        <PipelineLinkButton pipelineId={pipelineData.getData("_id")} loadPipelineInNewWindow={true}/>
       </div>
     </PipelineSummaryCardContainer>
   );
@@ -31,6 +32,5 @@ ParallelPipelineTaskSummaryCard.propTypes = {
   runCount: PropTypes.string,
   status: PropTypes.string
 };
-
 
 export default ParallelPipelineTaskSummaryCard;
