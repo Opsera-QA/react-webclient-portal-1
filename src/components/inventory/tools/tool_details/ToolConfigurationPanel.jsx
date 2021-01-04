@@ -68,7 +68,7 @@ function ToolConfigurationPanel({ toolData }) {
       case "anchore-integrator":
         return <AnchoreIntegratorToolConfiguration toolData={toolData} />;
       case "sonar":
-        return <SonarToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
+        return <SonarToolConfiguration toolData={toolData} />;
       case "aws_account":
         return <AwsToolConfiguration toolData={toolData} />;
       case "sfdc-configurator":

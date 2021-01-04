@@ -1,24 +1,32 @@
 const sonarConnectionMetadata = {
-  type: "Octopus API Configuration",
+  type: "Sonar Tool Configuration",
   idProperty: "_id",
   fields: [
     {
-      label: "Octopus URL",
-      id: "toolURL",
-      isRequired: true
+      label: "Sonar URL",
+      id: "sonarUrl",
+      isRequired: true,
+      maxLength: 100
     },
     {
-      label: "Username",
-      id: "userName",
-      isRequired: true
+      label: "Sonar Port",
+      id: "sonarPort",
+      maxLength: 5
     },
     {
-      label: "Octopus API Key",
-      id: "octopusApiKey",
-      isRequired: true
+      label: "Sonar User ID",
+      id: "sonarUserId",
+      isRequired: true,
+      maxLength: 50
+    },
+    {
+      label: "Sonar Authentication Token",
+      id: "sonarAuthToken",
+      isRequired: true,
+      maxLength: 500
     }
   ],
-  newModelBase:
+  newObjectFields:
     {
       sonarUrl: "",
       sonarPort : "",
