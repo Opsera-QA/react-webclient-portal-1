@@ -4,7 +4,7 @@ import SaveButtonContainer from "./SaveButtonContainer";
 import StrictSaveButton from "../StrictSaveButton";
 import CreateButton from "../CreateButton";
 
-function PersistButtonContainer({ recordDto, setRecordDto, updateRecord, createRecord, handleClose, addAnotherOption }) {
+function PersistButtonContainer({ recordDto, setRecordDto, updateRecord, createRecord, handleClose, addAnotherOption, disable }) {
   const getSaveButton = () => {
     if (recordDto.isNew()){
       return (
@@ -14,11 +14,12 @@ function PersistButtonContainer({ recordDto, setRecordDto, updateRecord, createR
           recordDto={recordDto}
           setRecordDto={setRecordDto}
           addAnotherOption={addAnotherOption}
+          disable={disable}
         />
       );
     }
 
-    return (<StrictSaveButton recordDto={recordDto} updateRecord={updateRecord} />);
+    return (<StrictSaveButton recordDto={recordDto} updateRecord={updateRecord} disable={disable} />);
   };
 
   return (
@@ -34,6 +35,7 @@ PersistButtonContainer.propTypes = {
   createRecord: PropTypes.func,
   setRecordDto: PropTypes.func,
   handleClose: PropTypes.func,
+  disable: PropTypes.bool,
   addAnotherOption: PropTypes.bool
 };
 
