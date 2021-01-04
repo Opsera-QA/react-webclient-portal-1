@@ -29,5 +29,4 @@ PipelineLinkButton.propTypes = {
   loadPipelineInNewWindow: PropTypes.bool
 };
 
-
 export default PipelineLinkButton;
