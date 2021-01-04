@@ -5,13 +5,10 @@ import "components/inventory/tools/tools.css";
 import GitHubConfiguration from "../forms/github";
 import GitlabToolConfiguration from "../forms/gitlab";
 import ArgoToolConfiguration from "./tool_jobs/argo/ArgoToolConfiguration";
-import AWSToolConfiguration from "../forms/aws";
 import SFDCToolConfiguration from "../forms/sfdc";
 import PipelineActions from "../../../workflow/pipeline-actions";
-import {AuthContext} from "../../../../contexts/AuthContext";
 import JenkinsToolConfiguration from "./tool_jobs/jenkins/JenkinsToolConfiguration";
 import NexusToolConfiguration from "./tool_jobs/nexus/NexusToolConfiguration";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import toolsActions from "../tools-actions";
 import JiraToolConfiguration from "./tool_jobs/jira/JiraToolConfiguration";
 import TeamsToolConfiguration from "./tool_jobs/teams/TeamsToolConfiguration";
@@ -19,10 +16,13 @@ import OctopusToolConfiguration from "./tool_jobs/octopus/OctopusToolConfigurati
 import SlackToolConfiguration from "./tool_jobs/slack/SlackToolConfiguration";
 import SonarToolConfiguration from "./tool_jobs/sonar/SonarToolConfiguration";
 import SpinnakerToolConfiguration from "./tool_jobs/spinnaker/SpinnakerToolConfiguration";
+import AwsToolConfiguration from "./tool_jobs/aws/AwsToolConfiguration";
 import BitbucketToolConfiguration from "./tool_jobs/bitbucket/BitbucketToolConfiguration";
 import CypressToolConfiguration from "./tool_jobs/cypress/CypressToolConfiguration";
 import AnchoreIntegratorToolConfiguration from "./tool_jobs/anchore_integrator/AnchoreIntegratorToolConfiguration";
 import AnchoreScanToolConfiguration from "./tool_jobs/anchore_scan/AnchoreScanToolConfiguration";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function ToolConfigurationPanel({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -69,7 +69,7 @@ function ToolConfigurationPanel({ toolData }) {
       case "sonar":
         return <SonarToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "aws_account":
-        return <AWSToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
+        return <AwsToolConfiguration toolData={toolData} />;
       case "sfdc-configurator":
         return <SFDCToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "nexus":
