@@ -3,13 +3,14 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 
 import "components/inventory/tools/tools.css";
-import DtoTextField from "../../../../common/form_fields/dto_form_fields/dto-text-field";
-import DtoDateField from "../../../../common/form_fields/dto_form_fields/dto-date-field";
-import DtoToggleField from "../../../../common/form_fields/dto_form_fields/dto-toggle-field";
-import DtoItemField from "../../../../common/form_fields/dto_form_fields/dto-item-field";
-import DtoPropertiesField from "../../../../common/form_fields/dto_form_fields/dto-properties-field";
-import LoadingDialog from "../../../../common/status_notifications/loading";
-import SummaryPanelContainer from "../../../../common/panels/detail_view/SummaryPanelContainer";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import ActivityField from "components/common/fields/boolean/ActivityField";
+import BooleanField from "components/common/fields/boolean/BooleanField";
+import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import LoadingDialog from "components/common/status_notifications/loading";
+import DtoItemField from "components/common/form_fields/dto_form_fields/dto-item-field";
+import DtoPropertiesField from "components/common/form_fields/dto_form_fields/dto-properties-field";
+import DtoDateField from "components/common/form_fields/dto_form_fields/dto-date-field";
 
 function ToolIdentifierSummaryPanel({ toolIdentifierData, setActiveTab }) {
 
@@ -21,31 +22,34 @@ function ToolIdentifierSummaryPanel({ toolIdentifierData, setActiveTab }) {
     <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
-          <DtoTextField dataObject={toolIdentifierData} fieldName={"name"}/>
+          <TextFieldBase dataObject={toolIdentifierData} fieldName={"name"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={toolIdentifierData} fieldName={"identifier"}/>
+          <TextFieldBase dataObject={toolIdentifierData} fieldName={"identifier"}/>
         </Col>
         <Col lg={12}>
-          <DtoTextField dataObject={toolIdentifierData} fieldName={"description"}/>
+          <TextFieldBase dataObject={toolIdentifierData} fieldName={"description"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={toolIdentifierData} fieldName={"tool_type_identifier"}/>
+          <TextFieldBase dataObject={toolIdentifierData} fieldName={"tool_type_identifier"}/>
         </Col>
         <Col lg={6}>
           <DtoDateField dataObject={toolIdentifierData} fieldName={"createdAt"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={toolIdentifierData} fieldName={"_id"}/>
+          <TextFieldBase dataObject={toolIdentifierData} fieldName={"_id"}/>
         </Col>
         <Col lg={6}>
-          <DtoToggleField dataObject={toolIdentifierData} fieldName={"active"}/>
+          <ActivityField dataObject={toolIdentifierData} fieldName={"active"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={toolIdentifierData} fieldName={"usageType"}/>
+          <TextFieldBase dataObject={toolIdentifierData} fieldName={"usageType"}/>
         </Col>
         <Col lg={12}>
           <DtoItemField dataObject={toolIdentifierData} fieldName={"tags"}/>
+        </Col>
+        <Col lg={6}>
+          <BooleanField dataObject={toolIdentifierData} fieldName={"enabledInRegistry"}/>
         </Col>
         <Col lg={6}>
           <DtoPropertiesField dataObject={toolIdentifierData} fieldName={"properties"}/>

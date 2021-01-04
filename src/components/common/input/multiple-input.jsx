@@ -72,7 +72,6 @@ function MultipleInput({ field, formData, setData }) {
     setRowList([
       ...rowList
     ]);
-    console.log("RowList: " + JSON.stringify(rowList.reduce((obj, item) => Object.assign(obj, {[item.name]: item.value}))));
     setData(field.id, rowList.reduce((obj, item) => Object.assign(obj, { [item.name]: item.value }), {}));
   };
 

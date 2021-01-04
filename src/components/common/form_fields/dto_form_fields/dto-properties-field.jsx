@@ -32,7 +32,6 @@ function DtoPropertiesField({dataObject, fieldName, fields}) {
 
   return (
     <>
-      {console.log("RowList: " + JSON.stringify(rowList))}
       {field && rowList &&
         <div className="custom-item-input m-2">
           <div className="custom-item-input">

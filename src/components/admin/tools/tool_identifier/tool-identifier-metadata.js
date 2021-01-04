@@ -5,12 +5,12 @@ const toolIdentifierMetadata = {
   {
     label: "Name",
     id: "name",
-      isRequired: true
+    isRequired: true
   },
-  {
-    label: "Description",
-    id: "description",
-  },
+    {
+      label: "Description",
+      id: "description",
+    },
     {
       label: "Usage Type",
       id: "usageType",
@@ -19,32 +19,36 @@ const toolIdentifierMetadata = {
       label: "ID",
       id: "_id",
     },
-  {
-    label: "Identifier",
-    id: "identifier",
-    isRequired: true
-  },
-  {
-    label: "Category Type",
-    id: "tool_type_identifier",
-    isRequired: true
-  },
-  {
-    label: "Tags",
-    id: "tags",
-  },
-  {
-    label: "Properties",
-    id: "properties",
-  },
+    {
+      label: "Identifier",
+      id: "identifier",
+      isRequired: true
+    },
+    {
+      label: "Category Type",
+      id: "tool_type_identifier",
+      isRequired: true
+    },
+    {
+      label: "Tags",
+      id: "tags",
+    },
+    {
+      label: "Properties",
+      id: "properties",
+    },
     {
       label: "Created At",
       id: "createdAt",
     },
-  {
-    label: "Active",
-    id: "active",
-  },
+    {
+      label: "Enabled in Tool Registry?",
+      id: "enabledInRegistry"
+    },
+    {
+      label: "Active",
+      id: "active",
+    },
 ],
   newObjectFields: {
     name: "",
@@ -55,6 +59,7 @@ const toolIdentifierMetadata = {
     properties: {
       isLiveStream: false
     },
+    enabledInRegistry: true,
     active: true,
   }
 }
