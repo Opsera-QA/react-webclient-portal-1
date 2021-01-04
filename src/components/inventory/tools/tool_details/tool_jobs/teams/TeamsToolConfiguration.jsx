@@ -32,6 +32,10 @@ function TeamsToolConfiguration({ toolData }) {
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };
 
+  if (teamsConfigurationDto == null) {
+    return <></>;
+  }
+
   return (
     <ToolConfigurationEditorPanelContainer
       recordDto={teamsConfigurationDto}
@@ -41,7 +45,7 @@ function TeamsToolConfiguration({ toolData }) {
     >
       <Row>
         <Col sm={12}>
-          <VaultTextInput dataObject={teamsConfigurationDto} setDataObject={setTeamsConfigurationDto} fieldName={"accountPassword"} />
+          <VaultTextInput dataObject={teamsConfigurationDto} setDataObject={setTeamsConfigurationDto} fieldName={"webhookUrl"} />
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>
