@@ -74,7 +74,7 @@ function ToolConfigurationPanel({ toolData }) {
       case "sfdc-configurator":
         return <SfdcToolConfiguration toolData={toolData} />;
       case "nexus":
-        return <NexusToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
+        return <NexusToolConfiguration toolData={toolData} />;
       case "teams":
         return <TeamsToolConfiguration toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "octopus":
