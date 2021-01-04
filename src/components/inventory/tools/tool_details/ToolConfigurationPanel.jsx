@@ -2,7 +2,6 @@ import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 
-import GitlabToolConfiguration from "../forms/gitlab";
 import ArgoToolConfiguration from "./tool_jobs/argo/ArgoToolConfiguration";
 import SFDCToolConfiguration from "../forms/sfdc";
 import PipelineActions from "../../../workflow/pipeline-actions";
@@ -21,6 +20,7 @@ import AnchoreIntegratorToolConfiguration from "./tool_jobs/anchore_integrator/A
 import BitbucketToolConfiguration from "./tool_jobs/bitbucket/BitbucketToolConfiguration";
 import AnchoreScanToolConfiguration from "./tool_jobs/anchore_scan/AnchoreScanToolConfiguration";
 import GithubToolConfiguration from "./tool_jobs/github/GithubToolConfiguration";
+import GitlabToolConfiguration from "./tool_jobs/gitlab/GitlabToolConfiguration";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
@@ -53,7 +53,7 @@ function ToolConfigurationPanel({ toolData }) {
       case "github":
         return <GithubToolConfiguration toolData={toolData} />;
       case "gitlab":
-        return <GitlabToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
+        return <GitlabToolConfiguration toolData={toolData} />;
       case "bitbucket":
         return <BitbucketToolConfiguration toolData={toolData} />;
       case "spinnaker":
