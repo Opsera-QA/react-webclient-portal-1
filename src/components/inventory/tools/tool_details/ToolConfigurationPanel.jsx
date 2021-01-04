@@ -48,7 +48,7 @@ function ToolConfigurationPanel({ toolData }) {
   const getConfiguration = (toolIdentifier) => {
     switch (toolIdentifier) {
       case "jenkins":
-        return <JenkinsToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
+        return <JenkinsToolConfiguration toolData={toolData} />;
       case "jira":
         return <JiraToolConfiguration toolData={toolData} />;
       case "github":
