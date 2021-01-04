@@ -2,15 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "../../status_notifications/loading";
 import Form from "react-bootstrap/Form";
+import RequiredFieldsMessage from "components/common/form_fields/RequiredFieldsMessage";
 
 function EditorPanelContainer({ children, isLoading, showRequiredFieldsMessage }) {
   const getRequiredFieldsMessage = () => {
     if (showRequiredFieldsMessage) {
-      return (
-        <div>
-          <small className="form-text text-muted text-right mr-2 mt-3"><span className="danger-red">*</span> Required Fields</small>
-        </div>
-      );
+      return (<RequiredFieldsMessage />);
     }
   }
 
@@ -19,7 +16,7 @@ function EditorPanelContainer({ children, isLoading, showRequiredFieldsMessage }
   }
 
   return (
-    <Form className="scroll-y full-height">
+    <Form className="scroll-y h-100">
       <div className="p-3">
         <div>{children}</div>
         {getRequiredFieldsMessage()}

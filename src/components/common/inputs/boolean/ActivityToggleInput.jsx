@@ -4,8 +4,7 @@ import { Form } from "react-bootstrap";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/fields/input/InfoText";
 
-// TODO: Move into /boolean in a separate request. Is this component necessary?
-function BooleanToggleInput({ fieldName, dataObject, setDataObject, disabled }) {
+function ActivityToggleInput({ fieldName, dataObject, setDataObject, disabled }) {
     const [field] = useState(dataObject.getFieldById(fieldName));
 
   const validateAndSetData = (value) => {
@@ -21,7 +20,7 @@ function BooleanToggleInput({ fieldName, dataObject, setDataObject, disabled }) 
         id={field.id}
         checked={!!dataObject.getData(fieldName)}
         disabled={disabled}
-        label={field.label}
+        label={dataObject.getData(fieldName) ? "Active" : "Inactive"}
         onChange={() => {
           validateAndSetData(!dataObject.getData(fieldName));
         }}
@@ -31,7 +30,7 @@ function BooleanToggleInput({ fieldName, dataObject, setDataObject, disabled }) 
   );
 }
 
-BooleanToggleInput.propTypes = {
+ActivityToggleInput.propTypes = {
   disabled: PropTypes.bool,
   setDataObject: PropTypes.func,
   fieldName: PropTypes.string,
@@ -39,4 +38,4 @@ BooleanToggleInput.propTypes = {
   setData: PropTypes.func
 };
 
-export default BooleanToggleInput;
+export default ActivityToggleInput;
