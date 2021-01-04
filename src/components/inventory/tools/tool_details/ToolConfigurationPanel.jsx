@@ -22,8 +22,12 @@ import CypressToolConfiguration from "./tool_jobs/cypress/CypressToolConfigurati
 import GitlabToolConfiguration from "components/inventory/tools/tool_details/tool_jobs/gitlab/GitlabToolConfiguration";
 
 function ToolConfigurationPanel({ toolData }) {
-  const getConfiguration = (toolIdentifier) => {
-    switch (toolIdentifier) {
+  const getConfiguration = () => {
+    if (toolData == null) {
+      return <></>;
+    }
+
+    switch (toolData.getData("tool_identifier")) {
       case "jenkins":
         return <JenkinsToolConfiguration toolData={toolData} />;
       case "jira":
@@ -63,10 +67,9 @@ function ToolConfigurationPanel({ toolData }) {
     }
   }
   
-
   return (
     <div className="p-3">
-      {toolData && getConfiguration(toolData.getData("tool_identifier").toLowerCase()) }
+      {getConfiguration() }
     </div>
   );
 }
