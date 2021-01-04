@@ -8,7 +8,7 @@ const octopusConnectionMetadata = {
       isRequired: true
     },
     {
-      label: "Username",
+      label: "Octopus Username",
       id: "userName",
       isRequired: true
     },
@@ -18,7 +18,7 @@ const octopusConnectionMetadata = {
       isRequired: true
     }
   ],
-  newModelBase:
+  newObjectFields:
     {
       toolURL: "",
       userName: "",

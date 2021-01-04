@@ -78,7 +78,7 @@ function ToolConfigurationPanel({ toolData }) {
       case "teams":
         return <TeamsToolConfiguration toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "octopus":
-        return <OctopusToolConfiguration toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
+        return <OctopusToolConfiguration toolData={toolData} />;
       case "slack":
         return <SlackToolConfiguration toolData={toolData.data}/>;
       default:
