@@ -1,22 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Form from "react-bootstrap/Form";
-import LoadingDialog from "../../../status_notifications/loading";
-import SaveButtonContainer from "../../../buttons/saving/containers/SaveButtonContainer";
-import StrictSaveButton from "../../../buttons/saving/StrictSaveButton";
-import {Row} from "react-bootstrap";
-import TestToolConnectionButton from "../../../buttons/connection/TestToolConnectionButton";
-import RequiredFieldsMessage from "../../../form_fields/RequiredFieldsMessage";
+import TestToolConnectionButton from "components/common/buttons/connection/TestToolConnectionButton";
+import LoadingDialog from "components/common/status_notifications/loading";
+import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
+import RequiredFieldsMessage from "components/common/form_fields/RequiredFieldsMessage";
+import StrictSaveButton from "components/common/buttons/saving/StrictSaveButton";
 
 function ToolConfigurationEditorPanelContainer({children, isLoading, persistRecord, recordDto, toolConnectionCheckName, toolData}) {
   const getToolConnectionCheckButton = () => {
     if (toolConnectionCheckName != null && toolData != null) {
      return (
-       <Row>
-         <div className="ml-auto mr-3">
-           <TestToolConnectionButton recordData={toolData} toolName={toolConnectionCheckName} disable={recordDto.isNew() || recordDto.isChanged()}/>
-         </div>
-       </Row>
+        <TestToolConnectionButton toolDataDto={toolData} toolName={toolConnectionCheckName} disable={recordDto.isNew() || recordDto.isChanged()}/>
      )
     }
   };
@@ -28,9 +23,12 @@ function ToolConfigurationEditorPanelContainer({children, isLoading, persistReco
   return (
     <Form className="scroll-y full-height">
       <div>
-        {getToolConnectionCheckButton()}
+        <div className="d-flex justify-content-between px-3">
+          <div className="text-muted pb-3 px-2">Enter tool specific configuration information below.  These settings will be used for pipelines.</div>
+          <div>{getToolConnectionCheckButton()}</div>
+        </div>
         <div>{children}</div>
-        <div className="mr-2">
+        <div className="mr-3">
           <SaveButtonContainer>
             <StrictSaveButton updateRecord={persistRecord} recordDto={recordDto} />
           </SaveButtonContainer>
