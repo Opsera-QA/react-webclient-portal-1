@@ -20,7 +20,13 @@ function GithubToolConfiguration({ toolData }) {
   }, []);
 
   const loadData = async () => {
-    setGithubConfigurationDto(modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), githubConnectionMetadata));
+    let githubConfigurationData = modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), githubConnectionMetadata)
+
+    if (githubConfigurationData.getData("twoFactorAuthentication") === true) {
+      githubConfigurationData.setMetaDataFields(githubConnectionMetadata.fieldsAlt);
+    }
+
+    setGithubConfigurationDto(githubConfigurationData);
   };
 
   const saveGithubToolConfiguration = async () => {
@@ -44,6 +50,10 @@ function GithubToolConfiguration({ toolData }) {
     }
     return (<VaultTextInput type={"password"} dataObject={githubConfigurationDto} setDataObject={setGithubConfigurationDto} fieldName={"accountPassword"} />);
   };
+
+  if (githubConfigurationDto == null) {
+    return <></>;
+  }
 
   return (
     <ToolConfigurationEditorPanelContainer

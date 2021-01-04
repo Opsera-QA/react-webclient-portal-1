@@ -55,7 +55,6 @@ const jenkinsConnectionMetadata = {
     {
       label: "Jenkins Token",
       id: "jAuthToken",
-      // isRequired: true
     },
     {
       label: "Proxy Enabled?",

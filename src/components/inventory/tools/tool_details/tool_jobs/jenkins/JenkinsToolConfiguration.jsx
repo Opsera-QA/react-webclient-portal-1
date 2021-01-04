@@ -21,7 +21,13 @@ function JenkinsToolConfiguration({ toolData }) {
   }, [toolData]);
 
   const loadData = async () => {
-    setJenkinsConfigurationDto(modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), jenkinsConnectionMetadata));
+    let jenkinsConfigurationData = modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), jenkinsConnectionMetadata)
+
+    if (jenkinsConfigurationData.getData("proxyEnable") === true) {
+      jenkinsConfigurationData.setMetaDataFields(jenkinsConnectionMetadata.fieldsAlt);
+    }
+
+    setJenkinsConfigurationDto(jenkinsConfigurationData);
   };
 
   const saveJenkinsToolConfiguration = async () => {
@@ -48,6 +54,10 @@ function JenkinsToolConfiguration({ toolData }) {
       <VaultTextInput dataObject={jenkinsConfigurationDto} setDataObject={setJenkinsConfigurationDto} fieldName={"jAuthToken"} />
     );
   };
+
+  if (jenkinsConfigurationDto == null) {
+    return <></>;
+  }
 
   return (
     <ToolConfigurationEditorPanelContainer
