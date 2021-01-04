@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faCogs} from "@fortawesome/pro-light-svg-icons";
+import {faChartBar} from "@fortawesome/pro-light-svg-icons";
 import KpiSettingsForm from "../marketplace/kpi_marketplace_detail_view/KpiSettingsForm";
-import { format, addDays } from "date-fns";
+import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 
 // Opsera KPIs
 import OpseraPipelineByStatusBarChart from "./opsera/bar_chart/pipeline_by_status/OpseraPipelineByStatusBarChart";
@@ -77,60 +76,48 @@ import MetricbeatCpuUsageByTimeLineChart from "./metricbeat/line_chart/cpu_usage
 import MetricbeatInNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/in_network_usage/MetricbeatInNetworkTrafficByTimeLineChart";
 import MetricbeatMemoryUsageByTimeLineChart from "./metricbeat/line_chart/memory_usage/MetricbeatMemoryUsageByTimeLineChart";
 import MetricbeatOutNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/out_network_usage/MetricbeatOutNetworkTrafficByTimeLineChart";
+import {getDateObjectFromKpiConfiguration} from "components/insights/charts/charts-helpers";
 
 function ChartView({kpiConfiguration, dashboardData, index}) {
-    const [view, setView] = useState("chart");
-
-    const getView = () => {
-      // TODO: make container
-      if (view === "chart") {
-        return (
-          <div>
-            <FontAwesomeIcon icon={faCogs} className="float-right pointer mr-2 mt-1" onClick={() => {changeView()}}/>
-            <h5>{kpiConfiguration.kpi_name}</h5>
-            {getChart(kpiConfiguration)}
-          </div>
-        );
-      }
-
-
-      if (view === "settings") {
-        return (
-          <div>
-            {getSettings(kpiConfiguration)}
-          </div>
-        );
-      }
+  // TODO: This is only being used until each chart is updated to use ChartContainer inside.
+  //  After everything is refactored,
+  //  this should be deleted and we should just return getChart() at bottom of component instead
+  const getView = () => {
+    if (kpiConfiguration?.kpi_identifier === "opsera-status-by-pipeline") {
+      return getChart();
     }
 
-  const changeView = () => {
-    setView(view === "chart" ? "settings" : "chart");
+    return (
+      <ChartContainer
+        title={kpiConfiguration?.kpi_name}
+        chart={getChart()}
+        kpiConfiguration={kpiConfiguration}
+        dashboardData={dashboardData}
+        index={index}
+      />
+    );
   }
 
-  const getSettings = (kpiConfiguration) => {
-    return <KpiSettingsForm kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} index={index} setView={setView}/>
-  }
-
+  // TODO: Remove all references and reference directly from helper class
   const getDateObject = (kpiConfiguration) => {
-    if (kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")] &&
-      kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")].value) {
-      return ({
-        "start": kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")].value.startDate,
-        "end": addDays(kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")].value.endDate, 1)
-      })
-    }
-    return ({
-      "start": "now-90d",
-      "end": "now"
-    });
+    return getDateObjectFromKpiConfiguration(kpiConfiguration);
   };
 
-  const getChart = (kpiConfiguration) => {
-    switch (kpiConfiguration.kpi_identifier) {
+  // TODO: chart is global in this component, so it doesn't need to be passed in to this or getDateObject,
+  //  unless those functions are moved into a helper component
+  const getChart = () => {
+    switch (kpiConfiguration?.kpi_identifier) {
 
       // Opsera KPIs
       case "opsera-status-by-pipeline":
-        return (<OpseraPipelineByStatusBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (
+            <OpseraPipelineByStatusBarChart
+              persona={"developer"}
+              kpiConfiguration={kpiConfiguration}
+              dashboardData={dashboardData}
+              index={index}
+            />
+          );
       case "opsera-pipeline-duration":
         return (<OpseraBuildDurationBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
       case "opsera-pipelines-by-user":
@@ -173,7 +160,7 @@ function ChartView({kpiConfiguration, dashboardData, index}) {
         return (<JiraSprintBurndownLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
       case "jira-issues-assigned-to-me":
         return (<JiraIssuesAssignedToMe persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
-      
+
       // Anchore KPIs
       case "anchore-vulnerability-severity-by-package":
         return (<AnchoreVulnerabilitySeverityByPackageBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
@@ -205,7 +192,7 @@ function ChartView({kpiConfiguration, dashboardData, index}) {
         return (<SonarCodeCoverageBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
       case "sonar-lines-to-cover":
         return (<SonarLinesToCoverBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
-      
+
       // Jmeter KPIs
       case "jmeter-hits":
         return (<JmeterHitsLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
@@ -235,19 +222,19 @@ function ChartView({kpiConfiguration, dashboardData, index}) {
         return (<GitlabTotalCommitsByProjectChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
       case "gitlab-recent-merge-requests":
         return (<GitlabRecentMergeRequests persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
-      
+
       // Cypress KPIs
       case "cypress-test-results":
         return (<CypressTestResultsTable persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
-      
+
       // Junit KPIs
       case "junit-test-results":
         return (<JunitTestResultsTable persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
-      
+
       // Xunit KPIs
       case "xunit-test-results":
         return (<XunitTestResultsTable persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
-      
+
       // Metricbeat KPIs
       case "metricbeat-kubernetes-cpu-usage":
         return (<MetricbeatCpuUsageByTimeLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
@@ -260,17 +247,15 @@ function ChartView({kpiConfiguration, dashboardData, index}) {
     }
   }
 
-  return (
-    <div className="p-2" style={{border: "1px solid rgba(0, 0, 0, 0.125)", minHeight: "365px"}}>
-      {getView()}
-    </div>
-  )
+  // TODO: Chart container should be inside each chart component
+  //  with loading passed in to allow chart to refresh while keeping existing data and also informing users it's updating.
+  return (getView());
 }
 
 ChartView.propTypes = {
-    kpiConfiguration: PropTypes.object,
-    dashboardData: PropTypes.object,
-    index: PropTypes.number
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  index: PropTypes.number
 }
 
 export default ChartView;

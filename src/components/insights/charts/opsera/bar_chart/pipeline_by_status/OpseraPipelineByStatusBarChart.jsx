@@ -1,144 +1,115 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
-import { AuthContext } from "../../../../../../contexts/AuthContext";
-import { axiosApiService } from "../../../../../../api/apiService";
-import InfoDialog from "components/common/status_notifications/info";
 import config from "./opseraPipelineByStatusBarChartConfigs";
 import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
-import LoadingDialog from "components/common/status_notifications/loading";
-import ErrorDialog from "components/common/status_notifications/error";
+import {AuthContext} from "contexts/AuthContext";
+import chartsActions from "components/insights/charts/charts-actions";
+import {getDateObjectFromKpiConfiguration} from "components/insights/charts/charts-helpers";
+import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 
-
-function OpseraPipelineByStatusBarChar( { persona, date  } ) {
-  const contextType = useContext(AuthContext);
-  const [error, setErrors] = useState(false);
+function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, dashboardData, index }) {
+  const {getAccessToken} = useContext(AuthContext);
+  const [error, setError] = useState(undefined);
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-
-  useEffect(() => {    
-    const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        await fetchData();
-      } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }        
-      }
-    };
-    runEffect();
-
-    return () => {
-      controller.abort();
-    };
+  useEffect(() => {
+    loadData();
   }, []);
 
-
-  const fetchData = async () => {
-    setLoading(true);
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";   
-    const postBody = {
-      data: [
-        {
-          "request": "opseraPipelineByStatus",
-          "metric": "bar"
-        }
-      ],
-      startDate: date.start, 
-      endDate: date.end
-    };
-
+  const loadData = async () => {
     try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].opseraPipelineByStatus : [];
+      setIsLoading(true);
+      const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
+      const response = await chartsActions.getChart("opseraPipelineByStatus", "bar", date, getAccessToken);
+      let dataObject = response?.data?.data[0]?.opseraPipelineByStatus?.data;
       setData(dataObject);
-      setLoading(false);
     }
-    catch (err) {
-      console.log(err.message);
-      setLoading(false);
-      setErrors(err.message);
+    catch (error) {
+      console.error(error);
+      setError(error);
+    }
+    finally {
+      setIsLoading(false);
     }
   };
 
-  
-  if(loading) {
-    return (<LoadingDialog size="sm" />);
-  } else if (error) {
-    return (<ErrorDialog  error={error} />);
-  // } else if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
-  //   return (<div style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}><ErrorDialog error="No Data is available for this chart at this time." /></div>);
-  } else {
-    return (
-      <>
-      
-        <ModalLogs header="Status by Pipeline" size="lg" jsonMessage={data ? data.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+  const getChartBody = () => {
+    if (data == null || data.length === 0) {
+      return null;
+    }
 
-        <div className="new-chart mb-3" style={{ height: "300px" }}>
-          {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
-            <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
-              <InfoDialog message="No Data is available for this chart at this time." />
+    return (
+      <div className="new-chart mb-3" style={{height: "300px"}}>
+        <ResponsiveBar
+          data={data}
+          keys={config.keys}
+          indexBy="pipeline_id"
+          onClick={() => setShowModal(true)}
+          margin={config.margin}
+          padding={0.3}
+          layout={"horizontal"}
+          colors={(bar) => bar.id === "Successful" ? "green" : "red"}
+          borderColor={{theme: "background"}}
+          colorBy="id"
+          defs={config.defs}
+          fill={config.fill}
+          axisTop={null}
+          axisRight={null}
+          axisBottom={config.axisBottom}
+          axisLeft={config.axisLeft}
+          enableLabel={false}
+          borderRadius={0}
+          labelSkipWidth={12}
+          labelSkipHeight={12}
+          labelTextColor="inherit:darker(2)"
+          animate={true}
+          motionStiffness={90}
+          borderWidth={2}
+          motionDamping={15}
+          legends={config.legends}
+          tooltip={({indexValue, color, value, id}) => (
+            <div>
+              <div><strong style={{color}}>Pipeline: </strong> {indexValue}</div>
+              <div><strong style={{color}}> {id} Builds: </strong> {value}</div>
             </div>
-            :
-            <ResponsiveBar
-              data={data ? data.data : []}
-              keys={config.keys}
-              indexBy="pipeline_id"
-              onClick={() => setShowModal(true)}
-              margin={config.margin}
-              padding={0.3}
-              layout={"horizontal"}
-              colors={(bar) => bar.id === "Successful" ? "green" : "red"}
-              borderColor={{ theme: "background" }}
-              colorBy="id"
-              defs={config.defs}
-              fill={config.fill}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              enableLabel={false}
-              borderRadius={0}
-              labelSkipWidth={12}
-              labelSkipHeight={12}
-              labelTextColor="inherit:darker(2)"
-              animate={true}
-              motionStiffness={90}
-              borderWidth={2}
-              motionDamping={15}
-              legends={config.legends}
-              tooltip={({ indexValue, color, value, id }) => (
-                <div>
-                  <strong style={{ color }}>
-                Pipeline: </strong> {indexValue}<br></br>
-                  <strong style={{ color }}> {id} Builds: </strong> {value}
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
-            />
-          }
-        </div>
-      </>
+          )}
+          theme={{
+            tooltip: {
+              container: {
+                fontSize: "16px",
+              },
+            },
+          }}
+        />
+      </div>
     );
   }
+
+  return (
+      <div>
+        <ChartContainer
+          kpiConfiguration={kpiConfiguration}
+          chart={getChartBody()}
+          dashboardData={dashboardData}
+          index={index}
+          error={error}
+          isLoading={isLoading}
+        />
+        {/*TODO: Might make more sense to create KpiChartModal and put inside ChartContainer instead, if it's not too different between charts*/}
+        <ModalLogs header="Status by Pipeline" size="lg" jsonMessage={data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+      </div>
+    );
 }
 
-OpseraPipelineByStatusBarChar.propTypes = {
-  data: PropTypes.object,
-  persona: PropTypes.string
+OpseraPipelineByStatusBarChart.propTypes = {
+  persona: PropTypes.string,
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  index: PropTypes.number
 };
 
-export default OpseraPipelineByStatusBarChar;
+export default OpseraPipelineByStatusBarChart;

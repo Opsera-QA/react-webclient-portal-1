@@ -64,7 +64,7 @@ function KpiSettingsForm({kpiConfiguration, dashboardData, index, setView}) {
     }
     
     return (
-        <EditorPanelContainer isLoading={false} showRequiredFieldsMessage={false}>
+        <EditorPanelContainer showRequiredFieldsMessage={false}>
         <DtoTextInput fieldName={"kpi_name"} dataObject={kpiSettings} setDataObject={setKpiSettings}/>
         {kpiSettings.getData("filters").map((filter, index) => 
             <div className="form-group m-2" key={index}> 
