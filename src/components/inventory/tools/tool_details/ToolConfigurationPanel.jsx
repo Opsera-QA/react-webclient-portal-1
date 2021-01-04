@@ -2,9 +2,8 @@ import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 
+import SfdcToolConfiguration from "components/inventory/tools/tool_details/tool_jobs/sfdc/SfdcToolConfiguration";
 import ArgoToolConfiguration from "./tool_jobs/argo/ArgoToolConfiguration";
-import SFDCToolConfiguration from "../forms/sfdc";
-import PipelineActions from "../../../workflow/pipeline-actions";
 import JenkinsToolConfiguration from "./tool_jobs/jenkins/JenkinsToolConfiguration";
 import NexusToolConfiguration from "./tool_jobs/nexus/NexusToolConfiguration";
 import toolsActions from "../tools-actions";
@@ -14,15 +13,16 @@ import OctopusToolConfiguration from "./tool_jobs/octopus/OctopusToolConfigurati
 import SlackToolConfiguration from "./tool_jobs/slack/SlackToolConfiguration";
 import SonarToolConfiguration from "./tool_jobs/sonar/SonarToolConfiguration";
 import SpinnakerToolConfiguration from "./tool_jobs/spinnaker/SpinnakerToolConfiguration";
-import AwsToolConfiguration from "./tool_jobs/aws/AwsToolConfiguration";
-import CypressToolConfiguration from "./tool_jobs/cypress/CypressToolConfiguration";
-import AnchoreIntegratorToolConfiguration from "./tool_jobs/anchore_integrator/AnchoreIntegratorToolConfiguration";
 import BitbucketToolConfiguration from "./tool_jobs/bitbucket/BitbucketToolConfiguration";
 import AnchoreScanToolConfiguration from "./tool_jobs/anchore_scan/AnchoreScanToolConfiguration";
 import GithubToolConfiguration from "./tool_jobs/github/GithubToolConfiguration";
-import GitlabToolConfiguration from "./tool_jobs/gitlab/GitlabToolConfiguration";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import pipelineActions from "components/workflow/pipeline-actions";
+import AnchoreIntegratorToolConfiguration
+  from "components/inventory/tools/tool_details/tool_jobs/anchore_integrator/AnchoreIntegratorToolConfiguration";
+import AwsToolConfiguration from "./tool_jobs/aws/AwsToolConfiguration";
+import CypressToolConfiguration from "./tool_jobs/cypress/CypressToolConfiguration";
 
 function ToolConfigurationPanel({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -41,7 +41,7 @@ function ToolConfigurationPanel({ toolData }) {
   };
 
   const saveToVault = async (postBody) => {
-    return await PipelineActions.saveToVault(postBody, getAccessToken);
+    return await pipelineActions.saveToVault(postBody, getAccessToken);
   };
 
   const getConfiguration = (toolIdentifier) => {
@@ -71,7 +71,7 @@ function ToolConfigurationPanel({ toolData }) {
       case "aws_account":
         return <AwsToolConfiguration toolData={toolData} />;
       case "sfdc-configurator":
-        return <SFDCToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
+        return <SfdcToolConfiguration toolData={toolData} />;
       case "nexus":
         return <NexusToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "teams":
