@@ -2,7 +2,6 @@ import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 
-import GitHubConfiguration from "../forms/github";
 import GitlabToolConfiguration from "../forms/gitlab";
 import ArgoToolConfiguration from "./tool_jobs/argo/ArgoToolConfiguration";
 import SFDCToolConfiguration from "../forms/sfdc";
@@ -17,10 +16,11 @@ import SlackToolConfiguration from "./tool_jobs/slack/SlackToolConfiguration";
 import SonarToolConfiguration from "./tool_jobs/sonar/SonarToolConfiguration";
 import SpinnakerToolConfiguration from "./tool_jobs/spinnaker/SpinnakerToolConfiguration";
 import AwsToolConfiguration from "./tool_jobs/aws/AwsToolConfiguration";
-import BitbucketToolConfiguration from "./tool_jobs/bitbucket/BitbucketToolConfiguration";
 import CypressToolConfiguration from "./tool_jobs/cypress/CypressToolConfiguration";
 import AnchoreIntegratorToolConfiguration from "./tool_jobs/anchore_integrator/AnchoreIntegratorToolConfiguration";
+import BitbucketToolConfiguration from "./tool_jobs/bitbucket/BitbucketToolConfiguration";
 import AnchoreScanToolConfiguration from "./tool_jobs/anchore_scan/AnchoreScanToolConfiguration";
+import GithubToolConfiguration from "./tool_jobs/github/GithubToolConfiguration";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
@@ -51,7 +51,7 @@ function ToolConfigurationPanel({ toolData }) {
       case "jira":
         return <JiraToolConfiguration toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "github":
-        return <GitHubConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
+        return <GithubToolConfiguration toolData={toolData} />;
       case "gitlab":
         return <GitlabToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "bitbucket":

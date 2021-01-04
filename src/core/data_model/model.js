@@ -89,6 +89,14 @@ export class Model {
     this.metaData.fields = newMetaDataFields;
   };
 
+  setMetaData = (metaData) => {
+    this.metaData = metaData;
+  };
+
+  setMetaDataFields = (newMetaDataFields) => {
+    this.metaData.fields = newMetaDataFields;
+  };
+
   setTextData = (fieldName, newValue) => {
     const field = this.getFieldById(fieldName);
     if (field) {
