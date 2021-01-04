@@ -1,101 +1,56 @@
 import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
-import {Form, Button, Row} from "react-bootstrap";
-import SaveButton from "../../../../../common/buttons/SaveButton";
-import Model from "../../../../../../core/data_model/model";
-import LoadingDialog from "../../../../../common/status_notifications/loading";
-import DtoTextInput from "../../../../../common/input/dto_input/dto-text-input";
-import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
-import jiraConnectionMetadata from "./jira-connection-metadata";
-import DetailPanelContainer from "../../../../../common/panels/detail_panel_container/DetailPanelContainer";
+import {Row} from "react-bootstrap";
 import Col from "react-bootstrap/Col";
-import {getFormValidationErrorDialog} from "components/common/toasts/toasts";
-import TestToolConnectionButton from "../../../../../common/buttons/connection/TestToolConnectionButton";
 import InstallJiraAppButton from "./InstallJiraAppButton";
-import modelHelpers from "../../../../../common/model/modelHelpers";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import VaultTextInput from "components/common/inputs/text/VaultTextInput";
+import ToolConfigurationEditorPanelContainer
+  from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+import toolsActions from "components/inventory/tools/tools-actions";
+import {AuthContext} from "contexts/AuthContext";
+import modelHelpers from "components/common/model/modelHelpers";
+import jiraConnectionMetadata from "components/inventory/tools/tool_details/tool_jobs/jira/jira-connection-metadata";
 
-
-function JiraToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
-  const toastContext = useContext(DialogToastContext);
-  const [isLoading, setIsLoading] = useState(false);
+function JiraToolConfiguration({ toolData }) {
+  const { getAccessToken } = useContext(AuthContext);
   const [jiraConfigurationDto, setJiraConfigurationDto] = useState(undefined);
-  const [showToast, setShowToast] = useState(false);
-  const [toast, setToast] = useState({});
 
   useEffect(() => {
     loadData();
   }, [toolData]);
 
   const loadData = async () => {
-    setJiraConfigurationDto(modelHelpers.getToolConfigurationModel(toolData["configuration"], jiraConnectionMetadata));
+    setJiraConfigurationDto(modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), jiraConnectionMetadata));
   };
 
-  const saveJiraConfig = async () => {
-    if (jiraConfigurationDto.isModelValid()) {
-      let newConfiguration = {...jiraConfigurationDto.getPersistData()};
-
-      if (jiraConfigurationDto.isChanged("vaultSecretKey")) {
-        newConfiguration.vaultSecretKey = await saveToVault(toolData._id, toolData.tool_identifier, "secretKey", "Vault Secured Key", jiraConfigurationDto.getData("vaultSecretKey"));
-      }
-
-      const item = {
-        configuration: newConfiguration
-      };
-      await fnSaveChanges(item);
-    }
-    else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
-    }
+  const saveJiraToolConfiguration = async () => {
+    let newConfiguration = jiraConfigurationDto.getPersistData();
+    const vaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}-secretKey`;
+    newConfiguration.vaultSecretKey = await toolsActions.saveKeyPasswordToVault(jiraConfigurationDto, "vaultSecretKey", newConfiguration.vaultSecretKey, vaultKey, getAccessToken);
+    const item = { configuration: newConfiguration };
+    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };
-
-  const saveToVault = async (toolId, toolIdentifier, key, name, value) => {
-    const keyName = `${toolId}-${toolIdentifier}-${key}`;
-    const body = {
-      "key": keyName,
-      "value": value
-    };
-    const response = await fnSaveToVault(body);
-    if (response.status === 200 ) {
-      return { name: name, vaultKey: keyName };
-    } else {
-      return "";
-    }
-  };
-
-  if (jiraConfigurationDto == null) {
-    return <LoadingDialog size="sm" />;
-  }
 
   return (
-    <DetailPanelContainer>
-      {showToast && toast}
-      <div className="h5">Jira Credentials</div>
-        {isLoading ? <LoadingDialog size={"sm"} message={"Loading JIRA Configuration Details"} /> :
-        <div>
-          <Row>
-            <Col sm={6}><DtoTextInput dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"toolURL"} /></Col>
-            <Col sm={6}><DtoTextInput dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"jiraPort"} /></Col>
-            <Col sm={12}><DtoTextInput dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"userName"} /></Col>
-            <Col sm={12}><DtoTextInput type={"password"} dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"vaultSecretKey"} /></Col>
-          </Row>
-          <Row>
-            <div className="ml-auto px-2 d-flex">
-              <div className="py-1">
-                <InstallJiraAppButton toolData={toolData} disable={jiraConfigurationDto.isNew()} />
-              </div>
-              <div className="py-1">
-                {/*<TestToolConnectionButton recordData={toolData} toolName={"Jira"}/>*/}
-              </div>
-              <div>
-                <SaveButton setRecordDto={setJiraConfigurationDto} modal={false} recordDto={jiraConfigurationDto} createRecord={saveJiraConfig} updateRecord={saveJiraConfig} />
-              </div>
-            </div>
-          </Row>
-        </div>
-        }
-    </DetailPanelContainer>
+    <ToolConfigurationEditorPanelContainer
+      recordDto={jiraConfigurationDto}
+      persistRecord={saveJiraToolConfiguration}
+      toolData={toolData}
+      // toolConnectionCheckName={"Jira"}
+    >
+      <Row>
+        <Col sm={12}>
+          <TextInputBase dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"toolURL"} />
+          <TextInputBase dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"jiraPort"} />
+          <TextInputBase dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"userName"} />
+          <VaultTextInput dataObject={jiraConfigurationDto} setDataObject={setJiraConfigurationDto} fieldName={"vaultSecretKey"} />
+        </Col>
+        <Col sm={12} className="mt-2">
+          <InstallJiraAppButton toolData={toolData} disable={jiraConfigurationDto == null || jiraConfigurationDto.isNew()} />
+        </Col>
+      </Row>
+    </ToolConfigurationEditorPanelContainer>
   );
 }
 

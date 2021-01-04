@@ -2,11 +2,9 @@ import React, {useContext, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/pro-solid-svg-icons";
-import {faPlug} from "@fortawesome/pro-solid-svg-icons/faPlug";
-import {faExclamationTriangle} from "@fortawesome/pro-solid-svg-icons/faExclamationTriangle";
-import {AuthContext} from "../../../../../../contexts/AuthContext";
-import toolsActions from "../../../tools-actions";
+import {faExclamationTriangle, faPlug, faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {AuthContext} from "contexts/AuthContext";
+import toolsActions from "components/inventory/tools/tools-actions";
 
 function InstallJiraAppButton({ toolData, disable }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -19,9 +17,9 @@ function InstallJiraAppButton({ toolData, disable }) {
       setIsTesting(true);
       setSuccessfulConnection(false);
       setFailedConnection(false);
-      let response = await toolsActions.installJiraApp(toolData["_id"], getAccessToken);
+      let response = await toolsActions.installJiraApp(toolData.getData("_id"), getAccessToken);
 
-      if (response && response.data != null && response.data.status === 200) {
+      if (response?.data?.status === 200) {
         setSuccessfulConnection(true);
       }
       else {
@@ -65,7 +63,7 @@ function InstallJiraAppButton({ toolData, disable }) {
   };
 
   return (
-    <div className="d-flex px-2">
+    <div className="px-2">
       <Button size="sm" variant={getVariant()} disabled={isTesting || disable} onClick={() => testConnection()}>
         {getLabel()}
       </Button>

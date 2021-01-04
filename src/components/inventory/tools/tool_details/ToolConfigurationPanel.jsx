@@ -23,6 +23,7 @@ import AnchoreIntegratorToolConfiguration
   from "components/inventory/tools/tool_details/tool_jobs/anchore_integrator/AnchoreIntegratorToolConfiguration";
 import AwsToolConfiguration from "./tool_jobs/aws/AwsToolConfiguration";
 import CypressToolConfiguration from "./tool_jobs/cypress/CypressToolConfiguration";
+import GitlabToolConfiguration from "components/inventory/tools/tool_details/tool_jobs/gitlab/GitlabToolConfiguration";
 
 function ToolConfigurationPanel({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -49,7 +50,7 @@ function ToolConfigurationPanel({ toolData }) {
       case "jenkins":
         return <JenkinsToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
       case "jira":
-        return <JiraToolConfiguration toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
+        return <JiraToolConfiguration toolData={toolData} />;
       case "github":
         return <GithubToolConfiguration toolData={toolData} />;
       case "gitlab":
