@@ -76,7 +76,7 @@ function ToolConfigurationPanel({ toolData }) {
       case "nexus":
         return <NexusToolConfiguration toolData={toolData} />;
       case "teams":
-        return <TeamsToolConfiguration toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
+        return <TeamsToolConfiguration toolData={toolData} />;
       case "octopus":
         return <OctopusToolConfiguration toolData={toolData} />;
       case "slack":
