@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import DtoTextInput from "components/common/input/dto_input/dto-text-input";
@@ -7,8 +7,11 @@ import ToolConfigurationEditorPanelContainer
 import Row from "react-bootstrap/Row";
 import modelHelpers from "components/common/model/modelHelpers";
 import spinnakerConnectionMetadata from "./spinnaker-connection-metadata";
+import toolsActions from "components/inventory/tools/tools-actions";
+import {AuthContext} from "contexts/AuthContext";
 
-function SpinnakerToolConfiguration({ toolData, saveToolConfiguration }) {
+function SpinnakerToolConfiguration({ toolData }) {
+  const { getAccessToken } = useContext(AuthContext);
   const [spinnakerConfigurationDto, setSpinnakerConfigurationDto] = useState(undefined);
 
   useEffect(() => {
@@ -21,9 +24,8 @@ function SpinnakerToolConfiguration({ toolData, saveToolConfiguration }) {
 
   const saveSpinnakerToolConfiguration = async () => {
     let newConfiguration = spinnakerConfigurationDto.getPersistData();
-    const item = {configuration: newConfiguration};
-    // TODO: Wire up actions method instead
-    return await saveToolConfiguration(item);
+    const item = { configuration: newConfiguration };
+    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };
 
   return (
@@ -44,7 +46,6 @@ function SpinnakerToolConfiguration({ toolData, saveToolConfiguration }) {
 
 SpinnakerToolConfiguration.propTypes = {
   toolData: PropTypes.object,
-  saveToolConfiguration: PropTypes.func
 };
 
 export default SpinnakerToolConfiguration;

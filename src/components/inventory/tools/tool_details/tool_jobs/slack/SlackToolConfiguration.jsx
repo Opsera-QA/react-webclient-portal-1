@@ -1,12 +1,12 @@
 import React, {useEffect, useContext, useState} from "react";
-import { AuthContext } from "../../../../../../contexts/AuthContext";
-import LoadingDialog from "../../../../../common/status_notifications/loading";
-import apiConnectorActions from "../../../../../api_connector/api-connector-actions";
-import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import slackConnectorActions from "./slack-actions";
-import ErrorDialog from "../../../../../common/status_notifications/error";
 import PropTypes from "prop-types";
 import {Link} from "react-router-dom";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import LoadingDialog from "components/common/status_notifications/loading";
+import ErrorDialog from "components/common/status_notifications/error";
+import apiConnectorActions from "components/api_connector/api-connector-actions";
 
 function SlackToolConfiguration({ toolData }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -59,9 +59,9 @@ function SlackToolConfiguration({ toolData }) {
   };
 
   const getSlackUrl = async () => {
-    let slackResponse = await slackConnectorActions.getSlackUrl(toolData["_id"], getAccessToken);
+    let slackResponse = await slackConnectorActions.getSlackUrl(toolData.getData("_id"), getAccessToken);
 
-    if (slackResponse.data != null && slackResponse.data.status === 200) {
+    if (slackResponse?.data != null && slackResponse?.data?.status === 200) {
       setSlackUrl(slackResponse.data.message);
     }
   };

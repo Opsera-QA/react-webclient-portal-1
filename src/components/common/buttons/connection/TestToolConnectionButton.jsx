@@ -2,15 +2,13 @@ import React, {useContext, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/pro-solid-svg-icons";
-import {faPlug} from "@fortawesome/pro-solid-svg-icons/faPlug";
+import {faSpinner, faPlug} from "@fortawesome/pro-light-svg-icons";
 import {faExclamationTriangle} from "@fortawesome/pro-solid-svg-icons/faExclamationTriangle";
-import toolsActions from "../../../inventory/tools/tools-actions";
-import {AuthContext} from "../../../../contexts/AuthContext";
-import TooltipWrapper from "../../tooltip/tooltipWrapper";
+import {AuthContext} from "contexts/AuthContext";
+import toolsActions from "components/inventory/tools/tools-actions";
+import TooltipWrapper from "components/common/tooltip/tooltipWrapper";
 
-// TODO: Once all tool connection forms use the Dto components, remove recordData
-function TestToolConnectionButton({ recordDto, recordData, disable, toolName }) {
+function TestToolConnectionButton({ toolDataDto, disable, toolName }) {
   const { getAccessToken } = useContext(AuthContext);
   const [isTesting, setIsTesting] = useState(false);
   const [successfulConnection, setSuccessfulConnection] = useState(false);
@@ -23,11 +21,8 @@ function TestToolConnectionButton({ recordDto, recordData, disable, toolName }) 
       setFailedConnection(false);
       let response;
 
-      if (recordDto != null) {
-        response = await toolsActions.checkToolConnectivity(recordDto.getData("_id"), toolName, getAccessToken);
-      }
-      else if (recordData != null) {
-        response = await toolsActions.checkToolConnectivity(recordData["_id"], toolName, getAccessToken);
+      if (toolDataDto != null) {
+        response = await toolsActions.checkToolConnectivity(toolDataDto.getData("_id"), toolName, getAccessToken);
       }
 
       if (response && response.data != null && response.data.status === 200) {
@@ -91,8 +86,7 @@ function TestToolConnectionButton({ recordDto, recordData, disable, toolName }) 
 }
 
 TestToolConnectionButton.propTypes = {
-  recordDto: PropTypes.object,
-  recordData: PropTypes.object,
+  toolDataDto: PropTypes.object,
   disable: PropTypes.bool,
   toolName: PropTypes.string
 };
