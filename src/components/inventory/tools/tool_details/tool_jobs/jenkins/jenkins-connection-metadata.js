@@ -18,6 +18,43 @@ const jenkinsConnectionMetadata = {
     {
       label: "Jenkins Token",
       id: "jAuthToken",
+      isRequired: true
+    },
+    {
+      label: "Proxy Enabled?",
+      id: "proxyEnable",
+    },
+    {
+      label: "Proxy Username",
+      id: "proxyUserName",
+    },
+    {
+      label: "Proxy Password",
+      id: "proxyPassword",
+    },
+    {
+      label: "Jenkins Password",
+      id: "jPassword",
+    },
+],
+  fieldsAlt: [
+    {
+      label: "Jenkins Container URL",
+      id: "jenkinsUrl",
+      isRequired: true
+    },
+    {
+      label: "Jenkins Port",
+      id: "jenkinsPort",
+    },
+    {
+      label: "Jenkins User ID",
+      id: "jUserId",
+      isRequired: true
+    },
+    {
+      label: "Jenkins Token",
+      id: "jAuthToken",
       // isRequired: true
     },
     {
@@ -27,20 +64,20 @@ const jenkinsConnectionMetadata = {
     {
       label: "Proxy Username",
       id: "proxyUserName",
-      // isRequired: true
+      isRequired: true
     },
     {
       label: "Proxy Password",
       id: "proxyPassword",
-      // isRequired: true
+      isRequired: true
     },
     {
       label: "Jenkins Password",
       id: "jPassword",
-      // isRequired: true
+      isRequired: true
     },
-],
-  newModelBase: {
+  ],
+  newObjectFields: {
     jenkinsUrl: "",
     jenkinsPort: "",
     jUserId: "",
