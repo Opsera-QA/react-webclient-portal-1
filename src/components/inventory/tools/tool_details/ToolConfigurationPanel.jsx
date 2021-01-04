@@ -62,7 +62,7 @@ function ToolConfigurationPanel({ toolData }) {
       case "cypress":
         return <CypressToolConfiguration toolData={toolData} />;
       case "argo":
-        return <ArgoToolConfiguration toolId={toolData._id} toolData={toolData.data} fnSaveChanges={saveToolConfiguration} fnSaveToVault={saveToVault} />;
+        return <ArgoToolConfiguration toolData={toolData} />;
       case "anchore-scan":
         return <AnchoreScanToolConfiguration toolData={toolData} />;
       case "anchore-integrator":
