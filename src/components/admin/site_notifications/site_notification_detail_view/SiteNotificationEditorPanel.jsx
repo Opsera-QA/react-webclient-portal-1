@@ -12,7 +12,6 @@ import SiteNotificationTypeInput
   from "../../../common/list_of_values_input/admin/site_notifications/SiteNotificationTypeInput";
 import SiteNotificationViewInput
   from "../../../common/list_of_values_input/admin/site_notifications/SiteNotificationViewInput";
-import DateTimeInput from "../../../common/inputs/DateTimeInput";
 
 function SiteNotificationEditorPanel({ siteNotificationData, setSiteNotificationData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
