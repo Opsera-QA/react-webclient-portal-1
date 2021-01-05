@@ -1,34 +1,36 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import InputLabel from "../form_fields/input/InputLabel";
-import InfoText from "../form_fields/input/InfoText";
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
+import Moment from "moment";
+import momentLocalizer from "react-widgets-moment";
+import InputContainer from "components/common/inputs/InputContainer";
+import InputLabel from "components/common/fields/input/InputLabel";
+import InfoText from "components/common/fields/input/InfoText";
 
 function DateTimeInput({ fieldName, dataObject, setDataObject, disabled }) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
+  Moment.locale("en");
+  momentLocalizer();
 
   const validateAndSetData = (value) => {
     let newDataObject = dataObject;
-    value = value.toLowerCase();
     newDataObject.setData(fieldName, value);
     setErrorMessage(newDataObject.getFieldError(fieldName));
     setDataObject({...newDataObject});
   };
 
   return (
-    <div className="form-group m-2">
+    <InputContainer>
       <InputLabel field={field}/>
       <DateTimePicker
         disabled={disabled}
-        value={dataObject.getData(fieldName)}
-        onChange={(event) => validateAndSetData(event.target.value)}
-        className="form-control"
+        value={new Date(dataObject.getData(fieldName))}
+        onChange={(value) => validateAndSetData(value)}
         defaultValue={new Date()}
-        step={30}
       />
       <InfoText field={field} errorMessage={errorMessage}/>
-    </div>
+    </InputContainer>
   );
 }
 
