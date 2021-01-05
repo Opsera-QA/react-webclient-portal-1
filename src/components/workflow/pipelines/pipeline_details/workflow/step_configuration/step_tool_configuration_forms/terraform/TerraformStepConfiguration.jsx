@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { OverlayTrigger, Popover, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import TerraformStepFormMetadata from "./terraform-stepForm-metadata";
 import Model from "core/data_model/model";
@@ -17,6 +16,7 @@ import JSONInput from "react-json-editor-ajrm";
 import locale    from "react-json-editor-ajrm/locale/en";
 import CloseButton from "../../../../../../../common/buttons/CloseButton";
 import pipelineActions from "../../../../../../pipeline-actions";
+import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
 
 
 const SCM_TOOL_LIST = [
@@ -318,8 +318,8 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             )}
           >
             <FontAwesomeIcon
-              icon={faEllipsisH}
-              className="fa-pull-right pointer pr-1"
+              icon={faInfoCircle}
+              className="fa-pull-right pointer pr-2"
               onClick={() => document.body.click()}
             />
           </OverlayTrigger>
@@ -401,8 +401,8 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             }
           >
             <FontAwesomeIcon
-              icon={faEllipsisH}
-              className="fa-pull-right pointer pr-1"
+              icon={faInfoCircle}
+              className="fa-pull-right pointer pr-2"
               onClick={() => document.body.click()}
             />
           </OverlayTrigger>
