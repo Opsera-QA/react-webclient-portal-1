@@ -34,6 +34,17 @@ const SCM_TOOL_LIST = [
   },
 ];
 
+const JOB_TYPES = [
+  {
+    name: "Execute Script",
+    value: "execute",
+  },
+  {
+    name: "Delete",
+    value: "delete",
+  }
+];
+
 function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -52,6 +63,8 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
   const [jsonEditor, setJsonEditor] = useState({});
   const [workspacesList, setWorkspacesList] = useState([]);
   const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
+  const [awsList, setAwsList] = useState([]);
+  const [isAwsSearching, setIsAwsSearching] = useState(false);
 
 
   useEffect(() => {
@@ -63,6 +76,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
     let { configuration, threshold } = step;
     if (typeof configuration !== "undefined") {
       setTerraformStepConfigurationDataDto(new Model(configuration, TerraformStepFormMetadata, false));
+      await fetchAWSDetails()
       await fetchSCMDetails(configuration);
       await searchRepositories(configuration.type, configuration.gitToolId, configuration.bitbucketWorkspace);
       await searchBranches(configuration.type, configuration.gitToolId, configuration.gitRepositoryID, configuration.bitbucketWorkspace);
@@ -71,6 +85,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
         setThresholdValue(threshold.value);
       }
     } else {
+      await fetchAWSDetails()
       setTerraformStepConfigurationDataDto(
         new Model({ ...TerraformStepFormMetadata.newModelBase }, TerraformStepFormMetadata, false)
       );
@@ -93,6 +108,18 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       setSCMList(filteredList);
       setIsGitSearching(false);
     }
+  };
+
+  const fetchAWSDetails = async () => {
+    setIsAwsSearching(true);
+
+    let results = await getToolsList("aws_account");
+
+    const filteredList = results.filter((el) => el.configuration !== undefined);
+    if (filteredList) {
+      setAwsList(filteredList);
+    }
+    setIsAwsSearching(false);
   };
 
   const formatOptions = (options) => {
@@ -273,6 +300,12 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       );
       return;
     }
+    if (fieldName === "awsToolConfigId") {
+      let newDataObject = terraformStepConfigurationDto;
+      newDataObject.setData("awsToolConfigId", value.id);
+      setTerraformStepConfigurationDataDto({ ...newDataObject });
+      return;
+    }
   };
 
   const handleJsonInputUpdate = (e) => {
@@ -298,6 +331,15 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
     <>
       {terraformStepConfigurationDto && (
         <>
+          <DtoSelectInput
+            setDataObject={setTerraformStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"value"}
+            dataObject={terraformStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={JOB_TYPES ? JOB_TYPES : []}
+            fieldName={"toolActionType"}
+          />
           <DtoSelectInput
             setDataObject={setTerraformStepConfigurationDataDto}
             setDataFunction={handleDTOChange}
@@ -381,6 +423,41 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             fieldName={"gitFilePath"}
             disabled={
               terraformStepConfigurationDto && terraformStepConfigurationDto.getData("defaultBranch").length === 0
+            }
+          />
+          <DtoSelectInput
+            setDataObject={setTerraformStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"id"}
+            dataObject={terraformStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={awsList ? awsList : []}
+            fieldName={"awsToolConfigId"}
+            busy={isAwsSearching}
+            disabled={isAwsSearching || terraformStepConfigurationDto && terraformStepConfigurationDto.getData("defaultBranch").length === 0}
+          />
+          <DtoTextInput
+            setDataObject={setTerraformStepConfigurationDataDto}
+            dataObject={terraformStepConfigurationDto}
+            fieldName={"accessKeyParamName"}
+            disabled={
+              terraformStepConfigurationDto && terraformStepConfigurationDto.getData("awsToolConfigId") && terraformStepConfigurationDto.getData("awsToolConfigId").length === 0
+            }
+          />
+          <DtoTextInput
+            setDataObject={setTerraformStepConfigurationDataDto}
+            dataObject={terraformStepConfigurationDto}
+            fieldName={"secrectKeyParamName"}
+            disabled={
+              terraformStepConfigurationDto && terraformStepConfigurationDto.getData("awsToolConfigId") && terraformStepConfigurationDto.getData("awsToolConfigId").length === 0
+            }
+          />
+          <DtoTextInput
+            setDataObject={setTerraformStepConfigurationDataDto}
+            dataObject={terraformStepConfigurationDto}
+            fieldName={"regionParamName"}
+            disabled={
+              terraformStepConfigurationDto && terraformStepConfigurationDto.getData("awsToolConfigId") && terraformStepConfigurationDto.getData("awsToolConfigId").length === 0
             }
           />
           <OverlayTrigger
