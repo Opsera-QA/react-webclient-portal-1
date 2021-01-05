@@ -1,84 +1,59 @@
 import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import {Row} from "react-bootstrap";
-import SaveButton from "../../../../../common/buttons/SaveButton";
-import LoadingDialog from "../../../../../common/status_notifications/loading";
-import DtoTextInput from "../../../../../common/input/dto_input/dto-text-input";
-import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
-import DetailPanelContainer from "../../../../../common/panels/detail_panel_container/DetailPanelContainer";
 import Col from "react-bootstrap/Col";
 import teamsConnectionMetadata from "./teams-connection-metadata";
-import modelHelpers from "../../../../../common/model/modelHelpers";
+import modelHelpers from "components/common/model/modelHelpers";
+import toolsActions from "components/inventory/tools/tools-actions";
+import {AuthContext} from "contexts/AuthContext";
+import ToolConfigurationEditorPanelContainer
+  from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 
-function TeamsToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
-  const toastContext = useContext(DialogToastContext);
-  const [isLoading, setIsLoading] = useState(false);
+function TeamsToolConfiguration({ toolData }) {
+  const { getAccessToken } = useContext(AuthContext);
   const [teamsConfigurationDto, setTeamsConfigurationDto] = useState(undefined);
 
   useEffect(() => {
     loadData();
-  }, [toolData]);
+  }, []);
 
   const loadData = async () => {
-    setTeamsConfigurationDto(modelHelpers.getToolConfigurationModel(toolData["configuration"], teamsConnectionMetadata));
+    setTeamsConfigurationDto(modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), teamsConnectionMetadata));
   };
 
-  const saveTeamsConfiguration = async () => {
-      let newConfiguration = {...teamsConfigurationDto.getPersistData()};
-      // TODO: Implement if needed
-      if (teamsConfigurationDto.isChanged("webhookUrl")) {
-        newConfiguration.webhookUrl = await saveToVault(toolData._id, toolData.tool_identifier, "secretKey", "webhookUrl", teamsConfigurationDto.getData("webhookUrl"));
-      }
-      const item = {
-        configuration: newConfiguration
-      };
-      await fnSaveChanges(item);
-  };
+  const saveTeamsToolConfiguration = async () => {
+    let newConfiguration = teamsConfigurationDto.getPersistData();
 
-  const saveToVault = async (toolId, toolIdentifier, key, name, value) => {
-    // key as only toolID as requested by purushoth!
-    const keyName = `${toolId}`;
-    const body = {
-      "key": keyName,
-      "value": value
-    };
-    const response = await fnSaveToVault(body);
-    if (response.status === 200 ) {
-      return { name: name, vaultKey: keyName };
-    } else {
-      return "";
-    }
+    // key as only toolID as requested by Purushoth!
+    const vaultKey = toolData.getData("_id");
+    newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(teamsConfigurationDto,"webhookUrl", newConfiguration.webhookUrl, vaultKey, getAccessToken);
+    const item = { configuration: newConfiguration };
+    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };
 
   if (teamsConfigurationDto == null) {
-    return <LoadingDialog size="sm" />;
+    return <></>;
   }
 
   return (
-    <DetailPanelContainer>
-      <div className="h5">Teams Credentials</div>
-        {isLoading ? <LoadingDialog size={"sm"} message={"Loading Teams Configuration Details"} /> :
-        <div>
-          <Row>
-            <Col sm={12}><DtoTextInput type={"password"} dataObject={teamsConfigurationDto} setDataObject={setTeamsConfigurationDto} fieldName={"webhookUrl"} /></Col>
-          </Row>
-          <Row>
-            <div className="ml-auto pr-3 pt-2">
-              <SaveButton modal={false}
-                          recordDto={teamsConfigurationDto} setRecordDto={setTeamsConfigurationDto}
-                          createRecord={saveTeamsConfiguration} updateRecord={saveTeamsConfiguration} />
-            </div>
-          </Row>
-        </div>
-        }
-    </DetailPanelContainer>
+    <ToolConfigurationEditorPanelContainer
+      recordDto={teamsConfigurationDto}
+      persistRecord={saveTeamsToolConfiguration}
+      toolData={toolData}
+      // toolConnectionCheckName={"Teams"}
+    >
+      <Row>
+        <Col sm={12}>
+          <VaultTextInput dataObject={teamsConfigurationDto} setDataObject={setTeamsConfigurationDto} fieldName={"webhookUrl"} />
+        </Col>
+      </Row>
+    </ToolConfigurationEditorPanelContainer>
   );
 }
 
 TeamsToolConfiguration.propTypes = {
   toolData: PropTypes.object,
-  fnSaveChanges: PropTypes.func,
-  fnSaveToVault: PropTypes.func
 };
 
 export default TeamsToolConfiguration;

@@ -54,3 +54,4 @@ AnchoreIntegratorToolConfiguration.propTypes = {
 };
 
 export default AnchoreIntegratorToolConfiguration;
+

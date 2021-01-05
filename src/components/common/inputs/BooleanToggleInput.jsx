@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
-import InfoText from "../form_fields/input/InfoText";
-import InputLabel from "../form_fields/input/InputLabel";
+import InputContainer from "components/common/inputs/InputContainer";
+import InfoText from "components/common/fields/input/InfoText";
 
-// TODO: Move into /boolean in a separate request
+// TODO: Move into /boolean in a separate request. Is this component necessary?
 function BooleanToggleInput({ fieldName, dataObject, setDataObject, disabled }) {
     const [field] = useState(dataObject.getFieldById(fieldName));
 
@@ -15,21 +15,19 @@ function BooleanToggleInput({ fieldName, dataObject, setDataObject, disabled }) 
   };
 
   return (
-    <div className="m-2">
-      <div className="d-flex justify-content-between">
-        <InputLabel field={field} />
-        <Form.Check
-          type="switch"
-          id={field.id}
-          checked={!!dataObject.getData(fieldName)}
-          disabled={disabled}
-          label={dataObject.getData(fieldName) ? "True" : "False"}
-          onChange={() => {validateAndSetData(!dataObject.getData(fieldName));
-          }}
-        />
-      </div>
-      <InfoText field={field} errorMessage={null} />
-    </div>
+    <InputContainer>
+      <Form.Check
+        type="switch"
+        id={field.id}
+        checked={!!dataObject.getData(fieldName)}
+        disabled={disabled}
+        label={field.label}
+        onChange={() => {
+          validateAndSetData(!dataObject.getData(fieldName));
+        }}
+      />
+      <InfoText field={field} errorMessage={null}/>
+    </InputContainer>
   );
 }
 

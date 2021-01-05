@@ -1,5 +1,5 @@
 const argoConnectionMetadata = {
-  type: "argo Tool Configuration",
+  type: "Argo Tool Configuration",
   fields: [
   {
     label: "Argo Container URL",
@@ -17,7 +17,7 @@ const argoConnectionMetadata = {
       isRequired: true
     }
 ],
-  newModelBase: {
+  newObjectFields: {
     toolURL: "",
     userName: "",
     accountPassword: "",

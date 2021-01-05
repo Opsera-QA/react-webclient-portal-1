@@ -129,7 +129,8 @@ toolsActions.installJiraApp = async (toolId, getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-// TODO: Should this be in a different area considering it's used in more places than just tools?
+// TODO: Should this be in a different area considering it's used in more places than just tools? Rename to three part vault key
+// Note: This is used for three part vault keys (tool ID, identifier, and key)
 toolsActions.savePasswordToVault = async (toolData, toolConfigurationData, fieldName, value, getAccessToken) => {
   if (toolConfigurationData.isChanged(fieldName) && value != null && typeof(value) === "string") {
     const toolId = toolData.getData("_id");

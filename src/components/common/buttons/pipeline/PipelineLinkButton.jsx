@@ -13,8 +13,9 @@ function PipelineLinkButton({pipelineId, loadPipelineInNewWindow}) {
     if (loadPipelineInNewWindow) {
       window.open(`/workflow/details/${pipelineId}`);
     }
-
-    history.push(`/workflow/details/${pipelineId}`);
+    else {
+      history.push(`/workflow/details/${pipelineId}`);
+    }
   };
 
   return (
@@ -28,6 +29,5 @@ PipelineLinkButton.propTypes = {
   pipelineId: PropTypes.string,
   loadPipelineInNewWindow: PropTypes.bool
 };
-
 
 export default PipelineLinkButton;

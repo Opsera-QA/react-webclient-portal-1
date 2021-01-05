@@ -10,7 +10,7 @@ export const DataState = {
 export class Model {
 
   constructor(data, metaData, newModel) {
-    this.metaData = metaData;
+    this.metaData = {...metaData};
     this.data = {...this.getNewObjectFields(), ...data};
     this.newModel = newModel;
     this.dataState = DataState.LOADED;
@@ -79,6 +79,30 @@ export class Model {
   setData = (fieldName, newValue) => {
       this.propertyChange(fieldName, newValue, this.getData(fieldName));
       this.data[fieldName] = newValue;
+  };
+
+  setMetaData = (metaData) => {
+    this.metaData = metaData;
+  };
+
+  setMetaDataFields = (newMetaDataFields) => {
+    this.metaData.fields = newMetaDataFields;
+  };
+
+  setMetaData = (metaData) => {
+    this.metaData = metaData;
+  };
+
+  setMetaDataFields = (newMetaDataFields) => {
+    this.metaData.fields = newMetaDataFields;
+  };
+
+  setMetaData = (metaData) => {
+    this.metaData = metaData;
+  };
+
+  setMetaDataFields = (newMetaDataFields) => {
+    this.metaData.fields = newMetaDataFields;
   };
 
   setTextData = (fieldName, newValue) => {

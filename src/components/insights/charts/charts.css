@@ -26,8 +26,8 @@
   background: white;
   /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); */
   transition: 0.3s;
-  border: 0px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0rem;
+  border: 0 solid rgba(0, 0, 0, 0.125);
+  border-radius: 0;
   padding-top: 20px;
 }
 

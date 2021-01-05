@@ -1,91 +1,55 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
-import {Form, Row} from "react-bootstrap";
-import SaveButton from "components/common/buttons/SaveButton";
+import {Row} from "react-bootstrap";
 import argoConnectionMetadata from "./argo-connection-metadata";
-import LoadingDialog from "components/common/status_notifications/loading";
 import Col from "react-bootstrap/Col";
-import DtoTextInput from "components/common/input/dto_input/dto-text-input";
-import TestToolConnectionButton from "../../../../../common/buttons/connection/TestToolConnectionButton";
-import modelHelpers from "../../../../../common/model/modelHelpers";
+import toolsActions from "components/inventory/tools/tools-actions";
+import modelHelpers from "components/common/model/modelHelpers";
+import {AuthContext} from "contexts/AuthContext";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import VaultTextInput from "components/common/inputs/text/VaultTextInput";
+import ToolConfigurationEditorPanelContainer
+  from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 
-function ArgoToolConfiguration({ toolData, toolId, fnSaveChanges, fnSaveToVault }) {
-  const [configurationData, setConfigurationData] = useState(undefined);
+function ArgoToolConfiguration({ toolData }) {
+  const { getAccessToken } = useContext(AuthContext);
+  const [argoConfigurationDto, setArgoConfigurationDto] = useState(undefined);
 
   useEffect(() => {
     loadData();
-  }, [toolData]);
+  }, []);
 
   const loadData = async () => {
-    setConfigurationData(modelHelpers.getToolConfigurationModel(toolData["configuration"], argoConnectionMetadata));
+    setArgoConfigurationDto(modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), argoConnectionMetadata));
   };
 
-  const callbackFunction = async () => {
-    let newConfiguration = {...configurationData.getPersistData()};
-
-    if (configurationData.isChanged("accountPassword")) {
-      newConfiguration.accountPassword = await saveToVault(toolId, toolData.tool_identifier, "accountPassword", "Vault Secured Key", configurationData.getData("accountPassword"));
-    }
-
-    const item = {
-      configuration: newConfiguration
-    };
-    await fnSaveChanges(item);
+  const saveArgoToolConfiguration = async () => {
+    let newConfiguration = argoConfigurationDto.getPersistData();
+    newConfiguration.accountPassword = await toolsActions.savePasswordToVault(toolData, argoConfigurationDto,"accountPassword", newConfiguration.accountPassword, getAccessToken);
+    const item = { configuration: newConfiguration };
+    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };
-
-  const saveToVault = async (toolId, toolIdentifier, key, name, value) => {
-    const keyName = `${toolId}-${toolIdentifier}-${key}`;
-    const body = {
-      "key": keyName,
-      "value": value
-    };
-    const response = await fnSaveToVault(body);
-    if (response.status === 200 ) {
-      return { name: name, vaultKey: keyName };
-    } else {
-      return "";
-    }
-  };
-
-  if (configurationData == null) {
-    return <LoadingDialog size="sm" />;
-  }
 
   return (
-    <div>
+    <ToolConfigurationEditorPanelContainer
+      recordDto={argoConfigurationDto}
+      persistRecord={saveArgoToolConfiguration}
+      toolData={toolData}
+      toolConnectionCheckName={"Argocd"}
+    >
       <Row>
-        <div className="ml-auto"><TestToolConnectionButton recordData={toolData} toolName={"Argocd"} disable={configurationData.isNew() || configurationData.isChanged()}/></div>
+        <Col sm={12}>
+          <TextInputBase dataObject={argoConfigurationDto} setDataObject={setArgoConfigurationDto} fieldName={"toolURL"} />
+          <TextInputBase dataObject={argoConfigurationDto} setDataObject={setArgoConfigurationDto} fieldName={"userName"} />
+          <VaultTextInput dataObject={argoConfigurationDto} setDataObject={setArgoConfigurationDto} fieldName={"accountPassword"} />
+        </Col>
       </Row>
-      <Form>
-        <Row>
-          <Col sm={12}>
-            <DtoTextInput setDataObject={setConfigurationData} fieldName={"toolURL"} dataObject={configurationData} />
-          </Col>
-          <Col sm={12}>
-            <DtoTextInput setDataObject={setConfigurationData} fieldName={"userName"} dataObject={configurationData} />
-          </Col>
-          <Col sm={12}>
-            <DtoTextInput type={"password"} setDataObject={setConfigurationData} fieldName={"accountPassword"} dataObject={configurationData} />
-          </Col>
-        </Row>
-        <Row>
-          <div className="ml-auto mt-3 px-3 d-flex">
-            <div>
-              <SaveButton recordDto={configurationData} createRecord={callbackFunction} updateRecord={callbackFunction} />
-            </div>
-          </div>
-        </Row>
-        <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
-      </Form>
-    </div>
+    </ToolConfigurationEditorPanelContainer>
   );
 }
 
 ArgoToolConfiguration.propTypes = {
   toolData: PropTypes.object,
-  toolId:  PropTypes.string,
-  fnSaveChanges: PropTypes.func,
-  fnSaveToVault: PropTypes.func
 };
 
 export default ArgoToolConfiguration;

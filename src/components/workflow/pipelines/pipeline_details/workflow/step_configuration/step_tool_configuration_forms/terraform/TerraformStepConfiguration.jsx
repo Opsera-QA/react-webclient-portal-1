@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { OverlayTrigger, Popover, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import TerraformStepFormMetadata from "./terraform-stepForm-metadata";
 import Model from "core/data_model/model";
@@ -17,6 +16,7 @@ import JSONInput from "react-json-editor-ajrm";
 import locale    from "react-json-editor-ajrm/locale/en";
 import CloseButton from "../../../../../../../common/buttons/CloseButton";
 import pipelineActions from "../../../../../../pipeline-actions";
+import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
 
 
 const SCM_TOOL_LIST = [
@@ -32,6 +32,17 @@ const SCM_TOOL_LIST = [
     name: "Bitbucket",
     value: "bitbucket",
   },
+];
+
+const JOB_TYPES = [
+  {
+    name: "Execute Script",
+    value: "execute",
+  },
+  {
+    name: "Delete",
+    value: "delete",
+  }
 ];
 
 function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel }) {
@@ -52,6 +63,8 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
   const [jsonEditor, setJsonEditor] = useState({});
   const [workspacesList, setWorkspacesList] = useState([]);
   const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
+  const [awsList, setAwsList] = useState([]);
+  const [isAwsSearching, setIsAwsSearching] = useState(false);
 
 
   useEffect(() => {
@@ -63,6 +76,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
     let { configuration, threshold } = step;
     if (typeof configuration !== "undefined") {
       setTerraformStepConfigurationDataDto(new Model(configuration, TerraformStepFormMetadata, false));
+      await fetchAWSDetails()
       await fetchSCMDetails(configuration);
       await searchRepositories(configuration.type, configuration.gitToolId, configuration.bitbucketWorkspace);
       await searchBranches(configuration.type, configuration.gitToolId, configuration.gitRepositoryID, configuration.bitbucketWorkspace);
@@ -71,6 +85,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
         setThresholdValue(threshold.value);
       }
     } else {
+      await fetchAWSDetails()
       setTerraformStepConfigurationDataDto(
         new Model({ ...TerraformStepFormMetadata.newModelBase }, TerraformStepFormMetadata, false)
       );
@@ -93,6 +108,18 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       setSCMList(filteredList);
       setIsGitSearching(false);
     }
+  };
+
+  const fetchAWSDetails = async () => {
+    setIsAwsSearching(true);
+
+    let results = await getToolsList("aws_account");
+
+    const filteredList = results.filter((el) => el.configuration !== undefined);
+    if (filteredList) {
+      setAwsList(filteredList);
+    }
+    setIsAwsSearching(false);
   };
 
   const formatOptions = (options) => {
@@ -273,6 +300,12 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       );
       return;
     }
+    if (fieldName === "awsToolConfigId") {
+      let newDataObject = terraformStepConfigurationDto;
+      newDataObject.setData("awsToolConfigId", value.id);
+      setTerraformStepConfigurationDataDto({ ...newDataObject });
+      return;
+    }
   };
 
   const handleJsonInputUpdate = (e) => {
@@ -300,6 +333,15 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
         <>
           <DtoSelectInput
             setDataObject={setTerraformStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"value"}
+            dataObject={terraformStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={JOB_TYPES ? JOB_TYPES : []}
+            fieldName={"toolActionType"}
+          />
+          <DtoSelectInput
+            setDataObject={setTerraformStepConfigurationDataDto}
             setDataFunction={handleDTOChange}
             textField={"name"}
             valueField={"value"}
@@ -318,8 +360,8 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             )}
           >
             <FontAwesomeIcon
-              icon={faEllipsisH}
-              className="fa-pull-right pointer pr-1"
+              icon={faInfoCircle}
+              className="fa-pull-right pointer pr-2"
               onClick={() => document.body.click()}
             />
           </OverlayTrigger>
@@ -383,6 +425,41 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
               terraformStepConfigurationDto && terraformStepConfigurationDto.getData("defaultBranch").length === 0
             }
           />
+          <DtoSelectInput
+            setDataObject={setTerraformStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"id"}
+            dataObject={terraformStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={awsList ? awsList : []}
+            fieldName={"awsToolConfigId"}
+            busy={isAwsSearching}
+            disabled={isAwsSearching || terraformStepConfigurationDto && terraformStepConfigurationDto.getData("defaultBranch").length === 0}
+          />
+          <DtoTextInput
+            setDataObject={setTerraformStepConfigurationDataDto}
+            dataObject={terraformStepConfigurationDto}
+            fieldName={"accessKeyParamName"}
+            disabled={
+              terraformStepConfigurationDto && terraformStepConfigurationDto.getData("awsToolConfigId") && terraformStepConfigurationDto.getData("awsToolConfigId").length === 0
+            }
+          />
+          <DtoTextInput
+            setDataObject={setTerraformStepConfigurationDataDto}
+            dataObject={terraformStepConfigurationDto}
+            fieldName={"secrectKeyParamName"}
+            disabled={
+              terraformStepConfigurationDto && terraformStepConfigurationDto.getData("awsToolConfigId") && terraformStepConfigurationDto.getData("awsToolConfigId").length === 0
+            }
+          />
+          <DtoTextInput
+            setDataObject={setTerraformStepConfigurationDataDto}
+            dataObject={terraformStepConfigurationDto}
+            fieldName={"regionParamName"}
+            disabled={
+              terraformStepConfigurationDto && terraformStepConfigurationDto.getData("awsToolConfigId") && terraformStepConfigurationDto.getData("awsToolConfigId").length === 0
+            }
+          />
           <OverlayTrigger
             trigger="click"
             rootClose
@@ -401,8 +478,8 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             }
           >
             <FontAwesomeIcon
-              icon={faEllipsisH}
-              className="fa-pull-right pointer pr-1"
+              icon={faInfoCircle}
+              className="fa-pull-right pointer pr-2"
               onClick={() => document.body.click()}
             />
           </OverlayTrigger>

@@ -1,96 +1,56 @@
 import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
-import {Form, Button, Row} from "react-bootstrap";
-import SaveButton from "../../../../../common/buttons/SaveButton";
-import LoadingDialog from "../../../../../common/status_notifications/loading";
-import DtoTextInput from "../../../../../common/input/dto_input/dto-text-input";
-import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import {Row} from "react-bootstrap";
 import octopusConnectionMetadata from "./octopus-connection-metadata";
-import DetailPanelContainer from "../../../../../common/panels/detail_panel_container/DetailPanelContainer";
 import Col from "react-bootstrap/Col";
-import {getFormValidationErrorDialog} from "components/common/toasts/toasts";
-import modelHelpers from "../../../../../common/model/modelHelpers";
+import modelHelpers from "components/common/model/modelHelpers";
+import toolsActions from "components/inventory/tools/tools-actions";
+import {AuthContext} from "contexts/AuthContext";
+import ToolConfigurationEditorPanelContainer
+  from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 
-
-function OctopusToolConfiguration({ toolData, fnSaveChanges, fnSaveToVault }) {
-  const toastContext = useContext(DialogToastContext);
-  const [isLoading, setIsLoading] = useState(false);
+function OctopusToolConfiguration({ toolData }) {
+  const { getAccessToken } = useContext(AuthContext);
   const [octopusConfigurationDto, setOctopusConfigurationDto] = useState(undefined);
-  const [showToast, setShowToast] = useState(false);
-  const [toast, setToast] = useState({});
 
   useEffect(() => {
     loadData();
-  }, [toolData]);
+  }, []);
 
   const loadData = async () => {
-    setOctopusConfigurationDto(modelHelpers.getToolConfigurationModel(toolData["configuration"], octopusConnectionMetadata));
+    setOctopusConfigurationDto(modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), octopusConnectionMetadata));
   };
 
-  const saveOctopusConfig = async () => {
-    if (octopusConfigurationDto.isModelValid()) {
-      let newConfiguration = {...octopusConfigurationDto.getPersistData()};
-
-      if (octopusConfigurationDto.isChanged("octopusApiKey")) {
-        newConfiguration.octopusApiKey = await saveToVault(toolData._id, toolData.tool_identifier, "secretKey", "Vault Secured Key", octopusConfigurationDto.getData("octopusApiKey"));
-      }
-
-      const item = {
-        configuration: newConfiguration
-      };
-      await fnSaveChanges(item);
-    }
-    else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
-    }
+  const saveOctopusToolConfiguration = async () => {
+    let newConfiguration = octopusConfigurationDto.getPersistData();
+    const octopusApiVaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}-secretKey`;
+    newConfiguration.octopusApiKey = await toolsActions.saveKeyPasswordToVault(octopusConfigurationDto, "octopusApiKey", newConfiguration.octopusApiKey, octopusApiVaultKey, getAccessToken);
+    const item = { configuration: newConfiguration };
+    return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };
-
-  const saveToVault = async (toolId, toolIdentifier, key, name, value) => {
-    const keyName = `${toolId}-${toolIdentifier}-${key}`;
-    const body = {
-      "key": keyName,
-      "value": value
-    };
-    const response = await fnSaveToVault(body);
-    if (response.status === 200 ) {
-      return { name: name, vaultKey: keyName };
-    } else {
-      return "";
-    }
-  };
-
-  if (octopusConfigurationDto == null) {
-    return <LoadingDialog size="sm" />;
-  }
 
   return (
-    <DetailPanelContainer>
-      {showToast && toast}
-      <div className="h5">Octopus Credentials</div>
-        {isLoading ? <LoadingDialog size={"sm"} message={"Loading Octopus Configuration Details"} /> :
-        <div>
-          <Row>
-            <Col sm={12}><DtoTextInput dataObject={octopusConfigurationDto} setDataObject={setOctopusConfigurationDto} fieldName={"toolURL"} /></Col>
-            <Col sm={12}><DtoTextInput dataObject={octopusConfigurationDto} setDataObject={setOctopusConfigurationDto} fieldName={"userName"} /></Col>
-            <Col sm={12}><DtoTextInput type={"password"} dataObject={octopusConfigurationDto} setDataObject={setOctopusConfigurationDto} fieldName={"octopusApiKey"} /></Col>
-          </Row>
-          <Row>
-          <div className="ml-auto mt-3 px-3">
-              <SaveButton setRecordDto={setOctopusConfigurationDto} modal={false} recordDto={octopusConfigurationDto} createRecord={saveOctopusConfig} updateRecord={saveOctopusConfig} />
-            </div>
-          </Row>
-        </div>
-        }
-    </DetailPanelContainer>
+    <ToolConfigurationEditorPanelContainer
+      recordDto={octopusConfigurationDto}
+      persistRecord={saveOctopusToolConfiguration}
+      toolData={toolData}
+      // toolConnectionCheckName={"Octopus"}
+    >
+      <Row>
+        <Col sm={12}>
+          <TextInputBase dataObject={octopusConfigurationDto} setDataObject={setOctopusConfigurationDto} fieldName={"toolURL"} />
+          <TextInputBase dataObject={octopusConfigurationDto} setDataObject={setOctopusConfigurationDto} fieldName={"userName"} />
+          <VaultTextInput dataObject={octopusConfigurationDto} setDataObject={setOctopusConfigurationDto} fieldName={"octopusApiKey"} />
+        </Col>
+      </Row>
+    </ToolConfigurationEditorPanelContainer>
   );
 }
 
 OctopusToolConfiguration.propTypes = {
   toolData: PropTypes.object,
-  fnSaveChanges: PropTypes.func,
-  fnSaveToVault: PropTypes.func
 };
 
 export default OctopusToolConfiguration;

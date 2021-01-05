@@ -2,10 +2,10 @@ import React, {useContext, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSave, faSpinner} from "@fortawesome/free-solid-svg-icons";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import {faSave, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import { persistNewRecordAndAddAnother, persistNewRecordAndViewDetails } from "./saving-helpers";
 import {useHistory} from "react-router-dom";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function CreateButton({recordDto, createRecord, disable, showSuccessToasts, lenient, setRecordDto, addAnotherOption}) {
   const [isSaving, setIsSaving] = useState(false);
@@ -47,6 +47,7 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
   return (
     <div className="px-2 d-flex">
       {getAddAnotherCheckbox()}
+      {/*TODO: Make sure button is not clickable until form is valid*/}
       <Button size="sm" variant="primary" disabled={isSaving || disable} onClick={() => persistRecord()}>
         {getLabel()}
       </Button>

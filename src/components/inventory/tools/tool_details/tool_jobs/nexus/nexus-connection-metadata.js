@@ -17,7 +17,7 @@ const nexusConnectionMetadata = {
       isRequired: true
     }
 ],
-  newModelBase: {
+  newObjectFields: {
     toolURL: "",
     userName: "",
     secretKey: "",
