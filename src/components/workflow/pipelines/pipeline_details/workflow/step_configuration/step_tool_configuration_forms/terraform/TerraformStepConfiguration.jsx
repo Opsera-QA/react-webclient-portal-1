@@ -7,7 +7,7 @@ import TerraformStepFormMetadata from "./terraform-stepForm-metadata";
 import Model from "core/data_model/model";
 import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
-import LoadingDialog from "components/common/status_notifications/loading";
+import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
 import SaveButton2 from "../../../../../../../common/buttons/saving/SaveButton2";
@@ -291,7 +291,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
 
 
   if (isLoading || terraformStepConfigurationDto === undefined) {
-    return <LoadingDialog size="sm" />;
+    return <DetailPanelLoadingDialog />;
   }
 
   return (
