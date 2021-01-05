@@ -9,6 +9,8 @@ import DestructiveDeleteModal from "../../../modal/DestructiveDeleteModal";
 import toolsActions from "../../../../inventory/tools/tools-actions";
 import ToolPipelinesTable from "../../../../inventory/tools/tool_details/ToolPipelinesTable";
 
+// TODO: Every load of the tool page loads these relevant pipelines, but the tab runs a separate query.
+//  Make sure to pull the relevant pipeline call inside the detail view instead and pass to both the delete button and the pipelines tab
 function ActionBarDeleteToolButton({ toolDataObject }) {
   const toastContext = useContext(DialogToastContext);
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
