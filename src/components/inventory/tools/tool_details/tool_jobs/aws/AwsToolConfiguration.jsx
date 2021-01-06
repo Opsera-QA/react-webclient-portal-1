@@ -38,6 +38,7 @@ function AwsToolConfiguration({ toolData }) {
       recordDto={awsConfigurationDto}
       persistRecord={saveAwsToolConfiguration}
       toolData={toolData}
+      toolConnectionCheckName={"aws"}
     >
       <Row>
         <Col sm={12}>
