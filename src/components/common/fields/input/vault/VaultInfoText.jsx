@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
+// TODO: This should be in /inputs/
 function VaultInfoText({ storedInVault, errorMessage }) {
   if (errorMessage != null && errorMessage !== "") {
     return (
