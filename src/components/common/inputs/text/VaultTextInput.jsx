@@ -16,7 +16,8 @@ function VaultTextInput({fieldName, dataObject, setDataObject, disabled}) {
   };
 
   const isStoredInVault = () => {
-    return typeof dataObject.getData(fieldName) === "object";
+    let currentValue = dataObject.getData(fieldName);
+    return typeof currentValue === "object" && Object.entries(currentValue).length > 0;
   };
 
   return (
