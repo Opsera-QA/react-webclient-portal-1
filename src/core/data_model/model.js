@@ -128,6 +128,12 @@ export class Model {
     return isValid === true;
   };
 
+  // This is a validity check without trimming
+  checkCurrentValidity = () => {
+    let isValid = validateData(this);
+    return isValid === true;
+  };
+
   isFieldValid = (fieldName) => {
     return validateField(this, this.getFieldById(fieldName));
   };

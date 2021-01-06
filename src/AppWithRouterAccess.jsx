@@ -86,6 +86,7 @@ import DashboardDetailView from "./components/insights/dashboards/dashboard_deta
 import { OktaAuth } from "@okta/okta-auth-js";
 import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
 import { axiosApiService } from "./api/apiService";
+import NotificationDetailView from "components/notifications/notification_details/NotificationDetailView";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -251,6 +252,7 @@ const AppWithRouterAccess = () => {
 
                   { /*Notifications */}
                   <SecureRoute path="/notifications" exact component={Notifications}/>
+                  <SecureRoute path="/notifications/details/:id" exact component={NotificationDetailView}/>
 
                   {/* marketplace */}
                   <SecureRoute path="/insights/marketplace" component={Marketplace}/>

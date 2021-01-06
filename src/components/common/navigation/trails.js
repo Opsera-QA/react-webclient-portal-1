@@ -88,7 +88,8 @@ const breadcrumbs = {
   analyticsProfile: {name: "analyticsProfile", path: paths.analyticsProfile, label: "Analytics Profile", icon: faChartNetwork},
 
   //Notifications
-  notifications : { name: "notifications", path: paths.notifications, label: "Notifications", icon: faEnvelope}
+  notifications : { name: "notifications", path: paths.notifications, label: "Notifications", icon: faEnvelope},
+  notificationDetailView: {name: "notificationDetailView", path: paths.toolDetailView, label: "Notification Details", icon: faEnvelope},
 };
 
 const trails = {
@@ -171,7 +172,8 @@ const trails = {
   analyticsProfile: {parent: "accountSettings", breadcrumb: breadcrumbs.analyticsProfile},
 
   //Notifications
-  notifications : {parent: undefined, breadcrumb: breadcrumbs.notifications}
+  notifications : {parent: undefined, breadcrumb: breadcrumbs.notifications},
+  notificationDetailView: {parent: "notifications", breadcrumb: breadcrumbs.notificationDetailView},
 
 };
 

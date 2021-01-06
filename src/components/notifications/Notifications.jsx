@@ -1,15 +1,24 @@
-import React, { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
-import LoadingDialog from "../common/status_notifications/loading";
-import AccessDeniedDialog from "../common/status_notifications/accessDeniedInfo";
-import { DialogToastContext } from "../../contexts/DialogToastContext";
-import ScreenContainer from "../common/panels/general/ScreenContainer";
+import { AuthContext } from "contexts/AuthContext";
+import React, { useContext, useEffect, useState } from "react";
+import "./notifications.css";
+import NotificationsTable from "./NotificationsTable";
+import notificationsFilterMetadata from "./notifications-filter-metadata";
+import notificationsActions from "./notifications-actions";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import Model from "core/data_model/model";
+import LoadingDialog from "components/common/status_notifications/loading";
+import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 function Notifications() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const { getUserRecord, setAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
+
+  const { getAccessToken } = useContext(AuthContext);
+  const [notificationsList, setNotificationsList] = useState([]);
+  const [notificationFilterDto, setNotificationFilterDto] = useState(new Model({...notificationsFilterMetadata.newObjectFields}, notificationsFilterMetadata, false));
 
   useEffect(() => {
     loadData();
@@ -18,7 +27,15 @@ function Notifications() {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await getRoles();
+      const userRoleAccess = await getRoles();
+
+      if (userRoleAccess) {
+        setAccessRoleData(userRoleAccess);
+
+        if(userRoleAccess?.PowerUser || userRoleAccess?.Administrator || userRoleAccess?.OpseraAdministrator) {
+          await loadNotifications();
+        }
+      }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     } finally {
@@ -26,15 +43,25 @@ function Notifications() {
     }
   };
 
+  const loadNotifications = async (filterDto = notificationFilterDto) => {
+    await getNotificationsList(filterDto);
+  }
+
   const getRoles = async () => {
     const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-    }
+    return await setAccessRoles(user);
   };
 
-  if (!accessRoleData || isLoading) {
+  const getNotificationsList = async (filterDto = notificationFilterDto) => {
+      const response = await notificationsActions.getNotificationsList(filterDto, getAccessToken);
+      setNotificationsList(response.data.data);
+      let newFilterDto = filterDto;
+      newFilterDto.setData("totalCount", response.data.count);
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
+      setNotificationFilterDto({...newFilterDto});
+  };
+
+  if (!accessRoleData) {
     return <LoadingDialog size="sm" />;
   }
 
@@ -47,17 +74,16 @@ function Notifications() {
       breadcrumbDestination={"notifications"}
       pageDescription={"Manage notification policies for the Opsera Analytics Engine."}
     >
-      {
-        //TODO Notification and Alerting stuff goes here
-      }
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a mauris gravida lacus ultricies lacinia.
-        Suspendisse mollis, orci sed mollis efficitur, velit massa pharetra magna, at rhoncus diam quam eu nisl.
-        Phasellus eget erat quis eros vestibulum euismod ut finibus felis. Sed ac commodo dolor. Sed ultrices arcu nisl,
-        vel rutrum sem dignissim eget. Morbi sit amet orci sem.
-      </div>
+      <NotificationsTable
+          isLoading={isLoading}
+          loadData={loadData}
+          data={notificationsList}
+          notificationFilterDto={notificationFilterDto}
+          setNotificationFilterDto={setNotificationFilterDto}
+      />
     </ScreenContainer>
   );
 }
+
 
 export default Notifications;

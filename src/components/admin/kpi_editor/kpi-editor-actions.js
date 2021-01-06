@@ -22,6 +22,17 @@ KpiActions.getKpis = async (kpiFilterDto, getAccessToken) => {
   return baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
+KpiActions.getAllKpis = async (getAccessToken) => {
+  const apiUrl = "/analytics/kpi/configurations";
+  const urlParams = {
+    params: {
+      pageSize: 10000
+    }
+  };
+
+  return baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+};
+
 KpiActions.get = async (kpiId, getAccessToken) => {
   const apiUrl = `/analytics/kpi/configurations/${kpiId}`;
   return baseActions.apiGetCall(getAccessToken, apiUrl);
