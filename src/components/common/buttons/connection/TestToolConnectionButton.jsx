@@ -72,10 +72,7 @@ function TestToolConnectionButton({ toolDataDto, disable, toolName }) {
   return (
     <div className="px-2">
       <TooltipWrapper
-        innerText={
-          `This tool must be saved before testing connection. 
-            This currently only tests whether or not the DNS is valid but will test account credentials in a future release.`
-        }
+        innerText={`This tool must be saved before testing connection.`}
       >
         <Button size="sm" variant={getVariant()} disabled={isTesting || disable} onClick={() => testConnection()}>
           {getLabel()}
