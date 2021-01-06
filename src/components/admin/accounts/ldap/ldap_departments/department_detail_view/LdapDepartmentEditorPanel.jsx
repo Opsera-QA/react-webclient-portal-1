@@ -12,6 +12,7 @@ import {DialogToastContext} from "../../../../../../contexts/DialogToastContext"
 import {getUsersByDomain} from "../../../../../settings/ldap_users/user-functions";
 import DtoSelectInput from "../../../../../common/input/dto_input/dto-select-input";
 import EditorPanelContainer from "../../../../../common/panels/detail_panel_container/EditorPanelContainer";
+import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 
 function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, setLdapDepartmentData, orgDomain, authorizedActions, handleClose }) {
   const toastContext = useContext(DialogToastContext);
@@ -131,11 +132,13 @@ function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, setLdapDepa
               />
             </Col>
           </Row>
-          <Row>
-            <div className="ml-auto mt-3 px-3">
-              <SaveButton recordDto={ldapDepartmentDataDto} setData={setLdapDepartmentData} setRecordDto={setLdapDepartmentDataDto} handleClose={handleClose} createRecord={createLdapDepartment} updateRecord={updateLdapDepartment} />
-            </div>
-          </Row>
+        <PersistButtonContainer
+          handleClose={handleClose}
+          createRecord={createLdapDepartment}
+          updateRecord={updateLdapDepartment}
+          setRecordDto={setLdapDepartmentDataDto}
+          recordDto={ldapDepartmentDataDto}
+        />
       </EditorPanelContainer>
     );
 }

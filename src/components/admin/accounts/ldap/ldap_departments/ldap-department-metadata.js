@@ -1,6 +1,9 @@
 export const ldapDepartmentMetaData = {
   idProperty: "name",
   type: "Department",
+  detailView: function(record) {
+    return `/admin/departments/details/${record.getData("name")}`;
+  },
   fields: [
     {
       label: "Department Name",
