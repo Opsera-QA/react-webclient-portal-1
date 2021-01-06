@@ -7,6 +7,7 @@ import tagEditorMetadata, {defaultTags} from "../../../settings/tags/tags-form-f
 import Model from "../../../../core/data_model/model";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 
+// TODO: Remove default tags on refactor
 function DtoTagManagerInput({ fieldName, type, dataObject, setDataObject, disabled, filter, placeholderText, setDataFunction, allowCreate, groupBy}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
