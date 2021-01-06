@@ -138,20 +138,24 @@ toolsActions.savePasswordToVault = async (toolData, toolConfigurationData, field
     const keyName = `${toolId}-${toolIdentifier}-${fieldName}`;
     const body = { "key": `${keyName}`, "value": value };
     const response = await PipelineActions.saveToVault(body, getAccessToken);
-    return response.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : "";
+    return response.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : {};
   }
 
-  return toolConfigurationData.getData(fieldName);
+  // Faseeh says all vault values MUST be objects and not strings
+  let currentValue = toolConfigurationData.getData(fieldName);
+  return typeof currentValue === "string" ? {} : currentValue;
 };
 
 toolsActions.saveKeyPasswordToVault = async (toolConfigurationData, fieldName, value, key, getAccessToken) => {
   if (toolConfigurationData.isChanged(fieldName) && value != null && typeof(value) === "string") {
     const body = { "key": key, "value": value };
     const response = await PipelineActions.saveToVault(body, getAccessToken);
-    return response.status === 200 ? { name: "Vault Secured Key", vaultKey: key } : "";
+    return response.status === 200 ? { name: "Vault Secured Key", vaultKey: key } : {};
   }
 
-  return toolConfigurationData.getData(fieldName);
+  // Faseeh says all values MUST be objects and not strings
+  let currentValue = toolConfigurationData.getData(fieldName);
+  return typeof currentValue === "string" ? {} : currentValue;
 };
 
 
