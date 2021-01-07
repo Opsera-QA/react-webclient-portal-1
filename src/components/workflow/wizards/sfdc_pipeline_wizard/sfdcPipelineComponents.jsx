@@ -108,7 +108,7 @@ const SfdcPipelineComponents = ({
   };
 
   const handleCheckAllClickComponentTypes = () => {
-    setSelectedComponentTypes(componentTypes);
+    setSelectedComponentTypes(componentTypes.map(({ name }) => name));
   };
 
   const handleUnCheckAllClickComponentTypes = () => {
@@ -116,7 +116,7 @@ const SfdcPipelineComponents = ({
   };
 
   const handleCheckOrUncheckAllClickComponentTypes = () => {
-    if (selectedComponentTypes === componentTypes) {handleUnCheckAllClickComponentTypes();}
+    if (selectedComponentTypes === componentTypes.map(({ name }) => name)) {handleUnCheckAllClickComponentTypes();}
     else {handleCheckAllClickComponentTypes();}
   }
 
