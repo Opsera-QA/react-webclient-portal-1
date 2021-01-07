@@ -12,11 +12,6 @@ const jiraStepNotificationMetadata = {
       isRequired: true
     },
     {
-      label: "Notification Level",
-      id: "jiraNotificationLevel",
-      isRequired: true
-    },
-    {
       label: "Jira Project",
       id: "jiraProject",
       isRequired: true
@@ -84,8 +79,6 @@ const jiraStepNotificationMetadata = {
     jiraParentTicket: "",
     jiraPrimaryAssignee: "",
     jiraSecondaryAssignees: [],
-    // jiraRejectionStep: "",
-    // jiraApprovalStep: "",
     jiraOpenStep: "",
     jiraClosureStep: "",
     enabled: false,

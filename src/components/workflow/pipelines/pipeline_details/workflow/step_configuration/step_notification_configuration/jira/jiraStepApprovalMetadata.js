@@ -12,10 +12,6 @@ const jiraStepApprovalMetadata = {
       isRequired: true
     },
     {
-      label: "Notification Level",
-      id: "jiraNotificationLevel",
-    },
-    {
       label: "Jira Project",
       id: "jiraProject",
       isRequired: true
@@ -49,24 +45,6 @@ const jiraStepApprovalMetadata = {
       label: "Jira Parent Ticket",
       id: "jiraParentTicket",
     },
-    // {
-    //   label: "Jira Open Step",
-    //   id: "jiraOpenStep",
-    // },
-    // {
-    //   label: "Jira Closure Step",
-    //   id: "jiraClosureStep",
-    // },
-    // {
-    //   label: "Jira Approval Step",
-    //   id: "jiraApprovalStep",
-    //   isRequired: true
-    // },
-    // {
-    //   label: "Jira Rejection Step",
-    //   id: "jiraRejectionStep",
-    //   isRequired: true
-    // },
     {
       label: "Jira Notifications",
       id: "enabled",
@@ -76,7 +54,6 @@ const jiraStepApprovalMetadata = {
     type: "jira",
     jiraBoard: "",
     event: "all",
-    jiraNotificationLevel: "all",
     jiraToolId: "",
     jiraProject: "",
     jiraPriority: "",
@@ -84,10 +61,6 @@ const jiraStepApprovalMetadata = {
     jiraParentTicket: "",
     jiraPrimaryAssignee: "",
     jiraSecondaryAssignees: [],
-    // jiraRejectionStep: "",
-    // jiraApprovalStep: "",
-    // jiraOpenStep: "",
-    // jiraClosureStep: "",
     enabled: false,
   }
 };
