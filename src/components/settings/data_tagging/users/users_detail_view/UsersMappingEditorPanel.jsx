@@ -260,7 +260,7 @@ function UsersMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
     <EditorPanelContainer>
       {toolTypeData && (
         <Card>
-          <Card.Text className={"mt-3"} style={{ display: "flex", justifyContent: "center" }}>
+          <Card.Text className={"mt-3 mb-3"} style={{ display: "flex", justifyContent: "center" }}>
             <strong>WARNING: </strong> Editing an active Analytics Data Mapping will result in loss of filtering
             functionality from data previously mapped with this information
           </Card.Text>
