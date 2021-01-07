@@ -56,7 +56,7 @@ import ToolManagement from "./components/admin/tools/ToolManagement";
 import ToolTypeDetailView from "./components/admin/tools/tool_type/tool_type_detail_view/ToolTypeDetailView";
 import ToolIdentifierDetailView
   from "./components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierDetailView";
-import Axios from "axios";
+//import Axios from "axios";
 import Pipelines from "./components/workflow/pipelines/Pipelines";
 import PipelineDetailView from "./components/workflow/pipelines/pipeline_details/PipelineDetailView";
 import ErrorDialog from "./components/common/status_notifications/error";
@@ -151,8 +151,9 @@ const AppWithRouterAccess = () => {
       return;
     }
 
-    if (authState.isAuthenticated && !authState.isPending && !data) {
+    if (authState.isAuthenticated && !authState.isPending && !data && !error) {
       setLoading(true);
+      console.log("loaindg users 1")
       await loadUsersData(authState.accessToken.value);
     }
 
@@ -163,7 +164,6 @@ const AppWithRouterAccess = () => {
   }, [authenticatedState, history.location.pathname]);
 
   const loadUsersData = async (token) => {
-    console.log("token: ", token);
     try {
       let apiUrl = "/users";
       const response = await axiosApiService(token).get(apiUrl, {});
@@ -185,6 +185,7 @@ const AppWithRouterAccess = () => {
   };
 
   const refreshToken = async () => {
+    console.log("loaindg users 2")
     const tokens = authClient.tokenManager.getTokens();
     await loadUsersData(tokens.accessToken.value);
   };
