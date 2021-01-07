@@ -13,7 +13,7 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
     }
 
     return (
-      <div className="page-description px-3 py-1">
+      <div className="page-description px-3 py-2">
         {pageDescription}
       </div>
     );
@@ -39,7 +39,7 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
           <DetailScreenTitleBar titleIcon={breadcrumb.icon} title={breadcrumb.label} isLoading={isLoading} />
         </div>
         {getPageDescription()}
-        <div className="p-3 shaded-container detail-view-body">
+        <div className="p-2 shaded-container detail-view-body">
           {getScreenBody()}
         </div>
         <div className="content-block-footer"/>
