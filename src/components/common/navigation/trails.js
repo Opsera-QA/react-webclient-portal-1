@@ -3,9 +3,9 @@ import {
   faAnalytics,
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
-  faFlag, faEnvelope,
+  faFlag, faEnvelope, faUserTag, faProjectDiagram,
 } from "@fortawesome/pro-light-svg-icons";
-import {faTools} from "@fortawesome/pro-solid-svg-icons";
+import { faTools } from "@fortawesome/pro-solid-svg-icons";
 import {faUsers} from "@fortawesome/free-solid-svg-icons";
 
 const breadcrumbs = {
@@ -86,6 +86,9 @@ const breadcrumbs = {
 
   //Analytics
   analyticsProfile: {name: "analyticsProfile", path: paths.analyticsProfile, label: "Analytics Profile", icon: faChartNetwork},
+  mapping: {name: "mapping", path: paths.mapping, label: "Data Mapping Management", icon: faProjectDiagram},
+  projectTaggingDetailView: {name: "projectTaggingDetailView", path: paths.projectTaggingDetailView, label: "Project Mapping Details", icon: faProjectDiagram},
+  userTaggingDetailView: {name: "userTaggingDetailView", path: paths.userTaggingDetailView, label: "User Mapping Details", icon: faUserTag},
 
   //Notifications
   notifications : { name: "notifications", path: paths.notifications, label: "Notifications", icon: faEnvelope},
@@ -170,6 +173,9 @@ const trails = {
 
   // Analytics
   analyticsProfile: {parent: "accountSettings", breadcrumb: breadcrumbs.analyticsProfile},
+  mapping : {parent: "accountSettings", breadcrumb : breadcrumbs.mapping},
+  projectTaggingDetailView : {parent : "mapping", breadcrumb : breadcrumbs.projectTaggingDetailView},
+  userTaggingDetailView : {parent : "mapping", breadcrumb : breadcrumbs.userTaggingDetailView},
 
   //Notifications
   notifications : {parent: undefined, breadcrumb: breadcrumbs.notifications},

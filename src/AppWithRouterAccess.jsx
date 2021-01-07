@@ -53,6 +53,7 @@ import LdapGroupDetailView from "./components/settings/ldap_groups/ldap_group_de
 import ToolDetailView from "./components/inventory/tools/tool_details/ToolDetailView";
 import TemplateDetailView from "./components/admin/template_editor/template_detail_view/TemplateDetailView";
 import ToolManagement from "./components/admin/tools/ToolManagement";
+import Mapping from "./components/settings/data_tagging/DataTagsManager";
 import ToolTypeDetailView from "./components/admin/tools/tool_type/tool_type_detail_view/ToolTypeDetailView";
 import ToolIdentifierDetailView
   from "./components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierDetailView";
@@ -82,6 +83,9 @@ import Notifications from "./components/notifications/Notifications";
 import ToolsUsedInPipelineReport from "./components/reports/tools/pipelines/ToolsUsedInPipelineReport";
 import Insights from "./components/insights/dashboards/Insights";
 import DashboardDetailView from "./components/insights/dashboards/dashboard_details/DashboardDetailView";
+import ProjectMappingDetailView
+  from "./components/settings/data_tagging/projects/projects_detail_view/ProjectMappingDetailView";
+import UsersMappingDetailView from "./components/settings/data_tagging/users/users_detail_view/UsersMappingDetailView";
 
 import { OktaAuth } from "@okta/okta-auth-js";
 import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
@@ -311,6 +315,9 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/settings/tags/:id" exact component={TagDetailView}/>
                   <SecureRoute path="/settings/customer-system-status" exact component={CustomerSystemStatus}/>
                   <SecureRoute path="/settings/analytics-profile" exact component={AnalyticsProfileSettings}/>
+                  <SecureRoute path="/settings/data_mapping" exact component={Mapping}/>
+                  <SecureRoute path="/settings/data_mapping/projects/details/:projectMappingId" exact component={ProjectMappingDetailView}/>
+                  <SecureRoute path="/settings/data_mapping/user_mapping/details/:usersMappingId" exact component={UsersMappingDetailView}/>
 
                   <SecureRoute path="/demo/api" component={ApiConnectionDemo}/>
                   <SecureRoute path="/demo/table" component={CommonTableDemo}/>
