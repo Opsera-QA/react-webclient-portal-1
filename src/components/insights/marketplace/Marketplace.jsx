@@ -173,7 +173,6 @@ export default function Marketplace () {
     <div className="marketplace">
     <div className="max-content-width">
       <h4>Marketplace</h4>
-      {/* TODO: change this text */}
       <p>
         OpsERA provides users with access to a vast repository of KPI. Access all available
         KPIs and configure them on your OpsERA Analytics Dashboards.
@@ -213,7 +212,7 @@ export default function Marketplace () {
       <Row>
         {marketplaceFilterDto.getData("activeFilters").map((filter, key) => getFilterActiveButton(filter, key))}
       </Row>
-      <Row>
+      <Row className="marketplace-cards">
         {getMainBody()}
       </Row>
       <Row>
