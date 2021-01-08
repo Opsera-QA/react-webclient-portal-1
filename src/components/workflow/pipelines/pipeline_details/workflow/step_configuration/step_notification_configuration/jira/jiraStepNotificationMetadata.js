@@ -19,6 +19,7 @@ const jiraStepNotificationMetadata = {
     {
       label: "Jira Sprint",
       id: "jiraSprint",
+      isRequired: true
     },
     {
       label: "Priority",

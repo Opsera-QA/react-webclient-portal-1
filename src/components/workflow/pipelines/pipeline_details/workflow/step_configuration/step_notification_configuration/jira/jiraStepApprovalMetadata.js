@@ -19,6 +19,7 @@ const jiraStepApprovalMetadata = {
     {
       label: "Jira Sprint",
       id: "jiraSprint",
+      isRequired: true
     },
     {
       label: "Priority",
