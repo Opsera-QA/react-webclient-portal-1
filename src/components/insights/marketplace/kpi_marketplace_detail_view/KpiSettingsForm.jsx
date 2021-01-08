@@ -15,7 +15,8 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 
 
-function KpiSettingsForm({kpiConfiguration, dashboardData, index, setView}) {
+function KpiSettingsForm({kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart}) {
+    console.log(index);
     const { getAccessToken } = useContext(AuthContext);
     const [kpiSettings, setKpiSettings] = useState(new Model(kpiConfiguration, kpiConfigurationMetadata, false));
     const [kpiDateFilter, setKpiDateFilter] = useState(new Model(kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")], kpiDateFilterMetadata, false))
@@ -48,6 +49,8 @@ function KpiSettingsForm({kpiConfiguration, dashboardData, index, setView}) {
         }
         setKpiSettings({ ...newKpiSettings });
         dashboardData.getData("configuration")[index] = kpiSettings.data;
+        setKpiConfiguration(kpiSettings.data);
+        loadChart(dashboardData);
         setView("chart");
         return await dashboardsActions.update(dashboardData, getAccessToken);
     }

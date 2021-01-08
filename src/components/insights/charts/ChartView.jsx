@@ -78,20 +78,23 @@ import MetricbeatMemoryUsageByTimeLineChart from "./metricbeat/line_chart/memory
 import MetricbeatOutNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/out_network_usage/MetricbeatOutNetworkTrafficByTimeLineChart";
 import {getDateObjectFromKpiConfiguration} from "components/insights/charts/charts-helpers";
 
-function ChartView({kpiConfiguration, dashboardData, index}) {
+function ChartView({kpiConfiguration, dashboardData, index, loadChart}) {
+  const [kpiConfig, setKpiConfig] = useState(kpiConfiguration);
   // TODO: This is only being used until each chart is updated to use ChartContainer inside.
   //  After everything is refactored,
   //  this should be deleted and we should just return getChart() at bottom of component instead
   const getView = () => {
-    if (kpiConfiguration?.kpi_identifier === "opsera-status-by-pipeline") {
+    if (kpiConfig?.kpi_identifier === "opsera-status-by-pipeline") {
       return getChart();
     }
 
     return (
       <ChartContainer
-        title={kpiConfiguration?.kpi_name}
+        title={kpiConfig?.kpi_name}
         chart={getChart()}
-        kpiConfiguration={kpiConfiguration}
+        loadChart={loadChart}
+        kpiConfiguration={kpiConfig}
+        setKpiConfiguration={setKpiConfig}
         dashboardData={dashboardData}
         index={index}
       />
@@ -106,144 +109,145 @@ function ChartView({kpiConfiguration, dashboardData, index}) {
   // TODO: chart is global in this component, so it doesn't need to be passed in to this or getDateObject,
   //  unless those functions are moved into a helper component
   const getChart = () => {
-    switch (kpiConfiguration?.kpi_identifier) {
+    switch (kpiConfig?.kpi_identifier) {
 
       // Opsera KPIs
       case "opsera-status-by-pipeline":
         return (
             <OpseraPipelineByStatusBarChart
               persona={"developer"}
-              kpiConfiguration={kpiConfiguration}
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
               index={index}
             />
           );
       case "opsera-pipeline-duration":
-        return (<OpseraBuildDurationBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<OpseraBuildDurationBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "opsera-pipelines-by-user":
-        return (<OpseraBuildsByUserBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<OpseraBuildsByUserBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "opsera-deployment-frequency":
-        return (<OpseraDeploymentFrequencyLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<OpseraDeploymentFrequencyLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "opsera-recent-pipeline-status":
-        return (<OpseraRecentPipelineStatus persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<OpseraRecentPipelineStatus persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "opsera-recent-cd-status":
-        return (<OpseraRecentCDStatus persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<OpseraRecentCDStatus persona={"developer"} date={getDateObject(kpiConfig)}/>);
 
       // Jenkins KPIs
       case "jenkins-builds-by-user":
-        return (<JenkinsBuildsByUserBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JenkinsBuildsByUserBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "jenkins-build-duration":
-        return (<JenkinsBuildDurationBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JenkinsBuildDurationBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "jenkins-status-by-job-name":
-        return (<JenkinsStatusByJobNameBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JenkinsStatusByJobNameBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "jenkins-deployment-frequency":
-        return (<JenkinsDeploymentFrequencyLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JenkinsDeploymentFrequencyLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "jenkins-change-failure-rate":
-        return (<JenkinsChangeFailureRate persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JenkinsChangeFailureRate persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "jenkins-deployments-counts":
-        return (<JenkinsDeploymentsCountsBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JenkinsDeploymentsCountsBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "jenkins-recent-build-status":
-        return (<JenkinsRecentBuildStatusTable persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JenkinsRecentBuildStatusTable persona={"developer"} date={getDateObject(kpiConfig)}/>);
 
       // Jira KPIs
       case "jira-tickets-assigned-by-user":
-        return (<JiraTicketsAssignedByUserBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JiraTicketsAssignedByUserBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "jira-issues-by-priority":
-        return (<JiraIssuesByPriorityBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JiraIssuesByPriorityBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "jira-health-by-sprint":
-        return (<JiraHealthBySprintBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JiraHealthBySprintBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "jira-velocity-report":
-        return (<JiraVelocityReportBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JiraVelocityReportBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "jira-issues-created-vs-resolved":
-        return (<JiraIssuesCreatedVsResolvedLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JiraIssuesCreatedVsResolvedLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "jira-sprint-burndown":
-        return (<JiraSprintBurndownLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JiraSprintBurndownLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "jira-issues-assigned-to-me":
-        return (<JiraIssuesAssignedToMe persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JiraIssuesAssignedToMe persona={"developer"} date={getDateObject(kpiConfig)}/>);
 
       // Anchore KPIs
       case "anchore-vulnerability-severity-by-package":
-        return (<AnchoreVulnerabilitySeverityByPackageBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<AnchoreVulnerabilitySeverityByPackageBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "anchore-vulnerabilities-by-date":
-        return (<AnchoreVulnerabilitiesByDateLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<AnchoreVulnerabilitiesByDateLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
 
       // Sonar KPIs
       case "sonar-code-smells":
-        return (<SonarCodeSmellsLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<SonarCodeSmellsLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "sonar-maintainability-rating":
-        return (<SonarMaintainabilityRatingLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<SonarMaintainabilityRatingLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "sonar-bugs":
-        return (<SonarBugsCountLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<SonarBugsCountLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "sonar-new-bugs":
-        return (<SonarNewBugsCountLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<SonarNewBugsCountLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "sonar-reliability-rating":
-        return (<SonarReliabilityRatingLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<SonarReliabilityRatingLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "sonar-reliability-remediation-effort":
-        return (<SonarReliabilityRemediationEffortLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<SonarReliabilityRemediationEffortLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "sonar-vulnerabilities-by-project":
-        return (<SonarMetricByProjectLineChart persona={"developer"} date={getDateObject(kpiConfiguration)} sonarMeasure={"vulnerabilities"}/>);
+        return (<SonarMetricByProjectLineChart persona={"developer"} date={getDateObject(kpiConfig)} sonarMeasure={"vulnerabilities"}/>);
       case "sonar-new-vulnerabilities-by-project":
-        return (<SonarMetricByProjectLineChart persona={"developer"} date={getDateObject(kpiConfiguration)} sonarMeasure={"new_vulnerabilities"}/>);
+        return (<SonarMetricByProjectLineChart persona={"developer"} date={getDateObject(kpiConfig)} sonarMeasure={"new_vulnerabilities"}/>);
       case "sonar-new-technical-debt-by-project":
-        return (<SonarMetricByProjectLineChart persona={"developer"} date={getDateObject(kpiConfiguration)} sonarMeasure={"new_technical_debt"}/>);
+        return (<SonarMetricByProjectLineChart persona={"developer"} date={getDateObject(kpiConfig)} sonarMeasure={"new_technical_debt"}/>);
       case "sonar-code-smells-by-project":
-        return (<SonarMetricByProjectLineChart persona={"developer"} date={getDateObject(kpiConfiguration)} sonarMeasure={"code_smells"}/>);
+        return (<SonarMetricByProjectLineChart persona={"developer"} date={getDateObject(kpiConfig)} sonarMeasure={"code_smells"}/>);
       case "sonar-code-coverage":
-        return (<SonarCodeCoverageBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<SonarCodeCoverageBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "sonar-lines-to-cover":
-        return (<SonarLinesToCoverBarChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<SonarLinesToCoverBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
 
       // Jmeter KPIs
       case "jmeter-hits":
-        return (<JmeterHitsLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JmeterHitsLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "jmeter-errors":
-        return (<JmeterErrorsLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JmeterErrorsLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "jmeter-throughput":
-        return (<JmeterThroughputLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JmeterThroughputLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "jmeter-response-time":
-        return (<JmeterResponseTimeLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JmeterResponseTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "jmeter-connect-time":
-        return (<JmeterConnectTimeTable persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JmeterConnectTimeTable persona={"developer"} date={getDateObject(kpiConfig)}/>);
 
       // Gitlab KPIs
       case "gitlab-most-active-contributors":
-        return (<GitlabMostActiveContributors persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<GitlabMostActiveContributors persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "gitlab-merge-request-by-maximum-time":
-        return (<GitlabMergeRequestByMaximumTimeChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<GitlabMergeRequestByMaximumTimeChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "gitlab-merge-requests-by-user":
-        return (<GitlabMergeRequestsByUserChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<GitlabMergeRequestsByUserChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "gitlab-time-taken-to-complete-merge-request-review":
-        return (<GitlabTimeTakenToCompleteMergeRequestReview persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<GitlabTimeTakenToCompleteMergeRequestReview persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "gitlab-commits-by-author":
-        return (<GitlabCommitsByAuthor persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<GitlabCommitsByAuthor persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "gitlab-merge-requests-pushes-and-comments":
-        return (<GitlabMergeRequestsPushesAndComments persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<GitlabMergeRequestsPushesAndComments persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "gitlab-total-commits-by-project":
-        return (<GitlabTotalCommitsByProjectChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<GitlabTotalCommitsByProjectChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "gitlab-recent-merge-requests":
-        return (<GitlabRecentMergeRequests persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<GitlabRecentMergeRequests persona={"developer"} date={getDateObject(kpiConfig)}/>);
 
       // Cypress KPIs
       case "cypress-test-results":
-        return (<CypressTestResultsTable persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<CypressTestResultsTable persona={"developer"} date={getDateObject(kpiConfig)}/>);
 
       // Junit KPIs
       case "junit-test-results":
-        return (<JunitTestResultsTable persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<JunitTestResultsTable persona={"developer"} date={getDateObject(kpiConfig)}/>);
 
       // Xunit KPIs
       case "xunit-test-results":
-        return (<XunitTestResultsTable persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<XunitTestResultsTable persona={"developer"} date={getDateObject(kpiConfig)}/>);
 
       // Metricbeat KPIs
       case "metricbeat-kubernetes-cpu-usage":
-        return (<MetricbeatCpuUsageByTimeLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<MetricbeatCpuUsageByTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "metricbeat-kubernetes-memory-usage":
-        return (<MetricbeatMemoryUsageByTimeLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<MetricbeatMemoryUsageByTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "metricbeat-kubernetes-in-network-usage":
-        return (<MetricbeatInNetworkTrafficByTimeLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<MetricbeatInNetworkTrafficByTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "metricbeat-kubernetes-out-network-usage":
-        return (<MetricbeatOutNetworkTrafficByTimeLineChart persona={"developer"} date={getDateObject(kpiConfiguration)}/>);
+        return (<MetricbeatOutNetworkTrafficByTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
     }
   }
 

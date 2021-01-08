@@ -9,7 +9,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {getDateObjectFromKpiConfiguration} from "components/insights/charts/charts-helpers";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 
-function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, dashboardData, index }) {
+function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, setKpiConfiguration, dashboardData, index }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [data, setData] = useState([]);
@@ -93,7 +93,9 @@ function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, dashboardDa
       <div>
         <ChartContainer
           kpiConfiguration={kpiConfiguration}
+          setKpiConfiguration={setKpiConfiguration}
           chart={getChartBody()}
+          loadChart={loadData}
           dashboardData={dashboardData}
           index={index}
           error={error}
