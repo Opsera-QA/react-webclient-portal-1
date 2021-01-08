@@ -16,7 +16,6 @@ import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarD
 
 
 function KpiSettingsForm({kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart, setKpis}) {
-    console.log(index);
     const { getAccessToken } = useContext(AuthContext);
     const [kpiSettings, setKpiSettings] = useState(new Model(kpiConfiguration, kpiConfigurationMetadata, false));
     const [kpiDateFilter, setKpiDateFilter] = useState(new Model(kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")], kpiDateFilterMetadata, false))
@@ -98,7 +97,10 @@ KpiSettingsForm.propTypes = {
     kpiConfiguration: PropTypes.object,
     dashboardData: PropTypes.object,
     index: PropTypes.number,
-    setView: PropTypes.func
+    setView: PropTypes.func,
+    setKpiConfiguration: PropTypes.func,
+    setKpis: PropTypes.func,
+    loadChart: PropTypes.func
 }
 
 export default KpiSettingsForm;

@@ -112,7 +112,9 @@ OpseraPipelineByStatusBarChart.propTypes = {
   persona: PropTypes.string,
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  index: PropTypes.number
+  index: PropTypes.number,
+  setKpiConfiguration: PropTypes.func,
+  setKpis: PropTypes.func
 };
 
 export default OpseraPipelineByStatusBarChart;

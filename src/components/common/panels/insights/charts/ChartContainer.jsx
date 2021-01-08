@@ -90,7 +90,10 @@ ChartContainer.propTypes = {
   dashboardData: PropTypes.object,
   error: PropTypes.object,
   isLoading: PropTypes.bool,
-  index: PropTypes.number
+  index: PropTypes.number,
+  setKpiConfiguration: PropTypes.func,
+  setKpis: PropTypes.func,
+  loadChart: PropTypes.func
 };
 
 export default ChartContainer;
