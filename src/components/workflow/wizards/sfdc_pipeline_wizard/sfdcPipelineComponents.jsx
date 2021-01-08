@@ -57,6 +57,8 @@ const SfdcPipelineComponents = ({
   const [error, setError] = useState(false);
   const [configurationError, setConfigurationError] = useState(false);
   const [save, setSave] = useState(false);
+  const [warning, setWarning] = useState(false);
+  
   const [componentTypes, setComponentTypes] = useState([]);
   // const [selectedComponentTypes, setSelectedComponentTypes] = useState([]);
   const [componentTypeForm, setComponentTypeForm] = useState(INITIAL_COMPONENT_TYPES_FORM);
@@ -66,6 +68,9 @@ const SfdcPipelineComponents = ({
 
   useEffect(() => {
     setConfigurationError(false);
+    setLoading(false);
+    setError(false);
+    setWarning(false);
     setComponentTypeForm(INITIAL_COMPONENT_TYPES_FORM);
   }, []);
 
@@ -93,7 +98,7 @@ const SfdcPipelineComponents = ({
   const dateAsOf = (
     <DateTimePicker
       time={true}
-      min={new Date().setMonth(new Date().getMonth() - 3)}
+      min={new Date().setFullYear(new Date().getFullYear() - 1)}
       max={new Date()}
       defaultValue={selectedDate}
       onChange={(value) => handleAsOfDateChange({ value })}
@@ -102,10 +107,30 @@ const SfdcPipelineComponents = ({
   );
 
   const handleAsOfDateChange = (value) => {
+    checkDateLimit(value.value);
     const date = Moment(value.value).toISOString();
     setSelectedDate(value.value);
     setAsOfDate(date);
   };
+
+  function checkDateLimit(date) {
+    var selectedDate = new Date(date);
+    var limitDate = new Date();
+    var month = limitDate.getMonth();
+    // Subtract 6 months
+    limitDate.setMonth(limitDate.getMonth() - 6);
+    // If the new month number isn't month - 6, set to last day of previous month
+    // Allow for cases where month < 6
+    var diff = (month + 12 - limitDate.getMonth()) % 12;
+    if (diff < 6) limitDate.setDate(0)    
+
+    if(selectedDate < limitDate) {
+      setWarning(true);
+      return;
+    }
+    setWarning(false);
+    return;
+  }
 
   const handleCheckAllClickComponentTypes = () => {
     setSelectedComponentTypes(componentTypes.map(({ name }) => name));
@@ -149,7 +174,7 @@ const SfdcPipelineComponents = ({
     postBody.objectType = filtered[0];
     postBody.nameSpacePrefix = nameSpacePrefix;
 
-    console.log(postBody);
+    // console.log(postBody);
     await postComponentTypes(postBody);
   };
 
@@ -181,6 +206,13 @@ const SfdcPipelineComponents = ({
           <div className="text-muted">Select component types to include in this pipeline run.</div>
 
           {error && <ErrorDialog error={error} align={"top"} setError={setError} />}
+          {warning &&  
+            // <div className="info-text mt-3 pl-4">You have selected a large date range and as such this may take some time to complete.</div>
+            <div className="warning-theme warning-text text-left">
+            <FontAwesomeIcon icon={faInfoCircle} fixedWidth className="mr-1" style={{cursor: "help"}}/>
+            You have selected a large date range and as such this may take some time to complete.
+            </div>
+          }
 
           {!configurationError && (
             <>
