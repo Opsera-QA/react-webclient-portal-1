@@ -7,7 +7,7 @@ import KpiSettingsForm from "components/insights/marketplace/kpi_marketplace_det
 import {getChartIconFromKpiConfiguration} from "components/insights/charts/charts-helpers";
 import InfoDialog from "components/common/status_notifications/info";
 
-function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, index, chart, isLoading, error, loadChart }) {
+function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, index, chart, isLoading, error, loadChart, setKpis }) {
   const [view, setView] = useState("chart");
 
   const changeView = () => {
@@ -46,6 +46,7 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
           dashboardData={dashboardData}
           index={index}
           loadChart={loadChart}
+          setKpis={setKpis}
           setView={setView}
         />
       );

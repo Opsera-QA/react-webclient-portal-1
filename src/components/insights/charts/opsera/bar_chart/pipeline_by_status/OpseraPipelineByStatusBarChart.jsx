@@ -9,7 +9,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {getDateObjectFromKpiConfiguration} from "components/insights/charts/charts-helpers";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 
-function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, setKpiConfiguration, dashboardData, index }) {
+function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [data, setData] = useState([]);
@@ -99,6 +99,7 @@ function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, setKpiConfi
           dashboardData={dashboardData}
           index={index}
           error={error}
+          setKpis={setKpis}
           isLoading={isLoading}
         />
         {/*TODO: Might make more sense to create KpiChartModal and put inside ChartContainer instead, if it's not too different between charts*/}

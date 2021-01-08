@@ -54,7 +54,6 @@ function DashboardDetailView() {
     const getDashboard = async () => {
         try {
           const response = await dashboardsActions.get(id, getAccessToken);
-          console.log(response);
           if (response != null && response.data) {
             setDashboardData(new Model(response.data, dashboardMetadata, false));
           }

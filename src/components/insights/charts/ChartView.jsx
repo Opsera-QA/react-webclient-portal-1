@@ -78,7 +78,7 @@ import MetricbeatMemoryUsageByTimeLineChart from "./metricbeat/line_chart/memory
 import MetricbeatOutNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/out_network_usage/MetricbeatOutNetworkTrafficByTimeLineChart";
 import {getDateObjectFromKpiConfiguration} from "components/insights/charts/charts-helpers";
 
-function ChartView({kpiConfiguration, dashboardData, index, loadChart}) {
+function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis}) {
   const [kpiConfig, setKpiConfig] = useState(kpiConfiguration);
   // TODO: This is only being used until each chart is updated to use ChartContainer inside.
   //  After everything is refactored,
@@ -96,6 +96,7 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart}) {
         kpiConfiguration={kpiConfig}
         setKpiConfiguration={setKpiConfig}
         dashboardData={dashboardData}
+        setKpis={setKpis}
         index={index}
       />
     );
@@ -119,6 +120,7 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart}) {
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
+              setKpis={setKpis}
               index={index}
             />
           );

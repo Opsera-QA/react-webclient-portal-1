@@ -15,7 +15,7 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 
 
-function KpiSettingsForm({kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart}) {
+function KpiSettingsForm({kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart, setKpis}) {
     console.log(index);
     const { getAccessToken } = useContext(AuthContext);
     const [kpiSettings, setKpiSettings] = useState(new Model(kpiConfiguration, kpiConfigurationMetadata, false));
@@ -62,6 +62,7 @@ function KpiSettingsForm({kpiConfiguration, setKpiConfiguration, dashboardData, 
 
     const deleteKpi = async () => {
         dashboardData.getData("configuration").splice(index, 1);
+        setKpis(dashboardData.getData("configuration"));
         setView("chart");
         return await dashboardsActions.update(dashboardData, getAccessToken);
     }

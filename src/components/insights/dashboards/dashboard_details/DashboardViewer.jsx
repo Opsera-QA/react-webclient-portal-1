@@ -35,14 +35,14 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
         </div>
       );
     }
-    console.log(kpis);
+
     return (
       <div className="px-2" style={{minWidth: "505px"}}>
         <Row className="px-2">
           {kpis.map(function (kpiConfiguration, index) {
             return (
-              <Col xl={6} md={12} className="p-2" key={index}>
-                <ChartView kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} index={index} loadChart={loadData}/>
+              <Col xl={6} md={12} className="p-2" key={kpiConfiguration._id}>
+                <ChartView kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} index={index} loadChart={loadData} setKpis={setKpis}/>
               </Col>
             )
           })}
