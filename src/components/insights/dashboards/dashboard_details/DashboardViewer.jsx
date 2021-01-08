@@ -15,11 +15,11 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-    loadData();
+    loadData(dashboardData);
   }, []);
 
-  const loadData = async () => {
-    setKpis(dashboardData?.data?.configuration);
+  const loadData = async (newDashboardData) => {
+    setKpis(newDashboardData?.data?.configuration);
   }
 
   const gotoMarketplace = () => {
@@ -41,8 +41,8 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
         <Row className="px-2">
           {kpis.map(function (kpiConfiguration, index) {
             return (
-              <Col xl={6} md={12} className="p-2" key={index}>
-                <ChartView kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} index={index}/>
+              <Col xl={6} md={12} className="p-2" key={kpiConfiguration._id}>
+                <ChartView kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} index={index} loadChart={loadData} setKpis={setKpis}/>
               </Col>
             )
           })}

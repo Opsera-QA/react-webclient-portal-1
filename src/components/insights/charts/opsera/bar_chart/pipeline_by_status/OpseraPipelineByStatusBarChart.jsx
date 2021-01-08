@@ -9,7 +9,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {getDateObjectFromKpiConfiguration} from "components/insights/charts/charts-helpers";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 
-function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, dashboardData, index }) {
+function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [data, setData] = useState([]);
@@ -93,10 +93,13 @@ function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, dashboardDa
       <div>
         <ChartContainer
           kpiConfiguration={kpiConfiguration}
+          setKpiConfiguration={setKpiConfiguration}
           chart={getChartBody()}
+          loadChart={loadData}
           dashboardData={dashboardData}
           index={index}
           error={error}
+          setKpis={setKpis}
           isLoading={isLoading}
         />
         {/*TODO: Might make more sense to create KpiChartModal and put inside ChartContainer instead, if it's not too different between charts*/}
@@ -109,7 +112,9 @@ OpseraPipelineByStatusBarChart.propTypes = {
   persona: PropTypes.string,
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  index: PropTypes.number
+  index: PropTypes.number,
+  setKpiConfiguration: PropTypes.func,
+  setKpis: PropTypes.func
 };
 
 export default OpseraPipelineByStatusBarChart;
