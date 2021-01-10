@@ -1,7 +1,7 @@
-import Model from "../../../../core/data_model/model";
+import Model from "core/data_model/model";
 
 export async function persistNewRecordAndViewDetails(recordDto, toastContext, showSuccessToasts, createRecord, lenient, history) {
-  let response = await persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient);
+  let response = await persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient, true);
 
   if (response != null && response !== false && recordDto.getDetailViewLink != null && history != null) {
     let updatedDto = new Model(response?.data, recordDto.getMetaData(), false);
@@ -11,7 +11,7 @@ export async function persistNewRecordAndViewDetails(recordDto, toastContext, sh
 }
 
 export async function persistNewRecordAndClose(recordDto, toastContext, showSuccessToasts, createRecord, lenient, handleClose) {
-  let response = await persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient);
+  let response = await persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient, true);
 
   if (response != null && response !== false && handleClose) {
     handleClose();
@@ -19,7 +19,7 @@ export async function persistNewRecordAndClose(recordDto, toastContext, showSucc
 }
 
 export async function persistNewRecordAndAddAnother(recordDto, toastContext, showSuccessToasts, createRecord, lenient, setRecordDto) {
-  let response = await persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient);
+  let response = await persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient, true);
 
   if (response != null && response !== false && setRecordDto) {
     let newModel = new Model({...recordDto.getNewObjectFields()}, recordDto.getMetaData(), true);
@@ -27,13 +27,19 @@ export async function persistNewRecordAndAddAnother(recordDto, toastContext, sho
   }
 }
 
-export async function persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient) {
+export async function persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient, showErrorToastsInline = true) {
   try {
     let isModelValid = recordDto.isModelValid2();
     if (!isModelValid && !lenient) {
       let errors = recordDto.isModelValid();
       console.error(JSON.stringify(errors));
-      toastContext.showFormValidationErrorDialog(errors && errors.length > 0 ? errors[0] : undefined);
+
+      if (showErrorToastsInline) {
+        toastContext.showInlineFormValidationErrorInline(errors && errors.length > 0 ? errors[0] : undefined);
+      }
+      else {
+        toastContext.showFormValidationErrorDialog(errors && errors.length > 0 ? errors[0] : undefined);
+      }
       return false;
     }
 
@@ -49,7 +55,14 @@ export async function persistNewRecord(recordDto, toastContext, showSuccessToast
     return response;
   } catch (error) {
     console.error(error);
-    toastContext.showCreateFailureResultDialog(recordDto.getType(), error);
+
+    if (showErrorToastsInline) {
+      toastContext.showInlineCreateFailureResultDialog(recordDto.getType(), error);
+    }
+    else {
+      toastContext.showCreateFailureResultDialog(recordDto.getType(), error)
+    }
+
     return false;
   }
 }

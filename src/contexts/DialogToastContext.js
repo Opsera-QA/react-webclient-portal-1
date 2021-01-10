@@ -12,6 +12,7 @@ import WarningToast from "../components/common/status_notifications/toasts/Warni
 import SuccessBanner from "../components/common/status_notifications/banners/SuccessBanner";
 import InformationBanner from "../components/common/status_notifications/banners/InformationBanner";
 import WarningBanner from "../components/common/status_notifications/banners/WarningBanner";
+import InlineError from "components/common/status_notifications/inline/InlineError";
 
 const notificationTypes = {
   FORM: "form",
@@ -50,6 +51,17 @@ function ToastContextProvider ({ children }) {
       let newBannerMessage = {id: id, bannerMessage: bannerMessage, type: notificationType};
       setBannerMessages(bannerMessages => [...bannerMessages, newBannerMessage]);
     }, [setBannerMessages]
+  );
+
+  const setInlineMessage = useCallback((bannerMessage, id, notificationType) => {
+      let newBannerMessage = {id: id, bannerMessage: bannerMessage, type: notificationType};
+      setInlineBanner(newBannerMessage);
+    }, [setInlineBanner]
+  );
+
+  const removeInlineMessage = useCallback(() => {
+      setInlineBanner(undefined);
+    }, [setInlineBanner]
   );
 
   const removeBannerMessage = useCallback((id) => {
@@ -190,6 +202,24 @@ function ToastContextProvider ({ children }) {
     addToast(errorToast, id, notificationTypes.FORM);
   };
 
+  const showFormValidationErrorBanner = (errorMessage = "") => {
+    let id = generateUUID();
+    let errorToast = getErrorToast(undefined, id,`WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`);
+    addToast(errorToast, id, notificationTypes.FORM);
+  };
+
+  const showFormValidationErrorToast = (errorMessage = "") => {
+    let id = generateUUID();
+    let errorToast = getErrorToast(undefined, id,`WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`);
+    addToast(errorToast, id, notificationTypes.FORM);
+  };
+
+  const showInlineFormValidationErrorInline = (errorMessage = "") => {
+    let id = generateUUID();
+    let inlineErrorBanner = getInlineErrorBanner(`WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`, id);
+    setInlineMessage(inlineErrorBanner, id, notificationTypes.FORM);
+  };
+
   // TODO: Phase this out on many screens. Instead of showing loading error, find way to make it look better (like the data not found container) where relevant
   const showLoadingErrorDialog = (error) => {
     let id = generateUUID();
@@ -243,6 +273,11 @@ function ToastContextProvider ({ children }) {
     addToast(errorToast, id, notificationTypes.FORM);
   }
 
+  const showInlineCreateFailureResultDialog = (type, error) => {
+    let id = generateUUID();
+    let inlineErrorBanner = getInlineErrorBanner(error, id, `WARNING! An error has occurred creating this ${type}:`);
+    setInlineMessage(inlineErrorBanner, id, notificationTypes.FORM);
+  }
   const showUpdateFailureResultDialog = (type, error) => {
     let id = generateUUID();
     let errorToast = getErrorToast(error, id, `WARNING! An error has occurred updating this ${type}:`);
@@ -292,6 +327,10 @@ function ToastContextProvider ({ children }) {
     return <ErrorBanner error={error} prependMessage={prependMessage} id={id} removeBanner={removeBannerMessage} />
   };
 
+  const getInlineErrorBanner = (error, id, prependMessage = "") => {
+    return <InlineError error={error} prependMessage={prependMessage} id={id} removeBanner={removeInlineMessage} />
+  };
+
   const getErrorToast = (error, id, prependMessage = "", autoCloseLengthInSeconds) => {
     return <ErrorToast error={error} prependMessage={prependMessage} id={id} removeToast={removeToast} autoCloseLength={autoCloseLengthInSeconds} />
   };
@@ -312,12 +351,8 @@ function ToastContextProvider ({ children }) {
     return <InformationToast informationMessage={message} id={id} removeToast={removeToast} autoCloseLength={autoCloseLengthInSeconds}/>
   };
 
-  const getModalToast = () => {
-    return <>{inlineBanner != null ? inlineBanner : null}</>;
-  }
-
   const getInlineBanner = () => {
-    return <>{inlineBanner != null ? inlineBanner : null}</>;
+    return <>{inlineBanner ? inlineBanner.bannerMessage : null}</>;
   }
 
   //TMP Solution to bypass array
@@ -339,6 +374,9 @@ function ToastContextProvider ({ children }) {
           showFormValidationErrorDialog: showFormValidationErrorDialog,
           showMissingRequiredFieldsErrorDialog: showMissingRequiredFieldsErrorDialog,
           showSuccessDialog: showSuccessToast,
+
+          showInlineCreateFailureResultDialog: showInlineCreateFailureResultDialog,
+          showInlineFormValidationErrorInline: showInlineFormValidationErrorInline,
 
           // TODO: Remove instances
           showInformationToast: showInformationToast,
