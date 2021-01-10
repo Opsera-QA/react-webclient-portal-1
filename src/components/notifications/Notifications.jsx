@@ -24,7 +24,7 @@ function Notifications() {
     loadData();
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (newFilterDto = notificationFilterDto) => {
     try {
       setIsLoading(true);
       const userRoleAccess = await getRoles();
@@ -33,7 +33,7 @@ function Notifications() {
         setAccessRoleData(userRoleAccess);
 
         if(userRoleAccess?.PowerUser || userRoleAccess?.Administrator || userRoleAccess?.OpseraAdministrator) {
-          await loadNotifications();
+          await loadNotifications(newFilterDto);
         }
       }
     } catch (error) {
