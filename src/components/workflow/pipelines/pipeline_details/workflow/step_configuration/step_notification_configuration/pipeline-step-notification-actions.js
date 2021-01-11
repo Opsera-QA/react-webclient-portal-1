@@ -1,9 +1,15 @@
 import baseActions from "../../../../../../../utils/actionsBase";
 
+// TODO Implement
 const pipelineStepNotificationActions = {};
 
 pipelineStepNotificationActions.getJiraBoards = async (jiraStepNotificationDto, getAccessToken) => {
   let toolId = jiraStepNotificationDto.getData("jiraToolId");
+  const apiUrl = `/connectors/jira/${toolId}/boards`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+pipelineStepNotificationActions.getJiraBoardsWithId = async (toolId, getAccessToken) => {
   const apiUrl = `/connectors/jira/${toolId}/boards`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
@@ -15,8 +21,18 @@ pipelineStepNotificationActions.getJiraSprints = async (jiraStepNotificationDto,
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+pipelineStepNotificationActions.getJiraSprints2 = async (toolId, board, getAccessToken) => {
+  const apiUrl = `connectors/jira/${toolId}/sprints?board=${board}`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
 pipelineStepNotificationActions.getJiraProjects = async (jiraStepNotificationDto, getAccessToken) => {
   let toolId = jiraStepNotificationDto.getData("jiraToolId");
+  const apiUrl = `/connectors/jira/${toolId}/projects`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+pipelineStepNotificationActions.getJiraProjectsFromId = async (toolId, getAccessToken) => {
   const apiUrl = `/connectors/jira/${toolId}/projects`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
@@ -28,11 +44,22 @@ pipelineStepNotificationActions.getJiraProjectUsers = async (jiraStepNotificatio
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+pipelineStepNotificationActions.getJiraProjectUsers2 = async (toolId, projectKey, getAccessToken) => {
+  const apiUrl = `/connectors/jira/${toolId}/project/users?project=${projectKey}`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
 pipelineStepNotificationActions.getJiraPriorities = async (jiraStepNotificationDto, getAccessToken) => {
   let toolId = jiraStepNotificationDto.getData("jiraToolId");
   const apiUrl = `/connectors/jira/${toolId}/priorities`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
+
+pipelineStepNotificationActions.getJiraPrioritiesWithId = async (jiraToolId, getAccessToken) => {
+  const apiUrl = `/connectors/jira/${jiraToolId}/priorities`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
 
 pipelineStepNotificationActions.getJiraTicketDetails = async (toolId, ticketId, getAccessToken) => {
   const apiUrl = `/connectors/jira/${toolId}/ticket/${ticketId}/details`;

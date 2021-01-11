@@ -6,15 +6,7 @@ import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import jiraNotificationMetadata from "components/notifications/notification_details/notification_method_forms/jira/jiraNotificationMetadata";
-import JiraStepNotificationParentTicketInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/jira/JiraStepNotificationParentTicketInput";
-import JiraStepNotificationProjectUserInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/jira/JiraStepNotificationProjectUserInput";
-import JiraStepNotificationToolInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/jira/JiraStepNotificationToolInput";
-import JiraStepNotificationProjectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/jira/JiraStepNotificationProjectInput";
-import JiraStepNotificationProjectUsersMultiSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/jira/JiraStepNotificationProjectUsersMultiSelectInput";
-import JiraStepNotificationBoardInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/jira/JiraStepNotificationBoardInput";
-import JiraStepNotificationSprintInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/jira/JiraStepNotificationSprintInput";
-import JiraStepNotificationPriorityInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/jira/JiraStepNotificationPriorityInput";
-import JiraStepNotificationWorkflowStepInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/jira/JiraStepNotificationWorkflowStepInput";
+import JiraInput from "components/notifications/notification_details/notification_method_forms/jira/JiraInput";
 
 function JiraNotificationMethodConfigurationPanel({ notificationDataDto, notificationMethodDataDto, setNotificationMethodDataDto }) {
   useEffect(() => {loadData();}, []);
@@ -40,16 +32,7 @@ function JiraNotificationMethodConfigurationPanel({ notificationDataDto, notific
   return (
     <div className="mb-4">
       {getJiraMessage()}
-      <JiraStepNotificationToolInput setDataObject={setNotificationMethodDataDto} dataObject={notificationMethodDataDto} />
-      <JiraStepNotificationPriorityInput jiraToolId={notificationMethodDataDto.getData("jiraToolId")} setDataObject={setNotificationMethodDataDto} dataObject={notificationMethodDataDto} />
-      <JiraStepNotificationProjectInput jiraToolId={notificationMethodDataDto.getData("jiraToolId")} setDataObject={setNotificationMethodDataDto} dataObject={notificationMethodDataDto} />
-      <JiraStepNotificationProjectUserInput jiraToolId={notificationMethodDataDto.getData("jiraToolId")} jiraProject={notificationMethodDataDto.getData("jiraProject")} setDataObject={setNotificationMethodDataDto} dataObject={notificationMethodDataDto} />
-      <JiraStepNotificationProjectUsersMultiSelectInput jiraToolId={notificationMethodDataDto.getData("jiraToolId")} jiraProject={notificationMethodDataDto.getData("jiraProject")} setDataObject={setNotificationMethodDataDto} dataObject={notificationMethodDataDto} />
-      <JiraStepNotificationBoardInput jiraToolId={notificationMethodDataDto.getData("jiraToolId")} setDataObject={setNotificationMethodDataDto} dataObject={notificationMethodDataDto} />
-      <JiraStepNotificationSprintInput jiraToolId={notificationMethodDataDto.getData("jiraToolId")} jiraBoard={notificationMethodDataDto.getData("jiraBoard")} setDataObject={setNotificationMethodDataDto} dataObject={notificationMethodDataDto} />
-      <JiraStepNotificationParentTicketInput jiraToolId={notificationMethodDataDto.getData("jiraToolId")} jiraSprintId={notificationMethodDataDto.getData("jiraSprint")} setDataObject={setNotificationMethodDataDto} dataObject={notificationMethodDataDto} />
-      <JiraStepNotificationWorkflowStepInput jiraToolId={notificationMethodDataDto.getData("jiraToolId")} jiraProject={notificationMethodDataDto.getData("jiraProject")} setDataObject={setNotificationMethodDataDto} dataObject={notificationMethodDataDto} fieldName={"jiraOpenStep"} />
-      <JiraStepNotificationWorkflowStepInput jiraToolId={notificationMethodDataDto.getData("jiraToolId")} jiraProject={notificationMethodDataDto.getData("jiraProject")} setDataObject={setNotificationMethodDataDto} dataObject={notificationMethodDataDto} fieldName={"jiraClosureStep"} />
+      <JiraInput dataObject={notificationMethodDataDto} setDataObject={setNotificationMethodDataDto} />
     </div>
   );
 }

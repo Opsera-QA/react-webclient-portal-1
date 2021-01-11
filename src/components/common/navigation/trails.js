@@ -12,6 +12,7 @@ const breadcrumbs = {
   // Inventory
   toolRegistry: {name: "toolRegistry", path: paths.toolRegistry, label: "Tool Registry", icon: faClipboardList},
   toolDetailView: {name: "toolDetailView", path: paths.toolDetailView, label: "Tool Details", icon: faTools},
+  toolProjectDetailView: {name: "toolProjectDetailView", path: paths.toolProjectDetailView, label: "Tool Project Details", icon: faProjectDiagram},
 
   // Administration
   admin: {name: "admin", path: paths.admin, label: "Administration Tools", icon: faTools},
@@ -99,6 +100,7 @@ const trails = {
   // Inventory
   toolRegistry: {parent: undefined, breadcrumb: breadcrumbs.toolRegistry},
   toolDetailView: {parent: "toolRegistry", breadcrumb: breadcrumbs.toolDetailView},
+  toolProjectDetailView: {parent: "toolDetailView", breadcrumb: breadcrumbs.toolDetailView},
 
   // Administration
   admin: {parent: undefined, breadcrumb: breadcrumbs.admin},

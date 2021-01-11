@@ -1,22 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { AuthContext } from "../../../../contexts/AuthContext";
-import Model from "../../../../core/data_model/model";
-import ToolSummaryPanel from "./ToolSummaryPanel";
-import inventoryActions from "../../inventory-actions";
-import toolMetadata from "../tool-metadata";
 import ToolDetailPanel from "./ToolDetailPanel";
 import {faTools} from "@fortawesome/pro-solid-svg-icons";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
-import {axiosApiService} from "../../../../api/apiService";
-import ActionBarContainer from "../../../common/actions/ActionBarContainer";
-import ActionBarToggleButton from "../../../common/actions/buttons/ActionBarToggleButton";
-import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
-import ActionBarDeleteToolButton from "../../../common/actions/buttons/tool/ActionBarDeleteToolButton";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import inventoryActions from "components/inventory/inventory-actions";
+import toolMetadata from "components/inventory/tools/tool-metadata";
+import Model from "core/data_model/model";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
+import ActionBarDeleteToolButton from "components/common/actions/buttons/tool/ActionBarDeleteToolButton";
+import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 
 function ToolDetailView() {
-  const { id } = useParams();
+  const { id, tab } = useParams();
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [toolData, setToolData] = useState(undefined);
@@ -70,7 +67,7 @@ function ToolDetailView() {
       isLoading={isLoading}
       activeField={"active"}
       actionBar={getActionBar()}
-      detailPanel={<ToolDetailPanel toolData={toolData} isLoading={isLoading} setToolData={setToolData} loadData={getTool}/>}
+      detailPanel={<ToolDetailPanel toolData={toolData} isLoading={isLoading} tab={tab} setToolData={setToolData} loadData={getTool}/>}
     />
   )
 }

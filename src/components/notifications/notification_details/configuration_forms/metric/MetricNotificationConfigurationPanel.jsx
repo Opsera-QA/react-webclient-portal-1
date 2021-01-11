@@ -4,10 +4,10 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
 import metricNotificationConfigurationMetadata
   from "components/notifications/notification_details/configuration_forms/metric/metric-notification-configuration-metadata";
-import KpiSelectInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiSelectInput";
 import Row from "react-bootstrap/Row";
-import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import Col from "react-bootstrap/Col";
+import MetricKpiConfigurationSelectInput
+  from "components/notifications/notification_details/configuration_forms/metric/MetricKpiConfigurationSelectInput";
 
 function MetricNotificationConfigurationPanel({ notificationDataDto, notificationConfigurationData, setNotificationConfigurationData }) {
   useEffect(() => {loadData();}, []);
@@ -24,10 +24,7 @@ function MetricNotificationConfigurationPanel({ notificationDataDto, notificatio
   return (
     <Row>
       <Col lg={12}>
-        <KpiSelectInput dataObject={notificationConfigurationData} setDataObject={setNotificationConfigurationData} fieldName={"kpi_identifier"} />
-      </Col>
-      <Col lg={12}>
-        <TextAreaInput dataObject={notificationConfigurationData} setDataObject={setNotificationConfigurationData} fieldName={"trigger"} />
+        <MetricKpiConfigurationSelectInput dataObject={notificationConfigurationData} setDataObject={setNotificationConfigurationData} fieldName={"kpi_identifier"} />
       </Col>
     </Row>
   );

@@ -15,9 +15,9 @@ import {
   faList,
   faTable,
   faUsers,
-  faBrowser, 
+  faBrowser,
   faTags,
-  faDiceD20
+  faDiceD20, faProjectDiagram
 } from "@fortawesome/pro-light-svg-icons";
 import ToolApplicationsPanel from "./ToolAppliationsPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
@@ -26,17 +26,63 @@ import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import ToolPipelinesPanel from "./ToolPipelinesPanel";
 import ToolTaggingPanel from "./ToolTaggingPanel";
+import ToolProjectsPanel from "components/inventory/tools/tool_details/projects/ToolProjectsPanel";
 
-function ToolDetailPanel({ toolData, setToolData, loadData, isLoading }) {
-  const [activeTab, setActiveTab] = useState("summary");
+function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
+  const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
     setActiveTab(activeTab);
   };
 
+  const getDynamicTabs = () => {
+    switch (toolData?.getData("tool_identifier")) {
+      case "jenkins":
+      return (
+        <>
+          <CustomTab icon={faAbacus} tabName={"jobs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Jobs"}/>
+          <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"}/>
+          <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Logs"}/>
+        </>
+      );
+      case "argo":
+      case "octopus":
+        return (
+          <>
+            <CustomTab icon={faBrowser} tabName={"applications"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Applications"}/>
+            <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Logs"}/>
+          </>
+        )
+      case "gitlab":
+      case "github":
+      case "bitbucket":
+        return (
+          <>
+          {/*<CustomTab icon={faTags} tabName={"tagging"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tagging"}/>*/}
+          </>
+        );
+      case "jira":
+        return (
+          <>
+            <CustomTab icon={faProjectDiagram} tabName={"projects"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Projects"}/>
+          </>
+          );
+      default: return <></>;
+    }
+  };
+
   const getTabContainer = () => {
-    return (<ToolTabOptions activeTab={activeTab} handleTabClick={handleTabClick} tool_identifier={toolData["tool_identifier"]}/>);
+    return (
+      <CustomTabContainer>
+        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Attributes"}/>
+        <CustomTab icon={faDiceD20} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
+        <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"}/>
+        {getDynamicTabs()}
+        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
+      </CustomTabContainer>
+    );
   };
 
   const getCurrentView = () => {
@@ -57,6 +103,8 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading }) {
         return <ToolLogsPanel toolData={toolData}/>;
       case "tagging":
         return <ToolTaggingPanel toolData={toolData} />;
+      case "projects":
+        return <ToolProjectsPanel toolData={toolData} isLoading={isLoading} loadData={loadData} />
       case "settings":
         return <ToolEditorPanel toolData={toolData} setToolData={setToolData} loadData={loadData}/>;
       case "pipelines":
@@ -69,109 +117,12 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading }) {
   return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
 }
 
-// TODO: Rework this
-function ToolTabOptions({ activeTab, tool_identifier, handleTabClick }) {
-  useEffect(() => {}, [tool_identifier]);
-
-  switch (tool_identifier) {
-  case "jenkins":
-    return (
-      <CustomTabContainer>
-        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
-                   tabText={"Attributes"}/>
-        <CustomTab icon={faDiceD20} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab}
-                   tabText={"Pipelines"}/>
-        <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
-                   activeTab={activeTab} tabText={"Connection"}/>
-        <CustomTab icon={faAbacus} tabName={"jobs"} handleTabClick={handleTabClick} activeTab={activeTab}
-                   tabText={"Jobs"}/>
-        <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab}
-                   tabText={"Accounts"}/>
-        <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab}
-                   tabText={"Logs"}/>
-        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
-      </CustomTabContainer>
-    );
-
-  case "argo":
-    return (
-      <CustomTabContainer>
-        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
-                   tabText={"Attributes"}/>
-        <CustomTab icon={faDiceD20} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab}
-                   tabText={"Pipelines"}/>
-        <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
-                   activeTab={activeTab} tabText={"Connection"}/>
-        <CustomTab icon={faBrowser} tabName={"applications"} handleTabClick={handleTabClick} activeTab={activeTab}
-                   tabText={"Applications"}/>
-        <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab}
-                   tabText={"Logs"}/>
-        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
-      </CustomTabContainer>
-    );
-    case "octopus":
-      return (
-        <CustomTabContainer>
-          <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-          <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
-                     tabText={"Attributes"}/>
-          <CustomTab icon={faDiceD20} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab}
-                     tabText={"Pipelines"}/>
-          <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
-                     activeTab={activeTab} tabText={"Connection"}/>
-          <CustomTab icon={faBrowser} tabName={"applications"} handleTabClick={handleTabClick} activeTab={activeTab}
-                     tabText={"Applications"}/>
-          <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab}
-            tabText={"Logs"}/>
-          <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        </CustomTabContainer>
-      );
-    case "gitlab":
-    case "github":
-    case "bitbucket":
-      return (
-        <CustomTabContainer>
-          <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-          {/*<CustomTab icon={faTags} tabName={"tagging"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tagging"}/>*/}
-          <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
-                     tabText={"Attributes"}/>
-          <CustomTab icon={faDiceD20} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab}
-                     tabText={"Pipelines"}/>
-          <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
-                     activeTab={activeTab} tabText={"Connection"}/>
-          <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        </CustomTabContainer>
-      );
-  default:
-    return (
-      <CustomTabContainer>
-        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab}
-                   tabText={"Attributes"}/>
-        <CustomTab icon={faDiceD20} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab}
-                   tabText={"Pipelines"}/>
-        <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick}
-                   activeTab={activeTab} tabText={"Connection"}/>
-        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
-      </CustomTabContainer>
-    );
-  }
-}
-
-
 ToolDetailPanel.propTypes = {
   toolData: PropTypes.object,
   setToolData: PropTypes.func,
   loadData: PropTypes.func,
+  tab: PropTypes.string,
   isLoading: PropTypes.bool,
-};
-
-ToolTabOptions.propTypes = {
-  activeTab: PropTypes.string,
-  tool_identifier: PropTypes.string,
-  handleTabClick: PropTypes.func,
 };
 
 export default ToolDetailPanel;

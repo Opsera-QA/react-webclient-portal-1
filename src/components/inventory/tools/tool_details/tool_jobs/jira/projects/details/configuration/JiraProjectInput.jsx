@@ -1,19 +1,20 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import pipelineStepNotificationActions from "../pipeline-step-notification-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/SelectInputBase";
+import pipelineStepNotificationActions
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
 
-function JiraStepNotificationBoardInput({visible, jiraToolId, dataObject, setDataObject, disabled}) {
+function JiraProjectInput({jiraToolId, visible, dataObject, setDataObject, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [boards, setBoards] = useState([]);
+  const [projects, setProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setBoards([]);
-    if (jiraToolId !== "") {
+    setProjects([]);
+    if (jiraToolId && jiraToolId !== "") {
       loadData();
     }
   }, [jiraToolId]);
@@ -32,15 +33,13 @@ function JiraStepNotificationBoardInput({visible, jiraToolId, dataObject, setDat
   };
 
   const loadProjects = async () => {
-    const response = await pipelineStepNotificationActions.getJiraBoards(dataObject, getAccessToken);
-
-    if (response.data != null && response.data.message != null && Array.isArray(response.data.message)) {
-      setBoards(response.data.message);
+    const response = await pipelineStepNotificationActions.getJiraProjectsFromId(jiraToolId, getAccessToken);
+    if (Array.isArray(response?.data?.message)) {
+      setProjects(response.data.message);
     }
   };
 
-
-  const setJiraBoard = (selectedOption) => {
+  const setJiraProject = (selectedOption) => {
     let newDataObject = {...selectedOption};
     newDataObject.setData("jiraSprint", "");
     newDataObject.setData("jiraParentTicket", "");
@@ -49,15 +48,15 @@ function JiraStepNotificationBoardInput({visible, jiraToolId, dataObject, setDat
 
   const getPlaceholderText = () => {
     if (isLoading) {
-      return "Loading Jira Boards";
+      return "Loading Jira Projects";
     }
 
     if (jiraToolId === "") {
-      return "A Jira Tool must be selected before selecting Jira Board";
+      return "A Jira Tool must be selected before selecting Jira Project";
     }
 
-    if (!isLoading && jiraToolId !== "" && boards.length === 0) {
-      return "No Jira Boards found for selected Jira tool.";
+    if (!isLoading && jiraToolId !== "" && projects.length === 0) {
+      return "No Jira Projects found for selected Jira Tool.";
     }
   };
 
@@ -67,29 +66,29 @@ function JiraStepNotificationBoardInput({visible, jiraToolId, dataObject, setDat
 
   return (
     <SelectInputBase
-      fieldName={"jiraBoard"}
+      fieldName={"jiraProject"}
       dataObject={dataObject}
-      setDataObject={setJiraBoard}
-      selectOptions={boards}
+      setDataObject={setJiraProject}
+      selectOptions={projects}
       busy={isLoading}
-      placeholderText={getPlaceholderText()}
-      valueField="id"
+      valueField="key"
       textField="name"
-      disabled={disabled || isLoading || jiraToolId === null || boards.length === 0}
+      placeholderText={getPlaceholderText()}
+      disabled={disabled || isLoading || jiraToolId == null || projects.length === 0}
     />
   );
 }
 
-JiraStepNotificationBoardInput.propTypes = {
+JiraProjectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  jiraToolId: PropTypes.string,
   disabled: PropTypes.bool,
-  visible: PropTypes.bool
+  visible: PropTypes.bool,
+  jiraToolId: PropTypes.string
 };
 
-JiraStepNotificationBoardInput.defaultProps = {
+JiraProjectInput.defaultProps = {
   visible: true
 }
 
-export default JiraStepNotificationBoardInput;
+export default JiraProjectInput;
