@@ -24,6 +24,7 @@ function ToolIdentifierTable({data, loadData, isLoading}) {
       getTableTextColumn(fields.find(field => { return field.id === "description" })),
       getTableDateColumn(fields.find(field => { return field.id === "createdAt" })),
       getTableBooleanIconColumn(fields.find(field => { return field.id === "active" })),
+      getTableBooleanIconColumn(fields.find(field => { return field.id === "enabledInRegistry" })),
     ],
     []
   );
