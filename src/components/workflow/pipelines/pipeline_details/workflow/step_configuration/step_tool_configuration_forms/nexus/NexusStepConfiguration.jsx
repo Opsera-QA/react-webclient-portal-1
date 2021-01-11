@@ -10,12 +10,11 @@ import Model from "core/data_model/model";
 import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import LoadingDialog from "components/common/status_notifications/loading";
-import { axiosApiService } from "../../../../../../../../api/apiService";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import _ from "lodash";
-import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
-import SaveButton from "../../../../../../../common/buttons/SaveButton";
 import nexusStepActions from "./nexus-step-actions";
+import SaveButton2 from "components/common/buttons/saving/SaveButton2";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 const NEXUS_STEP_TYPES = [
   {
@@ -294,7 +293,7 @@ function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToo
             }
         </>
       }
-      <SaveButton disable={nexusStepConfigurationDto.getData("type") === "push" && nexusStepConfigurationDto.getData("artifactStepId").length === 0} recordDto={nexusStepConfigurationDto} setRecordDto={setNexusStepConfigurationDataDto} createRecord={callbackFunction} updateRecord={callbackFunction} />
+      <SaveButton2 disable={nexusStepConfigurationDto.getData("type") === "push" && nexusStepConfigurationDto.getData("artifactStepId").length === 0} recordDto={nexusStepConfigurationDto} setRecordDto={setNexusStepConfigurationDataDto} createRecord={callbackFunction} updateRecord={callbackFunction} />
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
     </>
   );
