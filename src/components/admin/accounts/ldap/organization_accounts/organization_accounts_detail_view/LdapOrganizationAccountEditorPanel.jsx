@@ -3,16 +3,15 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import DropdownList from "react-widgets/lib/DropdownList";
-import accountsActions from "../../../accounts-actions";
-import {AuthContext} from "../../../../../../contexts/AuthContext";
-import {capitalizeFirstLetter} from "../../../../../common/helpers/string-helpers";
-import DtoTextInput from "../../../../../common/input/dto_input/dto-text-input";
-import DtoToggleInput from "../../../../../common/input/dto_input/dto-toggle-input";
-import SaveButton from "../../../../../common/buttons/SaveButton";
-import LoadingDialog from "../../../../../common/status_notifications/loading";
-import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
-import WarningDialog from "../../../../../common/status_notifications/WarningDialog";
-import EditorPanelContainer from "../../../../../common/panels/detail_panel_container/EditorPanelContainer";
+import {AuthContext} from "contexts/AuthContext";
+import accountsActions from "components/admin/accounts/accounts-actions";
+import LoadingDialog from "components/common/status_notifications/loading";
+import WarningDialog from "components/common/status_notifications/WarningDialog";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import BooleanToggleInput from "components/common/inputs/BooleanToggleInput";
+import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
 function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOrganization, setLdapOrganizationAccountData, authorizedActions, handleClose}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -20,7 +19,6 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
   const [opseraUserList, setOpseraUsersList] = useState([]);
   const [currentOpseraUser, setCurrentOpseraUser] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     loadData();
@@ -130,45 +128,45 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
           </Row>
           <Row>
             <Col lg={12}>
-              <DtoTextInput disabled={!ldapOrganizationAccountDataDto.isNew()} fieldName={"orgOwner"}
+              <TextInputBase disabled={!ldapOrganizationAccountDataDto.isNew()} fieldName={"orgOwner"}
                             dataObject={ldapOrganizationAccountDataDto}
                             setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput disabled={true} fieldName={"orgOwnerEmail"} dataObject={ldapOrganizationAccountDataDto}
+              <TextInputBase disabled={true} fieldName={"orgOwnerEmail"} dataObject={ldapOrganizationAccountDataDto}
                             setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput disabled={!ldapOrganizationAccountDataDto.isNew()} fieldName={"orgDomain"}
+              <TextInputBase disabled={!ldapOrganizationAccountDataDto.isNew()} fieldName={"orgDomain"}
                             dataObject={ldapOrganizationAccountDataDto}
                             setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput disabled={!ldapOrganizationAccountDataDto.isNew()} fieldName={"name"} dataObject={ldapOrganizationAccountDataDto}
+              <TextInputBase disabled={!ldapOrganizationAccountDataDto.isNew()} fieldName={"name"} dataObject={ldapOrganizationAccountDataDto}
                             setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput fieldName={"accountName"} dataObject={ldapOrganizationAccountDataDto}
+              <TextInputBase fieldName={"accountName"} dataObject={ldapOrganizationAccountDataDto}
                             setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput fieldName={"description"} dataObject={ldapOrganizationAccountDataDto}
+              <TextInputBase fieldName={"description"} dataObject={ldapOrganizationAccountDataDto}
                             setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput disabled={true} fieldName={"configEntryType"} dataObject={ldapOrganizationAccountDataDto}
+              <TextInputBase disabled={true} fieldName={"configEntryType"} dataObject={ldapOrganizationAccountDataDto}
                             setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput disabled={true} fieldName={"entityID"} dataObject={ldapOrganizationAccountDataDto}
+              <TextInputBase disabled={true} fieldName={"entityID"} dataObject={ldapOrganizationAccountDataDto}
                             setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput disabled={true} fieldName={"idpPostURL"} dataObject={ldapOrganizationAccountDataDto}
+              <TextInputBase disabled={true} fieldName={"idpPostURL"} dataObject={ldapOrganizationAccountDataDto}
                             setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput disabled={true} fieldName={"idpVendor"} dataObject={ldapOrganizationAccountDataDto}
+              <TextInputBase disabled={true} fieldName={"idpVendor"} dataObject={ldapOrganizationAccountDataDto}
                             setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             {/*<Col>*/}
@@ -176,31 +174,29 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
             {/*             formData={formData}/>*/}
             {/*</Col>*/}
             <Col lg={12}>
-              <DtoToggleInput disabled={true} fieldName={"isMultipleIDP"} dataObject={ldapOrganizationAccountDataDto}
+              <BooleanToggleInput disabled={true} fieldName={"isMultipleIDP"} dataObject={ldapOrganizationAccountDataDto}
                               setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoToggleInput disabled={true} fieldName={"localAuth"} dataObject={ldapOrganizationAccountDataDto}
+              <BooleanToggleInput disabled={true} fieldName={"localAuth"} dataObject={ldapOrganizationAccountDataDto}
                               setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoToggleInput disabled={true} fieldName={"samlEnabled"} dataObject={ldapOrganizationAccountDataDto}
+              <BooleanToggleInput disabled={true} fieldName={"samlEnabled"} dataObject={ldapOrganizationAccountDataDto}
                               setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoToggleInput disabled={true} fieldName={"oAuthEnabled"} dataObject={ldapOrganizationAccountDataDto}
+              <BooleanToggleInput disabled={true} fieldName={"oAuthEnabled"} dataObject={ldapOrganizationAccountDataDto}
                               setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
           </Row>
-
-          <Row>
-            <div className="ml-auto mt-3 px-3">
-              <SaveButton recordDto={ldapOrganizationAccountDataDto} createRecord={createOrganizationAccount}
-                          updateRecord={updateLdapOrganizationAccount} handleClose={handleClose} setRecordDto={setLdapOrganizationAccountDataDto}
-                          setData={setLdapOrganizationAccountData}
-              />
-            </div>
-          </Row>
+        <PersistButtonContainer
+          createRecord={createOrganizationAccount}
+          updateRecord={updateLdapOrganizationAccount}
+          setRecordDto={setLdapOrganizationAccountDataDto}
+          recordDto={ldapOrganizationAccountDataDto}
+          handleClose={handleClose}
+        />
       </EditorPanelContainer>
     );
 }
