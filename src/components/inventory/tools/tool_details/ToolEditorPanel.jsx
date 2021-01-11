@@ -8,20 +8,19 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import DtoTextInput from "components/common/input/dto_input/dto-text-input";
-import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import DtoTagManagerInput from "components/common/input/dto_input/dto-tag-manager-input";
 import ToolClassificationSelectInput
   from "components/common/list_of_values_input/inventory/ToolClassificationSelectInput";
 import DtoMultipleInput from "components/common/input/dto_input/dto-multiple-input";
 import DtoToggleInput from "components/common/input/dto_input/dto-toggle-input";
 import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
+import RegistryToolIdentifierSelectInput
+  from "components/inventory/tools/tool_details/input/RegistryToolIdentifierSelectInput";
 
 function ToolEditorPanel({ toolData, setToolData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [toolDataDto, setToolDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [ toolList, setToolList ] = useState([]);
 
   useEffect(() => {
     loadData();
@@ -30,18 +29,7 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
   const loadData = async () => {
     setIsLoading(true);
     setToolDataDto(toolData);
-    await getToolList();
     setIsLoading(false);
-  };
-
-  const getToolList = async () => {
-    try {
-      const toolResponse = await toolsActions.getTools(getAccessToken);
-      setToolList(toolResponse.data);
-    }
-    catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    }
   };
 
   const createTool = async () => {
@@ -50,14 +38,6 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
 
   const updateTool = async () => {
     return await toolsActions.updateTool(toolDataDto, getAccessToken);
-  };
-
-  const handleToolIdentifierChange = (fieldName, value) => {
-    let newDataObject = toolDataDto;
-    newDataObject.setData("tool_identifier", value.identifier);
-    newDataObject.setData("tool_type_identifier", value.tool_type_identifier);
-    newDataObject.setData("configuration", {});
-    setToolDataDto({...newDataObject});
   };
 
   if (isLoading) {
@@ -70,9 +50,7 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
               <DtoTextInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"name"}/>
             </Col>
             <Col lg={6}>
-              <DtoSelectInput setDataFunction={handleToolIdentifierChange} setDataObject={setToolDataDto}
-                              textField={"name"} valueField={"identifier"} dataObject={toolDataDto}
-                              groupBy={"tool_type_identifier"} selectOptions={toolList} fieldName={"tool_identifier"}/>
+              <RegistryToolIdentifierSelectInput dataObject={toolDataDto} setDataObject={setToolDataDto} />
             </Col>
             <Col lg={12}>
               <DtoTextInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"description"}/>

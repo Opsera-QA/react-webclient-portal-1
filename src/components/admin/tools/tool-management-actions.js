@@ -1,4 +1,5 @@
 import {axiosApiService} from "../../../api/apiService";
+import baseActions from "utils/actionsBase";
 
 const toolTypeActions = {};
 
@@ -63,13 +64,9 @@ toolTypeActions.getToolIdentifierById = async (toolIdentifierId, getAccessToken)
 };
 
 
-toolTypeActions.getToolIdentifiers = async (getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = "/registry/tools?hidden=true";
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+toolTypeActions.getToolIdentifiers = async (getAccessToken, enabledInToolRegistry) => {
+  const apiUrl = `/registry/tools?hidden=true&registry=${enabledInToolRegistry}`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 toolTypeActions.createToolIdentifier = async (toolIdentifierDataDto, getAccessToken) => {
