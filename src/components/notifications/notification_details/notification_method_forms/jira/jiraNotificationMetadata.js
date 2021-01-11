@@ -12,18 +12,14 @@ const jiraNotificationMetadata = {
       isRequired: true
     },
     {
-      label: "Jira Project",
-      id: "jiraProject",
-      isRequired: true
-    },
-    {
-      label: "Jira Sprint",
-      id: "jiraSprint",
-    },
-    {
       label: "Priority",
       id: "jiraPriority",
       isRequired: true
+    },
+    {
+      label: "Jira Tool Project",
+      id: "toolProjectId",
+      isRequired: true,
     },
     {
       label: "Jira Notification Assignee",
@@ -36,54 +32,15 @@ const jiraNotificationMetadata = {
       maxItems: 10,
       formText: "You may select up to ten secondary assignees."
     },
-    {
-      label: "Jira Board",
-      id: "jiraBoard",
-      isRequired: true
-    },
-    {
-      label: "Jira Parent Ticket",
-      id: "jiraParentTicket",
-    },
-    {
-      label: "Jira Open Step",
-      id: "jiraOpenStep",
-      isRequired: true
-    },
-    {
-      label: "Jira Closure Step",
-      id: "jiraClosureStep",
-      isRequired: true
-    },
-    // {
-    //   label: "Jira Approval Step",
-    //   id: "jiraApprovalStep",
-    // },
-    // {
-    //   label: "Jira Rejection Step",
-    //   id: "jiraRejectionStep",
-    // },
-    // {
-    //   label: "Jira Notifications",
-    //   id: "enabled",
-    // },
   ],
   newObjectFields: {
     type: "jira",
     event: "all",
-    jiraBoard: "",
     jiraToolId: "",
-    jiraProject: "",
+    toolProjectId: "",
     jiraPriority: "",
-    jiraSprint: "",
-    jiraParentTicket: "",
     jiraPrimaryAssignee: "",
     jiraSecondaryAssignees: [],
-    // jiraRejectionStep: "",
-    // jiraApprovalStep: "",
-    jiraOpenStep: "",
-    jiraClosureStep: "",
-    // enabled: false,
   }
 };
 

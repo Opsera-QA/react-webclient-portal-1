@@ -89,8 +89,9 @@ import UsersMappingDetailView from "./components/settings/data_tagging/users/use
 
 import { OktaAuth } from "@okta/okta-auth-js";
 import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
-import { axiosApiService } from "./api/apiService";
 import NotificationDetailView from "components/notifications/notification_details/NotificationDetailView";
+import ToolProjectsView from "components/inventory/tools/tool_details/projects/ToolProjectsView";
+import {axiosApiService} from "api/apiService";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -236,7 +237,8 @@ const AppWithRouterAccess = () => {
 
                   <SecureRoute path="/profile" component={Profile}/>
                   <SecureRoute path="/inventory/:view" exact component={Inventory}/>
-                  <SecureRoute path="/inventory/tools/details/:id" exact component={ToolDetailView}/>
+                  <SecureRoute path="/inventory/tools/details/:id/:tab?" exact component={ToolDetailView}/>
+                  <SecureRoute path="/inventory/tools/details/:id/projects/:projectId" exact component={ToolProjectsView}/>
                   <SecureRoute path="/dashboard" component={Dashboard}/>
                   <SecureRoute path="/tools/:id?" component={ApiConnector}/>
                   <SecureRoute path="/platform" component={Platform}/>

@@ -5,7 +5,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/SelectInputBase";
 
-function KpiSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField}) {
+function KpiSelectInput({ fieldName, dataObject, setDataObject, setCurrentKpi, setDataFunction, disabled, textField, valueField}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [kpis, setKpis] = useState([]);
@@ -31,8 +31,15 @@ function KpiSelectInput({ fieldName, dataObject, setDataObject, disabled, textFi
   const loadKpis = async () => {
     const response = await KpiActions.getAllKpis(getAccessToken);
 
-    if (response?.data?.data != null) {
-      setKpis(response?.data?.data);
+    const kpis = response?.data?.data;
+
+    if (kpis != null) {
+      if (setCurrentKpi && dataObject.getData(fieldName) !== "") {
+        const selectedKpi = kpis.find((kpi) => kpi.identifier === dataObject.getData(fieldName))
+        setCurrentKpi(selectedKpi);
+      }
+
+      setKpis(kpis);
     }
   };
 
@@ -41,6 +48,7 @@ function KpiSelectInput({ fieldName, dataObject, setDataObject, disabled, textFi
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
+      setDataFunction={setDataFunction}
       selectOptions={kpis}
       busy={isLoading}
       valueField={valueField}
@@ -55,6 +63,8 @@ KpiSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
+  setDataFunction: PropTypes.func,
+  setCurrentKpi: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string

@@ -14,11 +14,24 @@ function MetricNotificationTypeSummaryCard({ notificationData, notificationConfi
   return (
     <NotificationTypeSummaryCardContainer notificationData={notificationData} isLoading={isLoading}>
       <Row>
-        <Col lg={12}>
-          <TextFieldBase dataObject={notificationConfigurationData} fieldName={"trigger"} />
-        </Col>
+        {/*TODO: Write way to pull image and more KPI details*/}
         <Col lg={6}>
           <TextFieldBase dataObject={notificationConfigurationData} fieldName={"kpi_identifier"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={notificationConfigurationData} fieldName={"conditionIf"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={notificationConfigurationData} fieldName={"atLeast"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={notificationConfigurationData} fieldName={"condition"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={notificationConfigurationData} fieldName={"for"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={notificationConfigurationData} fieldName={"threshold"} />
         </Col>
       </Row>
     </NotificationTypeSummaryCardContainer>

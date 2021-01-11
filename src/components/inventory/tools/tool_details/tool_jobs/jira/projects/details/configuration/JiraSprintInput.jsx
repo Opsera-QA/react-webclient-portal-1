@@ -1,9 +1,10 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import pipelineStepNotificationActions from "../pipeline-step-notification-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/SelectInputBase";
+import pipelineStepNotificationActions
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
 
 function JiraStepNotificationSprintInput({visible, dataObject, setDataObject, disabled, jiraToolId, jiraBoard}) {
   const toastContext = useContext(DialogToastContext);
@@ -32,9 +33,9 @@ function JiraStepNotificationSprintInput({visible, dataObject, setDataObject, di
   };
 
   const loadProjects = async () => {
-    const response = await pipelineStepNotificationActions.getJiraSprints(dataObject, getAccessToken);
+    const response = await pipelineStepNotificationActions.getJiraSprints2(jiraToolId, jiraBoard, getAccessToken);
 
-    if (response.data != null && response.data.message != null && Array.isArray(response.data.message)) {
+    if (Array.isArray(response?.data?.message)) {
       setSprints(response.data.message);
     }
   };

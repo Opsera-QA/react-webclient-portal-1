@@ -1,11 +1,13 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import pipelineStepNotificationActions from "../pipeline-step-notification-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/SelectInputBase";
+import pipelineStepNotificationActions
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
 
-function JiraStepNotificationBoardInput({visible, jiraToolId, dataObject, setDataObject, disabled}) {
+// TODO: Make base
+function JiraBoardInput({visible, jiraToolId, dataObject, setDataObject, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [boards, setBoards] = useState([]);
@@ -32,9 +34,9 @@ function JiraStepNotificationBoardInput({visible, jiraToolId, dataObject, setDat
   };
 
   const loadProjects = async () => {
-    const response = await pipelineStepNotificationActions.getJiraBoards(dataObject, getAccessToken);
+    const response = await pipelineStepNotificationActions.getJiraBoardsWithId(jiraToolId, getAccessToken);
 
-    if (response.data != null && response.data.message != null && Array.isArray(response.data.message)) {
+    if (Array.isArray(response?.data?.message)) {
       setBoards(response.data.message);
     }
   };
@@ -80,7 +82,7 @@ function JiraStepNotificationBoardInput({visible, jiraToolId, dataObject, setDat
   );
 }
 
-JiraStepNotificationBoardInput.propTypes = {
+JiraBoardInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   jiraToolId: PropTypes.string,
@@ -88,8 +90,8 @@ JiraStepNotificationBoardInput.propTypes = {
   visible: PropTypes.bool
 };
 
-JiraStepNotificationBoardInput.defaultProps = {
+JiraBoardInput.defaultProps = {
   visible: true
 }
 
-export default JiraStepNotificationBoardInput;
+export default JiraBoardInput;

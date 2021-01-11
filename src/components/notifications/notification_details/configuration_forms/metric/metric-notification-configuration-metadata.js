@@ -3,19 +3,43 @@ const metricNotificationConfigurationMetadata = {
   // TODO: Faseeh, I don't know what the actual fields are so these will need to be changed.
   fields: [
     {
-      label: "Notification Trigger",
-      id: "trigger",
+      label: "KPI Metric",
+      id: "kpi_identifier",
+      isRequired: true,
+    },
+    {
+      label: "Condition triggers if",
+      id: "conditionIf",
       isRequired: true
     },
     {
-      label: "KPI Metric",
-      id: "kpi_identifier",
+      label: "is at least",
+      id: "atLeast",
+      isRequired: true,
+    },
+    {
+      label: "Condition",
+      id: "condition",
+      isRequired: true,
+    },
+    {
+      label: "Threshold",
+      id: "threshold",
+      isRequired: true,
+    },
+    {
+      label: "For",
+      id: "for",
       isRequired: true,
     },
   ],
   newObjectFields: {
     kpi_identifier: "",
-    trigger: "",
+    conditionIf: "This needs to be pulled from kpi, I think",
+    atLeast: 1,
+    condition: "",
+    threshold: 45,
+    for: ""
   }
 };
 

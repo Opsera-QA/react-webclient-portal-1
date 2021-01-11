@@ -2,19 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/SelectInputBase";
 
-// disabling metric selection for now
-export const notificationTypes = [
-  {name: "Pipeline", value: "pipeline"},
-  {name: "Metric", value: "metric"}
+export const notificationConditions = [
+  {name: "is above", value: "above"},
+  {name: "is below", value: "below"},
+  {name: "equals", value: "equals"},
 ];
 
-function NotificationTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction }) {
+function NotificationConditionSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction }) {
   return (
     <SelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      selectOptions={notificationTypes}
+      selectOptions={notificationConditions}
       setDataFunction={setDataFunction}
       valueField="value"
       textField="name"
@@ -23,7 +23,7 @@ function NotificationTypeSelectInput({ fieldName, dataObject, setDataObject, dis
   );
 }
 
-NotificationTypeSelectInput.propTypes = {
+NotificationConditionSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
@@ -31,8 +31,8 @@ NotificationTypeSelectInput.propTypes = {
   disabled: PropTypes.bool,
 };
 
-NotificationTypeSelectInput.defaultProps = {
-  fieldName: "type"
+NotificationConditionSelectInput.defaultProps = {
+  fieldName: "condition"
 };
 
-export default NotificationTypeSelectInput;
+export default NotificationConditionSelectInput;

@@ -205,6 +205,10 @@ export class Model {
     return this.dataState !== DataState.LOADED;
   };
 
+  getOriginalValue = (fieldName) => {
+    return this.changeMap.get(fieldName);
+  };
+
   isDeleted = () => {
     return this.dataState === DataState.DELETED;
   };

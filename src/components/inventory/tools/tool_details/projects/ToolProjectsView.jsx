@@ -1,0 +1,84 @@
+import React, { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import inventoryActions from "components/inventory/inventory-actions";
+import Model from "core/data_model/model";
+import toolMetadata from "components/inventory/tools/tool-metadata";
+import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import JiraProjectDetailView
+  from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/JiraProjectDetailView";
+import jiraProjectMetadata from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jira-project-metadata";
+
+function ToolProjectsView() {
+  const { id, projectId } = useParams();
+  const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
+  const [toolData, setToolData] = useState(undefined);
+  const [toolProjectData, setToolProjectData] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(true);
+
+
+  useEffect(() => {
+    getTool();
+  }, []);
+
+  const getTool = async () => {
+    try {
+      setIsLoading(true);
+      const response = await inventoryActions.getToolById(id, getAccessToken);
+
+      const toolDataResponse = response?.data[0];
+      if (toolDataResponse) {
+        const toolDataDto = new Model(toolDataResponse, toolMetadata, false);
+        await setToolData(toolDataDto);
+        await unpackToolProject(toolDataDto);
+      }
+    } catch (error) {
+      if (!error?.error?.message?.includes(404)) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+    }
+    finally {
+      setIsLoading(false);
+    }
+  };
+
+  const unpackToolProject = (toolDataDto) => {
+    let toolProjects = toolDataDto.getData("projects");
+    const metaData = getMetaData(toolDataDto.getData("tool_identifier"));
+
+    if (toolProjects?.length > 0) {
+      let projectData = toolProjects.find((project) => project.id === projectId);
+
+      if (projectData != null) {
+        console.log("getting tool project: " + JSON.stringify(projectData));
+        let toolProjectDto = new Model({...projectData}, metaData, false);
+        setToolProjectData(toolProjectDto);
+      }
+    }
+  };
+
+  const getMetaData = (toolIdentifier) => {
+    switch (toolIdentifier) {
+      case "jira":
+        return jiraProjectMetadata;
+    }
+  };
+
+  const getDetailView = () => {
+    switch (toolData.getData("tool_identifier")) {
+      case "jira":
+        return <JiraProjectDetailView toolData={toolData} loadTool={getTool} jiraProjectData={toolProjectData} setJiraProjectData={setToolProjectData} />;
+    }
+  };
+
+  if (isLoading || toolData == null || toolProjectData == null) {
+    return (
+      <DetailScreenContainer breadcrumbDestination={"toolProjectDetailView"} isLoading={isLoading} dataObject={toolData} />
+    )
+  }
+
+  return (getDetailView());
+}
+export default ToolProjectsView;
