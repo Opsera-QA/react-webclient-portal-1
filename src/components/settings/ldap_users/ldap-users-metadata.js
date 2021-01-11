@@ -167,6 +167,7 @@ export const ldapUsersMetaData = {
   ],
   newObjectFields: {
     name: "",
+    title: "",
     firstName: "",
     lastName: "",
     preferredName: "",

@@ -24,7 +24,7 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
     if (addAnother) {
       await persistNewRecordAndAddAnother(recordDto, toastContext, showSuccessToasts, createRecord, lenient, setRecordDto);
     }
-    else if (recordDto.getDetailViewLink != null) {
+    else if (recordDto.getDetailViewLink() != null) {
       await persistNewRecordAndViewDetails(recordDto, toastContext, showSuccessToasts, createRecord, lenient, history);
     }
     else if (handleClose != null) {
