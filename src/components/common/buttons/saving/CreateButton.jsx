@@ -32,7 +32,7 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
     }
     else {
       await persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient);
-      toastContext.showWarningToast("Successfully Created New Record But Could Not Close Modal or View Modal Details");
+      toastContext.showFormWarningToast("Successfully Created New Record But Could Not Close Modal or View Modal Details");
     }
 
     setIsSaving(false);
