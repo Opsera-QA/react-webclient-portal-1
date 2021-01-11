@@ -1129,6 +1129,10 @@ a.nav-link {
   /*max-width: 150px;*/
 }
 
+.inline-filter-input {
+    height: 31px;
+}
+
 /* End filter bar styling */
 
 /*Popover Styling*/

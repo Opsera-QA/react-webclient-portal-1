@@ -11,7 +11,6 @@ import kpiMetaData from "./kpi_detail_view/kpi-form-fields";
 import NewKpiModal from "./NewKpiModal";
 import FilterBar from "../../common/filters/FilterBar";
 import StatusFilter from "../../common/filters/status/StatusFilter";
-import SearchFilter from "../../common/filters/search/SearchFilter";
 
 function KpiTable({ data, kpiFilterDto, setKpiFilterDto, isLoading, loadData }) {
   let fields = kpiMetaData.fields;
@@ -51,9 +50,9 @@ function KpiTable({ data, kpiFilterDto, setKpiFilterDto, isLoading, loadData }) 
         filterDto={kpiFilterDto}
         setFilterDto={setKpiFilterDto}
         filters={["status", "search"]}
+        supportSearch={true}
       >
         <StatusFilter filterDto={kpiFilterDto} setFilterDto={setKpiFilterDto} />
-        <SearchFilter filterDto={kpiFilterDto} setFilterDto={setKpiFilterDto} />
       </FilterBar>
     );
   };
