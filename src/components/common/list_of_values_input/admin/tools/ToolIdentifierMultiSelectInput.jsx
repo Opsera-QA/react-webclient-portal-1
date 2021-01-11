@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import toolTypeActions from "components/admin/tools/tool-management-actions";
-import SelectInputBase from "components/common/inputs/SelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/MultiSelectInputBase";
 
-function ToolIdentifierSelectInput({ fieldName, dataObject, setDataFunction, setDataObject, disabled, textField, valueField, toolRegistryFilter}) {
+function ToolIdentifierMultiSelectInput({ fieldName, dataObject, setDataFunction, setDataObject, disabled, textField, valueField, toolRegistryFilter}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [toolTypes, setToolTypes] = useState([]);
+  const [toolIdentifiers, setToolIdentifiers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -32,17 +32,17 @@ function ToolIdentifierSelectInput({ fieldName, dataObject, setDataFunction, set
     let response = await toolTypeActions.getToolIdentifiers(getAccessToken, toolRegistryFilter);
 
     if (response?.data != null) {
-      setToolTypes(response?.data);
+      setToolIdentifiers(response?.data);
     }
   };
 
   return (
-    <SelectInputBase
+    <MultiSelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
       setDataFunction={setDataFunction}
-      selectOptions={toolTypes}
+      selectOptions={toolIdentifiers}
       groupBy={"tool_type_identifier"}
       busy={isLoading}
       valueField={valueField}
@@ -53,7 +53,7 @@ function ToolIdentifierSelectInput({ fieldName, dataObject, setDataFunction, set
   );
 }
 
-ToolIdentifierSelectInput.propTypes = {
+ToolIdentifierMultiSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
@@ -64,9 +64,9 @@ ToolIdentifierSelectInput.propTypes = {
   valueField: PropTypes.string
 };
 
-ToolIdentifierSelectInput.defaultProps = {
+ToolIdentifierMultiSelectInput.defaultProps = {
   valueField: "identifier",
   textField: "name"
 };
 
-export default ToolIdentifierSelectInput;
+export default ToolIdentifierMultiSelectInput;

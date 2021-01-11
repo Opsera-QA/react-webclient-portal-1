@@ -3,17 +3,18 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import RegisteredUserActions from "../../registered-user-actions";
-import LoadingDialog from "../../../../common/status_notifications/loading";
-import DtoTextInput from "../../../../common/input/dto_input/dto-text-input";
-import DtoToggleInput from "../../../../common/input/dto_input/dto-toggle-input";
-import DtoMultiselectInput from "../../../../common/input/dto_input/dto-multiselect-input";
-import SaveButton from "../../../../common/buttons/SaveButton";
-import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import Model from "../../../../../core/data_model/model";
-import toolsActions from "../../../../inventory/tools/tools-actions";
-import DetailPanelContainer from "../../../../common/panels/detail_panel_container/DetailPanelContainer";
-import EditorPanelContainer from "../../../../common/panels/detail_panel_container/EditorPanelContainer";
+import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
+import Model from "core/data_model/model";
+import toolsActions from "components/inventory/tools/tools-actions";
+import LoadingDialog from "components/common/status_notifications/loading";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import BooleanToggleInput from "components/common/inputs/BooleanToggleInput";
+import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
+import ToolIdentifierMultiSelectInput
+  from "components/common/list_of_values_input/admin/tools/ToolIdentifierMultiSelectInput";
 
 function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfileData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -46,7 +47,7 @@ function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfile
     if(analyticsProfileDataDto.isModelValid2()) {
       try {
         const response = await RegisteredUserActions.updateAnalyticsProfile(analyticsProfileDataDto, getAccessToken);
-        let newDto = new Model(response.data, analyticsProfileDataDto.metaData, false);
+        let newDto = new Model(response?.data, analyticsProfileDataDto.metaData, false);
         toastContext.showUpdateSuccessResultDialog(analyticsProfileDataDto.getType());
         setAnalyticsProfileData(newDto);
         unpackData(newDto);
@@ -78,53 +79,52 @@ function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfile
     <EditorPanelContainer>
       <Row>
         <Col>
-          <DtoMultiselectInput
+          <ToolIdentifierMultiSelectInput
+            toolRegistryFilter={false}
             selectOptions={toolList}
             fieldName={"enabledTools"}
             setDataObject={setAnalyticsProfileDataDto}
             dataObject={analyticsProfileDataDto}
-            valueField={"identifier"}
-            textField={"name"}
           />
         </Col>
         <Col>
-          <DtoTextInput fieldName="dataUsage" setDataObject={setAnalyticsProfileDataDto} dataObject={analyticsProfileDataDto}/>
+          <TextInputBase fieldName="dataUsage" setDataObject={setAnalyticsProfileDataDto} dataObject={analyticsProfileDataDto}/>
         </Col>
         <Col>
-          <DtoTextInput fieldName="hitsIndex" setDataObject={setAnalyticsProfileDataDto} dataObject={analyticsProfileDataDto}/>
+          <TextInputBase fieldName="hitsIndex" setDataObject={setAnalyticsProfileDataDto} dataObject={analyticsProfileDataDto}/>
         </Col>
       </Row>
       <Row>
         <Col>
-          <DtoTextInput fieldName="analyticsServerUrl" setDataObject={setAnalyticsProfileDataDto}
+          <TextInputBase fieldName="analyticsServerUrl" setDataObject={setAnalyticsProfileDataDto}
                         dataObject={analyticsProfileDataDto}/>
         </Col>
         <Col>
-          <DtoTextInput fieldName="defaultPersona" setDataObject={setAnalyticsProfileDataDto} dataObject={analyticsProfileDataDto}/>
+          <TextInputBase fieldName="defaultPersona" setDataObject={setAnalyticsProfileDataDto} dataObject={analyticsProfileDataDto}/>
         </Col>
       </Row>
       <Row>
         <Col>
-          <DtoToggleInput dataObject={analyticsProfileDataDto} setDataObject={setAnalyticsProfileDataDto} fieldName={"allowData"}/>
+          <BooleanToggleInput dataObject={analyticsProfileDataDto} setDataObject={setAnalyticsProfileDataDto} fieldName={"allowData"}/>
         </Col>
         <Col>
-          <DtoToggleInput dataObject={analyticsProfileDataDto} setDataObject={setAnalyticsProfileDataDto} fieldName={"active"}/>
+          <ActivityToggleInput dataObject={analyticsProfileDataDto} setDataObject={setAnalyticsProfileDataDto} fieldName={"active"}/>
         </Col>
       </Row>
       <Row>
         <Col>
-          <DtoToggleInput dataObject={analyticsProfileDataDto} setDataObject={setAnalyticsProfileDataDto}
-                          fieldName={"Infrastructure"}/>
+          <BooleanToggleInput dataObject={analyticsProfileDataDto} setDataObject={setAnalyticsProfileDataDto} fieldName={"Infrastructure"}/>
         </Col>
         <Col>
-          <DtoToggleInput dataObject={analyticsProfileDataDto} setDataObject={setAnalyticsProfileDataDto} fieldName={"Pipeline"}/>
+          <BooleanToggleInput dataObject={analyticsProfileDataDto} setDataObject={setAnalyticsProfileDataDto} fieldName={"Pipeline"}/>
         </Col>
       </Row>
-      <Row>
-        <div className="ml-auto px-3">
-          <SaveButton updateRecord={updateProfile} createRecord={updateProfile} recordDto={analyticsProfileData}/>
-        </div>
-      </Row>
+      <PersistButtonContainer
+        recordDto={analyticsProfileData}
+        setRecordDto={setAnalyticsProfileData}
+        updateRecord={updateProfile}
+        createRecord={updateProfile}
+        />
     </EditorPanelContainer>
   );
 }
