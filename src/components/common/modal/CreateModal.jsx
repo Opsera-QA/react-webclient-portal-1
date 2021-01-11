@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
 import TooltipWrapper from "../tooltip/tooltipWrapper";
 import {unsavedChanges} from "../tooltip/popover-text";
-import {DialogToastContext} from "../../../contexts/DialogToastContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function CreateModal({ children, objectType, showModal, handleCancelModal, loadData}) {
   const toastContext = useContext(DialogToastContext);
@@ -21,6 +21,7 @@ function CreateModal({ children, objectType, showModal, handleCancelModal, loadD
         </Modal.Header>
         <Modal.Body>
           <div className="content-block-shaded m-3 full-height">
+            {toastContext.getInlineBanner()}
             <div className="p-3">
               {children}
             </div>

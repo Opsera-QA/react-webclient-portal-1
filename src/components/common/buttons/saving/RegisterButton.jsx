@@ -12,7 +12,8 @@ function RegisterButton({recordDto, createAccount, disable, lenient}) {
 
   const createOpseraAccount = async () => {
     setIsSaving(true);
-    await persistNewRecord(recordDto, toastContext, false, createAccount, lenient);
+    // TODO: Wire up inline banner on signup forms
+    await persistNewRecord(recordDto, toastContext, false, createAccount, lenient, false);
     setIsSaving(false);
   }
 
