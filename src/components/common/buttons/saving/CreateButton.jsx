@@ -3,11 +3,16 @@ import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSave, faSpinner} from "@fortawesome/pro-light-svg-icons";
-import { persistNewRecordAndAddAnother, persistNewRecordAndViewDetails } from "./saving-helpers";
+import {
+  persistNewRecord,
+  persistNewRecordAndAddAnother,
+  persistNewRecordAndClose,
+  persistNewRecordAndViewDetails
+} from "./saving-helpers";
 import {useHistory} from "react-router-dom";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function CreateButton({recordDto, createRecord, disable, showSuccessToasts, lenient, setRecordDto, addAnotherOption}) {
+function CreateButton({recordDto, createRecord, disable, showSuccessToasts, lenient, setRecordDto, addAnotherOption, handleClose}) {
   const [isSaving, setIsSaving] = useState(false);
   const [addAnother, setAddAnother] = useState(false);
   const history = useHistory();
@@ -18,8 +23,16 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
 
     if (addAnother) {
       await persistNewRecordAndAddAnother(recordDto, toastContext, showSuccessToasts, createRecord, lenient, setRecordDto);
-    } else {
+    }
+    else if (recordDto.getDetailViewLink != null) {
       await persistNewRecordAndViewDetails(recordDto, toastContext, showSuccessToasts, createRecord, lenient, history);
+    }
+    else if (handleClose != null) {
+      await persistNewRecordAndClose(recordDto, toastContext, showSuccessToasts, createRecord, lenient, handleClose);
+    }
+    else {
+      await persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient);
+      toastContext.showWarningToast("Successfully Created New Record But Could Not Close Modal or View Modal Details");
     }
 
     setIsSaving(false);
@@ -61,6 +74,7 @@ CreateButton.propTypes = {
   setRecordDto: PropTypes.func,
   disable: PropTypes.bool,
   showSuccessToasts: PropTypes.bool,
+  handleClose: PropTypes.func,
   lenient: PropTypes.bool,
   addAnotherOption: PropTypes.bool
 };
