@@ -6,7 +6,10 @@ export async function persistNewRecordAndViewDetails(recordDto, toastContext, sh
   if (response != null && response !== false && recordDto.getDetailViewLink != null && history != null) {
     let updatedDto = new Model(response?.data, recordDto.getMetaData(), false);
     let link = updatedDto.getDetailViewLink();
-    history.push(link);
+
+    if (link != null) {
+      history.push(link);
+    }
   }
 }
 
@@ -86,7 +89,8 @@ export async function persistUpdatedRecord(recordDto, toastContext, showSuccessT
         toastContext.showUpdateSuccessResultDialog(recordDto.getType());
       }
     }
-
+    recordDto.clearChangeMap();
+    return response;
   }
   catch (error) {
     console.error(error);
