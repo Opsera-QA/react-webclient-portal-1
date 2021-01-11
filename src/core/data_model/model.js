@@ -166,6 +166,11 @@ export class Model {
     }
   };
 
+  clearChangeMap = () => {
+    this.dataState = DataState.LOADED;
+    this.changeMap = new Map();
+  };
+
   // TODO: Only send changemap for updates after getting everything else working
   getPersistData = () => {
     return this.trimStrings();
