@@ -56,10 +56,10 @@ function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadD
         setFilterDto={setDashboardFilterDto}
         filters={["status", "type", "search", "isFavorite"]}
         addRecordFunction={createNewDashboard}
+        supportSearch={true}
       >
         <StatusFilter filterDto={dashboardFilterDto} setFilterDto={setDashboardFilterDto}/>
         <DashboardTypeFilter filterDto={dashboardFilterDto} setFilterDto={setDashboardFilterDto}/>
-        <SearchFilter filterDto={dashboardFilterDto} setFilterDto={setDashboardFilterDto}/>
         <FavoritesFilter filterDto={dashboardFilterDto} setFilterDto={setDashboardFilterDto}/>
       </FilterBar>
     );

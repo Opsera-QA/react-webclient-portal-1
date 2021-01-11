@@ -54,10 +54,10 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto })
         filterDto={tagFilterDto}
         setFilterDto={setTagFilterDto}
         filters={["status", "type", "search"]}
+        supportSearch={true}
       >
         <StatusFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
         <TagTypeFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
-        <SearchFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
       </FilterBar>
     );
   };

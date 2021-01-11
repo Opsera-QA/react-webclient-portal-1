@@ -101,10 +101,10 @@ function PipelinesView({ currentTab, setActiveTab }) {
         setFilterDto={setPipelineFilterDto}
         filters={["status", "type", "search"]}
         customButtons={getViewToggle()}
+        supportSearch={true}
       >
         <TagFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>
         <PipelineOwnerFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>
-        <SearchFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>
       </FilterBar>
     );
   };

@@ -53,17 +53,16 @@ function NotificationsTable({ data, notificationFilterDto, setNotificationFilter
     }
 
     return(
-      <FilterBar
-        loadData={loadData}
-        filterDto={notificationFilterDto}
-        setFilterDto={setNotificationFilterDto}
-        filters={["status", "type", "tag", "search"]}
-        addRecordFunction={createNewNotification}
+      <FilterBar loadData={loadData}
+                 filterDto={notificationFilterDto}
+                 setFilterDto={setNotificationFilterDto}
+                 filters={["status", "type", "tag", "search"]}
+                 addRecordFunction={createNewNotification}
+                 supportSearch={true}
       >
         <StatusFilter filterDto={notificationFilterDto} setFilterDto={setNotificationFilterDto} />
         <NotificationTypeFilter filterDto={notificationFilterDto} setFilterDto={setNotificationFilterDto} />
         <TagFilter filterDto={notificationFilterDto} setFilterDto={setNotificationFilterDto} />
-        <SearchFilter filterDto={notificationFilterDto} setFilterDto={setNotificationFilterDto} />
       </FilterBar>
     );
   };

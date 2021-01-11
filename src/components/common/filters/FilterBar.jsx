@@ -10,8 +10,9 @@ import {Col, Row} from "react-bootstrap";
 import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import ActiveFilterDisplayer from "./ActiveFilterDisplayer";
 import {faSync} from "@fortawesome/pro-solid-svg-icons/faSync";
+import InlineSearchFilter from "components/common/filters/search/InlineSearchFilter";
 
-function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRecordFunction, customButtons}) {
+function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRecordFunction, customButtons, supportSearch}) {
   const resetFilters = async () => {
     let newFilterDto = new Model({...filterDto.getNewObjectFields()}, filterDto.getMetaData(), false);
     let pageSize = filterDto.getData("pageSize");
@@ -36,6 +37,19 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
     document.body.click();
   };
 
+  const getInnerFilters = () => {
+    if (children) {
+      if (Array.isArray(children)) {
+        return (children.map((child, index) => {
+          return (<div key={index} className="mb-2">{child}</div>);
+        }))
+      }
+      else {
+        return <div className="mb-2">{children}</div>;
+      }
+    }
+  }
+
   const popover = (
     <Popover id="popover-basic">
       <Popover.Title as="h3" className="filter-title">
@@ -51,9 +65,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
         </Row>
         </Popover.Title>
       <Popover.Content className="filter-body">
-        {children && children.map((child, index) => {
-          return (<div key={index} className="mb-2">{child}</div>);
-        })}
+        {getInnerFilters()}
         <div className="d-flex justify-content-between">
           <div className="w-50 mr-1">
             <Button type="primary" size="sm" onClick={() => loadFilters()} className="w-100">
@@ -94,6 +106,16 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
     )
   };
 
+  const getSearchBar = () => {
+    if (supportSearch) {
+      return (
+        <div className="mr-2">
+          <InlineSearchFilter filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} />
+        </div>
+      )
+    }
+  };
+
   const getFilterButtons = () => {
     // Only show filter buttons, if filters exists
     if (children === undefined) {
@@ -131,6 +153,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
       </div>
       <div className="d-flex">
         {getCustomButtons()}
+        {getSearchBar()}
         <div>{getNewRecordButton()}</div>
         <div>{getRefreshButton()}</div>
         <div>{getFilterButtons()}</div>
@@ -144,6 +167,7 @@ FilterBar.propTypes = {
   filterDto: PropTypes.object,
   activeFilterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
+  supportSearch: PropTypes.bool,
   customButtons: PropTypes.any,
   children: PropTypes.any,
   loadData: PropTypes.func,
