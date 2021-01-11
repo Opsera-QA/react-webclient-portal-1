@@ -50,7 +50,7 @@ function JiraProjectDetailView( {toolData, setToolData, jiraProjectData, setJira
 
   return (
     <DetailScreenContainer
-      breadcrumbDestination={"toolDetailView"}
+      breadcrumbDestination={"toolProjectDetailView"}
       title={jiraProjectData != null ? `Jira Project Details [${jiraProjectData["name"]}]` : undefined}
       managementViewLink={"/inventory/tools"}
       managementTitle={toolData ? `Tool Details [${toolData.getData("_id")}]` : undefined}
