@@ -61,7 +61,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
             </Button>
           </div>
           <div className="w-50 ml-1">
-            <Button type="primary" size="sm" onClick={() => resetFilters()} className="w-100">
+            <Button type="primary" size="sm" onClick={() => resetFilters()} className="w-100" disabled={filterDto.getData("activeFilters").length === 0}>
               <span><span className="mr-2">{getStackedFilterRemovalIcon()}</span>Remove</span>
             </Button>
           </div>
@@ -107,7 +107,11 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
             <Button type="primary" size="sm"><span><FontAwesomeIcon icon={faFilter} fixedWidth/></span></Button>
           </div>
         </OverlayTrigger>
-        <div><Button className={"ml-2"} type="primary" size="sm" onClick={() => resetFilters()}><span>{getStackedFilterRemovalIcon()}</span></Button></div>
+        <div>
+          <Button className={"ml-2"} disabled={filterDto.getData("activeFilters").length === 0} type="primary" size="sm" onClick={() => resetFilters()}>
+            <span>{getStackedFilterRemovalIcon()}</span>
+          </Button>
+        </div>
       </div>
     )
   };

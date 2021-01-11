@@ -21,10 +21,10 @@ function KpiManagement() {
     loadData();
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (newFilterDto = kpiFilterDto) => {
     try {
       setIsLoading(true);
-      await getRoles(kpiFilterDto);
+      await getRoles(newFilterDto);
     }
     catch (error) {
       console.log(error);
@@ -36,7 +36,7 @@ function KpiManagement() {
   };
 
   const getKpis = async (filterDto) => {
-    const response = await KpiActions.getKpis(kpiFilterDto, getAccessToken);
+    const response = await KpiActions.getKpis(filterDto, getAccessToken);
     setKpiList(response.data.data);
     let newFilterDto = filterDto;
     newFilterDto.setData("totalCount", response.data.count);
@@ -44,12 +44,12 @@ function KpiManagement() {
     setKpiFilterDto({...newFilterDto});
   };
 
-  const getRoles = async () => {
+  const getRoles = async (newFilterDto = kpiFilterDto) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      await getKpis(kpiFilterDto);
+      await getKpis(newFilterDto);
     }
   };
 
