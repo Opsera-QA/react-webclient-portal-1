@@ -135,6 +135,7 @@ function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountD
             updateRecord={updateLdapIdpAccount}
             createRecord={createIdpAccount}
             addAnotherOption={false}
+            disable={ldapIdpAccountDataDto.isNew()}
           />
         </div>
     </>
