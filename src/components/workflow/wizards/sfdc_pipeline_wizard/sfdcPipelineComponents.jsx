@@ -141,13 +141,13 @@ const SfdcPipelineComponents = ({
   };
 
   const handleCheckOrUncheckAllClickComponentTypes = () => {
-    if (selectedComponentTypes === componentTypes.map(({ name }) => name)) {handleUnCheckAllClickComponentTypes();}
+    if (isEqual(selectedComponentTypes,componentTypes.map(({ name }) => name))) {handleUnCheckAllClickComponentTypes();}
     else {handleCheckAllClickComponentTypes();}
   }
 
   const renderTooltip = (message, props) => (
     <Tooltip id="button-tooltip" {...props}>
-      {message}
+      {message.length > 0 ? message : "No file extension found."}
     </Tooltip>
   );
 
@@ -328,7 +328,7 @@ const SfdcPipelineComponents = ({
                               label={"Check All"}
                               name={"Check All"}
                               id={"Check All"}
-                              checked={isEqual(selectedComponentTypes,componentTypes)}
+                              checked={isEqual(selectedComponentTypes,componentTypes.map(({ name }) => name))}
                               onChange={handleCheckOrUncheckAllClickComponentTypes}
                             />
                     {/* <Button variant="secondary" size="sm" className="mr-2" onClick={handleCheckAllClickComponentTypes}>
