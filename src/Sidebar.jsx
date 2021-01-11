@@ -241,13 +241,13 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
               className="menu-text">Reports</span></NavLink>
           }
 
-          {/*{featureFlagHideItemInProd ?
+          {featureFlagHideItemInProd ?
             <></>
             :
             <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
               <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
               className="menu-text">Notifications</span></NavLink>
-          }*/}
+          }
 
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
