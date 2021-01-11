@@ -6,7 +6,6 @@ import Row from "react-bootstrap/Row";
 import LoadingDialog from "../../../../../common/status_notifications/loading";
 import WarningDialog from "../../../../../common/status_notifications/WarningDialog";
 import DtoTextInput from "../../../../../common/input/dto_input/dto-text-input";
-import SaveButton from "../../../../../common/buttons/SaveButton";
 import departmentActions from "../department-functions";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import {getUsersByDomain} from "../../../../../settings/ldap_users/user-functions";

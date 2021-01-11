@@ -7,11 +7,11 @@ import DtoTextInput from "../../common/input/dto_input/dto-text-input";
 import DtoToggleInput from "../../common/input/dto_input/dto-toggle-input";
 import DtoSelectInput from "../../common/input/dto_input/dto-select-input";
 import DtoMultiselectInput from "../../common/input/dto_input/dto-multiselect-input";
-import SaveButton from "../../common/buttons/SaveButton";
 import Model from "../../../core/data_model/model";
 import AnalyticsProfileMetadata from "./analytics-profile-metadata";
 import ScreenContainer from "../../common/panels/general/ScreenContainer";
 import LoadingView from "../../common/status_notifications/loading";
+import SaveButton2 from "components/common/buttons/saving/SaveButton2";
 
 const DEFAULT_PERSONAS = [
   {
@@ -267,7 +267,7 @@ function AnalyticsProfileSettings() {
             </Col>
           </Row>
           <div className="ml-auto mt-3">
-            <SaveButton
+            <SaveButton2
               updateRecord={updateProfile}
               setRecordDto={setAnalyticsProfileData}
               setData={setAnalyticsProfileData}

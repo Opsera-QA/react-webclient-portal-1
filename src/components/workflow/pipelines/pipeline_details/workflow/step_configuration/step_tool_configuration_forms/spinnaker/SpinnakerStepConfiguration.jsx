@@ -11,8 +11,8 @@ import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import LoadingDialog from "components/common/status_notifications/loading";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
-import SaveButton from "../../../../../../../common/buttons/SaveButton";
 import spinnakerStepActions from "./spinnaker-step-actions";
+import SaveButton2 from "components/common/buttons/saving/SaveButton2";
 
 function SpinnakerStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -253,7 +253,7 @@ function SpinnakerStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
         busy={spinnakerToolsSearching}
         disabled={spinnakerStepConfigurationDto.getData("applicationName").length === 0 || spinnakerToolsSearching}
       />
-      <SaveButton
+      <SaveButton2
         recordDto={spinnakerStepConfigurationDto}
         setRecordDto={setSpinnakerStepConfigurationDataDto}
         createRecord={callbackFunction}

@@ -11,13 +11,13 @@ import DtoTextInput from "../../../../../../../common/input/dto_input/dto-text-i
 import DtoToggleInput from "../../../../../../../common/input/dto_input/dto-toggle-input";
 import DtoSelectInput from "../../../../../../../common/input/dto_input/dto-select-input";
 import DtoMultiselectInput from "../../../../../../../common/input/dto_input/dto-multiselect-input";
-import SaveButton from "../../../../../../../common/buttons/SaveButton";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import OctopusStepActions from "../../../../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
 import PipelineActions from "../../../../../../../workflow/pipeline-actions";
 import OctopusActions from "../../octopus-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DeleteModal from "components/common/modal/DeleteModal";
+import SaveButton2 from "components/common/buttons/saving/SaveButton2";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -459,7 +459,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
             </div>
           )}
           <div className="ml-auto mt-3 px-3">
-            <SaveButton
+            <SaveButton2
               updateRecord={updateApplication}
               setRecordDto={setOctopusApplicationDataDto}
               setData={setOctopusApplicationDataDto}
