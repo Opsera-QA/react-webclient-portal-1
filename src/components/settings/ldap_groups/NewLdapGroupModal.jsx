@@ -10,7 +10,7 @@ function NewLdapUserModal({ ldapOrganizationData, authorizedActions, currentUser
 
   useEffect(() => {
     setLdapGroupData(new Model({...ldapGroupMetaData.newObjectFields}, ldapGroupMetaData, true));
-  }, []);
+  }, [showModal]);
 
   const handleClose = () => {
     loadData();
