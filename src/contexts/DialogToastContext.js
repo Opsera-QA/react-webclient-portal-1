@@ -431,6 +431,7 @@ function ToastContextProvider ({ children }) {
           removeAllToasts: removeAllToasts,
           removeFormToasts: removeFormToasts,
           getInlineBanner: getInlineBanner,
+          removeInlineMessage: removeInlineMessage,
 
           clearToastsArray: clearToastsArray //tmp solution till next version of toasts
         }}>

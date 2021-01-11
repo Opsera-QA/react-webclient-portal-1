@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
 import TooltipWrapper from "../tooltip/tooltipWrapper";
@@ -8,8 +8,13 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 function CreateModal({ children, objectType, showModal, handleCancelModal, loadData}) {
   const toastContext = useContext(DialogToastContext);
 
+  useEffect(() => {
+    toastContext.removeInlineMessage();
+  }, []);
+
   const handleClose = () => {
     loadData();
+    toastContext.removeInlineMessage();
     handleCancelModal();
   };
 
