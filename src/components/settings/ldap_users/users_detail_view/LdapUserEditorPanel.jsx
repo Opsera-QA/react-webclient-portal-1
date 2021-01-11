@@ -10,6 +10,7 @@ import SaveButton from "../../../common/buttons/SaveButton";
 import WarningDialog from "../../../common/status_notifications/WarningDialog";
 import DetailPanelContainer from "../../../common/panels/detail_panel_container/DetailPanelContainer";
 import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
+import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 
 function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authorizedActions, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -76,11 +77,13 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authori
               <DtoTextInput setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"site"}/>
             </Col>
           </Row>
-          <Row>
-            <div className="ml-auto mt-3 px-3">
-              <SaveButton recordDto={ldapUserDataDto} setData={setLdapUserData} setRecordDto={setLdapUserDataDto} handleClose={handleClose} createRecord={createLdapUser} updateRecord={updateLdapUser} />
-            </div>
-          </Row>
+        <PersistButtonContainer
+          handleClose={handleClose}
+          createRecord={createLdapUser}
+          updateRecord={updateLdapUser}
+          setRecordDto={setLdapUserDataDto}
+          recordDto={ldapUserDataDto}
+        />
       </EditorPanelContainer>
     );
 }
