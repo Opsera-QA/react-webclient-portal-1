@@ -2,18 +2,17 @@ import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import accountsActions from "../../accounts-actions";
-import {AuthContext} from "../../../../../contexts/AuthContext";
-import DtoTextInput from "../../../../common/input/dto_input/dto-text-input";
-import Model from "../../../../../core/data_model/model";
-import TooltipWrapper from "../../../../common/tooltip/tooltipWrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCogs} from "@fortawesome/free-solid-svg-icons";
-import LoadingDialog from "../../../../common/status_notifications/loading";
-import SaveButton from "../../../../common/buttons/SaveButton";
-import WarningDialog from "../../../../common/status_notifications/WarningDialog";
-import ToastContext from "react-bootstrap/cjs/ToastContext";
-import AccessDeniedDialog from "../../../../common/status_notifications/accessDeniedInfo";
+import {faCogs} from "@fortawesome/pro-light-svg-icons";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import {AuthContext} from "contexts/AuthContext";
+import ToastContext from "react-bootstrap/ToastContext";
+import accountsActions from "components/admin/accounts/accounts-actions";
+import Model from "core/data_model/model";
+import LoadingDialog from "components/common/status_notifications/loading";
+import WarningDialog from "components/common/status_notifications/WarningDialog";
+import TooltipWrapper from "components/common/tooltip/tooltipWrapper";
+import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 
 function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountData, setLdapIdpAccountData, setShowIdpEditPanel, authorizedActions }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -103,38 +102,40 @@ function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountD
           </div>}
           <Row>
             <Col lg={12}>
-              <DtoTextInput disabled={!ldapIdpAccountDataDto.isNew()} fieldName={"name"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+              <TextInputBase disabled={!ldapIdpAccountDataDto.isNew()} fieldName={"name"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput disabled={true} fieldName={"domain"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+              <TextInputBase disabled={true} fieldName={"domain"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput fieldName={"idpRedirectURI"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+              <TextInputBase fieldName={"idpRedirectURI"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput fieldName={"clientID"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+              <TextInputBase fieldName={"clientID"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput fieldName={"issuer"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+              <TextInputBase fieldName={"issuer"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput fieldName={"baseUrl"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+              <TextInputBase fieldName={"baseUrl"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput fieldName={"idpVendor"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+              <TextInputBase fieldName={"idpVendor"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput fieldName={"configEntryType"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+              <TextInputBase fieldName={"configEntryType"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <DtoTextInput fieldName={"idpNameIDMapping"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
+              <TextInputBase fieldName={"idpNameIDMapping"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
             </Col>
           </Row>
-          <Row>
-            <div className="ml-auto m-3 px-3">
-              <SaveButton disable={ldapIdpAccountDataDto.isNew()} recordDto={ldapIdpAccountDataDto} createRecord={createIdpAccount} updateRecord={updateLdapIdpAccount} />
-            </div>
-          </Row>
+          <PersistButtonContainer
+            recordDto={ldapIdpAccountDataDto}
+            setRecordDto={setLdapIdpAccountDataDto}
+            updateRecord={updateLdapIdpAccount}
+            createRecord={createIdpAccount}
+            addAnotherOption={false}
+          />
         </div>
     </>
   );

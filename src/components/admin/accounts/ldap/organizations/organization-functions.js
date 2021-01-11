@@ -17,7 +17,6 @@ export const getOrganizationAccountDropdownList = async (valueField, getAccessTo
         });
       });
     });
-    // console.log("Parsed Organization Names: " + JSON.stringify(parsedOrganizationNames));
     return parsedOrganizationNames;
   }
 };
@@ -27,14 +26,12 @@ export const getOrganizationDropdownList = async (valueField, getAccessToken) =>
   if (response.data) {
     let parsedOrganizationNames = [];
     response.data.map(organization => {
-      console.log("org: " + JSON.stringify(organization))
       parsedOrganizationNames.push({
         text: organization["name"] + ": " + organization["orgOwner"],
         groupId: organization["orgOwnerEmail"],
         id: organization[valueField]
       });
     });
-    // console.log("Parsed Organization Names: " + JSON.stringify(parsedOrganizationNames));
     return parsedOrganizationNames;
   }
 };
