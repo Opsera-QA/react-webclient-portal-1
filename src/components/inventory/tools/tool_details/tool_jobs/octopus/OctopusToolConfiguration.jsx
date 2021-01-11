@@ -36,7 +36,7 @@ function OctopusToolConfiguration({ toolData }) {
       recordDto={octopusConfigurationDto}
       persistRecord={saveOctopusToolConfiguration}
       toolData={toolData}
-      // toolConnectionCheckName={"Octopus"}
+      toolConnectionCheckName={"Octopus"}
     >
       <Row>
         <Col sm={12}>
