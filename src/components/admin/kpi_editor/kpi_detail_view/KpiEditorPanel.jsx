@@ -13,9 +13,9 @@ import KpiChartTypeInput from "../../../common/list_of_values_input/admin/kpi_co
 import KpiToolsInput from "../../../common/list_of_values_input/admin/kpi_configurations/KpiToolsInput";
 import KpiFiltersInput from "../../../common/list_of_values_input/admin/kpi_configurations/KpiFiltersInput";
 import KpiCategoriesInput from "../../../common/list_of_values_input/admin/kpi_configurations/KpiCategoriesInput";
-import CreateAndSaveButtonContainer from "../../../common/buttons/saving/containers/CreateAndSaveButtonContainer";
 import WebsitePathInput from "../../../common/inputs/WebsitePathInput";
 import TextAreaInput from "../../../common/inputs/text/TextAreaInput";
+import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 
 function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -68,13 +68,13 @@ function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
           <TextAreaInput dataObject={kpiDataDto} fieldName={"description"} setDataObject={setKpiDataDto}/>
         </Col>
       </Row>
-      <CreateAndSaveButtonContainer
+      <PersistButtonContainer
         updateRecord={updateKpi}
         recordDto={kpiDataDto}
         createRecord={createKpi}
         setRecordDto={setKpiDataDto}
         handleClose={handleClose}
-        />
+      />
     </EditorPanelContainer>
   );
 }

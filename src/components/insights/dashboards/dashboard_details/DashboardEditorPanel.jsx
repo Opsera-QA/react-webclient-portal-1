@@ -7,9 +7,9 @@ import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import Col from "react-bootstrap/Col";
 import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
-import PersistAndCloseButtonContainer from "../../../common/buttons/saving/containers/PersistAndCloseButtonContainer";
 import DashboardTypeSelectInput from "../../../common/list_of_values_input/insights/dashboards/DashboardTypeSelectInput";
 import DashboardAccessSelectInput from "../../../common/list_of_values_input/insights/dashboards/DashboardAccessSelectInput";
+import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 
 function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -54,7 +54,7 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
             <DtoToggleInput fieldName={"active"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
           </Col>
         </Row>
-        <PersistAndCloseButtonContainer
+        <PersistButtonContainer
           recordDto={dashboardDataDto}
           handleClose={handleClose}
           setRecordDto={setDashboardDataDto}

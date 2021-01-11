@@ -6,7 +6,6 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import CreateAndSaveButtonContainer from "components/common/buttons/saving/containers/CreateAndSaveButtonContainer";
 import {generateUUID} from "components/common/helpers/string-helpers";
 import JiraProjectConfigurationPanel
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraProjectConfigurationPanel";
@@ -77,6 +76,7 @@ function JiraProjectEditorPanel({ toolData, jiraProjectData, setJiraProjectData,
       <PersistButtonContainer
         recordDto={jiraProjectData}
         setRecordDto={setJiraProjectData}
+        handleClose={handleClose}
         updateRecord={updateJiraProject}
         createRecord={createJiraProject}
         disable={jiraProjectData == null || !jiraProjectData.checkCurrentValidity() || jiraConfigurationDto == null || !jiraConfigurationDto.checkCurrentValidity()}
