@@ -73,7 +73,6 @@ function LdapOrganizationAccountDetailView() {
       const response = await accountsActions.getOrganizationAccountByDomain(organizationDomain, getAccessToken);
 
       if (response != null && response.data != null) {
-        console.log("RESPONSE: " + JSON.stringify(response));
         setLdapOrganizationAccountData(new Model(response.data, ldapOrganizationAccountMetaData, false));
         setOrganizationName(response.data["org"]["name"]);
       }

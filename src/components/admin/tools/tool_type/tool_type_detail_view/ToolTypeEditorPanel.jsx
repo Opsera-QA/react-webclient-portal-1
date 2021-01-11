@@ -2,13 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext"; 
 import {Col, Row} from "react-bootstrap";
-import DtoTextInput from "../../../../common/input/dto_input/dto-text-input";
-import DtoToggleInput from "../../../../common/input/dto_input/dto-toggle-input";
-import toolTypeActions from "../../tool-management-actions";
-import LoadingDialog from "../../../../common/status_notifications/loading";
-import SaveButton from "../../../../common/buttons/SaveButton";
-import DtoTagManagerInput from "../../../../common/input/dto_input/dto-tag-manager-input";
-import EditorPanelContainer from "../../../../common/panels/detail_panel_container/EditorPanelContainer";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
+import toolTypeActions from "components/admin/tools/tool-management-actions";
+import DtoTagManagerInput from "components/common/input/dto_input/dto-tag-manager-input";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 function ToolTypeEditorPanel( { toolTypeData, setToolTypeData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -37,33 +37,34 @@ function ToolTypeEditorPanel( { toolTypeData, setToolTypeData, handleClose }) {
     return (<LoadingDialog size="sm"/>);
   }
 
-    return (
-      <EditorPanelContainer>
-          <Row>
-            <Col lg={6}>
-              <DtoTextInput fieldName={"name"} dataObject={toolTypeDataDto} setDataObject={setToolTypeDataDto}/>
-            </Col>
-            <Col lg={6}>
-              <DtoToggleInput fieldName={"active"} dataObject={toolTypeDataDto} setDataObject={setToolTypeDataDto}/>
-            </Col>
-            <Col lg={6}>
-              <DtoTextInput fieldName={"description"} dataObject={toolTypeDataDto} setDataObject={setToolTypeDataDto}/>
-            </Col>
-            <Col lg={6}>
-              <DtoTextInput fieldName={"identifier"} dataObject={toolTypeDataDto} setDataObject={setToolTypeDataDto}/>
-            </Col>
-            <Col lg={6}>
-              <DtoTagManagerInput type={"tool"} dataObject={toolTypeDataDto} fieldName={"tags"} setDataObject={setToolTypeDataDto}  />
-            </Col>
-          </Row>
-          <Row>
-            <div className="ml-auto mt-3 px-3">
-              <SaveButton recordDto={toolTypeDataDto} createRecord={createToolType} setRecordDto={setToolTypeDataDto}
-                          updateRecord={updateToolType} handleClose={handleClose} setData={setToolTypeData} />
-            </div>
-          </Row>
-      </EditorPanelContainer>
-    );
+  return (
+    <EditorPanelContainer>
+      <Row>
+        <Col lg={6}>
+          <TextInputBase fieldName={"name"} dataObject={toolTypeDataDto} setDataObject={setToolTypeDataDto}/>
+        </Col>
+        <Col lg={6}>
+          <ActivityToggleInput fieldName={"active"} dataObject={toolTypeDataDto} setDataObject={setToolTypeDataDto}/>
+        </Col>
+        <Col lg={6}>
+          <TextInputBase fieldName={"description"} dataObject={toolTypeDataDto} setDataObject={setToolTypeDataDto}/>
+        </Col>
+        <Col lg={6}>
+          <TextInputBase fieldName={"identifier"} dataObject={toolTypeDataDto} setDataObject={setToolTypeDataDto}/>
+        </Col>
+        <Col lg={6}>
+          <DtoTagManagerInput type={"tool"} dataObject={toolTypeDataDto} fieldName={"tags"} setDataObject={setToolTypeDataDto}/>
+        </Col>
+      </Row>
+      <PersistButtonContainer
+        createRecord={createToolType}
+        updateRecord={updateToolType}
+        setRecordDto={setToolTypeDataDto}
+        recordDto={toolTypeDataDto}
+        handleClose={handleClose}
+      />
+    </EditorPanelContainer>
+  );
 }
 
 ToolTypeEditorPanel.propTypes = {
