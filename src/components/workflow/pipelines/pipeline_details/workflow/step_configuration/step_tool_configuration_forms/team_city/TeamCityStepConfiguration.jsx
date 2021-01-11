@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import teamcityStepConfigurationMetadata from "./teamcity-step-configuration-metadata";
-import Model from "../../../../../../../../core/data_model/model";
-import DtoTextInput from "../../../../../../../common/input/dto_input/dto-text-input";
-import SaveButton from "../../../../../../../common/buttons/SaveButton";
-import LoadingDialog from "../../../../../../../common/status_notifications/loading";
-import stepConfigurationThresholdMetadata from "../common/step-configuration-threshold-metadata";
+import SaveButton2 from "components/common/buttons/saving/SaveButton2";
+import stepConfigurationThresholdMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/common/step-configuration-threshold-metadata";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import LoadingDialog from "components/common/status_notifications/loading";
+import Model from "core/data_model/model";
 
 function TeamCityStepConfiguration( { configurationData, parentCallback }) {
   const [thresholdDataDto, setThresholdDataDto] = useState(undefined);
@@ -48,14 +49,14 @@ function TeamCityStepConfiguration( { configurationData, parentCallback }) {
   
   return (
     <div className="scroll-y full-height">
-      <DtoTextInput fieldName={"teamcityApiURL"} dataObject={teamCityDataDto} setDataObject={setTeamCityDataDto} />
-      <DtoTextInput fieldName={"teamcityUsername"} dataObject={teamCityDataDto} setDataObject={setTeamCityDataDto} />
-      <DtoTextInput type={"password"} fieldName={"teamcityPassword"} dataObject={teamCityDataDto} setDataObject={setTeamCityDataDto} />
-      <DtoTextInput fieldName={"teamcityBuildTypeId"} dataObject={teamCityDataDto} setDataObject={setTeamCityDataDto} />
-      <DtoTextInput fieldName={"teamcityProjectId"} dataObject={teamCityDataDto} setDataObject={setTeamCityDataDto} />
-      <DtoTextInput disabled={true} fieldName={"value"} dataObject={thresholdDataDto} setDataObject={setThresholdDataDto} />
+      <TextInputBase fieldName={"teamcityApiURL"} dataObject={teamCityDataDto} setDataObject={setTeamCityDataDto} />
+      <TextInputBase fieldName={"teamcityUsername"} dataObject={teamCityDataDto} setDataObject={setTeamCityDataDto} />
+      <TextInputBase type={"password"} fieldName={"teamcityPassword"} dataObject={teamCityDataDto} setDataObject={setTeamCityDataDto} />
+      <TextInputBase fieldName={"teamcityBuildTypeId"} dataObject={teamCityDataDto} setDataObject={setTeamCityDataDto} />
+      <TextInputBase fieldName={"teamcityProjectId"} dataObject={teamCityDataDto} setDataObject={setTeamCityDataDto} />
+      <TextInputBase disabled={true} fieldName={"value"} dataObject={thresholdDataDto} setDataObject={setThresholdDataDto} />
       <div className="pt-3 pl-2">
-        <SaveButton recordDto={teamCityDataDto} setRecordDto={setTeamCityDataDto} updateRecord={callbackFunction} createRecord={callbackFunction} />
+        <SaveButton2 recordDto={teamCityDataDto} setRecordDto={setTeamCityDataDto} updateRecord={callbackFunction} createRecord={callbackFunction} />
       </div>
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
     </div>
