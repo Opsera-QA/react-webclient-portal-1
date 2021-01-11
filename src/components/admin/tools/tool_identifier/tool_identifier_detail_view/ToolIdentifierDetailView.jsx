@@ -80,7 +80,7 @@ function ToolIdentifierDetailView() {
     return (
       <ActionBarContainer>
         <div>
-          <ActionBarBackButton path={"/admin/tools"} />
+          <ActionBarBackButton path={"/admin/tools/identifiers"} />
         </div>
         <div>
           <ActionBarToggleButton status={toolIdentifierData?.getData("active")} handleActiveToggle={handleActiveToggle} />
@@ -101,7 +101,7 @@ function ToolIdentifierDetailView() {
     <DetailScreenContainer
       breadcrumbDestination={"toolIdentifierDetailView"}
       title={toolIdentifierData != null ? `Tool Identifier Details [${toolIdentifierData.getData("name")}]` : undefined}
-      managementViewLink={"/admin/tools"}
+      managementViewLink={"/admin/tools/identifiers"}
       managementTitle={"Tool Management"}
       managementViewIcon={faWrench}
       type={"Tool Identifier"}
