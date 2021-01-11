@@ -52,7 +52,6 @@ function ToolProjectsView() {
       let projectData = toolProjects.find((project) => project.id === projectId);
 
       if (projectData != null) {
-        console.log("getting tool project: " + JSON.stringify(projectData));
         let toolProjectDto = new Model({...projectData}, metaData, false);
         setToolProjectData(toolProjectDto);
       }

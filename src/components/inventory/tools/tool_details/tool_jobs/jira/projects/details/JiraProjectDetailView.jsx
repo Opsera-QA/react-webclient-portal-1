@@ -35,11 +35,9 @@ function JiraProjectDetailView( {toolData, setToolData, jiraProjectData, setJira
     let projects = toolData.getData("projects");
     const projectIndex = projects.findIndex((project) => project.id === jiraProjectData.getData("id"));
 
-    console.log("found Project: " + JSON.stringify(projectIndex))
     if (projectIndex != null) {
       projects.splice(projectIndex, 1);
       newToolData.setData("projects", projects);
-      console.log("found Project: " + JSON.stringify(projectIndex))
     }
     else {
       throw Error("Could not find Jira Project to delete.");

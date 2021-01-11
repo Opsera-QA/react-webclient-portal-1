@@ -100,7 +100,7 @@ const trails = {
   // Inventory
   toolRegistry: {parent: undefined, breadcrumb: breadcrumbs.toolRegistry},
   toolDetailView: {parent: "toolRegistry", breadcrumb: breadcrumbs.toolDetailView},
-  toolProjectDetailView: {parent: "toolDetailView", breadcrumb: breadcrumbs.toolProjectDetailView},
+  toolProjectDetailView: {parent: "toolRegistry", breadcrumb: breadcrumbs.toolProjectDetailView},
 
   // Administration
   admin: {parent: undefined, breadcrumb: breadcrumbs.admin},
