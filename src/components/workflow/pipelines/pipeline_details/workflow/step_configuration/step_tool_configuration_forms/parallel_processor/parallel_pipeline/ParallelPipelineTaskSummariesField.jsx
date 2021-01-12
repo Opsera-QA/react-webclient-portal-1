@@ -1,12 +1,15 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {AuthContext} from "../../../../../../../../../contexts/AuthContext";
-import pipelineActions from "../../../../../../../pipeline-actions";
-import ParallelPipelineTaskSummaryCard from "./ParallelPipelineTaskSummaryCard";
-import Model from "../../../../../../../../../core/data_model/model";
-import Label from "../../../../../../../../common/form_fields/Label";
-import PipelineSummaryCard from "../../../../../pipeline_activity/PipelineSummaryCard";
-import pipelineSummaryMetadata from "../../../../../pipeline_activity/pipeline-summary-metadata";
+import Model from "core/data_model/model";
+import {AuthContext} from "contexts/AuthContext";
+import pipelineActions from "components/workflow/pipeline-actions";
+import pipelineSummaryMetadata
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
+import ParallelPipelineTaskSummaryCard
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/parallel_processor/parallel_pipeline/ParallelPipelineTaskSummaryCard";
+import FieldContainer from "components/common/fields/FieldContainer";
+import FieldLabel from "components/common/fields/FieldLabel";
+import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
 
 function ParallelPipelineTaskSummariesField({ fieldName, dataObject }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -27,8 +30,7 @@ function ParallelPipelineTaskSummariesField({ fieldName, dataObject }) {
         let response = await pipelineActions.getPipelineSummaries(pipelineIds, getAccessToken);
 
         if (response?.data) {
-          let pipelineStateResponse = await pipelineActions.getPipelineStates(pipelineIds, getAccessToken);
-          initializePipelines(response.data, pipelineStateResponse?.data);
+          await initializePipelines(response.data);
         }
       }
     }
@@ -40,23 +42,26 @@ function ParallelPipelineTaskSummariesField({ fieldName, dataObject }) {
     }
   };
 
-  const initializePipelines = (pipelines, pipelineStates) => {
+  const initializePipelines = async (pipelines) => {
     let initializedPipelines = [];
 
     if (!Array.isArray(pipelines) || pipelines.length === 0) {
       setPipelines(initializedPipelines);
     }
 
-    pipelines.map((pipeline) => {
+    for (let index = 0; index < pipelines.length; index++) {
+      let pipeline = pipelines[index];
       let pipelineModel = new Model(pipeline, pipelineSummaryMetadata, false);
+      const runNumber = getRunResponseValue(pipelineModel.getData("_id"), "runCount");
 
-      if (pipelineStates != null) {
-        let pipelineStateObject = pipelineStates.find((item) => {return item.pipelineId === pipelineModel.getData("_id")});
-        pipelineModel.setData("state", pipelineStateObject?.state);
+      if (runNumber != null) {
+        const pipelineStateResponse = await pipelineActions.getPipelineStateAtRun(pipeline._id, runNumber, getAccessToken);
+        pipelineModel.setData("state", pipelineStateResponse?.data?.status);
       }
-      pipelineModel.setData("runNumber", getRunResponseValue(pipelineModel.getData("_id"), "runCount"));
+
+      pipelineModel.setData("runNumber", runNumber || "No Pipeline Run Associated With This Task");
       initializedPipelines.push({...pipelineModel});
-    });
+    }
 
     setPipelines([...initializedPipelines]);
   };
@@ -105,10 +110,10 @@ function ParallelPipelineTaskSummariesField({ fieldName, dataObject }) {
   };
 
   return (
-    <div>
-      <Label field={field} />
+    <FieldContainer>
+      <FieldLabel field={field} />
       {getBody()}
-    </div>
+    </FieldContainer>
   );
 }
 
