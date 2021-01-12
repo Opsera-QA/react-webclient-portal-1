@@ -73,7 +73,12 @@ export class Model {
 
 
   getData = (fieldName) => {
-    return fieldName.includes('.') ? this.getNestedData(fieldName) : this.data[fieldName];
+    if (fieldName == null) {
+      console.error("No field name was given, so returning null");
+      return null;
+    }
+
+    return fieldName && fieldName.includes('.') ? this.getNestedData(fieldName) : this.data[fieldName];
   };
 
   setData = (fieldName, newValue) => {
