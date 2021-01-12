@@ -15,8 +15,10 @@ function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visibl
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    loadData();
-  }, []);
+    if (toolType !== "") {
+      loadData();
+    }
+  }, [toolType]);
 
   const loadData = async () => {
     try {
@@ -52,7 +54,7 @@ function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visibl
     return <></>;
   }
 
-  if (!isLoading && (tools == null || tools.length === 0)) {
+  if (!isLoading && (tools == null || tools.length === 0) && toolFriendlyName) {
     return (
       <div className="form-text text-muted p-2">
         <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />

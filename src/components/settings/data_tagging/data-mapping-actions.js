@@ -1,4 +1,5 @@
 import { axiosApiService } from "../../../api/apiService";
+import baseActions from "utils/actionsBase";
 
 const dataMappingActions = {};
 
@@ -6,166 +7,85 @@ dataMappingActions.createProjectMapping = async (data, getAccessToken) => {
   let postData = {
     ...data.getPersistData(),
   };
-  const accessToken = await getAccessToken();
   const apiUrl = "/mappings/create/project";
-  const response = await axiosApiService(accessToken)
-    .post(apiUrl, postData)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      throw error;
-    });
-  return response;
+  return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
 dataMappingActions.getProjectMappings = async (getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/mappings/projects`;
-  const response = await axiosApiService(accessToken)
-    .get(apiUrl)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      throw error;
-    });
-  return response;
+  return baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 dataMappingActions.getProjectMappingById = async (id, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/mappings/projects/${id}`;
-  const response = await axiosApiService(accessToken)
-    .get(apiUrl)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      throw error;
-    });
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 dataMappingActions.updateProject = async (data, getAccessToken) => {
   let postData = {
     ...data.getPersistData(),
   };
-  const accessToken = await getAccessToken();
   const apiUrl = `/mappings/update/project/${data.getData("_id")}`;
-  const response = await axiosApiService(accessToken)
-    .post(apiUrl, postData)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      throw error;
-    });
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
 dataMappingActions.deleteProjectMapping = async (data, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/mappings/project/${data.getData("_id")}`;
-  const response = await axiosApiService(accessToken)
-    .delete(apiUrl)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      throw error;
-    });
-  return response;
+  return await baseActions.apiDeleteCall(getAccessToken, apiUrl);
 };
 
 dataMappingActions.createUserMapping = async (data, getAccessToken) => {
   let postData = {
     ...data.getPersistData(),
   };
-  const accessToken = await getAccessToken();
   const apiUrl = "/mappings/create/users";
-  const response = await axiosApiService(accessToken)
-    .post(apiUrl, postData)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      throw error;
-    });
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
 dataMappingActions.getUserMappings = async (getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/mappings/users`;
-  const response = await axiosApiService(accessToken)
-    .get(apiUrl)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      throw error;
-    });
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 dataMappingActions.getUserMappingById = async (id, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/mappings/users/${id}`;
-  const response = await axiosApiService(accessToken)
-    .get(apiUrl)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      throw error;
-    });
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 dataMappingActions.updateUserMapping = async (data, getAccessToken) => {
   let postData = {
     ...data.getPersistData(),
   };
-  const accessToken = await getAccessToken();
   const apiUrl = `/mappings/update/users/${data.getData("_id")}`;
-  const response = await axiosApiService(accessToken)
-    .post(apiUrl, postData)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      throw error;
-    });
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
 dataMappingActions.deleteUserMapping = async (data, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/mappings/users/${data.getData("_id")}`;
-  const response = await axiosApiService(accessToken)
-    .delete(apiUrl)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      throw error;
-    });
-  return response;
+  return await baseActions.apiDeleteCall(getAccessToken, apiUrl);
 };
 
 dataMappingActions.getSCMUserList = async (data, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/mappings/users/scmlist/${data.getData("tool_identifier")}/${data.getData("tool_id")}`;
-  const response = await axiosApiService(accessToken)
-    .get(apiUrl)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      throw error;
-    });
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+dataMappingActions.getJenkinsJobs = async (data, getAccessToken) => {
+  const apiUrl = `/mappings/projects/jobs/jenkins/${data.getData("tool_id")}`;
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
+  if (response && response.status === 200) {
+    return response.data
+  }
+  return [];
+};
+
+dataMappingActions.getSonarProjects = async (data, getAccessToken) => {
+  const apiUrl = `/mappings/projects/jobs/sonar/${data.getData("tool_id")}`;
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
+  if (response && response.status === 200) {
+    return response.data
+  }
+  return [];
 };
 
 export default dataMappingActions;

@@ -1,22 +1,17 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
-import AccessDeniedDialog from "../../../../common/status_notifications/accessDeniedInfo";
-import { AuthContext } from "../../../../../contexts/AuthContext";
-import dataMappingActions from "../../data-mapping-actions";
-import Model from "../../../../../core/data_model/model";
-import usersTagsMetadata from "../tagging-users-metadata";
+import React, { useState, useEffect, useContext } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import UsersMappingDetailPanel from "./UsersMappingDetailPanel";
-import { faProjectDiagram, faToolbox, faTrash, faWrench } from "@fortawesome/pro-light-svg-icons";
-import { DialogToastContext } from "../../../../../contexts/DialogToastContext";
-import DetailScreenContainer from "../../../../common/panels/detail_view_container/DetailScreenContainer";
-import ActionBarContainer from "../../../../common/actions/ActionBarContainer";
-import ActionBarBackButton from "../../../../common/actions/buttons/ActionBarBackButton";
-import ActionBarToggleButton from "../../../../common/actions/buttons/ActionBarToggleButton";
-import { faRUsers } from "@fortawesome/free-brands-svg-icons";
-import LoadingDialog from "../../../../common/status_notifications/loading";
-import { faUser } from "@fortawesome/pro-solid-svg-icons";
-import ActionBarButton from "../../../../common/actions/buttons/ActionBarButton";
-import DeleteModal from "../../../../common/modal/DeleteModal";
+import { faProjectDiagram, faUser } from "@fortawesome/pro-light-svg-icons";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {AuthContext} from "contexts/AuthContext";
+import dataMappingActions from "components/settings/data_tagging/data-mapping-actions";
+import usersTagsMetadata from "components/settings/data_tagging/users/tagging-users-metadata";
+import Model from "core/data_model/model";
+import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
+import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 
 function UsersMappingDetailView() {
   const { usersMappingId } = useParams();
@@ -25,7 +20,6 @@ function UsersMappingDetailView() {
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const [usersMappingData, setUsersMappingData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -48,8 +42,8 @@ function UsersMappingDetailView() {
   const getUsersMapping = async (usersMappingId) => {
     try {
       const response = await dataMappingActions.getUserMappingById(usersMappingId, getAccessToken);
-      if (response.data != null && response.data.length > 0) {
-        setUsersMappingData(new Model(response.data[0], usersTagsMetadata, false));
+      if (response?.data?.length > 0) {
+        setUsersMappingData(new Model(response?.data[0], usersTagsMetadata, false));
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -61,7 +55,7 @@ function UsersMappingDetailView() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      if (userRoleAccess.OpseraAdministrator === true) {
+      if (userRoleAccess?.OpseraAdministrator === true) {
         await getUsersMapping(usersMappingId);
       }
     }
@@ -70,24 +64,18 @@ function UsersMappingDetailView() {
   const deleteMapping = async () => {
     let response = await dataMappingActions.deleteUserMapping(usersMappingData, getAccessToken);
     if (response.status === 200) {
+      toastContext.showDeleteSuccessResultDialog("User Mapping");
       history.push("/settings/data_mapping");
+    } else {
+      toastContext.showDeleteFailureResultDialog("User Mapping", response);
     }
   };
 
   const getActionBar = () => {
     return (
       <ActionBarContainer>
-        <div>
-          <ActionBarBackButton path={"/settings/data_mapping"} />
-        </div>
-        <div>
-          <ActionBarButton
-            action={() => setShowDeleteModal(true)}
-            icon={faTrash}
-            iconClasses={"danger-red"}
-            popoverText={`Delete this Tool`}
-          />
-        </div>
+        <div><ActionBarBackButton path={"/settings/data_mapping"} /></div>
+        <div><ActionBarDeleteButton2 relocationPath={"/settings/data_mapping"} handleDelete={deleteMapping} dataObject={usersMappingData} /></div>
       </ActionBarContainer>
     );
   };
@@ -96,53 +84,20 @@ function UsersMappingDetailView() {
     return <AccessDeniedDialog roleData={accessRoleData} />;
   }
 
-  if (isLoading || !usersMappingData) {
-    return (
-      <DetailScreenContainer
-        breadcrumbDestination={"userTaggingDetailView"}
-        title={usersMappingData != null ? "Users Mapping Details" : undefined}
-        managementViewLink={"/settings/data_mapping"}
-        managementTitle={"Mappings Management"}
-        managementViewIcon={faProjectDiagram}
-        type={"User Mapping"}
-        titleIcon={faUser}
-        isLoading={isLoading}
-        actionBar={getActionBar()}
-      >
-        <LoadingDialog size="sm" />
-      </DetailScreenContainer>
-    );
-  }
-
   return (
-    <>
-      {usersMappingData && (
-        <>
-          <DetailScreenContainer
-            breadcrumbDestination={"userTaggingDetailView"}
-            title={usersMappingData != null ? "Users Mapping Details" : undefined}
-            managementViewLink={"/settings/data_mapping"}
-            managementTitle={"Mappings Management"}
-            managementViewIcon={faProjectDiagram}
-            type={"User Mapping"}
-            titleIcon={faUser}
-            dataObject={usersMappingData}
-            isLoading={isLoading}
-            actionBar={getActionBar()}
-            detailPanel={
-              <UsersMappingDetailPanel usersMappingData={usersMappingData} setUsersMappingData={setUsersMappingData} />
-            }
-          />
-          <DeleteModal
-            showModal={showDeleteModal}
-            setShowModal={setShowDeleteModal}
-            dataObject={usersMappingData}
-            handleDelete={deleteMapping}
-            // handleClose={handleClose}
-          />
-        </>
-      )}
-    </>
+    <DetailScreenContainer
+      breadcrumbDestination={"userTaggingDetailView"}
+      title={"Users Mapping Details"}
+      managementViewLink={"/settings/data_mapping"}
+      managementTitle={"Mappings Management"}
+      managementViewIcon={faProjectDiagram}
+      type={"User Mapping"}
+      titleIcon={faUser}
+      dataObject={usersMappingData}
+      isLoading={isLoading}
+      actionBar={getActionBar()}
+      detailPanel={<UsersMappingDetailPanel usersMappingData={usersMappingData} setUsersMappingData={setUsersMappingData}/>}
+    />
   );
 }
 

@@ -84,6 +84,19 @@ adminTagsActions.getTags = async (tagFilterDto, getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
+adminTagsActions.getProjectTags = async (getAccessToken) => {
+  const apiUrl = "/tags";
+  const urlParams = {
+    params: {
+      size: 10000,
+      page: 1,
+      sort: "type",
+      type: "project"
+    },
+  };
+  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+};
+
 adminTagsActions.getVisibleTags = async (getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/tags?status=active";

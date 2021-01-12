@@ -37,6 +37,11 @@ pipelineStepNotificationActions.getJiraProjectsFromId = async (toolId, getAccess
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+pipelineStepNotificationActions.getJiraProjects2 = async (toolId, getAccessToken) => {
+  const apiUrl = `/connectors/jira/${toolId}/projects`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
 pipelineStepNotificationActions.getJiraProjectUsers = async (jiraStepNotificationDto, getAccessToken) => {
   let toolId = jiraStepNotificationDto.getData("jiraToolId");
   let projectKey = jiraStepNotificationDto.getData("jiraProject");
@@ -46,6 +51,11 @@ pipelineStepNotificationActions.getJiraProjectUsers = async (jiraStepNotificatio
 
 pipelineStepNotificationActions.getJiraProjectUsers2 = async (toolId, projectKey, getAccessToken) => {
   const apiUrl = `/connectors/jira/${toolId}/project/users?project=${projectKey}`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+pipelineStepNotificationActions.getJiraProjectUsers2 = async (jiraToolId, jiraProject, getAccessToken) => {
+  const apiUrl = `/connectors/jira/${jiraToolId}/project/users?project=${jiraProject}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
