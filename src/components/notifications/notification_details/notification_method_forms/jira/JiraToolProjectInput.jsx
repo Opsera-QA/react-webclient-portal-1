@@ -10,6 +10,7 @@ import JiraUserInputs
   from "components/notifications/notification_details/notification_method_forms/jira/JiraUserInputs";
 import {faProjectDiagram} from "@fortawesome/pro-light-svg-icons";
 import DropdownList from "react-widgets/lib/DropdownList";
+import JiraToolProjectField from "components/common/fields/inventory/tools/jira/JiraToolProjectField";
 
 function JiraToolProjectInput({jiraToolId, fieldName, dataObject, setDataObject, disabled}) {
   const toastContext = useContext(DialogToastContext);
@@ -114,6 +115,9 @@ function JiraToolProjectInput({jiraToolId, fieldName, dataObject, setDataObject,
         disabled={disabled || isLoading || jiraToolId === "" || projects.length === 0}
       />
       {getJiraToolProjectInfo()}
+      <div className="mx-2">
+        <JiraToolProjectField fieldName={fieldName} dataObject={dataObject} jiraToolId={dataObject.getData("jiraToolId")} title={"Jira Tool Project"}/>
+      </div>
       <JiraUserInputs jiraToolId={jiraToolId} jiraProject={getJiraProject()} dataObject={dataObject} setDataObject={setDataObject} />
     </>
   );

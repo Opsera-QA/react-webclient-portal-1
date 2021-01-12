@@ -90,4 +90,9 @@ pipelineStepNotificationActions.getJiraParentTickets = async (jiraStepNotificati
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+pipelineStepNotificationActions.getJiraParentTickets2 = async (toolId, sprintId, getAccessToken) => {
+  const apiUrl = `/connectors/jira/${toolId}/sprint/issues?sprint=${sprintId}`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
 export default pipelineStepNotificationActions;

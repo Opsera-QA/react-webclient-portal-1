@@ -91,6 +91,7 @@ function NotificationEditorPanel({ notificationData, setNotificationData, handle
         createRecord={createNotification}
         updateRecord={updateNotification}
         setRecordDto={setNotificationDataDto}
+        lenient={true}
         disable={
           !notificationDataDto.checkCurrentValidity()
           || (notificationConfigurationDataDto == null || !notificationConfigurationDataDto.checkCurrentValidity())

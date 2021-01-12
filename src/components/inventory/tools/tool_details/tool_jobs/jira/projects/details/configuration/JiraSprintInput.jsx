@@ -6,7 +6,7 @@ import SelectInputBase from "components/common/inputs/SelectInputBase";
 import pipelineStepNotificationActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
 
-function JiraStepNotificationSprintInput({visible, dataObject, setDataObject, disabled, jiraToolId, jiraBoard}) {
+function JiraStepNotificationSprintInput({dataObject, setDataObject, disabled, jiraToolId, jiraBoard}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [sprints, setSprints] = useState([]);
@@ -60,10 +60,6 @@ function JiraStepNotificationSprintInput({visible, dataObject, setDataObject, di
     setDataObject({...newDataObject});
   };
 
-  if (!visible) {
-    return <></>;
-  }
-
   return (
     <SelectInputBase
       fieldName={"jiraSprint"}
@@ -85,11 +81,6 @@ JiraStepNotificationSprintInput.propTypes = {
   jiraToolId: PropTypes.string,
   jiraBoard: PropTypes.string,
   disabled: PropTypes.bool,
-  visible: PropTypes.bool
 };
-
-JiraStepNotificationSprintInput.defaultProps = {
-  visible: true
-}
 
 export default JiraStepNotificationSprintInput;
