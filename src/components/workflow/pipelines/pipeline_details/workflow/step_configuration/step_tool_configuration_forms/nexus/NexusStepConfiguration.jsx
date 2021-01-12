@@ -13,8 +13,8 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import _ from "lodash";
 import nexusStepActions from "./nexus-step-actions";
-import SaveButton2 from "components/common/buttons/saving/SaveButton2";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 
 const NEXUS_STEP_TYPES = [
   {
@@ -293,7 +293,7 @@ function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToo
             }
         </>
       }
-      <SaveButton2 disable={nexusStepConfigurationDto.getData("type") === "push" && nexusStepConfigurationDto.getData("artifactStepId").length === 0} recordDto={nexusStepConfigurationDto} setRecordDto={setNexusStepConfigurationDataDto} createRecord={callbackFunction} updateRecord={callbackFunction} />
+      <SaveButtonBase disable={nexusStepConfigurationDto.getData("type") === "push" && nexusStepConfigurationDto.getData("artifactStepId").length === 0} recordDto={nexusStepConfigurationDto} setRecordDto={setNexusStepConfigurationDataDto} createRecord={callbackFunction} updateRecord={callbackFunction} />
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
     </>
   );

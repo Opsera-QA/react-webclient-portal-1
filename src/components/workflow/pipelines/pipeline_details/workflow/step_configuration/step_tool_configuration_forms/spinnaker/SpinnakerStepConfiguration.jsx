@@ -12,7 +12,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import spinnakerStepActions from "./spinnaker-step-actions";
-import SaveButton2 from "components/common/buttons/saving/SaveButton2";
+import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 
 function SpinnakerStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -253,7 +253,7 @@ function SpinnakerStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
         busy={spinnakerToolsSearching}
         disabled={spinnakerStepConfigurationDto.getData("applicationName").length === 0 || spinnakerToolsSearching}
       />
-      <SaveButton2
+      <SaveButtonBase
         recordDto={spinnakerStepConfigurationDto}
         setRecordDto={setSpinnakerStepConfigurationDataDto}
         createRecord={callbackFunction}

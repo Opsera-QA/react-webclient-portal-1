@@ -1,14 +1,12 @@
 import React, {useContext, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
-import {DataState} from "../../../../core/data_model/model";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSave, faSpinner} from "@fortawesome/free-solid-svg-icons";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import {faSave, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import {persistUpdatedRecord} from "./saving-helpers";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
-//TODO: Rename after old one is removed
-function SaveButton2({recordDto, updateRecord, disable, showSuccessToasts, lenient}) {
+function SaveButtonBase({recordDto, updateRecord, disable, showSuccessToasts, lenient}) {
   let toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -23,19 +21,19 @@ function SaveButton2({recordDto, updateRecord, disable, showSuccessToasts, lenie
       return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving</span>);
     }
 
-    return (<span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-1"/>{`Save`}</span>);
+    return (<span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-1"/>Save</span>);
   };
 
   return (
     <div className="mx-1">
       <Button size="md" variant="primary" disabled={isSaving || disable || (!lenient && !recordDto.isChanged())} onClick={() => persistRecord()}>
-        {getLabel("Save")}
+        {getLabel()}
       </Button>
     </div>
   );
 }
 
-SaveButton2.propTypes = {
+SaveButtonBase.propTypes = {
   recordDto: PropTypes.object,
   updateRecord: PropTypes.func,
   disable: PropTypes.bool,
@@ -43,9 +41,9 @@ SaveButton2.propTypes = {
   lenient: PropTypes.bool
 };
 
-SaveButton2.defaultProps = {
+SaveButtonBase.defaultProps = {
   disable: false,
   showSuccessToasts: true
 }
 
-export default SaveButton2;
+export default SaveButtonBase;

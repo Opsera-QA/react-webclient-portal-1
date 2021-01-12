@@ -11,7 +11,7 @@ import Model from "../../../core/data_model/model";
 import AnalyticsProfileMetadata from "./analytics-profile-metadata";
 import ScreenContainer from "../../common/panels/general/ScreenContainer";
 import LoadingView from "../../common/status_notifications/loading";
-import SaveButton2 from "components/common/buttons/saving/SaveButton2";
+import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 
 const DEFAULT_PERSONAS = [
   {
@@ -267,7 +267,7 @@ function AnalyticsProfileSettings() {
             </Col>
           </Row>
           <div className="ml-auto mt-3">
-            <SaveButton2
+            <SaveButtonBase
               updateRecord={updateProfile}
               setRecordDto={setAnalyticsProfileData}
               setData={setAnalyticsProfileData}

@@ -10,9 +10,9 @@ import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import LoadingDialog from "components/common/status_notifications/loading";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
-import SaveButton2 from "../../../../../../../common/buttons/saving/SaveButton2";
 import CloseButton from "../../../../../../../common/buttons/CloseButton";
 import anchoreIntegratorStepConfigurationMetadata from "./anchore-integrator-step-configuration-metadata";
+import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 
 function AnchoreIntegratorStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -185,7 +185,7 @@ function AnchoreIntegratorStepConfiguration({ stepTool, plan, stepId, parentCall
         disabled={listOfSteps.length === 0 || anchoreStepConfigurationDto.getData("anchoreToolConfigId").length === 0}
       />
       <Row className="mx-1 py-2">
-        <SaveButton2
+        <SaveButtonBase
           disable={
             anchoreStepConfigurationDto.getData("type") === "push" &&
             anchoreStepConfigurationDto.getData("artifactStepId").length === 0

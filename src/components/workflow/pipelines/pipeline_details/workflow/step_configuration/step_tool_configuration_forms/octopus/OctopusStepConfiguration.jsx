@@ -11,8 +11,8 @@ import pipelineHelpers from "components/workflow/pipelineHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import OctopusStepActions from "./octopus-step-actions";
-import SaveButton2 from "../../../../../../../common/buttons/saving/SaveButton2";
 import CloseButton from "../../../../../../../common/buttons/CloseButton";
+import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -367,7 +367,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
             }
           /> */}
           <Row className="mx-1 py-2">
-            <SaveButton2
+            <SaveButtonBase
               recordDto={octopusStepConfigurationDto}
               setRecordDto={setOctopusStepConfigurationDataDto}
               createRecord={callbackFunction}
