@@ -9,7 +9,7 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import ChildPipelineTaskSummariesField from "./child-pipelines/ChildPipelineTaskSummariesField";
 import PipelineTaskSummaryMessageField
   from "components/common/form_fields/pipelines/activity/PipelineTaskSummaryMessageField";
-import PipelineTaskStateField from "../../../../../../../common/form_fields/pipelines/PipelineTaskStateField";
+import PipelineTaskStateField from "components/common/fields/workflow/pipelines/PipelineTaskStateField";
 
 function ChildPipelineTaskSummaryPanel({ pipelineTaskData }) {
   return (

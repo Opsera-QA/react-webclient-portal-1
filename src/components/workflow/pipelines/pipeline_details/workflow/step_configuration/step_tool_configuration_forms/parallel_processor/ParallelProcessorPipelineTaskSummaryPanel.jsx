@@ -9,7 +9,7 @@ import TextFieldBase from "components/common/form_fields/TextFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import PipelineTaskSummaryMessageField
   from "components/common/form_fields/pipelines/activity/PipelineTaskSummaryMessageField";
-import PipelineTaskStateField from "components/common/form_fields/pipelines/PipelineTaskStateField";
+import PipelineTaskStateField from "components/common/fields/workflow/pipelines/PipelineTaskStateField";
 
 function ParallelProcessorPipelineTaskSummaryPanel({ pipelineTaskData }) {
   return (
