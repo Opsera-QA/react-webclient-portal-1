@@ -40,7 +40,6 @@ const LoginForm = ({ authClient }) => {
 
     authClient.signIn({ username, password })
       .then(res => {
-        setLoading(false);
         setErrorMessage(false);
         setMessage(false);
         const sessionToken = res.sessionToken;
@@ -60,6 +59,7 @@ const LoginForm = ({ authClient }) => {
           .then(function(res) {
             let tokens = res.tokens;
             authClient.tokenManager.setTokens(tokens);
+            setLoading(false);
             history.push("/");
           })
           .catch(function(err) {
