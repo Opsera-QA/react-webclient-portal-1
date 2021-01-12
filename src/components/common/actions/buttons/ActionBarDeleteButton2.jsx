@@ -17,15 +17,16 @@ function ActionBarDeleteButton2({handleDelete, relocationPath, dataObject}) {
       let result = await handleDelete();
 
       console.log("result: " + JSON.stringify(result));
-
-      if (result.error == null) {
-        toastContext.showDeleteSuccessResultDialog(dataObject.getType());
-        setShowDeleteModal(false);
-        history.push(relocationPath);
-      }
-      else
-      {
-        toastContext.showDeleteFailureResultDialog(dataObject.getType(), result.error);
+      if (result) {
+        if (result.error == null) {
+          toastContext.showDeleteSuccessResultDialog(dataObject.getType());
+          setShowDeleteModal(false);
+          history.push(relocationPath);
+        }
+        else
+        {
+          toastContext.showDeleteFailureResultDialog(dataObject.getType(), result.error);
+        }
       }
     }
     catch (error) {

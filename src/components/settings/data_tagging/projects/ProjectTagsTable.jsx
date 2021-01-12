@@ -2,37 +2,20 @@ import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import projectTagsMetadata from "./tagging-project-metadata";
-import {
-  getTableBooleanIconColumn,
-  getTableDateColumn,
-  getTableTextColumn,
-} from "../../../common/table/table-column-helpers";
 import { useHistory } from "react-router-dom";
 import NewProjectMappingModal from "./NewProjectMappingModal";
+import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
 
 function ProjectsTagTable({ data, loadData, isLoading }) {
-  const [showCreateToolTypeModal, setShowCreateToolTypeModal] = useState(false);
+  const [showCreateProjectTagModal, setShowCreateProjectTagModal] = useState(false);
   const history = useHistory();
   let fields = projectTagsMetadata.fields;
 
-  const columns = useMemo(
-    () => [
-      getTableTextColumn(
-        fields.find((field) => {
-          return field.id === "tool_identifier";
-        })
-      ),
-      getTableTextColumn(
-        fields.find((field) => {
-          return field.id === "key";
-        })
-      ),
+  const columns = useMemo(() => [
+      getTableTextColumn(fields.find((field) => {return field.id === "tool_identifier";})),
+      getTableTextColumn(fields.find((field) => {return field.id === "key";})),
       // getTableTextColumn(fields.find(field => { return field.id === "tool_id"})),
-      getTableBooleanIconColumn(
-        fields.find((field) => {
-          return field.id === "active";
-        })
-      ),
+      getTableBooleanIconColumn(fields.find((field) => {return field.id === "active";})),
     ],
     []
   );
@@ -47,8 +30,8 @@ function ProjectsTagTable({ data, loadData, isLoading }) {
 
   const noDataMessage = "No Project Mappings have been configured";
 
-  const createToolType = () => {
-    setShowCreateToolTypeModal(true);
+  const createProjectTag = () => {
+    setShowCreateProjectTagModal(true);
   };
 
   return (
@@ -62,15 +45,13 @@ function ProjectsTagTable({ data, loadData, isLoading }) {
         isLoading={isLoading}
         tableTitle={"Project Mapping"}
         type={"Project Mapping"}
-        createNewRecord={createToolType}
+        createNewRecord={createProjectTag}
       />
-      {showCreateToolTypeModal && (
-        <NewProjectMappingModal
-          setShowModal={setShowCreateToolTypeModal}
-          showModal={showCreateToolTypeModal}
-          loadData={loadData}
-        />
-      )}
+      <NewProjectMappingModal
+        setShowModal={setShowCreateProjectTagModal}
+        showModal={showCreateProjectTagModal}
+        loadData={loadData}
+      />
     </>
   );
 }

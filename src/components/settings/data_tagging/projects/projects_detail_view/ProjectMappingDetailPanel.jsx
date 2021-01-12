@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 
 import ProjectMappingEditorPanel from "./ProjectMappingEditorPanel";
-import CustomTabContainer from "../../../../common/tabs/CustomTabContainer";
 import ProjectMappingSummaryPanel from "./ProjectMappingSummaryPanel";
-import DetailTabPanelContainer from "../../../../common/panels/detail_view/DetailTabPanelContainer";
-import SummaryTab from "../../../../common/tabs/detail_view/SummaryTab";
-import SettingsTab from "../../../../common/tabs/detail_view/SettingsTab";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
+import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
+import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
 function ProjectMappingDetailPanel({ projectMappingData, setProjectMappingData }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -19,13 +19,7 @@ function ProjectMappingDetailPanel({ projectMappingData, setProjectMappingData }
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return (
-          <ProjectMappingSummaryPanel
-            projectMappingDto={projectMappingData}
-            setProjectMappingData={setProjectMappingData}
-            setActiveTab={setActiveTab}
-          />
-        );
+        return <ProjectMappingSummaryPanel projectMappingDto={projectMappingData} setProjectMappingData={setProjectMappingData} setActiveTab={setActiveTab} />;
       case "settings":
         return <ProjectMappingEditorPanel toolTypeData={projectMappingData} setToolTypeData={setProjectMappingData} />;
       default:

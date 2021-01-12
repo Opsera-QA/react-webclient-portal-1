@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import UserMappingEditorPanel from "./UsersMappingEditorPanel";
-import CustomTabContainer from "../../../../common/tabs/CustomTabContainer";
 import UserMappingSummaryPanel from "./UsersMappingSummaryPanel";
-import DetailTabPanelContainer from "../../../../common/panels/detail_view/DetailTabPanelContainer";
-import SummaryTab from "../../../../common/tabs/detail_view/SummaryTab";
-import SettingsTab from "../../../../common/tabs/detail_view/SettingsTab";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
+import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
+import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
 function UsersMappingDetailPanel({ usersMappingData, setUsersMappingData }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -18,13 +18,7 @@ function UsersMappingDetailPanel({ usersMappingData, setUsersMappingData }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return (
-          <UserMappingSummaryPanel
-            usersMappingDto={usersMappingData}
-            setUsersMappingData={setUsersMappingData}
-            setActiveTab={setActiveTab}
-          />
-        );
+        return <UserMappingSummaryPanel usersMappingDto={usersMappingData} setUsersMappingData={setUsersMappingData} setActiveTab={setActiveTab} />;
       case "settings":
         return <UserMappingEditorPanel toolTypeData={usersMappingData} setToolTypeData={setUsersMappingData} />;
       default:

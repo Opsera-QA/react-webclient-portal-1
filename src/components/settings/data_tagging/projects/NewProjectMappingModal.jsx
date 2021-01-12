@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import projectTagsMetadata from "./tagging-project-metadata";
-import Model from "../../../../core/data_model/model";
-import CreateModal from "../../../common/modal/CreateModal";
 import ToolTypeEditorPanel from "./projects_detail_view/ProjectMappingEditorPanel";
+import Model from "core/data_model/model";
+import CreateModal from "components/common/modal/CreateModal";
 
 function NewProjectMappingModal({ setShowModal, showModal, loadData }) {
   const [projectTagsData, setPojectTagsData] = useState(undefined);
 
   useEffect(() => {
     setPojectTagsData(new Model({ ...projectTagsMetadata.newObjectFields }, projectTagsMetadata, true));
-  }, []);
+  }, [showModal]);
 
   const handleClose = () => {
     loadData();
@@ -18,22 +18,9 @@ function NewProjectMappingModal({ setShowModal, showModal, loadData }) {
   };
 
   return (
-    <>
-      <CreateModal
-        handleCancelModal={handleClose}
-        objectType={"Project Mapping"}
-        showModal={showModal}
-        loadData={loadData}
-      >
-        {projectTagsData && (
-          <ToolTypeEditorPanel
-            setToolTypeData={setPojectTagsData}
-            handleClose={handleClose}
-            projectTagsData={projectTagsData}
-          />
-        )}
-      </CreateModal>
-    </>
+    <CreateModal handleCancelModal={handleClose} objectType={"Project Mapping"} showModal={showModal} loadData={loadData}>
+        <ToolTypeEditorPanel setToolTypeData={setPojectTagsData} handleClose={handleClose} projectTagsData={projectTagsData} />
+    </CreateModal>
   );
 }
 

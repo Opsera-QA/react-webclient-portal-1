@@ -42,7 +42,6 @@ const projectTagsMetadata = {
     {
       label: "Active",
       id: "active",
-      isRequired: true,
     },
     {
       label: "Created At",

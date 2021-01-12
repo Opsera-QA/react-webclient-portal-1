@@ -1,23 +1,17 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
-import { Link, useHistory, useParams } from "react-router-dom";
-import AccessDeniedDialog from "../../../../common/status_notifications/accessDeniedInfo";
-import { AuthContext } from "../../../../../contexts/AuthContext";
-import dataMappingActions from "../../data-mapping-actions";
-import Model from "../../../../../core/data_model/model";
-import projectTagsMetadata from "../tagging-project-metadata";
+import React, { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
 import ProjectMappingDetailPanel from "./ProjectMappingDetailPanel";
-import { faProjectDiagram, faToolbox, faTrash, faWrench } from "@fortawesome/pro-light-svg-icons";
-import { DialogToastContext } from "../../../../../contexts/DialogToastContext";
-import DetailScreenContainer from "../../../../common/panels/detail_view_container/DetailScreenContainer";
-import ActionBarContainer from "../../../../common/actions/ActionBarContainer";
-import ActionBarBackButton from "../../../../common/actions/buttons/ActionBarBackButton";
-import ActionBarToggleButton from "../../../../common/actions/buttons/ActionBarToggleButton";
-import { faRProject } from "@fortawesome/free-brands-svg-icons";
-import LoadingDialog from "../../../../common/status_notifications/loading";
-import ActionBarDeleteToolButton from "../../../../common/actions/buttons/tool/ActionBarDeleteToolButton";
-import DeleteModal from "../../../../common/modal/DeleteModal";
-import EditorPanelContainer from "../../../../common/panels/detail_panel_container/EditorPanelContainer";
-import ActionBarButton from "../../../../common/actions/buttons/ActionBarButton";
+import { faProjectDiagram } from "@fortawesome/pro-light-svg-icons";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {AuthContext} from "contexts/AuthContext";
+import dataMappingActions from "components/settings/data_tagging/data-mapping-actions";
+import Model from "core/data_model/model";
+import projectTagsMetadata from "components/settings/data_tagging/projects/tagging-project-metadata";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
+import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
+import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 
 function ProjectMappingDetailView() {
   const { projectMappingId } = useParams();
@@ -26,8 +20,6 @@ function ProjectMappingDetailView() {
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const [projectMappingData, setProjectMappingData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const history = useHistory();
 
   useEffect(() => {
     loadData();
@@ -63,33 +55,21 @@ function ProjectMappingDetailView() {
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      if (userRoleAccess.OpseraAdministrator === true) {
+      if (userRoleAccess?.OpseraAdministrator === true) {
         await getProjectMapping(projectMappingId);
       }
     }
   };
 
   const deleteMapping = async () => {
-    let response = await dataMappingActions.deleteProjectMapping(projectMappingData, getAccessToken);
-    if (response.status === 200) {
-      history.push("/settings/data_mapping");
-    }
+    return await dataMappingActions.deleteProjectMapping(projectMappingData, getAccessToken);
   };
 
   const getActionBar = () => {
     return (
       <ActionBarContainer>
-        <div>
-          <ActionBarBackButton path={"/settings/data_mapping"} />
-        </div>
-        <div>
-          <ActionBarButton
-            action={() => setShowDeleteModal(true)}
-            icon={faTrash}
-            iconClasses={"danger-red"}
-            popoverText={`Delete this Tool`}
-          />
-        </div>
+        <div><ActionBarBackButton path={"/settings/data_mapping"} /></div>
+        <div><ActionBarDeleteButton2 dataObject={projectMappingData} handleDelete={deleteMapping} relocationPath={"/settings/data_mapping"} /></div>
       </ActionBarContainer>
     );
   };
@@ -98,56 +78,20 @@ function ProjectMappingDetailView() {
     return <AccessDeniedDialog roleData={accessRoleData} />;
   }
 
-  if (isLoading || !projectMappingData) {
-    return (
-      <DetailScreenContainer
-        breadcrumbDestination={"projectTaggingDetailView"}
-        title={projectMappingData != null ? "Project Mapping Details" : undefined}
-        managementViewLink={"/settings/data_mapping"}
-        managementTitle={"Mappings Management"}
-        managementViewIcon={faProjectDiagram}
-        type={"Project Mapping"}
-        titleIcon={faProjectDiagram}
-        isLoading={isLoading}
-        actionBar={getActionBar()}
-      >
-        <LoadingDialog size="sm" />
-      </DetailScreenContainer>
-    );
-  }
-
   return (
-    <>
-      {projectMappingData && (
-        <>
-          <DetailScreenContainer
-            breadcrumbDestination={"projectTaggingDetailView"}
-            title={projectMappingData != null ? "Project Mapping Details" : undefined}
-            managementViewLink={"/settings/data_mapping"}
-            managementTitle={"Mappings Management"}
-            managementViewIcon={faProjectDiagram}
-            type={"Project Mapping"}
-            titleIcon={faProjectDiagram}
-            dataObject={projectMappingData}
-            isLoading={isLoading}
-            actionBar={getActionBar()}
-            detailPanel={
-              <ProjectMappingDetailPanel
-                projectMappingData={projectMappingData}
-                setProjectMappingData={setProjectMappingData}
-              />
-            }
-          />
-          <DeleteModal
-            showModal={showDeleteModal}
-            setShowModal={setShowDeleteModal}
-            dataObject={projectMappingData}
-            handleDelete={deleteMapping}
-            // handleClose={handleClose}
-          />
-        </>
-      )}
-    </>
+    <DetailScreenContainer
+      breadcrumbDestination={"projectTaggingDetailView"}
+      title={"Project Mapping Details"}
+      managementViewLink={"/settings/data_mapping"}
+      managementTitle={"Mappings Management"}
+      managementViewIcon={faProjectDiagram}
+      type={"Project Mapping"}
+      titleIcon={faProjectDiagram}
+      dataObject={projectMappingData}
+      isLoading={isLoading}
+      actionBar={getActionBar()}
+      detailPanel={<ProjectMappingDetailPanel projectMappingData={projectMappingData} setProjectMappingData={setProjectMappingData} />}
+    />
   );
 }
 
