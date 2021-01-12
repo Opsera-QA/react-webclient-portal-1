@@ -19,6 +19,7 @@
     "@nivo/pie": "^0.61.1",
     "@okta/okta-auth-js": "^4.5.1",
     "@okta/okta-react": "^4.1.0",
+    "@okta/okta-signin-widget": "^5.2.1",
     "@types/react-router-dom": "^5.1.7",
     "axios": "^0.19.2",
     "axios-hooks": "^2.1.0",

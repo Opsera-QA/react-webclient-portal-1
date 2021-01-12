@@ -16,6 +16,10 @@
   display: block;
 }
 
+#okta-sign-in {
+   margin: 5px auto 8px !important;
+ }
+
 /*  Buttons  */
 
 .btn-link {

@@ -146,7 +146,7 @@ const AppWithRouterAccess = () => {
 
 
   authClient.authStateManager.subscribe(async (authState) => {
-    console.log("Statue manager subscription event: ", authState);
+    console.log("Auth State manager subscription event: ", authState);
     setAuthenticatedState(authState.isAuthenticated);
 
     if (!authState.isAuthenticated) {
@@ -158,7 +158,6 @@ const AppWithRouterAccess = () => {
 
     if (authState.isAuthenticated && !authState.isPending && !data && !error) {
       setLoading(true);
-      console.log("loaindg users 1")
       await loadUsersData(authState.accessToken.value);
     }
 

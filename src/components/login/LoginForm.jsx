@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
-import OktaAuth from "@okta/okta-auth-js";
-import { useOktaAuth } from "@okta/okta-react";
-import { Button, Row, Col, Card } from "react-bootstrap";
+import React, { useState, useEffect, useContext } from "react";
+import { Button, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { axiosApiService } from "../../api/apiService";
@@ -9,10 +7,13 @@ import { useHistory } from "react-router-dom";
 import ErrorDialog from "../common/status_notifications/error";
 import InformationDialog from "../common/status_notifications/info";
 import { faArrowLeft } from "@fortawesome/pro-solid-svg-icons";
+import { AuthContext } from "../../contexts/AuthContext";
+import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css'
+const OktaSignIn = require("@okta/okta-signin-widget");
 
-
-const LoginForm = ({authClient}) => {
-  const { oktaAuth } = useOktaAuth();
+const LoginForm = ({ authClient }) => {
+  const {featureFlagHideItemInProd} = useContext(AuthContext);
+  const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [resetEmailAddress, setResetEmailAddress] = useState("");
@@ -21,6 +22,7 @@ const LoginForm = ({authClient}) => {
   const [errorMessage, setErrorMessage] = useState(false);
   const [message, setMessage] = useState(false);
   const [viewType, setViewType] = useState("domain"); //login, reset or domain
+  const [loginType, setLoginType] = useState("standard"); //stardard: Opsera Okta Login, federated: Opsera Signing Widget
 
   useEffect(() => {
     if (viewType !== "login") {
@@ -29,6 +31,7 @@ const LoginForm = ({authClient}) => {
     setLookupAccountEmail("");
     setPassword("");
     setResetEmailAddress("");
+    setLoginType("standard");
   }, [viewType]);
 
   const handleSubmit = (e) => {
@@ -41,15 +44,78 @@ const LoginForm = ({authClient}) => {
         setErrorMessage(false);
         setMessage(false);
         const sessionToken = res.sessionToken;
-        oktaAuth.signInWithRedirect({ sessionToken })
+        //oktaAuth.signInWithRedirect({ sessionToken })
+
+        authClient.token.getWithoutPrompt({
+          sessionToken: sessionToken,
+          scopes: [
+            "openid",
+            "email",
+            "profile",
+          ],
+          state: "8rFzn42MH5q",
+          nonce: "51GePTb1wrm",
+          idp: null,
+        })
+          .then(function(res) {
+            let tokens = res.tokens;
+            authClient.tokenManager.setTokens(tokens);
+            history.push("/");
+          })
+          .catch(function(err) {
+            console.log("Found an error", err);
+            setErrorMessage(err.message);
+            setLoading(false);
+          });
       })
       .catch(err => {
         console.log("Found an error", err);
         setErrorMessage(err.message);
         setLoading(false);
       });
-
   };
+
+
+  //uses Okta Login widet for federated login.
+  //https://github.com/okta/okta-signin-widget#idp-discovery
+  const federatedOktaLogin = (idp) => {
+    setLoginType("federated");
+
+    const signIn = new OktaSignIn({
+      baseUrl: process.env.REACT_APP_OKTA_BASEURL,
+      redirectUri: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
+      authParams: {
+        pkce: true,
+        responseType: "code",
+        scopes: ["openid", "email"],
+      },
+      clientId: process.env.REACT_APP_OKTA_CLIENT_ID,
+      idps: [
+        { type: "GOOGLE", id: "0oaw3fhtfuCrJ31dK0h7" }, //IDP of our GSuite as opposed to pure google
+      ],
+      idpDisplay: "SECONDARY",
+      idpDiscovery: {
+        requestContext: process.env.REACT_APP_OPSERA_OKTA_REDIRECTURI,
+      },
+      features: {
+        idpDiscovery: true,
+      },
+    });
+
+    signIn.showSignInToGetTokens({
+      // Assumes there is an empty element on the page with an id of 'osw-container'
+      el: "#osw-container",
+    }).then(function(tokens) {
+      // Store tokens
+      authClient.tokenManager.setTokens(tokens);
+      signIn.remove();
+      history.push("/");
+    }).catch(function(err) {
+      console.log("Found an error", err);
+      setErrorMessage(err.message);
+    });
+  };
+
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value.toLowerCase());
@@ -89,6 +155,7 @@ const LoginForm = ({authClient}) => {
   };
 
 
+  //TODO: In future customer IDP may be returned here (based on email lookup to LDAP) and then used in new federated login
   const handleDomainLookupSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -114,13 +181,6 @@ const LoginForm = ({authClient}) => {
     } finally {
       setLoading(false);
     }
-
-
-    //todo: call lookup API with email address:  
-    // if successful, update Okta values to match, swap out logo (future) and switch to login form
-    /*setUsername(lookupAccountEmail);
-    setViewType("login");
-    setLoading(false);*/
   };
 
 
@@ -138,59 +198,74 @@ const LoginForm = ({authClient}) => {
                      height="126"
                 />
               </div>
-              <h4 className="auth-header">
-                Sign in
-              </h4>
 
-              {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage}/>}
+              <div id="osw-container">
+                {loginType !== "federated" && <>
+                  <div className="h4 auth-header">
+                    Sign in
+                  </div>
 
-              {message && <InformationDialog message={message} alignment="top" setInformationMessage={setMessage}/>}
+                  {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage}/>}
 
-              <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label htmlFor="username">Email Address</label>
-                  <input className="form-control"
-                         id="username" type="text"
-                         value={username}
-                         disabled={true}
-                         onChange={handleUsernameChange}/>
-                  <div className="pre-icon os-icon os-icon-user-male-circle"></div>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="password">Password</label>
-                  <input className="form-control"
-                         id="password" type="password"
-                         value={password}
-                         onChange={handlePasswordChange}/>
-                  <div className="pre-icon os-icon os-icon-fingerprint"></div>
-                </div>
-                <div className="buttons-w text-center">
+                  {message && <InformationDialog message={message} alignment="top" setInformationMessage={setMessage}/>}
 
-                  <Button variant="outline-secondary"
-                          className="mb-3 mr-1" style={{width:"46%"}}
-                          type="button"
-                          onClick={() => {
-                            setViewType("domain");
-                          }}>
-                    <FontAwesomeIcon icon={faArrowLeft} className="mr-1" size="sm" fixedWidth/>
-                    Back
-                  </Button>
+                  <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                      <label htmlFor="username">Email Address</label>
+                      <input className="form-control"
+                             id="username" type="text"
+                             value={username}
+                             disabled={true}
+                             onChange={handleUsernameChange}/>
+                      <div className="pre-icon os-icon os-icon-user-male-circle"></div>
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="password">Password</label>
+                      <input className="form-control"
+                             id="password" type="password"
+                             value={password}
+                             onChange={handlePasswordChange}/>
+                      <div className="pre-icon os-icon os-icon-fingerprint"></div>
+                    </div>
+                    <div className="buttons-w text-center">
 
-                  <Button variant="warning"
-                          className="ml-1 mb-3"
-                          style={{width:"46%"}}
-                          type="submit"
-                          disabled={!username || !password}>
-                    {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth/>}
-                    Log In</Button>
-                </div>
-                <div className="text-center">
-                  <Button variant="link" size="sm"
-                          onClick={() => {
-                            setViewType("reset");
-                          }}>Forgot Password</Button>
-                </div>
-              </form>
+                      <Button variant="outline-secondary"
+                              className="mb-3 mr-1" style={{ width: "46%" }}
+                              type="button"
+                              onClick={() => {
+                                setViewType("domain");
+                              }}>
+                        <FontAwesomeIcon icon={faArrowLeft} className="mr-1" size="sm" fixedWidth/>
+                        Back
+                      </Button>
+
+                      <Button variant="warning"
+                              className="ml-1 mb-3"
+                              style={{ width: "46%" }}
+                              type="submit"
+                              disabled={!username || !password}>
+                        {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth/>}
+                        Log In</Button>
+                    </div>
+                    <div className="text-center">
+                      <Button variant="link" size="sm"
+                              onClick={() => {
+                                setViewType("reset");
+                              }}>Forgot Password</Button>
+
+                      {featureFlagHideItemInProd() ?
+                        <></>
+                        :
+                        <Button variant="link" size="sm"
+                                onClick={() => {
+                                  federatedOktaLogin();
+                                }}>Federated Login</Button>
+                      }
+                    </div>
+                  </form>
+                </>}
+              </div>
+
             </div>
           </div>
         </Col>
