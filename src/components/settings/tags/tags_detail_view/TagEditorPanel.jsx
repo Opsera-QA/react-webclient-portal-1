@@ -6,12 +6,10 @@ import adminTagsActions from "../admin-tags-actions";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import Col from "react-bootstrap/Col";
-import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
-import {defaultTags} from "../tags-form-fields";
 import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
-import CreateAndSaveButtonContainer from "../../../common/buttons/saving/containers/CreateAndSaveButtonContainer";
 import TagConfigurationInput from "../../../common/list_of_values_input/settings/tags/TagConfigurationInput";
 import TagTypeSelectInput from "../../../common/list_of_values_input/settings/tags/TagTypeSelectInput";
+import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 
 function TagEditorPanel({ tagData, setTagData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -49,7 +47,7 @@ function TagEditorPanel({ tagData, setTagData, handleClose }) {
             <TagConfigurationInput dataObject={tagDataDto} setDataObject={setTagDataDto}/>
           </Col>
         </Row>
-        <CreateAndSaveButtonContainer
+        <PersistButtonContainer
           recordDto={tagDataDto}
           handleClose={handleClose}
           setRecordDto={setTagDataDto}

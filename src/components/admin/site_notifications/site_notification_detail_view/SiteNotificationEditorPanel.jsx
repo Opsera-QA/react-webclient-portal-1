@@ -7,11 +7,11 @@ import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import Col from "react-bootstrap/Col";
 import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
-import CreateAndSaveButtonContainer from "../../../common/buttons/saving/containers/CreateAndSaveButtonContainer";
 import SiteNotificationTypeInput
   from "../../../common/list_of_values_input/admin/site_notifications/SiteNotificationTypeInput";
 import SiteNotificationViewInput
   from "../../../common/list_of_values_input/admin/site_notifications/SiteNotificationViewInput";
+import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 
 function SiteNotificationEditorPanel({ siteNotificationData, setSiteNotificationData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -63,7 +63,7 @@ function SiteNotificationEditorPanel({ siteNotificationData, setSiteNotification
             <DtoToggleInput fieldName={"active"} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
           </Col>
         </Row>
-        <CreateAndSaveButtonContainer
+        <PersistButtonContainer
           recordDto={siteNotificationDto}
           handleClose={handleClose}
           setRecordDto={setSiteNotificationDto}
