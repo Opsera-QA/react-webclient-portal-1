@@ -11,10 +11,10 @@ import pipelineHelpers from "components/workflow/pipelineHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import SaveButton2 from "../../../../../../../common/buttons/saving/SaveButton2";
 import CloseButton from "../../../../../../../common/buttons/CloseButton"
 import JSONInput from "react-json-editor-ajrm";
 import locale    from "react-json-editor-ajrm/locale/en";
+import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 
 const PLATFORM_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -453,7 +453,7 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
             disabled={ebsStepConfigurationDto && ebsStepConfigurationDto.getData("hostedZoneId").length === 0}
           />
           <Row className="mx-1 py-2">
-            <SaveButton2
+            <SaveButtonBase
               recordDto={ebsStepConfigurationDto}
               setRecordDto={setEBSStepConfigurationDataDto}
               createRecord={callbackFunction}

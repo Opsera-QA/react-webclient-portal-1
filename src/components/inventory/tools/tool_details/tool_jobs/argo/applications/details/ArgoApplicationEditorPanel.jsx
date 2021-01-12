@@ -13,7 +13,7 @@ import DtoSelectInput from "../../../../../../../common/input/dto_input/dto-sele
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import argoActions from "../../argo-actions";
 import Modal from "components/common/modal/modal";
-import SaveButton2 from "components/common/buttons/saving/SaveButton2";
+import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 
 function ArgoApplicationEditorPanel({ argoApplicationData, toolData, appID, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -150,7 +150,7 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, appID, hand
             </div>
           )}
           <div className="ml-auto mt-3 px-3">
-            <SaveButton2
+            <SaveButtonBase
               updateRecord={updateApplication}
               setRecordDto={setArgoApplicationDataDto}
               setData={setArgoApplicationDataDto}

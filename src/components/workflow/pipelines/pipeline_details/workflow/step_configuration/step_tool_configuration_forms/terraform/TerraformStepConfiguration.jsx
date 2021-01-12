@@ -10,13 +10,13 @@ import pipelineHelpers from "components/workflow/pipelineHelpers";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
-import SaveButton2 from "../../../../../../../common/buttons/saving/SaveButton2";
 import GitActionsHelper from "../../helpers/git-actions-helper.js";
 import JSONInput from "react-json-editor-ajrm";
 import locale    from "react-json-editor-ajrm/locale/en";
 import CloseButton from "../../../../../../../common/buttons/CloseButton";
 import pipelineActions from "../../../../../../pipeline-actions";
 import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
+import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 
 
 const SCM_TOOL_LIST = [
@@ -505,7 +505,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
           </small>
 
           <Row className="mx-1 py-2">
-            <SaveButton2
+            <SaveButtonBase
               lenient={true}
               recordDto={terraformStepConfigurationDto}
               setRecordDto={setTerraformStepConfigurationDataDto}

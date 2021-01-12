@@ -11,11 +11,11 @@ import pipelineHelpers from "components/workflow/pipelineHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import SaveButton2 from "../../../../../../../common/buttons/saving/SaveButton2";
 import GitYamlStepActions from "./argocd-step-actions";
 import pipelineActions from "components/workflow/pipeline-actions";
 import CloseButton from "../../../../../../../common/buttons/CloseButton";
 import { Link } from "react-router-dom";
+import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 
 const YAML_SCM_TOOL = [
   {
@@ -500,7 +500,7 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
           )}
 
           <Row className="mx-1 py-2">
-            <SaveButton2
+            <SaveButtonBase
               lenient={true}
               recordDto={gitYAMLStepConfigurationDto}
               setRecordDto={setGitYAMLStepConfigurationDataDto}

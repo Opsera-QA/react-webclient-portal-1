@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from "prop-types";
-import SaveButton2 from "./SaveButton2";
+import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 
 function StrictSaveButton({recordDto, updateRecord, disable, showSuccessToasts}) {
   return (
-    <SaveButton2 lenient={false} disable={disable} recordDto={recordDto} updateRecord={updateRecord} showSuccessToasts={showSuccessToasts} />
+    <SaveButtonBase lenient={false} disable={disable} recordDto={recordDto} updateRecord={updateRecord} showSuccessToasts={showSuccessToasts} />
   );
 }
 

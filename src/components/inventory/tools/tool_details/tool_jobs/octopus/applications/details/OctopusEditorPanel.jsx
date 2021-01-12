@@ -17,7 +17,7 @@ import PipelineActions from "../../../../../../../workflow/pipeline-actions";
 import OctopusActions from "../../octopus-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DeleteModal from "components/common/modal/DeleteModal";
-import SaveButton2 from "components/common/buttons/saving/SaveButton2";
+import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -459,7 +459,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
             </div>
           )}
           <div className="ml-auto mt-3 px-3">
-            <SaveButton2
+            <SaveButtonBase
               updateRecord={updateApplication}
               setRecordDto={setOctopusApplicationDataDto}
               setData={setOctopusApplicationDataDto}

@@ -13,7 +13,6 @@ import { DialogToastContext } from "../../../../../contexts/DialogToastContext";
 import pipelineStepNotificationActions from "../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
 import jiraStepApprovalMetadata from "../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/jira/jiraStepApprovalMetadata";
 import dataMappingActions from "../../data-mapping-actions";
-import SaveButton2 from "../../../../common/buttons/saving/SaveButton2";
 import DeleteModal from "../../../../common/modal/DeleteModal";
 import ScreenContainer from "../../../../common/panels/general/ScreenContainer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,6 +21,7 @@ import ActionBarToggleButton from "../../../../common/actions/buttons/ActionBarT
 import { useHistory } from "react-router-dom";
 import accountsActions from "../../../../admin/accounts/accounts-actions";
 import DtoToggleInput from "../../../../common/input/dto_input/dto-toggle-input";
+import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 
 const TOOL_TYPES = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -366,7 +366,7 @@ function UsersMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
           </div>
         )}
         <div className="ml-auto mt-3 px-3">
-          <SaveButton2
+          <SaveButtonBase
             className="ml-auto mt-3 px-3"
             recordDto={usersMappingDto}
             setRecordDto={setUsersMappingDto}

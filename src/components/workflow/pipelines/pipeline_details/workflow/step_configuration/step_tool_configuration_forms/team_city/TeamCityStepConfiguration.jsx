@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import teamcityStepConfigurationMetadata from "./teamcity-step-configuration-metadata";
-import SaveButton2 from "components/common/buttons/saving/SaveButton2";
 import stepConfigurationThresholdMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/common/step-configuration-threshold-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Model from "core/data_model/model";
+import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 
 function TeamCityStepConfiguration( { configurationData, parentCallback }) {
   const [thresholdDataDto, setThresholdDataDto] = useState(undefined);
@@ -56,7 +56,7 @@ function TeamCityStepConfiguration( { configurationData, parentCallback }) {
       <TextInputBase fieldName={"teamcityProjectId"} dataObject={teamCityDataDto} setDataObject={setTeamCityDataDto} />
       <TextInputBase disabled={true} fieldName={"value"} dataObject={thresholdDataDto} setDataObject={setThresholdDataDto} />
       <div className="pt-3 pl-2">
-        <SaveButton2 recordDto={teamCityDataDto} setRecordDto={setTeamCityDataDto} updateRecord={callbackFunction} createRecord={callbackFunction} />
+        <SaveButtonBase recordDto={teamCityDataDto} setRecordDto={setTeamCityDataDto} updateRecord={callbackFunction} createRecord={callbackFunction} />
       </div>
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
     </div>
