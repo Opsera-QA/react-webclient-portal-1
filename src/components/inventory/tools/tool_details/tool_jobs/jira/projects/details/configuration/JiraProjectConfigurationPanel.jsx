@@ -13,6 +13,8 @@ import JiraSprintInput
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraSprintInput";
 import JiraBoardInput
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraBoardInput";
+import JiraParentTicketInput
+  from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraParentTicketInput";
 
 function JiraProjectConfigurationPanel({ toolData, jiraProjectData, jiraConfigurationDto, setJiraConfigurationDto }) {
   useEffect(() => {loadData();}, []);
@@ -42,6 +44,7 @@ function JiraProjectConfigurationPanel({ toolData, jiraProjectData, jiraConfigur
       <JiraProjectInput jiraToolId={toolData.getData("_id")} setDataObject={setJiraConfigurationDto} dataObject={jiraConfigurationDto} />
       <JiraBoardInput jiraToolId={toolData.getData("_id")} setDataObject={setJiraConfigurationDto} dataObject={jiraConfigurationDto} />
       <JiraSprintInput jiraToolId={toolData.getData("_id")} jiraBoard={jiraConfigurationDto.getData("jiraBoard")} setDataObject={setJiraConfigurationDto} dataObject={jiraConfigurationDto} />
+      <JiraParentTicketInput jiraToolId={toolData.getData("_id")} jiraSprintId={jiraConfigurationDto.getData("jiraSprint")} setDataObject={setJiraConfigurationDto} dataObject={jiraConfigurationDto} />
     </div>
   );
 }

@@ -6,7 +6,7 @@ import JiraProjectsTable from "components/inventory/tools/tool_details/tool_jobs
 function JiraProjectsPanel({ toolData, loadData, isLoading }) {
   return (
     <div>
-      <JiraProjectsTable isLoading={isLoading} toolData={toolData} loadData={loadData} />;
+      <JiraProjectsTable isLoading={isLoading} toolData={toolData} loadData={loadData} />
     </div>
   );
 }

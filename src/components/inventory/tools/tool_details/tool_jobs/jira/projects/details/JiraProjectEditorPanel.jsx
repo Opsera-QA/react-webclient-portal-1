@@ -79,6 +79,7 @@ function JiraProjectEditorPanel({ toolData, jiraProjectData, setJiraProjectData,
         handleClose={handleClose}
         updateRecord={updateJiraProject}
         createRecord={createJiraProject}
+        lenient={true}
         disable={jiraProjectData == null || !jiraProjectData.checkCurrentValidity() || jiraConfigurationDto == null || !jiraConfigurationDto.checkCurrentValidity()}
       />
     </EditorPanelContainer>

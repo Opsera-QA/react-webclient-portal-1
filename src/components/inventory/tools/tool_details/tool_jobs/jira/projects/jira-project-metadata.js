@@ -1,3 +1,4 @@
+// TODO: If this is used again in the same way, make this generic toolProjectMetadata
 const jiraProjectMetadata = {
   type: "Jira Project Configuration",
   fields: [

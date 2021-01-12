@@ -2,20 +2,18 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
-import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import JiraToolProjectSummaryCard
+  from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraToolProjectSummaryCard";
 
-function JiraProjectSummaryPanel({ jiraProjectData, setActiveTab } ) {
+function JiraProjectSummaryPanel({ jiraProjectData, jiraConfigurationData, setActiveTab } ) {
   if (jiraProjectData == null) {
     return <></>;
   }
 
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab}>
-      <Col lg={6}>
-        <TextFieldBase dataObject={jiraProjectData} fieldName={"name"} />
-      </Col>
-      <Col lg={6}>
-        <TextFieldBase dataObject={jiraProjectData} fieldName={"description"} />
+      <Col lg={12}>
+        <JiraToolProjectSummaryCard jiraProjectData={jiraProjectData} jiraConfigurationData={jiraConfigurationData} title={"Jira Tool Project"} />
       </Col>
     </SummaryPanelContainer>
   );
@@ -23,6 +21,7 @@ function JiraProjectSummaryPanel({ jiraProjectData, setActiveTab } ) {
 
 JiraProjectSummaryPanel.propTypes = {
   jiraProjectData: PropTypes.object,
+  jiraConfigurationData: PropTypes.object,
   setActiveTab: PropTypes.func
 };
 

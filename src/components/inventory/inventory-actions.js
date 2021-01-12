@@ -1,4 +1,5 @@
 import { axiosApiService } from "../../api/apiService";
+import baseActions from "utils/actionsBase";
 
 const inventoryActions = {};
 
@@ -46,12 +47,8 @@ inventoryActions.getTools = async (getAccessToken) => {
 };
 
 inventoryActions.getToolById = async (id, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/registry/${id}`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {return { error };});
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 inventoryActions.getUserByEmail = async (email, getAccessToken) => {
