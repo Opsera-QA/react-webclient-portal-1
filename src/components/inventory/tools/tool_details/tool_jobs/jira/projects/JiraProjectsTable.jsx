@@ -7,7 +7,7 @@ import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {useHistory} from "react-router-dom";
 
-function JiraProjectsTable({ toolData, loadData, selectRowFunction, isLoading }) {
+function JiraProjectsTable({ toolData, loadData, isLoading }) {
   let history = useHistory();
   const fields = jiraProjectMetadata.fields;
   const [showCreateProjectModal, setShowCreateProjectModal] = useState(false);
@@ -25,7 +25,6 @@ function JiraProjectsTable({ toolData, loadData, selectRowFunction, isLoading })
   );
 
   const onRowSelect = (rowData) => {
-    // selectRowFunction(rowData);
     history.push(`/inventory/tools/details/${toolData.getData("_id")}/projects/${rowData.original.id}`);
   };
 
