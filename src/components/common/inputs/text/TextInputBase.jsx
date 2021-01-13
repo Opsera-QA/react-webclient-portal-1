@@ -4,7 +4,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
-function TextInputBase({ fieldName, dataObject, setDataObject, disabled, type, inputPopover }) {
+function TextInputBase({ fieldName, dataObject, setDataObject, disabled, type, inputPopover, inputClasses }) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -15,6 +15,20 @@ function TextInputBase({ fieldName, dataObject, setDataObject, disabled, type, i
     setDataObject({...newDataObject});
   };
 
+  const getInputClasses = () => {
+    let classes = `form-control`;
+
+    if (errorMessage !== "") {
+      classes += ` border border-danger`;
+    }
+
+    if (inputClasses) {
+      classes += ` ${inputClasses}`;
+    }
+
+    return classes;
+  };
+
   return (
     <InputContainer>
       <InputLabel field={field} inputPopover={inputPopover} />
@@ -23,7 +37,7 @@ function TextInputBase({ fieldName, dataObject, setDataObject, disabled, type, i
         disabled={disabled}
         value={dataObject.getData(fieldName)}
         onChange={(event) => validateAndSetData(event.target.value)}
-        className="form-control"
+        className={getInputClasses()}
       />
       <InfoText field={field} errorMessage={errorMessage}/>
     </InputContainer>
@@ -36,6 +50,7 @@ TextInputBase.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   inputPopover: PropTypes.object,
+  inputClasses: PropTypes.string,
   disabled: PropTypes.bool
 };
 
