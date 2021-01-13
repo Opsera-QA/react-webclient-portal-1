@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import MultiSelectInputBase from "../../../inputs/MultiSelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
 import pipelineHelpers from "../../../../workflow/pipelineHelpers";
 
 function PipelineTypeMultiselectInput({ fieldName, dataObject, setDataObject, disabled }) {

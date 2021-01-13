@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBracketsCurly, faPlus, faTimes} from "@fortawesome/pro-light-svg-icons";
-import InfoText from "../form_fields/input/InfoText";
+import InfoText from "components/common/form_fields/input/InfoText";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Combobox } from 'react-widgets'
-import adminTagsActions from "../../settings/tags/admin-tags-actions";
-import regexHelpers from "../../../utils/regexHelpers";
+import adminTagsActions from "components/settings/tags/admin-tags-actions";
+import regexHelpers from "utils/regexHelpers";
 
 function ObjectPropertiesInput({dataObject, setDataObject, fieldName, disabledFields}) {
   const [field] = useState(dataObject.getFieldById(fieldName));

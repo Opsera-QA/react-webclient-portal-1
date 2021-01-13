@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import {Button, Form, Table} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlus, faTimes} from "@fortawesome/free-solid-svg-icons";
-import InputLabel from "../form_fields/input/InputLabel";
-import InfoText from "../form_fields/input/InfoText";
+import InputLabel from "components/common/form_fields/input/InputLabel";
+import InfoText from "components/common/form_fields/input/InfoText";
 
 // TODO: Rename KeyValueInput?
 function ConfigurationInput({dataObject, setDataObject, fieldName, disabledFields}) {

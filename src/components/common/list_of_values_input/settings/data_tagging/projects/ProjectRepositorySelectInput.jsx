@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import SelectInputBase from "components/common/inputs/SelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import pipelineActions from "components/workflow/pipeline-actions";
 
 function ProjectRepositorySelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool_prop}) {

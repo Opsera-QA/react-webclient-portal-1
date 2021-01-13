@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import { Multiselect } from 'react-widgets'
-import TooltipWrapper from "../tooltip/tooltipWrapper";
+import TooltipWrapper from "components/common/tooltip/tooltipWrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
 

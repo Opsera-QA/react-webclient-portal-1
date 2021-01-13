@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import KpiActions from "components/admin/kpi_editor/kpi-editor-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import SelectInputBase from "components/common/inputs/SelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function KpiSelectInput({ fieldName, dataObject, setDataObject, setCurrentKpi, setDataFunction, disabled, textField, valueField}) {
   const toastContext = useContext(DialogToastContext);
