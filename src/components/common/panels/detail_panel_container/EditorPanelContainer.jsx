@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import LoadingDialog from "../../status_notifications/loading";
 import Form from "react-bootstrap/Form";
-import RequiredFieldsMessage from "components/common/form_fields/RequiredFieldsMessage";
+import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 function EditorPanelContainer({ children, isLoading, showRequiredFieldsMessage }) {
   const getRequiredFieldsMessage = () => {

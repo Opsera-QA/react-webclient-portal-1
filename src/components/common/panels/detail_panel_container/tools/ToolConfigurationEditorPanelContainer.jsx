@@ -4,8 +4,8 @@ import Form from "react-bootstrap/Form";
 import TestToolConnectionButton from "components/common/buttons/connection/TestToolConnectionButton";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
-import RequiredFieldsMessage from "components/common/form_fields/RequiredFieldsMessage";
 import StrictSaveButton from "components/common/buttons/saving/StrictSaveButton";
+import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 
 function ToolConfigurationEditorPanelContainer({children, isLoading, persistRecord, recordDto, toolConnectionCheckName, toolData}) {
   const getToolConnectionCheckButton = () => {
