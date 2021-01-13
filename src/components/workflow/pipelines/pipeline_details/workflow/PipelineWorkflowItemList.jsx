@@ -139,6 +139,8 @@ function PipelineWorkflowItemList({
       } else if (typeof (last_step.running) !== "undefined" && last_step.running.step_id === item_id) {
         if (last_step.running.paused) {
           classString += " workflow-step-warning";
+        } else if (last_step.running.status === "stopped") {
+          classString += " workflow-step-stopped";
         } else {
           classString += " workflow-step-running";
         }

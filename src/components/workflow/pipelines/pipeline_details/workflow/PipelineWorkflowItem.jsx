@@ -87,10 +87,11 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
             setCurrentStatus(lastStep.running);
             if (lastStep.running.paused) {
               setItemState("paused");
+            } else if (lastStep.running.status === "stopped") {
+              setItemState("");
             } else {
               setItemState("running");
             }
-
           }
         }
 
