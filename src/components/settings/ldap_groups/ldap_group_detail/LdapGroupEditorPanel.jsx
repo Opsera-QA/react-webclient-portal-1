@@ -6,7 +6,7 @@ import accountsActions from "components/admin/accounts/accounts-actions.js";
 import Row from "react-bootstrap/Row";
 import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import BooleanToggleInput from "components/common/inputs/BooleanToggleInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import LoadingDialog from "components/common/status_notifications/loading";

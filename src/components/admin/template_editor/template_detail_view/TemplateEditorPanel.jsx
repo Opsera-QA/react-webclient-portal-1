@@ -13,7 +13,7 @@ import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggle
 import AccountRoleMultiSelectInput from "components/common/list_of_values_input/roles/AccountRoleMultiSelectInput";
 import LdapOrganizationAccountSelectInput
   from "components/common/list_of_values_input/admin/accounts/ldap_accounts/LdapOrganizationAccountSelectInput";
-import BooleanToggleInput from "components/common/inputs/BooleanToggleInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import JsonInput from "components/common/inputs/object/JsonInput";
 import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 

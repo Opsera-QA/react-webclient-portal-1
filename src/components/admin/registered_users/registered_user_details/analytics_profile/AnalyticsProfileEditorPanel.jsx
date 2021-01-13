@@ -11,7 +11,7 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import BooleanToggleInput from "components/common/inputs/BooleanToggleInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import ToolIdentifierMultiSelectInput
   from "components/common/list_of_values_input/admin/tools/ToolIdentifierMultiSelectInput";

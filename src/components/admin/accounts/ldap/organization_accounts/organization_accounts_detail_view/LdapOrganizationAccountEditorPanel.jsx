@@ -9,7 +9,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import BooleanToggleInput from "components/common/inputs/BooleanToggleInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
