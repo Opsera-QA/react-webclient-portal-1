@@ -1,6 +1,9 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import ComboBox from "react-widgets/lib/Combobox";
+import InputContainer from "components/common/inputs/InputContainer";
+import InfoText from "components/common/inputs/info_text/InfoText";
+import InputLabel from "components/common/inputs/info_text/InputLabel";
 
 function ComboBoxInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, disabled}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -12,8 +15,8 @@ function ComboBoxInputBase({ fieldName, dataObject, setDataObject, groupBy, sele
   };
 
   return (
-    <div className="custom-select-input m-2">
-      <label><span>{field.label}{field.isRequired ? <span className="danger-red">*</span> : null} </span></label>
+    <InputContainer className="custom-select-input">
+      <InputLabel field={field} />
       <ComboBox
         data={selectOptions}
         valueField={valueField}
@@ -27,10 +30,8 @@ function ComboBoxInputBase({ fieldName, dataObject, setDataObject, groupBy, sele
         onChange={data => setDataFunction ? setDataFunction(field.id, data) : validateAndSetData(field.id, data[valueField])}
         disabled={disabled}
       />
-      <small className="form-text text-muted">
-        <div>{field.formText}</div>
-      </small>
-    </div>
+      <InfoText field={field} />
+    </InputContainer>
   );
 }
 
