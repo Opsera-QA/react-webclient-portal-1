@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {format} from "date-fns";
 import TextField from "components/common/form_fields/text-field";
 
+// TODO: Rework
 function PipelineSummaryField({pipelineData}) {
   const constructPipelineSummaryText = () => {
     let lastRun = pipelineData.getPersistData()?.workflow?.last_run;

@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {getConditionLabel} from "../../../list_of_values_input/workflow/pipelines/conditional_operation/PipelineConditionMultiSelectInput";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCogs} from "@fortawesome/pro-light-svg-icons";
+import {getConditionLabel} from "components/common/list_of_values_input/workflow/pipelines/conditional_operation/PipelineConditionMultiSelectInput";
 
 function PipelineConditionsField({ dataObject, fieldName }) {
   const [field] = useState(dataObject.getFieldById(fieldName));

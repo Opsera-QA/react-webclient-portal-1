@@ -1,17 +1,17 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationCircle} from "@fortawesome/free-solid-svg-icons";
+import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import toolsActions from "components/inventory/tools/tools-actions";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import {AuthContext} from "../../../../contexts/AuthContext";
-import LoadingDialog from "../../status_notifications/loading";
-import PipelineSummaryCard from "../../../workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
-import Model from "../../../../core/data_model/model";
-import pipelineSummaryMetadata
-  from "../../../workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {AuthContext} from "contexts/AuthContext";
+import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
+import pipelineSummaryMetadata
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
+import Model from "core/data_model/model";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 function ToolUsedInPipelinesField({ dataObject }) {
   const toastContext = useContext(DialogToastContext);
