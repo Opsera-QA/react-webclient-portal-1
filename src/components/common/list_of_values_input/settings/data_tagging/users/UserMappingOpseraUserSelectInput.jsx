@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import SelectInputBase from "components/common/inputs/SelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import accountsActions from "components/admin/accounts/accounts-actions";
 
 // TODO: A base component should be made for jira projects and this should be built around it

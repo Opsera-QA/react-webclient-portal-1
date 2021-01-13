@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import pipelineStepNotificationActions from "../pipeline-step-notification-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import SelectInputBase from "components/common/inputs/SelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function JiraStepNotificationSprintInput({visible, dataObject, setDataObject, disabled, jiraToolId, jiraBoard}) {
   const toastContext = useContext(DialogToastContext);

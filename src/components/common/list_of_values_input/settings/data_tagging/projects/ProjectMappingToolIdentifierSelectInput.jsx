@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/SelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 const TOOL_TYPES = [
   { value: "", label: "Select One", isDisabled: "yes" },

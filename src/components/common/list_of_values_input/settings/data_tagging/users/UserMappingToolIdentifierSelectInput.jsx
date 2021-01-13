@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/SelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 // TODO: When all are supported, move to a common spot for both this and ProjectMappingToolIdtentiferSelectInput
 const TOOL_TYPES = [

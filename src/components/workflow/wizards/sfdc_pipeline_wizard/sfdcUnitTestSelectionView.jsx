@@ -20,7 +20,7 @@ import ErrorDialog from "components/common/status_notifications/error";
 import LoadingDialog from "components/common/status_notifications/loading";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import { RenderWorkflowItem } from "components/workflow/approvalModal";
-import MultiSelectInputBase from "components/common/inputs/MultiSelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
 import Model from "../../../../core/data_model/model";
 import filterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/filter-metadata";
 

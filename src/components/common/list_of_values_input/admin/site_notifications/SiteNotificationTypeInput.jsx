@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SelectInputBase from "../../../inputs/SelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import siteNotificationLovHelpers from "./site-notification-lov-helpers";
 
 function SiteNotificationTypeInput({ fieldName, dataObject, setDataObject, disabled }) {

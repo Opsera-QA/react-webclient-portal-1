@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import kpiLovHelpers from "./kpi-lov-helpers";
-import MultiSelectInputBase from "../../../inputs/MultiSelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
 
 function KpiCategoriesInput({ fieldName, dataObject, setDataObject, disabled }) {
   return (

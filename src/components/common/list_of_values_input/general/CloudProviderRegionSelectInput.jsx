@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import SelectInputBase from "../../inputs/SelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import userActions from "../../../user/user-actions";
 
 function CloudProviderRegionSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField}) {

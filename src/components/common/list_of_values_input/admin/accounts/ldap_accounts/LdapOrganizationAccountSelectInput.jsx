@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
 import {AuthContext} from "../../../../../../contexts/AuthContext";
 import {getOrganizationAccountDropdownList} from "../../../../../admin/accounts/ldap/organizations/organization-functions";
-import SelectInputBase from "../../../../inputs/SelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function LdapOrganizationAccountSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField}) {
   const toastContext = useContext(DialogToastContext);

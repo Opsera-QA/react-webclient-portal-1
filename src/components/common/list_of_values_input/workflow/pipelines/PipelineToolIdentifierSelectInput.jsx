@@ -5,7 +5,7 @@ import pipelineActions from "../../../../workflow/pipeline-actions";
 import {AuthContext} from "../../../../../contexts/AuthContext";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/free-solid-svg-icons";
-import SelectInputBase from "../../../inputs/SelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import PipelineToolIdentifierMultiSelectInput from "./PipelineToolIdentifierMultiSelectInput";
 
 function PipelineToolIdentifierSelectInput({ placeholderText, fieldName, dataObject, setDataObject, setDataFunction, disabled, textField, valueField}) {

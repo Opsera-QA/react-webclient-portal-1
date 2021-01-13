@@ -4,7 +4,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineStepNotificationActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
-import SelectInputBase from "components/common/inputs/SelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function JiraPriorityInput({jiraToolId, dataObject, setDataObject, disabled}) {
   const toastContext = useContext(DialogToastContext);

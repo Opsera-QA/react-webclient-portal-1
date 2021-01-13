@@ -14,7 +14,7 @@ import dashboardsActions from "../dashboards-actions";
 import dashboardMetadata from "../dashboard-metadata";
 import ActionBarContainer from "../../../common/actions/ActionBarContainer";
 import ActionBarDeleteButton2 from "../../../common/actions/buttons/ActionBarDeleteButton2";
-import FavoriteInput from "../../../common/inputs/FavoriteInput";
+import FavoriteInput from "components/common/inputs/boolean/FavoriteInput";
 
 function DashboardDetailView() {
     const { tab, id } = useParams();

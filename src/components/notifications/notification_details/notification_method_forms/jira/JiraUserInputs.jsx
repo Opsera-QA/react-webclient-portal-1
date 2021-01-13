@@ -4,8 +4,8 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineStepNotificationActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
-import SelectInputBase from "components/common/inputs/SelectInputBase";
-import MultiSelectInputBase from "components/common/inputs/MultiSelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
 
 function JiraUserInputs({jiraToolId, jiraProject, dataObject, setDataObject, disabled}) {
   const toastContext = useContext(DialogToastContext);
