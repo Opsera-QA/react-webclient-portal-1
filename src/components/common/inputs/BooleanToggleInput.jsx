@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
 import InputContainer from "components/common/inputs/InputContainer";
-import InfoText from "components/common/fields/input/InfoText";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 // TODO: Move into /boolean in a separate request. Is this component necessary?
 function BooleanToggleInput({ fieldName, dataObject, setDataObject, disabled }) {

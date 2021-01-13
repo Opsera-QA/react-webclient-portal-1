@@ -4,8 +4,8 @@ import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import Moment from "moment";
 import momentLocalizer from "react-widgets-moment";
 import InputContainer from "components/common/inputs/InputContainer";
-import InputLabel from "components/common/fields/input/InputLabel";
-import InfoText from "components/common/fields/input/InfoText";
+import InputLabel from "components/common/inputs/info_text/InputLabel";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFunction, disabled, showDate, showTime }) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));

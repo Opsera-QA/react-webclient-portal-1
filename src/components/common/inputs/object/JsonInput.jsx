@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import JSONInput from "react-json-editor-ajrm";
 import locale from "react-json-editor-ajrm/locale/en";
 import InputContainer from "components/common/inputs/InputContainer";
-import InputLabel from "components/common/fields/input/InputLabel";
-import InfoText from "components/common/fields/input/InfoText";
+import InputLabel from "components/common/inputs/info_text/InputLabel";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 // TODO: Finish configuring when wired up
 function JsonInput({fieldName, dataObject, setDataObject, disabled}) {

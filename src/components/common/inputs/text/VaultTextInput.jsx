@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import InputLabel from "components/common/form_fields/input/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
-import VaultInfoText from "components/common/fields/input/vault/VaultInfoText";
+import VaultInfoText from "components/common/inputs/info_text/vault/VaultInfoText";
 
 function VaultTextInput({fieldName, dataObject, setDataObject, disabled}) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
