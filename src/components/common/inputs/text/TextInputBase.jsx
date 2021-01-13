@@ -19,7 +19,7 @@ function TextInputBase({ fieldName, dataObject, setDataObject, disabled, type, i
     let classes = `form-control`;
 
     if (errorMessage !== "") {
-      classes += ` border border-danger`;
+      classes += ` border border-danger error-text`;
     }
 
     if (inputClasses) {
