@@ -5,16 +5,24 @@ import PopoverTitle from "react-bootstrap/PopoverTitle";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faInfoCircle, faTimes} from "@fortawesome/pro-light-svg-icons";
 
-function InputPopover({ tooltipBody, isLoading, trigger, title }) {
+function InputPopover({ tooltipBody, isLoading, trigger, tooltipTitle }) {
+  const getPopoverTitle = () => {
+    if (tooltipTitle) {
+      return (
+        <PopoverTitle as="h3" className="popover-title">
+          <div className={"d-flex justify-content-between"}>
+            <div>{tooltipTitle}</div>
+            <div><FontAwesomeIcon icon={faTimes} className="pointer" onClick={() => { document.body.click();}} /></div>
+          </div>
+        </PopoverTitle>
+      );
+    }
+  };
+
   const getPopover = () => {
     return (
     <Popover id="popover-basic" >
-      <PopoverTitle as="h3" className="popover-title">
-        <div className={"d-flex justify-content-between"}>
-          <div>{title}</div>
-          <div><FontAwesomeIcon icon={faTimes} className="pointer" onClick={() => { document.body.click();}} /></div>
-        </div>
-      </PopoverTitle>
+      {getPopoverTitle()}
       <Popover.Content>
         {tooltipBody}
       </Popover.Content>
@@ -32,13 +40,14 @@ function InputPopover({ tooltipBody, isLoading, trigger, title }) {
 InputPopover.propTypes = {
   isLoading: PropTypes.bool,
   tooltipBody: PropTypes.object,
+  tooltipTitle: PropTypes.string,
   trigger: PropTypes.any,
   title: PropTypes.string,
 };
 
 InputPopover.defaultProps = {
   trigger: ["hover", "focus"],
-  title: "Field Details"
+  tooltipTitle: "Field Details"
 };
 
 export default InputPopover;

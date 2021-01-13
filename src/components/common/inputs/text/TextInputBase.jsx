@@ -4,7 +4,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
-function TextInputBase({ fieldName, dataObject, setDataObject, disabled, type, tooltipBody }) {
+function TextInputBase({ fieldName, dataObject, setDataObject, disabled, type, inputPopover }) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -17,7 +17,7 @@ function TextInputBase({ fieldName, dataObject, setDataObject, disabled, type, t
 
   return (
     <InputContainer>
-      <InputLabel field={field} tooltipBody={tooltipBody}/>
+      <InputLabel field={field} inputPopover={inputPopover} />
       <input
         type={type}
         disabled={disabled}
@@ -35,7 +35,7 @@ TextInputBase.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  tooltipBody: PropTypes.any,
+  inputPopover: PropTypes.object,
   disabled: PropTypes.bool
 };
 
