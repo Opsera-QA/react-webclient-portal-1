@@ -12,7 +12,7 @@ import ActiveFilterDisplayer from "./ActiveFilterDisplayer";
 import {faSync} from "@fortawesome/pro-solid-svg-icons/faSync";
 import InlineSearchFilter from "components/common/filters/search/InlineSearchFilter";
 
-function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRecordFunction, customButtons, supportSearch}) {
+function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRecordFunction, customButtons, supportSearch, leftAlignCustomButtons}) {
   const resetFilters = async () => {
     let newFilterDto = new Model({...filterDto.getNewObjectFields()}, filterDto.getMetaData(), false);
     let pageSize = filterDto.getData("pageSize");
@@ -146,6 +146,23 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
     return (<div className="mr-2">{customButtons}</div>);
   };
 
+  if (leftAlignCustomButtons) {
+    return (
+      <div className="d-flex justify-content-between">
+        <div className="d-flex">
+          {getCustomButtons()}
+          <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} filters={filters} />
+        </div>
+        <div className="d-flex">
+          {getSearchBar()}
+          <div>{getNewRecordButton()}</div>
+          <div>{getRefreshButton()}</div>
+          <div>{getFilterButtons()}</div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="d-flex justify-content-between filter-bar">
       <div className="d-flex">
@@ -172,6 +189,7 @@ FilterBar.propTypes = {
   children: PropTypes.any,
   loadData: PropTypes.func,
   addRecordFunction: PropTypes.func,
+  leftAlignCustomButtons: PropTypes.bool,
   filters: PropTypes.array
 };
 

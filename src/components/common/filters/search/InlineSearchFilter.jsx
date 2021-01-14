@@ -47,7 +47,7 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
     <InputGroup>
       <input
         disabled={disabled}
-        placeholder="Search for Keywords"
+        placeholder="Search"
         value={filterDto.getData(fieldName)}
         className="form-control inline-filter-input"
         onKeyPress={(event) => handleKeyPress(event)}
