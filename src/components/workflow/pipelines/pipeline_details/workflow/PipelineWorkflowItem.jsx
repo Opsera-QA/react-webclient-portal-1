@@ -19,7 +19,7 @@ import {
   faTimesCircle,
   faTrash,
   faBan,
-  faTerminal, faToolbox,
+  faTerminal, faToolbox, faOctagon,
 } from "@fortawesome/pro-light-svg-icons";
 import ModalActivityLogs from "components/common/modal/modalActivityLogs";
 import StepToolActivityView from "./step_configuration/StepToolActivityView";
@@ -88,7 +88,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
             if (lastStep.running.paused) {
               setItemState("paused");
             } else if (lastStep.running.status === "stopped") {
-              setItemState("");
+              setItemState("stopped");
             } else {
               setItemState("running");
             }
@@ -186,6 +186,16 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
                                  onClick={() => {
                                    parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id, currentStatus.activity_id);
                                  }}/>
+              </OverlayTrigger>}
+
+              {itemState === "stopped" &&
+              <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip({ message: "The last run of this pipeline was stopped while this step was running." })}>
+                <FontAwesomeIcon icon={faOctagon} className="mr-2 danger-red"
+                                 style={{ cursor: "help" }}
+                                 />
               </OverlayTrigger>}
 
               {itemState === "completed" &&
