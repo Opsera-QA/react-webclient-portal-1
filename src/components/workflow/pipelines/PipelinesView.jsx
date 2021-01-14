@@ -1,27 +1,26 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Row, Col, Button } from "react-bootstrap";
-import { AuthContext } from "../../../contexts/AuthContext";
 import "../workflows.css";
 import PipelineItem from "./PipelineItem";
 import PropTypes from "prop-types";
-import pipelineActions from "../pipeline-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import PipelineWelcomeView from "./PipelineWelcomeView";
-import cookieHelpers from "../../../core/cookies/cookie-helpers";
-import { DialogToastContext } from "../../../contexts/DialogToastContext";
-import DtoTopPagination from "../../common/pagination/DtoTopPagination";
-import Model from "../../../core/data_model/model";
 import pipelineFilterMetadata from "./pipeline_details/workflow/pipeline-filter-metadata";
-import DtoBottomPagination from "../../common/pagination/DtoBottomPagination";
-import FilterBar from "../../common/filters/FilterBar";
-import SearchFilter from "../../common/filters/search/SearchFilter";
-import TagFilter from "../../common/filters/tags/TagFilter";
-import PipelineOwnerFilter from "../../common/filters/pipelines/PipelineOwnerFilter";
 import PipelinesTable from "./pipeline_details/PipelinesTable";
 import InformationDialog from "components/common/status_notifications/info";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faThLarge, faList, faPlus} from "@fortawesome/pro-light-svg-icons";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import cookieHelpers from "core/cookies/cookie-helpers";
+import pipelineActions from "components/workflow/pipeline-actions";
+import PipelineOwnerFilter from "components/common/filters/pipelines/PipelineOwnerFilter";
+import Model from "core/data_model/model";
+import TagFilter from "components/common/filters/tags/TagFilter";
+import DtoTopPagination from "components/common/pagination/DtoTopPagination";
+import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
+import FilterBar from "components/common/filters/FilterBar";
 
 function PipelinesView({ currentTab, setActiveTab }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -79,7 +78,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
       saveCookies(newPipelineFilterDto);
 
       const response = await pipelineActions.getPipelines(newPipelineFilterDto, currentTab, getAccessToken);
-      setData(response.data);
+      setData(response?.data);
 
       let newFilterDto = newPipelineFilterDto;
       newFilterDto.setData("totalCount", response.data.count);
@@ -102,6 +101,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
         filters={["status", "type", "search"]}
         customButtons={getViewToggle()}
         supportSearch={true}
+        leftAlignCustomButtons={true}
       >
         <TagFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>
         <PipelineOwnerFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>
