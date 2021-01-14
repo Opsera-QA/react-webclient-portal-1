@@ -1,4 +1,5 @@
 import { axiosApiService } from "../../../../../../api/apiService";
+import baseActions from "../../../../../../utils/actionsBase";
 
 const octopusActions = {};
 
@@ -58,6 +59,16 @@ octopusActions.createOctopusApplication = async (toolDataDto, type, getAccessTok
       throw error;
     });
   return response;
+};
+
+octopusActions.createOctopusProject = async (toolDataDto, getAccessToken) => {
+  const postBody = {
+    data: toolDataDto,
+    type: "create",
+    item: "project",
+  };
+  const apiUrl = `registry/action/octopus/create-app`;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 export default octopusActions;

@@ -19,16 +19,10 @@ function OctopusPipelineStepConfigurationSummaryPanel({ octopusPipelineDataObjec
           <DtoTextField dataObject={octopusPipelineDataObject} fieldName={"toolURL"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={octopusPipelineDataObject} fieldName={"octopusApiKey"}/>
-        </Col>
-        <Col lg={6}>
           <DtoTextField dataObject={octopusPipelineDataObject} fieldName={"spaceName"}/>
         </Col>
         <Col lg={6}>
           <DtoTextField dataObject={octopusPipelineDataObject} fieldName={"projectName"}/>
-        </Col>
-        <Col lg={6}>
-          <DtoTextField dataObject={octopusPipelineDataObject} fieldName={"releaseVersion"}/>
         </Col>
         <Col lg={6}>
           <DtoTextField dataObject={octopusPipelineDataObject} fieldName={"environmentName"}/>
@@ -41,9 +35,6 @@ function OctopusPipelineStepConfigurationSummaryPanel({ octopusPipelineDataObjec
         </Col>
         <Col lg={6}>
           <DtoTextField dataObject={octopusPipelineDataObject} fieldName={"projectId"}/>
-        </Col>
-        <Col lg={6}>
-          <DtoTextField dataObject={octopusPipelineDataObject} fieldName={"releaseVersionId"}/>
         </Col>
         <Col lg={6}>
           <DtoTextField dataObject={octopusPipelineDataObject} fieldName={"environmentId"}/>

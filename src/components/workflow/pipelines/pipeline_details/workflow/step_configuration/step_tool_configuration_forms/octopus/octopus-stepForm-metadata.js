@@ -4,6 +4,10 @@ const octopusStepFormMetadata = {
     idProperty: "_id",
     fields: [
       {
+        label: "Is Full Backup",
+        id: "isFullBackup"
+      },
+      {
         label: "Octopus URL",
         id: "toolURL",
         isRequired: true
@@ -23,11 +27,11 @@ const octopusStepFormMetadata = {
         id: "projectName",
         isRequired: true
       },
-      {
-        label: "Release Version",
-        id: "releaseVersion",
-        isRequired: true
-      },
+      // {
+      //   label: "Release Version",
+      //   id: "releaseVersion",
+      //   isRequired: true
+      // },
       {
         label: "Environment Name",
         id: "environmentName",
@@ -48,15 +52,19 @@ const octopusStepFormMetadata = {
         isRequired: true
       },
       {
-        label: "Project Name ID",
+        label: "Project ID",
         id: "projectId",
-        isRequired: true
       },
       {
-        label: "Release Name ID",
-        id: "releaseVersionId",
+        label: "Project Description",
+        id: "projectDescription",
         isRequired: true
       },
+      // {
+      //   label: "Release Name ID",
+      //   id: "releaseVersionId",
+      //   isRequired: true
+      // },
       // {
       //   label: "Tenant Name ID",
       //   id: "tenantId",
@@ -66,23 +74,42 @@ const octopusStepFormMetadata = {
         label: "Environment Name ID",
         id: "environmentId",
         isRequired: true
-      }
+      },
+      {
+        label: "Namespace",
+        id: "namespace",
+        isRequired: true
+      },
+      {
+        label: "ECR Step",
+        id: "ecrStepId",
+        isRequired: true
+      },
+      {
+        label: "Deployment ID",
+        id: "deploymentId"
+      },
     ],
     newModelBase:
       {
+        isFullBackup: false,
         toolURL: "",
         octopusApiKey: "",
         spaceName: "",
         projectName: "",
-        releaseVersion: "",
+        // releaseVersion: "",
         environmentName: "",
         // tenantName: "",	
         octopusToolId: "",
         spaceId: "",
         projectId: "",
+        projectDescription : "",
         // tenantId: "",
         environmentId: "",
-        releaseVersionId: ""
+        // releaseVersionId: "",
+        ecrStepId: "",
+        namespace : "",
+        deploymentId : ""
       }
   };
   
