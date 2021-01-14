@@ -13,8 +13,10 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import OctopusStepActions from "./octopus-step-actions";
 import CloseButton from "../../../../../../../common/buttons/CloseButton";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
+import DtoTextInput from "../../../../../../../common/input/dto_input/dto-text-input";
+import octopusActions from "../../../../../../../inventory/tools/tool_details/tool_jobs/octopus/octopus-actions";
 
-function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel }) {
+function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,6 +33,8 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
   const [releases, setReleases] = useState([]);
   const [environmentsSearching, setIsEnvironmentsSearching] = useState(false);
   const [environments, setEnvironments] = useState([]);
+  const [listOfSteps, setListOfSteps] = useState([]);
+
   /* DISABLING TENANTS UNTIL MICROSERVICE SUPPORT BECOMES FULLY AVAILABLE */
   // const [tenantsSearching, setIsTenantsSearching] = useState(false);
   // const [tenants, setTenants] = useState([]);
@@ -40,6 +44,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
   }, []);
 
   const loadFormData = async (step) => {
+    console.log(plan  )
     setIsLoading(true);
     let { configuration, threshold } = step;
     if (typeof configuration !== "undefined") {
@@ -48,15 +53,16 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
       if (configuration.octopusToolId.length > 0) {
         await searchSpaces(configuration.octopusToolId);
         if (configuration.spaceId.length > 0) {
-          await searchProjects(configuration.octopusToolId,configuration.spaceId);
+          /* DISABLING PROJECT GET SERVICE UNTIL MICROSERVICE SUPPORT BECOMES FULLY AVAILABLE */
+          // await searchProjects(configuration.octopusToolId,configuration.spaceId);
           await searchEnvironments(configuration.octopusToolId,configuration.spaceId);
-          if (configuration.projectId.length > 0) {
-            await searchReleases(configuration.octopusToolId,configuration.spaceId, configuration.projectId);
+          // if (configuration.projectId.length > 0) {
+            // await searchReleases(configuration.octopusToolId,configuration.spaceId, configuration.projectId);
             /* DISABLING TENANTS UNTIL MICROSERVICE SUPPORT BECOMES FULLY AVAILABLE */
             // if (configuration.environmentId.length > 0) {
             //   await searchTenants(configuration.octopusToolId,configuration.spaceId,configuration.projectId,configuration.environmentId);
             // }
-          }
+          // }
         }
       }
       if (typeof threshold !== "undefined") {
@@ -67,6 +73,11 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
       setOctopusStepConfigurationDataDto(
         new Model({ ...OctopusStepFormMetadata.newModelBase }, OctopusStepFormMetadata, false)
       );
+    }
+
+    if (plan && stepId) {
+      let pipelineSteps = pipelineHelpers.formatStepOptions(plan, stepId);
+      setListOfSteps(pipelineSteps);
     }
 
     await fetchOctopusDetails();
@@ -94,6 +105,16 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
       },
     };
     parentCallback(item);
+    await octopusActions.createOctopusProject({pipelineId: pipelineId, stepId: stepId}, getAccessToken)
+      .then(function (response) {
+        return
+      })
+      .catch(function (error) {
+        console.log(error)
+        let errorMesage = (error && error.error && error.error.response && error.error.response.data) ? error.error.response.data : ""
+        toastContext.showErrorDialog( `Error in octopus Project Creation:  ${errorMesage}`)
+        return
+  });
   };
 
   const errorCatch = async (setterFunc, error) => {
@@ -135,45 +156,47 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
     }
   };
 
-  const searchProjects = async (id, spaceID) => {
-    setIsProjectsSearching(true);
-    try {
-      const res = await OctopusStepActions.getProjects(id,spaceID, getAccessToken);
-      if (res.data) {
-        let arrOfObj = res.data.data ? res.data.data : [];
-        setProjects(arrOfObj);
-        if (arrOfObj.length === 0) {
-          await nullDataCatch(setProjects, "Projects")
-        }
-      } else {
-        await credentialCatch(setProjects, "Projects")
-      }
-    } catch (error) {
-      await errorCatch(setProjects, error)
-    } finally {
-      setIsProjectsSearching(false);
-    }
-  };
+  /* DISABLING PROJECT GET SERVICE UNTIL MICROSERVICE SUPPORT BECOMES FULLY AVAILABLE */
+  // const searchProjects = async (id, spaceID) => {
+  //   setIsProjectsSearching(true);
+  //   try {
+  //     const res = await OctopusStepActions.getProjects(id,spaceID, getAccessToken);
+  //     if (res.data) {
+  //       let arrOfObj = res.data.data ? res.data.data : [];
+  //       setProjects(arrOfObj);
+  //       if (arrOfObj.length === 0) {
+  //         await nullDataCatch(setProjects, "Projects")
+  //       }
+  //     } else {
+  //       await credentialCatch(setProjects, "Projects")
+  //     }
+  //   } catch (error) {
+  //     await errorCatch(setProjects, error)
+  //   } finally {
+  //     setIsProjectsSearching(false);
+  //   }
+  // };
 
-  const searchReleases = async (id, spaceID, projectID) => {
-    setIsReleasesSearching(true);
-    try {
-      const res = await OctopusStepActions.getReleases(id,spaceID,projectID, getAccessToken);
-      if (res.data) {
-        let arrOfObj = res.data.data ? res.data.data : [];
-        setReleases(arrOfObj);
-        if (arrOfObj.length === 0) {
-          await nullDataCatch(setReleases, "Releases")
-        }
-      } else {
-        await credentialCatch(setReleases, "Releases")
-      }
-    } catch (error) {
-      await errorCatch(setReleases, error)
-    } finally {
-      setIsReleasesSearching(false);
-    }
-  };
+  /* DISABLING RELEASE GET SERVICE UNTIL MICROSERVICE SUPPORT BECOMES FULLY AVAILABLE */
+  // const searchReleases = async (id, spaceID, projectID) => {
+  //   setIsReleasesSearching(true);
+  //   try {
+  //     const res = await OctopusStepActions.getReleases(id,spaceID,projectID, getAccessToken);
+  //     if (res.data) {
+  //       let arrOfObj = res.data.data ? res.data.data : [];
+  //       setReleases(arrOfObj);
+  //       if (arrOfObj.length === 0) {
+  //         await nullDataCatch(setReleases, "Releases")
+  //       }
+  //     } else {
+  //       await credentialCatch(setReleases, "Releases")
+  //     }
+  //   } catch (error) {
+  //     await errorCatch(setReleases, error)
+  //   } finally {
+  //     setIsReleasesSearching(false);
+  //   }
+  // };
 
   const searchEnvironments = async (id, spaceID) => {
     setIsEnvironmentsSearching(true);
@@ -231,23 +254,25 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
       newDataObject.setData("spaceName", value.name);
       newDataObject.setData("spaceId", value.id);
       setOctopusStepConfigurationDataDto({ ...newDataObject });
-      await searchProjects(octopusStepConfigurationDto.getData("octopusToolId"),value.id);
+      await searchEnvironments(octopusStepConfigurationDto.getData("octopusToolId"),octopusStepConfigurationDto.getData("spaceId"));
+      /* DISABLING PROJECT GET SERVICE UNTIL MICROSERVICE SUPPORT BECOMES FULLY AVAILABLE */
+      // await searchProjects(octopusStepConfigurationDto.getData("octopusToolId"),value.id);
       return;
     }
-    if (fieldName === "projectName") {
-      let newDataObject = octopusStepConfigurationDto;
-      newDataObject.setData("projectName", value.name);
-      newDataObject.setData("projectId", value.id);
-      setOctopusStepConfigurationDataDto({ ...newDataObject });
-      await searchReleases(octopusStepConfigurationDto.getData("octopusToolId"),octopusStepConfigurationDto.getData("spaceId"), value.id);
-      return;
-    }
+    // if (fieldName === "projectName") {
+    //   let newDataObject = octopusStepConfigurationDto;
+    //   newDataObject.setData("projectName", value);
+    //   /* DISABLING PROJECT GET SERVICE UNTIL MICROSERVICE SUPPORT BECOMES FULLY AVAILABLE */
+    //   // newDataObject.setData("projectId", value.id);
+    //   setOctopusStepConfigurationDataDto({ ...newDataObject });
+    //   // await searchReleases(octopusStepConfigurationDto.getData("octopusToolId"),octopusStepConfigurationDto.getData("spaceId"), value.id);
+    //   return;
+    // }
     if (fieldName === "releaseVersion") {
       let newDataObject = octopusStepConfigurationDto;
       newDataObject.setData("releaseVersion", value.version);
       newDataObject.setData("releaseVersionId", value.id);
       setOctopusStepConfigurationDataDto({ ...newDataObject });
-      await searchEnvironments(octopusStepConfigurationDto.getData("octopusToolId"),octopusStepConfigurationDto.getData("spaceId"));
       return;
     }
     if (fieldName === "environmentName") {
@@ -315,29 +340,23 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
             busy={spacesSearching}
             disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusToolId").length === 0}
           />
-          <DtoSelectInput
-            setDataFunction={handleDTOChange}
+          <DtoTextInput
             setDataObject={setOctopusStepConfigurationDataDto}
-            textField={"name"}
-            valueField={"id"}
             dataObject={octopusStepConfigurationDto}
-            filter={"contains"}
-            selectOptions={projects ? projects : []}
             fieldName={"projectName"}
-            busy={projectsSearching}
             disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
           />
-          <DtoSelectInput
-            setDataFunction={handleDTOChange}
+          <DtoTextInput
             setDataObject={setOctopusStepConfigurationDataDto}
-            textField={"version"}
-            valueField={"id"}
             dataObject={octopusStepConfigurationDto}
-            filter={"contains"}
-            selectOptions={releases ? releases : []}
-            fieldName={"releaseVersion"}
-            busy={releasesSearching}
-            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("projectName").length === 0}
+            fieldName={"projectDescription"}
+            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
+          />
+          <DtoTextInput
+            setDataObject={setOctopusStepConfigurationDataDto}
+            dataObject={octopusStepConfigurationDto}
+            fieldName={"namespace"}
+            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("projectDescription").length === 0}
           />
           <DtoSelectInput
             setDataFunction={handleDTOChange}
@@ -349,7 +368,19 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
             selectOptions={environments ? environments : []}
             fieldName={"environmentName"}
             busy={environmentsSearching}
-            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("releaseVersion").length === 0}
+            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("namespace").length === 0}
+          />
+          <DtoSelectInput
+            setDataObject={setOctopusStepConfigurationDataDto}
+            textField={"name"}
+            valueField={"_id"}
+            dataObject={octopusStepConfigurationDto}
+            filter={"contains"}
+            selectOptions={listOfSteps ? listOfSteps : []}
+            fieldName={"ecrStepId"}
+            disabled={
+              listOfSteps.length === 0 || octopusStepConfigurationDto.getData("environmentName").length === 0
+            }
           />
           {/* DISABLING TENANTS UNTIL MICROSERVICE SUPPORT BECOMES FULLY AVAILABLE */}
           {/* <DtoSelectInput
