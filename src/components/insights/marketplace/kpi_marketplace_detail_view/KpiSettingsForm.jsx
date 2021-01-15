@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
 import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
-import DateRangeInput from "../../../common/input/DateRangeInput";
+import DateRangeInput from "components/common/inputs/date/DateRangeInput";
 import DtoTagManagerFilterInput from "../../../common/input/dto_input/dto-tag-manager-filter-input";
 import LenientSaveButton from "../../../common/buttons/saving/LenientSaveButton";
 import CancelButton from "../../../common/buttons/CancelButton";

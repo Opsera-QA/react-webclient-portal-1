@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { DateRange } from "react-date-range";
-import InputLabel from "../form_fields/input/InputLabel";
-import InfoText from "../form_fields/input/InfoText";
+import InputLabel from "components/common/form_fields/input/InputLabel";
+import InfoText from "components/common/form_fields/input/InfoText";
 import { Button } from "react-bootstrap";
 import { useEffect } from "react";
 
 // TODO: If this can't be used elsewhere, Tejas, we should change the name to be KPI Specific.
-// TODO: This also needs to be moved to the /common/inputs folder.
-//  This houses the newest components, legacy ones are in /common/input until I can migrate everywhere to the new ones.
 function DateRangeInput({ fieldName, dataObject, setDataObject }) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
   const [date, setDate] = useState({
