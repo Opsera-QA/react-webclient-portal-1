@@ -19,7 +19,7 @@ function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFuncti
       newDataObject = setDataFunction(value);
     }
     else {
-      let newDataObject = dataObject;
+      newDataObject = {...dataObject};
       newDataObject.setData(fieldName, value);
       setDataObject({...newDataObject});
     }
