@@ -3,19 +3,19 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import KpiActions from "../kpi-editor-actions";
 import Loading from "components/common/status_notifications/loading";
-import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
-import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
-import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
-import DtoJsonInput from "../../../common/input/dto_input/dto-json-input";
-import KpiChartTypeInput from "../../../common/list_of_values_input/admin/kpi_configurations/KpiChartTypeInput";
-import KpiToolsInput from "../../../common/list_of_values_input/admin/kpi_configurations/KpiToolsInput";
-import KpiFiltersInput from "../../../common/list_of_values_input/admin/kpi_configurations/KpiFiltersInput";
-import KpiCategoriesInput from "../../../common/list_of_values_input/admin/kpi_configurations/KpiCategoriesInput";
 import WebsitePathInput from "components/common/inputs/text/WebsitePathInput";
-import TextAreaInput from "../../../common/inputs/text/TextAreaInput";
 import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
+import JsonInput from "components/common/inputs/object/JsonInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
+import KpiActions from "components/admin/kpi_editor/kpi-editor-actions";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import KpiChartTypeInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiChartTypeInput";
+import KpiToolsInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiToolsInput";
+import KpiFiltersInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiFiltersInput";
+import KpiCategoriesInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiCategoriesInput";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 
 function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -48,13 +48,8 @@ function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
     <EditorPanelContainer>
       <Row>
         <Col lg={6}>
-          <DtoTextInput dataObject={kpiDataDto} fieldName={"name"} setDataObject={setKpiDataDto}/>
-        </Col>
-        <Col lg={6}>
-          <DtoToggleInput setDataObject={setKpiDataDto} fieldName={"active"} dataObject={kpiData}/>
-        </Col>
-        <Col lg={6}>
-          <DtoTextInput dataObject={kpiDataDto} fieldName={"identifier"} setDataObject={setKpiDataDto}/>
+          <TextInputBase dataObject={kpiDataDto} fieldName={"name"} setDataObject={setKpiDataDto}/>
+          <TextInputBase dataObject={kpiDataDto} fieldName={"identifier"} setDataObject={setKpiDataDto}/>
           <KpiChartTypeInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
           <KpiToolsInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
           <KpiFiltersInput dataObject={kpiDataDto} fieldName={"supported_filters"} setDataObject={setKpiDataDto} />
@@ -62,10 +57,11 @@ function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
           <WebsitePathInput dataObject={kpiDataDto} fieldName={"thumbnailPath"} setDataObject={setKpiDataDto}/>
         </Col>
         <Col lg={6}>
-          <DtoJsonInput dataObject={kpiDataDto} fieldName={"settings"} setDataObject={setKpiDataDto}/>
+          <JsonInput dataObject={kpiDataDto} fieldName={"settings"} setDataObject={setKpiDataDto}/>
         </Col>
         <Col lg={12}>
           <TextAreaInput dataObject={kpiDataDto} fieldName={"description"} setDataObject={setKpiDataDto}/>
+          <ActivityToggleInput setDataObject={setKpiDataDto} fieldName={"active"} dataObject={kpiData}/>
         </Col>
       </Row>
       <PersistButtonContainer
