@@ -1,19 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Button } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import {getFormValidationErrorDialog} from "../../../common/toasts/toasts";
-import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
-import DtoItemInput from "../../../common/input/dto_input/item-displayer/dto-item-input";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 // TODO: Implement when refactoring pipeline overview page
 function PipelineEditorPanel({ pipelineData, setPipelineData, handleClose }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const [showToast, setShowToast] = useState(false);
   const [pipelineDataDto, setPipelineDataDto] = useState({});
-  const [toast, setToast] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -43,9 +37,7 @@ function PipelineEditorPanel({ pipelineData, setPipelineData, handleClose }) {
   //     }
     }
     else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      // let toast = getFormValidationErrorDialog(setShowToast);
     }
   };
 
@@ -68,9 +60,7 @@ function PipelineEditorPanel({ pipelineData, setPipelineData, handleClose }) {
       }
     }
     else {
-      let toast = getFormValidationErrorDialog(setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      // let toast = getFormValidationErrorDialog(setShowToast);
     }
   };
 
@@ -88,34 +78,32 @@ function PipelineEditorPanel({ pipelineData, setPipelineData, handleClose }) {
   //   }
   // };
 
-  return (
-    <>
-      {isLoading ? <Loading size="sm" /> : null}
+  if (isLoading) {
+    return (<LoadingDialog size={"sm"} message={"Loading Data"} />);
+  }
 
-      {!isLoading && <>
-        <div className="scroll-y full-height p-2">
-          {showToast && toast}
-          <Row>
-            <Col lg={6}>
-              <DtoTextInput setDataObject={setPipelineDataDto} dataObject={pipelineDataDto} fieldName={"name"} />
-            </Col>
-            <Col lg={12}>
-              <DtoTextInput setDataObject={setPipelineDataDto} dataObject={pipelineDataDto} fieldName={"description"} />
-            </Col>
-            <Col lg={6}>
-              <DtoItemInput setDataObject={setPipelineDataDto} dataObject={pipelineDataDto} fieldName={"tags"} />
-            </Col>
-          </Row>
-          <Row>
-              <div className="ml-auto px-3">
-                {pipelineDataDto.isNew() ? <Button size="sm" variant="primary" disabled={false} onClick={() => createPipeline()}>Create Tool</Button>
-                  : <Button size="sm" variant="primary" disabled={pipelineDataDto.dataState === DataState.LOADED} onClick={() => updatePipeline()}>Save changes</Button>}
-              </div>
-            }
-          </Row>
-        </div>
-      </>}
-    </>
+  return (
+    <div className="scroll-y full-height p-2">
+      <Row>
+        <Col lg={6}>
+          <TextInputBase setDataObject={setPipelineDataDto} dataObject={pipelineDataDto} fieldName={"name"}/>
+        </Col>
+        <Col lg={12}>
+          <TextInputBase setDataObject={setPipelineDataDto} dataObject={pipelineDataDto} fieldName={"description"}/>
+        </Col>
+        <Col lg={6}>
+          {/*<DtoItemInput setDataObject={setPipelineDataDto} dataObject={pipelineDataDto} fieldName={"tags"} />*/}
+        </Col>
+      </Row>
+      <Row>
+        {/*<div className="ml-auto px-3">*/}
+        {/*  {pipelineDataDto.isNew() ?*/}
+        {/*    <Button size="sm" variant="primary" disabled={false} onClick={() => createPipeline()}>Create Tool</Button>*/}
+        {/*    : <Button size="sm" variant="primary" disabled={pipelineDataDto.dataState === DataState.LOADED}*/}
+        {/*              onClick={() => updatePipeline()}>Save changes</Button>}*/}
+        {/*</div>*/}
+      </Row>
+    </div>
   );
 }
 
