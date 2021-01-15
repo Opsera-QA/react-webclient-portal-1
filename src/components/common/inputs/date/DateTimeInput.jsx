@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import DateTimeInputBase from "components/common/inputs/date/DateTimeInputBase";
 
 function DateTimeInput({ fieldName, dataObject, setDataObject, disabled }) {
   return (
-    <DateTimeInput
+    <DateTimeInputBase
       disabled={disabled}
       fieldName={fieldName}
       dataObject={dataObject}
