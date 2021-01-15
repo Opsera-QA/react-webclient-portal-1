@@ -3,17 +3,17 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import RegisteredUserActions from "../../registered-user-actions";
-import DtoJsonField from "../../../../common/form_fields/dto_form_fields/dto-json-field";
-import Model from "../../../../../core/data_model/model";
 import registeredUserToolsMetadata from "./registered-user-tools-form-fields";
-import DetailPanelLoadingDialog from "../../../../common/loading/DetailPanelLoadingDialog";
 import Button from "react-bootstrap/Button";
-import ErrorDialog from "../../../../common/status_notifications/error";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/free-solid-svg-icons";
-import DetailPanelContainer from "../../../../common/panels/detail_panel_container/DetailPanelContainer";
+import Model from "core/data_model/model";
+import {faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
+import JsonField from "components/common/fields/json/JsonField";
+import ErrorDialog from "components/common/status_notifications/error";
+import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
+import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 
 function RegisteredUserToolsPanel({ userData, isDeployingElk, setIsDeployingElk }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -91,8 +91,6 @@ function RegisteredUserToolsPanel({ userData, isDeployingElk, setIsDeployingElk 
     }
   }
 
-  // const
-
   const getJsonDisplayers = () => {
     if (registeredUserToolsDto != null) {
       return (
@@ -100,12 +98,12 @@ function RegisteredUserToolsPanel({ userData, isDeployingElk, setIsDeployingElk 
           {getDeployElkButton()}
           <Row>
             <Col md={12} lg={6}>
-              <DtoJsonField dataObject={registeredUserToolsDto} fieldName={"platformDbTools"}/>
+              <JsonField dataObject={registeredUserToolsDto} fieldName={"platformDbTools"}/>
             </Col>
           </Row>
           <Row>
             <Col md={12} lg={6}>
-              <DtoJsonField dataObject={registeredUserToolsDto} fieldName={"customerDbTools"}/>
+              <JsonField dataObject={registeredUserToolsDto} fieldName={"customerDbTools"}/>
             </Col>
           </Row>
         </div>
@@ -121,7 +119,7 @@ function RegisteredUserToolsPanel({ userData, isDeployingElk, setIsDeployingElk 
   }
 
   return (
-    <DetailPanelContainer showRequiredFieldsMessage={false}>
+    <DetailPanelContainer>
       {getJsonDisplayers()}
     </DetailPanelContainer>
   );

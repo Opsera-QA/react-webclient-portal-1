@@ -1,48 +1,39 @@
-import { axiosApiService } from "api/apiService";
+import baseActions from "utils/actionsBase";
 
 const RegisteredUserActions = {};
 
 RegisteredUserActions.getAnalyticsProfile = async (userId, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/analytics/profile/user/${userId}`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 RegisteredUserActions.getUserRecord = async (userId, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/users/record/${userId}`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-RegisteredUserActions.getRegisteredUsers = async (currentPage, pageSize, getAccessToken) => {
-  const postBody = {
-    page: currentPage,
-    size: pageSize,
+RegisteredUserActions.getRegisteredUsers = async (filterDto, getAccessToken) => {
+  let sortOption = filterDto.getData("sortOption");
+
+  const urlParams = {
+    params: {
+      sort: sortOption ? sortOption.value : undefined,
+      size: filterDto.getData("pageSize"),
+      page: filterDto.getData("currentPage"),
+      search: filterDto.getData("search")
+    },
   };
-  const accessToken = await getAccessToken();
+
   const apiUrl = `/users/get-users`;
-  const response = await axiosApiService(accessToken).get(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
 RegisteredUserActions.deactivateUser = async (userId, getAccessToken) => {
   const postBody = {
     userId: userId,
   };
-  const accessToken = await getAccessToken();
   const apiUrl = `/users/deactivate-user`;
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 RegisteredUserActions.updateAnalyticsProfile = async (analyticsProfileDto, getAccessToken) => {
@@ -61,39 +52,28 @@ RegisteredUserActions.updateAnalyticsProfile = async (analyticsProfileDto, getAc
     active: persistData.active,
     allowData: persistData.allowData,
   };
-  const accessToken = await getAccessToken();
   const apiUrl = `/analytics/profile/${recordId}/update/`;
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 RegisteredUserActions.deployElkStack = async (userId, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/users/tools/activate-elk/${userId}`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 RegisteredUserActions.getRegisteredUserTools = async (userId, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/tools/user/${userId}`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 RegisteredUserActions.getRegisteredUserDb = async (userId, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/tools/user/${userId}?name=mongodb`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+RegisteredUserActions.syncLdap = async (userId, getAccessToken) => {
+  const apiUrl = `/users/record/${userId}/sync`;
+  return await baseActions.apiPutCall(getAccessToken, apiUrl);
 };
 
 export default RegisteredUserActions;

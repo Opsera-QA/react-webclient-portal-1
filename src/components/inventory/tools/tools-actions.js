@@ -51,15 +51,6 @@ toolsActions.createTool = async (toolDataDto, getAccessToken) => {
   return response;
 };
 
-toolsActions.getUsers = async (getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = "/users/get-users?page=1&size=10000";
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
-};
-
 toolsActions.getTools = async (getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/registry/tools";

@@ -1,45 +1,44 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
-import DtoTextField from "../../../common/form_fields/dto_form_fields/dto-text-field";
-import DtoDateField from "../../../common/form_fields/dto_form_fields/dto-date-field";
 import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import DateFieldBase from "components/common/fields/date/DateFieldBase";
 
 function RegisteredUserSummary({ userData, setActiveTab }) {
   // TODO: When User Settings panel is set up, pass setActiveTab to Summary Panel Container
   return (
     <SummaryPanelContainer>
       <Row>
-        <Col md={6}>
-          <DtoTextField fieldName={"firstName"} dataObject={userData}/>
+        <Col lg={6}>
+          <TextFieldBase fieldName={"firstName"} dataObject={userData}/>
         </Col>
-        <Col md={6}>
-          <DtoTextField fieldName={"lastName"} dataObject={userData}/>
+        <Col lg={6}>
+          <TextFieldBase fieldName={"lastName"} dataObject={userData}/>
         </Col>
-        <Col md={6}>
-          <DtoTextField fieldName={"email"} dataObject={userData}/>
+        <Col lg={6}>
+          <TextFieldBase fieldName={"email"} dataObject={userData}/>
         </Col>
-        <Col md={6}>
-          <DtoTextField fieldName={"_id"} dataObject={userData}/>
+        <Col lg={6}>
+          <TextFieldBase fieldName={"_id"} dataObject={userData}/>
         </Col>
-        <Col md={6}>
-          <DtoTextField fieldName={"organizationName"} dataObject={userData}/>
+        <Col lg={6}>
+          <TextFieldBase fieldName={"organizationName"} dataObject={userData}/>
         </Col>
-        <Col md={6}>
-          <DtoTextField fieldName={"domain"} dataObject={userData}/>
+        <Col lg={6}>
+          <TextFieldBase fieldName={"domain"} dataObject={userData}/>
         </Col>
-        <Col md={6}>
-          <DtoTextField fieldName={"ssoSystem"} dataObject={userData}/>
+        <Col lg={6}>
+          <TextFieldBase fieldName={"ssoSystem"} dataObject={userData}/>
         </Col>
-        <Col md={6}>
-          <DtoTextField fieldName={"ssoClientId"} dataObject={userData}/>
+        <Col lg={6}>
+          <TextFieldBase fieldName={"ssoClientId"} dataObject={userData}/>
         </Col>
-        <Col md={6}>
-          <DtoDateField fieldName={"createdAt"} dataObject={userData}/>
+        <Col lg={6}>
+          <DateFieldBase fieldName={"createdAt"} dataObject={userData}/>
         </Col>
-        <Col md={12}>
-          <DtoTextField fieldName={"dbConnectionString"} dataObject={userData}/>
+        <Col lg={12}>
+          <TextFieldBase fieldName={"dbConnectionString"} dataObject={userData}/>
         </Col>
       </Row>
     </SummaryPanelContainer>
