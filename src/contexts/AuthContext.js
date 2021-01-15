@@ -2,6 +2,9 @@ import React, { createContext } from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 
+const jwt = require("jsonwebtoken");
+const ACCESS_TOKEN_SECRET = process.env.REACT_APP_OPSERA_NODE_JWT_SECRET;
+
 const AuthContextProvider = (props) => {
     const { userData, refreshToken, authClient } = props;
 
@@ -16,7 +19,7 @@ const AuthContextProvider = (props) => {
           if (e.xhr && e.xhr.status === 429) {
             // Too many requests
           }
-        })
+        });
     };
 
     const loginUserContext = () => {
@@ -131,6 +134,11 @@ const AuthContextProvider = (props) => {
       }
     };
 
+    const generateJwtServiceTokenWithValue = (object = {}) => {
+      const token = jwt.sign(object, ACCESS_TOKEN_SECRET);
+      return token;
+    };
+
 
     return (
       <AuthContext.Provider value={{
@@ -144,6 +152,7 @@ const AuthContextProvider = (props) => {
         getUserRecord: getUserRecord,
         setAccessRoles: setAccessRoles,
         getIsAuthenticated: getIsAuthenticated,
+        generateJwtServiceTokenWithValue:generateJwtServiceTokenWithValue
       }}>
         {props.children}
       </AuthContext.Provider>
