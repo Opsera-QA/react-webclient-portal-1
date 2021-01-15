@@ -1,11 +1,11 @@
 import React from "react";
 import {Row, Col} from "react-bootstrap";
 import PropTypes from "prop-types";
-import DtoTextField from "../../../../../common/form_fields/dto_form_fields/dto-text-field";
-import DtoToggleField from "../../../../../common/form_fields/dto_form_fields/dto-toggle-field";
-import DtoItemField from "../../../../../common/form_fields/dto_form_fields/dto-item-field";
-import LoadingDialog from "../../../../../common/status_notifications/loading";
-import SummaryPanelContainer from "../../../../../common/panels/detail_view/SummaryPanelContainer";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import GenericItemField from "components/common/fields/multiple_items/GenericItemField";
+import BooleanField from "components/common/fields/boolean/BooleanField";
+import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 function LdapOrganizationAccountSummaryPanel({ ldapOrganizationAccountData, setActiveTab }) {
 
@@ -17,48 +17,46 @@ function LdapOrganizationAccountSummaryPanel({ ldapOrganizationAccountData, setA
     <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"orgOwner"}/>
+          <TextFieldBase dataObject={ldapOrganizationAccountData} fieldName={"orgOwner"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"orgOwnerEmail"}/>
+          <TextFieldBase dataObject={ldapOrganizationAccountData} fieldName={"orgOwnerEmail"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"name"}/>
+          <TextFieldBase dataObject={ldapOrganizationAccountData} fieldName={"name"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"accountName"}/>
+          <TextFieldBase dataObject={ldapOrganizationAccountData} fieldName={"accountName"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"description"}/>
+          <TextFieldBase dataObject={ldapOrganizationAccountData} fieldName={"description"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"idpVendor"}/>
+          <TextFieldBase dataObject={ldapOrganizationAccountData} fieldName={"idpVendor"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"idpPostURL"}/>
+          <TextFieldBase dataObject={ldapOrganizationAccountData} fieldName={"idpPostURL"}/>
         </Col>
         <Col lg={6}>
-          <DtoItemField dataObject={ldapOrganizationAccountData} fieldName={"idpReturnAttributes"}/>
+          <GenericItemField dataObject={ldapOrganizationAccountData} fieldName={"idpReturnAttributes"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"configEntryType"}/>
+          <TextFieldBase dataObject={ldapOrganizationAccountData} fieldName={"configEntryType"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapOrganizationAccountData} fieldName={"entityID"}/>
-        </Col>
-      </Row>
-      <Row>
-        <Col lg={6}>
-          <DtoToggleField fieldName={"isMultipleIDP"} dataObject={ldapOrganizationAccountData}/>
+          <TextFieldBase dataObject={ldapOrganizationAccountData} fieldName={"entityID"}/>
         </Col>
         <Col lg={6}>
-          <DtoToggleField fieldName={"localAuth"} dataObject={ldapOrganizationAccountData}/>
+          <BooleanField fieldName={"isMultipleIDP"} dataObject={ldapOrganizationAccountData}/>
         </Col>
         <Col lg={6}>
-          <DtoToggleField fieldName={"samlEnabled"} dataObject={ldapOrganizationAccountData}/>
+          <BooleanField fieldName={"localAuth"} dataObject={ldapOrganizationAccountData}/>
         </Col>
         <Col lg={6}>
-          <DtoToggleField fieldName={"oAuthEnabled"} dataObject={ldapOrganizationAccountData}/>
+          <BooleanField fieldName={"samlEnabled"} dataObject={ldapOrganizationAccountData}/>
+        </Col>
+        <Col lg={6}>
+          <BooleanField fieldName={"oAuthEnabled"} dataObject={ldapOrganizationAccountData}/>
         </Col>
       </Row>
     </SummaryPanelContainer>
