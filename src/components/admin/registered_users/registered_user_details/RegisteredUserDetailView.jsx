@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
 import RegisteredUserDetailPanel from "./RegisteredUserDetailPanel";
 import { useParams } from "react-router-dom";
-import RegisteredUserActions from "../registered-user-actions";
 import { AuthContext } from "contexts/AuthContext";
-import LoadingDialog from "../../../common/status_notifications/loading";
-import AccessDeniedDialog from "../../../common/status_notifications/accessDeniedInfo";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import analyticsProfileMetadata from "./analytics_profile/analytics-profile-form-fields";
-import Model from "../../../../core/data_model/model";
-import registeredUsersMetadata from "../registered-users-form-fields";
 import {faUserCircle} from "@fortawesome/pro-light-svg-icons";
-import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
-import ActionBarContainer from "../../../common/actions/ActionBarContainer";
-import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
-import ActionBarShowDetailsButton from "../../../common/actions/buttons/ActionBarShowDetailsButton";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
+import registeredUsersMetadata from "components/admin/registered_users/registered-users-form-fields";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
+import ActionBarShowDetailsButton from "components/common/actions/buttons/ActionBarShowDetailsButton";
+import LoadingDialog from "components/common/status_notifications/loading";
+import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
+import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import Model from "core/data_model/model";
 
 function RegisteredUserDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -28,11 +28,12 @@ function RegisteredUserDetailView() {
     loadData();
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (silent = false) => {
     try {
-      setIsLoading(true);
-      await getAnalyticsProfile();
-      await getUser();
+      if (!silent) {
+        setIsLoading(true);
+      }
+
       await getRoles();
     }
     catch (error) {
@@ -48,7 +49,7 @@ function RegisteredUserDetailView() {
   const getUser = async () => {
     const response = await RegisteredUserActions.getUserRecord(id, getAccessToken);
 
-    if (response != null && response.data != null) {
+    if (response?.data != null) {
       setUserData(new Model(response.data, registeredUsersMetadata, false));
     }
   };
@@ -66,6 +67,11 @@ function RegisteredUserDetailView() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
+
+      if (userRoleAccess?.OpseraAdministrator) {
+        await getAnalyticsProfile();
+        await getUser();
+      }
     }
   };
 
@@ -110,6 +116,7 @@ function RegisteredUserDetailView() {
           analyticsProfileData={analyticsProfileData}
           userData={userData}
           setUserData={setUserData}
+          loadData={loadData}
         />
       }
     />

@@ -35,17 +35,6 @@ inventoryActions.createTool = async (ldapUserDataDto, getAccessToken) => {
   return response;
 };
 
-// TODO: Add ?hidden=true if needed
-// TODO: add manual options
-inventoryActions.getTools = async (getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = "/users/get-users?page=1&size=10000`;";
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {return { error };});
-  return response;
-};
-
 inventoryActions.getToolById = async (id, getAccessToken) => {
   const apiUrl = `/registry/${id}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);

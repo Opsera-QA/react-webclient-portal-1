@@ -1,39 +1,38 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useHistory} from "react-router-dom";
-import LoadingDialog from "../../common/status_notifications/loading";
-import {AuthContext} from "../../../contexts/AuthContext";
-import Modal from "../../common/modal/modal";
-import RegisteredUsersTable from "./RegisteredUsersTable";
-import Pagination from "components/common/pagination";
-
-import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
-import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
-import RegisteredUserActions from "./registered-user-actions";
-import {DialogToastContext} from "../../../contexts/DialogToastContext";
-import DetailPanelLoadingDialog from "../../common/loading/DetailPanelLoadingDialog";
-import InformationDialog from "../../common/status_notifications/info";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
+import LoadingDialog from "components/common/status_notifications/loading";
+import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
+import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
+import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
+import Model from "core/data_model/model";
+import registeredUsersFilterMetadata from "components/admin/registered_users/registered-users-filter-metadata";
+import FilterBar from "components/common/filters/FilterBar";
+import DtoTopPagination from "components/common/pagination/DtoTopPagination";
+import {Col, Row} from "react-bootstrap";
+import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
+import SearchFilter from "components/common/filters/search/SearchFilter";
+import InformationDialog from "components/common/status_notifications/info";
+import RegisteredUserSummaryCard from "components/admin/registered_users/RegisteredUserSummaryCard";
 
 function RegisteredUsersManagement() {
-  let history = useHistory();
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
   const [userData, setUserData] = useState(undefined);
-  const [confirm, setConfirm] = useState(false);
-  const [delUserId, setDelUserId] = useState("");
-  const [deployingElk, setDeployingElk] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [registeredUsersFilterDto, setRegisteredUsersFilterDto] = useState(new Model({...registeredUsersFilterMetadata.newObjectFields}, registeredUsersFilterMetadata, false));
 
   useEffect(() => {
     loadData();
-  }, [currentPage, pageSize]);
+  }, []);
 
-  const loadData = async () => {
+  const loadData = async (filterDto = registeredUsersFilterDto) => {
     try {
       setIsLoading(true);
-      await getRoles();
+      await getRoles(filterDto);
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -43,90 +42,105 @@ function RegisteredUsersManagement() {
     }
   };
 
-  const gotoPage = (pageNumber, pageSize) => {
-    setCurrentPage(pageNumber);
-    setPageSize(pageSize);
-  };
-
-  const getRoles = async () => {
+  const getRoles = async (filterDto = registeredUsersFilterDto) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
 
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-    }
 
-    if (userRoleAccess && userRoleAccess.OpseraAdministrator) {
-      await getRegisteredUsers();
+      if (userRoleAccess?.OpseraAdministrator) {
+        await getRegisteredUsers(filterDto);
+      }
     }
   };
 
+  const getRegisteredUsers = async (filterDto = registeredUsersFilterDto) => {
+    const response = await RegisteredUserActions.getRegisteredUsers(filterDto, getAccessToken);
+    const responseData = response?.data;
 
-  const handleDeletePress = (userId) => {
-    setConfirm(true);
-    setDelUserId(userId);
-  }
-
-  const handleCancel = () => {
-    setConfirm(false);
-    setDelUserId("");
-  }
-
-  const handleConfirm = async () => {
-    let userId = delUserId;
-    await handleDeactivateUser(delUserId);
-    setConfirm(false);
-    setDelUserId("");
-  }
-
-  const handleDeactivateUser = async (userId) => {
-    await deactivateUser(userId);
-  }
-
-  const gotoProfile = (id) => {
-     history.push("/admin/registered-users/" + id);
-  }
-
-  const handleDeployElkStack = async (userId) => {
-    console.log("Deploying for User ID: ", userId);
-    setDeployingElk(true);
-    await deployElkStack(userId);
-    //refresh page
-    await getRegisteredUsers();
-    setDeployingElk(false);
-  }
-
-  const deployElkStack = async (id) => {
-    try {
-      const response = await RegisteredUserActions.deployElkStack(id, getAccessToken);
-      let statusCode = response.status;
-      if (statusCode === 200) {
-        toastContext.showSuccessDialog("Successfully Deployed ELK Stack");
-      }
-      else {
-        toastContext.showErrorDialog("Something went wrong deploying ELK stack. View browser logs for more details");
-        console.error(response);
-      }
-    } catch (error) {
-      toastContext.showErrorDialog(error.message);
+    if (responseData) {
+      setUserData(responseData.data);
+      let newFilterDto = registeredUsersFilterDto;
+      newFilterDto.setData("totalCount", response.data.count);
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+      setRegisteredUsersFilterDto({ ...newFilterDto });
     }
   }
 
-  const deactivateUser = async (userId) => {
-    try {
-      const response = await RegisteredUserActions.deactivateUser(userId, getAccessToken);
-      toastContext.showSuccessDialog("Successfully deactivated user");
-      await getRegisteredUsers();
+  const getFilterBar = () => {
+    return (
+      <FilterBar
+        loadData={loadData}
+        filterDto={registeredUsersFilterDto}
+        setFilterDto={setRegisteredUsersFilterDto}
+        filters={["search"]}
+        supportSearch={true}
+      >
+        <SearchFilter filterDto={registeredUsersFilterDto} setFilterDto={setRegisteredUsersFilterDto}/>
+      </FilterBar>
+    );
+  };
+
+  const getRegisteredUsersBlock = () => {
+    if (isLoading) {
+      return (<DetailPanelLoadingDialog type={"Registered Users"} />);
     }
-    catch (error) {
-      toastContext.showErrorDialog(error);
-    }
+
+    return (
+      <div className="max-content-width">
+        <div className="mb-4">
+          <div className="px-2 mb-1">
+            {getFilterBar()}
+          </div>
+          <div className="px-3">
+            <div className="pt-1">
+              <DtoTopPagination
+                loadData={loadData}
+                isLoading={isLoading}
+                paginationDto={registeredUsersFilterDto}
+                setPaginationDto={setRegisteredUsersFilterDto}
+              />
+            </div>
+            <Row>
+              {getBody()}
+            </Row>
+            <div className="pb-2">
+              <DtoBottomPagination
+                loadData={loadData}
+                isLoading={isLoading}
+                paginationDto={registeredUsersFilterDto}
+                setPaginationDto={setRegisteredUsersFilterDto}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
-  const getRegisteredUsers = async () => {
-    const response = await RegisteredUserActions.getRegisteredUsers(currentPage, pageSize, getAccessToken);
-    setUserData(response.data.users);
-  }
+  const getBody = () => {
+    if (userData == null || !Array.isArray(userData)) {
+      return (<InformationDialog message="Could not load registered users" />);
+    }
+
+
+    if (userData.length === 0) {
+      return (<InformationDialog message="No registered users found" />);
+    }
+
+    return (
+      <Row>
+        {userData.map((user, index) => {
+          return (
+            <Col lg={12} key={index}>
+              <RegisteredUserSummaryCard registeredUsersData={user} loadData={loadData} />
+            </Col>
+          );
+        })}
+      </Row>
+    );
+  };
 
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
@@ -137,39 +151,11 @@ function RegisteredUsersManagement() {
   }
 
   return (
-    <>
       <div>
         <BreadcrumbTrail destination={"registeredUsersManagement"} />
         <h5>Registered Users</h5>
-        {confirm ? <Modal header="Confirm Deactivation"
-                          message="Warning! Data cannot be recovered once a User is deactivated. Do you still want to proceed?"
-                          button="Confirm"
-                          handleCancelModal={handleCancel}
-                          handleConfirmModal={handleConfirm}/> : null}
-
-        {isLoading  ? <DetailPanelLoadingDialog type={"Registered Users"} />
-        :
-          Object.keys(userData).length === 0 ? <InformationDialog message="No registered users found" />
-            :
-            <>
-            <RegisteredUsersTable
-              data={userData}
-              deployingElk={deployingElk}
-              gotoProfile={(id) => gotoProfile(id)}
-              handleDeletePress={(id) => {
-                handleDeletePress(id);
-              }}
-              handleDeployElkStack={(id) => {
-                handleDeployElkStack(id);
-              }}/>
-            <div className="mt-2">
-              <Pagination total={userData.count || 30} currentPage={currentPage} pageSize={pageSize}
-                        onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)}/>
-            </div>
-          </>
-        }
+        {getRegisteredUsersBlock()}
       </div>
-      </>
     );
 }
 

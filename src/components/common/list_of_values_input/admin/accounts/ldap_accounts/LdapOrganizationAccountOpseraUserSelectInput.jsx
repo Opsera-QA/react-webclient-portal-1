@@ -32,22 +32,26 @@ function LdapOrganizationAccountOpseraUserSelectInput({ fieldName, dataObject, s
 
   // TODO: Pull into general helper
   const loadOpseraUsers = async () => {
-    console.log("dataObject: " + JSON.stringify(dataObject));
     const response = await accountsActions.getUsers(getAccessToken);
-    // console.log("Opsera Users: \n" + JSON.stringify(response.data));
-
+    const users = response?.data?.data;
     let parsedUserNames = [];
-    Object.keys(response.data["users"]).length > 0 && response.data["users"].map(user => {
-      let orgDomain = user.email.substring(user.email.lastIndexOf("@") + 1);
-      if (dataObject.isNew() || dataObject["orgDomain"].includes(orgDomain)) {
-        if (dataObject.getData("orgOwnerEmail") != null) {
-          if (user["email"] === dataObject.getData("orgOwnerEmail")) {
-            setCurrentOpseraUser({text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"], id: user});
+
+    if (Array.isArray(users) && users.length > 0) {
+      users.map(user => {
+        let orgDomain = user.email.substring(user.email.lastIndexOf("@") + 1);
+        if (dataObject.isNew() || dataObject["orgDomain"].includes(orgDomain)) {
+          if (dataObject.getData("orgOwnerEmail") != null) {
+            if (user["email"] === dataObject.getData("orgOwnerEmail")) {
+              setCurrentOpseraUser({
+                text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"],
+                id: user
+              });
+            }
           }
+          parsedUserNames.push({text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"], id: user});
         }
-        parsedUserNames.push({text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"], id: user});
-      }
-    });
+      });
+    }
     // console.log("Parsed Organization Names: " + JSON.stringify(parsedUserNames));
     setOpseraUsersList(parsedUserNames);
   };

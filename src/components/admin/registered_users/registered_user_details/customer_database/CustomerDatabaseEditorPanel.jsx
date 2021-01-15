@@ -3,14 +3,15 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import Model from "../../../../../core/data_model/model";
-import RegisteredUserActions from "../../registered-user-actions";
-import DetailPanelLoadingDialog from "../../../../common/loading/DetailPanelLoadingDialog";
-import registeredUserToolsMetadata from "../tools/registered-user-tools-form-fields";
-import DtoJsonField from "../../../../common/form_fields/dto_form_fields/dto-json-field";
-import ErrorDialog from "../../../../common/status_notifications/error";
-import DetailPanelContainer from "../../../../common/panels/detail_panel_container/DetailPanelContainer";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
+import registeredUserToolsMetadata
+  from "components/admin/registered_users/registered_user_details/tools/registered-user-tools-form-fields";
+import Model from "core/data_model/model";
+import JsonField from "components/common/fields/json/JsonField";
+import ErrorDialog from "components/common/status_notifications/error";
+import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
+import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 
 function CustomerDatabaseEditorPanel({ customerDatabaseData, userId, setCustomerDatabaseData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -53,12 +54,12 @@ function CustomerDatabaseEditorPanel({ customerDatabaseData, userId, setCustomer
         <div>
           <Row>
             <Col md={12} lg={6}>
-              <DtoJsonField dataObject={customerDbJson} fieldName={"platformDbTools"}/>
+              <JsonField dataObject={customerDbJson} fieldName={"platformDbTools"}/>
             </Col>
           </Row>
           <Row>
             <Col md={12} lg={6}>
-              <DtoJsonField dataObject={customerDbJson} fieldName={"customerDbTools"}/>
+              <JsonField dataObject={customerDbJson} fieldName={"customerDbTools"}/>
             </Col>
           </Row>
         </div>
@@ -72,7 +73,7 @@ function CustomerDatabaseEditorPanel({ customerDatabaseData, userId, setCustomer
 
   // TODO: Create metadata and implement editor panel when necessary
   return (
-    <DetailPanelContainer showRequiredFieldsMessage={false}>
+    <DetailPanelContainer>
       {getJsonDisplayers()}
     </DetailPanelContainer>
   );

@@ -242,12 +242,14 @@ accountsActions.createUser = async (ldapUserDataDto, getAccessToken) => {
 };
 
 accountsActions.getUsers = async (getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = "/users/get-users?page=1&size=10000`;";
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  const urlParams = {
+    params: {
+      size: 10000,
+    },
+  };
+
+  const apiUrl = `/users/get-users`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
 accountsActions.getUserDetailViewLink = async (getUserRecord) => {

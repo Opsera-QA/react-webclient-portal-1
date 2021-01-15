@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import AnalyticsProfileEditorPanel from "./analytics_profile/AnalyticsProfileEditorPanel";
-import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
-import CustomTab from "../../../common/tabs/CustomTab";
-import {faClipboardList, faDatabase, faCogs} from "@fortawesome/pro-light-svg-icons";
+import {faClipboardList, faDatabase, faCogs, faUser} from "@fortawesome/pro-light-svg-icons";
 import CustomerDatabaseEditorPanel from "./customer_database/CustomerDatabaseEditorPanel";
 import RegisteredUserToolsPanel from "./tools/RegisteredUserToolsPanel";
 import RegisteredUserSummary from "./RegisteredUserSummary";
-import SummaryTab from "../../../common/tabs/detail_view/SummaryTab";
-import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTabPanelContainer";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
+import CustomTab from "components/common/tabs/CustomTab";
+import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
+import LdapSettingsPanel
+  from "components/admin/registered_users/registered_user_details/ldap_settings/LdapSettingsPanel";
 
-function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData, setAnalyticsProfileData }) {
+function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData, setAnalyticsProfileData, loadData }) {
   const [activeTab, setActiveTab] = useState("summary");
   const [isDeployingElk, setIsDeployingElk] = useState(false);
 
@@ -26,6 +28,7 @@ function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData
         <CustomTab icon={faDatabase} tabName={"customerDB"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Customer DB"} />
         <CustomTab icon={faCogs} tabName={"analyticsSettings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Analytics Profile"} />
         <CustomTab icon={faClipboardList} tabName={"tools"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tools"} />
+        <CustomTab icon={faUser} activeTab={activeTab} tabText={"LDAP Settings"} tabName={"ldap"} handleTabClick={handleTabClick} />
         {/*<SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />*/}
       </CustomTabContainer>
     );
@@ -41,6 +44,8 @@ function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData
         return <CustomerDatabaseEditorPanel userId={userData["_id"]} customerDatabaseData={analyticsProfileData} setCustomerDatabaseData={setAnalyticsProfileData} />;
       case "analyticsSettings":
         return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
+      case "ldap":
+        return <LdapSettingsPanel userData={userData} loadData={loadData} />;
       case "settings":
       // return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
       default:
@@ -55,7 +60,8 @@ RegisteredUserDetailPanel.propTypes = {
   analyticsProfileData: PropTypes.object,
   setAnalyticsProfileData: PropTypes.func,
   userData: PropTypes.object,
-  setUserData: PropTypes.func
+  setUserData: PropTypes.func,
+  loadData: PropTypes.func
 };
 
 export default RegisteredUserDetailPanel;

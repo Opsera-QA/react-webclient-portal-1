@@ -1,44 +1,37 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
 import ReactJson from "react-json-view";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 function ObjectJsonModal({ header, size, jsonData, show, setParentVisibility }) {
-  const [showModal, setShowModal] = useState(false);
-  const [dataView, setDataView] = useState(jsonData);
-  
-  useEffect(() => {
-    setShowModal(show);
-    if (jsonData !== undefined) {
-      const new_obj = jsonData;
-      setDataView(new_obj);
-    }    
-  }, [jsonData, show]);
 
   const handleClose = () => {
-    setShowModal(false);
-    setParentVisibility();
+    setParentVisibility(false);
+  };
+
+  const getBody = () =>{
+    if (jsonData == null) {
+      return <LoadingDialog message={"Loading Data"} size={"sm"} />
+    }
+
+    return (<ReactJson src={jsonData} displayDataTypes={false}/>);
   };
 
   return (
-    <>
-      <Modal show={showModal} size={size} onHide={() => handleClose()}>
-        <Modal.Header closeButton>
-          <Modal.Title>{header}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="m-3">
-            <ReactJson src={dataView} displayDataTypes={false}/>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleClose()}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-    </>
+    <Modal show={show} size={size} onHide={() => handleClose()}>
+      <Modal.Header closeButton>
+        <Modal.Title>{header}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="m-3">
+          {getBody()}
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={() => handleClose()}>Close</Button>
+      </Modal.Footer>
+    </Modal>
   );
 }
 

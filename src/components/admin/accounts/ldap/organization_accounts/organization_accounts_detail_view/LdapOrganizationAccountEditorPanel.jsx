@@ -47,20 +47,24 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
   // TODO: Pull into general helper
   const loadOpseraUsers = async (ldapOrganizationAccountDataDto) => {
     const response = await accountsActions.getUsers(getAccessToken);
-    // console.log("Opsera Users: \n" + JSON.stringify(response.data));
-
+    const users = response?.data?.data;
     let parsedUserNames = [];
-    Object.keys(response.data["users"]).length > 0 && response.data["users"].map(user => {
-      let orgDomain = user.email.substring(user.email.lastIndexOf("@") + 1);
-      if (ldapOrganizationAccountData.isNew() || ldapOrganizationAccountDataDto["orgDomain"].includes(orgDomain)) {
-        if (ldapOrganizationAccountData.getData("orgOwnerEmail") != null) {
-          if (user["email"] === ldapOrganizationAccountDataDto.getData("orgOwnerEmail")) {
-            setCurrentOpseraUser({text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"], id: user});
+
+    if (Array.isArray(users) && users.length > 0) {
+      users.map(user => {
+        let orgDomain = user.email.substring(user.email.lastIndexOf("@") + 1);
+        if (ldapOrganizationAccountData.isNew() || ldapOrganizationAccountDataDto["orgDomain"].includes(orgDomain)) {
+          if (ldapOrganizationAccountData.getData("orgOwnerEmail") != null) {
+            if (user["email"] === ldapOrganizationAccountDataDto.getData("orgOwnerEmail")) {
+              setCurrentOpseraUser({
+                text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"], id: user
+              });
+            }
           }
+          parsedUserNames.push({text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"], id: user});
         }
-        parsedUserNames.push({text: (user["firstName"] + " " + user["lastName"]) + ": " + user["email"], id: user});
-      }
-    });
+      });
+    }
     // console.log("Parsed Organization Names: " + JSON.stringify(parsedUserNames));
     setOpseraUsersList(parsedUserNames);
   };

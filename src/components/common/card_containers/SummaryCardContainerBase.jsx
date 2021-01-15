@@ -7,7 +7,7 @@ import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 function SummaryCardContainerBase({ children, isLoading, title, titleIcon }) {
   const getCardTitle = () => {
     if (isLoading) {
-      return (<div className="ml-1"><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Notification Method</div>);
+      return (<div className="ml-1"><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading {title}</div>);
     }
 
     return (

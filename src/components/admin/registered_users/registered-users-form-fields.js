@@ -47,6 +47,10 @@ const registeredUsersMetadata = {
       label: "Created",
       id: "createdAt",
     },
+    {
+      label: "Last LDAP Sync",
+      id: "ldapSyncAt",
+    },
   ]
 };
 
