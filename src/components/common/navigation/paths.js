@@ -30,7 +30,7 @@ paths.ldapDepartmentDetailView = paths.admin + "/departments";
 paths.ldapOrganizationAccountManagement = paths.admin + "/organization-accounts";
 paths.ldapOrganizationDetailView = paths.admin + "/organization-accounts";
 
-paths.customerOnboarding = "/accounts/create";
+paths.customerOnboarding = "accounts/create";
 
 paths.registeredUsersManagement = paths.admin + "/registered-users";
 
