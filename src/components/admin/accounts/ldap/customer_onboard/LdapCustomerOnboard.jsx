@@ -46,8 +46,10 @@ function LdapCustomerOnboard() {
         <div className="scroll-y p-3">
           <h6 className="text-center mb-3">Please complete the form below in order to create the LDAP data needed to
             support a new customer Organization and Account.</h6>
+          <div className="my-3">
+            <WarningDialog warningMessage={"LDAP Customer Onboard is currently unavailable."}/>
+          </div>
           <LdapCustomerOnboardEditorPanel/>
-          <WarningDialog warningMessage={"LDAP Customer Onboard is currently unavailable."}/>
         </div>
         <div className="content-block-footer"/>
       </div>
