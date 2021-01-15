@@ -12,7 +12,6 @@ import {
 } from "./ldap-customer-onboard-form-fields";
 import ToggleInput from "../../../../common/input/toggle-input";
 import DropdownList from "react-widgets/lib/DropdownList";
-import ItemInput from "../../../../common/input/item-input";
 import UserInput from "./user-input";
 import ldapUsersMetadata from "../../../../settings/ldap_users/ldap-users-metadata";
 import ldapOrganizationsFormFields from "../organizations/ldap-organizations-form-fields";
@@ -315,12 +314,12 @@ function LdapCustomerOnboardEditorPanel({ldapUserData, newLdapUser, setLdapUserD
                                formData={organizationFormData}/>
                   </Col>
                 </Row>
-                <Row>
-                  <Col>
-                    <ItemInput field={orgFields.subscription} setData={setOrganizationFormField}
-                               formData={organizationFormData}/>
-                  </Col>
-                </Row>
+                {/*<Row>*/}
+                {/*  <Col>*/}
+                {/*    <ItemInput field={orgFields.subscription} setData={setOrganizationFormField}*/}
+                {/*               formData={organizationFormData}/>*/}
+                {/*  </Col>*/}
+                {/*</Row>*/}
               </div>
                 <div className="content-block-footer"/>
             </div>
@@ -383,12 +382,12 @@ function LdapCustomerOnboardEditorPanel({ldapUserData, newLdapUser, setLdapUserD
                                formData={organizationAccountFormData}/>
                   </Col>
                 </Row>
-                <Row>
-                  <Col>
-                    <ItemInput field={orgAccountFields.idpReturnAttributes} setData={setOrganizationAccountFormField}
-                               formData={organizationAccountFormData}/>
-                  </Col>
-                </Row>
+                {/*<Row>*/}
+                {/*  <Col>*/}
+                {/*    <ItemInput field={orgAccountFields.idpReturnAttributes} setData={setOrganizationAccountFormField}*/}
+                {/*               formData={organizationAccountFormData}/>*/}
+                {/*  </Col>*/}
+                {/*</Row>*/}
                 <Row>
                   <Col>
                     <ToggleInput field={orgAccountFields.isMultipleIDP} setData={setOrganizationAccountFormField}
