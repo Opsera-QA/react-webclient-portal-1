@@ -6,11 +6,21 @@ import FieldContainer from "components/common/fields/FieldContainer";
 
 function JsonField({dataObject, fieldName}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
+
+  const getJsonBody = () => {
+    const json = dataObject.getData(fieldName);
+    if (json && typeof json === "object") {
+      return json;
+    }
+
+    return {};
+  }
+
   return (
     <FieldContainer>
       <div><FieldLabel field={field}/></div>
       <div className="ml-3">
-        <ReactJson src={dataObject.getData(fieldName)} enableClipboard={false} displayDataTypes={false} collapsed={field.isCollapsed}/>
+        <ReactJson src={getJsonBody()} enableClipboard={false} displayDataTypes={false} collapsed={field.isCollapsed}/>
       </div>
     </FieldContainer>
   );
