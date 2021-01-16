@@ -1,15 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 
-function CustomTabContainer({ children, styling }) {
+function CustomTabContainer({children, styling}) {
   return (
-    <>
-      <div className={styling}>
-        <ul className="nav nav-tabs">
-          {children}
-        </ul>
-      </div>
-    </>
+    <div className={styling}>
+      <ul className="nav nav-tabs">
+        {children}
+      </ul>
+    </div>
   );
 }
 

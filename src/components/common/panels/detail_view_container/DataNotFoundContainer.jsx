@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
-import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationTriangle} from "@fortawesome/free-solid-svg-icons";
+import {faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
+import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 
+// TODO: We should just pull all the management stuff from the breadcrumb's parent instead and construct the dialog here
 function DataNotFoundContainer({ breadcrumbDestination, type, children }) {
-
   return (
     <div className="max-content-width mb-2 ml-2">
       <BreadcrumbTrail destination={breadcrumbDestination} />
@@ -13,10 +13,8 @@ function DataNotFoundContainer({ breadcrumbDestination, type, children }) {
         <div className="pl-2 content-block-header title-text-header-1">
           <FontAwesomeIcon icon={faExclamationTriangle} fixedWidth className="mr-1"/>{type} Not Found!
         </div>
-        <div className="detail-view-body">
-          <div className="mt-2">
-            {children}
-          </div>
+        <div className="p-2 mt-2 shaded-container detail-container-body">
+          {children}
         </div>
         <div className="content-block-footer"/>
       </div>

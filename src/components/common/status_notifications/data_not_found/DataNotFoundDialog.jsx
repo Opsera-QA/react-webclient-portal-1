@@ -2,15 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
-import {faTimes} from "@fortawesome/pro-regular-svg-icons";
 
-function DataNotFoundDialog ({ type, setShowToast, alignment, managementViewTitle, managementViewLink, managementViewIcon }) {
-
-  const clearMessage = () => {
-    setShowToast(() => {
-        return false;
-    });
-  };
+// TODO: We should just pull all the management stuff from the breadcrumb's parent instead.
+function DataNotFoundDialog ({ type, managementViewTitle, managementViewLink, managementViewIcon }) {
 
   const getManagementViewLink = () => {
     return (
@@ -30,22 +24,6 @@ function DataNotFoundDialog ({ type, setShowToast, alignment, managementViewTitl
         {getManagementViewLink()}
       </div>
 
-    );
-  }
-
-  if (alignment === "dialogToast") {
-    return (
-      <div className="w-100 info-block top-dialog-block">
-        {setShowToast
-          && <div className="float-right ml-1">
-              <FontAwesomeIcon
-                icon={faTimes}
-                style={{ cursor: "pointer" }}
-                onClick={() => {clearMessage();}}
-              />
-            </div>}
-        <span>{constructMessage()}</span>
-      </div>
     );
   }
 

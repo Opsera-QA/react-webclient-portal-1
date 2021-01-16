@@ -1,10 +1,11 @@
 import React, {useState} from "react";
-import BreadcrumbTrail from "../../../common/navigation/breadcrumbTrail";
 import PropTypes from "prop-types";
-import DetailScreenTitleBar from "../detail_view_container/DetailScreenTitleBar";
-import {getBreadcrumb} from "../../navigation/trails";
+import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
+import {getBreadcrumb} from "components/common/navigation/trails";
+import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
+import DetailScreenTitleBar from "components/common/panels/detail_view_container/DetailScreenTitleBar";
 
-function ScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading }) {
+function ScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading, accessDenied }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
 
   const getPageDescription = () => {
@@ -24,22 +25,24 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
       return <div className="content-block-loading m-3"/>;
     }
 
-    return (
-      <div className="mt-2">
-        {children}
-      </div>
-    );
+    return (children);
   };
 
+  if (accessDenied) {
+    return (
+      <AccessDeniedContainer />
+    )
+  }
+
   return (
-    <div className="max-content-width mb-2 ml-2">
+    <div className="max-content-width mb-2 ml-2 max-content-height">
       <BreadcrumbTrail destination={breadcrumbDestination} />
       <div className="content-container content-card-1 ">
         <div className="pl-2 content-block-header title-text-header-1">
-          <DetailScreenTitleBar titleIcon={breadcrumb.icon} title={breadcrumb.label} isLoading={isLoading} />
+          <DetailScreenTitleBar titleIcon={breadcrumb.icon} title={breadcrumb.label} isLoading={isLoading}/>
         </div>
         {getPageDescription()}
-        <div className="p-2 shaded-container detail-view-body">
+        <div className="p-2 mt-2 shaded-container detail-container-body">
           {getScreenBody()}
         </div>
         <div className="content-block-footer"/>
@@ -53,7 +56,8 @@ ScreenContainer.propTypes = {
   breadcrumbDestination: PropTypes.string,
   pageDescription: PropTypes.string,
   isLoading: PropTypes.bool,
-  children: PropTypes.any
+  children: PropTypes.any,
+  accessDenied: PropTypes.bool
 };
 
 export default ScreenContainer;

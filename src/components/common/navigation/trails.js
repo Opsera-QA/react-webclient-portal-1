@@ -94,6 +94,8 @@ const breadcrumbs = {
   //Notifications
   notifications : { name: "notifications", path: paths.notifications, label: "Notifications", icon: faEnvelope},
   notificationDetailView: {name: "notificationDetailView", path: paths.toolDetailView, label: "Notification Details", icon: faEnvelope},
+
+  accessDenied: {name: "accessDenied", path: undefined, label: "Access Denied", icon: faEnvelope},
 };
 
 const trails = {
@@ -183,6 +185,7 @@ const trails = {
   notifications : {parent: undefined, breadcrumb: breadcrumbs.notifications},
   notificationDetailView: {parent: "notifications", breadcrumb: breadcrumbs.notificationDetailView},
 
+  accessDenied: {parent: undefined, breadcrumb: breadcrumbs.accessDenied},
 };
 
 export const getTrail = (breadcrumb) => {

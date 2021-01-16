@@ -1,7 +1,7 @@
 import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import {faSpinner} from "@fortawesome/pro-solid-svg-icons";
+import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 
 function DetailScreenTitleBar({ title, titleIcon, isLoading, inactive }) {
 

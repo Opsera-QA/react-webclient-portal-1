@@ -7,7 +7,7 @@ function DetailTabPanelContainer({ tabContainer, detailView }) {
       <div>
           {tabContainer}
       </div>
-      <div className="shaded-panel detail-screen-body">
+      <div className="shaded-panel detail-panel-body">
         {detailView}
       </div>
     </div>

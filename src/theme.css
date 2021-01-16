@@ -835,7 +835,6 @@ a.nav-link {
 .content-block-loading {
   border-radius: 5px;
   background-color: rgba(203, 205, 205, 0.1);
-  min-height: 75vh;
 }
 
 .content-block-no-height {
@@ -1037,9 +1036,19 @@ a.nav-link {
 
 /* End Action Bar styling */
 
+.max-content-height {
+  height: 100%;
+  max-height: 100%;
+}
+
 /* Detail View Styling */
 .detail-view-body {
   min-height: 60vh;
+}
+
+.detail-container-body {
+  min-height: calc(100vh - 300px);
+  max-height: calc(100vh - 300px);
 }
 
 .modal-detail-view-body {
@@ -1048,7 +1057,7 @@ a.nav-link {
   overflow-y: auto;
 }
 
-.detail-screen-body {
+.detail-panel-body {
   min-height: 60vh;
   max-height: 60vh;
   overflow-y: auto;
@@ -1057,14 +1066,6 @@ a.nav-link {
 .page-description {
   background-color: #E7E5ED;
   min-height: 2em;
-}
-
-.detail-view-body .detail-view-summary {
-  min-height: 20vh;
-}
-
-.detail-view-body .detail-view-detail-panel {
-  min-height: 30vh;
 }
 
 .shaded-panel {
