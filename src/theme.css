@@ -1256,6 +1256,10 @@ a.nav-link {
     overflow-x: hidden
 }
 
+.object-properties-input .properties-body-alt {
+    min-height: 195px;
+}
+
 .object-properties-input .no-data-message {
     padding: 12.5%;
 }
