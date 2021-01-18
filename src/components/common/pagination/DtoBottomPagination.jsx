@@ -56,7 +56,7 @@ function DtoBottomPagination({ paginationDto, setPaginationDto, paginationStyle,
   if (paginationStyle === "stacked") {
     return (
       <Row className="pagination-block small">
-        <Col sm={12} className="my-auto text-center">{getResultSummary(paginationDto)}</Col>
+        <Col sm={12} className="my-auto text-center">{getResultSummary(paginationDto, isLoading)}</Col>
         <Col sm={12} className="my-auto">
           {getPaginator()}
         </Col>
@@ -66,7 +66,7 @@ function DtoBottomPagination({ paginationDto, setPaginationDto, paginationStyle,
 
   return (
     <Row className="pagination-block small">
-      <Col sm={4} className="my-auto">{getResultSummary(paginationDto)}</Col>
+      <Col sm={4} className="my-auto">{getResultSummary(paginationDto, isLoading)}</Col>
       <Col sm={4} className="my-auto">
         {getPaginator()}
       </Col>

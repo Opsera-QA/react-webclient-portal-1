@@ -9,9 +9,9 @@ import {getResultSummary} from "./pagination-helpers";
 function DtoTopPagination({paginationDto, setPaginationDto, loadData, isLoading, pageSizeList }) {
   return (
     <Row className="small mb-1">
-      <Col className="px-0"><div className="mt-1 ml-2">{getResultSummary(paginationDto)}</div></Col>
-      <Col className="px-0" sm={2}><PageSort paginationDto={paginationDto} setPaginationDto={setPaginationDto} loadData={loadData} /></Col>
-      <Col className="px-0" sm={2}><PageSize paginationDto={paginationDto} setPaginationDto={setPaginationDto} pageSizeList={pageSizeList} loadData={loadData} /></Col>
+      <Col className="px-0"><div className="mt-1 ml-2">{getResultSummary(paginationDto, isLoading)}</div></Col>
+      <Col className="px-0" sm={2}><PageSort paginationDto={paginationDto} setPaginationDto={setPaginationDto} loadData={loadData} isLoading={isLoading} /></Col>
+      <Col className="px-0" sm={2}><PageSize paginationDto={paginationDto} setPaginationDto={setPaginationDto} pageSizeList={pageSizeList} loadData={loadData}  isLoading={isLoading} /></Col>
     </Row>
   );
 }
