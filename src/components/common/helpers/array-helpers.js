@@ -77,7 +77,9 @@ export function isEquals (arr1, arr2) {
   if(!(arr1 && arr2)){
     return false;
   }
-  if(JSON.stringify(arr1.sort((a, b) => (a.committedFile > b.committedFile) ? 1 : (a.committedFile === b.committedFile) ? ((a.size > b.size) ? 1 : -1) : -1 )) ===  JSON.stringify(arr2.sort((a, b) => (a.committedFile > b.committedFile) ? 1 : (a.committedFile === b.committedFile) ? ((a.size > b.size) ? 1 : -1) : -1 ))) {
+  let array1 = arr1.sort((a, b) => (a.committedFile > b.committedFile) ? 1 : (a.committedFile === b.committedFile) ? ((a.size > b.size) ? 1 : -1) : -1 );
+  let array2 = arr2.sort((a, b) => (a.committedFile > b.committedFile) ? 1 : (a.committedFile === b.committedFile) ? ((a.size > b.size) ? 1 : -1) : -1 );
+  if(JSON.stringify(array1) ===  JSON.stringify(array2)) {
     return true;
   } else {
     return false;
