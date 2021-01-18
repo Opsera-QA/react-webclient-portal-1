@@ -148,10 +148,16 @@ function PipelineSummaryPanel({
     });
   };
 
-  async function deleteItem(pipelineId) {
-    const { getAccessToken } = contextType;
-    await PipelineActions.delete(pipelineId, getAccessToken);
-    history.push("/workflow");
+  const deleteItem = async (pipelineId) => {
+    try {
+      const { getAccessToken } = contextType;
+      await PipelineActions.delete(pipelineId, getAccessToken);
+      toastContext.showDeleteSuccessResultDialog("Pipeline");
+      history.push("/workflow");
+    }
+    catch (error) {
+      toastContext.showDeleteFailureResultDialog("Pipeline", error);
+    }
   }
 
   const handleSavePropertyClick = async (pipelineId, value, type) => {

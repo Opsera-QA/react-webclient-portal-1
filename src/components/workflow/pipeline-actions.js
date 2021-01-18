@@ -51,7 +51,8 @@ pipelineActions.getAllPipelines = async (getAccessToken) => {
 };
 
 pipelineActions.delete = async (pipelineId, getAccessToken) => {
-  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/${pipelineId}/delete`;
+  return await baseActions.apiDeleteCall(getAccessToken, apiUrl);
 };
 
 pipelineActions.run = async (pipelineId, postBody, getAccessToken) => {
