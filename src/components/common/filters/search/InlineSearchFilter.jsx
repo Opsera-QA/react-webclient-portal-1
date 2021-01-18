@@ -6,6 +6,7 @@ import {faSearch, faSpinner} from "@fortawesome/pro-light-svg-icons";
 
 function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, fieldName}) {
   const [isLoading, setIsLoading] = useState(false);
+
   const validateAndSetData = (value) => {
     let newFilterDto = {...filterDto};
     newFilterDto.setData(fieldName, value);

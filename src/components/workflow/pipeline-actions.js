@@ -1,7 +1,31 @@
-import {axiosApiService} from "../../api/apiService";
-import baseActions from "../../utils/actionsBase";
+import baseActions from "utils/actionsBase";
+import {axiosApiService} from "api/apiService";
 
 const pipelineActions = {};
+
+pipelineActions.getWorkflowTemplates = async (catalogFilterDto, getAccessToken) => {
+  let sortOption = catalogFilterDto.getData("sortOption");
+
+  const urlParams = {
+    params: {
+      sort: sortOption ? sortOption.value : null,
+      size: catalogFilterDto.getData("pageSize"),
+      page: catalogFilterDto.getData("currentPage"),
+      search: catalogFilterDto.getFilterValue("search"),
+      type: catalogFilterDto.getFilterValue("type"),
+      tag: catalogFilterDto.getFilterValue("tag")
+    },
+  };
+
+  let apiUrl = `/pipelines/workflows`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+};
+
+pipelineActions.getInUseTemplates = async (getAccessToken) => {
+  let apiUrl = `/pipelines/workflows/inuse-templates`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
 
 pipelineActions.getPipelines = async (pipelineFilterDto, type, getAccessToken) => {
   let sortOption = pipelineFilterDto.getData("sortOption");
