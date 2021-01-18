@@ -10,7 +10,7 @@ function GenericItemField({dataObject, fieldName}) {
 
   const getItems = () => {
     if (dataObject?.getData(fieldName) == null || dataObject?.getData(fieldName)?.length === 0) {
-      return <span>No Tags Applied</span>;
+      return <span>No Items Applied</span>;
     }
 
     return (

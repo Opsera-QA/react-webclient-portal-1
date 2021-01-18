@@ -63,9 +63,6 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
               <DtoTagManagerInput type={"template"} fieldName={"tags"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
             </Col>
             <Col lg={6}>
-              <AccountRoleMultiSelectInput dataObject={templateDataDto} setDataObject={setTemplateDataDto} />
-            </Col>
-            <Col lg={6}>
               <LdapOrganizationAccountSelectInput fieldName={"account"} dataObject={templateDataDto} setDataObject={setTemplateDataDto} />
             </Col>
             <Col lg={6}>
@@ -74,8 +71,14 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
             <Col lg={6}>
               <BooleanToggleInput fieldName={"singleUse"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
             </Col>
-            <Col lg={12}>
+            <Col lg={6}>
+              <BooleanToggleInput fieldName={"publicUse"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
+            </Col>
+            <Col lg={6}>
               <JsonInput fieldName={"plan"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
+            </Col>
+            <Col lg={6}>
+              <JsonInput disabled={true} fieldName={"access"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
             </Col>
           </Row>
         <PersistButtonContainer
