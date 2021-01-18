@@ -1,4 +1,3 @@
-// TODO: This will be used for both the regular and free trial registration screens, but putting it here so I can check in this half first
 const octopusStepFormMetadata = {
     type: "Octopus API Configuration",
     idProperty: "_id",
@@ -27,20 +26,11 @@ const octopusStepFormMetadata = {
         id: "projectName",
         isRequired: true
       },
-      // {
-      //   label: "Release Version",
-      //   id: "releaseVersion",
-      //   isRequired: true
-      // },
       {
         label: "Environment Name",
         id: "environmentName",
         isRequired: true
       },
-      // {
-      //   label: "Tenant Name",
-      //   id: "tenantName"
-      // },
       {
         label: "Octopus Tool ID",
         id: "octopusToolId",
@@ -60,16 +50,6 @@ const octopusStepFormMetadata = {
         id: "projectDescription",
         isRequired: true
       },
-      // {
-      //   label: "Release Name ID",
-      //   id: "releaseVersionId",
-      //   isRequired: true
-      // },
-      // {
-      //   label: "Tenant Name ID",
-      //   id: "tenantId",
-      //   isRequired: true
-      // },
       {
         label: "Environment Name ID",
         id: "environmentId",
@@ -82,7 +62,7 @@ const octopusStepFormMetadata = {
       },
       {
         label: "ECR Step",
-        id: "ecrStepId",
+        id: "ecrPushStepId",
         isRequired: true
       },
       {
@@ -97,17 +77,13 @@ const octopusStepFormMetadata = {
         octopusApiKey: "",
         spaceName: "",
         projectName: "",
-        // releaseVersion: "",
         environmentName: "",
-        // tenantName: "",	
         octopusToolId: "",
         spaceId: "",
         projectId: "",
         projectDescription : "",
-        // tenantId: "",
         environmentId: "",
-        // releaseVersionId: "",
-        ecrStepId: "",
+        ecrPushStepId: "",
         namespace : "",
         deploymentId : ""
       }
