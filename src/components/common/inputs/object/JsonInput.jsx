@@ -5,6 +5,7 @@ import locale from "react-json-editor-ajrm/locale/en";
 import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import ReactJson from "react-json-view";
 
 // TODO: Finish configuring when wired up
 function JsonInput({fieldName, dataObject, setDataObject, disabled}) {
@@ -25,6 +26,23 @@ function JsonInput({fieldName, dataObject, setDataObject, disabled}) {
       // setErrorMessage(JSON.stringify(error));
     }
   };
+
+  if (disabled) {
+    return (
+      <InputContainer className="custom-text-input">
+        <InputLabel field={field}/>
+        <ReactJson
+          theme="light_mitsuketa_tribute"
+          locale={locale}
+          disabled={disabled}
+          height="300px"
+          width="100%"
+          src={dataObject.getData(fieldName)}
+        />
+        <InfoText field={field} errorMessage={errorMessage}/>
+      </InputContainer>
+    );
+  }
 
   return (
     <InputContainer className="custom-text-input">
