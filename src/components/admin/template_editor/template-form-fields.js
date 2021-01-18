@@ -26,7 +26,6 @@ const templateEditorMetadata = {
     {
       label: "Created At",
       id: "createdAt",
-      // value: [],
     },
     {
       label: "Roles",
@@ -37,13 +36,11 @@ const templateEditorMetadata = {
     { //this should be a dropdown that lists Org Accounts (showing domain in UI) but saving orgAccount name in fields
       label: "LDAP Account",
       id: "account",
-      isRequired: false, //optional value
       formText: "Optional Account (LDAP) to limit visibility of this template to a specific customer.  Only one customer can be selected, so if the template is required for multiple customers, create multiple templates."
     },
     {
       label: "Tags",
       id: "tags",
-      // value: [],
     },
     {
       label: "State",
@@ -55,9 +52,18 @@ const templateEditorMetadata = {
       formText: "If enabled will prevent user from using this template, but it will be visible in the catalog list."
     },
     {
+      label: "Public Use",
+      id: "publicUse",
+      formText: "If enabled, ALL users will be able to see this template across ALL customer stacks."
+    },
+    {
       label: "Single Use",
       id: "singleUse",
-      formText: "If enabled, user can only have one copy of this template in use at a time.  They will not be allowed to create a second pipeline while another one exists with this template."
+      formText: "If enabled will prevent user from using this template, but it will be visible in the catalog list."
+    },
+    {
+      label: "Access",
+      id: "access"
     },
     {
       label: "Plan",
@@ -84,8 +90,10 @@ const templateEditorMetadata = {
     "name": "",
     "description": "",
     "active": true,
-    "roles": ["opsera", "everyone"],
+    "publicUse": true,
+    "singleUse": false,
     "account": "",
+    "access": [{}],
     "plan": [{}],
   },
 };

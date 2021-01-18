@@ -23,6 +23,7 @@ function TemplateTable({ data, loadData, isLoading }) {
       getTableTextColumn(fields.find(field => { return field.id === "account"})),
       getTableBooleanIconColumn(fields.find(field => { return field.id === "readOnly"})),
       getTableBooleanIconColumn(fields.find(field => { return field.id === "singleUse"})),
+      getTableBooleanIconColumn(fields.find(field => { return field.id === "publicUse"})),
       getTableBooleanIconColumn(fields.find(field => { return field.id === "active"})),
     ],
     []
