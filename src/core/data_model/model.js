@@ -296,6 +296,11 @@ export class Model {
     return this.metaData.fields.find(field => {return field.id === id });
   };
 
+  getDefaultValue = (fieldName) => {
+    const newObjectFields = this.getNewObjectFields();
+    return newObjectFields ? newObjectFields[fieldName] : undefined;
+  };
+
   // TODO: Should we make view definitions?
   getNewObjectFields = () => {
     return this.metaData.newObjectFields != null ? this.metaData.newObjectFields : {};

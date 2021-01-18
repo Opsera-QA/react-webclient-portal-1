@@ -18,7 +18,7 @@ function ActiveFilterDisplayer({filterDto, setFilterDto, loadData}) {
 
   const removeFilter = (fieldName) => {
     let newDto = filterDto;
-    newDto.setData(fieldName, null);
+    newDto.setData(fieldName, filterDto.getDefaultValue(fieldName));
     newDto.setData("currentPage", 1);
     setFilterDto({...newDto});
     loadData(newDto);
