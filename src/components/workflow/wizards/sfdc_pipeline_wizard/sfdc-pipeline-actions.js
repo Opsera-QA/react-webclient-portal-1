@@ -78,4 +78,15 @@ sfdcPipelineActions.getProfileComponentList = async (postBody, getAccessToken) =
   return response;
 };
 
+// setSelectedComponents
+
+sfdcPipelineActions.setSelectedComponents = async (postBody, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/sfdc/setselectedcomponents`;   
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
 export default sfdcPipelineActions;

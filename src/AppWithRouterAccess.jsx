@@ -330,9 +330,9 @@ const AppWithRouterAccess = () => {
                 </div>
               </div>
               <div className="row fixed-row-footer-bottom">
-                <div className="col text-center m-1" style={{ padding: 0, margin: 0, fontSize: ".6em" }}>© 2020
+                <div className="col text-center m-1" style={{ padding: 0, margin: 0, fontSize: ".6em" }}>{`© ${new Date().getFullYear()}
                   Opsera,
-                  Inc. The Continuous Orchestration Platform™
+                  Inc. The Continuous Orchestration Platform™`}
                 </div>
               </div>
             </div>

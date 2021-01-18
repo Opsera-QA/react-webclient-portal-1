@@ -61,7 +61,23 @@
 // };
 
 export function isEqual (arr1, arr2) {
+  // check if params are array
+  if(!(arr1 && arr2)){
+    return false;
+  }
   if(JSON.stringify(arr1.sort()) ===  JSON.stringify(arr2.sort())) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+export function isEquals (arr1, arr2) {
+  // check if params are array
+  if(!(arr1 && arr2)){
+    return false;
+  }
+  if(JSON.stringify(arr1.sort((a, b) => (a.committedFile > b.committedFile) ? 1 : (a.committedFile === b.committedFile) ? ((a.size > b.size) ? 1 : -1) : -1 )) ===  JSON.stringify(arr2.sort((a, b) => (a.committedFile > b.committedFile) ? 1 : (a.committedFile === b.committedFile) ? ((a.size > b.size) ? 1 : -1) : -1 ))) {
     return true;
   } else {
     return false;
