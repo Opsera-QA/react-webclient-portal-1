@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
-import { Button, Form, InputGroup } from "react-bootstrap";
+import { Button, Form, InputGroup, Row, Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
@@ -24,6 +24,8 @@ import sfdcPipelineActions from "./sfdc-pipeline-actions";
 import filterMetadata from "./filter-metadata";
 import Model from "../../../../core/data_model/model";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
+import PageSize from "components/common/pagination/page_options/PageSize";
+import { isEquals } from "components/common/helpers/array-helpers"
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -45,6 +47,8 @@ const SfdcPipelineProfileComponents = ({
   setSelectedProfileComponent,
   recordId,
   setRecordId,
+  profileCompCheckAll,
+  setProfileCompCheckAll,
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -71,6 +75,14 @@ const SfdcPipelineProfileComponents = ({
     loadInitialData();
   }, []);
 
+  useEffect(()=>{
+    if(isEquals(selectedProfileComponent, allProfileComponentType)){
+      setProfileCompCheckAll(true);
+    } else {
+      setProfileCompCheckAll(false);
+    }
+  },[allProfileComponentType, selectedProfileComponent]);
+  
 
   const loadData = async () => {
     setComponentsLoading(true);
@@ -120,13 +132,21 @@ const SfdcPipelineProfileComponents = ({
   };
 
   const handleCheckAllClickComponentTypes = () => {
-    setSelectedProfileComponent(allProfileComponentType);
+    // TODO: for advacned selection feature select only the items on this page
+    // setSelectedProfileComponent(allProfileComponentType);
+    setSelectedProfileComponent(profileComponentList);
   };
 
   const handleUnCheckAllClickComponentTypes = () => {
     // setSelectedProfileComponent(selectedProfileComponent.filter((item) =>  !profileComponentList.includes( item )));
     setSelectedProfileComponent([]);
   };
+
+  const renderTooltip = (message, props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      {message.length > 0 ? message : "No message found."}
+    </Tooltip>
+  );
 
   const checkDisabled = () => {
     if (fromProfiles) return false;
@@ -144,39 +164,66 @@ const SfdcPipelineProfileComponents = ({
     await loadData();
   };
 
+  const handleSelectAll = (e) => {
+    const type = e.target.name;
+    // set checkall flag for selected type 
+    setProfileCompCheckAll(e.target.checked);
+    if (e.target.checked) {
+      setSelectedProfileComponent(allProfileComponentType);
+    } else {
+      setSelectedProfileComponent([]);
+    }    
+  }
+
   const handleApproveChanges = async () => {
+    
+    setSave(true);
     // let selectedList = [];
     // if (fromProfiles) {
-    let selectedList = [...selectedProfileComponent];
+    let selectedList = profileCompCheckAll ? "all" : [...selectedProfileComponent];
+    let typeOfSelection = "profileComponentList";
     // }
     if (selectedList.length < 1) {
-      setError("Please select atlest one component to proceed!");
+      setError("Please select atleast one component to proceed!");
       setSave(false);
       return;
     }
     // saving selected files to mongo before calling generate xml func
     try {
-      await sfdcPipelineActions.setListToPipelineStorage({
+
+      let triggerResponse = await sfdcPipelineActions.setListToPipelineStorage({
         "recordId": recordId,
         "pipelineId": pipelineId,
         "stepId": stepId,
         "dataType": "sfdc-packageXml",
         "updateAttribute": "selectedFileList",
+        "typeOfSelection" : typeOfSelection,
         "data": selectedList,
       }, getAccessToken);
+      
+    if (triggerResponse.status != 200) {
+      console.error("Error getting API Data: ", triggerResponse.data.message);
+      setSave(false);
+      // setError(result.data.message);
+      toastContext.showLoadingErrorDialog(error);
+    } else {      
+      const postBody = {
+        pipelineId: pipelineId,
+        stepId: stepId,
+        isProfiles: isProfiles,
+        componentTypes: isProfiles ? selectedComponentTypes : "",
+        isSfdc: true,
+      };
+
+      await generateXML(postBody);
+    }
+
     } catch (err) {
       console.error("Error saving selected data: ", error);
+      setSave(false);
       toastContext.showLoadingErrorDialog(error);
     }
-    const postBody = {
-      pipelineId: pipelineId,
-      stepId: stepId,
-      isProfiles: isProfiles,
-      componentTypes: isProfiles ? selectedComponentTypes : "",
-      isSfdc: true,
-    };
-
-    await generateXML(postBody);
+    
   };
 
   const generateXML = async (data) => {
@@ -209,9 +256,15 @@ const SfdcPipelineProfileComponents = ({
   const getPaginator = (dtoObj, setDto, loading, loadData) => {
     return (
       <div>{dtoObj && dtoObj.getData("totalCount") != null &&
-      <DtoBottomPagination paginationDto={dtoObj} setPaginationDto={setDto} isLoading={loading}
-                           paginationStyle={"stacked"}
-                           loadData={loadData}/>}</div>
+      <>
+        <DtoBottomPagination paginationStyle={"stacked"} paginationDto={dtoObj} setPaginationDto={setDto} isLoading={loading}
+                            loadData={loadData}/>
+                            
+        <Row className="justify-content-md-center">
+          <Col className="px-0" sm={4}><PageSize paginationDto={dtoObj} setPaginationDto={setDto} pageSizeList={[50, 100, 150, 200]} loadData={loadData} /></Col>
+        </Row>
+      </>
+      }</div>
     );
   };
 
@@ -237,7 +290,7 @@ const SfdcPipelineProfileComponents = ({
           </div>
 
           <div className="d-flex w-100 pr-2">
-            <div className="list-item-container mr-1">
+            <div className="col-5 list-item-container mr-1">
               <div className="h6 opsera-blue">SFDC Files</div>
 
               {profileComponentList && profileComponentList.length === 0 &&
@@ -259,11 +312,16 @@ const SfdcPipelineProfileComponents = ({
                 <div className="col-9">
                   {fromProfiles && (
                     <div className="align-self-end">
-                      <Button variant="secondary" size="sm" className="mr-1"
+                       <OverlayTrigger
+                            placement="top"
+                            delay={{ show: 250, hide: 400 }}
+                            overlay={renderTooltip("This will select all the items on this page only")}>
+                      <Button variant="secondary" size="sm" className="mr-1" disabled={profileCompCheckAll}
                               onClick={() => handleCheckAllClickComponentTypes()}>
                         <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>
                         Check All
                       </Button>
+                      </OverlayTrigger>
                       <Button
                         variant="secondary"
                         size="sm"
@@ -273,6 +331,16 @@ const SfdcPipelineProfileComponents = ({
                         <FontAwesomeIcon icon={faSquare} fixedWidth className="mr-1"/>
                         Uncheck All
                       </Button>
+                      <Form.Check
+                        style={{paddingTop: "10px", paddingBottom: "10px"}}
+                        inline
+                        type={"switch"}
+                        label={"Check All"}
+                        id="profileComp"
+                        name="profileComp"
+                        checked={profileCompCheckAll}
+                        onChange={handleSelectAll}
+                      />
                     </div>
                   )}
                 </div>
@@ -369,7 +437,6 @@ const SfdcPipelineProfileComponents = ({
             variant="success"
             size="sm"
             onClick={() => {
-              setSave(true);
               handleApproveChanges();
             }}
             disabled={checkDisabled()}
@@ -406,14 +473,16 @@ SfdcPipelineProfileComponents.propTypes = {
   isOrgToOrg: PropTypes.bool,
   isProfiles: PropTypes.bool,
   stepToolConfig: PropTypes.object,
-  selectedComponentTypes: PropTypes.object,
-  selectedProfileComponent: PropTypes.object,
+  selectedComponentTypes: PropTypes.array,
+  selectedProfileComponent: PropTypes.array,
   setSelectedProfileComponent: PropTypes.func,
   handleClose: PropTypes.func,
   recordId: PropTypes.string,
   setRecordId: PropTypes.func,
   fromProfiles: PropTypes.bool,
   setFromProfiles: PropTypes.func,
+  profileCompCheckAll: PropTypes.bool,
+  setProfileCompCheckAll: PropTypes.func,
 };
 
 export default SfdcPipelineProfileComponents;

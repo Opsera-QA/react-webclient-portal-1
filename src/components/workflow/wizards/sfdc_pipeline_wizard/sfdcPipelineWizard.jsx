@@ -41,6 +41,7 @@ const SfdcPipelineWizard = ({
   const [fromDestinationSFDC, setFromDestinationSFDC] = useState(false);
   const [fromGit, setFromGit] = useState(false);
   const [fromProfiles, setFromProfiles] = useState(false);
+  const [selectedComp, setSelectedComp] = useState([]);
   
   const [nameSpacePrefix, setNameSpacePrefix] = useState("");
   const [gitSelectedComponent, setGitSelectedComponent] = useState([]);
@@ -53,6 +54,12 @@ const SfdcPipelineWizard = ({
   const [formData, setFormData] = useState(INITIAL_OBJECT_TYPES);
   const [xml, setXML] = useState("");
   const [destructiveXml, setDestructiveXml] = useState("");
+
+  // flags for handling new checkall feature
+  const [sfdcCheckAll, setSfdcCheckAll] = useState(false);
+  const [destSfdcCheckAll, setDestSfdcCheckAll] = useState(false);
+  const [gitCheckAll, setGitCheckAll] = useState(false);
+  const [profileCompCheckAll, setProfileCompCheckAll] = useState(false);
 
   const [asOfDate, setAsOfDate] = useState(Moment(new Date(new Date().setHours(0,0,0,0))).toISOString());
 
@@ -100,7 +107,7 @@ const SfdcPipelineWizard = ({
       },
     };
 
-    console.log(postBody);
+    // console.log(postBody);
 
     //create jenkins job and automate job creation/updation of validate and deploy jobs
     let createJobResponse;
@@ -124,16 +131,10 @@ const SfdcPipelineWizard = ({
     }
   };
 
-  if (error) {
-    return (
-      <div className="mt-5">
-        <ErrorDialog error={error} />
-      </div>
-    );
-  } else {
-    return (
-      <>
-        {view === 1 && (
+  const getBody = () => {
+    switch (view) {
+      case 1:
+        return (
           <SfdcPipelineComponents
             pipelineId={pipelineId}
             stepId={stepId}
@@ -142,7 +143,7 @@ const SfdcPipelineWizard = ({
             stepToolConfig={stepToolConfig}
             handleClose={handleClose}
             setView={setView}
-            nameSpacePrefix={nameSpacePrefix} 
+            nameSpacePrefix={nameSpacePrefix}
             setNameSpacePrefix={setNameSpacePrefix}
             setSelectedComponentTypes={setSelectedComponentTypes}
             selectedComponentTypes={selectedComponentTypes}
@@ -155,10 +156,12 @@ const SfdcPipelineWizard = ({
             asOfDate={asOfDate}
             setAsOfDate={setAsOfDate}
             unitTestSteps={unitTestSteps}
+            selectedComp={selectedComp}
+            setSelectedComp={setSelectedComp}
           />
-        )}
-
-        {view === 2 && (
+        );
+      case 2:
+        return(
           <SfdcPipelineModifiedFiles
             pipelineId={pipelineId}
             stepId={stepId}
@@ -186,10 +189,18 @@ const SfdcPipelineWizard = ({
             recordId={recordId}
             setRecordId={setRecordId}
             unitTestSteps={unitTestSteps}
+            selectedComp={selectedComp}
+            setSelectedComp={setSelectedComp}
+            sfdcCheckAll={sfdcCheckAll}
+            setSfdcCheckAll={setSfdcCheckAll}
+            destSfdcCheckAll={destSfdcCheckAll}
+            setDestSfdcCheckAll={setDestSfdcCheckAll}
+            gitCheckAll={gitCheckAll}
+            setGitCheckAll={setGitCheckAll}
           />
-        )}
-
-        {view === 3 && (
+       );
+      case 3:
+        return (
           <SfdcPipelineProfileComponents
             pipelineId={pipelineId}
             stepId={stepId}
@@ -211,10 +222,13 @@ const SfdcPipelineWizard = ({
             recordId={recordId}
             setRecordId={setRecordId}
             unitTestSteps={unitTestSteps}
+            profileCompCheckAll={profileCompCheckAll}
+            setProfileCompCheckAll={setProfileCompCheckAll}
           />
-        )}
+        );
 
-        {view === 4 && (
+      case 4:
+        return (
           <SfdcPipelineXMLView
             pipelineId={pipelineId}
             stepId={stepId}
@@ -232,24 +246,38 @@ const SfdcPipelineWizard = ({
             recordId={recordId}
             unitTestSteps={unitTestSteps}
           />
-        )}
-        
-        {view === 5 && (
-         <SfdcUnitTestSelectionView
-          pipelineId={pipelineId}
-          stepId={stepId}
-          handleClose={handleClose}
-          setView={setView}
-          isOrgToOrg={isOrgToOrg}
-          isProfiles={isProfiles}
-          fromSFDC={fromSFDC}
-          setFromSFDC={setFromSFDC}
-          fromGit={fromGit}
-          fromDestinationSFDC={fromDestinationSFDC}
-          unitTestSteps={unitTestSteps}
-         />
-        )}
-      </>
+        );
+
+      case 5:
+        return (
+          <SfdcUnitTestSelectionView
+            pipelineId={pipelineId}
+            stepId={stepId}
+            handleClose={handleClose}
+            setView={setView}
+            isOrgToOrg={isOrgToOrg}
+            isProfiles={isProfiles}
+            fromSFDC={fromSFDC}
+            setFromSFDC={setFromSFDC}
+            fromGit={fromGit}
+            fromDestinationSFDC={fromDestinationSFDC}
+            unitTestSteps={unitTestSteps}
+          />
+        );
+    }
+  };
+
+  if (error) {
+    return (
+      <div className="mt-5">
+        <ErrorDialog error={error} />
+      </div>
+    );
+  } else {
+    return (
+      <div className="modal-xl">
+        {getBody()}
+      </div>
     );
   }
 };

@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
-import { Button, Form, OverlayTrigger, Tooltip, InputGroup } from "react-bootstrap";
+import { Button, Form, OverlayTrigger, Tooltip, InputGroup, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
@@ -27,6 +27,8 @@ import sfdcPipelineActions from "./sfdc-pipeline-actions";
 import filterMetadata from "./filter-metadata";
 import Model from "../../../../core/data_model/model";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
+import PageSize from "components/common/pagination/page_options/PageSize";
+import { isEquals } from "components/common/helpers/array-helpers"
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -64,6 +66,14 @@ const SfdcPipelineModifiedFiles = ({
   recordId,
   setRecordId,
   unitTestSteps,
+  selectedComp,
+  setSelectedComp,
+  sfdcCheckAll,
+  setSfdcCheckAll,
+  destSfdcCheckAll,
+  setDestSfdcCheckAll,
+  gitCheckAll,
+  setGitCheckAll
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -92,7 +102,7 @@ const SfdcPipelineModifiedFiles = ({
       loadGitData();
       loadDestSfdcData();
       let componentTypesArr = [{ "componentType": "All", "value": "" }];
-      let uniqueComponentTypes = [...new Set(selectedComponentTypes.map(item => item))];
+      let uniqueComponentTypes =  isProfiles ? [...new Set(selectedComp.map(item => item))] : [...new Set(selectedComponentTypes.map(item => item))];
       uniqueComponentTypes.map(item => componentTypesArr.push({ "componentType": item, "value": item }));
       setComponentType(componentTypesArr);
       setLoading(false);
@@ -207,6 +217,37 @@ const SfdcPipelineModifiedFiles = ({
     }
   }, [fromGit]);
 
+  useEffect(()=>{
+    // console.log(isEquals(sfdcSelectedComponent, allSFDCComponentType));
+    if(isEquals(sfdcSelectedComponent, allSFDCComponentType)){
+      setSfdcCheckAll(true);
+    } else {
+      setSfdcCheckAll(false);
+    }
+  },[allSFDCComponentType, sfdcSelectedComponent]);
+  
+  useEffect(()=>{
+    if(isEquals(destSFDCSelectedComponent, allDestSfdcComponentType)){
+      setDestSfdcCheckAll(true);
+    } else {
+      setDestSfdcCheckAll(false);
+    }
+  },[allDestSfdcComponentType, destSFDCSelectedComponent]);
+  
+  useEffect(()=>{
+    if(isEquals(gitSelectedComponent, allGitComponentType)){
+      setGitCheckAll(true);
+    } else {
+      setGitCheckAll(false);
+    }
+  },[allGitComponentType, gitSelectedComponent]);
+  
+  const renderTooltip = (message, props) => (
+    <Tooltip id="button-tooltip" {...props}>
+      {message.length > 0 ? message : "No message found."}
+    </Tooltip>
+  );
+
   const handleSFDCComponentCheck = (e) => {
     const newValue = e.target.name;
     if (!e.target.checked) {
@@ -256,15 +297,19 @@ const SfdcPipelineModifiedFiles = ({
   };
 
   const handleCheckAllClickComponentTypes = (type) => {
+    // for advanced obj selection we have to select items which are visible on this page itself not all
     switch (type) {
     case "sfdc":
-      setSFDCSelectedComponent(allSFDCComponentType);
+      // setSFDCSelectedComponent(allSFDCComponentType);
+      setSFDCSelectedComponent(sfdcModified);
       break;
     case "destSFDC":
-      setDestSFDCSelectedComponent(allDestSfdcComponentType);
+      // setDestSFDCSelectedComponent(allDestSfdcComponentType);
+      setDestSFDCSelectedComponent(destSfdcModified);
       break;
     case "git":
-      setGitSelectedComponent(allGitComponentType);
+      // setGitSelectedComponent(allGitComponentType);
+      setGitSelectedComponent(gitModified);
       break;
     default :
       break;
@@ -286,6 +331,40 @@ const SfdcPipelineModifiedFiles = ({
       break;
     }
   };
+
+  const handleSelectAll = (e) => {
+    const type = e.target.name;
+    // set checkall flag for selected type 
+    switch (type) {
+      case "sfdc":
+        setSfdcCheckAll(e.target.checked);
+        if (e.target.checked) {
+          setSFDCSelectedComponent(allSFDCComponentType);
+        } else {
+          setSFDCSelectedComponent([]);
+        }
+        break;
+      case "destSFDC":
+        setDestSfdcCheckAll(e.target.checked);
+        if (e.target.checked) {
+          setDestSFDCSelectedComponent(allDestSfdcComponentType);
+        } else {
+          setDestSFDCSelectedComponent([]);
+        }
+        break;
+      case "git":
+        setGitCheckAll(e.target.checked);
+        if (e.target.checked) {
+          setGitSelectedComponent(allGitComponentType);
+        } else {
+          setGitSelectedComponent([]);
+        }
+        break;
+      default :
+        break;
+      }
+
+  }
 
   const checkDisabled = () => {
     if (fromGit || fromSFDC || fromDestinationSFDC) return false;
@@ -327,15 +406,20 @@ const SfdcPipelineModifiedFiles = ({
 
   const handleApproveChanges = async () => {
     // console.log(fromSFDC,fromDestinationSFDC,fromGit);
+    // TODO: This needs to be handled differently
     let selectedList = [];
+    let typeOfSelection;
     if (fromSFDC) {
-      selectedList = [...sfdcSelectedComponent];
+      selectedList = sfdcCheckAll ? "all" : [...sfdcSelectedComponent];
+      typeOfSelection = "sfdcCommitList"; 
     }
     if (fromDestinationSFDC) {
-      selectedList = [...destSFDCSelectedComponent];
+      selectedList = destSfdcCheckAll ? "all" : [...destSFDCSelectedComponent];
+      typeOfSelection = "destSfdcCommitList"; 
     }
     if (fromGit) {
-      selectedList = [...gitSelectedComponent];
+      selectedList = gitCheckAll ? "all" : [...gitSelectedComponent];
+      typeOfSelection = "gitCommitList"; 
     }
     if (selectedList.length < 1) {
       setError("Please select atlest one component to proceed!");
@@ -345,7 +429,7 @@ const SfdcPipelineModifiedFiles = ({
     // saving selected files to mongo before calling generate xml func
     try {
       if (isProfiles) {
-        await saveSelectedList(selectedList);
+        await saveSelectedList(selectedList, typeOfSelection);
         return;
       } else {
         await sfdcPipelineActions.setListToPipelineStorage({
@@ -354,26 +438,28 @@ const SfdcPipelineModifiedFiles = ({
           "stepId": stepId,
           "dataType": "sfdc-packageXml",
           "updateAttribute": "selectedFileList",
+          "typeOfSelection" : typeOfSelection,
           "data": selectedList,
         }, getAccessToken);
+        
+        const postBody = {
+          pipelineId: pipelineId,
+          stepId: stepId,
+          isProfiles: isProfiles,
+          componentTypes: isProfiles ? selectedComponentTypes : [],
+          // commitList: selectedList,
+          isSfdc: fromSFDC || fromDestinationSFDC ? true : false,
+        };
+
+        await generateXML(postBody);
       }
     } catch (err) {
       console.error("Error saving selected data: ", error);
       toastContext.showLoadingErrorDialog(error);
     }
-    const postBody = {
-      pipelineId: pipelineId,
-      stepId: stepId,
-      isProfiles: isProfiles,
-      componentTypes: isProfiles ? selectedComponentTypes : [],
-      // commitList: selectedList,
-      isSfdc: fromSFDC || fromDestinationSFDC ? true : false,
-    };
-
-    await generateXML(postBody);
   };
 
-  const saveSelectedList = async (selectedList) => {
+  const saveSelectedList = async (selectedList, typeOfSelection) => {
     try {
       await sfdcPipelineActions.setListToPipelineStorage({
         "recordId": recordId,
@@ -381,6 +467,7 @@ const SfdcPipelineModifiedFiles = ({
         "stepId": stepId,
         "dataType": "sfdc-packageXml",
         "updateAttribute": "profilesList",
+        "typeOfSelection" : typeOfSelection,
         "data": selectedList,
       }, getAccessToken);
       getProfileComponentList();
@@ -400,8 +487,16 @@ const SfdcPipelineModifiedFiles = ({
     };
 
     try {
-      await sfdcPipelineActions.getProfileComponentList(postBody, getAccessToken);
-      setView(3);
+      let getProfileComponentListRes = await sfdcPipelineActions.getProfileComponentList(postBody, getAccessToken);
+      
+      if (getProfileComponentListRes.data.status != 200) {
+        console.error("Error getting API Data: ", getProfileComponentListRes.data.message);
+        setSave(false);
+        // setError(result.data.message);
+        toastContext.showLoadingErrorDialog(error);
+      } else {      
+        setView(3);
+      }
     } catch (err) {
       console.error("Error saving selected data: ", error);
       toastContext.showLoadingErrorDialog(error);
@@ -436,14 +531,14 @@ const SfdcPipelineModifiedFiles = ({
 
 
   const handleSFDCComponentTypeChange = (selectedOption) => {
-    console.log(selectedOption);
+    // console.log(selectedOption);
     setFormData({
       ...formData,
       SFDCComponentType: selectedOption.value, SFDCCommittedFile: "",
     });
   };
   const handleGitComponentTypeChange = (selectedOption) => {
-    console.log(selectedOption);
+    // console.log(selectedOption);
     setFormData({
       ...formData,
       gitComponentType: selectedOption.value, gitCommittedFile: "",
@@ -451,7 +546,7 @@ const SfdcPipelineModifiedFiles = ({
   };
 
   const handleDestSFDCComponentTypeChange = (selectedOption) => {
-    console.log(selectedOption);
+    // console.log(selectedOption);
     setFormData({
       ...formData,
       destSFDComponentType: selectedOption.value, destSFDCCommittedFile: "",
@@ -462,8 +557,15 @@ const SfdcPipelineModifiedFiles = ({
   const getPaginator = (dtoObj, setDto, loading, loadData) => {
     return (
       <div>{dtoObj && dtoObj.getData("totalCount") != null &&
-      <DtoBottomPagination paginationStyle={"stacked"} paginationDto={dtoObj} setPaginationDto={setDto} isLoading={loading}
-                           loadData={loadData}/>}</div>
+      <>
+        <DtoBottomPagination paginationStyle={"stacked"} paginationDto={dtoObj} setPaginationDto={setDto} isLoading={loading}
+                            loadData={loadData}/>
+                            
+        <Row className="justify-content-md-center">
+          <Col className="px-0" sm={4}><PageSize paginationDto={dtoObj} setPaginationDto={setDto} pageSizeList={[50, 100, 150, 200]} loadData={loadData} /></Col>
+        </Row>
+      </>
+      }</div>
     );
   };
 
@@ -511,11 +613,16 @@ const SfdcPipelineModifiedFiles = ({
                 <div className="col-9">
                   {fromSFDC && (
                     <div className="align-self-end">
-                      <Button variant="secondary" size="sm" className="mr-1"
-                              onClick={() => handleCheckAllClickComponentTypes("sfdc")}>
-                        <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>
-                        Check All
-                      </Button>
+                      <OverlayTrigger
+                      placement="top"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={renderTooltip("This will select all the items on this page only")}>
+                        <Button variant="secondary" size="sm" className="mr-1" disabled={sfdcCheckAll}
+                                onClick={() => handleCheckAllClickComponentTypes("sfdc")}>
+                          <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>
+                          Check All
+                        </Button>
+                      </OverlayTrigger>
                       <Button
                         variant="secondary"
                         size="sm"
@@ -525,6 +632,16 @@ const SfdcPipelineModifiedFiles = ({
                         <FontAwesomeIcon icon={faSquare} fixedWidth className="mr-1"/>
                         Uncheck All
                       </Button>
+                      <Form.Check
+                        style={{paddingTop: "10px", paddingBottom: "10px"}}
+                        inline
+                        type={"switch"}
+                        label={"Check All"}
+                        id="sfdc"
+                        name="sfdc"
+                        checked={sfdcCheckAll}
+                        onChange={handleSelectAll}
+                      />
                     </div>
                   )}
                 </div>
@@ -532,7 +649,6 @@ const SfdcPipelineModifiedFiles = ({
 
               {fromSFDC &&
               <div className="d-flex w-100 pr-2">
-              {!isProfiles && 
                 <div className="col-5 mr-1">
                   <DropdownList
                     data={componentType}
@@ -550,7 +666,6 @@ const SfdcPipelineModifiedFiles = ({
                     onChange={handleSFDCComponentTypeChange}
                   />
                 </div>
-                }
                 <div className="col-7 mr-1">
                   <InputGroup className="mb-3">
                     <Form.Control
@@ -670,11 +785,16 @@ const SfdcPipelineModifiedFiles = ({
                     <div className="col-9">
                       {fromGit && (
                         <div className="align-self-end">
-                          <Button variant="secondary" size="sm" className="mr-1"
-                                  onClick={() => handleCheckAllClickComponentTypes("git")}>
-                            <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>
-                            Check All
-                          </Button>
+                           <OverlayTrigger
+                            placement="top"
+                            delay={{ show: 250, hide: 400 }}
+                            overlay={renderTooltip("This will select all the items on this page only")}>
+                            <Button variant="secondary" size="sm" className="mr-1" disabled={gitCheckAll}
+                                    onClick={() => handleCheckAllClickComponentTypes("git")}>
+                              <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>
+                              Check All
+                            </Button>
+                          </OverlayTrigger>
                           <Button
                             variant="secondary"
                             size="sm"
@@ -684,6 +804,16 @@ const SfdcPipelineModifiedFiles = ({
                             <FontAwesomeIcon icon={faSquare} fixedWidth className="mr-1"/>
                             Uncheck All
                           </Button>
+                          <Form.Check
+                            style={{paddingTop: "10px", paddingBottom: "10px"}}
+                            inline
+                            type={"switch"}
+                            label={"Check All"}
+                            id="git"
+                            name="git"
+                            checked={gitCheckAll}
+                            onChange={handleSelectAll}
+                          />
                         </div>
                       )}
                     </div>
@@ -870,6 +1000,14 @@ SfdcPipelineModifiedFiles.propTypes = {
   recordId: PropTypes.string,
   setRecordId: PropTypes.func,
   unitTestSteps: PropTypes.array,
+  selectedComp: PropTypes.object,
+  setSelectedComp: PropTypes.func,
+  sfdcCheckAll: PropTypes.bool,
+  setSfdcCheckAll: PropTypes.func,
+  destSfdcCheckAll: PropTypes.bool,
+  setDestSfdcCheckAll: PropTypes.func,
+  gitCheckAll: PropTypes.bool,
+  setGitCheckAll: PropTypes.func,
 };
 
 export default SfdcPipelineModifiedFiles;

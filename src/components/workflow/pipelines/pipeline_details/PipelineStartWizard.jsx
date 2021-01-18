@@ -1,15 +1,12 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button, OverlayTrigger, Popover, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStepForward, faPlay, faSync, faSpinner, faStopCircle, faHistory, faPause, faFlag } from "@fortawesome/free-solid-svg-icons";
-import SfdcPipelineWizard from "../../wizards/sfdc_pipeline_wizard/sfdcPipelineWizard";
-
-import "../../workflows.css";
+import { faStepForward, faPlay, faSpinner } from "@fortawesome/pro-light-svg-icons";
+import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/sfdcPipelineWizard";
 
 function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, pipeline, handleClose, handlePipelineWizardRequest, refreshPipelineActivityData }) {
 
-    
   const popover = (
     <Popover id="popover-basic">
       <Popover.Content>
@@ -18,32 +15,36 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, p
     </Popover>
   );
 
+  const getBody = () => {
+    if (pipelineType !== "sfdc" && pipelineOrientation === "middle") {
+      return (<ConfirmResumePipeline pipelineId={pipelineId} handlePipelineWizardRequest={handlePipelineWizardRequest} />);
+    }
+
+    if (pipelineType === "sfdc") {
+      return (
+      <div>
+        {pipelineOrientation === "middle"
+        && <div className="info-text mt-3 pl-4">Warning!  This pipeline is in the middle of running.  If you proceed, this will cancel the running job and start the pipeline over.</div>}
+        <SfdcPipelineWizard pipelineId={pipelineId} pipeline={pipeline} handlePipelineWizardRequest={handlePipelineWizardRequest} handleClose={handleClose} refreshPipelineActivityData={refreshPipelineActivityData} />
+      </div>
+      );
+    }
+  };
+
   return (
-    <>
-      <Modal size="lg" show={true} onHide={handleClose} 
-        className="tool-details-modal" id="dataManagerModal" backdrop="static">       
-        <Modal.Header closeButton>
-          <Modal.Title>Pipeline Start Wizard</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-
-          {pipelineType !== "sfdc" && pipelineOrientation === "middle" && 
-            <ConfirmResumePipeline pipelineId={pipelineId} handlePipelineWizardRequest={handlePipelineWizardRequest} />}
-
-          
-          {pipelineType === "sfdc" && pipelineOrientation === "middle" && <div className="info-text mt-3 pl-4">Warning!  This pipeline is in the middle of running.  If you proceed, this will cancel the running job and start the pipeline over.</div>}
-          {pipelineType === "sfdc" && 
-            <SfdcPipelineWizard pipelineId={pipelineId} pipeline={pipeline} handlePipelineWizardRequest={handlePipelineWizardRequest} handleClose={handleClose} refreshPipelineActivityData={refreshPipelineActivityData} />}
-
-        </Modal.Body>
-        <Modal.Footer>
-          <OverlayTrigger trigger={["hover", "hover"]} placement="top" overlay={popover}>
-            <Button size="sm" variant="secondary" onClick={handleClose}>Close</Button>
-          </OverlayTrigger>
-        </Modal.Footer>
-      </Modal>
-
-    </>
+    <Modal size={"xl"} show={true} onHide={handleClose} className={"pipeline-start-wizard-modal"} id="pipelineWizardModal" backdrop="static">
+      <Modal.Header closeButton>
+        <Modal.Title>Pipeline Start Wizard</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {getBody()}
+      </Modal.Body>
+      <Modal.Footer>
+        <OverlayTrigger trigger={["hover", "focus"]} placement="top" overlay={popover}>
+          <Button size="sm" variant="secondary" onClick={handleClose}>Close</Button>
+        </OverlayTrigger>
+      </Modal.Footer>
+    </Modal>
   );
 
 }

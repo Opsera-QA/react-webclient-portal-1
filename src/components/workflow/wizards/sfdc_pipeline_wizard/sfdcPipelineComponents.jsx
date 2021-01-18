@@ -50,7 +50,9 @@ const SfdcPipelineComponents = ({
   formData,
   setFormData,
   asOfDate,
-  setAsOfDate
+  setAsOfDate,
+  selectedComp,
+  setSelectedComp
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
@@ -69,6 +71,7 @@ const SfdcPipelineComponents = ({
   useEffect(() => {
     setConfigurationError(false);
     setLoading(false);
+    setSave(false);
     setError(false);
     setWarning(false);
     setComponentTypeForm(INITIAL_COMPONENT_TYPES_FORM);
@@ -151,6 +154,15 @@ const SfdcPipelineComponents = ({
     </Tooltip>
   );
 
+  const handleTypeSelect = (e) => {
+    const newValue = e.target.name;
+    if (e.target.checked) {
+      setSelectedComp((selectedComp) => [...selectedComp, newValue]);
+    } else {
+      setSelectedComp(selectedComp.filter((item) => item !== newValue));
+    }
+  }
+
   const handleComponentCheck = (e) => {
     const newValue = e.target.name;
     // console.log("selected value: " ,newValue)
@@ -162,6 +174,7 @@ const SfdcPipelineComponents = ({
   };
 
   const handleSubmitComponentTypes = async () => {
+    setSave(true);
     let keys = Object.keys(formData);
     let filtered = keys.filter(function (key) {
       return formData[key];
@@ -170,13 +183,41 @@ const SfdcPipelineComponents = ({
     postBody.pipelineId = pipelineId;
     postBody.stepId = stepId;
     postBody.lastCommitTimeStamp = isProfiles ? "1900-01-01T00:00:00.000Z" : asOfDate;
-    postBody.componentTypes = isProfiles ? ["Profile"] : selectedComponentTypes;
+    // postBody.componentTypes = isProfiles ? ["Profile"] : selectedComponentTypes;
+    postBody.componentTypes = isProfiles ? selectedComp : selectedComponentTypes;
     postBody.objectType = filtered[0];
     postBody.nameSpacePrefix = nameSpacePrefix;
 
     // console.log(postBody);
-    await postComponentTypes(postBody);
+    await storeSelectedComponents(postBody);
   };
+
+  const storeSelectedComponents = async (data) => {
+    // TODO: Make a call to store the selected components to pipeline storage selectedComponents
+    const postBody = {
+      "dataType" : "sfdc-packageXml",
+      "pipelineId" : pipelineId,
+      "stepId" : stepId,
+      "updateAttribute": "selectedComponents",
+      "data" :  selectedComponentTypes,
+    };
+    try {
+      const result = await sfdcPipelineActions.setSelectedComponents(postBody, getAccessToken);
+      // setModifiedFiles(result.data); 
+      // console.log(result.data)
+      if (result.data.status === 500) {
+        console.error("Error setting selected Data: ", result.data.message);
+        setError(result.data.message);
+        setSave(false);
+      } else {
+        await postComponentTypes(data);
+      }
+    } catch (err) {
+      console.error("Error setting selected Data: ", err.message);
+      setError("Error setting selected Data: ", error);
+      setSave(false);
+    }
+  }
 
   const postComponentTypes = async (data) => {
     setSfdcComponentFilterObject(data);
@@ -188,11 +229,13 @@ const SfdcPipelineComponents = ({
       if (result.data.status === 500) {
         console.error("Error getting API Data: ", result.data.message);
         setError(result.data.message);
+        setSave(false);
       } else {
         setView(2); //move to next view
       }
     } catch (err) {
       console.error(err.message);
+      setSave(false);
       setError(error);
     }
   };
@@ -218,7 +261,40 @@ const SfdcPipelineComponents = ({
             <>
               <div className="mt-3 mr-3">
                 <div className="d-flex justify-content-between">
-                  {!isProfiles && 
+                  {isProfiles ? 
+
+                  <div className="px-2">
+                     <OverlayTrigger
+                      placement="right"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={renderTooltip("select type of migration is it a profile migration or permission set migration or both")}
+                      ><FontAwesomeIcon
+                      icon={faInfoCircle}
+                      className="fa-pull-right pointer pr-1"
+                      onClick={() => document.body.click()}
+                    /></OverlayTrigger>
+                    <div className="text-muted pl-1 pb-1">Type of Migration: *</div>
+                    <Form.Check
+                        inline
+                        type={"checkbox"}
+                        label="Profile"
+                        id="Profile"
+                        name="Profile"
+                        checked={selectedComp.includes("Profile")}
+                        onChange={handleTypeSelect}
+                      />
+                      <Form.Check
+                        inline
+                        type={"checkbox"}
+                        label="Permission Set"
+                        id="Permission"
+                        name="PermissionSet"
+                        checked={selectedComp.includes("PermissionSet")}
+                        onChange={handleTypeSelect}
+                      />
+                      
+                  </div>
+                  :
                   <div className="px-2">
                     <OverlayTrigger
                   placement="right"
@@ -396,10 +472,9 @@ const SfdcPipelineComponents = ({
             variant="success"
             size="sm"
             onClick={() => {
-              setSave(true);
               handleSubmitComponentTypes();
             }}
-            disabled={save}
+            disabled={save || isProfiles ? selectedComp.length < 1 : false }
           >
             {save ? (
               <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
@@ -442,6 +517,8 @@ SfdcPipelineComponents.propTypes = {
   setFormData: PropTypes.func,
   asOfDate: PropTypes.string,
   setAsOfDate: PropTypes.func,
+  selectedComp: PropTypes.object,
+  setSelectedComp: PropTypes.func,
 };
 
 AccountDropDown.propTypes = {
