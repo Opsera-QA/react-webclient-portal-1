@@ -76,6 +76,7 @@ export const ldapOrganizationAccountMetaData = {
     {
       label: "IdP Identifier",
       id: "entityID",
+      maxLength: 50
     }
   ],
   newObjectFields: {
