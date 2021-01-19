@@ -26,9 +26,9 @@ function JiraSecondaryUsersField({ dataObject, fieldName, jiraUsers, isLoading }
           let jiraName = jiraUser ? jiraUser.displayName :  `No User Found for ID: [${jiraUserId}]`;
 
           return (
-            <Button key={i} variant="primary" className="mx-1 mb-1" size="sm">
+            <span key={i} className="mx-1 mb-1 badge badge-secondary">
               {jiraName}
-            </Button>
+            </span>
           );
         })
       );
@@ -39,9 +39,9 @@ function JiraSecondaryUsersField({ dataObject, fieldName, jiraUsers, isLoading }
         <div>Could Not Pull Jira Users. Secondary User Account IDs:</div>
         {accountIds.map((jiraUserId, i) => {
           return (
-            <Button key={i} variant="primary" className="mx-1 mb-1" size="sm">
+            <span key={i} className="mx-1 mb-1 badge badge-secondary">
               {jiraUserId}
-            </Button>
+            </span>
           )
         })}
       </div>
