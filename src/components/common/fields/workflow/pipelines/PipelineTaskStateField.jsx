@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {getPipelineStatusIcon2} from "components/common/table/table-column-helpers";
+import {getAssociatedPipelineStatusIcon} from "components/common/table/table-column-helpers";
 import FieldLabel from "components/common/fields/FieldLabel";
 import FieldContainer from "components/common/fields/FieldContainer";
 
@@ -8,8 +8,17 @@ function PipelineTaskStateField({ fieldName, dataObject }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const getPipelineStateField = (pipelineState) => {
-    return <span>{getPipelineStatusIcon2(pipelineState)}<span className="ml-1 mt-1">{pipelineState}</span></span>
+    console.log("pipeline state: " + JSON.stringify(pipelineState));
+    return <span>{getAssociatedPipelineStatusIcon(pipelineState)}<span className="ml-1 mt-1">{pipelineState}</span></span>
   };
+
+  if (dataObject.getData(fieldName) == null) {
+    return (
+      <FieldContainer>
+        <span>No Pipeline State Associated With This Task</span>
+      </FieldContainer>
+    )
+  }
 
   return (
     <FieldContainer>

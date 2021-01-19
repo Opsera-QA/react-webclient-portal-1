@@ -4,16 +4,16 @@ import "components/inventory/tools/tools.css";
 import PipelineSummaryCardContainer
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCardContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import PipelineStateField from "components/common/form_fields/pipelines/state/PipelineStateField";
 import DateFieldBase from "components/common/form_fields/DateFieldBase";
 import PipelineLinkButton from "components/common/buttons/pipeline/PipelineLinkButton";
+import PipelineTaskStateField from "components/common/fields/workflow/pipelines/PipelineTaskStateField";
 
 function ParallelPipelineTaskSummaryCard({ pipelineData }) {
   return (
     <PipelineSummaryCardContainer pipelineData={pipelineData}>
       <div className="d-flex justify-content-between">
         <TextFieldBase dataObject={pipelineData} fieldName={"runNumber"}/>
-        <PipelineStateField dataObject={pipelineData} fieldName={"state"}/>
+        <PipelineTaskStateField dataObject={pipelineData} fieldName={"state"}/>
       </div>
       <div className="mb-2">
         <TextFieldBase dataObject={pipelineData} fieldName={"description"}/>

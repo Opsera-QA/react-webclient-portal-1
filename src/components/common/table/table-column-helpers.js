@@ -88,26 +88,26 @@ export const getPipelineStatusIcon = (props) => {
   }
 };
 
-// TODO: merge with above method
-export const getPipelineStatusIcon2 = (pipelineStatus) => {
+export const getAssociatedPipelineStatusIcon = (pipelineStatus) => {
   switch (pipelineStatus) {
     case "failure":
     case "failed":
-      return (<FontAwesomeIcon icon={faTimesCircle} className="cell-icon red vertical-align-item" fixedWidth />);
+      return (<FontAwesomeIcon icon={faTimesCircle} className="red" fixedWidth />);
     case "unknown":
-      return (<FontAwesomeIcon icon={faCircle} className="cell-icon yellow vertical-align-item" fixedWidth/>);
+      return (<FontAwesomeIcon icon={faCircle} className="yellow" fixedWidth/>);
     case "rejected":
-      return (<FontAwesomeIcon icon={faStopCircle} className="cell-icon red vertical-align-item" fixedWidth/>);
+      return (<FontAwesomeIcon icon={faStopCircle} className="red" fixedWidth/>);
     case "running":
     case "processing event":
-      return (<FontAwesomeIcon icon={faPlayCircle} className="cell-icon green vertical-align-item" fixedWidth/>);
+      return (<FontAwesomeIcon icon={faPlayCircle} className="green" fixedWidth/>);
     case "queued":
-      return (<FontAwesomeIcon icon={faPauseCircle} className="cell-icon green vertical-align-item" fixedWidth/>);
+    case "pending":
+      return (<FontAwesomeIcon icon={faPauseCircle} className="green" fixedWidth/>);
     case "stopped":
     case "halted":
-      return (<FontAwesomeIcon icon={faOctagon} className="cell-icon red vertical-align-item" fixedWidth/>);
+      return (<FontAwesomeIcon icon={faOctagon} className="red" fixedWidth/>);
     default:
-      return (<FontAwesomeIcon icon={faCheckCircle} className="cell-icon green vertical-align-item" fixedWidth/>);
+      return (<FontAwesomeIcon icon={faCheckCircle} className="green" fixedWidth/>);
   }
 }
 
