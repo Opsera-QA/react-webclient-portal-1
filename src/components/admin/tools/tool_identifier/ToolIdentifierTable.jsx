@@ -1,17 +1,14 @@
 import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import {Button} from "react-bootstrap";
 import {useHistory} from "react-router-dom";
 import toolIdentifierMetadata from "./tool-identifier-metadata";
+import NewToolIdentifierModal from "./NewToolIdentifierModal";
 import {
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn
-} from "../../../common/table/table-column-helpers";
-import NewToolIdentifierModal from "./NewToolIdentifierModal";
+} from "components/common/table/table-column-helpers";
 
 function ToolIdentifierTable({data, loadData, isLoading}) {
   const [showCreateToolIdentifierModal, setShowCreateToolIdentifierModal] = useState(false);
@@ -29,7 +26,7 @@ function ToolIdentifierTable({data, loadData, isLoading}) {
     []
   );
 
-  const noDataMessage = "No tools are currently registered";
+  const noDataMessage = "No tool identifiers are currently registered";
 
   const rowStyling = (row) => {
     return !row["values"].active ? " inactive-row" : "";
