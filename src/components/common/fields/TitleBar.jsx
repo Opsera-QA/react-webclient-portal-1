@@ -3,7 +3,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 
-function DetailScreenTitleBar({ title, titleIcon, isLoading, inactive }) {
+// TODO: Move and rename
+function TitleBar({ title, titleIcon, isLoading, inactive }) {
 
   if (isLoading) {
     return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Data</span>);
@@ -17,11 +18,11 @@ function DetailScreenTitleBar({ title, titleIcon, isLoading, inactive }) {
 }
 
 
-DetailScreenTitleBar.propTypes = {
+TitleBar.propTypes = {
   inactive: PropTypes.bool,
   title: PropTypes.string,
   titleIcon: PropTypes.object,
   isLoading: PropTypes.bool
 };
 
-export default DetailScreenTitleBar;
+export default TitleBar;

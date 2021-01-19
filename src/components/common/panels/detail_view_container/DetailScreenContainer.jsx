@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DetailScreenTitleBar from "components/common/panels/detail_view_container/DetailScreenTitleBar";
 import DataNotFoundContainer from "components/common/panels/detail_view_container/DataNotFoundContainer";
 import DataNotFoundDialog from "components/common/status_notifications/data_not_found/DataNotFoundDialog";
 import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
+import TitleBar from "components/common/fields/TitleBar";
 
 function DetailScreenContainer(
   {
@@ -24,7 +24,7 @@ function DetailScreenContainer(
   }) {
 
   const getTitleBar = () => {
-    return (<DetailScreenTitleBar isLoading={isLoading} titleIcon={titleIcon} title={title} inactive={activeField ? dataObject?.getData(activeField) === false : false} /> );
+    return (<TitleBar isLoading={isLoading} titleIcon={titleIcon} title={title} inactive={activeField ? dataObject?.getData(activeField) === false : false} /> );
   };
 
   const getDetailBody = () => {

@@ -1,8 +1,8 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import DetailScreenTitleBar from "../../common/panels/detail_view_container/DetailScreenTitleBar";
 import { faChartNetwork } from "@fortawesome/pro-light-svg-icons";
+import TitleBar from "components/common/fields/TitleBar";
 
 function AnalyticsProfileSettings() {
   const history = useHistory();
@@ -15,9 +15,7 @@ function AnalyticsProfileSettings() {
     <>
       <div className="content-container content-card-analytics">
         <div className="pl-2 content-block-header title-text-header-1">
-
-            <DetailScreenTitleBar titleIcon={faChartNetwork} title={"Activate Opsera Analytics"} />
-
+          <TitleBar titleIcon={faChartNetwork} title={"Activate Opsera Analytics"} />
         </div>
         <div className="p-3 shaded-container">
           <Card.Text>

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 import {getBreadcrumb} from "components/common/navigation/trails";
 import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
-import DetailScreenTitleBar from "components/common/panels/detail_view_container/DetailScreenTitleBar";
+import TitleBar from "components/common/fields/TitleBar";
 
 function ScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading, accessDenied }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
@@ -39,7 +39,7 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
       <BreadcrumbTrail destination={breadcrumbDestination} />
       <div className="content-container content-card-1 ">
         <div className="pl-2 content-block-header title-text-header-1">
-          <DetailScreenTitleBar titleIcon={breadcrumb.icon} title={breadcrumb.label} isLoading={isLoading}/>
+          <TitleBar titleIcon={breadcrumb.icon} title={breadcrumb.label} isLoading={isLoading}/>
         </div>
         {getPageDescription()}
         <div className="p-2 mt-2 shaded-container detail-container-body">

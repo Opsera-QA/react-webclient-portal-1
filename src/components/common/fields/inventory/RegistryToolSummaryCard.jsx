@@ -6,12 +6,12 @@ import TextFieldBase from "components/common/form_fields/TextFieldBase";
 import {faWrench} from "@fortawesome/pro-light-svg-icons";
 import ToolLinkButton from "components/common/buttons/inventory/ToolLinkButton";
 import CardContainerBase from "components/common/card_containers/CardContainerBase";
-import DetailScreenTitleBar from "components/common/panels/detail_view_container/DetailScreenTitleBar";
 import TagField from "components/common/fields/multiple_items/TagField";
+import TitleBar from "components/common/fields/TitleBar";
 
 function RegistryToolSummaryCard({ toolData, isLoading, loadToolInNewWindow }) {
   const getTitleBar = () => {
-    return <DetailScreenTitleBar titleIcon={faWrench} title={`Tool: [${toolData.getData("name")}]`} isLoading={isLoading} inactive={toolData?.getData("active") !== true} />;
+    return <TitleBar titleIcon={faWrench} title={`Tool: [${toolData.getData("name")}]`} isLoading={isLoading} inactive={toolData?.getData("active") !== true} />;
   };
 
   if (isLoading) {
