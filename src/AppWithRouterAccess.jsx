@@ -57,7 +57,6 @@ import Mapping from "./components/settings/data_tagging/DataTagsManager";
 import ToolTypeDetailView from "./components/admin/tools/tool_type/tool_type_detail_view/ToolTypeDetailView";
 import ToolIdentifierDetailView
   from "./components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierDetailView";
-//import Axios from "axios";
 import Pipelines from "./components/workflow/pipelines/Pipelines";
 import PipelineDetailView from "./components/workflow/pipelines/pipeline_details/PipelineDetailView";
 import ErrorDialog from "./components/common/status_notifications/error";
@@ -91,7 +90,7 @@ import { OktaAuth } from "@okta/okta-auth-js";
 import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
 import NotificationDetailView from "components/notifications/notification_details/NotificationDetailView";
 import ToolProjectsView from "components/inventory/tools/tool_details/projects/ToolProjectsView";
-import {axiosApiService} from "api/apiService";
+import { axiosApiService } from "api/apiService";
 import TagsUsedInPipelineReport from "components/reports/tags/pipelines/TagsUsedInPipelineReport";
 import TagsUsedInToolsReport from "components/reports/tags/tools/TagsUsedInToolsReport";
 import AccountRegistration from "components/user/account_registration/AccountRegistration";
@@ -155,7 +154,11 @@ const AppWithRouterAccess = () => {
     if (!authState.isAuthenticated) {
       setHideSideBar(true);
       setData(null);
-      history.push("/login");
+
+      if (!isPublicPath(history.location.pathname)) {
+        history.push("/login");
+      }
+
       return;
     }
 
@@ -183,8 +186,16 @@ const AppWithRouterAccess = () => {
     }
   };
 
+  const isPublicPath = (path) => {
+    return (path === "/login" ||
+      path === "/signup" ||
+      path === "/registration" ||
+      path === "/trial/registration" ||
+      path.includes("/account/registration"));
+  };
+
   const enableSideBar = (path) => {
-    if (path === "/login" || path === "/signup" || path === "/registration" || path === "/trial/registration") {
+    if (isPublicPath(path)) {
       setHideSideBar(true);
     } else {
       setHideSideBar(false);
@@ -192,7 +203,6 @@ const AppWithRouterAccess = () => {
   };
 
   const refreshToken = async () => {
-    console.log("loaindg users 2")
     const tokens = authClient.tokenManager.getTokens();
     await loadUsersData(tokens.accessToken.value);
   };
@@ -219,7 +229,7 @@ const AppWithRouterAccess = () => {
         }
         <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
           <ToastContextProvider>
-          <Navbar hideAuthComponents={hideSideBar} userData={data}/>
+            <Navbar hideAuthComponents={hideSideBar} userData={data}/>
             <div className="container-fluid" style={{ margin: "0" }}>
               <div className="d-flex flex-row">
                 <Sidebar userData={data} hideSideBar={hideSideBar}/>
@@ -241,7 +251,8 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/profile" component={Profile}/>
                   <SecureRoute path="/inventory/:view" exact component={Inventory}/>
                   <SecureRoute path="/inventory/tools/details/:id/:tab?" exact component={ToolDetailView}/>
-                  <SecureRoute path="/inventory/tools/details/:id/projects/:projectId" exact component={ToolProjectsView}/>
+                  <SecureRoute path="/inventory/tools/details/:id/projects/:projectId" exact
+                               component={ToolProjectsView}/>
                   <SecureRoute path="/dashboard" component={Dashboard}/>
                   <SecureRoute path="/tools/:id?" component={ApiConnector}/>
                   <SecureRoute path="/platform" component={Platform}/>
@@ -325,8 +336,10 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/settings/customer-system-status" exact component={CustomerSystemStatus}/>
                   <SecureRoute path="/settings/analytics-profile" exact component={AnalyticsProfileSettings}/>
                   <SecureRoute path="/settings/data_mapping" exact component={Mapping}/>
-                  <SecureRoute path="/settings/data_mapping/projects/details/:projectMappingId" exact component={ProjectMappingDetailView}/>
-                  <SecureRoute path="/settings/data_mapping/user_mapping/details/:usersMappingId" exact component={UsersMappingDetailView}/>
+                  <SecureRoute path="/settings/data_mapping/projects/details/:projectMappingId" exact
+                               component={ProjectMappingDetailView}/>
+                  <SecureRoute path="/settings/data_mapping/user_mapping/details/:usersMappingId" exact
+                               component={UsersMappingDetailView}/>
 
                   <SecureRoute path="/demo/api" component={ApiConnectionDemo}/>
                   <SecureRoute path="/demo/table" component={CommonTableDemo}/>
@@ -338,7 +351,8 @@ const AppWithRouterAccess = () => {
                 </div>
               </div>
               <div className="row fixed-row-footer-bottom">
-                <div className="col text-center m-1" style={{ padding: 0, margin: 0, fontSize: ".6em" }}>{`© ${new Date().getFullYear()}
+                <div className="col text-center m-1"
+                     style={{ padding: 0, margin: 0, fontSize: ".6em" }}>{`© ${new Date().getFullYear()}
                   Opsera,
                   Inc. The Continuous Orchestration Platform™`}
                 </div>
