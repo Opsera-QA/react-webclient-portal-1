@@ -15,7 +15,7 @@ import jiraConfigurationMetadata
 import Col from "react-bootstrap/Col";
 import JiraUserFields from "components/common/fields/inventory/tools/jira/JiraUserFields";
 
-function JiraToolProjectField({ dataObject, jiraToolId, fieldName, children, title, showUsersFields }) {
+function JiraToolProjectField({ dataObject, jiraToolId, jiraToolProjectId, fieldName, children, title, showUsersFields }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
   const toastContext = useContext(DialogToastContext);
   const {getAccessToken} = useContext(AuthContext);
@@ -25,7 +25,7 @@ function JiraToolProjectField({ dataObject, jiraToolId, fieldName, children, tit
 
   useEffect(() => {
     loadData();
-  }, [jiraToolId]);
+  }, [jiraToolId, jiraToolProjectId]);
 
   const loadData = async () => {
     try {
@@ -39,7 +39,7 @@ function JiraToolProjectField({ dataObject, jiraToolId, fieldName, children, tit
   };
 
   const loadJiraTool = async () => {
-    if (jiraToolId !== "") {
+    if (jiraToolId !== "" && jiraToolProjectId !== "") {
       const response = await inventoryActions.getToolById(jiraToolId, getAccessToken);
       const toolDataResponse = response?.data[0];
 
@@ -97,6 +97,7 @@ JiraToolProjectField.propTypes = {
   jiraToolId: PropTypes.string,
   fieldName: PropTypes.string,
   title: PropTypes.string,
+  jiraToolProjectId: PropTypes.string,
   showUsersFields: PropTypes.bool,
   children: PropTypes.any
 };

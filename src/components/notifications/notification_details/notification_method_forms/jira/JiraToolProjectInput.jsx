@@ -116,7 +116,7 @@ function JiraToolProjectInput({jiraToolId, fieldName, dataObject, setDataObject,
       />
       {getJiraToolProjectInfo()}
       <div className="mx-2">
-        <JiraToolProjectField fieldName={fieldName} dataObject={dataObject} jiraToolId={dataObject.getData("jiraToolId")} title={"Jira Tool Project"}/>
+        <JiraToolProjectField fieldName={fieldName} dataObject={dataObject} jiraToolId={dataObject.getData("jiraToolId")} jiraToolProjectId={dataObject.getData(fieldName)} title={"Jira Tool Project"}/>
       </div>
       <JiraUserInputs jiraToolId={jiraToolId} jiraProject={getJiraProject()} dataObject={dataObject} setDataObject={setDataObject} />
     </>
