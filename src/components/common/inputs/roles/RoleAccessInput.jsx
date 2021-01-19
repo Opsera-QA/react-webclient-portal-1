@@ -233,19 +233,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
       <div className="d-flex my-2 justify-content-between" key={index}>
         <Col sm={11}>
           <Row>
-            <Col sm={4} className={"pl-2 pr-1"}>
-              <DropdownList
-                className=""
-                data={roleTypes}
-                valueField={"value"}
-                textField={"text"}
-                value={property["role"]}
-                filter={"contains"}
-                placeholder={"Select Role Type"}
-                onChange={(value) => updateProperty(property, "role", value["value"])}
-              />
-            </Col>
-            <Col sm={4}>
+            <Col sm={2}>
               <div className="mt-2 w-100 d-flex">
                 <div className="ml-auto">
                   <input
@@ -267,8 +255,20 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
                 </div>
               </div>
             </Col>
-            <Col sm={4} className={"pl-1 pr-0"}>
+            <Col sm={5} className={"pl-1 pr-0"}>
               {getAssigneeInput(property)}
+            </Col>
+            <Col sm={5} className={"pl-2 pr-1"}>
+              <DropdownList
+                className=""
+                data={roleTypes}
+                valueField={"value"}
+                textField={"text"}
+                value={property["role"]}
+                filter={"contains"}
+                placeholder={"Select Role Type"}
+                onChange={(value) => updateProperty(property, "role", value["value"])}
+              />
             </Col>
           </Row>
         </Col>
@@ -314,13 +314,13 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
     return (
       <div className="d-flex justify-content-between page-description">
         <div className={"mr-auto ml-3 mt-1"}>
-          <span className="text-muted">Role Type</span>
-        </div>
-        <div className={"mx-auto mt-1"}>
           <span className="text-muted ml-5">Type</span>
         </div>
-        <div className={"mx-auto mr-5 mt-1"}>
+        <div className={"mx-auto mt-1"}>
           <span className="text-muted">Assignee</span>
+        </div>
+        <div className={"mx-auto mr-5 mt-1"}>
+          <span className="text-muted">Role Type</span>
         </div>
         <div />
       </div>

@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faUser, faUserFriends} from "@fortawesome/pro-light-svg-icons";
 
 function RoleAccessField({dataObject, fieldName}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -18,15 +20,15 @@ function RoleAccessField({dataObject, fieldName}) {
 
         if (user) {
           return (
-            <span key={i} className="mx-1 mb-1 badge badge-primary" >
-              {`${user}: ${item.role}`}
+            <span key={i} className="mx-1 mb-1 badge badge-primary">
+              <FontAwesomeIcon icon={faUser} fixedWidth className="mr-1"/>{`${user}: ${item.role}`}
             </span>
           );
         }
 
         return (
-          <span key={i} className="mx-1 mb-1 badge badge-secondary" >
-            {`${group}: ${item.role}`}
+          <span key={i} className="mx-1 mb-1 badge badge-secondary">
+            <FontAwesomeIcon icon={faUserFriends} fixedWidth className="mr-1"/>{`${group}: ${item.role}`}
           </span>
         );
       })
