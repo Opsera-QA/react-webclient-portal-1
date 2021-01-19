@@ -339,7 +339,7 @@ const SfdcPipelineProfileComponents = ({
                         ) : (
                           <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
                         )}
-                        Next
+                        Use All Files
                       </Button>
                       {/* <Form.Check
                         style={{paddingTop: "10px", paddingBottom: "10px"}}
@@ -418,6 +418,7 @@ const SfdcPipelineProfileComponents = ({
                             type={"checkbox"}
                             name={item.committedFile}
                             id={idx}
+                            disabled={profileCompCheckAll}
                             checked={selectedProfileComponent.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
                             onChange={handleComponentCheck}
                           />
