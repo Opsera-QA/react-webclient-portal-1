@@ -59,7 +59,7 @@ const pipelineFilterMetadata = {
   newObjectFields: {
     pageSize: 25,
     currentPage: 1,
-    sortOption: { value: "name", text: "Pipeline Name (a-z)", order: 1 },
+    sortOption: { value: "name", text: "Pipeline Name (A-Za-z)", order: 1 },
     search: "",
     viewType: "cards",
     activeFilters: []
@@ -67,8 +67,8 @@ const pipelineFilterMetadata = {
   sortOptions: [
     { option: "createdAt", text: "Newest Pipelines", order: -1 },
     { option: "createdAt", text: "Oldest Pipelines", order: 1 },
-    { option: "name", text: "Pipeline Name (a-z)", order: 1 },
-    { option: "name", text: "Pipeline Name (z-a)", order: -1 },
+    { option: "name", text: "Pipeline Name (A-Za-z)", order: 1 },
+    { option: "name", text: "Pipeline Name (z-aZ-A)", order: -1 },
     { option: "updatedAt", text: "Updated (latest)", order: -1 },
     { option: "updatedAt", text: "Updated (earliest)", order: 1 },
   ]

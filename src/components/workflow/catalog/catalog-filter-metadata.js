@@ -59,7 +59,7 @@ const catalogFilterMetadata = {
   newObjectFields: {
     pageSize: 25,
     currentPage: 1,
-    sortOption: { option: "name", text: "Template Name" },
+    sortOption: { option: "name", text: "Template Name (A-Za-z)" },
     search: "",
     type: "",
     tag: "",
@@ -68,7 +68,7 @@ const catalogFilterMetadata = {
   sortOptions: [
     { option: "newest", text: "Newest Templates"},
     { option: "oldest", text: "Oldest Templates"},
-    { option: "name", text: "Template Name" },
+    { option: "name", text: "Template Name (A-Za-z)" },
     { option: "lastupdated", text: "Last Updated"},
     { option: "description", text: "Description"},
   ]
