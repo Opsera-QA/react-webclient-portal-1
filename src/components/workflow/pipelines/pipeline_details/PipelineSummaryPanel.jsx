@@ -313,6 +313,33 @@ function PipelineSummaryPanel({
     );
   };
 
+  const getTagField = () => {
+    return (
+      <Col xs={12} className="py-2"><span className="text-muted mr-1">Tags:</span>
+
+        {!editTags && pipeline.tags &&
+        pipeline.tags.map((item, idx) => {
+          if (typeof item !== "string")
+            return (
+              <span key={idx} className="mx-1 mb-1 badge badge-secondary">
+                    <span className="mr-1">{item.type}:</span>{item.value}
+                  </span>
+            );
+        })
+        }
+        {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
+
+        {editTags &&
+        <EditTagModal data={pipeline.tags} visible={editTags} onHide={() => {
+          setEditTags(false);
+        }} onClick={(tags) => {
+          handleSavePropertyClick(pipeline._id, tags, "tags");
+        }}/>}
+
+      </Col>
+    );
+  };
+
   if (!pipeline || Object.keys(pipeline).length <= 0) {
     return (<InfoDialog
       message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."/>);
@@ -471,30 +498,7 @@ function PipelineSummaryPanel({
                 getEditIcon("schedule", true) : null}
             </Col>
           }
-
-
-          <Col xs={12} className="py-2"><span className="text-muted mr-1">Tags:</span>
-
-            {!editTags && pipeline.tags &&
-            pipeline.tags.map((item, idx) => {
-              if (typeof item !== "string")
-                return (
-                  <span key={idx} className="mx-1 mb-1 badge badge-secondary">
-                    <span className="mr-1">{item.type}:</span>{item.value}
-                  </span>
-                );
-            })
-            }
-            {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
-
-            {editTags &&
-            <EditTagModal data={pipeline.tags} visible={editTags} onHide={() => {
-              setEditTags(false);
-            }} onClick={(tags) => {
-              handleSavePropertyClick(pipeline._id, tags, "tags");
-            }}/>}
-
-          </Col>
+          {getTagField()}
 
           {editDescription ?
             <>
