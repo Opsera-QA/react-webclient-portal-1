@@ -74,7 +74,7 @@ function LdapOrganizationManagement() {
   };
 
   const getUrlString = () => {
-    const urlString = "Registration URL: [https://portal.opsera.io/account/registration/<organization account name>]"
+    const urlString = "Registration URL: [" + process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL +"/account/registration/<organization account name>]"
     return (
       <div>
         <span className="text-muted">{urlString}</span>
