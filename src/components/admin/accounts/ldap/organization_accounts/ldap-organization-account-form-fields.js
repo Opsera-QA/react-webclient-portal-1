@@ -42,19 +42,19 @@ export const ldapOrganizationAccountMetaData = {
       id: "description",
     },
     {
-      label: "IDP Post URL",
+      label: "IdP Post URL",
       id: "idpPostURL",
     },
     {
-      label: "IDP Vendor",
+      label: "IdP Vendor",
       id: "idpVendor",
     },
     {
-      label: "IDP Return Attributes",
+      label: "IdP Return Attributes",
       id: "idpReturnAttributes",
     },
     {
-      label: "Is Multiple IDP?",
+      label: "Is Multiple IdP?",
       id: "isMultipleIDP",
     },
     {

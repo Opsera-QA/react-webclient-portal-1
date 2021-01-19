@@ -1,19 +1,19 @@
 export const ldapIdpAccountsMetaData = {
   idProperty: "name",
-  type: "IDP Account",
+  type: "IdP Account",
   fields: [
   {
-    label: "IDP Account Name",
+    label: "IdP Account Name",
     id: "name",
       isRequired: true
   },
   {
-    label: "IDP Domain",
+    label: "IdP Domain",
     id: "domain",
       isRequired: true
   },
   {
-    label: "IDP Redirect URI",
+    label: "IdP Redirect URI",
     id: "idpRedirectURI",
       isRequired: true
   },
@@ -30,7 +30,7 @@ export const ldapIdpAccountsMetaData = {
     id: "baseUrl",
   },
   {
-    label: "IDP Vendor",
+    label: "IdP Vendor",
     id: "idpVendor",
   },
   {
