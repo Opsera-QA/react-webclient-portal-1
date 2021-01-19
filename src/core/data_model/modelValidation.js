@@ -72,7 +72,7 @@ export const fieldValidation = (value, data, field) => {
 
   if (field.isOpseraPassword === true && !isOpseraPassword(value))
   {
-    errorMessages.push("Password requirements: at least 8 characters, a lowercase letter, an uppercase letter, a number, a symbol");
+    errorMessages.push("Password Requirements: At Least 8 Characters, 1 Lowercase Letter, 1 Uppercase Letter, 1 Number (0-9), and 1 Symbol (!@#$%^&*)");
   }
 
   if (field.matchField != null && value !== "" && data[field.matchField] !== "" && value !== data[field.matchField]) {

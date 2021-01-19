@@ -41,13 +41,11 @@ InputPopover.propTypes = {
   isLoading: PropTypes.bool,
   tooltipBody: PropTypes.object,
   tooltipTitle: PropTypes.string,
-  trigger: PropTypes.any,
-  title: PropTypes.string,
+  trigger: PropTypes.any
 };
 
 InputPopover.defaultProps = {
-  trigger: ["hover", "focus"],
-  tooltipTitle: "Field Details"
+  trigger: ["hover", "focus"]
 };
 
 export default InputPopover;
