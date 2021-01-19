@@ -29,7 +29,7 @@ function RegistryToolSummaryCard({ toolData, isLoading, loadToolInNewWindow }) {
       <div className="d-flex justify-content-between">
         <DateFieldBase dataObject={toolData} fieldName={"createdAt"}/>
         <DateFieldBase dataObject={toolData} fieldName={"updatedAt"}/>
-        <ToolLinkButton pipelineId={toolData.getData("_id")} loadPipelineInNewWindow={loadToolInNewWindow}/>
+        <ToolLinkButton toolId={toolData.getData("_id")} loadToolInNewWindow={loadToolInNewWindow}/>
       </div>
     </CardContainerBase>
   );

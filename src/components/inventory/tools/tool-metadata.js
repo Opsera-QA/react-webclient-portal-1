@@ -101,6 +101,10 @@ const toolMetadata = {
     {
       label: "Created",
       id: "createdAt",
+    },
+    {
+      label: "Updated",
+      id: "updatedAt",
     }
   ],
   newObjectFields: {

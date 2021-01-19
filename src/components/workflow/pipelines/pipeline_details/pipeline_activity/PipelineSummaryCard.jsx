@@ -5,6 +5,7 @@ import DateFieldBase from "components/common/form_fields/DateFieldBase";
 import TextFieldBase from "components/common/form_fields/TextFieldBase";
 import PipelineSummaryCardContainer from "./PipelineSummaryCardContainer";
 import PipelineLinkButton from "components/common/buttons/pipeline/PipelineLinkButton";
+import TagField from "components/common/fields/multiple_items/TagField";
 
 function PipelineSummaryCard({ pipelineData, isLoading, loadPipelineInNewWindow }) {
   if (isLoading) {
@@ -15,6 +16,9 @@ function PipelineSummaryCard({ pipelineData, isLoading, loadPipelineInNewWindow 
     <PipelineSummaryCardContainer pipelineData={pipelineData} isLoading={isLoading}>
       <div className="mb-2">
         <TextFieldBase dataObject={pipelineData} fieldName={"description"}/>
+      </div>
+      <div className="mb-2">
+        <TagField dataObject={pipelineData} fieldName={"tags"}/>
       </div>
       <div className="d-flex justify-content-between">
         <DateFieldBase dataObject={pipelineData} fieldName={"createdAt"}/>
