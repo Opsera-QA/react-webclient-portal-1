@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import DtoFilterSelectInput from "../input/DtoFilterSelectInput";
-import {AuthContext} from "../../../../contexts/AuthContext";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import {getUsersByDomain} from "../../../settings/ldap_users/user-functions";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {getUsersByDomain} from "components/settings/ldap_users/user-functions";
+import DtoFilterSelectInput from "components/common/filters/input/DtoFilterSelectInput";
 
 function PipelineOwnerFilter({ filterDto, setFilterDto }) {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
