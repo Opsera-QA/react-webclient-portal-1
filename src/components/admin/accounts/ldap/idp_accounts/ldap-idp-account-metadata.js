@@ -20,17 +20,14 @@ export const ldapIdpAccountsMetaData = {
   {
     label: "Client ID",
     id: "clientID",
-      // isRequired: true
   },
   {
     label: "Issuer",
     id: "issuer",
-    // isRequired: true
   },
   {
     label: "Base URL",
     id: "baseUrl",
-      // isRequired: true
   },
   {
     label: "IDP Vendor",
