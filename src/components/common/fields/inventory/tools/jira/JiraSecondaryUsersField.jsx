@@ -51,7 +51,7 @@ function JiraSecondaryUsersField({ dataObject, fieldName, jiraUsers, isLoading }
   return (
     <FieldContainer>
       <FieldLabel field={field}/>
-      <span>{getFormattedUsers()}</span>
+      <span className="item-field">{getFormattedUsers()}</span>
     </FieldContainer>
   );
 }
