@@ -8,7 +8,7 @@ const spinnakerConnectionMetadata = {
       isRequired: true
     },
   ],
-  newModelBase:
+  newObjectFields:
     {
       toolURL: "",
     }
