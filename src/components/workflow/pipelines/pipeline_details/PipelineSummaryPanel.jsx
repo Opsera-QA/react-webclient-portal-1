@@ -13,7 +13,7 @@ import {
   faSave,
   faTimes,
   faCogs,
-  faFlag,
+  faFlag, faUser, faUserFriends,
 } from "@fortawesome/pro-light-svg-icons";
 import "../../workflows.css";
 import SchedulerWidget from "../../../common/schedulerWidget";
@@ -27,6 +27,9 @@ import PipelineSummaryActionBar from "../../../common/actions/pipeline/PipelineS
 import InfoDialog from "../../../common/status_notifications/info";
 import WorkflowAuthorizedActions from "./workflow/workflow-authorized-actions";
 import PipelineSummaryMessages from "./pipelineSummaryMessage";
+import EditRolesModal from "components/workflow/EditRolesModal";
+import Model from "core/data_model/model";
+import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -35,6 +38,7 @@ const INITIAL_FORM_DATA = {
   type: [],
 };
 
+// TODO: This class needs to be reworked with new components and also to cleanup
 function PipelineSummaryPanel({
   pipeline,
   ownerName,
@@ -64,6 +68,7 @@ function PipelineSummaryPanel({
   const [editType, setEditType] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [approvalStep, setApprovalStep] = useState({});
+  const [pipelineModel, setPipelineModel] = useState(new Model(pipeline.data, pipelineMetadata, false));
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   let history = useHistory();
 
@@ -213,14 +218,16 @@ function PipelineSummaryPanel({
           setEditType(false);
           break;
         case "roles":
-          pipeline.roles = value.roles;
+
+          pipeline.roles = [...value];
           postBody = {
-            "roles": value.roles,
+            "roles": [...value],
           };
           setEditType(false);
           break;
       }
 
+      setPipelineModel(new Model({...pipeline}, pipelineMetadata, false));
 
       if (Object.keys(postBody).length > 0) {
         try {
@@ -318,14 +325,16 @@ function PipelineSummaryPanel({
       <Col xs={12} className="py-2"><span className="text-muted mr-1">Tags:</span>
 
         {!editTags && pipeline.tags &&
-        pipeline.tags.map((item, idx) => {
-          if (typeof item !== "string")
-            return (
-              <span key={idx} className="mx-1 mb-1 badge badge-secondary">
-                    <span className="mr-1">{item.type}:</span>{item.value}
-                  </span>
-            );
-        })
+        <span className="item-field">
+            {pipeline.tags.map((item, idx) => {
+              if (typeof item !== "string")
+                return (
+                  <span key={idx} className="mx-1 mb-1 badge badge-secondary">
+            <span className="mr-1">{item.type}:</span>{item.value}
+            </span>
+                );
+            })}
+          </span>
         }
         {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
 
@@ -334,6 +343,50 @@ function PipelineSummaryPanel({
           setEditTags(false);
         }} onClick={(tags) => {
           handleSavePropertyClick(pipeline._id, tags, "tags");
+        }}/>}
+
+      </Col>
+    );
+  };
+
+  // TODO: This can be removed once dto components are wired up
+  const getRoleBadges = (roles) => {
+    if (roles == null || roles.length === 0) {
+      return <span>No Role Access Configurations Applied</span>;
+    }
+
+    return (
+      roles.map((item, i) => {
+        const user = item["user"];
+        const group = item["group"];
+
+        if (user) {
+          return (
+            <span key={i} className="mx-1 mb-1 badge badge-primary">
+              <FontAwesomeIcon icon={faUser} fixedWidth className="mr-1"/>{`${user}: ${item.role}`}
+            </span>
+          );
+        }
+
+        return (
+          <span key={i} className="mx-1 mb-1 badge badge-secondary">
+            <FontAwesomeIcon icon={faUserFriends} fixedWidth className="mr-1"/>{`${group}: ${item.role}`}
+          </span>
+        );
+      })
+    );
+  };
+
+  const getRoleAccessField = () => {
+    return (
+      <Col xs={12} className="py-2"><span className="text-muted mr-1">Roles:</span>
+
+        {!editRoles && pipeline.roles &&
+          <span className="item-field">{getRoleBadges(pipeline.roles)}</span>}
+        {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("roles")}
+
+        {editRoles &&
+        <EditRolesModal setPipelineModel={setPipelineModel} pipelineModel={pipelineModel} data={pipeline.roles} visible={editRoles} onHide={() => {setEditRoles(false);}} onClick={(roles) => {handleSavePropertyClick(pipeline._id, roles, "roles");
         }}/>}
 
       </Col>
@@ -499,6 +552,7 @@ function PipelineSummaryPanel({
             </Col>
           }
           {getTagField()}
+          {/*{getRoleAccessField()}*/}
 
           {editDescription ?
             <>
