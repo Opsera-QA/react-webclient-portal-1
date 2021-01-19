@@ -73,6 +73,15 @@ function LdapOrganizationManagement() {
     }
   };
 
+  const getUrlString = () => {
+    const urlString = "Registration URL: [https://portal.opsera.io/account/registration/<organization account name>]"
+    return (
+      <div>
+        <span className="text-muted">{urlString}</span>
+      </div>
+    );
+  };
+
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -100,6 +109,7 @@ function LdapOrganizationManagement() {
           </div>
         </div>
         <LdapOrganizationsTable isLoading={isLoading} data={ldapOrganizationData}/>
+        {getUrlString()}
         <NewLdapOrganizationModal showModal={showCreateOrganizationModal} loadData={loadData}
                                   authorizedActions={authorizedActions} setShowModal={setShowCreateOrganizationModal}/>
       </div>

@@ -134,8 +134,8 @@ const AuthContextProvider = (props) => {
       }
     };
 
-    const generateJwtServiceTokenWithValue = (object = {}) => {
-      const token = jwt.sign(object, ACCESS_TOKEN_SECRET);
+    const generateJwtServiceTokenWithValue = (object = {}, expirationDuration = "1h") => {
+      const token = jwt.sign(object, ACCESS_TOKEN_SECRET, { expiresIn: expirationDuration });
       return token;
     };
 
