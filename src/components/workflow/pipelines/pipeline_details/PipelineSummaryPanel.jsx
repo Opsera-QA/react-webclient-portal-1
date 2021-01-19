@@ -223,7 +223,7 @@ function PipelineSummaryPanel({
           postBody = {
             "roles": [...value],
           };
-          setEditType(false);
+          setEditRoles(false);
           break;
       }
 
