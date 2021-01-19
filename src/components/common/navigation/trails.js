@@ -2,11 +2,9 @@ import paths from "./paths";
 import {
   faAnalytics,
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
-  faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
-  faFlag, faEnvelope, faUserTag, faProjectDiagram,
+  faSitemap, faStream, faTags, faTimes, faUser, faUsers, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
+  faFlag, faEnvelope, faUserTag, faProjectDiagram, faTools
 } from "@fortawesome/pro-light-svg-icons";
-import { faTools } from "@fortawesome/pro-solid-svg-icons";
-import {faUsers} from "@fortawesome/free-solid-svg-icons";
 
 const breadcrumbs = {
   // Inventory
