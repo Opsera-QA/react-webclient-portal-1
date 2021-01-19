@@ -66,6 +66,8 @@ paths.reports = "reports";
 paths.toolReports = paths.reports + "/registry";
 paths.toolsUsedInPipelineReport = paths.toolReports + "/tools-used-in-pipeline";
 paths.tagReports = paths.reports + "/tags";
+paths.tagsUsedInPipelineReport = paths.tagReports + "/tags-used-in-pipeline";
+paths.tagsUsedInToolsReport = paths.tagReports + "/tags-used-in-tools";
 paths.pipelineReports = paths.reports + "/pipelines";
 
 //Inventory (Tool Registry) paths

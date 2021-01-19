@@ -4,6 +4,8 @@ import {DialogToastContext} from "../../../contexts/DialogToastContext";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ScreenContainer from "../../common/panels/general/ScreenContainer";
 import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
+import BreadcrumbPageLink from "components/common/links/BreadcrumbPageLink";
+import Row from "react-bootstrap/Row";
 
 function TagReports() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -49,7 +51,10 @@ function TagReports() {
       breadcrumbDestination={"tagReports"}
       pageDescription={"You will be able to view Tag Reports here."}
     >
-      {/*{TODO: Add reports links here}*/}
+      <Row className="ml-3">
+        <BreadcrumbPageLink breadcrumbDestination={"tagsUsedInPipelineReport"} />
+        <BreadcrumbPageLink breadcrumbDestination={"tagsUsedInToolsReport"} />
+      </Row>
     </ScreenContainer>
   );
 }

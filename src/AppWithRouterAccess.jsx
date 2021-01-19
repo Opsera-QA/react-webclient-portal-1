@@ -92,6 +92,8 @@ import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
 import NotificationDetailView from "components/notifications/notification_details/NotificationDetailView";
 import ToolProjectsView from "components/inventory/tools/tool_details/projects/ToolProjectsView";
 import {axiosApiService} from "api/apiService";
+import TagsUsedInPipelineReport from "components/reports/tags/pipelines/TagsUsedInPipelineReport";
+import TagsUsedInToolsReport from "components/reports/tags/tools/TagsUsedInToolsReport";
 import AccountRegistration from "components/user/account_registration/AccountRegistration";
 
 const AppWithRouterAccess = () => {
@@ -257,6 +259,10 @@ const AppWithRouterAccess = () => {
                                component={ToolsUsedInPipelineReport}/>
                   <SecureRoute path="/reports/pipelines" exact component={PipelineReports}/>
                   <SecureRoute path="/reports/tags" exact component={TagReports}/>
+                  <SecureRoute path="/reports/tags/tags-used-in-pipeline" exact
+                               component={TagsUsedInPipelineReport}/>
+                  <SecureRoute path="/reports/tags/tags-used-in-tools" exact
+                               component={TagsUsedInToolsReport}/>
 
                   { /*Notifications */}
                   <SecureRoute path="/notifications" exact component={Notifications}/>

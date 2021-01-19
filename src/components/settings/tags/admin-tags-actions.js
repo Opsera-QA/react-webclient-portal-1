@@ -145,6 +145,24 @@ adminTagsActions.create = async (tagDataDto, getAccessToken) => {
   return response;
 };
 
+adminTagsActions.getRelevantPipelines = async (tagDto, getAccessToken) => {
+  const postBody = [
+    ...tagDto.getData("tags")
+  ];
+
+  const apiUrl = `/reports/pipelines/tags`;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+adminTagsActions.getRelevantTools = async (tagDto, getAccessToken) => {
+  const postBody = [
+    ...tagDto.getData("tags")
+  ];
+
+  const apiUrl = `/reports/tools/tags`;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
 // TODO: Implement if necessary
 // adminTagsActions.duplicate = async (tagId, getAccessToken) => {
 //   const accessToken = await getAccessToken();
