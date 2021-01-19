@@ -1279,3 +1279,9 @@ a.nav-link {
     background-color: #f2f4f8;
 }
 /* End Pipeline Summary Card styling */
+
+/* Item Field */
+.item-field .badge {
+  font-size: 13px;
+}
+/* End Item Field */

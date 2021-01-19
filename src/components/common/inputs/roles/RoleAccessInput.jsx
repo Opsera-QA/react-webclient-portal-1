@@ -313,13 +313,13 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
   const getHeaderBar = () => {
     return (
       <div className="d-flex justify-content-between page-description">
-        <div className={"mr-auto ml-3"}>
+        <div className={"mr-auto ml-3 mt-1"}>
           <span className="text-muted">Role Type</span>
         </div>
-        <div className={"mx-auto"}>
+        <div className={"mx-auto mt-1"}>
           <span className="text-muted ml-5">Type</span>
         </div>
-        <div className={"mx-auto mr-5"}>
+        <div className={"mx-auto mr-5 mt-1"}>
           <span className="text-muted">Assignee</span>
         </div>
         <div />

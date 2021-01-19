@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 
@@ -16,20 +15,20 @@ function TagField({dataObject, fieldName}) {
     return (
       dataObject.getData(fieldName).map((tag, i) => {
         return (
-          <Button key={i} variant="primary" className="mx-1 mb-1" size="sm">
+          <span key={i} className="mx-1 mb-1 badge badge-secondary">
             {`${tag.type}: ${tag.value}`}
-          </Button>
+          </span>
         );
       })
     );
   };
 
   return (
-    <FieldContainer className="custom-text-field">
+    <FieldContainer>
       <FieldLabel fieldName={fieldName} field={field}/>
-      <div className="custom-item-input">
+      <span className="item-field">
         {getTags()}
-      </div>
+      </span>
     </FieldContainer>
   );
 }
