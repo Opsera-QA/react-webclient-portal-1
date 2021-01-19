@@ -16,9 +16,17 @@ function RoleAccessField({dataObject, fieldName}) {
         const user = item["user"];
         const group = item["group"];
 
+        if (user) {
+          return (
+            <span key={i} className="mx-1 mb-1 badge badge-primary" >
+              {`${user}: ${item.role}`}
+            </span>
+          );
+        }
+
         return (
           <span key={i} className="mx-1 mb-1 badge badge-secondary" >
-            {`${item.role}: ${user ? user : group}`}
+            {`${group}: ${item.role}`}
           </span>
         );
       })
