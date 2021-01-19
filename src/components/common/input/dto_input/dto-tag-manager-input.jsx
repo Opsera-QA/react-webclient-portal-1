@@ -166,7 +166,7 @@ DtoTagManagerInput.propTypes = {
   type: PropTypes.string,
   placeholderText: PropTypes.string,
   setDataFunction: PropTypes.func,
-  allowCreate: PropTypes.string,
+  allowCreate: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   disabled: PropTypes.bool
 };
 
