@@ -66,7 +66,7 @@ const bitbucketConnectionMetadata = {
       id: "twoFactorAuthentication",
     },
   ],
-  newModelBase:
+  newObjectFields:
     {
       url: "https://api.bitbucket.org/",
       accountUsername: "",
