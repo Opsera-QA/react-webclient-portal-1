@@ -18,6 +18,10 @@ function PipelinesTable({ data, isLoading }) {
     history.push(`/workflow/details/${rowData.original._id}/summary`);
   };
 
+  const initialState = {
+    pageIndex: 0,
+  }
+
   const columns = useMemo(
     () => [
       getPipelineTypeColumn(fields.find(field => { return field.id === "type"})),
@@ -36,6 +40,7 @@ function PipelinesTable({ data, isLoading }) {
     <CustomTable
       columns={columns}
       onRowSelect={onRowSelect}
+      initialState={initialState}
       data={data}
       isLoading={isLoading}
     />
