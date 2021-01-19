@@ -2,32 +2,21 @@ import React, {useEffect, useState} from "react";
 
 import PropTypes from "prop-types";
 import LdapOrganizationAccountEditorPanel from "./LdapOrganizationAccountEditorPanel";
-import Model from "../../../../../../core/data_model/model";
-import {ldapIdpAccountsMetaData} from "../../idp_accounts/ldap-idp-account-metadata";
-import LdapUsersTable from "../../../../../settings/ldap_users/LdapUsersTable";
-import LdapGroupsTable from "../../../../../settings/ldap_groups/LdapGroupsTable";
-import LdapIdpAccountEditorPanel from "../../idp_accounts/LdapIdpAccountEditorPanel";
-import LdapIdpAccountSummaryPanel from "../../idp_accounts/LdapIdpAccountSummaryPanel";
-import CustomTabContainer from "../../../../../common/tabs/CustomTabContainer";
-import CustomTab from "../../../../../common/tabs/CustomTab";
+import Model from "core/data_model/model";
 import {faUsers, faUsersClass, faBuilding, faCubes} from "@fortawesome/pro-light-svg-icons";
-import LdapDepartmentsTable from "../../ldap_departments/LdapDepartmentsTable";
-import LdapOrganizationAccountSummaryPanel from "./LdapOrganizationAccountSummaryPanel";
-import DetailTabPanelContainer from "../../../../../common/panels/detail_view/DetailTabPanelContainer";
-import SettingsTab from "../../../../../common/tabs/detail_view/SettingsTab";
-import SummaryTab from "../../../../../common/tabs/detail_view/SummaryTab";
-
-const INITIAL_IDP_ACCOUNT_DATA = {
-  name: "",
-  domain: "",
-  idpRedirectURI: "https://portal.opsera.io/implicit/callback",
-  clientID: "0oaou6bztkPJFnxaL0h7",
-  issuer: "https://dev-842100.oktapreview.com/oauth2/default",
-  baseUrl: "https://dev-842100.oktapreview.com",
-  idpVendor: "OKTA",
-  configEntryType: "IDP",
-  idpNameIDMapping: "idmap"
-};
+import {ldapIdpAccountsMetaData} from "components/admin/accounts/ldap/idp_accounts/ldap-idp-account-metadata";
+import LdapIdpAccountEditorPanel from "components/admin/accounts/ldap/idp_accounts/LdapIdpAccountEditorPanel";
+import LdapIdpAccountSummaryPanel from "components/admin/accounts/ldap/idp_accounts/LdapIdpAccountSummaryPanel";
+import LdapOrganizationAccountSummaryPanel
+  from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountSummaryPanel";
+import LdapUsersTable from "components/settings/ldap_users/LdapUsersTable";
+import LdapGroupsTable from "components/settings/ldap_groups/LdapGroupsTable";
+import LdapDepartmentsTable from "components/admin/accounts/ldap/ldap_departments/LdapDepartmentsTable";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
+import CustomTab from "components/common/tabs/CustomTab";
+import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
+import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
 function LdapOrganizationAccountDetailPanel(
   {
@@ -54,7 +43,7 @@ function LdapOrganizationAccountDetailPanel(
       setLdapIdpAccountData(new Model(idpAccounts[0], ldapIdpAccountsMetaData, false));
     }
     else {
-      setLdapIdpAccountData(new Model(INITIAL_IDP_ACCOUNT_DATA, ldapIdpAccountsMetaData, true));
+      setLdapIdpAccountData(new Model({...ldapIdpAccountsMetaData.newObjectFields}, ldapIdpAccountsMetaData, true));
     }
   };
 
@@ -65,26 +54,29 @@ function LdapOrganizationAccountDetailPanel(
     }
   };
 
+  // TODO: Enable or remove
   const getIdpAccountPanel = () => {
-    if (showIdpEditPanel || ldapIdpAccountData.isNew()) {
-      return (
-        <LdapIdpAccountEditorPanel
-          setLdapIdpAccountData={setLdapIdpAccountData}
-          setShowIdpEditPanel={setShowIdpEditPanel}
-          ldapOrganizationAccountData={ldapOrganizationAccountData}
-          ldapIdpAccountData={ldapIdpAccountData}
-          authorizedActions={authorizedIdpActions}
-        />
-      );
-    }
+    return <></>;
 
-    return (
-      <LdapIdpAccountSummaryPanel
-        ldapIdpAccountData={ldapIdpAccountData}
-        setShowIdpEditPanel={setShowIdpEditPanel}
-        authorizedActions={authorizedIdpActions}
-      />
-    );
+    // if (showIdpEditPanel || ldapIdpAccountData.isNew()) {
+    //   return (
+    //     <LdapIdpAccountEditorPanel
+    //       setLdapIdpAccountData={setLdapIdpAccountData}
+    //       setShowIdpEditPanel={setShowIdpEditPanel}
+    //       ldapOrganizationAccountData={ldapOrganizationAccountData}
+    //       ldapIdpAccountData={ldapIdpAccountData}
+    //       authorizedActions={authorizedIdpActions}
+    //     />
+    //   );
+    // }
+    //
+    // return (
+    //   <LdapIdpAccountSummaryPanel
+    //     ldapIdpAccountData={ldapIdpAccountData}
+    //     setShowIdpEditPanel={setShowIdpEditPanel}
+    //     authorizedActions={authorizedIdpActions}
+    //   />
+    // );
   };
 
   const getCurrentView = () => {
@@ -130,8 +122,8 @@ function LdapOrganizationAccountDetailPanel(
                    tabText={"Groups"}/>
         <CustomTab icon={faBuilding} tabName={"departments"} handleTabClick={handleTabClick} activeTab={activeTab}
                    tabText={"Departments"}/>
-        <CustomTab icon={faCubes} tabName={"idpAccounts"} handleTabClick={handleTabClick} activeTab={activeTab}
-                   tabText={"IDP Account"}/>
+        {/*<CustomTab icon={faCubes} tabName={"idpAccounts"} handleTabClick={handleTabClick} activeTab={activeTab}*/}
+        {/*           tabText={"IDP Account"}/>*/}
         <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
       </CustomTabContainer>
     )
