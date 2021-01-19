@@ -92,6 +92,12 @@ function PipelinesView({ currentTab, setActiveTab }) {
     }
   };
 
+  const getDynamicFilter = () => {
+    if (currentTab !== "owner") {
+      return (<PipelineOwnerFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>);
+    }
+  };
+
   const getFilterBar = () => {
     return (
       <FilterBar
@@ -104,7 +110,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
         leftAlignCustomButtons={true}
       >
         <TagFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>
-        <PipelineOwnerFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>
+        {getDynamicFilter()}
       </FilterBar>
     );
   };
