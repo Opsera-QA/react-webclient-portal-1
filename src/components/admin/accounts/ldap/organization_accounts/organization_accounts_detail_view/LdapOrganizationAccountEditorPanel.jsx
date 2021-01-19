@@ -12,6 +12,8 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import IdpVendorSelectInput
+  from "components/common/list_of_values_input/admin/accounts/ldap_idp_accounts/IdpVendorSelectInput";
 
 function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOrganization, setLdapOrganizationAccountData, authorizedActions, handleClose}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -162,15 +164,13 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
                             setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
-              <TextInputBase disabled={true} fieldName={"entityID"} dataObject={ldapOrganizationAccountDataDto}
-                            setDataObject={setLdapOrganizationAccountDataDto}/>
+              <IdpVendorSelectInput fieldName={"idpVendor"} dataObject={ldapOrganizationAccountDataDto} setDataObject={setLdapOrganizationAccountDataDto}/>
+            </Col>
+            <Col lg={12}>
+              <TextInputBase fieldName={"entityID"} dataObject={ldapOrganizationAccountDataDto} setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             <Col lg={12}>
               <TextInputBase disabled={true} fieldName={"idpPostURL"} dataObject={ldapOrganizationAccountDataDto}
-                            setDataObject={setLdapOrganizationAccountDataDto}/>
-            </Col>
-            <Col lg={12}>
-              <TextInputBase disabled={true} fieldName={"idpVendor"} dataObject={ldapOrganizationAccountDataDto}
                             setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
             {/*<Col>*/}

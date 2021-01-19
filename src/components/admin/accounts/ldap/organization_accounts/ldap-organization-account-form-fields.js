@@ -74,7 +74,7 @@ export const ldapOrganizationAccountMetaData = {
       id: "configEntryType",
     },
     {
-      label: "Entity ID",
+      label: "IdP Identifier",
       id: "entityID",
     }
   ],
