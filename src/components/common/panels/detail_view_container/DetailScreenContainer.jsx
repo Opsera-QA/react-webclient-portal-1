@@ -71,7 +71,7 @@ function DetailScreenContainer(
         <div>
           {getActionBar()}
         </div>
-        <div className="p-2 mt-2 shaded-container detail-container-body">
+        <div className="shaded-container detail-container-body">
           {getDetailBody()}
         </div>
         <div className="content-block-footer"/>

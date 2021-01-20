@@ -1053,7 +1053,6 @@ a.nav-link {
 .detail-container-body {
   min-height: calc(100vh - 300px);
   max-height: calc(100vh - 300px);
-  overflow-y: auto;
 }
 
 .modal-detail-view-body {
@@ -1063,8 +1062,8 @@ a.nav-link {
 }
 
 .detail-panel-body {
-  min-height: 60vh;
-  max-height: 60vh;
+  min-height: calc(92vh - 300px);
+  max-height: calc(92vh - 300px);
   overflow-y: auto;
 }
 
