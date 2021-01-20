@@ -59,8 +59,19 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
       setLoadingGroups(true)
       let organization = await getOrganizationByDomain(ldapDomain, getAccessToken);
 
-      if (organization?.groups) {
-        setGroupList(organization?.groups);
+      const groupResponse = organization?.groups;
+
+      if (Array.isArray(groupResponse) && groupResponse.length > 0) {
+        let filteredGroups = [];
+
+        groupResponse.map((group) => {
+          let groupType = group.groupType.toLowerCase();
+          if (groupType !== "role" && groupType !== "dept") {
+            filteredGroups.push(group);
+          }
+        });
+
+        setGroupList(filteredGroups);
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error.message);
