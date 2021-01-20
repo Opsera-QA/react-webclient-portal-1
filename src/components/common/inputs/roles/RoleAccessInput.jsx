@@ -192,9 +192,13 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
 
   const getAddPropertyButton = () => {
     return (
-      <Button variant="link" onClick={() => addProperty()}>
-        <FontAwesomeIcon className="text-white" icon={faPlus} fixedWidth />
-      </Button>
+      <Row>
+        <div className="ml-auto mt-3 mr-3 d-flex">
+          <Button variant="secondary" onClick={() => addProperty()} size="sm">
+            <span className="text-white"><FontAwesomeIcon className="text-white mr-2" icon={faPlus} fixedWidth />Add Role</span>
+          </Button>
+        </div>
+      </Row>
     );
   }
 
@@ -299,14 +303,9 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
 
   const getTitleBar = () => {
     return (
-      <Row>
-        <Col className="mt-2" sm={11}>
-          <span><FontAwesomeIcon icon={faIdCard} fixedWidth className="mr-1"/>{field.label}</span>
-        </Col>
-        <Col sm={1} className={"pr-3 pl-1"}>
-          {getAddPropertyButton()}
-        </Col>
-      </Row>
+      <div className="d-flex justify-content-between mx-2">
+        <div className="mt-2"><FontAwesomeIcon icon={faIdCard} fixedWidth className="mr-1"/>{field.label}</div>
+      </div>
     );
   };
 
@@ -345,6 +344,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
           {getFieldBody()}
         </div>
       </div>
+      <div>{getAddPropertyButton()}</div>
       <InfoText field={field} errorMessage={errorMessage} />
     </div>
   );

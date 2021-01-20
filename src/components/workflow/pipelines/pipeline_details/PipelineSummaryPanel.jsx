@@ -68,7 +68,7 @@ function PipelineSummaryPanel({
   const [editType, setEditType] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
   const [approvalStep, setApprovalStep] = useState({});
-  const [pipelineModel, setPipelineModel] = useState(new Model(pipeline.data, pipelineMetadata, false));
+  const [pipelineModel, setPipelineModel] = useState(new Model(pipeline, pipelineMetadata, false));
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   let history = useHistory();
 
@@ -278,7 +278,7 @@ function PipelineSummaryPanel({
       setEditType(true);
       break;
     case "roles":
-        setEditRoles(true);
+        handleEditAccessRolesClick();
         break;
     default:
       console.error("Missing value or type for edit field");
