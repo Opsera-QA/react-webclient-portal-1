@@ -13,6 +13,8 @@ import accountRegistrationMetadata from "components/user/account_registration/ac
 import OpseraPasswordInput from "components/common/inputs/text/OpseraPasswordInput";
 import {AuthContext} from "contexts/AuthContext";
 import TempTextInput from "components/common/inputs/text/TempTextInput";
+import DataNotFoundDialog from "components/common/status_notifications/data_not_found/DataNotFoundDialog";
+import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
 
 function AccountRegistration() {
   const { orgAccountId } = useParams();
@@ -21,6 +23,7 @@ function AccountRegistration() {
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
+  const [accountNotFound, setAccountNotFound] = useState(false);
   const [registrationDataDto, setRegistrationDataDto] = useState(undefined);
   const [companyName, setCompanyName] = useState("Opsera");
 
@@ -44,11 +47,18 @@ function AccountRegistration() {
         newAccountDto.setData("orgAccount", accountResponse?.data?.name);
       }
 
-
       setRegistrationDataDto(newAccountDto);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (!error?.error?.message?.includes(404)) {
+        toastContext.showLoadingErrorDialog(error);
+      }
+      else {
+        setAccountNotFound(true);
+        let newAccountDto = (new Model(accountRegistrationMetadata.newObjectFields, accountRegistrationMetadata, true));
+        newAccountDto.setData("company", "Opsera");
+        setRegistrationDataDto(newAccountDto);
+      }
     }
     finally {
       setIsLoading(false);
@@ -88,6 +98,24 @@ function AccountRegistration() {
     return (<span>Opsera Account Registration</span>)
   };
 
+  const getAccountNotFoundMessage = () => {
+    if (accountNotFound) {
+      return (
+        <div className="w-100 error-block p-2">
+          <div><span>Account not found! The link you may have followed could be incorrect or incomplete.</span></div>
+        </div>
+      );
+    }
+  }
+
+  if (accountNotFound) {
+    return (
+      <div className="w-100 error-block top-dialog-block-static-login">
+        <div><span>Account not found! The link you may have followed could be incorrect or incomplete.</span></div>
+      </div>
+    );
+  }
+
   if (isLoading || registrationDataDto == null) {
     return <LoadingDialog />
   }
@@ -98,6 +126,7 @@ function AccountRegistration() {
         <Card>
           <Card.Header as="h5" className="new-user-header">{getTitle()}</Card.Header>
           <Card.Body className="new-user-body-full p-3">
+            {getAccountNotFoundMessage()}
             <Row>
               <Col md={12}>
                 <TextInputBase disabled={true} fieldName={"company"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />

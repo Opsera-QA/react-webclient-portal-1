@@ -654,6 +654,14 @@ a:hover, .active {
     z-index: 1200;
 }
 
+.top-dialog-block-static-login {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    padding: .75em;
+    z-index: 1200;
+}
+
 .top-error-block {
     top: 0;
     left: 0;
