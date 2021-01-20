@@ -332,33 +332,30 @@ const SfdcPipelineModifiedFiles = ({
     }
   };
 
-  const handleSelectAll = (e) => {
-    const type = e.target.name;
+  const handleSelectAll = (type) => {
+    // const type = e.target.name;
     // set checkall flag for selected type 
     switch (type) {
       case "sfdc":
-        setSfdcCheckAll(e.target.checked);
-        if (e.target.checked) {
-          setSFDCSelectedComponent(allSFDCComponentType);
-        } else {
-          setSFDCSelectedComponent([]);
-        }
+        setSfdcCheckAll(true);
+        setDestSfdcCheckAll(false);
+        setGitCheckAll(false);
+        setSFDCSelectedComponent(allSFDCComponentType);
+        handleApproveChanges(true);
         break;
       case "destSFDC":
-        setDestSfdcCheckAll(e.target.checked);
-        if (e.target.checked) {
-          setDestSFDCSelectedComponent(allDestSfdcComponentType);
-        } else {
-          setDestSFDCSelectedComponent([]);
-        }
+        setSfdcCheckAll(false);
+        setDestSfdcCheckAll(true);
+        setGitCheckAll(false);
+        setDestSFDCSelectedComponent(allDestSfdcComponentType);
+        handleApproveChanges(true);
         break;
       case "git":
-        setGitCheckAll(e.target.checked);
-        if (e.target.checked) {
-          setGitSelectedComponent(allGitComponentType);
-        } else {
-          setGitSelectedComponent([]);
-        }
+        setSfdcCheckAll(false);
+        setDestSfdcCheckAll(false);
+        setGitCheckAll(true);
+        setGitSelectedComponent(allGitComponentType);
+        handleApproveChanges(true);
         break;
       default :
         break;
@@ -404,21 +401,21 @@ const SfdcPipelineModifiedFiles = ({
     await loadDestSfdcData();
   };
 
-  const handleApproveChanges = async () => {
+  const handleApproveChanges = async (checkall) => {
     // console.log(fromSFDC,fromDestinationSFDC,fromGit);
     // TODO: This needs to be handled differently
     let selectedList = [];
     let typeOfSelection;
     if (fromSFDC) {
-      selectedList = sfdcCheckAll ? "all" : [...sfdcSelectedComponent];
+      selectedList = (sfdcCheckAll || checkall) ? "all" : [...sfdcSelectedComponent];
       typeOfSelection = "sfdcCommitList"; 
     }
     if (fromDestinationSFDC) {
-      selectedList = destSfdcCheckAll ? "all" : [...destSFDCSelectedComponent];
+      selectedList = (destSfdcCheckAll || checkall) ? "all" : [...destSFDCSelectedComponent];
       typeOfSelection = "destSfdcCommitList"; 
     }
     if (fromGit) {
-      selectedList = gitCheckAll ? "all" : [...gitSelectedComponent];
+      selectedList = (gitCheckAll || checkall) ? "all" : [...gitSelectedComponent];
       typeOfSelection = "gitCommitList"; 
     }
     if (selectedList.length < 1) {
@@ -598,7 +595,7 @@ const SfdcPipelineModifiedFiles = ({
               {sfdcModified && sfdcModified.length === 0 && <div className="info-text mt-3">NO FILES</div>}
 
               <div className="d-flex w-100">
-                <div className="col-5">
+                <div className="col-4">
                   <Form.Group controlId="fromSFDC">
                     <Form.Check
                       type="checkbox"
@@ -632,7 +629,24 @@ const SfdcPipelineModifiedFiles = ({
                         <FontAwesomeIcon icon={faSquare} fixedWidth className="mr-1"/>
                         Uncheck All
                       </Button>
-                      <Form.Check
+                      
+                      <Button
+                        variant="success"
+                        size="sm"
+                        onClick={() => {
+                          setSave(true);
+                          handleSelectAll("sfdc");
+                        }}
+                        disabled={checkDisabled()}
+                      >
+                        {save ? (
+                          <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
+                        ) : (
+                          <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
+                        )}
+                        Use All Files
+                      </Button>
+                      {/* <Form.Check
                         style={{paddingTop: "10px", paddingBottom: "10px"}}
                         inline
                         type={"switch"}
@@ -641,7 +655,7 @@ const SfdcPipelineModifiedFiles = ({
                         name="sfdc"
                         checked={sfdcCheckAll}
                         onChange={handleSelectAll}
-                      />
+                      /> */}
                     </div>
                   )}
                 </div>
@@ -711,6 +725,7 @@ const SfdcPipelineModifiedFiles = ({
                           type={"checkbox"}
                           name={item.committedFile}
                           id={idx}
+                          disabled={sfdcCheckAll}
                           checked={sfdcSelectedComponent.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
                           onChange={handleSFDCComponentCheck}
                         />
@@ -751,6 +766,7 @@ const SfdcPipelineModifiedFiles = ({
                                 inline
                                 type={"checkbox"}
                                 name={item.committedFile}
+                                disabled={destSfdcCheckAll}
                                 id={idx}
                                 checked={destSFDCSelectedComponent.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
                                 onChange={handleDestSFDCComponentCheck}
@@ -770,7 +786,7 @@ const SfdcPipelineModifiedFiles = ({
                   {gitModified && gitModified.length === 0 && <div className="info-text mt-3">NO FILES</div>}
 
                   <div className="d-flex w-100">
-                    <div className="col-5">
+                    <div className="col-6">
                       <Form.Group controlId="fromGit">
                         <Form.Check
                           type="checkbox"
@@ -804,7 +820,24 @@ const SfdcPipelineModifiedFiles = ({
                             <FontAwesomeIcon icon={faSquare} fixedWidth className="mr-1"/>
                             Uncheck All
                           </Button>
-                          <Form.Check
+                          
+                          <Button
+                            variant="success"
+                            size="sm"
+                            onClick={() => {
+                              setSave(true);
+                              handleSelectAll("git");
+                            }}
+                            disabled={checkDisabled()}
+                          >
+                            {save ? (
+                              <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
+                            ) : (
+                              <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
+                            )}
+                            Use All Files
+                          </Button>
+                          {/* <Form.Check
                             style={{paddingTop: "10px", paddingBottom: "10px"}}
                             inline
                             type={"switch"}
@@ -813,7 +846,7 @@ const SfdcPipelineModifiedFiles = ({
                             name="git"
                             checked={gitCheckAll}
                             onChange={handleSelectAll}
-                          />
+                          /> */}
                         </div>
                       )}
                     </div>
@@ -910,6 +943,7 @@ const SfdcPipelineModifiedFiles = ({
                                   type={"checkbox"}
                                   name={item.committedFile}
                                   id={idx}
+                                  disabled={gitCheckAll}
                                   checked={gitSelectedComponent.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
                                   onChange={handleGitComponentCheck}
                                 />

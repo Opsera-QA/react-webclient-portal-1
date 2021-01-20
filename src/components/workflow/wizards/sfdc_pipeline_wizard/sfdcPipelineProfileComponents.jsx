@@ -164,23 +164,18 @@ const SfdcPipelineProfileComponents = ({
     await loadData();
   };
 
-  const handleSelectAll = (e) => {
-    const type = e.target.name;
-    // set checkall flag for selected type 
-    setProfileCompCheckAll(e.target.checked);
-    if (e.target.checked) {
+  const handleSelectAll = () => {
+      setProfileCompCheckAll(true);
       setSelectedProfileComponent(allProfileComponentType);
-    } else {
-      setSelectedProfileComponent([]);
-    }    
+      handleApproveChanges(true);
   }
 
-  const handleApproveChanges = async () => {
+  const handleApproveChanges = async (checkall) => {
     
     setSave(true);
     // let selectedList = [];
     // if (fromProfiles) {
-    let selectedList = profileCompCheckAll ? "all" : [...selectedProfileComponent];
+    let selectedList = (profileCompCheckAll || checkall) ? "all" : [...selectedProfileComponent];
     let typeOfSelection = "profileComponentList";
     // }
     if (selectedList.length < 1) {
@@ -297,7 +292,7 @@ const SfdcPipelineProfileComponents = ({
               <div className="info-text mt-3">NO FILES</div>}
 
               <div className="d-flex w-100">
-                <div className="col-5">
+                <div className="col-4">
                   <Form.Group controlId="fromProfiles">
                     <Form.Check
                       type="checkbox"
@@ -330,8 +325,23 @@ const SfdcPipelineProfileComponents = ({
                       >
                         <FontAwesomeIcon icon={faSquare} fixedWidth className="mr-1"/>
                         Uncheck All
+                      </Button> 
+                      <Button
+                        variant="success"
+                        size="sm"
+                        onClick={() => {
+                          handleSelectAll();
+                        }}
+                        disabled={checkDisabled()}
+                      >
+                        {save ? (
+                          <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
+                        ) : (
+                          <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
+                        )}
+                        Use All Files
                       </Button>
-                      <Form.Check
+                      {/* <Form.Check
                         style={{paddingTop: "10px", paddingBottom: "10px"}}
                         inline
                         type={"switch"}
@@ -340,7 +350,7 @@ const SfdcPipelineProfileComponents = ({
                         name="profileComp"
                         checked={profileCompCheckAll}
                         onChange={handleSelectAll}
-                      />
+                      /> */}
                     </div>
                   )}
                 </div>
@@ -408,6 +418,7 @@ const SfdcPipelineProfileComponents = ({
                             type={"checkbox"}
                             name={item.committedFile}
                             id={idx}
+                            disabled={profileCompCheckAll}
                             checked={selectedProfileComponent.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
                             onChange={handleComponentCheck}
                           />
