@@ -15,8 +15,8 @@ function RegistrationLanding() {
         <Row>
           <Col xl="12">
             <div style={{ maxWidth: "1025px" }}>
-              <div className="h5 mb-3">Welcome to OpsERA!  Your DevSecOps Solution.</div>
-              <div className="h4 text-muted mb-5">Your registration has been processed successfully.  You will be contacted via email shortly with details on how to proceed.</div>
+              <div className="h4 mb-3">Welcome to OpsERA!  Your DevSecOps Solution.</div>
+              <div className="h5 text-muted mb-5">Your registration has been processed successfully.  You will be contacted via email shortly with details on how to proceed.</div>
               
               <div className="row mx-n2 mt-3" style={{ minWidth:"1020px" }}>
                 <div className="col-md px-2 landing-content-module">
@@ -47,38 +47,19 @@ function RegistrationLanding() {
               </div>
               <div className="row mx-n2 mt-4" style={{ minWidth:"1020px" }}>
                 <div className="col-md px-2 landing-content-module">
-                  <div className="h5">Platform</div>
+                  <div className="h5">Toolchain Automation</div>
                   <div className="text-muted">Get started in your DevOps journey or experiment with many of our tool offerings to figure out your next steps.</div>
                 </div>
                 <div className="col-md px-2 landing-content-module">
-                  <div className="h5">Pipeline</div>
+                  <div className="h5">Declarative Pipelines</div>
                   <div className="text-muted">Orchestrate workflows across various technologies and platforms.</div>
                 </div>
                 <div className="col-md px-2 landing-content-module">
-                  <div className="h5">Analytics</div>
+                  <div className="h5">Analytics and Intelligence</div>
                   <div className="text-muted">Get real time observability across your various pipelines.</div>
                 </div>                
               </div>
 
-
-              <hr style={{ width:"1020px", textAlign: "left", marginLeft: "0" }} />
-
-              <div className="row mx-n2 mt-4" style={{ minWidth:"1020px" }}>
-                <div className="col-md px-2 landing-content-module2">
-                  <img alt="OpsERA"
-                    src="/img/dashboard.png"
-                    width="195"
-                    height="225"
-                    className="d-inline-block align-top pointer"
-                  />
-                </div>
-              </div>
-              <div className="row mx-n2 mt-4" style={{ minWidth:"1020px" }}>
-                <div className="col-md px-2 landing-content-module">
-                  <div className="h5">My Dashboards</div>
-                  <div className="text-muted">Stay current on exactly what you need to know.</div>
-                </div>
-              </div>
 
             </div>
           </Col>          
@@ -88,8 +69,8 @@ function RegistrationLanding() {
         </Row>  
         <Row>
           <Col xl="12">
-              At this time OpsERA's solution is available for users through invitation only. 
-              You will be contacted by OpsERA in order to complete your onboarding process.
+              At this time Opsera's solution is available for users through invitation only.
+              You will be contacted by Opsera in order to complete your onboarding process.
           </Col>
         </Row>  
 

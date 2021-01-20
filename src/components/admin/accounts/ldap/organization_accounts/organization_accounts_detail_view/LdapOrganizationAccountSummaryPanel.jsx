@@ -35,6 +35,9 @@ function LdapOrganizationAccountSummaryPanel({ ldapOrganizationAccountData, setA
           <TextFieldBase dataObject={ldapOrganizationAccountData} fieldName={"name"}/>
         </Col>
         <Col lg={6}>
+          <TextFieldBase dataObject={ldapOrganizationAccountData} fieldName={"orgDomain"}/>
+        </Col>
+        <Col lg={6}>
           <TextFieldBase dataObject={ldapOrganizationAccountData} fieldName={"accountName"}/>
         </Col>
         <Col lg={6}>

@@ -38,9 +38,8 @@ function AccountRegistration() {
       let newAccountDto = (new Model(accountRegistrationMetadata.newObjectFields, accountRegistrationMetadata, true));
 
       if (accountResponse?.data) {
-        setCompanyName(accountResponse.data?.accountName);
-        newAccountDto.setData("company", accountResponse.data?.accountName);
-        newAccountDto.setData("domain", accountResponse?.data?.accountName?.toLowerCase());
+        setCompanyName(accountResponse.data?.orgName);
+        newAccountDto.setData("company", accountResponse.data?.orgName);
         newAccountDto.setData("organizationName", accountResponse?.data?.description);
         newAccountDto.setData("orgAccount", accountResponse?.data?.name);
       }

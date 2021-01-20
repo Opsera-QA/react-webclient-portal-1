@@ -21,7 +21,7 @@ export const ldapOrganizationAccountMetaData = {
       isRequired: true
     },
     {
-      label: "Organization Domain",
+      label: "Inherited Organization Domain",
       id: "orgDomain",
     },
     {
