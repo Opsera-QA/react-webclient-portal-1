@@ -11,6 +11,7 @@ import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import BooleanField from "components/common/fields/boolean/BooleanField";
+import RoleAccessField from "components/common/fields/multiple_items/RoleAccessField";
 
 function TemplateSummaryPanel({ templateData, setActiveTab }) {
 
@@ -58,7 +59,7 @@ function TemplateSummaryPanel({ templateData, setActiveTab }) {
           <JsonField dataObject={templateData} fieldName={"plan"}/>
         </Col>
         <Col lg={6}>
-          <JsonField dataObject={templateData} fieldName={"access"}/>
+          <RoleAccessField dataObject={templateData} fieldName={"access"}/>
         </Col>
       </Row>
     </SummaryPanelContainer>

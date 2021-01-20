@@ -131,6 +131,10 @@ function PipelineSummaryPanel({
     setModalDeleteId(itemId);
   };
 
+  const handleEditAccessRolesClick = () => {
+    setEditRoles(true);
+  };
+
   const handleCopyPipeline = async (pipelineId) => {
     const { getAccessToken } = contextType;
     await PipelineActions.duplicate(pipelineId, getAccessToken);
@@ -418,12 +422,14 @@ function PipelineSummaryPanel({
       <div className="mb-3 flat-top-content-block p-3">
 
         <div className="text-muted float-right">
+          {/*TODO: Remove this and replace with new action bar*/}
           <PipelineSummaryActionBar
             pipeline={pipeline}
             handleDeleteClick={authorizedAction("delete_pipeline_btn", pipeline.owner) ? handleDeleteClick : undefined}
             handleDuplicateClick={authorizedAction("duplicate_pipeline_btn", pipeline.owner) ? handleCopyPipeline : undefined}
             handleViewClick={authorizedAction("view_template_pipeline_btn", pipeline.owner) ? handleViewClick : undefined}
             handlePublishClick={authorizedAction("publish_pipeline_btn", pipeline.owner) ? handlePublishPipelineClick : undefined}
+            handleEditAccessRolesClick={authorizedAction("edit_access_roles", pipeline.owner) ? handleEditAccessRolesClick : undefined}
             canTransferPipeline={authorizedAction("transfer_pipeline_btn", pipeline.owner)}
             loadPipeline={fetchPlan}
           />
@@ -552,7 +558,7 @@ function PipelineSummaryPanel({
             </Col>
           }
           {getTagField()}
-          {/*{getRoleAccessField()}*/}
+          {getRoleAccessField()}
 
           {editDescription ?
             <>
