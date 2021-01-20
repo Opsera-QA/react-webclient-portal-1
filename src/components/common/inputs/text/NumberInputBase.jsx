@@ -25,7 +25,6 @@ function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, place
   return (
     <InputContainer className="custom-number-input">
       <InputLabel field={field}/>
-      {console.log("formatType: " + formatTypes[formatType])}
       <NumberPicker
         type="number"
         placeholder={placeholderText}
