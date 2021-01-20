@@ -1,11 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
-import DateFieldBase from "components/common/form_fields/DateFieldBase";
 import TextFieldBase from "components/common/form_fields/TextFieldBase";
 import PipelineSummaryCardContainer from "./PipelineSummaryCardContainer";
 import PipelineLinkButton from "components/common/buttons/pipeline/PipelineLinkButton";
 import TagField from "components/common/fields/multiple_items/TagField";
+import DateFieldBase from "components/common/fields/date/DateFieldBase";
 
 function PipelineSummaryCard({ pipelineData, isLoading, loadPipelineInNewWindow }) {
   if (isLoading) {

@@ -3,8 +3,8 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import DateFieldBase from "components/common/form_fields/DateFieldBase";
 import DtoTagField from "components/common/form_fields/dto_form_fields/dto-tag-field";
+import DateFieldBase from "components/common/fields/date/DateFieldBase";
 
 function NotificationSummaryPanelBase({ notificationData, setActiveTab, notificationTypeSummaryCard, notificationMethodSummaryCard }) {
   return (
