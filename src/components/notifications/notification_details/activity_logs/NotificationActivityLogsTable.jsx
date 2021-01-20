@@ -1,6 +1,5 @@
 import React, { useMemo, useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { axiosApiService } from "api/apiService";
 import CustomTable from "components/common/table/CustomTable";
 import { AuthContext } from "contexts/AuthContext";
 import {
@@ -20,7 +19,6 @@ import notificationActivityLogFilterMetadata
 function NotificationActivityLogsTable({ notificationData }) {
   let fields = notificationActivityLogMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
-  const [logCount, setLogCount] = useState(0);
   const [logData, setLogData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState({});
@@ -59,7 +57,6 @@ function NotificationActivityLogsTable({ notificationData }) {
       const notificationLogResponse = await notificationsActions.getNotificationActivityLogs(notificationData, filterDto, getAccessToken);
 
       if (notificationLogResponse?.data) {
-        setLogCount(notificationLogResponse.data.count);
         setLogData(notificationLogResponse.data.data);
 
         let newFilterDto = filterDto;
