@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
+import TooltipWrapper from "components/common/tooltip/tooltipWrapper";
+import {unsavedChanges} from "components/common/tooltip/popover-text";
 
 function EditRolesModal({visible, pipelineModel, setPipelineModel, onHide, onClick, data}) {
   const [roles, setRoles] = useState(pipelineModel.getData("roles"));
@@ -28,7 +30,9 @@ function EditRolesModal({visible, pipelineModel, setPipelineModel, onHide, onCli
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => onHide()}>Close</Button>
+        <TooltipWrapper innerText={unsavedChanges}>
+          <Button variant="secondary" onClick={() => onHide()}>Cancel</Button>
+        </TooltipWrapper>
         <Button variant="success" onClick={() => onClick(roles)}>Save</Button>
       </Modal.Footer>
     </Modal>
