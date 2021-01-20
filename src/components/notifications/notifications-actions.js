@@ -23,19 +23,19 @@ notificationsActions.createNotification = async (notificationDataDto, getAccessT
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
-notificationsActions.getNotificationsList = async (toolFilterDto, getAccessToken) => {
-  let sortOption = toolFilterDto.getData("sortOption");
+notificationsActions.getNotificationsList = async (notificationDataDto, getAccessToken) => {
+  let sortOption = notificationDataDto.getData("sortOption");
 
   let urlParams = {
     params: {
       sort: sortOption ? sortOption.value : undefined,
-      page: toolFilterDto.getData("currentPage"),
-      size: toolFilterDto.getData("pageSize"),
-      tag: toolFilterDto.getFilterValue("tag"),
-      type: toolFilterDto.getFilterValue("type"),
-      status: toolFilterDto.getFilterValue("status"),
-      tool: toolFilterDto.getFilterValue("toolIdentifier"),
-      search: toolFilterDto.getFilterValue("search")
+      page: notificationDataDto.getData("currentPage"),
+      size: notificationDataDto.getData("pageSize"),
+      tag: notificationDataDto.getFilterValue("tag"),
+      type: notificationDataDto.getFilterValue("type"),
+      status: notificationDataDto.getFilterValue("status"),
+      tool: notificationDataDto.getFilterValue("toolIdentifier"),
+      search: notificationDataDto.getFilterValue("search")
     }
   }
 
@@ -45,6 +45,11 @@ notificationsActions.getNotificationsList = async (toolFilterDto, getAccessToken
 
 notificationsActions.getNotificationById = async (id, getAccessToken) => {
   const apiUrl = `/notifications/${id}`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+notificationsActions.getNotificationActivityLogs = async (notificationDataDto, currentPage, pageSize, getAccessToken) => {
+  const apiUrl = `/notifications/logs/${notificationDataDto.getData("_id")}?page=${currentPage}&size=${pageSize}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
