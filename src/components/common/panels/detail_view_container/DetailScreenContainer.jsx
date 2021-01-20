@@ -39,6 +39,8 @@ function DetailScreenContainer(
     if (dataObject != null) {
       return actionBar;
     }
+
+    return <div className="py-2" />;
   };
 
   // TODO: We should just pull all the management stuff from the breadcrumb's parent instead.
@@ -68,7 +70,7 @@ function DetailScreenContainer(
         <div className="pl-2 content-block-header title-text-header-1">
           {getTitleBar()}
         </div>
-        <div className="py-2">
+        <div>
           {getActionBar()}
         </div>
         <div className="shaded-container detail-container-body">
