@@ -44,6 +44,10 @@ const kpiMetaData = {
       id: "settings",
     },
     {
+      label: "Y-Axis Type",
+      id: "yAxis",
+    },
+    {
       label: "Thumbnail Path",
       id: "thumbnailPath",
       // isWebsite: true

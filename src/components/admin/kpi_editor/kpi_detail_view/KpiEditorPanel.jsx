@@ -16,6 +16,8 @@ import KpiToolsInput from "components/common/list_of_values_input/admin/kpi_conf
 import KpiFiltersInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiFiltersInput";
 import KpiCategoriesInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiCategoriesInput";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
+import  NotificationConditionTriggerSelectInput
+  from "components/common/list_of_values_input/notifications/NotificationConditionTriggerSelectInput";
 
 function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -54,6 +56,7 @@ function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
           <KpiToolsInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
           <KpiFiltersInput dataObject={kpiDataDto} fieldName={"supported_filters"} setDataObject={setKpiDataDto} />
           <KpiCategoriesInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
+          <NotificationConditionTriggerSelectInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} fieldName={"yAxis"}/>
           <WebsitePathInput dataObject={kpiDataDto} fieldName={"thumbnailPath"} setDataObject={setKpiDataDto}/>
         </Col>
         <Col lg={6}>

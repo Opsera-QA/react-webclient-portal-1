@@ -22,13 +22,7 @@ function MetricNotificationTypeSummaryCard({ notificationData, notificationConfi
           <TextFieldBase dataObject={notificationConfigurationData} fieldName={"conditionIf"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={notificationConfigurationData} fieldName={"atLeast"} />
-        </Col>
-        <Col lg={6}>
           <TextFieldBase dataObject={notificationConfigurationData} fieldName={"condition"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={notificationConfigurationData} fieldName={"for"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={notificationConfigurationData} fieldName={"threshold"} />
