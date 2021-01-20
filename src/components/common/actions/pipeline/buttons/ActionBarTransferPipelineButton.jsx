@@ -1,12 +1,11 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {faUserEdit, faUserTimes} from "@fortawesome/pro-light-svg-icons";
-import Popover from "react-bootstrap/Popover";
-import {Col, Row} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTimes} from "@fortawesome/pro-solid-svg-icons";
+import {faUserEdit, faUserTimes, faPeopleArrows} from "@fortawesome/pro-light-svg-icons";
+//import Popover from "react-bootstrap/Popover";
+//import {Col, Row} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+//import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import {AuthContext} from "../../../../../contexts/AuthContext";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import ActionBarPopoverButton from "../../buttons/ActionBarPopoverButton";
@@ -102,7 +101,7 @@ function ActionBarTransferPipelineButton({ pipeline, loadPipeline }) {
       title={"Transfer Pipeline"}
       content={popoverContent}>
       <div>
-        <ActionBarPopoverButton disabled={isLoading} icon={faUserEdit} popoverText={`Transfer Pipeline to new Owner`} />
+        <ActionBarPopoverButton disabled={isLoading} icon={faPeopleArrows} popoverText={`Transfer Pipeline to new Owner`} />
       </div>
     </PopoverContainer>
   );

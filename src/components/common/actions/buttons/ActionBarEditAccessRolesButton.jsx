@@ -1,7 +1,7 @@
 import React  from "react";
 import PropTypes from "prop-types";
 import ActionBarButton from "./ActionBarButton";
-import {faIdCard} from "@fortawesome/pro-light-svg-icons";
+import {faUsersCog} from "@fortawesome/pro-light-svg-icons";
 
 function ActionBarEditAccessRolesButton({handleEditAccessRolesClick, itemName}) {
   const duplicateConfiguration = () => {
@@ -9,7 +9,7 @@ function ActionBarEditAccessRolesButton({handleEditAccessRolesClick, itemName}) 
   }
 
   return (
-    <ActionBarButton action={duplicateConfiguration} icon={faIdCard} popoverText={`Edit this ${itemName}'s role access configuration`} />
+    <ActionBarButton action={duplicateConfiguration} icon={faUsersCog} popoverText={`Edit this ${itemName}'s role access configuration`} />
   );
 }
 

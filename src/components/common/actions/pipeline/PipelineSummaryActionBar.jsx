@@ -13,7 +13,7 @@ function PipelineSummaryActionBar({canTransferPipeline, handleDuplicateClick, ha
       {handleViewClick && <div className="ml-3"><ActionBarViewButton handleViewClick={handleViewClick} itemName={"Pipeline"} data={pipeline} /></div>}
       {handlePublishClick && <div className="ml-3"><ActionBarPublishPipelineButton handlePublishClick={handlePublishClick} itemId={pipeline._id} /></div>}
       {handleDuplicateClick && <div className="ml-3"><ActionBarDuplicateButton handleDuplicateClick={handleDuplicateClick} itemName={"Pipeline"} itemId={pipeline._id} /></div>}
-      {handleEditAccessRolesClick && <div className="ml-3"><ActionBarEditAccessRolesButton handleEditAccessRolesClick={handleEditAccessRolesClick} itemName={"Pipeline"} /></div>}
+      {/*{handleEditAccessRolesClick && <div className="ml-3"><ActionBarEditAccessRolesButton handleEditAccessRolesClick={handleEditAccessRolesClick} itemName={"Pipeline"} /></div>}*/}
       {canTransferPipeline && pipeline.account != null && <div className="ml-3"><ActionBarTransferPipelineButton loadPipeline={loadPipeline} pipeline={pipeline} itemId={pipeline._id} /></div>}
       {handleDeleteClick && <div className="ml-3"><ActionBarDeleteButton handleDeleteClick={handleDeleteClick} itemId={pipeline._id} itemName={"Pipeline"} /></div>}
     </div>

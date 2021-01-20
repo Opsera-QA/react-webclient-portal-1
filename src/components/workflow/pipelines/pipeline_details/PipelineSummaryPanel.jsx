@@ -558,7 +558,8 @@ function PipelineSummaryPanel({
             </Col>
           }
           {getTagField()}
-          {getRoleAccessField()}
+
+          {!featureFlagHideItemInProd() && getRoleAccessField()}
 
           {editDescription ?
             <>
