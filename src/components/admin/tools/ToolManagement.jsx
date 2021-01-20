@@ -9,20 +9,19 @@ import AccessDeniedDialog from "../../common/status_notifications/accessDeniedIn
 import toolTypeActions from "./tool-management-actions";
 import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
 import {useParams} from "react-router-dom";
-import {getLoadingErrorDialog} from "../../common/toasts/toasts";
 import CustomTab from "../../common/tabs/CustomTab";
 import {faServer, faToolbox, faTools, faWrench} from "@fortawesome/pro-light-svg-icons";
 import CustomTabContainer from "../../common/tabs/CustomTabContainer";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function ToolManagement() {
+  const toastContext = useContext(DialogToastContext);
   const {tabKey} = useParams();
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [toolTypeList, setToolTypeList] = useState([]);
   const [toolIdentifierList, setToolIdentifierList] = useState([]);
-  const [toast, setToast] = useState({});
-  const [showToast, setShowToast] = useState(false);
   const [activeTab, setActiveTab] = useState("types");
 
   useEffect(() => {
@@ -59,9 +58,7 @@ function ToolManagement() {
       const tool_type = await toolTypeActions.getToolTypes(getAccessToken);
       setToolTypeList(tool_type.data);
     } catch (error) {
-      let toast = getLoadingErrorDialog(error.message, setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showLoadingErrorDialog(error);
       console.error(error.message);
     }
   };
@@ -71,9 +68,7 @@ function ToolManagement() {
       const tool_identifier = await toolTypeActions.getToolIdentifiers(getAccessToken);
       setToolIdentifierList(tool_identifier.data);
     } catch (error) {
-      let toast = getLoadingErrorDialog(error.message, setShowToast);
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showLoadingErrorDialog(error);
       console.error(error.message);
     }
   };
@@ -86,7 +81,6 @@ function ToolManagement() {
     return (
       <div>
         <BreadcrumbTrail destination="toolManagement"/>
-        {showToast && toast}
         <h5>Tool Management</h5>
         <CustomTabContainer styling="alternate-tabs">
           <CustomTab icon={faToolbox} tabName={"types"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Category"} />
