@@ -10,12 +10,12 @@ import PipelineTypeMultiselectInput
   from "components/common/list_of_values_input/admin/pipeline_templates/PipelineTypeMultiselectInput";
 import DtoTagManagerInput from "components/common/input/dto_input/dto-tag-manager-input";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
-import AccountRoleMultiSelectInput from "components/common/list_of_values_input/roles/AccountRoleMultiSelectInput";
 import LdapOrganizationAccountSelectInput
   from "components/common/list_of_values_input/admin/accounts/ldap_accounts/LdapOrganizationAccountSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import JsonInput from "components/common/inputs/object/JsonInput";
 import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
+import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 
 function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -58,27 +58,21 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
             </Col>
             <Col lg={6}>
               <PipelineTypeMultiselectInput dataObject={templateDataDto} setDataObject={setTemplateDataDto} />
-            </Col>
-            <Col lg={6}>
-              <DtoTagManagerInput type={"template"} fieldName={"tags"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
-            </Col>
-            <Col lg={6}>
               <LdapOrganizationAccountSelectInput fieldName={"account"} dataObject={templateDataDto} setDataObject={setTemplateDataDto} />
             </Col>
-            <Col lg={6}>
+            <Col lg={6} className="my-auto">
               <BooleanToggleInput fieldName={"readOnly"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
-            </Col>
-            <Col lg={6}>
               <BooleanToggleInput fieldName={"singleUse"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
-            </Col>
-            <Col lg={6}>
               <BooleanToggleInput fieldName={"publicUse"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
+            </Col>
+            <Col lg={12}>
+              <RoleAccessInput fieldName={"access"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
             </Col>
             <Col lg={6}>
               <JsonInput fieldName={"plan"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
             </Col>
             <Col lg={6}>
-              <JsonInput disabled={true} fieldName={"access"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
+              <DtoTagManagerInput type={"template"} fieldName={"tags"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
             </Col>
           </Row>
         <PersistButtonContainer
