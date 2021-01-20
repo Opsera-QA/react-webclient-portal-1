@@ -6,7 +6,11 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import NumberPicker from "react-widgets/lib/NumberPicker";
 import simpleNumberLocalizer from "react-widgets-simple-number";
 
-function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, placeholderText }) {
+export const formatTypes = {
+  percent: '%'
+}
+
+function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, placeholderText, formatType }) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   simpleNumberLocalizer();
@@ -21,6 +25,7 @@ function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, place
   return (
     <InputContainer className="custom-number-input">
       <InputLabel field={field}/>
+      {console.log("formatType: " + formatTypes[formatType])}
       <NumberPicker
         type="number"
         placeholder={placeholderText}
@@ -30,6 +35,7 @@ function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, place
         onChange={(newValue) => validateAndSetData(newValue)}
         min={field?.getMaxNumber}
         max={field?.getMinNumber}
+        format={ formatType && formatTypes[formatType] != null ? formatTypes[formatType] : undefined}
       />
       <InfoText field={field} errorMessage={errorMessage}/>
     </InputContainer>
@@ -41,7 +47,8 @@ NumberInputBase.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  formatType: PropTypes.string
 };
 
 export default NumberInputBase;

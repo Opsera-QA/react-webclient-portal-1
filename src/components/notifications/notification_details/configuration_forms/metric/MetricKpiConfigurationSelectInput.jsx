@@ -55,7 +55,7 @@ function MetricKpiConfigurationSelectInput({ fieldName, dataObject, setDataObjec
                 <NotificationConditionSelectInput dataObject={dataObject} setDataObject={setDataObject}/>
               </Col>
               <Col lg={4}>
-                <NumberInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"threshold"}/>
+                <NumberInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"threshold"} formatType={dataObject.getData("conditionIf")}/>
               </Col>
             </Row>
           </MetricNotificationConfigurationCardContainer>
