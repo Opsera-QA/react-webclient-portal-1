@@ -242,27 +242,6 @@ const SfdcPipelineModifiedFiles = ({
     }
   },[allGitComponentType, gitSelectedComponent]);
   
-  // useEffect(()=>{
-  //   if(sfdcCheckAll){
-  //     // proceed with next steps
-  //     handleApproveChanges();
-  //   }
-  // },[sfdcCheckAll]);
-  
-  // useEffect(()=>{
-  //   if(destSfdcCheckAll){
-  //     // proceed with next steps
-  //     handleApproveChanges();
-  //   }
-  // },[destSfdcCheckAll]);
-  
-  // useEffect(()=>{
-  //   if(gitCheckAll){
-  //     // proceed with next steps
-  //     handleApproveChanges();
-  //   }
-  // },[gitCheckAll]);
-
   const renderTooltip = (message, props) => (
     <Tooltip id="button-tooltip" {...props}>
       {message.length > 0 ? message : "No message found."}
@@ -616,7 +595,7 @@ const SfdcPipelineModifiedFiles = ({
               {sfdcModified && sfdcModified.length === 0 && <div className="info-text mt-3">NO FILES</div>}
 
               <div className="d-flex w-100">
-                <div className="col-5">
+                <div className="col-4">
                   <Form.Group controlId="fromSFDC">
                     <Form.Check
                       type="checkbox"
@@ -807,7 +786,7 @@ const SfdcPipelineModifiedFiles = ({
                   {gitModified && gitModified.length === 0 && <div className="info-text mt-3">NO FILES</div>}
 
                   <div className="d-flex w-100">
-                    <div className="col-5">
+                    <div className="col-6">
                       <Form.Group controlId="fromGit">
                         <Form.Check
                           type="checkbox"

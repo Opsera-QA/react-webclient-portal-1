@@ -292,7 +292,7 @@ const SfdcPipelineProfileComponents = ({
               <div className="info-text mt-3">NO FILES</div>}
 
               <div className="d-flex w-100">
-                <div className="col-5">
+                <div className="col-4">
                   <Form.Group controlId="fromProfiles">
                     <Form.Check
                       type="checkbox"
