@@ -1,20 +1,18 @@
 import React, { useMemo, useState, useEffect, useContext } from "react";
-import { Button, Modal } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { axiosApiService } from "api/apiService";
 import CustomTable from "components/common/table/CustomTable";
-import { faTimesCircle, faCheckCircle, faSearchPlus } from "@fortawesome/pro-light-svg-icons";
+import { faSearchPlus } from "@fortawesome/pro-light-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { format } from "date-fns";
-import ReactJson from "react-json-view";
 import { AuthContext } from "contexts/AuthContext";
 import {
   getTableBooleanIconColumn,
-  getTableDateColumn,
+  getTableDateColumn, getTableInfoIconColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import notificationActivityLogMetadata
   from "components/notifications/notification_details/activity_logs/notification-activity-log-metadata";
+import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
 
 function NotificationActivityPanel({ notificationData }) {
   let fields = notificationActivityLogMetadata.fields;
@@ -25,10 +23,16 @@ function NotificationActivityPanel({ notificationData }) {
   const [modalData, setModalData] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(25);
-  const [loading, isLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
 
   const initialState = {
     pageIndex: 0,
+  };
+
+  const selectRow = (rowInfo) => {
+
+    console.log("rowINfo: " + JSON.stringify(rowInfo));
+    return getRowInfo(rowInfo);
   };
 
   const columns = useMemo(
@@ -38,18 +42,7 @@ function NotificationActivityPanel({ notificationData }) {
       getTableTextColumn(fields.find(field => { return field.id === "message"})),
       getTableBooleanIconColumn(fields.find(field => { return field.id === "status"})),
       getTableDateColumn(fields.find(field => { return field.id === "createdAt"})),
-      {
-        Header: "Info",
-        accessor: "row",
-        Cell: (props) => {
-          return props["row"]["values"].action !== "automation task" ?
-            <FontAwesomeIcon icon={faSearchPlus}
-                             style={{ cursor: "pointer" }}
-                             onClick={() => {
-                               selectRow(props, props.row, props.row["index"]);
-                             }}/> : null;
-        },
-      },
+      getTableInfoIconColumn(selectRow),
     ],
     [],
   );
@@ -60,8 +53,8 @@ function NotificationActivityPanel({ notificationData }) {
   }, [currentPage, pageSize]);
 
   const getToolLog = async () => {
-    isLoading(true)
     try {
+      setIsLoading(true)
       const accessToken = await getAccessToken();
       const apiUrl = `/notifications/logs/${notificationData.getData("_id")}?page=${currentPage}&size=${pageSize}`;
       const tool_logs = await axiosApiService(accessToken).get(apiUrl, {});
@@ -70,16 +63,14 @@ function NotificationActivityPanel({ notificationData }) {
     } catch (err) {
       console.log(err.message);
     }
-    isLoading(false)
+    finally {
+      setIsLoading(false)
+    }
   };
 
   const getRowInfo = (row) => {
     setModalData(row);
     setShowModal(true);
-  };
-
-  const selectRow = (rows, row, index) => {
-    return getRowInfo(rows["data"][index]);
   };
 
   // TODO: Wire up new pagination
@@ -106,24 +97,10 @@ function NotificationActivityPanel({ notificationData }) {
         columns={columns}
         data={logData}
         initialState={initialState}
-        isLoading={loading}
+        isLoading={isLoading}
         paginationOptions={getPaginationOptions()}
       />
-      <Modal show={showModal} size="lg" onHide={() => setShowModal(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Activity Log Details</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="m-3">
-            <ReactJson src={modalData} displayDataTypes={false}/>
-          </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <ModalActivityLogsDialog size={"lg"} header={"Policy Activity Log"} jsonData={modalData} show={showModal} setParentVisibility={setShowModal} />
     </div>
   );
 }

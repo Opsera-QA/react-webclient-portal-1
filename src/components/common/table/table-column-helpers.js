@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
   faCircle, faOctagon,
-  faPause, faPauseCircle, faPlayCircle,
+  faPause, faPauseCircle, faPlayCircle, faSearchPlus,
   faSpinner,
   faStop,
   faStopCircle,
@@ -189,6 +189,16 @@ export const getTableBooleanIconColumn = (field) => {
       return props.value ? <div><FontAwesomeIcon icon={faCheckCircle} className="green ml-2" /></div> :  <div><FontAwesomeIcon icon={faTimesCircle} className="red ml-2" /></div>;
     },
     class: "text-left"
+  };
+};
+
+export const getTableInfoIconColumn = (showInformationFunction) => {
+  return {
+    Header: "Info",
+    accessor: "row",
+    Cell: (props) => {
+      return <FontAwesomeIcon icon={faSearchPlus} className="pointer" onClick={() => {showInformationFunction(props["data"][props.row["index"]]); }}/>;
+    },
   };
 };
 
