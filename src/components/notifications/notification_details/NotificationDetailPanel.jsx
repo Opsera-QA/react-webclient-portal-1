@@ -12,8 +12,8 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import NotificationSummaryPanel
   from "components/notifications/notification_details/NotificationSummaryPanel";
-import NotificationActivityPanel
-  from "components/notifications/notification_details/activity_logs/NotificationActivityPanel";
+import NotificationActivityLogsTable
+  from "components/notifications/notification_details/activity_logs/NotificationActivityLogsTable";
 
 function NotificationDetailPanel({ notificationData, setNotificationData, loadData, isLoading }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -40,7 +40,7 @@ function NotificationDetailPanel({ notificationData, setNotificationData, loadDa
         case "settings":
           return <NotificationEditorPanel notificationData={notificationData} setNotificationData={setNotificationData} loadData={loadData}/>;
         case "logs":
-          return <NotificationActivityPanel notificationData={notificationData} setNotificationData={setNotificationData} loadData={loadData}/>;
+          return <NotificationActivityLogsTable notificationData={notificationData} setNotificationData={setNotificationData} loadData={loadData}/>;
       default:
         return null;
     }
