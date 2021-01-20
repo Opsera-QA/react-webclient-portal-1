@@ -48,9 +48,16 @@ notificationsActions.getNotificationById = async (id, getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-notificationsActions.getNotificationActivityLogs = async (notificationDataDto, currentPage, pageSize, getAccessToken) => {
-  const apiUrl = `/notifications/logs/${notificationDataDto.getData("_id")}?page=${currentPage}&size=${pageSize}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+notificationsActions.getNotificationActivityLogs = async (notificationDataDto, notificationActivityFilterDto, getAccessToken) => {
+  let urlParams = {
+    params: {
+      page: notificationActivityFilterDto.getData("currentPage"),
+      size: notificationActivityFilterDto.getData("pageSize"),
+    }
+  }
+
+  const apiUrl = `/notifications/logs/${notificationDataDto.getData("_id")}`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
 export default notificationsActions;

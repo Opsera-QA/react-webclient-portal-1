@@ -13,6 +13,9 @@ import notificationActivityLogMetadata
 import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import notificationsActions from "components/notifications/notifications-actions";
+import Model from "core/data_model/model";
+import notificationActivityLogFilterMetadata
+  from "components/notifications/notification_details/activity_logs/notifications-activity-log-filter-metadata";
 
 function NotificationActivityLogsTable({ notificationData }) {
   let fields = notificationActivityLogMetadata.fields;
@@ -21,9 +24,13 @@ function NotificationActivityLogsTable({ notificationData }) {
   const [logData, setLogData] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState({});
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(25);
   const [isLoading, setIsLoading] = useState(true);
+  const [notificationActivityFilterDto, setNotificationActivityFilterDto] = useState(new Model({...notificationActivityLogFilterMetadata.newObjectFields}, notificationActivityLogFilterMetadata, false));
+
+
+  useEffect(() => {
+    loadData();
+  }, []);
 
   const initialState = {
     pageIndex: 0,
@@ -46,19 +53,19 @@ function NotificationActivityLogsTable({ notificationData }) {
     [],
   );
 
-  // Executed every time page number or page size changes
-  useEffect(() => {
-    getNotificationLogs();
-  }, [currentPage, pageSize]);
-
-  const getNotificationLogs = async () => {
+  const loadData = async (filterDto = notificationActivityFilterDto) => {
     try {
       setIsLoading(true)
-      const notificationLogResponse = await notificationsActions.getNotificationActivityLogs(notificationData, currentPage, pageSize, getAccessToken);
+      const notificationLogResponse = await notificationsActions.getNotificationActivityLogs(notificationData, filterDto, getAccessToken);
 
       if (notificationLogResponse?.data) {
         setLogCount(notificationLogResponse.data.count);
         setLogData(notificationLogResponse.data.data);
+
+        let newFilterDto = filterDto;
+        newFilterDto.setData("totalCount", notificationLogResponse.data.count);
+        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
+        setNotificationActivityFilterDto({...newFilterDto});
       }
     } catch (error) {
       console.log(error.message);
@@ -68,31 +75,18 @@ function NotificationActivityLogsTable({ notificationData }) {
     }
   };
 
-  // TODO: Wire up new pagination
-  const getPaginationOptions = () => {
-    return {
-      pageSize: pageSize,
-      totalCount: logCount,
-      currentPage: currentPage,
-      gotoPageFn: gotoPage,
-    };
-  };
-
-  const gotoPage = (pageNumber, pageSize) => {
-    setCurrentPage(pageNumber);
-    setPageSize(pageSize);
-  };
-
   return (
     <DetailPanelContainer>
-      <div className="h6">Policy Activity Logs</div>
       <div className="mb-3 text-muted">View log activity for notifications performed by Opsera against this policy.</div>
       <CustomTable
         columns={columns}
         data={logData}
         initialState={initialState}
         isLoading={isLoading}
-        paginationOptions={getPaginationOptions()}
+        paginationDto={notificationActivityFilterDto}
+        setPaginationDto={setNotificationActivityFilterDto}
+        loadData={loadData}
+        tableTitle={"Policy Activity Logs"}
       />
       <ModalActivityLogsDialog size={"lg"} header={"Policy Activity Log"} jsonData={modalData} show={showModal} setParentVisibility={setShowModal} />
     </DetailPanelContainer>
