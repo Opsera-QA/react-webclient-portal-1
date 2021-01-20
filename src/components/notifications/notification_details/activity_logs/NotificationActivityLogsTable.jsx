@@ -2,8 +2,6 @@ import React, { useMemo, useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { axiosApiService } from "api/apiService";
 import CustomTable from "components/common/table/CustomTable";
-import { faSearchPlus } from "@fortawesome/pro-light-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AuthContext } from "contexts/AuthContext";
 import {
   getTableBooleanIconColumn,
@@ -13,8 +11,9 @@ import {
 import notificationActivityLogMetadata
   from "components/notifications/notification_details/activity_logs/notification-activity-log-metadata";
 import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
+import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 
-function NotificationActivityPanel({ notificationData }) {
+function NotificationActivityLogsTable({ notificationData }) {
   let fields = notificationActivityLogMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [logCount, setLogCount] = useState(0);
@@ -89,10 +88,9 @@ function NotificationActivityPanel({ notificationData }) {
   };
 
   return (
-    <div className="text-muted p-3">
+    <DetailPanelContainer>
       <div className="h6">Policy Activity Logs</div>
-      <div className="mb-3">View log activity for notifications performed by Opsera against this policy.
-      </div>
+      <div className="mb-3 text-muted">View log activity for notifications performed by Opsera against this policy.</div>
       <CustomTable
         columns={columns}
         data={logData}
@@ -101,13 +99,13 @@ function NotificationActivityPanel({ notificationData }) {
         paginationOptions={getPaginationOptions()}
       />
       <ModalActivityLogsDialog size={"lg"} header={"Policy Activity Log"} jsonData={modalData} show={showModal} setParentVisibility={setShowModal} />
-    </div>
+    </DetailPanelContainer>
   );
 }
 
-NotificationActivityPanel.propTypes = {
+NotificationActivityLogsTable.propTypes = {
   notificationData: PropTypes.object,
 };
 
 
-export default NotificationActivityPanel;
+export default NotificationActivityLogsTable;
