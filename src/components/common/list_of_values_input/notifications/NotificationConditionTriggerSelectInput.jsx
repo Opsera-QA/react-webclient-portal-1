@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 export const conditionTriggers = [
-  {name: "Number of time series violates", value: "timesViolates"},
+  {name: "Number", value: "number"},
+  {name: "Percentage", value: "percent"}
 ];
 
 function NotificationConditionTriggerSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction }) {

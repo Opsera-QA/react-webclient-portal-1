@@ -8,8 +8,8 @@ import Col from "react-bootstrap/Col";
 import NumberInputBase from "components/common/inputs/text/NumberInputBase";
 import NotificationConditionSelectInput
   from "components/common/list_of_values_input/notifications/NotificationConditionSelectInput";
-import NotificationFrequencySelectInput
-  from "components/common/list_of_values_input/notifications/NotificationFrequencySelectInput";
+import  NotificationConditionTriggerSelectInput
+  from "components/common/list_of_values_input/notifications/NotificationConditionTriggerSelectInput";
 import MetricNotificationConfigurationCardContainer
   from "components/notifications/notification_details/configuration_forms/metric/MetricNotificationConfigurationCardContainer";
 
@@ -20,6 +20,7 @@ function MetricKpiConfigurationSelectInput({ fieldName, dataObject, setDataObjec
   const validateAndSetData = (fieldName, value) => {
     const newDataObject = {...dataObject};
     newDataObject.setData(fieldName, value["identifier"]);
+    newDataObject.setData("conditionIf", value["yAxis"]);
     setCurrentKpi(value);
     setDataObject({...newDataObject});
   }
@@ -45,19 +46,16 @@ function MetricKpiConfigurationSelectInput({ fieldName, dataObject, setDataObjec
                   setCurrentKpi={setCurrentKpi}
                 />
               </Col>
-              <Col lg={6}>
-                <NumberInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"atLeast"}/>
+              <Col lg={12}>
+                <NotificationConditionTriggerSelectInput dataObject={dataObject} setDataObject={setDataObject} />
               </Col>
             </Row>
             <Row>
-              <Col lg={4}>
+              <Col lg={6}>
                 <NotificationConditionSelectInput dataObject={dataObject} setDataObject={setDataObject}/>
               </Col>
-              <Col lg={4}>
+              <Col lg={6}>
                 <NumberInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"threshold"}/>
-              </Col>
-              <Col lg={4}>
-                <NotificationFrequencySelectInput dataObject={dataObject} setDataObject={setDataObject}/>
               </Col>
             </Row>
           </MetricNotificationConfigurationCardContainer>

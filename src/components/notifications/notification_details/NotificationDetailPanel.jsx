@@ -6,8 +6,14 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
+import CustomTab from "components/common/tabs/CustomTab";
+import {
+  faTable,
+} from "@fortawesome/pro-light-svg-icons";
 import NotificationSummaryPanel
   from "components/notifications/notification_details/NotificationSummaryPanel";
+import NotificationActivityPanel
+  from "components/notifications/notification_details/activity_logs/NotificationActivityPanel";
 
 function NotificationDetailPanel({ notificationData, setNotificationData, loadData, isLoading }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -21,6 +27,7 @@ function NotificationDetailPanel({ notificationData, setNotificationData, loadDa
     return (
       <CustomTabContainer>
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Activity Logs"}/>
         <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
       </CustomTabContainer>
     );
@@ -30,8 +37,10 @@ function NotificationDetailPanel({ notificationData, setNotificationData, loadDa
     switch (activeTab) {
       case "summary":
         return <NotificationSummaryPanel notificationData={notificationData} setActiveTab={setActiveTab} />;
-      case "settings":
-        return <NotificationEditorPanel notificationData={notificationData} setNotificationData={setNotificationData} loadData={loadData}/>;
+        case "settings":
+          return <NotificationEditorPanel notificationData={notificationData} setNotificationData={setNotificationData} loadData={loadData}/>;
+        case "logs":
+          return <NotificationActivityPanel notificationData={notificationData} setNotificationData={setNotificationData} loadData={loadData}/>;
       default:
         return null;
     }
