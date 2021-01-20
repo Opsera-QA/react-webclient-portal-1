@@ -8,10 +8,19 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import LoadingDialog from "components/common/status_notifications/loading";
 
 function LdapOrganizationAccountSummaryPanel({ ldapOrganizationAccountData, setActiveTab }) {
+  const getUrlString = () => {
+    const urlString = "New User Registration URL: " + process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL +"/account/registration/"+ ldapOrganizationAccountData.name
+    return (
+      <div className="mt-1">
+        <span className="text-muted">{urlString}</span>
+      </div>
+    );
+  };
 
   if (ldapOrganizationAccountData == null) {
     return (<LoadingDialog size="sm"/>);
   }
+
 
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab}>
@@ -57,6 +66,9 @@ function LdapOrganizationAccountSummaryPanel({ ldapOrganizationAccountData, setA
         </Col>
         <Col lg={6}>
           <BooleanField fieldName={"oAuthEnabled"} dataObject={ldapOrganizationAccountData}/>
+        </Col>
+        <Col lg={12}>
+          {getUrlString()}
         </Col>
       </Row>
     </SummaryPanelContainer>
