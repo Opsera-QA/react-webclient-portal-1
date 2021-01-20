@@ -46,15 +46,15 @@ function MetricKpiConfigurationSelectInput({ fieldName, dataObject, setDataObjec
                   setCurrentKpi={setCurrentKpi}
                 />
               </Col>
-              <Col lg={12}>
-                <NotificationConditionTriggerSelectInput dataObject={dataObject} setDataObject={setDataObject} />
-              </Col>
             </Row>
             <Row>
-              <Col lg={6}>
+              <Col lg={4}>
+                <NotificationConditionTriggerSelectInput dataObject={dataObject} setDataObject={setDataObject} />
+              </Col>
+              <Col lg={4}>
                 <NotificationConditionSelectInput dataObject={dataObject} setDataObject={setDataObject}/>
               </Col>
-              <Col lg={6}>
+              <Col lg={4}>
                 <NumberInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"threshold"}/>
               </Col>
             </Row>
