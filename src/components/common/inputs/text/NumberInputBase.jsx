@@ -19,7 +19,7 @@ function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, place
   };
 
   return (
-    <InputContainer>
+    <InputContainer className="custom-number-input">
       <InputLabel field={field}/>
       <NumberPicker
         type="number"

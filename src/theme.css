@@ -804,6 +804,11 @@ a.nav-link {
   height: calc(1.5em + .75rem + 5px);
 }
 
+.custom-number-input .rw-widget-input {
+    /* this is based on form input's height, with a couple extra pixels added */
+    height: calc(1.5em + .75rem + 3px);
+}
+
 /* Ensure dropdown does not get cut off. */
 
 /*TODO: This can probably be applied everywhere, but I don't want to break anything so in next release test all modals and change to
