@@ -25,7 +25,6 @@ function NotificationActivityLogsTable({ notificationData }) {
   const [isLoading, setIsLoading] = useState(true);
   const [notificationActivityFilterDto, setNotificationActivityFilterDto] = useState(new Model({...notificationActivityLogFilterMetadata.newObjectFields}, notificationActivityLogFilterMetadata, false));
 
-
   useEffect(() => {
     loadData();
   }, []);
@@ -93,6 +92,5 @@ function NotificationActivityLogsTable({ notificationData }) {
 NotificationActivityLogsTable.propTypes = {
   notificationData: PropTypes.object,
 };
-
 
 export default NotificationActivityLogsTable;

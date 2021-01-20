@@ -3,8 +3,8 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import DtoTagField from "components/common/form_fields/dto_form_fields/dto-tag-field";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
+import TagField from "components/common/fields/multiple_items/TagField";
 
 function NotificationSummaryPanelBase({ notificationData, setActiveTab, notificationTypeSummaryCard, notificationMethodSummaryCard }) {
   return (
@@ -26,7 +26,7 @@ function NotificationSummaryPanelBase({ notificationData, setActiveTab, notifica
           <DateFieldBase dataObject={notificationData} fieldName={"createdAt"} />
         </Col>
         <Col lg={12}>
-          <DtoTagField dataObject={notificationData} fieldName={"tags"} />
+          <TagField dataObject={notificationData} fieldName={"tags"} />
         </Col>
       </Row>
       {notificationTypeSummaryCard}

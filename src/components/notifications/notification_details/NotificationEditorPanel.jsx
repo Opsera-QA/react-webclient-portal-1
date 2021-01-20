@@ -62,6 +62,14 @@ function NotificationEditorPanel({ notificationData, setNotificationData, handle
           <TextInputBase setDataObject={setNotificationDataDto} dataObject={notificationDataDto}
                         fieldName={"description"}/>
         </Col>
+          <Col lg={12}>
+            <DtoTagManagerInput
+              type={"notification"}
+              setDataObject={setNotificationDataDto}
+              dataObject={notificationDataDto}
+              fieldName={"tags"}
+            />
+          </Col>
       </Row>
       <NotificationConfigurationPanel
         notificationConfigurationData={notificationConfigurationDataDto}
@@ -75,16 +83,6 @@ function NotificationEditorPanel({ notificationData, setNotificationData, handle
         notificationMethodDataDto={notificationMethodDataDto}
         setNotificationMethodDataDto={setNotificationMethodDataDto}
       />
-      <Row>
-        <Col lg={6}>
-          <DtoTagManagerInput
-            type={"notification"}
-            setDataObject={setNotificationDataDto}
-            dataObject={notificationDataDto}
-            fieldName={"tags"}
-          />
-        </Col>
-      </Row>
       <PersistButtonContainer
         handleClose={handleClose}
         recordDto={notificationDataDto}
