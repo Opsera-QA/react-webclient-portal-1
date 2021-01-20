@@ -3,13 +3,13 @@ import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import DateTimeField from "components/common/form_fields/DateTimeField";
-import TextFieldBase from "components/common/form_fields/TextFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import ChildPipelineTaskSummariesField from "./child-pipelines/ChildPipelineTaskSummariesField";
 import PipelineTaskSummaryMessageField
   from "components/common/form_fields/pipelines/activity/PipelineTaskSummaryMessageField";
 import PipelineTaskStateField from "components/common/fields/workflow/pipelines/PipelineTaskStateField";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import DateTimeField from "components/common/fields/date/DateTimeField";
 
 function ChildPipelineTaskSummaryPanel({ pipelineTaskData }) {
   return (

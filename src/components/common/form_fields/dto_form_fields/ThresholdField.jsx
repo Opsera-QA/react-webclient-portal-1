@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import BooleanField from "./BooleanField";
+import BooleanField from "components/common/fields/boolean/BooleanField";
 
 function ThresholdField({ thresholdDataObject }) {
   // TODO: Style

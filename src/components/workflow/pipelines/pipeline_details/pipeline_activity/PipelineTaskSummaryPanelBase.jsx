@@ -5,10 +5,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import DateTimeField from "components/common/fields/date/DateTimeField";
 import PipelineTaskStateField from "components/common/fields/workflow/pipelines/PipelineTaskStateField";
 import PipelineTaskSummaryMessageField
   from "components/common/form_fields/pipelines/activity/PipelineTaskSummaryMessageField";
+import DateTimeField from "components/common/fields/date/DateTimeField";
 
 function PipelineTaskSummaryPanelBase({ pipelineTaskData }) {
   return (

@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import DtoTextField from "../../../../../../../common/form_fields/dto_form_fields/dto-text-field";
 import LoadingDialog from "../../../../../../../common/status_notifications/loading";
-import BooleanField from "../../../../../../../common/form_fields/dto_form_fields/BooleanField";
 import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
 import DtoJsonField from "../../../../../../../common/form_fields/dto_form_fields/dto-json-field";
 
