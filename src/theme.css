@@ -1055,6 +1055,12 @@ a.nav-link {
   max-height: calc(100vh - 300px);
 }
 
+.screen-container-body {
+  min-height: calc(100vh - 300px);
+  max-height: calc(100vh - 300px);
+  overflow-y: auto;
+}
+
 .modal-detail-view-body {
   min-height: 65vh;
   max-height: 80vh;
