@@ -21,13 +21,14 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../../../api/apiService";
 import { Link } from "react-router-dom";
-import ErrorDialog from "../../../../../../../common/status_notifications/error";
-import JUnitStepConfiguration from "../junit/JUnitStepConfiguration";
 import {
   getErrorDialog,
   getMissingRequiredFieldsErrorDialog,
   getServiceUnavailableDialog
 } from "../../../../../../../common/toasts/toasts";
+import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
+import pipelineActions from "components/workflow/pipeline-actions";
+
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -61,6 +62,7 @@ const INITIAL_DATA = {
   service: "",
   gitCredential: "",
   gitUserName: "",
+  workspace: "",
   repository: "",
   branch: "",
 };
@@ -79,6 +81,8 @@ function CommandLineStepConfiguration({
   setShowToast
 }) {
   const contextType = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [renderForm, setRenderForm] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -93,6 +97,9 @@ function CommandLineStepConfiguration({
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [jobType, setJobType] = useState("");
+  
+  const [workspacesList, setWorkspacesList] = useState([]);
+  const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -141,20 +148,59 @@ function CommandLineStepConfiguration({
     fetchJenkinsDetails("jenkins");
   }, []);
 
+  // fetch workspaces
+  useEffect(() => {
+    setShowToast(false);
+
+    async function fetchWorkspaces(service, gitToolId) {
+      setIsWorkspacesSearching(true);
+      // Set results state
+      let results = await pipelineActions.searchWorkSpaces(service, gitToolId, getAccessToken);
+      if (typeof(results) != "object") {
+        setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+        let errorMessage =
+          "Workspace information is missing or unavailable!";
+        toastContext.showErrorDialog(errorMessage);
+        setIsWorkspacesSearching(false);
+        return;
+      }
+        //console.log(results);
+        setWorkspacesList(results);
+        setIsWorkspacesSearching(false);
+    }
+
+    if (
+      formData.service === "bitbucket" &&
+      formData.gitToolId &&
+      formData.gitToolId.length > 0
+    ) {
+      // Fire off our API call
+      fetchWorkspaces(formData.service, formData.gitToolId);
+    } else {
+      setIsWorkspacesSearching(true);
+      setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+    }
+  }, [formData.service, formData.gitToolId, formData.gitCredential]);
+
   // fetch repos
   useEffect(() => {
     setShowToast(false);
 
-    // setFormData({ ...formData, branch : "" });
-    async function fetchRepos(service, gitToolId) {
+    async function fetchRepos(service, gitToolId, workspaces) {
       setIsRepoSearching(true);
       // Set results state
-      let results = await searchRepositories(service, gitToolId);
-      if (results) {
+      let results = await pipelineActions.searchRepositories(service, gitToolId, workspaces, getAccessToken);
+      if (typeof(results) != "object") {
+        setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+        let errorMessage =
+          "Repository information is missing or unavailable!";
+        toastContext.showErrorDialog(errorMessage);
+        setIsRepoSearching(false);
+        return;
+      }
         //console.log(results);
         setRepoList(results);
         setIsRepoSearching(false);
-      }
     }
 
     if (
@@ -164,27 +210,32 @@ function CommandLineStepConfiguration({
       formData.gitToolId.length > 0
     ) {
       // Fire off our API call
-      fetchRepos(formData.service, formData.gitToolId);
+      fetchRepos(formData.service, formData.gitToolId, formData.workspace);
     } else {
       setIsRepoSearching(true);
       setRepoList([{ value: "", name: "Select One", isDisabled: "yes" }]);
     }
-  }, [formData.service, formData.gitToolId, formData.gitCredential]);
+  }, [formData.service, formData.gitToolId, formData.gitCredential, formData.workspace]);
+
 
   // fetch branches
   useEffect(() => {
     setShowToast(false);
 
-    // setFormData({ ...formData, branch : "" });
-    async function fetchBranches(service, gitToolId, repoId) {
+    async function fetchBranches(service, gitToolId, repoId, workspaces) {
       setIsBranchSearching(true);
       // Set results state
-      let results = await searchBranches(service, gitToolId, repoId);
-      if (results) {
-        //console.log(results);
+      let results = await pipelineActions.searchBranches(service, gitToolId, repoId, workspaces, getAccessToken);
+      if (typeof(results) != "object") {
+        setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
+        let errorMessage =
+          "Branch information is missing or unavailable!";
+        toastContext.showErrorDialog(errorMessage);
+        setIsBranchSearching(false);
+        return;
+      }
         setBranchList(results);
         setIsBranchSearching(false);
-      }
     }
 
     if (
@@ -196,7 +247,7 @@ function CommandLineStepConfiguration({
       formData.repoId.length > 0
     ) {
       // Fire off our API call
-      fetchBranches(formData.service, formData.gitToolId, formData.repoId);
+      fetchBranches(formData.service, formData.gitToolId, formData.repoId, formData.workspace);
     } else {
       setIsRepoSearching(true);
       setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
@@ -411,6 +462,7 @@ function CommandLineStepConfiguration({
         gitCredential: "",
         gitUserName: "",
         repository: "",
+        workspace:"",
         branch: "",
         toolJobId: "",
         toolJobType: "",
@@ -458,9 +510,25 @@ function CommandLineStepConfiguration({
       gitUrl: "",
       sshUrl: "",
       repository: "",
+      workspace:"",
       branch: "",
       projectId: "",
       defaultBranch: "",
+    });
+  };
+
+  const handleWorkspacesChange = (selectedOption) => {
+    setFormData({
+      ...formData,
+      workspace: selectedOption,
+      repository: "",
+      repoId: "",
+      projectId: "",
+      gitUrl: "",
+      sshUrl: "",
+      branch: "",
+      defaultBranch: "",
+      gitBranch: "",
     });
   };
 
@@ -500,91 +568,6 @@ function CommandLineStepConfiguration({
         toolJobId: "",
         toolJobType: "",
       });
-  };
-
-  //todo: the api needs to be moved to actions.jsx
-  const searchRepositories = async (service, gitAccountId) => {
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/tools/properties";
-    const postBody = {
-      tool: service,
-      metric: "getRepositories",
-      gitAccountId: gitAccountId,
-    };
-    //console.log(postBody);
-    try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      if (res.data && res.data.data) {
-        let arrOfObj = res.data.data;
-        if( typeof arrOfObj !== "object" ) {
-          let toast = getErrorDialog(
-            "Error fetching repositories: "+ arrOfObj,
-            setShowToast,
-            "detailPanelTop"
-          );
-          setToast(toast);
-          setShowToast(true);
-          setBranchList([]);
-          return [];
-        }
-        return arrOfObj;
-      } else {
-        let toast = getServiceUnavailableDialog(setShowToast, "detailPanelTop");
-        setToast(toast);
-        setShowToast(true);
-      }
-    } catch (error) {
-      let toast = getErrorDialog(error, setShowToast, "detailPanelTop");
-      setToast(toast);
-      setShowToast(true);
-    }
-  };
-
-  //todo: the api needs to be moved to actions.jsx
-  const searchBranches = async (service, gitAccountId, repoId) => {
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/tools/properties";
-    const postBody = {
-      tool: service,
-      metric: "getBranches",
-      gitAccountId: gitAccountId,
-      repoId: repoId,
-    };
-    try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      if (res.data && res.data.data) {
-        let arrOfObj = res.data.data;
-        if( typeof arrOfObj !== "object" ) {
-          let toast = getErrorDialog(
-            "Error fetching branches: "+ arrOfObj,
-            setShowToast,
-            "detailPanelTop"
-          );
-          setToast(toast);
-          setShowToast(true);
-          return [];
-        }
-        if (arrOfObj) {
-          var result = arrOfObj.map(function (el) {
-            var o = Object.assign({});
-            o.value = el;
-            o.name = el;
-            return o;
-          });
-          return result;
-        }
-      } else {
-        let toast = getServiceUnavailableDialog(setShowToast, "detailPanelTop");
-        setToast(toast);
-        setShowToast(true);
-      }
-    } catch (error) {
-      let toast = getErrorDialog(error, setShowToast, "detailPanelTop");
-      setToast(toast);
-      setShowToast(true);
-    }
   };
 
   const RegistryPopover = (data) => {
@@ -887,91 +870,115 @@ function CommandLineStepConfiguration({
           </Form.Group>
         )}
 
-        {formData.service && formData.gitToolId && (
-          <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Repository*</Form.Label>
-            {isRepoSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading repositories from registry
-              </div>
-            ) : (
-              <>
-                {repoList ? (
-                  <DropdownList
-                    data={repoList}
-                    value={
-                      repoList[
-                        repoList.findIndex(
-                          (x) => x.name === formData.repository
-                        )
-                      ]
-                    }
-                    valueField="value"
-                    textField="name"
-                    filter="contains"
-                    onChange={handleRepoChange}
-                  />
+            {formData.service && formData.service === "bitbucket" && 
+              formData.gitToolId &&
+              (
+              <Form.Group controlId="account" className="mt-2">
+                <Form.Label>Workspace*</Form.Label>
+                {isWorkspacesSearching ? (
+                  <div className="form-text text-muted mt-2 p-2">
+                    <FontAwesomeIcon
+                      icon={faSpinner}
+                      spin
+                      className="text-muted mr-1"
+                      fixedWidth
+                    />
+                    Loading workspaces from registry
+                  </div>
                 ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
+                  <>
+                    {workspacesList ? (
+                      <DropdownList
+                        data={workspacesList}
+                        value={
+                          workspacesList[
+                            workspacesList.findIndex(
+                              (x) => x === formData.workspace,
+                            )
+                            ]
+                        }
+                        valueField="value"
+                        textField="name"
+                        filter="contains"
+                        onChange={handleWorkspacesChange}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faSpinner}
+                        spin
+                        className="text-muted mr-1"
+                        fixedWidth
+                      />
+                    )}
+                  </>
                 )}
-              </>
+                {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+              </Form.Group>
             )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-        )}
 
-        {formData.service && formData.gitToolId && formData.repoId && (
-          <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Branch*</Form.Label>
-            {isBranchSearching ? (
-              <div className="form-text text-muted mt-2 p-2">
-                <FontAwesomeIcon
-                  icon={faSpinner}
-                  spin
-                  className="text-muted mr-1"
-                  fixedWidth
-                />
-                Loading branches from selected repository
-              </div>
-            ) : (
-              <>
-                {branchList ? (
-                  <DropdownList
-                    data={branchList}
-                    value={
-                      branchList[
-                        branchList.findIndex((x) => x.value === formData.branch)
-                      ]
-                    }
-                    valueField="value"
-                    textField="name"
-                    filter="contains"
-                    onChange={handleBranchChange}
-                  />
-                ) : (
-                  <FontAwesomeIcon
-                    icon={faSpinner}
-                    spin
-                    className="text-muted mr-1"
-                    fixedWidth
-                  />
-                )}
-              </>
-            )}
-            {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
-          </Form.Group>
-        )}
+            {formData.service &&
+              formData.gitToolId &&
+              (formData.service === "bitbucket"? 
+                formData.workspace 
+                && formData.workspace.length > 0 : true ) && 
+               (
+                <Form.Group controlId="account" className="mt-2">
+                  <Form.Label>Repository*</Form.Label>
+                  {isRepoSearching ? (
+                    <div className="form-text text-muted mt-2 p-2">
+                      <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
+                      Loading repositories from registry
+                    </div>
+                  ) : (
+                    <>
+                      {repoList ? (
+                        <DropdownList
+                          data={repoList}
+                          value={repoList[repoList.findIndex((x) => x.name === formData.repository)]}
+                          valueField="value"
+                          textField="name"
+                          filter="contains"
+                          onChange={handleRepoChange}
+                        />
+                      ) : (
+                        <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
+                      )}
+                    </>
+                  )}
+                  {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+                </Form.Group>
+              )}
+
+            {formData.service &&
+              formData.gitToolId &&
+              formData.repoId &&
+             (
+                <Form.Group controlId="account" className="mt-2">
+                  <Form.Label>Branch*</Form.Label>
+                  {isBranchSearching ? (
+                    <div className="form-text text-muted mt-2 p-2">
+                      <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
+                      Loading branches from selected repository
+                    </div>
+                  ) : (
+                    <>
+                      {branchList && branchList.length > 0 ? (
+                        <DropdownList
+                          data={branchList}
+                          value={branchList[branchList.findIndex((x) => x.value === formData.branch)]}
+                          valueField="value"
+                          textField="name"
+                          filter="contains"
+                          onChange={handleBranchChange}
+                        />
+                      ) : (
+                        <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
+                      )}
+                    </>
+                  )}
+                  {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+                </Form.Group>
+              )}
 
         {formData.jobType === "SHELL SCRIPT" ? (
          <>
