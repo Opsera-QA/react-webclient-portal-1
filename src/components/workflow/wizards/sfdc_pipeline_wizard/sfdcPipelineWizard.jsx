@@ -101,7 +101,8 @@ const SfdcPipelineWizard = ({
       stepId: stepId,
       buildParams: {
       componentTypes: isProfiles ? JSON.stringify(selectedComponentTypes) : "",
-      packageXml: isProfiles ? "" : xml,
+      // packageXml: isProfiles ? "" : xml,
+      packageXml: "",
       retrieveFilesFromSFDC: fromSFDC || fromDestinationSFDC ? "true" : "false",
       nameSpacePrefix: nameSpacePrefix
       },
