@@ -94,6 +94,7 @@ import { axiosApiService } from "api/apiService";
 import TagsUsedInPipelineReport from "components/reports/tags/pipelines/TagsUsedInPipelineReport";
 import TagsUsedInToolsReport from "components/reports/tags/tools/TagsUsedInToolsReport";
 import AccountRegistration from "components/user/account_registration/AccountRegistration";
+import ToolCountsReport from "components/reports/tools/counts/ToolCountsReport";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -266,8 +267,8 @@ const AppWithRouterAccess = () => {
                   {/* Reports */}
                   <SecureRoute path="/reports" exact component={Reports}/>
                   <SecureRoute path="/reports/registry" exact component={ToolReports}/>
-                  <SecureRoute path="/reports/registry/tools-used-in-pipeline" exact
-                               component={ToolsUsedInPipelineReport}/>
+                  <SecureRoute path="/reports/registry/tools-used-in-pipeline" exact component={ToolsUsedInPipelineReport}/>
+                  <SecureRoute path="/reports/registry/tool-counts" exact component={ToolCountsReport}/>
                   <SecureRoute path="/reports/pipelines" exact component={PipelineReports}/>
                   <SecureRoute path="/reports/tags" exact component={TagReports}/>
                   <SecureRoute path="/reports/tags/tags-used-in-pipeline" exact
