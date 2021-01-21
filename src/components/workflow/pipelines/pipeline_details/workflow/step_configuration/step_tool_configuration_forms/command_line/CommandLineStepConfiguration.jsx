@@ -148,11 +148,11 @@ function CommandLineStepConfiguration({
     fetchJenkinsDetails("jenkins");
   }, []);
 
-  // fetch repos
+  // fetch workspaces
   useEffect(() => {
     setShowToast(false);
 
-    async function fetchRepos(service, gitToolId) {
+    async function fetchWorkspaces(service, gitToolId) {
       setIsWorkspacesSearching(true);
       // Set results state
       let results = await pipelineActions.searchWorkSpaces(service, gitToolId, getAccessToken);
@@ -175,7 +175,7 @@ function CommandLineStepConfiguration({
       formData.gitToolId.length > 0
     ) {
       // Fire off our API call
-      fetchRepos(formData.service, formData.gitToolId);
+      fetchWorkspaces(formData.service, formData.gitToolId);
     } else {
       setIsWorkspacesSearching(true);
       setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
