@@ -35,16 +35,16 @@ const registeredUsersFilterMetadata = {
   newObjectFields: {
     pageSize: 50,
     currentPage: 1,
-    sortOption: {text: "Newest", value: ""},
+    sortOption: {text: "Newest", option: ""},
     search: "",
     activeFilters: []
   },
   sortOptions: [
-    {text: "Newest", value: ""},
-    {text: "Oldest", value: "oldest"},
-    {text: "Last Name", value: "lastName"},
-    {text: "Email", value: "email"},
-    {text: "Last Updated", value: "lastupdated"}
+    {text: "Newest", option: ""},
+    {text: "Oldest", option: "oldest"},
+    {text: "Last Name", option: "lastName"},
+    {text: "Email", option: "email"},
+    {text: "Last Updated", option: "lastupdated"}
   ]
 };
 
