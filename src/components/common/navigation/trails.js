@@ -2,8 +2,8 @@ import paths from "./paths";
 import {
   faAnalytics,
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
-  faSitemap, faStream, faTags, faTimes, faUser, faUsers, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
-  faFlag, faEnvelope, faUserTag, faProjectDiagram, faTools
+  faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
+  faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers
 } from "@fortawesome/pro-light-svg-icons";
 
 const breadcrumbs = {
@@ -80,6 +80,7 @@ const breadcrumbs = {
   reports: {name: "reports", path: paths.reports, label: "Reports", icon: faAnalytics},
   toolReports: {name: "toolReports", path: paths.toolReports, label: "Tool Reports", icon: faTools},
   toolsUsedInPipelineReport: {name: "toolsUsedInPipelineReport", path: paths.toolsUsedInPipelineReport, label: "Tools Used In Pipelines", icon: faDraftingCompass},
+  toolCountsReport: {name: "toolCountsReport", path: paths.toolCountsReport, label: "Tool Counts", icon: faTally},
   tagsUsedInPipelineReport: {name: "tagsUsedInPipelineReport", path: paths.tagsUsedInPipelineReport, label: "Tags Used In Pipelines", icon: faTags},
   tagsUsedInToolsReport: {name: "tagsUsedInToolsReport", path: paths.tagsUsedInToolsReport, label: "Tags Used In Tools", icon: faTools},
   tagReports: {name: "tagReports", path: paths.tagReports, label: "Tag Reports", icon: faTags},
@@ -173,6 +174,7 @@ const trails = {
   toolReports: {parent: "reports", breadcrumb: breadcrumbs.toolReports},
   toolsUsedInPipelineReport: {parent: "toolReports", breadcrumb: breadcrumbs.toolsUsedInPipelineReport},
   tagsUsedInPipelineReport: {parent: "tagReports", breadcrumb: breadcrumbs.tagsUsedInPipelineReport},
+  toolCountsReport: {parent: "toolReports", breadcrumb: breadcrumbs.toolCountsReport},
   tagsUsedInToolsReport: {parent: "tagReports", breadcrumb: breadcrumbs.tagsUsedInToolsReport},
   tagReports: {parent: "reports", breadcrumb: breadcrumbs.tagReports},
   pipelineReports: {parent: "reports", breadcrumb: breadcrumbs.pipelineReports},

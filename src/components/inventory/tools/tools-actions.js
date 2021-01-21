@@ -156,4 +156,10 @@ toolsActions.saveToolConfiguration = async (toolData, configurationItem, getAcce
   return await toolsActions.updateToolConfiguration(newToolData, getAccessToken);
 };
 
+
+toolsActions.getToolCounts = async (getAccessToken) => {
+  const apiUrl = `/reports/tools/counts`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
 export default toolsActions;
