@@ -93,7 +93,7 @@ const templateEditorMetadata = {
     "publicUse": true,
     "singleUse": false,
     "account": "",
-    "access": [{}],
+    "access": [],
     "plan": [{}],
   },
 };
