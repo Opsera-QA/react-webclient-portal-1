@@ -1,19 +1,18 @@
 import React, {useContext, useState, useEffect} from "react";
-import {AuthContext} from "../../../../contexts/AuthContext";
 import {useParams} from "react-router-dom";
-import LoadingDialog from "../../../common/status_notifications/loading";
-import "../../../admin/accounts/accounts.css";
 import LdapGroupDetailPanel from "./LdapGroupDetailPanel";
-import accountsActions from "../../../admin/accounts/accounts-actions";
-import AccessDeniedDialog from "../../../common/status_notifications/accessDeniedInfo";
-import {ldapGroupMetaData} from "../ldap-groups-metadata";
-import Model from "../../../../core/data_model/model";
+import Model from "core/data_model/model";
 import {faUserFriends} from "@fortawesome/pro-light-svg-icons";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
-import ActionBarContainer from "../../../common/actions/ActionBarContainer";
-import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
-import ActionBarDeleteButton2 from "../../../common/actions/buttons/ActionBarDeleteButton2";
+import accountsActions from "components/admin/accounts/accounts-actions";
+import {ldapGroupMetaData} from "components/settings/ldap_groups/ldap-groups-metadata";
+import LoadingDialog from "components/common/status_notifications/loading";
+import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
+import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {AuthContext} from "contexts/AuthContext";
 
 // TODO: Can we get an API Call to get role group names associated with an organization?
 const roleGroups = ["Administrators", "PowerUsers", "Users"];
@@ -23,7 +22,7 @@ function LdapGroupDetailView() {
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
-  const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
+  const [ldapUsers, setLdapUsers] = useState([]);
   const [ldapGroupData, setLdapGroupData] = useState(undefined);
   const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
@@ -47,11 +46,10 @@ function LdapGroupDetailView() {
     }
   }
 
-  // TODO: Can we get a getGroupOwnerEmail api with name, so we can cut off loading the group
   const getGroup = async () => {
     const user = await getUserRecord();
     const response = await accountsActions.getGroup(orgDomain, groupName, getAccessToken);
-    setLdapGroupData(new Model(response.data, ldapGroupMetaData, false));
+    setLdapGroupData(new Model(response?.data, ldapGroupMetaData, false));
     let isOwner = user.email === response.data["ownerEmail"];
 
     if (isOwner) {
@@ -65,11 +63,14 @@ function LdapGroupDetailView() {
     }
   };
 
-  const getOrganization = async (domain) => {
+  const getLdapUsers = async (domain) => {
     if (domain != null) {
-      const response = await accountsActions.getOrganizationAccountByDomain(domain, getAccessToken);
-      let ldapOrganizationData = response.data;
-      setLdapOrganizationData(ldapOrganizationData);
+      const response = await accountsActions.getLdapUsersWithDomain(domain, getAccessToken);
+      let ldapUsers = response?.data;
+
+      if (ldapUsers) {
+        setLdapUsers(ldapUsers);
+      }
     }
   };
 
@@ -97,7 +98,7 @@ function LdapGroupDetailView() {
       }
 
       if (authorizedActions.includes("get_group_details")) {
-        await getOrganization(orgDomain);
+        await getLdapUsers(orgDomain);
         await getGroup();
       }
     }
@@ -146,7 +147,7 @@ function LdapGroupDetailView() {
         <LdapGroupDetailPanel
           orgDomain={orgDomain}
           ldapGroupData={ldapGroupData}
-          ldapOrganizationData={ldapOrganizationData}
+          ldapUsers={ldapUsers}
           currentUserEmail={currentUserEmail}
           setLdapGroupData={setLdapGroupData}
           loadData={getRoles}

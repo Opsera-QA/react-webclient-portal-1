@@ -3,21 +3,21 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import LdapGroupEditorPanel from "./LdapGroupEditorPanel";
 import LdapGroupMembershipManagementPanel from "./LdapGroupMembershipManagementPanel";
-import LdapUsersTable from "../../ldap_users/LdapUsersTable";
-import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
-import CustomTab from "../../../common/tabs/CustomTab";
 import {faIdCard, faUsers} from "@fortawesome/pro-light-svg-icons";
-import SummaryTab from "../../../common/tabs/detail_view/SummaryTab";
-import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTabPanelContainer";
 import LdapGroupSummaryPanel from "./LdapGroupSummaryPanel";
-import SettingsTab from "../../../common/tabs/detail_view/SettingsTab";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
+import CustomTab from "components/common/tabs/CustomTab";
+import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
+import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
+import LdapUsersTable from "components/settings/ldap_users/LdapUsersTable";
 
 function LdapGroupDetailPanel(
   {
     currentUserEmail,
     ldapGroupData,
     setLdapGroupData,
-    ldapOrganizationData,
+    ldapUsers,
     orgDomain,
     loadData,
     authorizedActions,
@@ -49,9 +49,9 @@ function LdapGroupDetailPanel(
       case "membership":
         return (<div className="px-3 pt-2 pb-3"><LdapUsersTable orgDomain={orgDomain} userData={ldapGroupData.members} /></div>);
       case "manage":
-        return (<LdapGroupMembershipManagementPanel setActiveTab={setActiveTab} ldapGroupData={ldapGroupData.data} authorizedActions={authorizedActions} ldapOrganizationData={ldapOrganizationData} loadData={loadData}/>);
+        return (<LdapGroupMembershipManagementPanel orgDomain={orgDomain} setActiveTab={setActiveTab} ldapGroupData={ldapGroupData.data} authorizedActions={authorizedActions} ldapUsers={ldapUsers} loadData={loadData}/>);
       case "settings":
-        return <LdapGroupEditorPanel currentUserEmail={currentUserEmail} authorizedActions={authorizedActions} setLdapGroupData={setLdapGroupData} ldapGroupData={ldapGroupData} ldapOrganizationData={ldapOrganizationData} />;
+        return <LdapGroupEditorPanel currentUserEmail={currentUserEmail} authorizedActions={authorizedActions} setLdapGroupData={setLdapGroupData} ldapGroupData={ldapGroupData} orgDomain={orgDomain} />;
       default:
         return null;
     }
@@ -63,7 +63,7 @@ function LdapGroupDetailPanel(
 LdapGroupDetailPanel.propTypes = {
   ldapGroupData: PropTypes.object,
   setLdapGroupData: PropTypes.func,
-  ldapOrganizationData: PropTypes.object,
+  ldapUsers: PropTypes.array,
   orgDomain: PropTypes.string,
   currentUserEmail: PropTypes.string,
   loadData: PropTypes.func,

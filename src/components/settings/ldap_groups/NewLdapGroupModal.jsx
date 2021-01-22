@@ -5,7 +5,7 @@ import Model from "../../../core/data_model/model";
 import {ldapGroupMetaData} from "./ldap-groups-metadata";
 import CreateModal from "../../common/modal/CreateModal";
 
-function NewLdapUserModal({ ldapOrganizationData, authorizedActions, currentUserEmail, setShowModal, showModal, loadData }) {
+function NewLdapUserModal({ orgDomain, authorizedActions, currentUserEmail, setShowModal, showModal, loadData }) {
   const [ldapGroupData, setLdapGroupData] = useState(undefined);
 
   useEffect(() => {
@@ -20,14 +20,14 @@ function NewLdapUserModal({ ldapOrganizationData, authorizedActions, currentUser
   return (
     <>
       <CreateModal handleCancelModal={handleClose} objectType={"Group"} showModal={showModal} loadData={loadData}>
-        {ldapGroupData && <LdapGroupEditorPanel authorizedActions={authorizedActions} currentUserEmail={currentUserEmail} ldapGroupData={ldapGroupData} handleClose={handleClose} ldapOrganizationData={ldapOrganizationData} />}
+        {ldapGroupData && <LdapGroupEditorPanel authorizedActions={authorizedActions} currentUserEmail={currentUserEmail} ldapGroupData={ldapGroupData} handleClose={handleClose} orgDomain={orgDomain} />}
       </CreateModal>
     </>
   );
 }
 
 NewLdapUserModal.propTypes = {
-  ldapOrganizationData: PropTypes.object,
+  orgDomain: PropTypes.string,
   authorizedActions: PropTypes.array,
   currentUserEmail: PropTypes.string,
   showModal: PropTypes.bool,

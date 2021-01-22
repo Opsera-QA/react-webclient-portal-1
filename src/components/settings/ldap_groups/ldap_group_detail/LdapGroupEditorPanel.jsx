@@ -10,9 +10,8 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import LoadingDialog from "components/common/status_notifications/loading";
-import GroupTypeSelectInput from "components/common/list_of_values_input/settings/groups/GroupTypeSelectInput";
 
-function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganizationData, setLdapGroupData, handleClose, authorizedActions}) {
+function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, orgDomain, setLdapGroupData, handleClose, authorizedActions}) {
   const {getAccessToken} = useContext(AuthContext);
   const [ldapGroupDataDto, setLdapGroupDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -28,11 +27,11 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
   };
 
   const createGroup = async () => {
-    return await accountsActions.createGroup(ldapOrganizationData, ldapGroupDataDto, currentUserEmail, getAccessToken);
+    return await accountsActions.createGroup(orgDomain, ldapGroupDataDto, currentUserEmail, getAccessToken);
   };
 
   const updateGroup = async () => {
-    return await accountsActions.updateGroup(ldapOrganizationData, ldapGroupDataDto, getAccessToken);
+    return await accountsActions.updateGroup(orgDomain, ldapGroupDataDto, getAccessToken);
   };
 
   if (isLoading) {
@@ -50,7 +49,7 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
           <TextInputBase disabled={!ldapGroupDataDto.isNew()} fieldName={"name"} dataObject={ldapGroupDataDto} setDataObject={setLdapGroupDataDto}/>
         </Col>
         <Col lg={12}>
-          <GroupTypeSelectInput dataObject={ldapGroupDataDto} setDataObject={setLdapGroupDataDto} disabled={ldapGroupDataDto.isNew()} />
+          <TextInputBase fieldName={"groupType"} dataObject={ldapGroupDataDto} setDataObject={setLdapGroupDataDto} disabled={true} />
         </Col>
         <Col lg={12}>
           <TextInputBase
@@ -82,6 +81,7 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, ldapOrganization
 
 LdapGroupEditorPanel.propTypes = {
   currentUserEmail: PropTypes.string,
+  orgDomain: PropTypes.string,
   setLdapGroupData: PropTypes.func,
   ldapGroupData: PropTypes.object,
   ldapOrganizationData: PropTypes.object,

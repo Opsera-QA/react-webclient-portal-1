@@ -507,35 +507,27 @@ accountsActions.getGroup = async (orgDomain, groupName, getAccessToken) => {
   return response;
 };
 
-accountsActions.updateGroup = async (ldapOrganizationData, ldapGroupDataDto, getAccessToken) => {
+accountsActions.updateGroup = async (orgDomain, ldapGroupDataDto, getAccessToken) => {
   let putData = {
-    "domain": ldapOrganizationData.orgDomain,
+    "domain": orgDomain,
     "group": {
       ...ldapGroupDataDto.getPersistData()
     }
   }
-  const accessToken = await getAccessToken();
   const apiUrl = "/users/account/group/update";
-  const response = await axiosApiService(accessToken).put(apiUrl, putData)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPutCall(getAccessToken, apiUrl, putData);
 };
 
-accountsActions.createGroup = async (ldapOrganizationData, ldapGroupDataDto, currentUserEmail, getAccessToken) => {
-  let putData = {
-    "domain": ldapOrganizationData.orgDomain,
+accountsActions.createGroup = async (orgDomain, ldapGroupDataDto, currentUserEmail, getAccessToken) => {
+  let postData = {
+    "domain": orgDomain,
     "group": {
       ...ldapGroupDataDto.getPersistData(),
       ownerEmail: currentUserEmail,
     }
   }
-  const accessToken = await getAccessToken();
   const apiUrl = "/users/account/group/create";
-  const response = await axiosApiService(accessToken).post(apiUrl, putData)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
 
@@ -544,18 +536,14 @@ accountsActions.deleteGroup = async (orgDomain, ldapGroupDataDto, getAccessToken
   return await baseActions.apiDeleteCall(getAccessToken, apiUrl);
 };
 
-accountsActions.syncMembership = async (ldapOrganizationData, groupName, emailList, getAccessToken) => {
+accountsActions.syncMembership = async (orgDomain, groupName, emailList, getAccessToken) => {
   let postData = {
-    domain: ldapOrganizationData.orgDomain,
+    domain: orgDomain,
     groupName: groupName,
     emails: emailList,
   };
-  const accessToken = await getAccessToken();
   const apiUrl = "/users/account/group/sync-membership";
-  const response = await axiosApiService(accessToken).post(apiUrl, postData)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
 export default accountsActions;

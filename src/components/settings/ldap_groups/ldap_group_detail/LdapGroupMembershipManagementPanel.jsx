@@ -22,7 +22,7 @@ import StandaloneSaveButton from "../../../common/buttons/saving/StandaloneSaveB
 import CancelButton from "../../../common/buttons/CancelButton";
 import MessageField from "../../../common/form_fields/MessageField";
 
-function LdapGroupMembershipManagementPanel({ldapGroupData, ldapOrganizationData, setActiveTab, loadData, authorizedActions}) {
+function LdapGroupMembershipManagementPanel({ldapGroupData, ldapUsers, setActiveTab, loadData, authorizedActions, orgDomain}) {
   const {name} = useParams();
   const toastContext = useContext(DialogToastContext);
   const {getUserRecord, getAccessToken} = useContext(AuthContext);
@@ -50,7 +50,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, ldapOrganizationData
   }
 
   const changeMemberStatus = async () => {
-    ldapOrganizationData.users.map((user, index) => {
+    ldapUsers.map((user, index) => {
       let member = ldapGroupData.members.find((member) => member.emailAddress === user.emailAddress);
 
       if (member != null) {
@@ -111,7 +111,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, ldapOrganizationData
         acc.push(item.emailAddress);
         return acc;
       }, []);
-      await accountsActions.syncMembership(ldapOrganizationData, ldapGroupData.name, emailList, getAccessToken);
+      await accountsActions.syncMembership(orgDomain, ldapGroupData.name, emailList, getAccessToken);
       toastContext.showUpdateSuccessResultDialog("Group Membership");
       loadData();
     }
@@ -220,7 +220,8 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, ldapOrganizationData
 
 LdapGroupMembershipManagementPanel.propTypes = {
   ldapGroupData: PropTypes.object,
-  ldapOrganizationData: PropTypes.object,
+  ldapUsers: PropTypes.array,
+  orgDomain: PropTypes.string,
   getGroup: PropTypes.func,
   setActiveTab: PropTypes.func,
   loadData: PropTypes.func,

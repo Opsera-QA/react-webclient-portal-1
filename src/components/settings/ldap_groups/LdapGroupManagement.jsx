@@ -115,7 +115,7 @@ function LdapGroupManagement() {
           <div className="full-height">
             <LdapGroupsTable isLoading={isLoading} groupData={groupList} orgDomain={orgDomain}/>
           </div>
-          <NewLdapGroupModal loadData={loadData} authorizedActions={authorizedActions} ldapOrganizationData={ldapOrganizationData} showModal={showCreateGroupModal} currentUserEmail={currentUserEmail} setShowModal={setShowCreateGroupModal}/>
+          <NewLdapGroupModal loadData={loadData} authorizedActions={authorizedActions} orgDomain={orgDomain} showModal={showCreateGroupModal} currentUserEmail={currentUserEmail} setShowModal={setShowCreateGroupModal}/>
       </div>
     );
 }
