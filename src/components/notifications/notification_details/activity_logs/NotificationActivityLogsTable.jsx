@@ -15,8 +15,12 @@ import notificationsActions from "components/notifications/notifications-actions
 import Model from "core/data_model/model";
 import notificationActivityLogFilterMetadata
   from "components/notifications/notification_details/activity_logs/notifications-activity-log-filter-metadata";
+import FilterBar from "components/common/filters/FilterBar";
+import StatusFilter from "components/common/filters/status/StatusFilter";
+import TagFilter from "components/common/filters/tags/TagFilter";
+import NotificationTypeFilter from "components/common/filters/notifications/NotificationTypeFilter";
 
-function NotificationActivityLogsTable({ notificationData }) {
+function NotificationActivityLogsTable({ notificationData, allLogs }) {
   let fields = notificationActivityLogMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [logData, setLogData] = useState([]);
@@ -52,9 +56,16 @@ function NotificationActivityLogsTable({ notificationData }) {
 
   const loadData = async (filterDto = notificationActivityFilterDto) => {
     try {
-      setIsLoading(true)
-      const notificationLogResponse = await notificationsActions.getNotificationActivityLogs(notificationData, filterDto, getAccessToken);
+      let notificationLogResponse;
 
+      setIsLoading(true)
+
+      if(allLogs) {
+        notificationLogResponse = await notificationsActions.getAllNotificationActivityLogs(filterDto, getAccessToken);
+      } else {
+        notificationLogResponse = await notificationsActions.getNotificationActivityLogs(notificationData, filterDto, getAccessToken);
+      }
+      
       if (notificationLogResponse?.data) {
         setLogData(notificationLogResponse.data.data);
 
@@ -71,9 +82,30 @@ function NotificationActivityLogsTable({ notificationData }) {
     }
   };
 
+  const getFilterBar = () => {
+    if (notificationActivityFilterDto == null) {
+      return null;
+    }
+
+    return(
+      <FilterBar
+        loadData={loadData}
+        filterDto={notificationActivityFilterDto}
+        setFilterDto={setNotificationActivityFilterDto}
+        filters={["status", "tag", "search"]}
+        supportSearch={true}
+      >
+        <StatusFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} />
+        {/* add custom filters here */}
+        <NotificationTypeFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} />
+        <TagFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} />
+      </FilterBar>
+    );
+  };
+
   return (
     <DetailPanelContainer>
-      <div className="mb-3 text-muted">View log activity for notifications performed by Opsera against this policy.</div>
+      {/* <div className="mb-3 text-muted">View log activity for notifications performed by Opsera against this policy.</div> */}
       <CustomTable
         columns={columns}
         data={logData}
@@ -82,6 +114,7 @@ function NotificationActivityLogsTable({ notificationData }) {
         paginationDto={notificationActivityFilterDto}
         setPaginationDto={setNotificationActivityFilterDto}
         loadData={loadData}
+        tableFilterBar={getFilterBar()}
         tableTitle={"Policy Activity Logs"}
       />
       <ModalActivityLogsDialog size={"lg"} header={"Policy Activity Log"} jsonData={modalData} show={showModal} setParentVisibility={setShowModal} />
@@ -91,6 +124,7 @@ function NotificationActivityLogsTable({ notificationData }) {
 
 NotificationActivityLogsTable.propTypes = {
   notificationData: PropTypes.object,
+  allLogs : PropTypes.bool,
 };
 
 export default NotificationActivityLogsTable;

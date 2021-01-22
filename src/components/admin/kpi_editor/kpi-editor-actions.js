@@ -6,6 +6,7 @@ KpiActions.getKpis = async (kpiFilterDto, getAccessToken) => {
   const apiUrl = "/analytics/kpi/configurations";
   let sortOption = kpiFilterDto.getData("sortOption");
   let status = kpiFilterDto.getData("status");
+  let policySupport = kpiFilterDto.getData("policySupport");
 
   const urlParams = {
     params: {
@@ -15,6 +16,7 @@ KpiActions.getKpis = async (kpiFilterDto, getAccessToken) => {
       tool: kpiFilterDto.getFilterValue("tool"),
       category: kpiFilterDto.getFilterValue("category"),
       status: status ? status.value : undefined,
+      policySupport: policySupport ? policySupport.value : undefined,
       search: kpiFilterDto.getFilterValue("search")
     },
   };
@@ -22,11 +24,13 @@ KpiActions.getKpis = async (kpiFilterDto, getAccessToken) => {
   return baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
-KpiActions.getAllKpis = async (getAccessToken) => {
+KpiActions.getAllKpis = async (getAccessToken, status, policySupport) => {
   const apiUrl = "/analytics/kpi/configurations";
   const urlParams = {
     params: {
-      pageSize: 10000
+      pageSize: 10000,
+      status: status ? status.value : undefined,
+      policySupport: policySupport ? policySupport.value : undefined,
     }
   };
 

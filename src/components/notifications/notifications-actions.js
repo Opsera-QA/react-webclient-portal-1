@@ -49,14 +49,38 @@ notificationsActions.getNotificationById = async (id, getAccessToken) => {
 };
 
 notificationsActions.getNotificationActivityLogs = async (notificationDataDto, notificationActivityFilterDto, getAccessToken) => {
+  let sortOption = notificationActivityFilterDto.getData("sortOption");
   let urlParams = {
     params: {
+      sort: notificationActivityFilterDto ? sortOption.value : undefined,
       page: notificationActivityFilterDto.getData("currentPage"),
       size: notificationActivityFilterDto.getData("pageSize"),
+      tag: notificationActivityFilterDto.getFilterValue("tag"),
+      type: notificationActivityFilterDto.getFilterValue("type"),
+      status: notificationActivityFilterDto.getFilterValue("status"),
+      search: notificationActivityFilterDto.getFilterValue("search"),
     }
   }
 
   const apiUrl = `/notifications/logs/${notificationDataDto.getData("_id")}`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+};
+
+notificationsActions.getAllNotificationActivityLogs = async ( notificationActivityFilterDto, getAccessToken) => {
+  let sortOption = notificationActivityFilterDto.getData("sortOption");
+  let urlParams = {
+    params: {
+      sort: notificationActivityFilterDto ? sortOption.value : undefined,
+      page: notificationActivityFilterDto.getData("currentPage"),
+      size: notificationActivityFilterDto.getData("pageSize"),
+      tag: notificationActivityFilterDto.getFilterValue("tag"),
+      type: notificationActivityFilterDto.getFilterValue("type"),
+      status: notificationActivityFilterDto.getFilterValue("status"),
+      search: notificationActivityFilterDto.getFilterValue("search"),
+    }
+  }
+
+  const apiUrl = `/notifications/logs/`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 

@@ -59,7 +59,7 @@ const notificationActivityLogFilterMetadata = {
   newObjectFields: {
     pageSize: 50,
     currentPage: 1,
-    sortOption: {text: "Sort: Name", value: "name"},
+    sortOption: {text: "Sort: Name", option: "name"},
     search: "",
     activeFilters: []
   },

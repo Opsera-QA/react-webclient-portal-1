@@ -64,6 +64,11 @@ function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
         </Col>
         <Col lg={12}>
           <TextAreaInput dataObject={kpiDataDto} fieldName={"description"} setDataObject={setKpiDataDto}/>
+          
+          <div className="text-muted pl-1 pb-1">Policy Support:</div>
+          <ActivityToggleInput setDataObject={setKpiDataDto} fieldName={"policySupport"} dataObject={kpiData}/>
+          
+          <div className="text-muted pl-1 pb-1">Status:</div>
           <ActivityToggleInput setDataObject={setKpiDataDto} fieldName={"active"} dataObject={kpiData}/>
         </Col>
       </Row>

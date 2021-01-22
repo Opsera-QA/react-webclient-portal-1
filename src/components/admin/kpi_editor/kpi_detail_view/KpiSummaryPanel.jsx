@@ -26,6 +26,9 @@ function KpiSummaryPanel({ kpiData, setActiveTab }) {
           <DtoToggleField dataObject={kpiData} fieldName={"active"} />
         </Col>
         <Col lg={6}>
+          <DtoToggleField dataObject={kpiData} fieldName={"policySupport"} />
+        </Col>
+        <Col lg={6}>
           <DtoTextField dataObject={kpiData} fieldName={"_id"} />
         </Col>
         <Col lg={6}>
