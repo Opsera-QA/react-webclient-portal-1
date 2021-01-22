@@ -59,7 +59,7 @@ const catalogFilterMetadata = {
   newObjectFields: {
     pageSize: 25,
     currentPage: 1,
-    sortOption: { option: "name", text: "Template Name (A-Za-z)" },
+    sortOption: { value: "name", text: "Template Name (A-Za-z)" },
     search: "",
     type: "",
     tag: "",
