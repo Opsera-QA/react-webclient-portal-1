@@ -246,7 +246,7 @@ const AppWithRouterAccess = () => {
                   <Route path="/about/pricing" component={Pricing}/>
                   <Route path="/help" component={OnlineHelp}/>
                   <Route path="/registration" exact component={Registration}/>
-                  <Route path="/account/registration/:orgAccountId" exact component={AccountRegistration}/>
+                  <Route path="/account/registration/:domain" exact component={AccountRegistration}/>
 
 
                   <SecureRoute path="/profile" component={Profile}/>

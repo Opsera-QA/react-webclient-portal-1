@@ -17,7 +17,7 @@ import DataNotFoundDialog from "components/common/status_notifications/data_not_
 import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
 
 function AccountRegistration() {
-  const { orgAccountId } = useParams();
+  const { domain } = useParams();
   const { generateJwtServiceTokenWithValue } = useContext(AuthContext);
   const [serviceToken, setServiceToken] = useState(undefined);
   const history = useHistory();
@@ -37,7 +37,7 @@ function AccountRegistration() {
       const token = await generateJwtServiceTokenWithValue({id: "orgRegistrationForm"});
       setServiceToken(token);
 
-      const accountResponse = await userActions.getAccountInformation(orgAccountId, token);
+      const accountResponse = await userActions.getAccountInformation(domain, token);
       let newAccountDto = (new Model(accountRegistrationMetadata.newObjectFields, accountRegistrationMetadata, true));
 
       if (accountResponse?.data) {

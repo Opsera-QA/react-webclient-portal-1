@@ -151,9 +151,10 @@ userActions.getAWSRegions = async () => {
   return response;
 };
 
-userActions.getAccountInformation = async (accountId, token) => {
-  const apiUrl = `/users/account/${accountId}/summary`;
-  return await baseActions.customTokenApiGetCall(token, apiUrl);
+userActions.getAccountInformation = async (domain, token) => {
+  const apiUrl = `/users/account/summary`;
+  const postBody = {domain:domain};
+  return await baseActions.customTokenApiPostCall(token, apiUrl, postBody);
 };
 
 export default userActions;

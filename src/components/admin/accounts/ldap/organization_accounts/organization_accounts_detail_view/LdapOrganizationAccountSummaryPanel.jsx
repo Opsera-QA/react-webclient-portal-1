@@ -9,7 +9,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 
 function LdapOrganizationAccountSummaryPanel({ ldapOrganizationAccountData, setActiveTab }) {
   const getUrlString = () => {
-    const urlString = "New User Registration URL: " + process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL +"/account/registration/"+ ldapOrganizationAccountData.name
+    const urlString = "New User Registration URL: " + process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL +"/account/registration/"+ ldapOrganizationAccountData.orgDomain
     return (
       <div className="mt-1">
         <span className="text-muted">{urlString}</span>

@@ -15,6 +15,12 @@ baseActions.customTokenApiGetCall = async (customToken, apiUrl, urlParams) => {
     .catch(error => {throw { error };});
 };
 
+baseActions.customTokenApiPostCall = async (customToken, apiUrl, postBody) => {
+  return axiosApiService(customToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+};
+
 baseActions.apiPostCall = async (getAccessToken, apiUrl, postBody = {}) => {
   const accessToken = await getAccessToken();
   return axiosApiService(accessToken).post(apiUrl, postBody)
