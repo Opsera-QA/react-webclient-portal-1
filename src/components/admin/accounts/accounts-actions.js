@@ -264,14 +264,40 @@ accountsActions.getUserDetailViewLink = async (getUserRecord) => {
 };
 
 
-accountsActions.getLdapUsers = async (getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = "/users/accounts";
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+accountsActions.getLdapUsersWithEmail = async (emailAddress, getAccessToken) => {
+  const postBody = {
+    email: emailAddress
+  };
+  const apiUrl = "/users/account/users";
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
+
+accountsActions.getLdapUsersWithDomain = async (domain, getAccessToken) => {
+  const postBody = {
+    domain: domain
+  };
+  const apiUrl = "/users/account/users";
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+
+
+accountsActions.getLdapGroupsWithEmail = async (emailAddress, getAccessToken) => {
+  const postBody = {
+    email: emailAddress
+  };
+  const apiUrl = "/users/account/groups";
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+accountsActions.getLdapGroupsWithDomain = async (domain, getAccessToken) => {
+  const postBody = {
+    domain: domain
+  };
+  const apiUrl = "/users/account/groups";
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
 
 accountsActions.getUserByEmail = async (email, getAccessToken) => {
   let postBody = {

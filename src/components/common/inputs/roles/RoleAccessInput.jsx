@@ -12,6 +12,7 @@ import {
 } from "components/admin/accounts/ldap/organizations/organization-functions";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import accountsActions from "components/admin/accounts/accounts-actions";
 
 const roleTypes = [
   {text: "Administrator", value: "administrator"},
@@ -46,10 +47,9 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      // TODO: Should this be pulled from ldap domain associated to pipeline owner
       if (ldap.domain != null) {
         await getGroupsByDomain(ldap.domain);
-        await getUsersByDomain(ldap.domain);
+        await getLdapUsers(ldap.domain);
       }
     }
   };
@@ -57,9 +57,9 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
   const getGroupsByDomain = async (ldapDomain) => {
     try {
       setLoadingGroups(true)
-      let organization = await getOrganizationByDomain(ldapDomain, getAccessToken);
+      let response = await accountsActions.getLdapGroupsWithDomain(ldapDomain, getAccessToken);
 
-      const groupResponse = organization?.groups;
+      const groupResponse = response?.data;
 
       if (Array.isArray(groupResponse) && groupResponse.length > 0) {
         let filteredGroups = [];
@@ -74,24 +74,24 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
         setGroupList(filteredGroups);
       }
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error.message);
-      console.error(error.message);
+      toastContext.showLoadingErrorDialog(error);
+      console.error(error);
     } finally {
       setLoadingGroups(false);
     }
   };
 
-  const getUsersByDomain = async (ldapDomain) => {
+  const getLdapUsers = async (ldapDomain) => {
     try {
-      let organization = await getOrganizationByDomain(ldapDomain, getAccessToken);
-      setLoadingUsers(true)
-
-      if (organization?.users) {
-        setUserList(organization?.users);
+      setLoadingUsers(true);
+      let userResponse = await accountsActions.getLdapUsersWithDomain(ldapDomain, getAccessToken);
+      if (userResponse?.data) {
+        setUserList(userResponse.data);
       }
+
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error.message);
-      console.error(error.message);
+      toastContext.showLoadingErrorDialog(error);
+      console.error(error);
     } finally {
       setLoadingUsers(false);
     }
