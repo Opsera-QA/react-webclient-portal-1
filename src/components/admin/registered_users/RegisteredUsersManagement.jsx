@@ -13,7 +13,6 @@ import FilterBar from "components/common/filters/FilterBar";
 import DtoTopPagination from "components/common/pagination/DtoTopPagination";
 import {Col, Row} from "react-bootstrap";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
-import SearchFilter from "components/common/filters/search/SearchFilter";
 import InformationDialog from "components/common/status_notifications/info";
 import RegisteredUserSummaryCard from "components/admin/registered_users/RegisteredUserSummaryCard";
 
@@ -76,9 +75,7 @@ function RegisteredUsersManagement() {
         setFilterDto={setRegisteredUsersFilterDto}
         filters={["search"]}
         supportSearch={true}
-      >
-        <SearchFilter filterDto={registeredUsersFilterDto} setFilterDto={setRegisteredUsersFilterDto}/>
-      </FilterBar>
+      />
     );
   };
 
