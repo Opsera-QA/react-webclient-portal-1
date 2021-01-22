@@ -28,12 +28,76 @@ import {
 } from "../../../../../../../common/toasts/toasts";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import pipelineActions from "components/workflow/pipeline-actions";
+import { Multiselect } from 'react-widgets'
 
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
   { value: "job", label: "Custom Job" },
   { value: "opsera-job", label: "Opsera Managed Jobs" }
+];
+
+const DEPENDENCIES = [
+  {
+    "active": true,
+    "description": "Node version v10.2",
+    "enabledInRegistry": true,
+    "value": "node_v10.2",
+    "name": "Node v10.2",
+    "properties": {"isLiveStream": false},
+    "tags": [],
+    "dependency_type_description": "node version 10.2",
+    "dependency_type_identifier": "node",
+    "dependency_type_name": "Node",
+  },
+  {
+    "active": true,
+    "description": "Node version v10.3",
+    "enabledInRegistry": true,
+    "value": "node_v10.3",
+    "name": "Node v10.3",
+    "properties": {"isLiveStream": false},
+    "tags": [],
+    "dependency_type_description": "node version 10.3",
+    "dependency_type_identifier": "node",
+    "dependency_type_name": "Node",
+  },
+  {
+    "active": true,
+    "description": "Node version v10.4",
+    "enabledInRegistry": true,
+    "value": "node_v10.4",
+    "name": "Node v10.4",
+    "properties": {"isLiveStream": false},
+    "tags": [],
+    "dependency_type_description": "node version 10.4",
+    "dependency_type_identifier": "node",
+    "dependency_type_name": "Node",
+  },
+  {
+    "active": true,
+    "description": "Node version v10.5",
+    "enabledInRegistry": true,
+    "value": "node_v10.5",
+    "name": "Node v10.5",
+    "properties": {"isLiveStream": false},
+    "tags": [],
+    "dependency_type_description": "node version 10.5",
+    "dependency_type_identifier": "node",
+    "dependency_type_name": "Node",
+  },
+  {
+    "active": true,
+    "description": "Gradle version v10.5",
+    "enabledInRegistry": true,
+    "value": "gradle_v10.5",
+    "name": "Gradle v10.4",
+    "properties": {"isLiveStream": false},
+    "tags": [],
+    "dependency_type_description": "gradle version 10.5",
+    "dependency_type_identifier": "gradle",
+    "dependency_type_name": "Gradle",
+  }
 ];
 
 //This must match the form below and the data object expected.  Each tools' data object is different
@@ -48,6 +112,7 @@ const INITIAL_DATA = {
   toolJobId: "",
   toolJobType: "",
 
+  dependencies:[],
   commands: "",
  
   accountUsername: "",
@@ -570,6 +635,8 @@ function CommandLineStepConfiguration({
       });
   };
 
+  console.log(formData);
+
   const RegistryPopover = (data) => {
     if (data) {
       return (
@@ -982,6 +1049,21 @@ function CommandLineStepConfiguration({
 
         {formData.jobType === "SHELL SCRIPT" ? (
          <>
+          {/* multi select dependency selection */}
+          <div className="form-group custom-multiselect-input">
+            <label><span>Dependencies*</span></label>
+            <Multiselect
+              data={DEPENDENCIES}
+              textField={data => data["name"]}
+              groupBy={"dependency_type_identifier"}
+              // busy={componentLoading}
+              containerClassName={"tag-input"}
+              value={formData.dependencies}
+              placeholder={"Select Dependencies"}
+              disabled={false}
+              onChange={dependencies => setFormData({...formData, dependencies: dependencies })}
+            />
+          </div>
           <Form.Group controlId="repoField">
             <Form.Label>Enter build script content*</Form.Label>
             <Form.Control
