@@ -57,6 +57,10 @@ const kpiMetaData = {
       id: "active",
     },
     {
+      label: "Policy Support",
+      id: "policySupport",
+    },
+    {
       label: "Created At",
       id: "createdAt",
     },
@@ -76,6 +80,7 @@ const kpiMetaData = {
     "supported_filters": [],
     "tools": [],
     "active": true,
+    "policySupport": false,
     "thumbnailPath": "",
     // "persona": ["manager","developer", "executive"]
   }

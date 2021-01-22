@@ -29,7 +29,10 @@ function KpiSelectInput({ fieldName, dataObject, setDataObject, setCurrentKpi, s
   };
 
   const loadKpis = async () => {
-    const response = await KpiActions.getAllKpis(getAccessToken);
+    const status = {text: "Status: Active", value: "active"};
+    const policySupport = {text: "Policy: Active", value: "active"};
+
+    const response = await KpiActions.getAllKpis(getAccessToken, status, policySupport);
 
     const kpis = response?.data?.data;
 

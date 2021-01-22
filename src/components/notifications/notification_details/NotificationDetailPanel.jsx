@@ -40,7 +40,7 @@ function NotificationDetailPanel({ notificationData, setNotificationData, loadDa
         case "settings":
           return <NotificationEditorPanel notificationData={notificationData} setNotificationData={setNotificationData} loadData={loadData}/>;
         case "logs":
-          return <NotificationActivityLogsTable notificationData={notificationData} setNotificationData={setNotificationData} loadData={loadData}/>;
+          return <NotificationActivityLogsTable notificationData={notificationData} setNotificationData={setNotificationData} loadData={loadData} allLogs={false}/>;
       default:
         return null;
     }

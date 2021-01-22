@@ -1,89 +1,59 @@
-import { AuthContext } from "contexts/AuthContext";
-import React, { useContext, useEffect, useState } from "react";
-import "./notifications.css";
-import NotificationsTable from "./NotificationsTable";
-import notificationsFilterMetadata from "./notifications-filter-metadata";
-import notificationsActions from "./notifications-actions";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import Model from "core/data_model/model";
-import LoadingDialog from "components/common/status_notifications/loading";
-import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
-import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTable, faEnvelope } from "@fortawesome/pro-light-svg-icons";
+import NotificationsView from "./NotificationsView";
+import NotificationActivityLogsTable from "./notification_details/activity_logs/NotificationActivityLogsTable";
 
 function Notifications() {
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [isLoading, setIsLoading] = useState(true);
+  const { tab } = useParams();
+  const [activeTab, setActiveTab] = useState(tab ? tab : "notifications");
 
-  const { getAccessToken } = useContext(AuthContext);
-  const [notificationsList, setNotificationsList] = useState([]);
-  const [notificationFilterDto, setNotificationFilterDto] = useState(new Model({...notificationsFilterMetadata.newObjectFields}, notificationsFilterMetadata, false));
+  const handleTabClick = (tabSelection) => e => {
+    e.preventDefault();
+    setActiveTab(tabSelection);
+  };
 
-  useEffect(() => {
-    loadData();
-  }, []);
+  const getTab = (handleTabClick, tabName, icon, text) => {
+    return (
+      <li className="nav-item" style={{ minWidth: "5em", textAlign: "center" }}>
+          <a className={"nav-link " + (activeTab === tabName ? "active" : "")} href="#"
+             onClick={handleTabClick(tabName)}><FontAwesomeIcon icon={icon} fixedWidth size="lg"/><span
+            className="ml-1 d-none d-lg-inline">{text}</span></a>
+      </li>
+    );
+  };
 
-  const loadData = async (newFilterDto = notificationFilterDto) => {
-    try {
-      setIsLoading(true);
-      const userRoleAccess = await getRoles();
-
-      if (userRoleAccess) {
-        setAccessRoleData(userRoleAccess);
-
-        if(userRoleAccess?.PowerUser || userRoleAccess?.Administrator || userRoleAccess?.OpseraAdministrator) {
-          await loadNotifications(newFilterDto);
-        }
-      }
-    } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    } finally {
-      setIsLoading(false);
+  const getView = () => {
+    switch (activeTab) {
+      case "notifications":
+        return <NotificationsView />;
+      case "activity":
+        return <NotificationActivityLogsTable allLogs={true} />;
+      default:
+        return null;
     }
-  };
-
-  const loadNotifications = async (filterDto = notificationFilterDto) => {
-    await getNotificationsList(filterDto);
-  }
-
-  const getRoles = async () => {
-    const user = await getUserRecord();
-    return await setAccessRoles(user);
-  };
-
-  const getNotificationsList = async (filterDto = notificationFilterDto) => {
-      const response = await notificationsActions.getNotificationsList(filterDto, getAccessToken);
-      setNotificationsList(response.data.data);
-      let newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", response.data.count);
-      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
-      setNotificationFilterDto({...newFilterDto});
-  };
-
-  if (!accessRoleData) {
-    return <LoadingDialog size="sm" />;
-  }
-
-  if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
-    return <AccessDeniedDialog roleData={accessRoleData} />;
   }
 
   return (
-    <ScreenContainer
-      breadcrumbDestination={"notifications"}
-      pageDescription={"Manage notification policies for the Opsera Analytics Engine."}
-    >
-      <NotificationsTable
-          isLoading={isLoading}
-          loadData={loadData}
-          data={notificationsList}
-          notificationFilterDto={notificationFilterDto}
-          setNotificationFilterDto={setNotificationFilterDto}
-      />
-    </ScreenContainer>
+    <>
+    <div className="max-content-width">
+      {/*<BreadcrumbTrail destination={"pipelines"}/>*/}
+      <div className="title-text-5 mb-2">Notifications</div>
+      <>
+        <div className="alternate-tabs">
+          <ul className="nav nav-tabs">
+            {getTab(handleTabClick, "notifications", faEnvelope, "Notification Policies", "Notification Policies")}
+            {getTab(handleTabClick, "activity", faTable, "Activity Logs", "Activity Logs")}
+          </ul>
+        </div>
+        <div className="content-block-collapse pt-2">
+          {getView()}
+        </div>
+      </>
+    </div>
+  </>
   );
 }
-
 
 export default Notifications;

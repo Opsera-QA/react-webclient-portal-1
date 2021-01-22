@@ -1,0 +1,81 @@
+import { AuthContext } from "contexts/AuthContext";
+import React, { useContext, useEffect, useState } from "react";
+import "./notifications.css";
+import NotificationsTable from "./NotificationsTable";
+import notificationsFilterMetadata from "./notifications-filter-metadata";
+import notificationsActions from "./notifications-actions";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import Model from "core/data_model/model";
+import LoadingDialog from "components/common/status_notifications/loading";
+import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
+
+function NotificationsView() {
+  const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
+  const [isLoading, setIsLoading] = useState(true);
+  const [accessRoleData, setAccessRoleData] = useState(undefined);
+  const [notificationsList, setNotificationsList] = useState([]);
+  const [notificationFilterDto, setNotificationFilterDto] = useState(new Model({...notificationsFilterMetadata.newObjectFields}, notificationsFilterMetadata, false));
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async (newFilterDto = notificationFilterDto) => {
+    try {
+      setIsLoading(true);
+      const userRoleAccess = await getRoles();
+
+      if (userRoleAccess) {
+        setAccessRoleData(userRoleAccess);
+
+        if(userRoleAccess?.PowerUser || userRoleAccess?.Administrator || userRoleAccess?.OpseraAdministrator) {
+          await loadNotifications(newFilterDto);
+        }
+      }
+    } catch (error) {
+      toastContext.showLoadingErrorDialog(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const loadNotifications = async (filterDto = notificationFilterDto) => {
+    await getNotificationsList(filterDto);
+  }
+
+  const getRoles = async () => {
+    const user = await getUserRecord();
+    return await setAccessRoles(user);
+  };
+
+  const getNotificationsList = async (filterDto = notificationFilterDto) => {
+      const response = await notificationsActions.getNotificationsList(filterDto, getAccessToken);
+      setNotificationsList(response.data.data);
+      let newFilterDto = filterDto;
+      newFilterDto.setData("totalCount", response.data.count);
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
+      setNotificationFilterDto({...newFilterDto});
+  };
+
+  if (!accessRoleData) {
+    return <LoadingDialog size="sm" />;
+  }
+
+  if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
+    return <AccessDeniedDialog roleData={accessRoleData} />;
+  }
+
+  return (
+    <NotificationsTable
+        isLoading={isLoading}
+        loadData={loadData}
+        data={notificationsList}
+        notificationFilterDto={notificationFilterDto}
+        setNotificationFilterDto={setNotificationFilterDto}
+    />
+  );
+}
+
+
+export default NotificationsView;

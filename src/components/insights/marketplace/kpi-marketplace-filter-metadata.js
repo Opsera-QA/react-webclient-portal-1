@@ -54,6 +54,7 @@ const kpiMarketplaceFilterMetadata = {
     currentPage: 1,
     sort: "name",
     search: "",
+    status: {text: "Status: Active", value: "active"},
     activeFilters: []
   }
 };
