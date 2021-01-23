@@ -3,17 +3,30 @@ import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 
-// TODO: Final styling when implementing
 function TagField({dataObject, fieldName}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
+  // TODO: After all pipelines are updated to new tags, remove this.
+  // Legacy tags are just strings
+  const parseTags = () => {
+    let tags = dataObject?.getData(fieldName);
+
+    if (Array.isArray(tags) && tags.length > 0) {
+      return tags.filter((tag) => {return typeof tag === "object" && tag.type != null && tag.value != null});
+    }
+
+    return [];
+  };
+
   const getTags = () => {
-    if (dataObject?.getData(fieldName) == null || dataObject?.getData(fieldName)?.length === 0) {
+    const parsedTags = parseTags();
+
+    if (parsedTags.length === 0) {
       return <span>No Tags Applied</span>;
     }
 
     return (
-      dataObject.getData(fieldName).map((tag, i) => {
+      parsedTags.map((tag, i) => {
         return (
           <span key={i} className="mx-1 mb-1 badge badge-secondary">
             {`${tag.type}: ${tag.value}`}
