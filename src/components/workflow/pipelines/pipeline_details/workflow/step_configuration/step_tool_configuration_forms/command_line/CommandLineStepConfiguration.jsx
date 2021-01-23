@@ -28,9 +28,6 @@ import {
 } from "../../../../../../../common/toasts/toasts";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import pipelineActions from "components/workflow/pipeline-actions";
-import { Multiselect } from 'react-widgets';
-import SelectInputBase from 'components/common/inputs/select/SelectInputBase';
-
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
