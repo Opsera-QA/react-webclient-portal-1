@@ -29,11 +29,29 @@ import {
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 
-
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
   { value: "job", label: "Custom Job" },
   { value: "opsera-job", label: "Opsera Managed Jobs" }
+];
+
+// TODO : Make a new component for this as this can be re-used multiple other places 
+
+const DEPENDENCIES =  [
+  {text: "Node", value: "node"},
+  // {text: "Gradle", value: "gradle"},
+];
+
+const NODE_VERSIONS =  [
+  {text: "Node JS v12.x", value: "12x"},
+  {text: "Node JS v14x", value: "14x"},
+  {text: "Node JS v15x", value: "15x"},
+];
+
+const GRADLE_VERSIONS =  [
+  {text: "Gradle v12x", value: "v12x"},
+  {text: "Gradle v14x", value: "v14x"},
+  {text: "Gradle v15x", value: "v15x"},
 ];
 
 //This must match the form below and the data object expected.  Each tools' data object is different
@@ -47,6 +65,13 @@ const INITIAL_DATA = {
   jobName: "",
   toolJobId: "",
   toolJobType: "",
+
+  outputPath: "",
+  outputFileName: "",
+  dependencies: {},
+  dependencyType:"",
+  nodeVersion: "",
+  gradleVersion: "",
 
   commands: "",
  
@@ -302,7 +327,24 @@ function CommandLineStepConfiguration({
     }
   }, [formData.toolJobType]);
 
-  console.log(formData);
+  
+  useEffect(() => {
+    // create dependencies obj
+
+    let dependenciesObj = {};
+
+    if (renderForm ) {
+      dependenciesObj.node = formData.nodeVersion;
+      // dependenciesObj[formData.dependencyType] = formData.nodeVersion;
+      // dependenciesObj.gradle = formData.gradleVersion;
+  
+      setFormData({...formData, dependencies : dependenciesObj });
+    }
+
+
+  }, [formData.nodeVersion]);
+
+  // console.log(formData);
   // console.log(jobsList);
 
   const loadFormData = async (step) => {
@@ -326,7 +368,7 @@ function CommandLineStepConfiguration({
   const handleCreateAndSave = async (pipelineId, stepId, toolId) => {
     console.log("saving and creating job for toolID: ", toolId);
     if (validateRequiredFields() && toolId) {
-      setLoading(true);
+      // setLoading(true);
 
       const createJobPostBody = {
         jobId: "",
@@ -569,6 +611,8 @@ function CommandLineStepConfiguration({
         toolJobType: "",
       });
   };
+
+  // console.log(formData);
 
   const RegistryPopover = (data) => {
     if (data) {
@@ -980,8 +1024,54 @@ function CommandLineStepConfiguration({
                 </Form.Group>
               )}
 
-        {formData.jobType === "SHELL SCRIPT" ? (
+        {formData.jobType === "SHELL SCRIPT" && 
          <>
+
+          {/* multi select dependency selection */}
+          <div className="form-group custom-select-input">
+            <label><span>Dependency*</span></label>
+            <DropdownList
+              data={DEPENDENCIES}
+              valueField="value"
+              textField="text"
+              // groupBy={groupBy}
+              filter={"contains"}
+              value={formData.dependencyType}
+              placeholder={"Select Dependency"}
+              onChange={dependency => setFormData({...formData, dependencyType: dependency.value, nodeVersion: "", gradleVersion: "" })}
+            />
+          </div>
+          {formData.dependencyType === "node" && 
+            <div className="form-group custom-select-input">
+              <label><span>Node Version</span></label>
+              <DropdownList
+                data={NODE_VERSIONS}
+                valueField="value"
+                textField="text"
+                // groupBy={groupBy}
+                filter={"contains"}
+                value={formData.nodeVersion}
+                placeholder={"Select Node Version"}
+                onChange={version => setFormData({...formData, nodeVersion: version.value })}
+              />
+            </div>
+          }
+          {formData.dependencyType === "gradle" && 
+            <div className="form-group custom-select-input">
+              <label><span>Gradle Version</span></label>
+              <DropdownList
+                data={GRADLE_VERSIONS}
+                valueField="value"
+                textField="text"
+                // groupBy={groupBy}
+                filter={"contains"}
+                value={formData.gradleVersion}
+                placeholder={"Select Gradle Version"}
+                onChange={version => setFormData({...formData, gradleVersion: version.value })}
+              />
+            </div>
+          }
+
           <Form.Group controlId="repoField">
             <Form.Label>Enter build script content*</Form.Label>
             <Form.Control
@@ -1000,10 +1090,29 @@ function CommandLineStepConfiguration({
             Windows or as a shellscript in Unix-like environments
           </small>
 
+          <Form.Group controlId="fileName">
+          <Form.Label>Output File Name</Form.Label>
+          <Form.Control
+            maxLength="50"
+            type="text"
+            placeholder=""
+            value={formData.outputFileName || ""}
+            onChange={(e) => setFormData({ ...formData, outputFileName: e.target.value })}
+          />
+          </Form.Group>
+          <Form.Group controlId="path">
+            <Form.Label>Output File Path</Form.Label>
+            <Form.Control
+              maxLength="50"
+              type="text"
+              placeholder=""
+              value={formData.outputPath || ""}
+              onChange={(e) => setFormData({ ...formData, outputPath: e.target.value })}
+            />
+          </Form.Group>
+
          </>
-        ) : (
-          <></>
-        )}
+        }
         </>
         
         }
