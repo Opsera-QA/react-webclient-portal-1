@@ -28,7 +28,8 @@ import {
 } from "../../../../../../../common/toasts/toasts";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import pipelineActions from "components/workflow/pipeline-actions";
-import { Multiselect } from 'react-widgets'
+import { Multiselect } from 'react-widgets';
+import SelectInputBase from 'components/common/inputs/select/SelectInputBase';
 
 
 const JOB_OPTIONS = [
@@ -37,67 +38,23 @@ const JOB_OPTIONS = [
   { value: "opsera-job", label: "Opsera Managed Jobs" }
 ];
 
-const DEPENDENCIES = [
-  {
-    "active": true,
-    "description": "Node version v10.2",
-    "enabledInRegistry": true,
-    "value": "node_v10.2",
-    "name": "Node v10.2",
-    "properties": {"isLiveStream": false},
-    "tags": [],
-    "dependency_type_description": "node version 10.2",
-    "dependency_type_identifier": "node",
-    "dependency_type_name": "Node",
-  },
-  {
-    "active": true,
-    "description": "Node version v10.3",
-    "enabledInRegistry": true,
-    "value": "node_v10.3",
-    "name": "Node v10.3",
-    "properties": {"isLiveStream": false},
-    "tags": [],
-    "dependency_type_description": "node version 10.3",
-    "dependency_type_identifier": "node",
-    "dependency_type_name": "Node",
-  },
-  {
-    "active": true,
-    "description": "Node version v10.4",
-    "enabledInRegistry": true,
-    "value": "node_v10.4",
-    "name": "Node v10.4",
-    "properties": {"isLiveStream": false},
-    "tags": [],
-    "dependency_type_description": "node version 10.4",
-    "dependency_type_identifier": "node",
-    "dependency_type_name": "Node",
-  },
-  {
-    "active": true,
-    "description": "Node version v10.5",
-    "enabledInRegistry": true,
-    "value": "node_v10.5",
-    "name": "Node v10.5",
-    "properties": {"isLiveStream": false},
-    "tags": [],
-    "dependency_type_description": "node version 10.5",
-    "dependency_type_identifier": "node",
-    "dependency_type_name": "Node",
-  },
-  {
-    "active": true,
-    "description": "Gradle version v10.5",
-    "enabledInRegistry": true,
-    "value": "gradle_v10.5",
-    "name": "Gradle v10.4",
-    "properties": {"isLiveStream": false},
-    "tags": [],
-    "dependency_type_description": "gradle version 10.5",
-    "dependency_type_identifier": "gradle",
-    "dependency_type_name": "Gradle",
-  }
+// TODO : Make a new component for this as this can be re-used multiple other places 
+
+const DEPENDENCIES =  [
+  {text: "Node", value: "node"},
+  // {text: "Gradle", value: "gradle"},
+];
+
+const NODE_VERSIONS =  [
+  {text: "Node JS v12.x", value: "12x"},
+  {text: "Node JS v14x", value: "14x"},
+  {text: "Node JS v15x", value: "15x"},
+];
+
+const GRADLE_VERSIONS =  [
+  {text: "Gradle v12x", value: "v12x"},
+  {text: "Gradle v14x", value: "v14x"},
+  {text: "Gradle v15x", value: "v15x"},
 ];
 
 //This must match the form below and the data object expected.  Each tools' data object is different
@@ -112,7 +69,13 @@ const INITIAL_DATA = {
   toolJobId: "",
   toolJobType: "",
 
-  dependencies:[],
+  outputPath: "",
+  outputFileName: "",
+  dependencies: {},
+  dependencyType:"",
+  nodeVersion: "",
+  gradleVersion: "",
+
   commands: "",
  
   accountUsername: "",
@@ -367,7 +330,24 @@ function CommandLineStepConfiguration({
     }
   }, [formData.toolJobType]);
 
-  console.log(formData);
+  
+  useEffect(() => {
+    // create dependencies obj
+
+    let dependenciesObj = {};
+
+    if (renderForm ) {
+      dependenciesObj.node = formData.nodeVersion;
+      // dependenciesObj[formData.dependencyType] = formData.nodeVersion;
+      // dependenciesObj.gradle = formData.gradleVersion;
+  
+      setFormData({...formData, dependencies : dependenciesObj });
+    }
+
+
+  }, [formData.nodeVersion]);
+
+  // console.log(formData);
   // console.log(jobsList);
 
   const loadFormData = async (step) => {
@@ -391,7 +371,7 @@ function CommandLineStepConfiguration({
   const handleCreateAndSave = async (pipelineId, stepId, toolId) => {
     console.log("saving and creating job for toolID: ", toolId);
     if (validateRequiredFields() && toolId) {
-      setLoading(true);
+      // setLoading(true);
 
       const createJobPostBody = {
         jobId: "",
@@ -635,7 +615,7 @@ function CommandLineStepConfiguration({
       });
   };
 
-  console.log(formData);
+  // console.log(formData);
 
   const RegistryPopover = (data) => {
     if (data) {
@@ -1047,23 +1027,54 @@ function CommandLineStepConfiguration({
                 </Form.Group>
               )}
 
-        {formData.jobType === "SHELL SCRIPT" ? (
+        {formData.jobType === "SHELL SCRIPT" && 
          <>
+
           {/* multi select dependency selection */}
-          <div className="form-group custom-multiselect-input">
-            <label><span>Dependencies*</span></label>
-            <Multiselect
+          <div className="form-group custom-select-input">
+            <label><span>Dependency*</span></label>
+            <DropdownList
               data={DEPENDENCIES}
-              textField={data => data["name"]}
-              groupBy={"dependency_type_identifier"}
-              // busy={componentLoading}
-              containerClassName={"tag-input"}
-              value={formData.dependencies}
-              placeholder={"Select Dependencies"}
-              disabled={false}
-              onChange={dependencies => setFormData({...formData, dependencies: dependencies })}
+              valueField="value"
+              textField="text"
+              // groupBy={groupBy}
+              filter={"contains"}
+              value={formData.dependencyType}
+              placeholder={"Select Dependency"}
+              onChange={dependency => setFormData({...formData, dependencyType: dependency.value, nodeVersion: "", gradleVersion: "" })}
             />
           </div>
+          {formData.dependencyType === "node" && 
+            <div className="form-group custom-select-input">
+              <label><span>Node Version</span></label>
+              <DropdownList
+                data={NODE_VERSIONS}
+                valueField="value"
+                textField="text"
+                // groupBy={groupBy}
+                filter={"contains"}
+                value={formData.nodeVersion}
+                placeholder={"Select Node Version"}
+                onChange={version => setFormData({...formData, nodeVersion: version.value })}
+              />
+            </div>
+          }
+          {formData.dependencyType === "gradle" && 
+            <div className="form-group custom-select-input">
+              <label><span>Gradle Version</span></label>
+              <DropdownList
+                data={GRADLE_VERSIONS}
+                valueField="value"
+                textField="text"
+                // groupBy={groupBy}
+                filter={"contains"}
+                value={formData.gradleVersion}
+                placeholder={"Select Gradle Version"}
+                onChange={version => setFormData({...formData, gradleVersion: version.value })}
+              />
+            </div>
+          }
+
           <Form.Group controlId="repoField">
             <Form.Label>Enter build script content*</Form.Label>
             <Form.Control
@@ -1082,10 +1093,29 @@ function CommandLineStepConfiguration({
             Windows or as a shellscript in Unix-like environments
           </small>
 
+          <Form.Group controlId="fileName">
+          <Form.Label>Output File Name</Form.Label>
+          <Form.Control
+            maxLength="50"
+            type="text"
+            placeholder=""
+            value={formData.outputFileName || ""}
+            onChange={(e) => setFormData({ ...formData, outputFileName: e.target.value })}
+          />
+          </Form.Group>
+          <Form.Group controlId="path">
+            <Form.Label>Output File Path</Form.Label>
+            <Form.Control
+              maxLength="50"
+              type="text"
+              placeholder=""
+              value={formData.outputPath || ""}
+              onChange={(e) => setFormData({ ...formData, outputPath: e.target.value })}
+            />
+          </Form.Group>
+
          </>
-        ) : (
-          <></>
-        )}
+        }
         </>
         
         }
