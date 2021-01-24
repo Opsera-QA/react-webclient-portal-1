@@ -43,9 +43,9 @@ const DEPENDENCIES =  [
 ];
 
 const NODE_VERSIONS =  [
-  {text: "Node JS v12.x", value: "12x"},
-  {text: "Node JS v14x", value: "14x"},
-  {text: "Node JS v15x", value: "15x"},
+  {text: "Node JS v12.x", value: "12"},
+  {text: "Node JS v14x", value: "14"},
+  {text: "Node JS v15x", value: "15"},
 ];
 
 const GRADLE_VERSIONS =  [
