@@ -8,11 +8,13 @@ import ErrorDialog from "../common/status_notifications/error";
 import InformationDialog from "../common/status_notifications/info";
 import { faArrowLeft } from "@fortawesome/pro-solid-svg-icons";
 import { AuthContext } from "../../contexts/AuthContext";
-import '@okta/okta-signin-widget/dist/css/okta-sign-in.min.css'
+import "@okta/okta-signin-widget/dist/css/okta-sign-in.min.css";
+import { useOktaAuth } from "@okta/okta-react";
 const OktaSignIn = require("@okta/okta-signin-widget");
 
 const LoginForm = ({ authClient }) => {
-  const {featureFlagHideItemInProd} = useContext(AuthContext);
+  const { featureFlagHideItemInProd } = useContext(AuthContext);
+  const { oktaAuth } = useOktaAuth();
   const history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -45,7 +47,7 @@ const LoginForm = ({ authClient }) => {
         const sessionToken = res.sessionToken;
         //oktaAuth.signInWithRedirect({ sessionToken })
 
-        authClient.token.getWithoutPrompt({
+        const tokenOptions = {
           sessionToken: sessionToken,
           scopes: [
             "openid",
@@ -55,7 +57,9 @@ const LoginForm = ({ authClient }) => {
           state: "8rFzn42MH5q",
           nonce: "51GePTb1wrm",
           idp: null,
-        })
+        };
+
+        authClient.token.getWithoutPrompt(tokenOptions)
           .then(function(res) {
             let tokens = res.tokens;
             authClient.tokenManager.setTokens(tokens);
@@ -63,13 +67,35 @@ const LoginForm = ({ authClient }) => {
             history.push("/");
           })
           .catch(function(err) {
-            console.log("Found an error", err);
+            console.log("Error on getWithoutPrompt, trying fallback", err);
+            //handleFallbackGetLoginWithPrompt(tokenOptions);
+            handleFallbackSignInReactHook(sessionToken);
             setErrorMessage(err.message);
             setLoading(false);
           });
       })
       .catch(err => {
         console.log("Found an error", err);
+        setErrorMessage(err.message);
+        setLoading(false);
+      });
+  };
+
+  //works for if password is expired or 2FA engaged.  Would prefer to use the next funciton though
+  const handleFallbackSignInReactHook = (sessionToken) => {
+    oktaAuth.signInWithRedirect({ sessionToken })
+  }
+
+  const handleFallbackGetLoginWithPrompt = (options) => {
+    authClient.token.getWithoutPrompt(options)
+      .then(function(res) {
+        let tokens = res.tokens;
+        authClient.tokenManager.setTokens(tokens);
+        setLoading(false);
+        history.push("/");
+      })
+      .catch(function(err) {
+        console.log("Error [getWithoutPrompt]:", err);
         setErrorMessage(err.message);
         setLoading(false);
       });

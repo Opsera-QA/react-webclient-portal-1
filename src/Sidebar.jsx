@@ -241,10 +241,15 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
               className="menu-text">Reports</span></NavLink>
           }
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
-            <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
-            className="menu-text">Notifications</span></NavLink>
-        
+          {featureFlagHideItemInProd ?
+            <></>
+            :
+            <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
+              <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
+              className="menu-text">Notifications</span></NavLink>
+          }
+
+          
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
             className="menu-text">Updates</span></NavLink>
@@ -325,9 +330,9 @@ function SaasUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHideIte
             <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
             className="menu-text">Blueprints</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
+          {/* <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
             <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
-            className="menu-text">Notifications</span></NavLink>
+            className="menu-text">Notifications</span></NavLink>*/}
 
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
@@ -406,9 +411,9 @@ function AccountAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFla
             <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
             className="menu-text">Blueprints</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
+         {/* <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
             <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
-            className="menu-text">Notifications</span></NavLink>
+            className="menu-text">Notifications</span></NavLink>*/}
 
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
@@ -486,9 +491,9 @@ function AccountPowerUserNav({ accessRole, featureFlagHideItemInProd, featureFla
             <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
             className="menu-text">Blueprints</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
+          {/* <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
             <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
-            className="menu-text">Notifications</span></NavLink>
+            className="menu-text">Notifications</span></NavLink>*/}
 
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
