@@ -43,7 +43,7 @@ const DEPENDENCIES =  [
 ];
 
 const NODE_VERSIONS =  [
-  {text: "Node JS v12.x", value: "12"},
+  {text: "Node JS v12x", value: "12"},
   {text: "Node JS v14x", value: "14"},
   {text: "Node JS v15x", value: "15"},
 ];
