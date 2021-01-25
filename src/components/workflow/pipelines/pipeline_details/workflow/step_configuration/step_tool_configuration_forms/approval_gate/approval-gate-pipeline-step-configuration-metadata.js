@@ -4,15 +4,17 @@ const approvalGatePipelineStepConfigurationMetadata = {
     {
       label: "Custom Step Message",
       id: "message",
-      isRequired: true
+      isRequired: true,
+      formText: "Provide the step specific message to include in the approval notification."
     },
     {
       label: "Point of Contact",
       id: "contact",
-      isRequired: true
+      isRequired: true,
+      formText: "Point of contact if approval assignee has questions."
     },
   ],
-  newModelBase: {
+  newObjectFields: {
     message: "",
     contact: ""
   }
