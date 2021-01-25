@@ -51,7 +51,7 @@ function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, l
         columns={columns}
         tableTitle={"Groups"}
         type={"Group"}
-        createNewRecord={createGroup}
+        createNewRecord={!useMembers ? createGroup : undefined}
       />
       <NewLdapGroupModal
         loadData={loadData}
