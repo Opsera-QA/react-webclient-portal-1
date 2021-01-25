@@ -33,7 +33,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
   };
 
   const getClearDataIcon = () => {
-    if (dataObject.getData(field.id) !== "") {
+    if (dataObject.getData(field.id) !== "" && !disabled) {
       return (
         <TooltipWrapper innerText={"Clear this Value"}>
           <span className="pointer danger-red" onClick={() => clearValue()}>

@@ -41,7 +41,7 @@ function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, d
   };
 
   const getClearDataIcon = () => {
-    if (dataObject.getData(field.id) !== "") {
+    if (dataObject.getData(field.id) !== "" && !disabled) {
       return (
         <TooltipWrapper innerText={"Clear this Value"}>
           <span className="pointer danger-red" onClick={() => clearValue()}>
