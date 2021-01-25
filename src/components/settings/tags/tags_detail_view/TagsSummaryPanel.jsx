@@ -1,13 +1,13 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
-import NameValueTable from "../../../common/table/nameValueTable";
-import DtoTextField from "../../../common/form_fields/dto_form_fields/dto-text-field";
-import DtoToggleField from "../../../common/form_fields/dto_form_fields/dto-toggle-field";
-import DtoDateField from "../../../common/form_fields/dto_form_fields/dto-date-field";
-import LoadingDialog from "../../../common/status_notifications/loading";
-import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import ActivityField from "components/common/fields/boolean/ActivityField";
+import DateFieldBase from "components/common/fields/date/DateFieldBase";
+import LoadingDialog from "components/common/status_notifications/loading";
+import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import ConfigurationField from "components/common/fields/multiple_items/ConfigurationField";
+import NameValueTable from "components/common/table/nameValueTable";
 
 function TagsSummaryPanel({ tagData, setActiveTab }) {
   const parseNameValueArray = (nameValueArray) => {
@@ -32,23 +32,26 @@ function TagsSummaryPanel({ tagData, setActiveTab }) {
     <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
-          <DtoTextField dataObject={tagData} fieldName={"_id"}/>
+          <TextFieldBase dataObject={tagData} fieldName={"_id"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={tagData} fieldName={"account"}/>
+          <TextFieldBase dataObject={tagData} fieldName={"account"}/>
         </Col>
         <Col lg={6}>
-          <DtoDateField dataObject={tagData} fieldName={"createdAt"}/>
+          <DateFieldBase dataObject={tagData} fieldName={"createdAt"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={tagData} fieldName={"type"}/>
+          <TextFieldBase dataObject={tagData} fieldName={"type"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={tagData} fieldName={"value"}/>
+          <TextFieldBase dataObject={tagData} fieldName={"value"}/>
         </Col>
         <Col lg={6}>
-          <DtoToggleField dataObject={tagData} fieldName={"active"}/>
+          <ActivityField dataObject={tagData} fieldName={"active"}/>
         </Col>
+        {/*<Col lg={12}>*/}
+        {/*  <ConfigurationField dataObject={tagData} fieldName={"configuration"} />*/}
+        {/*</Col>*/}
       </Row>
       <Row>
         <Col>
