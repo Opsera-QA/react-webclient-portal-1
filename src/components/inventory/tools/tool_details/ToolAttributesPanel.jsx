@@ -3,8 +3,8 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import NameValueTable from "components/common/table/nameValueTable";
-import DtoTagField from "components/common/form_fields/dto_form_fields/dto-tag-field";
-import DtoTextField from "components/common/form_fields/dto_form_fields/dto-text-field";
+import TagField from "components/common/fields/multiple_items/TagField";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
 
 function ToolAttributesPanel({ toolData }) {
   const contactsColumns = useMemo(
@@ -62,10 +62,10 @@ function ToolAttributesPanel({ toolData }) {
       <div className="scroll-y pt-2 px-3">
         <Row>
           <Col lg={6}>
-            <DtoTagField dataObject={toolData} fieldName={"tags"} />
+            <TagField dataObject={toolData} fieldName={"tags"} />
           </Col>
           <Col lg={6}>
-            <DtoTextField dataObject={toolData} fieldName={"costCenter"} />
+            <TextFieldBase dataObject={toolData} fieldName={"costCenter"} />
           </Col>
           <Col lg={6}>
             <NameValueTable data={toolData["licensing"]} label={toolData.getFieldById("licensing").label}/>
