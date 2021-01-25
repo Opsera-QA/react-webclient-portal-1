@@ -1,3 +1,6 @@
+import { Tooltip } from "react-bootstrap";
+import React from "react";
+
 export function isLocalHost(hostname) {
   return !!(
     hostname === "localhost" ||
@@ -58,4 +61,28 @@ export function handleError(error) {
   }
   console.log(errMessage);
   return errMessage;
+}
+
+export function renderTooltip(props) {
+  const { message } = props;
+  return (
+    <Tooltip id="button-tooltip" {...props}>
+      {message}
+    </Tooltip>
+  );
+}
+
+export function defineUserRole(userRole) {
+  switch (userRole) {
+  case "administrator":
+    return "Administrator";
+  case "free_trial":
+    return "Free Trial User";
+  case "power_user":
+    return "Power User";
+  case "user":
+    return "Standard User"
+  default:
+    return "Read Only User"
+  }
 }

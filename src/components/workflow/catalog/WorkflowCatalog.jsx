@@ -2,8 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
 import WorkflowCatalogItem from "./WorkflowCatalogItem";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { AuthContext } from "contexts/AuthContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 import InformationDialog from "components/common/status_notifications/info";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -58,7 +58,7 @@ function WorkflowCatalog() {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   const loadRoles = async () => {
     const user = await getUserRecord();
@@ -139,7 +139,7 @@ function WorkflowCatalog() {
         supportSearch={true}
       >
         <TagFilter filterDto={catalogFilterDto} setFilterDto={setCatalogFilterDto}/>
-        <PipelineTypeFilter filterDto={catalogFilterDto} setFilterDto={setCatalogFilterDto} />
+        <PipelineTypeFilter filterDto={catalogFilterDto} setFilterDto={setCatalogFilterDto}/>
       </FilterBar>
     );
   };
@@ -147,12 +147,12 @@ function WorkflowCatalog() {
   return (
     <div className="max-content-width" style={{ minWidth: "505px" }}>
       <div className="mb-4">
-        <div className="my-2 p-1 px-3">
-          <div>To get started with Opsera Pipelines, choose a pipeline template below that best matches your needs and
-            click the &quot;Create Pipeline&quot; button in order to build the workflow for your new pipeline.
-          </div>
+
+        <div className="pl-3 mt-2">
+          Select a template to get started &quot;Creating a new Pipeline&quot;.
         </div>
-        <div className="px-4 mb-1">
+
+        <div className="mr-4">
           {getFilterBar()}
         </div>
         <div className="px-3">
