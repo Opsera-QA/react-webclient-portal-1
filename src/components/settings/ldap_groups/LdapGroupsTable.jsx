@@ -5,21 +5,30 @@ import { useHistory } from "react-router-dom";
 import {ldapGroupMetaData} from "./ldap-groups-metadata";
 import NewLdapGroupModal from "components/settings/ldap_groups/NewLdapGroupModal";
 import {
+  getCountColumnWithoutField,
   getTableBooleanIconColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 
-function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, loadData, currentUserEmail }) {
+function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, loadData, currentUserEmail, useMembers }) {
   let fields = ldapGroupMetaData.fields;
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
   const history = useHistory();
+
+  const getDynamicColumn = () => {
+    if (useMembers) {
+      return (getCountColumnWithoutField("Members", "members"));
+    }
+
+    return getTableTextColumn(fields.find(field => { return field.id === "memberCount"}));
+  };
 
   const columns = useMemo(
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "name"})),
       getTableTextColumn(fields.find(field => { return field.id === "externalSyncGroup"})),
       getTableTextColumn(fields.find(field => { return field.id === "groupType"})),
-      getTableTextColumn(fields.find(field => { return field.id === "memberCount"})),
+      getDynamicColumn(),
       getTableBooleanIconColumn(fields.find(field => { return field.id === "isSync"}))
     ],
     []
@@ -62,7 +71,8 @@ LdapGroupsTable.propTypes = {
   isLoading: PropTypes.bool,
   authorizedActions: PropTypes.array,
   loadData: PropTypes.func,
-  currentUserEmail: PropTypes.string
+  currentUserEmail: PropTypes.string,
+  useMembers: PropTypes.bool
 };
 
 export default LdapGroupsTable;

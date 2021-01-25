@@ -88,7 +88,7 @@ function LdapGroupManagement() {
         isLoading={isLoading} breadcrumbDestination={"ldapGroupManagement"}
       >
         {/*{getOrganizationListDropdown()}*/}
-        <LdapGroupsTable isLoading={isLoading} groupData={groupList} orgDomain={orgDomain} authorizedActions={authorizedActions} currentUserEmail={currentUserEmail} />
+        <LdapGroupsTable isLoading={isLoading} groupData={groupList} loadData={loadData} orgDomain={orgDomain} authorizedActions={authorizedActions} currentUserEmail={currentUserEmail} />
       </ScreenContainer>
     );
 }

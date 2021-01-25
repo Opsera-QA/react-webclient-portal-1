@@ -84,9 +84,17 @@ function LdapOrganizationAccountDetailPanel(
       case "summary":
         return <LdapOrganizationAccountSummaryPanel ldapOrganizationAccountData={ldapOrganizationAccountData} setActiveTab={setActiveTab}/>;
       case "users":
-        return <div className="p-3"><LdapUsersTable orgDomain={ldapOrganizationAccountData["orgDomain"]} userData={ldapOrganizationAccountData.getData("users")} /></div>
+        return (
+          <div className="p-3">
+            <LdapUsersTable orgDomain={ldapOrganizationAccountData["orgDomain"]} userData={ldapOrganizationAccountData.getData("users")} />
+          </div>
+        );
       case "groups":
-        return <div className="p-3"><LdapGroupsTable orgDomain={ldapOrganizationAccountData["orgDomain"]} groupData={ldapOrganizationAccountData.getData("groups")} /></div>
+        return (
+          <div className="p-3">
+            <LdapGroupsTable orgDomain={ldapOrganizationAccountData["orgDomain"]} groupData={ldapOrganizationAccountData.getData("groups")} useMembers={true} loadData={loadData} />
+          </div>
+        );
       case "idpAccounts":
         return(getIdpAccountPanel());
       case "departments":
