@@ -3,10 +3,10 @@ import { AuthContext } from "contexts/AuthContext";
 
 import siteNotificationActions from "./site-notification-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
-import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
-import {DialogToastContext} from "../../../contexts/DialogToastContext";
-import TableScreenContainer from "../../common/panels/table_screen_container/TableScreenContainer";
 import SiteNotificationTable from "./SiteNotificationTable";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
+import TableScreenContainer from "components/common/panels/table_screen_container/TableScreenContainer";
 
 function SiteNotificationManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -34,7 +34,7 @@ function SiteNotificationManagement() {
 
   const getSiteNotifications = async () => {
     const response = await siteNotificationActions.getSiteNotifications(getAccessToken);
-    setSiteNotifications(response.data);
+    setSiteNotifications(response?.data);
   };
 
   const getRoles = async () => {
@@ -42,9 +42,11 @@ function SiteNotificationManagement() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-    }
 
-    await getSiteNotifications();
+      if (userRoleAccess?.OpseraAdministrator) {
+        await getSiteNotifications();
+      }
+    }
   };
 
   if (!accessRoleData) {

@@ -16,11 +16,16 @@ const siteNotificationMetadata = {
     },
     {
       label: "Message",
-      id: "message"
+      id: "message",
+      maxLength: 250
     },
     {
       label: "FQDN Link",
       id: "link"
+    },
+    {
+      label: "Begin Date",
+      id: "displayOnDate"
     },
     {
       label: "Expiration Date",
@@ -37,6 +42,7 @@ const siteNotificationMetadata = {
     message: "",
     view: "site",
     link: "",
+    displayOnDate: new Date(),
     expiration: new Date(),
     active: true,
   }

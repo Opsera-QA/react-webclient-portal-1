@@ -2,14 +2,14 @@ import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
+import siteNotificationMetadata from "components/admin/site_notifications/siteNotificationMetadata";
 import {
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn
-} from "../../common/table/table-column-helpers";
-import NewSiteNotificationModal from "./NewSiteNotificationModal";
-import {getField} from "../../common/metadata/metadata-helpers";
-import siteNotificationMetadata from "./siteNotificationMetadata";
+} from "components/common/table/table-column-helpers";
+import NewSiteNotificationModal from "components/admin/site_notifications/NewSiteNotificationModal";
+import {getField} from "components/common/metadata/metadata-helpers";
 
 function SiteNotificationTable({ data, loadData, isLoading }) {
   const history = useHistory();

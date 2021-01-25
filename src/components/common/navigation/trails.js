@@ -23,6 +23,7 @@ const breadcrumbs = {
 
   siteNotificationManagement: {name: "siteNotificationManagement", path: paths.siteNotificationManagement, label: "Site Notification Management", icon: faFlag},
   siteNotificationDetailView: {name: "siteNotificationDetailView", path: paths.siteNotificationDetailView, label: "Site Notification Detail View", icon: faFlag},
+  siteNotificationManager: {name: "siteNotificationManager", path: paths.siteNotificationManager, label: "Site Notification Manager", icon: faFlag},
 
   templateManagement: {name: "templateManagement", path: paths.templateManagement, label: "Template Management", icon: faStream},
   templateDetailView: {name: "templateDetailView", path: paths.templateDetailView, label: "Template Details", icon: faStream},
@@ -128,7 +129,8 @@ const trails = {
   registeredUsersDetailView: {parent: "registeredUsersManagement", breadcrumb: breadcrumbs.registeredUsersDetailView},
   apiManagement: {parent: "admin", breadcrumb: breadcrumbs.apiManagement},
   siteNotificationManagement: {parent: "admin", breadcrumb: breadcrumbs.siteNotificationManagement},
-  siteNotificationDetailView: {parent: "admin", breadcrumb: breadcrumbs.siteNotificationDetailView},
+  siteNotificationDetailView: {parent: "siteNotificationManagement", breadcrumb: breadcrumbs.siteNotificationDetailView},
+  siteNotificationManager: {parent: "admin", breadcrumb: breadcrumbs.siteNotificationManager},
 
   // Account settings
   accountSettings: {parent: undefined, breadcrumb: breadcrumbs.accountSettings},

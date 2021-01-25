@@ -13,7 +13,8 @@ paths.systemManagement = paths.admin + "/manage-systems";
 paths.templateManagement = paths.admin + "/templates";
 paths.templateDetailView = paths.templateManagement + "/details/";
 
-paths.siteNotificationManagement = paths.admin + "/site-notifications";
+paths.siteNotificationManagement = paths.admin + "/site-notifications/table";
+paths.siteNotificationManager = paths.admin + "/site-notifications";
 paths.siteNotificationDetailView = paths.siteNotificationManagement + "/details/";
 
 paths.toolManagement = paths.admin + "/tools";

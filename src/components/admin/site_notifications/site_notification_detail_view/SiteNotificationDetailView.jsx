@@ -1,16 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
-import SiteNotificationDetailPanel from "./SiteNotificationDetailPanel";
 import { useParams } from "react-router-dom";
-import siteNotificationActions from "../site-notification-actions";
-import { AuthContext } from "../../../../contexts/AuthContext";
-import Model from "../../../../core/data_model/model";
 import {faFlag} from "@fortawesome/pro-light-svg-icons";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
-import ActionBarContainer from "../../../common/actions/ActionBarContainer";
-import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
-import siteNotificationMetadata from "../siteNotificationMetadata";
-import ActionBarDeleteButton2 from "../../../common/actions/buttons/ActionBarDeleteButton2";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import siteNotificationActions from "components/admin/site_notifications/site-notification-actions";
+import siteNotificationMetadata from "components/admin/site_notifications/siteNotificationMetadata";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
+import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import SiteNotificationDetailPanel
+  from "components/admin/site_notifications/site_notification_detail_view/SiteNotificationDetailPanel";
+import Model from "core/data_model/model";
+import LoadingDialog from "components/common/status_notifications/loading";
+import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 
 function SiteNotificationDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -28,7 +31,6 @@ function SiteNotificationDetailView() {
     try {
       setIsLoading(true);
       await getRoles();
-      await getSiteNotification();
     }
     catch (error) {
       if (!error?.error?.message?.includes(404)) {
@@ -44,7 +46,7 @@ function SiteNotificationDetailView() {
   const getSiteNotification = async () => {
     const response = await siteNotificationActions.getSiteNotification(id, getAccessToken);
 
-    if (response != null && response.data != null) {
+    if (response?.data) {
       setSiteNotificationData(new Model(response.data, siteNotificationMetadata, false));
     }
   };
@@ -54,6 +56,10 @@ function SiteNotificationDetailView() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
+
+      if (userRoleAccess?.OpseraAdministrator) {
+        await getSiteNotification();
+      }
     }
   };
 
@@ -72,9 +78,17 @@ function SiteNotificationDetailView() {
     }
   };
 
-    const handleDelete = async () => {
-      return await siteNotificationActions.deleteSiteNotification(siteNotificationData, getAccessToken);
-    }
+  const handleDelete = async () => {
+    return await siteNotificationActions.deleteSiteNotification(siteNotificationData, getAccessToken);
+  }
+
+  if (!accessRoleData) {
+    return (<LoadingDialog size="sm"/>);
+  }
+
+  if (!accessRoleData.OpseraAdministrator) {
+    return (<AccessDeniedDialog roleData={accessRoleData}/>);
+  }
 
   return (
     <DetailScreenContainer

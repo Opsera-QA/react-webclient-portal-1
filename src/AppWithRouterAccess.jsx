@@ -94,6 +94,7 @@ import { axiosApiService } from "api/apiService";
 import TagsUsedInPipelineReport from "components/reports/tags/pipelines/TagsUsedInPipelineReport";
 import TagsUsedInToolsReport from "components/reports/tags/tools/TagsUsedInToolsReport";
 import AccountRegistration from "components/user/account_registration/AccountRegistration";
+import SiteNotificationManager from "components/admin/site_notifications/manager/SiteNotificationManager";
 import ToolCountsReport from "components/reports/tools/counts/ToolCountsReport";
 
 const AppWithRouterAccess = () => {
@@ -208,6 +209,10 @@ const AppWithRouterAccess = () => {
     await loadUsersData(tokens.accessToken.value);
   };
 
+  const getNavBar = () => {
+    return (<Navbar hideAuthComponents={hideSideBar} userData={data} />);
+  };
+
   /*const redirectFromLogin = async () => {
     console.log("redirectFromLogin called");
     const tokens = authClient.tokenManager.getTokens();
@@ -229,8 +234,7 @@ const AppWithRouterAccess = () => {
           <div style={{ height: "55px" }}><ErrorDialog align="top" error={error}/></div>
         }
         <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
-          <ToastContextProvider>
-            <Navbar hideAuthComponents={hideSideBar} userData={data}/>
+          <ToastContextProvider navBar={getNavBar()}>
             <div className="container-fluid" style={{ margin: "0" }}>
               <div className="d-flex flex-row">
                 <Sidebar userData={data} hideSideBar={hideSideBar}/>
@@ -300,9 +304,11 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/admin/templates" exact component={TemplateManagement}/>
                   <SecureRoute path="/admin/templates/details/:templateId" exact component={TemplateDetailView}/>
                   <SecureRoute path="/admin/reports" exact component={Reports_Old}/>
-                  <SecureRoute path="/admin/site-notifications" exact component={SiteNotificationManagement}/>
-                  <SecureRoute path="/admin/site-notifications/details/:id" exact
-                               component={SiteNotificationDetailView}/>
+
+                  {/* Site Notification Management */}
+                  <SecureRoute path="/admin/site-notifications/table" exact component={SiteNotificationManagement}/>
+                  <SecureRoute path="/admin/site-notifications/details/:id" exact component={SiteNotificationDetailView}/>
+                  <SecureRoute path="/admin/site-notifications" exact component={SiteNotificationManager}/>
 
                   {/* Ldap Account Pages */}
                   <SecureRoute path="/admin/organizations" exact component={LdapOrganizationsView}/>
