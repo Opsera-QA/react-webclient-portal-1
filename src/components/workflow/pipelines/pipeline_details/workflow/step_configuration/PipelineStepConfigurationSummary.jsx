@@ -19,9 +19,9 @@ import MockPipelineStepConfigurationSummaryPanel
 import mockPipelineStepConfigurationMetadata
   from "./step_tool_configuration_forms/mock/mock-pipeline-step-configuration-metadata";
 import approvalGatePipelineStepConfigurationMetadata
-  from "./step_tool_configuration_forms/approval/approval-gate-pipeline-step-configuration-metadata";
+  from "./step_tool_configuration_forms/approval_gate/approval-gate-pipeline-step-configuration-metadata";
 import ApprovalGatePipelineStepConfigurationSummaryPanel
-  from "./step_tool_configuration_forms/approval/ApprovalGatePipelineStepConfigurationSummaryPanel";
+  from "./step_tool_configuration_forms/approval_gate/ApprovalGatePipelineStepConfigurationSummaryPanel";
 import SpinnakerPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/spinnaker/SpinnakerPipelineStepConfigurationSummaryPanel";
 import spinnakerStepFormMetadata from "./step_tool_configuration_forms/spinnaker/spinnaker-stepForm-metadata";
