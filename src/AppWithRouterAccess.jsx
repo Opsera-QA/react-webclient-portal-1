@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Route, useHistory } from "react-router-dom";
-//import useAxios, { configure } from "axios-hooks";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/status_notifications/loading";
 import Home from "./Home";

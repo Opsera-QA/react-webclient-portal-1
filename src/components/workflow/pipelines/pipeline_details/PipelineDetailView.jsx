@@ -305,7 +305,7 @@ function PipelineDetailView() {
 
     return (
       <div>
-        <div className="max-content-width-1080 content-block-no-height pl-3 pb-2" style={{ width: "80vw" }}>
+        <div className="max-content-width-1080 content-block-no-height pb-2" style={{ width: "80vw" }}>
           <PipelineSummaryPanel
             pipeline={pipeline}
             setPipeline={setPipeline}

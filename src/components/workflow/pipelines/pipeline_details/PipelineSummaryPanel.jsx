@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "../../../../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
-import { Row, Col, Button, Form } from "react-bootstrap";
+import { Row, Col, Form } from "react-bootstrap";
 import PipelineActions from "../../pipeline-actions";
 import { format } from "date-fns";
 import Modal from "../../../common/modal/modal";
@@ -12,8 +12,8 @@ import {
   faPencilAlt,
   faSave,
   faTimes,
-  faCogs,
-  faFlag, faUser, faUserFriends,
+  faUser,
+  faUserFriends,
 } from "@fortawesome/pro-light-svg-icons";
 import "../../workflows.css";
 import SchedulerWidget from "../../../common/schedulerWidget";
@@ -74,7 +74,8 @@ function PipelineSummaryPanel({
 
 
   const authorizedAction = (action, owner) => {
-    return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner);
+    let objectRoles = pipeline?.roles;
+    return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner, objectRoles);
   };
 
 
@@ -387,7 +388,7 @@ function PipelineSummaryPanel({
 
         {!editRoles && pipeline.roles &&
           <span className="item-field">{getRoleBadges(pipeline.roles)}</span>}
-        {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("roles")}
+        {authorizedAction("edit_access_roles", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("roles")}
 
         {editRoles &&
         <EditRolesModal setPipelineModel={setPipelineModel} pipelineModel={pipelineModel} data={pipeline.roles} visible={editRoles} onHide={() => {setEditRoles(false);}} onClick={(roles) => {handleSavePropertyClick(pipeline._id, roles, "roles");
@@ -420,24 +421,9 @@ function PipelineSummaryPanel({
       </div>
 
       <div className="mb-3 flat-top-content-block p-3">
-
-        <div className="text-muted float-right">
-          {/*TODO: Remove this and replace with new action bar*/}
-          <PipelineSummaryActionBar
-            pipeline={pipeline}
-            handleDeleteClick={authorizedAction("delete_pipeline_btn", pipeline.owner) ? handleDeleteClick : undefined}
-            handleDuplicateClick={authorizedAction("duplicate_pipeline_btn", pipeline.owner) ? handleCopyPipeline : undefined}
-            handleViewClick={authorizedAction("view_template_pipeline_btn", pipeline.owner) ? handleViewClick : undefined}
-            handlePublishClick={authorizedAction("publish_pipeline_btn", pipeline.owner) ? handlePublishPipelineClick : undefined}
-            handleEditAccessRolesClick={authorizedAction("edit_access_roles", pipeline.owner) ? handleEditAccessRolesClick : undefined}
-            canTransferPipeline={authorizedAction("transfer_pipeline_btn", pipeline.owner)}
-            loadPipeline={fetchPlan}
-          />
-        </div>
-
         <Row>
-          <Col sm={12}>
-            <div className="d-flex py-2">
+          <Col sm={9}>
+            <div className="d-flex pb-3 title-text-header-1">
               {editTitle ?
                 <>
                   <div className="flex-fill p-2">
@@ -452,14 +438,29 @@ function PipelineSummaryPanel({
                 <>
                   {/*{Object.keys(approvalStep).length > 0 &&
                       <FontAwesomeIcon icon={faFlag} className="red mr-1 vertical-align-item" fixedWidth/>}*/}
-                  <span className="text-muted mr-1">Name:</span> {pipeline.name}
-                  {authorizedAction("edit_pipeline_attribute", pipeline.owner)
+                  {/*<span className="text-muted mr-1">Name:</span> */}{pipeline.name}
+                  {authorizedAction("edit_pipeline_name", pipeline.owner)
                   && parentWorkflowStatus !== "running"
                     ? getEditIcon("name")
                     : null}
                 </>
               }</div>
           </Col>
+
+          <Col sm={3}>
+            <PipelineSummaryActionBar
+              pipeline={pipeline}
+              handleDeleteClick={authorizedAction("delete_pipeline_btn", pipeline.owner) ? handleDeleteClick : undefined}
+              handleDuplicateClick={authorizedAction("duplicate_pipeline_btn", pipeline.owner) ? handleCopyPipeline : undefined}
+              handleViewClick={authorizedAction("view_template_pipeline_btn", pipeline.owner) ? handleViewClick : undefined}
+              handlePublishClick={authorizedAction("publish_pipeline_btn", pipeline.owner) ? handlePublishPipelineClick : undefined}
+              handleEditAccessRolesClick={authorizedAction("edit_access_roles", pipeline.owner) ? handleEditAccessRolesClick : undefined}
+              canTransferPipeline={authorizedAction("transfer_pipeline_btn", pipeline.owner)}
+              loadPipeline={fetchPlan}
+            />
+          </Col>
+
+
           <Col sm={12} md={6} className="py-2"><span className="text-muted mr-1">ID:</span> {pipeline._id}</Col>
           <Col sm={12} md={6} className="py-2"><span
             className="text-muted mr-1">Pipeline Run Count:</span> {pipeline.workflow.run_count || "0"}</Col>
@@ -559,7 +560,7 @@ function PipelineSummaryPanel({
           }
           {getTagField()}
 
-          {!featureFlagHideItemInProd() && getRoleAccessField()}
+          {!featureFlagHideItemInProd() && customerAccessRules.Type !== "sass-user" && getRoleAccessField()}
 
           {editDescription ?
             <>

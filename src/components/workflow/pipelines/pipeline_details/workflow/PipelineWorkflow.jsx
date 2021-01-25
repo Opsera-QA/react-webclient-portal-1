@@ -44,7 +44,8 @@ function PipelineWorkflow({
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
 
   const authorizedAction = (action, owner) => {
-    return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner);
+    let objectRoles = pipeline?.roles;
+    return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner, objectRoles);
   };
 
   useEffect(() => {
