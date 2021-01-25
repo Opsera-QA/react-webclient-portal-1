@@ -1,14 +1,13 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
-import DtoTextField from "../../../../../../../common/form_fields/dto_form_fields/dto-text-field";
-import LoadingDialog from "../../../../../../../common/status_notifications/loading";
-import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
-import DtoJsonField from "../../../../../../../common/form_fields/dto_form_fields/dto-json-field";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import JsonField from "components/common/fields/json/JsonField";
+import LoadingDialog from "components/common/status_notifications/loading";
+import PipelineStepSummaryPanelContainer
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 
 function TerraformPipelineStepConfigurationSummaryPanel({ terraformPipelineDataObject, pipelineData, setActiveTab }) {
-
   if (terraformPipelineDataObject == null) {
     return <LoadingDialog size="sm" />;
   }
@@ -17,25 +16,25 @@ function TerraformPipelineStepConfigurationSummaryPanel({ terraformPipelineDataO
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <DtoTextField dataObject={terraformPipelineDataObject} fieldName={"type"}/>
+          <TextFieldBase dataObject={terraformPipelineDataObject} fieldName={"type"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={terraformPipelineDataObject} fieldName={"gitToolId"}/>
+          <TextFieldBase dataObject={terraformPipelineDataObject} fieldName={"gitToolId"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={terraformPipelineDataObject} fieldName={"gitRepository"}/>
+          <TextFieldBase dataObject={terraformPipelineDataObject} fieldName={"gitRepository"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={terraformPipelineDataObject} fieldName={"defaultBranch"}/>
+          <TextFieldBase dataObject={terraformPipelineDataObject} fieldName={"defaultBranch"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={terraformPipelineDataObject} fieldName={"gitFilePath"}/>
+          <TextFieldBase dataObject={terraformPipelineDataObject} fieldName={"gitFilePath"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={terraformPipelineDataObject} fieldName={"gitRepositoryID"}/>
+          <TextFieldBase dataObject={terraformPipelineDataObject} fieldName={"gitRepositoryID"}/>
         </Col>
         <Col lg={6}>
-          <DtoJsonField dataObject={terraformPipelineDataObject} fieldName={"keyValueMap"}/>
+          <JsonField dataObject={terraformPipelineDataObject} fieldName={"keyValueMap"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
