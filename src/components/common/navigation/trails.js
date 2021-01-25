@@ -44,7 +44,7 @@ const breadcrumbs = {
   customerSystemStatus: {name: "customerSystemStatus", path: paths.customerSystemStatus, label: "Customer System Status", icon: faHeartbeat},
 
   // LDAP Users Administration
-  ldapUserManagement: {name: "ldapUserManagement", path: paths.ldapUserManagement, label: "Users", icon: faUser},
+  ldapUserManagement: {name: "ldapUserManagement", path: paths.ldapUserManagement, label: "User Management", icon: faUser},
   ldapUserDetailView: {name: "ldapUserDetailView", path: paths.ldapUserDetailView, label: "User Details", icon: faUser},
   ldapUserDetailViewLimited: {name: "ldapUserDetailViewLimited", path: paths.ldapUserDetailView, label: "My User Details", icon: faUser},
 
