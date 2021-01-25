@@ -2,10 +2,10 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
-import LoadingDialog from "../../../../../../../common/status_notifications/loading";
-import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
-import DtoItemField from "../../../../../../../common/form_fields/dto_form_fields/dto-item-field";
-import PipelineSummariesField from "../../../../../../../common/form_fields/pipelines/PipelineSummariesField";
+import LoadingDialog from "components/common/status_notifications/loading";
+import PipelineStepSummaryPanelContainer
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+import PipelineSummariesField from "components/common/form_fields/pipelines/PipelineSummariesField";
 
 function ParallelProcessPipelineStepConfigurationSummaryPanel({ parallelPipelineDataObject, pipelineData, setActiveTab }) {
 
