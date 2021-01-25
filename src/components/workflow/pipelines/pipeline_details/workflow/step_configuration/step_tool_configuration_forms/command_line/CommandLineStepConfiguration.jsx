@@ -1087,7 +1087,7 @@ function CommandLineStepConfiguration({
 
           <small className="form-text text-muted mt-2 text-left pb-2">
             A platform-specific script, which will be executed as .cmd file on
-            Windows or as a shellscript in Unix-like environments
+            Windows or as a shellscript in Unix-like environments. Multiple commands are supported (each line indicates a new command)
           </small>
 
           <Form.Group controlId="fileName">
@@ -1099,6 +1099,7 @@ function CommandLineStepConfiguration({
             value={formData.outputFileName || ""}
             onChange={(e) => setFormData({ ...formData, outputFileName: e.target.value })}
           />
+          <Form.Text className="text-muted">File name with extension is expected.</Form.Text>
           </Form.Group>
           <Form.Group controlId="path">
             <Form.Label>Output File Path</Form.Label>

@@ -38,6 +38,11 @@ const nexusStepFormMetadata = {
       isRequired: true
     },
     {
+      label: "Use Run count as version?",
+      id: "customVersion",
+      isRequired: true
+    },
+    {
       id: "repositoryGroup",
       isRequired: true
     },
@@ -56,6 +61,7 @@ const nexusStepFormMetadata = {
     toolURL: "",
     userName: "",
     secretKey: "",
+    customVersion: false,
     repositoryGroup : "",
     nexusToolConfigId: "",
   }
