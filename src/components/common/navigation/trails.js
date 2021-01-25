@@ -31,8 +31,8 @@ const breadcrumbs = {
   deleteTools: {name: "deleteTools", path: paths.deleteTools, label: "Delete Tools", icon: faTimes},
   toolTypeDetailView: {name: "toolTypeDetailView", path: paths.toolTypeDetailView, label: "Tool Category Details", icon: faWrench},
   toolIdentifierDetailView: {name: "toolIdentifierDetailView", path: paths.toolIdentifierDetailView, label: "Tool Identifier Details", icon: faWrench},
-  kpiManagement: {name: "kpiManagement", path: paths.kpiManagement, label: "Kpi Management", icon: faFileInvoice},
-  kpiDetailView: {name: "kpiDetailView", path: paths.kpiManagement, label: "Kpi Details", icon: faFileInvoice},
+  kpiManagement: {name: "kpiManagement", path: paths.kpiManagement, label: "KPI Management", icon: faFileInvoice},
+  kpiDetailView: {name: "kpiDetailView", path: paths.kpiManagement, label: "KPI Details", icon: faFileInvoice},
   registeredUsersManagement: {name: "registeredUsersManagement", path: paths.registeredUsersManagement, label: "Registered Users Management", icon: faUserCircle},
   registeredUsersDetailView: {name: "registeredUsersDetailView", path: paths.registeredUsersManagement, label: "Registered User Details", icon: faUserCircle},
   apiManagement: {name: "apiManagement", path: paths.apiManagement, label: "API Management", icon: faLink},
@@ -57,14 +57,14 @@ const breadcrumbs = {
   tagDetailView: {name: "tagDetailView", path: paths.tagDetailView, label: "Tag Details", icon: faTags},
 
   // Ldap Organizations Administration
-  ldapOrganizationManagement: {name: "ldapOrganizationManagement", path: paths.ldapOrganizationManagement, label: "Organizations", icon: faSitemap},
+  ldapOrganizationManagement: {name: "ldapOrganizationManagement", path: paths.ldapOrganizationManagement, label: "Organization Management", icon: faSitemap},
   ldapOrganizationDetailView: {name: "ldapOrganizationDetailView", path: paths.ldapOrganizationDetailView, label: "Organization Details", icon: faSitemap},
 
-  ldapDepartmentManagement: {name: "ldapDepartmentManagement", path: paths.ldapDepartmentManagement, label: "Departments", icon: faBuilding},
+  ldapDepartmentManagement: {name: "ldapDepartmentManagement", path: paths.ldapDepartmentManagement, label: "Department Management", icon: faBuilding},
   ldapDepartmentDetailView: {name: "ldapDepartmentDetailView", path: paths.ldapDepartmentDetailView, label: "Department Details", icon: faBuilding},
 
   // Ldap Organization Account Administration
-  ldapOrganizationAccountManagement: {name: "ldapOrganizationAccountManagement", path: paths.ldapOrganizationAccountManagement, label: "Organization Accounts", icon: faSitemap},
+  ldapOrganizationAccountManagement: {name: "ldapOrganizationAccountManagement", path: paths.ldapOrganizationAccountManagement, label: "Organization Account Management", icon: faSitemap},
   ldapOrganizationAccountDetailView: {name: "ldapOrganizationAccountDetailView", path: paths.ldapOrganizationDetailView, label: "Organization Account Details", icon: faUsers},
 
   customerOnboarding: {name: "customerOnboarding", path: paths.customerOnboarding, label: "Customer Onboarding", icon: faUserPlus},
