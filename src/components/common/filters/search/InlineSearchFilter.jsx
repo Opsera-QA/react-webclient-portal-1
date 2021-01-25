@@ -31,7 +31,7 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
       return <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>;
     }
 
-    return  <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-1"/>;
+    return  <FontAwesomeIcon icon={faSearch} fixedWidth />;
   }
 
   const handleKeyPress = async (event) => {
@@ -45,7 +45,7 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
   }
 
   return (
-    <InputGroup>
+    <InputGroup size="sm">
       <input
         disabled={disabled}
         placeholder="Search"
@@ -55,7 +55,7 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
         onChange={e => validateAndSetData(e.target.value)}
       />
       <InputGroup.Append>
-        <Button variant="primary" size="sm" onClick={handleSearch}>
+        <Button variant="primary" onClick={handleSearch}>
           {getSearchIcon()}
         </Button>
       </InputGroup.Append>

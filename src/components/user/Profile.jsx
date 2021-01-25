@@ -7,14 +7,15 @@ import userActions from "./user-actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/pro-solid-svg-icons/faUser";
 import { faSync, faSpinner } from "@fortawesome/pro-light-svg-icons";
+import { defineUserRole } from "utils/helpers";
 
 function Profile() {
-  const { getAccessToken, getUserRecord } = useContext(AuthContext);
+  const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [data, setData] = useState({});
   const [user, setUser] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
+  const [accessRoleLabel, setAccessRoleLabel] = useState("");
 
   useEffect(() => {
     loadData();
@@ -33,9 +34,14 @@ function Profile() {
   };
 
   const fetchData = async () => {
-    /*const response = await userActions.getAnalyticsSettings(getAccessToken);
-    setData(response.data.profile[0]);*/
-    setUser(await getUserRecord());
+    const user = await getUserRecord();
+    setUser(user);
+
+    const userRoleAccess = await setAccessRoles(user);
+    if (userRoleAccess) {
+      const userRole = defineUserRole(userRoleAccess.Role);
+      setAccessRoleLabel(userRole);
+    }
   };
 
   const syncUserData = async () => {
@@ -108,7 +114,11 @@ function Profile() {
             <td>{user.ldapSyncAt || ""}</td>
           </tr>
           <tr>
-            <td>Groups & Roles</td>
+            <td>Platform Access Role</td>
+            <td>{accessRoleLabel}</td>
+          </tr>
+          <tr>
+            <td>Groups Membership</td>
             <td>
               {user.groups !== undefined && user.groups.map((group) => {
                 return <div className="pb-1" key={group}>{group}</div>;

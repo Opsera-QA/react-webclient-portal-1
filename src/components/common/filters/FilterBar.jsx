@@ -109,7 +109,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
   const getSearchBar = () => {
     if (supportSearch) {
       return (
-        <div className="mr-2">
+        <div className="mr-2" style={{minWidth:"350px"}}>
           <InlineSearchFilter filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} />
         </div>
       )
@@ -164,7 +164,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
   }
 
   return (
-    <div className="d-flex justify-content-between filter-bar">
+    <div className="d-flex justify-content-between filter-bar mb-2">
       <div className="d-flex">
         <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} filters={filters} />
       </div>

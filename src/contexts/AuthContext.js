@@ -154,7 +154,7 @@ const AuthContextProvider = (props) => {
         getUserRecord: getUserRecord,
         setAccessRoles: setAccessRoles,
         getIsAuthenticated: getIsAuthenticated,
-        generateJwtServiceTokenWithValue:generateJwtServiceTokenWithValue
+        generateJwtServiceTokenWithValue: generateJwtServiceTokenWithValue,
       }}>
         {props.children}
       </AuthContext.Provider>

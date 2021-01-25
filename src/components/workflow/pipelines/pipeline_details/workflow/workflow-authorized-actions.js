@@ -47,8 +47,6 @@ workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, o
 
   const userObjectRole = calculateUserObjectRole(customerAccessRules.Email, customerAccessRules.Groups, objectRoles);
 
-  //console.log("Returned User Object Role: ", userObjectRole); //NOW Wire this data up below!!
-
   if (userObjectRole === "administrator") {
     return true; //all actions are authorized to administrator
   }
@@ -107,7 +105,8 @@ workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, o
 };
 
 
-//compares the user email to the objectRoles data to see if the user has a spcific role (either directly or through group membership)
+//compares the user email to the objectRoles data to see if the user has a specific role
+// (either directly or through group membership)
 const calculateUserObjectRole = (userEmail, userGroups, objectRoles) => {
   if (!objectRoles || objectRoles.length === 0) {
     return false;

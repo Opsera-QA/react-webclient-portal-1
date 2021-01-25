@@ -367,14 +367,14 @@ function PipelineSummaryPanel({
 
         if (user) {
           return (
-            <span key={i} className="mx-1 mb-1 badge badge-primary">
+            <span key={i} className="mx-1 mb-1 badge badge-light" style={{fontWeight: "normal",backgroundColor:"#E6E5E3"}}>
               <FontAwesomeIcon icon={faUser} fixedWidth className="mr-1"/>{`${user}: ${item.role}`}
             </span>
           );
         }
 
         return (
-          <span key={i} className="mx-1 mb-1 badge badge-secondary">
+          <span key={i} className="mx-1 mb-1 badge badge-light" style={{fontWeight: "normal", backgroundColor:"#b2dbff"}}>
             <FontAwesomeIcon icon={faUserFriends} fixedWidth className="mr-1"/>{`${group}: ${item.role}`}
           </span>
         );
