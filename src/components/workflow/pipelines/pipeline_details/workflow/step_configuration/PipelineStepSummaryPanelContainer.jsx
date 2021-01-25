@@ -18,7 +18,7 @@ function PipelineStepSummaryPanelContainer({ pipelineData, setActiveTab, childre
       {/*TODO: Wire up threshold*/}
       {/*<Col lg={6}>*/}
       {/*TODO: This is in pipelineData?.threshold and not actual data object*/}
-      {/*  <DtoJsonField dataObject={childPipelineDataObject} fieldName={"threshold"}/>*/}
+      {/*  <JsonField dataObject={childPipelineDataObject} fieldName={"threshold"}/>*/}
       {/*</Col>*/}
       {children}
     </SummaryPanelContainer>

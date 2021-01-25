@@ -12,7 +12,7 @@ import registeredUserToolsMetadata
   from "../admin/registered_users/registered_user_details/tools/registered-user-tools-form-fields";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import DtoJsonField from "../common/form_fields/dto_form_fields/dto-json-field";
+import JsonField from "components/common/fields/json/JsonField";
 
 function ApiDemo() {
   const {getAccessToken, getUserRecord} = useContext(AuthContext);
@@ -169,12 +169,12 @@ function ApiDemo() {
 
         <Row>
           <Col md={12} lg={6}>
-            <DtoJsonField dataObject={registeredUserToolsDto} fieldName={"platformDbTools"}/>
+            <JsonField dataObject={registeredUserToolsDto} fieldName={"platformDbTools"}/>
           </Col>
         </Row>
         <Row>
           <Col md={12} lg={6}>
-            <DtoJsonField dataObject={registeredUserToolsDto} fieldName={"customerDbTools"}/>
+            <JsonField dataObject={registeredUserToolsDto} fieldName={"customerDbTools"}/>
           </Col>
         </Row>
 
