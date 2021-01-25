@@ -156,7 +156,7 @@ function AccountRegistration() {
               </div>
             </Row>
           </Card.Body>
-          <Card.Footer className="new-user-footer">
+          <Card.Footer className="new-user-footer mr-2">
             <RequiredFieldsMessage />
           </Card.Footer>
         </Card>

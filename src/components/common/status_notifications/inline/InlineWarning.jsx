@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
-// TODO: Clean up code once dialogs are completed
 function InlineWarning({warningMessage}) {
   const [messageBody, setMessageBody] = useState("");
 
@@ -23,9 +20,6 @@ function InlineWarning({warningMessage}) {
 
 InlineWarning.propTypes = {
   warningMessage: PropTypes.string,
-  setWarningMessage: PropTypes.string,
-  alignment: PropTypes.string,
-  autoCloseDialog: PropTypes.bool
 };
 
 export default InlineWarning;

@@ -1,18 +1,12 @@
 import React, {useState, useEffect, useContext} from "react";
-import {Button} from "react-bootstrap";
 import {AuthContext} from "contexts/AuthContext";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import {useHistory, useParams} from "react-router-dom";
 import LdapGroupsTable from "./LdapGroupsTable";
-import NewLdapGroupModal from "./NewLdapGroupModal";
 import LoadingDialog from "components/common/status_notifications/loading";
-import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
-import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {getOrganizationByDomain} from "components/admin/accounts/ldap/organizations/organization-functions";
-
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 function LdapGroupManagement() {
   const history = useHistory();
@@ -23,7 +17,6 @@ function LdapGroupManagement() {
   const [groupList, setGroupList] = useState([]);
   const [ldapOrganizationData, setLdapOrganizationData] = useState();
   const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
-  const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
   const toastContext = useContext(DialogToastContext);
   const [authorizedActions, setAuthorizedActions] = useState([]);
 
@@ -78,45 +71,27 @@ function LdapGroupManagement() {
     }
   };
 
-  const createGroup = () => {
-    setShowCreateGroupModal(true);
+  // TODO: Remove after confirming it's not needed
+  const getOrganizationListDropdown = () => {
+    return (
+      <div className="tableDropdown mr-2">
+        {/*{accessRoleData.OpseraAdministrator && <LdapOrganizationSelectInput currentOrganizationDomain={currentOrganizationDomain} location={"groups"} />}*/}
+      </div>
+    );
   };
 
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
 
-  if (!authorizedActions.includes("get_groups") && !isLoading) {
-    return (<AccessDeniedDialog roleData={accessRoleData}/>);
-  }
-
     return (
-      <div>
-          <BreadcrumbTrail destination={"ldapGroupManagement"} />
-          <div className="justify-content-between mb-1 d-flex">
-            <h5>Groups Management</h5>
-            <div className="d-flex">
-              {/*<div className="tableDropdown mr-2">*/}
-              {/*  {accessRoleData.OpseraAdministrator && <LdapOrganizationSelectInput currentOrganizationDomain={currentOrganizationDomain} location={"groups"} />}*/}
-              {/*</div>*/}
-              <div className="">
-                {authorizedActions.includes("create_group") && <Button variant="primary" size="sm"
-                        onClick={() => {
-                          createGroup(ldapOrganizationData);
-                        }}>
-                  <FontAwesomeIcon icon={faPlus} className="mr-1"/>New Group
-                </Button>}
-              </div>
-              <br/>
-              <br/>
-            </div>
-          </div>
-
-          <div className="full-height">
-            <LdapGroupsTable isLoading={isLoading} groupData={groupList} orgDomain={orgDomain}/>
-          </div>
-          <NewLdapGroupModal loadData={loadData} authorizedActions={authorizedActions} orgDomain={orgDomain} showModal={showCreateGroupModal} currentUserEmail={currentUserEmail} setShowModal={setShowCreateGroupModal}/>
-      </div>
+      <ScreenContainer
+        accessDenied={!authorizedActions.includes("get_groups") && !isLoading}
+        isLoading={isLoading} breadcrumbDestination={"ldapGroupManagement"}
+      >
+        {/*{getOrganizationListDropdown()}*/}
+        <LdapGroupsTable isLoading={isLoading} groupData={groupList} orgDomain={orgDomain} authorizedActions={authorizedActions} currentUserEmail={currentUserEmail} />
+      </ScreenContainer>
     );
 }
 

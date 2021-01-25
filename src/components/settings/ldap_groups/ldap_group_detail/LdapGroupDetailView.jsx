@@ -1,18 +1,17 @@
 import React, {useContext, useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
-import LdapGroupDetailPanel from "./LdapGroupDetailPanel";
-import Model from "core/data_model/model";
 import {faUserFriends} from "@fortawesome/pro-light-svg-icons";
-import accountsActions from "components/admin/accounts/accounts-actions";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import Model from "core/data_model/model";
+import {AuthContext} from "contexts/AuthContext";
 import {ldapGroupMetaData} from "components/settings/ldap_groups/ldap-groups-metadata";
+import accountsActions from "components/admin/accounts/accounts-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
-import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
+import LdapGroupDetailPanel from "components/settings/ldap_groups/ldap_group_detail/LdapGroupDetailPanel";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
 
 // TODO: Can we get an API Call to get role group names associated with an organization?
 const roleGroups = ["Administrators", "PowerUsers", "Users"];
@@ -49,17 +48,22 @@ function LdapGroupDetailView() {
   const getGroup = async () => {
     const user = await getUserRecord();
     const response = await accountsActions.getGroup(orgDomain, groupName, getAccessToken);
-    setLdapGroupData(new Model(response?.data, ldapGroupMetaData, false));
-    let isOwner = user.email === response.data["ownerEmail"];
 
-    if (isOwner) {
-      let authorizedActions = ["get_group_details", "update_group", "update_group_membership"];
+    if (response?.data) {
+      setLdapGroupData(new Model(response.data, ldapGroupMetaData, false));
+      let isOwner = user.email === response.data["ownerEmail"];
 
-      if (!roleGroups.includes(groupName) && !groupName.startsWith("_dept")) {
-        authorizedActions.push("delete_group");
+      if (isOwner) {
+        let authorizedActions = ["get_group_details", "update_group", "update_group_membership"];
+
+        if (!roleGroups.includes(groupName) && !groupName.startsWith("_dept")) {
+          authorizedActions.push("delete_group");
+        }
+
+        setAuthorizedActions(authorizedActions);
+
+
       }
-
-      setAuthorizedActions(authorizedActions);
     }
   };
 
@@ -108,10 +112,6 @@ function LdapGroupDetailView() {
     return (<LoadingDialog size="sm"/>);
   }
 
-  if (!authorizedActions.includes("get_group_details") && !isLoading) {
-    return (<AccessDeniedDialog roleData={accessRoleData} />);
-  }
-
   const getActionBar = () => {
     if (ldapGroupData != null) {
       return (
@@ -143,6 +143,7 @@ function LdapGroupDetailView() {
       dataObject={ldapGroupData}
       isLoading={isLoading}
       actionBar={getActionBar()}
+      accessDenied={!authorizedActions.includes("get_group_details") && !isLoading}
       detailPanel={
         <LdapGroupDetailPanel
           orgDomain={orgDomain}

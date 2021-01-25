@@ -32,8 +32,8 @@ function ToolConfigurationEditorPanelContainer({children, isLoading, persistReco
           <SaveButtonContainer>
             <StrictSaveButton updateRecord={persistRecord} recordDto={recordDto} />
           </SaveButtonContainer>
+          <RequiredFieldsMessage />
         </div>
-        <RequiredFieldsMessage />
       </div>
     </Form>
   );

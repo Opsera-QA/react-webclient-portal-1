@@ -1,5 +1,4 @@
-import { axiosApiService } from "../../../api/apiService";
-import baseActions from "../../../utils/actionsBase";
+import baseActions from "utils/actionsBase";
 
 const accountsActions = {};
 
@@ -221,24 +220,16 @@ accountsActions.updateUser = async (orgDomain, ldapUserDataDto, getAccessToken) 
       ...ldapUserDataDto.getPersistData()
     }
   }
-  const accessToken = await getAccessToken();
   const apiUrl = "/users/account/user/update";
-  const response = await axiosApiService(accessToken).put(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPutCall(getAccessToken, apiUrl, postBody);
 };
 
 accountsActions.createUser = async (ldapUserDataDto, getAccessToken) => {
   let postData = {
       ...ldapUserDataDto.getPersistData()
   }
-  const accessToken = await getAccessToken();
   const apiUrl = "/users/account/user/create";
-  const response = await axiosApiService(accessToken).post(apiUrl, postData)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
 accountsActions.getUsers = async (getAccessToken) => {
@@ -298,56 +289,35 @@ accountsActions.getLdapGroupsWithDomain = async (domain, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
-
 accountsActions.getUserByEmail = async (email, getAccessToken) => {
   let postBody = {
     email: email
   };
-  const accessToken = await getAccessToken();
   const apiUrl = "/users/account/user";
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 accountsActions.getUser = async (userId, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/users/${userId}`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 accountsActions.getUserRegistrations = async (getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = "/users/registrations";
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 accountsActions.getOrganizations = async (getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = "/users/account/organizations";
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 accountsActions.createIdpAccount = async (ldapIdpAccountDataDto, getAccessToken) => {
   let postData = {
     ...ldapIdpAccountDataDto.getPersistData()
   }
-  const accessToken = await getAccessToken();
   const apiUrl = "/users/account/idp/create";
-  const response = await axiosApiService(accessToken).post(apiUrl, postData)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
 accountsActions.updateIdpAccount = async (ldapIdpAccountDataDto,ldapOrganizationAccountData, getAccessToken) => {
@@ -355,79 +325,50 @@ accountsActions.updateIdpAccount = async (ldapIdpAccountDataDto,ldapOrganization
     ...ldapIdpAccountDataDto.getPersistData(),
     // domain: ldapOrganizationAccountData.getData("orgDomain")
   }
-  const accessToken = await getAccessToken();
   const apiUrl = "/users/account/idp/update";
-  const response = await axiosApiService(accessToken).put(apiUrl, postData)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPutCall(getAccessToken, apiUrl, postData);
 };
 
 accountsActions.createOrganizationAccount = async (ldapOrganizationAccountDataDto, getAccessToken) => {
   let postData = {
     ...ldapOrganizationAccountDataDto.getPersistData()
   }
-  const accessToken = await getAccessToken();
   const apiUrl = "/users/account/create";
-  const response = await axiosApiService(accessToken).post(apiUrl, postData)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
 accountsActions.updateOrganizationAccount = async (ldapOrganizationAccountDataDto, getAccessToken) => {
   let postBody = {
     ...ldapOrganizationAccountDataDto.getPersistData()
   }
-  const accessToken = await getAccessToken();
   const apiUrl = "/users/account/update";
-  const response = await axiosApiService(accessToken).put(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPutCall(getAccessToken, apiUrl, postBody);
 };
 
 accountsActions.createOrganization = async (ldapOrganizationDataDto, getAccessToken) => {
   let postBody = {
       ...ldapOrganizationDataDto.getPersistData(),
   }
-  const accessToken = await getAccessToken();
   const apiUrl = "/users/account/organization/create";
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 accountsActions.updateOrganization = async (ldapOrganizationDataDto, getAccessToken) => {
   let postBody = {
     ...ldapOrganizationDataDto.getPersistData()
   }
-  const accessToken = await getAccessToken();
   const apiUrl = "/users/account/organization/update";
-  const response = await axiosApiService(accessToken).put(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPutCall(getAccessToken, apiUrl, postBody);
 };
 
 accountsActions.getOrganizationByName = async (organizationName, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/users/account/organization/${organizationName}`;
-  const response = await axiosApiService(accessToken).post(apiUrl, {})
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl);
 };
 
 accountsActions.getOrganizationOwnerEmailWithName = async (organizationName, getAccessToken) => {
-  console.log("Trying to get owner email for: " + organizationName);
-  const accessToken = await getAccessToken();
   const apiUrl = `/users/account/organization/${organizationName}?emailOnly=true`;
-  const response = await axiosApiService(accessToken).post(apiUrl, {})
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl);
 };
 
 accountsActions.getOrganizationAccountByName = async (organizationAccountName, getAccessToken) => {
@@ -435,63 +376,34 @@ accountsActions.getOrganizationAccountByName = async (organizationAccountName, g
     name: organizationAccountName
   }
 
-  const accessToken = await getAccessToken();
   const apiUrl = `/users/account/`;
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 accountsActions.getOrganizationAccountMembers = async (organizationAccountName, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/users/account/members/${organizationAccountName}`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 accountsActions.getOrganizationAccountByDomain = async (domain, getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = "/users/account";
   const postBody = {
     domain: domain
   }
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  const apiUrl = "/users/account";
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 accountsActions.getOrganizationAccountByEmail = async (email, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = "/users/account";
   const postBody = {
     email: email
   }
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
-};
-
-accountsActions.activateElk = async (userId, getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = `/users/tools/activate-elk/${userId}`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 accountsActions.create = async (accountData, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = "/users/account/onboard";
-  const response = await axiosApiService(accessToken).post(apiUrl, accountData)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, accountData);
 };
 
 accountsActions.getGroup = async (orgDomain, groupName, getAccessToken) => {
@@ -499,12 +411,8 @@ accountsActions.getGroup = async (orgDomain, groupName, getAccessToken) => {
     domain: orgDomain,
     groupName: groupName,
   };
-  const accessToken = await getAccessToken();
   const apiUrl = "/users/account/group";
-  const response = await axiosApiService(accessToken).post(apiUrl, postData)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
 accountsActions.updateGroup = async (orgDomain, ldapGroupDataDto, getAccessToken) => {
