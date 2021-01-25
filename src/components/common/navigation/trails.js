@@ -48,7 +48,7 @@ const breadcrumbs = {
   ldapUserDetailViewLimited: {name: "ldapUserDetailViewLimited", path: paths.ldapUserDetailView, label: "My User Details", icon: faUser},
 
   // LDAP Groups Administration
-  ldapGroupManagement: {name: "ldapGroupManagement", path: paths.ldapGroupManagement, label: "Groups", icon: faUserFriends},
+  ldapGroupManagement: {name: "ldapGroupManagement", path: paths.ldapGroupManagement, label: "Group Management", icon: faUserFriends},
   ldapGroupDetailView: {name: "ldapGroupDetailView", path: paths.ldapGroupDetailView, label: "Group Details", icon: faUserFriends},
 
   // Tag Management
@@ -211,5 +211,5 @@ export const getBreadcrumb = (breadcrumb) => {
 
 export const getParentBreadcrumb = (breadcrumb) => {
   let parentBreadcrumb = trails[breadcrumb]?.parent;
-  return parentBreadcrumb ? breadcrumbs[parentBreadcrumb] : null;
+  return parentBreadcrumb ? trails[parentBreadcrumb]?.breadcrumb : null;
 };

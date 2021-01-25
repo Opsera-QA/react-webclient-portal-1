@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import accountsActions from "components/admin/accounts/accounts-actions.js";
 import Row from "react-bootstrap/Row";
-import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
@@ -43,7 +42,13 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, orgDomain, setLd
   }
 
   return (
-    <EditorPanelContainer>
+    <EditorPanelContainer
+      createRecord={createGroup}
+      updateRecord={updateGroup}
+      setRecordDto={setLdapGroupDataDto}
+      recordDto={ldapGroupDataDto}
+      handleClose={handleClose}
+    >
       <Row>
         <Col lg={12}>
           <TextInputBase disabled={!ldapGroupDataDto.isNew()} fieldName={"name"} dataObject={ldapGroupDataDto} setDataObject={setLdapGroupDataDto}/>
@@ -61,20 +66,13 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, orgDomain, setLd
         </Col>
         <Col lg={12}>
           <BooleanToggleInput
-            disabled={ldapGroupDataDto.groupType === "role"}
+            disabled={true}
             fieldName={"isSync"}
             dataObject={ldapGroupDataDto}
             setDataObject={setLdapGroupDataDto}
           />
         </Col>
       </Row>
-      <PersistButtonContainer
-        createRecord={createGroup}
-        updateRecord={updateGroup}
-        setRecordDto={setLdapGroupDataDto}
-        recordDto={ldapGroupDataDto}
-        handleClose={handleClose}
-      />
     </EditorPanelContainer>
   );
 }

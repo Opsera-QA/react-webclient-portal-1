@@ -7,6 +7,8 @@ export const ldapGroupMetaData = {
     label: "Name",
     id: "name",
     isRequired: true,
+    lowercase: true,
+    maxLength: 25
   },
   {
     label: "Group Type",
@@ -35,6 +37,6 @@ export const ldapGroupMetaData = {
     groupType: "user",
     // TODO: Set Default Value When user groups can use it
     externalSyncGroup: undefined,
-    isSync: true,
+    isSync: false,
   }
 }

@@ -452,6 +452,12 @@ a.text-primary:hover, a.text-primary:focus {
   width: 100%;
 }
 
+.table-base-body {
+  height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
 .custom-table th {
   background-color: #fff; /*#2588ec;*/
   border-bottom: 1px solid #7368AA; /*#3598fc;*/
@@ -1040,7 +1046,7 @@ a.nav-link {
 
 /* Action Bar styling */
 .action-bar-icon:hover {
-  color: #0f3e84;
+  color: #8F86BB;
 }
 
 /* End Action Bar styling */
@@ -1086,7 +1092,7 @@ a.nav-link {
 
 .shaded-panel {
   border-radius: 5px;
-  background-color: #FCFCFC;
+  background-color: #F8F8F8;
 }
 
 .shaded-container {
@@ -1297,3 +1303,14 @@ a.nav-link {
   font-size: 13px;
 }
 /* End Item Field */
+
+/* Membership panel */
+.membership-list {
+  min-height: 370px;
+  background-color: #E7E5ED;
+}
+
+.membership-search {
+  width: 300px;
+}
+/* End Membership Panel Styling */

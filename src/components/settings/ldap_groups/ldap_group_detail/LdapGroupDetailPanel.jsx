@@ -1,16 +1,15 @@
-import React, {useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 
 import PropTypes from "prop-types";
 import LdapGroupEditorPanel from "./LdapGroupEditorPanel";
-import LdapGroupMembershipManagementPanel from "./LdapGroupMembershipManagementPanel";
-import {faIdCard, faUsers} from "@fortawesome/pro-light-svg-icons";
+import {faIdCard} from "@fortawesome/pro-light-svg-icons";
 import LdapGroupSummaryPanel from "./LdapGroupSummaryPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
-import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import CustomTab from "components/common/tabs/CustomTab";
-import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
-import LdapUsersTable from "components/settings/ldap_users/LdapUsersTable";
+import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
+import LdapGroupMembershipManagementPanel
+  from "components/settings/ldap_groups/ldap_group_detail/membership_manager/LdapGroupMembershipManagementPanel";
 
 function LdapGroupDetailPanel(
   {
@@ -31,13 +30,15 @@ function LdapGroupDetailPanel(
     }
   };
 
+  const toggleSummaryPanel = () => {
+    setActiveTab("summary");
+  };
+
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <CustomTab icon={faUsers} tabName={"membership"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Current Members"} />
+        <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <CustomTab icon={faIdCard} tabName={"manage"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Manage Members"} />
-        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
       </CustomTabContainer>
     );
   };
@@ -46,12 +47,10 @@ function LdapGroupDetailPanel(
     switch (activeTab) {
       case "summary":
         return <LdapGroupSummaryPanel ldapGroupData={ldapGroupData} domain={orgDomain} setActiveTab={setActiveTab} />;
-      case "membership":
-        return (<div className="px-3 pt-2 pb-3"><LdapUsersTable orgDomain={orgDomain} userData={ldapGroupData.members} /></div>);
       case "manage":
-        return (<LdapGroupMembershipManagementPanel orgDomain={orgDomain} setActiveTab={setActiveTab} ldapGroupData={ldapGroupData.data} authorizedActions={authorizedActions} ldapUsers={ldapUsers} loadData={loadData}/>);
+        return (<LdapGroupMembershipManagementPanel orgDomain={orgDomain} setActiveTab={setActiveTab} ldapGroupData={ldapGroupData} authorizedActions={authorizedActions} ldapUsers={ldapUsers} loadData={loadData}/>);
       case "settings":
-        return <LdapGroupEditorPanel currentUserEmail={currentUserEmail} authorizedActions={authorizedActions} setLdapGroupData={setLdapGroupData} ldapGroupData={ldapGroupData} orgDomain={orgDomain} />;
+        return <LdapGroupEditorPanel handleClose={toggleSummaryPanel} currentUserEmail={currentUserEmail} authorizedActions={authorizedActions} setLdapGroupData={setLdapGroupData} ldapGroupData={ldapGroupData} orgDomain={orgDomain} />;
       default:
         return null;
     }

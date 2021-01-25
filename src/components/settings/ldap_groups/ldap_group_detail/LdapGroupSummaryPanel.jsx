@@ -1,14 +1,13 @@
 import React from "react";
 import {Row, Col} from "react-bootstrap";
 import PropTypes from "prop-types";
-import DtoTextField from "../../../common/form_fields/dto_form_fields/dto-text-field";
-import DtoToggleField from "../../../common/form_fields/dto_form_fields/dto-toggle-field";
-import TextField from "../../../common/form_fields/text-field";
-import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
 import LdapGroupPermissionsField from "./LdapGroupPermissionsField";
+import LdapUsersTable from "components/settings/ldap_users/LdapUsersTable";
+import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import BooleanField from "components/common/fields/boolean/BooleanField";
 
 function LdapGroupSummaryPanel({ ldapGroupData, domain, setActiveTab }) {
-
   if (ldapGroupData == null) {
     return <></>;
   }
@@ -17,26 +16,28 @@ function LdapGroupSummaryPanel({ ldapGroupData, domain, setActiveTab }) {
     <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapGroupData} fieldName={"name"}/>
+          <TextFieldBase dataObject={ldapGroupData} fieldName={"name"}/>
         </Col>
         <Col lg={6}>
-          {/*TODO: Pull through orgObject with its metadata once set up*/}
-          <TextField label={"Domain"} value={domain}/>
+          <div className="custom-text-field"><label className="text-muted mr-1">Domain:</label><span>{domain}</span></div>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapGroupData} fieldName={"groupType"}/>
+          <TextFieldBase dataObject={ldapGroupData} fieldName={"groupType"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapGroupData} fieldName={"externalSyncGroup"}/>
+          <TextFieldBase dataObject={ldapGroupData} fieldName={"externalSyncGroup"}/>
         </Col>
         <Col lg={6}>
-          <DtoToggleField dataObject={ldapGroupData} fieldName={"isSync"}/>
+          <BooleanField dataObject={ldapGroupData} fieldName={"isSync"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapGroupData} fieldName={"ownerEmail"}/>
+          <TextFieldBase dataObject={ldapGroupData} fieldName={"ownerEmail"}/>
         </Col>
         <Col lg={12}>
           <LdapGroupPermissionsField dataObject={ldapGroupData} />
+        </Col>
+        <Col lg={12} className="pt-2">
+          <LdapUsersTable orgDomain={domain} userData={ldapGroupData.members} />
         </Col>
       </Row>
     </SummaryPanelContainer>
