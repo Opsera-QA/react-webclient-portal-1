@@ -58,7 +58,7 @@ function AdminTools() {
         <BreadcrumbPageLink breadcrumbDestination={"deleteTools"} />
         <BreadcrumbPageLink breadcrumbDestination={"kpiManagement"} />
         <BreadcrumbPageLink breadcrumbDestination={"templateManagement"} />
-        <BreadcrumbPageLink breadcrumbDestination={"siteNotificationManagement"} />
+        <BreadcrumbPageLink breadcrumbDestination={"siteNotificationManager"} />
         <BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationManagement"} />
         <BreadcrumbPageLink breadcrumbDestination={"ldapDepartmentManagement"} />
         <BreadcrumbPageLink breadcrumbDestination={"customerOnboarding"} />

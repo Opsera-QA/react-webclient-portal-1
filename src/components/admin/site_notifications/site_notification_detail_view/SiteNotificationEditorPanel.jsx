@@ -2,20 +2,21 @@ import React, {useState, useContext, useEffect} from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Row from "react-bootstrap/Row";
-import siteNotificationActions from "../site-notification-actions";
-import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
-import DtoToggleInput from "../../../common/input/dto_input/dto-toggle-input";
 import Col from "react-bootstrap/Col";
-import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
-import SiteNotificationTypeInput
-  from "../../../common/list_of_values_input/admin/site_notifications/SiteNotificationTypeInput";
-import SiteNotificationViewInput
-  from "../../../common/list_of_values_input/admin/site_notifications/SiteNotificationViewInput";
 import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import SiteNotificationTypeInput
+  from "components/common/list_of_values_input/admin/site_notifications/SiteNotificationTypeInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import SiteNotificationViewInput
+  from "components/common/list_of_values_input/admin/site_notifications/SiteNotificationViewInput";
+import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
+import siteNotificationActions from "components/admin/site_notifications/site-notification-actions";
+import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 
 function SiteNotificationEditorPanel({ siteNotificationData, setSiteNotificationData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [siteNotificationDto, setSiteNotificationDto] = useState({});
+  const [siteNotificationDto, setSiteNotificationDto] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -36,31 +37,38 @@ function SiteNotificationEditorPanel({ siteNotificationData, setSiteNotification
     return await siteNotificationActions.updateSiteNotification(siteNotificationDto, getAccessToken);
   };
 
+  if (siteNotificationDto == null) {
+    return <></>;
+  }
+
   return (
-    <EditorPanelContainer isLoading={isLoading}>
+    <EditorPanelContainer>
       <div className="mx-2">
         <Row>
           <Col md={6}>
             <SiteNotificationTypeInput setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
           </Col>
           <Col md={6}>
-            <DtoTextInput fieldName={"header"} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
+            <TextInputBase fieldName={"header"} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
+          </Col>
+          <Col md={6}>
+            <DateTimeInput fieldName={"displayOnDate"} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
+          </Col>
+          <Col md={6}>
+            <DateTimeInput fieldName={"expiration"} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
           </Col>
           <Col md={12}>
-            <DtoTextInput fieldName={"message"} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
+            <TextInputBase fieldName={"message"} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
           </Col>
           <Col md={6}>
             <SiteNotificationViewInput disabled={true} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
           </Col>
           {/*TODO: Make FQDN component after KPI website one is checked in*/}
           <Col md={6}>
-            <DtoTextInput fieldName={"link"} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
+            <TextInputBase fieldName={"link"} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
           </Col>
           <Col md={6}>
-            {/*<DateTimeInput fieldName={"expiration"} disabled={true} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>*/}
-          </Col>
-          <Col md={6}>
-            <DtoToggleInput fieldName={"active"} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
+            <ActivityToggleInput fieldName={"active"} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
           </Col>
         </Row>
         <PersistButtonContainer
@@ -69,6 +77,7 @@ function SiteNotificationEditorPanel({ siteNotificationData, setSiteNotification
           setRecordDto={setSiteNotificationDto}
           createRecord={createSiteNotification}
           updateRecord={updateSiteNotification}
+          addAnotherOption={false}
         />
       </div>
     </EditorPanelContainer>

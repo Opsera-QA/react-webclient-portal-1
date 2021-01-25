@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-
-import SiteNotificationEditorPanel from "./SiteNotificationEditorPanel";
-import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
-import SummaryTab from "../../../common/tabs/detail_view/SummaryTab";
-import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTabPanelContainer";
-import SiteNotificationSummaryPanel from "./SiteNotificationSummaryPanel";
-import SettingsTab from "../../../common/tabs/detail_view/SettingsTab";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
+import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
+import SiteNotificationSummaryPanel
+  from "components/admin/site_notifications/site_notification_detail_view/SiteNotificationSummaryPanel";
+import SiteNotificationEditorPanel
+  from "components/admin/site_notifications/site_notification_detail_view/SiteNotificationEditorPanel";
+import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
 function SiteNotificationDetailPanel({ siteNotificationData, setSiteNotificationData }) {
   const [activeTab, setActiveTab] = useState("summary");

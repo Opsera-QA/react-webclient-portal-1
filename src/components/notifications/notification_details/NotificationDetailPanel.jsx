@@ -7,9 +7,7 @@ import DetailTabPanelContainer from "components/common/panels/detail_view/Detail
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import CustomTab from "components/common/tabs/CustomTab";
-import {
-  faTable,
-} from "@fortawesome/pro-light-svg-icons";
+import {faTable} from "@fortawesome/pro-light-svg-icons";
 import NotificationSummaryPanel
   from "components/notifications/notification_details/NotificationSummaryPanel";
 import NotificationActivityLogsTable
