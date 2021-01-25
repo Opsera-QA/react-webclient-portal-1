@@ -15,7 +15,6 @@ function LdapGroupManagement() {
   const {getUserRecord, setAccessRoles, getAccessToken} = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const [groupList, setGroupList] = useState([]);
-  const [ldapOrganizationData, setLdapOrganizationData] = useState();
   const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
   const [authorizedActions, setAuthorizedActions] = useState([]);
@@ -40,12 +39,11 @@ function LdapGroupManagement() {
   const getGroupsByDomain = async (ldapDomain) => {
     if (ldapDomain != null) {
       try {
-        let organization = await getOrganizationByDomain(ldapDomain, getAccessToken);
-        setLdapOrganizationData(organization);
-        setGroupList(organization["groups"]);
+        let response = await accountsActions.getLdapGroupsWithDomain(ldapDomain, getAccessToken);
+        setGroupList(response?.data);
       } catch (error) {
-        toastContext.showLoadingErrorDialog(error.message);
-        console.error(error.message);
+        toastContext.showLoadingErrorDialog(error);
+        console.error(error);
       }
     }
   };

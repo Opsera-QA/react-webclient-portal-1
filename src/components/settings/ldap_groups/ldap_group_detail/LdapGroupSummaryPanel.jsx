@@ -37,7 +37,7 @@ function LdapGroupSummaryPanel({ ldapGroupData, domain, setActiveTab }) {
           <LdapGroupPermissionsField dataObject={ldapGroupData} />
         </Col>
         <Col lg={12} className="pt-2">
-          <LdapUsersTable orgDomain={domain} userData={ldapGroupData.members} />
+          <LdapUsersTable orgDomain={domain} userData={ldapGroupData.getData("members")} />
         </Col>
       </Row>
     </SummaryPanelContainer>

@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 import {ldapGroupMetaData} from "./ldap-groups-metadata";
 import NewLdapGroupModal from "components/settings/ldap_groups/NewLdapGroupModal";
 import {
-  getCountColumnWithoutField,
   getTableBooleanIconColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
@@ -20,7 +19,7 @@ function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, l
       getTableTextColumn(fields.find(field => { return field.id === "name"})),
       getTableTextColumn(fields.find(field => { return field.id === "externalSyncGroup"})),
       getTableTextColumn(fields.find(field => { return field.id === "groupType"})),
-      getCountColumnWithoutField("Members", "members"),
+      getTableTextColumn(fields.find(field => { return field.id === "memberCount"})),
       getTableBooleanIconColumn(fields.find(field => { return field.id === "isSync"}))
     ],
     []
