@@ -10,12 +10,11 @@ function ConfigurationField({dataObject, fieldName}) {
 
   const getItems = () => {
     const configuration = dataObject.getData(fieldName);
+    const configurationKeys = Object.keys(configuration);
 
-    if (configuration == null || configuration === {}) {
+    if (configurationKeys == null || configurationKeys.length === 0) {
       return <span>No Configurations Applied</span>;
     }
-
-    const configurationKeys = Object.keys(configuration);
 
     return (
       configurationKeys.map((key, i) => {
