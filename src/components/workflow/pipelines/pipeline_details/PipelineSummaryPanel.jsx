@@ -1,12 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "../../../../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
-import { Row, Col, Form } from "react-bootstrap";
-import PipelineActions from "../../pipeline-actions";
+import {Row, Col, Form} from "react-bootstrap";
 import { format } from "date-fns";
-import Modal from "../../../common/modal/modal";
-import ModalActivityLogs from "../../../common/modal/modalActivityLogs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPencilAlt,
@@ -15,21 +11,24 @@ import {
   faUser,
   faUserFriends,
 } from "@fortawesome/pro-light-svg-icons";
-import "../../workflows.css";
-import SchedulerWidget from "../../../common/schedulerWidget";
-import PipelineHelpers from "../../pipelineHelpers";
 import DropdownList from "react-widgets/lib/DropdownList";
-import pipelineHelpers from "../../pipelineHelpers";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import PipelineActionControls from "./PipelineActionControls";
-import EditTagModal from "../../EditTagModal";
-import PipelineSummaryActionBar from "../../../common/actions/pipeline/PipelineSummaryActionBar";
-import InfoDialog from "../../../common/status_notifications/info";
-import WorkflowAuthorizedActions from "./workflow/workflow-authorized-actions";
-import PipelineSummaryMessages from "./pipelineSummaryMessage";
 import EditRolesModal from "components/workflow/EditRolesModal";
 import Model from "core/data_model/model";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
+import {AuthContext} from "contexts/AuthContext";
+import workflowAuthorizedActions
+  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+import pipelineHelpers from "components/workflow/pipelineHelpers";
+import InformationDialog from "components/common/status_notifications/info";
+import PipelineActionControls from "components/workflow/pipelines/pipeline_details/PipelineActionControls";
+import PipelineSummaryActionBar from "components/common/actions/pipeline/PipelineSummaryActionBar";
+import SchedulerWidget from "components/common/schedulerWidget";
+import PipelineSummaryMessages from "components/workflow/pipelines/pipeline_details/pipelineSummaryMessage";
+import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
+import EditTagModal from "components/workflow/EditTagModal";
+import pipelineActions from "components/workflow/pipeline-actions";
+import Modal from "components/common/modal/modal";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -72,12 +71,10 @@ function PipelineSummaryPanel({
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   let history = useHistory();
 
-
   const authorizedAction = (action, owner) => {
     let objectRoles = pipeline?.roles;
-    return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner, objectRoles);
+    return workflowAuthorizedActions.workflowItems(customerAccessRules, action, owner, objectRoles);
   };
-
 
   useEffect(() => {
     const controller = new AbortController();
@@ -112,7 +109,7 @@ function PipelineSummaryPanel({
         setWorkflowStatus(false);
       }
 
-      const step = await PipelineHelpers.getPendingApprovalStep(pipeline);
+      const step = await pipelineHelpers.getPendingApprovalStep(pipeline);
       if (step) {
         setApprovalStep(step);
       } else {
@@ -138,19 +135,19 @@ function PipelineSummaryPanel({
 
   const handleCopyPipeline = async (pipelineId) => {
     const { getAccessToken } = contextType;
-    await PipelineActions.duplicate(pipelineId, getAccessToken);
     setInfoModal({
       show: true,
       header: "Duplicate Pipeline",
       message: "A new pipeline configuration has been created, duplicating all of the settings from this one.  That pipeline is now in your list of Pipelines for viewing.  No tools or activity logs have been duplicated in this process.",
       button: "OK",
     });
+    await pipelineActions.duplicate(pipelineId, getAccessToken);
   };
 
 
   const handlePublishPipelineClick = async (pipelineId) => {
     const { getAccessToken } = contextType;
-    await PipelineActions.publish(pipelineId, getAccessToken);
+    await pipelineActions.publish(pipelineId, getAccessToken);
     setInfoModal({
       show: true,
       header: "Publish Pipeline to Catalog",
@@ -162,7 +159,7 @@ function PipelineSummaryPanel({
   const deleteItem = async (pipelineId) => {
     try {
       const { getAccessToken } = contextType;
-      await PipelineActions.delete(pipelineId, getAccessToken);
+      await pipelineActions.delete(pipelineId, getAccessToken);
       toastContext.showDeleteSuccessResultDialog("Pipeline");
       history.push("/workflow");
     }
@@ -236,7 +233,7 @@ function PipelineSummaryPanel({
 
       if (Object.keys(postBody).length > 0) {
         try {
-          await PipelineActions.updatePipeline(pipelineId, postBody, getAccessToken);
+          await pipelineActions.updatePipeline(pipelineId, postBody, getAccessToken);
           setFormData(INITIAL_FORM_DATA);
           toastContext.showUpdateSuccessResultDialog("Pipeline");
           await fetchPlan();
@@ -399,7 +396,7 @@ function PipelineSummaryPanel({
   };
 
   if (!pipeline || Object.keys(pipeline).length <= 0) {
-    return (<InfoDialog
+    return (<InformationDialog
       message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."/>);
   }
 
@@ -619,7 +616,7 @@ function PipelineSummaryPanel({
                                 handleCancelModal={() => setShowDeleteModal(false)}
                                 handleConfirmModal={() => deleteItem(modalDeleteId)}/> : null}
 
-      <ModalActivityLogs header="Pipeline Details" size="lg" jsonData={modalMessage} show={showModal}
+      <ModalActivityLogsDialog header="Pipeline Details" size="lg" jsonData={modalMessage} show={showModal}
                          setParentVisibility={setShowModal}/>
 
       {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
