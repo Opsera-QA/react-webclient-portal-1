@@ -56,17 +56,18 @@ function PipelineActionControls({
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
 
   const authorizedAction = (action, owner) => {
-    return WorkflowAuthorizedActions.pipelineActionControls(customerAccessRules, action, owner);
+    let objectRoles = pipeline?.roles;
+    return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner, objectRoles);
   };
 
   useEffect(() => {
     loadData(pipeline);
     if (workflowStatus === "paused") {
       setStatusMessage("This pipeline is currently paused.");
-      setStatusMessageBody("A paused pipeline requires either approval or review of the logs in order to proceed.")
+      setStatusMessageBody("A paused pipeline requires either approval or review of the logs in order to proceed.");
     } else {
       setStatusMessage(false);
-      setStatusMessageBody("")
+      setStatusMessageBody("");
     }
   }, [workflowStatus, JSON.stringify(pipeline.workflow)]);
 
@@ -310,7 +311,7 @@ function PipelineActionControls({
             placement="top"
             delay={{ show: 250, hide: 400 }}
             overlay={renderTooltip({ message: statusMessageBody })}>
-            <FontAwesomeIcon icon={faInfoCircle} fixedWidth className="mr-1" style={{cursor: "help"}}/>
+            <FontAwesomeIcon icon={faInfoCircle} fixedWidth className="mr-1" style={{ cursor: "help" }}/>
           </OverlayTrigger>
           {statusMessage}
         </div>

@@ -9,7 +9,7 @@ import ActionBarEditAccessRolesButton from "components/common/actions/buttons/Ac
 
 function PipelineSummaryActionBar({canTransferPipeline, handleDuplicateClick, handleDeleteClick, handleEditAccessRolesClick, handleViewClick, handlePublishClick, pipeline, loadPipeline}) {
   return (
-    <div className="text-muted action-bar justify-content-between d-flex pb-2">
+    <div className="text-muted action-bar justify-content-end d-flex pb-2">
       {handleViewClick && <div className="ml-3"><ActionBarViewButton handleViewClick={handleViewClick} itemName={"Pipeline"} data={pipeline} /></div>}
       {handlePublishClick && <div className="ml-3"><ActionBarPublishPipelineButton handlePublishClick={handlePublishClick} itemId={pipeline._id} /></div>}
       {handleDuplicateClick && <div className="ml-3"><ActionBarDuplicateButton handleDuplicateClick={handleDuplicateClick} itemName={"Pipeline"} itemId={pipeline._id} /></div>}

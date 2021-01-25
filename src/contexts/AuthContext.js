@@ -117,8 +117,10 @@ const AuthContextProvider = (props) => {
             PowerUser: groups.includes("PowerUsers"),
             User: groups.includes("Users"),
             UserId: user._id,
+            Email: user.email,
             Role: role,
             Type: ldap ? ldap.type : "sass-user",
+            Groups: groups,
           };
         }
         if (ldap && ldap.domain === "opsera.io") { //checking for OpsERA account domain

@@ -446,7 +446,7 @@ function ToastContextProvider ({ children, navBar }) {
 
 ToastContextProvider.propTypes = {
   children: PropTypes.any,
-  navBar: PropTypes.func
+  navBar: PropTypes.object
 };
 
 export const DialogToastContext = createContext(ToastContextProvider);
