@@ -75,7 +75,7 @@ const breadcrumbs = {
 
   //Insights
   insights: {name: "insights", path: paths.insights, label: "Insights", icon: faChartNetwork},
-  dashboardViewer: {name: "dashboardViewer", path: paths.dashboardViewer, label: "Dashboard Details", icon: faChartNetwork},
+  dashboardDetails: {name: "dashboardDetails", path: paths.dashboardDetails, label: "Dashboard Details", icon: faChartNetwork},
 
   //Reports
   reports: {name: "reports", path: paths.reports, label: "Reports", icon: faAnalytics},
@@ -169,7 +169,7 @@ const trails = {
 
   //Insights
   insights: {parent: undefined, breadcrumb: breadcrumbs.insights},
-  dashboardViewer: {parent: "insights", breadcrumb: breadcrumbs.dashboardViewer},
+  dashboardDetails: {parent: "insights", breadcrumb: breadcrumbs.dashboardDetails},
 
   //Reports
   reports: {parent: undefined, breadcrumb: breadcrumbs.reports},
