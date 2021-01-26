@@ -1073,6 +1073,14 @@ a.nav-link {
   overflow-x: hidden;
 }
 
+.wide-screen-container-body {
+    min-height: calc(100vh - 300px);
+    max-height: calc(100vh - 300px);
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+
 .modal-detail-view-body {
   min-height: 65vh;
   max-height: 80vh;
