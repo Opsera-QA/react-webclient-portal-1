@@ -32,7 +32,7 @@ function TitleBar({ title, titleIcon, parentBreadcrumb, isLoading, inactive }) {
     <div className="d-flex">
       {/*{getBackButton()}*/}
       <div><span><FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-1"/>{title}</span></div>
-      <div className="ml-auto mr-3"><span className="text-white-50">{inactive && "Inactive"}</span></div>
+      <div className="ml-auto mr-1"><span className="text-white-50">{inactive && "Inactive"}</span></div>
     </div>);
 }
 

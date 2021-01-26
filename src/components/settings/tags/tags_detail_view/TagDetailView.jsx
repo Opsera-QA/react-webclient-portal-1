@@ -91,6 +91,7 @@ function TagDetailView() {
       breadcrumbDestination={"tagDetailView"}
       title={tagData != null ? `Tag Details [${tagData["type"]}]` : undefined}
       managementViewLink={"/settings/tags"}
+      activeField={"active"}
       managementTitle={"Tag Management"}
       managementViewIcon={faTags}
       type={"Tag"}
