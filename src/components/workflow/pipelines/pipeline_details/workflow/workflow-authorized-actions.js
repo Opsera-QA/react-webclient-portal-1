@@ -19,9 +19,6 @@ const workflowAuthorizedActions = {};
  ];
  */
 
-//TODO: Redo the "role message" shown in UI.  Shouldn't be there anymore, instead show it inline in the new Roles area
-//TODO: Review top icon action bars in summary to see if we want to keep that.
-
 /**
  * Handles all authorization of actions in the pipeline.  It factors in the overall user roles and the individual object (pipeline)
  * access roles.
@@ -30,9 +27,13 @@ const workflowAuthorizedActions = {};
  * @param owner
  * @param objectRoles
  * @returns {boolean}
+ *
+ *
+ * Administrator & Owner Only Roles:
+ * duplicate_pipeline_btn, delete_pipeline_btn,
+ *
  */
 workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, objectRoles) => {
-  //console.log(customerAccessRules);
   if (customerAccessRules.Administrator) {
     return true; //all actions are authorized to administrator
   }
@@ -46,12 +47,11 @@ workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, o
   }
 
   const userObjectRole = calculateUserObjectRole(customerAccessRules.Email, customerAccessRules.Groups, objectRoles);
-
+  console.log("userObjectRole: ", userObjectRole)
   if (userObjectRole === "administrator") {
     return true; //all actions are authorized to administrator
   }
 
-  //TODO: Review what other roles actions I can add now explicitly...?
   if (userObjectRole === "secops") {
     switch (action) {
     case "view_step_configuration":
@@ -59,11 +59,16 @@ workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, o
     case "edit_step_details":
     case "duplicate_pipeline_btn":
     case "view_template_pipeline_btn":
+    case "publish_pipeline_btn":
     case "stop_pipeline_btn":
     case "approve_step_btn":
     case "edit_access_roles":
+    case "edit_tags":
+    case "edit_workflow_structure":
+    case "transfer_pipeline_btn":
     case "start_pipeline_btn":
     case "reset_pipeline_btn":
+    case "edit_step_notification":
       return true;
     default:
       return false; //all other options are disabled
@@ -73,15 +78,15 @@ workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, o
   if (customerAccessRules.PowerUser || userObjectRole === "manager") {
     switch (action) {
     case "view_step_configuration":
-    case "view_pipeline_configuration":
     case "edit_step_details":
+    case "publish_pipeline_btn":
     case "duplicate_pipeline_btn":
-    case "view_template_pipeline_btn":
     case "stop_pipeline_btn":
-    case "approve_step_btn":
     case "edit_access_roles":
+    case "approve_step_btn":
     case "start_pipeline_btn":
     case "reset_pipeline_btn":
+    case "edit_step_notification":
       return true;
     default:
       return false; //all other options are disabled
@@ -89,7 +94,7 @@ workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, o
   }
 
 
-  if (customerAccessRules.User || userObjectRole === "user") {
+  if (userObjectRole === "user") { //customerAccessRules.User no longer applies here
     switch (action) {
     case "stop_pipeline_btn":
     case "start_pipeline_btn":

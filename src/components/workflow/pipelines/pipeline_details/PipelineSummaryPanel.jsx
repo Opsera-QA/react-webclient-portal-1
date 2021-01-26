@@ -338,7 +338,7 @@ function PipelineSummaryPanel({
             })}
           </span>
         }
-        {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
+        {authorizedAction("edit_tags", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
 
         {editTags &&
         <EditTagModal data={pipeline.tags} visible={editTags} onHide={() => {

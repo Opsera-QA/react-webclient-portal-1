@@ -14,7 +14,7 @@ import {
   faSpinner,
   faStopCircle,
   faHistory,
-  faFlag, faRedo, faUserCircle, faInfoCircle,
+  faFlag, faRedo, faInfoCircle,
 } from "@fortawesome/pro-light-svg-icons";
 import "../../workflows.css";
 import { DialogToastContext } from "contexts/DialogToastContext";
