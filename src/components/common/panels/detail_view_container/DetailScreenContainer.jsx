@@ -74,11 +74,11 @@ function DetailScreenContainer(
         <div className="pl-2 content-block-header title-text-header-1">
           {getTitleBar()}
         </div>
-        <div>
+        <div className="detail-container-body">
           {getActionBar()}
-        </div>
-        <div className="shaded-container detail-container-body">
-          {getDetailBody()}
+          <div className="shaded-container">
+            {getDetailBody()}
+          </div>
         </div>
         <div className="content-block-footer"/>
       </div>
