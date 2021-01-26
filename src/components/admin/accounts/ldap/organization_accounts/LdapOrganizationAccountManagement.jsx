@@ -1,15 +1,12 @@
 import React, {useContext, useState, useEffect} from "react";
-import {AuthContext} from "../../../../../contexts/AuthContext";
-import LoadingDialog from "../../../../common/status_notifications/loading";
-import "../../accounts.css";
-import accountsActions from "../../accounts-actions";
-import BreadcrumbTrail from "../../../../common/navigation/breadcrumbTrail";
-import AccessDeniedDialog from "../../../../common/status_notifications/accessDeniedInfo";
-import LdapOrganizationAccountsTable from "./LdapOrganizationAccountsTable";
-import {getOrganizationDropdownList} from "../organizations/organization-functions";
 import {useHistory, useParams} from "react-router-dom";
-import DropdownList from "react-widgets/lib/DropdownList";
 import ToastContext from "react-bootstrap/cjs/ToastContext";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import {AuthContext} from "contexts/AuthContext";
+import accountsActions from "components/admin/accounts/accounts-actions";
+import LoadingDialog from "components/common/status_notifications/loading";
+import LdapOrganizationAccountsTable
+  from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountsTable";
 
 function LdapOrganizationAccountManagement() {
   const history = useHistory();
@@ -19,7 +16,6 @@ function LdapOrganizationAccountManagement() {
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
   const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
   const [organizationAccounts, setOrganizationAccounts] = useState(undefined);
-  const [organizations, setOrganizations] = useState(undefined);
   const [currentOrganizationName, setCurrentOrganizationName] = useState(undefined);
   const toastContext = useContext(ToastContext);
   const [authorizedActions, setAuthorizedActions] = useState([]);
@@ -45,8 +41,8 @@ function LdapOrganizationAccountManagement() {
     try {
       if (name != null) {
         const response = await accountsActions.getOrganizationByName(name, getAccessToken);
-        setLdapOrganizationData(response.data);
-        setOrganizationAccounts(response.data["orgAccounts"]);
+        setLdapOrganizationData(response?.data);
+        setOrganizationAccounts(response?.data?.orgAccounts);
       }
     } catch (error) {
       toastContext.showLoadingErrorDialog(error.message);
@@ -65,9 +61,6 @@ function LdapOrganizationAccountManagement() {
       setAuthorizedActions(authorizedActions);
 
       if (userRoleAccess.OpseraAdministrator) {
-        let organizationList = await getOrganizationDropdownList("name", getAccessToken);
-        setOrganizations(organizationList);
-
         if (organizationName != null) {
           setCurrentOrganizationName(organizationName);
           await loadOrganizationByName(organizationName);
@@ -86,42 +79,26 @@ function LdapOrganizationAccountManagement() {
     }
   };
 
-  const handleOrganizationChange = async (selectedOption) => {
-    history.push(`/admin/organization-accounts/${selectedOption.id}`);
-    setCurrentOrganizationName(selectedOption.id);
-    setIsLoading(true);
-    await loadOrganizationByName(selectedOption.id);
-    setIsLoading(false);
-  };
-
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
 
-  if (!authorizedActions.includes("get_organization_accounts") && !isLoading) {
-    return (<AccessDeniedDialog roleData={accessRoleData} />);
-  }
-
-    return (
-      <>
-        <BreadcrumbTrail destination="ldapOrganizationAccountManagement" />
-        <div className="max-content-width ml-2">
-          <div className="justify-content-between mb-1 d-flex">
-            <h5>Organization Account Management</h5>
-          </div>
-          <LdapOrganizationAccountsTable
-            isLoading={isLoading}
-            authorizedActions={authorizedActions}
-            ldapOrganizationData={ldapOrganizationData}
-            showDropdown={true}
-            ldapOrganizationAccounts={organizationAccounts}
-            organizations={organizations}
-            currentOrganizationName={currentOrganizationName}
-            handleOrganizationChange={handleOrganizationChange}
-            loadData={loadData}
-          />
-        </div>
-      </>);
+  return (
+    <ScreenContainer
+      breadcrumbDestination={"ldapOrganizationAccountManagement"}
+      isLoading={isLoading}
+      accessDenied={!authorizedActions.includes("get_organization_accounts")}
+    >
+      <LdapOrganizationAccountsTable
+        isLoading={isLoading}
+        authorizedActions={authorizedActions}
+        ldapOrganizationData={ldapOrganizationData}
+        ldapOrganizationAccounts={organizationAccounts}
+        currentOrganizationName={currentOrganizationName}
+        loadData={loadData}
+      />
+    </ScreenContainer>
+  );
 }
 
 export default LdapOrganizationAccountManagement;
