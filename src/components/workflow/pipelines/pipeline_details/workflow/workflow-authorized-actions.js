@@ -34,6 +34,10 @@ const workflowAuthorizedActions = {};
  *
  */
 workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, objectRoles) => {
+  if (customerAccessRules.OpseraAdministrator) {
+    return true; //all actions are authorized to Opsera Administrator
+  }
+
   if (customerAccessRules.Administrator) {
     return true; //all actions are authorized to administrator
   }
@@ -47,7 +51,7 @@ workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, o
   }
 
   const userObjectRole = calculateUserObjectRole(customerAccessRules.Email, customerAccessRules.Groups, objectRoles);
-  console.log("userObjectRole: ", userObjectRole)
+  //console.log("userObjectRole: ", userObjectRole);
   if (userObjectRole === "administrator") {
     return true; //all actions are authorized to administrator
   }
