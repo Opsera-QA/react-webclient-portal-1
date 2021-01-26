@@ -61,7 +61,7 @@ function DetailScreenContainer(
     )
   }
 
-  if (accessDenied) {
+  if (!isLoading && accessDenied) {
     return (
       <AccessDeniedContainer />
     )

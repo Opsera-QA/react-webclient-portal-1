@@ -28,7 +28,7 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
     return (children);
   };
 
-  if (accessDenied) {
+  if (!isLoading && accessDenied) {
     return (
       <AccessDeniedContainer />
     )
