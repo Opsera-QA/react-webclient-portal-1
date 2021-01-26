@@ -2,13 +2,13 @@ import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {useHistory} from "react-router-dom";
-import NewTemplateModal from "./NewTemplateModal";
-import templateEditorMetadata from "./template-form-fields";
+import templateEditorMetadata from "components/admin/template_editor/template-form-fields";
 import {
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn
-} from "../../common/table/table-column-helpers";
+} from "components/common/table/table-column-helpers";
+import NewTemplateModal from "components/admin/template_editor/NewTemplateModal";
 
 function TemplateTable({ data, loadData, isLoading }) {
   const fields = templateEditorMetadata.fields;
@@ -55,8 +55,7 @@ function TemplateTable({ data, loadData, isLoading }) {
         tableTitle={"Pipeline Templates"}
         type={"Pipeline Template"}
         createNewRecord={createTemplate}
-      >
-      </CustomTable>
+      />
       <NewTemplateModal setShowModal={setShowCreateTemplateModal} loadData={loadData} showModal={showCreateTemplateModal}/>
     </div>
   );

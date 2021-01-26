@@ -37,7 +37,7 @@ function TemplateManagement() {
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      if (accessRoleData.OpseraAdministrator) {
+      if (userRoleAccess?.OpseraAdministrator) {
         await getTemplates();
       }
     }
