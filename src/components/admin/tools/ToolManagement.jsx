@@ -1,18 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "contexts/AuthContext";
 
-import ToolTypeTable from "./tool_type/ToolTypeTable";
-
-import ToolIdentifierTable from "./tool_identifier/ToolIdentifierTable";
 import LoadingDialog from "components/common/status_notifications/loading";
-import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
-import toolTypeActions from "./tool-management-actions";
-import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
 import {useParams} from "react-router-dom";
-import CustomTab from "../../common/tabs/CustomTab";
-import {faServer, faToolbox, faTools, faWrench} from "@fortawesome/pro-light-svg-icons";
-import CustomTabContainer from "../../common/tabs/CustomTabContainer";
+import {faToolbox, faTools} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import toolTypeActions from "components/admin/tools/tool-management-actions";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import CustomTab from "components/common/tabs/CustomTab";
+import ToolTypeTable from "components/admin/tools/tool_type/ToolTypeTable";
+import ToolIdentifierTable from "components/admin/tools/tool_identifier/ToolIdentifierTable";
+import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 
 function ToolManagement() {
   const toastContext = useContext(DialogToastContext);
@@ -22,7 +21,7 @@ function ToolManagement() {
   const [isLoading, setIsLoading] = useState(true);
   const [toolTypeList, setToolTypeList] = useState([]);
   const [toolIdentifierList, setToolIdentifierList] = useState([]);
-  const [activeTab, setActiveTab] = useState("types");
+  const [activeTab, setActiveTab] = useState(tabKey === "identifiers" ? "identifiers" : "types");
 
   useEffect(() => {
     loadData();
@@ -35,10 +34,6 @@ function ToolManagement() {
 
   const loadData = async () => {
     setIsLoading(true);
-    if (tabKey === "identifiers") {
-      setActiveTab("identifiers");
-    }
-
     await getRoles();
     setIsLoading(false);
   };
@@ -46,60 +41,37 @@ function ToolManagement() {
   const getRoles = async () => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess && userRoleAccess.OpseraAdministrator) {
+    if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      await getToolTypes();
-      await getToolIdentifiers();
+
+      if (userRoleAccess?.OpseraAdministrator) {
+        await getToolTypes();
+        await getToolIdentifiers();
+      }
     }
   };
 
   const getToolTypes = async () => {
     try {
-      const tool_type = await toolTypeActions.getToolTypes(getAccessToken);
-      setToolTypeList(tool_type.data);
+      const toolTypeResponse = await toolTypeActions.getToolTypes(getAccessToken);
+      setToolTypeList(toolTypeResponse?.data);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
-      console.error(error.message);
+      console.error(error);
     }
   };
 
   const getToolIdentifiers = async () => {
     try {
-      const tool_identifier = await toolTypeActions.getToolIdentifiers(getAccessToken);
-      setToolIdentifierList(tool_identifier.data);
+      const toolIdentifierResponse = await toolTypeActions.getToolIdentifiers(getAccessToken);
+      setToolIdentifierList(toolIdentifierResponse?.data);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
-      console.error(error.message);
+      console.error(error);
     }
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  } else if (!accessRoleData.OpseraAdministrator) {
-    return (<AccessDeniedDialog roleData={accessRoleData}/>);
-  } else {
-    return (
-      <div>
-        <BreadcrumbTrail destination="toolManagement"/>
-        <h5>Tool Management</h5>
-        <CustomTabContainer styling="alternate-tabs">
-          <CustomTab icon={faToolbox} tabName={"types"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Category"} />
-          <CustomTab icon={faTools} tabName={"identifiers"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tools"} />
-        </CustomTabContainer>
-        <div className="content-block-collapse p-3">
-          <ToolManagementTabView activeTab={activeTab} loadData={loadData} isLoading={isLoading} toolTypeList={toolTypeList} toolIdentifierList={toolIdentifierList} />
-        </div>
-      </div>
-    );
-  }
-}
-
-function ToolManagementTabView({ activeTab, loadData, isLoading, toolTypeList, toolIdentifierList }) {
-  useEffect(() => {
-    // console.log("CHANGE HAPPENED");
-  }, [activeTab]);
-
-  if (activeTab) {
+  const getCurrentView = () => {
     switch (activeTab) {
       case "types":
         return <ToolTypeTable loadData={loadData} isLoading={isLoading} data={toolTypeList}/>;
@@ -109,7 +81,31 @@ function ToolManagementTabView({ activeTab, loadData, isLoading, toolTypeList, t
         return null;
     }
   }
-}
 
+  const getTabContainer = () => {
+    return (
+      <CustomTabContainer styling="alternate-tabs">
+        <CustomTab icon={faToolbox} tabName={"types"} handleTabClick={handleTabClick} activeTab={activeTab}
+                   tabText={"Category"}/>
+        <CustomTab icon={faTools} tabName={"identifiers"} handleTabClick={handleTabClick} activeTab={activeTab}
+                   tabText={"Tools"}/>
+      </CustomTabContainer>
+    );
+  }
+
+  if (!accessRoleData) {
+    return (<LoadingDialog size="sm"/>);
+  }
+
+  return (
+    <ScreenContainer
+      accessDenied={!isLoading && !accessRoleData.OpseraAdministrator}
+      isLoading={isLoading}
+      breadcrumbDestination={"toolManagement"}
+    >
+      <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
+    </ScreenContainer>
+  );
+}
 
 export default ToolManagement;
