@@ -212,6 +212,10 @@ export default function Marketplace () {
           </Col>
         </Row>
         <Row>
+          {/* pagination */}
+          {getPaginator(marketplaceFilterDto, setMarketplaceFilterDto, loading, getMarketKPIData)}
+        </Row>
+        <Row>
           {marketplaceFilterDto.getData("activeFilters").map((filter, key) => getFilterActiveButton(filter, key))}
         </Row>
         <Row className="marketplace-cards">
