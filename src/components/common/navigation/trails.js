@@ -3,7 +3,7 @@ import {
   faAnalytics,
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
-  faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers
+  faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea
 } from "@fortawesome/pro-light-svg-icons";
 
 const breadcrumbs = {
@@ -76,6 +76,7 @@ const breadcrumbs = {
   //Insights
   insights: {name: "insights", path: paths.insights, label: "Insights", icon: faChartNetwork},
   dashboardDetails: {name: "dashboardDetails", path: paths.dashboardDetails, label: "Dashboard Details", icon: faChartNetwork},
+  marketplace: {name: "marketplace", path: paths.marketplace, label: "Marketplace", icon: faChartArea},
 
   //Reports
   reports: {name: "reports", path: paths.reports, label: "Reports", icon: faAnalytics},
@@ -170,6 +171,7 @@ const trails = {
   //Insights
   insights: {parent: undefined, breadcrumb: breadcrumbs.insights},
   dashboardDetails: {parent: "insights", breadcrumb: breadcrumbs.dashboardDetails},
+  marketplace: {parent: "insights", breadcrumb: breadcrumbs.marketplace},
 
   //Reports
   reports: {parent: undefined, breadcrumb: breadcrumbs.reports},

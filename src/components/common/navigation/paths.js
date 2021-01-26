@@ -47,6 +47,7 @@ paths.pipelineDetailView = paths.pipelines + "/details"
 // Insights Paths
 paths.insights = "insights/dashboards";
 paths.dashboardDetails = paths.insights;
+paths.marketplace = paths.insights + "/marketplace";
 
 // Settings Paths
 paths.accountSettings = "settings";
