@@ -44,24 +44,21 @@ function TemplateTable({ data, loadData, isLoading }) {
   };
 
   return (
-    <>
-      <div className="justify-content-between mb-1 d-flex">
-        <h5>Template Management</h5>
-      </div>
-        <CustomTable
-          columns={columns}
-          data={data}
-          onRowSelect={selectedRow}
-          noDataMessage={noDataMessage}
-          isLoading={isLoading}
-          rowStyling={rowStyling}
-          tableTitle={"Pipeline Templates"}
-          type={"Pipeline Template"}
-          createNewRecord={createTemplate}
-        >
-        </CustomTable>
+    <div>
+      <CustomTable
+        columns={columns}
+        data={data}
+        onRowSelect={selectedRow}
+        noDataMessage={noDataMessage}
+        isLoading={isLoading}
+        rowStyling={rowStyling}
+        tableTitle={"Pipeline Templates"}
+        type={"Pipeline Template"}
+        createNewRecord={createTemplate}
+      >
+      </CustomTable>
       <NewTemplateModal setShowModal={setShowCreateTemplateModal} loadData={loadData} showModal={showCreateTemplateModal}/>
-    </>
+    </div>
   );
 }
 

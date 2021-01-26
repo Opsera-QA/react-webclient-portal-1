@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "contexts/AuthContext";
 
-import TemplatesTable from "./TemplateTable";
 import LoadingDialog from "components/common/status_notifications/loading";
-import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
-import BreadcrumbTrail from "../../common/navigation/breadcrumbTrail";
-import templateActions from "./template-actions";
-import {DialogToastContext} from "../../../contexts/DialogToastContext";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import templateActions from "components/admin/template_editor/template-actions";
+import TemplateTable from "components/admin/template_editor/TemplateTable";
 
 function TemplateManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -43,20 +41,21 @@ function TemplateManagement() {
 
   const getTemplates = async () => {
     const templateListResponse = await templateActions.getTemplates(getAccessToken);
-    setTemplateList(templateListResponse.data);
+    setTemplateList(templateListResponse?.data);
   };
 
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
-  if (!accessRoleData.OpseraAdministrator) {
-    return (<AccessDeniedDialog roleData={accessRoleData}/>);
-  }
+
   return (
-    <div>
-      <BreadcrumbTrail destination={"templateManagement"}/>
-      <TemplatesTable data={templateList} isLoading={isLoading} loadData={loadData}/>
-    </div>
+    <ScreenContainer
+      breadcrumbDestination={"templateManagement"}
+      isLoading={isLoading}
+      accessDenied={!isLoading && !accessRoleData.OpseraAdministrator}
+    >
+      <TemplateTable data={templateList} isLoading={isLoading} loadData={loadData}/>
+    </ScreenContainer>
   );
 }
 
