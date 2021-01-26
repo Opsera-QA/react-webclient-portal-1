@@ -22,7 +22,6 @@ function TemplateManagement() {
     try {
       setIsLoading(true);
       await getRoles();
-      await getTemplates();
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -37,6 +36,10 @@ function TemplateManagement() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
+
+      if (accessRoleData.OpseraAdministrator) {
+        await getTemplates();
+      }
     }
   };
 
