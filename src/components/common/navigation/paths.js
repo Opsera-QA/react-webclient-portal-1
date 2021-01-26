@@ -7,7 +7,7 @@ paths.systemStatus = paths.admin + "/system-status";
 paths.systemHealthCheck = paths.admin + "/health";
 
 paths.deprecatedReports = paths.admin + "/reports";
-paths.reportsRegistration = paths.admin + "analytics/reports-registration";
+paths.reportsRegistration = paths.admin + "/analytics/reports-registration";
 paths.systemManagement = paths.admin + "/manage-systems";
 
 paths.templateManagement = paths.admin + "/templates";
