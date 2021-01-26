@@ -1067,8 +1067,8 @@ a.nav-link {
 }
 
 .screen-container-body {
-  min-height: calc(100vh - 300px);
-  max-height: calc(100vh - 300px);
+  min-height: calc(100vh - 263px);
+  max-height: calc(100vh - 263px);
   overflow-y: auto;
   overflow-x: hidden;
 }
