@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTable, faEnvelope } from "@fortawesome/pro-light-svg-icons";
-import NotificationsView from "./NotificationsView";
-import NotificationActivityLogsTable from "./notification_details/activity_logs/NotificationActivityLogsTable";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
+import NotificationsView from "components/notifications/NotificationsView";
+import NotificationActivityLogsTable
+  from "components/notifications/notification_details/activity_logs/NotificationActivityLogsTable";
 
 function Notifications() {
   const { tab } = useParams();
@@ -24,7 +27,18 @@ function Notifications() {
     );
   };
 
-  const getView = () => {
+  const getTabContainer = () => {
+    return (
+      <div className="alternate-tabs">
+        <ul className="nav nav-tabs">
+          {getTab(handleTabClick, "notifications", faEnvelope, "Notification Policies", "Notification Policies")}
+          {getTab(handleTabClick, "activity", faTable, "Activity Logs", "Activity Logs")}
+        </ul>
+      </div>
+    );
+  };
+
+  const getCurrentView = () => {
     switch (activeTab) {
       case "notifications":
         return <NotificationsView />;
@@ -36,23 +50,9 @@ function Notifications() {
   }
 
   return (
-    <>
-    <div className="max-content-width">
-      {/*<BreadcrumbTrail destination={"pipelines"}/>*/}
-      <div className="title-text-5 mb-2">Notifications</div>
-      <>
-        <div className="alternate-tabs">
-          <ul className="nav nav-tabs">
-            {getTab(handleTabClick, "notifications", faEnvelope, "Notification Policies", "Notification Policies")}
-            {getTab(handleTabClick, "activity", faTable, "Activity Logs", "Activity Logs")}
-          </ul>
-        </div>
-        <div className="content-block-collapse pt-2">
-          {getView()}
-        </div>
-      </>
-    </div>
-  </>
+    <ScreenContainer breadcrumbDestination={"notificationManagement"}>
+      <TabPanelContainer tabContainer={getTabContainer()} currentView={getCurrentView()} />
+  </ScreenContainer>
   );
 }
 

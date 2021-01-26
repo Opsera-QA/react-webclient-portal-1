@@ -77,7 +77,7 @@ paths.toolRegistry = "inventory/tools";
 paths.toolDetailView = paths.toolRegistry + "/details";
 
 //Notifications
-paths.notifications = "notifications";
+paths.notificationManagement = "notifications";
 paths.notificationDetailView = paths.notificationDetailView + "/details";
 
 export default paths;

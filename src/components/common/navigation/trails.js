@@ -94,8 +94,8 @@ const breadcrumbs = {
   userTaggingDetailView: {name: "userTaggingDetailView", path: paths.userTaggingDetailView, label: "User Mapping Details", icon: faUserTag},
 
   //Notifications
-  notifications : { name: "notifications", path: paths.notifications, label: "Notifications", icon: faEnvelope},
-  notificationDetailView: {name: "notificationDetailView", path: paths.toolDetailView, label: "Notification Details", icon: faEnvelope},
+  notificationManagement : { name: "notificationManagement", path: paths.notificationManagement, label: "Notification Management", icon: faEnvelope},
+  notificationDetailView: {name: "notificationDetailView", path: paths.notificationDetailView, label: "Notification Details", icon: faEnvelope},
 
   accessDenied: {name: "accessDenied", path: undefined, label: "Access Denied", icon: faEnvelope},
 };
@@ -188,8 +188,8 @@ const trails = {
   userTaggingDetailView : {parent : "mapping", breadcrumb : breadcrumbs.userTaggingDetailView},
 
   //Notifications
-  notifications : {parent: undefined, breadcrumb: breadcrumbs.notifications},
-  notificationDetailView: {parent: "notifications", breadcrumb: breadcrumbs.notificationDetailView},
+  notificationManagement : {parent: undefined, breadcrumb: breadcrumbs.notificationManagement},
+  notificationDetailView: {parent: "notificationManagement", breadcrumb: breadcrumbs.notificationDetailView},
 
   accessDenied: {parent: undefined, breadcrumb: breadcrumbs.accessDenied},
 };
