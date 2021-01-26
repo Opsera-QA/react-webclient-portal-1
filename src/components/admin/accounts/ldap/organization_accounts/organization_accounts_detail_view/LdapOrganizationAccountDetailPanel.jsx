@@ -86,7 +86,7 @@ function LdapOrganizationAccountDetailPanel(
       case "users":
         return (
           <div className="p-3">
-            <LdapUsersTable orgDomain={ldapOrganizationAccountData["orgDomain"]} userData={ldapOrganizationAccountData.getData("users")} />
+            <LdapUsersTable orgDomain={ldapOrganizationAccountData["orgDomain"]} userData={ldapOrganizationAccountData.getData("users")} loadData={loadData} />
           </div>
         );
       case "groups":
