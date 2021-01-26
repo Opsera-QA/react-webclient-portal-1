@@ -921,7 +921,7 @@ a.nav-link {
 }
 
 .content-card-1 .content-block-footer {
-  border-top: 5px solid #738192;
+  border-top: 5px solid #8F86BB;
   background-color: #6E6690;
   padding-top: 1em;
   height: 1.5em;
@@ -1265,11 +1265,11 @@ a.nav-link {
 
 /* Property Input Styling */
 .object-properties-input .property-header {
-    background-color: #46415C;
+    background-color: #6E6690;
     color: #fff;
     height: 40px;
     line-height: 2.4em;
-    border-bottom: 5px solid #7368AA;
+    border-bottom: 5px solid #8F86BB;
 }
 
 .object-properties-input .delete-button {
