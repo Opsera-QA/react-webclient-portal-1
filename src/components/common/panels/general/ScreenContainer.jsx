@@ -41,9 +41,9 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
         <div className="pl-2 content-block-header title-text-header-1">
           <TitleBar titleIcon={breadcrumb.icon} title={breadcrumb.label} isLoading={isLoading}/>
         </div>
-        <div className="screen-container-body">
+        <div className="screen-container-body shaded-container">
           {getPageDescription()}
-          <div className="p-2 mt-2 shaded-container">
+          <div className="p-2 mt-2">
             {getScreenBody()}
           </div>
         </div>
