@@ -78,7 +78,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
     }
 
     return (
-      <div className="mt-2 p-1">
+      <div className="mt-2 py-1">
         <OverlayTrigger
           placement="auto"
           delay={{ hide: 400 }}
