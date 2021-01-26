@@ -5,6 +5,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import templateActions from "components/admin/template_editor/template-actions";
 import TemplateTable from "components/admin/template_editor/TemplateTable";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function TemplateManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
