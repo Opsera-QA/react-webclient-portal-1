@@ -41,7 +41,7 @@ import LdapOrganizationDetailView
 import LdapCustomerOnboardView from "./components/admin/accounts/ldap/customer_onboard/LdapCustomerOnboard";
 import FreeTrialRegistration from "./components/free_trial/Registration";
 import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
-import ApiConnectionDemo from "./components/api_connector/ApiDemo";
+import ApiConnectionDemo from "components/admin/api_demo/ApiConnectionDemo";
 import CommonTableDemo from "./components/common/samples/tableImplementation";
 import CustomerSystemStatus from "./components/settings/customer_system_status/CustomerSystemStatus";
 import LdapUserManagement from "./components/settings/ldap_users/LdapUserManagement";
@@ -347,7 +347,7 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/settings/data_mapping/user_mapping/details/:usersMappingId" exact
                                component={UsersMappingDetailView}/>
 
-                  <SecureRoute path="/demo/api" component={ApiConnectionDemo}/>
+                  <SecureRoute path="/admin/demo/api" component={ApiConnectionDemo}/>
                   <SecureRoute path="/demo/table" component={CommonTableDemo}/>
 
                   {(process.env.REACT_APP_STACK === "free-trial") && <>

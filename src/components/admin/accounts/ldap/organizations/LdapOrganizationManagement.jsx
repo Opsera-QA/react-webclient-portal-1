@@ -70,6 +70,7 @@ function LdapOrganizationManagement() {
     <ScreenContainer
       breadcrumbDestination={"ldapOrganizationManagement"}
       accessDenied={!accessRoleData?.OpseraAdministrator}
+      isLoading={isLoading}
     >
       <LdapOrganizationsTable
         isLoading={isLoading}

@@ -35,7 +35,7 @@ paths.customerOnboarding = "accounts/create";
 
 paths.registeredUsersManagement = paths.admin + "/registered-users";
 
-paths.apiManagement = "demo/api";
+paths.apiManagement = paths.admin + "/demo/api";
 
 paths.kpiManagement = paths.admin + "/kpis";
 paths.kpiDetailView = paths.kpiManagement;
