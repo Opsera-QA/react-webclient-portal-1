@@ -51,8 +51,8 @@ function Notifications() {
 
   return (
     <ScreenContainer breadcrumbDestination={"notificationManagement"}>
-      <TabPanelContainer tabContainer={getTabContainer()} currentView={getCurrentView()} />
-  </ScreenContainer>
+      <TabPanelContainer tabContainer={getTabContainer()} currentView={getCurrentView()}/>
+    </ScreenContainer>
   );
 }
 
