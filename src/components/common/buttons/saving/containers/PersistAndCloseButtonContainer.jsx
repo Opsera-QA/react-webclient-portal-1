@@ -4,7 +4,6 @@ import SaveButtonContainer from "./SaveButtonContainer";
 import StrictSaveButton from "../StrictSaveButton";
 import CreateButton from "../CreateButton";
 import LenientSaveButton from "components/common/buttons/saving/LenientSaveButton";
-import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 import CloseButton from "components/common/buttons/CloseButton";
 
 // TODO: If it makes sense, merge this with PersistButtonContainer
@@ -30,9 +29,16 @@ function PersistAndCloseButtonContainer({ recordDto, setRecordDto, updateRecord,
     return (<StrictSaveButton recordDto={recordDto} updateRecord={updateRecord} disable={disable} />);
   };
 
+  // Don't show close button when using create modal. At least for now
+  const getCloseButton = () => {
+    if (!recordDto.isNew()) {
+      return (<CloseButton closeEditorCallback={handleClose}/>);
+    }
+  };
+
   return (
     <SaveButtonContainer>
-      <CloseButton closeEditorCallback={handleClose}/>
+      {getCloseButton()}
       {getSaveButton()}
     </SaveButtonContainer>
   );
