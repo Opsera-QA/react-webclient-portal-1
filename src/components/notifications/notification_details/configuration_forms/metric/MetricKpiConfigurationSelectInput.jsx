@@ -61,7 +61,6 @@ function MetricKpiConfigurationSelectInput({ fieldName, dataObject, setDataObjec
               </Col>
             </Row>
             {dataPoints && dataPoints.length > 0 &&
-
             <Row>
               <Col lg={12}>
                 <SelectInputBase
@@ -75,9 +74,7 @@ function MetricKpiConfigurationSelectInput({ fieldName, dataObject, setDataObjec
                 />
               </Col>
             </Row>
-            
             }
-            
             <Row>
               <Col lg={4}>
                 <NotificationConditionTriggerSelectInput dataObject={dataObject} setDataObject={setDataObject} />

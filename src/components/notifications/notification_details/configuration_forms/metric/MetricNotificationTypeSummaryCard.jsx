@@ -19,6 +19,9 @@ function MetricNotificationTypeSummaryCard({ notificationData, notificationConfi
           <TextFieldBase dataObject={notificationConfigurationData} fieldName={"kpi_identifier"} />
         </Col>
         <Col lg={6}>
+          <TextFieldBase dataObject={notificationConfigurationData} fieldName={"dataPoint"} />
+        </Col>
+        <Col lg={6}>
           <TextFieldBase dataObject={notificationConfigurationData} fieldName={"conditionIf"} />
         </Col>
         <Col lg={6}>
