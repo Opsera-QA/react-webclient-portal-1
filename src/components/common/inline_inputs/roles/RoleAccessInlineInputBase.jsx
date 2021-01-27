@@ -1,22 +1,24 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencilAlt} from "@fortawesome/pro-light-svg-icons";
 import EditRolesModal from "components/common/inline_inputs/roles/modal/EditRolesModal";
 import RoleAccessField from "components/common/fields/multiple_items/RoleAccessField";
-import Button from "react-bootstrap/Button";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData}) {
+  const toastContext = useContext(DialogToastContext);
   const [showModal, setShowModal] = useState(false);
 
   const handleSave = async (newRoles) => {
       try {
-        const response = await saveData(newRoles);
+        await saveData(newRoles);
+        toastContext.showUpdateSuccessResultDialog(dataObject.getType());
         setShowModal(false);
       }
       catch (error) {
         console.error(error);
-        // TODO: Add toast context error toast
+        toastContext.showUpdateFailureResultDialog(dataObject.getType(), error);
       }
   };
 

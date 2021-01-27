@@ -1,15 +1,18 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import TooltipWrapper from "components/common/tooltip/tooltipWrapper";
 import {unsavedChanges} from "components/common/tooltip/popover-text";
 import Model from "core/data_model/model";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function EditRolesModal({showModal, dataObject, fieldName, handleClose, saveData}) {
+  const toastContext = useContext(DialogToastContext);
   const [temporaryDataObject, setTemporaryDataObject] = useState(undefined);
 
   useEffect(() => {
+    toastContext.removeInlineMessage();
     setTemporaryDataObject(new Model({...dataObject?.getPersistData()}, dataObject?.getMetaData(), false));
   }, [showModal]);
 
@@ -20,6 +23,7 @@ function EditRolesModal({showModal, dataObject, fieldName, handleClose, saveData
       </Modal.Header>
       <Modal.Body>
         <div className="p-3">
+          {toastContext.getInlineBanner()}
           <RoleAccessInput dataObject={temporaryDataObject} setDataObject={setTemporaryDataObject} fieldName={fieldName} />
         </div>
       </Modal.Body>
