@@ -63,7 +63,4 @@ function AdminTools() {
   );
 }
 
-AdminTools.propTypes = {};
-
-
 export default AdminTools;
