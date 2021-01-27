@@ -53,7 +53,7 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"ldapUserManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
-          {!envIsProd && <BreadcrumbPageLink breadcrumbDestination={"mapping"}/>}
+          <BreadcrumbPageLink breadcrumbDestination={"mapping"}/>
           {!envIsProd && <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"}/>}
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
         </>
@@ -65,7 +65,7 @@ function AccountSettings() {
         <>
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
-          {!envIsProd && <BreadcrumbPageLink breadcrumbDestination={"mapping"}/>}
+          <BreadcrumbPageLink breadcrumbDestination={"mapping"}/>
           {!envIsProd && <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"}/>}
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
         </>
