@@ -31,9 +31,9 @@ function MetricKpiConfigurationSelectInput({ fieldName, dataObject, setDataObjec
 
   const setDataPoint = (fieldName, value) => {
     console.log(value)
-    console.log(value["name"])
+    console.log(value["dataPoint"])
     const newDataObject = {...dataObject};
-    newDataObject.setData(fieldName, value["name"]);
+    newDataObject.setData(fieldName, value["dataPoint"]);
     newDataObject.setData("conditionIf", value["type"]);
     setDataObject({...newDataObject});
   }
@@ -60,6 +60,8 @@ function MetricKpiConfigurationSelectInput({ fieldName, dataObject, setDataObjec
                 />
               </Col>
             </Row>
+            {dataPoints && dataPoints.length > 0 &&
+
             <Row>
               <Col lg={12}>
                 <SelectInputBase
@@ -68,11 +70,14 @@ function MetricKpiConfigurationSelectInput({ fieldName, dataObject, setDataObjec
                   setDataObject={setDataObject}
                   selectOptions={dataPoints}
                   setDataFunction={setDataPoint}
-                  valueField="value"
-                  textField="name"
+                  valueField="dataPoint"
+                  textField="dataPoint"
                 />
               </Col>
             </Row>
+            
+            }
+            
             <Row>
               <Col lg={4}>
                 <NotificationConditionTriggerSelectInput dataObject={dataObject} setDataObject={setDataObject} />

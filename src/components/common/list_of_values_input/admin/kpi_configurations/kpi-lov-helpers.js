@@ -22,14 +22,6 @@ kpiLovHelpers.getFilterById = (id) => {
   return kpiLovHelpers.filters.find((filter) => filter.id === id);
 };
 
-
-kpiLovHelpers.dataPoints = [
-  {id: {"value": "cypress-tests-run", "name": "Cypress : Tests Run", "type": "number" }, label: "Cypress : Tests Run"},
-  {id: {"value": "cypress-tests-passed", "name": "Cypress : Tests Passed", "type": "number" }, label: "Cypress : Tests Passed"},
-  {id: {"value": "cypress-tests-failed", "name": "Cypress : Tests Failed", "type": "number" }, label: "Cypress : Tests Failed"},
-  {id: {"value": "cypress-pass-rate", "name": "Cypress : Pass Rate", "type": "percent" }, label: "Cypress : Pass Rate"},
-];
-
 kpiLovHelpers.categories = [
   {id: "pipeline", label: "Pipeline"},
   {id: "security", label: "Security"},
