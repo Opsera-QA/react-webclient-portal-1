@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import {AuthContext} from "../../../../../contexts/AuthContext";
-import toolTypeActions from "../../../../admin/tools/tool-management-actions";
+import toolManagementActions from "../../../../admin/tools/tool-management-actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function ToolTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField}) {
@@ -29,7 +29,7 @@ function ToolTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, t
   };
 
   const loadTools = async () => {
-    let response = await toolTypeActions.getToolTypes(getAccessToken, false);
+    let response = await toolManagementActions.getToolTypes(getAccessToken, false);
 
     if (response?.data != null) {
       setToolTypes(response.data);

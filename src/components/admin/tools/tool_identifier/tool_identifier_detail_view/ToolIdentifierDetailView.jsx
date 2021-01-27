@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import LoadingDialog from "../../../../common/status_notifications/loading";
 import AccessDeniedDialog from "../../../../common/status_notifications/accessDeniedInfo";
 import {AuthContext} from "../../../../../contexts/AuthContext";
-import toolTypeActions from "../../tool-management-actions";
+import toolManagementActions from "../../tool-management-actions";
 import Model from "../../../../../core/data_model/model";
-import toolIdentifierMetadata from "../tool-identifier-metadata";
+import toolCategoryMetadata from "../tool-identifier-metadata";
 import ToolIdentifierDetailPanel from "./ToolIdentifierDetailPanel";
 import {faTools} from "@fortawesome/pro-solid-svg-icons";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
@@ -43,10 +43,10 @@ function ToolIdentifierDetailView() {
   };
 
   const getToolIdentifier = async (toolIdentifierId) => {
-    const response = await toolTypeActions.getToolIdentifierById(toolIdentifierId, getAccessToken);
+    const response = await toolManagementActions.getToolIdentifierById(toolIdentifierId, getAccessToken);
     // // TODO: remove grabbing first when it only sends object instead of array
     if (response.data != null && response.data.length > 0) {
-      setToolIdentifierData(new Model(response.data[0], toolIdentifierMetadata, false));
+      setToolIdentifierData(new Model(response.data[0], toolCategoryMetadata, false));
     }
   };
 
@@ -66,7 +66,7 @@ function ToolIdentifierDetailView() {
     try {
       let newToolIdentifierData = {...toolIdentifierData};
       newToolIdentifierData.setData("active", !newToolIdentifierData.getData("active"));
-      let response = await toolTypeActions.updateToolIdentifier({...newToolIdentifierData}, getAccessToken);
+      let response = await toolManagementActions.updateToolIdentifier({...newToolIdentifierData}, getAccessToken);
       let updatedDto = new Model(response.data, toolIdentifierData.metaData, false);
       setToolIdentifierData(updatedDto);
       toastContext.showUpdateSuccessResultDialog(newToolIdentifierData.getType());

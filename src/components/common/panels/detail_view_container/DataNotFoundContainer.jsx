@@ -22,7 +22,7 @@ function DataNotFoundContainer({ breadcrumbDestination, type, children }) {
           type={type}
           managementViewIcon={parentBreadcrumb["icon"]}
           managementViewTitle={parentBreadcrumb["label"]}
-          managementViewLink={parentBreadcrumb["path"]}
+          managementViewLink={`/${parentBreadcrumb["path"]}`}
         />
       )
     }

@@ -10,17 +10,21 @@ import {getBreadcrumb, getParentBreadcrumb} from "components/common/navigation/t
 function DetailScreenContainer(
   {
     breadcrumbDestination,
-    type,
     actionBar,
     dataObject,
+    // TODO: Remove these four after wiring up everything
+    type,
     managementViewIcon,
     managementViewLink,
     managementTitle,
+
     title,
+
+    // TODO: remove title icon when pulling from breadcrumb
     titleIcon,
+
     detailPanel,
     isLoading,
-    activeField,
     accessDenied
   }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
@@ -28,6 +32,7 @@ function DetailScreenContainer(
 
 
   const getTitleBar = () => {
+    const activeField = dataObject?.getActiveField();
     return (<TitleBar isLoading={isLoading} parentBreadcrumb={parentBreadcrumb} titleIcon={titleIcon} title={title} inactive={activeField ? dataObject?.getData(activeField) === false : false} /> );
   };
 
@@ -49,15 +54,22 @@ function DetailScreenContainer(
 
   // TODO: We should just pull all the management stuff from the breadcrumb's parent instead.
   if (!isLoading && dataObject == null) {
+    // TODO: Remove using this when all detail views updated
+    if (managementViewLink && managementViewIcon) {
+      return (
+        <DataNotFoundContainer type={type} breadcrumbDestination={breadcrumbDestination}>
+          <DataNotFoundDialog
+            type={type}
+            managementViewIcon={managementViewIcon}
+            managementViewTitle={managementTitle}
+            managementViewLink={managementViewLink}
+          />
+        </DataNotFoundContainer>
+      )
+    }
+
     return (
-      <DataNotFoundContainer type={type} breadcrumbDestination={breadcrumbDestination}>
-        <DataNotFoundDialog
-          type={type}
-          managementViewIcon={managementViewIcon}
-          managementViewTitle={managementTitle}
-          managementViewLink={managementViewLink}
-        />
-      </DataNotFoundContainer>
+      <DataNotFoundContainer type={type} breadcrumbDestination={breadcrumbDestination} />
     )
   }
 
@@ -88,7 +100,6 @@ function DetailScreenContainer(
 
 
 DetailScreenContainer.propTypes = {
-  activeField: PropTypes.string,
   breadcrumbDestination: PropTypes.string,
   title: PropTypes.string,
   type: PropTypes.string,

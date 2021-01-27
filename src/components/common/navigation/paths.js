@@ -19,7 +19,7 @@ paths.siteNotificationDetailView = paths.siteNotificationManagement + "/details/
 
 paths.toolManagement = paths.admin + "/tools";
 paths.deleteTools = paths.admin + "/delete/";
-paths.toolTypeDetailView = paths.toolManagement + "/types/details/";
+paths.toolCategoryDetailView = paths.toolManagement + "/types/details/";
 paths.toolIdentifierDetailView = paths.toolManagement + "/identifiers/details/";
 
 paths.ldapOrganizationManagement = paths.admin + "/organizations";

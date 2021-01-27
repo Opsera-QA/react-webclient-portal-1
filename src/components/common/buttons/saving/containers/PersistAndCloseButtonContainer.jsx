@@ -31,7 +31,7 @@ function PersistAndCloseButtonContainer({ recordDto, setRecordDto, updateRecord,
 
   // Don't show close button when using create modal. At least for now
   const getCloseButton = () => {
-    if (!recordDto.isNew()) {
+    if (!recordDto.isNew() && handleClose) {
       return (<CloseButton closeEditorCallback={handleClose}/>);
     }
   };

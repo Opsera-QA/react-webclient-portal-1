@@ -6,10 +6,10 @@ import {useParams} from "react-router-dom";
 import {faToolbox, faTools} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import toolTypeActions from "components/admin/tools/tool-management-actions";
+import toolManagementActions from "components/admin/tools/tool-management-actions";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
-import ToolTypeTable from "components/admin/tools/tool_type/ToolTypeTable";
+import ToolCategoryTable from "components/admin/tools/tool_category/ToolCategoryTable";
 import ToolIdentifierTable from "components/admin/tools/tool_identifier/ToolIdentifierTable";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 
@@ -53,7 +53,7 @@ function ToolManagement() {
 
   const getToolTypes = async () => {
     try {
-      const toolTypeResponse = await toolTypeActions.getToolTypes(getAccessToken);
+      const toolTypeResponse = await toolManagementActions.getToolTypes(getAccessToken);
       setToolTypeList(toolTypeResponse?.data);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -63,7 +63,7 @@ function ToolManagement() {
 
   const getToolIdentifiers = async () => {
     try {
-      const toolIdentifierResponse = await toolTypeActions.getToolIdentifiers(getAccessToken);
+      const toolIdentifierResponse = await toolManagementActions.getToolIdentifiers(getAccessToken);
       setToolIdentifierList(toolIdentifierResponse?.data);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -74,7 +74,7 @@ function ToolManagement() {
   const getCurrentView = () => {
     switch (activeTab) {
       case "types":
-        return <ToolTypeTable loadData={loadData} isLoading={isLoading} data={toolTypeList}/>;
+        return <ToolCategoryTable loadData={loadData} isLoading={isLoading} data={toolTypeList}/>;
       case "identifiers":
         return <ToolIdentifierTable loadData={loadData} isLoading={isLoading} data={toolIdentifierList}/>;
       default:

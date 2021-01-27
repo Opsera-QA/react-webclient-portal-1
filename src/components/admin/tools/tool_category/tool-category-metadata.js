@@ -1,6 +1,7 @@
-const toolTypeMetadata = {
+const toolCategoryMetadata = {
   idProperty: "_id",
-  type: "Tool Type",
+  type: "Tool Category",
+  activeField: "active",
   fields: [
   {
     label: "Name",
@@ -42,4 +43,4 @@ const toolTypeMetadata = {
   }
 };
 
-export default toolTypeMetadata;
+export default toolCategoryMetadata;

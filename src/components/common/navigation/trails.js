@@ -29,7 +29,9 @@ const breadcrumbs = {
   templateDetailView: {name: "templateDetailView", path: paths.templateDetailView, label: "Template Details", icon: faStream},
   toolManagement: {name: "toolManagement", path: paths.toolManagement, label: "Tool Management", icon: faWrench},
   deleteTools: {name: "deleteTools", path: paths.deleteTools, label: "Delete Tools", icon: faTimes},
-  toolTypeDetailView: {name: "toolTypeDetailView", path: paths.toolTypeDetailView, label: "Tool Category Details", icon: faWrench},
+
+  // TODO: This needs to be updated to Tool Category
+  toolCategoryDetailView: {name: "toolCategoryDetailView", path: paths.toolCategoryDetailView, label: "Tool Category Details", icon: faWrench},
   toolIdentifierDetailView: {name: "toolIdentifierDetailView", path: paths.toolIdentifierDetailView, label: "Tool Identifier Details", icon: faWrench},
   kpiManagement: {name: "kpiManagement", path: paths.kpiManagement, label: "KPI Management", icon: faFileInvoice},
   kpiDetailView: {name: "kpiDetailView", path: paths.kpiManagement, label: "KPI Details", icon: faFileInvoice},
@@ -122,7 +124,7 @@ const trails = {
   templateManagement: {parent: "admin", breadcrumb: breadcrumbs.templateManagement},
   templateDetailView: {parent: "templateManagement", breadcrumb: breadcrumbs.templateDetailView},
   toolManagement: {parent: "admin", breadcrumb: breadcrumbs.toolManagement},
-  toolTypeDetailView: {parent: "toolManagement", breadcrumb: breadcrumbs.toolTypeDetailView},
+  toolCategoryDetailView: {parent: "toolManagement", breadcrumb: breadcrumbs.toolCategoryDetailView},
   toolIdentifierDetailView: {parent: "toolManagement", breadcrumb: breadcrumbs.toolIdentifierDetailView},
   kpiManagement: {parent: "admin", breadcrumb: breadcrumbs.kpiManagement},
   kpiDetailView: {parent: "kpiManagement", breadcrumb: breadcrumbs.kpiDetailView},

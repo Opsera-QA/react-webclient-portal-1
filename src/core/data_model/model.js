@@ -289,11 +289,15 @@ export class Model {
   };
 
   getType = () => {
-    return this.metaData["type"];
+    return this.metaData?.type;
+  }
+
+  getActiveField = () => {
+    return this.metaData?.activeField;
   }
 
   getFieldById = (id) => {
-    return this.metaData.fields.find(field => {return field.id === id });
+    return this.metaData?.fields.find(field => {return field.id === id });
   };
 
   getDefaultValue = (fieldName) => {

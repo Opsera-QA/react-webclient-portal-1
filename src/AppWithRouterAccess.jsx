@@ -53,7 +53,7 @@ import ToolDetailView from "./components/inventory/tools/tool_details/ToolDetail
 import TemplateDetailView from "./components/admin/template_editor/template_detail_view/TemplateDetailView";
 import ToolManagement from "./components/admin/tools/ToolManagement";
 import Mapping from "./components/settings/data_tagging/DataTagsManager";
-import ToolTypeDetailView from "./components/admin/tools/tool_type/tool_type_detail_view/ToolTypeDetailView";
+import ToolCategoryDetailView from "components/admin/tools/tool_category/tool_category_detail_view/ToolCategoryDetailView";
 import ToolIdentifierDetailView
   from "./components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierDetailView";
 import Pipelines from "./components/workflow/pipelines/Pipelines";
@@ -295,7 +295,7 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/admin/system-status" component={SystemStatus}/>
                   <SecureRoute path="/admin/analytics/reports-registration" component={ReportsRegistration}/>
                   <SecureRoute path="/admin/tools/:tabKey?" exact component={ToolManagement}/>
-                  <SecureRoute path="/admin/tools/types/details/:toolTypeId" exact component={ToolTypeDetailView}/>
+                  <SecureRoute path="/admin/tools/types/details/:toolTypeId" exact component={ToolCategoryDetailView}/>
                   <SecureRoute path="/admin/tools/identifiers/details/:toolIdentifierId" exact
                                component={ToolIdentifierDetailView}/>
                   <SecureRoute path="/admin/kpis" exact component={KpiManagement}/>

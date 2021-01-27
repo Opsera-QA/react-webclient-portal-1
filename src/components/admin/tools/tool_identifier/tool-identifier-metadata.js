@@ -1,12 +1,13 @@
 const toolIdentifierMetadata = {
   idProperty: "_id",
   type: "Tool Identifier",
+  activeField: "active",
   fields: [
-  {
-    label: "Name",
-    id: "name",
-    isRequired: true
-  },
+    {
+      label: "Name",
+      id: "name",
+      isRequired: true
+    },
     {
       label: "Description",
       id: "description",
@@ -49,7 +50,7 @@ const toolIdentifierMetadata = {
       label: "Active",
       id: "active",
     },
-],
+  ],
   newObjectFields: {
     name: "",
     description: "",

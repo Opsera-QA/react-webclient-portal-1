@@ -1,19 +1,19 @@
 import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import toolMetadata from "../../../inventory/tools/tool-metadata";
+import {useHistory} from "react-router-dom";
 import {
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn
-} from "../../../common/table/table-column-helpers";
-import {useHistory} from "react-router-dom";
-import NewToolTypeModal from "./NewToolTypeModal";
+} from "components/common/table/table-column-helpers";
+import NewToolCategoryModal from "components/admin/tools/tool_category/NewToolCategoryModal";
+import toolCategoryMetadata from "components/admin/tools/tool_category/tool-category-metadata";
 
-function ToolTypeTable({ data, loadData, isLoading }) {
-  const [showCreateToolTypeModal, setShowCreateToolTypeModal] = useState(false);
+function ToolCategoryTable({ data, loadData, isLoading }) {
+  const [showCreateToolCategoryModal, setShowCreateToolCategoryModal] = useState(false);
   const history = useHistory();
-  let fields = toolMetadata.fields;
+  let fields = toolCategoryMetadata.fields;
 
   const columns = useMemo(
     () => [
@@ -33,34 +33,31 @@ function ToolTypeTable({ data, loadData, isLoading }) {
     history.push(`/admin/tools/types/details/${rowData.original._id}`);
   };
 
-  const noDataMessage = "No tools are currently registered";
-
   const createToolType = () => {
-    setShowCreateToolTypeModal(true);
+    setShowCreateToolCategoryModal(true);
   };
 
   return (
-    <>
+    <div>
         <CustomTable
           columns={columns}
           data={data}
           rowStyling={rowStyling}
-          noDataMessage={noDataMessage}
           onRowSelect={selectedRow}
           isLoading={isLoading}
-          tableTitle={"Tool Types"}
-          type={"Tool Type"}
+          tableTitle={`Tool Categories`}
+          type={toolCategoryMetadata.type}
           createNewRecord={createToolType}
         />
-      {showCreateToolTypeModal && <NewToolTypeModal setShowModal={setShowCreateToolTypeModal} showModal={showCreateToolTypeModal} loadData={loadData}/>}
-    </>
+      <NewToolCategoryModal setShowModal={setShowCreateToolCategoryModal} showModal={showCreateToolCategoryModal} loadData={loadData}/>
+    </div>
   );
 }
 
-ToolTypeTable.propTypes = {
+ToolCategoryTable.propTypes = {
   data: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool
 };
 
-export default ToolTypeTable;
+export default ToolCategoryTable;

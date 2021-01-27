@@ -3,7 +3,7 @@ import { Col, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import toolTypeActions from "components/admin/tools/tool-management-actions";
+import toolManagementActions from "components/admin/tools/tool-management-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import ToolTypeSelectInput from "components/common/list_of_values_input/admin/tools/ToolTypeSelectInput";
@@ -27,11 +27,11 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, 
   };
 
   const createToolIdentifier = async () => {
-    return await toolTypeActions.createToolIdentifier(toolIdentifierDataDto, getAccessToken);
+    return await toolManagementActions.createToolIdentifier(toolIdentifierDataDto, getAccessToken);
   };
 
   const updateToolIdentifier = async () => {
-    return await toolTypeActions.updateToolIdentifier(toolIdentifierDataDto, getAccessToken);
+    return await toolManagementActions.updateToolIdentifier(toolIdentifierDataDto, getAccessToken);
   };
 
   if (toolIdentifierDataDto == null) {
@@ -39,7 +39,13 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, 
   }
 
   return (
-    <EditorPanelContainer>
+    <EditorPanelContainer
+      updateRecord={updateToolIdentifier}
+      recordDto={toolIdentifierDataDto}
+      createRecord={createToolIdentifier}
+      setRecordDto={setToolIdentifierDataDto}
+      handleClose={handleClose}
+    >
       <Row>
         <Col lg={6}>
           <TextInputBase fieldName={"name"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
@@ -69,15 +75,6 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, 
           <DtoPropertiesInput fieldName={"properties"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto} fields={["name", "value"]}/>
         </Col>
       </Row>
-      <div className="mr-2">
-        <PersistButtonContainer
-          updateRecord={updateToolIdentifier}
-          recordDto={toolIdentifierDataDto}
-          createRecord={createToolIdentifier}
-          setRecordDto={setToolIdentifierDataDto}
-          handleClose={handleClose}
-        />
-      </div>
     </EditorPanelContainer>
   );
 }

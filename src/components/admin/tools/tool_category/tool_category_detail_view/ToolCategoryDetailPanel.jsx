@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import ToolIdentifierSummaryPanel
-  from "components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierSummaryPanel";
-import ToolIdentifierEditorPanel
-  from "components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierEditorPanel";
+import ToolCategoryEditorPanel from "components/admin/tools/tool_category/tool_category_detail_view/ToolCategoryEditorPanel";
+import ToolCategorySummaryPanel from "components/admin/tools/tool_category/tool_category_detail_view/ToolCategorySummaryPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
-
-function ToolIdentifierDetailPanel({ toolIdentifierData, setToolIdentifierData }) {
+function ToolCategoryDetailPanel({ toolCategoryData, setToolCategoryData }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -25,9 +22,9 @@ function ToolIdentifierDetailPanel({ toolIdentifierData, setToolIdentifierData }
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <ToolIdentifierSummaryPanel toolIdentifierData={toolIdentifierData} setActiveTab={setActiveTab} />;
+        return <ToolCategorySummaryPanel toolCategoryData={toolCategoryData} setToolTypeData={setToolCategoryData} setActiveTab={setActiveTab}/>;
       case "settings":
-        return <ToolIdentifierEditorPanel setToolIdentifierData={setToolIdentifierData} toolIdentifierData={toolIdentifierData} handleClose={toggleSummaryPanel} />;
+        return <ToolCategoryEditorPanel setToolCategoryData={setToolCategoryData} toolCategoryData={toolCategoryData} handleClose={toggleSummaryPanel} />;
       default:
         return null;
     }
@@ -36,8 +33,8 @@ function ToolIdentifierDetailPanel({ toolIdentifierData, setToolIdentifierData }
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <SummaryTab activeTab={activeTab} handleTabClick={handleTabClick} />
-        <SettingsTab activeTab={activeTab} handleTabClick={handleTabClick} />
+        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
       </CustomTabContainer>
     )
   };
@@ -45,11 +42,11 @@ function ToolIdentifierDetailPanel({ toolIdentifierData, setToolIdentifierData }
   return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
 }
 
-ToolIdentifierDetailPanel.propTypes = {
-  toolIdentifierData: PropTypes.object,
-  setToolIdentifierData: PropTypes.func,
+ToolCategoryDetailPanel.propTypes = {
+  toolCategoryData: PropTypes.object,
+  setToolCategoryData: PropTypes.func,
 };
 
-export default ToolIdentifierDetailPanel;
+export default ToolCategoryDetailPanel;
 
 
