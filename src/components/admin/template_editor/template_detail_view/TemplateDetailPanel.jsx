@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-
-import TemplateEditorPanel from "./TemplateEditorPanel";
-import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
-import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTabPanelContainer";
-import TemplateSummaryPanel from "./TemplateSummaryPanel";
-import SummaryTab from "../../../common/tabs/detail_view/SummaryTab";
-import SettingsTab from "../../../common/tabs/detail_view/SettingsTab";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
+import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
+import TemplateSummaryPanel from "components/admin/template_editor/template_detail_view/TemplateSummaryPanel";
+import TemplateEditorPanel from "components/admin/template_editor/template_detail_view/TemplateEditorPanel";
+import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
 function TemplateDetailPanel({ templateData, setTemplateData }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -14,6 +13,10 @@ function TemplateDetailPanel({ templateData, setTemplateData }) {
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
     setActiveTab(activeTab);
+  };
+
+  const toggleSummaryPanel = () => {
+    setActiveTab("summary");
   };
 
   const getTabContainer = () => {
@@ -30,7 +33,7 @@ function TemplateDetailPanel({ templateData, setTemplateData }) {
       case "summary":
         return <TemplateSummaryPanel templateData={templateData} setActiveTab={setActiveTab} />;
       case "settings":
-        return <TemplateEditorPanel setTemplateData={setTemplateData} templateData={templateData} />;
+        return <TemplateEditorPanel setTemplateData={setTemplateData} templateData={templateData} handleClose={toggleSummaryPanel} />;
       default:
         return null;
     }

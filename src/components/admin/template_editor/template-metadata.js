@@ -1,6 +1,13 @@
 const templateEditorMetadata = {
   idProperty: "_id",
-  type: "Template",
+  type: "Pipeline Template",
+  activeField: "active",
+  detailView: function (record) {
+    return `/admin/templates/details/${record.getData("_id")}`;
+  },
+  detailViewTitle: function (record) {
+    return `Template Details [${record?.getData("name")}]`;
+  },
   fields: [
     {
       label: "Name",

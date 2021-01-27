@@ -1,9 +1,9 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
-import {AuthContext} from "../../../../../../contexts/AuthContext";
-import {getOrganizationAccountDropdownList} from "../../../../../admin/accounts/ldap/organizations/organization-functions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {AuthContext} from "contexts/AuthContext";
+import {getOrganizationAccountDropdownList} from "components/admin/accounts/ldap/organizations/organization-functions";
 
 function LdapOrganizationAccountSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField}) {
   const toastContext = useContext(DialogToastContext);
@@ -44,7 +44,6 @@ function LdapOrganizationAccountSelectInput({ fieldName, dataObject, setDataObje
         valueField={valueField}
         groupBy={"groupId"}
         textField={textField}
-        // placeholderText={placeholderText}
         disabled={disabled || isLoading}
       />
     </div>

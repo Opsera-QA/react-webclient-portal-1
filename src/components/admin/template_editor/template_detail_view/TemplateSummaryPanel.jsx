@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React from "react";
 import {Row, Col} from "react-bootstrap";
 import PropTypes from "prop-types";
 
@@ -70,6 +70,5 @@ TemplateSummaryPanel.propTypes = {
   templateData: PropTypes.object,
   setActiveTab: PropTypes.func
 };
-
 
 export default TemplateSummaryPanel;

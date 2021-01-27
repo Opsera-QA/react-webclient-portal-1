@@ -2,13 +2,13 @@ import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {useHistory} from "react-router-dom";
-import templateEditorMetadata from "components/admin/template_editor/template-form-fields";
 import {
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import NewTemplateModal from "components/admin/template_editor/NewTemplateModal";
+import templateEditorMetadata from "components/admin/template_editor/template-metadata";
 
 function TemplateTable({ data, loadData, isLoading }) {
   const fields = templateEditorMetadata.fields;

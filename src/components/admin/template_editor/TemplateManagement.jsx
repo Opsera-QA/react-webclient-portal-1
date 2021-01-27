@@ -56,7 +56,7 @@ function TemplateManagement() {
     <ScreenContainer
       breadcrumbDestination={"templateManagement"}
       isLoading={isLoading}
-      accessDenied={!isLoading && !accessRoleData.OpseraAdministrator}
+      accessDenied={!accessRoleData?.OpseraAdministrator}
     >
       <TemplateTable data={templateList} isLoading={isLoading} loadData={loadData}/>
     </ScreenContainer>
