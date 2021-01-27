@@ -13,15 +13,28 @@ import  NotificationConditionTriggerSelectInput
 import MetricNotificationConfigurationCardContainer
   from "components/notifications/notification_details/configuration_forms/metric/MetricNotificationConfigurationCardContainer";
 
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+
 function MetricKpiConfigurationSelectInput({ fieldName, dataObject, setDataObject, disabled }) {
   const [currentKpi, setCurrentKpi] = useState(undefined);
+  const [dataPoints, setDataPoints] = useState(undefined);
 
   // Faseeh, here is where you add what fields you pull off of the KPI configuration to the data object
   const validateAndSetData = (fieldName, value) => {
     const newDataObject = {...dataObject};
     newDataObject.setData(fieldName, value["identifier"]);
     newDataObject.setData("conditionIf", value["yAxis"]);
+    setDataPoints(value["dataPoints"])
     setCurrentKpi(value);
+    setDataObject({...newDataObject});
+  }
+
+  const setDataPoint = (fieldName, value) => {
+    console.log(value)
+    console.log(value["dataPoint"])
+    const newDataObject = {...dataObject};
+    newDataObject.setData(fieldName, value["dataPoint"]);
+    newDataObject.setData("conditionIf", value["type"]);
     setDataObject({...newDataObject});
   }
 
@@ -47,6 +60,21 @@ function MetricKpiConfigurationSelectInput({ fieldName, dataObject, setDataObjec
                 />
               </Col>
             </Row>
+            {dataPoints && dataPoints.length > 0 &&
+            <Row>
+              <Col lg={12}>
+                <SelectInputBase
+                  fieldName="dataPoint"
+                  dataObject={dataObject}
+                  setDataObject={setDataObject}
+                  selectOptions={dataPoints}
+                  setDataFunction={setDataPoint}
+                  valueField="dataPoint"
+                  textField="dataPoint"
+                />
+              </Col>
+            </Row>
+            }
             <Row>
               <Col lg={4}>
                 <NotificationConditionTriggerSelectInput dataObject={dataObject} setDataObject={setDataObject} />

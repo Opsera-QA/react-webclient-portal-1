@@ -54,10 +54,13 @@ function KpiSummaryPanel({ kpiData, setActiveTab }) {
         <Col lg={12}>
           <GenericItemField dataObject={kpiData} fieldName={"category"} />
         </Col>
-        <Col lg={6}>
+        <Col lg={4}>
           <JsonField dataObject={kpiData} fieldName={"supported_filters"} />
         </Col>
-        <Col lg={6}>
+        <Col lg={4}>
+          <JsonField dataObject={kpiData} fieldName={"dataPoints"} />
+        </Col>
+        <Col lg={4}>
           <JsonField dataObject={kpiData} fieldName={"settings"} />
         </Col>
       </Row>

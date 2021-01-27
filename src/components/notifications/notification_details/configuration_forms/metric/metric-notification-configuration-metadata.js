@@ -12,6 +12,11 @@ const metricNotificationConfigurationMetadata = {
       isRequired: true
     },
     {
+      label: "Select Data Point",
+      id: "dataPoint",
+      // isRequired: true
+    },
+    {
       label: "is at least",
       id: "atLeast",
       // isRequired: true,
@@ -30,6 +35,7 @@ const metricNotificationConfigurationMetadata = {
   newObjectFields: {
     kpi_identifier: "",
     conditionIf: "",
+    dataPoint: "",
     atLeast: 1,
     condition: "",
     threshold: 45,
