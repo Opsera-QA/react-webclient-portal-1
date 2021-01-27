@@ -44,6 +44,10 @@ const kpiMetaData = {
       id: "settings",
     },
     {
+      label: "Data Points",
+      id: "dataPoints",
+    },
+    {
       label: "Y-Axis Type",
       id: "yAxis",
     },
@@ -76,6 +80,7 @@ const kpiMetaData = {
     "type": "",
     "componentName": "",
     "settings": {},
+    "dataPoints": [],
     "category": [],
     "supported_filters": [],
     "tools": [],
