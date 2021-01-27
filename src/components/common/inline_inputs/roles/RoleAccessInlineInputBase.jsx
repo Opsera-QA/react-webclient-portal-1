@@ -15,7 +15,7 @@ function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData}) 
   const getEditButton = () => {
     if (!disabled) {
       return (
-        <div onClick={() => {setShowModal(true);}} className={"ml-2 mt-2 pointer text-muted"}>
+        <div onClick={() => {setShowModal(true);}} className={"ml-2 mt-2 pointer text-muted edit-button"}>
           <FontAwesomeIcon icon={faPencilAlt} className="mr-1"/>
           Edit Roles
         </div>
@@ -24,7 +24,7 @@ function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData}) 
   };
 
   return (
-    <div>
+    <div className="role-access">
       <div className="d-flex">
         <div><RoleAccessField dataObject={dataObject} fieldName={fieldName} /></div>
         <div>{getEditButton()}</div>

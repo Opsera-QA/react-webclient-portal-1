@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSave, faSpinner} from "@fortawesome/pro-light-svg-icons";
-import {modalPersistUpdatedRecord, persistUpdatedRecord} from "./saving-helpers";
+import {modalPersistUpdatedRecord} from "./saving-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
 function ModalSaveButtonBase({recordDto, updateRecord, disable, showSuccessToasts, lenient, handleClose}) {
