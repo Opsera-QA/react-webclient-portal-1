@@ -27,9 +27,9 @@ function ToolAttributesPanel({ toolData }) {
 
   const getTable = (data, tableColumns, object) => {
     return (
-      <>
+      <div>
         <div className="text-center pb-1"><span className="text-muted">{object}</span></div>
-        <div className="table-content-block mb-3">
+        <div className="mb-3">
           <CustomTable
             showHeaderText={false}
             columns={tableColumns}
@@ -38,7 +38,7 @@ function ToolAttributesPanel({ toolData }) {
           >
           </CustomTable>
         </div>
-      </>
+      </div>
     );
   };
 
