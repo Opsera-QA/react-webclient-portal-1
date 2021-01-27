@@ -557,7 +557,7 @@ function PipelineSummaryPanel({
           }
           {getTagField()}
 
-          {!featureFlagHideItemInProd() && customerAccessRules.Type !== "sass-user" && getRoleAccessField()}
+          {customerAccessRules.Type !== "sass-user" && getRoleAccessField()}
 
           {editDescription ?
             <>
