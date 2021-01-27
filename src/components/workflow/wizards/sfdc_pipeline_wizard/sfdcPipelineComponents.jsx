@@ -261,7 +261,7 @@ const SfdcPipelineComponents = ({
             <>
               <div className="mt-3 mr-3">
                 <div className="d-flex justify-content-between">
-                  {isProfiles ? 
+                  {/* {isProfiles ? 
 
                   <div className="px-2">
                      <OverlayTrigger
@@ -294,7 +294,7 @@ const SfdcPipelineComponents = ({
                       />
                       
                   </div>
-                  :
+                  : */}
                   <div className="px-2">
                     <OverlayTrigger
                   placement="right"
@@ -308,7 +308,7 @@ const SfdcPipelineComponents = ({
                     <div className="text-muted pl-1 pb-1">Date Filter:</div>
                     {dateAsOf}
                   </div>
-                  }
+                  {/* } */}
                   
                   <div className="px-2">
                     <div className="text-muted pl-1 pb-1">  <OverlayTrigger
@@ -474,7 +474,10 @@ const SfdcPipelineComponents = ({
             onClick={() => {
               handleSubmitComponentTypes();
             }}
-            disabled={save || isProfiles ? selectedComp.length < 1 : false }
+            disabled={save ||
+              // isProfiles ? selectedComp.length < 1 : false
+              selectedComponentTypes.length < 1
+             }
           >
             {save ? (
               <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
