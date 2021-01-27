@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from "react";
-import PlatformInventory from "./platform/platformInventory";
-import ToolInventory from "./tools/ToolInventory";
-import BreadcrumbTrail from "../common/navigation/breadcrumbTrail";
-import CustomTabContainer from "../common/tabs/CustomTabContainer";
-import CustomTab from "../common/tabs/CustomTab";
+import React, {useState} from "react";
 import {faServer, faTools} from "@fortawesome/pro-light-svg-icons";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
+import ToolInventory from "components/inventory/tools/ToolInventory";
+import PlatformInventory from "components/inventory/platform/platformInventory";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import CustomTab from "components/common/tabs/CustomTab";
 
 function Inventory() {
   const [activeTab, setActiveTab] = useState("tools");
@@ -14,39 +15,37 @@ function Inventory() {
     setActiveTab(tabSelection);
   };
 
-  return (
-    <div className="max-content-width">
-      <BreadcrumbTrail destination="toolRegistry"/>
-      <h4>Tool Registry</h4>
-      <p>The OpsERA Tool Registry allows you to register, track and configure all of the tools in your organization in
-        one centralized inventory.</p>
-
-      <CustomTabContainer styling="alternate-tabs">
-        <CustomTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tools"} />
-        <CustomTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Platform"} />
-      </CustomTabContainer>
-      <div className="content-block-collapse">
-        <InventoryTabView activeTab={activeTab} />
-      </div>
-    </div>
-  );
-}
-
-function InventoryTabView({ activeTab }) {
-  useEffect(() => {
-    // console.log("CHANGE HAPPENED");
-  }, [activeTab]);
-
-  if (activeTab) {
+  const getCurrentView = () => {
     switch (activeTab) {
       case "tools":
-        return <ToolInventory/>;
+        return <ToolInventory />;
       case "platform":
-        return <PlatformInventory/>;
+        return <PlatformInventory />;
       default:
         return null;
     }
   }
+
+  const getTabContainer = () => {
+    return (
+      <CustomTabContainer styling="alternate-tabs">
+        <CustomTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tools"} />
+        <CustomTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Platform"} />
+      </CustomTabContainer>
+    );
+  }
+
+  return (
+    <ScreenContainer
+      breadcrumbDestination={"toolRegistry"}
+      pageDescription={`
+        The OpsERA Tool Registry allows you to register, track and configure all of the tools in your organization in
+        one centralized inventory.
+      `}
+    >
+      <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
+    </ScreenContainer>
+  );
 }
 
 export default Inventory;

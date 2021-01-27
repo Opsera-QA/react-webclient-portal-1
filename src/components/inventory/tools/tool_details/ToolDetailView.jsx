@@ -58,14 +58,9 @@ function ToolDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"toolDetailView"}
-      title={toolData != null ? `Tool Details [${toolData["name"]}]` : undefined}
-      managementViewLink={"/inventory/tools"}
-      managementTitle={"Tool Registry"}
-      type={"Tool"}
-      titleIcon={faTools}
+      metadata={toolMetadata}
       dataObject={toolData}
       isLoading={isLoading}
-      activeField={"active"}
       actionBar={getActionBar()}
       detailPanel={<ToolDetailPanel toolData={toolData} isLoading={isLoading} tab={tab} setToolData={setToolData} loadData={getTool}/>}
     />
