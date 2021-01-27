@@ -3,14 +3,13 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import inventoryActions from "components/inventory/inventory-actions";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import JiraUserInputs
   from "components/notifications/notification_details/notification_method_forms/jira/JiraUserInputs";
 import {faProjectDiagram} from "@fortawesome/pro-light-svg-icons";
-import DropdownList from "react-widgets/lib/DropdownList";
 import JiraToolProjectField from "components/common/fields/inventory/tools/jira/JiraToolProjectField";
+import toolsActions from "components/inventory/tools/tools-actions";
 
 function JiraToolProjectInput({jiraToolId, fieldName, dataObject, setDataObject, disabled}) {
   const toastContext = useContext(DialogToastContext);
@@ -38,7 +37,7 @@ function JiraToolProjectInput({jiraToolId, fieldName, dataObject, setDataObject,
   };
 
   const loadProjects = async () => {
-    const response = await inventoryActions.getToolById(jiraToolId, getAccessToken);
+    const response = await toolsActions.getToolById(jiraToolId, getAccessToken);
 
     let toolProjects = response?.data[0]?.projects;
     if (toolProjects) {

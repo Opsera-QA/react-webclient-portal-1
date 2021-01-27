@@ -44,6 +44,11 @@ toolsActions.getTools = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+toolsActions.getToolById = async (id, getAccessToken) => {
+  const apiUrl = `/registry/${id}`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
 toolsActions.getToolRegistryList = async (toolFilterDto, getAccessToken) => {
   let sortOption = toolFilterDto.getData("sortOption");
 
@@ -59,7 +64,7 @@ toolsActions.getToolRegistryList = async (toolFilterDto, getAccessToken) => {
     }
   }
 
-  const apiUrl = `/registry`;
+  const apiUrl = `/registry/configs`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 

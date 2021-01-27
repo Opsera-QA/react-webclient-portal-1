@@ -3,13 +3,13 @@ import { useParams } from "react-router-dom";
 import ToolDetailPanel from "./ToolDetailPanel";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import inventoryActions from "components/inventory/inventory-actions";
 import toolMetadata from "components/inventory/tools/tool-metadata";
 import Model from "core/data_model/model";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarDeleteToolButton from "components/common/actions/buttons/tool/ActionBarDeleteToolButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import toolsActions from "components/inventory/tools/tools-actions";
 
 function ToolDetailView() {
   const { id, tab } = useParams();
@@ -25,7 +25,7 @@ function ToolDetailView() {
   const getTool = async () => {
     try {
       setIsLoading(true);
-      const response = await inventoryActions.getToolById(id, getAccessToken);
+      const response = await toolsActions.getToolById(id, getAccessToken);
 
       if (response != null && response.data && response.data[0]) {
         setToolData(new Model(response.data[0], toolMetadata, false));

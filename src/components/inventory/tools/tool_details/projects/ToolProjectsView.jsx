@@ -2,13 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import inventoryActions from "components/inventory/inventory-actions";
 import Model from "core/data_model/model";
 import toolMetadata from "components/inventory/tools/tool-metadata";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import JiraProjectDetailView
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/JiraProjectDetailView";
 import jiraProjectMetadata from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jira-project-metadata";
+import toolsActions from "components/inventory/tools/tools-actions";
 
 function ToolProjectsView() {
   const { id, projectId } = useParams();
@@ -26,7 +26,7 @@ function ToolProjectsView() {
   const getTool = async () => {
     try {
       setIsLoading(true);
-      const response = await inventoryActions.getToolById(id, getAccessToken);
+      const response = await toolsActions.getToolById(id, getAccessToken);
 
       const toolDataResponse = response?.data[0];
       if (toolDataResponse) {
