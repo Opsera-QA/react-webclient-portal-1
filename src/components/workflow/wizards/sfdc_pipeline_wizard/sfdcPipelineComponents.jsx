@@ -183,8 +183,8 @@ const SfdcPipelineComponents = ({
     postBody.pipelineId = pipelineId;
     postBody.stepId = stepId;
     postBody.lastCommitTimeStamp = isProfiles ? "1900-01-01T00:00:00.000Z" : asOfDate;
-    // postBody.componentTypes = isProfiles ? ["Profile"] : selectedComponentTypes;
-    postBody.componentTypes = isProfiles ? selectedComp : selectedComponentTypes;
+    postBody.componentTypes = isProfiles ? ["Profile"] : selectedComponentTypes;
+    // postBody.componentTypes = isProfiles ? selectedComp : selectedComponentTypes;
     postBody.objectType = filtered[0];
     postBody.nameSpacePrefix = nameSpacePrefix;
 
