@@ -6,13 +6,13 @@ import {faSave, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import {modalPersistUpdatedRecord, persistUpdatedRecord} from "./saving-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function ModalSaveButtonBase({recordDto, updateRecord, disable, showSuccessToasts, lenient}) {
+function ModalSaveButtonBase({recordDto, updateRecord, disable, showSuccessToasts, lenient, handleClose}) {
   let toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
 
   const persistRecord = async () => {
     setIsSaving(true);
-    await modalPersistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient);
+    await modalPersistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient, handleClose);
     setIsSaving(false);
   }
 
@@ -38,7 +38,8 @@ ModalSaveButtonBase.propTypes = {
   updateRecord: PropTypes.func,
   disable: PropTypes.bool,
   showSuccessToasts: PropTypes.bool,
-  lenient: PropTypes.bool
+  lenient: PropTypes.bool,
+  handleClose: PropTypes.func
 };
 
 ModalSaveButtonBase.defaultProps = {

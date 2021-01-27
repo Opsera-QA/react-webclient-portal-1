@@ -98,7 +98,7 @@ export async function persistUpdatedRecord(recordDto, toastContext, showSuccessT
   }
 }
 
-export async function modalPersistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient) {
+export async function modalPersistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient, handleClose) {
   try {
     let isModelValid = recordDto.isModelValid2();
     if(!isModelValid && !lenient) {
@@ -118,6 +118,7 @@ export async function modalPersistUpdatedRecord(recordDto, toastContext, showSuc
       }
     }
     recordDto.clearChangeMap();
+    handleClose();
     return response;
   }
   catch (error) {

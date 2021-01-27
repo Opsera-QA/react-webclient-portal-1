@@ -38,7 +38,7 @@ function EditRolesModal({showModal, dataObject, fieldName, handleClose, saveData
         <TooltipWrapper innerText={unsavedChanges}>
           <Button size={"sm"} variant="secondary" onClick={() => handleClose()}>Cancel</Button>
         </TooltipWrapper>
-        <ModalSaveButtonBase updateRecord={handleSave} recordDto={temporaryDataObject} />
+        <ModalSaveButtonBase updateRecord={handleSave} recordDto={temporaryDataObject} handleClose={handleClose} />
       </Modal.Footer>
     </Modal>
   );
