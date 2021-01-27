@@ -14,7 +14,7 @@ const metricNotificationConfigurationMetadata = {
     {
       label: "Select Data Point",
       id: "dataPoint",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "is at least",
