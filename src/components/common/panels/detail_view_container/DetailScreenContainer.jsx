@@ -52,6 +52,12 @@ function DetailScreenContainer(
     return <div className="py-2" />;
   };
 
+  if (!isLoading && accessDenied) {
+    return (
+      <AccessDeniedContainer />
+    )
+  }
+
   // TODO: We should just pull all the management stuff from the breadcrumb's parent instead.
   if (!isLoading && dataObject == null) {
     // TODO: Remove using this when all detail views updated
@@ -70,12 +76,6 @@ function DetailScreenContainer(
 
     return (
       <DataNotFoundContainer type={type} breadcrumbDestination={breadcrumbDestination} />
-    )
-  }
-
-  if (!isLoading && accessDenied) {
-    return (
-      <AccessDeniedContainer />
     )
   }
 
