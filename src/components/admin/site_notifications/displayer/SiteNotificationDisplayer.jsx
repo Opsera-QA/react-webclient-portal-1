@@ -17,8 +17,12 @@ function SiteNotificationDisplayer() {
 
   const loadSiteNotifications = async () => {
     try {
-      const response = await siteNotificationActions.getSiteNotifications(getAccessToken);
-      unpackNotifications(response?.data);
+      const accessToken = getAccessToken();
+
+      if (accessToken?.isAuthenticated) {
+        const response = await siteNotificationActions.getSiteNotifications(getAccessToken);
+        unpackNotifications(response?.data);
+      }
     }
     catch (error) {
       console.error("Could not pull site notifications: " + error)
