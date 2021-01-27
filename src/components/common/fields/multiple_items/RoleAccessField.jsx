@@ -20,14 +20,14 @@ function RoleAccessField({dataObject, fieldName}) {
 
         if (user) {
           return (
-            <span key={i} className="mx-1 mb-1 badge badge-primary">
+            <span key={i} className="mx-1 mb-1 badge badge-light user-badge">
               <FontAwesomeIcon icon={faUser} fixedWidth className="mr-1"/>{`${user}: ${item.role}`}
             </span>
           );
         }
 
         return (
-          <span key={i} className="mx-1 mb-1 badge badge-secondary">
+          <span key={i} className="mx-1 mb-1 badge badge-light group-badge">
             <FontAwesomeIcon icon={faUserFriends} fixedWidth className="mr-1"/>{`${group}: ${item.role}`}
           </span>
         );
@@ -38,7 +38,7 @@ function RoleAccessField({dataObject, fieldName}) {
   return (
     <FieldContainer>
       <FieldLabel fieldName={fieldName} field={field}/>
-      <span className="item-field">
+      <span className="item-field role-access">
         {getRoleAccessConfigurationItems()}
       </span>
     </FieldContainer>

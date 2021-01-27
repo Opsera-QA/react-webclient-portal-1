@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import ToolDetailPanel from "./ToolDetailPanel";
-import {faTools} from "@fortawesome/pro-solid-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import inventoryActions from "components/inventory/inventory-actions";
@@ -18,7 +17,6 @@ function ToolDetailView() {
   const toastContext = useContext(DialogToastContext);
   const [toolData, setToolData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-
 
   useEffect(() => {
     getTool();

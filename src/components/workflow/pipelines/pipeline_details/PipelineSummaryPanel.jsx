@@ -364,14 +364,14 @@ function PipelineSummaryPanel({
 
         if (user) {
           return (
-            <span key={i} className="mx-1 mb-1 badge badge-light" style={{fontWeight: "normal",backgroundColor:"#E6E5E3"}}>
+            <span key={i} className="mx-1 mb-1 badge badge-light user-badge">
               <FontAwesomeIcon icon={faUser} fixedWidth className="mr-1"/>{`${user}: ${item.role}`}
             </span>
           );
         }
 
         return (
-          <span key={i} className="mx-1 mb-1 badge badge-light" style={{fontWeight: "normal", backgroundColor:"#b2dbff"}}>
+          <span key={i} className="mx-1 mb-1 badge badge-light group-badge">
             <FontAwesomeIcon icon={faUserFriends} fixedWidth className="mr-1"/>{`${group}: ${item.role}`}
           </span>
         );
@@ -384,7 +384,7 @@ function PipelineSummaryPanel({
       <Col xs={12} className="py-2"><span className="text-muted mr-1">Roles:</span>
 
         {!editRoles && pipeline.roles &&
-          <span className="item-field">{getRoleBadges(pipeline.roles)}</span>}
+          <span className="item-field role-access">{getRoleBadges(pipeline.roles)}</span>}
         {authorizedAction("edit_access_roles", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("roles")}
 
         {editRoles &&

@@ -4,8 +4,9 @@ import PropTypes from "prop-types";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
+import RegistryToolRoleAccessInput from "components/inventory/tools/tool_details/input/RegistryToolRoleAccessInput";
 
-function ToolSummaryPanel({ toolData, setActiveTab }) {
+function ToolSummaryPanel({ toolData, setToolData, setActiveTab }) {
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
@@ -33,6 +34,9 @@ function ToolSummaryPanel({ toolData, setActiveTab }) {
         <Col lg={6}>
           <TextFieldBase dataObject={toolData} fieldName={"classification"} />
         </Col>
+        <Col lg={12}>
+          <RegistryToolRoleAccessInput dataObject={toolData} setDataObject={setToolData} />
+        </Col>
       </Row>
     </SummaryPanelContainer>
   );
@@ -40,6 +44,7 @@ function ToolSummaryPanel({ toolData, setActiveTab }) {
 
 ToolSummaryPanel.propTypes = {
   toolData: PropTypes.object,
+  setToolData: PropTypes.func,
   setActiveTab: PropTypes.func
 }
 
