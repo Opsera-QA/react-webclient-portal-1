@@ -27,7 +27,6 @@ function ToolDetailView() {
       setIsLoading(true);
       const response = await toolsActions.getToolByIdNew(id, getAccessToken);
 
-      console.log("response: " + JSON.stringify(response))
       if (response?.data?.data) {
         setToolData(new Model(response.data.data[0], toolMetadata, false));
       }
