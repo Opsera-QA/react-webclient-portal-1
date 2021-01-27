@@ -23,6 +23,7 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
 
     if (addAnother) {
       await persistNewRecordAndAddAnother(recordDto, toastContext, showSuccessToasts, createRecord, lenient, setRecordDto);
+      setIsSaving(false);
     }
     else if (recordDto.getDetailViewLink() != null) {
       await persistNewRecordAndViewDetails(recordDto, toastContext, showSuccessToasts, createRecord, lenient, history);
@@ -32,9 +33,8 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
     }
     else {
       await persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient);
+      setIsSaving(false);
     }
-
-    setIsSaving(false);
   }
 
   const getLabel = () => {
