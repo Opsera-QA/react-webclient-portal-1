@@ -69,7 +69,6 @@ function ToolCategoryDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"toolCategoryDetailView"}
-      title={toolCategoryData != null ? `Tool Category Details [${toolCategoryData.getData("name")}]` : undefined}
       metadata={toolCategoryMetadata}
       accessDenied={!accessRoleData?.OpseraAdministrator}
       dataObject={toolCategoryData}

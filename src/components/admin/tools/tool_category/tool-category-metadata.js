@@ -2,6 +2,12 @@ const toolCategoryMetadata = {
   idProperty: "_id",
   type: "Tool Category",
   activeField: "active",
+  detailView: function(record) {
+    return `/admin/tools/types/details/${record.getData("_id")}`;
+  },
+  detailViewTitle: function(record) {
+    return `Tool Category Details [${record?.getData("name")}]`;
+  },
   fields: [
   {
     label: "Name",
