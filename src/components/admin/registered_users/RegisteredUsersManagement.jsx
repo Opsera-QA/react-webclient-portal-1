@@ -143,7 +143,7 @@ function RegisteredUsersManagement() {
 
   return (
       <ScreenContainer
-        accessDenied={!isLoading &&!accessRoleData.OpseraAdministrator}
+        accessDenied={!accessRoleData.OpseraAdministrator}
         breadcrumbDestination={"registeredUsersManagement"}
         isLoading={isLoading}
       >

@@ -3,10 +3,9 @@ import RegisteredUserDetailPanel from "./RegisteredUserDetailPanel";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "contexts/AuthContext";
 import analyticsProfileMetadata from "./analytics_profile/analytics-profile-form-fields";
-import {faUserCircle} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
-import registeredUsersMetadata from "components/admin/registered_users/registered-users-form-fields";
+import registeredUsersMetadata from "components/admin/registered_users/registered-users-metadata";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarShowDetailsButton from "components/common/actions/buttons/ActionBarShowDetailsButton";
@@ -37,7 +36,7 @@ function RegisteredUserDetailView() {
       await getRoles();
     }
     catch (error) {
-      if (!error.message.includes(404)) {
+      if (!error?.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
       }
     }
@@ -57,7 +56,7 @@ function RegisteredUserDetailView() {
   const getAnalyticsProfile = async () => {
     const response = await RegisteredUserActions.getAnalyticsProfile(id, getAccessToken);
 
-    if (response.data != null) {
+    if (response?.data != null) {
       setAnalyticsProfileData(new Model(response.data, analyticsProfileMetadata, false));
     }
   };
@@ -94,20 +93,12 @@ function RegisteredUserDetailView() {
     return (<LoadingDialog size="sm"/>);
   }
 
-  if (!accessRoleData.OpseraAdministrator && !isLoading) {
-    return (<AccessDeniedDialog roleData={accessRoleData}/>);
-  }
-
   return (
     <DetailScreenContainer
       breadcrumbDestination={"registeredUsersDetailView"}
-      title={userData != null ? `Registered User Details [${userData.getData("email")}]` : undefined}
-      managementViewLink={"/admin/registered-users"}
-      managementTitle={"Registered Users"}
-      managementViewIcon={faUserCircle}
-      type={"Registered User"}
-      titleIcon={faUserCircle}
+      metadata={registeredUsersMetadata}
       dataObject={userData}
+      accessDenied={!accessRoleData?.OpseraAdministrator}
       isLoading={isLoading}
       actionBar={getActionBar()}
       detailPanel={

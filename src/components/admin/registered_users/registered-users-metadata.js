@@ -1,6 +1,12 @@
 const registeredUsersMetadata = {
   idProperty: "_id",
   type: "Registered User",
+  detailView: function(record) {
+    return `/admin/tools/identifiers/details/${record.getData("_id")}`;
+  },
+  detailViewTitle: function(record) {
+    return `Registered User Details [${record.getData("email")}]`;
+  },
   fields: [
     {
       label: "User ID",
