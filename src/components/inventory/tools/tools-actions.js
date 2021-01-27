@@ -1,6 +1,6 @@
-import {axiosApiService} from "../../../api/apiService";
-import baseActions from "../../../utils/actionsBase";
-import PipelineActions from "../../workflow/pipeline-actions";
+import baseActions from "utils/actionsBase";
+import pipelineActions from "components/workflow/pipeline-actions";
+
 const toolsActions = {};
 
 toolsActions.checkToolConnectivity = async (toolId, toolName, getAccessToken) => {
@@ -15,15 +15,11 @@ toolsActions.deleteTool = async (dataObject, getAccessToken) => {
 
 toolsActions.deleteVaultRecordsForToolId = async (toolDataDto,getAccessToken) => {
   const apiUrl = `/vault/delete`;
-  const accessToken = await getAccessToken();
   let id = toolDataDto.getData("_id")
   let postBody = {
     id : id
   }
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 }
 
 toolsActions.updateTool = async (toolDataDto, getAccessToken) => {
@@ -31,33 +27,21 @@ toolsActions.updateTool = async (toolDataDto, getAccessToken) => {
     ...toolDataDto.getPersistData()
   }
   let id = toolDataDto.getData("_id");
-  const accessToken = await getAccessToken();
   const apiUrl = `/registry/${id}/update`;
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 toolsActions.createTool = async (toolDataDto, getAccessToken) => {
   const postBody = {
     ...toolDataDto.getPersistData()
   }
-  const accessToken = await getAccessToken();
   const apiUrl = "/registry/create";
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 toolsActions.getTools = async (getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = "/registry/tools";
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 toolsActions.getToolRegistryList = async (toolFilterDto, getAccessToken) => {
@@ -91,28 +75,14 @@ toolsActions.getFullToolRegistryList = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
-
-toolsActions.getToolTypes = async (getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = "/registry/types";
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
-};
-
 toolsActions.getRelevantPipelines = async (toolDto, getAccessToken) => {
   const apiUrl = `/registry/${toolDto.getData("_id")}/pipelines`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 toolsActions.updateToolConfiguration = async (toolData, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/registry/${toolData._id}/update`;
-  const response = await axiosApiService(accessToken).post(apiUrl, toolData)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, toolData);
 }
 
 toolsActions.installJiraApp = async (toolId, getAccessToken) => {
@@ -128,8 +98,8 @@ toolsActions.savePasswordToVault = async (toolData, toolConfigurationData, field
     const toolIdentifier = toolData.getData("tool_identifier");
     const keyName = `${toolId}-${toolIdentifier}-${fieldName}`;
     const body = { "key": `${keyName}`, "value": value };
-    const response = await PipelineActions.saveToVault(body, getAccessToken);
-    return response.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : {};
+    const response = await pipelineActions.saveToVault(body, getAccessToken);
+    return response?.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : {};
   }
 
   // Faseeh says all vault values MUST be objects and not strings
@@ -140,8 +110,8 @@ toolsActions.savePasswordToVault = async (toolData, toolConfigurationData, field
 toolsActions.saveKeyPasswordToVault = async (toolConfigurationData, fieldName, value, key, getAccessToken) => {
   if (toolConfigurationData.isChanged(fieldName) && value != null && typeof(value) === "string") {
     const body = { "key": key, "value": value };
-    const response = await PipelineActions.saveToVault(body, getAccessToken);
-    return response.status === 200 ? { name: "Vault Secured Key", vaultKey: key } : {};
+    const response = await pipelineActions.saveToVault(body, getAccessToken);
+    return response?.status === 200 ? { name: "Vault Secured Key", vaultKey: key } : {};
   }
 
   // Faseeh says all values MUST be objects and not strings
