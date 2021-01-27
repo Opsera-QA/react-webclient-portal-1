@@ -38,7 +38,7 @@ export async function persistNewRecord(recordDto, toastContext, showSuccessToast
       console.error(JSON.stringify(errors));
 
       if (showErrorToastsInline) {
-        toastContext.showInlineFormValidationErrorInline(errors && errors.length > 0 ? errors[0] : undefined);
+        toastContext.showInlineFormValidationError(errors && errors.length > 0 ? errors[0] : undefined);
       }
       else {
         toastContext.showFormValidationErrorDialog(errors && errors.length > 0 ? errors[0] : undefined);
@@ -95,6 +95,34 @@ export async function persistUpdatedRecord(recordDto, toastContext, showSuccessT
   catch (error) {
     console.error(error);
     toastContext.showUpdateFailureResultDialog(recordDto.getType(), error);
+  }
+}
+
+export async function modalPersistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient) {
+  try {
+    let isModelValid = recordDto.isModelValid2();
+    if(!isModelValid && !lenient) {
+      let errors = recordDto.isModelValid();
+      console.error(JSON.stringify(errors));
+      toastContext.showInlineFormValidationError(errors && errors.length > 0 ? errors[0] : undefined);
+      return false;
+    }
+
+    let response = await updateRecord();
+
+    if (showSuccessToasts) {
+      if (lenient && !isModelValid) {
+        toastContext.showIncompleteCreateSuccessResultDialog(recordDto.getType());
+      } else {
+        toastContext.showUpdateSuccessResultDialog(recordDto.getType());
+      }
+    }
+    recordDto.clearChangeMap();
+    return response;
+  }
+  catch (error) {
+    console.error(error);
+    toastContext.showInlineUpdateFailureMessage(recordDto.getType(), error);
   }
 }
 

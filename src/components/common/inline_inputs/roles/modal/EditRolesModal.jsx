@@ -6,6 +6,7 @@ import TooltipWrapper from "components/common/tooltip/tooltipWrapper";
 import {unsavedChanges} from "components/common/tooltip/popover-text";
 import Model from "core/data_model/model";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import ModalSaveButtonBase from "components/common/buttons/saving/ModalSaveButtonBase";
 
 function EditRolesModal({showModal, dataObject, fieldName, handleClose, saveData}) {
   const toastContext = useContext(DialogToastContext);
@@ -16,22 +17,28 @@ function EditRolesModal({showModal, dataObject, fieldName, handleClose, saveData
     setTemporaryDataObject(new Model({...dataObject?.getPersistData()}, dataObject?.getMetaData(), false));
   }, [showModal]);
 
+  const handleSave = async () => {
+    return await saveData(temporaryDataObject.getData(fieldName));
+  };
+
   return (
     <Modal size={"lg"} show={showModal} onHide={() => handleClose()} className="tag-modal">
       <Modal.Header closeButton>
         <Modal.Title>Edit Roles</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="p-3">
+        <div className="content-block-shaded m-3">
           {toastContext.getInlineBanner()}
-          <RoleAccessInput dataObject={temporaryDataObject} setDataObject={setTemporaryDataObject} fieldName={fieldName} />
+          <div className="p-3">
+            <RoleAccessInput dataObject={temporaryDataObject} setDataObject={setTemporaryDataObject} fieldName={fieldName} />
+          </div>
         </div>
       </Modal.Body>
       <Modal.Footer>
         <TooltipWrapper innerText={unsavedChanges}>
           <Button size={"sm"} variant="secondary" onClick={() => handleClose()}>Cancel</Button>
         </TooltipWrapper>
-        <Button size={"sm"} variant="success" onClick={() => saveData(temporaryDataObject.getData(fieldName))}>Save</Button>
+        <ModalSaveButtonBase updateRecord={handleSave} recordDto={temporaryDataObject} />
       </Modal.Footer>
     </Modal>
   );

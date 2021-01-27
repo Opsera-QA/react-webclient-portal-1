@@ -4,23 +4,9 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencilAlt} from "@fortawesome/pro-light-svg-icons";
 import EditRolesModal from "components/common/inline_inputs/roles/modal/EditRolesModal";
 import RoleAccessField from "components/common/fields/multiple_items/RoleAccessField";
-import {DialogToastContext} from "contexts/DialogToastContext";
 
 function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData}) {
-  const toastContext = useContext(DialogToastContext);
   const [showModal, setShowModal] = useState(false);
-
-  const handleSave = async (newRoles) => {
-      try {
-        await saveData(newRoles);
-        toastContext.showUpdateSuccessResultDialog(dataObject.getType());
-        setShowModal(false);
-      }
-      catch (error) {
-        console.error(error);
-        toastContext.showUpdateFailureResultDialog(dataObject.getType(), error);
-      }
-  };
 
   const closeModal = () => {
     setShowModal(false);
@@ -46,7 +32,7 @@ function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData}) 
       <EditRolesModal
         dataObject={dataObject}
         fieldName={fieldName}
-        saveData={handleSave}
+        saveData={saveData}
         showModal={showModal}
         handleClose={closeModal}
       />

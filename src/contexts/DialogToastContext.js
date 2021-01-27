@@ -214,7 +214,7 @@ function ToastContextProvider ({ children, navBar }) {
     addToast(errorToast, id, notificationTypes.FORM);
   };
 
-  const showInlineFormValidationErrorInline = (errorMessage = "") => {
+  const showInlineFormValidationError = (errorMessage = "") => {
     let id = generateUUID();
     let inlineErrorBanner = getInlineErrorBanner(`WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`, id);
     setInlineMessage(inlineErrorBanner, id, notificationTypes.FORM);
@@ -282,6 +282,12 @@ function ToastContextProvider ({ children, navBar }) {
     let id = generateUUID();
     let errorToast = getErrorToast(error, id, `WARNING! An error has occurred updating this ${type}:`);
     addToast(errorToast, id, notificationTypes.FORM);
+  }
+
+  const showInlineUpdateFailureMessage = (type, error) => {
+    let id = generateUUID();
+    let inlineErrorBanner = getInlineErrorBanner(error, id, `WARNING! An error has occurred updating this ${type}:`);
+    setInlineMessage(inlineErrorBanner, id, notificationTypes.FORM);
   }
 
   const showDeleteFailureResultDialog = (type, error) => {
@@ -376,7 +382,7 @@ function ToastContextProvider ({ children, navBar }) {
           showSuccessDialog: showSuccessToast,
 
           showInlineCreateFailureResultDialog: showInlineCreateFailureResultDialog,
-          showInlineFormValidationErrorInline: showInlineFormValidationErrorInline,
+          showInlineFormValidationError: showInlineFormValidationError,
 
           // TODO: Remove instances
           showInformationToast: showInformationToast,
@@ -421,6 +427,9 @@ function ToastContextProvider ({ children, navBar }) {
           // Error Toasts
           showSystemErrorToast: showSystemErrorToast,
           showFormErrorToast: showFormErrorToast,
+
+          //Inline Errors
+          showInlineUpdateFailureMessage: showInlineUpdateFailureMessage,
 
           // TODO: Remove when everything is using the banner ones.
           showWarningDialog: showWarningBanner,
