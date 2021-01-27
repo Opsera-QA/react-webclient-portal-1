@@ -45,7 +45,7 @@ toolsActions.getTools = async (getAccessToken) => {
 };
 
 toolsActions.getToolById = async (id, getAccessToken) => {
-  const apiUrl = `/registry/${id}`;
+  const apiUrl = `/registry/configs/${id}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
