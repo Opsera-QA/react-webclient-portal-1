@@ -12,7 +12,6 @@ import DtoTagManagerInput from "components/common/input/dto_input/dto-tag-manage
 import DtoPropertiesInput from "components/common/input/dto_input/dto-properties-input";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 
 function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, handleClose} ) {
   const {getAccessToken} = useContext(AuthContext);

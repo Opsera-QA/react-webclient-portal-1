@@ -12,28 +12,37 @@ function DetailScreenContainer(
     breadcrumbDestination,
     actionBar,
     dataObject,
-    // TODO: Remove these four after wiring up everything
+
+    // TODO: Remove these after wiring up everything
     type,
     managementViewIcon,
     managementViewLink,
     managementTitle,
-
     title,
-
-    // TODO: remove title icon when pulling from breadcrumb
     titleIcon,
 
     detailPanel,
     isLoading,
-    accessDenied
+    accessDenied,
+    metadata
   }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const [parentBreadcrumb, setParentBreadcrumb] = useState(getParentBreadcrumb(breadcrumbDestination));
 
-
   const getTitleBar = () => {
     const activeField = dataObject?.getActiveField();
-    return (<TitleBar isLoading={isLoading} parentBreadcrumb={parentBreadcrumb} titleIcon={titleIcon} title={title} inactive={activeField ? dataObject?.getData(activeField) === false : false} /> );
+    const breadcrumbIcon = breadcrumb?.icon ? breadcrumb?.icon : titleIcon;
+    const detailViewTitle = dataObject?.getDetailViewTitle();
+
+    return (
+      <TitleBar
+        isLoading={isLoading}
+        parentBreadcrumb={parentBreadcrumb}
+        titleIcon={breadcrumbIcon}
+        title={detailViewTitle != null ? detailViewTitle : title}
+        inactive={activeField ? dataObject?.getData(activeField) === false : false}
+      />
+    );
   };
 
   const getDetailBody = () => {
@@ -74,8 +83,11 @@ function DetailScreenContainer(
       )
     }
 
+    // TODO: just pass in metadata?.type once wired up everywhere
+    const metadataType = metadata ? metadata?.type : type;
+
     return (
-      <DataNotFoundContainer type={type} breadcrumbDestination={breadcrumbDestination} />
+      <DataNotFoundContainer type={metadataType} breadcrumbDestination={breadcrumbDestination} />
     )
   }
 
@@ -111,7 +123,8 @@ DetailScreenContainer.propTypes = {
   actionBar: PropTypes.object,
   managementViewIcon: PropTypes.object,
   isLoading: PropTypes.bool,
-  accessDenied: PropTypes.bool
+  accessDenied: PropTypes.bool,
+  metadata: PropTypes.object
 };
 
 export default DetailScreenContainer;

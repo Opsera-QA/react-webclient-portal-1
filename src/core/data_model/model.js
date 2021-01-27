@@ -252,6 +252,10 @@ export class Model {
     return this.metaData?.detailView != null ? this.metaData.detailView(this) : null;
   };
 
+  getDetailViewTitle = () => {
+    return this.metaData?.detailViewTitle != null ? this.metaData.detailViewTitle(this) : null;
+  };
+
   getLabel = (fieldName) => {
     let fields = this.metaData.fields;
     // TODO: Replace with metadata helper call once finished

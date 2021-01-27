@@ -2,6 +2,12 @@ const toolIdentifierMetadata = {
   idProperty: "_id",
   type: "Tool Identifier",
   activeField: "active",
+  detailView: function(record) {
+    return `/admin/tools/identifiers/details/${record.getData("_id")}`;
+  },
+  detailViewTitle: function(record) {
+    return `Tool Identifier Details [${record?.getData("name")}]`;
+  },
   fields: [
     {
       label: "Name",

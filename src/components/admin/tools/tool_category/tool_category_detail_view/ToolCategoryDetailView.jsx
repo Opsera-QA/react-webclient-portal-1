@@ -28,7 +28,7 @@ function ToolCategoryDetailView() {
       await getRoles();
     }
     catch (error) {
-      if (!error.message.includes(404)) {
+      if (!error?.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
       }
     }
@@ -70,6 +70,7 @@ function ToolCategoryDetailView() {
     <DetailScreenContainer
       breadcrumbDestination={"toolCategoryDetailView"}
       title={toolCategoryData != null ? `Tool Category Details [${toolCategoryData.getData("name")}]` : undefined}
+      metadata={toolCategoryMetadata}
       accessDenied={!accessRoleData?.OpseraAdministrator}
       dataObject={toolCategoryData}
       isLoading={isLoading}
