@@ -1,18 +1,15 @@
-import React, { useState, useEffect, useContext, useMemo } from "react";
-import KpiSummaryPanel from "./KpiSummaryPanel";
-import KpiDetailPanel from "./KpiDetailPanel";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import KpiTagsActions from "../kpi-editor-actions";
 import { AuthContext } from "contexts/AuthContext";
-import Model from "../../../../core/data_model/model";
-import kpiMetaData from "./kpi-form-fields";
-import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import ActionBarContainer from "../../../common/actions/ActionBarContainer";
-import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
-import ActionBarDeleteButton2 from "../../../common/actions/buttons/ActionBarDeleteButton2";
-import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
-import KpiActions from "../kpi-editor-actions";
+import Model from "core/data_model/model";
+import kpiMetaData from "components/admin/kpi_editor/kpi-metadata";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import KpiActions from "components/admin/kpi_editor/kpi-editor-actions";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
+import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+import KpiDetailPanel from "components/admin/kpi_editor/kpi_detail_view/KpiDetailPanel";
+import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 
 function KpiDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -32,7 +29,7 @@ function KpiDetailView() {
       await getRoles();
     }
     catch (error) {
-      if (!error.message.includes(404)) {
+      if (!error?.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
       }
     }
@@ -42,8 +39,11 @@ function KpiDetailView() {
   };
 
   const getKpi = async (tagId) => {
-    const response = await KpiTagsActions.get(tagId, getAccessToken);
-    setKpiData(new Model(response.data, kpiMetaData, false));
+    const response = await KpiActions.get(tagId, getAccessToken);
+
+    if (response?.data) {
+      setKpiData(new Model(response?.data, kpiMetaData, false));
+    }
   };
 
   const getRoles = async () => {
@@ -78,10 +78,8 @@ function KpiDetailView() {
       title={kpiData != null ? `KPI Configuration Details [${kpiData.getData("name")}]` : undefined}
       managementViewLink={"/admin/kpis"}
       managementTitle={"KPI Management"}
-      managementViewIcon={faFileInvoice}
       type={"KPI Configuration"}
-      titleIcon={faFileInvoice}
-      activeField={"active"}
+      metadata={kpiMetaData}
       dataObject={kpiData}
       isLoading={isLoading}
       actionBar={getActionBar()}

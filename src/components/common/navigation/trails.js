@@ -34,7 +34,7 @@ const breadcrumbs = {
   toolCategoryDetailView: {name: "toolCategoryDetailView", path: paths.toolCategoryDetailView, label: "Tool Category Details", icon: faWrench},
   toolIdentifierDetailView: {name: "toolIdentifierDetailView", path: paths.toolIdentifierDetailView, label: "Tool Identifier Details", icon: faWrench},
   kpiManagement: {name: "kpiManagement", path: paths.kpiManagement, label: "KPI Management", icon: faFileInvoice},
-  kpiDetailView: {name: "kpiDetailView", path: paths.kpiManagement, label: "KPI Details", icon: faFileInvoice},
+  kpiDetailView: {name: "kpiDetailView", path: paths.kpiManagement, label: "KPI Configuration Details", icon: faFileInvoice},
   registeredUsersManagement: {name: "registeredUsersManagement", path: paths.registeredUsersManagement, label: "Registered Users Management", icon: faUserCircle},
   registeredUsersDetailView: {name: "registeredUsersDetailView", path: paths.registeredUsersManagement, label: "Registered User Details", icon: faUserCircle},
   apiManagement: {name: "apiManagement", path: paths.apiManagement, label: "API Management", icon: faLink},

@@ -1,9 +1,12 @@
-// TODO: put metadata on node server and pull down that way?
 const kpiMetaData = {
   idProperty: "name",
-  type: "KPI",
+  type: "KPI Configuration",
+  activeField: "active",
   detailView: function(record) {
     return `/admin/kpis/${record.getData("_id")}`;
+  },
+  detailViewTitle: function(record) {
+    return `KPI Configuration Details [${record?.getData("name")}]`;
   },
   fields: [
     {

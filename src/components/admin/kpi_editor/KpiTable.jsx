@@ -2,15 +2,15 @@ import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
+import kpiMetaData from "components/admin/kpi_editor/kpi-metadata";
 import {
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn
-} from "../../common/table/table-column-helpers";
-import kpiMetaData from "./kpi_detail_view/kpi-form-fields";
-import NewKpiModal from "./NewKpiModal";
-import FilterBar from "../../common/filters/FilterBar";
-import StatusFilter from "../../common/filters/status/StatusFilter";
+} from "components/common/table/table-column-helpers";
+import FilterBar from "components/common/filters/FilterBar";
+import StatusFilter from "components/common/filters/status/StatusFilter";
+import NewKpiModal from "components/admin/kpi_editor/NewKpiModal";
 
 function KpiTable({ data, kpiFilterDto, setKpiFilterDto, isLoading, loadData }) {
   let fields = kpiMetaData.fields;
@@ -58,7 +58,7 @@ function KpiTable({ data, kpiFilterDto, setKpiFilterDto, isLoading, loadData }) 
   };
 
   return (
-    <div className="mt-2">
+    <div>
       <CustomTable
         onRowSelect={onRowSelect}
         isLoading={isLoading}
