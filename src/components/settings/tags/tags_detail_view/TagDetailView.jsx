@@ -1,21 +1,19 @@
 import React, { useState, useEffect, useContext } from "react";
-import TagDetailPanel from "./TagDetailPanel";
 import { useParams } from "react-router-dom";
-import adminTagsActions from "../admin-tags-actions";
-import { AuthContext } from "../../../../contexts/AuthContext";
-import Model from "../../../../core/data_model/model";
-import tagEditorMetadata from "../tags-form-fields";
-import {faTags} from "@fortawesome/pro-light-svg-icons";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
-import ActionBarContainer from "../../../common/actions/ActionBarContainer";
-import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
-import ActionBarToggleButton from "../../../common/actions/buttons/ActionBarToggleButton";
+import {AuthContext} from "contexts/AuthContext";
+import Model from "core/data_model/model";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import adminTagsActions from "components/settings/tags/admin-tags-actions";
+import tagEditorMetadata from "components/settings/tags/tags-metadata";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
+import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import TagDetailPanel from "components/settings/tags/tags_detail_view/TagDetailPanel";
 
 function TagDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [accessRoleData, setAccessRoleData] = useState({});
+  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [tagData, setTagData] = useState(undefined);
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
@@ -44,7 +42,7 @@ function TagDetailView() {
   const getTag = async (tagId) => {
     const response = await adminTagsActions.get(tagId, getAccessToken);
 
-    if (response != null && response.data != null) {
+    if (response?.data) {
       setTagData(new Model(response.data, tagEditorMetadata, false));
     }
   };
@@ -64,25 +62,8 @@ function TagDetailView() {
           <div>
             <ActionBarBackButton path={"/settings/tags"} />
           </div>
-          <div>
-            <ActionBarToggleButton handleActiveToggle={handleActiveToggle} status={tagData.getData("active")} />
-          </div>
         </ActionBarContainer>
       );
-    }
-  };
-
-  const handleActiveToggle = async () => {
-    try {
-      let newTagData = {...tagData};
-      newTagData.setData("active", !newTagData.getData("active"));
-      let response = await adminTagsActions.update({...newTagData}, getAccessToken);
-      let updatedDto = new Model(response.data, tagData.metaData, false);
-      setTagData(updatedDto);
-      toastContext.showUpdateSuccessResultDialog(newTagData.getType());
-    } catch (error) {
-      toastContext.showLoadingErrorDialog(error.message);
-      console.error(error.message);
     }
   };
 
@@ -90,12 +71,7 @@ function TagDetailView() {
     <DetailScreenContainer
       breadcrumbDestination={"tagDetailView"}
       title={tagData != null ? `Tag Details [${tagData["type"]}]` : undefined}
-      managementViewLink={"/settings/tags"}
-      activeField={"active"}
-      managementTitle={"Tag Management"}
-      managementViewIcon={faTags}
-      type={"Tag"}
-      titleIcon={faTags}
+      metadata={tagEditorMetadata}
       dataObject={tagData}
       isLoading={isLoading}
       actionBar={getActionBar()}

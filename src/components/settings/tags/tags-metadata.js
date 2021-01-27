@@ -2,6 +2,13 @@
 const tagEditorMetadata = {
   idProperty: "_id",
   type: "Tag",
+  activeField: "active",
+  detailView: function(record) {
+    return `/settings/tags/${record.getData("_id")}`;
+  },
+  detailViewTitle: function(record) {
+    return `Tag Details [${record?.getData("type")}]`;
+  },
   fields: [
     {
       label: "Account",

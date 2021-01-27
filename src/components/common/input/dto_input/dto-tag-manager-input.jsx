@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Multiselect } from 'react-widgets'
 import adminTagsActions from "../../../settings/tags/admin-tags-actions";
 import {AuthContext} from "../../../../contexts/AuthContext";
-import tagEditorMetadata, {defaultTags} from "../../../settings/tags/tags-form-fields";
+import tagEditorMetadata, {defaultTags} from "components/settings/tags/tags-metadata";
 import Model from "../../../../core/data_model/model";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 

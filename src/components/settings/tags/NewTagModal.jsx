@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import TagEditorPanel from "./tags_detail_view/TagEditorPanel";
-import CreateModal from "../../common/modal/CreateModal";
-import Model from "../../../core/data_model/model";
-import tagEditorMetadata from "./tags-form-fields";
+import Model from "core/data_model/model";
+import tagEditorMetadata from "components/settings/tags/tags-metadata";
+import CreateModal from "components/common/modal/CreateModal";
+import TagEditorPanel from "components/settings/tags/tags_detail_view/TagEditorPanel";
 
 function NewTagModal({ setShowModal, showModal, loadData }) {
   const [tagData, setTagData] = useState(undefined);
@@ -18,11 +18,9 @@ function NewTagModal({ setShowModal, showModal, loadData }) {
   };
 
   return (
-    <>
-      <CreateModal handleCancelModal={handleClose} objectType={"Tag"} showModal={showModal} loadData={loadData} >
-        {tagData && <TagEditorPanel setTagData={setTagData} handleClose={handleClose} tagData={tagData} />}
-      </CreateModal>
-    </>
+    <CreateModal handleCancelModal={handleClose} objectType={"Tag"} showModal={showModal} loadData={loadData}>
+      <TagEditorPanel setTagData={setTagData} handleClose={handleClose} tagData={tagData}/>
+    </CreateModal>
   );
 }
 
