@@ -7,7 +7,6 @@ import notificationsActions from "components/notifications/notifications-actions
 import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import DtoTagManagerInput from "components/common/input/dto_input/dto-tag-manager-input";
-import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import NotificationConfigurationPanel
   from "components/notifications/notification_details/configuration_forms/NotificationConfigurationPanel";
@@ -50,7 +49,19 @@ function NotificationEditorPanel({ notificationData, setNotificationData, handle
   }
 
   return (
-    <EditorPanelContainer>
+    <EditorPanelContainer
+      handleClose={handleClose}
+      recordDto={notificationDataDto}
+      createRecord={createNotification}
+      updateRecord={updateNotification}
+      setRecordDto={setNotificationDataDto}
+      lenient={true}
+      disable={
+        !notificationDataDto.checkCurrentValidity()
+        || (notificationConfigurationDataDto == null || !notificationConfigurationDataDto.checkCurrentValidity())
+        || (notificationMethodDataDto == null || !notificationMethodDataDto.checkCurrentValidity())
+      }
+    >
       <Row>
         <Col lg={6}>
           <TextInputBase setDataObject={setNotificationDataDto} dataObject={notificationDataDto} fieldName={"name"}/>
@@ -82,19 +93,6 @@ function NotificationEditorPanel({ notificationData, setNotificationData, handle
         setNotificationDataDto={setNotificationDataDto}
         notificationMethodDataDto={notificationMethodDataDto}
         setNotificationMethodDataDto={setNotificationMethodDataDto}
-      />
-      <PersistButtonContainer
-        handleClose={handleClose}
-        recordDto={notificationDataDto}
-        createRecord={createNotification}
-        updateRecord={updateNotification}
-        setRecordDto={setNotificationDataDto}
-        lenient={true}
-        disable={
-          !notificationDataDto.checkCurrentValidity()
-          || (notificationConfigurationDataDto == null || !notificationConfigurationDataDto.checkCurrentValidity())
-          || (notificationMethodDataDto == null || !notificationMethodDataDto.checkCurrentValidity())
-        }
       />
     </EditorPanelContainer>
   );
