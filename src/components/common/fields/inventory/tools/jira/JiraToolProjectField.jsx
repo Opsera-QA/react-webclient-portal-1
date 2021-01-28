@@ -40,7 +40,7 @@ function JiraToolProjectField({ dataObject, jiraToolId, jiraToolProjectId, field
 
   const loadJiraTool = async () => {
     if (jiraToolId !== "" && jiraToolProjectId !== "") {
-      const response = await toolsActions.getToolById(jiraToolId, getAccessToken);
+      const response = await toolsActions.getFullToolById(jiraToolId, getAccessToken);
       const toolDataResponse = response?.data[0];
 
       if (toolDataResponse != null) {

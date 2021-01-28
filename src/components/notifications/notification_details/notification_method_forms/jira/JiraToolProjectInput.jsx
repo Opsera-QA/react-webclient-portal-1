@@ -37,7 +37,7 @@ function JiraToolProjectInput({jiraToolId, fieldName, dataObject, setDataObject,
   };
 
   const loadProjects = async () => {
-    const response = await toolsActions.getToolById(jiraToolId, getAccessToken);
+    const response = await toolsActions.getFullToolById(jiraToolId, getAccessToken);
 
     let toolProjects = response?.data[0]?.projects;
     if (toolProjects) {

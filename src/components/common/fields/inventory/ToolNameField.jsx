@@ -33,7 +33,7 @@ function ToolNameField({ dataObject, fieldName }) {
   const loadToolName = async () => {
     let toolId = dataObject.getData(fieldName);
     if (toolId !== "") {
-      const response = await toolsActions.getToolById(toolId, getAccessToken);
+      const response = await toolsActions.getFullToolById(toolId, getAccessToken);
       if (response?.data) {
         setToolName(response.data[0].name);
       }

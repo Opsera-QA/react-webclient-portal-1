@@ -26,7 +26,7 @@ function ToolProjectsView() {
   const getTool = async () => {
     try {
       setIsLoading(true);
-      const response = await toolsActions.getToolById(id, getAccessToken);
+      const response = await toolsActions.getFullToolById(id, getAccessToken);
 
       const toolDataResponse = response?.data[0];
       if (toolDataResponse) {

@@ -44,17 +44,7 @@ toolsActions.getTools = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-toolsActions.getToolByIdNew = async (id, getAccessToken) => {
-  const apiUrl = `/registry/configs/${id}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
-toolsActions.getToolById = async (id, getAccessToken) => {
-  const apiUrl = `/registry/${id}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
-toolsActions.getToolRegistryList = async (toolFilterDto, getAccessToken) => {
+toolsActions.getRoleLimitedToolRegistryList = async (toolFilterDto, getAccessToken) => {
   let sortOption = toolFilterDto.getData("sortOption");
 
   let urlParams = {
@@ -83,6 +73,21 @@ toolsActions.getFullToolRegistryList = async (getAccessToken) => {
 
   const apiUrl = `/registry`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+};
+
+toolsActions.getFullToolById = async (id, getAccessToken) => {
+  const apiUrl = `/registry/${id}`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+toolsActions.getRoleLimitedTools = async (id, getAccessToken) => {
+  const apiUrl = `/registry/configs/${id}`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+toolsActions.getToolLovs = async (id, getAccessToken) => {
+  const apiUrl = `/registry/configs/summary`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 toolsActions.getRelevantPipelines = async (toolDto, getAccessToken) => {
