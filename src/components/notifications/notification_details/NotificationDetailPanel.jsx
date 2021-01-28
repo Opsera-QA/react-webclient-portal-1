@@ -12,6 +12,7 @@ import NotificationSummaryPanel
   from "components/notifications/notification_details/NotificationSummaryPanel";
 import NotificationActivityLogsTable
   from "components/notifications/notification_details/activity_logs/NotificationActivityLogsTable";
+import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 
 function NotificationDetailPanel({ notificationData, setNotificationData, loadData, isLoading }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -34,11 +35,31 @@ function NotificationDetailPanel({ notificationData, setNotificationData, loadDa
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <NotificationSummaryPanel notificationData={notificationData} setActiveTab={setActiveTab} />;
-        case "settings":
-          return <NotificationEditorPanel notificationData={notificationData} setNotificationData={setNotificationData} loadData={loadData}/>;
-        case "logs":
-          return <NotificationActivityLogsTable notificationData={notificationData} setNotificationData={setNotificationData} loadData={loadData} allLogs={false}/>;
+        return (
+          <NotificationSummaryPanel
+            notificationData={notificationData}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case "settings":
+        return (
+          <NotificationEditorPanel
+            notificationData={notificationData}
+            setNotificationData={setNotificationData}
+            loadData={loadData}
+          />
+        );
+      case "logs":
+        return (
+          <DetailPanelContainer>
+            <NotificationActivityLogsTable
+              notificationData={notificationData}
+              setNotificationData={setNotificationData}
+              loadData={loadData}
+              allLogs={false}
+            />
+          </DetailPanelContainer>
+        );
       default:
         return null;
     }
