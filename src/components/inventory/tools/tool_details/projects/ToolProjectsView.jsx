@@ -38,6 +38,7 @@ function ToolProjectsView() {
       }
     } catch (error) {
       if (!error?.error?.message?.includes(404)) {
+        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     }
@@ -95,7 +96,6 @@ function ToolProjectsView() {
       />
     );
   }
-
 
   if (toolProjectData == null) {
     return (
