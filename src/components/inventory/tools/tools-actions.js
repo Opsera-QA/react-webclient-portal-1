@@ -67,7 +67,7 @@ toolsActions.getFullToolRegistryList = async (getAccessToken) => {
   let urlParams = {
     params: {
       sort: "name",
-      size: 1000,
+      size: 10000,
     }
   }
 
