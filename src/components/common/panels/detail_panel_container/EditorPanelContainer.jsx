@@ -5,7 +5,7 @@ import RequiredFieldsMessage from "components/common/fields/editor/RequiredField
 import LoadingDialog from "components/common/status_notifications/loading";
 import PersistAndCloseButtonContainer from "components/common/buttons/saving/containers/PersistAndCloseButtonContainer";
 
-function EditorPanelContainer({ children, isLoading, showRequiredFieldsMessage, createRecord, updateRecord, recordDto, setRecordDto, handleClose  }) {
+function EditorPanelContainer({ children, isLoading, showRequiredFieldsMessage, createRecord, updateRecord, recordDto, setRecordDto, handleClose, lenient, disable  }) {
 
   // TODO: Remove check. Editor panels should always have the message. If not an editor panel, use summary or detail or make a new panel.
   const getRequiredFieldsMessage = () => {
@@ -23,6 +23,8 @@ function EditorPanelContainer({ children, isLoading, showRequiredFieldsMessage, 
           setRecordDto={setRecordDto}
           recordDto={recordDto}
           handleClose={handleClose}
+          disable={disable}
+          lenient={lenient}
         />
       );
     }
@@ -55,6 +57,8 @@ EditorPanelContainer.propTypes = {
   handleClose: PropTypes.func,
   setRecordDto: PropTypes.func,
   recordDto: PropTypes.object,
+  lenient: PropTypes.bool,
+  disable: PropTypes.bool
 };
 
 EditorPanelContainer.defaultProps = {
