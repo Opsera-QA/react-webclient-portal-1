@@ -26,13 +26,15 @@ function ToolProjectsView() {
   const getTool = async () => {
     try {
       setIsLoading(true);
-      const response = await toolsActions.getFullToolById(id, getAccessToken);
+      const response = await toolsActions.getRoleLimitedToolById(id, getAccessToken);
 
-      const toolDataResponse = response?.data[0];
-      if (toolDataResponse) {
-        const toolDataDto = new Model(toolDataResponse, toolMetadata, false);
-        await setToolData(toolDataDto);
-        await unpackToolProject(toolDataDto);
+      if (response?.data?.data[0]) {
+        const toolDataResponse = response?.data?.data[0];
+        if (toolDataResponse) {
+          const toolDataDto = new Model(toolDataResponse, toolMetadata, false);
+          await setToolData(toolDataDto);
+          await unpackToolProject(toolDataDto);
+        }
       }
     } catch (error) {
       if (!error?.error?.message?.includes(404)) {
@@ -72,10 +74,38 @@ function ToolProjectsView() {
     }
   };
 
-  if (isLoading || toolData == null || toolProjectData == null) {
+  if (isLoading) {
     return (
-      <DetailScreenContainer breadcrumbDestination={"toolProjectDetailView"} isLoading={isLoading} dataObject={toolData} />
-    )
+      <DetailScreenContainer
+        breadcrumbDestination={"toolProjectDetailView"}
+        isLoading={isLoading}
+        dataObject={toolProjectData}
+        metadata={getMetaData(toolData?.getData("tool_identifier"))}
+      />
+    );
+  }
+
+  if (toolData == null) {
+    return (
+      <DetailScreenContainer
+        breadcrumbDestination={"toolProjectDetailView"}
+        isLoading={isLoading}
+        dataObject={toolData}
+        metadata={toolMetadata}
+      />
+    );
+  }
+
+
+  if (toolProjectData == null) {
+    return (
+      <DetailScreenContainer
+        breadcrumbDestination={"toolProjectDetailView"}
+        isLoading={isLoading}
+        dataObject={toolProjectData}
+        metadata={getMetaData(toolData?.getData("tool_identifier"))}
+      />
+    );
   }
 
   return (getDetailView());
