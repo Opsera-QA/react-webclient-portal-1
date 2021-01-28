@@ -24,7 +24,9 @@ export const ldapUsersMetaData = {
     {
       label: "Email Address",
       id: "emailAddress",
-      isRequired: true
+      isRequired: true,
+      isEmail: true,
+      lowercase: true,
     },
     {
       label: "Division",

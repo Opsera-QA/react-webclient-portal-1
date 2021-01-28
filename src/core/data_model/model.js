@@ -230,12 +230,12 @@ export class Model {
 
   isLowercase = (fieldName) => {
     const field = this.getFieldById(fieldName);
-    return field != null ? field.isLowercase === true : false;
+    return field?.lowercase === true;
   };
 
   isUppercase = (fieldName) => {
     const field = this.getFieldById(fieldName);
-    return field != null ? field.isUppercase === true : false;
+    return field?.uppercase === true;
   };
 
   isWebsite = (fieldName) => {
