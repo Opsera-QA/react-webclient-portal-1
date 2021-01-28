@@ -32,11 +32,14 @@ function ToolInventory () {
 
   const getToolRegistryList = async (filterDto = toolFilterDto) => {
     const response = await toolsActions.getRoleLimitedToolRegistryList(filterDto, getAccessToken);
-    setToolRegistryList(response.data.data);
-    let newFilterDto = filterDto;
-    newFilterDto.setData("totalCount", response.data.count);
-    newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
-    setToolFilterDto({...newFilterDto});
+
+    if (response?.data?.data) {
+      setToolRegistryList(response.data.data);
+      let newFilterDto = filterDto;
+      newFilterDto.setData("totalCount", response.data.count);
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
+      setToolFilterDto({...newFilterDto});
+    }
   };
 
   return (
