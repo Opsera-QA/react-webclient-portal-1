@@ -50,7 +50,7 @@ function AccountRegistration() {
       setRegistrationDataDto(newAccountDto);
     }
     catch (error) {
-      if (!error?.error?.message?.includes(404)) {
+      if (!error?.error?.message?.includes(404) && !error?.error?.message?.includes(400)) {
         toastContext.showLoadingErrorDialog(error);
       }
       else {
@@ -89,7 +89,6 @@ function AccountRegistration() {
     }
   };
 
-  // TODO: Wire up display name when node query is
   const getTitle = () => {
     if (companyName !== "Opsera") {
       return <span>{companyName} Account Registration for Opsera Portal</span>
