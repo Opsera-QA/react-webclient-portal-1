@@ -5,9 +5,10 @@ import pipelineActions from "../../../../workflow/pipeline-actions";
 import {AuthContext} from "../../../../../contexts/AuthContext";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/free-solid-svg-icons";
-import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import PipelineUsageToolMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineUsageToolMultiSelectInput";
 
-function PipelineToolIdentifierMultiSelectInput({ placeholderText, valueField, textField, fieldName, dataObject, setDataObject, setDataFunction, disabled}) {
+function PipelineUsageToolSelectInput({ placeholderText, fieldName, dataObject, setDataObject, setDataFunction, disabled, textField, valueField}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [toolIdentifiers, setToolIdentifiers] = useState([]);
@@ -31,10 +32,10 @@ function PipelineToolIdentifierMultiSelectInput({ placeholderText, valueField, t
   };
 
   const loadTools = async () => {
-    const response = await pipelineActions.getToolIdentifierList(getAccessToken);
+    const response = await pipelineActions.getPipelineUsageToolList(getAccessToken);
 
     if (response.data != null) {
-      setToolIdentifiers(response.data);
+      setToolIdentifiers(response);
     }
   };
 
@@ -48,12 +49,12 @@ function PipelineToolIdentifierMultiSelectInput({ placeholderText, valueField, t
   }
 
   return (
-    <MultiSelectInputBase
+    <SelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      setDataFunction={setDataFunction}
       selectOptions={toolIdentifiers}
+      setDataFunction={setDataFunction}
       busy={isLoading}
       valueField={valueField}
       textField={textField}
@@ -63,7 +64,7 @@ function PipelineToolIdentifierMultiSelectInput({ placeholderText, valueField, t
   );
 }
 
-PipelineToolIdentifierMultiSelectInput.propTypes = {
+PipelineUsageToolSelectInput.propTypes = {
   placeholderText: PropTypes.string,
   fieldName: PropTypes.string,
   textField: PropTypes.string,
@@ -75,9 +76,9 @@ PipelineToolIdentifierMultiSelectInput.propTypes = {
   visible: PropTypes.bool
 };
 
-PipelineToolIdentifierMultiSelectInput.defaultProps = {
+PipelineUsageToolMultiSelectInput.defaultProps = {
   textField: "name",
   valueField: "identifier"
 };
 
-export default PipelineToolIdentifierMultiSelectInput;
+export default PipelineUsageToolSelectInput;

@@ -279,7 +279,7 @@ pipelineActions.getToolsList = async (service, getAccessToken) => {
   return response;
 };
 
-pipelineActions.getToolIdentifierList = async (getAccessToken) => {
+pipelineActions.getPipelineUsageToolList = async (getAccessToken) => {
   const params = { status: "active", usage: "pipeline"};
   const apiUrl = `/registry/tools`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl, params);
