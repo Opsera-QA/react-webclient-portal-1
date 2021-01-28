@@ -25,7 +25,7 @@ function ToolDetailView() {
   const getTool = async () => {
     try {
       setIsLoading(true);
-      const response = await toolsActions.getRoleLimitedTools(id, getAccessToken);
+      const response = await toolsActions.getRoleLimitedToolById(id, getAccessToken);
 
       if (response?.data?.data) {
         setToolData(new Model(response.data.data[0], toolMetadata, false));
