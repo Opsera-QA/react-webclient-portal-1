@@ -14,6 +14,7 @@ import NotificationConfigurationPanel
 import NotificationMethodConfigurationPanel 
   from "components/notifications/notification_details/notification_method_forms/NotificationMethodConfigurationPanel";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 
 function NotificationEditorPanel({ notificationData, setNotificationData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -83,6 +84,10 @@ function NotificationEditorPanel({ notificationData, setNotificationData, handle
         notificationMethodDataDto={notificationMethodDataDto}
         setNotificationMethodDataDto={setNotificationMethodDataDto}
       />
+      <Col lg={12}>
+          <TextAreaInput setDataObject={setNotificationDataDto} dataObject={notificationDataDto}
+                        fieldName={"nextSteps"}/>
+        </Col>
       <PersistButtonContainer
         handleClose={handleClose}
         recordDto={notificationDataDto}
