@@ -1,12 +1,19 @@
 const toolIdentifierMetadata = {
   idProperty: "_id",
   type: "Tool Identifier",
-  fields: [
-  {
-    label: "Name",
-    id: "name",
-    isRequired: true
+  activeField: "active",
+  detailView: function(record) {
+    return `/admin/tools/identifiers/details/${record.getData("_id")}`;
   },
+  detailViewTitle: function(record) {
+    return `Tool Identifier Details [${record?.getData("name")}]`;
+  },
+  fields: [
+    {
+      label: "Name",
+      id: "name",
+      isRequired: true
+    },
     {
       label: "Description",
       id: "description",
@@ -49,7 +56,7 @@ const toolIdentifierMetadata = {
       label: "Active",
       id: "active",
     },
-],
+  ],
   newObjectFields: {
     name: "",
     description: "",

@@ -1,6 +1,9 @@
 import baseActions from "utils/actionsBase";
 import {axiosApiService} from "api/apiService";
 
+// TODO: This is getting large. I think it might be wise to separate it into separate files
+//  (pipeline actions being add/get/update/delete, catalog for catalog related,
+//  step for step configuration related ones (save to vault, tools, etc)
 const pipelineActions = {};
 
 pipelineActions.getWorkflowTemplates = async (catalogFilterDto, getAccessToken) => {
@@ -276,12 +279,14 @@ pipelineActions.getToolsList = async (service, getAccessToken) => {
   return response;
 };
 
-pipelineActions.getToolIdentifierList = async (getAccessToken) => {
+pipelineActions.getPipelineUsageToolList = async (getAccessToken) => {
   const params = { status: "active", usage: "pipeline"};
   const apiUrl = `/registry/tools`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl, params);
 };
 
+// TODO: We should be handling not getting data inside the places that call this route instead
+//  We can always have a function in a helper that does the parsing of data automatically and call that instead
 pipelineActions.searchWorkSpaces = async (service, gitAccountId, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/tools/properties`;
@@ -304,7 +309,8 @@ pipelineActions.searchWorkSpaces = async (service, gitAccountId, getAccessToken)
   return response;
 };
 
-
+// TODO: We should be handling not getting data inside the places that call this route instead
+//  We can always have a function in a helper that does the parsing of data automatically and call that instead
 pipelineActions.searchRepositories = async (service, gitAccountId, workspaces, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/tools/properties`;
@@ -328,6 +334,8 @@ pipelineActions.searchRepositories = async (service, gitAccountId, workspaces, g
   return response;
 };
 
+// TODO: in case we  want to reuse this route, we should probably construct the array inside wherever uses it instead
+//  We can always have a function in a helper that does the parsing of data automatically and call that instead
 pipelineActions.searchBranches = async (service, gitAccountId, repoId, workspaces, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/tools/properties`;

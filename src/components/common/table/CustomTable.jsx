@@ -92,7 +92,7 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
             <div className="d-flex text-right">
               {/*TODO: Remove old add button after removing everywhere*/}
               {createNewRecord &&
-                <Button size="sm" className={"mb-2"} onClick={() => { createNewRecord(); }}>
+                <Button size="sm" onClick={() => { createNewRecord(); }}>
                   <FontAwesomeIcon icon={faPlus}/><span className="ml-1">New {type}</span>
                 </Button>
               }

@@ -1,7 +1,5 @@
 import React, {createContext, useCallback, useState} from "react";
 import PropTypes from "prop-types";
-import {generateUUID} from "../components/common/helpers/string-helpers";
-import PersistentInformationMessage from "../components/common/status_notifications/banners/PersistentInformationMessage";
 import BannerMessageContainer from "../components/common/status_notifications/banners/BannerMessageContainer";
 import ErrorBanner from "../components/common/status_notifications/banners/ErrorBanner";
 import SuccessToast from "../components/common/status_notifications/toasts/SuccessToast";
@@ -13,6 +11,8 @@ import SuccessBanner from "../components/common/status_notifications/banners/Suc
 import InformationBanner from "../components/common/status_notifications/banners/InformationBanner";
 import WarningBanner from "../components/common/status_notifications/banners/WarningBanner";
 import InlineError from "components/common/status_notifications/inline/InlineError";
+import {generateUUID} from "components/common/helpers/string-helpers";
+import SiteNotificationDisplayer from "components/admin/site_notifications/displayer/SiteNotificationDisplayer";
 
 const notificationTypes = {
   FORM: "form",
@@ -21,7 +21,7 @@ const notificationTypes = {
   UNKNOWN: "unknown"
 }
 
-function ToastContextProvider ({ children }) {
+function ToastContextProvider ({ children, navBar }) {
   const [toasts, setToasts] = useState([]);
   // TODO: Wire up way to arrow through banners
   const [bannerMessages, setBannerMessages] = useState([]);
@@ -214,7 +214,7 @@ function ToastContextProvider ({ children }) {
     addToast(errorToast, id, notificationTypes.FORM);
   };
 
-  const showInlineFormValidationErrorInline = (errorMessage = "") => {
+  const showInlineFormValidationError = (errorMessage = "") => {
     let id = generateUUID();
     let inlineErrorBanner = getInlineErrorBanner(`WARNING! There are errors in your form. ${errorMessage} Please review the details and ensure any required fields or special rules are met and try again.`, id);
     setInlineMessage(inlineErrorBanner, id, notificationTypes.FORM);
@@ -282,6 +282,12 @@ function ToastContextProvider ({ children }) {
     let id = generateUUID();
     let errorToast = getErrorToast(error, id, `WARNING! An error has occurred updating this ${type}:`);
     addToast(errorToast, id, notificationTypes.FORM);
+  }
+
+  const showInlineUpdateFailureMessage = (type, error) => {
+    let id = generateUUID();
+    let inlineErrorBanner = getInlineErrorBanner(error, id, `WARNING! An error has occurred updating this ${type}:`);
+    setInlineMessage(inlineErrorBanner, id, notificationTypes.FORM);
   }
 
   const showDeleteFailureResultDialog = (type, error) => {
@@ -376,7 +382,7 @@ function ToastContextProvider ({ children }) {
           showSuccessDialog: showSuccessToast,
 
           showInlineCreateFailureResultDialog: showInlineCreateFailureResultDialog,
-          showInlineFormValidationErrorInline: showInlineFormValidationErrorInline,
+          showInlineFormValidationError: showInlineFormValidationError,
 
           // TODO: Remove instances
           showInformationToast: showInformationToast,
@@ -422,6 +428,9 @@ function ToastContextProvider ({ children }) {
           showSystemErrorToast: showSystemErrorToast,
           showFormErrorToast: showFormErrorToast,
 
+          //Inline Errors
+          showInlineUpdateFailureMessage: showInlineUpdateFailureMessage,
+
           // TODO: Remove when everything is using the banner ones.
           showWarningDialog: showWarningBanner,
           showErrorDialog: showErrorBanner,
@@ -435,7 +444,8 @@ function ToastContextProvider ({ children }) {
 
           clearToastsArray: clearToastsArray //tmp solution till next version of toasts
         }}>
-        <PersistentInformationMessage />
+        {navBar}
+        <SiteNotificationDisplayer />
         <BannerMessageContainer bannerMessages={bannerMessages} />
         {children}
         <Toaster toasts={toasts} />
@@ -444,7 +454,8 @@ function ToastContextProvider ({ children }) {
   }
 
 ToastContextProvider.propTypes = {
-  children: PropTypes.any
+  children: PropTypes.any,
+  navBar: PropTypes.object
 };
 
 export const DialogToastContext = createContext(ToastContextProvider);

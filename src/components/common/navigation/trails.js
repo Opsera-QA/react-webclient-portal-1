@@ -3,7 +3,7 @@ import {
   faAnalytics,
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
-  faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers
+  faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea
 } from "@fortawesome/pro-light-svg-icons";
 
 const breadcrumbs = {
@@ -23,15 +23,18 @@ const breadcrumbs = {
 
   siteNotificationManagement: {name: "siteNotificationManagement", path: paths.siteNotificationManagement, label: "Site Notification Management", icon: faFlag},
   siteNotificationDetailView: {name: "siteNotificationDetailView", path: paths.siteNotificationDetailView, label: "Site Notification Detail View", icon: faFlag},
+  siteNotificationManager: {name: "siteNotificationManager", path: paths.siteNotificationManager, label: "Site Notification Manager", icon: faFlag},
 
   templateManagement: {name: "templateManagement", path: paths.templateManagement, label: "Template Management", icon: faStream},
   templateDetailView: {name: "templateDetailView", path: paths.templateDetailView, label: "Template Details", icon: faStream},
   toolManagement: {name: "toolManagement", path: paths.toolManagement, label: "Tool Management", icon: faWrench},
   deleteTools: {name: "deleteTools", path: paths.deleteTools, label: "Delete Tools", icon: faTimes},
-  toolTypeDetailView: {name: "toolTypeDetailView", path: paths.toolTypeDetailView, label: "Tool Category Details", icon: faWrench},
+
+  // TODO: This needs to be updated to Tool Category
+  toolCategoryDetailView: {name: "toolCategoryDetailView", path: paths.toolCategoryDetailView, label: "Tool Category Details", icon: faWrench},
   toolIdentifierDetailView: {name: "toolIdentifierDetailView", path: paths.toolIdentifierDetailView, label: "Tool Identifier Details", icon: faWrench},
-  kpiManagement: {name: "kpiManagement", path: paths.kpiManagement, label: "Kpi Management", icon: faFileInvoice},
-  kpiDetailView: {name: "kpiDetailView", path: paths.kpiManagement, label: "Kpi Details", icon: faFileInvoice},
+  kpiManagement: {name: "kpiManagement", path: paths.kpiManagement, label: "KPI Management", icon: faFileInvoice},
+  kpiDetailView: {name: "kpiDetailView", path: paths.kpiManagement, label: "KPI Configuration Details", icon: faFileInvoice},
   registeredUsersManagement: {name: "registeredUsersManagement", path: paths.registeredUsersManagement, label: "Registered Users Management", icon: faUserCircle},
   registeredUsersDetailView: {name: "registeredUsersDetailView", path: paths.registeredUsersManagement, label: "Registered User Details", icon: faUserCircle},
   apiManagement: {name: "apiManagement", path: paths.apiManagement, label: "API Management", icon: faLink},
@@ -43,12 +46,12 @@ const breadcrumbs = {
   customerSystemStatus: {name: "customerSystemStatus", path: paths.customerSystemStatus, label: "Customer System Status", icon: faHeartbeat},
 
   // LDAP Users Administration
-  ldapUserManagement: {name: "ldapUserManagement", path: paths.ldapUserManagement, label: "Users", icon: faUser},
+  ldapUserManagement: {name: "ldapUserManagement", path: paths.ldapUserManagement, label: "User Management", icon: faUser},
   ldapUserDetailView: {name: "ldapUserDetailView", path: paths.ldapUserDetailView, label: "User Details", icon: faUser},
   ldapUserDetailViewLimited: {name: "ldapUserDetailViewLimited", path: paths.ldapUserDetailView, label: "My User Details", icon: faUser},
 
   // LDAP Groups Administration
-  ldapGroupManagement: {name: "ldapGroupManagement", path: paths.ldapGroupManagement, label: "Groups", icon: faUserFriends},
+  ldapGroupManagement: {name: "ldapGroupManagement", path: paths.ldapGroupManagement, label: "Group Management", icon: faUserFriends},
   ldapGroupDetailView: {name: "ldapGroupDetailView", path: paths.ldapGroupDetailView, label: "Group Details", icon: faUserFriends},
 
   // Tag Management
@@ -56,14 +59,14 @@ const breadcrumbs = {
   tagDetailView: {name: "tagDetailView", path: paths.tagDetailView, label: "Tag Details", icon: faTags},
 
   // Ldap Organizations Administration
-  ldapOrganizationManagement: {name: "ldapOrganizationManagement", path: paths.ldapOrganizationManagement, label: "Organizations", icon: faSitemap},
+  ldapOrganizationManagement: {name: "ldapOrganizationManagement", path: paths.ldapOrganizationManagement, label: "Organization Management", icon: faSitemap},
   ldapOrganizationDetailView: {name: "ldapOrganizationDetailView", path: paths.ldapOrganizationDetailView, label: "Organization Details", icon: faSitemap},
 
-  ldapDepartmentManagement: {name: "ldapDepartmentManagement", path: paths.ldapDepartmentManagement, label: "Departments", icon: faBuilding},
+  ldapDepartmentManagement: {name: "ldapDepartmentManagement", path: paths.ldapDepartmentManagement, label: "Department Management", icon: faBuilding},
   ldapDepartmentDetailView: {name: "ldapDepartmentDetailView", path: paths.ldapDepartmentDetailView, label: "Department Details", icon: faBuilding},
 
   // Ldap Organization Account Administration
-  ldapOrganizationAccountManagement: {name: "ldapOrganizationAccountManagement", path: paths.ldapOrganizationAccountManagement, label: "Organization Accounts", icon: faSitemap},
+  ldapOrganizationAccountManagement: {name: "ldapOrganizationAccountManagement", path: paths.ldapOrganizationAccountManagement, label: "Organization Account Management", icon: faSitemap},
   ldapOrganizationAccountDetailView: {name: "ldapOrganizationAccountDetailView", path: paths.ldapOrganizationDetailView, label: "Organization Account Details", icon: faUsers},
 
   customerOnboarding: {name: "customerOnboarding", path: paths.customerOnboarding, label: "Customer Onboarding", icon: faUserPlus},
@@ -74,7 +77,8 @@ const breadcrumbs = {
 
   //Insights
   insights: {name: "insights", path: paths.insights, label: "Insights", icon: faChartNetwork},
-  dashboardViewer: {name: "dashboardViewer", path: paths.dashboardViewer, label: "Dashboard Details", icon: faChartNetwork},
+  dashboardDetails: {name: "dashboardDetails", path: paths.dashboardDetails, label: "Dashboard Details", icon: faChartNetwork},
+  marketplace: {name: "marketplace", path: paths.marketplace, label: "Marketplace", icon: faChartArea},
 
   //Reports
   reports: {name: "reports", path: paths.reports, label: "Reports", icon: faAnalytics},
@@ -93,8 +97,8 @@ const breadcrumbs = {
   userTaggingDetailView: {name: "userTaggingDetailView", path: paths.userTaggingDetailView, label: "User Mapping Details", icon: faUserTag},
 
   //Notifications
-  notifications : { name: "notifications", path: paths.notifications, label: "Notifications", icon: faEnvelope},
-  notificationDetailView: {name: "notificationDetailView", path: paths.toolDetailView, label: "Notification Details", icon: faEnvelope},
+  notificationManagement : { name: "notificationManagement", path: paths.notificationManagement, label: "Notification Management", icon: faEnvelope},
+  notificationDetailView: {name: "notificationDetailView", path: paths.notificationDetailView, label: "Notification Details", icon: faEnvelope},
 
   accessDenied: {name: "accessDenied", path: undefined, label: "Access Denied", icon: faEnvelope},
 };
@@ -120,7 +124,7 @@ const trails = {
   templateManagement: {parent: "admin", breadcrumb: breadcrumbs.templateManagement},
   templateDetailView: {parent: "templateManagement", breadcrumb: breadcrumbs.templateDetailView},
   toolManagement: {parent: "admin", breadcrumb: breadcrumbs.toolManagement},
-  toolTypeDetailView: {parent: "toolManagement", breadcrumb: breadcrumbs.toolTypeDetailView},
+  toolCategoryDetailView: {parent: "toolManagement", breadcrumb: breadcrumbs.toolCategoryDetailView},
   toolIdentifierDetailView: {parent: "toolManagement", breadcrumb: breadcrumbs.toolIdentifierDetailView},
   kpiManagement: {parent: "admin", breadcrumb: breadcrumbs.kpiManagement},
   kpiDetailView: {parent: "kpiManagement", breadcrumb: breadcrumbs.kpiDetailView},
@@ -128,7 +132,8 @@ const trails = {
   registeredUsersDetailView: {parent: "registeredUsersManagement", breadcrumb: breadcrumbs.registeredUsersDetailView},
   apiManagement: {parent: "admin", breadcrumb: breadcrumbs.apiManagement},
   siteNotificationManagement: {parent: "admin", breadcrumb: breadcrumbs.siteNotificationManagement},
-  siteNotificationDetailView: {parent: "admin", breadcrumb: breadcrumbs.siteNotificationDetailView},
+  siteNotificationDetailView: {parent: "siteNotificationManagement", breadcrumb: breadcrumbs.siteNotificationDetailView},
+  siteNotificationManager: {parent: "admin", breadcrumb: breadcrumbs.siteNotificationManager},
 
   // Account settings
   accountSettings: {parent: undefined, breadcrumb: breadcrumbs.accountSettings},
@@ -167,7 +172,8 @@ const trails = {
 
   //Insights
   insights: {parent: undefined, breadcrumb: breadcrumbs.insights},
-  dashboardViewer: {parent: "insights", breadcrumb: breadcrumbs.dashboardViewer},
+  dashboardDetails: {parent: "insights", breadcrumb: breadcrumbs.dashboardDetails},
+  marketplace: {parent: "insights", breadcrumb: breadcrumbs.marketplace},
 
   //Reports
   reports: {parent: undefined, breadcrumb: breadcrumbs.reports},
@@ -186,8 +192,8 @@ const trails = {
   userTaggingDetailView : {parent : "mapping", breadcrumb : breadcrumbs.userTaggingDetailView},
 
   //Notifications
-  notifications : {parent: undefined, breadcrumb: breadcrumbs.notifications},
-  notificationDetailView: {parent: "notifications", breadcrumb: breadcrumbs.notificationDetailView},
+  notificationManagement : {parent: undefined, breadcrumb: breadcrumbs.notificationManagement},
+  notificationDetailView: {parent: "notificationManagement", breadcrumb: breadcrumbs.notificationDetailView},
 
   accessDenied: {parent: undefined, breadcrumb: breadcrumbs.accessDenied},
 };
@@ -211,5 +217,5 @@ export const getBreadcrumb = (breadcrumb) => {
 
 export const getParentBreadcrumb = (breadcrumb) => {
   let parentBreadcrumb = trails[breadcrumb]?.parent;
-  return parentBreadcrumb ? breadcrumbs[parentBreadcrumb] : null;
+  return parentBreadcrumb ? trails[parentBreadcrumb]?.breadcrumb : null;
 };

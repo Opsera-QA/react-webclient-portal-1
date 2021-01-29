@@ -1,11 +1,34 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
 import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
+import {getParentBreadcrumb} from "components/common/navigation/trails";
+import DataNotFoundDialog from "components/common/status_notifications/data_not_found/DataNotFoundDialog";
 
 // TODO: We should just pull all the management stuff from the breadcrumb's parent instead and construct the dialog here
 function DataNotFoundContainer({ breadcrumbDestination, type, children }) {
+  const [parentBreadcrumb, setParentBreadcrumb] = useState(getParentBreadcrumb(breadcrumbDestination));
+
+  const getBody = () => {
+    // TODO: Remove this check when all areas are updated
+    if (children != null) {
+      return children;
+    }
+
+    if (parentBreadcrumb != null) {
+      return (
+        <DataNotFoundDialog
+          type={type}
+          managementViewIcon={parentBreadcrumb["icon"]}
+          managementViewTitle={parentBreadcrumb["label"]}
+          managementViewLink={`/${parentBreadcrumb["path"]}`}
+        />
+      )
+    }
+  }
+
+
   return (
     <div className="max-content-width mb-2 ml-2">
       <BreadcrumbTrail destination={breadcrumbDestination} />
@@ -14,7 +37,7 @@ function DataNotFoundContainer({ breadcrumbDestination, type, children }) {
           <FontAwesomeIcon icon={faExclamationTriangle} fixedWidth className="mr-1"/>{type} Not Found!
         </div>
         <div className="p-2 mt-2 shaded-container detail-container-body">
-          {children}
+          {getBody()}
         </div>
         <div className="content-block-footer"/>
       </div>

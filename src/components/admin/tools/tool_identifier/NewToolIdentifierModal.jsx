@@ -1,16 +1,17 @@
 import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import CreateModal from "../../../common/modal/CreateModal";
-import ToolIdentifierEditorPanel from "./tool_identifier_detail_view/ToolIdentifierEditorPanel";
-import toolIdentifierMetadata from "./tool-identifier-metadata";
-import Model from "../../../../core/data_model/model";
+import toolIdentifierMetadata from "components/admin/tools/tool_identifier/tool-identifier-metadata";
+import ToolIdentifierEditorPanel
+  from "components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierEditorPanel";
+import CreateModal from "components/common/modal/CreateModal";
+import Model from "core/data_model/model";
 
 function NewToolIdentifierModal({ setShowModal, loadData, showModal } ) {
   const [toolIdentifierData, setToolIdentifierData] = useState(undefined);
 
   useEffect(() => {
     setToolIdentifierData(new Model({...toolIdentifierMetadata.newObjectFields}, toolIdentifierMetadata, true));
-  }, []);
+  }, [showModal]);
 
   const handleClose = () => {
     loadData();
@@ -18,9 +19,9 @@ function NewToolIdentifierModal({ setShowModal, loadData, showModal } ) {
   };
 
   return (
-      <CreateModal handleCancelModal={handleClose} objectType={"Tool Identifier"} showModal={showModal} loadData={loadData} >
-        {toolIdentifierData && <ToolIdentifierEditorPanel setToolIdentifierData={setToolIdentifierData} toolIdentifierData={toolIdentifierData} handleClose={handleClose} />}
-      </CreateModal>
+    <CreateModal handleCancelModal={handleClose} objectType={toolIdentifierMetadata.type} showModal={showModal} loadData={loadData}>
+      <ToolIdentifierEditorPanel setToolIdentifierData={setToolIdentifierData} toolIdentifierData={toolIdentifierData} handleClose={handleClose} />
+    </CreateModal>
   );
 }
 

@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationCircle, faTools} from "@fortawesome/free-solid-svg-icons";
+import {faExclamationCircle, faTools} from "@fortawesome/pro-light-svg-icons";
 import {Link} from "react-router-dom";
-import toolsActions from "../../../inventory/tools/tools-actions";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import {AuthContext} from "../../../../contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import toolsActions from "components/inventory/tools/tools-actions";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {AuthContext} from "contexts/AuthContext";
 
 function ToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField}) {
   const toastContext = useContext(DialogToastContext);
@@ -32,7 +32,7 @@ function ToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textF
   };
 
   const loadTools = async () => {
-    const response = await toolsActions.getFullToolRegistryList(getAccessToken);
+    const response = await toolsActions.getToolLovs(getAccessToken);
     setTools(response?.data?.data);
   };
 

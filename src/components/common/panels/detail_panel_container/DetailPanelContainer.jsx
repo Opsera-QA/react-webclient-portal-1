@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import LoadingDialog from "../../status_notifications/loading";
-import Form from "react-bootstrap/Form";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 function DetailPanelContainer({ children, isLoading, showRequiredFieldsMessage }) {
 

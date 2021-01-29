@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-
-import TagEditorPanel from "./TagEditorPanel";
-import CustomTabContainer from "../../../common/tabs/CustomTabContainer";
-import SummaryTab from "../../../common/tabs/detail_view/SummaryTab";
-import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTabPanelContainer";
-import TagsSummaryPanel from "./TagsSummaryPanel";
-import SettingsTab from "../../../common/tabs/detail_view/SettingsTab";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
+import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
+import TagsSummaryPanel from "components/settings/tags/tags_detail_view/TagsSummaryPanel";
+import TagEditorPanel from "components/settings/tags/tags_detail_view/TagEditorPanel";
+import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
 function TagDetailPanel({ tagData, setTagData }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -14,6 +13,10 @@ function TagDetailPanel({ tagData, setTagData }) {
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
     setActiveTab(activeTab);
+  };
+
+  const toggleSummaryPanel = () => {
+    setActiveTab("summary");
   };
 
   const getTabContainer = () => {
@@ -30,7 +33,7 @@ function TagDetailPanel({ tagData, setTagData }) {
       case "summary":
         return <TagsSummaryPanel tagData={tagData} setTagData={setTagData} setActiveTab={setActiveTab} />;
       case "settings":
-      return <TagEditorPanel setTagData={setTagData} tagData={tagData} />;
+      return <TagEditorPanel setTagData={setTagData} tagData={tagData} handleClose={toggleSummaryPanel} />;
       default:
         return null;
     }

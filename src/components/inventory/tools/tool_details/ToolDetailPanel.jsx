@@ -27,6 +27,7 @@ import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import ToolPipelinesPanel from "./ToolPipelinesPanel";
 import ToolTaggingPanel from "./ToolTaggingPanel";
 import ToolProjectsPanel from "components/inventory/tools/tool_details/projects/ToolProjectsPanel";
+import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
@@ -34,6 +35,10 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
     setActiveTab(activeTab);
+  };
+
+  const toggleSummaryPanel = () => {
+    setActiveTab("summary");
   };
 
   const getDynamicTabs = () => {
@@ -75,12 +80,11 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Attributes"}/>
         <CustomTab icon={faDiceD20} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"}/>
         {getDynamicTabs()}
-        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
       </CustomTabContainer>
     );
   };
@@ -89,6 +93,8 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
     switch (activeTab) {
       case "summary":
         return <ToolSummaryPanel toolData={toolData} setToolData={setToolData} setActiveTab={setActiveTab} />;
+      case "settings":
+        return <ToolEditorPanel toolData={toolData} setToolData={setToolData} loadData={loadData} handleClose={toggleSummaryPanel} />;
       case "attributes":
         return <ToolAttributesPanel toolData={toolData}/>;
       case "configuration":
@@ -105,8 +111,6 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         return <ToolTaggingPanel toolData={toolData} />;
       case "projects":
         return <ToolProjectsPanel toolData={toolData} isLoading={isLoading} loadData={loadData} />
-      case "settings":
-        return <ToolEditorPanel toolData={toolData} setToolData={setToolData} loadData={loadData}/>;
       case "pipelines":
         return <ToolPipelinesPanel toolData={toolData} />;
       default:

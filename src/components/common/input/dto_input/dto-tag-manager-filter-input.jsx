@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Multiselect } from 'react-widgets'
 import adminTagsActions from "../../../settings/tags/admin-tags-actions";
 import {AuthContext} from "../../../../contexts/AuthContext";
-import {defaultTags} from "../../../settings/tags/tags-form-fields";
+import {defaultTags} from "components/settings/tags/tags-metadata";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 
 function DtoTagManagerFilterInput({ fieldName, type, dataObject, setDataObject, disabled, filter, placeholderText, setDataFunction, allowCreate, groupBy }) {

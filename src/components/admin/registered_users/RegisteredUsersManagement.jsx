@@ -1,11 +1,8 @@
 import React, {useContext, useEffect, useState} from "react";
-import {useHistory} from "react-router-dom";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
-import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
-import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import Model from "core/data_model/model";
 import registeredUsersFilterMetadata from "components/admin/registered_users/registered-users-filter-metadata";
@@ -15,6 +12,7 @@ import {Col, Row} from "react-bootstrap";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import InformationDialog from "components/common/status_notifications/info";
 import RegisteredUserSummaryCard from "components/admin/registered_users/RegisteredUserSummaryCard";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 function RegisteredUsersManagement() {
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
@@ -143,16 +141,14 @@ function RegisteredUsersManagement() {
     return (<LoadingDialog size="sm"/>);
   }
 
-  if (!accessRoleData.OpseraAdministrator && !isLoading) {
-    return (<AccessDeniedDialog roleData={accessRoleData}/>);
-  }
-
   return (
-      <div>
-        <BreadcrumbTrail destination={"registeredUsersManagement"} />
-        <h5>Registered Users</h5>
+      <ScreenContainer
+        accessDenied={!accessRoleData.OpseraAdministrator}
+        breadcrumbDestination={"registeredUsersManagement"}
+        isLoading={isLoading}
+      >
         {getRegisteredUsersBlock()}
-      </div>
+      </ScreenContainer>
     );
 }
 

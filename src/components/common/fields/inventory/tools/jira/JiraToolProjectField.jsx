@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import FieldContainer from "components/common/fields/FieldContainer";
-import inventoryActions from "components/inventory/inventory-actions";
 import Model from "core/data_model/model";
 import jiraProjectMetadata from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jira-project-metadata";
 import toolMetadata from "components/inventory/tools/tool-metadata";
@@ -14,6 +13,7 @@ import jiraConfigurationMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/jiraConfigurationMetadata";
 import Col from "react-bootstrap/Col";
 import JiraUserFields from "components/common/fields/inventory/tools/jira/JiraUserFields";
+import toolsActions from "components/inventory/tools/tools-actions";
 
 function JiraToolProjectField({ dataObject, jiraToolId, jiraToolProjectId, fieldName, children, title, showUsersFields }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -40,7 +40,7 @@ function JiraToolProjectField({ dataObject, jiraToolId, jiraToolProjectId, field
 
   const loadJiraTool = async () => {
     if (jiraToolId !== "" && jiraToolProjectId !== "") {
-      const response = await inventoryActions.getToolById(jiraToolId, getAccessToken);
+      const response = await toolsActions.getFullToolById(jiraToolId, getAccessToken);
       const toolDataResponse = response?.data[0];
 
       if (toolDataResponse != null) {

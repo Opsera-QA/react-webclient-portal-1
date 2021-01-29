@@ -1,19 +1,17 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { AuthContext } from "../../../../contexts/AuthContext";
-import LoadingDialog from "../../../common/status_notifications/loading";
-import AccessDeniedDialog from "../../../common/status_notifications/accessDeniedInfo";
-import Model from "../../../../core/data_model/model";
-import templateEditorMetadata from "../template-form-fields";
-import templateActions from "../template-actions";
-import TemplateDetailPanel from "./TemplateDetailPanel";
-import {faStream} from "@fortawesome/free-solid-svg-icons";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
-import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
-import ActionBarShowJsonButton from "../../../common/actions/buttons/ActionBarShowJsonButton";
-import ActionBarDeleteButton2 from "../../../common/actions/buttons/ActionBarDeleteButton2";
-import ActionBarContainer from "../../../common/actions/ActionBarContainer";
+import Model from "core/data_model/model";
+import templateActions from "components/admin/template_editor/template-actions";
+import LoadingDialog from "components/common/status_notifications/loading";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {AuthContext} from "contexts/AuthContext";
+import templateEditorMetadata from "components/admin/template_editor/template-metadata";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
+import ActionBarShowJsonButton from "components/common/actions/buttons/ActionBarShowJsonButton";
+import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import TemplateDetailPanel from "components/admin/template_editor/template_detail_view/TemplateDetailPanel";
 
 function TemplateDetailView() {
   const {templateId} = useParams();
@@ -45,7 +43,7 @@ function TemplateDetailView() {
   const getTemplate = async (templateId) => {
     const response = await templateActions.getTemplateById(templateId, getAccessToken);
     // TODO: remove grabbing first when it only sends object instead of array
-    if (response.data != null && response.data.length > 0) {
+    if (response?.data?.length > 0) {
       setTemplateData(new Model(response.data[0], templateEditorMetadata, false));
     }
   };
@@ -74,9 +72,8 @@ function TemplateDetailView() {
         </div>
         <div>
           <ActionBarShowJsonButton dataObject={templateData} />
-          {accessRoleData.OpseraAdministrator === true
-            && <span className={"mr-2"}><ActionBarDeleteButton2 relocationPath={"/admin/templates"} dataObject={templateData} handleDelete={deletePipeline}/></span>}
-          {/*<ActionBarStatus status={templateData.getData("status")}/>*/}
+          {accessRoleData?.OpseraAdministrator === true
+            && <ActionBarDeleteButton2 relocationPath={"/admin/templates"} dataObject={templateData} handleDelete={deletePipeline}/>}
         </div>
       </ActionBarContainer>
     );
@@ -90,20 +87,13 @@ function TemplateDetailView() {
     return (<LoadingDialog size="sm"/>);
   }
 
-  if (accessRoleData.OpseraAdministrator === false) {
-    return (<AccessDeniedDialog roleData={accessRoleData} />);
-  }
-
   return (
     <DetailScreenContainer
       breadcrumbDestination={"templateDetailView"}
-      title={templateData != null ? `Template Details [${templateData.getData("name")}]` : undefined}
-      managementViewLink={"/admin/templates"}
-      type={"Pipeline Template"}
-      managementTitle={"Template Management"}
-      titleIcon={faStream}
+      accessDenied={!accessRoleData?.OpseraAdministrator}
       dataObject={templateData}
       isLoading={isLoading}
+      metadata={templateEditorMetadata}
       actionBar={getActionBar()}
       detailPanel={<TemplateDetailPanel setTemplateData={setTemplateData} templateData={templateData} />}
     />

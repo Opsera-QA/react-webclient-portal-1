@@ -41,20 +41,20 @@ function ToolIdentifierTable({data, loadData, isLoading}) {
   };
 
   return (
-    <>
-        <CustomTable
-          columns={columns}
-          data={data}
-          rowStyling={rowStyling}
-          noDataMessage={noDataMessage}
-          isLoading={isLoading}
-          onRowSelect={selectedRow}
-          tableTitle={"Tool Identifiers"}
-          type={"Tool Identifier"}
-          createNewRecord={createToolType}
-        />
-      {showCreateToolIdentifierModal && <NewToolIdentifierModal setShowModal={setShowCreateToolIdentifierModal} loadData={loadData} showModal={showCreateToolIdentifierModal}/>}
-    </>
+    <div>
+      <CustomTable
+        columns={columns}
+        data={data}
+        rowStyling={rowStyling}
+        noDataMessage={noDataMessage}
+        isLoading={isLoading}
+        onRowSelect={selectedRow}
+        tableTitle={"Tool Identifiers"}
+        type={"Tool Identifier"}
+        createNewRecord={createToolType}
+      />
+      <NewToolIdentifierModal setShowModal={setShowCreateToolIdentifierModal} loadData={loadData} showModal={showCreateToolIdentifierModal}/>
+    </div>
   );
 }
 

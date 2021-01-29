@@ -9,6 +9,7 @@ import DataNotFoundContainer from "components/common/panels/detail_view_containe
 import DataNotFoundDialog from "components/common/status_notifications/data_not_found/DataNotFoundDialog";
 import ObjectJsonModal from "components/common/modal/ObjectJsonModal";
 import ChartView from "../../charts/ChartView";
+
 function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLink, managementTitle, type}) {
   const history = useHistory();
   const [kpis, setKpis] = useState([]);

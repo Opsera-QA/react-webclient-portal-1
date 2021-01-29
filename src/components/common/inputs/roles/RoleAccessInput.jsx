@@ -193,6 +193,34 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
     }
   };
 
+  const getDisabledUsers = () => {
+    if (properties.length > 0) {
+      const disabledUsers = [];
+
+      properties.map((property) => {
+        if (property.user != null && property.user !== "") {
+          disabledUsers.push(property.user);
+        }
+      });
+
+      return disabledUsers;
+    }
+  };
+
+  const getDisabledGroups = () => {
+    if (properties.length > 0) {
+      const disabledGroups = [];
+
+      properties.map((property) => {
+        if (property.group != null && property.group !== "") {
+          disabledGroups.push(property.group);
+        }
+      });
+
+      return disabledGroups;
+    }
+  };
+
   const getDeletePropertyButton = (index) => {
     return (
       <Button variant="link" onClick={() => deleteProperty(index)}>
@@ -223,6 +251,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
           value={property["user"]}
           busy={loadingUsers}
           filter={"contains"}
+          disabled={getDisabledUsers()}
           placeholder={"Select A User"}
           onChange={(value) => updateProperty(property, "user", value["emailAddress"])}
         />
@@ -236,6 +265,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
         textField={"name"}
         value={property["group"]}
         busy={loadingGroups}
+        disabled={getDisabledGroups()}
         filter={"contains"}
         placeholder={"Select A Group"}
         onChange={(value) => updateProperty(property, "group", value["name"])}

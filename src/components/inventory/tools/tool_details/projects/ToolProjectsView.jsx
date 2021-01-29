@@ -2,13 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import inventoryActions from "components/inventory/inventory-actions";
 import Model from "core/data_model/model";
 import toolMetadata from "components/inventory/tools/tool-metadata";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import JiraProjectDetailView
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/JiraProjectDetailView";
 import jiraProjectMetadata from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jira-project-metadata";
+import toolsActions from "components/inventory/tools/tools-actions";
 
 function ToolProjectsView() {
   const { id, projectId } = useParams();
@@ -26,16 +26,19 @@ function ToolProjectsView() {
   const getTool = async () => {
     try {
       setIsLoading(true);
-      const response = await inventoryActions.getToolById(id, getAccessToken);
+      const response = await toolsActions.getRoleLimitedToolById(id, getAccessToken);
 
-      const toolDataResponse = response?.data[0];
-      if (toolDataResponse) {
-        const toolDataDto = new Model(toolDataResponse, toolMetadata, false);
-        await setToolData(toolDataDto);
-        await unpackToolProject(toolDataDto);
+      if (response?.data?.data[0]) {
+        const toolDataResponse = response?.data?.data[0];
+        if (toolDataResponse) {
+          const toolDataDto = new Model(toolDataResponse, toolMetadata, false);
+          await setToolData(toolDataDto);
+          await unpackToolProject(toolDataDto);
+        }
       }
     } catch (error) {
       if (!error?.error?.message?.includes(404)) {
+        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     }
@@ -72,10 +75,37 @@ function ToolProjectsView() {
     }
   };
 
-  if (isLoading || toolData == null || toolProjectData == null) {
+  if (isLoading) {
     return (
-      <DetailScreenContainer breadcrumbDestination={"toolProjectDetailView"} isLoading={isLoading} dataObject={toolData} />
-    )
+      <DetailScreenContainer
+        breadcrumbDestination={"toolProjectDetailView"}
+        isLoading={isLoading}
+        dataObject={toolProjectData}
+        metadata={getMetaData(toolData?.getData("tool_identifier"))}
+      />
+    );
+  }
+
+  if (toolData == null) {
+    return (
+      <DetailScreenContainer
+        breadcrumbDestination={"toolProjectDetailView"}
+        isLoading={isLoading}
+        dataObject={toolData}
+        metadata={toolMetadata}
+      />
+    );
+  }
+
+  if (toolProjectData == null) {
+    return (
+      <DetailScreenContainer
+        breadcrumbDestination={"toolProjectDetailView"}
+        isLoading={isLoading}
+        dataObject={toolProjectData}
+        metadata={getMetaData(toolData?.getData("tool_identifier"))}
+      />
+    );
   }
 
   return (getDetailView());

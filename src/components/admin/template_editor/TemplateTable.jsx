@@ -2,13 +2,13 @@ import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {useHistory} from "react-router-dom";
-import NewTemplateModal from "./NewTemplateModal";
-import templateEditorMetadata from "./template-form-fields";
 import {
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn
-} from "../../common/table/table-column-helpers";
+} from "components/common/table/table-column-helpers";
+import NewTemplateModal from "components/admin/template_editor/NewTemplateModal";
+import templateEditorMetadata from "components/admin/template_editor/template-metadata";
 
 function TemplateTable({ data, loadData, isLoading }) {
   const fields = templateEditorMetadata.fields;
@@ -44,24 +44,20 @@ function TemplateTable({ data, loadData, isLoading }) {
   };
 
   return (
-    <>
-      <div className="justify-content-between mb-1 d-flex">
-        <h5>Template Management</h5>
-      </div>
-        <CustomTable
-          columns={columns}
-          data={data}
-          onRowSelect={selectedRow}
-          noDataMessage={noDataMessage}
-          isLoading={isLoading}
-          rowStyling={rowStyling}
-          tableTitle={"Pipeline Templates"}
-          type={"Pipeline Template"}
-          createNewRecord={createTemplate}
-        >
-        </CustomTable>
+    <div>
+      <CustomTable
+        columns={columns}
+        data={data}
+        onRowSelect={selectedRow}
+        noDataMessage={noDataMessage}
+        isLoading={isLoading}
+        rowStyling={rowStyling}
+        tableTitle={"Pipeline Templates"}
+        type={"Pipeline Template"}
+        createNewRecord={createTemplate}
+      />
       <NewTemplateModal setShowModal={setShowCreateTemplateModal} loadData={loadData} showModal={showCreateTemplateModal}/>
-    </>
+    </div>
   );
 }
 

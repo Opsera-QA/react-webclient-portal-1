@@ -1,30 +1,48 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import DataNotFoundContainer from "components/common/panels/detail_view_container/DataNotFoundContainer";
 import DataNotFoundDialog from "components/common/status_notifications/data_not_found/DataNotFoundDialog";
 import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 import TitleBar from "components/common/fields/TitleBar";
+import {getBreadcrumb, getParentBreadcrumb} from "components/common/navigation/trails";
 
 function DetailScreenContainer(
   {
     breadcrumbDestination,
-    type,
     actionBar,
     dataObject,
+
+    // TODO: Remove these after wiring up everything
+    type,
     managementViewIcon,
     managementViewLink,
     managementTitle,
     title,
     titleIcon,
+
     detailPanel,
     isLoading,
-    activeField,
-    accessDenied
+    accessDenied,
+    metadata
   }) {
+  const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
+  const [parentBreadcrumb, setParentBreadcrumb] = useState(getParentBreadcrumb(breadcrumbDestination));
 
   const getTitleBar = () => {
-    return (<TitleBar isLoading={isLoading} titleIcon={titleIcon} title={title} inactive={activeField ? dataObject?.getData(activeField) === false : false} /> );
+    const activeField = dataObject?.getActiveField();
+    const breadcrumbIcon = breadcrumb?.icon ? breadcrumb?.icon : titleIcon;
+    const detailViewTitle = dataObject?.getDetailViewTitle();
+
+    return (
+      <TitleBar
+        isLoading={isLoading}
+        parentBreadcrumb={parentBreadcrumb}
+        titleIcon={breadcrumbIcon}
+        title={detailViewTitle != null ? detailViewTitle : title}
+        inactive={activeField ? dataObject?.getData(activeField) === false : false}
+      />
+    );
   };
 
   const getDetailBody = () => {
@@ -37,29 +55,39 @@ function DetailScreenContainer(
 
   const getActionBar = () => {
     if (dataObject != null) {
-      return actionBar;
+      return <div className="mb-1">{actionBar}</div>;
     }
 
     return <div className="py-2" />;
   };
 
-  // TODO: We should just pull all the management stuff from the breadcrumb's parent instead.
-  if (!isLoading && dataObject == null) {
+  if (!isLoading && accessDenied) {
     return (
-      <DataNotFoundContainer type={type} breadcrumbDestination={breadcrumbDestination}>
-        <DataNotFoundDialog
-          type={type}
-          managementViewIcon={managementViewIcon}
-          managementViewTitle={managementTitle}
-          managementViewLink={managementViewLink}
-        />
-      </DataNotFoundContainer>
+      <AccessDeniedContainer />
     )
   }
 
-  if (accessDenied) {
+  // TODO: We should just pull all the management stuff from the breadcrumb's parent instead.
+  if (!isLoading && dataObject == null) {
+    // TODO: Remove using this when all detail views updated
+    if (managementViewLink && managementViewIcon) {
+      return (
+        <DataNotFoundContainer type={type} breadcrumbDestination={breadcrumbDestination}>
+          <DataNotFoundDialog
+            type={type}
+            managementViewIcon={managementViewIcon}
+            managementViewTitle={managementTitle}
+            managementViewLink={managementViewLink}
+          />
+        </DataNotFoundContainer>
+      )
+    }
+
+    // TODO: just pass in metadata?.type once wired up everywhere
+    const metadataType = metadata ? metadata?.type : type;
+
     return (
-      <AccessDeniedContainer />
+      <DataNotFoundContainer type={metadataType} breadcrumbDestination={breadcrumbDestination} />
     )
   }
 
@@ -67,14 +95,14 @@ function DetailScreenContainer(
     <div className="max-content-width mb-2 ml-2 max-content-height">
       <BreadcrumbTrail destination={breadcrumbDestination} />
       <div className="content-container content-card-1">
-        <div className="pl-2 content-block-header title-text-header-1">
+        <div className="px-2 content-block-header title-text-header-1">
           {getTitleBar()}
         </div>
-        <div>
+        <div className="detail-container-body">
           {getActionBar()}
-        </div>
-        <div className="shaded-container detail-container-body">
-          {getDetailBody()}
+          <div className="shaded-container">
+            {getDetailBody()}
+          </div>
         </div>
         <div className="content-block-footer"/>
       </div>
@@ -84,7 +112,6 @@ function DetailScreenContainer(
 
 
 DetailScreenContainer.propTypes = {
-  activeField: PropTypes.string,
   breadcrumbDestination: PropTypes.string,
   title: PropTypes.string,
   type: PropTypes.string,
@@ -96,7 +123,8 @@ DetailScreenContainer.propTypes = {
   actionBar: PropTypes.object,
   managementViewIcon: PropTypes.object,
   isLoading: PropTypes.bool,
-  accessDenied: PropTypes.bool
+  accessDenied: PropTypes.bool,
+  metadata: PropTypes.object
 };
 
 export default DetailScreenContainer;

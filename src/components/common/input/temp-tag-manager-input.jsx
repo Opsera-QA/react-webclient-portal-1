@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { Multiselect } from 'react-widgets'
 import {AuthContext} from "../../../contexts/AuthContext";
-import tagEditorMetadata, {defaultTags} from "../../settings/tags/tags-form-fields";
+import tagEditorMetadata, {defaultTags} from "components/settings/tags/tags-metadata";
 import adminTagsActions from "../../settings/tags/admin-tags-actions";
 import Model from "../../../core/data_model/model";
 import LoadingDialog from "../status_notifications/loading";

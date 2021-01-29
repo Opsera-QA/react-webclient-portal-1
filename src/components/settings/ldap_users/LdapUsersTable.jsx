@@ -1,11 +1,13 @@
-import React, { useMemo } from "react";
+import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import {ldapUsersMetaData} from "./ldap-users-metadata";
-import { getTableTextColumn } from "../../common/table/table-column-helpers";
+import {getTableTextColumn} from "components/common/table/table-column-helpers";
+import NewLdapUserModal from "components/settings/ldap_users/NewLdapUserModal";
 
-function LdapUsersTable({ userData, orgDomain, isLoading }) {
+function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loadData }) {
+  const [showCreateUserModal, setShowCreateUserModal] = useState(false);
   const fields = ldapUsersMetaData.fields;
   const history = useHistory();
 
@@ -28,14 +30,36 @@ function LdapUsersTable({ userData, orgDomain, isLoading }) {
     history.push(`/settings/${orgDomain}/users/details/${rowData.original.emailAddress}`);
   };
 
+  const createUser = () => {
+    setShowCreateUserModal(true);
+  };
+
   return (
-    <CustomTable isLoading={isLoading} tableTitle={"Users"} onRowSelect={onRowSelect} data={userData} columns={columns}/>
+    <div>
+      <CustomTable
+        isLoading={isLoading}
+        tableTitle={"Users"}
+        onRowSelect={onRowSelect}
+        data={userData}
+        type={"User"}
+        columns={columns}
+        createNewRecord={authorizedActions?.includes("create_user") && createUser}
+      />
+      <NewLdapUserModal
+        authorizedActions={authorizedActions}
+        showModal={showCreateUserModal}
+        setShowModal={setShowCreateUserModal}
+        loadData={loadData}
+      />
+    </div>
   );
 }
 
 LdapUsersTable.propTypes = {
   userData: PropTypes.array,
   orgDomain: PropTypes.string,
+  authorizedActions: PropTypes.array,
+  loadData: PropTypes.func,
   isLoading: PropTypes.bool
 };
 

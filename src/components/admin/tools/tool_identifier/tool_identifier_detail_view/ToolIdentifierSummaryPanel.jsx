@@ -9,10 +9,9 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import LoadingDialog from "components/common/status_notifications/loading";
 import DtoPropertiesField from "components/common/form_fields/dto_form_fields/dto-properties-field";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
-import GenericItemField from "components/common/fields/multiple_items/GenericItemField";
+import TagField from "components/common/fields/multiple_items/TagField";
 
 function ToolIdentifierSummaryPanel({ toolIdentifierData, setActiveTab }) {
-
   if (toolIdentifierData == null) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -45,7 +44,7 @@ function ToolIdentifierSummaryPanel({ toolIdentifierData, setActiveTab }) {
           <TextFieldBase dataObject={toolIdentifierData} fieldName={"usageType"}/>
         </Col>
         <Col lg={12}>
-          <GenericItemField dataObject={toolIdentifierData} fieldName={"tags"}/>
+          <TagField dataObject={toolIdentifierData} fieldName={"tags"}/>
         </Col>
         <Col lg={6}>
           <BooleanField dataObject={toolIdentifierData} fieldName={"enabledInRegistry"}/>

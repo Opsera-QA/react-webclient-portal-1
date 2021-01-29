@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import DtoFilterSelectInput from "../input/DtoFilterSelectInput";
 import {createFilterOptions} from "../filterHelpers";
-import {defaultTags} from "../../../settings/tags/tags-form-fields";
+import {defaultTags} from "components/settings/tags/tags-metadata";
 
 function TagTypeFilter({ filterDto, setFilterDto}) {
   return (

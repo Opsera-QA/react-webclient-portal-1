@@ -45,7 +45,8 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
   const [showSummaryModal, setShowSummaryModal] = useState(false);
 
   const authorizedAction = (action, owner) => {
-    return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner);
+    let objectRoles = pipeline?.roles;
+    return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner, objectRoles);
   };
 
   useEffect(() => {
@@ -112,23 +113,43 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
     }
   };
 
-  const handleViewClick = (data, header) => {
+/*  const handleViewClick = (data, header) => {
     setActivityLogModal({ show: true, header: header, message: data, button: "OK" });
-  };
+  };*/
 
   const handleSummaryViewClick = () => {
     setShowSummaryModal(true);
   }
 
+  const handleViewStepActivityLogClick = async (pipelineId, toolIdentifier, itemId) => {
+    setIsLoading(true);
+    await parentHandleViewSourceActivityLog(pipelineId, toolIdentifier, itemId);
+    setIsLoading(false);
+  }
+
   const handleEditClick = async (type, tool, itemId) => {
-    if (!authorizedAction("edit_step_details", pipeline.owner)) {
-      setInfoModal({
-        show: true,
-        header: "Permission Denied",
-        message: "Editing step details allows users to change the behavior of a pipeline step.  This action requires elevated privileges.",
-        button: "OK",
-      });
-      return;
+    if (type === "notification") {
+      if (!authorizedAction("edit_step_notification", pipeline.owner)) {
+        setInfoModal({
+          show: true,
+          header: "Permission Denied",
+          message: "Editing step notifications is not allowed.  This action requires elevated privileges.",
+          button: "OK",
+        });
+        return;
+      }
+    }
+
+    if (type !== "notification") {
+      if (!authorizedAction("edit_step_details", pipeline.owner)) {
+        setInfoModal({
+          show: true,
+          header: "Permission Denied",
+          message: "Editing step settings is not allowed.  This action requires elevated privileges.",
+          button: "OK",
+        });
+        return;
+      }
     }
 
     setIsLoading(true);
@@ -361,7 +382,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
                                      className="text-muted mx-1" fixedWidth
                                      style={{ cursor: "pointer" }}
                                      onClick={() => {
-                                       parentHandleViewSourceActivityLog(pipelineId, item.tool.tool_identifier, item._id);
+                                       handleViewStepActivityLogClick(pipelineId, item.tool.tool_identifier, item._id);
                                      }}/>
                   </OverlayTrigger>
                 </>

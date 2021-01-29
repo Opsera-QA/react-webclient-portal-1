@@ -15,6 +15,7 @@ import _ from "lodash";
 import nexusStepActions from "./nexus-step-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 const NEXUS_STEP_TYPES = [
   {
@@ -292,6 +293,8 @@ function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToo
                   fieldName={"artifactStepId"}
                 />
               }
+              {/* flag for custom version */}
+              <BooleanToggleInput dataObject={nexusStepConfigurationDto} setDataObject={setNexusStepConfigurationDataDto} fieldName={"customVersion"}/>
               </>
             }
         </>

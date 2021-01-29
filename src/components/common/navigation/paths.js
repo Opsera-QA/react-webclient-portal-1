@@ -7,18 +7,19 @@ paths.systemStatus = paths.admin + "/system-status";
 paths.systemHealthCheck = paths.admin + "/health";
 
 paths.deprecatedReports = paths.admin + "/reports";
-paths.reportsRegistration = paths.admin + "analytics/reports-registration";
+paths.reportsRegistration = paths.admin + "/analytics/reports-registration";
 paths.systemManagement = paths.admin + "/manage-systems";
 
 paths.templateManagement = paths.admin + "/templates";
 paths.templateDetailView = paths.templateManagement + "/details/";
 
-paths.siteNotificationManagement = paths.admin + "/site-notifications";
+paths.siteNotificationManagement = paths.admin + "/site-notifications/table";
+paths.siteNotificationManager = paths.admin + "/site-notifications";
 paths.siteNotificationDetailView = paths.siteNotificationManagement + "/details/";
 
 paths.toolManagement = paths.admin + "/tools";
 paths.deleteTools = paths.admin + "/delete/";
-paths.toolTypeDetailView = paths.toolManagement + "/types/details/";
+paths.toolCategoryDetailView = paths.toolManagement + "/types/details/";
 paths.toolIdentifierDetailView = paths.toolManagement + "/identifiers/details/";
 
 paths.ldapOrganizationManagement = paths.admin + "/organizations";
@@ -34,7 +35,7 @@ paths.customerOnboarding = "accounts/create";
 
 paths.registeredUsersManagement = paths.admin + "/registered-users";
 
-paths.apiManagement = "demo/api";
+paths.apiManagement = paths.admin + "/demo/api";
 
 paths.kpiManagement = paths.admin + "/kpis";
 paths.kpiDetailView = paths.kpiManagement;
@@ -45,7 +46,8 @@ paths.pipelineDetailView = paths.pipelines + "/details"
 
 // Insights Paths
 paths.insights = "insights/dashboards";
-paths.dashboardViewer = paths.insights;
+paths.dashboardDetails = paths.insights;
+paths.marketplace = paths.insights + "/marketplace";
 
 // Settings Paths
 paths.accountSettings = "settings";
@@ -76,7 +78,7 @@ paths.toolRegistry = "inventory/tools";
 paths.toolDetailView = paths.toolRegistry + "/details";
 
 //Notifications
-paths.notifications = "notifications";
+paths.notificationManagement = "notifications";
 paths.notificationDetailView = paths.notificationDetailView + "/details";
 
 export default paths;

@@ -28,7 +28,7 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
     return (children);
   };
 
-  if (accessDenied) {
+  if (!isLoading && accessDenied) {
     return (
       <AccessDeniedContainer />
     )
@@ -41,9 +41,11 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
         <div className="pl-2 content-block-header title-text-header-1">
           <TitleBar titleIcon={breadcrumb.icon} title={breadcrumb.label} isLoading={isLoading}/>
         </div>
-        {getPageDescription()}
-        <div className="p-2 mt-2 shaded-container screen-container-body">
-          {getScreenBody()}
+        <div className="screen-container-body shaded-container">
+          {getPageDescription()}
+          <div className="p-2 mt-2">
+            {getScreenBody()}
+          </div>
         </div>
         <div className="content-block-footer"/>
       </div>

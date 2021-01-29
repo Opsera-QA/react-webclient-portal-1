@@ -18,13 +18,12 @@ import {
   faMicrochip,
   faArrowLeft,
   faBracketsCurly,
-  faSpinner, faPen, faSearchPlus, faUserCircle,
+  faSpinner
 } from "@fortawesome/pro-light-svg-icons";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import Model from "../../../../core/data_model/model";
 import pipelineActivityActions from "./pipeline_activity/pipeline-activity-actions";
 import pipelineActivityFilterMetadata from "./pipeline_activity/pipeline-activity-filter-metadata";
-import { Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 
 const refreshInterval = 8000;
 
@@ -213,44 +212,6 @@ function PipelineDetailView() {
     }
   };
 
-  const getPermissionsMessage = () => {
-    if (pipeline?.owner === customerAccessRules?.UserId || loading) {
-      return null;
-    }
-
-    let permissionsMessage, permissionHeader;
-
-    switch (customerAccessRules?.Role) {
-    case "administrator":
-      permissionHeader = "Administrator Access";
-      permissionsMessage = "Administrator Access Role: Your account has full access to this pipeline and its settings.";
-      break;
-    case "power_user":
-      permissionHeader = "Power User Access";
-      permissionsMessage = "Power User Role: Your account has elevated privileges to this pipeline which include changing settings and running the pipeline.";
-      break;
-    case "user":
-      permissionHeader = "Standard User Access";
-      permissionsMessage = "Standard User Role: Your account has basic access to this pipeline which is limited to viewing and running pipeline operations only.";
-      break;
-    case "readonly":
-      permissionHeader = "Read Only Access";
-      permissionsMessage = "Read Only Role: Your account does not have any privileges associated with this pipeline. You are being temporarily granted Viewer permissions and will not be able to perform any actions.";
-      break;
-    }
-
-    return (
-      <div className="ml-3 mt-1 text-block w-100 max-charting-width info-text">
-        <OverlayTrigger
-          placement="bottom"
-          delay={{ show: 250, hide: 400 }}
-          overlay={renderTooltip({ message: permissionsMessage })}>
-          <FontAwesomeIcon icon={faUserCircle} fixedWidth className="mr-1" style={{cursor: "help"}}/>
-        </OverlayTrigger>
-        {permissionHeader}
-      </div>
-    );
-  };
 
   const getNavigationTabs = () => {
     return (
@@ -305,7 +266,7 @@ function PipelineDetailView() {
 
     return (
       <div>
-        <div className="max-content-width-1080 content-block-no-height pl-3 pb-2" style={{ width: "80vw" }}>
+        <div className="max-content-width-1080 content-block-no-height pb-2" style={{ width: "80vw" }}>
           <PipelineSummaryPanel
             pipeline={pipeline}
             setPipeline={setPipeline}
@@ -360,11 +321,7 @@ function PipelineDetailView() {
 
   return (
     <div>
-      <div className="d-flex w-100">
-        <div className="title-text-5 mb-2">{getPipelineTitle()}</div>
-        <div className="flex-fill p-2"></div>
-        <div className="text-right">{getPermissionsMessage()}</div>
-      </div>
+      <div className="title-text-5 mb-2">{getPipelineTitle()}</div>
 
       {getNavigationTabs()}
       {getCurrentView()}
@@ -372,14 +329,7 @@ function PipelineDetailView() {
   );
 }
 
-function renderTooltip(props) {
-  const { message } = props;
-  return (
-    <Tooltip id="button-tooltip" {...props}>
-      {message}
-    </Tooltip>
-  );
-}
+
 
 
 export default PipelineDetailView;

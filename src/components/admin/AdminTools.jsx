@@ -1,14 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
-import { Row, Col } from "react-bootstrap";
-import AccessDeniedDialog from "../common/status_notifications/accessDeniedInfo";
-import LoadingDialog from "../common/status_notifications/loading";
-import {DialogToastContext} from "../../contexts/DialogToastContext";
-import BreadcrumbPageLink from "../common/links/BreadcrumbPageLink";
-import ScreenContainer from "../common/panels/general/ScreenContainer";
+import { Row } from "react-bootstrap";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import LoadingDialog from "components/common/status_notifications/loading";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import BreadcrumbPageLink from "components/common/links/BreadcrumbPageLink";
 
 function AdminTools() {
-  const [accessRoleData, setAccessRoleData] = useState({});
+  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const { getUserRecord, setAccessRoles, featureFlagHideItemInProd } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
 
@@ -37,13 +36,10 @@ function AdminTools() {
     return (<LoadingDialog size="sm"/>);
   }
 
-  if (!accessRoleData.OpseraAdministrator) {
-    return (<AccessDeniedDialog roleData={accessRoleData} />);
-  }
-
   return (
     <ScreenContainer
       breadcrumbDestination={"admin"}
+      accessDenied={!accessRoleData?.OpseraAdministrator}
       pageDescription={"Listed below are administration tools for the platform."}
     >
       <Row className="ml-3">
@@ -58,7 +54,7 @@ function AdminTools() {
         <BreadcrumbPageLink breadcrumbDestination={"deleteTools"} />
         <BreadcrumbPageLink breadcrumbDestination={"kpiManagement"} />
         <BreadcrumbPageLink breadcrumbDestination={"templateManagement"} />
-        <BreadcrumbPageLink breadcrumbDestination={"siteNotificationManagement"} />
+        <BreadcrumbPageLink breadcrumbDestination={"siteNotificationManager"} />
         <BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationManagement"} />
         <BreadcrumbPageLink breadcrumbDestination={"ldapDepartmentManagement"} />
         <BreadcrumbPageLink breadcrumbDestination={"customerOnboarding"} />
@@ -66,8 +62,5 @@ function AdminTools() {
     </ScreenContainer>
   );
 }
-
-AdminTools.propTypes = {};
-
 
 export default AdminTools;

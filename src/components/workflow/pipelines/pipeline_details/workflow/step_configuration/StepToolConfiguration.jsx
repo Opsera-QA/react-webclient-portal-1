@@ -20,7 +20,7 @@ import DatabricksNotebookStepConfiguration from "./step_tool_configuration_forms
 import SshUploadDeployStepConfiguration from "./step_tool_configuration_forms/ssh_upload_deploy/SshUploadDeployStepConfiguration";
 import ElasticBeanstalkDeployStepConfiguration from "./step_tool_configuration_forms/elastic_beanstalk_deploy/ElasticBeanstalkDeployStepConfiguration";
 import SpinnakerStepConfiguration from "./step_tool_configuration_forms/spinnaker/SpinnakerStepConfiguration";
-import ApprovalStepConfiguration from "./step_tool_configuration_forms/approval/ApprovalStepConfiguration";
+import ApprovalGateStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/approval_gate/ApprovalGateStepConfiguration";
 import CypressStepConfiguration from "./step_tool_configuration_forms/cypress/CypressStepConfiguration";
 import DockerPushStepConfiguration from "./step_tool_configuration_forms/docker_push/DockerPushStepConfiguration";
 import AnchoreScanStepConfiguration from "./step_tool_configuration_forms/anchore_scan/AnchoreScanStepConfiguration";
@@ -391,7 +391,7 @@ function StepToolConfiguration({
         );
       case "approval":
         return (
-          <ApprovalStepConfiguration
+          <ApprovalGateStepConfiguration
             stepTool={stepTool}
             parentCallback={callbackFunction}
             closeEditorPanel={closeEditorPanel}

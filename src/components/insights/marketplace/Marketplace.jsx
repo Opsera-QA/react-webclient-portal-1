@@ -5,24 +5,25 @@ import {
   faSpinner,
   faSearch,
   faTimes,
-} from "@fortawesome/free-solid-svg-icons";
-import { AuthContext } from "../../../contexts/AuthContext";
+} from "@fortawesome/pro-light-svg-icons";
 import { useLocation } from 'react-router-dom';
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
-import Model from "../../../core/data_model/model";
-import kpiMarketplaceFilterMetadata from "./kpi-marketplace-filter-metadata";
+import Model from "core/data_model/model";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import "./marketplace.css";
-import MarketplaceCard from './MarketplaceCard';
 import KpiActions from 'components/admin/kpi_editor/kpi-editor-actions';
-import {DialogToastContext} from "../../../contexts/DialogToastContext";
-import KPIInfoModal from "./KPIInfoModal";
 import dashboardMetadata from "../dashboards/dashboard-metadata";
 import KpiCategoryFilter from "components/common/filters/insights/kpi_marketplace/KpiCategoryFilter";
 import ToolIdentifierFilter from "components/common/filters/tools/ToolIdentifierFilter";
 import InlineInformation from "components/common/status_notifications/inline/InlineInformation";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import kpiMarketplaceFilterMetadata from "components/insights/marketplace/kpi-marketplace-filter-metadata";
+import MarketplaceCard from "components/insights/marketplace/MarketplaceCard";
+import KPIInfoModal from "components/insights/marketplace/KPIInfoModal";
 
 export default function Marketplace () {  
   const contextType = useContext(AuthContext);
@@ -136,7 +137,7 @@ export default function Marketplace () {
 
   const getPaginator = (dtoObj, setDto, loading, loadData) => {
     return (
-      <div>{dtoObj && dtoObj.getData("totalCount") != null &&
+      <div className="mx-auto">{dtoObj && dtoObj.getData("totalCount") != null &&
       <DtoBottomPagination paginationStyle={"stacked"} paginationDto={dtoObj} setPaginationDto={setDto} isLoading={loading}
                            loadData={loadData}/>}</div>
     );
@@ -170,59 +171,65 @@ export default function Marketplace () {
   }
 
   return (
-    <div className="marketplace">
-    <div className="max-content-width">
-      <h4>Marketplace</h4>
-      <p>
+    <ScreenContainer
+      isLoading={loading}
+      breadcrumbDestination={"marketplace"}
+      pageDescription={`
         OpsERA provides users with access to a vast repository of KPI. Access all available
         KPIs and configure them on your OpsERA Analytics Dashboards.
-      </p>
-      </div>
-      <Row>
-        <Col>
-          <KpiCategoryFilter filterDto={marketplaceFilterDto} setFilterDto={setMarketplaceFilterDto} setDataFunction={setFilterData} />
-        </Col>
-        <Col>
-          <ToolIdentifierFilter
-            setDataFunction={setFilterData}
-            setFilterDto={setMarketplaceFilterDto}
-            filterDto={marketplaceFilterDto}
-            fieldName={"tool"}
+      `}
+    >
+      <div className="px-3">
+        <Row>
+          <Col>
+            <KpiCategoryFilter filterDto={marketplaceFilterDto} setFilterDto={setMarketplaceFilterDto} setDataFunction={setFilterData}/>
+          </Col>
+          <Col>
+            <ToolIdentifierFilter
+              setDataFunction={setFilterData}
+              setFilterDto={setMarketplaceFilterDto}
+              filterDto={marketplaceFilterDto}
+              fieldName={"tool"}
             />
-        </Col>
-        <Col>
-          <InputGroup className="mb-3">
-            <Form.Control
-              placeholder="Search"
-              value={searchKeyword || ""}
-              onChange={e => setSearchKeyword(e.target.value)}
-            />
-            <InputGroup.Append>
-              <Button variant="primary" size="sm" onClick={handleSearch}>
-                {loading ? (
-                  <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
-                ) : (
-                  <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-1"/>
-                )}
-              </Button>
-            </InputGroup.Append>
-          </InputGroup>
-        </Col>
-      </Row>
-      <Row>
-        {marketplaceFilterDto.getData("activeFilters").map((filter, key) => getFilterActiveButton(filter, key))}
-      </Row>
-      <Row className="marketplace-cards">
-        {getMainBody()}
-      </Row>
-      <Row>
-        {/* pagination */}
-        {getPaginator(marketplaceFilterDto, setMarketplaceFilterDto, loading, getMarketKPIData)}
-      </Row>
+          </Col>
+          <Col>
+            <InputGroup className="mb-3">
+              <Form.Control
+                placeholder="Search"
+                value={searchKeyword || ""}
+                onChange={e => setSearchKeyword(e.target.value)}
+              />
+              <InputGroup.Append>
+                <Button variant="primary" size="sm" onClick={handleSearch}>
+                  {loading ? (
+                    <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
+                  ) : (
+                    <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-1"/>
+                  )}
+                </Button>
+              </InputGroup.Append>
+            </InputGroup>
+          </Col>
+        </Row>
+        <Row>
+          {/* pagination */}
+          {getPaginator(marketplaceFilterDto, setMarketplaceFilterDto, loading, getMarketKPIData)}
+        </Row>
+        <Row>
+          {marketplaceFilterDto.getData("activeFilters").map((filter, key) => getFilterActiveButton(filter, key))}
+        </Row>
+        <Row className="marketplace-cards">
+          {getMainBody()}
+        </Row>
+        <Row>
+          {/* pagination */}
+          {getPaginator(marketplaceFilterDto, setMarketplaceFilterDto, loading, getMarketKPIData)}
+        </Row>
 
-      {/* modal for displaying complete info */}
-      <KPIInfoModal setShowModal={setShowModal} showModal={showModal} kpiItem={selectedItem} dashboardData={dashboardData} />
-    </div>
+        {/* modal for displaying complete info */}
+        <KPIInfoModal setShowModal={setShowModal} showModal={showModal} kpiItem={selectedItem} dashboardData={dashboardData}/>
+      </div>
+    </ScreenContainer>
   )
 }
 

@@ -49,7 +49,7 @@ function PipelineWorkflowView({
       <div className="workflow-view h-100">
         {getPipelineWorkflowEditor(editItem)}
 
-        <div className="py-1 text-right">
+        <div className="py-1 text-right" style={{minHeight:"42px"}}>
           {!editItem && <div className="float-right pt-1 mr-2">
             <PipelineActionControls pipeline={pipeline}
                                     disabledActionState={false}

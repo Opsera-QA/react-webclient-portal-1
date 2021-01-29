@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "contexts/AuthContext";
 
-import TagsTable from "./TagsTable";
-import adminTagsActions from "./admin-tags-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
-import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
-import {DialogToastContext} from "../../../contexts/DialogToastContext";
-import Model from "../../../core/data_model/model";
-import tagFilterMetadata from "./tag-filter-metadata";
-import TableScreenContainer from "../../common/panels/table_screen_container/TableScreenContainer";
+import Model from "core/data_model/model";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import tagFilterMetadata from "components/settings/tags/tag-filter-metadata";
+import adminTagsActions from "components/settings/tags/admin-tags-actions";
+import TagsTable from "components/settings/tags/TagsTable";
 
 function TagManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -37,7 +36,7 @@ function TagManagement() {
 
   const getTags = async (filterDto = tagFilterDto) => {
     const response = await adminTagsActions.getTags(filterDto, getAccessToken);
-    setTagList(response.data.data);
+    setTagList(response?.data?.data);
     let newFilterDto = filterDto;
     newFilterDto.setData("totalCount", response.data.count);
     newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
@@ -49,25 +48,31 @@ function TagManagement() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-    }
 
-    await getTags(filterDto);
+      if (userRoleAccess?.PowerUser || userRoleAccess?.Administrator || userRoleAccess?.OpseraAdministrator) {
+        await getTags(filterDto);
+      }
+    }
   };
 
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
 
-  if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
-    return (<AccessDeniedDialog roleData={accessRoleData}/>);
-  }
-
   return (
-    <TableScreenContainer
+    <ScreenContainer
       breadcrumbDestination={"tagManagement"}
-      title={"Tag Management"}
-      tableComponent={<TagsTable loadData={loadData} isLoading={isLoading} data={tagList} tagFilterDto={tagFilterDto} setTagFilterDto={setTagFilterDto}/>}
-    />
+      isLoading={isLoading}
+      accessDenied={!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator}
+    >
+      <TagsTable
+        loadData={loadData}
+        isLoading={isLoading}
+        data={tagList}
+        tagFilterDto={tagFilterDto}
+        setTagFilterDto={setTagFilterDto}
+      />
+    </ScreenContainer>
   );
 
 }

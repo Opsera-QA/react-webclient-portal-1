@@ -230,12 +230,12 @@ export class Model {
 
   isLowercase = (fieldName) => {
     const field = this.getFieldById(fieldName);
-    return field != null ? field.isLowercase === true : false;
+    return field?.lowercase === true;
   };
 
   isUppercase = (fieldName) => {
     const field = this.getFieldById(fieldName);
-    return field != null ? field.isUppercase === true : false;
+    return field?.uppercase === true;
   };
 
   isWebsite = (fieldName) => {
@@ -250,6 +250,10 @@ export class Model {
 
   getDetailViewLink = () => {
     return this.metaData?.detailView != null ? this.metaData.detailView(this) : null;
+  };
+
+  getDetailViewTitle = () => {
+    return this.metaData?.detailViewTitle != null ? this.metaData.detailViewTitle(this) : null;
   };
 
   getLabel = (fieldName) => {
@@ -289,11 +293,15 @@ export class Model {
   };
 
   getType = () => {
-    return this.metaData["type"];
+    return this.metaData?.type;
+  }
+
+  getActiveField = () => {
+    return this.metaData?.activeField;
   }
 
   getFieldById = (id) => {
-    return this.metaData.fields.find(field => {return field.id === id });
+    return this.metaData?.fields.find(field => {return field.id === id });
   };
 
   getDefaultValue = (fieldName) => {

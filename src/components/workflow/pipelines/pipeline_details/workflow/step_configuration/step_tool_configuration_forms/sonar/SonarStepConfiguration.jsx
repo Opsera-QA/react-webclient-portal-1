@@ -909,7 +909,17 @@ function SonarStepConfiguration({
                         <Form.Group controlId="projectKey">
                           <Form.Label>Project Key*</Form.Label>
                           <Form.Control maxLength="150" type="text" placeholder="" value={formData.projectKey || ""}
-                                        onChange={e => setFormData({ ...formData, projectKey: e.target.value })}/>
+                                        onChange={e => 
+                                          {
+                                            if(e.target.value.match("^\\S*$") != null){
+                                              setFormData({ ...formData, projectKey: e.target.value })
+                                          } else {
+                                            setErrors("ProjectKey is invalid, No Space allowed")
+                                            }
+                                          }
+                                        
+                                        }/>
+                          {/* <Form.Text className="text-muted">Spaces are not allowed.</Form.Text> */}
                         </Form.Group>
                       </>
                     ) : (
@@ -1124,11 +1134,11 @@ function SonarStepConfiguration({
             <Form.Group controlId="path">
               <Form.Label>Sonar Source Path</Form.Label>
               <Form.Control
-                maxLength="50"
-                type="text"
+                // maxLength="50"
+                as="textarea" rows={2}
                 placeholder=""
                 value={formData.sonarSourcePath || ""}
-                onChange={(e) => setFormData({ ...formData, sonarSourcePath: e.target.value })}
+                onChange={(e) => setFormData({ ...formData, sonarSourcePath: (e.target.value).replace(/\r?\n/g, ',') })}
               />
             </Form.Group>
 

@@ -10,7 +10,6 @@ import DtoTagManagerInput from "components/common/input/dto_input/dto-tag-manage
 import ToolClassificationSelectInput
   from "components/common/list_of_values_input/inventory/ToolClassificationSelectInput";
 import DtoMultipleInput from "components/common/input/dto_input/dto-multiple-input";
-import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 import RegistryToolIdentifierSelectInput
   from "components/inventory/tools/tool_details/input/RegistryToolIdentifierSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
@@ -43,44 +42,50 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
     return (<LoadingDialog size="sm"/>);
   }
     return (
-        <EditorPanelContainer>
-          <Row>
-            <Col lg={6}>
-              <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"name"}/>
-            </Col>
-            <Col lg={6}>
-              <RegistryToolIdentifierSelectInput dataObject={toolDataDto} setDataObject={setToolDataDto} />
-            </Col>
-            <Col lg={12}>
-              <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"description"}/>
-            </Col>
-            <Col lg={6}>
-              <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"costCenter"} />
-            </Col>
-            <Col lg={6}>
-              <DtoTagManagerInput type={"tool"} setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"tags"} />
-            </Col>
-            <Col lg={6}>
-              <ToolClassificationSelectInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
-            </Col>
-            <Col lg={6}>
-              <DtoMultipleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "value"]} fieldName={"location"} />
-            </Col>
-            <Col lg={6}>
-              <DtoMultipleInput disabledFields={["user_id"]} setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "email", "user_id"]} fieldName={"contacts"} />
-            </Col>
-            <Col lg={6}>
-              <DtoMultipleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "value"]} fieldName={"applications"} />
-            </Col>
-            <Col lg={6}>
-              <DtoMultipleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "value"]} fieldName={"organization"} />
-            </Col>
-            <Col lg={6}>
-              <ActivityToggleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"active"}/>
-            </Col>
-          </Row>
-          <PersistButtonContainer recordDto={toolDataDto} createRecord={createTool} updateRecord={updateTool} setRecordDto={setToolDataDto} />
-        </EditorPanelContainer>
+      <EditorPanelContainer
+        recordDto={toolDataDto}
+        createRecord={createTool}
+        updateRecord={updateTool}
+        setRecordDto={setToolDataDto}
+        isLoading={isLoading}
+        handleClose={handleClose}
+      >
+        <Row>
+          <Col lg={6}>
+            <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"name"}/>
+          </Col>
+          <Col lg={6}>
+            <RegistryToolIdentifierSelectInput dataObject={toolDataDto} setDataObject={setToolDataDto} />
+          </Col>
+          <Col lg={12}>
+            <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"description"}/>
+          </Col>
+          <Col lg={6}>
+            <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"costCenter"} />
+          </Col>
+          <Col lg={6}>
+            <DtoTagManagerInput type={"tool"} setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"tags"} />
+          </Col>
+          <Col lg={6}>
+            <ToolClassificationSelectInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
+          </Col>
+          <Col lg={6}>
+            <DtoMultipleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "value"]} fieldName={"location"} />
+          </Col>
+          <Col lg={6}>
+            <DtoMultipleInput disabledFields={["user_id"]} setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "email", "user_id"]} fieldName={"contacts"} />
+          </Col>
+          <Col lg={6}>
+            <DtoMultipleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "value"]} fieldName={"applications"} />
+          </Col>
+          <Col lg={6}>
+            <DtoMultipleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "value"]} fieldName={"organization"} />
+          </Col>
+          <Col lg={6}>
+            <ActivityToggleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"active"}/>
+          </Col>
+        </Row>
+      </EditorPanelContainer>
     );
 }
 

@@ -1,24 +1,17 @@
 import React, {useContext, useState, useEffect} from "react";
-import {AuthContext} from "../../../../../contexts/AuthContext";
-import LoadingDialog from "../../../../common/status_notifications/loading";
-import "../../accounts.css";
-import LdapOrganizationsTable from "./LdapOrganizationsTable";
-import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
-import NewLdapOrganizationModal from "./NewLdapOrganizationModal";
-import accountsActions from "../../accounts-actions";
-import BreadcrumbTrail from "../../../../common/navigation/breadcrumbTrail";
-import AccessDeniedDialog from "../../../../common/status_notifications/accessDeniedInfo";
 import {useHistory} from "react-router-dom";
-import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import accountsActions from "components/admin/accounts/accounts-actions";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {AuthContext} from "contexts/AuthContext";
+import LoadingDialog from "components/common/status_notifications/loading";
+import LdapOrganizationsTable from "components/admin/accounts/ldap/organizations/LdapOrganizationsTable";
 
 function LdapOrganizationManagement() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
   const [ldapOrganizationData, setLdapOrganizationData] = useState([]);
-  const [showCreateOrganizationModal, setShowCreateOrganizationModal] = useState(false);
   const [authorizedActions, setAuthorizedActions] = useState(undefined);
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
@@ -43,15 +36,11 @@ function LdapOrganizationManagement() {
   const loadOrganizations = async () => {
     try {
       const response = await accountsActions.getOrganizations(getAccessToken);
-      setLdapOrganizationData(response.data);
+      setLdapOrganizationData(response?.data);
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error.message);
-      console.error(error.message);
+      toastContext.showLoadingErrorDialog(error);
+      console.error(error);
     }
-  };
-
-  const createOrganization = () => {
-    setShowCreateOrganizationModal(true);
   };
 
   const getRoles = async () => {
@@ -64,7 +53,7 @@ function LdapOrganizationManagement() {
       let authorizedActions = await accountsActions.getAllowedOrganizationActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
       setAuthorizedActions(authorizedActions);
 
-      if (userRoleAccess.OpseraAdministrator) {
+      if (userRoleAccess?.OpseraAdministrator) {
         await loadOrganizations();
       }
       else if (ldap.organization != null && authorizedActions.includes("get_organization_details")) {
@@ -77,34 +66,20 @@ function LdapOrganizationManagement() {
     return (<LoadingDialog size="sm"/>);
   }
 
-   if (!accessRoleData.OpseraAdministrator) {
-    return (<AccessDeniedDialog roleData={accessRoleData} />);
-  }
-
   return (
-    <>
-      <BreadcrumbTrail destination="ldapOrganizationManagement"/>
-      <div className="max-content-width ml-2">
-        <div className="justify-content-between mb-1 d-flex">
-          <h5>Organization Management</h5>
-          <div className="d-flex">
-            <div className="mt-1">
-              <Button variant="primary" size="sm"
-                      onClick={() => {
-                        createOrganization();
-                      }}>
-                <FontAwesomeIcon icon={faPlus} className="mr-1"/>New Organization
-              </Button>
-            </div>
-            <br/>
-          </div>
-        </div>
-        <LdapOrganizationsTable isLoading={isLoading} data={ldapOrganizationData}/>
-
-        <NewLdapOrganizationModal showModal={showCreateOrganizationModal} loadData={loadData}
-                                  authorizedActions={authorizedActions} setShowModal={setShowCreateOrganizationModal}/>
-      </div>
-    </>);
+    <ScreenContainer
+      breadcrumbDestination={"ldapOrganizationManagement"}
+      accessDenied={!accessRoleData?.OpseraAdministrator}
+      isLoading={isLoading}
+    >
+      <LdapOrganizationsTable
+        isLoading={isLoading}
+        data={ldapOrganizationData}
+        loadData={loadData}
+        authorizedActions={authorizedActions}
+      />
+    </ScreenContainer>
+  );
 }
 
 export default LdapOrganizationManagement;

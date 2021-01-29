@@ -96,7 +96,7 @@ function DashboardDetailView() {
         return (
         <DashboardViewer 
         dashboardData={dashboardData}
-        breadcrumbDestination={"dashboardViewer"}
+        breadcrumbDestination={"dashboardDetails"}
         managementViewLink={"/insights/dashboards"}
         managementTitle={"Dashboards"}
         type={"Dashboard"}
@@ -106,7 +106,7 @@ function DashboardDetailView() {
       if (activeTab === "settings") {
         return (
         <DetailScreenContainer
-        breadcrumbDestination={"dashboardViewer"}
+        breadcrumbDestination={"dashboardDetails"}
         title={dashboardData != null ? `${dashboardData.getData("name")}` : undefined}
         managementViewLink={"/insights/dashboards"}
         managementTitle={"Dashboards"}

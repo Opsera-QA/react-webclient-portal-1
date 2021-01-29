@@ -2,11 +2,11 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import inventoryActions from "components/inventory/inventory-actions";
 import Label from "components/common/form_fields/Label";
 import FieldContainer from "components/common/fields/FieldContainer";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
+import toolsActions from "components/inventory/tools/tools-actions";
 
 function ToolNameField({ dataObject, fieldName }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -33,7 +33,7 @@ function ToolNameField({ dataObject, fieldName }) {
   const loadToolName = async () => {
     let toolId = dataObject.getData(fieldName);
     if (toolId !== "") {
-      const response = await inventoryActions.getToolById(toolId, getAccessToken);
+      const response = await toolsActions.getFullToolById(toolId, getAccessToken);
       if (response?.data) {
         setToolName(response.data[0].name);
       }

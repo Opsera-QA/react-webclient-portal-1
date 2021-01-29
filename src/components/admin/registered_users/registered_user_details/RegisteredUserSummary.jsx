@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
+import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 
 function RegisteredUserSummary({ userData, setActiveTab }) {
   // TODO: When User Settings panel is set up, pass setActiveTab to Summary Panel Container

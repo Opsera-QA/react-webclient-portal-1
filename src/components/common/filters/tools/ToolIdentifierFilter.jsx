@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import toolsActions from "../../../inventory/tools/tools-actions";
-import {AuthContext} from "../../../../contexts/AuthContext";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import {createFilterOptions} from "../filterHelpers";
-import DtoFilterSelectInput from "../input/DtoFilterSelectInput";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import toolsActions from "components/inventory/tools/tools-actions";
+import {createFilterOptions} from "components/common/filters/filterHelpers";
+import DtoFilterSelectInput from "components/common/filters/input/DtoFilterSelectInput";
 
 function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunction}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -31,7 +31,7 @@ function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunct
 
   const getToolList = async () => {
     const toolResponse = await toolsActions.getTools(getAccessToken);
-    setToolIdentifierFilterOptions(createFilterOptions(toolResponse.data, "Tool", "name", "identifier"));
+    setToolIdentifierFilterOptions(createFilterOptions(toolResponse?.data, "Tool", "name", "identifier"));
   };
 
   return (

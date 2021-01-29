@@ -23,6 +23,7 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
 
     if (addAnother) {
       await persistNewRecordAndAddAnother(recordDto, toastContext, showSuccessToasts, createRecord, lenient, setRecordDto);
+      setIsSaving(false);
     }
     else if (recordDto.getDetailViewLink() != null) {
       await persistNewRecordAndViewDetails(recordDto, toastContext, showSuccessToasts, createRecord, lenient, history);
@@ -32,10 +33,8 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
     }
     else {
       await persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient);
-      toastContext.showFormWarningToast("Successfully Created New Record But Could Not Close Modal or View Modal Details");
+      setIsSaving(false);
     }
-
-    setIsSaving(false);
   }
 
   const getLabel = () => {

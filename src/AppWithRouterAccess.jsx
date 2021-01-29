@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Route, useHistory } from "react-router-dom";
-//import useAxios, { configure } from "axios-hooks";
 import AuthContextProvider from "./contexts/AuthContext";
 import LoadingDialog from "./components/common/status_notifications/loading";
 import Home from "./Home";
@@ -42,7 +41,7 @@ import LdapOrganizationDetailView
 import LdapCustomerOnboardView from "./components/admin/accounts/ldap/customer_onboard/LdapCustomerOnboard";
 import FreeTrialRegistration from "./components/free_trial/Registration";
 import FreeTrialLanding from "./components/free_trial/landing_page/Landing";
-import ApiConnectionDemo from "./components/api_connector/ApiDemo";
+import ApiConnectionDemo from "components/admin/api_demo/ApiConnectionDemo";
 import CommonTableDemo from "./components/common/samples/tableImplementation";
 import CustomerSystemStatus from "./components/settings/customer_system_status/CustomerSystemStatus";
 import LdapUserManagement from "./components/settings/ldap_users/LdapUserManagement";
@@ -54,7 +53,7 @@ import ToolDetailView from "./components/inventory/tools/tool_details/ToolDetail
 import TemplateDetailView from "./components/admin/template_editor/template_detail_view/TemplateDetailView";
 import ToolManagement from "./components/admin/tools/ToolManagement";
 import Mapping from "./components/settings/data_tagging/DataTagsManager";
-import ToolTypeDetailView from "./components/admin/tools/tool_type/tool_type_detail_view/ToolTypeDetailView";
+import ToolCategoryDetailView from "components/admin/tools/tool_category/tool_category_detail_view/ToolCategoryDetailView";
 import ToolIdentifierDetailView
   from "./components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierDetailView";
 import Pipelines from "./components/workflow/pipelines/Pipelines";
@@ -94,6 +93,7 @@ import { axiosApiService } from "api/apiService";
 import TagsUsedInPipelineReport from "components/reports/tags/pipelines/TagsUsedInPipelineReport";
 import TagsUsedInToolsReport from "components/reports/tags/tools/TagsUsedInToolsReport";
 import AccountRegistration from "components/user/account_registration/AccountRegistration";
+import SiteNotificationManager from "components/admin/site_notifications/manager/SiteNotificationManager";
 import ToolCountsReport from "components/reports/tools/counts/ToolCountsReport";
 
 const AppWithRouterAccess = () => {
@@ -208,6 +208,10 @@ const AppWithRouterAccess = () => {
     await loadUsersData(tokens.accessToken.value);
   };
 
+  const getNavBar = () => {
+    return (<Navbar hideAuthComponents={hideSideBar} userData={data} />);
+  };
+
   /*const redirectFromLogin = async () => {
     console.log("redirectFromLogin called");
     const tokens = authClient.tokenManager.getTokens();
@@ -229,8 +233,7 @@ const AppWithRouterAccess = () => {
           <div style={{ height: "55px" }}><ErrorDialog align="top" error={error}/></div>
         }
         <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
-          <ToastContextProvider>
-            <Navbar hideAuthComponents={hideSideBar} userData={data}/>
+          <ToastContextProvider navBar={getNavBar()}>
             <div className="container-fluid" style={{ margin: "0" }}>
               <div className="d-flex flex-row">
                 <Sidebar userData={data} hideSideBar={hideSideBar}/>
@@ -292,7 +295,7 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/admin/system-status" component={SystemStatus}/>
                   <SecureRoute path="/admin/analytics/reports-registration" component={ReportsRegistration}/>
                   <SecureRoute path="/admin/tools/:tabKey?" exact component={ToolManagement}/>
-                  <SecureRoute path="/admin/tools/types/details/:toolTypeId" exact component={ToolTypeDetailView}/>
+                  <SecureRoute path="/admin/tools/types/details/:toolTypeId" exact component={ToolCategoryDetailView}/>
                   <SecureRoute path="/admin/tools/identifiers/details/:toolIdentifierId" exact
                                component={ToolIdentifierDetailView}/>
                   <SecureRoute path="/admin/kpis" exact component={KpiManagement}/>
@@ -300,9 +303,11 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/admin/templates" exact component={TemplateManagement}/>
                   <SecureRoute path="/admin/templates/details/:templateId" exact component={TemplateDetailView}/>
                   <SecureRoute path="/admin/reports" exact component={Reports_Old}/>
-                  <SecureRoute path="/admin/site-notifications" exact component={SiteNotificationManagement}/>
-                  <SecureRoute path="/admin/site-notifications/details/:id" exact
-                               component={SiteNotificationDetailView}/>
+
+                  {/* Site Notification Management */}
+                  <SecureRoute path="/admin/site-notifications/table" exact component={SiteNotificationManagement}/>
+                  <SecureRoute path="/admin/site-notifications/details/:id" exact component={SiteNotificationDetailView}/>
+                  <SecureRoute path="/admin/site-notifications" exact component={SiteNotificationManager}/>
 
                   {/* Ldap Account Pages */}
                   <SecureRoute path="/admin/organizations" exact component={LdapOrganizationsView}/>
@@ -342,7 +347,7 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/settings/data_mapping/user_mapping/details/:usersMappingId" exact
                                component={UsersMappingDetailView}/>
 
-                  <SecureRoute path="/demo/api" component={ApiConnectionDemo}/>
+                  <SecureRoute path="/admin/demo/api" component={ApiConnectionDemo}/>
                   <SecureRoute path="/demo/table" component={CommonTableDemo}/>
 
                   {(process.env.REACT_APP_STACK === "free-trial") && <>

@@ -40,9 +40,9 @@ function NameValueTable({ tableStyleName, data, noDataMessage, label, valueForma
   };
 
   return (
-    <>
+    <div>
       <div className="text-center pb-1"><span className="text-muted">{label}</span></div>
-      <div className="table-content-block mb-3">
+      <div className="mb-3">
         <CustomTable
           tableStyleName={tableStyleName}
           columns={columns}
@@ -51,7 +51,7 @@ function NameValueTable({ tableStyleName, data, noDataMessage, label, valueForma
           showHeaderText={showHeaderText}
         />
       </div>
-    </>
+    </div>
   );
 }
 

@@ -1,0 +1,15 @@
+/* Role Access Input Styling */
+.role-access .group-badge {
+  font-weight: normal;
+  background: #E6E5E3;
+}
+
+.role-access .user-badge {
+  font-weight: normal;
+  background: #b2dbff;
+}
+
+.role-access .edit-button {
+  min-width: 100px;
+}
+/* End Role Access Input Styling */

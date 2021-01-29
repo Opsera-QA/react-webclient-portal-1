@@ -1,13 +1,12 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import {getTableDateColumn, getTableTextColumn} from "../../common/table/table-column-helpers";
-import platformMetadata from "./platform-metadata";
+import platformMetadata from "components/inventory/platform/platform-metadata";
+import {getTableDateColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
 
 function PlatformToolsTable({ data, isLoading }) {
   const fields = platformMetadata.fields;
 
-  // TODO: Pull from metadata
   const columns = useMemo(
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "name"})),
@@ -22,15 +21,7 @@ function PlatformToolsTable({ data, isLoading }) {
   );
 
   return (
-    <>
-      <div className="table-content-block">
-      <CustomTable 
-        columns={columns} 
-        data={data}
-        isLoading={isLoading}
-      />
-      </div>
-    </>
+    <CustomTable columns={columns} data={data} isLoading={isLoading} />
   );
 }
 

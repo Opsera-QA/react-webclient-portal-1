@@ -32,7 +32,7 @@ function ToolMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, 
   };
 
   const loadTools = async () => {
-    const response = await toolsActions.getFullToolRegistryList(getAccessToken);
+    const response = await toolsActions.getToolLovs(getAccessToken);
     setTools(response?.data?.data);
   };
 

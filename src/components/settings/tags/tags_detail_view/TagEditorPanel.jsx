@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
@@ -35,26 +34,24 @@ function TagEditorPanel({ tagData, setTagData, handleClose }) {
   };
 
   return (
-    <EditorPanelContainer isLoading={isLoading}>
-      <div className="mx-2">
-        <Row>
-          <Col md={6}>
-            <TagTypeSelectInput dataObject={tagDataDto} setDataObject={setTagDataDto} />
-            <TextInputBase fieldName={"value"} setDataObject={setTagDataDto} dataObject={tagDataDto}/>
-            <ActivityToggleInput fieldName={"active"} setDataObject={setTagDataDto} dataObject={tagDataDto}/>
-          </Col>
-          <Col md={6}>
-            <TagConfigurationInput dataObject={tagDataDto} setDataObject={setTagDataDto}/>
-          </Col>
-        </Row>
-        <PersistButtonContainer
-          recordDto={tagDataDto}
-          handleClose={handleClose}
-          setRecordDto={setTagDataDto}
-          createRecord={createTag}
-          updateRecord={updateTag}
-        />
-      </div>
+    <EditorPanelContainer
+      isLoading={isLoading}
+      recordDto={tagDataDto}
+      handleClose={handleClose}
+      setRecordDto={setTagDataDto}
+      createRecord={createTag}
+      updateRecord={updateTag}
+    >
+      <Row>
+        <Col md={6}>
+          <TagTypeSelectInput dataObject={tagDataDto} setDataObject={setTagDataDto}/>
+          <TextInputBase fieldName={"value"} setDataObject={setTagDataDto} dataObject={tagDataDto}/>
+          <ActivityToggleInput fieldName={"active"} setDataObject={setTagDataDto} dataObject={tagDataDto}/>
+        </Col>
+        <Col md={6}>
+          <TagConfigurationInput dataObject={tagDataDto} setDataObject={setTagDataDto}/>
+        </Col>
+      </Row>
     </EditorPanelContainer>
   );
 }

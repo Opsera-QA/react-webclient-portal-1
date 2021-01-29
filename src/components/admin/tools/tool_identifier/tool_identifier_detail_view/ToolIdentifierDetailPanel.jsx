@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import ToolIdentifierSummaryPanel
+  from "components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierSummaryPanel";
+import ToolIdentifierEditorPanel
+  from "components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierEditorPanel";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
+import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
+import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
-import ToolIdentifierEditorPanel from "./ToolIdentifierEditorPanel";
-import CustomTabContainer from "../../../../common/tabs/CustomTabContainer";
-import ToolIdentifierSummaryPanel from "./ToolIdentifierSummaryPanel";
-import DetailTabPanelContainer from "../../../../common/panels/detail_view/DetailTabPanelContainer";
-import SummaryTab from "../../../../common/tabs/detail_view/SummaryTab";
-import SettingsTab from "../../../../common/tabs/detail_view/SettingsTab";
 
 function ToolIdentifierDetailPanel({ toolIdentifierData, setToolIdentifierData }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -16,12 +18,16 @@ function ToolIdentifierDetailPanel({ toolIdentifierData, setToolIdentifierData }
     setActiveTab(activeTab);
   };
 
+  const toggleSummaryPanel = () => {
+    setActiveTab("summary");
+  };
+
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
         return <ToolIdentifierSummaryPanel toolIdentifierData={toolIdentifierData} setActiveTab={setActiveTab} />;
       case "settings":
-        return <ToolIdentifierEditorPanel setToolIdentifierData={setToolIdentifierData} toolIdentifierData={toolIdentifierData} />;
+        return <ToolIdentifierEditorPanel setToolIdentifierData={setToolIdentifierData} toolIdentifierData={toolIdentifierData} handleClose={toggleSummaryPanel} />;
       default:
         return null;
     }

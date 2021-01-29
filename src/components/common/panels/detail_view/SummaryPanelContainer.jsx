@@ -11,7 +11,7 @@ function SummaryPanelContainer({ setActiveTab, children }) {
 
   return (
     <div className="scroll-y">
-      <div className="float-right mt-1">
+      <div className="float-right mt-2 mr-1">
         {getSettingsToggle()}
       </div>
       <div className="p-3">

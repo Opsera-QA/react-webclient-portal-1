@@ -5,7 +5,6 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Loading from "components/common/status_notifications/loading";
 import WebsitePathInput from "components/common/inputs/text/WebsitePathInput";
-import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 import JsonInput from "components/common/inputs/object/JsonInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
@@ -42,12 +41,18 @@ function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
    return await KpiActions.updateKpi(kpiDataDto, getAccessToken);
   };
 
-  if (isLoading || kpiDataDto == null) {
+  if (kpiDataDto == null) {
     return <Loading size="sm" />;
   }
 
   return (
-    <EditorPanelContainer>
+    <EditorPanelContainer
+      updateRecord={updateKpi}
+      recordDto={kpiDataDto}
+      createRecord={createKpi}
+      setRecordDto={setKpiDataDto}
+      handleClose={handleClose}
+    >
       <Row>
         <Col lg={6}>
           <TextInputBase dataObject={kpiDataDto} fieldName={"name"} setDataObject={setKpiDataDto}/>
@@ -55,6 +60,7 @@ function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
           <KpiChartTypeInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
           <KpiToolsInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
           <KpiFiltersInput dataObject={kpiDataDto} fieldName={"supported_filters"} setDataObject={setKpiDataDto} />
+          <JsonInput dataObject={kpiDataDto} fieldName={"dataPoints"} setDataObject={setKpiDataDto}/>
           <KpiCategoriesInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
           <NotificationConditionTriggerSelectInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} fieldName={"yAxis"}/>
           <WebsitePathInput dataObject={kpiDataDto} fieldName={"thumbnailPath"} setDataObject={setKpiDataDto}/>
@@ -72,13 +78,6 @@ function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
           <ActivityToggleInput setDataObject={setKpiDataDto} fieldName={"active"} dataObject={kpiData}/>
         </Col>
       </Row>
-      <PersistButtonContainer
-        updateRecord={updateKpi}
-        recordDto={kpiDataDto}
-        createRecord={createKpi}
-        setRecordDto={setKpiDataDto}
-        handleClose={handleClose}
-      />
     </EditorPanelContainer>
   );
 }

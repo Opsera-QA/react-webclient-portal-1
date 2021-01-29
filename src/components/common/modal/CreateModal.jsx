@@ -19,26 +19,24 @@ function CreateModal({ children, objectType, showModal, handleCancelModal, loadD
   };
 
   return (
-    <>
-      <Modal size="lg" show={showModal} onHide={handleClose} backdrop="static" centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Create New {objectType}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="content-block-shaded m-3 full-height">
-            {toastContext.getInlineBanner()}
-            <div className="p-3">
-              {children}
-            </div>
+    <Modal size="lg" show={showModal} onHide={handleClose} backdrop="static" centered>
+      <Modal.Header closeButton>
+        <Modal.Title>Create New {objectType}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="content-block-shaded m-3 full-height">
+          {toastContext.getInlineBanner()}
+          <div className="p-3">
+            {children}
           </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <TooltipWrapper innerText={unsavedChanges}>
-            <Button size="sm" variant="secondary" onClick={handleClose}>Close</Button>
-          </TooltipWrapper>
-        </Modal.Footer>
-      </Modal>
-    </>
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <TooltipWrapper innerText={unsavedChanges}>
+          <Button size="sm" variant="secondary" onClick={handleClose}>Close</Button>
+        </TooltipWrapper>
+      </Modal.Footer>
+    </Modal>
   );
 }
 

@@ -1,19 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import LoadingDialog from "../../../../common/status_notifications/loading";
-import AccessDeniedDialog from "../../../../common/status_notifications/accessDeniedInfo";
-import {AuthContext} from "../../../../../contexts/AuthContext";
-import toolTypeActions from "../../tool-management-actions";
-import Model from "../../../../../core/data_model/model";
-import toolIdentifierMetadata from "../tool-identifier-metadata";
-import ToolIdentifierDetailPanel from "./ToolIdentifierDetailPanel";
-import {faTools} from "@fortawesome/pro-solid-svg-icons";
-import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import {faWrench} from "@fortawesome/free-solid-svg-icons";
-import DetailScreenContainer from "../../../../common/panels/detail_view_container/DetailScreenContainer";
-import ActionBarContainer from "../../../../common/actions/ActionBarContainer";
-import ActionBarBackButton from "../../../../common/actions/buttons/ActionBarBackButton";
-import ActionBarToggleButton from "../../../../common/actions/buttons/ActionBarToggleButton";
+import Model from "core/data_model/model";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import toolManagementActions from "components/admin/tools/tool-management-actions";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
+import LoadingDialog from "components/common/status_notifications/loading";
+import ToolIdentifierDetailPanel
+  from "components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierDetailPanel";
+import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import toolIdentifierMetadata from "components/admin/tools/tool_identifier/tool-identifier-metadata";
 
 function ToolIdentifierDetailView() {
   const {toolIdentifierId} = useParams();
@@ -33,7 +30,7 @@ function ToolIdentifierDetailView() {
       await getRoles();
     }
     catch (error) {
-      if (!error.message.includes(404)) {
+      if (!error.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
       }
     }
@@ -43,7 +40,7 @@ function ToolIdentifierDetailView() {
   };
 
   const getToolIdentifier = async (toolIdentifierId) => {
-    const response = await toolTypeActions.getToolIdentifierById(toolIdentifierId, getAccessToken);
+    const response = await toolManagementActions.getToolIdentifierById(toolIdentifierId, getAccessToken);
     // // TODO: remove grabbing first when it only sends object instead of array
     if (response.data != null && response.data.length > 0) {
       setToolIdentifierData(new Model(response.data[0], toolIdentifierMetadata, false));
@@ -56,34 +53,17 @@ function ToolIdentifierDetailView() {
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      if (userRoleAccess.OpseraAdministrator === true) {
+      if (userRoleAccess?.OpseraAdministrator === true) {
         await getToolIdentifier(toolIdentifierId);
       }
     }
   };
-
-  const handleActiveToggle = async () => {
-    try {
-      let newToolIdentifierData = {...toolIdentifierData};
-      newToolIdentifierData.setData("active", !newToolIdentifierData.getData("active"));
-      let response = await toolTypeActions.updateToolIdentifier({...newToolIdentifierData}, getAccessToken);
-      let updatedDto = new Model(response.data, toolIdentifierData.metaData, false);
-      setToolIdentifierData(updatedDto);
-      toastContext.showUpdateSuccessResultDialog(newToolIdentifierData.getType());
-    } catch (error) {
-      toastContext.showUpdateFailureResultDialog(error);
-      console.error(error);
-    }
-  }
 
   const getActionBar = () => {
     return (
       <ActionBarContainer>
         <div>
           <ActionBarBackButton path={"/admin/tools/identifiers"} />
-        </div>
-        <div>
-          <ActionBarToggleButton status={toolIdentifierData?.getData("active")} handleActiveToggle={handleActiveToggle} />
         </div>
       </ActionBarContainer>
     );
@@ -93,19 +73,11 @@ function ToolIdentifierDetailView() {
     return (<LoadingDialog size="sm"/>);
   }
 
-  if (accessRoleData.OpseraAdministrator === false) {
-    return (<AccessDeniedDialog roleData={accessRoleData} />);
-  }
-
   return (
     <DetailScreenContainer
       breadcrumbDestination={"toolIdentifierDetailView"}
-      title={toolIdentifierData != null ? `Tool Identifier Details [${toolIdentifierData.getData("name")}]` : undefined}
-      managementViewLink={"/admin/tools/identifiers"}
-      managementTitle={"Tool Management"}
-      managementViewIcon={faWrench}
-      type={"Tool Identifier"}
-      titleIcon={faTools}
+      accessDenied={!accessRoleData?.OpseraAdministrator}
+      metadata={toolIdentifierMetadata}
       dataObject={toolIdentifierData}
       isLoading={isLoading}
       actionBar={getActionBar()}

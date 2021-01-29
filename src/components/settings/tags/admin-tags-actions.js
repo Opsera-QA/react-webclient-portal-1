@@ -1,52 +1,21 @@
-import { axiosApiService } from "../../../api/apiService";
-import baseActions from "../../../utils/actionsBase";
+import baseActions from "utils/actionsBase";
 
 const adminTagsActions = {};
 
 adminTagsActions.delete = async (tagId, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/tags/${tagId}`;
-  const response = await axiosApiService(accessToken).delete(apiUrl, {})
-    .then((result) => {
-      return result;
-    })
-    .catch(error => {
-      throw error;
-    });
-  return response;
-};
-
-adminTagsActions.cancel = async (tagId, getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = `/tags/${tagId}/reset/`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) => {
-      return result;
-    })
-    .catch(error => {
-      throw { error };
-    });
-  return response;
+  return await baseActions.apiDeleteCall(getAccessToken, apiUrl);
 };
 
 adminTagsActions.update = async (tagDataDto, getAccessToken) => {
   let postBody = {
     ...tagDataDto.getPersistData(),
   };
-  const accessToken = await getAccessToken();
   const apiUrl = `/tags/${tagDataDto.getData("_id")}/update/`;
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) => {
-      return result;
-    })
-    .catch(error => {
-      throw { error };
-    });
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 adminTagsActions.getAllTags = async (getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = "/tags";
   const urlParams = {
     params: {
@@ -54,14 +23,7 @@ adminTagsActions.getAllTags = async (getAccessToken) => {
       page: 1,
     },
   };
-  const response = await axiosApiService(accessToken).get(apiUrl, urlParams)
-    .then((result) => {
-      return result;
-    })
-    .catch(error => {
-      throw { error };
-    });
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
 adminTagsActions.getTags = async (tagFilterDto, getAccessToken) => {
@@ -98,7 +60,6 @@ adminTagsActions.getProjectTags = async (getAccessToken) => {
 };
 
 adminTagsActions.getVisibleTags = async (getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = "/tags?status=active";
   const urlParams = {
     params: {
@@ -106,43 +67,20 @@ adminTagsActions.getVisibleTags = async (getAccessToken) => {
       page: 1,
     },
   };
-  const response = await axiosApiService(accessToken).get(apiUrl, urlParams)
-    .then((result) => {
-      return result;
-    })
-    .catch(error => {
-      throw { error };
-    });
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
 adminTagsActions.get = async (tagId, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/tags/${tagId}`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) => {
-      return result;
-    })
-    .catch(error => {
-      throw { error };
-    });
-  return response;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
 adminTagsActions.create = async (tagDataDto, getAccessToken) => {
   let postBody = {
     ...tagDataDto.getPersistData(),
   };
-  const accessToken = await getAccessToken();
   const apiUrl = "/tags/create";
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) => {
-      return result;
-    })
-    .catch(error => {
-      throw { error };
-    });
-  return response;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 adminTagsActions.getRelevantPipelines = async (tagDto, getAccessToken) => {
@@ -163,16 +101,7 @@ adminTagsActions.getRelevantTools = async (tagDto, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
-// TODO: Implement if necessary
-// adminTagsActions.duplicate = async (tagId, getAccessToken) => {
-//   const accessToken = await getAccessToken();
-//   const apiUrl = `/pipelines/${tagId}/duplicate/`;
-//   const response = await axiosApiService(accessToken).put(apiUrl)
-//     .then((result) =>  {return result;})
-//     .catch(error => {return { error };});
-//   return response;
-// };
-
+// TODO: This should be moved into that input component
 adminTagsActions.configurationOptions = [
   {id: "costCenter", label: "Cost Center"}
 ];

@@ -44,7 +44,8 @@ function PipelineWorkflow({
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
 
   const authorizedAction = (action, owner) => {
-    return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner);
+    let objectRoles = pipeline?.roles;
+    return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner, objectRoles);
   };
 
   useEffect(() => {
@@ -108,8 +109,6 @@ function PipelineWorkflow({
       });
       return;
     }
-
-
     setModalHeader("Pipeline Configuration");
     setModalMessage(param);
     setShowModal(true);
@@ -206,6 +205,7 @@ function PipelineWorkflow({
       <div>
         <div className="pb-1">
 
+          {authorizedAction("view_pipeline_configuration", pipeline.owner) &&
           <OverlayTrigger
             placement="top"
             delay={{ show: 250, hide: 400 }}
@@ -215,6 +215,7 @@ function PipelineWorkflow({
             }}>
               <FontAwesomeIcon icon={faFileAlt} fixedWidth/> View Configuration</Button>
           </OverlayTrigger>
+          }
 
           {editWorkflow &&
           <Button
@@ -260,18 +261,18 @@ function PipelineWorkflow({
             {pipeline.workflow.source.trigger_active &&
             <div className="d-flex">
               <div className="upper-case-first pl-2">
-                <span className="text-muted small">
-                <FontAwesomeIcon icon={faClipboardCheck} size="sm" fixedWidth
-                                 className="mr-1"/>Webhook Trigger: {pipeline.workflow.source.trigger_active ? "Enabled" : "Disabled"}</span>
+            <span className="text-muted small">
+            <FontAwesomeIcon icon={faClipboardCheck} size="sm" fixedWidth
+                             className="mr-1"/>Webhook Trigger: {pipeline.workflow.source.trigger_active ? "Enabled" : "Disabled"}</span>
               </div>
             </div>}
 
             {pipeline.workflow.source.service &&
             <div className="d-flex">
               <div className="upper-case-first pl-2">
-                <span className="text-muted small">
-                <FontAwesomeIcon icon={faCode} size="sm" fixedWidth
-                                 className="mr-1"/>Source Repository: {pipeline.workflow.source.service}</span>
+            <span className="text-muted small">
+            <FontAwesomeIcon icon={faCode} size="sm" fixedWidth
+                             className="mr-1"/>Source Repository: {pipeline.workflow.source.service}</span>
               </div>
             </div>}
 

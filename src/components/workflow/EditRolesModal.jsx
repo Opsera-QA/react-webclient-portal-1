@@ -5,6 +5,7 @@ import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import TooltipWrapper from "components/common/tooltip/tooltipWrapper";
 import {unsavedChanges} from "components/common/tooltip/popover-text";
 
+// TODO Replace with EditRolesModal in inline_inputs and delete this after wiring up Model wrapped object
 function EditRolesModal({visible, pipelineModel, setPipelineModel, onHide, onClick, data}) {
   const [roles, setRoles] = useState(pipelineModel.getData("roles"));
 

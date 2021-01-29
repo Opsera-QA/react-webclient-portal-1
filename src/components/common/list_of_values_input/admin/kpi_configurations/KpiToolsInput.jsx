@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineToolIdentifierMultiSelectInput from "../../workflow/pipelines/PipelineToolIdentifierMultiSelectInput";
+import PipelineUsageToolMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineUsageToolMultiSelectInput";
 
 function KpiToolsInput({ fieldName, dataObject, setDataObject, disabled }) {
   return (
-    <PipelineToolIdentifierMultiSelectInput
+    <PipelineUsageToolMultiSelectInput
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}

@@ -6,6 +6,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 function CloseButton({ isLoading, closeEditorCallback }) {
 
+  // TODO: Add unsaved changes popover
   return (
     <div className="mx-1">
       <Button size="md" variant="secondary" disabled={isLoading} onClick={() => closeEditorCallback()}>

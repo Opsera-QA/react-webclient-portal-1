@@ -452,6 +452,12 @@ a.text-primary:hover, a.text-primary:focus {
   width: 100%;
 }
 
+.table-base-body {
+  height: 100%;
+  max-height: 100%;
+  overflow-y: auto;
+}
+
 .custom-table th {
   background-color: #fff; /*#2588ec;*/
   border-bottom: 1px solid #7368AA; /*#3598fc;*/
@@ -528,7 +534,7 @@ div.modal-header .h4 {
 
 div.modal-header {
   padding: .3em 1em;
-  background-color: #46415C;
+  background-color: #6E6690;
   color: #fff;
   margin-top: 0;
 }
@@ -579,7 +585,7 @@ a.nav-link {
 }
 
 .default-custom-tabs .nav-tabs .nav-item.show .nav-link, .default-custom-tabs .nav-tabs .nav-link.active {
-  background: #46415C;
+  background: #6E6690;
   color: #fff;
   /* border-color: #1578dc;*/
   text-decoration: none;
@@ -678,9 +684,9 @@ a.nav-link {
 }
 
 .alternate-tabs .nav-tabs > li a.active {
-  background: #46415C;
+  background: #6E6690;
   /*border-color: #1578dc;*/
-  border-bottom: 5px solid #7368AA;
+  border-bottom: 5px solid #8F86BB;
   text-decoration: none;
 }
 
@@ -862,7 +868,7 @@ a.nav-link {
 }
 
 .content-container {
-  border: 1px solid #7368AA;
+  border: 1px solid #8F86BB;
   /*border-radius: .25rem;*/
 }
 
@@ -915,8 +921,8 @@ a.nav-link {
 }
 
 .content-card-1 .content-block-footer {
-  border-top: 5px solid #738192;
-  background-color: #334152;
+  border-top: 5px solid #8F86BB;
+  background-color: #6E6690;
   padding-top: 1em;
   height: 1.5em;
 }
@@ -1040,7 +1046,7 @@ a.nav-link {
 
 /* Action Bar styling */
 .action-bar-icon:hover {
-  color: #0f3e84;
+  color: #8F86BB;
 }
 
 /* End Action Bar styling */
@@ -1056,16 +1062,24 @@ a.nav-link {
 }
 
 .detail-container-body {
-  min-height: calc(100vh - 300px);
-  max-height: calc(100vh - 300px);
+  min-height: calc(100vh - 263px);
+  max-height: calc(100vh - 263px);
 }
 
 .screen-container-body {
-  min-height: calc(100vh - 300px);
-  max-height: calc(100vh - 300px);
+  min-height: calc(100vh - 263px);
+  max-height: calc(100vh - 263px);
   overflow-y: auto;
   overflow-x: hidden;
 }
+
+.wide-screen-container-body {
+    min-height: calc(100vh - 300px);
+    max-height: calc(100vh - 300px);
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
 
 .modal-detail-view-body {
   min-height: 65vh;
@@ -1086,7 +1100,7 @@ a.nav-link {
 
 .shaded-panel {
   border-radius: 5px;
-  background-color: #FCFCFC;
+  background-color: #F8F8F8;
 }
 
 .shaded-container {
@@ -1251,11 +1265,11 @@ a.nav-link {
 
 /* Property Input Styling */
 .object-properties-input .property-header {
-    background-color: #46415C;
+    background-color: #6E6690;
     color: #fff;
     height: 40px;
     line-height: 2.4em;
-    border-bottom: 5px solid #7368AA;
+    border-bottom: 5px solid #8F86BB;
 }
 
 .object-properties-input .delete-button {
@@ -1297,3 +1311,14 @@ a.nav-link {
   font-size: 13px;
 }
 /* End Item Field */
+
+/* Membership panel */
+.membership-list {
+  min-height: 370px;
+  background-color: #E7E5ED;
+}
+
+.membership-search {
+  width: 300px;
+}
+/* End Membership Panel Styling */

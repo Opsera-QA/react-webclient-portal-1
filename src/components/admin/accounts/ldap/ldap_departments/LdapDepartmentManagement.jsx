@@ -1,19 +1,15 @@
 import React, {useState, useEffect, useContext} from "react";
 import {AuthContext} from "contexts/AuthContext";
-import {useHistory} from "react-router-dom";
 import LoadingDialog from "components/common/status_notifications/loading";
-import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import accountsActions from "../../accounts-actions";
-import LdapDepartmentsTable from "./LdapDepartmentsTable";
-import AccessDeniedDialog from "../../../../common/status_notifications/accessDeniedInfo";
-import departmentActions from "./department-functions";
-import TableScreenContainer from "../../../../common/panels/table_screen_container/TableScreenContainer";
-import Model from "../../../../../core/data_model/model";
-import departmentFilterMetadata from "./department-filter-metadata";
-
+import Model from "core/data_model/model";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import departmentFilterMetadata from "components/admin/accounts/ldap/ldap_departments/department-filter-metadata";
+import departmentActions from "components/admin/accounts/ldap/ldap_departments/department-functions";
+import accountsActions from "components/admin/accounts/accounts-actions";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import LdapDepartmentsTable from "components/admin/accounts/ldap/ldap_departments/LdapDepartmentsTable";
 
 function LdapDepartmentManagement() {
-  const history = useHistory();
   const toastContext = useContext(DialogToastContext);
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -42,7 +38,7 @@ function LdapDepartmentManagement() {
 
   const getDepartments = async (ldapDomain) => {
       let response = await departmentActions.getDepartmentsByDomain(ldapDomain, getAccessToken);
-      setDepartments(response.data);
+      setDepartments(response?.data);
   };
 
   const getRoles = async () => {
@@ -53,38 +49,24 @@ function LdapDepartmentManagement() {
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      let authorizedActions = await accountsActions.getAllowedDepartmentActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-      setAuthorizedActions(authorizedActions);
-
-      if (userRoleAccess.OpseraAdministrator) {
+      if (userRoleAccess?.OpseraAdministrator && ldap) {
+        let authorizedActions = await accountsActions.getAllowedDepartmentActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
+        setAuthorizedActions(authorizedActions);
         setDomain(ldap.domain)
         await getDepartments(ldap.domain);
       }
     }
   };
 
-  // const handleOrganizationChange = async (selectedOption) => {
-  //   setIsLoading(true);
-  //   console.log("Setting organization to: " + JSON.stringify(selectedOption));
-  //   history.push(`/settings/${selectedOption.id}/users`);
-  //   setCurrentOrganizationDomain(selectedOption.id);
-  //   await getUsersByDomain(selectedOption.id);
-  //   setIsLoading(false);
-  // };
-
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
 
-  if (!authorizedActions.includes("get_departments") && !isLoading) {
-    return (<AccessDeniedDialog roleData={accessRoleData}/>);
-  }
-
   return (
-    <TableScreenContainer
+    <ScreenContainer
       breadcrumbDestination={"ldapDepartmentManagement"}
-      title={"Department Management"}
-      tableComponent={
+      isLoading={isLoading} accessDenied={!isLoading && !authorizedActions.includes("get_departments")}
+      >
         <LdapDepartmentsTable
           authorizedActions={authorizedActions}
           loadData={loadData}
@@ -93,10 +75,9 @@ function LdapDepartmentManagement() {
           departmentData={departments}
           departmentFilterDto={departmentFilterDto}
           setDepartmentFilterDto={setDepartmentFilterDto}
-        />}
-      />
-    );
+        />
+    </ScreenContainer>
+  );
 }
-
 
 export default LdapDepartmentManagement;

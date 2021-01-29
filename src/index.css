@@ -98,6 +98,10 @@
     cursor: pointer
 }
 
+.default-cursor {
+    cursor: default
+}
+
 .vertical-align-item {
     vertical-align: middle;
 }

@@ -1,10 +1,14 @@
-import regexHelpers from "../../../utils/regexHelpers";
+import regexHelpers from "utils/regexHelpers";
 
 const toolMetadata = {
   idProperty: "_id",
   type: "Tool",
-  detailView: function(record) {
+  activeField: "active",
+  detailView: function (record) {
     return `/inventory/tools/details/${record.getData("_id")}`;
+  },
+  detailViewTitle: function (record) {
+    return `Tool Details [${record?.name}]`;
   },
   fields: [
     {

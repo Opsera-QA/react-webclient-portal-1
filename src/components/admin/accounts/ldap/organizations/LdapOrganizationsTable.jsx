@@ -2,10 +2,12 @@ import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {useHistory} from "react-router-dom";
-import {getTableTextColumn} from "../../../../common/table/table-column-helpers";
-import  {ldapOrganizationMetaData} from "./ldap-organizations-form-fields";
+import NewLdapOrganizationModal from "components/admin/accounts/ldap/organizations/NewLdapOrganizationModal";
+import {ldapOrganizationMetaData} from "components/admin/accounts/ldap/organizations/ldap-organizations-form-fields";
+import {getTableTextColumn} from "components/common/table/table-column-helpers";
 
-function LdapOrganizationsTable({data, isLoading}) {
+function LdapOrganizationsTable({data, isLoading, loadData, authorizedActions}) {
+  const [showCreateOrganizationModal, setShowCreateOrganizationModal] = useState(false);
   const fields = ldapOrganizationMetaData.fields;
   const history = useHistory();
 
@@ -23,14 +25,37 @@ function LdapOrganizationsTable({data, isLoading}) {
     history.push(`/admin/organizations/details/${selectedRow.original.name}`);
   };
 
+  const createOrganization = () => {
+    setShowCreateOrganizationModal(true);
+  };
+
   return (
-    <CustomTable isLoading={isLoading} onRowSelect={onRowSelect} tableTitle={"Organizations"} type={"Organization"} data={data} columns={columns}/>
+    <div>
+      <CustomTable
+        isLoading={isLoading}
+        onRowSelect={onRowSelect}
+        tableTitle={"Organizations"}
+        type={"Organization"}
+        data={data}
+        loadData={loadData}
+        createNewRecord={createOrganization}
+        columns={columns}
+      />
+      <NewLdapOrganizationModal
+        showModal={showCreateOrganizationModal}
+        loadData={loadData}
+        authorizedActions={authorizedActions}
+        setShowModal={setShowCreateOrganizationModal}
+      />
+    </div>
   );
 }
 
 LdapOrganizationsTable.propTypes = {
   data: PropTypes.array,
   isLoading: PropTypes.bool,
+  loadData: PropTypes.func,
+  authorizedActions: PropTypes.array
 };
 
 export default LdapOrganizationsTable;

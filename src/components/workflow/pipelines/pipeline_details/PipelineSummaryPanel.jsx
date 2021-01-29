@@ -1,35 +1,34 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "../../../../contexts/AuthContext";
 import { useHistory } from "react-router-dom";
-import { Row, Col, Button, Form } from "react-bootstrap";
-import PipelineActions from "../../pipeline-actions";
+import {Row, Col, Form} from "react-bootstrap";
 import { format } from "date-fns";
-import Modal from "../../../common/modal/modal";
-import ModalActivityLogs from "../../../common/modal/modalActivityLogs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPencilAlt,
   faSave,
   faTimes,
-  faCogs,
-  faFlag, faUser, faUserFriends,
+  faUser,
+  faUserFriends,
 } from "@fortawesome/pro-light-svg-icons";
-import "../../workflows.css";
-import SchedulerWidget from "../../../common/schedulerWidget";
-import PipelineHelpers from "../../pipelineHelpers";
 import DropdownList from "react-widgets/lib/DropdownList";
-import pipelineHelpers from "../../pipelineHelpers";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import PipelineActionControls from "./PipelineActionControls";
-import EditTagModal from "../../EditTagModal";
-import PipelineSummaryActionBar from "../../../common/actions/pipeline/PipelineSummaryActionBar";
-import InfoDialog from "../../../common/status_notifications/info";
-import WorkflowAuthorizedActions from "./workflow/workflow-authorized-actions";
-import PipelineSummaryMessages from "./pipelineSummaryMessage";
 import EditRolesModal from "components/workflow/EditRolesModal";
 import Model from "core/data_model/model";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
+import {AuthContext} from "contexts/AuthContext";
+import workflowAuthorizedActions
+  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+import pipelineHelpers from "components/workflow/pipelineHelpers";
+import InformationDialog from "components/common/status_notifications/info";
+import PipelineActionControls from "components/workflow/pipelines/pipeline_details/PipelineActionControls";
+import PipelineSummaryActionBar from "components/common/actions/pipeline/PipelineSummaryActionBar";
+import SchedulerWidget from "components/common/schedulerWidget";
+import PipelineSummaryMessages from "components/workflow/pipelines/pipeline_details/pipelineSummaryMessage";
+import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
+import EditTagModal from "components/workflow/EditTagModal";
+import pipelineActions from "components/workflow/pipeline-actions";
+import Modal from "components/common/modal/modal";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -72,11 +71,10 @@ function PipelineSummaryPanel({
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   let history = useHistory();
 
-
   const authorizedAction = (action, owner) => {
-    return WorkflowAuthorizedActions.workflowItems(customerAccessRules, action, owner);
+    let objectRoles = pipeline?.roles;
+    return workflowAuthorizedActions.workflowItems(customerAccessRules, action, owner, objectRoles);
   };
-
 
   useEffect(() => {
     const controller = new AbortController();
@@ -111,7 +109,7 @@ function PipelineSummaryPanel({
         setWorkflowStatus(false);
       }
 
-      const step = await PipelineHelpers.getPendingApprovalStep(pipeline);
+      const step = await pipelineHelpers.getPendingApprovalStep(pipeline);
       if (step) {
         setApprovalStep(step);
       } else {
@@ -137,19 +135,19 @@ function PipelineSummaryPanel({
 
   const handleCopyPipeline = async (pipelineId) => {
     const { getAccessToken } = contextType;
-    await PipelineActions.duplicate(pipelineId, getAccessToken);
     setInfoModal({
       show: true,
       header: "Duplicate Pipeline",
       message: "A new pipeline configuration has been created, duplicating all of the settings from this one.  That pipeline is now in your list of Pipelines for viewing.  No tools or activity logs have been duplicated in this process.",
       button: "OK",
     });
+    await pipelineActions.duplicate(pipelineId, getAccessToken);
   };
 
 
   const handlePublishPipelineClick = async (pipelineId) => {
     const { getAccessToken } = contextType;
-    await PipelineActions.publish(pipelineId, getAccessToken);
+    await pipelineActions.publish(pipelineId, getAccessToken);
     setInfoModal({
       show: true,
       header: "Publish Pipeline to Catalog",
@@ -161,7 +159,7 @@ function PipelineSummaryPanel({
   const deleteItem = async (pipelineId) => {
     try {
       const { getAccessToken } = contextType;
-      await PipelineActions.delete(pipelineId, getAccessToken);
+      await pipelineActions.delete(pipelineId, getAccessToken);
       toastContext.showDeleteSuccessResultDialog("Pipeline");
       history.push("/workflow");
     }
@@ -235,7 +233,7 @@ function PipelineSummaryPanel({
 
       if (Object.keys(postBody).length > 0) {
         try {
-          await PipelineActions.updatePipeline(pipelineId, postBody, getAccessToken);
+          await pipelineActions.updatePipeline(pipelineId, postBody, getAccessToken);
           setFormData(INITIAL_FORM_DATA);
           toastContext.showUpdateSuccessResultDialog("Pipeline");
           await fetchPlan();
@@ -340,7 +338,7 @@ function PipelineSummaryPanel({
             })}
           </span>
         }
-        {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
+        {authorizedAction("edit_tags", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
 
         {editTags &&
         <EditTagModal data={pipeline.tags} visible={editTags} onHide={() => {
@@ -366,14 +364,14 @@ function PipelineSummaryPanel({
 
         if (user) {
           return (
-            <span key={i} className="mx-1 mb-1 badge badge-primary">
+            <span key={i} className="mx-1 mb-1 badge badge-light user-badge">
               <FontAwesomeIcon icon={faUser} fixedWidth className="mr-1"/>{`${user}: ${item.role}`}
             </span>
           );
         }
 
         return (
-          <span key={i} className="mx-1 mb-1 badge badge-secondary">
+          <span key={i} className="mx-1 mb-1 badge badge-light group-badge">
             <FontAwesomeIcon icon={faUserFriends} fixedWidth className="mr-1"/>{`${group}: ${item.role}`}
           </span>
         );
@@ -386,8 +384,8 @@ function PipelineSummaryPanel({
       <Col xs={12} className="py-2"><span className="text-muted mr-1">Roles:</span>
 
         {!editRoles && pipeline.roles &&
-          <span className="item-field">{getRoleBadges(pipeline.roles)}</span>}
-        {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("roles")}
+          <span className="item-field role-access">{getRoleBadges(pipeline.roles)}</span>}
+        {authorizedAction("edit_access_roles", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("roles")}
 
         {editRoles &&
         <EditRolesModal setPipelineModel={setPipelineModel} pipelineModel={pipelineModel} data={pipeline.roles} visible={editRoles} onHide={() => {setEditRoles(false);}} onClick={(roles) => {handleSavePropertyClick(pipeline._id, roles, "roles");
@@ -398,7 +396,7 @@ function PipelineSummaryPanel({
   };
 
   if (!pipeline || Object.keys(pipeline).length <= 0) {
-    return (<InfoDialog
+    return (<InformationDialog
       message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."/>);
   }
 
@@ -420,24 +418,9 @@ function PipelineSummaryPanel({
       </div>
 
       <div className="mb-3 flat-top-content-block p-3">
-
-        <div className="text-muted float-right">
-          {/*TODO: Remove this and replace with new action bar*/}
-          <PipelineSummaryActionBar
-            pipeline={pipeline}
-            handleDeleteClick={authorizedAction("delete_pipeline_btn", pipeline.owner) ? handleDeleteClick : undefined}
-            handleDuplicateClick={authorizedAction("duplicate_pipeline_btn", pipeline.owner) ? handleCopyPipeline : undefined}
-            handleViewClick={authorizedAction("view_template_pipeline_btn", pipeline.owner) ? handleViewClick : undefined}
-            handlePublishClick={authorizedAction("publish_pipeline_btn", pipeline.owner) ? handlePublishPipelineClick : undefined}
-            handleEditAccessRolesClick={authorizedAction("edit_access_roles", pipeline.owner) ? handleEditAccessRolesClick : undefined}
-            canTransferPipeline={authorizedAction("transfer_pipeline_btn", pipeline.owner)}
-            loadPipeline={fetchPlan}
-          />
-        </div>
-
         <Row>
-          <Col sm={12}>
-            <div className="d-flex py-2">
+          <Col sm={9}>
+            <div className="d-flex pb-3 title-text-header-1">
               {editTitle ?
                 <>
                   <div className="flex-fill p-2">
@@ -452,14 +435,29 @@ function PipelineSummaryPanel({
                 <>
                   {/*{Object.keys(approvalStep).length > 0 &&
                       <FontAwesomeIcon icon={faFlag} className="red mr-1 vertical-align-item" fixedWidth/>}*/}
-                  <span className="text-muted mr-1">Name:</span> {pipeline.name}
-                  {authorizedAction("edit_pipeline_attribute", pipeline.owner)
+                  {/*<span className="text-muted mr-1">Name:</span> */}{pipeline.name}
+                  {authorizedAction("edit_pipeline_name", pipeline.owner)
                   && parentWorkflowStatus !== "running"
                     ? getEditIcon("name")
                     : null}
                 </>
               }</div>
           </Col>
+
+          <Col sm={3}>
+            <PipelineSummaryActionBar
+              pipeline={pipeline}
+              handleDeleteClick={authorizedAction("delete_pipeline_btn", pipeline.owner) ? handleDeleteClick : undefined}
+              handleDuplicateClick={authorizedAction("duplicate_pipeline_btn", pipeline.owner) ? handleCopyPipeline : undefined}
+              handleViewClick={authorizedAction("view_template_pipeline_btn", pipeline.owner) ? handleViewClick : undefined}
+              handlePublishClick={authorizedAction("publish_pipeline_btn", pipeline.owner) ? handlePublishPipelineClick : undefined}
+              handleEditAccessRolesClick={authorizedAction("edit_access_roles", pipeline.owner) ? handleEditAccessRolesClick : undefined}
+              canTransferPipeline={authorizedAction("transfer_pipeline_btn", pipeline.owner)}
+              loadPipeline={fetchPlan}
+            />
+          </Col>
+
+
           <Col sm={12} md={6} className="py-2"><span className="text-muted mr-1">ID:</span> {pipeline._id}</Col>
           <Col sm={12} md={6} className="py-2"><span
             className="text-muted mr-1">Pipeline Run Count:</span> {pipeline.workflow.run_count || "0"}</Col>
@@ -559,7 +557,7 @@ function PipelineSummaryPanel({
           }
           {getTagField()}
 
-          {!featureFlagHideItemInProd() && getRoleAccessField()}
+          {customerAccessRules.Type !== "sass-user" && getRoleAccessField()}
 
           {editDescription ?
             <>
@@ -618,7 +616,7 @@ function PipelineSummaryPanel({
                                 handleCancelModal={() => setShowDeleteModal(false)}
                                 handleConfirmModal={() => deleteItem(modalDeleteId)}/> : null}
 
-      <ModalActivityLogs header="Pipeline Details" size="lg" jsonData={modalMessage} show={showModal}
+      <ModalActivityLogsDialog header="Pipeline Details" size="lg" jsonData={modalMessage} show={showModal}
                          setParentVisibility={setShowModal}/>
 
       {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
