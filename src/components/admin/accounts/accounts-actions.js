@@ -302,6 +302,14 @@ accountsActions.getUser = async (userId, getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+accountsActions.isEmailAvailable = async (email, getAccessToken) => {
+  let postBody = {
+    email: email
+  };
+  const apiUrl = "/users/account/is-email-available";
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
 accountsActions.getUserRegistrations = async (getAccessToken) => {
   const apiUrl = "/users/registrations";
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
