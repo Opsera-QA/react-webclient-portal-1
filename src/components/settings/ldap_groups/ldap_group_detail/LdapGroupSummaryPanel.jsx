@@ -7,7 +7,7 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 
-function LdapGroupSummaryPanel({ ldapGroupData, domain, setActiveTab }) {
+function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData, setActiveTab }) {
   if (ldapGroupData == null) {
     return <></>;
   }
@@ -37,7 +37,7 @@ function LdapGroupSummaryPanel({ ldapGroupData, domain, setActiveTab }) {
           <LdapGroupPermissionsField dataObject={ldapGroupData} />
         </Col>
         <Col lg={12} className="pt-2">
-          <LdapUsersTable orgDomain={domain} userData={ldapGroupData.getData("members")} />
+          <LdapUsersTable loadData={loadData} orgDomain={domain} userData={ldapGroupData.getData("members")} />
         </Col>
       </Row>
     </SummaryPanelContainer>
@@ -47,7 +47,8 @@ function LdapGroupSummaryPanel({ ldapGroupData, domain, setActiveTab }) {
 LdapGroupSummaryPanel.propTypes = {
   ldapGroupData: PropTypes.object,
   domain: PropTypes.string,
-  setActiveTab: PropTypes.func
+  setActiveTab: PropTypes.func,
+  loadData: PropTypes.func
 };
 
 
