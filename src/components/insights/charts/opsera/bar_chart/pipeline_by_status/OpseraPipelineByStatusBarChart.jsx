@@ -6,7 +6,7 @@ import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
 import {AuthContext} from "contexts/AuthContext";
 import chartsActions from "components/insights/charts/charts-actions";
-import {getDateObjectFromKpiConfiguration} from "components/insights/charts/charts-helpers";
+import {getDateObjectFromKpiConfiguration, getTagsFromKpiConfiguration} from "components/insights/charts/charts-helpers";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 
 function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
@@ -24,7 +24,9 @@ function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, setKpiConfi
     try {
       setIsLoading(true);
       const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
-      const response = await chartsActions.getChart("opseraPipelineByStatus", "bar", date, getAccessToken);
+      const tags = getTagsFromKpiConfiguration(kpiConfiguration);
+      const response = await chartsActions.getChartMetrics("opseraPipelineByStatus", "bar", date, tags, getAccessToken);
+      console.log(response);
       let dataObject = response?.data?.data[0]?.opseraPipelineByStatus?.data;
       setData(dataObject);
     }
@@ -47,12 +49,12 @@ function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, setKpiConfi
         <ResponsiveBar
           data={data}
           keys={config.keys}
-          indexBy="pipeline_id"
+          indexBy="_id"
           onClick={() => setShowModal(true)}
           margin={config.margin}
           padding={0.3}
           layout={"horizontal"}
-          colors={(bar) => bar.id === "Successful" ? "green" : "red"}
+          colors={(bar) => bar.id === "successful" ? "green" : "red"}
           borderColor={{theme: "background"}}
           colorBy="id"
           defs={config.defs}

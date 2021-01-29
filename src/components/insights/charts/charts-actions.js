@@ -19,4 +19,17 @@ chartsActions.getChart = async (request, metric, date, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody)
 };
 
+chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessToken) => {
+  const apiUrl = "/analytics/metrics";
+
+  const postBody = {
+    request: request,
+    startDate: date.start,
+    endDate: date.end,
+    tags: tags
+  };
+
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody)
+};
+
 export default chartsActions;

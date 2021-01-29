@@ -10,7 +10,7 @@ import CustomTable from "components/common/table/CustomTable";
 import { format } from "date-fns";
 import "components/analytics/charts/charts.css";
 
-function OpseraRecentPipelineStatus({ date }) {
+function OpseraRecentPipelineStatus({ date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -92,16 +92,12 @@ function OpseraRecentPipelineStatus({ date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
+    const apiUrl = "/analytics/metrics";
     const postBody = {
-      data: [
-        {
-          request: "opseraPipelineInfo",
-          metric: "bar",
-        },
-      ],
+      request: "opseraPipelineInfo",
       startDate: date.start,
       endDate: date.end,
+      tags: tags
     };
 
     try {

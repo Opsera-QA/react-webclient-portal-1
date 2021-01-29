@@ -76,7 +76,7 @@ import MetricbeatCpuUsageByTimeLineChart from "./metricbeat/line_chart/cpu_usage
 import MetricbeatInNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/in_network_usage/MetricbeatInNetworkTrafficByTimeLineChart";
 import MetricbeatMemoryUsageByTimeLineChart from "./metricbeat/line_chart/memory_usage/MetricbeatMemoryUsageByTimeLineChart";
 import MetricbeatOutNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/out_network_usage/MetricbeatOutNetworkTrafficByTimeLineChart";
-import {getDateObjectFromKpiConfiguration} from "components/insights/charts/charts-helpers";
+import {getDateObjectFromKpiConfiguration, getTagsFromKpiConfiguration} from "components/insights/charts/charts-helpers";
 
 function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis}) {
   const [kpiConfig, setKpiConfig] = useState(kpiConfiguration);
@@ -125,15 +125,15 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
             />
           );
       case "opsera-pipeline-duration":
-        return (<OpseraBuildDurationBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<OpseraBuildDurationBarChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "opsera-pipelines-by-user":
-        return (<OpseraBuildsByUserBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<OpseraBuildsByUserBarChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "opsera-deployment-frequency":
-        return (<OpseraDeploymentFrequencyLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<OpseraDeploymentFrequencyLineChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "opsera-recent-pipeline-status":
-        return (<OpseraRecentPipelineStatus persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<OpseraRecentPipelineStatus persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "opsera-recent-cd-status":
-        return (<OpseraRecentCDStatus persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<OpseraRecentCDStatus persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
 
       // Jenkins KPIs
       case "jenkins-builds-by-user":

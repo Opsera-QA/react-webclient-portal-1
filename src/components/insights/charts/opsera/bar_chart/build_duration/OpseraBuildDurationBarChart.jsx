@@ -10,7 +10,7 @@ import ModalLogs from "components/common/modal/modalLogs";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 
-function OpseraBuildDurationBarChart({ persona, date }) {
+function OpseraBuildDurationBarChart({ persona, date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -22,16 +22,12 @@ function OpseraBuildDurationBarChart({ persona, date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
+    const apiUrl = "/analytics/metrics";
     const postBody = {
-      data: [
-        {
-          request: "opseraPipelineDuration",
-          metric: "bar",
-        },
-      ],
+      request: "opseraPipelineDuration",
       startDate: date.start,
       endDate: date.end,
+      tags: tags
     };
 
     try {
@@ -90,7 +86,7 @@ function OpseraBuildDurationBarChart({ persona, date }) {
             data={data ? data.data : []}
             keys={config.keys}
             layout="vertical"
-            indexBy="item_number"
+            indexBy="pipelineId"
             onClick={() => setShowModal(true)}
             margin={config.margin}
             padding={0.3}

@@ -32,7 +32,7 @@ function KpiSettingsForm({kpiConfiguration, setKpiConfiguration, dashboardData, 
             case "tags":
                 return (
                     <div>
-                        <DtoTagManagerFilterInput type={"kpi_filter"} fieldName={"value"} setDataObject={setKpiTagsFilter} dataObject={kpiTagsFilter} disabled={true}/>
+                        <DtoTagManagerFilterInput type={"kpi_filter"} fieldName={"value"} setDataObject={setKpiTagsFilter} dataObject={kpiTagsFilter}/>
                     </div>
                 );
         }

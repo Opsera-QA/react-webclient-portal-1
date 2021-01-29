@@ -1,6 +1,6 @@
 export default {
   keys: [
-    "value"
+    "time"
   ],
   margin: {
     "top": 50,
@@ -43,7 +43,7 @@ export default {
     }
   ],
   axisBottom: {
-    "format": d => /(?:(?!-).)*/.exec(d)[0],
+    "format": (d) => (typeof d === "string" ? d.substring(0, 6) : ""),
     "tickSize": 5,
     "tickPadding": 5,
     "tickRotation": 0,
