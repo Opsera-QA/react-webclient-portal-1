@@ -53,6 +53,10 @@ const notificationsMetadata = {
       id: "tags",
     },
     {
+      label: "What next steps to be taken?",
+      id: "nextSteps",
+    },
+    {
       label: "Created",
       id: "createdAt",
     },
@@ -70,7 +74,8 @@ const notificationsMetadata = {
     active: true,
     configuration: {},
     status: "",
-    tags: []
+    tags: [],
+    nextSteps: "",
   }
 };
 
