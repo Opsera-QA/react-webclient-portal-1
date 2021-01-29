@@ -137,11 +137,11 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
 
       // Jenkins KPIs
       case "jenkins-builds-by-user":
-        return (<JenkinsBuildsByUserBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<JenkinsBuildsByUserBarChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "jenkins-build-duration":
-        return (<JenkinsBuildDurationBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<JenkinsBuildDurationBarChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "jenkins-status-by-job-name":
-        return (<JenkinsStatusByJobNameBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<JenkinsStatusByJobNameBarChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "jenkins-deployment-frequency":
         return (<JenkinsDeploymentFrequencyLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "jenkins-change-failure-rate":
@@ -149,7 +149,7 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
       case "jenkins-deployments-counts":
         return (<JenkinsDeploymentsCountsBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "jenkins-recent-build-status":
-        return (<JenkinsRecentBuildStatusTable persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<JenkinsRecentBuildStatusTable persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
 
       // Jira KPIs
       case "jira-tickets-assigned-by-user":
