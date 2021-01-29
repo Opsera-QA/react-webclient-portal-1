@@ -13,6 +13,7 @@ import NotificationConfigurationPanel
 import NotificationMethodConfigurationPanel 
   from "components/notifications/notification_details/notification_method_forms/NotificationMethodConfigurationPanel";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 
 function NotificationEditorPanel({ notificationData, setNotificationData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
