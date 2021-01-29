@@ -6,6 +6,8 @@ const emailNotificationMetadata = {
       label: "Email Address",
       id: "address",
       isRequired: true,
+      isEmail: true,
+      lowercase: true
     },
   ],
   newObjectFields: {

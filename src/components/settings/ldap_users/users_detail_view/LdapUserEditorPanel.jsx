@@ -26,6 +26,14 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authori
   };
 
   const createLdapUser = async () => {
+    // TODO: Uncomment when email check is ready
+    // const email = ldapUserDataDto.getData("emailAddress");
+    // const emailIsAvailable = await accountsActions.isEmailAvailable(email, getAccessToken);
+    //
+    // if (emailIsAvailable?.data === false) {
+    //   throw `User with email ${email} already exists. Please try another email address.`;
+    // }
+    //
     return await accountsActions.createUser(ldapUserDataDto, getAccessToken);
   };
 

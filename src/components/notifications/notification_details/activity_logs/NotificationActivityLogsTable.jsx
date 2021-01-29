@@ -96,7 +96,6 @@ function NotificationActivityLogsTable({ notificationData, allLogs }) {
         supportSearch={true}
       >
         <StatusFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} />
-        {/* add custom filters here */}
         <NotificationTypeFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} />
         <TagFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} />
       </FilterBar>
@@ -104,8 +103,7 @@ function NotificationActivityLogsTable({ notificationData, allLogs }) {
   };
 
   return (
-    <DetailPanelContainer>
-      {/* <div className="mb-3 text-muted">View log activity for notifications performed by Opsera against this policy.</div> */}
+    <div className="p-2">
       <CustomTable
         columns={columns}
         data={logData}
@@ -118,7 +116,7 @@ function NotificationActivityLogsTable({ notificationData, allLogs }) {
         tableTitle={"Policy Activity Logs"}
       />
       <ModalActivityLogsDialog size={"lg"} header={"Policy Activity Log"} jsonData={modalData} show={showModal} setParentVisibility={setShowModal} />
-    </DetailPanelContainer>
+    </div>
   );
 }
 

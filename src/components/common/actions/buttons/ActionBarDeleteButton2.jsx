@@ -16,9 +16,8 @@ function ActionBarDeleteButton2({handleDelete, relocationPath, dataObject}) {
     try {
       let result = await handleDelete();
 
-      console.log("result: " + JSON.stringify(result));
       if (result) {
-        if (result.error == null) {
+        if (result?.error == null) {
           toastContext.showDeleteSuccessResultDialog(dataObject.getType());
           setShowDeleteModal(false);
           history.push(relocationPath);

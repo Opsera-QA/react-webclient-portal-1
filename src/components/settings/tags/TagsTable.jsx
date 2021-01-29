@@ -58,7 +58,7 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto })
   };
 
   return (
-    <div>
+    <div className="m-2">
       <CustomTable
         onRowSelect={onRowSelect}
         data={data}

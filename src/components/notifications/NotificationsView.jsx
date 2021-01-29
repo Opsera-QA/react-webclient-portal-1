@@ -34,6 +34,7 @@ function NotificationsView() {
         }
       }
     } catch (error) {
+      console.error(error);
       toastContext.showLoadingErrorDialog(error);
     } finally {
       setIsLoading(false);
@@ -68,11 +69,11 @@ function NotificationsView() {
 
   return (
     <NotificationsTable
-        isLoading={isLoading}
-        loadData={loadData}
-        data={notificationsList}
-        notificationFilterDto={notificationFilterDto}
-        setNotificationFilterDto={setNotificationFilterDto}
+      isLoading={isLoading}
+      loadData={loadData}
+      data={notificationsList}
+      notificationFilterDto={notificationFilterDto}
+      setNotificationFilterDto={setNotificationFilterDto}
     />
   );
 }
