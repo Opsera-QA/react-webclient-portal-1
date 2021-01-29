@@ -11,6 +11,8 @@ export async function persistNewRecordAndViewDetails(recordDto, toastContext, sh
       history.push(link);
     }
   }
+
+  return response;
 }
 
 export async function persistNewRecordAndClose(recordDto, toastContext, showSuccessToasts, createRecord, lenient, handleClose) {
@@ -19,6 +21,8 @@ export async function persistNewRecordAndClose(recordDto, toastContext, showSucc
   if (response != null && response !== false && handleClose) {
     handleClose();
   }
+
+  return response;
 }
 
 export async function persistNewRecordAndAddAnother(recordDto, toastContext, showSuccessToasts, createRecord, lenient, setRecordDto) {

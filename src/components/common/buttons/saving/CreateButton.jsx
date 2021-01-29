@@ -26,10 +26,18 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
       setIsSaving(false);
     }
     else if (recordDto.getDetailViewLink() != null) {
-      await persistNewRecordAndViewDetails(recordDto, toastContext, showSuccessToasts, createRecord, lenient, history);
+      let response = await persistNewRecordAndViewDetails(recordDto, toastContext, showSuccessToasts, createRecord, lenient, history);
+
+      if (response === false) {
+        setIsSaving(false);
+      }
     }
     else if (handleClose != null) {
-      await persistNewRecordAndClose(recordDto, toastContext, showSuccessToasts, createRecord, lenient, handleClose);
+      let response = await persistNewRecordAndClose(recordDto, toastContext, showSuccessToasts, createRecord, lenient, handleClose);
+
+      if (response === false) {
+        setIsSaving(false);
+      }
     }
     else {
       await persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient);
