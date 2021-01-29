@@ -133,7 +133,7 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
       case "opsera-recent-pipeline-status":
         return (<OpseraRecentPipelineStatus persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "opsera-recent-cd-status":
-        return (<OpseraRecentCDStatus persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
+        return (<OpseraRecentCDStatus persona={"developer"} date={getDateObject(kpiConfig)}/>);
 
       // Jenkins KPIs
       case "jenkins-builds-by-user":
