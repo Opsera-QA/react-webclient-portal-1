@@ -43,7 +43,7 @@ function ClientSideBottomPaginator({ items, pageSize, paginationStyle, setShownI
   };
 
   const setPaginationItems = (newPage) => {
-    const startIndex = (newPage - 1) * (pageSize - 1);
+    const startIndex = ((newPage - 1) * pageSize);
     const endIndex = startIndex + pageSize;
     const shownItems = items.slice(startIndex, endIndex);
     setShownItems([...shownItems]);

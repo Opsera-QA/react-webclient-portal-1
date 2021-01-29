@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useState} from "react";
 
 import PropTypes from "prop-types";
 import LdapGroupEditorPanel from "./LdapGroupEditorPanel";
@@ -11,16 +11,7 @@ import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTa
 import LdapGroupMembershipManagementPanel
   from "components/settings/ldap_groups/ldap_group_detail/membership_manager/LdapGroupMembershipManagementPanel";
 
-function LdapGroupDetailPanel(
-  {
-    currentUserEmail,
-    ldapGroupData,
-    setLdapGroupData,
-    ldapUsers,
-    orgDomain,
-    loadData,
-    authorizedActions,
-  }) {
+function LdapGroupDetailPanel({currentUserEmail, ldapGroupData, setLdapGroupData, ldapUsers, orgDomain, loadData, authorizedActions }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -46,7 +37,7 @@ function LdapGroupDetailPanel(
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <LdapGroupSummaryPanel ldapGroupData={ldapGroupData} domain={orgDomain} setActiveTab={setActiveTab} />;
+        return <LdapGroupSummaryPanel ldapGroupData={ldapGroupData} domain={orgDomain} setActiveTab={setActiveTab} loadData={loadData} />;
       case "manage":
         return (<LdapGroupMembershipManagementPanel orgDomain={orgDomain} setActiveTab={setActiveTab} ldapGroupData={ldapGroupData} authorizedActions={authorizedActions} ldapUsers={ldapUsers} loadData={loadData}/>);
       case "settings":
