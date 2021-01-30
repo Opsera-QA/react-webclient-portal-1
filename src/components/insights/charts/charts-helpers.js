@@ -9,9 +9,17 @@ export function getDateObjectFromKpiConfiguration(kpiConfiguration) {
     })
   }
   return ({
-    "start": "now-90d",
-    "end": "now"
+    "start": addDays(new Date(), -90).toISOString(),
+    "end": new Date().toISOString()
   });
+}
+
+export function getTagsFromKpiConfiguration(kpiConfiguration) {
+  if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "tags")]?.value && 
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "tags")]?.value.length > 0) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "tags")].value;
+  }
+  return null;
 }
 
 export function getChartIconFromKpiConfiguration(kpiConfiguration) {

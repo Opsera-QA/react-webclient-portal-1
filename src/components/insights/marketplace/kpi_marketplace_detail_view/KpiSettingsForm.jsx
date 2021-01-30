@@ -20,6 +20,8 @@ function KpiSettingsForm({kpiConfiguration, setKpiConfiguration, dashboardData, 
     const [kpiSettings, setKpiSettings] = useState(new Model(kpiConfiguration, kpiConfigurationMetadata, false));
     const [kpiDateFilter, setKpiDateFilter] = useState(new Model(kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")], kpiDateFilterMetadata, false))
     const [kpiTagsFilter, setKpiTagsFilter] = useState(new Model(kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "tags")], kpiTagsFilterMetadata, false))
+    const tagFilterEnabled = ["opsera-pipeline-duration", "opsera-pipelines-by-user", "opsera-deployment-frequency", "opsera-recent-pipeline-status", "opsera-status-by-pipeline", 
+                                "jenkins-builds-by-user", "jenkins-build-duration", "jenkins-status-by-job-name", "jenkins-recent-build-status"];
 
     const getKpiFilters = (filter) => {
         switch (filter.type) {
@@ -32,7 +34,7 @@ function KpiSettingsForm({kpiConfiguration, setKpiConfiguration, dashboardData, 
             case "tags":
                 return (
                     <div>
-                        <DtoTagManagerFilterInput type={"kpi_filter"} fieldName={"value"} setDataObject={setKpiTagsFilter} dataObject={kpiTagsFilter} disabled={true}/>
+                        <DtoTagManagerFilterInput type={"kpi_filter"} fieldName={"value"} setDataObject={setKpiTagsFilter} dataObject={kpiTagsFilter} disabled={!tagFilterEnabled.includes(kpiSettings.getData("kpi_identifier"))}/>
                     </div>
                 );
         }

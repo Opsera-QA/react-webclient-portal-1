@@ -9,8 +9,9 @@ import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
+import { green } from "colors";
 
-function JenkinsStatusByJobNameBarChart({ persona, date }) {
+function JenkinsStatusByJobNameBarChart({ persona, date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -39,16 +40,12 @@ function JenkinsStatusByJobNameBarChart({ persona, date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
+    const apiUrl = "/analytics/metrics";
     const postBody = {
-      data: [
-        {
-          request: "jenkinsStatusByJobName",
-          metric: "bar",
-        },
-      ],
+      request: "jenkinsStatusByJobName",
       startDate: date.start,
       endDate: date.end,
+      tags: tags
     };
 
     try {
@@ -90,13 +87,17 @@ function JenkinsStatusByJobNameBarChart({ persona, date }) {
             <ResponsiveBar
               data={data ? data.data : []}
               keys={config.keys}
-              indexBy="key"
+              indexBy="_id"
               onClick={() => setShowModal(true)}
               margin={config.margin}
               padding={0.3}
               layout={"horizontal"}
               colors={(bar) => {
-                return bar.id === "Failed" ? "red" : "green";
+                switch (bar.id) {
+                  case "successful": return "green";
+                  case "failed": return "red";
+                  default: return "gold"
+                }
               }}
               borderColor={{ theme: "background" }}
               colorBy="id"

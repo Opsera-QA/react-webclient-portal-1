@@ -11,7 +11,7 @@ import { faCheckCircle, faTimesCircle } from "@fortawesome/free-solid-svg-icons"
 import CustomTable from "components/common/table/CustomTable";
 import "components/analytics/charts/charts.css";
 
-function RecentBuildsTable({ date }) {
+function RecentBuildsTable({ date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -42,6 +42,7 @@ function RecentBuildsTable({ date }) {
         Header: "Completed At",
         accessor: "timestamp",
         Cell: (props) => {
+          console.log(props);
           return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
         },
       },
@@ -98,16 +99,17 @@ function RecentBuildsTable({ date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/activity";
+    const apiUrl = "/analytics/metrics";
     const postBody = {
-      requests: ["jenkinsBuildRecent"],
+      request: "jenkinsBuildRecent",
       startDate: date.start,
       endDate: date.end,
+      tags: tags
     };
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res : [];
+      let dataObject = res && res.data ? res.data.data[0].jenkinsBuildRecent : [];
       setData(dataObject);
       setLoading(false);
     } catch (err) {

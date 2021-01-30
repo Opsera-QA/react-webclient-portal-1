@@ -10,7 +10,7 @@ import ModalLogs from "components/common/modal/modalLogs";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 
-function JenkinsBuildsByUserBarChart({ persona, date }) {
+function JenkinsBuildsByUserBarChart({ persona, date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -39,16 +39,12 @@ function JenkinsBuildsByUserBarChart({ persona, date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
+    const apiUrl = "/analytics/metrics";
     const postBody = {
-      data: [
-        {
-          request: "jenkinsBuildsByUser",
-          metric: "bar",
-        },
-      ],
+      request: "jenkinsBuildsByUser",
       startDate: date.start,
       endDate: date.end,
+      tags: tags
     };
 
     try {
@@ -90,7 +86,7 @@ function JenkinsBuildsByUserBarChart({ persona, date }) {
             <ResponsiveBar
               data={data ? data.data : []}
               keys={config.keys}
-              indexBy="key"
+              indexBy="_id"
               onClick={() => setShowModal(true)}
               margin={config.margin}
               padding={0.3}

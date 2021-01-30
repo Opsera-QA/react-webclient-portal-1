@@ -10,12 +10,13 @@ import ModalLogs from "components/common/modal/modalLogs";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 
-function OpseraBuildsByUserBarChart({ persona, date }) {
+function OpseraBuildsByUserBarChart({ persona, date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  console.log(tags);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -39,16 +40,12 @@ function OpseraBuildsByUserBarChart({ persona, date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
+    const apiUrl = "/analytics/metrics";
     const postBody = {
-      data: [
-        {
-          request: "opseraPipelinesByUser",
-          metric: "bar",
-        },
-      ],
+      request: "opseraPipelinesByUser",
       startDate: date.start,
       endDate: date.end,
+      tags: tags
     };
 
     try {
@@ -90,7 +87,7 @@ function OpseraBuildsByUserBarChart({ persona, date }) {
             <ResponsiveBar
               data={data ? data.data : []}
               keys={config.keys}
-              indexBy="key"
+              indexBy="_id"
               onClick={() => setShowModal(true)}
               margin={config.margin}
               padding={0.3}

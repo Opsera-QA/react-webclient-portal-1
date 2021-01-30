@@ -182,15 +182,15 @@ export default function Marketplace () {
       <div className="px-3">
         <Row>
           <Col>
+            <KpiCategoryFilter filterDto={marketplaceFilterDto} setFilterDto={setMarketplaceFilterDto} setDataFunction={setFilterData}/>
+          </Col>
+          <Col>
             <ToolIdentifierFilter
               setDataFunction={setFilterData}
               setFilterDto={setMarketplaceFilterDto}
               filterDto={marketplaceFilterDto}
               fieldName={"tool"}
             />
-          </Col>
-          <Col>
-            <KpiCategoryFilter filterDto={marketplaceFilterDto} setFilterDto={setMarketplaceFilterDto} setDataFunction={setFilterData}/>
           </Col>
           <Col>
             <InputGroup className="mb-3">
