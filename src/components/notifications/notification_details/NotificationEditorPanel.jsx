@@ -95,6 +95,10 @@ function NotificationEditorPanel({ notificationData, setNotificationData, handle
         notificationMethodDataDto={notificationMethodDataDto}
         setNotificationMethodDataDto={setNotificationMethodDataDto}
       />
+      <Col lg={12}>
+        <TextAreaInput setDataObject={setNotificationDataDto} dataObject={notificationDataDto} fieldName={"nextSteps"}/>
+      </Col>
+
     </EditorPanelContainer>
   );
 }
