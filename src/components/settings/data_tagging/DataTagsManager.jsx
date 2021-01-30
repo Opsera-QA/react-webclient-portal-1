@@ -55,11 +55,14 @@ function Tagging() {
   const getRoles = async () => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess?.OpseraAdministrator) {
-      setAccessRoleData(userRoleAccess);
-      await fetchProjectTags();
-      await fetchUserTags();
+    if (!userRoleAccess) {
+      setIsLoading(false)
+      toastContext.showLoadingErrorDialog("Unable to fetch access privileges");
+      return
     }
+    setAccessRoleData(userRoleAccess);
+    await fetchProjectTags();
+    await fetchUserTags();
   };
 
   const getProjectTags = async () => {
