@@ -9,6 +9,7 @@ import GitlabTwoFactorToggle from "components/inventory/tools/tool_details/tool_
 import {AuthContext} from "contexts/AuthContext";
 import toolsActions from "components/inventory/tools/tools-actions";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 
 function GitlabToolConfiguration({ toolData }) {
@@ -29,7 +30,7 @@ function GitlabToolConfiguration({ toolData }) {
     setGitlabConfigurationDto(gitlabConfigurationData);
   };
 
-  const saveGithubToolConfiguration = async () => {
+  const saveGitlabToolConfiguration = async () => {
     let newConfiguration = gitlabConfigurationDto.getPersistData();
     const simpleVaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`;
     newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(gitlabConfigurationDto, "accountPassword", newConfiguration.accountPassword, simpleVaultKey, getAccessToken);
@@ -43,8 +44,8 @@ function GitlabToolConfiguration({ toolData }) {
     if (gitlabConfigurationDto.getData("twoFactorAuthentication") === true) {
       return (
         <div>
-          <VaultTextInput dataObject={gitlabConfigurationDto} setDataObject={setGitlabConfigurationDto} fieldName={"secretPrivateKey"}/>
-          <VaultTextInput dataObject={gitlabConfigurationDto} setDataObject={setGitlabConfigurationDto} fieldName={"secretAccessTokenKey"}/>
+          <VaultTextAreaInput dataObject={gitlabConfigurationDto} setDataObject={setGitlabConfigurationDto} fieldName={"secretPrivateKey"}/>
+          <VaultTextAreaInput dataObject={gitlabConfigurationDto} setDataObject={setGitlabConfigurationDto} fieldName={"secretAccessTokenKey"}/>
         </div>
       );
     }
@@ -58,7 +59,7 @@ function GitlabToolConfiguration({ toolData }) {
   return (
     <ToolConfigurationEditorPanelContainer
       recordDto={gitlabConfigurationDto}
-      persistRecord={saveGithubToolConfiguration}
+      persistRecord={saveGitlabToolConfiguration}
       toolData={toolData}
       toolConnectionCheckName={"Gitlab"}
     >
