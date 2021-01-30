@@ -22,7 +22,7 @@ function VaultTextAreaInput({fieldName, dataObject, setDataObject, disabled}) {
 
   const getCurrentValue = () => {
     if (typeof dataObject.getData(fieldName) === "object") {
-      return "***********";
+      return "*********************************";
     }
 
     return dataObject.getData(fieldName);
