@@ -60,7 +60,8 @@ function AccountSettings() {
       );
     }
 
-    if (accessRoleData.PowerUser) {
+    //for LDAP Power User role or Saas based user, show this (Saas based user gets the .Role of "power_user"
+    if (accessRoleData.PowerUser || accessRoleData.Role === "power_user") {
       return (
         <>
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
