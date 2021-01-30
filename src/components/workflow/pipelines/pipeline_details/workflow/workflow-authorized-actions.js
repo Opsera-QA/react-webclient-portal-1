@@ -123,7 +123,7 @@ const calculateUserObjectRole = (userEmail, userGroups, objectRoles) => {
 
   //filter out only user records (groups null)
   const userRoles = objectRoles.filter(function(item) {
-    return item.user && item.user === userEmail;
+    return item.user && item.user.toLowerCase() === userEmail.toLowerCase();
   });
 
   if (userRoles.length > 0) {
