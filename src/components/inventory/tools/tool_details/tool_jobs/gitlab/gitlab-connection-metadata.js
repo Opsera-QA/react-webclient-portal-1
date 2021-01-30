@@ -55,19 +55,19 @@ const gitlabConnectionMetadata = {
     },
     {
       label: "Enable Two Factor Authentication?",
-      id: "twoFactorAuthentication",
-      maxLength: 100
+      id: "twoFactorAuthentication"
     },
     {
       label: "Private Key",
       id: "secretPrivateKey",
       isRequired: true,
+      maxLength: 10000,
     },
     {
       label: "Access Key",
       id: "secretAccessTokenKey",
       isRequired: true,
-      maxLength: 256,
+      maxLength: 10000,
     },
   ],
   newObjectFields:
