@@ -20,6 +20,14 @@ function VaultTextAreaInput({fieldName, dataObject, setDataObject, disabled}) {
     return typeof currentValue === "object" && Object.entries(currentValue).length > 0;
   };
 
+  const getCurrentValue = () => {
+    if (typeof dataObject.getData(fieldName) === "object") {
+      return "***********";
+    }
+
+    return dataObject.getData(fieldName);
+  };
+
   return (
     <InputContainer>
       <InputLabel field={field}/>
@@ -27,7 +35,7 @@ function VaultTextAreaInput({fieldName, dataObject, setDataObject, disabled}) {
         style={{WebkitTextSecurity: 'disc'}}
         rows={3}
         disabled={disabled}
-        value={dataObject.getData(fieldName)}
+        value={getCurrentValue()}
         onChange={(event) => validateAndSetData(event.target.value)}
         className="form-control"
       />
