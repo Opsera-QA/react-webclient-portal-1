@@ -59,14 +59,14 @@ function Sidebar({ userData, hideSideBar }) {
 
     } else if (accessRole.Type === "sass-user") {
       return (<SaasUserNav accessRole={accessRole}
-                                  featureFlagHideItemInProd={featureFlagHideItemInProd()}
-                                  featureFlagHideItemInTest={featureFlagHideItemInTest()}/>);
+                           featureFlagHideItemInProd={featureFlagHideItemInProd()}
+                           featureFlagHideItemInTest={featureFlagHideItemInTest()}/>);
 
     } else { //drop into LDAP Org roles
       if (accessRole.Administrator) {
         return (<AccountAdminUserNav accessRole={accessRole}
-                             featureFlagHideItemInProd={featureFlagHideItemInProd()}
-                             featureFlagHideItemInTest={featureFlagHideItemInTest()}/>);
+                                     featureFlagHideItemInProd={featureFlagHideItemInProd()}
+                                     featureFlagHideItemInTest={featureFlagHideItemInTest()}/>);
 
       } else if (accessRole.Role === "power_user") {
         return (<AccountPowerUserNav accessRole={accessRole}
@@ -75,8 +75,8 @@ function Sidebar({ userData, hideSideBar }) {
 
       } else {
         return (<DefaultUserNav accessRole={accessRole}
-                                     featureFlagHideItemInProd={featureFlagHideItemInProd()}
-                                     featureFlagHideItemInTest={featureFlagHideItemInTest()}/>);
+                                featureFlagHideItemInProd={featureFlagHideItemInProd()}
+                                featureFlagHideItemInTest={featureFlagHideItemInTest()}/>);
       }
     }
   };
@@ -241,15 +241,12 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
               className="menu-text">Reports</span></NavLink>
           }
 
-          {featureFlagHideItemInProd ?
-            <></>
-            :
-            <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
-              <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
-              className="menu-text">Notifications</span></NavLink>
-          }
 
-          
+          <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
+            <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
+            className="menu-text">Notifications</span></NavLink>
+
+
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
             className="menu-text">Updates</span></NavLink>
@@ -330,9 +327,9 @@ function SaasUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHideIte
             <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
             className="menu-text">Blueprints</span></NavLink>
 
-          {/* <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
+           <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
             <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
-            className="menu-text">Notifications</span></NavLink>*/}
+            className="menu-text">Notifications</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
@@ -411,9 +408,9 @@ function AccountAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFla
             <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
             className="menu-text">Blueprints</span></NavLink>
 
-         {/* <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
+           <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
             <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
-            className="menu-text">Notifications</span></NavLink>*/}
+            className="menu-text">Notifications</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
@@ -491,9 +488,9 @@ function AccountPowerUserNav({ accessRole, featureFlagHideItemInProd, featureFla
             <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
             className="menu-text">Blueprints</span></NavLink>
 
-          {/* <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
+           <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
             <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
-            className="menu-text">Notifications</span></NavLink>*/}
+            className="menu-text">Notifications</span></NavLink>
 
           <NavLink className="nav-link" activeClassName="chosen" to="/update">
             <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
@@ -572,13 +569,12 @@ function DefaultUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHide
             <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
             className="menu-text">Blueprints</span></NavLink>
 
-          
+
         </div>
       </div>
     </div>
   </>);
 }
-
 
 
 FreeTrialNav.propTypes = {
