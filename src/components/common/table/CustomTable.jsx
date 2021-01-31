@@ -15,13 +15,7 @@ export const defaultRowStyling = (row) => {
 };
 
 export const defaultInitialState = {
-  pageIndex: 0,
-  sortBy: [
-    {
-      id: "name",
-      desc: false
-    }
-  ]
+  pageIndex: 0
 };
 
 function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, paginationOptions, showHeaderText, isLoading, tableTitle, createNewRecord, tableFilterBar, paginationDto, setPaginationDto, loadData }) {
