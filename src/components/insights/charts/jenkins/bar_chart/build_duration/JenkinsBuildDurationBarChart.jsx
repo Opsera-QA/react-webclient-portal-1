@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useCallback } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
@@ -12,23 +12,57 @@ import ErrorDialog from "components/common/status_notifications/error";
 
 function JenkinsBuildDurationBarChart({ persona, date, tags }) {
   const contextType = useContext(AuthContext);
+  const {featureFlagHideItemInProd} = useContext(AuthContext)
+  const isEnvProd = featureFlagHideItemInProd();
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  const fetchData = useCallback(async () => {
+  useEffect(() => {
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await fetchData();
+      } catch (err) {
+        if (err.name === "AbortError")
+          // console.log("Request was canceled via controller.abort");
+          return;
+      }
+    };
+    runEffect();
+
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
+  const fetchData = async () => {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/metrics";
-    const postBody = {
+    let apiUrl = "/analytics/metrics";
+    let postBody = {
       request: "jenkinsBuildDuration",
       startDate: date.start,
       endDate: date.end,
       tags: tags
     };
-
+    if (isEnvProd) {
+      apiUrl = "/analytics/data";
+      postBody = {
+        data: [
+          {
+            request: "jenkinsBuildDuration",
+            metric: "bar",
+            index: "jenkins-pipeline*",
+          },
+        ],
+        startDate: date.start,
+        endDate: date.end
+      };
+    }
+    
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].jenkinsBuildDuration : [];
@@ -38,25 +72,8 @@ function JenkinsBuildDurationBarChart({ persona, date, tags }) {
       setLoading(false);
       setErrors(err.message);
     }
-  }, [contextType]);
+  };
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        await fetchData();
-      } catch (err) {
-        if (err.name === "AbortError")
-          //console.log("Request was canceled via controller.abort");
-          return;
-      }
-    };
-    runEffect();
-
-    return () => {
-      controller.abort();
-    };
-  }, [fetchData]);
 
   if (loading) return <LoadingDialog size="sm" />;
   else if (error) return <ErrorDialog error={error} />;
