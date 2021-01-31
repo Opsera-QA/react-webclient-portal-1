@@ -54,10 +54,7 @@ function ProjectMappingDetailView() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-
-      if (userRoleAccess?.OpseraAdministrator === true) {
-        await getProjectMapping(projectMappingId);
-      }
+      await getProjectMapping(projectMappingId);
     }
   };
 
@@ -74,7 +71,7 @@ function ProjectMappingDetailView() {
     );
   };
 
-  if (accessRoleData.OpseraAdministrator === false) {
+  if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
     return <AccessDeniedDialog roleData={accessRoleData} />;
   }
 
