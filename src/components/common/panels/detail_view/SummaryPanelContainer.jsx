@@ -1,19 +1,21 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ActionBarEditorToggleButton from "../../actions/buttons/ActionBarEditorToggleButton";
+import ActionBarEditorToggleButton from "components/common/actions/buttons/ActionBarEditorToggleButton";
 
-function SummaryPanelContainer({ setActiveTab, children }) {
+function SummaryPanelContainer({ setActiveTab, editingAllowed, children }) {
   const getSettingsToggle = () => {
-    if (setActiveTab) {
-      return <ActionBarEditorToggleButton setActiveTab={setActiveTab} />
+    if (editingAllowed && setActiveTab) {
+      return (
+        <div className="float-right mt-2 mr-1">
+          <ActionBarEditorToggleButton setActiveTab={setActiveTab} />
+        </div>
+      );
     }
   };
 
   return (
     <div className="scroll-y">
-      <div className="float-right mt-2 mr-1">
-        {getSettingsToggle()}
-      </div>
+      {getSettingsToggle()}
       <div className="p-3">
         {children}
       </div>
@@ -21,10 +23,14 @@ function SummaryPanelContainer({ setActiveTab, children }) {
   );
 }
 
-
 SummaryPanelContainer.propTypes = {
   setActiveTab: PropTypes.func,
-  children: PropTypes.oneOfType([PropTypes.object, PropTypes.array])
+  children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  editingAllowed: PropTypes.bool
+};
+
+SummaryPanelContainer.defaultProps = {
+  editingAllowed: true
 };
 
 export default SummaryPanelContainer;
