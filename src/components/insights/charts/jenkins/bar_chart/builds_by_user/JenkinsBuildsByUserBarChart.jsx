@@ -12,6 +12,8 @@ import ErrorDialog from "components/common/status_notifications/error";
 
 function JenkinsBuildsByUserBarChart({ persona, date, tags }) {
   const contextType = useContext(AuthContext);
+  const {featureFlagHideItemInProd} = useContext(AuthContext)
+  const isEnvProd = featureFlagHideItemInProd();
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -39,13 +41,26 @@ function JenkinsBuildsByUserBarChart({ persona, date, tags }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/metrics";
-    const postBody = {
+    let apiUrl = "/analytics/metrics";
+    let postBody = {
       request: "jenkinsBuildsByUser",
       startDate: date.start,
       endDate: date.end,
       tags: tags
     };
+    if (isEnvProd) {
+      apiUrl = "/analytics/data";
+      postBody = {
+        data: [
+          {
+            request: "jenkinsBuildsByUser",
+            metric: "bar",
+          },
+        ],
+        startDate: date.start,
+        endDate: date.end
+      };
+    }
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
@@ -86,7 +101,7 @@ function JenkinsBuildsByUserBarChart({ persona, date, tags }) {
             <ResponsiveBar
               data={data ? data.data : []}
               keys={config.keys}
-              indexBy="_id"
+              indexBy={isEnvProd ? "key" : "_id"}
               onClick={() => setShowModal(true)}
               margin={config.margin}
               padding={0.3}

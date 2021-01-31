@@ -13,6 +13,8 @@ import "components/analytics/charts/charts.css";
 
 function RecentBuildsTable({ date, tags }) {
   const contextType = useContext(AuthContext);
+  const {featureFlagHideItemInProd} = useContext(AuthContext)
+  const isEnvProd = featureFlagHideItemInProd();
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -42,7 +44,6 @@ function RecentBuildsTable({ date, tags }) {
         Header: "Completed At",
         accessor: "timestamp",
         Cell: (props) => {
-          console.log(props);
           return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
         },
       },
@@ -99,17 +100,25 @@ function RecentBuildsTable({ date, tags }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/metrics";
-    const postBody = {
+    let apiUrl = "/analytics/metrics";
+    let postBody = {
       request: "jenkinsBuildRecent",
       startDate: date.start,
       endDate: date.end,
       tags: tags
     };
+    if (isEnvProd) {
+      apiUrl = "/analytics/activity";
+      postBody = {
+        requests: ["jenkinsBuildRecent"],
+        startDate: date.start,
+        endDate: date.end
+      };
+    }
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].jenkinsBuildRecent : [];
+      let dataObject = isEnvProd ? res && res.data ? res : [] : res && res.data ? res.data.data[0].jenkinsBuildRecent : [] ;
       setData(dataObject);
       setLoading(false);
     } catch (err) {
