@@ -2,6 +2,8 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
+import {faTag} from "@fortawesome/pro-light-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 function TagField({dataObject, fieldName}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -28,8 +30,8 @@ function TagField({dataObject, fieldName}) {
     return (
       parsedTags.map((tag, i) => {
         return (
-          <span key={i} className="mx-1 mb-1 badge badge-secondary">
-            {`${tag.type}: ${tag.value}`}
+          <span key={i} className="mx-1 mb-1 badge badge-light tag-badge">
+            <FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/>{`${tag.type}: ${tag.value}`}
           </span>
         );
       })

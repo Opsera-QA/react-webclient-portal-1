@@ -2,6 +2,11 @@
 .item-field .badge {
     font-size: 13px;
 }
+
+.item-field .tag-badge {
+  font-weight: normal;
+  background: #E7E5ED;
+}
 /* End Item Field */
 
 
