@@ -22,8 +22,6 @@ import {
 import ToolApplicationsPanel from "./ToolAppliationsPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import ToolSummaryPanel from "./ToolSummaryPanel";
-import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
-import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import ToolPipelinesPanel from "./ToolPipelinesPanel";
 import ToolTaggingPanel from "./ToolTaggingPanel";
 import ToolProjectsPanel from "components/inventory/tools/tool_details/projects/ToolProjectsPanel";

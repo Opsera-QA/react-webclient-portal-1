@@ -5,7 +5,7 @@ import {faPencilAlt} from "@fortawesome/pro-light-svg-icons";
 import EditRolesModal from "components/common/inline_inputs/roles/modal/EditRolesModal";
 import RoleAccessField from "components/common/fields/multiple_items/RoleAccessField";
 
-function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData}) {
+function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData, visible}) {
   const [showModal, setShowModal] = useState(false);
 
   const closeModal = () => {
@@ -22,6 +22,10 @@ function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData}) 
       );
     }
   };
+
+  if (!visible) {
+    return null;
+  }
 
   return (
     <div className="role-access">
@@ -44,7 +48,12 @@ RoleAccessInlineInputBase.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   disabled: PropTypes.bool,
+  visible: PropTypes.bool,
   saveData: PropTypes.func
 };
+
+RoleAccessInlineInputBase.defaultProps = {
+  visible: true
+}
 
 export default RoleAccessInlineInputBase;

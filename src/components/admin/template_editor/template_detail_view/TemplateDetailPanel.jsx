@@ -31,7 +31,7 @@ function TemplateDetailPanel({ templateData, setTemplateData }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <TemplateSummaryPanel templateData={templateData} setActiveTab={setActiveTab} />;
+        return <TemplateSummaryPanel templateData={templateData} setActiveTab={setActiveTab} setTemplateData={setTemplateData} />;
       case "settings":
         return <TemplateEditorPanel setTemplateData={setTemplateData} templateData={templateData} handleClose={toggleSummaryPanel} />;
       default:

@@ -1,16 +1,16 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
-import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
+import templateActions from "components/admin/template_editor/template-actions";
 
-function RegistryToolRoleAccessInput({fieldName, dataObject, setDataObject, disabled, visible}) {
+function PipelineTemplateRoleAccessInput({fieldName, dataObject, setDataObject, disabled, visible}) {
   const { getAccessToken } = useContext(AuthContext);
 
   const saveData = async (newRoles) => {
     let newDataObject = {...dataObject};
     newDataObject.setData(fieldName, newRoles);
-    const response = await toolsActions.updateTool(newDataObject, getAccessToken);
+    let response = await templateActions.updateTemplate(dataObject, getAccessToken);
     setDataObject({...newDataObject});
     return response;
   };
@@ -20,13 +20,13 @@ function RegistryToolRoleAccessInput({fieldName, dataObject, setDataObject, disa
       fieldName={fieldName}
       dataObject={dataObject}
       disabled={disabled}
-      saveData={saveData}
       visible={visible}
+      saveData={saveData}
     />
   );
 }
 
-RegistryToolRoleAccessInput.propTypes = {
+PipelineTemplateRoleAccessInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
@@ -34,8 +34,8 @@ RegistryToolRoleAccessInput.propTypes = {
   visible: PropTypes.bool,
 };
 
-RegistryToolRoleAccessInput.defaultProps = {
-  fieldName: "roles"
+PipelineTemplateRoleAccessInput.defaultProps = {
+  fieldName: "access"
 };
 
-export default RegistryToolRoleAccessInput;
+export default PipelineTemplateRoleAccessInput;
