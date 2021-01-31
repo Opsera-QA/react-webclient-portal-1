@@ -15,7 +15,7 @@ function GenericItemField({dataObject, fieldName}) {
     return (
       dataObject.getData(fieldName).map((item, i) => {
         return (
-          <span key={i} className="mx-1 mb-1 badge badge-secondary">
+          <span key={i} className="mx-1 mb-1 badge badge-light generic-badge">
             {item}
           </span>
         );

@@ -7,6 +7,11 @@
   font-weight: normal;
   background: #E7E5ED;
 }
+
+.item-field .generic-badge {
+  font-weight: normal;
+  background: #C7C3DD;
+}
 /* End Item Field */
 
 
