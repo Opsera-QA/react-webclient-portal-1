@@ -5,7 +5,7 @@ import {faPencilAlt} from "@fortawesome/pro-light-svg-icons";
 import EditRolesModal from "components/common/inline_inputs/roles/modal/EditRolesModal";
 import RoleAccessField from "components/common/fields/multiple_items/RoleAccessField";
 
-function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData, visible}) {
+function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData, visible, noDataMessage}) {
   const [showModal, setShowModal] = useState(false);
 
   const closeModal = () => {
@@ -30,7 +30,7 @@ function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData, v
   return (
     <div className="role-access">
       <div className="d-flex">
-        <div><RoleAccessField dataObject={dataObject} fieldName={fieldName} /></div>
+        <div><RoleAccessField dataObject={dataObject} fieldName={fieldName} noDataMessage={noDataMessage} /></div>
         <div>{getEditButton()}</div>
       </div>
       <EditRolesModal
@@ -49,7 +49,8 @@ RoleAccessInlineInputBase.propTypes = {
   dataObject: PropTypes.object,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
-  saveData: PropTypes.func
+  saveData: PropTypes.func,
+  noDataMessage: PropTypes.string
 };
 
 RoleAccessInlineInputBase.defaultProps = {

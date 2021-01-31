@@ -15,12 +15,19 @@ function RegistryToolRoleAccessInput({fieldName, dataObject, setDataObject, disa
     return response;
   };
 
+  const getNoDataMessage = () => {
+    return (
+      <span>No Role Access Configurations Applied. All users can see or edit this {dataObject?.getType()}.</span>
+    );
+  }
+
   return (
     <RoleAccessInlineInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       disabled={disabled}
       saveData={saveData}
+      noDataMessage={getNoDataMessage()}
       visible={visible}
     />
   );

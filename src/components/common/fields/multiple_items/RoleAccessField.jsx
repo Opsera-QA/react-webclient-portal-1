@@ -5,12 +5,12 @@ import FieldLabel from "components/common/fields/FieldLabel";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUser, faUserFriends} from "@fortawesome/pro-light-svg-icons";
 
-function RoleAccessField({dataObject, fieldName}) {
+function RoleAccessField({dataObject, fieldName, noDataMessage}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const getRoleAccessConfigurationItems = () => {
     if (dataObject?.getData(fieldName) == null || dataObject?.getData(fieldName)?.length === 0) {
-      return <span>No Role Access Configurations Applied</span>;
+      return <span>{noDataMessage}</span>;
     }
 
     return (
@@ -48,6 +48,7 @@ function RoleAccessField({dataObject, fieldName}) {
 RoleAccessField.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
+  noDataMessage: PropTypes.any
 };
 
 export default RoleAccessField;

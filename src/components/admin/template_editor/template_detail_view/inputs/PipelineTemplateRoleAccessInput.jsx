@@ -15,6 +15,12 @@ function PipelineTemplateRoleAccessInput({fieldName, dataObject, setDataObject, 
     return response;
   };
 
+  const getNoDataMessage = () => {
+    return (
+      <span>No Role Access Configurations Applied. All users can see or edit this {dataObject?.getType()}.</span>
+    );
+  }
+
   return (
     <RoleAccessInlineInputBase
       fieldName={fieldName}
@@ -22,6 +28,7 @@ function PipelineTemplateRoleAccessInput({fieldName, dataObject, setDataObject, 
       disabled={disabled}
       visible={visible}
       saveData={saveData}
+      noDataMessage={getNoDataMessage()}
     />
   );
 }
