@@ -2,10 +2,10 @@ import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import LoadingDialog from "../common/status_notifications/loading";
 import { Row } from "react-bootstrap";
-import {faUser} from "@fortawesome/pro-light-svg-icons";
+import { faUser } from "@fortawesome/pro-light-svg-icons";
 import AccessDeniedDialog from "../common/status_notifications/accessDeniedInfo";
 import accountsActions from "../admin/accounts/accounts-actions";
-import {DialogToastContext} from "../../contexts/DialogToastContext";
+import { DialogToastContext } from "../../contexts/DialogToastContext";
 import PageLink from "../common/links/PageLink";
 import BreadcrumbPageLink from "../common/links/BreadcrumbPageLink";
 import ScreenContainer from "../common/panels/general/ScreenContainer";
@@ -26,14 +26,12 @@ function AccountSettings() {
     try {
       setIsLoading(true);
       await getRoles();
-    }
-    catch (error) {
+    } catch (error) {
       toastContext.showLoadingErrorDialog(error);
+    } finally {
+      setIsLoading(false);
     }
-    finally {
-      setIsLoading(false)
-    }
-  }
+  };
 
   const getRoles = async () => {
     const user = await getUserRecord();
@@ -64,6 +62,7 @@ function AccountSettings() {
     if (accessRoleData.PowerUser || accessRoleData.Role === "power_user") {
       return (
         <>
+          {!accessRoleData.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>}
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
           <BreadcrumbPageLink breadcrumbDestination={"mapping"}/>
@@ -74,13 +73,15 @@ function AccountSettings() {
     }
   };
 
-  if (!accessRoleData || isLoading) {
-    return (<LoadingDialog size="sm"/>);
-  }
+  if (!accessRoleData || isLoading)
+    {
+      return (<LoadingDialog size="sm"/>);
+    }
 
-  if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator && !userDetailsLink) {
-    return (<AccessDeniedDialog roleData={accessRoleData} />);
-  }
+  if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator && !userDetailsLink)
+    {
+      return (<AccessDeniedDialog roleData={accessRoleData}/>);
+    }
 
   return (
     <ScreenContainer
@@ -88,12 +89,13 @@ function AccountSettings() {
       pageDescription={"Manage account settings from this dashboard."}>
       <Row className="ml-3">
         {/*TODO: Make User Details Link Component*/}
-        {userDetailsLink && accessRoleData?.Type !== "sass-user" && <PageLink link={userDetailsLink} icon={faUser} linkText={"My User Record"}/>}
+        {userDetailsLink && accessRoleData?.Type !== "sass-user" &&
+        <PageLink link={userDetailsLink} icon={faUser} linkText={"My User Record"}/>}
         {getRolePageLinks()}
       </Row>
     </ScreenContainer>
   );
-}
+  }
 
-export default AccountSettings;
+  export default AccountSettings;
 
