@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import {Button} from "react-bootstrap";
 import {faPlus} from "@fortawesome/pro-light-svg-icons";
 
-function PropertyInputContainer({ children, titleIcon, titleText, field, errorMessage, addProperty, type }) {
+function PropertyInputContainer({ children, titleIcon, titleText, field, errorMessage, addProperty, type, addAllowed }) {
   const getTitleBar = () => {
     return (
       <div className="mx-2">
@@ -19,7 +19,7 @@ function PropertyInputContainer({ children, titleIcon, titleText, field, errorMe
     return (
       <Row>
         <div className="ml-auto mt-3 mr-3 d-flex">
-          <Button variant="secondary" onClick={() => addProperty()} size="sm">
+          <Button variant="secondary" disabled={!addAllowed} onClick={() => addProperty()} size="sm">
             <span className="text-white"><FontAwesomeIcon className="text-white mr-2" icon={faPlus} fixedWidth />Add {type}</span>
           </Button>
         </div>
@@ -49,6 +49,7 @@ PropertyInputContainer.propTypes = {
   errorMessage: PropTypes.string,
   type: PropTypes.string,
   addProperty: PropTypes.func,
+  addAllowed: PropTypes.bool
 };
 
 export default PropertyInputContainer;

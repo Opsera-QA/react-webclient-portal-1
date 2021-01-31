@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faIdCard, faTimes} from "@fortawesome/pro-light-svg-icons";
+import {faExclamationTriangle, faIdCard, faTimes} from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import DropdownList from "react-widgets/lib/DropdownList";
@@ -27,7 +27,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
   const [groupList, setGroupList] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const toastContext = useContext(DialogToastContext);
-  const [properties, setProperties] = useState([]);
+  const [roles, setRoles] = useState([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
   const [loadingGroups, setLoadingGroups] = useState(true);
 
@@ -96,12 +96,12 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
 
   const unpackData = () => {
     let currentData = dataObject.getData(fieldName);
-    let items = [];
+    let unpackedRoles = [];
 
     if (Array.isArray(currentData) && currentData.length > 0)
     {
       currentData.map((item) => {
-        items.push(
+        unpackedRoles.push(
           {
             _id: item["_id"],
             role: item["role"],
@@ -115,25 +115,25 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
       });
     }
     else {
-      items.push({role: "", user: "", group: "", roleAccessType: "group"});
+      unpackedRoles.push({role: "", user: "", group: "", roleAccessType: "group"});
     }
 
-    setProperties([...items]);
+    setRoles([...unpackedRoles]);
   };
 
-  const validateAndSetData = (newPropertyList) => {
-    setProperties([...newPropertyList]);
+  const validateAndSetData = (newRoleList) => {
+    setRoles([...newRoleList]);
     let newDataObject = {...dataObject};
 
-    if (newPropertyList.length > field.maxItems) {
+    if (newRoleList.length > field.maxItems) {
       setErrorMessage("You have reached the maximum allowed number of role access items. Please remove one to add another.");
       return;
     }
 
     let newArray = [];
 
-    if (newPropertyList && newPropertyList.length > 0) {
-      newPropertyList.map((item) => {
+    if (newRoleList && newRoleList.length > 0) {
+      newRoleList.map((item) => {
         if (item["role"] === "" || (item["user"] === "" && item["group"] === "")) {
           return;
         }
@@ -155,28 +155,39 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
     setDataObject({...newDataObject});
   }
 
-  const addProperty = () => {
-    let newPropertyList = properties;
-    let lastObject = newPropertyList[newPropertyList.length - 1];
-
-    // Do not add another row if key is not configured for last row
-    if (lastObject?.role === "" || (lastObject?.user === "" && lastObject?.group === "")) {
-      return;
-    }
-
-    let newRow = {role: "", user: "", group: "", roleAccessType: "group"};
-    newPropertyList.push(newRow);
-    validateAndSetData(newPropertyList);
+  const isRoleComplete = (role) => {
+    return !(role?.role === "" || (role?.user === "" && role?.group === ""));
   };
 
-  const deleteProperty = (index) => {
-    let newPropertyList = properties
-    newPropertyList.splice(index, 1);
-    validateAndSetData(newPropertyList);
+  const lastRoleComplete = () => {
+    let newPropertyList = roles;
+
+    if (newPropertyList.length === 0) {
+      return true;
+    }
+
+    let lastObject = newPropertyList[newPropertyList.length - 1];
+    return isRoleComplete(lastObject);
+  };
+
+  const addRole = () => {
+    let newRoleList = roles;
+
+    if (lastRoleComplete()) {
+      let newRow = {role: "", user: "", group: "", roleAccessType: "group"};
+      newRoleList.push(newRow);
+      validateAndSetData(newRoleList);
+    }
+  };
+
+  const deleteRole = (index) => {
+    let newRoleList = roles
+    newRoleList.splice(index, 1);
+    validateAndSetData(newRoleList);
   };
 
   const updateProperty = (row, innerField, newValue) => {
-    let newPropertyList = properties
+    let newPropertyList = roles
     let index = newPropertyList.indexOf(row);
 
     if (newPropertyList[index][innerField] !== newValue) {
@@ -191,10 +202,10 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
   };
 
   const getDisabledUsers = () => {
-    if (properties.length > 0) {
+    if (roles.length > 0) {
       const disabledUsers = [];
 
-      properties.map((property) => {
+      roles.map((property) => {
         if (property.user != null && property.user !== "") {
           disabledUsers.push(property.user);
         }
@@ -205,10 +216,10 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
   };
 
   const getDisabledGroups = () => {
-    if (properties.length > 0) {
+    if (roles.length > 0) {
       const disabledGroups = [];
 
-      properties.map((property) => {
+      roles.map((property) => {
         if (property.group != null && property.group !== "") {
           disabledGroups.push(property.group);
         }
@@ -218,7 +229,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
     }
   };
 
-  const getTypeInput = (property, index) => {
+  const getTypeInput = (role, index) => {
     return (
       <div className="mt-2 w-100 d-flex">
         <div className="ml-auto">
@@ -227,8 +238,8 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
             type="radio"
             name={`roleAccessType-${index}`}
             value={"group"}
-            checked={property["roleAccessType"] === "group"}
-            onChange={() => updateProperty(property, "roleAccessType", "group")}/>Group
+            checked={role["roleAccessType"] === "group"}
+            onChange={() => updateProperty(role, "roleAccessType", "group")}/>Group
         </div>
         <div className="mr-auto">
           <input
@@ -236,26 +247,26 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
             type="radio"
             name={`roleAccessType-${index}`}
             value={"user"}
-            checked={property["roleAccessType"] === "user"}
-            onChange={() => updateProperty(property, "roleAccessType", "user")}/>User
+            checked={role["roleAccessType"] === "user"}
+            onChange={() => updateProperty(role, "roleAccessType", "user")}/>User
         </div>
       </div>
     );
   };
 
-  const getAssigneeInput = (property) => {
-    if (property["roleAccessType"] === "user") {
+  const getAssigneeInput = (role) => {
+    if (role["roleAccessType"] === "user") {
       return (
         <DropdownList
           data={userList}
           valueField={"emailAddress"}
           textField={(item) => item != null && typeof item === "object" ? `${item.name} (${item.emailAddress})` : item}
-          value={property["user"]}
+          value={role["user"]}
           busy={loadingUsers}
           filter={"contains"}
           disabled={getDisabledUsers()}
           placeholder={"Select A User"}
-          onChange={(value) => updateProperty(property, "user", value["emailAddress"])}
+          onChange={(value) => updateProperty(role, "user", value["emailAddress"])}
         />
       );
     }
@@ -265,74 +276,76 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
         data={groupList}
         valueField={"name"}
         textField={"name"}
-        value={property["group"]}
+        value={role["group"]}
         busy={loadingGroups}
         disabled={getDisabledGroups()}
         filter={"contains"}
         placeholder={"Select A Group"}
-        onChange={(value) => updateProperty(property, "group", value["name"])}
+        onChange={(value) => updateProperty(role, "group", value["name"])}
       />
     );
   };
 
-  const getRoleTypeInput = (property) => {
+  const getRoleTypeInput = (role) => {
     return (
       <DropdownList
         className=""
         data={roleTypes}
         valueField={"value"}
         textField={"text"}
-        value={property["role"]}
+        value={role["role"]}
         filter={"contains"}
         placeholder={"Select Role Type"}
-        onChange={(value) => updateProperty(property, "role", value["value"])}
+        onChange={(value) => updateProperty(role, "role", value["value"])}
       />
     );
   };
 
   const getDeletePropertyButton = (index) => {
     return (
-      <Button variant="link" onClick={() => deleteProperty(index)}>
+      <Button variant="link" onClick={() => deleteRole(index)}>
         <span><FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/></span>
       </Button>
     )
   };
 
-  const getPropertyRow = (property, index) => {
+  const getPropertyRow = (role, index) => {
     return (
-      <div className="d-flex my-2 justify-content-between" key={index}>
-        <Col sm={11}>
-          <Row>
-            <Col sm={2}>
-              {getTypeInput(property, index)}
-            </Col>
-            <Col sm={5} className={"pl-1 pr-0"}>
-              {getAssigneeInput(property)}
-            </Col>
-            <Col sm={5} className={"pl-2 pr-1"}>
-              {getRoleTypeInput(property)}
-            </Col>
-          </Row>
-        </Col>
-        <Col sm={1} className={"pr-3 pl-0 delete-button"}>
-          {getDeletePropertyButton(index)}
-        </Col>
+      <div>
+        <div className="d-flex my-2" key={index}>
+          <Col sm={11}>
+            <Row>
+              <Col sm={2}>
+                {getTypeInput(role, index)}
+              </Col>
+              <Col sm={5} className={"pl-1 pr-0"}>
+                {getAssigneeInput(role)}
+              </Col>
+              <Col sm={5} className={"pl-2 pr-1"}>
+                {getRoleTypeInput(role)}
+              </Col>
+            </Row>
+          </Col>
+          <Col sm={1} className={"pr-3 pl-0 delete-button"}>
+            {getDeletePropertyButton(index)}
+          </Col>
+        </div>
       </div>
     );
   };
 
   const getFieldBody = () => {
-    if (!properties || properties.length === 0) {
+    if (!roles || roles.length === 0) {
       return (
         <div className="text-center">
-          <div className="text-muted no-data-message">No configuration properties have been added to this Tag</div>
+          <div className="text-muted no-data-message">No access roles have been added yet.</div>
         </div>
       );
     }
 
     return (
       <div className="flex-fill">
-        {properties.map((property, index) => {
+        {roles.map((property, index) => {
           return getPropertyRow(property, index);
         })}
       </div>
@@ -356,19 +369,38 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
     );
   };
 
+  const getIncompleteRoleMessage = () => {
+    if (!lastRoleComplete()) {
+      return (
+        <div className="w-100 ml-3">
+          <FontAwesomeIcon className="text-warning mr-1" icon={faExclamationTriangle} fixedWidth />
+          <span className="mt-1">Incomplete Roles Will Be Removed Upon Saving</span>
+        </div>
+      )
+    }
+  };
 
   if (field == null) {
     return <></>;
   }
 
   return (
-    <PropertyInputContainer titleIcon={faIdCard} field={field} addProperty={addProperty} titleText={field.label} errorMessage={errorMessage} type={"Role"}>
+    <PropertyInputContainer
+      titleIcon={faIdCard}
+      field={field}
+      addProperty={addRole}
+      titleText={field.label}
+      errorMessage={errorMessage}
+      type={"Role"}
+      addAllowed={lastRoleComplete()}
+    >
       <div>
         {getHeaderBar()}
       </div>
       <div className="properties-body-alt">
         {getFieldBody()}
       </div>
+      {getIncompleteRoleMessage()}
     </PropertyInputContainer>
   );
 }
