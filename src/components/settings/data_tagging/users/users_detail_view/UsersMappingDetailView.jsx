@@ -55,9 +55,7 @@ function UsersMappingDetailView() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      if (userRoleAccess?.OpseraAdministrator === true) {
-        await getUsersMapping(usersMappingId);
-      }
+      await getUsersMapping(usersMappingId);
     }
   };
 
@@ -80,7 +78,7 @@ function UsersMappingDetailView() {
     );
   };
 
-  if (accessRoleData.OpseraAdministrator === false) {
+  if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
     return <AccessDeniedDialog roleData={accessRoleData} />;
   }
 
