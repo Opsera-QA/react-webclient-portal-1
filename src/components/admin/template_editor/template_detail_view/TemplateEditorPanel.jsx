@@ -14,7 +14,6 @@ import LdapOrganizationAccountSelectInput
   from "components/common/list_of_values_input/admin/accounts/ldap_accounts/LdapOrganizationAccountSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import JsonInput from "components/common/inputs/object/JsonInput";
-import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 
 function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -69,9 +68,6 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
           <BooleanToggleInput fieldName={"readOnly"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
           <BooleanToggleInput fieldName={"singleUse"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
           <BooleanToggleInput fieldName={"publicUse"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
-        </Col>
-        <Col lg={12}>
-          <RoleAccessInput fieldName={"access"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
         </Col>
         <Col lg={6}>
           <JsonInput fieldName={"plan"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>

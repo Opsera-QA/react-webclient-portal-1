@@ -11,10 +11,10 @@ import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import BooleanField from "components/common/fields/boolean/BooleanField";
-import RoleAccessField from "components/common/fields/multiple_items/RoleAccessField";
+import PipelineTemplateRoleAccessInput
+  from "components/admin/template_editor/template_detail_view/inputs/PipelineTemplateRoleAccessInput";
 
-function TemplateSummaryPanel({ templateData, setActiveTab }) {
-
+function TemplateSummaryPanel({ templateData, setActiveTab, setTemplateData }) {
   if (templateData == null) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -58,8 +58,8 @@ function TemplateSummaryPanel({ templateData, setActiveTab }) {
         <Col lg={6}>
           <JsonField dataObject={templateData} fieldName={"plan"}/>
         </Col>
-        <Col lg={6}>
-          <RoleAccessField dataObject={templateData} fieldName={"access"}/>
+        <Col lg={12}>
+          <PipelineTemplateRoleAccessInput dataObject={templateData} setDataObject={setTemplateData} />
         </Col>
       </Row>
     </SummaryPanelContainer>
@@ -68,7 +68,8 @@ function TemplateSummaryPanel({ templateData, setActiveTab }) {
 
 TemplateSummaryPanel.propTypes = {
   templateData: PropTypes.object,
-  setActiveTab: PropTypes.func
+  setActiveTab: PropTypes.func,
+  setTemplateData: PropTypes.func
 };
 
 export default TemplateSummaryPanel;
