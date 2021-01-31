@@ -1,18 +1,15 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import InfoText from "components/common/inputs/info_text/InfoText";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faIdCard, faPlus, faTimes} from "@fortawesome/pro-light-svg-icons";
+import {faIdCard, faTimes} from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import DropdownList from "react-widgets/lib/DropdownList";
-import {
-  getOrganizationByDomain,
-} from "components/admin/accounts/ldap/organizations/organization-functions";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
+import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 
 const roleTypes = [
   {text: "Administrator", value: "administrator"},
@@ -221,25 +218,30 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
     }
   };
 
-  const getDeletePropertyButton = (index) => {
+  const getTypeInput = (property, index) => {
     return (
-      <Button variant="link" onClick={() => deleteProperty(index)}>
-        <FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/>
-      </Button>
-    )
-  };
-
-  const getAddPropertyButton = () => {
-    return (
-      <Row>
-        <div className="ml-auto mt-3 mr-3 d-flex">
-          <Button variant="secondary" onClick={() => addProperty()} size="sm">
-            <span className="text-white"><FontAwesomeIcon className="text-white mr-2" icon={faPlus} fixedWidth />Add Role</span>
-          </Button>
+      <div className="mt-2 w-100 d-flex">
+        <div className="ml-auto">
+          <input
+            className="mx-2"
+            type="radio"
+            name={`roleAccessType-${index}`}
+            value={"group"}
+            checked={property["roleAccessType"] === "group"}
+            onChange={() => updateProperty(property, "roleAccessType", "group")}/>Group
         </div>
-      </Row>
+        <div className="mr-auto">
+          <input
+            className="mx-2"
+            type="radio"
+            name={`roleAccessType-${index}`}
+            value={"user"}
+            checked={property["roleAccessType"] === "user"}
+            onChange={() => updateProperty(property, "roleAccessType", "user")}/>User
+        </div>
+      </div>
     );
-  }
+  };
 
   const getAssigneeInput = (property) => {
     if (property["roleAccessType"] === "user") {
@@ -273,47 +275,42 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
     );
   };
 
+  const getRoleTypeInput = (property) => {
+    return (
+      <DropdownList
+        className=""
+        data={roleTypes}
+        valueField={"value"}
+        textField={"text"}
+        value={property["role"]}
+        filter={"contains"}
+        placeholder={"Select Role Type"}
+        onChange={(value) => updateProperty(property, "role", value["value"])}
+      />
+    );
+  };
+
+  const getDeletePropertyButton = (index) => {
+    return (
+      <Button variant="link" onClick={() => deleteProperty(index)}>
+        <span><FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/></span>
+      </Button>
+    )
+  };
+
   const getPropertyRow = (property, index) => {
     return (
       <div className="d-flex my-2 justify-content-between" key={index}>
         <Col sm={11}>
           <Row>
             <Col sm={2}>
-              <div className="mt-2 w-100 d-flex">
-                <div className="ml-auto">
-                  <input
-                    className="mx-2"
-                    type="radio"
-                    name={`roleAccessType-${index}`}
-                    value={"group"}
-                    checked={property["roleAccessType"] === "group"}
-                    onChange={() => updateProperty(property, "roleAccessType", "group")}/>Group
-                </div>
-                <div className="mr-auto">
-                  <input
-                    className="mx-2"
-                    type="radio"
-                    name={`roleAccessType-${index}`}
-                    value={"user"}
-                    checked={property["roleAccessType"] === "user"}
-                    onChange={() => updateProperty(property, "roleAccessType", "user")}/>User
-                </div>
-              </div>
+              {getTypeInput(property, index)}
             </Col>
             <Col sm={5} className={"pl-1 pr-0"}>
               {getAssigneeInput(property)}
             </Col>
             <Col sm={5} className={"pl-2 pr-1"}>
-              <DropdownList
-                className=""
-                data={roleTypes}
-                valueField={"value"}
-                textField={"text"}
-                value={property["role"]}
-                filter={"contains"}
-                placeholder={"Select Role Type"}
-                onChange={(value) => updateProperty(property, "role", value["value"])}
-              />
+              {getRoleTypeInput(property)}
             </Col>
           </Row>
         </Col>
@@ -342,14 +339,6 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
     );
   };
 
-  const getTitleBar = () => {
-    return (
-      <div className="d-flex justify-content-between mx-2">
-        <div className="mt-2"><FontAwesomeIcon icon={faIdCard} fixedWidth className="mr-1"/>{field.label}</div>
-      </div>
-    );
-  };
-
   const getHeaderBar = () => {
     return (
       <div className="d-flex justify-content-between page-description">
@@ -373,21 +362,14 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
   }
 
   return (
-    <div className="object-properties-input">
-      <div className="content-container">
-        <div className="pl-2 pr-3 property-header">
-          <h6>{getTitleBar()}</h6>
-        </div>
-        <div>
-          {getHeaderBar()}
-        </div>
-        <div className="properties-body-alt">
-          {getFieldBody()}
-        </div>
+    <PropertyInputContainer titleIcon={faIdCard} field={field} addProperty={addProperty} titleText={field.label} errorMessage={errorMessage} type={"Role"}>
+      <div>
+        {getHeaderBar()}
       </div>
-      <div>{getAddPropertyButton()}</div>
-      <InfoText field={field} errorMessage={errorMessage} />
-    </div>
+      <div className="properties-body-alt">
+        {getFieldBody()}
+      </div>
+    </PropertyInputContainer>
   );
 }
 
