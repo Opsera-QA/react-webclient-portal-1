@@ -1,6 +1,12 @@
 export const ldapOrganizationMetaData = {
   idProperty: "name",
   type: "Organization",
+  detailView: function (record) {
+    return `/admin/organizations/details/${record.getData("name")}`;
+  },
+  detailViewTitle: function (record) {
+    return `Organization Details [${record.getData("name")}]`;
+  },
   fields: [
     {
       label: "LDAP Organization ID",

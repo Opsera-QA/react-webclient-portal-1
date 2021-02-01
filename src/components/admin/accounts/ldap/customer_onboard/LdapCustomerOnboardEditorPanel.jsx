@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import DropdownList from "react-widgets/lib/DropdownList";
-import {ldapOrganizationMetaData} from "../organizations/ldap-organizations-form-fields";
+import {ldapOrganizationMetaData} from "components/admin/accounts/ldap/organizations/ldap-organizations-metadata";
 import {ldapIdpAccountsMetaData} from "../idp_accounts/ldap-idp-account-metadata";
 import {
   ldapOrganizationAccountMetaData

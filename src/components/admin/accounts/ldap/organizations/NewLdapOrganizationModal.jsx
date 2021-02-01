@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
 import LdapOrganizationEditorPanel from "./organizations_detail_view/LdapOrganizationEditorPanel";
 import Model from "../../../../../core/data_model/model";
-import {ldapOrganizationMetaData} from "./ldap-organizations-form-fields";
+import {ldapOrganizationMetaData} from "components/admin/accounts/ldap/organizations/ldap-organizations-metadata";
 import CreateModal from "../../../../common/modal/CreateModal";
 
 

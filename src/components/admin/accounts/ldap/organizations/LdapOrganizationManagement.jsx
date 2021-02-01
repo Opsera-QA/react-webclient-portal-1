@@ -4,7 +4,6 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import LoadingDialog from "components/common/status_notifications/loading";
 import LdapOrganizationsTable from "components/admin/accounts/ldap/organizations/LdapOrganizationsTable";
 
 function LdapOrganizationManagement() {
@@ -62,15 +61,11 @@ function LdapOrganizationManagement() {
     }
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
   return (
     <ScreenContainer
       breadcrumbDestination={"ldapOrganizationManagement"}
       accessDenied={!accessRoleData?.OpseraAdministrator}
-      isLoading={isLoading}
+      isLoading={!accessRoleData}
     >
       <LdapOrganizationsTable
         isLoading={isLoading}

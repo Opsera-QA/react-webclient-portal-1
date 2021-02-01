@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {useHistory} from "react-router-dom";
 import NewLdapOrganizationModal from "components/admin/accounts/ldap/organizations/NewLdapOrganizationModal";
-import {ldapOrganizationMetaData} from "components/admin/accounts/ldap/organizations/ldap-organizations-form-fields";
+import {ldapOrganizationMetaData} from "components/admin/accounts/ldap/organizations/ldap-organizations-metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 
 function LdapOrganizationsTable({data, isLoading, loadData, authorizedActions}) {

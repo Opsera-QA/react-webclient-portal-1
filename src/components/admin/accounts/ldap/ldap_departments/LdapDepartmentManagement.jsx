@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useContext} from "react";
 import {AuthContext} from "contexts/AuthContext";
-import LoadingDialog from "components/common/status_notifications/loading";
 import Model from "core/data_model/model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import departmentFilterMetadata from "components/admin/accounts/ldap/ldap_departments/department-filter-metadata";
@@ -58,14 +57,11 @@ function LdapDepartmentManagement() {
     }
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
   return (
     <ScreenContainer
+      isLoading={!accessRoleData}
       breadcrumbDestination={"ldapDepartmentManagement"}
-      isLoading={isLoading} accessDenied={!isLoading && !authorizedActions.includes("get_departments")}
+      accessDenied={!authorizedActions.includes("get_departments")}
       >
         <LdapDepartmentsTable
           authorizedActions={authorizedActions}

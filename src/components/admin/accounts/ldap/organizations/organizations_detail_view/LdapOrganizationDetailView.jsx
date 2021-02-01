@@ -1,19 +1,15 @@
 import React, { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../../../../../../contexts/AuthContext";
 import { useParams } from "react-router-dom";
-import LoadingDialog from "../../../../../common/status_notifications/loading";
-
-import "../../../accounts.css";
-import AccessDeniedDialog from "../../../../../common/status_notifications/accessDeniedInfo";
-import Model from "../../../../../../core/data_model/model";
-import {ldapOrganizationMetaData} from "../ldap-organizations-form-fields";
-import accountsActions from "../../../accounts-actions";
-import LdapOrganizationDetailPanel from "./LdapOrganizationDetailPanel";
-import {faSitemap} from "@fortawesome/free-solid-svg-icons";
-import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
-import DetailScreenContainer from "../../../../../common/panels/detail_view_container/DetailScreenContainer";
-import ActionBarContainer from "../../../../../common/actions/ActionBarContainer";
-import ActionBarBackButton from "../../../../../common/actions/buttons/ActionBarBackButton";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import accountsActions from "components/admin/accounts/accounts-actions";
+import {ldapOrganizationMetaData} from "components/admin/accounts/ldap/organizations/ldap-organizations-metadata";
+import Model from "core/data_model/model";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
+import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import LdapOrganizationDetailPanel
+  from "components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationDetailPanel";
 
 function LdapOrganizationDetailView() {
   const { organizationName } = useParams();
@@ -65,7 +61,7 @@ function LdapOrganizationDetailView() {
   const loadOrganization = async () => {
     const response = await accountsActions.getOrganizationByName(organizationName, getAccessToken);
 
-    if (response != null && response.data != null) {
+    if (response?.data != null) {
       setLdapOrganizationData(new Model(response.data, ldapOrganizationMetaData, false));
       setOrganizationAccounts(response.data["orgAccounts"]);
     }
@@ -77,32 +73,17 @@ function LdapOrganizationDetailView() {
         <div>
           <ActionBarBackButton path={"/admin/organizations"} />
         </div>
-        <div>
-          {/*<ActionBarToggleButton status={ldapOrganizationData?.getData("active")} handleActiveToggle={handleActiveToggle} />*/}
-        </div>
       </ActionBarContainer>
     );
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
-  if (!authorizedActions.includes("get_organization_details") && !isLoading) {
-    return <AccessDeniedDialog roleData={accessRoleData}/>;
-  }
-
   return (
     <DetailScreenContainer
       breadcrumbDestination={"ldapOrganizationDetailView"}
-      title={ldapOrganizationData != null ? `Organization Details [${ldapOrganizationData["name"]}]` : undefined}
-      managementViewLink={"/admin/organizations"}
-      managementTitle={"Organization Management"}
-      managementViewIcon={faSitemap}
-      type={"Organization"}
-      titleIcon={faSitemap}
+      metadata={ldapOrganizationMetaData}
+      accessDenied={!authorizedActions.includes("get_organization_details")}
       dataObject={ldapOrganizationData}
-      isLoading={isLoading}
+      isLoading={!accessRoleData || isLoading}
       actionBar={getActionBar()}
       detailPanel={
         <LdapOrganizationDetailPanel

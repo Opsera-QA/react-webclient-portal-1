@@ -2,10 +2,8 @@ import React, {useState, useEffect, useContext} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import {useHistory, useParams} from "react-router-dom";
 import LdapGroupsTable from "./LdapGroupsTable";
-import LoadingDialog from "components/common/status_notifications/loading";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {getOrganizationByDomain} from "components/admin/accounts/ldap/organizations/organization-functions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 function LdapGroupManagement() {
@@ -57,7 +55,7 @@ function LdapGroupManagement() {
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      let authorizedActions = await accountsActions.getAllowedGroupActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
+      let authorizedActions = await accountsActions.getAllowedGroupActions(userRoleAccess, ldap?.organization, getUserRecord, getAccessToken);
       setAuthorizedActions(authorizedActions);
 
       if (orgDomain != null && userRoleAccess.OpseraAdministrator) {
@@ -78,19 +76,23 @@ function LdapGroupManagement() {
     );
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
-    return (
-      <ScreenContainer
-        accessDenied={!authorizedActions.includes("get_groups") && !isLoading}
-        isLoading={isLoading} breadcrumbDestination={"ldapGroupManagement"}
-      >
-        {/*{getOrganizationListDropdown()}*/}
-        <LdapGroupsTable isLoading={isLoading} groupData={groupList} loadData={loadData} orgDomain={orgDomain} authorizedActions={authorizedActions} currentUserEmail={currentUserEmail} />
-      </ScreenContainer>
-    );
+  return (
+    <ScreenContainer
+      isLoading={!accessRoleData}
+      accessDenied={!authorizedActions.includes("get_groups")}
+      breadcrumbDestination={"ldapGroupManagement"}
+    >
+      {/*{getOrganizationListDropdown()}*/}
+      <LdapGroupsTable
+        isLoading={isLoading}
+        groupData={groupList}
+        loadData={loadData}
+        orgDomain={orgDomain}
+        authorizedActions={authorizedActions}
+        currentUserEmail={currentUserEmail}
+      />
+    </ScreenContainer>
+  );
 }
 
 

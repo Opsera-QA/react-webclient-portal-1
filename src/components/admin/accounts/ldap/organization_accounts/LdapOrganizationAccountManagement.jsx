@@ -4,7 +4,6 @@ import ToastContext from "react-bootstrap/cjs/ToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {AuthContext} from "contexts/AuthContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
-import LoadingDialog from "components/common/status_notifications/loading";
 import LdapOrganizationAccountsTable
   from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountsTable";
 
@@ -60,7 +59,7 @@ function LdapOrganizationAccountManagement() {
       let authorizedActions = await accountsActions.getAllowedOrganizationAccountActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
       setAuthorizedActions(authorizedActions);
 
-      if (userRoleAccess.OpseraAdministrator) {
+      if (userRoleAccess?.OpseraAdministrator) {
         if (organizationName != null) {
           setCurrentOrganizationName(organizationName);
           await loadOrganizationByName(organizationName);
@@ -71,7 +70,7 @@ function LdapOrganizationAccountManagement() {
           setCurrentOrganizationName(ldap.organization);
           await loadOrganizationByName(ldap.organization);
         }
-      } else if (ldap.organization != null && authorizedActions.includes("get_organization_accounts")) {
+      } else if (ldap.organization != null && authorizedActions?.includes("get_organization_accounts")) {
         history.push(`/admin/organization-accounts/${ldap.organization}`);
         setCurrentOrganizationName(ldap.organization);
         await loadOrganizationByName(ldap.organization);
@@ -79,14 +78,10 @@ function LdapOrganizationAccountManagement() {
     }
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
   return (
     <ScreenContainer
       breadcrumbDestination={"ldapOrganizationAccountManagement"}
-      isLoading={isLoading}
+      isLoading={!accessRoleData}
       accessDenied={!authorizedActions.includes("get_organization_accounts")}
     >
       <LdapOrganizationAccountsTable

@@ -2,7 +2,6 @@ import React, {useState, useEffect, useContext} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import {useHistory, useParams} from "react-router-dom";
 import LdapUsersTable from "./LdapUsersTable";
-import LoadingDialog from "components/common/status_notifications/loading";
 import {getOrganizationByDomain} from "components/admin/accounts/ldap/organizations/organization-functions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
@@ -71,15 +70,11 @@ function LdapUserManagement() {
     }
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
   return (
     <ScreenContainer
       breadcrumbDestination={"ldapUserManagement"}
-      isLoading={isLoading}
       accessDenied={!authorizedActions?.includes("get_users")}
+      isLoading={!accessRoleData}
     >
       <LdapUsersTable
         orgDomain={orgDomain}
