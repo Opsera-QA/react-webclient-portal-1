@@ -9,6 +9,7 @@ import {
 } from "components/common/table/table-column-helpers";
 import NewTemplateModal from "components/admin/template_editor/NewTemplateModal";
 import templateEditorMetadata from "components/admin/template_editor/template-metadata";
+import {getField} from "components/common/metadata/metadata-helpers";
 
 function TemplateTable({ data, loadData, isLoading }) {
   const fields = templateEditorMetadata.fields;
@@ -17,14 +18,14 @@ function TemplateTable({ data, loadData, isLoading }) {
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "name"})),
-      getTableTextColumn(fields.find(field => { return field.id === "description"})),
-      getTableDateColumn(fields.find(field => { return field.id === "createdAt"})),
-      getTableTextColumn(fields.find(field => { return field.id === "account"})),
-      getTableBooleanIconColumn(fields.find(field => { return field.id === "readOnly"})),
-      getTableBooleanIconColumn(fields.find(field => { return field.id === "singleUse"})),
-      getTableBooleanIconColumn(fields.find(field => { return field.id === "publicUse"})),
-      getTableBooleanIconColumn(fields.find(field => { return field.id === "active"})),
+      getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "description")),
+      getTableDateColumn(getField(fields, "createdAt")),
+      getTableTextColumn(getField(fields, "account")),
+      getTableBooleanIconColumn(getField(fields, "readOnly")),
+      getTableBooleanIconColumn(getField(fields, "singleUse")),
+      getTableBooleanIconColumn(getField(fields, "publicUse")),
+      getTableBooleanIconColumn(getField(fields, "active")),
     ],
     []
   );

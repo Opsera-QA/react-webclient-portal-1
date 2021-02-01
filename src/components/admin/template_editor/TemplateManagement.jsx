@@ -48,14 +48,10 @@ function TemplateManagement() {
     setTemplateList(templateListResponse?.data);
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
   return (
     <ScreenContainer
       breadcrumbDestination={"templateManagement"}
-      isLoading={isLoading}
+      isLoading={!accessRoleData}
       accessDenied={!accessRoleData?.OpseraAdministrator}
     >
       <TemplateTable data={templateList} isLoading={isLoading} loadData={loadData}/>

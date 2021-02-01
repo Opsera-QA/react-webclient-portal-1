@@ -2,7 +2,6 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import Model from "core/data_model/model";
 import templateActions from "components/admin/template_editor/template-actions";
-import LoadingDialog from "components/common/status_notifications/loading";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import templateEditorMetadata from "components/admin/template_editor/template-metadata";
@@ -82,10 +81,6 @@ function TemplateDetailView() {
   const deletePipeline = () => {
     return templateActions.deleteTemplate(templateData, getAccessToken);
   };
-
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
 
   return (
     <DetailScreenContainer
