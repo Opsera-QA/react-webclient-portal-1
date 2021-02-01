@@ -1,24 +1,22 @@
 import React, { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../../../../../../contexts/AuthContext";
 import { useParams } from "react-router-dom";
-import "../../../accounts.css";
-import AccessDeniedDialog from "../../../../../common/status_notifications/accessDeniedInfo";
-import Model from "../../../../../../core/data_model/model";
-import accountsActions from "../../../accounts-actions";
-import {ldapOrganizationAccountMetaData} from "../ldap-organization-account-form-fields";
-import LdapOrganizationAccountDetailPanel from "./LdapOrganizationAccountDetailPanel";
-import {faSitemap, faUsers, faWrench} from "@fortawesome/free-solid-svg-icons";
-import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
-import departmentActions from "../../ldap_departments/department-functions";
-import DetailScreenContainer from "../../../../../common/panels/detail_view_container/DetailScreenContainer";
-import ActionBarContainer from "../../../../../common/actions/ActionBarContainer";
-import ActionBarBackButton from "../../../../../common/actions/buttons/ActionBarBackButton";
+import Model from "core/data_model/model";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import accountsActions from "components/admin/accounts/accounts-actions";
+import {ldapOrganizationAccountMetaData} from "components/admin/accounts/ldap/organization_accounts/ldap-organization-account-metadata";
+import departmentActions from "components/admin/accounts/ldap/ldap_departments/department-functions";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
+import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import LdapOrganizationAccountDetailPanel
+  from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountDetailPanel";
 
 function LdapOrganizationAccountDetailView() {
   const { organizationDomain } = useParams();
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [accessRoleData, setAccessRoleData] = useState({});
+  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false); //this is how we toggle showing/hiding stuff when API calls or other functions are loading
   const [ldapOrganizationAccountData, setLdapOrganizationAccountData] = useState(undefined);
   const [ldapDepartmentData, setLdapDepartmentData] = useState(undefined);
@@ -59,11 +57,11 @@ function LdapOrganizationAccountDetailView() {
       let authorizedDepartmentActions = await accountsActions.getAllowedDepartmentActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
       setAuthorizedDepartmentActions(authorizedDepartmentActions);
 
-      if (authorizedActions.includes("get_organization_account_details")) {
+      if (authorizedActions?.includes("get_organization_account_details")) {
         await loadOrganizationAccount();
       }
 
-      if (authorizedDepartmentActions.includes("get_department_details")) {
+      if (authorizedDepartmentActions?.includes("get_department_details")) {
         await loadDepartments();
       }
     }
@@ -72,20 +70,19 @@ function LdapOrganizationAccountDetailView() {
   const loadOrganizationAccount = async () => {
       const response = await accountsActions.getOrganizationAccountByDomain(organizationDomain, getAccessToken);
 
-      if (response != null && response.data != null) {
+      if (response?.data != null) {
         setLdapOrganizationAccountData(new Model(response.data, ldapOrganizationAccountMetaData, false));
-        setOrganizationName(response.data["org"]["name"]);
+        setOrganizationName(response.data.org?.name);
       }
   };
 
   const loadDepartments = async () => {
     const response = await departmentActions.getDepartmentsByDomain(organizationDomain, getAccessToken);
 
-    if (response != null && response.data != null) {
+    if (response?.data != null) {
       setLdapDepartmentData(response.data);
     }
   };
-
 
   const getActionBar = () => {
     return (
@@ -93,26 +90,15 @@ function LdapOrganizationAccountDetailView() {
         <div>
           <ActionBarBackButton path={"/admin/organizations"} />
         </div>
-        <div>
-          {/*<ActionBarToggleButton status={ldapOrganizationAccountData?.getData("active")} handleActiveToggle={handleActiveToggle} />*/}
-        </div>
       </ActionBarContainer>
     );
   };
 
-  if (!authorizedActions.includes("get_organization_account_details") && !isLoading) {
-    return (<AccessDeniedDialog roleData={accessRoleData}/>);
-  }
-
   return (
     <DetailScreenContainer
       breadcrumbDestination={"ldapOrganizationAccountDetailView"}
-      title={ldapOrganizationAccountData != null ? `Organization Account Details [${ldapOrganizationAccountData["name"]}]` : undefined}
-      managementViewLink={"/admin/organizations"}
-      managementTitle={"Organization Management"}
-      managementViewIcon={faSitemap}
-      type={"Organization Account"}
-      titleIcon={faUsers}
+      accessDenied={!authorizedActions?.includes("get_organization_account_details")}
+      metadata={ldapOrganizationAccountMetaData}
       dataObject={ldapOrganizationAccountData}
       isLoading={isLoading}
       actionBar={getActionBar()}

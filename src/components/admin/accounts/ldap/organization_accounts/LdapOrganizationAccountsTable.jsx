@@ -1,11 +1,12 @@
 import React, {useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import {useHistory} from "react-router-dom";
-import {ldapOrganizationAccountMetaData} from "components/admin/accounts/ldap/organization_accounts/ldap-organization-account-form-fields";
+import {ldapOrganizationAccountMetaData} from "components/admin/accounts/ldap/organization_accounts/ldap-organization-account-metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import CustomTable from "components/common/table/CustomTable";
 import NewLdapOrganizationAccountModal
   from "components/admin/accounts/ldap/organization_accounts/NewLdapOrganizationAccountModal";
+import {getField} from "components/common/metadata/metadata-helpers";
 
 function LdapOrganizationAccountsTable({ldapOrganizationAccounts, ldapOrganizationData, authorizedActions, isLoading, loadData }) {
   const [showCreateOrganizationAccountModal, setShowCreateOrganizationAccountModal] = useState(false);
@@ -14,12 +15,12 @@ function LdapOrganizationAccountsTable({ldapOrganizationAccounts, ldapOrganizati
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "name"})),
-      getTableTextColumn(fields.find(field => { return field.id === "orgOwner"})),
-      getTableTextColumn(fields.find(field => { return field.id === "orgOwnerEmail"})),
-      getTableTextColumn(fields.find(field => { return field.id === "accountName"})),
-      getTableTextColumn(fields.find(field => { return field.id === "description"})),
-      getTableTextColumn(fields.find(field => { return field.id === "orgDomain"})),
+      getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "orgOwner")),
+      getTableTextColumn(getField(fields, "orgOwnerEmail")),
+      getTableTextColumn(getField(fields, "accountName")),
+      getTableTextColumn(getField(fields, "description")),
+      getTableTextColumn(getField(fields, "orgDomain")),
     ],
     []
   );

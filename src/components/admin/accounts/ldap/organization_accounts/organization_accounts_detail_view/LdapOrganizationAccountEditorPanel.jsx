@@ -10,7 +10,6 @@ import WarningDialog from "components/common/status_notifications/WarningDialog"
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import IdpVendorSelectInput
   from "components/common/list_of_values_input/admin/accounts/ldap_idp_accounts/IdpVendorSelectInput";
@@ -115,7 +114,13 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
   }
 
     return (
-      <EditorPanelContainer>
+      <EditorPanelContainer
+        createRecord={createOrganizationAccount}
+        updateRecord={updateLdapOrganizationAccount}
+        setRecordDto={setLdapOrganizationAccountDataDto}
+        recordDto={ldapOrganizationAccountDataDto}
+        handleClose={handleClose}
+      >
           <Row>
             <Col>
               <div className="custom-select-input m-2">
@@ -194,13 +199,6 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
                               setDataObject={setLdapOrganizationAccountDataDto}/>
             </Col>
           </Row>
-        <PersistButtonContainer
-          createRecord={createOrganizationAccount}
-          updateRecord={updateLdapOrganizationAccount}
-          setRecordDto={setLdapOrganizationAccountDataDto}
-          recordDto={ldapOrganizationAccountDataDto}
-          handleClose={handleClose}
-        />
       </EditorPanelContainer>
     );
 }

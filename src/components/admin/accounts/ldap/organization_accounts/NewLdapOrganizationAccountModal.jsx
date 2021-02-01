@@ -1,16 +1,17 @@
 import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import LdapOrganizationAccountEditorPanel from "./organization_accounts_detail_view/LdapOrganizationAccountEditorPanel";
-import Model from "../../../../../core/data_model/model";
-import {ldapOrganizationAccountMetaData} from "./ldap-organization-account-form-fields";
-import CreateModal from "../../../../common/modal/CreateModal";
+import Model from "core/data_model/model";
+import {ldapOrganizationAccountMetaData} from "components/admin/accounts/ldap/organization_accounts/ldap-organization-account-metadata";
+import LdapOrganizationAccountEditorPanel
+  from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountEditorPanel";
+import CreateModal from "components/common/modal/CreateModal";
 
 function NewLdapOrganizationAccountModal({ setShowModal, showModal, ldapOrganizationData, loadData,authorizedActions } ) {
   const [ldapOrganizationAccountData, setLdapOrganizationAccountData] = useState(undefined);
 
   useEffect(() => {
     setLdapOrganizationAccountData(new Model({...ldapOrganizationAccountMetaData.newObjectFields}, ldapOrganizationAccountMetaData, true));
-  }, []);
+  }, [showModal]);
 
   const handleClose = () => {
     setShowModal(false);
@@ -18,11 +19,15 @@ function NewLdapOrganizationAccountModal({ setShowModal, showModal, ldapOrganiza
   };
 
   return (
-    <>
-      <CreateModal handleCancelModal={handleClose} objectType={"Organization Account"} showModal={showModal} loadData={loadData} >
-        {ldapOrganizationAccountData && <LdapOrganizationAccountEditorPanel authorizedActions={authorizedActions} ldapOrganization={ldapOrganizationData} setLdapOrganizationAccountData={setLdapOrganizationAccountData} handleClose={handleClose} ldapOrganizationAccountData={ldapOrganizationAccountData} />}
-      </CreateModal>
-    </>
+    <CreateModal handleCancelModal={handleClose} objectType={"Organization Account"} showModal={showModal} loadData={loadData} >
+      <LdapOrganizationAccountEditorPanel
+        authorizedActions={authorizedActions}
+        ldapOrganization={ldapOrganizationData}
+        setLdapOrganizationAccountData={setLdapOrganizationAccountData}
+        handleClose={handleClose}
+        ldapOrganizationAccountData={ldapOrganizationAccountData}
+      />
+     </CreateModal>
   );
 }
 

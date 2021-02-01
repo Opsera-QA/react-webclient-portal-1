@@ -13,10 +13,9 @@ import LdapUsersTable from "components/settings/ldap_users/LdapUsersTable";
 import LdapGroupsTable from "components/settings/ldap_groups/LdapGroupsTable";
 import LdapDepartmentsTable from "components/admin/accounts/ldap/ldap_departments/LdapDepartmentsTable";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
-import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import CustomTab from "components/common/tabs/CustomTab";
-import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
+import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 
 function LdapOrganizationAccountDetailPanel(
   {
@@ -52,6 +51,10 @@ function LdapOrganizationAccountDetailPanel(
     if (tabSelection) {
       setActiveTab(tabSelection);
     }
+  };
+
+  const toggleSummaryPanel = () => {
+    setActiveTab("summary");
   };
 
   // TODO: Enable or remove
@@ -109,12 +112,15 @@ function LdapOrganizationAccountDetailPanel(
           </div>
         );
       case "settings":
-        return <LdapOrganizationAccountEditorPanel
-          ldapOrganizationAccountData={ldapOrganizationAccountData}
-          setLdapOrganizationAccountData={setLdapOrganizationAccountData}
-          loadData={loadData}
-          authorizedActions={authorizedActions}
-        />;
+        return (
+          <LdapOrganizationAccountEditorPanel
+            ldapOrganizationAccountData={ldapOrganizationAccountData}
+            setLdapOrganizationAccountData={setLdapOrganizationAccountData}
+            loadData={loadData}
+            authorizedActions={authorizedActions}
+            handleClose={toggleSummaryPanel}
+          />
+      );
       default:
         return null;
     }
@@ -123,7 +129,7 @@ function LdapOrganizationAccountDetailPanel(
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <CustomTab icon={faUsers} tabName={"users"} handleTabClick={handleTabClick} activeTab={activeTab}
                    tabText={"Users"}/>
         <CustomTab icon={faUsersClass} tabName={"groups"} handleTabClick={handleTabClick} activeTab={activeTab}
@@ -132,7 +138,6 @@ function LdapOrganizationAccountDetailPanel(
                    tabText={"Departments"}/>
         {/*<CustomTab icon={faCubes} tabName={"idpAccounts"} handleTabClick={handleTabClick} activeTab={activeTab}*/}
         {/*           tabText={"IDP Account"}/>*/}
-        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
       </CustomTabContainer>
     )
   };

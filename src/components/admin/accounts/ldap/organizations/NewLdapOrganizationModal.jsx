@@ -11,7 +11,7 @@ function NewLdapOrganizationModal({ setShowModal, showModal, loadData, authorize
 
   useEffect(() => {
     setLdapOrganizationData(new Model({...ldapOrganizationMetaData.newObjectFields}, ldapOrganizationMetaData, true));
-  }, []);
+  }, [showModal]);
 
   const handleClose = () => {
     setShowModal(false);

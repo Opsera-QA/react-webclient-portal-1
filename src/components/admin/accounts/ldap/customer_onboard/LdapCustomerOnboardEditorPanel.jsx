@@ -8,7 +8,7 @@ import {ldapOrganizationMetaData} from "components/admin/accounts/ldap/organizat
 import {ldapIdpAccountsMetaData} from "../idp_accounts/ldap-idp-account-metadata";
 import {
   ldapOrganizationAccountMetaData
-} from "../organization_accounts/ldap-organization-account-form-fields";
+} from "components/admin/accounts/ldap/organization_accounts/ldap-organization-account-metadata";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
