@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import CreateModal from "components/common/modal/CreateModal";
+import DashboardEditorPanel from "components/insights/dashboards/dashboard_details/DashboardEditorPanel";
 
 function NewDashboardModal({ setShowModal, loadData, showModal } ) {
   const [dashboardData, setDashboardData] = useState(undefined);
