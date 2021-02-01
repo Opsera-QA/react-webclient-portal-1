@@ -30,9 +30,6 @@ import ArgoCDStepConfiguration from "./step_tool_configuration_forms/argo_cd/Arg
 import TerraformStepConfiguration from "./step_tool_configuration_forms/terraform/TerraformStepConfiguration";
 import OctopusStepConfiguration from "./step_tool_configuration_forms/octopus/OctopusStepConfiguration";
 import EBSStepConfiguration from "./step_tool_configuration_forms/ebs/EBSStepConfiguration";
-import {getErrorDialog} from "../../../../../common/toasts/toasts";
-import pipelineActions from "../../../../pipeline-actions";
-import ToastContext from "react-bootstrap/cjs/ToastContext";
 import AnchoreIntegratorStepConfiguration
   from "./step_tool_configuration_forms/anchore_integrator/AnchoreIntegratorStepConfiguration";
 import ChildPipelineStepConfiguration from "./step_tool_configuration_forms/child/ChildPipelineStepConfiguration";
@@ -41,6 +38,8 @@ import ParallelProcessPipelineStepConfiguration
   from "./step_tool_configuration_forms/parallel_processor/ParallelProcessPipelineStepConfiguration";
 import ConditionalOperationPipelineStepConfiguration
   from "./step_tool_configuration_forms/conditional_operation/ConditionalOperationPipelineStepConfiguration";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import pipelineActions from "../../../../pipeline-actions";
 
 function StepToolConfiguration({
   pipeline,
@@ -57,7 +56,7 @@ function StepToolConfiguration({
   const [stepName, setStepName] = useState(undefined);
   const [stepId, setStepId] = useState(undefined);
   const { getAccessToken } = contextType;
-  const { toastContext } = useContext(ToastContext);
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     loadData();
@@ -149,20 +148,14 @@ function StepToolConfiguration({
       } else {
 
         const errorMsg = `Service Unavailable. Error reported by services creating the job for toolId: ${toolId}.  Please see browser logs for details.`;
-        console.error(createJobResponse.data)
-
-        let toast = getErrorDialog(errorMsg, setShowToast, "detailPanelTop");
-        setToast(toast);
-        setShowToast(true);
+        console.error(createJobResponse.data);
+        toastContext.showCreateFailureResultDialog(errorMsg);
       }
     } catch (error) {
 
       const errorMsg = `Error Creating and Saving Job Configuration for toolId: ${toolId} on $pipeline: ${ pipeline._id }.  Please see browser logs for details.`;
       console.error(error);
-
-      let toast = getErrorDialog(errorMsg, setShowToast, "detailPanelTop");
-      setToast(toast);
-      setShowToast(true);
+      toastContext.showCreateFailureResultDialog(errorMsg);
     }
   };
 
