@@ -86,7 +86,13 @@ function UsersMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
   }
 
   return (
-    <EditorPanelContainer>
+    <EditorPanelContainer
+      recordDto={usersMappingDto}
+      setRecordDto={setUsersMappingDto}
+      createRecord={createMapping}
+      updateRecord={toolTypeData ? updateMapping : createMapping}
+      handleClose={handleClose}
+    >
       {toolTypeData &&
       <div className="m-2">
         <Card>
@@ -111,18 +117,6 @@ function UsersMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
         <Col lg={12}>
           <ActivityToggleInput dataObject={usersMappingDto} fieldName={"active"} setDataObject={setUsersMappingDto} />
         </Col>
-      </Row>
-      <Row>
-        <div className="ml-auto mt-3 px-3">
-          <SaveButtonBase
-            className="ml-auto mt-3 px-3"
-            recordDto={usersMappingDto}
-            setRecordDto={setUsersMappingDto}
-            createRecord={createMapping}
-            updateRecord={toolTypeData ? updateMapping : createMapping}
-            handleClose={handleClose}
-          />
-        </div>
       </Row>
     </EditorPanelContainer>
   );

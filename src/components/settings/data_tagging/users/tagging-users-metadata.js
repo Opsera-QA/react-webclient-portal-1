@@ -1,6 +1,13 @@
 const usersTagsMetadata = {
   idProperty: "_id",
   type: "User Mapping",
+  activeField: "active",
+  detailView: function (record) {
+    return `/settings/data_mapping/user_mapping/details/${record.getData("_id")}`;
+  },
+  detailViewTitle: function (record) {
+    return `User Mapping Details`;
+  },
   fields: [
     {
       label: "Type",

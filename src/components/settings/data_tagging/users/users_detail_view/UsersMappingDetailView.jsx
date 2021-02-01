@@ -46,7 +46,10 @@ function UsersMappingDetailView() {
         setUsersMappingData(new Model(response?.data[0], usersTagsMetadata, false));
       }
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (!error?.error?.message?.includes(404)) {
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
   };
 
@@ -61,7 +64,7 @@ function UsersMappingDetailView() {
 
   const deleteMapping = async () => {
     let response = await dataMappingActions.deleteUserMapping(usersMappingData, getAccessToken);
-    if (response.status === 200) {
+    if (response?.status === 200) {
       toastContext.showDeleteSuccessResultDialog("User Mapping");
       history.push("/settings/data_mapping");
     } else {
@@ -85,12 +88,8 @@ function UsersMappingDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"userTaggingDetailView"}
-      title={"Users Mapping Details"}
-      managementViewLink={"/settings/data_mapping"}
-      managementTitle={"Mappings Management"}
-      managementViewIcon={faProjectDiagram}
-      type={"User Mapping"}
-      titleIcon={faUser}
+      metadata={usersTagsMetadata}
+      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator}
       dataObject={usersMappingData}
       isLoading={isLoading}
       actionBar={getActionBar()}

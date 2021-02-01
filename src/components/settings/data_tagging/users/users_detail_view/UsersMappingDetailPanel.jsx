@@ -15,12 +15,16 @@ function UsersMappingDetailPanel({ usersMappingData, setUsersMappingData }) {
     setActiveTab(activeTab);
   };
 
+  const toggleSummaryPanel = () => {
+    setActiveTab("summary");
+  };
+
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
         return <UserMappingSummaryPanel usersMappingDto={usersMappingData} setUsersMappingData={setUsersMappingData} setActiveTab={setActiveTab} />;
       case "settings":
-        return <UserMappingEditorPanel toolTypeData={usersMappingData} setToolTypeData={setUsersMappingData} />;
+        return <UserMappingEditorPanel toolTypeData={usersMappingData} setToolTypeData={setUsersMappingData} handleClose={toggleSummaryPanel} />;
       default:
         return null;
     }

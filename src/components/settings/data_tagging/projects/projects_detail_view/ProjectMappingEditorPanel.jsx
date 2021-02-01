@@ -121,7 +121,13 @@ function ProjectMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
   }
 
   return (
-    <EditorPanelContainer>
+    <EditorPanelContainer
+      recordDto={projectMappingDto}
+      setRecordDto={setProjectMappingDto}
+      createRecord={createMapping}
+      updateRecord={toolTypeData ? updateMapping : createMapping}
+      handleClose={handleClose}
+    >
       {
         toolTypeData &&
         <div className="m-2">
@@ -154,17 +160,6 @@ function ProjectMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
         <Col lg={12}>
           <ActivityToggleInput dataObject={projectMappingDto} fieldName={"active"} setDataObject={setProjectMappingDto} />
         </Col>
-      </Row>
-      <Row>
-        <div className="ml-auto mt-3 px-3">
-          <SaveButtonBase
-            recordDto={projectMappingDto}
-            setRecordDto={setProjectMappingDto}
-            createRecord={createMapping}
-            updateRecord={toolTypeData ? updateMapping : createMapping}
-            handleClose={handleClose}
-          />
-        </div>
       </Row>
     </EditorPanelContainer>
   );

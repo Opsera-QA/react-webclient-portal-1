@@ -16,12 +16,16 @@ function ProjectMappingDetailPanel({ projectMappingData, setProjectMappingData }
     setActiveTab(activeTab);
   };
 
+  const toggleSummaryPanel = () => {
+    setActiveTab("summary");
+  };
+
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
         return <ProjectMappingSummaryPanel projectMappingDto={projectMappingData} setProjectMappingData={setProjectMappingData} setActiveTab={setActiveTab} />;
       case "settings":
-        return <ProjectMappingEditorPanel toolTypeData={projectMappingData} setToolTypeData={setProjectMappingData} />;
+        return <ProjectMappingEditorPanel toolTypeData={projectMappingData} setToolTypeData={setProjectMappingData} handleClose={toggleSummaryPanel} />;
       default:
         return null;
     }
