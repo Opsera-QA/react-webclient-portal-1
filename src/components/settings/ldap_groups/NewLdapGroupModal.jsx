@@ -18,11 +18,9 @@ function NewLdapUserModal({ orgDomain, authorizedActions, currentUserEmail, setS
   };
 
   return (
-    <>
-      <CreateModal handleCancelModal={handleClose} objectType={"Group"} showModal={showModal} loadData={loadData}>
-        {ldapGroupData && <LdapGroupEditorPanel authorizedActions={authorizedActions} currentUserEmail={currentUserEmail} ldapGroupData={ldapGroupData} handleClose={handleClose} orgDomain={orgDomain} />}
-      </CreateModal>
-    </>
+    <CreateModal handleCancelModal={handleClose} objectType={"Group"} showModal={showModal} loadData={loadData}>
+        <LdapGroupEditorPanel authorizedActions={authorizedActions} currentUserEmail={currentUserEmail} ldapGroupData={ldapGroupData} handleClose={handleClose} orgDomain={orgDomain} />
+    </CreateModal>
   );
 }
 

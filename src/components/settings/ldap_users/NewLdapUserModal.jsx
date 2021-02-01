@@ -10,7 +10,7 @@ function NewLdapUserModal({ setShowModal, showModal, loadData, authorizedActions
 
   useEffect(() => {
     setLdapUserData(new Model({...ldapUsersMetaData.newObjectFields}, ldapUsersMetaData, true));
-  }, []);
+  }, [showModal]);
 
   const handleClose = () => {
     loadData();

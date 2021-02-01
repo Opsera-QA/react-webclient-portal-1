@@ -1,9 +1,10 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import CreateModal from "../../../../../../common/modal/CreateModal";
-import argoApplicationsMetadata from "../argo-application-metadata";
-import Model from "../../../../../../../core/data_model/model";
-import ArgoApplicationEditorPanel from "./details/ArgoApplicationEditorPanel";
+import Model from "core/data_model/model";
+import argoApplicationsMetadata from "components/inventory/tools/tool_details/tool_jobs/argo/argo-application-metadata";
+import CreateModal from "components/common/modal/CreateModal";
+import ArgoApplicationEditorPanel
+  from "components/inventory/tools/tool_details/tool_jobs/argo/applications/details/ArgoApplicationEditorPanel";
 
 function ExistingArgoApplicationModal({ loadData, toolData, argoApplicationDataObj, setShowModal, showModal, appID }) {
   const [argoApplicationData, setArgoApplicationData] = useState(undefined);
@@ -13,7 +14,7 @@ function ExistingArgoApplicationModal({ loadData, toolData, argoApplicationDataO
       setArgoApplicationData(argoApplicationDataObj);
     } else
       setArgoApplicationData(new Model({ ...argoApplicationsMetadata.newModelBase }, argoApplicationsMetadata, true));
-  }, []);
+  }, [showModal]);
 
   const handleClose = () => {
     loadData();
@@ -21,24 +22,9 @@ function ExistingArgoApplicationModal({ loadData, toolData, argoApplicationDataO
   };
 
   return (
-    <>
-      <CreateModal
-        handleCancelModal={handleClose}
-        objectType={"Argo Application"}
-        showModal={showModal}
-        loadData={loadData}
-      >
-        {argoApplicationData && (
-          <ArgoApplicationEditorPanel
-            argoApplicationData={argoApplicationData}
-            toolData={toolData}
-            loadData={loadData}
-            handleClose={handleClose}
-            appID={appID}
-          />
-        )}
-      </CreateModal>
-    </>
+    <CreateModal handleCancelModal={handleClose} objectType={"Argo Application"} showModal={showModal} loadData={loadData}>
+      <ArgoApplicationEditorPanel argoApplicationData={argoApplicationData} toolData={toolData} loadData={loadData} handleClose={handleClose} appID={appID} />
+    </CreateModal>
   );
 }
 

@@ -2,15 +2,11 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Card, Col, Row } from "react-bootstrap";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import usersTagsMetadata from "components/settings/data_tagging/users/tagging-users-metadata";
 import Model from "core/data_model/model";
 import dataMappingActions from "components/settings/data_tagging/data-mapping-actions";
-import accountsActions from "components/admin/accounts/accounts-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
-import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import UserMappingToolIdentifierSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingToolIdentifierSelectInput";

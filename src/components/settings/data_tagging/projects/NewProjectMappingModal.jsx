@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import projectTagsMetadata from "./tagging-project-metadata";
-import ToolTypeEditorPanel from "./projects_detail_view/ProjectMappingEditorPanel";
+import ProjectMappingEditorPanel from "./projects_detail_view/ProjectMappingEditorPanel";
 import Model from "core/data_model/model";
 import CreateModal from "components/common/modal/CreateModal";
 
@@ -19,7 +19,7 @@ function NewProjectMappingModal({ setShowModal, showModal, loadData }) {
 
   return (
     <CreateModal handleCancelModal={handleClose} objectType={"Project Mapping"} showModal={showModal} loadData={loadData}>
-        <ToolTypeEditorPanel setToolTypeData={setPojectTagsData} handleClose={handleClose} projectTagsData={projectTagsData} />
+      <ProjectMappingEditorPanel setToolTypeData={setPojectTagsData} handleClose={handleClose} projectTagsData={projectTagsData} />
     </CreateModal>
   );
 }

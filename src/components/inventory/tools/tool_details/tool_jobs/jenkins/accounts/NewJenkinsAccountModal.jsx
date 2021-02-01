@@ -15,18 +15,16 @@ function NewJenkinsAccountModal( { toolData, setShowModal, showModal, loadData }
 
   useEffect(() => {
     setJenkinsAccountData(new Model({...INITIAL_ACCOUNT_DATA}, jenkinsCreateAccountMetadata, true));
-  }, []);
+  }, [showModal]);
 
   const handleClose = async () => {
     setShowModal(false);
   };
 
   return (
-    <>
-      <CreateModal handleCancelModal={handleClose} objectType={"Jenkins Account"} showModal={showModal} loadData={loadData}>
-        {jenkinsAccountData && <JenkinsAccountEditorPanel toolData={toolData} jenkinsAccountData={jenkinsAccountData} handleClose={handleClose}/>}
-      </CreateModal>
-    </>
+    <CreateModal handleCancelModal={handleClose} objectType={"Jenkins Account"} showModal={showModal} loadData={loadData}>
+      <JenkinsAccountEditorPanel toolData={toolData} jenkinsAccountData={jenkinsAccountData} handleClose={handleClose}/>
+    </CreateModal>
   );
 }
 

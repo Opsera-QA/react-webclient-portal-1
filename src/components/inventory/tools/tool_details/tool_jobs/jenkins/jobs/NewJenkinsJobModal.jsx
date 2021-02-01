@@ -16,7 +16,7 @@ function NewJenkinsJobModal( { toolData, loadData, setShowModal, showModal } ) {
   // TODO: Implement use of DTO
   // useEffect(() => {
     // setJenkinsJobsData(new Model({...INITIAL_DATA}, ldapGroupMetaData, true));
-  // }, []);
+  // }, [showModal]);
 
   const handleClose = () => {
     setShowModal(false);
@@ -24,11 +24,9 @@ function NewJenkinsJobModal( { toolData, loadData, setShowModal, showModal } ) {
 
 
   return (
-    <>
-      <CreateModal handleCancelModal={handleClose} objectType={"Jenkins Job"} showModal={showModal} loadData={loadData} >
-        {toolData && <JenkinsJobEditorPanel toolData={toolData.getPersistData()} loadData={loadData} jobData={{}} handleClose={handleClose}/>}
-      </CreateModal>
-    </>
+    <CreateModal handleCancelModal={handleClose} objectType={"Jenkins Job"} showModal={showModal} loadData={loadData} >
+      <JenkinsJobEditorPanel toolData={toolData.getPersistData()} loadData={loadData} jobData={{}} handleClose={handleClose}/>
+    </CreateModal>
   );
 }
 
