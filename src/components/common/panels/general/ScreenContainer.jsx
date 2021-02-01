@@ -4,9 +4,22 @@ import AccessDeniedContainer from "components/common/panels/detail_view_containe
 import {getBreadcrumb} from "components/common/navigation/trails";
 import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import TitleBar from "components/common/fields/TitleBar";
+import TitleComponent from "components/common/panels/TitleComponent";
 
-function ScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading, accessDenied }) {
+function ScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading, accessDenied, showBreadcrumbTrail, subNavigationBar }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
+
+  const getTopNavigation = () => {
+    if (showBreadcrumbTrail) {
+      return (<BreadcrumbTrail destination={breadcrumbDestination} />);
+    }
+
+    if (subNavigationBar) {
+      return subNavigationBar;
+    }
+
+    return (<TitleComponent title={breadcrumb.label} />);
+  };
 
   const getPageDescription = () => {
     if (pageDescription == null) {
@@ -36,8 +49,7 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
 
   return (
     <div className="max-content-width mb-2 ml-2 max-content-height">
-      {/*<div className="h4 mt-3 mb-4">Passed In Optional Title</div> TODO: Noah please wire this up for Tool Registry to just say "Registry" and disable breadcrumb for now in Tool Registry only*/}
-      <BreadcrumbTrail destination={breadcrumbDestination} />
+      {getTopNavigation()}
       <div className="content-container content-card-1 ">
         <div className="pl-2 content-block-header title-text-header-1">
           <TitleBar titleIcon={breadcrumb.icon} title={breadcrumb.label} isLoading={isLoading}/>
@@ -60,7 +72,8 @@ ScreenContainer.propTypes = {
   pageDescription: PropTypes.string,
   isLoading: PropTypes.bool,
   children: PropTypes.any,
-  accessDenied: PropTypes.bool
+  accessDenied: PropTypes.bool,
+  showBreadcrumbTrail: PropTypes.bool
 };
 
 export default ScreenContainer;

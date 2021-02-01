@@ -6,6 +6,7 @@ import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 import TitleBar from "components/common/fields/TitleBar";
 import {getBreadcrumb, getParentBreadcrumb} from "components/common/navigation/trails";
+import TitleComponent from "components/common/panels/TitleComponent";
 
 function DetailScreenContainer(
   {
@@ -24,10 +25,24 @@ function DetailScreenContainer(
     detailPanel,
     isLoading,
     accessDenied,
-    metadata
+    metadata,
+    showBreadcrumbTrail,
+    subNavigationBar
   }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const [parentBreadcrumb, setParentBreadcrumb] = useState(getParentBreadcrumb(breadcrumbDestination));
+
+  const getTopNavigation = () => {
+    if (showBreadcrumbTrail) {
+      return (<BreadcrumbTrail destination={breadcrumbDestination} />);
+    }
+
+    if (subNavigationBar) {
+      return subNavigationBar;
+    }
+
+    return (<TitleComponent title={breadcrumb.label} />);
+  };
 
   const getTitleBar = () => {
     const activeField = dataObject?.getActiveField();
@@ -93,7 +108,7 @@ function DetailScreenContainer(
 
   return (
     <div className="max-content-width mb-2 ml-2 max-content-height">
-      <BreadcrumbTrail destination={breadcrumbDestination} />
+      {getTopNavigation()}
       <div className="content-container content-card-1">
         <div className="px-2 content-block-header title-text-header-1">
           {getTitleBar()}
@@ -112,6 +127,8 @@ function DetailScreenContainer(
 
 
 DetailScreenContainer.propTypes = {
+  showBreadcrumbTrail: PropTypes.bool,
+  subNavigationBar: PropTypes.object,
   breadcrumbDestination: PropTypes.string,
   title: PropTypes.string,
   type: PropTypes.string,
