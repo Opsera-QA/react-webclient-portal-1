@@ -68,6 +68,7 @@
 .membership-list {
     min-height: 370px;
     background-color: #E7E5ED;
+    list-style-type: none;
 }
 
 .membership-search {
