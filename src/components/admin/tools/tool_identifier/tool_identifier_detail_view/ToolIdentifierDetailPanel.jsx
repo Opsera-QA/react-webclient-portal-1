@@ -9,7 +9,6 @@ import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
-
 function ToolIdentifierDetailPanel({ toolIdentifierData, setToolIdentifierData }) {
   const [activeTab, setActiveTab] = useState("summary");
 

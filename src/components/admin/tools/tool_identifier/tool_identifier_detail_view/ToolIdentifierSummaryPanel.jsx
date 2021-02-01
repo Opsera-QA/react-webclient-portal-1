@@ -7,9 +7,9 @@ import ActivityField from "components/common/fields/boolean/ActivityField";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
-import DtoPropertiesField from "components/common/form_fields/dto_form_fields/dto-properties-field";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import TagField from "components/common/fields/multiple_items/TagField";
+import BooleanPropertiesField from "components/common/fields/multiple_items/BooleanPropertiesField";
 
 function ToolIdentifierSummaryPanel({ toolIdentifierData, setActiveTab }) {
   if (toolIdentifierData == null) {
@@ -50,7 +50,7 @@ function ToolIdentifierSummaryPanel({ toolIdentifierData, setActiveTab }) {
           <BooleanField dataObject={toolIdentifierData} fieldName={"enabledInRegistry"}/>
         </Col>
         <Col lg={6}>
-          <DtoPropertiesField dataObject={toolIdentifierData} fieldName={"properties"}/>
+          <BooleanPropertiesField dataObject={toolIdentifierData} fieldName={"properties"}/>
         </Col>
       </Row>
     </SummaryPanelContainer>

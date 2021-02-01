@@ -9,6 +9,7 @@ import {
 } from "components/common/table/table-column-helpers";
 import NewToolCategoryModal from "components/admin/tools/tool_category/NewToolCategoryModal";
 import toolCategoryMetadata from "components/admin/tools/tool_category/tool-category-metadata";
+import {getField} from "components/common/metadata/metadata-helpers";
 
 function ToolCategoryTable({ data, loadData, isLoading }) {
   const [showCreateToolCategoryModal, setShowCreateToolCategoryModal] = useState(false);
@@ -17,10 +18,10 @@ function ToolCategoryTable({ data, loadData, isLoading }) {
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "name"})),
-      getTableTextColumn(fields.find(field => { return field.id === "description"})),
-      getTableDateColumn(fields.find(field => { return field.id === "createdAt"})),
-      getTableBooleanIconColumn(fields.find(field => { return field.id === "active"})),
+      getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "description")),
+      getTableDateColumn(getField(fields, "createdAt")),
+      getTableBooleanIconColumn(getField(fields, "active")),
     ],
     []
   );

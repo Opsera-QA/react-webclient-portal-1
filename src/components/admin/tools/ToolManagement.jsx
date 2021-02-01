@@ -93,14 +93,10 @@ function ToolManagement() {
     );
   }
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
   return (
     <ScreenContainer
-      accessDenied={!isLoading && !accessRoleData.OpseraAdministrator}
-      isLoading={isLoading}
+      accessDenied={!accessRoleData?.OpseraAdministrator}
+      isLoading={!accessRoleData}
       breadcrumbDestination={"toolManagement"}
     >
       <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />

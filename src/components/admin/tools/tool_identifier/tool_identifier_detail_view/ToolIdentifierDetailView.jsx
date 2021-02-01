@@ -42,8 +42,8 @@ function ToolIdentifierDetailView() {
   const getToolIdentifier = async (toolIdentifierId) => {
     const response = await toolManagementActions.getToolIdentifierById(toolIdentifierId, getAccessToken);
     // // TODO: remove grabbing first when it only sends object instead of array
-    if (response.data != null && response.data.length > 0) {
-      setToolIdentifierData(new Model(response.data[0], toolIdentifierMetadata, false));
+    if (response?.data?.length > 0) {
+      setToolIdentifierData(new Model(response?.data[0], toolIdentifierMetadata, false));
     }
   };
 
@@ -53,7 +53,7 @@ function ToolIdentifierDetailView() {
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      if (userRoleAccess?.OpseraAdministrator === true) {
+      if (userRoleAccess?.OpseraAdministrator) {
         await getToolIdentifier(toolIdentifierId);
       }
     }
@@ -68,10 +68,6 @@ function ToolIdentifierDetailView() {
       </ActionBarContainer>
     );
   };
-
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
 
   return (
     <DetailScreenContainer
