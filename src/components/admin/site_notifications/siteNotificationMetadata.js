@@ -1,6 +1,9 @@
 const siteNotificationMetadata = {
   idProperty: "_id",
   type: "Site Notification",
+  detailViewTitle: function(record) {
+    return `Site Notification Manager`;
+  },
   fields: [
     {
       label: "Type",

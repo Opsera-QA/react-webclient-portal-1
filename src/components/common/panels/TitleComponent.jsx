@@ -5,7 +5,6 @@ function TitleComponent({title}) {
   return (<div className="h4 mt-3 mb-4">{title}</div>)
 }
 
-
 TitleComponent.propTypes = {
   title: PropTypes.string,
 };

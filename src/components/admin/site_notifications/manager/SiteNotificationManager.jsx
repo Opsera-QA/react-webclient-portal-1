@@ -9,6 +9,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import siteNotificationHelpers from "components/admin/site_notifications/site-notification-helpers";
 import SiteNotificationManagerDetailPanel
   from "components/admin/site_notifications/manager/SiteNotificationManagerDetailPanel";
+import siteNotificationMetadata from "components/admin/site_notifications/siteNotificationMetadata";
 
 function SiteNotificationManager() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -60,24 +61,12 @@ function SiteNotificationManager() {
     setSiteWideNotificationData(siteWideNotification);
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
-  if (!isLoading && !accessRoleData.OpseraAdministrator) {
-    return (<AccessDeniedDialog roleData={accessRoleData}/>);
-  }
-
   return (
     <DetailScreenContainer
       breadcrumbDestination={"siteNotificationManager"}
-      title={`Site Notification Manager`}
-      managementViewLink={"/admin/"}
-      managementTitle={"Administration Tools"}
-      managementViewIcon={faFlag}
-      type={"Site Notification"}
-      titleIcon={faFlag}
+      metadata={siteNotificationMetadata}
       dataObject={siteWideNotificationData}
+      accessDenied={!accessRoleData?.OpseraAdministrator}
       isLoading={isLoading}
       detailPanel={<SiteNotificationManagerDetailPanel siteWideNotificationData={siteWideNotificationData} setSiteWideNotificationData={setSiteWideNotificationData} />}
     />
