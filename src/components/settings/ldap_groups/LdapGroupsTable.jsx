@@ -2,13 +2,13 @@ import React, { useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
-import {ldapGroupMetaData} from "./ldap-groups-metadata";
 import NewLdapGroupModal from "components/settings/ldap_groups/NewLdapGroupModal";
 import {
   getCountColumnWithoutField,
   getTableBooleanIconColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
+import {ldapGroupMetaData} from "components/settings/ldap_groups/ldap-groups-metadata";
 
 function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, loadData, currentUserEmail, useMembers }) {
   let fields = ldapGroupMetaData.fields;
@@ -20,16 +20,16 @@ function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, l
       return (getCountColumnWithoutField("Members", "members"));
     }
 
-    return getTableTextColumn(fields.find(field => { return field.id === "memberCount"}));
+    return getTableTextColumn(getField(fields, "memberCount"));
   };
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "name"})),
-      getTableTextColumn(fields.find(field => { return field.id === "externalSyncGroup"})),
-      getTableTextColumn(fields.find(field => { return field.id === "groupType"})),
+      getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "externalSyncGroup")),
+      getTableTextColumn(getField(fields, "groupType")),
       getDynamicColumn(),
-      getTableBooleanIconColumn(fields.find(field => { return field.id === "isSync"}))
+      getTableBooleanIconColumn(getField(fields, "isSync"))
     ],
     []
   );
@@ -51,7 +51,7 @@ function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, l
         columns={columns}
         tableTitle={"Groups"}
         type={"Group"}
-        createNewRecord={!useMembers ? createGroup : undefined}
+        createNewRecord={!useMembers && authorizedActions ? createGroup : undefined}
       />
       <NewLdapGroupModal
         loadData={loadData}
