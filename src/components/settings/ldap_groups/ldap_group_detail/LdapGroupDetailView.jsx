@@ -38,7 +38,10 @@ function LdapGroupDetailView() {
       await getRoles();
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (!error?.error?.message?.includes(404)) {
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
     finally {
       setIsLoading(false);
@@ -134,12 +137,7 @@ function LdapGroupDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"ldapGroupDetailView"}
-      title={ldapGroupData != null ? `Group Details [${ldapGroupData && ldapGroupData.name}]` : undefined}
-      managementViewLink={`/settings/${orgDomain}/groups`}
-      managementTitle={"Groups"}
-      managementViewIcon={faUserFriends}
-      type={"Group"}
-      titleIcon={faUserFriends}
+      metadata={ldapGroupMetaData}
       dataObject={ldapGroupData}
       isLoading={isLoading}
       actionBar={getActionBar()}

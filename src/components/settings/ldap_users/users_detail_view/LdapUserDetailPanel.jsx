@@ -16,6 +16,10 @@ function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, authori
     setActiveTab(activeTab);
   };
 
+  const toggleSummaryPanel = () => {
+    setActiveTab("summary");
+  };
+
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
@@ -30,7 +34,7 @@ function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, authori
       case "summary":
         return <LdapUserSummaryPanel ldapUserData={ldapUserData} setActiveTab={setActiveTab} />;
       case "settings":
-        return <LdapUserEditorPanel setLdapUserData={setLdapUserData} authorizedActions={authorizedActions} ldapUserData={ldapUserData} orgDomain={orgDomain} />;
+        return <LdapUserEditorPanel setLdapUserData={setLdapUserData} authorizedActions={authorizedActions} ldapUserData={ldapUserData} orgDomain={orgDomain} handleClose={toggleSummaryPanel} />;
       default:
         return null;
     }

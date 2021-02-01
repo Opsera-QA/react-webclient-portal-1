@@ -2,6 +2,12 @@
 export const ldapGroupMetaData = {
   idProperty: "name",
   type: "Group",
+  // detailView: function (record) {
+  //   return `/admin/organizations/details/${record.getData("name")}`;
+  // },
+  detailViewTitle: function (record) {
+    return `Group Details [${record.getData("name")}]`;
+  },
   fields: [
     {
       label: "Name",
@@ -39,7 +45,6 @@ export const ldapGroupMetaData = {
   newObjectFields: {
     name: "",
     groupType: "user",
-    // TODO: Set Default Value When user groups can use it
     externalSyncGroup: undefined,
     isSync: false,
   }

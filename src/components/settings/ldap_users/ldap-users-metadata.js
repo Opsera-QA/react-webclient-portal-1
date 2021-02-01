@@ -1,6 +1,12 @@
 export const ldapUsersMetaData = {
   idProperty: "name",
   type: "User",
+  // detailView: function (record) {
+  //   return `/admin/organizations/details/${record.getData("name")}`;
+  // },
+  detailViewTitle: function (record) {
+    return `User Details [${record.getData("name")}]`;
+  },
   fields: [
     {
       label: "Full User Name",

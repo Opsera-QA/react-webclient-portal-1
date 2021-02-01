@@ -80,10 +80,6 @@ function LdapUserDetailView() {
     }
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
   if (!authorizedActions.includes("get_user_details") && !isLoading) {
     return (<AccessDeniedDialog roleData={accessRoleData}/>);
   }
@@ -91,12 +87,8 @@ function LdapUserDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={(accessRoleData.PowerUser || accessRoleData.Administrator || accessRoleData.OpseraAdministrator) ? "ldapUserDetailView" : "ldapUserDetailViewLimited"}
-      title={ldapUserData != null ? `User Details [${ldapUserData["name"]}]` : undefined}
-      managementViewLink={"/settings/users"}
-      managementTitle={"User Management"}
-      managementViewIcon={faUser}
-      type={"User"}
-      titleIcon={faUser}
+      metadata={ldapUsersMetaData}
+      accessDenied={!authorizedActions?.includes("get_user_details")}
       dataObject={ldapUserData}
       isLoading={isLoading}
       actionBar={getActionBar()}

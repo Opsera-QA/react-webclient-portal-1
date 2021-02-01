@@ -4,7 +4,6 @@ import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
-import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -50,7 +49,13 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authori
   }
 
   return (
-    <EditorPanelContainer>
+    <EditorPanelContainer
+      handleClose={handleClose}
+      createRecord={createLdapUser}
+      updateRecord={updateLdapUser}
+      setRecordDto={setLdapUserDataDto}
+      recordDto={ldapUserDataDto}
+    >
       <Row>
         <Col lg={6}>
           <TextInputBase disabled={!ldapUserDataDto.isNew()} setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"name"} />
@@ -83,13 +88,6 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authori
           <TextInputBase setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"site"}/>
         </Col>
       </Row>
-      <PersistButtonContainer
-        handleClose={handleClose}
-        createRecord={createLdapUser}
-        updateRecord={updateLdapUser}
-        setRecordDto={setLdapUserDataDto}
-        recordDto={ldapUserDataDto}
-      />
     </EditorPanelContainer>
   );
 }
