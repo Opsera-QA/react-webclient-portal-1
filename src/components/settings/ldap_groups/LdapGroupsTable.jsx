@@ -8,6 +8,7 @@ import {
   getTableBooleanIconColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
+import {getField} from "components/common/metadata/metadata-helpers";
 import {ldapGroupMetaData} from "components/settings/ldap_groups/ldap-groups-metadata";
 
 function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, loadData, currentUserEmail, useMembers }) {
