@@ -1,20 +1,20 @@
 import React, { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../../../../contexts/AuthContext";
-import Model from "../../../../core/data_model/model";
+import Model from "core/data_model/model";
 import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft, faAnalytics, faCogs } from "@fortawesome/pro-light-svg-icons";
-import DashboardViewer from "./DashboardViewer";
-import DashboardEditorPanel from "./DashboardEditorPanel";
-import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
-import dashboardsActions from "../dashboards-actions";
-import dashboardMetadata from "../dashboard-metadata";
-import ActionBarContainer from "../../../common/actions/ActionBarContainer";
-import ActionBarDeleteButton2 from "../../../common/actions/buttons/ActionBarDeleteButton2";
 import FavoriteInput from "components/common/inputs/boolean/FavoriteInput";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {AuthContext} from "contexts/AuthContext";
+import dashboardsActions from "components/insights/dashboards/dashboards-actions";
+import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import DashboardEditorPanel from "components/insights/dashboards/dashboard_details/DashboardEditorPanel";
+import DashboardViewer from "components/insights/dashboards/dashboard_details/DashboardViewer";
 
 function DashboardDetailView() {
     const { tab, id } = useParams();
@@ -54,7 +54,7 @@ function DashboardDetailView() {
     const getDashboard = async () => {
         try {
           const response = await dashboardsActions.get(id, getAccessToken);
-          if (response != null && response.data) {
+          if (response?.data) {
             setDashboardData(new Model(response.data, dashboardMetadata, false));
           }
         } catch (error) {
@@ -94,30 +94,25 @@ function DashboardDetailView() {
     const getTabView = () => {
       if (activeTab === "viewer") {
         return (
-        <DashboardViewer 
-        dashboardData={dashboardData}
-        breadcrumbDestination={"dashboardDetails"}
-        managementViewLink={"/insights/dashboards"}
-        managementTitle={"Dashboards"}
-        type={"Dashboard"}
-        />
+          <DashboardViewer
+            dashboardData={dashboardData}
+            breadcrumbDestination={"dashboardDetails"}
+            managementViewLink={"/insights/dashboards"}
+            managementTitle={"Dashboards"}
+            type={"Dashboard"}
+          />
         );
       }
       if (activeTab === "settings") {
         return (
-        <DetailScreenContainer
-        breadcrumbDestination={"dashboardDetails"}
-        title={dashboardData != null ? `${dashboardData.getData("name")}` : undefined}
-        managementViewLink={"/insights/dashboards"}
-        managementTitle={"Dashboards"}
-        type={"Dashboard"}
-        titleIcon={faAnalytics}
-        dataObject={dashboardData}
-        isLoading={isLoading}
-        activeField={"active"}
-        actionBar={getActionBar()}
-        detailPanel={<DashboardEditorPanel dashboardData={dashboardData} setDashboardData={setDashboardData} /> }
-      />
+          <DetailScreenContainer
+            breadcrumbDestination={"dashboardDetails"}
+            metadata={dashboardMetadata}
+            dataObject={dashboardData}
+            isLoading={isLoading}
+            actionBar={getActionBar()}
+            detailPanel={<DashboardEditorPanel dashboardData={dashboardData} setDashboardData={setDashboardData} /> }
+          />
         );
       }
     };

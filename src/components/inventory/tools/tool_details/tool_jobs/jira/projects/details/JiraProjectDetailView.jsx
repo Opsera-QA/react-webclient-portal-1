@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import {faProjectDiagram} from "@fortawesome/pro-light-svg-icons";
 import JiraProjectsDetailPanel
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/JiraProjectsDetailPanel";
 import ActionBarDestructiveDeleteButton from "components/common/actions/buttons/ActionBarDestructiveDeleteButton";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
+import jiraProjectMetadata from "components/inventory/tools/tool_details/tool_jobs/jira/projects/jira-project-metadata";
 
 function JiraProjectDetailView( {toolData, setToolData, jiraProjectData, setJiraProjectData, loadTool}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -49,13 +49,8 @@ function JiraProjectDetailView( {toolData, setToolData, jiraProjectData, setJira
   return (
     <DetailScreenContainer
       breadcrumbDestination={"toolProjectDetailView"}
-      title={jiraProjectData != null ? `Jira Project Details [${jiraProjectData["name"]}]` : undefined}
-      managementViewLink={"/inventory/tools"}
-      managementTitle={toolData ? `Tool Details [${toolData.getData("_id")}]` : undefined}
-      type={"Jira Project"}
-      titleIcon={faProjectDiagram}
+      metadata={jiraProjectMetadata}
       dataObject={jiraProjectData}
-      activeField={"active"}
       actionBar={getActionBar()}
       detailPanel={<JiraProjectsDetailPanel jiraProjectData={jiraProjectData} setJiraProjectData={setJiraProjectData} toolData={toolData} setToolData={setToolData} loadData={loadTool}/>}
     />

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import {faFlag} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import siteNotificationActions from "components/admin/site_notifications/site-notification-actions";
@@ -12,8 +11,6 @@ import DetailScreenContainer from "components/common/panels/detail_view_containe
 import SiteNotificationDetailPanel
   from "components/admin/site_notifications/site_notification_detail_view/SiteNotificationDetailPanel";
 import Model from "core/data_model/model";
-import LoadingDialog from "components/common/status_notifications/loading";
-import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 
 function SiteNotificationDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -82,23 +79,11 @@ function SiteNotificationDetailView() {
     return await siteNotificationActions.deleteSiteNotification(siteNotificationData, getAccessToken);
   }
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
-  if (!accessRoleData.OpseraAdministrator) {
-    return (<AccessDeniedDialog roleData={accessRoleData}/>);
-  }
-
   return (
     <DetailScreenContainer
       breadcrumbDestination={"siteNotificationDetailView"}
-      title={siteNotificationData != null ? `Site Notification Details [${siteNotificationData["header"]}]` : undefined}
-      managementViewLink={"/admin/site-notifications"}
-      managementTitle={"Site Notification Management"}
-      managementViewIcon={faFlag}
-      type={"Site Notification"}
-      titleIcon={faFlag}
+      accessDenied={!accessRoleData?.OpseraAdministrator}
+      metadata={siteNotificationMetadata}
       dataObject={siteNotificationData}
       isLoading={isLoading}
       actionBar={getActionBar()}

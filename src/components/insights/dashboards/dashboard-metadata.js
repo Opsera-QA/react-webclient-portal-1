@@ -1,6 +1,13 @@
 const dashboardMetadata = {
   idProperty: "_id",
   type: "Dashboard",
+  activeField: "active",
+  detailView: function (record) {
+    return `/insights/dashboards/${record?.getData("_id")}/viewer`;
+  },
+  detailViewTitle: function (record) {
+    return `${record?.getData("name")}`;
+  },
   fields: [
     {
       label: "Account",

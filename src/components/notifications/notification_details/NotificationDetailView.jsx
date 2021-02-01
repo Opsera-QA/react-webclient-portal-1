@@ -10,7 +10,6 @@ import ActionBarBackButton from "components/common/actions/buttons/ActionBarBack
 import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
-import {faEnvelope} from "@fortawesome/pro-light-svg-icons";
 
 function NotificationDetailView() {
   const { id } = useParams();
@@ -63,14 +62,9 @@ function NotificationDetailView() {
     // TODO: We should really be pulling icon, managementViewLink, managementTitle, etc  from trails. I need to make another container
     <DetailScreenContainer
       breadcrumbDestination={"notificationDetailView"}
-      title={notificationData != null ? `Notification Details [${notificationData["name"]}]` : undefined}
-      managementViewLink={"/notifications/"}
-      managementTitle={"Notification"}
-      type={"Notification"}
-      titleIcon={faEnvelope}
+      metadata={notificationMetadata}
       dataObject={notificationData}
       isLoading={isLoading}
-      activeField={"active"}
       actionBar={getActionBar()}
       detailPanel={<NotificationDetailPanel notificationData={notificationData} isLoading={isLoading} setNotificationData={setNotificationData} loadData={getNotificationData}/>}
     />

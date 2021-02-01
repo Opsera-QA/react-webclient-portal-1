@@ -1,8 +1,12 @@
 const notificationsMetadata = {
   idProperty: "_id",
   type: "Notification Policy",
+  activeField: "active",
   detailView: function(record) {
     return `/notifications/details/${record.getData("_id")}`;
+  },
+  detailViewTitle: function (record) {
+    return `Notification Details [${record.getData("name")}]`;
   },
   fields: [
     {

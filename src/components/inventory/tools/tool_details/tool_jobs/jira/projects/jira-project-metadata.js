@@ -1,6 +1,13 @@
 // TODO: If this is used again in the same way, make this generic toolProjectMetadata
 const jiraProjectMetadata = {
   type: "Jira Project Configuration",
+  activeField: "active",
+  detailView: function (record) {
+    return `/admin/organizations/details/${record.getData("name")}`;
+  },
+  detailViewTitle: function (record) {
+    return `Jira Project Details [${record.getData("name")}]`;
+  },
   fields: [
     {
       label: "Project Name",

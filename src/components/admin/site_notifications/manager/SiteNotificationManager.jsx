@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import {faFlag} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import siteNotificationActions from "components/admin/site_notifications/site-notification-actions";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
-import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
-import LoadingDialog from "components/common/status_notifications/loading";
 import siteNotificationHelpers from "components/admin/site_notifications/site-notification-helpers";
 import SiteNotificationManagerDetailPanel
   from "components/admin/site_notifications/manager/SiteNotificationManagerDetailPanel";
