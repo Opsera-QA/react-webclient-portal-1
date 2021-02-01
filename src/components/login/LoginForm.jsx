@@ -212,7 +212,7 @@ const LoginForm = ({ authClient }) => {
 
   if (viewType === "login") {
     return (
-      <Row>
+      <Row className="mt-4">
         <Col md={5} className="p-4"><WelcomeMessage/></Col>
         <Col>
           <div className="d-flex align-items-center justify-content-center">
@@ -302,7 +302,7 @@ const LoginForm = ({ authClient }) => {
 
   if (viewType === "reset") {
     return (
-      <div className="d-flex align-items-center justify-content-center" style={{ minHeight: "500px" }}>
+      <div className="mt-4 d-flex align-items-center justify-content-center" style={{ minHeight: "500px" }}>
         <div className="auth-box-w">
           <div className="logo-w">
             <img alt="Opsera"
@@ -348,7 +348,7 @@ const LoginForm = ({ authClient }) => {
 
   if (viewType === "domain") {
     return (
-      <Row>
+      <Row className="mt-4">
         <Col md={5} className="p-4"><WelcomeMessage/></Col>
         <Col>
           <div className="d-flex align-items-center justify-content-center">
