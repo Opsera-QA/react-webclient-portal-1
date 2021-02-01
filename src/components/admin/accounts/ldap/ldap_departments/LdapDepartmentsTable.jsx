@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import ldapDepartmentMetaData from "./ldap-department-metadata";
-import {getTableTextColumn} from "../../../../common/table/table-column-helpers";
-import {getField} from "../../../../common/metadata/metadata-helpers";
-import NewLdapDepartmentModal from "./NewLdapDepartmentModal";
-import FilterBar from "../../../../common/filters/FilterBar";
+import {getField} from "components/common/metadata/metadata-helpers";
+import {getTableTextColumn} from "components/common/table/table-column-helpers";
+import FilterBar from "components/common/filters/FilterBar";
+import NewLdapDepartmentModal from "components/admin/accounts/ldap/ldap_departments/NewLdapDepartmentModal";
 
 function LdapDepartmentsTable({ departmentData, departmentFilterDto, authorizedActions, setDepartmentFilterDto, domain, loadData, isLoading }) {
   const [showCreateDepartmentModal, setShowCreateDepartmentModal] = useState(false);
@@ -30,7 +30,6 @@ function LdapDepartmentsTable({ departmentData, departmentFilterDto, authorizedA
     setShowCreateDepartmentModal(true);
   }
 
-
   const getFilterBar = () => {
     if (departmentFilterDto == null) {
       return null;
@@ -49,16 +48,16 @@ function LdapDepartmentsTable({ departmentData, departmentFilterDto, authorizedA
     );
   };
 
-
   return (
     <div>
-      <CustomTable onRowSelect={onRowSelect}
-                   data={departmentData}
-                   columns={columns}
-                   isLoading={isLoading}
-                   tableTitle={"Departments"}
-                   loadData={loadData}
-                   tableFilterBar={getFilterBar()}
+      <CustomTable
+        onRowSelect={onRowSelect}
+        data={departmentData}
+        columns={columns}
+        isLoading={isLoading}
+        tableTitle={"Departments"}
+        loadData={loadData}
+        tableFilterBar={getFilterBar()}
       />
       <NewLdapDepartmentModal
         showModal={showCreateDepartmentModal}

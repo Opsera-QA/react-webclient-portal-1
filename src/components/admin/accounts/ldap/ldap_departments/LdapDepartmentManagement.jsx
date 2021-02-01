@@ -61,17 +61,17 @@ function LdapDepartmentManagement() {
     <ScreenContainer
       isLoading={!accessRoleData}
       breadcrumbDestination={"ldapDepartmentManagement"}
-      accessDenied={!authorizedActions.includes("get_departments")}
+      accessDenied={!authorizedActions?.includes("get_departments")}
       >
-        <LdapDepartmentsTable
-          authorizedActions={authorizedActions}
-          loadData={loadData}
-          domain={domain}
-          isLoading={isLoading}
-          departmentData={departments}
-          departmentFilterDto={departmentFilterDto}
-          setDepartmentFilterDto={setDepartmentFilterDto}
-        />
+      <LdapDepartmentsTable
+        authorizedActions={authorizedActions}
+        loadData={loadData}
+        domain={domain}
+        isLoading={isLoading}
+        departmentData={departments}
+        departmentFilterDto={departmentFilterDto}
+        setDepartmentFilterDto={setDepartmentFilterDto}
+      />
     </ScreenContainer>
   );
 }

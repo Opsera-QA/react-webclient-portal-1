@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import CustomTabContainer from "../../../../../common/tabs/CustomTabContainer";
-import CustomTab from "../../../../../common/tabs/CustomTab";
-import LdapDepartmentEditorPanel from "./LdapDepartmentEditorPanel";
 import {faUsers} from "@fortawesome/pro-light-svg-icons";
-import LdapDepartmentSummaryPanel from "./LdapDepartmentSummaryPanel";
-import SummaryTab from "../../../../../common/tabs/detail_view/SummaryTab";
-import SettingsTab from "../../../../../common/tabs/detail_view/SettingsTab";
-import DetailTabPanelContainer from "../../../../../common/panels/detail_view/DetailTabPanelContainer";
-import LdapDepartmentMembershipPanel from "./LdapDepartmentMembershipPanel";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
+import CustomTab from "components/common/tabs/CustomTab";
+import LdapDepartmentSummaryPanel
+  from "components/admin/accounts/ldap/ldap_departments/department_detail_view/LdapDepartmentSummaryPanel";
+import LdapDepartmentMembershipPanel
+  from "components/admin/accounts/ldap/ldap_departments/department_detail_view/LdapDepartmentMembershipPanel";
+import LdapDepartmentEditorPanel
+  from "components/admin/accounts/ldap/ldap_departments/department_detail_view/LdapDepartmentEditorPanel";
+import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
 function LdapDepartmentDetailPanel({ ldapDepartmentData, loadData, setLdapDepartmentData, ldapDepartmentGroupData, orgDomain, authorizedActions }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -19,12 +21,16 @@ function LdapDepartmentDetailPanel({ ldapDepartmentData, loadData, setLdapDepart
     setActiveTab(activeTab);
   };
 
+  const toggleSummaryPanel = () => {
+    setActiveTab("summary");
+  };
+
+
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <CustomTab icon={faUsers} tabName={"membership"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Membership"} />
-        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
       </CustomTabContainer>
     );
   };
@@ -49,6 +55,7 @@ function LdapDepartmentDetailPanel({ ldapDepartmentData, loadData, setLdapDepart
             orgDomain={orgDomain}
             ldapDepartmentData={ldapDepartmentData}
             reloadData={loadData}
+            handleClose={toggleSummaryPanel}
           />
         );
       default:

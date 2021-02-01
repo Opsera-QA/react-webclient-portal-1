@@ -3,15 +3,14 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import LoadingDialog from "../../../../../common/status_notifications/loading";
-import WarningDialog from "../../../../../common/status_notifications/WarningDialog";
-import DtoTextInput from "../../../../../common/input/dto_input/dto-text-input";
-import departmentActions from "../department-functions";
-import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
-import {getUsersByDomain} from "../../../../../settings/ldap_users/user-functions";
-import DtoSelectInput from "../../../../../common/input/dto_input/dto-select-input";
-import EditorPanelContainer from "../../../../../common/panels/detail_panel_container/EditorPanelContainer";
-import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {getUsersByDomain} from "components/settings/ldap_users/user-functions";
+import departmentActions from "components/admin/accounts/ldap/ldap_departments/department-functions";
+import LoadingDialog from "components/common/status_notifications/loading";
+import WarningDialog from "components/common/status_notifications/WarningDialog";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 
 function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, setLdapDepartmentData, orgDomain, authorizedActions, handleClose }) {
   const toastContext = useContext(DialogToastContext);
@@ -41,7 +40,7 @@ function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, setLdapDepa
   const getLdapOrganizationUsers = async () => {
     const response = await getUsersByDomain(orgDomain, getAccessToken);
 
-    if (response != null && response.length > 0) {
+    if (response?.length > 0) {
       setLdapUsers(response);
     }
   };
@@ -70,7 +69,10 @@ function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, setLdapDepa
     try {
       newDepartmentResponse = await departmentActions.createDepartment(orgDomain, ldapDepartmentDataDto, getAccessToken);
       const newOwnerEmail = ldapDepartmentDataDto.getData("ownerEmail");
-      await departmentActions.syncDepartmentMembership(orgDomain, newDepartmentResponse.data.departmentGroupName, [newOwnerEmail], getAccessToken);
+
+      if (newDepartmentResponse?.data) {
+        await departmentActions.syncDepartmentMembership(orgDomain, newDepartmentResponse?.data?.departmentGroupName, [newOwnerEmail], getAccessToken);
+      }
     }
     catch (error) {
       if (newDepartmentResponse != null && newDepartmentResponse.data != null) {
@@ -111,35 +113,35 @@ function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, setLdapDepa
     return <WarningDialog warningMessage={"You do not have the required permissions to update this user"} />;
   }
 
-    return (
-      <EditorPanelContainer>
-          <Row>
-            <Col lg={12}>
-              <DtoTextInput disabled={!ldapDepartmentDataDto.isNew()} setDataObject={setLdapDepartmentDataDto} dataObject={ldapDepartmentDataDto} fieldName={"name"} />
-            </Col>
-            <Col lg={12}>
-              <DtoSelectInput
-                dataObject={ldapDepartmentDataDto}
-                setDataObject={setLdapDepartmentDataDto}
-                busy={isLoading}
-                fieldName={"ownerEmail"}
-                groupBy={"emailAddress"}
-                valueField={"emailAddress"}
-                textField={"name"}
-                filter={"contains"}
-                selectOptions={ldapUsers}
-              />
-            </Col>
-          </Row>
-        <PersistButtonContainer
-          handleClose={handleClose}
-          createRecord={createLdapDepartment}
-          updateRecord={updateLdapDepartment}
-          setRecordDto={setLdapDepartmentDataDto}
-          recordDto={ldapDepartmentDataDto}
-        />
-      </EditorPanelContainer>
-    );
+  return (
+    <EditorPanelContainer
+      handleClose={handleClose}
+      createRecord={createLdapDepartment}
+      updateRecord={updateLdapDepartment}
+      setRecordDto={setLdapDepartmentDataDto}
+      recordDto={ldapDepartmentDataDto}
+    >
+      <Row>
+        <Col lg={12}>
+          <TextInputBase disabled={!ldapDepartmentDataDto.isNew()} setDataObject={setLdapDepartmentDataDto} dataObject={ldapDepartmentDataDto} fieldName={"name"} />
+        </Col>
+        <Col lg={12}>
+          {/*TODO: Make component*/}
+          <DtoSelectInput
+            dataObject={ldapDepartmentDataDto}
+            setDataObject={setLdapDepartmentDataDto}
+            busy={isLoading}
+            fieldName={"ownerEmail"}
+            groupBy={"emailAddress"}
+            valueField={"emailAddress"}
+            textField={"name"}
+            filter={"contains"}
+            selectOptions={ldapUsers}
+          />
+        </Col>
+      </Row>
+    </EditorPanelContainer>
+  );
 }
 
 LdapDepartmentEditorPanel.propTypes = {

@@ -1,9 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
-import LdapGroupsTable from "../../../../../settings/ldap_groups/LdapGroupsTable";
-import LdapUsersTable from "../../../../../settings/ldap_users/LdapUsersTable";
-import DetailPanelContainer from "../../../../../common/panels/detail_panel_container/DetailPanelContainer";
+import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
+import LdapGroupsTable from "components/settings/ldap_groups/LdapGroupsTable";
+import LdapUsersTable from "components/settings/ldap_users/LdapUsersTable";
 
 function LdapDepartmentMembershipPanel({ ldapDepartmentData, ldapDepartmentGroupData, orgDomain }) {
   return (
