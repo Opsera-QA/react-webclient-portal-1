@@ -1,4 +1,4 @@
-import accountsActions from "../../accounts-actions";
+import accountsActions from "components/admin/accounts/accounts-actions";
 
 export const getOrganizationList = async (getAccessToken) => {
   return getOrganizationAccountDropdownList("orgDomain", getAccessToken);
@@ -6,7 +6,7 @@ export const getOrganizationList = async (getAccessToken) => {
 
 export const getOrganizationAccountDropdownList = async (valueField, getAccessToken) => {
   const response = await accountsActions.getOrganizations(getAccessToken);
-  if (response.data) {
+  if (response?.data) {
     let parsedOrganizationNames = [];
     response.data.map(organization => {
       organization["orgAccounts"].map(orgAccount => {
@@ -23,7 +23,7 @@ export const getOrganizationAccountDropdownList = async (valueField, getAccessTo
 
 export const getOrganizationDropdownList = async (valueField, getAccessToken) => {
   const response = await accountsActions.getOrganizations(getAccessToken);
-  if (response.data) {
+  if (response?.data) {
     let parsedOrganizationNames = [];
     response.data.map(organization => {
       parsedOrganizationNames.push({
@@ -39,13 +39,13 @@ export const getOrganizationDropdownList = async (valueField, getAccessToken) =>
 export const getOrganizationByEmail = async (email, getAccessToken) => {
   if (email != null) {
     const response = await accountsActions.getOrganizationAccountByEmail(email, getAccessToken);
-    return response.data;
+    return response?.data;
   }
 };
 
 export const getOrganizationByDomain = async (ldapDomain, getAccessToken) => {
   if (ldapDomain != null) {
     const response = await accountsActions.getOrganizationAccountByDomain(ldapDomain, getAccessToken);
-    return response.data;
+    return response?.data;
   }
 };
