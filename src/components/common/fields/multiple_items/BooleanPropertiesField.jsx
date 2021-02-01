@@ -5,22 +5,23 @@ import FieldLabel from "components/common/fields/FieldLabel";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 
-function ConfigurationField({dataObject, fieldName}) {
+function BooleanPropertiesField({dataObject, fieldName}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const getItems = () => {
-    const configuration = dataObject.getData(fieldName);
-    const configurationKeys = Object.keys(configuration);
+    const properties = dataObject.getData(fieldName);
+    const propertyKeys = Object.keys(properties);
 
-    if (configurationKeys == null || configurationKeys.length === 0) {
-      return <span>No Configurations Applied</span>;
+    if (propertyKeys == null || propertyKeys.length === 0) {
+      return <span>No Properties Applied</span>;
     }
 
     return (
-      configurationKeys.map((key, i) => {
+      propertyKeys.map((key, i) => {
+        const property = `${key}: ${properties[key]}`
         return (
           <div key={i} className="mx-1 mb-1 badge badge-light generic-badge">
-            <span><FontAwesomeIcon icon={faBracketsCurly} className="mr-2" fixedWidth />{key}: {configuration[key]}</span>
+            <span><FontAwesomeIcon icon={faBracketsCurly} className="mr-2" fixedWidth />{property}</span>
           </div>
         );
       })
@@ -37,9 +38,9 @@ function ConfigurationField({dataObject, fieldName}) {
   );
 }
 
-ConfigurationField.propTypes = {
+BooleanPropertiesField.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
 };
 
-export default ConfigurationField;
+export default BooleanPropertiesField;
