@@ -9,8 +9,6 @@ import registeredUsersMetadata from "components/admin/registered_users/registere
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarShowDetailsButton from "components/common/actions/buttons/ActionBarShowDetailsButton";
-import LoadingDialog from "components/common/status_notifications/loading";
-import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import Model from "core/data_model/model";
 
@@ -88,10 +86,6 @@ function RegisteredUserDetailView() {
       );
     }
   };
-
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
 
   return (
     <DetailScreenContainer

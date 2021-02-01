@@ -137,15 +137,11 @@ function RegisteredUsersManagement() {
     );
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
   return (
       <ScreenContainer
-        accessDenied={!accessRoleData.OpseraAdministrator}
+        accessDenied={!accessRoleData?.OpseraAdministrator}
         breadcrumbDestination={"registeredUsersManagement"}
-        isLoading={isLoading}
+        isLoading={!accessRoleData}
       >
         {getRegisteredUsersBlock()}
       </ScreenContainer>
