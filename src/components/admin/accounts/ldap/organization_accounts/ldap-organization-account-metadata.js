@@ -82,6 +82,7 @@ export const ldapOrganizationAccountMetaData = {
     {
       label: "IdP Identifier",
       id: "entityID",
+      isRequired: true,
       maxLength: 50
     }
   ],
@@ -94,7 +95,7 @@ export const ldapOrganizationAccountMetaData = {
     idpPostURL: "https://testurl.com",
     idpVendor: "OKTA",
     configEntryType: "Not sure",
-    entityID: "https://dev-842100.oktapreview.com",
+    entityID: "0",
     description: "",
     isMultipleIDP: false,
     idpReturnAttributes: [
