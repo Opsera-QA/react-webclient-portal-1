@@ -11,6 +11,7 @@ import {
 import FilterBar from "components/common/filters/FilterBar";
 import StatusFilter from "components/common/filters/status/StatusFilter";
 import NewKpiModal from "components/admin/kpi_editor/NewKpiModal";
+import {getField} from "components/common/metadata/metadata-helpers";
 
 function KpiTable({ data, kpiFilterDto, setKpiFilterDto, isLoading, loadData }) {
   let fields = kpiMetaData.fields;
@@ -18,17 +19,13 @@ function KpiTable({ data, kpiFilterDto, setKpiFilterDto, isLoading, loadData }) 
   const [showKpiModal, setShowKpiModal] = useState(false);
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "name"})),
-      getTableTextColumn(fields.find(field => { return field.id === "description"})),
-      getTableBooleanIconColumn(fields.find(field => { return field.id === "active"})),
-      getTableDateColumn(fields.find(field => { return field.id === "createdAt"})),
+      getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "description")),
+      getTableBooleanIconColumn(getField(fields, "active")),
+      getTableDateColumn(getField(fields, "createdAt")),
     ],
     []
   );
-
-  const tableInitialState = {
-    pageIndex: 0,
-  };
 
   const onRowSelect = (rowData, type) => {
     history.push("/admin/kpis/" + rowData.original._id);
@@ -69,7 +66,6 @@ function KpiTable({ data, kpiFilterDto, setKpiFilterDto, isLoading, loadData }) 
         type={"KPI"}
         tableTitle={"KPIs"}
         loadData={loadData}
-        initialState={tableInitialState}
         tableFilterBar={getFilterBar()}
         paginationDto={kpiFilterDto}
         setPaginationDto={setKpiFilterDto}

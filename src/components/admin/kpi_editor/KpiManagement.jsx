@@ -58,15 +58,11 @@ function KpiManagement() {
     }
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
   return (
     <ScreenContainer
-      isLoading={isLoading}
+      isLoading={!accessRoleData}
       breadcrumbDestination={"kpiManagement"}
-      accessDenied={!accessRoleData.OpseraAdministrator && !accessRoleData.Administrator}
+      accessDenied={!accessRoleData?.OpseraAdministrator && !accessRoleData?.Administrator}
       pageDescription={
         `Listed below are registered charts for the Analytics platform. 
         Each chart or KPI corresponds to a data point in the analytics platform.

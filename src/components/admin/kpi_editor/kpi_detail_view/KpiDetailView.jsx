@@ -75,10 +75,6 @@ function KpiDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"kpiDetailView"}
-      title={kpiData != null ? `KPI Configuration Details [${kpiData.getData("name")}]` : undefined}
-      managementViewLink={"/admin/kpis"}
-      managementTitle={"KPI Management"}
-      type={"KPI Configuration"}
       metadata={kpiMetaData}
       dataObject={kpiData}
       isLoading={isLoading}
