@@ -61,8 +61,7 @@ function Pipelines() {
   return (
     <>
       <div className="max-content-width">
-        {/*<BreadcrumbTrail destination={"pipelines"}/>*/}
-        <div className="title-text-5 mb-2">Pipelines</div>
+        <div className="h4 mt-3 mb-4">Pipelines</div>
         <>
           <div className="alternate-tabs">
             <ul className="nav nav-tabs">

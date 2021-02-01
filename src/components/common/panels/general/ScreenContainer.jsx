@@ -36,6 +36,7 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
 
   return (
     <div className="max-content-width mb-2 ml-2 max-content-height">
+      {/*<div className="h4 mt-3 mb-4">Passed In Optional Title</div> TODO: Noah please wire this up for Tool Registry to just say "Registry" and disable breadcrumb for now in Tool Registry only*/}
       <BreadcrumbTrail destination={breadcrumbDestination} />
       <div className="content-container content-card-1 ">
         <div className="pl-2 content-block-header title-text-header-1">

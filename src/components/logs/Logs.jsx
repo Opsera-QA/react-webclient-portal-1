@@ -94,12 +94,10 @@ function Logs() {
       {error && <ErrorDialog error={error} align="top" />}
 
       <div className="max-content-width">
-        <h4>Logs</h4>
-        <p>
+        <div className="h4 mt-3 mb-4">Logs</div>
           Opsera provides users with access to a vast repository of logging with industry leading search and filtering
           capability. Access all available logging, reports and configurations around the Opsera Analytics Platform or
-          search your currently configured logs repositories below.{" "}
-        </p>
+          search your currently configured logs repositories below.
       </div>
 
       {!error && (
