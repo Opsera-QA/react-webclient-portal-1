@@ -1,6 +1,8 @@
 import React  from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import TooltipWrapper from "components/common/tooltip/tooltipWrapper";
+import {tabAccessRestricted} from "components/common/tooltip/popover-text";
 
 function CustomTab({activeTab, tabName, tabText, handleTabClick, icon, visible, disabled}) {
   if (!visible) {
@@ -10,9 +12,11 @@ function CustomTab({activeTab, tabName, tabText, handleTabClick, icon, visible, 
   if (disabled) {
     return (
       <li className="nav-item mr-1">
-        <div className={"nav-link disabled-tab"}>
-          <FontAwesomeIcon icon={icon} fixedWidth/><span className="ml-2 d-none d-lg-inline">{tabText}</span>
-        </div>
+        <TooltipWrapper innerText={tabAccessRestricted}>
+          <div className={"nav-link disabled-tab"}>
+            <FontAwesomeIcon icon={icon} fixedWidth/><span className="ml-2 d-none d-lg-inline">{tabText}</span>
+          </div>
+        </TooltipWrapper>
       </li>
     );
   }
