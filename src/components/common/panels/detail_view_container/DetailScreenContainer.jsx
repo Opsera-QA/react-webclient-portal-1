@@ -1,34 +1,13 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import DataNotFoundContainer from "components/common/panels/detail_view_container/DataNotFoundContainer";
-import DataNotFoundDialog from "components/common/status_notifications/data_not_found/DataNotFoundDialog";
 import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 import TitleBar from "components/common/fields/TitleBar";
 import {getBreadcrumb, getParentBreadcrumb} from "components/common/navigation/trails";
 import TitleComponent from "components/common/panels/TitleComponent";
 
-function DetailScreenContainer(
-  {
-    breadcrumbDestination,
-    actionBar,
-    dataObject,
-
-    // TODO: Remove these after wiring up everything
-    type,
-    managementViewIcon,
-    managementViewLink,
-    managementTitle,
-    title,
-    titleIcon,
-
-    detailPanel,
-    isLoading,
-    accessDenied,
-    metadata,
-    showBreadcrumbTrail,
-    subNavigationBar
-  }) {
+function DetailScreenContainer({ breadcrumbDestination, actionBar, dataObject, detailPanel, isLoading, accessDenied, metadata, showBreadcrumbTrail, subNavigationBar }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const [parentBreadcrumb, setParentBreadcrumb] = useState(getParentBreadcrumb(breadcrumbDestination));
 
@@ -46,15 +25,12 @@ function DetailScreenContainer(
 
   const getTitleBar = () => {
     const activeField = dataObject?.getActiveField();
-    const breadcrumbIcon = breadcrumb?.icon ? breadcrumb?.icon : titleIcon;
-    const detailViewTitle = dataObject?.getDetailViewTitle();
-
     return (
       <TitleBar
         isLoading={isLoading}
         parentBreadcrumb={parentBreadcrumb}
-        titleIcon={breadcrumbIcon}
-        title={detailViewTitle != null ? detailViewTitle : title}
+        titleIcon={breadcrumb?.icon}
+        title={dataObject?.getDetailViewTitle()}
         inactive={activeField ? dataObject?.getData(activeField) === false : false}
       />
     );
@@ -82,27 +58,9 @@ function DetailScreenContainer(
     )
   }
 
-  // TODO: We should just pull all the management stuff from the breadcrumb's parent instead.
   if (!isLoading && dataObject == null) {
-    // TODO: Remove using this when all detail views updated
-    if (managementViewLink && managementViewIcon) {
-      return (
-        <DataNotFoundContainer type={type} breadcrumbDestination={breadcrumbDestination}>
-          <DataNotFoundDialog
-            type={type}
-            managementViewIcon={managementViewIcon}
-            managementViewTitle={managementTitle}
-            managementViewLink={managementViewLink}
-          />
-        </DataNotFoundContainer>
-      )
-    }
-
-    // TODO: just pass in metadata?.type once wired up everywhere
-    const metadataType = metadata ? metadata?.type : type;
-
     return (
-      <DataNotFoundContainer type={metadataType} breadcrumbDestination={breadcrumbDestination} />
+      <DataNotFoundContainer type={metadata?.type} breadcrumbDestination={breadcrumbDestination} />
     )
   }
 
@@ -130,11 +88,6 @@ DetailScreenContainer.propTypes = {
   showBreadcrumbTrail: PropTypes.bool,
   subNavigationBar: PropTypes.object,
   breadcrumbDestination: PropTypes.string,
-  title: PropTypes.string,
-  type: PropTypes.string,
-  managementViewLink: PropTypes.string,
-  managementTitle: PropTypes.string,
-  titleIcon: PropTypes.object,
   detailPanel: PropTypes.object,
   dataObject: PropTypes.object,
   actionBar: PropTypes.object,
