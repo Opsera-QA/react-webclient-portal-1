@@ -10,7 +10,6 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
 function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganizationData, authorizedActions, handleClose }) {
@@ -84,7 +83,14 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
   }
 
     return (
-      <EditorPanelContainer>
+      <EditorPanelContainer
+        handleClose={handleClose}
+        recordDto={ldapOrganizationDataDto}
+        setRecordDto={setLdapOrganizationDataDto}
+        updateRecord={updateLdapOrganization}
+        createRecord={createOrganization}
+        addAnotherOption={false}
+      >
           <Row>
             <Col lg={12}>
               <div className="p-2">
@@ -128,14 +134,6 @@ function LdapOrganizationEditorPanel({ ldapOrganizationData, setLdapOrganization
               <TextInputBase disabled={true} fieldName={"subscription"} dataObject={ldapOrganizationDataDto} setDataObject={setLdapOrganizationDataDto}/>
             </Col>
           </Row>
-        <PersistButtonContainer
-          handleClose={handleClose}
-          recordDto={ldapOrganizationDataDto}
-          setRecordDto={setLdapOrganizationDataDto}
-          updateRecord={updateLdapOrganization}
-          createRecord={createOrganization}
-          addAnotherOption={false}
-        />
       </EditorPanelContainer>
     );
 }

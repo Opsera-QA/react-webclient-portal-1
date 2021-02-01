@@ -1,15 +1,16 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-
-import LdapOrganizationEditorPanel from "./LdapOrganizationEditorPanel";
-import LdapOrganizationAccountsTable from "../../organization_accounts/LdapOrganizationAccountsTable";
-import CustomTabContainer from "../../../../../common/tabs/CustomTabContainer";
-import CustomTab from "../../../../../common/tabs/CustomTab";
 import {faUsers} from "@fortawesome/pro-light-svg-icons";
-import DetailTabPanelContainer from "../../../../../common/panels/detail_view/DetailTabPanelContainer";
-import LdapOrganizationSummaryPanel from "./LdapOrganizationSummaryPanel";
-import SummaryTab from "../../../../../common/tabs/detail_view/SummaryTab";
-import SettingsTab from "../../../../../common/tabs/detail_view/SettingsTab";
+import LdapOrganizationSummaryPanel
+  from "components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationSummaryPanel";
+import LdapOrganizationAccountsTable
+  from "components/admin/accounts/ldap/organization_accounts/LdapOrganizationAccountsTable";
+import LdapOrganizationEditorPanel
+  from "components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationEditorPanel";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
+import CustomTab from "components/common/tabs/CustomTab";
+import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
 function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationData, setLdapOrganizationData, loadData, authorizedActions, authorizedOrganizationAccountActions}) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -21,6 +22,10 @@ function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationDat
     }
   };
 
+  const toggleSummaryPanel = () => {
+    setActiveTab("summary");
+  };
+
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
@@ -28,7 +33,7 @@ function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationDat
       case "accounts":
         return <div className="p-3"><LdapOrganizationAccountsTable ldapOrganizationAccounts={organizationAccounts} authorizedActions={authorizedOrganizationAccountActions} ldapOrganizationData={ldapOrganizationData} loadData={loadData} /></div>
       case "settings":
-        return <LdapOrganizationEditorPanel setLdapOrganizationData={setLdapOrganizationData} ldapOrganizationData={ldapOrganizationData} authorizedActions={authorizedActions} />;
+        return <LdapOrganizationEditorPanel handleClose={toggleSummaryPanel} setLdapOrganizationData={setLdapOrganizationData} ldapOrganizationData={ldapOrganizationData} authorizedActions={authorizedActions} />;
       default:
         return null;
     }
@@ -37,9 +42,8 @@ function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationDat
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <SummaryTab activeTab={activeTab} handleTabClick={handleTabClick} />
+        <SummaryToggleTab activeTab={activeTab} handleTabClick={handleTabClick} />
         <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"}/>
-        <SettingsTab activeTab={activeTab} handleTabClick={handleTabClick} />
       </CustomTabContainer>
     )
   };
