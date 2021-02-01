@@ -497,22 +497,22 @@ a.text-primary:hover, a.text-primary:focus {
 }
 
 .custom-table .table-row:hover {
-  background-color: #E7E5ED;
+  background-color: #F3F3F1;
 }
 
 .custom-table .table-footer {
-  background-color: #E7E5ED;
+  background-color: #F3F3F1;
   padding-top: 1em;
   height: 2em;
 }
 
 .custom-table .top-pagination {
-  background-color: #E7E5ED;
+  background-color: #F3F3F1;
   height: 2em;
 }
 
 .filter-table .active-filter-bar {
-    background-color: #E7E5ED;
+    background-color: #F3F3F1;
 }
 
 /* End Table Styling */
