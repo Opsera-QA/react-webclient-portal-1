@@ -1,12 +1,11 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import pipelineActions from "../../../../workflow/pipeline-actions";
-import {AuthContext} from "../../../../../contexts/AuthContext";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationCircle, faTools} from "@fortawesome/free-solid-svg-icons";
+import {faExclamationCircle, faTools} from "@fortawesome/pro-light-svg-icons";
 import {Link} from "react-router-dom";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {AuthContext} from "contexts/AuthContext";
 
 function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visible, fieldName, dataObject, setDataObject, setDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);
