@@ -321,7 +321,7 @@ function PipelineDetailView() {
 
   return (
     <div>
-      <div className="title-text-5 mb-2">{getPipelineTitle()}</div>
+      <div className="h4 mt-3 mb-4">{getPipelineTitle()}</div>
 
       {getNavigationTabs()}
       {getCurrentView()}
