@@ -894,7 +894,7 @@ a.nav-link {
 
 .content-card-1 .content-block-footer {
   border-top: 5px solid #8F86BB;
-  background-color: #6E6690;
+  background-color: #2e1956;
   padding-top: 1em;
   height: 1.5em;
 }
@@ -904,7 +904,7 @@ a.nav-link {
 }
 
 .content-card-1 .selected {
-  background-color: #6153A5;
+  background-color: #453191;
   color: #fff;
 }
 
@@ -1245,3 +1245,7 @@ a.nav-link {
     background-color: #f2f4f8;
 }
 /* End Pipeline Summary Card styling */
+
+.text-muted-purple {
+  color: #2e1956 !important;
+}
