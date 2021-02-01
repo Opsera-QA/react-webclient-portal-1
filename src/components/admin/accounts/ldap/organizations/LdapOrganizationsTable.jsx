@@ -5,6 +5,7 @@ import {useHistory} from "react-router-dom";
 import NewLdapOrganizationModal from "components/admin/accounts/ldap/organizations/NewLdapOrganizationModal";
 import {ldapOrganizationMetaData} from "components/admin/accounts/ldap/organizations/ldap-organizations-metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
+import {getField} from "components/common/metadata/metadata-helpers";
 
 function LdapOrganizationsTable({data, isLoading, loadData, authorizedActions}) {
   const [showCreateOrganizationModal, setShowCreateOrganizationModal] = useState(false);
@@ -13,10 +14,10 @@ function LdapOrganizationsTable({data, isLoading, loadData, authorizedActions}) 
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "name"})),
-      getTableTextColumn(fields.find(field => { return field.id === "description"})),
-      getTableTextColumn(fields.find(field => { return field.id === "orgName"})),
-      getTableTextColumn(fields.find(field => { return field.id === "orgOwnerEmail"})),
+      getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "description")),
+      getTableTextColumn(getField(fields, "orgName")),
+      getTableTextColumn(getField(fields, "orgOwnerEmail")),
     ],
     []
   );

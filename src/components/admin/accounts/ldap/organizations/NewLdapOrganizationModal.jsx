@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from "react";
 import PropTypes from "prop-types";
-import LdapOrganizationEditorPanel from "./organizations_detail_view/LdapOrganizationEditorPanel";
-import Model from "../../../../../core/data_model/model";
+import Model from "core/data_model/model";
 import {ldapOrganizationMetaData} from "components/admin/accounts/ldap/organizations/ldap-organizations-metadata";
-import CreateModal from "../../../../common/modal/CreateModal";
-
+import LdapOrganizationEditorPanel
+  from "components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationEditorPanel";
+import CreateModal from "components/common/modal/CreateModal";
 
 function NewLdapOrganizationModal({ setShowModal, showModal, loadData, authorizedActions }) {
   const [ldapOrganizationData, setLdapOrganizationData] = useState(undefined);
@@ -19,11 +19,9 @@ function NewLdapOrganizationModal({ setShowModal, showModal, loadData, authorize
   };
 
   return (
-    <>
-      <CreateModal handleCancelModal={handleClose} objectType={"Organization"} showModal={showModal} loadData={loadData} >
-        {ldapOrganizationData && <LdapOrganizationEditorPanel authorizedActions={authorizedActions} setLdapOrganizationData={setLdapOrganizationData} newLdapOrganization={true} handleClose={handleClose} ldapOrganizationData={ldapOrganizationData} />}
-      </CreateModal>
-    </>
+    <CreateModal handleCancelModal={handleClose} objectType={"Organization"} showModal={showModal} loadData={loadData} >
+      <LdapOrganizationEditorPanel authorizedActions={authorizedActions} setLdapOrganizationData={setLdapOrganizationData} newLdapOrganization={true} handleClose={handleClose} ldapOrganizationData={ldapOrganizationData} />
+    </CreateModal>
   );
 }
 

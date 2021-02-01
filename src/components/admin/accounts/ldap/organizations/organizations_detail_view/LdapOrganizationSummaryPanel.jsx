@@ -1,12 +1,11 @@
 import React from "react";
 import {Row, Col} from "react-bootstrap";
 import PropTypes from "prop-types";
-import DtoTextField from "../../../../../common/form_fields/dto_form_fields/dto-text-field";
-import LoadingDialog from "../../../../../common/status_notifications/loading";
-import SummaryPanelContainer from "../../../../../common/panels/detail_view/SummaryPanelContainer";
+import LoadingDialog from "components/common/status_notifications/loading";
+import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
 
 function LdapOrganizationSummaryPanel({ ldapOrganizationData, setActiveTab }) {
-
   if (ldapOrganizationData == null) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -15,28 +14,28 @@ function LdapOrganizationSummaryPanel({ ldapOrganizationData, setActiveTab }) {
     <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapOrganizationData} fieldName={"orgName"}/>
+          <TextFieldBase dataObject={ldapOrganizationData} fieldName={"orgName"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapOrganizationData} fieldName={"description"}/>
+          <TextFieldBase dataObject={ldapOrganizationData} fieldName={"description"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapOrganizationData} fieldName={"envCount"}/>
+          <TextFieldBase dataObject={ldapOrganizationData} fieldName={"envCount"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapOrganizationData} fieldName={"numberOfLicenses"}/>
+          <TextFieldBase dataObject={ldapOrganizationData} fieldName={"numberOfLicenses"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapOrganizationData} fieldName={"objectCount"}/>
+          <TextFieldBase dataObject={ldapOrganizationData} fieldName={"objectCount"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapOrganizationData} fieldName={"name"}/>
+          <TextFieldBase dataObject={ldapOrganizationData} fieldName={"name"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapOrganizationData} fieldName={"orgOwner"}/>
+          <TextFieldBase dataObject={ldapOrganizationData} fieldName={"orgOwner"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapOrganizationData} fieldName={"orgOwnerEmail"}/>
+          <TextFieldBase dataObject={ldapOrganizationData} fieldName={"orgOwnerEmail"}/>
         </Col>
       </Row>
     </SummaryPanelContainer>
