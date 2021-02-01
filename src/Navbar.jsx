@@ -103,9 +103,9 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
       <Navbar className="nav-bar">
         <Navbar.Brand href="/">
           <img alt="Opsera Inc."
-               src="/img/logos/opsera_logo_transparent_229x40.png"
-               width="229"
-               height="40"
+               src="/img/logos/opsera_logo_white_horizontal_240_42.png"
+               width="240"
+               height="42"
                className="d-inline-block align-top ml-3"
           />
         </Navbar.Brand>
@@ -136,10 +136,10 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
   return (
     <Navbar className="nav-bar">
       <Navbar.Brand href="/">
-        <img alt="OpsERA"
-             src="/img/logos/opsera_logo_transparent_229x40.png"
-             width="229"
-             height="40"
+        <img alt="Opsera Inc."
+             src="/img/logos/opsera_logo_white_horizontal_240_42.png"
+             width="240"
+             height="42"
              className="d-inline-block align-top ml-3"
         />
       </Navbar.Brand>
@@ -152,7 +152,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
 
             {getPermissionsMessage()}
 
-            <NavDropdown title={fullName} id="basic-nav-dropdown" alignRight>
+            <NavDropdown title={fullName} id="basic-nav-dropdown" className="top-nav-dropdown" alignRight>
               <Link to="/profile" id="profile-button" className="dropdown-item nav-drop-down-item">Profile</Link>
               <NavDropdown.Divider/>
 

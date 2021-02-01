@@ -1,15 +1,21 @@
 .nav-bar {
-  padding-top:5px;
-  border-bottom: solid 1px #c9cdd0
+/*  padding-top:5px;
+  border-bottom: solid 1px #c9cdd0*/
+  background-color: #453191;
+}
+
+.navbar .top-nav-dropdown .nav-link {
+  color: #fef7fd !important;
 }
 
 .nav-bar .header-text {
   font-size: 1.7rem;
-  margin-left:-3px;;
+  margin-left:-3px;
+  color: #fef7fd;
 }
 
 .nav-drop-down-item {
-  color: #212529;
+  color: #2e1956;
   text-decoration: none;
 }
 
@@ -22,7 +28,7 @@
 
 a.nav-drop-down-item:hover {
   /* color: #fff !important; */
-  background-color: #1989F9 !important;
+  background-color: #7139df !important;
   text-decoration: none;
 }
 

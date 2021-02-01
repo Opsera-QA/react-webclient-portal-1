@@ -66,6 +66,11 @@
       "src": "img/logos/opsera_bird_infinity_171_126.png",
       "type": "image/png",
       "sizes": "171x126"
+    },
+    {
+      "src": "img/logos/opsera_logo_white_horizontal_240_42.png",
+      "type": "image/png",
+      "sizes": "240x42"
     }
   ],
   "start_url": ".",

@@ -593,27 +593,27 @@ a.nav-link {
 }
 
 .default-custom-tabs .nav-tabs .nav-item.show .nav-link, .default-custom-tabs .nav-tabs .nav-link.active {
-  background: #6E6690;
-  color: #fff;
+  background: #453191;
+  color: #fef7fd;
   /* border-color: #1578dc;*/
   text-decoration: none;
 }
 
 .default-custom-tabs .nav-tabs .nav-item.show .nav-link, .default-custom-tabs .nav-tabs .nav-link:hover {
-  border-color: #1E1D1B;
+  border-color: #2e1956;
 }
 
 /* End Default Custom Tab styling */
 
 /* Begin Step Tabs Styling */
 .step-tabs .nav-tabs > li a.active, .step-tabs .nav-tabs > li a.active:focus {
-  background: #241F3D;
-  color: #fff;
+  background: #453191;
+  color: #fef7fd;
 }
 
 .step-tabs .nav-tabs > li a.active:hover {
-  background: #241F3D;
-  color: #fff;
+  background: #2e1956;
+  color: #fef7fd;
   /*border-color: #1578dc;*/
 }
 
@@ -675,12 +675,12 @@ a.nav-link {
 }
 
 .alternate-tabs .nav-tabs > li a.active, .alternate-tabs .nav-tabs > li a.active:focus {
-  background: #46415C;
-  color: #fff;
+  background: #453191;
+  color: #fef7fd;
 }
 
 .alternate-tabs .nav-tabs > li a.active:hover {
-  background: #241F3D;
+  background: #2e1956;
   border-bottom-color: #46415C;
 }
 
@@ -692,14 +692,14 @@ a.nav-link {
 }
 
 .alternate-tabs .nav-tabs > li a.active {
-  background: #6E6690;
+  background: #453191;
   /*border-color: #1578dc;*/
   border-bottom: 5px solid #8F86BB;
   text-decoration: none;
 }
 
 .alternate-tabs .nav-tabs .nav-item.show .nav-link, .alternate-tabs .nav-tabs .nav-link:hover {
-  border-color: #7368AA;
+  border-color: #2e1956;
 }
 
 .alternate-tabs .nav-tabs {
@@ -840,18 +840,18 @@ a.nav-link {
 }
 
 .content-container {
-  border: 1px solid #8F86BB;
+  border: 1px solid #453191;
   /*border-radius: .25rem;*/
 }
 
 .content-container-shadow {
-  -moz-box-shadow: 0px 2px 8px #8F86BB; /* Firefox */
-  -webkit-box-shadow: 0px 2px 8px #8F86BB; /* Safari, Chrome */
-  box-shadow: 0px 2px 8px #8F86BB; /* CSS3 */
+  /*-moz-box-shadow: 0px 2px 8px #8F86BB; !* Firefox *!
+  -webkit-box-shadow: 0px 2px 8px #8F86BB; !* Safari, Chrome *!
+  box-shadow: 0px 2px 8px #8F86BB; !* CSS3 *!
 
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
-  border-radius: 5px;
+  border-radius: 5px;*/
 }
 
 /* Content Card 1 Styling */
@@ -881,8 +881,8 @@ a.nav-link {
 /*}*/
 
 .content-card-1 .content-block-header {
-  background-color: #6E6690;
-  color: #fff;
+  background-color: #453191;
+  color: #fef7fd;
   line-height: 2.4em;
   /*border-bottom: 3px solid #6E6690;*/
 }
