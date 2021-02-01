@@ -78,7 +78,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
     }
 
     return (
-      <div className="mt-2 py-1">
+      <div className="mt-2 py-1 opsera-banner-text-on-purple-background">
         <OverlayTrigger
           placement="auto"
           delay={{ hide: 400 }}
