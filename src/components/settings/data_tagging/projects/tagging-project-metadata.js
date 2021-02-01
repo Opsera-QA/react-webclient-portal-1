@@ -1,6 +1,13 @@
 const projectTagsMetadata = {
   idProperty: "_id",
   type: "Project Mapping",
+  activeField: "active",
+  detailView: function (record) {
+    return `/settings/data_mapping/projects/details/${record.getData("_id")}`;
+  },
+  detailViewTitle: function (record) {
+    return `Project Mapping Details`;
+  },
   fields: [
     {
       label: "Type",

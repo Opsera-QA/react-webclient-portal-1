@@ -59,7 +59,6 @@ function NotificationDetailView() {
   };
 
   return (
-    // TODO: We should really be pulling icon, managementViewLink, managementTitle, etc  from trails. I need to make another container
     <DetailScreenContainer
       breadcrumbDestination={"notificationDetailView"}
       metadata={notificationMetadata}

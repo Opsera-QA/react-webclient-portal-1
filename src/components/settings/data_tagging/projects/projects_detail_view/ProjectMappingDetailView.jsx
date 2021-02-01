@@ -41,11 +41,14 @@ function ProjectMappingDetailView() {
   const getProjectMapping = async (projectMappingId) => {
     try {
       const response = await dataMappingActions.getProjectMappingById(projectMappingId, getAccessToken);
-      if (response.data != null && response.data.length > 0) {
+      if (response?.data?.length > 0) {
         setProjectMappingData(new Model(response.data[0], projectTagsMetadata, false));
       }
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (!error?.error?.message?.includes(404)) {
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
   };
 
@@ -71,19 +74,11 @@ function ProjectMappingDetailView() {
     );
   };
 
-  if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
-    return <AccessDeniedDialog roleData={accessRoleData} />;
-  }
-
   return (
     <DetailScreenContainer
       breadcrumbDestination={"projectTaggingDetailView"}
-      title={"Project Mapping Details"}
-      managementViewLink={"/settings/data_mapping"}
-      managementTitle={"Mappings Management"}
-      managementViewIcon={faProjectDiagram}
-      type={"Project Mapping"}
-      titleIcon={faProjectDiagram}
+      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator}
+      metadata={projectTagsMetadata}
       dataObject={projectMappingData}
       isLoading={isLoading}
       actionBar={getActionBar()}
