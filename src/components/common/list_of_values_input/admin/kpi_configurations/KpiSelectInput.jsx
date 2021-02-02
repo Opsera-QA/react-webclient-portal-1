@@ -5,7 +5,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function KpiSelectInput({ fieldName, dataObject, setDataObject, setCurrentKpi, setDataFunction, disabled, textField, valueField}) {
+function KpiSelectInput({ fieldName, dataObject, setDataObject, setCurrentKpi, setDataPoints, setDataFunction, disabled, textField, valueField}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [kpis, setKpis] = useState([]);
@@ -40,6 +40,7 @@ function KpiSelectInput({ fieldName, dataObject, setDataObject, setCurrentKpi, s
       if (setCurrentKpi && dataObject.getData(fieldName) !== "") {
         const selectedKpi = kpis.find((kpi) => kpi.identifier === dataObject.getData(fieldName))
         setCurrentKpi(selectedKpi);
+        setDataPoints(selectedKpi["dataPoints"]);
       }
 
       setKpis(kpis);
@@ -68,6 +69,7 @@ KpiSelectInput.propTypes = {
   setDataObject: PropTypes.func,
   setDataFunction: PropTypes.func,
   setCurrentKpi: PropTypes.func,
+  setDataPoints: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string

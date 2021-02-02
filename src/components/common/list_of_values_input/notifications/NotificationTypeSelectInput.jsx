@@ -7,7 +7,7 @@ export const notificationTypes = [
   {name: "Pipeline", value: "pipeline"},
   {name: "Metric", value: "metric"}
 ];
-
+// TODO: Remove the disabled items from here when done
 function NotificationTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction }) {
   return (
     <SelectInputBase
@@ -19,6 +19,7 @@ function NotificationTypeSelectInput({ fieldName, dataObject, setDataObject, dis
       valueField="value"
       textField="name"
       disabled={disabled}
+      // disabled={[ {name: "Metric", value: "metric"} ]}
     />
   );
 }
