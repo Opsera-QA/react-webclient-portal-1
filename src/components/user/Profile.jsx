@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
 import { Button, Table } from "react-bootstrap";
-import LoadingDialog from "../common/status_notifications/loading";
-import { DialogToastContext } from "../../contexts/DialogToastContext";
-import userActions from "./user-actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/pro-solid-svg-icons/faUser";
 import { faSync, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import { defineUserRole } from "utils/helpers";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import userActions from "components/user/user-actions";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 function Profile() {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
@@ -75,6 +74,10 @@ function Profile() {
 
   // TODO: Style better
   const getUserInfo = () => {
+    if (user == null) {
+      return <></>;
+    }
+
     return (
       <div>
         <Table className="custom-table mb-0">
@@ -153,6 +156,7 @@ function Profile() {
 
   return (
     <ScreenContainer
+      isLoading={isLoading}
       breadcrumbDestination={"userProfile"}
       pageDescription={`
           Review and manage your user profile information as well as platform settings from this page. Please note,
@@ -160,8 +164,7 @@ function Profile() {
           stored in your identify provider so some changes may not be possible from this portal at this time.
       `}>
       {getSyncButton()}
-      {isLoading && <LoadingDialog size={"sm"} message={"Loading User Details"}/>}
-      {user && getUserInfo()}
+      {getUserInfo()}
     </ScreenContainer>
   );
 }
