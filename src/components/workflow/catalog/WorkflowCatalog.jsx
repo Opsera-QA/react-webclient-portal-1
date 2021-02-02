@@ -16,6 +16,7 @@ import TagFilter from "components/common/filters/tags/TagFilter";
 import DtoTopPagination from "components/common/pagination/DtoTopPagination";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import PipelineTypeFilter from "components/common/filters/admin/templates/PipelineTypeFilter";
+import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 
 function WorkflowCatalog() {
   const contextType = useContext(AuthContext);
@@ -111,9 +112,9 @@ function WorkflowCatalog() {
 
     if (Array.isArray(workflowTemplates) && workflowTemplates.length > 0) {
       return (
-        <Row className="pl-3 w-100">
+        <Row className="px-3">
           {workflowTemplates.map((item, idx) => (
-            <Col xl={6} md={12} key={idx} className="pl-3 py-2">
+            <Col xl={6} md={12} key={idx} className="py-2">
               <WorkflowCatalogItem
                 item={item}
                 parentCallback={callbackFunction}
@@ -144,43 +145,9 @@ function WorkflowCatalog() {
     );
   };
 
-  return (
-    <div className="max-content-width" style={{ minWidth: "505px" }}>
-      <div className="mb-4">
-
-        <div className="pl-3 mt-2">
-          Select a template to get started &quot;Creating a new Pipeline&quot;.
-        </div>
-
-        <div className="mr-4">
-          {getFilterBar()}
-        </div>
-        <div className="px-3">
-          <div className="px-3">
-            <DtoTopPagination
-              loadData={loadData}
-              isLoading={loading}
-              paginationDto={catalogFilterDto}
-              setPaginationDto={setCatalogFilterDto}
-            />
-          </div>
-          <Row>
-            {getWorkflowItems()}
-          </Row>
-          <div className="pb-2">
-            <DtoBottomPagination
-              loadData={loadData}
-              isLoading={loading}
-              paginationDto={catalogFilterDto}
-              setPaginationDto={setCatalogFilterDto}
-            />
-          </div>
-        </div>
-        <ModalActivityLogsDialog
-          header="Template Details" size="lg" jsonData={modalMessage} show={showModal}
-          setParentVisibility={setShowModal}
-        />
-        {showFreeTrialModal &&
+  const getFreeTrialModal = () => {
+    if (showFreeTrialModal) {
+      return (
         <FreeTrialPipelineWizard
           pipelineId={pipelineId}
           templateId={templateId}
@@ -188,8 +155,41 @@ function WorkflowCatalog() {
           autoRun={false}
           handleClose={handleClose}
         />
-        }
+      );
+    }
+  }
+
+  return (
+    <div>
+      <div>
+        {getFilterBar()}
       </div>
+      <div>
+        <div className="px-2">
+          <DtoTopPagination
+            loadData={loadData}
+            isLoading={loading}
+            paginationDto={catalogFilterDto}
+            setPaginationDto={setCatalogFilterDto}
+          />
+        </div>
+        <Row>
+          {getWorkflowItems()}
+        </Row>
+        <div className="pb-2">
+          <DtoBottomPagination
+            loadData={loadData}
+            isLoading={loading}
+            paginationDto={catalogFilterDto}
+            setPaginationDto={setCatalogFilterDto}
+          />
+        </div>
+      </div>
+      <ModalActivityLogsDialog
+        header="Template Details" size="lg" jsonData={modalMessage} show={showModal}
+        setParentVisibility={setShowModal}
+      />
+      {getFreeTrialModal()}
     </div>
   );
 }

@@ -5,10 +5,11 @@ import PipelinesView from "./PipelinesView";
 import WorkflowCatalog from "../catalog/WorkflowCatalog";
 import cookieHelpers from "../../../core/cookies/cookie-helpers";
 import { useHistory } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiceD20, faMicrochip, faBracketsCurly, faHexagon, faUser  } from "@fortawesome/pro-light-svg-icons";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
+import NavigationTab from "components/common/tabs/navigation/NavigationTab";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 function Pipelines() {
   const { tab } = useParams();
@@ -20,14 +21,13 @@ function Pipelines() {
   }, []);
 
   const initializeComponent = async () => {
-
     if (tab != null) {
       setActiveTab(tab);
-    } else {
+    }
+    else {
       let storedTab = cookieHelpers.getCookie("pipelines", "selectedTab");
 
       if (storedTab != null) {
-        console.log("Got cookie: " + storedTab);
         setActiveTab(storedTab);
       } else {
         setActiveTab("owner");
@@ -45,64 +45,69 @@ function Pipelines() {
     }
   };
 
-  // TODO: make tab component
-  const getTab = (handleTabClick, tabName, icon, text, hover_text) => {
+  const getCurrentView = () => {
+    switch (activeTab) {
+      case "catalog":
+        return <WorkflowCatalog/>;
+      case "all":
+      case "owner":
+      case "sdlc":
+      case "ai-ml":
+      case "sfdc":
+        return <PipelinesView currentTab={activeTab} setActiveTab={setActiveTab}/>;
+      default:
+        return null;
+    }
+  };
+
+  const getPageDescription = () => {
+    switch (activeTab) {
+      case "catalog":
+        return "Create a new Pipeline from this catalog of templates. Select a template to get started.";
+      case "all":
+      case "owner":
+      case "sdlc":
+      case "ai-ml":
+      case "sfdc":
+        return null
+      default:
+        return null;
+    }
+  };
+
+  const getDynamicTabs = () => {
+    if (process.env.REACT_APP_STACK !== "free-trial") {
+      return (
+        <>
+          <NavigationTab activeTab={activeTab} tabText={"My Pipelines"} handleTabClick={handleTabClick} tabName={"owner"} toolTipText={"My Pipelines"} icon={faUser} />
+          <NavigationTab activeTab={activeTab} tabText={"Software Development"} handleTabClick={handleTabClick} tabName={"sdlc"} toolTipText={"Software Development Pipelines"} icon={faBracketsCurly} />
+          <NavigationTab activeTab={activeTab} tabText={"Machine Learning"} handleTabClick={handleTabClick} tabName={"ai-ml"} toolTipText={"Machine Learning (AI) Pipelines"} icon={faMicrochip} />
+          <NavigationTab activeTab={activeTab} tabText={"SalesForce Pipelines"} handleTabClick={handleTabClick} tabName={"sfdc"} toolTipText={"SalesForce Pipelines"} icon={faSalesforce} />
+        </>
+      )
+    }
+  };
+
+  const getNavigationTabContainer = () => {
     return (
-      <li className="nav-item" style={{ minWidth: "5em", textAlign: "center" }}>
-        <TooltipWrapper innerText={hover_text}>
-          <a className={"nav-link " + (activeTab === tabName ? "active" : "")} href="#"
-             onClick={handleTabClick(tabName)}><FontAwesomeIcon icon={icon} fixedWidth size="lg"/><span
-            className="ml-1 d-none d-lg-inline">{text}</span></a>
-        </TooltipWrapper>
-      </li>
+      <NavigationTabContainer>
+        <NavigationTab activeTab={activeTab} tabText={"Template Catalog"} handleTabClick={handleTabClick} tabName={"catalog"} toolTipText={"Template Catalog"} icon={faHexagon} />
+        <NavigationTab activeTab={activeTab} tabText={"All Pipelines"} handleTabClick={handleTabClick} tabName={"all"} toolTipText={"All Pipelines"} icon={faDiceD20} />
+        {getDynamicTabs()}
+      </NavigationTabContainer>
     );
   };
 
   return (
-    <>
-      <div className="max-content-width">
-        <div className="h4 mt-3 mb-4">Pipelines</div>
-        <>
-          <div className="alternate-tabs">
-            <ul className="nav nav-tabs">
-              {getTab(handleTabClick, "catalog", faHexagon, "Template Catalog", "Catalog Templates")}
-              {getTab(handleTabClick, "all", faDiceD20, "All Pipelines", "All Pipelines")}
-              {(process.env.REACT_APP_STACK !== "free-trial") && <>
-                {getTab(handleTabClick, "owner", faUser, "My Pipelines", "My Pipelines")}
-                {getTab(handleTabClick, "sdlc", faBracketsCurly, "Software Development", "Software Development Pipelines")}
-                {getTab(handleTabClick, "ai-ml", faMicrochip, "Machine Learning", "Machine Learning (AI) Pipelines")}
-                {getTab(handleTabClick, "sfdc", faSalesforce, "SalesForce", "SalesForce Pipelines")}
-              </>}
-            </ul>
-          </div>
-          <div className="content-block-collapse pt-2">
-            {activeTab && <PipelinesTabView activeTab={activeTab} setActiveTab={setActiveTab}/>}
-          </div>
-        </>
-      </div>
-    </>
+    <ScreenContainer
+      breadcrumbDestination={"pipelines"}
+      navigationTabContainer={getNavigationTabContainer()}
+      pageDescription={getPageDescription()}
+    >
+      {getCurrentView()}
+    </ScreenContainer>
   );
 
-}
-
-function PipelinesTabView({ activeTab, setActiveTab }) {
-  useEffect(() => {
-    // console.log("CHANGE HAPPENED");
-  }, [activeTab]);
-  if (activeTab) {
-    switch (activeTab) {
-    case "catalog":
-      return <WorkflowCatalog/>;
-    case "all":
-    case "owner":
-    case "sdlc":
-    case "ai-ml":
-    case "sfdc":
-      return <PipelinesView currentTab={activeTab} setActiveTab={setActiveTab}/>;
-    default:
-      return null;
-    }
-  }
 }
 
 export default Pipelines;
