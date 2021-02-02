@@ -13,6 +13,11 @@ const metricNotificationConfigurationMetadata = {
     },
     {
       label: "Select Data Point",
+      id: "dataPointName",
+      // isRequired: true
+    },
+    {
+      label: "Data Point",
       id: "dataPoint",
       // isRequired: true
     },
