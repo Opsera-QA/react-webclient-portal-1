@@ -4,8 +4,8 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import ToolInventory from "components/inventory/tools/ToolInventory";
 import PlatformInventory from "components/inventory/platform/platformInventory";
-import CustomTabContainer from "components/common/tabs/CustomTabContainer";
-import CustomTab from "components/common/tabs/CustomTab";
+import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
+import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 
 function Inventory() {
   const [activeTab, setActiveTab] = useState("tools");
@@ -26,24 +26,25 @@ function Inventory() {
     }
   }
 
-  const getTabContainer = () => {
+  const getNavigationTabContainer = () => {
     return (
-      <CustomTabContainer styling="alternate-tabs">
-        <CustomTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tools"} />
-        <CustomTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Platform"} />
-      </CustomTabContainer>
+      <NavigationTabContainer>
+        <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tools"} />
+        <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Platform"} />
+      </NavigationTabContainer>
     );
   }
 
   return (
     <ScreenContainer
+      navigationTabContainer={getNavigationTabContainer()}
       breadcrumbDestination={"toolRegistry"}
       pageDescription={`
         The OpsERA Tool Registry allows you to register, track and configure all of the tools in your organization in
         one centralized inventory.
       `}
     >
-      <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
+      {getCurrentView()}
     </ScreenContainer>
   );
 }
