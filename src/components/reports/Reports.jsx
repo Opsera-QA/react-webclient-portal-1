@@ -1,10 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
-import LoadingDialog from "../common/status_notifications/loading";
-import AccessDeniedDialog from "../common/status_notifications/accessDeniedInfo";
+import Row from "react-bootstrap/Row";
+import {AuthContext} from "../../contexts/AuthContext";
 import {DialogToastContext} from "../../contexts/DialogToastContext";
 import ScreenContainer from "../common/panels/general/ScreenContainer";
-import Row from "react-bootstrap/Row";
 import BreadcrumbPageLink from "../common/links/BreadcrumbPageLink";
 
 function Reports() {
@@ -38,18 +36,12 @@ function Reports() {
     }
   };
 
-  if (!accessRoleData || isLoading) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
-  if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
-    return (<AccessDeniedDialog roleData={accessRoleData} />);
-  }
-
   return (
     <ScreenContainer
       breadcrumbDestination={"reports"}
       pageDescription={"View reports from this dashboard."}
+      accessDenied={!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator}
+      isLoading={isLoading}
     >
       <Row className="ml-3">
         <BreadcrumbPageLink breadcrumbDestination={"toolReports"}/>
