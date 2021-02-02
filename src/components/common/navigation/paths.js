@@ -1,5 +1,7 @@
 const paths = {};
 
+paths.userProfile = "profile";
+
 // Admin Paths
 paths.admin = "admin";
 

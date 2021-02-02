@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/pro-solid-svg-icons/faUser";
 import { faSync, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import { defineUserRole } from "utils/helpers";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 function Profile() {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
@@ -72,6 +73,7 @@ function Profile() {
     );
   };
 
+  // TODO: Style better
   const getUserInfo = () => {
     return (
       <div>
@@ -137,31 +139,30 @@ function Profile() {
     );
   };
 
-  return (
-    <div className="mt-3 max-content-width">
-      <div className="max-content-width mt-3 mb-4">
-        <h4>My User Profile</h4>
-        <p>Review and manage your user profile information as well as platform settings from this page. Please note,
-          profile details are
-          stored in your identify provider so some changes may not be possible from this portal at this time.</p>
+  const getSyncButton = () => {
+    return (
+      <div className="text-right pb-3">
+        <Button variant="primary" size="sm" disabled={isSyncing} onClick={() => syncUserData()}>
+          {isSyncing ?
+            <><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Syncing</> :
+            <><FontAwesomeIcon icon={faSync} fixedWidth className="mr-2"/>Re-Sync Profile</>}
+        </Button>
       </div>
-      <div className="content-container content-card-1 max-content-width ml-2 mb-2">
-        <div className="pl-2 content-block-header title-text-header-1">
-          <FontAwesomeIcon icon={faUser} fixedWidth className="mr-1"/>My Profile
-        </div>
-        <div className="text-right p-1">
-          <Button variant="primary" size="sm"
-                  disabled={isSyncing}
-                  onClick={() => syncUserData()}>
-            {isSyncing ?
-              <><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Syncing</> :
-              <><FontAwesomeIcon icon={faSync} fixedWidth className="mr-2"/>Re-Sync Profile</>}
-          </Button></div>
+    );
+  };
 
-        {isLoading && <LoadingDialog size={"sm"} message={"Loading User Details"}/>}
-        {user && getUserInfo()}
-      </div>
-    </div>
+  return (
+    <ScreenContainer
+      breadcrumbDestination={"userProfile"}
+      pageDescription={`
+          Review and manage your user profile information as well as platform settings from this page. Please note,
+          profile details are
+          stored in your identify provider so some changes may not be possible from this portal at this time.
+      `}>
+      {getSyncButton()}
+      {isLoading && <LoadingDialog size={"sm"} message={"Loading User Details"}/>}
+      {user && getUserInfo()}
+    </ScreenContainer>
   );
 }
 

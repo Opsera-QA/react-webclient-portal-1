@@ -100,6 +100,9 @@ const breadcrumbs = {
   notificationManagement : { name: "notificationManagement", path: paths.notificationManagement, label: "Notification Management", icon: faEnvelope},
   notificationDetailView: {name: "notificationDetailView", path: paths.notificationDetailView, label: "Notification Details", icon: faEnvelope},
 
+  //General
+  userProfile: {name: "userProfile", path: paths.userProfile, label: "My User Profile", icon: faUser},
+
   accessDenied: {name: "accessDenied", path: undefined, label: "Access Denied", icon: faEnvelope},
 };
 
@@ -112,7 +115,6 @@ const trails = {
   // Administration
   admin: {parent: undefined, breadcrumb: breadcrumbs.admin},
   systemStatus: {parent: "admin", breadcrumb: breadcrumbs.systemStatus},
-
 
   systemHealthCheck: {parent: "admin", breadcrumb: breadcrumbs.systemStatus},
   deprecatedReports: {parent: "admin", breadcrumb: breadcrumbs.systemStatus},
@@ -194,6 +196,10 @@ const trails = {
   //Notifications
   notificationManagement : {parent: undefined, breadcrumb: breadcrumbs.notificationManagement},
   notificationDetailView: {parent: "notificationManagement", breadcrumb: breadcrumbs.notificationDetailView},
+
+
+  // General
+  userProfile: {parent: undefined, breadcrumb: breadcrumbs.userProfile},
 
   accessDenied: {parent: undefined, breadcrumb: breadcrumbs.accessDenied},
 };
