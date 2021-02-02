@@ -745,11 +745,6 @@ a.nav-link {
   position: relative;
 }
 
-.sub-navigation li a:hover {
-  color: #fff;
-  background: #241F3D;
-}
-
 .sub-navigation .nav-tabs .nav-item {
   margin-right: 2px;
 }
@@ -757,12 +752,10 @@ a.nav-link {
 .sub-navigation .nav-tabs > li a.active, .sub-navigation .nav-tabs > li a.active:focus {
   color: #CF940C;
   border-top: 5px solid #CF940C;
-  background: rgba(0, 0, 0, .05);
   text-decoration: none;
 }
 
 .sub-navigation .nav-tabs > li a.active:hover {
-  background: rgba(0, 0, 0, .05);
   border-top: 5px solid #F0B324 !important;
   color: #F0B324;
 }
@@ -775,13 +768,11 @@ a.nav-link {
 
 .sub-navigation .nav-tabs > li a {
   border-top: 5px solid #C3C1CE;
-  background: rgba(0, 0, 0, .05);
 }
 
 .sub-navigation li a:hover {
-  color: #6c757d;
+  color: #F0B324;
   border-top: 5px solid #CF940C !important;
-  background: rgba(0, 0, 0, .05);
 }
 
 /* End Sub-navigation Tab Styling */
