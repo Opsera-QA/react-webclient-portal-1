@@ -150,6 +150,10 @@ a:hover, .active {
 }
 
 .title-text-header-1 {
+    font-size: 1.25rem;
+}
+
+.title-text-header-2 {
     font-size: 1.1rem;
 }
 

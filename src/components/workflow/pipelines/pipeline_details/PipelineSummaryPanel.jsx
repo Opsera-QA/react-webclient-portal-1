@@ -420,7 +420,7 @@ function PipelineSummaryPanel({
       <div className="mb-3 flat-top-content-block p-3">
         <Row>
           <Col sm={9}>
-            <div className="d-flex pb-3 title-text-header-1">
+            <div className="d-flex pb-3 title-text-header-2">
               {editTitle ?
                 <>
                   <div className="flex-fill p-2">

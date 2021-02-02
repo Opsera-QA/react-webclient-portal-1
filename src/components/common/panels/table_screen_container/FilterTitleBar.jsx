@@ -10,7 +10,7 @@ function FilterTitleBar({ title, tableFilters, titleIcon, isLoading }) {
 
   return (
     <div className="d-flex justify-content-between w-100">
-      <div className="title-text-header-1 pt-1">
+      <div className="title-text-header-2 pt-1">
         {isLoading ?
           <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>
           :
