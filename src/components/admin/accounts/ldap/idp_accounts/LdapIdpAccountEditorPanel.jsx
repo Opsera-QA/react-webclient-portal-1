@@ -12,7 +12,6 @@ import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import TooltipWrapper from "components/common/tooltip/tooltipWrapper";
-import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 
 function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountData, setLdapIdpAccountData, setShowIdpEditPanel, authorizedActions }) {

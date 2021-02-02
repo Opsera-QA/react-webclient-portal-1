@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import RegisteredUserActions from "components/admin/registered_users/registered-user-actions";
 import Model from "core/data_model/model";

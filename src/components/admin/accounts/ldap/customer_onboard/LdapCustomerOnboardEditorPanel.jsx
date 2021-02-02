@@ -15,7 +15,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import accountsActions from "components/admin/accounts/accounts-actions";

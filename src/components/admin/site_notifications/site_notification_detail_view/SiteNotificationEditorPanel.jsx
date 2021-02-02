@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import SiteNotificationTypeInput
   from "components/common/list_of_values_input/admin/site_notifications/SiteNotificationTypeInput";

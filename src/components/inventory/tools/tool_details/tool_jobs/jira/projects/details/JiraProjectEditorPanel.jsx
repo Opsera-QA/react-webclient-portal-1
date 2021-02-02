@@ -9,7 +9,6 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import {generateUUID} from "components/common/helpers/string-helpers";
 import JiraProjectConfigurationPanel
   from "components/inventory/tools/tool_details/tool_jobs/jira/projects/details/configuration/JiraProjectConfigurationPanel";
-import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
 
 function JiraProjectEditorPanel({ toolData, jiraProjectData, setJiraProjectData, handleClose }) {
   const [jiraConfigurationDto, setJiraConfigurationDto] = useState(undefined);
