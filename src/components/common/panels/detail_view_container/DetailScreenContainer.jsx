@@ -7,7 +7,7 @@ import TitleBar from "components/common/fields/TitleBar";
 import {getBreadcrumb, getParentBreadcrumb} from "components/common/navigation/trails";
 import TitleComponent from "components/common/panels/TitleComponent";
 
-function DetailScreenContainer({ breadcrumbDestination, actionBar, dataObject, detailPanel, isLoading, accessDenied, metadata, showBreadcrumbTrail, subNavigationBar }) {
+function DetailScreenContainer({ breadcrumbDestination, actionBar, dataObject, detailPanel, isLoading, accessDenied, metadata, showBreadcrumbTrail, navigationTabContainer }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const [parentBreadcrumb, setParentBreadcrumb] = useState(getParentBreadcrumb(breadcrumbDestination));
 
@@ -16,8 +16,8 @@ function DetailScreenContainer({ breadcrumbDestination, actionBar, dataObject, d
       return (<BreadcrumbTrail destination={breadcrumbDestination} />);
     }
 
-    if (subNavigationBar) {
-      return subNavigationBar;
+    if (navigationTabContainer) {
+      return navigationTabContainer;
     }
 
     return (<TitleComponent title={breadcrumb.label} />);
@@ -86,12 +86,11 @@ function DetailScreenContainer({ breadcrumbDestination, actionBar, dataObject, d
 
 DetailScreenContainer.propTypes = {
   showBreadcrumbTrail: PropTypes.bool,
-  subNavigationBar: PropTypes.object,
+  navigationTabContainer: PropTypes.object,
   breadcrumbDestination: PropTypes.string,
   detailPanel: PropTypes.object,
   dataObject: PropTypes.object,
   actionBar: PropTypes.object,
-  managementViewIcon: PropTypes.object,
   isLoading: PropTypes.bool,
   accessDenied: PropTypes.bool,
   metadata: PropTypes.object
