@@ -268,16 +268,11 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/update" component={Update}/>
 
                   {/* Reports */}
-                  <SecureRoute path="/reports" exact component={Reports}/>
-                  <SecureRoute path="/reports/registry" exact component={ToolReports}/>
-                  <SecureRoute path="/reports/registry/tools-used-in-pipeline" exact component={ToolsUsedInPipelineReport}/>
-                  <SecureRoute path="/reports/registry/tool-counts" exact component={ToolCountsReport}/>
-                  <SecureRoute path="/reports/pipelines" exact component={PipelineReports}/>
-                  <SecureRoute path="/reports/tags" exact component={TagReports}/>
-                  <SecureRoute path="/reports/tags/tags-used-in-pipeline" exact
-                               component={TagsUsedInPipelineReport}/>
-                  <SecureRoute path="/reports/tags/tags-used-in-tools" exact
-                               component={TagsUsedInToolsReport}/>
+                  <SecureRoute path="/reports/:tab?" exact component={Reports}/>
+                  <SecureRoute path="/reports/tools/tools-used-in-pipeline" exact component={ToolsUsedInPipelineReport}/>
+                  <SecureRoute path="/reports/tools/tool-counts" exact component={ToolCountsReport}/>
+                  <SecureRoute path="/reports/tags/tags-used-in-pipeline" exact component={TagsUsedInPipelineReport}/>
+                  <SecureRoute path="/reports/tags/tags-used-in-tools" exact component={TagsUsedInToolsReport}/>
 
                   { /*Notifications */}
                   <SecureRoute path="/notifications" exact component={Notifications}/>

@@ -6,6 +6,7 @@ import {
   faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea
 } from "@fortawesome/pro-light-svg-icons";
 
+// TODO: Now that this is getting big, we should break it up into files in the top level directories and then just accumulate all here
 const breadcrumbs = {
   // Inventory
   toolRegistry: {name: "toolRegistry", path: paths.toolRegistry, label: "Tool Registry", icon: faClipboardList},
@@ -81,7 +82,7 @@ const breadcrumbs = {
   marketplace: {name: "marketplace", path: paths.marketplace, label: "Marketplace", icon: faChartArea},
 
   //Reports
-  reports: {name: "reports", path: paths.reports, label: "Reports", icon: faAnalytics},
+  reports: {name: "reports", path: paths.reports, label: "All Reports", icon: faAnalytics},
   toolReports: {name: "toolReports", path: paths.toolReports, label: "Tool Reports", icon: faTools},
   toolsUsedInPipelineReport: {name: "toolsUsedInPipelineReport", path: paths.toolsUsedInPipelineReport, label: "Tools Used In Pipelines", icon: faDraftingCompass},
   toolCountsReport: {name: "toolCountsReport", path: paths.toolCountsReport, label: "Tool Counts", icon: faTally},

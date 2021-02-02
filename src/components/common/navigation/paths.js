@@ -67,7 +67,7 @@ paths.userTaggingDetailView = paths.mapping + "/users/details/"
 
 //Reports
 paths.reports = "reports";
-paths.toolReports = paths.reports + "/registry";
+paths.toolReports = paths.reports + "/tools";
 paths.toolsUsedInPipelineReport = paths.toolReports + "/tools-used-in-pipeline";
 paths.toolCountsReport = paths.toolReports + "/tool-counts";
 paths.tagReports = paths.reports + "/tags";

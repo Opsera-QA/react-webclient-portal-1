@@ -755,7 +755,7 @@ a.nav-link {
 }
 
 .sub-navigation .nav-tabs > li a.active, .sub-navigation .nav-tabs > li a.active:focus {
-  color: #6c757d;
+  color: #CF940C;
   border-top: 5px solid #CF940C;
   background: rgba(0, 0, 0, .05);
   text-decoration: none;
@@ -764,7 +764,7 @@ a.nav-link {
 .sub-navigation .nav-tabs > li a.active:hover {
   background: rgba(0, 0, 0, .05);
   border-top: 5px solid #F0B324 !important;
-  color: #CF940C;
+  color: #F0B324;
 }
 
 .sub-navigation .nav-tabs .nav-item .disabled-tab {
