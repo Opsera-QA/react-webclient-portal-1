@@ -84,7 +84,6 @@ function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, d
     )
   }
 
-
   if (field == null) {
     return <></>
   }
@@ -102,7 +101,7 @@ function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, d
         busy={busy}
         filter="contains"
         groupBy={groupBy}
-        value={[...dataObject.getData(fieldName)]}
+        value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : [] }
         placeholder={placeholderText}
         disabled={disabled}
         onChange={newValue => setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)}
@@ -124,7 +123,10 @@ MultiSelectInputBase.propTypes = {
   maxNumber: PropTypes.number,
   setDataFunction: PropTypes.func,
   busy: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array
+  ]),
 };
 
 export default MultiSelectInputBase;

@@ -239,9 +239,11 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
             createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
           />
         );
       case "npm":
