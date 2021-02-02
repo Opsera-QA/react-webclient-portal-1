@@ -1,12 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
-import Row from "react-bootstrap/Row";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import BreadcrumbPageLink from "components/common/links/BreadcrumbPageLink";
 import {useParams} from "react-router-dom";
+import ToolReports from "components/reports/tools/ToolReports";
+import TagReports from "components/reports/tags/TagReports";
+import PipelineReports from "components/reports/pipelines/PipelineReports";
 
 const reportsTypes = ["tools", "pipelines", "tags"];
 
@@ -51,11 +52,11 @@ function Reports() {
   const getCurrentView = () => {
     switch (activeTab) {
       case "tools":
-        return getToolReports();
+        return <ToolReports />
       case "pipelines":
-        return getPipelineReports();
+        return <PipelineReports />
       case "tags":
-        return getTagReports();
+        return <TagReports />;
       case "all":
       default:
         return getAllReports();
@@ -73,40 +74,12 @@ function Reports() {
   const getAllReports = () => {
     return (
       <div>
-        {getTagReports()}
-        {getToolReports()}
-        {getPipelineReports()}
+        <TagReports />
+        <ToolReports />
+        {/*TODO: Uncomment when Pipeline Report is added*/}
+        {/*<PipelineReports />*/}
       </div>
     );
-  };
-
-  const getToolReports = () => {
-    return (
-      <Row className="ml-3">
-        <BreadcrumbPageLink breadcrumbDestination={"toolsUsedInPipelineReport"} />
-        <BreadcrumbPageLink breadcrumbDestination={"toolCountsReport"} />
-      </Row>
-    );
-  };
-
-  const getPipelineReports = () => {
-    if (activeTab === "pipelines") {
-      return (
-        <Row className="ml-4">
-          <span>No Pipeline Reports exist yet.</span>
-        </Row>
-      );
-    }
-
-  };
-
-  const getTagReports = () => {
-    return (
-      <Row className="ml-3">
-        <BreadcrumbPageLink breadcrumbDestination={"tagsUsedInPipelineReport"} />
-        <BreadcrumbPageLink breadcrumbDestination={"tagsUsedInToolsReport"} />
-      </Row>
-    )
   };
 
   const getNavigationTabContainer = () => {
