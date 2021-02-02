@@ -6,7 +6,7 @@ const dashboardMetadata = {
     return `/insights/dashboards/${record?.getData("_id")}/viewer`;
   },
   detailViewTitle: function (record) {
-    return `${record?.getData("name")}`;
+    return `Dashboard Details [${record?.getData("name")}]`;
   },
   fields: [
     {
