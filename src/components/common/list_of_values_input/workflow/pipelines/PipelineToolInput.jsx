@@ -8,7 +8,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 
-function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visible, fieldName, dataObject, setDataObject, setDataFunction, disabled}) {
+function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visible, fieldName, dataObject, setDataObject, setDataFunction, disabled, configurationRequired}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
@@ -35,7 +35,16 @@ function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visibl
 
   const loadTools = async () => {
     const response = await pipelineActions.getToolsList(toolType, getAccessToken);
-    setTools(response);
+
+    if (response && Array.isArray(response)) {
+      if (configurationRequired) {
+        const filteredTools = response?.filter((tool) => {return tool.configuration != null && Object.entries(tool.configuration).length > 0 });
+        setTools(filteredTools)
+      }
+      else {
+        setTools(response);
+      }
+    }
   };
 
   const getInfoText = () => {
@@ -58,7 +67,7 @@ function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visibl
     return (
       <div className="form-text text-muted p-2">
         <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
-        No tools have been registered for <span className="upper-case-first">{toolFriendlyName}</span>.
+        No {configurationRequired ? "configured " : ""}tools have been registered for <span className="upper-case-first">{toolFriendlyName}</span>.
         Please go to
         <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to
         proceed.
@@ -96,7 +105,8 @@ PipelineToolInput.propTypes = {
   setDataObject: PropTypes.func,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
-  visible: PropTypes.bool
+  visible: PropTypes.bool,
+  configurationRequired: PropTypes.bool,
 };
 
 PipelineToolInput.defaultProps = {

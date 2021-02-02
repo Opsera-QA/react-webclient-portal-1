@@ -84,6 +84,8 @@ import XUnitPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/xunit/XUnitPipelineStepConfigurationSummaryPanel";
 import xunitPipelineStepConfigurationMetadata
   from "./step_tool_configuration_forms/xunit/xunitPipelineStepConfigurationMetadata";
+import CommandLinePipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/command_line/CommandLinePipelineStepConfigurationSummaryPanel";
+import commandLineStepFormMetadata from "./step_tool_configuration_forms/command_line/commandline-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -241,8 +243,14 @@ function PipelineStepConfigurationSummary({
             xunitPipelineStepData={getModelWrappedObject(xunitPipelineStepConfigurationMetadata)}
           />
         );
-      case "sonar":
       case "command-line":
+        return (
+          <CommandLinePipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            commandLinePipelineDataObject={getModelWrappedObject(commandLineStepFormMetadata)}
+          />
+        );
+      case "sonar":
       case "jmeter":
       case "selenium":
       case "twistlock":
