@@ -4,7 +4,17 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import TooltipWrapper from "components/common/tooltip/tooltipWrapper";
 import {tabAccessRestricted} from "components/common/tooltip/popover-text";
 
-function NavigationTab({activeTab, tabName, tabText, handleTabClick, icon, visible, disabled}) {
+function NavigationTab({activeTab, tabName, tabText, handleTabClick, icon, visible, disabled, toolTipText}) {
+  const getTab = () => {
+    return (
+      <li className="mr-1">
+        <a className={"nav-link " + (activeTab === tabName ? "active" : "")} onClick={handleTabClick(tabName)} href="#">
+          {getIcon()}<span className="ml-2 d-none d-lg-inline">{tabText}</span>
+        </a>
+      </li>
+    )
+  };
+
   const getIcon = () => {
     if (icon) {
       return (
@@ -29,13 +39,15 @@ function NavigationTab({activeTab, tabName, tabText, handleTabClick, icon, visib
     );
   }
 
-  return (
-    <li className="mr-1">
-      <a className={"nav-link " + (activeTab === tabName ? "active" : "")} onClick={handleTabClick(tabName)} href="#">
-        {getIcon()}<span className="ml-2 d-none d-lg-inline">{tabText}</span>
-      </a>
-    </li>
-  );
+  if (toolTipText) {
+    return (
+      <TooltipWrapper innerText={toolTipText} placement={"bottom"}>
+        {getTab()}
+      </TooltipWrapper>
+    );
+  }
+
+  return (getTab());
 }
 
 NavigationTab.propTypes = {
@@ -45,7 +57,8 @@ NavigationTab.propTypes = {
   tabText: PropTypes.string.isRequired,
   icon: PropTypes.object,
   visible: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  toolTipText: PropTypes.string
 };
 
 NavigationTab.defaultProps = {
