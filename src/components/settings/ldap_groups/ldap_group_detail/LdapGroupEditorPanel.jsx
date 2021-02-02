@@ -10,6 +10,9 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import LoadingDialog from "components/common/status_notifications/loading";
 
+// Note this is lowercase intentionally, as Users cannot create groups with capital letters
+const reservedNames = ["administrators", "powerusers", "users"];
+
 function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, orgDomain, setLdapGroupData, handleClose, authorizedActions}) {
   const {getAccessToken} = useContext(AuthContext);
   const [ldapGroupDataDto, setLdapGroupDataDto] = useState({});
@@ -26,6 +29,10 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, orgDomain, setLd
   };
 
   const createGroup = async () => {
+    if (reservedNames.indexOf(ldapGroupDataDto.getData("name")?.toLowerCase().trim()) > -1) {
+      throw `[${ldapGroupDataDto.getData("name")}] is a reserved group name and cannot be used when creating a new group.`;
+    }
+
     return await accountsActions.createGroup(orgDomain, ldapGroupDataDto, currentUserEmail, getAccessToken);
   };
 
