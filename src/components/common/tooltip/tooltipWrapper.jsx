@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import {OverlayTrigger, Popover} from "react-bootstrap";
 
-function TooltipWrapper({ innerText, children }) {
+function TooltipWrapper({ innerText, placement, children }) {
   
   const getPopover = (innerText) => {
     return (
@@ -15,17 +15,20 @@ function TooltipWrapper({ innerText, children }) {
   };
 
   return (
-    <>
-      <OverlayTrigger trigger={["hover", "hover"]} placement="top" overlay={getPopover(innerText)}>
-        {children}
-      </OverlayTrigger>
-    </>
+    <OverlayTrigger trigger={["hover", "hover"]} placement={placement} overlay={getPopover(innerText)}>
+      {children}
+    </OverlayTrigger>
   );
 }
 
 TooltipWrapper.propTypes = {
   innerText: PropTypes.string,
-  children: PropTypes.any
+  children: PropTypes.any,
+  placement: PropTypes.string
+};
+
+TooltipWrapper.defaultProps = {
+  placement: "top"
 };
 
 export default TooltipWrapper;
