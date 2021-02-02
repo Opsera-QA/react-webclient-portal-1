@@ -114,7 +114,7 @@ class Update extends Component {
     const { error, fetching } = this.state;
     return (
       <div className="max-content-width">
-        <h4>Updates</h4>
+        <div className="h4 mt-3 mb-4">Updates</div>
         <p>Any available updates for tools currently registered will be listed below.</p>
 
         {error ? <ErrorDialog error={error} /> : null}

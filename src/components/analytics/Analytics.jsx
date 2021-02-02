@@ -274,7 +274,7 @@ function Analytics() {
         {error && <ErrorDialog error={error} align="top"/>}
 
         <div className="max-content-width">
-          <h4>Analytics</h4>
+          <div className="h4 mt-3 mb-4">Analytics</div>
           <p>
             OpsERA provides users with access to a vast repository of logging and analytics. Access all available
             logging, reports and configurations around the OpsERA Analytics Platform or search your currently
