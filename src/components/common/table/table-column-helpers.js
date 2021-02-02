@@ -33,7 +33,15 @@ export const getTableTextColumnWithoutField = (header, accessor) => {
   };
 };
 
-export const getTableTextColumn = (field) => {
+export const getTableTextColumn = (field, classNames) => {
+  if (classNames) {
+    return {
+      Header: getTableHeader(field),
+      accessor: getTableAccessor(field),
+      class: classNames
+    };
+  }
+
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field)
