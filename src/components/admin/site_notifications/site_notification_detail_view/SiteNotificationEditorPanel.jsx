@@ -42,7 +42,14 @@ function SiteNotificationEditorPanel({ siteNotificationData, setSiteNotification
   }
 
   return (
-    <EditorPanelContainer>
+    <EditorPanelContainer
+      recordDto={siteNotificationDto}
+      handleClose={handleClose}
+      setRecordDto={setSiteNotificationDto}
+      createRecord={createSiteNotification}
+      updateRecord={updateSiteNotification}
+      addAnotherOption={false}
+    >
       <div className="mx-2">
         <Row>
           <Col md={6}>
@@ -71,14 +78,6 @@ function SiteNotificationEditorPanel({ siteNotificationData, setSiteNotification
             <ActivityToggleInput fieldName={"active"} setDataObject={setSiteNotificationDto} dataObject={siteNotificationDto}/>
           </Col>
         </Row>
-        <PersistButtonContainer
-          recordDto={siteNotificationDto}
-          handleClose={handleClose}
-          setRecordDto={setSiteNotificationDto}
-          createRecord={createSiteNotification}
-          updateRecord={updateSiteNotification}
-          addAnotherOption={false}
-        />
       </div>
     </EditorPanelContainer>
   );
