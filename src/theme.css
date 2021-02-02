@@ -732,6 +732,10 @@ a.nav-link {
   display: inline-block;
 }
 
+.sub-navigation-block {
+  height: 42px;
+}
+
 .sub-navigation .nav-tabs .nav-link {
   border-left: none;
   border-right: none;

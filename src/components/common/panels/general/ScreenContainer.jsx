@@ -4,7 +4,6 @@ import AccessDeniedContainer from "components/common/panels/detail_view_containe
 import {getBreadcrumb} from "components/common/navigation/trails";
 import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import TitleBar from "components/common/fields/TitleBar";
-import TitleComponent from "components/common/panels/TitleComponent";
 
 function ScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading, accessDenied, showBreadcrumbTrail, navigationTabContainer }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
@@ -28,7 +27,11 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
       );
     }
 
-    return (<TitleComponent title={breadcrumb.label} />);
+    return (
+      <div className="mb-3">
+        <div className="sub-navigation-block" />
+      </div>
+    );
   };
 
   const getPageDescription = () => {
