@@ -17,7 +17,11 @@ function DetailScreenContainer({ breadcrumbDestination, actionBar, dataObject, d
     }
 
     if (navigationTabContainer) {
-      return navigationTabContainer;
+      return (
+        <div className="mb-3">
+          {navigationTabContainer}
+        </div>
+      );
     }
 
     return (<TitleComponent title={breadcrumb.label} />);
