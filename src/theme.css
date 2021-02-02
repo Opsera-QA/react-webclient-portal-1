@@ -684,6 +684,14 @@ a.nav-link {
   border-bottom-color: #46415C;
 }
 
+.alternate-tabs .nav-tabs .nav-item .disabled-tab {
+  background: #C3C1CE;
+  color: #fff;
+  border-bottom: 5px solid rgba(0, 0, 0, .15);
+  cursor: not-allowed;
+}
+
+
 .alternate-tabs .nav-tabs > li a {
   padding: 10px 15px;
   border-bottom: 5px solid #6c757d;

@@ -5,6 +5,10 @@ import LdapGroupsTable from "./LdapGroupsTable";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import CustomTab from "components/common/tabs/CustomTab";
+import {faServer, faUsers} from "@fortawesome/pro-light-svg-icons";
+import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 
 function LdapGroupManagement() {
   const history = useHistory();
@@ -16,6 +20,12 @@ function LdapGroupManagement() {
   const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
   const [authorizedActions, setAuthorizedActions] = useState([]);
+  const [activeTab, setActiveTab] = useState("userGroups");
+
+  const handleTabClick = (tabSelection) => e => {
+    e.preventDefault();
+    setActiveTab(tabSelection);
+  };
 
   useEffect(() => {
     loadData();
@@ -50,7 +60,7 @@ function LdapGroupManagement() {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
     const {ldap} = user;
-    setCurrentUserEmail(user.email);
+    setCurrentUserEmail(user?.email);
 
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
@@ -58,23 +68,64 @@ function LdapGroupManagement() {
       let authorizedActions = await accountsActions.getAllowedGroupActions(userRoleAccess, ldap?.organization, getUserRecord, getAccessToken);
       setAuthorizedActions(authorizedActions);
 
-      if (orgDomain != null && userRoleAccess.OpseraAdministrator) {
+      if (orgDomain != null && userRoleAccess?.OpseraAdministrator) {
         await getGroupsByDomain(orgDomain);
-      } else if (ldap.domain != null && authorizedActions.includes("get_groups")) {
+      } else if (ldap.domain != null && authorizedActions?.includes("get_groups")) {
         history.push(`/settings/${ldap.domain}/groups`);
         await getGroupsByDomain(ldap.domain);
       }
     }
   };
 
-  // TODO: Remove after confirming it's not needed
-  const getOrganizationListDropdown = () => {
-    return (
-      <div className="tableDropdown mr-2">
-        {/*{accessRoleData.OpseraAdministrator && <LdapOrganizationSelectInput currentOrganizationDomain={currentOrganizationDomain} location={"groups"} />}*/}
-      </div>
-    );
+  const parseUsersGroups = () => {
+    return Array.isArray(groupList) && groupList.filter((group) => {return group.groupType === "user"});
   };
+
+  const parseAdminGroups = () => {
+    return Array.isArray(groupList) && groupList.filter((group) => {return group.groupType !== "user"});
+  };
+
+  const getCurrentView = () => {
+    switch (activeTab) {
+      case "userGroups":
+        return (
+          <LdapGroupsTable
+            isLoading={isLoading}
+            groupData={parseUsersGroups()}
+            loadData={loadData}
+            orgDomain={orgDomain}
+            authorizedActions={authorizedActions}
+            currentUserEmail={currentUserEmail}
+          />
+        );
+      case "adminGroups":
+        return (
+          <LdapGroupsTable
+            isLoading={isLoading}
+            groupData={parseAdminGroups()}
+            loadData={loadData}
+            orgDomain={orgDomain}
+            currentUserEmail={currentUserEmail}
+          />
+        );
+      default:
+        return null;
+    }
+  }
+
+  const getTabContainer = () => {
+    return (
+      <CustomTabContainer styling="alternate-tabs">
+        <CustomTab icon={faUsers} tabName={"userGroups"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"User Groups"} />
+        <CustomTab
+          icon={faServer}
+          tabName={"adminGroups"}
+          handleTabClick={handleTabClick}
+          activeTab={activeTab}
+          disabled={!accessRoleData || (!accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator)} tabText={"Site Roles & Departments"} />
+      </CustomTabContainer>
+    );
+  }
 
   return (
     <ScreenContainer
@@ -82,15 +133,7 @@ function LdapGroupManagement() {
       accessDenied={!authorizedActions.includes("get_groups")}
       breadcrumbDestination={"ldapGroupManagement"}
     >
-      {/*{getOrganizationListDropdown()}*/}
-      <LdapGroupsTable
-        isLoading={isLoading}
-        groupData={groupList}
-        loadData={loadData}
-        orgDomain={orgDomain}
-        authorizedActions={authorizedActions}
-        currentUserEmail={currentUserEmail}
-      />
+      <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
     </ScreenContainer>
   );
 }
