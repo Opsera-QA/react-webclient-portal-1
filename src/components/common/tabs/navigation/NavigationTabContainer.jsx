@@ -17,7 +17,7 @@ NavigationTabContainer.propTypes = {
 };
 
 NavigationTabContainer.defaultProps = {
-  styling: "sub-navigation-tabs"
+  styling: "sub-navigation"
 };
 
 export default NavigationTabContainer;
