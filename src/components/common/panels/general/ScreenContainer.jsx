@@ -22,7 +22,7 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
 
     if (navigationTabContainer) {
       return (
-        <div className="mb-2">
+        <div className="mb-3">
           {navigationTabContainer}
         </div>
       );
