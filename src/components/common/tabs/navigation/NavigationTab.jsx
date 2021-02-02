@@ -5,16 +5,24 @@ import TooltipWrapper from "components/common/tooltip/tooltipWrapper";
 import {tabAccessRestricted} from "components/common/tooltip/popover-text";
 
 function NavigationTab({activeTab, tabName, tabText, handleTabClick, icon, visible, disabled}) {
+  const getIcon = () => {
+    if (icon) {
+      return (
+        <FontAwesomeIcon icon={icon} fixedWidth/>
+      );
+    }
+  };
+
   if (!visible) {
     return null;
   }
 
   if (disabled) {
     return (
-      <li className="nav-item mr-1">
+      <li className="mr-1">
         <TooltipWrapper innerText={tabAccessRestricted}>
           <div className={"nav-link disabled-tab"}>
-            <FontAwesomeIcon icon={icon} fixedWidth/><span className="ml-2 d-none d-lg-inline">{tabText}</span>
+            {getIcon()}<span className="ml-2 d-none d-lg-inline">{tabText}</span>
           </div>
         </TooltipWrapper>
       </li>
@@ -22,9 +30,9 @@ function NavigationTab({activeTab, tabName, tabText, handleTabClick, icon, visib
   }
 
   return (
-    <li className="nav-item mr-1">
+    <li className="mr-1">
       <a className={"nav-link " + (activeTab === tabName ? "active" : "")} onClick={handleTabClick(tabName)} href="#">
-        <FontAwesomeIcon icon={icon} fixedWidth/><span className="ml-2 d-none d-lg-inline">{tabText}</span>
+        {getIcon()}<span className="ml-2 d-none d-lg-inline">{tabText}</span>
       </a>
     </li>
   );

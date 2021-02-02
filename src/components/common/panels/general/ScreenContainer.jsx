@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 import {getBreadcrumb} from "components/common/navigation/trails";
@@ -9,13 +9,23 @@ import TitleComponent from "components/common/panels/TitleComponent";
 function ScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading, accessDenied, showBreadcrumbTrail, navigationTabContainer }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
 
+  useEffect(() => {
+    if (breadcrumb.name !== breadcrumbDestination) {
+      setBreadcrumb(getBreadcrumb(breadcrumbDestination));
+    }
+  }, [breadcrumbDestination]);
+
   const getTopNavigation = () => {
     if (showBreadcrumbTrail) {
       return (<BreadcrumbTrail destination={breadcrumbDestination} />);
     }
 
     if (navigationTabContainer) {
-      return navigationTabContainer;
+      return (
+        <div className="mb-2">
+          {navigationTabContainer}
+        </div>
+      );
     }
 
     return (<TitleComponent title={breadcrumb.label} />);

@@ -728,45 +728,15 @@ a.nav-link {
 /* End Alternate Tab Styling */
 
 /* Sub-Navigation Tab Styling */
-.sub-navigation .nav-tabs .nav-item {
-  margin-right: 2px;
-}
-
-.sub-navigation .nav-tabs > li a.active, .alternate-tabs .nav-tabs > li a.active:focus {
-  background: #453191;
-  color: #fef7fd;
-}
-
-.sub-navigation .nav-tabs > li a.active:hover {
-  background: #2e1956;
-  border-top: 5px solid rgba(0, 0, 0, .15);
-}
-
-.sub-navigation .nav-tabs .nav-item .disabled-tab {
-  background: #C3C1CE;
-  color: #fff;
-  cursor: not-allowed;
-}
-
-.sub-navigation .nav-tabs > li a {
-  padding: 10px 15px;
-  border-bottom: 5px solid #6c757d;
-  background: rgba(0, 0, 0, .05);
-  color: #6c757d;
-}
-
-.sub-navigation .nav-tabs > li a.active {
-  background: #453191;
-  border-top: 5px solid #8F86BB;
-  text-decoration: none;
-}
-
-.sub-navigation .nav-tabs .nav-item.show .nav-link, .alternate-tabs .nav-tabs .nav-link:hover {
-  border-color: #2e1956;
-}
-
 .sub-navigation .nav-tabs {
   display: inline-block;
+}
+
+.sub-navigation .nav-tabs .nav-link {
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  border-radius: 0;
 }
 
 .sub-navigation li {
@@ -778,6 +748,40 @@ a.nav-link {
 .sub-navigation li a:hover {
   color: #fff;
   background: #241F3D;
+}
+
+.sub-navigation .nav-tabs .nav-item {
+  margin-right: 2px;
+}
+
+.sub-navigation .nav-tabs > li a.active, .sub-navigation .nav-tabs > li a.active:focus {
+  color: #6c757d;
+  border-top: 5px solid #CF940C;
+  background: rgba(0, 0, 0, .05);
+  text-decoration: none;
+}
+
+.sub-navigation .nav-tabs > li a.active:hover {
+  background: rgba(0, 0, 0, .05);
+  border-top: 5px solid #F0B324 !important;
+  color: #CF940C;
+}
+
+.sub-navigation .nav-tabs .nav-item .disabled-tab {
+  background: #C3C1CE;
+  color: #fff;
+  cursor: not-allowed;
+}
+
+.sub-navigation .nav-tabs > li a {
+  border-top: 5px solid #C3C1CE;
+  background: rgba(0, 0, 0, .05);
+}
+
+.sub-navigation li a:hover {
+  color: #6c757d;
+  border-top: 5px solid #CF940C !important;
+  background: rgba(0, 0, 0, .05);
 }
 
 /* End Sub-navigation Tab Styling */
