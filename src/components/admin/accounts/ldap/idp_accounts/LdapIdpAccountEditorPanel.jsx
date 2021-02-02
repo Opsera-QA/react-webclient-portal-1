@@ -13,6 +13,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import TooltipWrapper from "components/common/tooltip/tooltipWrapper";
 import PersistButtonContainer from "components/common/buttons/saving/containers/PersistButtonContainer";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 
 function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountData, setLdapIdpAccountData, setShowIdpEditPanel, authorizedActions }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -91,7 +92,14 @@ function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountD
 
   return (
     <>
-        <div className="m-3">
+        <EditorPanelContainer
+          recordDto={ldapIdpAccountDataDto}
+          setRecordDto={setLdapIdpAccountDataDto}
+          updateRecord={updateLdapIdpAccount}
+          createRecord={createIdpAccount}
+          addAnotherOption={false}
+          disable={ldapIdpAccountDataDto.isNew()}
+        >
           {ldapIdpAccountDataDto.isNew() && showWarningMessage && <WarningDialog setWarningMessage={setShowWarningMessage} autoCloseDialog={false} warningMessage="IDP Account Creation is not currently available" />}
           {!ldapIdpAccountDataDto.isNew() && <div className="mb-2 text-muted">
             <TooltipWrapper innerText={"Edit this Account"}>
@@ -129,15 +137,7 @@ function LdapIdpAccountEditorPanel({ldapOrganizationAccountData, ldapIdpAccountD
               <TextInputBase fieldName={"idpNameIDMapping"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
             </Col>
           </Row>
-          <PersistButtonContainer
-            recordDto={ldapIdpAccountDataDto}
-            setRecordDto={setLdapIdpAccountDataDto}
-            updateRecord={updateLdapIdpAccount}
-            createRecord={createIdpAccount}
-            addAnotherOption={false}
-            disable={ldapIdpAccountDataDto.isNew()}
-          />
-        </div>
+        </EditorPanelContainer>
     </>
   );
 }
