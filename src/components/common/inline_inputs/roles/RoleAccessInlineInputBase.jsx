@@ -50,7 +50,7 @@ RoleAccessInlineInputBase.propTypes = {
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   saveData: PropTypes.func,
-  noDataMessage: PropTypes.string
+  noDataMessage: PropTypes.any
 };
 
 RoleAccessInlineInputBase.defaultProps = {
