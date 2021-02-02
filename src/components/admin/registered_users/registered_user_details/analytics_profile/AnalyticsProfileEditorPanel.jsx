@@ -76,7 +76,12 @@ function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfile
   }
 
   return (
-    <EditorPanelContainer>
+    <EditorPanelContainer
+      recordDto={analyticsProfileData}
+      setRecordDto={setAnalyticsProfileData}
+      updateRecord={updateProfile}
+      createRecord={updateProfile}
+    >
       <Row>
         <Col>
           <ToolIdentifierMultiSelectInput
@@ -119,12 +124,6 @@ function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfile
           <BooleanToggleInput dataObject={analyticsProfileDataDto} setDataObject={setAnalyticsProfileDataDto} fieldName={"Pipeline"}/>
         </Col>
       </Row>
-      <PersistButtonContainer
-        recordDto={analyticsProfileData}
-        setRecordDto={setAnalyticsProfileData}
-        updateRecord={updateProfile}
-        createRecord={updateProfile}
-        />
     </EditorPanelContainer>
   );
 }
