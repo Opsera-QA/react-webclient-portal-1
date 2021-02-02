@@ -63,7 +63,15 @@ function JiraProjectEditorPanel({ toolData, jiraProjectData, setJiraProjectData,
   }
 
   return (
-    <EditorPanelContainer>
+    <EditorPanelContainer
+      recordDto={jiraProjectData}
+      setRecordDto={setJiraProjectData}
+      handleClose={handleClose}
+      updateRecord={updateJiraProject}
+      createRecord={createJiraProject}
+      lenient={true}
+      disable={jiraProjectData == null || !jiraProjectData.checkCurrentValidity() || jiraConfigurationDto == null || !jiraConfigurationDto.checkCurrentValidity()}
+    >
       <Row>
         <Col lg={12}>
           <TextInputBase dataObject={jiraProjectData} setDataObject={setJiraProjectData} fieldName={"name"} />
@@ -73,15 +81,6 @@ function JiraProjectEditorPanel({ toolData, jiraProjectData, setJiraProjectData,
         </Col>
       </Row>
       <JiraProjectConfigurationPanel toolData={toolData} jiraProjectData={jiraProjectData} jiraConfigurationDto={jiraConfigurationDto} setJiraConfigurationDto={setJiraConfigurationDto} />
-      <PersistButtonContainer
-        recordDto={jiraProjectData}
-        setRecordDto={setJiraProjectData}
-        handleClose={handleClose}
-        updateRecord={updateJiraProject}
-        createRecord={createJiraProject}
-        lenient={true}
-        disable={jiraProjectData == null || !jiraProjectData.checkCurrentValidity() || jiraConfigurationDto == null || !jiraConfigurationDto.checkCurrentValidity()}
-      />
     </EditorPanelContainer>
   );
 }
