@@ -28,7 +28,7 @@ function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, l
     () => [
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "externalSyncGroup")),
-      getTableTextColumn(getField(fields, "groupType")),
+      getTableTextColumn(getField(fields, "groupType"), "upper-case-first"),
       getDynamicColumn(),
       getTableBooleanIconColumn(getField(fields, "isSync"))
     ],
