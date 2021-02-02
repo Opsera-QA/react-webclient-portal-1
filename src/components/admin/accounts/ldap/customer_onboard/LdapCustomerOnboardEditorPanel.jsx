@@ -179,7 +179,14 @@ function LdapCustomerOnboardEditorPanel({ldapUserData}) {
           <div className="pl-2 content-block-header title-text-header-1">
             Organization
           </div>
-          <EditorPanelContainer>
+          <EditorPanelContainer
+            disable={true}
+            recordDto={ldapOrganizationDataDto}
+            setRecordDto={setLdapOrganizationDataDto}
+            // updateRecord={updateLdapOrganization}
+            // createRecord={createOrganization}
+            addAnotherOption={false}
+          >
             <Row>
               <Col lg={12}>
                 <div className="p-2">
@@ -224,14 +231,6 @@ function LdapCustomerOnboardEditorPanel({ldapUserData}) {
                 <TextInputBase disabled={true} fieldName={"subscription"} dataObject={ldapOrganizationDataDto} setDataObject={setLdapOrganizationDataDto}/>
               </Col>
             </Row>
-            <PersistButtonContainer
-              disable={true}
-              recordDto={ldapOrganizationDataDto}
-              setRecordDto={setLdapOrganizationDataDto}
-              // updateRecord={updateLdapOrganization}
-              // createRecord={createOrganization}
-              addAnotherOption={false}
-            />
           </EditorPanelContainer>
           <div className="content-block-footer"/>
         </div>
@@ -246,7 +245,14 @@ function LdapCustomerOnboardEditorPanel({ldapUserData}) {
           <div className="pl-2 content-block-header title-text-header-1">
             Organization Account
           </div>
-          <EditorPanelContainer>
+          <EditorPanelContainer
+            // createRecord={createOrganizationAccount}
+            // updateRecord={updateLdapOrganizationAccount}
+            setRecordDto={setLdapOrganizationAccountDataDto}
+            recordDto={ldapOrganizationAccountDataDto}
+            disable={true}
+            addAnotherOption={false}
+          >
             <Row>
               <Col>
                 <div className="custom-select-input m-2">
@@ -333,13 +339,6 @@ function LdapCustomerOnboardEditorPanel({ldapUserData}) {
                                     setDataObject={setLdapOrganizationAccountDataDto}/>
               </Col>
             </Row>
-            <PersistButtonContainer
-              // createRecord={createOrganizationAccount}
-              // updateRecord={updateLdapOrganizationAccount}
-              setRecordDto={setLdapOrganizationAccountDataDto}
-              recordDto={ldapOrganizationAccountDataDto}
-              disable={true}
-            />
           </EditorPanelContainer>
           <div className="content-block-footer"/>
         </div>
@@ -371,7 +370,14 @@ function LdapCustomerOnboardEditorPanel({ldapUserData}) {
         <div className="pl-2 content-block-header title-text-header-1">
           IDP Account
         </div>
-        <div className="m-3">
+        <EditorPanelContainer
+          recordDto={ldapIdpAccountDataDto}
+          setRecordDto={setLdapIdpAccountDataDto}
+          // updateRecord={updateLdapIdpAccount}
+          // createRecord={createIdpAccount}
+          addAnotherOption={false}
+          disable={ldapIdpAccountDataDto.isNew() || true}
+        >
           <Row>
             <Col lg={12}>
               <TextInputBase disabled={true || !ldapIdpAccountDataDto.isNew()} fieldName={"name"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
@@ -401,15 +407,7 @@ function LdapCustomerOnboardEditorPanel({ldapUserData}) {
               <TextInputBase disabled={true} fieldName={"idpNameIDMapping"} dataObject={ldapIdpAccountDataDto} setDataObject={setLdapIdpAccountDataDto}/>
             </Col>
           </Row>
-          <PersistButtonContainer
-            recordDto={ldapIdpAccountDataDto}
-            setRecordDto={setLdapIdpAccountDataDto}
-            // updateRecord={updateLdapIdpAccount}
-            // createRecord={createIdpAccount}
-            addAnotherOption={false}
-            disable={ldapIdpAccountDataDto.isNew() || true}
-          />
-        </div>
+        </EditorPanelContainer>
         <div className="content-block-footer"/>
       </div>
     );
