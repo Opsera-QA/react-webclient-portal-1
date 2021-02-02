@@ -6,7 +6,7 @@ import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import TitleBar from "components/common/fields/TitleBar";
 import TitleComponent from "components/common/panels/TitleComponent";
 
-function ScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading, accessDenied, showBreadcrumbTrail, subNavigationBar }) {
+function ScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading, accessDenied, showBreadcrumbTrail, navigationTabContainer }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
 
   const getTopNavigation = () => {
@@ -14,8 +14,8 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
       return (<BreadcrumbTrail destination={breadcrumbDestination} />);
     }
 
-    if (subNavigationBar) {
-      return subNavigationBar;
+    if (navigationTabContainer) {
+      return navigationTabContainer;
     }
 
     return (<TitleComponent title={breadcrumb.label} />);
@@ -73,7 +73,8 @@ ScreenContainer.propTypes = {
   isLoading: PropTypes.bool,
   children: PropTypes.any,
   accessDenied: PropTypes.bool,
-  showBreadcrumbTrail: PropTypes.bool
+  showBreadcrumbTrail: PropTypes.bool,
+  navigationTabContainer: PropTypes.object
 };
 
 export default ScreenContainer;
