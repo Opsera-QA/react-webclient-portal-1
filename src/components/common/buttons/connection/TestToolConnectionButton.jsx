@@ -6,7 +6,7 @@ import {faSpinner, faPlug} from "@fortawesome/pro-light-svg-icons";
 import {faExclamationTriangle} from "@fortawesome/pro-solid-svg-icons/faExclamationTriangle";
 import {AuthContext} from "contexts/AuthContext";
 import toolsActions from "components/inventory/tools/tools-actions";
-import TooltipWrapper from "components/common/tooltip/tooltipWrapper";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 function TestToolConnectionButton({ toolDataDto, disable, toolName }) {
   const { getAccessToken } = useContext(AuthContext);

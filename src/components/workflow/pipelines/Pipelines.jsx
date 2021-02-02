@@ -8,7 +8,7 @@ import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiceD20, faMicrochip, faBracketsCurly, faHexagon, faUser  } from "@fortawesome/pro-light-svg-icons";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
-import TooltipWrapper from "../../common/tooltip/tooltipWrapper";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 function Pipelines() {
   const { tab } = useParams();

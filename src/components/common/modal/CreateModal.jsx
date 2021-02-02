@@ -1,7 +1,7 @@
 import React, {useContext, useEffect} from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
-import TooltipWrapper from "../tooltip/tooltipWrapper";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {unsavedChanges} from "../tooltip/popover-text";
 import {DialogToastContext} from "contexts/DialogToastContext";
 

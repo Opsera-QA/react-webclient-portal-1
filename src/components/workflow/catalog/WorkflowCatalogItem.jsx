@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import React, { useContext, useEffect, useState } from "react";
 import { axiosApiService } from "../../../api/apiService";
 import { AuthContext } from "../../../contexts/AuthContext";
-import TooltipWrapper from "components/common/tooltip/tooltipWrapper";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard, accessRoleData, activeTemplates }) => {
   const contextType = useContext(AuthContext);

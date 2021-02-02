@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import React from "react";
 import PipelineActionBar from "./PipelineActionBar";
 import PipelineStatus from "./PipelineStatus";
-import TooltipWrapper from "../../common/tooltip/tooltipWrapper";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import {
   faDiceD20, faBracketsCurly, faMicrochip, faClock, faFlag, faPause,

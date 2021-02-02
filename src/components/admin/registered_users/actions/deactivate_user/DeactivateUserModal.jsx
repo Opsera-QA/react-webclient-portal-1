@@ -6,7 +6,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner, faTrash} from "@fortawesome/pro-light-svg-icons";
-import TooltipWrapper from "components/common/tooltip/tooltipWrapper";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {cannotBeUndone} from "components/common/tooltip/popover-text";
 
 function DeactivateUserModal({ closeModal, currentUserId, showModal }) {

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React from "react";
-import TooltipWrapper from "../../common/tooltip/tooltipWrapper";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 function PipelineStatus({ icon, innerText, statusText, tableColumn }) {
 

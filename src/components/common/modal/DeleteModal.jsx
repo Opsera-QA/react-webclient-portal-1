@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Row, Col, Button, Modal } from "react-bootstrap";
-import TooltipWrapper from "../tooltip/tooltipWrapper";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {cannotBeUndone} from "../tooltip/popover-text";
 import {faTrash} from "@fortawesome/pro-light-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";

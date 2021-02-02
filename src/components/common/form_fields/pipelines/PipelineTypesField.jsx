@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TooltipWrapper from "../../tooltip/tooltipWrapper";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBracketsCurly, faDiceD20, faMicrochip} from "@fortawesome/pro-light-svg-icons";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";

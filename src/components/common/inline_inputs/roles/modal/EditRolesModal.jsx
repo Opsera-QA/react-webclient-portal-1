@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
-import TooltipWrapper from "components/common/tooltip/tooltipWrapper";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {unsavedChanges} from "components/common/tooltip/popover-text";
 import Model from "core/data_model/model";
 import {DialogToastContext} from "contexts/DialogToastContext";
