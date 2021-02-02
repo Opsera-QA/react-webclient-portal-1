@@ -14,7 +14,9 @@ export const ldapGroupMetaData = {
       id: "name",
       isRequired: true,
       lowercase: true,
-      maxLength: 25
+      maxLength: 25,
+      inputMaskRegex: /^[A-Za-z][A-Za-z0-9-_]*$/,
+      formText: "Group name must be unique and must begin with a letter."
     },
     {
       label: "Group Type",
