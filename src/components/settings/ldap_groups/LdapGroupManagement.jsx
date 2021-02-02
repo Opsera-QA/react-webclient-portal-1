@@ -5,10 +5,9 @@ import LdapGroupsTable from "./LdapGroupsTable";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import CustomTabContainer from "components/common/tabs/CustomTabContainer";
-import CustomTab from "components/common/tabs/CustomTab";
 import {faServer, faUsers} from "@fortawesome/pro-light-svg-icons";
-import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
+import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
+import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 
 function LdapGroupManagement() {
   const history = useHistory();
@@ -113,27 +112,29 @@ function LdapGroupManagement() {
     }
   }
 
-  const getTabContainer = () => {
+  const getNavigationTabContainer = () => {
     return (
-      <CustomTabContainer styling="alternate-tabs">
-        <CustomTab icon={faUsers} tabName={"userGroups"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"User Groups"} />
-        <CustomTab
+      <NavigationTabContainer>
+        <NavigationTab icon={faUsers} tabName={"userGroups"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"User Groups"} />
+        <NavigationTab
           icon={faServer}
           tabName={"adminGroups"}
           handleTabClick={handleTabClick}
           activeTab={activeTab}
-          disabled={!accessRoleData || (!accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator)} tabText={"Site Roles & Departments"} />
-      </CustomTabContainer>
+          disabled={!accessRoleData || (!accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator)}
+          tabText={"Site Roles & Departments"} />
+      </NavigationTabContainer>
     );
   }
 
   return (
     <ScreenContainer
       isLoading={!accessRoleData}
+      navigationTabContainer={getNavigationTabContainer()}
       accessDenied={!authorizedActions.includes("get_groups")}
       breadcrumbDestination={"ldapGroupManagement"}
     >
-      <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
+      {getCurrentView()}
     </ScreenContainer>
   );
 }
