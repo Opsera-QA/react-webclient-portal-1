@@ -7,7 +7,7 @@ import ErrorDialog from "components/common/status_notifications/error";
 // import { Table } from "react-bootstrap";
 import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheckCircle, faTimesCircle, faCircle } from "@fortawesome/free-solid-svg-icons";
 import CustomTable from "components/common/table/CustomTable";
 import "components/analytics/charts/charts.css";
 
@@ -51,8 +51,9 @@ function RecentBuildsTable({ date, tags }) {
         Header: "Result",
         accessor: "data_result",
         Cell: (props) => {
+          console.log(props);
           return props.value ? (
-            props.value === "Failure" || props.value === "failed" ? (
+            props.value === "FAILURE" || props.value === "failed" ? (
               <>
                 <div style={{ display: "flex", flexWrap: "nowrap" }}>
                   <div>
@@ -62,6 +63,16 @@ function RecentBuildsTable({ date, tags }) {
                 </div>
               </>
             ) : (
+              props.value === "UNSTABLE" || props.value === "unstable" ? (
+                <>
+                  <div style={{ display: "flex", flexWrap: "nowrap" }}>
+                    <div>
+                      <FontAwesomeIcon icon={faCircle} className="cell-icon yellow" />
+                    </div>
+                    <div className="ml-1">{props.value}</div>
+                  </div>
+                </>
+              ) : (
               <>
                 <div style={{ display: "flex", flexWrap: "nowrap" }}>
                   <div>
@@ -70,8 +81,8 @@ function RecentBuildsTable({ date, tags }) {
                   <div className="ml-1">{props.value}</div>
                 </div>
               </>
-            )
-          ) : (
+              )
+          )) : (
             "unknown"
           );
         },
