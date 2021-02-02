@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { faTable, faEnvelope } from "@fortawesome/pro-light-svg-icons";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import NotificationsView from "components/notifications/NotificationsView";
 import NotificationActivityLogsTable
   from "components/notifications/notification_details/activity_logs/NotificationActivityLogsTable";
-import CustomTabContainer from "components/common/tabs/CustomTabContainer";
-import CustomTab from "components/common/tabs/CustomTab";
+import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
+import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 
 function Notifications() {
   const { tab } = useParams();
@@ -18,12 +17,12 @@ function Notifications() {
     setActiveTab(tabSelection);
   };
 
-  const getTabContainer = () => {
+  const getNavigationTabContainer = () => {
     return (
-      <CustomTabContainer styling="alternate-tabs">
-        <CustomTab tabName={"notifications"} icon={faEnvelope} tabText={"Notification Policies"} handleTabClick={handleTabClick} activeTab={activeTab} />
-        <CustomTab tabName={"activity"} icon={faTable} tabText={"Activity Logs"} handleTabClick={handleTabClick} activeTab={activeTab} />
-      </CustomTabContainer>
+      <NavigationTabContainer>
+        <NavigationTab tabName={"notifications"} icon={faEnvelope} tabText={"Notification Policies"} handleTabClick={handleTabClick} activeTab={activeTab} />
+        <NavigationTab tabName={"activity"} icon={faTable} tabText={"Activity Logs"} handleTabClick={handleTabClick} activeTab={activeTab} />
+      </NavigationTabContainer>
     );
   };
 
@@ -44,8 +43,9 @@ function Notifications() {
       pageDescription={`
         Create notification policies to tailor activity logging to your needs.
       `}
+      navigationTabContainer={getNavigationTabContainer()}
     >
-      <TabPanelContainer tabContainer={getTabContainer()} currentView={getCurrentView()}/>
+      {getCurrentView()}
     </ScreenContainer>
   );
 }
