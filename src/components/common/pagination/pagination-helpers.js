@@ -10,9 +10,10 @@ export const getResultSummary = (paginationDto, isLoading) => {
   }
 
   if (paginationDto.getData("totalCount") === 0) {
-    return (
+    /*return (
       <div><span>No Results Found</span></div>
-    );
+    );*/
+    return <div></div>
   }
 
   const lowerResultsViewLimit = ((paginationDto.getData("currentPage") - 1) * paginationDto.getData("pageSize")) + 1;
