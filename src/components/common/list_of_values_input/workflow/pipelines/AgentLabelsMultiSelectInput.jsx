@@ -5,18 +5,18 @@ import {AuthContext} from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 // TODO:  Check with mahantha to get the actual agent label values and update it here
-
-export const itemArray = [
-  {
-    "name": "Windows Agent",
-    "env" : "windows",
-    "agentLabel": "exampleWindowsAgentLabel",
-  },
-  {
-    "name": "Linux Agen",
-    "env" : "linux",
-    "agentLabel": "exampleLinuxAgentLabel",
-  }
+// TODO : un-comment when this feature is pushed - dependency ticket -KI-150 
+export const jenkinsAgentArray = [
+  // {
+  //   "name": "Windows Agent",
+  //   "env" : "windows",
+  //   "agentLabel": "exampleWindowsAgentLabel",
+  // },
+  // {
+  //   "name": "Linux Agen",
+  //   "env" : "linux",
+  //   "agentLabel": "exampleLinuxAgentLabel",
+  // }
 ];
 
 function AgentLabelsMultiSelectInput({ fieldName, dataObject, setDataObject, setDataFunction, disabled }) {
@@ -47,7 +47,7 @@ function AgentLabelsMultiSelectInput({ fieldName, dataObject, setDataObject, set
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      selectOptions={itemArray}
+      selectOptions={jenkinsAgentArray}
       setDataFunction={setDataFunction}
       groupBy="env"
       valueField="agentLabel"
