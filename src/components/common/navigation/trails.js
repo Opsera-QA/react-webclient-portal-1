@@ -3,7 +3,7 @@ import {
   faAnalytics,
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
-  faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea
+  faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Now that this is getting big, we should break it up into files in the top level directories and then just accumulate all here
@@ -103,6 +103,7 @@ const breadcrumbs = {
 
   //General
   userProfile: {name: "userProfile", path: paths.userProfile, label: "My User Profile", icon: faUser},
+  home: {name: "home", path: paths.home, label: "Welcome back", icon: faHome},
 
   accessDenied: {name: "accessDenied", path: undefined, label: "Access Denied", icon: faEnvelope},
 };
@@ -201,6 +202,7 @@ const trails = {
 
   // General
   userProfile: {parent: undefined, breadcrumb: breadcrumbs.userProfile},
+  home: {parent: undefined, breadcrumb: breadcrumbs.home},
 
   accessDenied: {parent: undefined, breadcrumb: breadcrumbs.accessDenied},
 };
