@@ -1,6 +1,6 @@
 // TODO: Pull directly from node server --
 //  also write way to pull text from a properties file for easier language localization
-import {isOpseraPassword} from "../../utils/helpers";
+import {isOpseraPassword} from "utils/helpers";
 
 const defaultSignupFormFields = {
   fields: [

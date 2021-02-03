@@ -1,17 +1,17 @@
 import React, {useContext, useEffect, useState} from "react";
 import { Form, Row, Col, Card } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import defaultSignupFormFields from "./signup-form-fields.js";
-import usStateList from "./states";
-import "./user.css";
-import Model from "../../core/data_model/model";
-import DtoTextInput from "../common/input/dto_input/dto-text-input";
-import DtoSelectInput from "../common/input/dto_input/dto-select-input";
-import LoadingDialog from "../common/status_notifications/loading";
-import {DialogToastContext} from "../../contexts/DialogToastContext";
-import userActions from "./user-actions";
-import RegisterButton from "../common/buttons/saving/RegisterButton";
-import PasswordInput from "../common/input/dto_input/PasswordInput";
+import defaultSignupFormFields from "components/user/signup/signup-form-fields.js";
+import usStateList from "components/user/states";
+import "components/user/user.css";
+import Model from "core/data_model/model";
+import DtoTextInput from "components/common/input/dto_input/dto-text-input";
+import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
+import LoadingDialog from "components/common/status_notifications/loading";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import userActions from "components/user/user-actions";
+import RegisterButton from "components/common/buttons/saving/RegisterButton";
+import PasswordInput from "components/common/input/dto_input/PasswordInput";
 
 function Signup() {
   const history = useHistory();

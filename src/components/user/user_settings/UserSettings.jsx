@@ -4,13 +4,13 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import PlatformInventory from "components/inventory/platform/platformInventory";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import Profile from "components/user/Profile";
-import MyUserRecord from "components/user/MyUserRecord";
+import Profile from "components/user/user_settings/Profile";
+import MyUserRecord from "components/user/user_settings/MyUserRecord";
 import {useParams} from "react-router-dom";
 import {AuthContext} from "contexts/AuthContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import MyUserProfile from "components/user/MyUserProfile";
+import MyUserProfile from "components/user/user_settings/MyUserProfile";
 
 function UserSettings() {
   const {tab} = useParams();

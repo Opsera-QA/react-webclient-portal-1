@@ -8,12 +8,12 @@ import Logout from "./components/login/Logout";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Dashboard from "./components/dashboard/DashboardHome";
-import Profile from "./components/user/Profile";
+import Profile from "components/user/user_settings/Profile";
 import About from "./components/about/About";
 import Pricing from "./components/about/Pricing";
 import OnlineHelp from "./components/about/Help";
 import Inventory from "./components/inventory/Inventory";
-import Signup from "./components/user/Signup";
+import Signup from "components/user/signup/Signup";
 import ApiConnector from "./components/api_connector/ApiConnector";
 import Pipeline from "./components/pipeline/index";
 import Platform from "./components/platform/Platform";
@@ -95,7 +95,7 @@ import TagsUsedInToolsReport from "components/reports/tags/tools/TagsUsedInTools
 import AccountRegistration from "components/user/account_registration/AccountRegistration";
 import SiteNotificationManager from "components/admin/site_notifications/manager/SiteNotificationManager";
 import ToolCountsReport from "components/reports/tools/counts/ToolCountsReport";
-import UserSettings from "components/user/UserSettings";
+import UserSettings from "components/user/user_settings/UserSettings";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
