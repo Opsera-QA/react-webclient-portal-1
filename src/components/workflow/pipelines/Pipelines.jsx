@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import "../workflows.css";
-import PipelinesView from "./PipelinesView";
-import WorkflowCatalog from "../catalog/WorkflowCatalog";
-import cookieHelpers from "../../../core/cookies/cookie-helpers";
 import { useHistory } from "react-router-dom";
-import { faDiceD20, faMicrochip, faBracketsCurly, faHexagon, faUser  } from "@fortawesome/pro-light-svg-icons";
-import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
+import {faBracketsCurly, faDiceD20, faHexagon, faMicrochip, faUser} from "@fortawesome/pro-light-svg-icons";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import WorkflowCatalog from "components/workflow/catalog/WorkflowCatalog";
+import cookieHelpers from "core/cookies/cookie-helpers";
+import PipelinesView from "components/workflow/pipelines/PipelinesView";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import CustomTab from "components/common/tabs/CustomTab";
+import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
+import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 
 const unpackTab = (tab) => {
   if (tab != null) {
@@ -45,7 +47,7 @@ function Pipelines() {
       case "sdlc":
       case "ai-ml":
       case "sfdc":
-        return <PipelinesView currentTab={activeTab} setActiveTab={setActiveTab}/>;
+        return getPipelinesView();
       default:
         return null;
     }
@@ -60,31 +62,41 @@ function Pipelines() {
       case "sdlc":
       case "ai-ml":
       case "sfdc":
-        return null
       default:
-        return null;
+        return "Select a Pipeline to view details.";
     }
   };
 
-  const getDynamicTabs = () => {
-    if (process.env.REACT_APP_STACK !== "free-trial") {
-      return (
-        <>
-          <NavigationTab activeTab={activeTab} tabText={"My Pipelines"} handleTabClick={handleTabClick} tabName={"owner"} toolTipText={"My Pipelines"} icon={faUser} />
-          <NavigationTab activeTab={activeTab} tabText={"Software Development"} handleTabClick={handleTabClick} tabName={"sdlc"} toolTipText={"Software Development Pipelines"} icon={faBracketsCurly} />
-          <NavigationTab activeTab={activeTab} tabText={"Machine Learning"} handleTabClick={handleTabClick} tabName={"ai-ml"} toolTipText={"Machine Learning (AI) Pipelines"} icon={faMicrochip} />
-          <NavigationTab activeTab={activeTab} tabText={"SalesForce Pipelines"} handleTabClick={handleTabClick} tabName={"sfdc"} toolTipText={"SalesForce Pipelines"} icon={faSalesforce} />
-        </>
-      )
+  const getPipelinesView = () => {
+    if (process.env.REACT_APP_STACK === "free-trial") {
+      return (<PipelinesView currentTab={activeTab} setActiveTab={setActiveTab}/>);
     }
+
+    return (
+      <DetailTabPanelContainer
+        detailView={<PipelinesView currentTab={activeTab} setActiveTab={setActiveTab}/>}
+        tabContainer={getPipelineTabContainer()}
+      />
+    )
+  }
+
+  const getPipelineTabContainer = () => {
+    return (
+      <CustomTabContainer>
+        <CustomTab activeTab={activeTab} tabText={"All Pipelines"} handleTabClick={handleTabClick} tabName={"all"} toolTipText={"All Pipelines"} icon={faDiceD20} />
+        <CustomTab activeTab={activeTab} tabText={"My Pipelines"} handleTabClick={handleTabClick} tabName={"owner"} toolTipText={"My Pipelines"} icon={faUser} />
+        <CustomTab activeTab={activeTab} tabText={"Software Development"} handleTabClick={handleTabClick} tabName={"sdlc"} toolTipText={"Software Development Pipelines"} icon={faBracketsCurly} />
+        <CustomTab activeTab={activeTab} tabText={"Machine Learning"} handleTabClick={handleTabClick} tabName={"ai-ml"} toolTipText={"Machine Learning (AI) Pipelines"} icon={faMicrochip} />
+        <CustomTab activeTab={activeTab} tabText={"SalesForce Pipelines"} handleTabClick={handleTabClick} tabName={"sfdc"} toolTipText={"SalesForce Pipelines"} icon={faSalesforce} />
+      </CustomTabContainer>
+    );
   };
 
   const getNavigationTabContainer = () => {
     return (
       <NavigationTabContainer>
         <NavigationTab activeTab={activeTab} tabText={"Template Catalog"} handleTabClick={handleTabClick} tabName={"catalog"} toolTipText={"Template Catalog"} icon={faHexagon} />
-        <NavigationTab activeTab={activeTab} tabText={"All Pipelines"} handleTabClick={handleTabClick} tabName={"all"} toolTipText={"All Pipelines"} icon={faDiceD20} />
-        {getDynamicTabs()}
+        <NavigationTab activeTab={activeTab !== "catalog" ? "all" : activeTab} tabText={"Pipelines"} handleTabClick={handleTabClick} tabName={"all"} toolTipText={"Pipelines"} icon={faDiceD20} />
       </NavigationTabContainer>
     );
   };
