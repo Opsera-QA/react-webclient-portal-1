@@ -220,23 +220,47 @@ const AppWithRouterAccess = () => {
   };
 */
 
+  const getError = () => {
+    if (
+      error &&
+      !error.message.includes("401") &&
+      !error.message.includes("undefined") &&
+      !error.message.includes("cancelToken")
+    ) {
+      return (
+        <div style={{ height: "55px" }}>
+          <ErrorDialog align="top" error={error}/>
+        </div>
+      );
+    }
+  };
+
+  const getFreeTrialRoutes = () => {
+    if (process.env.REACT_APP_STACK === "free-trial") {
+      return (
+        <>
+          <Route path="/trial/registration" exact component={FreeTrialRegistration}/>
+          <SecureRoute path="/trial/landing/:id?" exact component={FreeTrialLanding}/>
+        </>
+      );
+    }
+  };
+
   if (!data && loading && !error) {
     return (<LoadingDialog/>);
-  } else {
-    return (
-      <Security oktaAuth={authClient} onAuthRequired={onAuthRequired}>
-        {
-          (error &&
-            !error.message.includes("401") &&
-            !error.message.includes("undefined") &&
-            !error.message.includes("cancelToken")) &&
-          <div style={{ height: "55px" }}><ErrorDialog align="top" error={error}/></div>
-        }
-        <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
-          <ToastContextProvider navBar={getNavBar()}>
-            <div className="container-fluid" style={{ margin: "0" }}>
-              <div className="d-flex flex-row">
-                <Sidebar userData={data} hideSideBar={hideSideBar}/>
+  }
+
+  // TODO: Now that this is getting big, we should put the routes in the main screen of each area/feature
+  //  and accumulate here, for instance putting all admin routes in AdminTools--
+  //  This will also make it easier if we eventually allow access to different areas based on free trial/different customer levels/etc..
+  return (
+    <Security oktaAuth={authClient} onAuthRequired={onAuthRequired}>
+      {getError()}
+      <AuthContextProvider userData={data} refreshToken={refreshToken} authClient={authClient}>
+        <ToastContextProvider navBar={getNavBar()}>
+          <div className="container-fluid" style={{ margin: "0" }}>
+            <div className="d-flex flex-row">
+              <Sidebar userData={data} hideSideBar={hideSideBar}/>
 
                 <div className="w-100 pb-4">
                   <Route path="/" exact component={Home}/>
@@ -345,25 +369,19 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/admin/demo/api" component={ApiConnectionDemo}/>
                   <SecureRoute path="/demo/table" component={CommonTableDemo}/>
 
-                  {(process.env.REACT_APP_STACK === "free-trial") && <>
-                    <Route path="/trial/registration" exact component={FreeTrialRegistration}/>
-                    <SecureRoute path="/trial/landing/:id?" exact component={FreeTrialLanding}/>
-                  </>}
+                  {getFreeTrialRoutes()}
                 </div>
-              </div>
-              <div className="row fixed-row-footer-bottom">
-                <div className="col text-center m-1"
-                     style={{ padding: 0, margin: 0, fontSize: ".6em" }}>{`© ${new Date().getFullYear()}
-                  Opsera,
-                  Inc. The Continuous Orchestration Platform™`}
-                </div>
+            </div>
+            <div className="row fixed-row-footer-bottom">
+              <div className="col text-center m-1" style={{ padding: 0, margin: 0, fontSize: ".6em" }}>
+                <span>{`© ${new Date().getFullYear()} Opsera, Inc. The Continuous Orchestration Platform™`}</span>
               </div>
             </div>
-          </ToastContextProvider>
-        </AuthContextProvider>
-      </Security>
-    );
-  }
+          </div>
+        </ToastContextProvider>
+      </AuthContextProvider>
+    </Security>
+  );
 };
 
 export default AppWithRouterAccess;
