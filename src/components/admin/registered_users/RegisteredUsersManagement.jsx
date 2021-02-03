@@ -83,12 +83,10 @@ function RegisteredUsersManagement() {
     }
 
     return (
-      <div className="max-content-width">
+      <div className="max-content-width px-3">
         <div className="mb-4">
-          <div className="px-2 mb-1">
-            {getFilterBar()}
-          </div>
-          <div className="px-3">
+          {getFilterBar()}
+          <div className="px-2">
             <div className="pt-1">
               <DtoTopPagination
                 loadData={loadData}
