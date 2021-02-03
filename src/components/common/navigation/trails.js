@@ -3,7 +3,8 @@ import {
   faAnalytics,
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
-  faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey
+  faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey,
+  faHexagon
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Now that this is getting big, we should break it up into files in the top level directories and then just accumulate all here
@@ -74,6 +75,7 @@ const breadcrumbs = {
 
   //Pipelines
   pipelines: {name: "pipelines", path: paths.pipelines, label: "Pipelines", icon: faDraftingCompass},
+  catalog: {name: "catalog", path: paths.pipelines, label: "Template Catalog", icon: faHexagon},
   pipelineDetailView: {name: "pipelineDetailView", path: paths.pipelineDetailView, label: "Pipeline Details", icon: faDraftingCompass},
 
   //Insights
@@ -173,8 +175,9 @@ const trails = {
   ldapOrganizationAccountDetailView: {parent: "admin", breadcrumb: breadcrumbs.ldapOrganizationAccountDetailView},
 
   //Pipelines
-  pipelines: {parent: undefined, destination: {name: "pipelines", path: paths.pipelines, label: "Pipelines"}},
-  pipelineDetailView: {parent: "pipelines", destination: {name: "pipelineDetailView", path: paths.pipelineDetailView, label: "Pipeline Details"}},
+  pipelines: {parent: undefined, breadcrumb: breadcrumbs.pipelines},
+  catalog: {parent: "pipelines", breadcrumb: breadcrumbs.catalog},
+  pipelineDetailView: {parent: "pipelines", breadcrumb: breadcrumbs.pipelineDetailView},
 
   //Insights
   insights: {parent: undefined, breadcrumb: breadcrumbs.insights},

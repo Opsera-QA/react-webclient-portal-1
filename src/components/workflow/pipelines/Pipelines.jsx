@@ -41,13 +41,28 @@ function Pipelines() {
   const getCurrentView = () => {
     switch (activeTab) {
       case "catalog":
-        return <WorkflowCatalog/>;
+        return <WorkflowCatalog />;
       case "all":
       case "owner":
       case "sdlc":
       case "ai-ml":
       case "sfdc":
         return getPipelinesView();
+      default:
+        return null;
+    }
+  };
+
+  const getCurrentBreadcrumbDestination = () => {
+    switch (activeTab) {
+      case "catalog":
+        return "catalog";
+      case "all":
+      case "owner":
+      case "sdlc":
+      case "ai-ml":
+      case "sfdc":
+        return "pipelines";
       default:
         return null;
     }
@@ -103,7 +118,7 @@ function Pipelines() {
 
   return (
     <ScreenContainer
-      breadcrumbDestination={"pipelines"}
+      breadcrumbDestination={getCurrentBreadcrumbDestination()}
       navigationTabContainer={getNavigationTabContainer()}
       pageDescription={getPageDescription()}
     >
