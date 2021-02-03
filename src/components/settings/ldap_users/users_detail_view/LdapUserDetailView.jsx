@@ -7,6 +7,8 @@ import accountsActions from "components/admin/accounts/accounts-actions";
 import {ldapUsersMetaData} from "components/settings/ldap_users/ldap-users-metadata";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import LdapUserDetailPanel from "components/settings/ldap_users/users_detail_view/LdapUserDetailPanel";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 
 function LdapUserDetailView() {
   const {userEmail, orgDomain} = useParams();
@@ -37,7 +39,7 @@ function LdapUserDetailView() {
   const getLdapUser = async (userEmail) => {
     const response = await accountsActions.getUserByEmail(userEmail, getAccessToken);
 
-    if (response != null && response.data != null) {
+    if (response?.data != null) {
       setLdapUserData(new Model(response.data, ldapUsersMetaData, false));
     }
   };
