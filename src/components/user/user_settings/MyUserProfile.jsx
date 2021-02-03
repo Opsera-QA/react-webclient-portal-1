@@ -93,8 +93,8 @@ function MyUserProfile() {
     }
 
     return (
-      <DetailPanelContainer>
-        <Table className="custom-table mb-0">
+      <div className="pt-2">
+        <Table className="m-0">
           <tbody>
           {getOpseraUserInfo()}
           <tr>
@@ -103,13 +103,8 @@ function MyUserProfile() {
           </tr>
           {getLdapUserInfo()}
           </tbody>
-          <tfoot>
-          <tr>
-            <td colSpan="100%" className="px-2 pt-2 table-footer"/>
-          </tr>
-          </tfoot>
         </Table>
-      </DetailPanelContainer>
+      </div>
     );
   };
 
