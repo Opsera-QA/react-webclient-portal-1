@@ -37,7 +37,7 @@ function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <RegisteredUserSummary userData={userData} setActiveTab={setActiveTab} />;
+        return <RegisteredUserSummary userData={userData} setActiveTab={setActiveTab} showDbConnectionString={true} />;
       case "tools":
         return <RegisteredUserToolsPanel userData={userData} setIsDeployingElk={setIsDeployingElk} isDeployingElk={isDeployingElk} />
       case "customerDB":
@@ -45,7 +45,7 @@ function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData
       case "analyticsSettings":
         return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
       case "ldap":
-        return <LdapSettingsPanel userData={userData} loadData={loadData} />;
+        return <LdapSettingsPanel userData={userData} loadData={loadData} showSyncButton={true} />;
       case "settings":
       // return <AnalyticsProfileEditorPanel setAnalyticsProfileData={setAnalyticsProfileData} analyticsProfileData={analyticsProfileData} />;
       default:

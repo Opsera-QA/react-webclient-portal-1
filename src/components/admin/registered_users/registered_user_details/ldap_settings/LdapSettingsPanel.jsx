@@ -10,7 +10,7 @@ import SyncLdapButton from "components/common/buttons/ldap/SyncLdapButton";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 
-function LdapSettingsPanel({ userData, loadData }) {
+function LdapSettingsPanel({ userData, loadData, showSyncButton }) {
   const [userLdapDto, setUserLdapDto] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -22,6 +22,12 @@ function LdapSettingsPanel({ userData, loadData }) {
     setIsLoading(true);
     setUserLdapDto(new Model(userData.getData("ldap"), ldapSettingsMetadata, false))
     setIsLoading(false);
+  };
+
+  const getSyncButton = () => {
+    if (showSyncButton) {
+      return <SyncLdapButton userData={userData} loadData={loadData} />;
+    }
   };
 
   if (isLoading) {
@@ -53,7 +59,7 @@ function LdapSettingsPanel({ userData, loadData }) {
       <Row>
         <Col>
           <DateTimeField dataObject={userData} fieldName={"ldapSyncAt"}/>
-          <SyncLdapButton userData={userData} loadData={loadData} />
+          {getSyncButton()}
         </Col>
       </Row>
     </EditorPanelContainer>
@@ -62,7 +68,8 @@ function LdapSettingsPanel({ userData, loadData }) {
 
 LdapSettingsPanel.propTypes = {
   userData: PropTypes.object,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  showSyncButton: PropTypes.bool
 };
 
 export default LdapSettingsPanel;

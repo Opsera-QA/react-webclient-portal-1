@@ -1,11 +1,22 @@
-import React, { useState } from "react";
+import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import GroupField from "components/common/fields/multiple_items/GroupField";
 
-function RegisteredUserSummary({ userData, setActiveTab }) {
+function RegisteredUserSummary({ userData, setActiveTab, showDbConnectionString }) {
+  const getConnectionString = () => {
+    if (showDbConnectionString) {
+      return (
+        <Col lg={12}>
+          <TextFieldBase fieldName={"dbConnectionString"} dataObject={userData}/>
+        </Col>
+      );
+    }
+  };
+
   // TODO: When User Settings panel is set up, pass setActiveTab to Summary Panel Container
   return (
     <SummaryPanelContainer>
@@ -26,6 +37,9 @@ function RegisteredUserSummary({ userData, setActiveTab }) {
           <TextFieldBase fieldName={"organizationName"} dataObject={userData}/>
         </Col>
         <Col lg={6}>
+          <TextFieldBase fieldName={"title"} dataObject={userData}/>
+        </Col>
+        <Col lg={6}>
           <TextFieldBase fieldName={"domain"} dataObject={userData}/>
         </Col>
         <Col lg={6}>
@@ -34,12 +48,16 @@ function RegisteredUserSummary({ userData, setActiveTab }) {
         <Col lg={6}>
           <TextFieldBase fieldName={"ssoClientId"} dataObject={userData}/>
         </Col>
+        <Col lg={12}>
+          <GroupField fieldName={"groups"} dataObject={userData}/>
+        </Col>
         <Col lg={6}>
           <DateFieldBase fieldName={"createdAt"} dataObject={userData}/>
         </Col>
-        <Col lg={12}>
-          <TextFieldBase fieldName={"dbConnectionString"} dataObject={userData}/>
+        <Col lg={6}>
+          <DateFieldBase fieldName={"updatedAt"} dataObject={userData}/>
         </Col>
+        {getConnectionString()}
       </Row>
     </SummaryPanelContainer>
   );
@@ -47,7 +65,8 @@ function RegisteredUserSummary({ userData, setActiveTab }) {
 
 RegisteredUserSummary.propTypes = {
   userData: PropTypes.object,
-  setActiveTab: PropTypes.func
+  setActiveTab: PropTypes.func,
+  showDbConnectionString: PropTypes.bool
 };
 
 export default RegisteredUserSummary;

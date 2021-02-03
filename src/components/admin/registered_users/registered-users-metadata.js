@@ -9,7 +9,7 @@ const registeredUsersMetadata = {
   },
   fields: [
     {
-      label: "User ID",
+      label: "Opsera User ID",
       id: "_id",
     },
     {
@@ -46,12 +46,24 @@ const registeredUsersMetadata = {
       id: "dbConnectionString",
     },
     {
-      label: "Domain",
+      label: "Platform SubDomain",
       id: "domain",
+    },
+    {
+      label: "Job Title",
+      id: "title",
+    },
+    {
+      label: "Group Membership",
+      id: "groups",
     },
     {
       label: "Created",
       id: "createdAt",
+    },
+    {
+      label: "Updated",
+      id: "updatedAt",
     },
     {
       label: "Last LDAP Sync",

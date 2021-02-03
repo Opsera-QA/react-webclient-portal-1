@@ -7,11 +7,18 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import userActions from "components/user/user-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
+import LdapSettingsPanel
+  from "components/admin/registered_users/registered_user_details/ldap_settings/LdapSettingsPanel";
+import Model from "core/data_model/model";
+import registeredUsersMetadata from "components/admin/registered_users/registered-users-metadata";
+import RegisteredUserSummary from "components/admin/registered_users/registered_user_details/RegisteredUserSummary";
+import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 
 function MyUserProfile() {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(undefined);
+  const [userModel, setUserModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
   const [accessRoleLabel, setAccessRoleLabel] = useState("");
@@ -35,6 +42,7 @@ function MyUserProfile() {
   const fetchData = async () => {
     const user = await getUserRecord();
     setUser(user);
+    setUserModel(new Model({...user}, registeredUsersMetadata, false));
 
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
@@ -54,21 +62,28 @@ function MyUserProfile() {
     }
   };
 
-  const getLdapUserInfo = () => {
+  const getOpseraUserInfo = () => {
     return (
       <tr>
-        <td>Organization & Account</td>
+        <td>Opsera User Information</td>
         <td>
-          <div className="pb-1"><span className="text-muted mr-2">Organization:</span> {user.ldap.organization}</div>
-          <div className="pb-1"><span className="text-muted mr-2">Account:</span> {user.ldap.account}</div>
-          <div className="pb-1"><span className="text-muted mr-2">Domain:</span> {user.ldap.domain}</div>
-          <div className="pb-1"><span className="text-muted mr-2">Division:</span> {user.ldap.division}</div>
-          <div className="pb-1"><span
-            className="text-muted mr-2">Account Owner:</span> {user.ldap.orgAccountOwnerEmail}</div>
-          <div className="pb-1"><span className="text-muted mr-2">Account Type:</span> {user.ldap.type}</div>
+          <RegisteredUserSummary userData={userModel} />
         </td>
       </tr>
-    );
+    )
+  };
+
+  const getLdapUserInfo = () => {
+    if (user?.ldap) {
+      return (
+        <tr>
+          <td>Organization & Account</td>
+          <td>
+            <LdapSettingsPanel userData={userModel} />
+          </td>
+        </tr>
+      );
+    }
   };
 
   // TODO: Style better
@@ -78,58 +93,15 @@ function MyUserProfile() {
     }
 
     return (
-      <div>
+      <DetailPanelContainer>
         <Table className="custom-table mb-0">
           <tbody>
-          <tr>
-            <td>OpsERA User ID</td>
-            <td>{user._id}</td>
-          </tr>
-          <tr>
-            <td>Name</td>
-            <td>{user.firstName} {user.lastName}</td>
-          </tr>
-          <tr>
-            <td>Email Address</td>
-            <td>{user.email}</td>
-          </tr>
-          <tr>
-            <td>Job Title</td>
-            <td>{user.title}</td>
-          </tr>
-          <tr>
-            <td>Organization</td>
-            <td>{user.organizationName}</td>
-          </tr>
-          <tr>
-            <td>Platform SubDomain</td>
-            <td>{user.domain}</td>
-          </tr>
-          <tr>
-            <td>Created</td>
-            <td>{user.createdAt}</td>
-          </tr>
-          <tr>
-            <td>Updated</td>
-            <td>{user.updatedAt}</td>
-          </tr>
-          <tr>
-            <td>SyncAt</td>
-            <td>{user.ldapSyncAt || ""}</td>
-          </tr>
+          {getOpseraUserInfo()}
           <tr>
             <td>Platform Access Role</td>
             <td>{accessRoleLabel}</td>
           </tr>
-          <tr>
-            <td>Groups Membership</td>
-            <td>
-              {user.groups !== undefined && user.groups.map((group) => {
-                return <div className="pb-1" key={group}>{group}</div>;
-              })}
-            </td>
-          </tr>
-          {user.ldap && getLdapUserInfo()}
+          {getLdapUserInfo()}
           </tbody>
           <tfoot>
           <tr>
@@ -137,13 +109,13 @@ function MyUserProfile() {
           </tr>
           </tfoot>
         </Table>
-      </div>
+      </DetailPanelContainer>
     );
   };
 
   const getSyncButton = () => {
     return (
-      <div className="text-right pb-3">
+      <div className="text-right">
         <Button variant="primary" size="sm" disabled={isSyncing} onClick={() => syncUserData()}>
           {isSyncing ?
             <><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Syncing</> :
