@@ -1,11 +1,12 @@
 import React from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+/*import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";*/
 
 export const getResultSummary = (paginationDto, isLoading) => {
 
   if (isLoading) {
-    return <div><span><FontAwesomeIcon icon={faSpinner} spin className="mr-2 mt-1"/>Loading Data</span></div>
+    //return <div><span><FontAwesomeIcon icon={faSpinner} spin className="mr-2 mt-1"/>Loading Data</span></div>
+    return <div></div>
   }
 
   if (paginationDto.getData("totalCount") === 0) {

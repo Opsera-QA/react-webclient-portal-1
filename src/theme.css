@@ -675,12 +675,12 @@ a.nav-link {
 }
 
 .alternate-tabs .nav-tabs > li a.active, .alternate-tabs .nav-tabs > li a.active:focus {
-  background: #453191;
+  background: #CF940C;
   color: #fef7fd;
 }
 
 .alternate-tabs .nav-tabs > li a.active:hover {
-  background: #2e1956;
+  background: #CF940C;
   border-bottom-color: #46415C;
 }
 
@@ -700,14 +700,14 @@ a.nav-link {
 }
 
 .alternate-tabs .nav-tabs > li a.active {
-  background: #453191;
+  background: #CF940C;
   /*border-color: #1578dc;*/
-  border-bottom: 5px solid #8F86BB;
+  border-bottom: 5px solid #C3C1CE;
   text-decoration: none;
 }
 
 .alternate-tabs .nav-tabs .nav-item.show .nav-link, .alternate-tabs .nav-tabs .nav-link:hover {
-  border-color: #2e1956;
+  border-color: #CF940C;
 }
 
 .alternate-tabs .nav-tabs {
@@ -721,8 +721,7 @@ a.nav-link {
 }
 
 .alternate-tabs li a:hover {
-  color: #fff;
-  background: #241F3D;
+  border-color: #CF940C;
 }
 
 /* End Alternate Tab Styling */

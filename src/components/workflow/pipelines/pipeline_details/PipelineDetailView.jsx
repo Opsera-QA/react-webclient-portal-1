@@ -16,14 +16,15 @@ import {
   faDraftingCompass,
   faDiceD20,
   faMicrochip,
-  faArrowLeft,
   faBracketsCurly,
-  faSpinner
+  faSpinner, faHexagon,
 } from "@fortawesome/pro-light-svg-icons";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import Model from "../../../../core/data_model/model";
 import pipelineActivityActions from "./pipeline_activity/pipeline-activity-actions";
 import pipelineActivityFilterMetadata from "./pipeline_activity/pipeline-activity-filter-metadata";
+import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
+import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 
 const refreshInterval = 8000;
 
@@ -61,7 +62,12 @@ function PipelineDetailView() {
     e.preventDefault();
     clearTimeout(refreshTimer);
 
-    if (tabSelection === "pipelines") {
+    if (tabSelection === "catalog") {
+      history.push(`/workflow/catalog`);
+      return;
+    }
+
+    if (tabSelection === "pipelines" || tabSelection === "all") {
       history.push(`/workflow/`);
       return;
     }
@@ -217,10 +223,10 @@ function PipelineDetailView() {
     return (
       <div className="alternate-tabs">
         <ul className="nav nav-tabs">
-          <li className="nav-item">
+          {/*<li className="nav-item">
             <a className={"nav-link"} href="#"
                onClick={handleTabClick("pipelines")}><FontAwesomeIcon icon={faArrowLeft} className="mr-2"/>Pipelines</a>
-          </li>
+          </li>*/}
           <li className="nav-item">
             <a className={"nav-link " + (activeTab === "summary" ? "active" : "")} href="#"
                onClick={handleTabClick("summary")}><FontAwesomeIcon
@@ -298,7 +304,8 @@ function PipelineDetailView() {
   const getPipelineTitle = () => {
     if (loading) {
       //return (<span><FontAwesomeIcon icon={faSpinner} className="mr-2" spin/>Loading Pipeline</span>)
-      return (<div><FontAwesomeIcon icon={faSpinner} className="mr-2" spin/></div>);
+      //return (<div><FontAwesomeIcon icon={faSpinner} className="mr-2" spin/></div>);
+      return (<></>)
     }
 
     return (
@@ -306,6 +313,18 @@ function PipelineDetailView() {
         <FontAwesomeIcon icon={getTypeIcon(pipeline["type"] ? pipeline["type"][0] : "default")} className="mr-2"/>
         {pipeline?.name}
       </span>
+    );
+  };
+
+
+  const getNavigationTabContainer = () => {
+    return (
+      <NavigationTabContainer>
+        <NavigationTab activeTab={activeTab} tabText={"Catalog"} handleTabClick={handleTabClick}
+                       tabName={"catalog"} toolTipText={"Template Catalog"} icon={faHexagon}/>
+        <NavigationTab activeTab={activeTab !== "catalog" ? "all" : activeTab} tabText={"Pipelines"}
+                       handleTabClick={handleTabClick} tabName={"all"} toolTipText={"Pipelines"} icon={faDiceD20}/>
+      </NavigationTabContainer>
     );
   };
 
@@ -319,17 +338,17 @@ function PipelineDetailView() {
       message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."/>);
   }
 
+
   return (
     <div>
-      <div className="h4 mt-3 mb-4">{getPipelineTitle()}</div>
+      {getNavigationTabContainer()}
+      <div className="h4 mt-2 mb-4">{getPipelineTitle()}</div>
 
       {getNavigationTabs()}
       {getCurrentView()}
     </div>
   );
 }
-
-
 
 
 export default PipelineDetailView;

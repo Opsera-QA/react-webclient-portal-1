@@ -110,7 +110,7 @@ function Pipelines() {
   const getNavigationTabContainer = () => {
     return (
       <NavigationTabContainer>
-        <NavigationTab activeTab={activeTab} tabText={"Template Catalog"} handleTabClick={handleTabClick} tabName={"catalog"} toolTipText={"Template Catalog"} icon={faHexagon} />
+        <NavigationTab activeTab={activeTab} tabText={"Catalog"} handleTabClick={handleTabClick} tabName={"catalog"} toolTipText={"Template Catalog"} icon={faHexagon} />
         <NavigationTab activeTab={activeTab !== "catalog" ? "all" : activeTab} tabText={"Pipelines"} handleTabClick={handleTabClick} tabName={"all"} toolTipText={"Pipelines"} icon={faDiceD20} />
       </NavigationTabContainer>
     );
