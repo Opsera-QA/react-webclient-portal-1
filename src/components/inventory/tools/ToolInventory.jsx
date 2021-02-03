@@ -1,34 +1,35 @@
 import { AuthContext } from "contexts/AuthContext";
 import React, { useContext, useEffect, useState } from "react";
 import Model from "core/data_model/model";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import toolFilterMetadata from "components/inventory/tools/tool-filter-metadata";
 import toolsActions from "components/inventory/tools/tools-actions";
 import ToolsTable from "components/inventory/tools/ToolsTable";
+import PropTypes from "prop-types";
 
-function ToolInventory () {
+function ToolInventory({ customerAccessRules }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
   const [toolRegistryList, setToolRegistryList] = useState([]);
-  const [toolFilterDto, setToolFilterDto] = useState(new Model({...toolFilterMetadata.newObjectFields}, toolFilterMetadata, false));
+  const [toolFilterDto, setToolFilterDto] = useState(new Model({ ...toolFilterMetadata.newObjectFields }, toolFilterMetadata, false));
 
-  useEffect(() => {    
-    loadData();
+  useEffect(() => {
+    loadData().catch(error => {
+      throw { error };
+    });
   }, []);
 
   const loadData = async (filterDto = toolFilterDto) => {
     try {
       setLoading(true);
       await getToolRegistryList(filterDto);
-    }
-    catch (error) {
+    } catch (error) {
       toastContext.showLoadingErrorDialog(error);
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
-  }
+  };
 
   const getToolRegistryList = async (filterDto = toolFilterDto) => {
     const response = await toolsActions.getRoleLimitedToolRegistryList(filterDto, getAccessToken);
@@ -37,8 +38,8 @@ function ToolInventory () {
       setToolRegistryList(response.data.data);
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.count);
-      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
-      setToolFilterDto({...newFilterDto});
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+      setToolFilterDto({ ...newFilterDto });
     }
   };
 
@@ -49,9 +50,13 @@ function ToolInventory () {
       data={toolRegistryList}
       toolFilterDto={toolFilterDto}
       setToolFilterDto={setToolFilterDto}
+      customerAccessRules={customerAccessRules}
     />
   );
 }
 
+ToolInventory.propTypes = {
+  customerAccessRules: PropTypes.object,
+};
 
 export default ToolInventory;

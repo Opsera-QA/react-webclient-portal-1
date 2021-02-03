@@ -13,8 +13,9 @@ import FilterBar from "../../common/filters/FilterBar";
 import StatusFilter from "../../common/filters/status/StatusFilter";
 import ToolIdentifierFilter from "../../common/filters/tools/ToolIdentifierFilter";
 import TagFilter from "../../common/filters/tags/TagFilter";
+import workflowAuthorizedActions from "../../workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 
-function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading }) {
+function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading, customerAccessRules }) {
   const [showCreateToolModal, setShowCreateToolModal] = useState(false);
   let history = useHistory();
   const fields = toolMetadata.fields;
@@ -38,6 +39,10 @@ function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading
     []
   );
 
+  const authorizedAction = (action, owner, objectRoles) => {
+    return workflowAuthorizedActions.toolRegistryItems(customerAccessRules, action, owner, objectRoles);
+  };
+
   const createNewTool = () => {
     setShowCreateToolModal(true);
   };
@@ -56,7 +61,7 @@ function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading
                  filterDto={toolFilterDto}
                  setFilterDto={setToolFilterDto}
                  filters={["status", "toolIdentifier", "tag", "search"]}
-                 addRecordFunction={createNewTool}
+                 addRecordFunction={authorizedAction("create_tool") ? createNewTool : null}
                  supportSearch={true}
       >
         <StatusFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
@@ -93,6 +98,7 @@ ToolsTable.propTypes = {
   toolFilterDto: PropTypes.object,
   activeToolFilterDto: PropTypes.object,
   setToolFilterDto: PropTypes.func,
+  customerAccessRules: PropTypes.object,
 };
 
 export default ToolsTable;

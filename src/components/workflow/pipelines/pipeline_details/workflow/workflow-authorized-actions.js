@@ -155,6 +155,7 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
     switch (action) {
     case "edit_tool_settings":
     case "use_tool_in_pipeline":
+    case "create_tool":
       return true;
     default:
       return false; //all other options are disabled
@@ -162,9 +163,11 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
   }
 
   if (customerAccessRules.PowerUser || userObjectRole === "manager") {
+    console.log("FOUND PowerUser Role but with no user object data!")
     switch (action) {
     case "edit_tool_settings":
     case "use_tool_in_pipeline":
+    case "create_tool":
       return true;
     default:
       return false; //all other options are disabled
@@ -175,6 +178,7 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
   if (userObjectRole === "user") {
     switch (action) {
     case "use_tool_in_pipeline": //not implemented yet
+    case "create_tool":
       return true;
     default:
       return false;

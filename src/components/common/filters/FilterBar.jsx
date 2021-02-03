@@ -83,7 +83,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
   );
 
   const getNewRecordButton = () => {
-    if (addRecordFunction == null) {
+    if (!addRecordFunction) {
       return <></>;
     }
 
