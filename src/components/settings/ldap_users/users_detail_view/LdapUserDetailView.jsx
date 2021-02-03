@@ -12,7 +12,7 @@ import ActionBarBackButton from "components/common/actions/buttons/ActionBarBack
 
 function LdapUserDetailView() {
   const {userEmail, orgDomain} = useParams();
-  const [accessRoleData, setAccessRoleData] = useState({});
+  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [ldapUserData, setLdapUserData] = useState(undefined);

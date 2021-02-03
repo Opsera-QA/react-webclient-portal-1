@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
-import { Navbar, Nav, NavDropdown, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown, Button, OverlayTrigger } from "react-bootstrap";
 import "./navbar.css";
 import userActions from "./components/user/user-actions";
 import { AuthContext } from "contexts/AuthContext";
@@ -12,9 +12,8 @@ import { faUserCircle } from "@fortawesome/pro-light-svg-icons";
 import { renderTooltip } from "utils/helpers";
 
 function HeaderNavBar({ hideAuthComponents, userData }) {
-  const contextType = useContext(AuthContext);
+  const { setAccessRoles, getAccessToken, featureFlagHideItemInProd, loginUserContext, logoutUserContext } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const { setAccessRoles, getAccessToken } = contextType;
   const history = useHistory();
   const [fullName, setFullName] = useState("User Profile");
   const [accessRoleData, setAccessRoleData] = useState(null);
@@ -36,13 +35,10 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
   };
 
   const login = function() {
-    const { loginUserContext } = contextType;
     loginUserContext();
   };
 
   const logout = async function() {
-    const { logoutUserContext } = contextType;
-
     //call logout API to clear cache
     try {
       await userActions.logout(getAccessToken);
@@ -50,10 +46,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
     } catch (error) {
       toastContext.showErrorDialog(error.message);
     }
-
-
   };
-
 
   const getPermissionsMessage = () => {
     let permissionsMessage, permissionHeader;
@@ -88,7 +81,6 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
       </div>
     );
   };
-
 
   const gotoSignUp = function() {
     if (process.env.REACT_APP_STACK === "free-trial") {
@@ -153,7 +145,10 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
             {getPermissionsMessage()}
 
             <NavDropdown title={fullName} id="basic-nav-dropdown" className="top-nav-dropdown" alignRight>
+              {/*TODO: Remove profile link when User Settings goes live*/}
               <Link to="/profile" id="profile-button" className="dropdown-item nav-drop-down-item">Profile</Link>
+              {!featureFlagHideItemInProd && <Link to="/user/profile" id="profile-button" className="dropdown-item nav-drop-down-item">User Settings</Link>}
+
               <NavDropdown.Divider/>
 
               <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/kIA5" target="_blank"

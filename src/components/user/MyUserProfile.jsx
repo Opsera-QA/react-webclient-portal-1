@@ -3,14 +3,12 @@ import { Button, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import { defineUserRole } from "utils/helpers";
-import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import userActions from "components/user/user-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 
-// TODO: Remove this after new settings area is live
-function Profile() {
+function MyUserProfile() {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [user, setUser] = useState();
@@ -155,19 +153,16 @@ function Profile() {
     );
   };
 
+  if (isLoading) {
+    return (<LoadingDialog size={"sm"} message="Loading User Profile" />);
+  }
+
   return (
-    <ScreenContainer
-      isLoading={isLoading}
-      breadcrumbDestination={"userProfile"}
-      pageDescription={`
-          Review and manage your user profile information as well as platform settings from this page. Please note,
-          profile details are
-          stored in your identify provider so some changes may not be possible from this portal at this time.
-      `}>
+    <div>
       {getSyncButton()}
       {getUserInfo()}
-    </ScreenContainer>
+    </div>
   );
 }
 
-export default Profile;
+export default MyUserProfile;

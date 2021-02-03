@@ -95,6 +95,7 @@ import TagsUsedInToolsReport from "components/reports/tags/tools/TagsUsedInTools
 import AccountRegistration from "components/user/account_registration/AccountRegistration";
 import SiteNotificationManager from "components/admin/site_notifications/manager/SiteNotificationManager";
 import ToolCountsReport from "components/reports/tools/counts/ToolCountsReport";
+import UserSettings from "components/user/UserSettings";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -275,8 +276,12 @@ const AppWithRouterAccess = () => {
                   <Route path="/registration" exact component={Registration}/>
                   <Route path="/account/registration/:domain" exact component={AccountRegistration}/>
 
+                  {/* User Settings */}
+                  <SecureRoute path="/user/:tab?" exact component={UserSettings}/>
 
+                  {/*// TODO: Remove this after new settings area is live*/}
                   <SecureRoute path="/profile" component={Profile}/>
+
                   <SecureRoute path="/inventory/:view" exact component={Inventory}/>
                   <SecureRoute path="/inventory/tools/details/:id/:tab?" exact component={ToolDetailView}/>
                   <SecureRoute path="/inventory/tools/details/:id/projects/:projectId" exact

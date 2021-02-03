@@ -3,7 +3,7 @@ import {
   faAnalytics,
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
-  faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome
+  faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Now that this is getting big, we should break it up into files in the top level directories and then just accumulate all here
@@ -102,7 +102,9 @@ const breadcrumbs = {
   notificationDetailView: {name: "notificationDetailView", path: paths.notificationDetailView, label: "Notification Details", icon: faEnvelope},
 
   //General
-  userProfile: {name: "userProfile", path: paths.userProfile, label: "My User Profile", icon: faUser},
+  userProfile: {name: "userProfile", path: paths.userProfile, label: "My User Profile", icon: faIdCard},
+  myUserRecord: {name: "myUserRecord", path: paths.userProfile, label: "My User Record", icon: faUser},
+  myAccessTokens: {name: "myAccessTokens", path: paths.userProfile, label: "Access Tokens", icon: faKey},
   home: {name: "home", path: paths.home, label: "Welcome back", icon: faHome},
 
   accessDenied: {name: "accessDenied", path: undefined, label: "Access Denied", icon: faEnvelope},
@@ -202,6 +204,8 @@ const trails = {
 
   // General
   userProfile: {parent: undefined, breadcrumb: breadcrumbs.userProfile},
+  myUserRecord: {parent: "userProfile", breadcrumb: breadcrumbs.myUserRecord},
+  myAccessTokens: {parent: "userProfile", breadcrumb: breadcrumbs.myAccessTokens},
   home: {parent: undefined, breadcrumb: breadcrumbs.home},
 
   accessDenied: {parent: undefined, breadcrumb: breadcrumbs.accessDenied},

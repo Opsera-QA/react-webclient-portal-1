@@ -69,7 +69,7 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
         </div>
         <div className="screen-container-body shaded-container">
           {getPageDescription()}
-          <div className="p-2 mt-2">
+          <div className="mt-2">
             {getScreenBody()}
           </div>
         </div>
