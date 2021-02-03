@@ -593,14 +593,14 @@ a.nav-link {
 }
 
 .default-custom-tabs .nav-tabs .nav-item.show .nav-link, .default-custom-tabs .nav-tabs .nav-link.active {
-  background: #453191;
+  background: #CF940C;
   color: #fef7fd;
   /* border-color: #1578dc;*/
   text-decoration: none;
 }
 
 .default-custom-tabs .nav-tabs .nav-item.show .nav-link, .default-custom-tabs .nav-tabs .nav-link:hover {
-  border-color: #2e1956;
+  border-color: #CF940C;
 }
 
 /* End Default Custom Tab styling */
