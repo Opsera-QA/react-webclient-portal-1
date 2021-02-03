@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Button from "react-bootstrap/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilter, faTimes} from "@fortawesome/pro-solid-svg-icons";
-import Model from "../../../core/data_model/model";
+import Model from "core/data_model/model";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Popover from "react-bootstrap/Popover";
 import {Col, Row} from "react-bootstrap";
@@ -11,8 +11,9 @@ import {faPlus} from "@fortawesome/free-solid-svg-icons";
 import ActiveFilterDisplayer from "./ActiveFilterDisplayer";
 import {faSync} from "@fortawesome/pro-solid-svg-icons/faSync";
 import InlineSearchFilter from "components/common/filters/search/InlineSearchFilter";
+import ViewToggle from "components/common/view/ViewToggle";
 
-function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRecordFunction, customButtons, supportSearch, leftAlignCustomButtons}) {
+function FilterBar({ filterDto, setFilterDto, filters, children, loadData, saveCookies, addRecordFunction, customButtons, supportSearch, leftAlignCustomButtons, supportViewToggle}) {
   const resetFilters = async () => {
     let newFilterDto = new Model({...filterDto.getNewObjectFields()}, filterDto.getMetaData(), false);
     let pageSize = filterDto.getData("pageSize");
@@ -49,6 +50,12 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
       }
     }
   }
+
+  const getViewToggle = () => {
+    if (supportViewToggle) {
+      return <ViewToggle filterDto={filterDto} setFilterDto={setFilterDto} saveCookies={saveCookies} />
+    }
+  };
 
   const popover = (
     <Popover id="popover-basic">
@@ -109,7 +116,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
   const getSearchBar = () => {
     if (supportSearch) {
       return (
-        <div className="mr-2" style={{minWidth:"350px"}}>
+        <div className="mr-2 inline-search-filter">
           <InlineSearchFilter filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} />
         </div>
       )
@@ -151,6 +158,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
       <div className="d-flex justify-content-between">
         <div className="d-flex">
           {getCustomButtons()}
+          {getViewToggle()}
           <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} filters={filters} />
         </div>
         <div className="d-flex">
@@ -166,6 +174,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, addRe
   return (
     <div className="d-flex justify-content-between filter-bar mb-2">
       <div className="d-flex">
+        {getViewToggle()}
         <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} filters={filters} />
       </div>
       <div className="d-flex">
@@ -185,6 +194,8 @@ FilterBar.propTypes = {
   activeFilterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
   supportSearch: PropTypes.bool,
+  supportViewToggle: PropTypes.bool,
+  saveCookies: PropTypes.func,
   customButtons: PropTypes.any,
   children: PropTypes.any,
   loadData: PropTypes.func,

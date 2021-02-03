@@ -3,6 +3,10 @@ import PropTypes from "prop-types";
 
 function TableCardView({ filterDto, tableView, cardView }) {
   const getView = () => {
+    if (filterDto == null) {
+      return <></>;
+    }
+
     if (filterDto.getData("viewType") === "list") {
       return (tableView);
     }
@@ -12,9 +16,9 @@ function TableCardView({ filterDto, tableView, cardView }) {
 
   // TODO: add styling
   return (
-    <>
+    <div>
       {getView()}
-    </>
+    </div>
   );
 }
 
