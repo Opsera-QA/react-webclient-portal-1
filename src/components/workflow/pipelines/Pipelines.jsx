@@ -11,29 +11,20 @@ import NavigationTabContainer from "components/common/tabs/navigation/Navigation
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
+const unpackTab = (tab) => {
+  if (tab != null) {
+    return tab;
+  }
+  else {
+    let storedTab = cookieHelpers.getCookie("pipelines", "selectedTab");
+    return storedTab != null ? storedTab : "owner";
+  }
+};
+
 function Pipelines() {
   const { tab } = useParams();
-  const [activeTab, setActiveTab] = useState(undefined);
+  const [activeTab, setActiveTab] = useState(unpackTab(tab));
   const history = useHistory();
-
-  useEffect(() => {
-    initializeComponent();
-  }, []);
-
-  const initializeComponent = async () => {
-    if (tab != null) {
-      setActiveTab(tab);
-    }
-    else {
-      let storedTab = cookieHelpers.getCookie("pipelines", "selectedTab");
-
-      if (storedTab != null) {
-        setActiveTab(storedTab);
-      } else {
-        setActiveTab("owner");
-      }
-    }
-  };
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
