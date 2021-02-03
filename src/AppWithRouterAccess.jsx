@@ -105,7 +105,7 @@ const AppWithRouterAccess = () => {
 
   const history = useHistory();
   const onAuthRequired = (authService) => {
-    console.log("onAuthRequired being called!");
+    console.info("onAuthRequired being called!");
     if (authService && !authService.isAuthenticated) {
       history.push("/login");
     }
@@ -129,15 +129,15 @@ const AppWithRouterAccess = () => {
   });
 
   authClient.tokenManager.on("expired", function(key, expiredToken) {
-    console.log("Token with key", key, " has expired:");
+    console.info("Token with key", key, " has expired:");
   });
 
   authClient.tokenManager.on("renewed", function(key, newToken, oldToken) {
-    console.log("Token with key", key, "has been renewed");
+    console.info("Token with key", key, "has been renewed");
   });
 
   authClient.tokenManager.on("error", function(err) {
-    console.log("TokenManager error:", err);
+    console.error("TokenManager error:", err);
     window.location.reload(false);
     // err.name
     // err.message
@@ -149,7 +149,7 @@ const AppWithRouterAccess = () => {
 
 
   authClient.authStateManager.subscribe(async (authState) => {
-    console.log("Auth State manager subscription event: ", authState);
+    console.info("Auth State manager subscription event: ", authState);
     setAuthenticatedState(authState.isAuthenticated);
 
     if (!authState.isAuthenticated) {
@@ -179,9 +179,9 @@ const AppWithRouterAccess = () => {
       let apiUrl = "/users";
       const response = await axiosApiService(token).get(apiUrl, {});
       setData(response.data);
-    } catch (err) {
-      console.log(err.message);
-      setError(err);
+    } catch (error) {
+      console.error(error);
+      setError(error);
     } finally {
       setLoading(false);
     }
