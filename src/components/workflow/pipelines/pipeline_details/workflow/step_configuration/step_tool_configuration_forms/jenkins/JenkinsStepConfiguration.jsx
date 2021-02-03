@@ -72,6 +72,9 @@ const INITIAL_DATA = {
   isFullBackup: false,
   sfdcUnitTestType: "",
   workspace: "",
+  isNewBranch: false,
+  hasUpstreamBranch: false,
+  upstreamBranch: "",
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -1086,7 +1089,7 @@ function JenkinsStepConfiguration({
                   <Form.Group controlId="isNewBranch">
                     <Form.Check inline
                       type="checkbox"
-                      label={"Use a new branch instead?"}
+                      label={"Create a new backup branch?"}
                       id={`newBranch`}
                       checked={formData.isNewBranch}
                       onChange={(e) => setFormData({ ...formData, isNewBranch: e.target.checked })}
