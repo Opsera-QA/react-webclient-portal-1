@@ -169,7 +169,7 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
 
   if (customerAccessRules.PowerUser || userObjectRole === "manager") {
     switch (action) {
-    case "edit_tool_settings1":
+    case "edit_tool_settings":
     case "use_tool_in_pipeline":
     case "create_tool":
       return true;
