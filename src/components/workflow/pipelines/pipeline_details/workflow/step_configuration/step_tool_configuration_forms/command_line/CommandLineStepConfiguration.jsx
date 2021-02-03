@@ -97,12 +97,11 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
       <CommandLineBitbucketWorkspaceInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
       <CommandLineGitRepositoryInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
       <CommandLineGitBranchInput  dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
-      {/* TODO : un-comment when this feature is pushed - dependency ticket -KI-150 */}
-      {/* <AgentLabelsMultiSelectInput
+      <AgentLabelsMultiSelectInput
         dataObject={commandLineStepConfigurationDto}
         fieldName={"agentLabels"}
         setDataObject={setCommandLineStepConfigurationDataDto}
-      /> */}
+      />
       <TextAreaInput dataObject={commandLineStepConfigurationDto} fieldName={"commands"} setDataObject={setCommandLineStepConfigurationDataDto}/>
       <CommandLineDependencyTypeInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
       <TextInputBase setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} fieldName={"outputPath"} />

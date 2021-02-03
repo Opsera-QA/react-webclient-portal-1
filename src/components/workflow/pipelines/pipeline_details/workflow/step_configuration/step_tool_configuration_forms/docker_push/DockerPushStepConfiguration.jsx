@@ -31,6 +31,7 @@ import {
 
 import pipelineActions from "components/workflow/pipeline-actions";
 import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
+import {jenkinsAgentArray} from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -50,6 +51,8 @@ const INITIAL_DATA = {
   toolJobId: "",
   toolJobType: "",
   projectKey: "",
+  
+  agentLabels : "",
  
   accountUsername: "",
   projectId: "",
@@ -363,8 +366,6 @@ function DockerPushStepConfiguration({
     }
   }, [formData.toolJobType]);
 
-  console.log(formData);
-  // console.log(jobsList);
 
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
@@ -558,6 +559,7 @@ function DockerPushStepConfiguration({
       setShowToast(true);
     }
   };
+
 
   const handleJobTypeChange = (selectedOption) => {
     setShowToast(false);
@@ -760,6 +762,7 @@ function DockerPushStepConfiguration({
         {jobType === "opsera-job" && (
           <>
             {formData.jenkinsUrl && jenkinsList.length > 0 && (
+              <>
               <Form.Group controlId="formBasicEmail">
                 <Form.Label className="w-100">
                   Job*
@@ -813,6 +816,24 @@ function DockerPushStepConfiguration({
                   />
                 ) : null}
               </Form.Group>
+              <Form.Group controlId="formJenkinsAgent">
+                <Form.Label className="w-100">
+                  Jenkins Agent
+                </Form.Label>
+              
+                <DropdownList
+                  data={jenkinsAgentArray}
+                  groupBy="env"
+                  valueField="agentLabel"
+                  textField="name"
+                  value={jenkinsAgentArray[
+                    jenkinsAgentArray.findIndex((x) => x.agentLabel === formData.agentLabels)
+                  ]}
+                  filter="contains"
+                  onChange={(item)=> setFormData({...formData, agentLabels: item.agentLabel }) }
+                />
+              </Form.Group>
+            </>
             )}
           </>
         )}
