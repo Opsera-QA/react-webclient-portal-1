@@ -1,17 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { AuthContext } from "../../../../contexts/AuthContext";
-import LdapUserDetailPanel from "./LdapUserDetailPanel";
-import accountsActions from "../../../admin/accounts/accounts-actions";
-import LoadingDialog from "../../../common/status_notifications/loading";
-import Model from "../../../../core/data_model/model";
-import {ldapUsersMetaData} from "../ldap-users-metadata";
-import {faUser} from "@fortawesome/pro-light-svg-icons";
-import AccessDeniedDialog from "../../../common/status_notifications/accessDeniedInfo";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import DetailScreenContainer from "../../../common/panels/detail_view_container/DetailScreenContainer";
-import ActionBarContainer from "../../../common/actions/ActionBarContainer";
-import ActionBarBackButton from "../../../common/actions/buttons/ActionBarBackButton";
+import Model from "core/data_model/model";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import accountsActions from "components/admin/accounts/accounts-actions";
+import {ldapUsersMetaData} from "components/settings/ldap_users/ldap-users-metadata";
+import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import LdapUserDetailPanel from "components/settings/ldap_users/users_detail_view/LdapUserDetailPanel";
 
 function LdapUserDetailView() {
   const {userEmail, orgDomain} = useParams();
@@ -79,10 +74,6 @@ function LdapUserDetailView() {
       );
     }
   };
-
-  if (!authorizedActions.includes("get_user_details") && !isLoading) {
-    return (<AccessDeniedDialog roleData={accessRoleData}/>);
-  }
 
   return (
     <DetailScreenContainer
