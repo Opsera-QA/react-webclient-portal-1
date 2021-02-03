@@ -26,7 +26,14 @@ function LdapSettingsPanel({ userData, loadData, showSyncButton }) {
 
   const getSyncButton = () => {
     if (showSyncButton) {
-      return <SyncLdapButton userData={userData} loadData={loadData} />;
+      return (
+        <Row>
+          <Col>
+            <DateTimeField dataObject={userData} fieldName={"ldapSyncAt"}/>
+            <SyncLdapButton userData={userData} loadData={loadData} />
+          </Col>
+        </Row>
+      );
     }
   };
 
@@ -56,12 +63,7 @@ function LdapSettingsPanel({ userData, loadData, showSyncButton }) {
           <TextFieldBase dataObject={userLdapDto} fieldName={"type"} />
         </Col>
       </Row>
-      <Row>
-        <Col>
-          <DateTimeField dataObject={userData} fieldName={"ldapSyncAt"}/>
-          {getSyncButton()}
-        </Col>
-      </Row>
+      {getSyncButton()}
     </EditorPanelContainer>
   );
 }
