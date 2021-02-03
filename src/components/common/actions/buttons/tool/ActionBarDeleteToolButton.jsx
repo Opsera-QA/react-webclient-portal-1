@@ -32,16 +32,22 @@ function ActionBarDeleteToolButton({ toolDataObject }) {
     const rules = await setAccessRoles(userRecord);
 
     setCanDelete(rules.OpseraAdministrator || rules.Administrator || toolDataObject.getData("owner") === userRecord._id);
-    await loadRelevantPipelines();
   };
 
 
   const loadRelevantPipelines = async () => {
-    if (toolDataObject.getData("_id")) {
-      const response = await toolsActions.getRelevantPipelines(toolDataObject, getAccessToken);
+    if (toolDataObject?.getData("_id")) {
+      try {
+        setIsLoading(true);
+        const response = await toolsActions.getRelevantPipelines(toolDataObject, getAccessToken);
 
-      if (response?.data != null) {
-        setRelevantPipelines(response?.data?.data);
+        if (response?.data != null) {
+          setRelevantPipelines(response?.data?.data);
+        }
+      }
+      catch (error) {
+        console.error(error);
+        toastContext.showSystemErrorToast(error);
       }
     }
   };
@@ -63,8 +69,9 @@ function ActionBarDeleteToolButton({ toolDataObject }) {
     }
   }
 
-  const toggleDeleteModal = () => {
+  const toggleDeleteModal = async () => {
     setShowDeleteModal(true);
+    await loadRelevantPipelines();
   }
 
   const getDeleteDetails = () => {
