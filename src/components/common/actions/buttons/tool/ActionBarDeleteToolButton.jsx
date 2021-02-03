@@ -20,30 +20,29 @@ function ActionBarDeleteToolButton({ toolDataObject }) {
   const [canDelete, setCanDelete] = useState(false);
   const [relevantPipelines, setRelevantPipelines] = useState([]);
 
+
   useEffect(() => {
-    checkPermissions();
+    initRoleAccess().catch(error => {
+      throw { error };
+    });
   }, []);
 
-  const checkPermissions = async () => {
-    setIsLoading(true);
-    await getRoles();
-    setIsLoading(false);
+  const initRoleAccess = async () => {
+    const userRecord = await getUserRecord(); //RBAC Logic
+    const rules = await setAccessRoles(userRecord);
+
+    setCanDelete(rules.OpseraAdministrator || rules.Administrator || toolDataObject.getData("owner") === userRecord._id);
+    await loadRelevantPipelines();
   };
 
-  const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
-      setCanDelete(userRoleAccess.OpseraAdministrator || userRoleAccess.Administrator || toolDataObject.getData("owner") === user._id);
-      await loadRelevantPipelines();
-    }
-  };
 
   const loadRelevantPipelines = async () => {
-    const response = await toolsActions.getRelevantPipelines(toolDataObject, getAccessToken);
+    if (toolDataObject.getData("_id")) {
+      const response = await toolsActions.getRelevantPipelines(toolDataObject, getAccessToken);
 
-    if (response?.data != null) {
-      setRelevantPipelines(response?.data?.data);
+      if (response?.data != null) {
+        setRelevantPipelines(response?.data?.data);
+      }
     }
   };
 

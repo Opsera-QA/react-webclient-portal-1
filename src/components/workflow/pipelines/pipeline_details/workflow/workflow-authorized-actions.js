@@ -145,8 +145,13 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
     return true; //owner can do all actions
   }
 
+  //if no objectRole data passed, then allow actions
+  if (objectRoles && objectRoles.length === 0) {
+    return true;
+  }
+
   const userObjectRole = calculateUserObjectRole(customerAccessRules.Email, customerAccessRules.Groups, objectRoles);
-  //console.log("userObjectRole: ", userObjectRole);
+  //console.log("userObjectRole: ", objectRoles);
   if (userObjectRole === "administrator") {
     return true; //all actions are authorized to administrator
   }
@@ -163,9 +168,8 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
   }
 
   if (customerAccessRules.PowerUser || userObjectRole === "manager") {
-    console.log("FOUND PowerUser Role but with no user object data!")
     switch (action) {
-    case "edit_tool_settings":
+    case "edit_tool_settings1":
     case "use_tool_in_pipeline":
     case "create_tool":
       return true;
@@ -193,7 +197,7 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
 //compares the user email to the objectRoles data to see if the user has a specific role
 // (either directly or through group membership)
 const calculateUserObjectRole = (userEmail, userGroups, objectRoles) => {
-  if (!objectRoles || objectRoles.length === 0) {
+  if (!objectRoles || objectRoles.length === 0 || !userEmail) {
     return false;
   }
 
@@ -202,7 +206,6 @@ const calculateUserObjectRole = (userEmail, userGroups, objectRoles) => {
     if (!item.user || typeof item.user !== "string") {
       return false;
     }
-
     return item.user.toLowerCase() === userEmail.toLowerCase();
   });
 
@@ -217,7 +220,7 @@ const calculateUserObjectRole = (userEmail, userGroups, objectRoles) => {
 
   let userGroupsRole = [];
   groupRoles.forEach(function(item) {
-    if (userGroups.includes(item.group)) {
+    if (userGroups && userGroups.includes(item.group)) {
       userGroupsRole.push(item.role);
     }
   });

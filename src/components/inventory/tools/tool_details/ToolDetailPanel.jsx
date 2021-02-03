@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import PropTypes from "prop-types";
 import ToolJobsPanel from "./ToolJobsPanel";
@@ -26,9 +26,24 @@ import ToolPipelinesPanel from "./ToolPipelinesPanel";
 import ToolTaggingPanel from "./ToolTaggingPanel";
 import ToolProjectsPanel from "components/inventory/tools/tool_details/projects/ToolProjectsPanel";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
+import { AuthContext } from "../../../../contexts/AuthContext";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
+  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
+  const [customerAccessRules, setCustomerAccessRules] = useState({});
+
+  useEffect(() => {
+    initRoleAccess().catch(error => {
+      throw { error };
+    });
+  }, [isLoading]);
+
+  const initRoleAccess = async () => {
+    const userRecord = await getUserRecord(); //RBAC Logic
+    const rules = await setAccessRoles(userRecord);
+    setCustomerAccessRules(rules);
+  };
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
@@ -90,7 +105,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <ToolSummaryPanel toolData={toolData} setToolData={setToolData} setActiveTab={setActiveTab} />;
+        return <ToolSummaryPanel toolData={toolData} setToolData={setToolData} setActiveTab={setActiveTab} customerAccessRules={customerAccessRules} />;
       case "settings":
         return <ToolEditorPanel toolData={toolData} setToolData={setToolData} loadData={loadData} handleClose={toggleSummaryPanel} />;
       case "attributes":
@@ -116,7 +131,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
     }
   };
 
-  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
+  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} customerAccessRules={customerAccessRules} />);
 }
 
 ToolDetailPanel.propTypes = {

@@ -6,7 +6,7 @@ function SummaryPanelContainer({ setActiveTab, editingAllowed, children }) {
   const getSettingsToggle = () => {
     if (editingAllowed && setActiveTab) {
       return (
-        <div className="float-right mt-2 mr-1">
+        <div className="float-right mt-2 mr-2">
           <ActionBarEditorToggleButton setActiveTab={setActiveTab} />
         </div>
       );
