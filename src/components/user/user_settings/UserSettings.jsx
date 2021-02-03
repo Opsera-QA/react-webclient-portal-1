@@ -1,19 +1,20 @@
 import React, {useContext, useEffect, useState} from "react";
-import {faIdCard, faUser} from "@fortawesome/pro-light-svg-icons";
+import {faIdCard, faKey, faUser} from "@fortawesome/pro-light-svg-icons";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import PlatformInventory from "components/inventory/platform/platformInventory";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import MyUserRecord from "components/user/user_settings/MyUserRecord";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import MyUserProfile from "components/user/user_settings/MyUserProfile";
+import MyAccessTokens from "components/user/user_settings/MyAccessTokens";
 
 function UserSettings() {
-  const {tab} = useParams();
+  const { tab } = useParams();
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
+  const history = useHistory();
   const [user, setUser] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -53,6 +54,7 @@ function UserSettings() {
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
     setActiveTab(tabSelection);
+    history.push(`/user/${tabSelection}`);
   };
 
   const getBreadcrumbDestination = () => {
@@ -74,7 +76,7 @@ function UserSettings() {
       case "myUserRecord":
         return <MyUserRecord />;
       case "accessTokens":
-        return <PlatformInventory />;
+        return <MyAccessTokens />;
       default:
         return null;
     }
@@ -85,7 +87,7 @@ function UserSettings() {
       <NavigationTabContainer>
         <NavigationTab icon={faIdCard} tabName={"profile"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My User Profile"} />
         <NavigationTab icon={faUser} tabName={"myUserRecord"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My User Record"} visible={user != null && user.ldap != null} />
-        {/*<NavigationTab icon={faKey} tabName={"accessTokens"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Access Tokens"} />*/}
+        <NavigationTab icon={faKey} tabName={"accessTokens"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Access Tokens"} />
       </NavigationTabContainer>
     );
   }

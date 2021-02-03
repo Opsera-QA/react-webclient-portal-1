@@ -5,8 +5,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {ldapUsersMetaData} from "components/settings/ldap_users/ldap-users-metadata";
 import LdapUserDetailPanel from "components/settings/ldap_users/users_detail_view/LdapUserDetailPanel";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/pro-solid-svg-icons";
 import LoadingDialog from "components/common/status_notifications/loading";
 
 function MyUserRecord() {
@@ -14,7 +12,7 @@ function MyUserRecord() {
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [ldapUserData, setLdapUserData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [orgDomain, setOrgDomain] = useState(undefined);
   const [authorizedActions, setAuthorizedActions] = useState([]);
 
