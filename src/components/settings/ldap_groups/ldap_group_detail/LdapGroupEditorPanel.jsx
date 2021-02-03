@@ -13,7 +13,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 // Note this is lowercase intentionally, as Users cannot create groups with capital letters
 const reservedNames = ["administrators", "powerusers", "users"];
 
-function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, orgDomain, setLdapGroupData, handleClose, authorizedActions}) {
+function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, orgDomain, setLdapGroupData, handleClose, authorizedActions, existingGroupNames}) {
   const {getAccessToken} = useContext(AuthContext);
   const [ldapGroupDataDto, setLdapGroupDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -29,7 +29,16 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, orgDomain, setLd
   };
 
   const createGroup = async () => {
-    if (reservedNames.indexOf(ldapGroupDataDto.getData("name")?.toLowerCase().trim()) > -1) {
+    const name = ldapGroupDataDto?.getData("name")?.toLowerCase()?.trim();
+
+    if (existingGroupNames && existingGroupNames.indexOf(name) > -1) {
+      throw `
+        [${ldapGroupDataDto.getData("name")}] is a name already registered to a group. 
+        Group names must be unique. Please try another name.
+      `;
+    }
+
+    if (reservedNames.indexOf(name) > -1) {
       throw `[${ldapGroupDataDto.getData("name")}] is a reserved group name and cannot be used when creating a new group.`;
     }
 
@@ -91,7 +100,8 @@ LdapGroupEditorPanel.propTypes = {
   ldapGroupData: PropTypes.object,
   ldapOrganizationData: PropTypes.object,
   handleClose: PropTypes.func,
-  authorizedActions: PropTypes.array
+  authorizedActions: PropTypes.array,
+  existingGroupNames: PropTypes.array
 };
 
 export default LdapGroupEditorPanel;

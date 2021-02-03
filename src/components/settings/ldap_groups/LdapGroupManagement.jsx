@@ -17,6 +17,7 @@ function LdapGroupManagement() {
   const [isLoading, setIsLoading] = useState(true);
   const [groupList, setGroupList] = useState([]);
   const [currentUserEmail, setCurrentUserEmail] = useState(undefined);
+  const [existingGroupNames, setExistingGroupNames] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const [authorizedActions, setAuthorizedActions] = useState([]);
   const [activeTab, setActiveTab] = useState("userGroups");
@@ -47,7 +48,13 @@ function LdapGroupManagement() {
     if (ldapDomain != null) {
       try {
         let response = await accountsActions.getLdapGroupsWithDomain(ldapDomain, getAccessToken);
-        setGroupList(response?.data);
+
+        if (response?.data) {
+          let existingGroups = response?.data;
+          const existingGroupNames = existingGroups.map((group) => {return group.name.toLowerCase()});
+          setExistingGroupNames(existingGroupNames);
+;         setGroupList(existingGroups);
+        }
       } catch (error) {
         toastContext.showLoadingErrorDialog(error);
         console.error(error);
@@ -94,6 +101,7 @@ function LdapGroupManagement() {
             loadData={loadData}
             orgDomain={orgDomain}
             authorizedActions={authorizedActions}
+            existingGroupNames={existingGroupNames}
             currentUserEmail={currentUserEmail}
           />
         );
@@ -121,7 +129,7 @@ function LdapGroupManagement() {
           tabName={"adminGroups"}
           handleTabClick={handleTabClick}
           activeTab={activeTab}
-          disabled={!accessRoleData || (!accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator)}
+          disabled={accessRoleData && (!accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator)}
           tabText={"Site Roles & Departments"} />
       </NavigationTabContainer>
     );

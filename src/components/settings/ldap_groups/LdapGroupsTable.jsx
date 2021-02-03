@@ -11,7 +11,7 @@ import {
 import {getField} from "components/common/metadata/metadata-helpers";
 import {ldapGroupMetaData} from "components/settings/ldap_groups/ldap-groups-metadata";
 
-function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, loadData, currentUserEmail, useMembers }) {
+function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, loadData, currentUserEmail, useMembers, existingGroupNames }) {
   let fields = ldapGroupMetaData.fields;
   const [showCreateGroupModal, setShowCreateGroupModal] = useState(false);
   const history = useHistory();
@@ -61,6 +61,7 @@ function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, l
         showModal={showCreateGroupModal}
         currentUserEmail={currentUserEmail}
         setShowModal={setShowCreateGroupModal}
+        existingGroupNames={existingGroupNames}
       />
     </div>
   );
@@ -73,7 +74,8 @@ LdapGroupsTable.propTypes = {
   authorizedActions: PropTypes.array,
   loadData: PropTypes.func,
   currentUserEmail: PropTypes.string,
-  useMembers: PropTypes.bool
+  useMembers: PropTypes.bool,
+  existingGroupNames: PropTypes.array
 };
 
 export default LdapGroupsTable;
