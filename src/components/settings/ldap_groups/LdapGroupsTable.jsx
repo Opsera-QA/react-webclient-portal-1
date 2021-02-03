@@ -44,7 +44,7 @@ function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, l
   };
 
   return (
-    <div>
+    <div className="px-2 pb-2">
       <CustomTable
         isLoading={isLoading}
         onRowSelect={onRowSelect}

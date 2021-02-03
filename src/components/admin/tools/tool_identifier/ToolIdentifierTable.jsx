@@ -42,7 +42,7 @@ function ToolIdentifierTable({data, loadData, isLoading}) {
   };
 
   return (
-    <div>
+    <div className="px-2 pb-2">
       <CustomTable
         columns={columns}
         data={data}

@@ -208,7 +208,7 @@ function AnalyticsProfileSettings() {
         </Card>
       )}
       {analyticsProfileData && analyticsProfileData.getData("active") && (
-        <div>
+        <div className="px-2 pb-2">
           <Row>
             <Col lg={3}>
               <OverlayTrigger
@@ -266,7 +266,7 @@ function AnalyticsProfileSettings() {
               />
             </Col>
           </Row>
-          <div className="ml-auto mt-3">
+          <Row className="ml-auto mt-3">
             <SaveButtonBase
               updateRecord={updateProfile}
               setRecordDto={setAnalyticsProfileData}
@@ -274,7 +274,7 @@ function AnalyticsProfileSettings() {
               // createRecord={createApplication}
               recordDto={analyticsProfileData}
             />
-          </div>
+          </Row>
         </div>
       )}
     </ScreenContainer>

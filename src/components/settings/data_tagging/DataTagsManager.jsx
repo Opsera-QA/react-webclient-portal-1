@@ -169,7 +169,7 @@ function Tagging() {
 
     if (toolRegistryList && opseraProjectTags) {
       return (
-        <div>
+        <div className="px-2 pb-2">
           {getTabContainer()}
           <div className="p-3">
             <TagsTabView
@@ -185,7 +185,7 @@ function Tagging() {
     }
 
     return (
-      <div>
+      <div className="px-2 pb-2">
         {getNoTagsMessage()}
         {getNoToolsMessage()}
       </div>

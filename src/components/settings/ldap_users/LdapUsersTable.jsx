@@ -35,7 +35,7 @@ function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loa
   };
 
   return (
-    <div>
+    <div className="px-2 pb-2">
       <CustomTable
         isLoading={isLoading}
         tableTitle={"Users"}
