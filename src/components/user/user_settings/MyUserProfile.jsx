@@ -13,6 +13,7 @@ import Model from "core/data_model/model";
 import registeredUsersMetadata from "components/admin/registered_users/registered-users-metadata";
 import RegisteredUserSummary from "components/admin/registered_users/registered_user_details/RegisteredUserSummary";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
+import AccessRoleField from "components/common/fields/access/AccessRoleField";
 
 function MyUserProfile() {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
@@ -21,7 +22,7 @@ function MyUserProfile() {
   const [userModel, setUserModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
-  const [accessRoleLabel, setAccessRoleLabel] = useState("");
+  const [accessRole, setAccessRole] = useState("");
 
   useEffect(() => {
     loadData();
@@ -46,8 +47,7 @@ function MyUserProfile() {
 
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
-      const userRole = defineUserRole(userRoleAccess.Role);
-      setAccessRoleLabel(userRole);
+      setAccessRole(userRoleAccess);
     }
   };
 
@@ -97,10 +97,6 @@ function MyUserProfile() {
         <Table className="m-0">
           <tbody>
           {getOpseraUserInfo()}
-          <tr>
-            <td>Platform Access Role</td>
-            <td>{accessRoleLabel}</td>
-          </tr>
           {getLdapUserInfo()}
           </tbody>
         </Table>
@@ -110,7 +106,10 @@ function MyUserProfile() {
 
   const getSyncButton = () => {
     return (
-      <div className="text-right">
+      <div className="justify-content-between d-flex px-3">
+        <div className="mt-1">
+          <AccessRoleField accessRole={accessRole} />
+        </div>
         <Button variant="primary" size="sm" disabled={isSyncing} onClick={() => syncUserData()}>
           {isSyncing ?
             <><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Syncing</> :

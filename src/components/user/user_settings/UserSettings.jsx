@@ -1,14 +1,12 @@
 import React, {useContext, useEffect, useState} from "react";
-import {faIdCard, faKey, faUser, faUserAlt} from "@fortawesome/pro-light-svg-icons";
+import {faIdCard, faUser} from "@fortawesome/pro-light-svg-icons";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import PlatformInventory from "components/inventory/platform/platformInventory";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import Profile from "components/user/user_settings/Profile";
 import MyUserRecord from "components/user/user_settings/MyUserRecord";
 import {useParams} from "react-router-dom";
 import {AuthContext} from "contexts/AuthContext";
-import accountsActions from "components/admin/accounts/accounts-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import MyUserProfile from "components/user/user_settings/MyUserProfile";
 
