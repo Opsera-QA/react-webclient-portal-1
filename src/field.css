@@ -12,6 +12,11 @@
   font-weight: normal;
   background: #C7C3DD;
 }
+
+.item-field .group-badge {
+  font-weight: normal;
+  background: #E6E5E3;
+}
 /* End Item Field */
 
 
