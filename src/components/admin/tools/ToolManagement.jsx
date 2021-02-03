@@ -1,17 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "contexts/AuthContext";
 
-import LoadingDialog from "components/common/status_notifications/loading";
 import {useParams} from "react-router-dom";
 import {faToolbox, faTools} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import toolManagementActions from "components/admin/tools/tool-management-actions";
-import CustomTabContainer from "components/common/tabs/CustomTabContainer";
-import CustomTab from "components/common/tabs/CustomTab";
 import ToolCategoryTable from "components/admin/tools/tool_category/ToolCategoryTable";
 import ToolIdentifierTable from "components/admin/tools/tool_identifier/ToolIdentifierTable";
-import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
+import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
+import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 
 function ToolManagement() {
   const toastContext = useContext(DialogToastContext);
@@ -82,14 +80,14 @@ function ToolManagement() {
     }
   }
 
-  const getTabContainer = () => {
+  const getNavigationTabContainer = () => {
     return (
-      <CustomTabContainer styling="alternate-tabs">
-        <CustomTab icon={faToolbox} tabName={"types"} handleTabClick={handleTabClick} activeTab={activeTab}
+      <NavigationTabContainer>
+        <NavigationTab icon={faToolbox} tabName={"types"} handleTabClick={handleTabClick} activeTab={activeTab}
                    tabText={"Category"}/>
-        <CustomTab icon={faTools} tabName={"identifiers"} handleTabClick={handleTabClick} activeTab={activeTab}
+        <NavigationTab icon={faTools} tabName={"identifiers"} handleTabClick={handleTabClick} activeTab={activeTab}
                    tabText={"Tools"}/>
-      </CustomTabContainer>
+      </NavigationTabContainer>
     );
   }
 
@@ -97,9 +95,10 @@ function ToolManagement() {
     <ScreenContainer
       accessDenied={!accessRoleData?.OpseraAdministrator}
       isLoading={!accessRoleData}
+      navigationTabContainer={getNavigationTabContainer()}
       breadcrumbDestination={"toolManagement"}
     >
-      <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
+      {getCurrentView()}
     </ScreenContainer>
   );
 }
