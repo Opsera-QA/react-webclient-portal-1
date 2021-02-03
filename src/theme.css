@@ -1162,6 +1162,10 @@ a.nav-link {
   height: 30px;
 }
 
+.inline-search-filter {
+  min-width: 350px;
+}
+
 .filter-title {
   background-color: #4D4283;
   border-bottom: 1px solid #46415C;

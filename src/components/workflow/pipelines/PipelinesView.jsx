@@ -105,7 +105,9 @@ function PipelinesView({ currentTab, setActiveTab }) {
         filterDto={pipelineFilterDto}
         setFilterDto={setPipelineFilterDto}
         filters={["status", "type", "search"]}
-        customButtons={getViewToggle()}
+        customButtons={getCustomButtons()}
+        saveCookies={saveCookies}
+        supportViewToggle={true}
         supportSearch={true}
         leftAlignCustomButtons={true}
       >
@@ -115,43 +117,14 @@ function PipelinesView({ currentTab, setActiveTab }) {
     );
   };
 
-  const switchView = () => {
-    let newPipelineFilterDto = pipelineFilterDto;
-    if (pipelineFilterDto.getData("viewType") === "list") {
-      newPipelineFilterDto.setData("viewType", "card");
-    } else {
-      newPipelineFilterDto.setData("viewType", "list");
-    }
-
-    saveCookies(newPipelineFilterDto);
-    setPipelineFilterDto({ ...newPipelineFilterDto });
-  };
-
-  const getViewToggle = () => {
-    const view = pipelineFilterDto.getData("viewType");
+  const getCustomButtons = () => {
     return (
-      <div className="d-flex">
-        <Button
-          variant={"primary"}
-          className="mr-2"
-          size="sm"
-          onClick={() => setActiveTab("catalog")}>
-          <span><FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Add New Pipeline</span>
-        </Button>
-        <Button
-          variant={view === "list" ? "primary" : "outline-secondary"}
-          className="mr-2"
-          size="sm"
-          onClick={() => switchView()}>
-          <FontAwesomeIcon icon={faList} fixedWidth/>
-        </Button>
-        <Button
-          variant={view !== "list" ? "primary" : "outline-secondary"}
-          size="sm"
-          onClick={() => switchView()}>
-          <FontAwesomeIcon icon={faThLarge} fixedWidth/>
-        </Button>
-      </div>
+      <Button
+        variant={"primary"}
+        size="sm"
+        onClick={() => setActiveTab("catalog")}>
+        <span><FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Add New Pipeline</span>
+      </Button>
     );
   };
 
