@@ -98,7 +98,7 @@ function PipelineActivityLogTable({ data, loadData, isLoading, pipeline, pipelin
         filterDto={pipelineActivityFilterDto}
         setFilterDto={setPipelineActivityFilterDto}
         isLoading={isLoading}
-        tableTitle={"Pipeline Activity Logs"}
+        title={"Pipeline Activity Logs"}
         titleIcon={faClipboardList}
         filters={["hide_status", "tool", "search", "run"]}
         body={getPipelineActivityTable()}

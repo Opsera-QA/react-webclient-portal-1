@@ -18,7 +18,7 @@ function FilterContainer(
     setFilterDto,
     titleIcon,
     filters,
-    tableTitle,
+    title,
     dropdownFilters,
     children,
     loadData,
@@ -164,7 +164,7 @@ function FilterContainer(
     <div>
       <div className="filter-table content-container content-card-1 w-100">
         <div className="px-2 d-flex content-block-header">
-          <FilterTitleBar isLoading={isLoading} title={tableTitle} titleIcon={titleIcon} tableFilters={getFilters()}/>
+          <FilterTitleBar isLoading={isLoading} title={title} titleIcon={titleIcon} filters={getFilters()}/>
         </div>
         <Row className="d-flex mx-0 py-1 active-filter-bar">
           <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} filters={filters}/>
@@ -184,7 +184,7 @@ FilterContainer.propTypes = {
   isLoading: PropTypes.bool,
   supportSearch: PropTypes.bool,
   titleIcon: PropTypes.object,
-  tableTitle:PropTypes.string,
+  title:PropTypes.string,
   children: PropTypes.any,
   body: PropTypes.object,
   loadData: PropTypes.func,

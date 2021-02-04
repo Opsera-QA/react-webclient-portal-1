@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 
-function FilterTitleBar({ title, tableFilters, titleIcon, isLoading }) {
+function FilterTitleBar({ title, filters, titleIcon, isLoading }) {
   /*if (isLoading) {
     return (<div className="pt-2"><h5><span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Data</span></h5></div>);
   }*/
@@ -17,7 +17,7 @@ function FilterTitleBar({ title, tableFilters, titleIcon, isLoading }) {
           <FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-1"/>
         }
         {title}</div>
-      <div className="d-flex small">{tableFilters}</div>
+      <div className="d-flex small">{filters}</div>
     </div>
   );
 }
@@ -26,7 +26,7 @@ function FilterTitleBar({ title, tableFilters, titleIcon, isLoading }) {
 FilterTitleBar.propTypes = {
   title: PropTypes.string,
   titleIcon: PropTypes.object,
-  tableFilters: PropTypes.any,
+  filters: PropTypes.any,
   isLoading: PropTypes.bool
 };
 
