@@ -11,7 +11,7 @@ import ActiveFilterDisplayer from "../filters/ActiveFilterDisplayer";
 import FilterTitleBar from "../panels/table_screen_container/FilterTitleBar";
 import StackedFilterRemovalIcon from "components/common/icons/StackedFilterRemovalIcon";
 
-function FilterTable(
+function FilterContainer(
   {
     filterDto,
     setFilterDto,
@@ -164,7 +164,7 @@ function FilterTable(
   );
 }
 
-FilterTable.propTypes = {
+FilterContainer.propTypes = {
   filterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
   dropdownFilters: PropTypes.any,
@@ -178,6 +178,6 @@ FilterTable.propTypes = {
   filters: PropTypes.array
 };
 
-export default FilterTable;
+export default FilterContainer;
 
 

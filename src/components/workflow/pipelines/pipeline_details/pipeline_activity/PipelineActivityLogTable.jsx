@@ -6,7 +6,7 @@ import simpleNumberLocalizer from "react-widgets-simple-number";
 import PipelineTaskDetailViewer from "../../../../common/modal/PipelineTaskDetailViewer";
 import SearchFilter from "../../../../common/filters/search/SearchFilter";
 import PipelineRunFilter from "../../../../common/filters/pipelines/activity_logs/PipelineRunFilter";
-import FilterTable from "../../../../common/table/FilterTable";
+import FilterContainer from "components/common/table/FilterContainer";
 import BooleanFilter from "../../../../common/filters/input/BooleanFilter";
 import {
   getPipelineActivityStatusColumn,
@@ -94,7 +94,7 @@ function PipelineActivityLogTable({ data, loadData, isLoading, pipeline, pipelin
 
   return (
     <div>
-      <FilterTable
+      <FilterContainer
         loadData={loadData}
         filterDto={pipelineActivityFilterDto}
         setFilterDto={setPipelineActivityFilterDto}
@@ -109,7 +109,7 @@ function PipelineActivityLogTable({ data, loadData, isLoading, pipeline, pipelin
           <div><BooleanFilter loadData={loadData} filterDto={pipelineActivityFilterDto} setFilterDto={setPipelineActivityFilterDto} fieldName={"hide_status"} /></div>
           <div className="px-2"><BooleanFilter loadData={loadData} filterDto={pipelineActivityFilterDto} setFilterDto={setPipelineActivityFilterDto} fieldName={"latest"} /></div>
         </div>
-      </FilterTable>
+      </FilterContainer>
       <PipelineTaskDetailViewer
         pipelineData={pipeline}
         pipelineTaskData={modalData}
