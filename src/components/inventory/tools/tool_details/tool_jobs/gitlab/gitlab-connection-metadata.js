@@ -15,7 +15,7 @@ const gitlabConnectionMetadata = {
       maxLength: 100
     },
     {
-      label: "Password",
+      label: "Personal Access Token",
       id: "accountPassword",
       isRequired: true,
       maxLength: 256
