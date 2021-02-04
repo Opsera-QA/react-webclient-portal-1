@@ -23,6 +23,8 @@ import CommandLineBitbucketWorkspaceInput
 import CommandLineDependencyTypeInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineDependencyTypeInput";
 import AgentLabelsMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
+import CommandLineSourceScriptToggleInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineSourceScriptToggleInput";
 
 function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -39,7 +41,13 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
   const loadData = async () => {
     setIsLoading(true);
     let { threshold, job_type } = stepTool;
-    setCommandLineStepConfigurationDataDto({...modelHelpers.getPipelineStepConfigurationModel(stepTool, commandLineStepFormMetadata)});
+    let commandLineConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, commandLineStepFormMetadata);
+
+    if (commandLineConfigurationData.getData("sourceScript") === true) {
+      commandLineConfigurationData.setMetaDataFields(commandLineStepFormMetadata.fieldsAlt);
+    }
+
+    setCommandLineStepConfigurationDataDto(commandLineConfigurationData);
 
     if (job_type) {
       setJobType(job_type);
@@ -51,6 +59,18 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
     }
 
     setIsLoading(false);
+  };
+
+  const getDynamicFields = () => {
+    if (commandLineStepConfigurationDto.getData("sourceScript") === true) {
+      return (
+        <div>
+           <TextInputBase fieldName={"inputPath"} dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
+          <TextInputBase fieldName={"inputFileName"} dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
+        </div>
+      );
+    }
+    return (<TextAreaInput dataObject={commandLineStepConfigurationDto} fieldName={"commands"} setDataObject={setCommandLineStepConfigurationDataDto}/>);
   };
 
   const handleCreateAndSave = async () => {
@@ -102,7 +122,8 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
         fieldName={"agentLabels"}
         setDataObject={setCommandLineStepConfigurationDataDto}
       />
-      <TextAreaInput dataObject={commandLineStepConfigurationDto} fieldName={"commands"} setDataObject={setCommandLineStepConfigurationDataDto}/>
+      <CommandLineSourceScriptToggleInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"sourceScript"}/>
+      {getDynamicFields()}
       <CommandLineDependencyTypeInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
       <TextInputBase setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} fieldName={"outputPath"} />
       <TextInputBase setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} fieldName={"outputFileName"} />
