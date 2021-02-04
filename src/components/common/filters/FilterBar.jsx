@@ -10,6 +10,7 @@ import {Col, Row} from "react-bootstrap";
 import ActiveFilterDisplayer from "./ActiveFilterDisplayer";
 import InlineSearchFilter from "components/common/filters/search/InlineSearchFilter";
 import ViewToggle from "components/common/view/ViewToggle";
+import StackedFilterRemovalIcon from "components/common/icons/StackedFilterRemovalIcon";
 
 function FilterBar({ filterDto, setFilterDto, filters, children, loadData, saveCookies, addRecordFunction, customButtons, supportSearch, leftAlignCustomButtons, supportViewToggle}) {
   const resetFilters = async () => {
@@ -20,15 +21,6 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, saveC
     newFilterDto.setData("sortOption", sortOption);
     document.body.click();
     await loadData(newFilterDto);
-  };
-
-  const getStackedFilterRemovalIcon = () => {
-    return (
-      <span className="fa-layers fa-fw">
-        <FontAwesomeIcon icon={faFilter}/>
-        <FontAwesomeIcon icon={faTimes} transform="right-9 down-5 shrink-4" />
-      </span>
-    );
   };
 
   const loadFilters = async () => {
@@ -79,7 +71,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, saveC
           </div>
           <div className="w-50 ml-1">
             <Button type="outline-primary" size="sm" onClick={() => resetFilters()} className="w-100" disabled={filterDto.getData("activeFilters").length === 0}>
-              <span><span className="mr-2">{getStackedFilterRemovalIcon()}</span>Remove</span>
+              <span><span className="mr-2"><StackedFilterRemovalIcon /></span>Remove</span>
             </Button>
           </div>
         </div>
@@ -136,7 +128,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, saveC
         </OverlayTrigger>
         <div>
           <Button className={"ml-1"} disabled={filterDto.getData("activeFilters").length === 0} variant="outline-primary" size="sm" onClick={() => resetFilters()}>
-            <span>{getStackedFilterRemovalIcon()}</span>
+            <StackedFilterRemovalIcon />
           </Button>
         </div>
       </div>

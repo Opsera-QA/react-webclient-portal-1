@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFilter, faTimes} from "@fortawesome/pro-solid-svg-icons";
+import {faFilter, faTimes} from "@fortawesome/pro-light-svg-icons";
 
 function StackedFilterRemovalIcon({}) {
   return (
