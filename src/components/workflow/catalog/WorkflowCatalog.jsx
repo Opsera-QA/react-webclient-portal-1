@@ -165,7 +165,7 @@ function WorkflowCatalog() {
         {getFilterBar()}
       </div>
       <div>
-        <div className="px-2">
+        <div className="px-2 mt-2">
           <DtoTopPagination
             loadData={loadData}
             isLoading={loading}

@@ -96,20 +96,18 @@ function Pipelines() {
 
   const getPipelineTabContainer = () => {
     return (
-      <div className="mt-3">
-        <CustomTabContainer>
-          <CustomTab activeTab={activeTab} tabText={"All Pipelines"} handleTabClick={handleTabClick} tabName={"all"}
-                     toolTipText={"All Pipelines"} icon={faDiceD20}/>
-          <CustomTab activeTab={activeTab} tabText={"My Pipelines"} handleTabClick={handleTabClick} tabName={"owner"}
-                     toolTipText={"My Pipelines"} icon={faUser}/>
-          <CustomTab activeTab={activeTab} tabText={"Software Development"} handleTabClick={handleTabClick}
-                     tabName={"sdlc"} toolTipText={"Software Development Pipelines"} icon={faBracketsCurly}/>
-          <CustomTab activeTab={activeTab} tabText={"Machine Learning"} handleTabClick={handleTabClick}
-                     tabName={"ai-ml"} toolTipText={"Machine Learning (AI) Pipelines"} icon={faMicrochip}/>
-          <CustomTab activeTab={activeTab} tabText={"SalesForce Pipelines"} handleTabClick={handleTabClick}
-                     tabName={"sfdc"} toolTipText={"SalesForce Pipelines"} icon={faSalesforce}/>
-        </CustomTabContainer>
-      </div>
+      <CustomTabContainer>
+        <CustomTab activeTab={activeTab} tabText={"All Pipelines"} handleTabClick={handleTabClick} tabName={"all"}
+                   toolTipText={"All Pipelines"} icon={faDiceD20}/>
+        <CustomTab activeTab={activeTab} tabText={"My Pipelines"} handleTabClick={handleTabClick} tabName={"owner"}
+                   toolTipText={"My Pipelines"} icon={faUser}/>
+        <CustomTab activeTab={activeTab} tabText={"Software Development"} handleTabClick={handleTabClick}
+                   tabName={"sdlc"} toolTipText={"Software Development Pipelines"} icon={faBracketsCurly}/>
+        <CustomTab activeTab={activeTab} tabText={"Machine Learning"} handleTabClick={handleTabClick}
+                   tabName={"ai-ml"} toolTipText={"Machine Learning (AI) Pipelines"} icon={faMicrochip}/>
+        <CustomTab activeTab={activeTab} tabText={"SalesForce Pipelines"} handleTabClick={handleTabClick}
+                   tabName={"sfdc"} toolTipText={"SalesForce Pipelines"} icon={faSalesforce}/>
+      </CustomTabContainer>
     );
   };
 

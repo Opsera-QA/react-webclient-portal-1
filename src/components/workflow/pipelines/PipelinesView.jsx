@@ -9,8 +9,6 @@ import PipelineWelcomeView from "./PipelineWelcomeView";
 import pipelineFilterMetadata from "./pipeline_details/workflow/pipeline-filter-metadata";
 import PipelinesTable from "./pipeline_details/PipelinesTable";
 import InformationDialog from "components/common/status_notifications/info";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faThLarge, faList, faPlus} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import cookieHelpers from "core/cookies/cookie-helpers";
@@ -162,14 +160,14 @@ function PipelinesView({ currentTab, setActiveTab }) {
 
   const showList = () => {
     return (
-      <Col sm={12} className="p-2">
+      <div className="p-2">
         <PipelinesTable
           isLoading={loading}
           paginationModel={pipelineFilterDto}
           setPaginationModel={setPipelineFilterDto}
           data={data.response}
         />
-      </Col>
+      </div>
     );
   };
 

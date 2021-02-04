@@ -7,7 +7,7 @@ function DetailTabPanelContainer({ tabContainer, detailView }) {
       <div className="mt-1">
           {tabContainer}
       </div>
-      <div className="shaded-panel detail-panel-body pt-1">
+      <div className="shaded-panel detail-panel-body">
         {detailView}
       </div>
     </div>
