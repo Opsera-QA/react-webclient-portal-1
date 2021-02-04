@@ -16,6 +16,11 @@ const commandLineStepFormMetadata = {
       id: "toolJobName",
       isRequired: true
     },
+    
+    {
+      // label: "Jenkins Job Name",
+      id: "jobName",
+    },
     {
       // label: "Jenkins Job Id",
       id: "toolJobId",
@@ -152,6 +157,11 @@ const commandLineStepFormMetadata = {
       label: "Jenkins Job",
       id: "toolJobName",
       isRequired: true
+    },
+    
+    {
+      // label: "Jenkins Job Name",
+      id: "jobName",
     },
     {
       // label: "Jenkins Job Id",

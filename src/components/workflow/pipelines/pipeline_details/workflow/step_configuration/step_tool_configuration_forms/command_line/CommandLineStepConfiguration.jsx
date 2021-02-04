@@ -92,7 +92,7 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
           type: thresholdType,
           value: thresholdVal,
         },
-        job_type: jobType,
+        job_type: commandLineStepConfigurationDto.getData("jobType"),
       };
       console.log("item: ", toolConfiguration);
 
