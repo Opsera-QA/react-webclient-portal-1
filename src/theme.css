@@ -1156,7 +1156,12 @@ a.nav-link {
 }
 
 /* End Status Card Styling */
+
 /* Filter bar styling */
+.popover-filter {
+  min-width: 600px; /* Max Width of the popover */
+}
+
 .filter-bar {
   height: 30px;
 }

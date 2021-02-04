@@ -15,7 +15,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import cookieHelpers from "core/cookies/cookie-helpers";
 import pipelineActions from "components/workflow/pipeline-actions";
-import PipelineOwnerFilter from "components/common/filters/pipelines/PipelineOwnerFilter";
+import LdapOwnerFilter from "components/common/filters/pipelines/LdapOwnerFilter";
 import Model from "core/data_model/model";
 import TagFilter from "components/common/filters/tags/TagFilter";
 import DtoTopPagination from "components/common/pagination/DtoTopPagination";
@@ -94,7 +94,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
 
   const getDynamicFilter = () => {
     if (currentTab !== "owner") {
-      return (<PipelineOwnerFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>);
+      return (<LdapOwnerFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>);
     }
   };
 

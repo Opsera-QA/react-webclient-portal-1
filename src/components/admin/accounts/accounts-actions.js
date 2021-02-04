@@ -243,6 +243,11 @@ accountsActions.getUsers = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
+accountsActions.getAccountUsers = async (getAccessToken) => {
+  const apiUrl = `/users/account-users`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
 accountsActions.getUserDetailViewLink = async (getUserRecord) => {
   const user = await getUserRecord();
   const {ldap} = user;

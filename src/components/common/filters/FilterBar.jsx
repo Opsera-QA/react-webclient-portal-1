@@ -58,7 +58,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, saveC
   };
 
   const popover = (
-    <Popover id="popover-basic">
+    <Popover id="popover-basic" className="popover-filter">
       <Popover.Title as="h3" className="filter-title">
         <Row>
           <Col sm={10} className="my-auto">Filters</Col>
