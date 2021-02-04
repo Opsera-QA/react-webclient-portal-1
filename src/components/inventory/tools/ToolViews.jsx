@@ -79,20 +79,18 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
     </div>
   );
 
-  // return (
-  //   <div className="px-2">
-  //     {getFilterBar()}
-  //     <TableCardView
-  //       filterDto={toolFilterDto}
-  //       setFilterDto={setToolFilterDto}
-  //       isLoading={isLoading}
-  //       loadData={loadData}
-  //       cardView={getCardView()}
-  //       tableView={getTableView()}
-  //     />
-  //     <NewToolModal loadData={loadData} setShowModal={setShowCreateToolModal} showModal={showCreateToolModal}/>
-  //   </div>
-  // );
+
+  // <div className="px-2 pb-2">
+  //   {getFilterBar()}
+  //   <TableCardView
+  //     data={data}
+  //     isLoading={isLoading}
+  //     loadData={loadData}
+  //     cardView={getCardView()}
+  //     tableView={getTableView()}
+  //   />
+  //   <NewToolModal loadData={loadData} setShowModal={setShowCreateToolModal} showModal={showCreateToolModal}/>
+  // </div>
 }
 
 ToolViews.propTypes = {

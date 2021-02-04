@@ -1,20 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function TableCardView({ filterDto, tableView, cardView }) {
+function TableCardView({ filterDto, tableView, cardView, data, isLoading }) {
   const getView = () => {
-    if (filterDto == null) {
-      return <></>;
+    // if (isLoading && !Array.isArray(data) || data.length === 0) {
+    //   // TODO: Make good looking loading display
+    // }
+
+    if (filterDto?.getData("viewType") === "card") {
+      return (cardView);
     }
 
-    if (filterDto.getData("viewType") === "list") {
-      return (tableView);
-    }
-
-    return (cardView);
+    return (tableView);
   };
 
-  // TODO: add styling
   return (
     <div>
       {getView()}
@@ -26,6 +25,8 @@ TableCardView.propTypes = {
   filterDto: PropTypes.object,
   tableView: PropTypes.object,
   cardView: PropTypes.object,
+  data: PropTypes.array,
+  isLoading: PropTypes.bool
 };
 
 export default TableCardView;

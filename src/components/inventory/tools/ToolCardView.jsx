@@ -16,7 +16,7 @@ function ToolCardView({ data, toolFilterDto, setToolFilterDto, loadData, isLoadi
     return (
       <Row>
         {data.map((toolData, index) => (
-          <Col key={index} sm={6} md={4} lg={2} className="p-2">
+          <Col key={index} sm={6} md={4} lg={2} className="p-1">
             <RegistryToolCard toolData={new Model({ ...toolData }, toolMetadata, false)}/>
           </Col>
         ))}
@@ -38,6 +38,10 @@ function ToolCardView({ data, toolFilterDto, setToolFilterDto, loadData, isLoadi
 
 ToolCardView.propTypes = {
   data: PropTypes.array,
+  toolFilterDto: PropTypes.object,
+  setToolFilterDto: PropTypes.func,
+  loadData: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 
 export default ToolCardView;
