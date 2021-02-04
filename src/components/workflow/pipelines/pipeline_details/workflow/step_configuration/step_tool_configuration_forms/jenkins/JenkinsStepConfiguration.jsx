@@ -76,6 +76,7 @@ const INITIAL_DATA = {
   isNewBranch: false,
   hasUpstreamBranch: false,
   upstreamBranch: "",
+  agentLabels : "",
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
