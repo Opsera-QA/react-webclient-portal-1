@@ -105,12 +105,12 @@ const commandLineStepFormMetadata = {
     },
     {
       label: "Script File Path",
-      id: "inputPath",
+      id: "scriptFilePath",
       // isRequired: true
     },
     {
-      label: "File Name",
-      id: "inputFileName",
+      label: "Script File Name",
+      id: "scriptFileName",
       formText: "File name with extension is expected."
       // isRequired: true
     },
@@ -242,12 +242,12 @@ const commandLineStepFormMetadata = {
     },
     {
       label: "Script File Path",
-      id: "inputPath",
+      id: "scriptFilePath",
       isRequired: true
     },
     {
-      label: "File Name",
-      id: "inputFileName",
+      label: "Script File Name",
+      id: "scriptFileName",
       formText: "File name with extension is expected.",
       isRequired: true
     },

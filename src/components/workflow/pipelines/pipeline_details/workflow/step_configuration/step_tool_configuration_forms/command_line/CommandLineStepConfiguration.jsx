@@ -65,8 +65,8 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
     if (commandLineStepConfigurationDto.getData("sourceScript") === true) {
       return (
         <div>
-           <TextInputBase fieldName={"inputPath"} dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
-          <TextInputBase fieldName={"inputFileName"} dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
+          <TextInputBase fieldName={"scriptFilePath"} dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
+          <TextInputBase fieldName={"scriptFileName"} dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
         </div>
       );
     }
