@@ -86,8 +86,8 @@ function UserSettings() {
     return (
       <NavigationTabContainer>
         <NavigationTab icon={faIdCard} tabName={"profile"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My User Profile"} />
-        <NavigationTab icon={faUser} tabName={"myUserRecord"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My User Record"} visible={user != null && user.ldap != null} />
-        <NavigationTab icon={faKey} tabName={"accessTokens"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Access Tokens"} />
+        <NavigationTab icon={faUser} tabName={"myUserRecord"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My User Record"} visible={user != null && user?.ldap != null} />
+        {/*<NavigationTab icon={faKey} tabName={"accessTokens"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Access Tokens"} />*/}
       </NavigationTabContainer>
     );
   }

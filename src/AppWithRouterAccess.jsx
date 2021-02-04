@@ -8,7 +8,6 @@ import Logout from "./components/login/Logout";
 import Navbar from "./Navbar";
 import Sidebar from "./Sidebar";
 import Dashboard from "./components/dashboard/DashboardHome";
-import Profile from "components/user/user_settings/Profile";
 import About from "./components/about/About";
 import Pricing from "./components/about/Pricing";
 import OnlineHelp from "./components/about/Help";
@@ -68,9 +67,6 @@ import LdapDepartmentManagement from "./components/admin/accounts/ldap/ldap_depa
 import LdapDepartmentDetailView
   from "./components/admin/accounts/ldap/ldap_departments/department_detail_view/LdapDepartmentDetailView";
 import Reports from "./components/reports/Reports";
-import ToolReports from "./components/reports/tools/ToolReports";
-import PipelineReports from "./components/reports/pipelines/PipelineReports";
-import TagReports from "./components/reports/tags/TagReports";
 import Reports_Old from "./components/reports/Reports_Old";
 import Marketplace from "components/insights/marketplace/Marketplace";
 import AnalyticsProfileSettings from "./components/settings/analytics/analyticsProfileSettings";
@@ -278,9 +274,6 @@ const AppWithRouterAccess = () => {
 
                   {/* User Settings */}
                   <SecureRoute path="/user/:tab?" exact component={UserSettings}/>
-
-                  {/*// TODO: Remove this after new settings area is live*/}
-                  <SecureRoute path="/profile" component={Profile}/>
 
                   <SecureRoute path="/inventory/:view" exact component={Inventory}/>
                   <SecureRoute path="/inventory/tools/details/:id/:tab?" exact component={ToolDetailView}/>

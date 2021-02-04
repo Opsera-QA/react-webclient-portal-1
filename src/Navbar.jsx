@@ -159,9 +159,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
             {getPermissionsMessage()}
 
             <NavDropdown title={fullName} id="basic-nav-dropdown" className="top-nav-dropdown" alignRight>
-              {/*TODO: Remove profile link when User Settings goes live*/}
-              <Link to="/profile" id="profile-button" className="dropdown-item nav-drop-down-item">Profile</Link>
-              {!featureFlagHideItemInProd() && <Link to="/user/profile" id="profile-button" className="dropdown-item nav-drop-down-item">User Settings</Link>}
+              <Link to="/user/profile" id="profile-button" className="dropdown-item nav-drop-down-item">User Settings</Link>
 
               <NavDropdown.Divider/>
 
