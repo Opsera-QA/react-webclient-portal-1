@@ -73,7 +73,9 @@ const INITIAL_DATA = {
   isFullBackup: false,
   sfdcUnitTestType: "",
   workspace: "",
-  agentLabels : "",
+  isNewBranch: false,
+  hasUpstreamBranch: false,
+  upstreamBranch: "",
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -576,6 +578,13 @@ function JenkinsStepConfiguration({
     });
   };
 
+  const handleUpstreamBranchChange = (selectedOption) => {
+    setFormData({
+      ...formData,
+      upstreamBranch: selectedOption.value,
+    });
+  }
+
   const handleJobTypeChange = (selectedOption) => {
     setShowToast(false);
     setJobType(selectedOption.value);
@@ -1047,7 +1056,7 @@ function JenkinsStepConfiguration({
               formData.jobType != "SFDC UNIT TESTING" &&
               formData.jobType != "SFDC DEPLOY" &&
               formData.jobType != "SFDC BACK UP" &&
-              formData.jobType != "SFDC PUSH ARTIFACTS" &&
+              !formData.isNewBranch &&
               !formData.isOrgToOrg && (
                 <Form.Group controlId="account" className="mt-2">
                   <Form.Label>Branch*</Form.Label>
@@ -1092,16 +1101,74 @@ function JenkinsStepConfiguration({
                 
               {formData.jobType === "SFDC PUSH ARTIFACTS" && (
                 <>
-                  <Form.Group controlId="gitBranchName">
-                    <Form.Label>Branch Name*</Form.Label>
-                    <Form.Control
-                      maxLength="50"
-                      type="text"
-                      placeholder=""
-                      value={formData.gitBranch || ""}
-                      onChange={(e) => setFormData({ ...formData, gitBranch: e.target.value })}
+                {/* isNewBranch -> flag to decide if the branch is a new branch (true) or existing branch (false)
+                    artifact branch name -> we can use existing field itself
+                    hasUpstreamBranch -> flag to denote if source branch is configured (true) or not (false)
+                    upstreamBranch -> contains the upstream branch name
+                */}
+                  <Form.Group controlId="isNewBranch">
+                    <Form.Check inline
+                      type="checkbox"
+                      label={"Create a new backup branch?"}
+                      id={`newBranch`}
+                      checked={formData.isNewBranch}
+                      onChange={(e) => setFormData({ ...formData, isNewBranch: e.target.checked })}
                     />
+                    <Form.Text className="text-muted">Creates a new branch and push the artifacts</Form.Text>
                   </Form.Group>
+
+                  {formData.isNewBranch && 
+                    <Form.Group controlId="gitBranchName">
+                      <Form.Label>Branch Name*</Form.Label>
+                      <Form.Control
+                        maxLength="50"
+                        type="text"
+                        placeholder=""
+                        value={formData.gitBranch || ""}
+                        onChange={(e) => setFormData({ ...formData, gitBranch: e.target.value })}
+                      />
+                    </Form.Group>
+                  }
+
+                  <Form.Group controlId="isNewBranch">
+                    <Form.Check inline
+                      type="checkbox"
+                      label={"Use an upstream branch?"}
+                      id={`hasUpstreamBranch`}
+                      checked={formData.hasUpstreamBranch}
+                      onChange={(e) => setFormData({ ...formData, hasUpstreamBranch: e.target.checked })}
+                    />
+                    <Form.Text className="text-muted">Configure an upstream/source branch to which the artifacts will be pushed.</Form.Text>
+                  </Form.Group>
+
+                  {formData.hasUpstreamBranch && 
+                  <Form.Group controlId="account" className="mt-2">
+                    <Form.Label>Select Upstream Branch*</Form.Label>
+                    {isBranchSearching ? (
+                      <div className="form-text text-muted mt-2 p-2">
+                        <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
+                        Loading branches from selected repository
+                      </div>
+                    ) : (
+                      <>
+                        {branchList && branchList.length > 0 ? (
+                          <DropdownList
+                            data={branchList}
+                            value={branchList[branchList.findIndex((x) => x.value === formData.upstreamBranch)]}
+                            valueField="value"
+                            textField="name"
+                            filter="contains"
+                            onChange={handleUpstreamBranchChange}
+                          />
+                        ) : (
+                          <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
+                        )}
+                      </>
+                    )}
+                    {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+                  </Form.Group>
+                  }
+
                   <Form.Group controlId="xmlStep">
                     <Form.Label>Build/Xml Step Info*</Form.Label>
                     {listOfSteps ? (
