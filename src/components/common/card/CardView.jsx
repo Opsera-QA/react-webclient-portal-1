@@ -7,7 +7,7 @@ import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 function CardView({ cards, isLoading, paginationDto, setPaginationDto, loadData, title }) {
   // TODO: its own component
   const getLoadingIcon = () => {
-    if (isLoading && title && cards != null) {
+    if (isLoading && cards != null) {
       return (<FontAwesomeIcon icon={faSpinner} spin className="ml-2 my-auto"/>);
     }
   };
@@ -18,18 +18,24 @@ function CardView({ cards, isLoading, paginationDto, setPaginationDto, loadData,
     }
   };
 
+  if (!isLoading && cards == null) {
+    return <div className="info-text text-center p-5">No data is currently available</div>
+  }
+
   return (
-    <PaginationContainer
-      loadData={loadData}
-      setFilterDto={setPaginationDto}
-      filterDto={paginationDto}
-      isLoading={isLoading}
-    >
-      <div className="px-2">
-        <div>{getTitle()}</div>
-        {cards}
-      </div>
-    </PaginationContainer>
+    <div className="p-2 px-3">
+      <div>{getTitle()}</div>
+      <PaginationContainer
+        loadData={loadData}
+        setFilterDto={setPaginationDto}
+        filterDto={paginationDto}
+        isLoading={isLoading}
+      >
+        <div>
+          {cards}
+        </div>
+      </PaginationContainer>
+    </div>
   );
 }
 

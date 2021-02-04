@@ -37,7 +37,7 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
         addRecordFunction={authorizedAction("create_tool") ? createNewTool : null}
         supportSearch={true}
         saveCookies={saveCookies}
-        // supportViewToggle={true}
+        supportViewToggle={true}
       >
         <StatusFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
         <LdapOwnerFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
@@ -72,25 +72,20 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
   };
 
   return (
+
     <div className="px-2 pb-2">
       {getFilterBar()}
-      {getTableView()}
+      <TableCardView
+        filterDto={toolFilterDto}
+        data={data}
+        isLoading={isLoading}
+        loadData={loadData}
+        cardView={getCardView()}
+        tableView={getTableView()}
+      />
       <NewToolModal loadData={loadData} setShowModal={setShowCreateToolModal} showModal={showCreateToolModal}/>
     </div>
   );
-
-
-  // <div className="px-2 pb-2">
-  //   {getFilterBar()}
-  //   <TableCardView
-  //     data={data}
-  //     isLoading={isLoading}
-  //     loadData={loadData}
-  //     cardView={getCardView()}
-  //     tableView={getTableView()}
-  //   />
-  //   <NewToolModal loadData={loadData} setShowModal={setShowCreateToolModal} showModal={showCreateToolModal}/>
-  // </div>
 }
 
 ToolViews.propTypes = {

@@ -222,7 +222,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
   return (
     <div style={{minWidth: "505px"}}>
       <div>
-        <div className="mb-2 py-2 px-2" style={{backgroundColor:"#E8E8E8"}}>
+        <div className="mb-2">
           {getFilterBar()}
         </div>
         <div>

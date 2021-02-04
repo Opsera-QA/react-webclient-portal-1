@@ -32,8 +32,11 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
     }
   };
 
+  // TODO: We really need to pass in two functions if clearing out data on a complex function,
+  //  one for setting and one for clearing.
+  //  For now, I'm going to disable the clear button if you pass in setDataFunction
   const getClearDataIcon = () => {
-    if (dataObject.getData(field.id) !== "" && !disabled) {
+    if (dataObject.getData(field.id) !== "" && !disabled && setDataFunction == null) {
       return (
         <TooltipWrapper innerText={"Clear this Value"}>
           <span className="pointer danger-red" onClick={() => clearValue()}>

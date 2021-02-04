@@ -78,7 +78,7 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
       <div>
         <Row className="d-flex justify-content-between mx-0">
           <Col sm={3} className="d-flex pl-0 my-1">
-            <div><span className="h6">{tableTitle}{getTableTitleLoader()}</span></div>
+            <div><span className="h6 ml-1">{tableTitle}{getTableTitleLoader()}</span></div>
           </Col>
           {tableFilterBar
             ? <Col className="pr-0"><div className="mt-0 mb-1"><div className="ml-auto">{tableFilterBar}</div></div></Col>

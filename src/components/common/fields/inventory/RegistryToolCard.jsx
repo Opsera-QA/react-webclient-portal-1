@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import {faWrench} from "@fortawesome/pro-light-svg-icons";
 import ToolLinkButton from "components/common/buttons/inventory/ToolLinkButton";
-import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import DescriptionField from "components/common/fields/text/DescriptionField";
+import CreateAndUpdateDateFieldBase from "components/common/fields/date/CreateAndUpdateDateFieldBase";
 
 function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
   const getTitleBar = () => {
-    return <IconTitleBar className={"title"} titleIcon={faWrench} title={`${toolData.getData("name")}`} isLoading={isLoading} inactive={toolData?.getData("active") !== true} />;
+    return <IconTitleBar className={"title"} titleIcon={faWrench} title={`${toolData.getData("name")}`} isLoading={isLoading} />;
   };
 
   if (isLoading) {
@@ -19,13 +19,22 @@ function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
 
   return (
     <IconCardContainerBase titleBar={getTitleBar()} isLoading={isLoading} className={"tool-registry-card"}>
-      <small><DescriptionField dataObject={toolData} fieldName={"description"}/></small>
-      <small><DateFieldBase dataObject={toolData} fieldName={"createdAt"}/></small>
-      <small><DateFieldBase dataObject={toolData} fieldName={"updatedAt"}/></small>
       <div className="h-100 w-100">
-        <div className="mt-auto mx-auto">
-          <ToolLinkButton toolId={toolData.getData("_id")} loadToolInNewWindow={loadToolInNewWindow}/>
-        </div>
+        <div className="description-height"><small><DescriptionField dataObject={toolData} fieldName={"description"}/></small></div>
+        <small>
+          <CreateAndUpdateDateFieldBase
+            className={"mt-2"}
+            dataObject={toolData}
+            createdAtFieldName={"createdAt"}
+            updatedAtFieldName={"updatedAt"}
+          />
+        </small>
+        <ToolLinkButton
+          toolId={toolData.getData("_id")}
+          className={"w-100 mt-auto ml-auto"}
+          loadToolInNewWindow={loadToolInNewWindow}
+          variant={"outline-primary"}
+        />
       </div>
     </IconCardContainerBase>
   );

@@ -17,6 +17,12 @@
   font-weight: normal;
   background: #E6E5E3;
 }
+
+.item-field .filter-badge {
+  font-weight: normal;
+  background-color: #6E6690;
+  color: #fff;
+}
 /* End Item Field */
 
 
@@ -118,6 +124,20 @@
 
 /* End Select input styling */
 
+/* Summary Card Styling */
 .tool-registry-card .title-icon {
   font-size: 75px;
 }
+
+.tool-registry-card .title {
+  font-size: 13px;
+  color: #2e1956;
+  font-weight: bold;
+  min-height: 50px;
+}
+
+.tool-registry-card .description-height {
+  height: 50px;
+}
+
+/* End Summary Card Styling */

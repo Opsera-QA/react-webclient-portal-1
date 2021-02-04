@@ -1,18 +1,18 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import {Button, Form} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTimes} from "@fortawesome/pro-light-svg-icons";
+import {faFilter, faTimes} from "@fortawesome/pro-light-svg-icons";
 
 function ActiveFilterDisplayer({filterDto, setFilterDto, loadData}) {
   const getFilterActiveButton = (filter, key) => {
     return (
-      <Button type="outline-primary" size="sm" className="mx-2" key={key}>
-        <span className="">{filter["text"]}</span>
-        <span className="ml-1" onClick={() => {removeFilter(filter.filterId);}}>
-              <FontAwesomeIcon icon={faTimes} fixedWidth/>
+      <span key={key} className="mx-1 badge badge-light filter-badge">
+        <span className="mr-1"><FontAwesomeIcon icon={faFilter} fixedWidth/></span>
+        <span>{filter["text"]}</span>
+        <span className="ml-1 pointer" onClick={() => {removeFilter(filter.filterId);}}>
+          <FontAwesomeIcon icon={faTimes} fixedWidth/>
         </span>
-      </Button>
+      </span>
     );
   };
 
@@ -24,15 +24,24 @@ function ActiveFilterDisplayer({filterDto, setFilterDto, loadData}) {
     loadData(newDto);
   };
 
+  const getActiveFilters = () => {
+    const activeFilters = filterDto?.getData("activeFilters");
+    if (Array.isArray(activeFilters) && activeFilters.length > 0) {
+      return (
+        <div className="active-filter-bar item-field py-2 px-1">
+          {activeFilters.map((filter, key) =>  getFilterActiveButton(filter, key))}
+        </div>
+      )
+    }
+
+    return <></>;
+  };
+
   if (filterDto == null) {
     return <></>;
   }
 
-  return (
-    <div className="custom-item-input justify-content-between">
-      {filterDto.getData("activeFilters").map((filter, key) =>  getFilterActiveButton(filter, key))}
-    </div>
-  );
+  return (getActiveFilters());
 }
 
 ActiveFilterDisplayer.propTypes = {

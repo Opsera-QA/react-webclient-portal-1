@@ -1088,6 +1088,10 @@ a.nav-link {
 }
 
 /* Detail View Styling */
+.table-card-panel {
+  background-color: #fafafb;
+}
+
 .detail-view-body {
   min-height: 60vh;
 }
@@ -1105,10 +1109,10 @@ a.nav-link {
 }
 
 .wide-screen-container-body {
-    min-height: calc(100vh - 300px);
-    max-height: calc(100vh - 300px);
-    overflow-y: auto;
-    overflow-x: auto;
+  min-height: calc(100vh - 300px);
+  max-height: calc(100vh - 300px);
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 
@@ -1163,7 +1167,11 @@ a.nav-link {
 }
 
 .filter-bar {
-  height: 30px;
+  background-color: #E8E8E8;
+}
+
+.active-filter-bar {
+  background-color: #F3F3F1;
 }
 
 .inline-search-filter {

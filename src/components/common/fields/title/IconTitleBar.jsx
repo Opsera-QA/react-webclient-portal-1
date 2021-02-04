@@ -31,10 +31,10 @@ function IconTitleBar({ title, titleIcon, isLoading, inactive }) {
       </Col>
       <Col sm={12}>
         <div className="d-flex w-100">
-          <div className="mx-auto h6">{title}</div>
+          <div className="mx-auto title">{title}</div>
         </div>
       </Col>
-      {/*{getStateColumn()}*/}
+      {getStateColumn()}
     </Row>
   );
 }

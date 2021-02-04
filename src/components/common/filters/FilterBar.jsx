@@ -168,7 +168,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, saveC
 
   return (
     <>
-      <div className="filter-bar">
+      <div className="filter-bar p-2">
         <div className="justify-content-between d-flex">
           <div className="d-flex">
             <div>{getNewRecordButton()}</div>
@@ -182,9 +182,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, saveC
           </div>
         </div>
       </div>
-      <div>
-        <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} filters={filters} />
-      </div>
+      <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} filters={filters} />
     </>
   );
 }

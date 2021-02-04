@@ -7,12 +7,14 @@ function PaginationContainer({ isLoading, filterDto, setFilterDto, loadData, chi
   const getTopPaginator = () => {
     if (filterDto && filterDto.getData("totalCount") != null) {
       return (
-        <DtoTopPagination
-          paginationDto={filterDto}
-          setPaginationDto={setFilterDto}
-          isLoading={isLoading}
-          loadData={loadData}
-        />
+        <div className="top-pagination pt-1 px-3">
+          <DtoTopPagination
+            paginationDto={filterDto}
+            setPaginationDto={setFilterDto}
+            isLoading={isLoading}
+            loadData={loadData}
+          />
+        </div>
       );
     }
   };
@@ -20,12 +22,14 @@ function PaginationContainer({ isLoading, filterDto, setFilterDto, loadData, chi
   const getBottomPaginator = () => {
     if (filterDto && filterDto.getData("totalCount") != null) {
       return (
-        <DtoBottomPagination
-          paginationDto={filterDto}
-          setPaginationDto={setFilterDto}
-          isLoading={isLoading}
-          loadData={loadData}
-        />
+        <div className="px-2 py-1 table-footer">
+          <DtoBottomPagination
+            paginationDto={filterDto}
+            setPaginationDto={setFilterDto}
+            isLoading={isLoading}
+            loadData={loadData}
+          />
+        </div>
       );
     }
   };

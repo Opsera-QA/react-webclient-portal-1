@@ -33,7 +33,7 @@ function IconCardContainerBase({ children, isLoading, titleBar, footerBar, class
 
   return (
     <Card className={`mb-2 h-100 ${className}`}>
-      <Card.Title className="mb-0">
+      <Card.Title className="mb-0 px-2">
         {getCardTitle()}
       </Card.Title>
       <Card.Body className="h-100 px-2 py-0">

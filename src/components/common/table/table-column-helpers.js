@@ -48,6 +48,99 @@ export const getTableTextColumn = (field, classNames) => {
   };
 };
 
+export const getStringifiedArrayColumn = (field) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: (props) => {
+      const array = props?.value;
+
+      if (Array.isArray(array) && array.length > 0) {
+        return JSON.stringify(array);
+      }
+
+      return "";
+    },
+    class: "no-wrap-inline"
+  };
+};
+
+export const getNameValueArrayColumn = (field) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: (props) => {
+      const array = props?.value;
+
+      if (Array.isArray(array) && array.length > 0) {
+        return array.map((item, index) => {
+          return (`${item.name}:${item.value}${array.length > index + 1 ? ',' : ''}`);
+        });
+      }
+
+      return "";
+    },
+    class: "no-wrap-inline"
+  };
+};
+
+export const getRoleArrayColumn = (field) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: (props) => {
+      const array = props?.value;
+
+      if (Array.isArray(array) && array.length > 0) {
+        return array.map((item, index) => {
+          return (`${item.role}:${item.user}:${item.group}${array.length > index + 1 ? ',' : ''}`);
+        });
+      }
+
+      return "";
+    },
+    class: "no-wrap-inline"
+  };
+};
+
+export const getContactArrayColumn = (field) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: (props) => {
+      const array = props?.value;
+
+      if (Array.isArray(array) && array.length > 0) {
+        return array.map((item, index) => {
+          return (`${item.name}:${item.email}:${item.user_id}${array.length > index + 1 ? ',' : ''}`);
+        });
+      }
+
+      return "";
+    },
+    class: "no-wrap-inline"
+  };
+};
+
+export const getTagArrayColumn = (field) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: (props) => {
+      const array = props?.value;
+
+      if (Array.isArray(array) && array.length > 0) {
+        return array.map((tag, index) => {
+          return (`${tag.type}: ${tag.value}${array.length > index + 1 ? ',' : ''}`);
+        });
+      }
+
+      return "";
+    },
+    class: "no-wrap-inline"
+  };
+};
+
 export const getTableDateColumn = (field) => {
   return {
     Header: getTableHeader(field),
