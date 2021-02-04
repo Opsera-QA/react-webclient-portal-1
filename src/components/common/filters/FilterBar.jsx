@@ -154,7 +154,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, saveC
   if (leftAlignCustomButtons) {
     return (
       <>
-        <div className="justify-content-between d-flex">
+        <div className="justify-content-between filter-bar d-flex">
           <div className="d-flex">
             <div>{getNewRecordButton()}</div>
             {getCustomButtons()}
@@ -175,23 +175,25 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, saveC
   }
 
   return (
-    <div className="filter-bar">
-      <div className="justify-content-between d-flex">
-        <div className="d-flex">
-          <div>{getNewRecordButton()}</div>
-        </div>
-        <div className="d-flex">
-          {getCustomButtons()}
-          {getSearchBar()}
-          <div>{getFilterButtons()}</div>
-          <div>{getViewToggle()}</div>
-          <div>{getRefreshButton()}</div>
+    <>
+      <div className="filter-bar">
+        <div className="justify-content-between d-flex">
+          <div className="d-flex">
+            <div>{getNewRecordButton()}</div>
+          </div>
+          <div className="d-flex">
+            {getCustomButtons()}
+            {getSearchBar()}
+            <div>{getFilterButtons()}</div>
+            <div>{getViewToggle()}</div>
+            <div>{getRefreshButton()}</div>
+          </div>
         </div>
       </div>
       <div className="py-2">
         <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} filters={filters} />
       </div>
-    </div>
+    </>
   );
 }
 
