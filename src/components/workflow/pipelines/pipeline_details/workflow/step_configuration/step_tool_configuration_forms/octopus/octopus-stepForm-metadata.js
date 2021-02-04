@@ -58,10 +58,9 @@ const octopusStepFormMetadata = {
       {
         label: "Namespace",
         id: "namespace",
-        isRequired: true
       },
       {
-        label: "ECR Step",
+        label: "Artifact Step",
         id: "ecrPushStepId",
         isRequired: true
       },
@@ -69,6 +68,30 @@ const octopusStepFormMetadata = {
         label: "Deployment ID",
         id: "deploymentId"
       },
+      {
+        label: "Deployment Target Role",
+        id: "octopusTargetRoles"
+      },
+      {
+        label: "Octopus Platform Type",
+        id: "octopusPlatformType"
+      },
+      {
+        label: "Octopus Deployment Type",
+        id: "octopusDeploymentType"
+      },
+      {
+        label: "Octopus Feed",
+        id: "octopusFeedId"
+      },
+      {
+        label: "Version",
+        id: "octopusVersion"
+      },
+      {
+        label: "Package ID",
+        id: "packageId"
+      }
     ],
     newModelBase:
       {
@@ -85,7 +108,13 @@ const octopusStepFormMetadata = {
         environmentId: "",
         ecrPushStepId: "",
         namespace : "",
-        deploymentId : ""
+        octopusTargetRoles: "",
+        octopusPlatformType: "",
+        octopusDeploymentType: "",
+        octopusFeedId: "",
+        deploymentId : "",
+        octopusVersion: "",
+        packageId: ""
       }
   };
   

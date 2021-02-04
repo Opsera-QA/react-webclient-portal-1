@@ -46,6 +46,11 @@ function OctopusApplicationsTable({ toolData, loadData, selectedRow, isLoading }
       setType("target");
       return;
     }
+    if (type === "feed") {
+      setShowCreateOctopusModal(true);
+      setType("feed");
+      return;
+    }
   };
 
   const columns = useMemo(
@@ -90,6 +95,7 @@ function OctopusApplicationsTable({ toolData, loadData, selectedRow, isLoading }
               <Dropdown.Item onClick={() => createOctopusApplication("environment")}>Environment</Dropdown.Item>
               <Dropdown.Item onClick={() => createOctopusApplication("account")}>Account</Dropdown.Item>
               <Dropdown.Item onClick={() => createOctopusApplication("target")}>Target</Dropdown.Item>
+              <Dropdown.Item onClick={() => createOctopusApplication("feed")}>External Feed</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
           <br />

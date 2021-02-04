@@ -8,18 +8,16 @@ const OctopusTargetMetadata = {
     },
     {
       label: "AWS Credentials",
-      id: "awsToolConfigId",
-      isRequired: true
+      id: "awsToolConfigId"
     },
     {
-      label: "Octopus Configured AWS Account",
+      label: "Octopus Configured Account",
       id: "accountId",
       isRequired: true
     },
     {
       label: "Cluster Name",
-      id: "clusterName",
-      isRequired: true
+      id: "clusterName"
     },
     {
       label: "Environments",
@@ -42,6 +40,27 @@ const OctopusTargetMetadata = {
       isRequired: true
     },
     {
+      label: "Communication Style",
+      id: "communicationStyle"
+    },
+    {
+      label: "Resource Group Name",
+      id: "resourceGroupName"
+    },
+    {
+      label: "Web App Name",
+      id: "webAppName"
+    },
+    {
+      label: "Web App Slot Name",
+      id: "webAppSlotName"
+    },
+    {
+      label: "Cloud Type",
+      id: "cloudType",
+      isRequired: true
+    },
+    {
       label: "Active",
       id: "active",
     }
@@ -57,6 +76,11 @@ const OctopusTargetMetadata = {
     spaceId: "",
     spaceName: "",
     accountId: "",
+    communicationStyle: "",
+    resourceGroupName: "",
+    webAppName: "",
+    webAppSlotName: "",
+    cloudType: "",
     active: true,
   }
 };

@@ -50,6 +50,10 @@ const nexusStepFormMetadata = {
       label: "Step Tool",
       id: "nexusToolConfigId",
       isRequired: true
+    },
+    {
+      label: "Package ID",
+      id: "packageId"
     }
   ],
   newModelBase: {
@@ -64,6 +68,7 @@ const nexusStepFormMetadata = {
     customVersion: false,
     repositoryGroup : "",
     nexusToolConfigId: "",
+    packageId : ""
   }
 };
 

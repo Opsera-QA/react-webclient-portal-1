@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
-import { Col, Button } from "react-bootstrap";
+import { Col, Button, Card } from "react-bootstrap";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
@@ -15,29 +15,25 @@ import { DialogToastContext } from "../../../../../../../../contexts/DialogToast
 import OctopusStepActions from "../../../../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
 import PipelineActions from "../../../../../../../workflow/pipeline-actions";
 import OctopusActions from "../../octopus-actions";
-import LoadingDialog from "components/common/status_notifications/loading";
 import DeleteModal from "components/common/modal/DeleteModal";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
+import CloudProviderSelectInput from "./input/CloudProviderSelectInput";
+import AzureToolSelectInput from "./input/AzureToolSelectInput";
+import CommunicationStyleSelectInput from "./input/CommunicationStyleSelectInput";
+import WebAppNameSelectInput from "./input/WebAppNameSelectInput";
+import ListOfFeedsSelectInput from "./input/ListofFeedsSelectInput";
+import SpaceNameSelectInput from "./input/SpaceNameSelectInput";
+import EnvironmentNameSelectInput from "./input/EnvironmentSelectInput";
+import AccountSelectInput from "./input/AccountSelectInput";
+import AWSToolSelectInput from "./input/AWSToolSelectInput";
+import ClusterSelectInput from "./input/ClusterSelectInput";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [octopusApplicationDataDto, setOctopusApplicationDataDto] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [spacesSearching, setIsSpacesSearching] = useState(false);
-  const [spaces, setSpaces] = useState([]);
-  const [loadingOctopusData, setLoadingOctopusData] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [environmentsSearching, setIsEnvironmentsSearching] = useState(false);
-  const [environments, setEnvironments] = useState([]);
-  const [awsList, setAwsList] = useState([]);
-  const [isAwsSearching, setIsAwsSearching] = useState(false);
-  const [clustersSearching, setIsClustersSearching] = useState(false);
-  const [clusters, setClusters] = useState([]);
-  const [projectsSearching, setIsProjectsSearching] = useState(false);
-  const [projects, setProjects] = useState([]);
-  const [accountsSearching, setIsAccountsSearching] = useState(false);
-  const [accounts, setAccounts] = useState([]);
 
   useEffect(() => {
     loadData();
@@ -46,12 +42,10 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
   const loadData = async () => {
     try {
       setIsLoading(true);
-      setLoadingOctopusData(true);
-      await fetchOnloadDetails()
+      await fetchOnloadDetails();
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     } finally {
-      setLoadingOctopusData(false);
       setIsLoading(false);
     }
   };
@@ -61,25 +55,22 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
       let newDataObject = octopusApplicationData;
       newDataObject.setData("toolId", toolData._id);
       setOctopusApplicationDataDto({ ...newDataObject });
-      if (toolData && toolData._id) {
-        await searchSpaces(toolData._id);
-      }
-      if ((type && type === "account") || type === "target") {
-        fetchAWSDetails();
-      }
     } else {
-      setOctopusApplicationDataDto(octopusApplicationData)
-      await searchSpaces(toolData._id);
-      if (type === "account" || type === "target") {
-        fetchAWSDetails();
-        searchEnvironments(toolData._id, octopusApplicationData.getData("spaceId"))
-        if (type === "target") {
-          searchAccounts(toolData._id, octopusApplicationData.getData("spaceId"))
-          searchClusters(toolData._id, octopusApplicationData.getData("awsToolConfigId"))
+      setOctopusApplicationDataDto(octopusApplicationData);
+      if (type === "account" || type === "target" || type === "feed") {
+        let newDataObject = octopusApplicationData;
+        if (!newDataObject.getData("cloudType")) {
+          if (newDataObject.getData("awsToolConfigId")) {
+            newDataObject.setData("cloudType", "AmazonWebServicesAccount");
+          }
+          if (newDataObject.getData("azureToolConfigId")) {
+            newDataObject.setData("cloudType", "AzureServicePrincipal");
+          }
         }
+        setOctopusApplicationDataDto({ ...newDataObject });
       }
     }
-  }
+  };
 
   const createApplication = async () => {
     return await OctopusActions.createOctopusApplication(octopusApplicationDataDto, type, getAccessToken);
@@ -92,147 +83,6 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
   const deleteApplication = async () => {
     await OctopusActions.deleteOctopusApplication(toolData._id, type, getAccessToken, appID);
     handleClose();
-  };
-
-  const fetchAWSDetails = async () => {
-    setIsAwsSearching(true);
-
-    let results = await PipelineActions.getToolsList("aws_account", getAccessToken);
-
-    const filteredList = results.filter((el) => el.configuration !== undefined);
-    if (filteredList) {
-      setAwsList(filteredList);
-    }
-    setIsAwsSearching(false);
-  };
-
-  const handleDTOChangeEnv = (fieldName, value) => {
-    if (fieldName === "spaceName") {
-      let newDataObject = octopusApplicationDataDto;
-      newDataObject.setData("spaceName", value.name);
-      newDataObject.setData("spaceId", value.id);
-      setOctopusApplicationDataDto({ ...newDataObject });
-      if (type === "account" || type === "target") {
-        searchEnvironments(toolData._id, value.id);
-      }
-      if (type === "target") {
-        searchAccounts(toolData._id, value.id);
-      }
-      return;
-    }
-    if (fieldName === "awsToolConfigId") {
-      let newDataObject = octopusApplicationDataDto;
-      newDataObject.setData("awsToolConfigId", value.id);
-      setOctopusApplicationDataDto({ ...newDataObject });
-      if (type === "target") {
-        searchClusters(toolData._id, value.id);
-      }
-      return;
-    }
-    if (fieldName === "clusterName") {
-      let newDataObject = octopusApplicationDataDto;
-      newDataObject.setData("clusterName", value);
-      setOctopusApplicationDataDto({ ...newDataObject });
-      return;
-    }
-  };
-
-  const errorCatch = async (setterFunc, error) => {
-    setterFunc([{ value: "", name: "Select One", isDisabled: "yes" }]);
-    console.error(error);
-    toastContext.showServiceUnavailableDialog();
-  };
-
-  const credentialCatch = async (setterFunc, tool) => {
-    setterFunc([{ value: "", name: "Select One", isDisabled: "yes" }]);
-    let errorMessage = `Error fetching Octopus ${tool}!  Please validate configured ${tool}.`;
-    toastContext.showErrorDialog(errorMessage);
-  };
-
-  const nullDataCatch = async (setterFunc, tool) => {
-    setterFunc([{ value: "", name: "Select One", isDisabled: "yes" }]);
-    let errorMessage = `No Octopus ${tool} Found!  Please validate credentials and configured  ${tool}.`;
-    toastContext.showErrorDialog(errorMessage);
-  };
-
-  const searchSpaces = async (id) => {
-    setIsSpacesSearching(true);
-    try {
-      const res = await OctopusStepActions.getSpaces(id, getAccessToken);
-      if (res.data) {
-        let arrOfObj = res.data.data ? res.data.data : [];
-        setSpaces(arrOfObj);
-        if (arrOfObj.length === 0) {
-          await nullDataCatch(setSpaces, "Spaces");
-        }
-      } else {
-        await credentialCatch(setSpaces, "Spaces");
-      }
-    } catch (error) {
-      await errorCatch(setSpaces, error);
-    } finally {
-      setIsSpacesSearching(false);
-    }
-  };
-
-  const searchEnvironments = async (id, spaceID) => {
-    setIsEnvironmentsSearching(true);
-    try {
-      const res = await OctopusStepActions.getEnvironments(id, spaceID, getAccessToken);
-      if (res.data) {
-        let arrOfObj = res.data.data ? res.data.data : [];
-        setEnvironments(arrOfObj);
-        if (arrOfObj.length === 0) {
-          await nullDataCatch(setEnvironments, "Environments");
-        }
-      } else {
-        await credentialCatch(setEnvironments, "Environments");
-      }
-    } catch (error) {
-      await errorCatch(setEnvironments, error);
-    } finally {
-      setIsEnvironmentsSearching(false);
-    }
-  };
-
-  const searchClusters = async (id, awsToolConfigId) => {
-    setIsClustersSearching(true);
-    try {
-      const res = await OctopusStepActions.getClusters(id, awsToolConfigId, getAccessToken);
-      if (res.data) {
-        let arrOfObj = res.data.data ? res.data.data : [];
-        setClusters(arrOfObj);
-        if (arrOfObj.length === 0) {
-          await nullDataCatch(setClusters, "Clusters");
-        }
-      } else {
-        await credentialCatch(setClusters, "Clusters");
-      }
-    } catch (error) {
-      await errorCatch(setClusters, error);
-    } finally {
-      setIsClustersSearching(false);
-    }
-  };
-
-  const searchAccounts = async (id, spaceID) => {
-    setIsAccountsSearching(true);
-    try {
-      const res = await OctopusStepActions.getAccounts(id, spaceID, getAccessToken);
-      if (res.data) {
-        let arrOfObj = res.data.data ? res.data.data : [];
-        setAccounts(arrOfObj);
-        if (arrOfObj.length === 0) {
-          await nullDataCatch(setAccounts, "Accounts");
-        }
-      } else {
-        await credentialCatch(setAccounts, "Accounts");
-      }
-    } catch (error) {
-      await errorCatch(setAccounts, error);
-    } finally {
-      setIsAccountsSearching(false);
-    }
   };
 
   if (isLoading || octopusApplicationDataDto === null || octopusApplicationDataDto === undefined) {
@@ -261,17 +111,12 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
               />
             </Col>
             <Col lg={12}>
-              <DtoSelectInput
-                setDataFunction={handleDTOChangeEnv}
-                setDataObject={setOctopusApplicationDataDto}
-                textField={"name"}
-                valueField={"id"}
-                dataObject={octopusApplicationDataDto}
-                filter={"contains"}
-                selectOptions={spaces ? spaces : []}
+              <SpaceNameSelectInput
                 fieldName={"spaceName"}
-                busy={spacesSearching}
-                disabled={(octopusApplicationDataDto && spaces.length === 0) || appID ? true : false}
+                dataObject={octopusApplicationDataDto}
+                setDataObject={setOctopusApplicationDataDto}
+                disabled={appID ? true : false}
+                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
               />
             </Col>
             <div className="float-right ml-2">
@@ -294,54 +139,82 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
               />
             </Col>
             <Col lg={12}>
-              <DtoSelectInput
+              <DtoTextInput
                 setDataObject={setOctopusApplicationDataDto}
-                textField={"name"}
-                valueField={"id"}
                 dataObject={octopusApplicationDataDto}
-                filter={"contains"}
-                selectOptions={awsList ? awsList : []}
-                fieldName={"awsToolConfigId"}
-                busy={isAwsSearching}
-                disabled={awsList.length === 0 || isAwsSearching || appID ? true : false}
+                fieldName={"description"}
+                disabled={appID ? true : false}
               />
             </Col>
             <Col lg={12}>
-              <DtoSelectInput
-                setDataFunction={handleDTOChangeEnv}
-                setDataObject={setOctopusApplicationDataDto}
-                textField={"name"}
-                valueField={"id"}
-                dataObject={octopusApplicationDataDto}
-                filter={"contains"}
-                selectOptions={spaces ? spaces : []}
+              <SpaceNameSelectInput
                 fieldName={"spaceName"}
-                busy={spacesSearching}
-                disabled={(octopusApplicationDataDto && spaces.length === 0) || appID ? true : false}
+                dataObject={octopusApplicationDataDto}
+                setDataObject={setOctopusApplicationDataDto}
+                disabled={appID ? true : false}
+                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
               />
             </Col>
             <Col lg={12}>
-              <DtoMultiselectInput
-                setDataObject={setOctopusApplicationDataDto}
-                textField={"name"}
-                valueField={"id"}
+              <CloudProviderSelectInput
+                fieldName={"cloudType"}
                 dataObject={octopusApplicationDataDto}
-                filter={"contains"}
-                selectOptions={environments ? environments : []}
-                fieldName={"environmentIds"}
-                busy={environmentsSearching}
+                setDataObject={setOctopusApplicationDataDto}
                 disabled={
-                  (octopusApplicationDataDto && environments.length === 0) ||
-                  octopusApplicationDataDto.getData("spaceId").length === 0 ||
-                  appID
+                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceName").length === 0) || appID
                     ? true
                     : false
                 }
+                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
+              />
+            </Col>
+            {octopusApplicationDataDto &&
+            octopusApplicationDataDto.getData("cloudType") === "AzureServicePrincipal" && (
+            <Col lg={12}>
+              <AzureToolSelectInput
+                fieldName={"azureToolConfigId"}
+                dataObject={octopusApplicationDataDto}
+                setDataObject={setOctopusApplicationDataDto}
+                disabled={
+                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) || appID
+                    ? true
+                    : false
+                }
+                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("cloudType") : ""}
+              />
+            </Col>)
+            }
+            {octopusApplicationDataDto &&
+            octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
+              <Col lg={12}>
+                <AWSToolSelectInput
+                  fieldName={"awsToolConfigId"}
+                  dataObject={octopusApplicationDataDto}
+                  setDataObject={setOctopusApplicationDataDto}
+                  disabled={
+                    (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) || appID
+                      ? true
+                      : false
+                  }
+                  tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("cloudType") : ""}
+                />
+              </Col>)
+            }
+            <Col lg={12}>
+              <EnvironmentNameSelectInput
+                fieldName={"environmentIds"}
+                dataObject={octopusApplicationDataDto}
+                setDataObject={setOctopusApplicationDataDto}
+                disabled={
+                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceId").length === 0) || appID
+                    ? true
+                    : false
+                }
+                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
               />
             </Col>
             <div className="float-right ml-2">
               <DtoToggleInput
-                setDataFunction={handleDTOChangeEnv}
                 setDataObject={setOctopusApplicationDataDto}
                 fieldName={"active"}
                 dataObject={octopusApplicationDataDto}
@@ -360,87 +233,211 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
               />
             </Col>
             <Col lg={12}>
-              <DtoSelectInput
-                setDataFunction={handleDTOChangeEnv}
-                setDataObject={setOctopusApplicationDataDto}
-                textField={"name"}
-                valueField={"id"}
-                dataObject={octopusApplicationDataDto}
-                filter={"contains"}
-                selectOptions={spaces ? spaces : []}
+              <SpaceNameSelectInput
                 fieldName={"spaceName"}
-                busy={spacesSearching}
-                disabled={(octopusApplicationDataDto && spaces.length === 0) || appID ? true : false}
+                dataObject={octopusApplicationDataDto}
+                setDataObject={setOctopusApplicationDataDto}
+                disabled={appID ? true : false}
+                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
               />
             </Col>
             <Col lg={12}>
-              <DtoSelectInput
-                setDataObject={setOctopusApplicationDataDto}
-                textField={"name"}
-                valueField={"id"}
-                dataObject={octopusApplicationDataDto}
-                filter={"contains"}
-                selectOptions={accounts ? accounts : []}
+              <AccountSelectInput
                 fieldName={"accountId"}
-                busy={accountsSearching}
+                dataObject={octopusApplicationDataDto}
+                setDataObject={setOctopusApplicationDataDto}
                 disabled={
-                  accounts.length === 0 ||
-                  accountsSearching ||
-                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceId").length === 0) ||
-                  appID
+                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceName").length === 0) || appID
                     ? true
                     : false
                 }
+                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
               />
             </Col>
             <Col lg={12}>
-              <DtoSelectInput
-                setDataFunction={handleDTOChangeEnv}
-                setDataObject={setOctopusApplicationDataDto}
-                textField={"name"}
-                valueField={"id"}
+              <CloudProviderSelectInput
+                fieldName={"cloudType"}
                 dataObject={octopusApplicationDataDto}
-                filter={"contains"}
-                selectOptions={awsList ? awsList : []}
-                fieldName={"awsToolConfigId"}
-                busy={isAwsSearching}
-                disabled={awsList.length === 0 || isAwsSearching || appID ? true : false}
+                setDataObject={setOctopusApplicationDataDto}
+                disabled={
+                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceName").length === 0) || appID
+                    ? true
+                    : false
+                }
+                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
               />
             </Col>
+            {octopusApplicationDataDto &&
+              octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
+                <Col lg={12}>
+                  <AWSToolSelectInput
+                    fieldName={"awsToolConfigId"}
+                    dataObject={octopusApplicationDataDto}
+                    setDataObject={setOctopusApplicationDataDto}
+                    disabled={
+                      (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) ||
+                      appID
+                        ? true
+                        : false
+                    }
+                    tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("cloudType") : ""}
+                  />
+                </Col>
+              )}
+            {octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType") === "AzureServicePrincipal" && (
+              <>
+                <Col lg={12}>
+                  <CommunicationStyleSelectInput
+                    fieldName={"communicationStyle"}
+                    dataObject={octopusApplicationDataDto}
+                    setDataObject={setOctopusApplicationDataDto}
+                    disabled={
+                      (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) ||
+                      appID
+                        ? true
+                        : false
+                    }
+                    tool_prop={
+                      octopusApplicationDataDto &&
+                      octopusApplicationDataDto.getData("cloudType") === "AzureServicePrincipal"
+                        ? octopusApplicationDataDto.getData("spaceId")
+                        : ""
+                    }
+                  />
+                </Col>
+                <Col lg={12}>
+                  <WebAppNameSelectInput
+                    fieldName={"webAppName"}
+                    dataObject={octopusApplicationDataDto}
+                    setDataObject={setOctopusApplicationDataDto}
+                    disabled={
+                      (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) ||
+                      appID
+                        ? true
+                        : false
+                    }
+                    tool_prop={
+                      octopusApplicationDataDto &&
+                      octopusApplicationDataDto.getData("cloudType") === "AzureServicePrincipal"
+                        ? octopusApplicationDataDto.getData("accountId")
+                        : ""
+                    }
+                  />
+                </Col>
+              </>
+            )}
             <Col lg={12}>
-              <DtoMultiselectInput
-                setDataObject={setOctopusApplicationDataDto}
-                textField={"name"}
-                valueField={"id"}
-                dataObject={octopusApplicationDataDto}
-                filter={"contains"}
-                selectOptions={environments ? environments : []}
+              <EnvironmentNameSelectInput
                 fieldName={"environmentIds"}
-                busy={environmentsSearching}
+                dataObject={octopusApplicationDataDto}
+                setDataObject={setOctopusApplicationDataDto}
                 disabled={
-                  (octopusApplicationDataDto && environments.length === 0) ||
-                  octopusApplicationDataDto.getData("spaceId").length === 0 ||
-                  appID
+                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceId").length === 0) || appID
                     ? true
                     : false
                 }
+                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
+              />
+            </Col>
+            {octopusApplicationDataDto &&
+              octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
+                <Col lg={12}>
+                  <ClusterSelectInput
+                    fieldName={"clusterName"}
+                    dataObject={octopusApplicationDataDto}
+                    setDataObject={setOctopusApplicationDataDto}
+                    disabled={
+                      (octopusApplicationDataDto &&
+                        octopusApplicationDataDto.getData("awsToolConfigId").length === 0) ||
+                      appID
+                        ? true
+                        : false
+                    }
+                    tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("awsToolConfigId") : ""}
+                  />
+                </Col>
+              )}
+            <div className="float-right ml-2">
+              <DtoToggleInput
+                setDataObject={setOctopusApplicationDataDto}
+                fieldName={"active"}
+                dataObject={octopusApplicationDataDto}
+              />
+            </div>
+          </Row>
+        )}
+        {octopusApplicationDataDto && type && type === "feed" && !isLoading && (
+          <Row>
+            {!appID && (
+              <Col lg={12}>
+                <Card>
+                  <Card.Body>
+                    <Card.Subtitle className="text-muted">
+                      External Feed support is currently only available for Azure Cloud Accounts. In order to configure
+                      External Feeds for other cloud providers contact Opsera Support.
+                    </Card.Subtitle>
+                  </Card.Body>
+                </Card>
+              </Col>
+            )}
+
+            <Col lg={12}>
+              <DtoTextInput
+                setDataObject={setOctopusApplicationDataDto}
+                dataObject={octopusApplicationDataDto}
+                fieldName={"name"}
+                disabled={appID ? true : false}
               />
             </Col>
             <Col lg={12}>
-              <DtoSelectInput
-                setDataFunction={handleDTOChangeEnv}
+              <SpaceNameSelectInput
+                fieldName={"spaceName"}
+                dataObject={octopusApplicationDataDto}
+                setDataObject={setOctopusApplicationDataDto}
+                disabled={appID ? true : false}
+                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
+              />
+            </Col>
+            <Col lg={12}>
+              <DtoTextInput
                 setDataObject={setOctopusApplicationDataDto}
                 dataObject={octopusApplicationDataDto}
-                filter={"contains"}
-                selectOptions={clusters ? clusters : []}
-                fieldName={"clusterName"}
-                busy={clustersSearching}
-                disabled={(octopusApplicationDataDto && clusters.length === 0) || appID ? true : false}
+                fieldName={"username"}
+                disabled={appID ? true : false}
+              />
+            </Col>
+            <Col lg={12}>
+              <DtoTextInput
+                setDataObject={setOctopusApplicationDataDto}
+                dataObject={octopusApplicationDataDto}
+                type={"password"}
+                fieldName={"password"}
+                disabled={appID ? true : false}
+              />
+            </Col>
+            <Col lg={12}>
+              <ListOfFeedsSelectInput
+                fieldName={"feedType"}
+                dataObject={octopusApplicationDataDto}
+                setDataObject={setOctopusApplicationDataDto}
+                disabled={
+                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceId").length === 0) || appID
+                    ? true
+                    : false
+                }
+                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
+              />
+            </Col>
+            <Col lg={12}>
+              <DtoTextInput
+                setDataObject={setOctopusApplicationDataDto}
+                dataObject={octopusApplicationDataDto}
+                fieldName={"feedUri"}
+                disabled={appID ? true : false}
               />
             </Col>
             <div className="float-right ml-2">
               <DtoToggleInput
-                setDataFunction={handleDTOChangeEnv}
                 setDataObject={setOctopusApplicationDataDto}
                 fieldName={"active"}
                 dataObject={octopusApplicationDataDto}
@@ -460,7 +457,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
           )}
           <div className="ml-auto mt-3 px-3">
             <SaveButtonBase
-              updateRecord={updateApplication}
+              updateRecord={appID ? updateApplication : createApplication}
               setRecordDto={setOctopusApplicationDataDto}
               setData={setOctopusApplicationDataDto}
               createRecord={createApplication}
