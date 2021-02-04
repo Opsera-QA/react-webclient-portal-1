@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPencilAlt,
-  faSave,
+  faSave, faTag,
   faTimes,
   faUser,
   faUserFriends,
@@ -331,8 +331,8 @@ function PipelineSummaryPanel({
             {pipeline.tags.map((item, idx) => {
               if (typeof item !== "string")
                 return (
-                  <span key={idx} className="mx-1 mb-1 badge badge-secondary">
-            <span className="mr-1">{item.type}:</span>{item.value}
+                  <span key={idx} className="mx-1 mb-1 badge badge-light tag-badge">
+            <FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/><span className="mr-1">{item.type}:</span>{item.value}
             </span>
                 );
             })}
