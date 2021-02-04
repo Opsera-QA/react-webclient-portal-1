@@ -2,14 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "react-bootstrap/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faFilter, faTimes} from "@fortawesome/pro-solid-svg-icons";
+import {faFilter, faTimes, faPlus, faSync} from "@fortawesome/pro-light-svg-icons";
 import Model from "../../../core/data_model/model";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Popover from "react-bootstrap/Popover";
 import {Col, Row} from "react-bootstrap";
-import {faPlus, faSpinner} from "@fortawesome/free-solid-svg-icons";
 import ActiveFilterDisplayer from "../filters/ActiveFilterDisplayer";
-import {faSync} from "@fortawesome/pro-solid-svg-icons/faSync";
 import FilterTitleBar from "../panels/table_screen_container/FilterTitleBar";
 
 function FilterTable(
@@ -73,12 +71,12 @@ function FilterTable(
           {dropdownFilters}
           <div className="d-flex justify-content-between">
             <div className="w-50 mr-1">
-              <Button type="primary" size="sm" onClick={() => loadFilters()} className="w-100">
+              <Button type="outline-primary" size="sm" onClick={() => loadFilters()} className="w-100">
                 <span className="pr-3"><FontAwesomeIcon icon={faFilter} fixedWidth className="mr-2"/>Filter</span>
               </Button>
             </div>
             <div className="w-50 ml-1">
-              <Button type="primary" size="sm" onClick={() => resetFilters()} className="w-100">
+              <Button type="outline-primary" size="sm" onClick={() => resetFilters()} className="w-100">
                 <span><span className="mr-2">{getStackedFilterRemovalIcon()}</span>Remove</span>
               </Button>
             </div>
@@ -106,7 +104,7 @@ function FilterTable(
     }
 
     return (
-      <Button variant="primary" size="sm" onClick={() => {loadData();}} className="mr-2">
+      <Button variant="outline-primary" size="sm" onClick={() => {loadData();}} className="mr-2">
         <span><FontAwesomeIcon icon={faSync} fixedWidth/></span>
       </Button>
     )
@@ -118,7 +116,7 @@ function FilterTable(
       if (children !== null) {
         return (
           <div>
-            <Button type="primary" size="sm" onClick={() => resetFilters()}>
+            <Button type="outline-primary" size="sm" onClick={() => resetFilters()}>
               <span>{getStackedFilterRemovalIcon()}</span>
             </Button>
           </div>
@@ -132,10 +130,10 @@ function FilterTable(
       <div className="d-flex">
         <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={getFilterPopover()} className="filter-popover">
           <div>
-            <Button type="primary" size="sm"><span><FontAwesomeIcon icon={faFilter} fixedWidth/></span></Button>
+            <Button type="outline-primary" size="sm"><span><FontAwesomeIcon icon={faFilter} fixedWidth/></span></Button>
           </div>
         </OverlayTrigger>
-        <div><Button className={"ml-2"} type="primary" size="sm" onClick={() => resetFilters()}><span>{getStackedFilterRemovalIcon()}</span></Button></div>
+        <div><Button className={"ml-2"} type="outline-primary" size="sm" onClick={() => resetFilters()}><span>{getStackedFilterRemovalIcon()}</span></Button></div>
       </div>
     )
   };

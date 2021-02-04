@@ -49,7 +49,7 @@ function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessR
           <TextFieldBase dataObject={toolData} fieldName={"description"} />
         </Col>
         <Col lg={12}>
-          <RegistryToolRoleAccessInput dataObject={toolData} setDataObject={setToolData} />
+          <RegistryToolRoleAccessInput dataObject={toolData} setDataObject={setToolData} disabled={!authorizedAction("edit_access_roles", toolData?.data)} />
         </Col>
       </Row>
     </SummaryPanelContainer>

@@ -11,14 +11,14 @@ function ViewToggle({filterDto, setFilterDto, saveCookies}) {
     return (
       <div className="d-flex">
         <Button
-          variant={view === "list" ? "primary" : "outline-secondary"}
-          className="mr-2"
+          variant={view === "list" ? "success" : "outline-secondary"}
+          className="ml-2 mr-1"
           size="sm"
           onClick={() => switchView()}>
           <FontAwesomeIcon icon={faList} fixedWidth/>
         </Button>
         <Button
-          variant={view !== "list" ? "primary" : "outline-secondary"}
+          variant={view !== "list" ? "success" : "outline-secondary"}
           size="sm"
           onClick={() => switchView()}>
           <FontAwesomeIcon icon={faThLarge} fixedWidth/>

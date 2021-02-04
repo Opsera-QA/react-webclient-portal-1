@@ -165,6 +165,7 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
     case "edit_tool_account_tabs":
     case "edit_tool_application_tabs":
     case "edit_tool_projects_tabs":
+    case "edit_access_roles":
     case "create_tool":
       return true;
     default:
@@ -172,7 +173,7 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
     }
   }
 
-  if (customerAccessRules.PowerUser1 || userObjectRole === "manager") {
+  if (customerAccessRules.PowerUser || userObjectRole === "manager") {
     switch (action) {
     case "edit_tool_settings":
     case "use_tool_in_pipeline":
@@ -181,6 +182,7 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
     case "edit_tool_account_tabs":
     case "edit_tool_application_tabs":
     case "edit_tool_projects_tabs":
+    case "edit_access_roles":
     case "create_tool":
       return true;
     default:

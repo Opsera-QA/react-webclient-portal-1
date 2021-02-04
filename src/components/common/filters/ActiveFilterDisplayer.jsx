@@ -2,14 +2,14 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {Button, Form} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTimes} from "@fortawesome/free-solid-svg-icons";
+import {faTimes} from "@fortawesome/pro-light-svg-icons";
 
 function ActiveFilterDisplayer({filterDto, setFilterDto, loadData}) {
   const getFilterActiveButton = (filter, key) => {
     return (
-      <Button type="primary" size="sm" className="mx-2" key={key}>
-        <span className="mx-2">{filter["text"]}</span>
-        <span className="ml-2" onClick={() => {removeFilter(filter.filterId);}}>
+      <Button type="outline-primary" size="sm" className="mx-2" key={key}>
+        <span className="">{filter["text"]}</span>
+        <span className="ml-1" onClick={() => {removeFilter(filter.filterId);}}>
               <FontAwesomeIcon icon={faTimes} fixedWidth/>
         </span>
       </Button>
