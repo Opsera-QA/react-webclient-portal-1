@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { OverlayTrigger, Row } from "react-bootstrap";
+import { Col, OverlayTrigger, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
@@ -15,6 +15,20 @@ import CloseButton from "../../../../../../../common/buttons/CloseButton";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import DtoTextInput from "../../../../../../../common/input/dto_input/dto-text-input";
 import octopusActions from "../../../../../../../inventory/tools/tool_details/tool_jobs/octopus/octopus-actions";
+import OctopusToolSelectInput from "./input/OctopusToolSelectInput";
+import ProjectMappingToolSelectInput
+  from "../../../../../../../common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolSelectInput";
+import AzureToolSelectInput
+  from "../../../../../../../inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/AzureToolSelectInput";
+import SpaceNameSelectInput
+  from "../../../../../../../inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/SpaceNameSelectInput";
+import OctopusSpaceNameSelectInput from "./input/OctopusSpaceNameSelectInput";
+import OctopusEnvironmentNameSelectInput from "./input/OctopusEnvironmentSelectInput";
+import OctopusTargetRolesSelectInput from "./input/OctopusTargetRolesSelect";
+import OctopusPlatformTypeSelectInput from "./input/OctopusPlatformTypeSelectInput";
+import OctopusDeploymentTypeInputSelect from "./input/OctopusDeploymentTypeInputSelect";
+import OctopusFeedSelectInput from "./input/OctopusFeedSelectInput";
+import OctopusVersionSelectInput from "./input/OctopusVersionSelectInput";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -25,10 +39,6 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
   const [thresholdType, setThresholdType] = useState("");
   const [octopusSearching, isOctopusSearching] = useState(false);
   const [octopusList, setOctopusList] = useState([]);
-  const [spacesSearching, setIsSpacesSearching] = useState(false);
-  const [spaces, setSpaces] = useState([]);
-  const [environmentsSearching, setIsEnvironmentsSearching] = useState(false);
-  const [environments, setEnvironments] = useState([]);
   const [listOfSteps, setListOfSteps] = useState([]);
 
   useEffect(() => {
@@ -36,18 +46,10 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
   }, []);
 
   const loadFormData = async (step) => {
-    console.log(plan  )
     setIsLoading(true);
     let { configuration, threshold } = step;
     if (typeof configuration !== "undefined") {
       setOctopusStepConfigurationDataDto(new Model(configuration, OctopusStepFormMetadata, false));
-
-      if (configuration.octopusToolId.length > 0) {
-        await searchSpaces(configuration.octopusToolId);
-        if (configuration.spaceId.length > 0) {
-          await searchEnvironments(configuration.octopusToolId,configuration.spaceId);
-        }
-      }
       if (typeof threshold !== "undefined") {
         setThresholdType(threshold.type);
         setThresholdValue(threshold.value);
@@ -100,100 +102,6 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
   });
   };
 
-  const errorCatch = async (setterFunc, error) => {
-    setterFunc([{ value: "", name: "Select One", isDisabled: "yes" }]);
-    console.error(error);
-    toastContext.showServiceUnavailableDialog();
-  }
-
-  const credentialCatch = async (setterFunc, tool) => {
-    setterFunc([{ value: "", name: "Select One", isDisabled: "yes" }]);
-    let errorMessage =
-      `Error fetching Octopus ${tool}!  Please validate configured ${tool}.`;
-    toastContext.showErrorDialog(errorMessage);
-  }
-
-  const nullDataCatch = async (setterFunc, tool) => {
-    setterFunc([{ value: "", name: "Select One", isDisabled: "yes" }]);
-    let errorMessage = `No Octopus ${tool} Found!  Please validate credentials and configured  ${tool}.`;
-    toastContext.showErrorDialog(errorMessage);
-  }
-
-  const searchSpaces = async (id) => {
-    setIsSpacesSearching(true);
-    try {
-      const res = await OctopusStepActions.getSpaces(id, getAccessToken);
-      if (res.data) {
-        let arrOfObj = res.data.data ? res.data.data : [];
-        setSpaces(arrOfObj);
-        if (arrOfObj.length === 0) {
-          await nullDataCatch(setSpaces, "Spaces")
-        }
-      } else {
-        await credentialCatch(setSpaces, "Spaces")
-      }
-    } catch (error) {
-      await errorCatch(setSpaces, error)
-    } finally {
-      setIsSpacesSearching(false);
-    }
-  };
-
-
-  const searchEnvironments = async (id, spaceID) => {
-    setIsEnvironmentsSearching(true);
-    try {
-      const res = await OctopusStepActions.getEnvironments(id,spaceID, getAccessToken);
-      if (res.data) {
-        let arrOfObj = res.data.data ? res.data.data : [];
-        setEnvironments(arrOfObj);
-        if (arrOfObj.length === 0) {
-          await nullDataCatch(setEnvironments, "Environments")
-        }
-      } else {
-        await credentialCatch(setEnvironments, "Environments")
-      }
-    } catch (error) {
-      await errorCatch(setEnvironments, error)
-    } finally {
-      setIsEnvironmentsSearching(false);
-    }
-  };
-
-  const handleDTOChange = async (fieldName, value) => {
-    if (fieldName === "octopusToolId") {
-      let newDataObject = octopusStepConfigurationDto;
-      newDataObject.setData("octopusToolId", value.id);
-      newDataObject.setData("toolURL", value.configuration.toolURL);
-      newDataObject.setData("octopusApiKey", value.configuration.octopusApiKey);
-      setOctopusStepConfigurationDataDto({ ...newDataObject });
-      await searchSpaces(value.id);
-      return;
-    }
-    if (fieldName === "spaceName") {
-      let newDataObject = octopusStepConfigurationDto;
-      newDataObject.setData("spaceName", value.name);
-      newDataObject.setData("spaceId", value.id);
-      setOctopusStepConfigurationDataDto({ ...newDataObject });
-      await searchEnvironments(octopusStepConfigurationDto.getData("octopusToolId"),octopusStepConfigurationDto.getData("spaceId"));
-      return;
-    }
-    if (fieldName === "releaseVersion") {
-      let newDataObject = octopusStepConfigurationDto;
-      newDataObject.setData("releaseVersion", value.version);
-      newDataObject.setData("releaseVersionId", value.id);
-      setOctopusStepConfigurationDataDto({ ...newDataObject });
-      return;
-    }
-    if (fieldName === "environmentName") {
-      let newDataObject = octopusStepConfigurationDto;
-      newDataObject.setData("environmentName", value.name);
-      newDataObject.setData("environmentId", value.id);
-      setOctopusStepConfigurationDataDto({ ...newDataObject });
-      return;
-    }
-  };
-
   if (isLoading || octopusStepConfigurationDto === undefined) {
     return <LoadingDialog size="sm" />;
   }
@@ -202,43 +110,17 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
     <>
       {octopusStepConfigurationDto && (
         <>
-          <OverlayTrigger
-            trigger="click"
-            rootClose
-            placement="left"
-            overlay={pipelineHelpers.getRegistryPopover(
-              octopusList[octopusList.findIndex((x) => x.id === octopusStepConfigurationDto.getData("octopusToolId"))]
-            )}
-          >
-            <FontAwesomeIcon
-              icon={faEllipsisH}
-              className="fa-pull-right pointer pr-1"
-              onClick={() => document.body.click()}
-            />
-          </OverlayTrigger>
-          <DtoSelectInput
-            setDataFunction={handleDTOChange}
-            setDataObject={setOctopusStepConfigurationDataDto}
-            textField={"name"}
-            valueField={"id"}
-            dataObject={octopusStepConfigurationDto}
-            filter={"contains"}
-            selectOptions={octopusList ? octopusList : []}
+          <OctopusToolSelectInput
             fieldName={"octopusToolId"}
-            busy={octopusSearching}
-            disabled={octopusList.length === 0 || octopusSearching}
-          />
-          <DtoSelectInput
-            setDataFunction={handleDTOChange}
-            setDataObject={setOctopusStepConfigurationDataDto}
-            textField={"name"}
-            valueField={"id"}
             dataObject={octopusStepConfigurationDto}
-            filter={"contains"}
-            selectOptions={spaces ? spaces : []}
+            setDataObject={setOctopusStepConfigurationDataDto}
+          />
+          <OctopusSpaceNameSelectInput
             fieldName={"spaceName"}
-            busy={spacesSearching}
+            dataObject={octopusStepConfigurationDto}
+            setDataObject={setOctopusStepConfigurationDataDto}
             disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusToolId").length === 0}
+            tool_prop={octopusStepConfigurationDto ? octopusStepConfigurationDto.getData("octopusToolId") : ""}
           />
           <DtoTextInput
             setDataObject={setOctopusStepConfigurationDataDto}
@@ -252,23 +134,12 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
             fieldName={"projectDescription"}
             disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
           />
-          <DtoTextInput
-            setDataObject={setOctopusStepConfigurationDataDto}
-            dataObject={octopusStepConfigurationDto}
-            fieldName={"namespace"}
-            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("projectDescription").length === 0}
-          />
-          <DtoSelectInput
-            setDataFunction={handleDTOChange}
-            setDataObject={setOctopusStepConfigurationDataDto}
-            textField={"name"}
-            valueField={"id"}
-            dataObject={octopusStepConfigurationDto}
-            filter={"contains"}
-            selectOptions={environments ? environments : []}
+          <OctopusEnvironmentNameSelectInput
             fieldName={"environmentName"}
-            busy={environmentsSearching}
-            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("namespace").length === 0}
+            dataObject={octopusStepConfigurationDto}
+            setDataObject={setOctopusStepConfigurationDataDto}
+            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
+            tool_prop={octopusStepConfigurationDto ? octopusStepConfigurationDto.getData("spaceName") : ""}
           />
           <DtoSelectInput
             setDataObject={setOctopusStepConfigurationDataDto}
@@ -282,6 +153,46 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
               listOfSteps.length === 0 || octopusStepConfigurationDto.getData("environmentName").length === 0
             }
           />
+          <OctopusTargetRolesSelectInput
+            fieldName={"octopusTargetRoles"}
+            dataObject={octopusStepConfigurationDto}
+            setDataObject={setOctopusStepConfigurationDataDto}
+            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName") ? octopusStepConfigurationDto.getData("spaceName").length === 0 : true}
+            tool_prop={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName") ? octopusStepConfigurationDto.getData("spaceName") : ""}
+          />
+          <OctopusPlatformTypeSelectInput
+            fieldName={"octopusPlatformType"}
+            dataObject={octopusStepConfigurationDto}
+            setDataObject={setOctopusStepConfigurationDataDto}
+            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName") ? octopusStepConfigurationDto.getData("spaceName").length === 0 : true}
+            tool_prop={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName") ? octopusStepConfigurationDto.getData("spaceName") : ""}
+          />
+          {octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType") && octopusStepConfigurationDto.getData("octopusPlatformType") === "Kubernetes" &&
+            <DtoTextInput
+              setDataObject={setOctopusStepConfigurationDataDto}
+              dataObject={octopusStepConfigurationDto}
+              fieldName={"namespace"}
+              disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
+            />
+          }
+          { octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType") && octopusStepConfigurationDto.getData("octopusPlatformType") === "Azure" &&
+            <>
+            <OctopusDeploymentTypeInputSelect
+            fieldName={"octopusDeploymentType"}
+            dataObject={octopusStepConfigurationDto}
+            setDataObject={setOctopusStepConfigurationDataDto}
+            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType") ? octopusStepConfigurationDto.getData("octopusPlatformType").length === 0 : true}
+            tool_prop={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType") ? octopusStepConfigurationDto.getData("octopusPlatformType") : ""}
+            />
+            <OctopusFeedSelectInput
+              fieldName={"octopusFeedId"}
+              dataObject={octopusStepConfigurationDto}
+              setDataObject={setOctopusStepConfigurationDataDto}
+              disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName") ? octopusStepConfigurationDto.getData("spaceName").length === 0 : true}
+              tool_prop={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName") ? octopusStepConfigurationDto.getData("spaceName") : ""}
+            />
+            </>
+          }
           <Row className="mx-1 py-2">
             <SaveButtonBase
               recordDto={octopusStepConfigurationDto}

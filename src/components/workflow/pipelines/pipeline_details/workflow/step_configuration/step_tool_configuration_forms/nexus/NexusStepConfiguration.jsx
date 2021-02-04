@@ -107,6 +107,10 @@ function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToo
   };
 
   const callbackFunction = async () => {
+    let newDataObject = nexusStepConfigurationDto;
+    const packageId = nexusStepConfigurationDto.getData("groupName") + ":" + nexusStepConfigurationDto.getData("artifactName")
+    newDataObject.setData("packageId", packageId);
+    setNexusStepConfigurationDataDto({...newDataObject});
     const item = {
       configuration: nexusStepConfigurationDto.getPersistData(),
       threshold: {

@@ -1,19 +1,16 @@
 import { axiosApiService } from "../../../../../../../../api/apiService";
+import baseActions from "../../../../../../../../utils/actionsBase";
+import octopusActions from "../../../../../../../inventory/tools/tool_details/tool_jobs/octopus/octopus-actions";
 
 const OctopusStepActions = {};
 
 OctopusStepActions.getSpaces = async (id, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/tools/octopus/spaces/${id}/octopus`;
-  const res = await axiosApiService(accessToken)
-    .get(apiUrl)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      throw error;
-    });
-  return res;
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
+  if (response && response.status === 200) {
+    return response.data
+  }
+  return [];
 };
 
 OctopusStepActions.getProjects = async (id,spaceId, getAccessToken) => {
@@ -30,32 +27,22 @@ OctopusStepActions.getProjects = async (id,spaceId, getAccessToken) => {
   return res;
 };
 
-OctopusStepActions.getReleases = async (id,spaceId, projectId, getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = `/tools/octopus/releases/${id}/octopus/${spaceId}/${projectId}`;
-  const res = await axiosApiService(accessToken)
-    .get(apiUrl)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      throw error;
-    });
-  return res;
+OctopusStepActions.getVersions = async (id,spaceId, feedId,ecrPushStepId,pipelineId, getAccessToken) => {
+  const apiUrl = `/tools/octopus/versions/${id}/octopus/${spaceId}/${feedId}/${ecrPushStepId}/${pipelineId}`;
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
+  if (response && response.status === 200) {
+    return response.data
+  }
+  return [];
 };
 
 OctopusStepActions.getEnvironments = async (id,spaceId, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/tools/octopus/environments/${id}/octopus/${spaceId}`;
-  const res = await axiosApiService(accessToken)
-    .get(apiUrl)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      throw error;
-    });
-  return res;
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
+  if (response && response.status === 200) {
+    return response.data
+  }
+  return [];
 };
 
 OctopusStepActions.getTenants = async (id,spaceId, projectId,environmentId, getAccessToken) => {
@@ -73,31 +60,93 @@ OctopusStepActions.getTenants = async (id,spaceId, projectId,environmentId, getA
 };
 
 OctopusStepActions.getAccounts = async (id,spaceId, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/tools/octopus/accounts/${id}/octopus/${spaceId}`;
-  const res = await axiosApiService(accessToken)
-    .get(apiUrl)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      throw error;
-    });
-  return res;
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
+  if (response && response.status === 200) {
+    return response.data
+  }
+  return [];
 };
 
 OctopusStepActions.getClusters = async (id,awsToolConfigId, getAccessToken) => {
-  const accessToken = await getAccessToken();
   const apiUrl = `/tools/octopus/clusters/${id}/octopus/${awsToolConfigId}`;
-  const res = await axiosApiService(accessToken)
-    .get(apiUrl)
-    .then((result) => {
-      return result;
-    })
-    .catch((error) => {
-      throw error;
-    });
-  return res;
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
+  if (response && response.status === 200) {
+    return response.data
+  }
+  return [];
 };
+
+OctopusStepActions.getCloudOptions = async (id, spaceId, getAccessToken) => {
+  const apiUrl = `/tools/octopus/accounts/type/${id}/octopus/${spaceId}}`;
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
+  if (response && response.status === 200) {
+    return response.data
+  }
+  return [];
+}
+
+OctopusStepActions.getCommunicationStyles = async (id, spaceId, getAccessToken) => {
+  const apiUrl = `/tools/octopus/target/commStyle/${id}/octopus/${spaceId}`;
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
+  if (response && response.status === 200) {
+    return response.data
+  }
+  return [];
+}
+
+OctopusStepActions.getWebAppNames = async (id, spaceId,accountId, getAccessToken) => {
+  const apiUrl = `/tools/octopus/target/resourceWebName/${id}/octopus/${spaceId}/${accountId}`;
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
+  if (response && response.status === 200) {
+    return response.data
+  }
+  return [];
+}
+
+OctopusStepActions.getFeedTypes = async (id, spaceId, getAccessToken) => {
+  const apiUrl = `/tools/octopus/feeds/types/${id}/octopus/${spaceId}`;
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
+  if (response && response.status === 200) {
+    return response.data
+  }
+  return [];
+}
+
+OctopusStepActions.getFeedList = async (id, spaceId, getAccessToken) => {
+  const apiUrl = `/tools/octopus/feeds/list/${id}/octopus/${spaceId}`;
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
+  if (response && response.status === 200) {
+    return response.data
+  }
+  return [];
+}
+
+OctopusStepActions.getPlatformTypes = async (id, spaceId, getAccessToken) => {
+  const apiUrl = `/tools/octopus/platform/types/${id}/octopus/${spaceId}`;
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
+  if (response && response.status === 200) {
+    return response.data
+  }
+  return [];
+}
+
+OctopusStepActions.getDeploymentTypes = async (id, spaceId,platformType, getAccessToken) => {
+  const apiUrl = `/tools/octopus/deployment/types/${id}/octopus/${spaceId}/${platformType}`;
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
+  if (response && response.status === 200) {
+    return response.data
+  }
+  return [];
+}
+
+OctopusStepActions.getTargetRoles = async (id, spaceId, getAccessToken) => {
+  const apiUrl = `/tools/octopus/target/roles/${id}/octopus/${spaceId}`;
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
+  if (response && response.status === 200) {
+    return response.data
+  }
+  return [];
+}
 
 export default OctopusStepActions;

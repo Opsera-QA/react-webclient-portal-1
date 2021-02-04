@@ -7,9 +7,12 @@ const OctopusAccountMetadata = {
       isRequired: true
     },
     {
-      label: "AWS Credentials",
+      label: "Cloud Credentials",
       id: "awsToolConfigId",
-      isRequired: true
+    },
+    {
+      label: "Cloud Credentials",
+      id: "azureToolConfigId",
     },
     {
       label: "Environments",
@@ -37,6 +40,16 @@ const OctopusAccountMetadata = {
       isRequired: true
     },
     {
+      label: "Cloud Type",
+      id: "cloudType",
+      isRequired: true
+    },
+    {
+      label: "Description",
+      id: "description",
+      isRequired: true
+    },
+    {
       label: "Active",
       id: "active",
     }
@@ -44,11 +57,14 @@ const OctopusAccountMetadata = {
   newModelBase: {
     _id: "",
     type: "account",
+    cloudType : "",
     awsToolConfigId : "",
+    azureToolConfigId: "",
     environmentIds : "",
     name : "",
     spaceId : "",
     spaceName : "",
+    description: "",
     toolId : "",
     active: true,
   }
