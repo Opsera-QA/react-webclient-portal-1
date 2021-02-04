@@ -39,5 +39,10 @@ export const jobTypes = [
   {
     label: "Push to Git",
     value: "SFDC PUSH ARTIFACTS"
-  }
+  },
+  {
+    label: "Powershell Script",
+    value: "POWERSHELL SCRIPT"
+  },
+
 ];

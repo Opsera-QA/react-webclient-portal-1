@@ -86,6 +86,9 @@ import xunitPipelineStepConfigurationMetadata
   from "./step_tool_configuration_forms/xunit/xunitPipelineStepConfigurationMetadata";
 import CommandLinePipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/command_line/CommandLinePipelineStepConfigurationSummaryPanel";
 import commandLineStepFormMetadata from "./step_tool_configuration_forms/command_line/commandline-stepForm-metadata";
+import powershellStepFormMetadata from "./step_tool_configuration_forms/powershell/powershell-stepForm-metadata";
+import PowershellPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/powershell/PowershellPipelineStepConfigurationSummaryPanel";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -248,6 +251,13 @@ function PipelineStepConfigurationSummary({
           <CommandLinePipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             commandLinePipelineDataObject={getModelWrappedObject(commandLineStepFormMetadata)}
+          />
+        );
+      case "powershell":
+        return (
+          <PowershellPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            powershellPipelineDataObject={getModelWrappedObject(powershellStepFormMetadata)}
           />
         );
       case "sonar":

@@ -38,6 +38,7 @@ import ParallelProcessPipelineStepConfiguration
   from "./step_tool_configuration_forms/parallel_processor/ParallelProcessPipelineStepConfiguration";
 import ConditionalOperationPipelineStepConfiguration
   from "./step_tool_configuration_forms/conditional_operation/ConditionalOperationPipelineStepConfiguration";
+import PowershellStepConfiguration from "./step_tool_configuration_forms/powershell/PowershellStepConfiguration";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import pipelineActions from "../../../../pipeline-actions";
 
@@ -568,6 +569,22 @@ function StepToolConfiguration({
             pipelineId={pipeline._id}
             stepTool={stepTool}
             parentCallback={callbackFunction}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "powershell":
+        return (
+          <PowershellStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
           />
         );
