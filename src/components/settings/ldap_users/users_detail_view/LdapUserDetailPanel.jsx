@@ -8,7 +8,7 @@ import LdapUserSummaryPanel from "./LdapUserSummaryPanel";
 import DetailTabPanelContainer from "../../../common/panels/detail_view/DetailTabPanelContainer";
 import SettingsTab from "../../../common/tabs/detail_view/SettingsTab";
 
-function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, authorizedActions }) {
+function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, authorizedActions, hideSettings }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -24,7 +24,7 @@ function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, authori
     return (
       <CustomTabContainer>
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} disabled={hideSettings} />
       </CustomTabContainer>
     );
   };
@@ -46,6 +46,7 @@ function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, authori
 LdapUserDetailPanel.propTypes = {
   ldapUserData: PropTypes.object,
   setLdapUserData: PropTypes.func,
+  hideSettings: PropTypes.bool,
   orgDomain: PropTypes.string,
   authorizedActions: PropTypes.array
 };

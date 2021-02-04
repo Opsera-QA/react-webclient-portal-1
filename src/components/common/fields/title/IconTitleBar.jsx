@@ -30,7 +30,7 @@ function IconTitleBar({ title, titleIcon, isLoading, inactive }) {
         </div>
       </Col>
       <Col sm={12}>
-        <div className="d-flex w-100">
+        <div className="d-flex w-100 mt-2">
           <div className="mx-auto title">{title}</div>
         </div>
       </Col>

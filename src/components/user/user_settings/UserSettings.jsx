@@ -24,6 +24,12 @@ function UserSettings() {
     loadData();
   }, []);
 
+  useEffect(() => {
+    if (activeTab !== tab) {
+      setActiveTab(tab);
+    }
+  }, [tab])
+
   const loadData = async () => {
     try {
       setIsLoading(true);
@@ -85,8 +91,8 @@ function UserSettings() {
   const getNavigationTabContainer = () => {
     return (
       <NavigationTabContainer>
-        <NavigationTab icon={faIdCard} tabName={"profile"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My User Profile"} />
-        <NavigationTab icon={faUser} tabName={"myUserRecord"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My User Record"} visible={user != null && user?.ldap != null} />
+        <NavigationTab icon={faIdCard} tabName={"profile"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My Profile"} />
+        <NavigationTab icon={faUser} tabName={"myUserRecord"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My Record"} visible={user != null && user?.ldap != null} />
         {/*<NavigationTab icon={faKey} tabName={"accessTokens"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Access Tokens"} />*/}
       </NavigationTabContainer>
     );

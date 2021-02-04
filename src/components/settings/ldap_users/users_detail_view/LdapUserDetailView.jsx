@@ -79,7 +79,7 @@ function LdapUserDetailView() {
 
   return (
     <DetailScreenContainer
-      breadcrumbDestination={(accessRoleData.PowerUser || accessRoleData.Administrator || accessRoleData.OpseraAdministrator) ? "ldapUserDetailView" : "ldapUserDetailViewLimited"}
+      breadcrumbDestination={(accessRoleData?.PowerUser || accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator) ? "ldapUserDetailView" : "ldapUserDetailViewLimited"}
       metadata={ldapUsersMetaData}
       accessDenied={!authorizedActions?.includes("get_user_details")}
       dataObject={ldapUserData}

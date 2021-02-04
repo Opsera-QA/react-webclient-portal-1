@@ -71,6 +71,7 @@ function MyUserRecord() {
       orgDomain={orgDomain}
       ldapUserData={ldapUserData}
       authorizedActions={authorizedActions}
+      hideSettings={true}
     />
   );
 }

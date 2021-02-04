@@ -159,7 +159,8 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
             {getPermissionsMessage()}
 
             <NavDropdown title={fullName} id="basic-nav-dropdown" className="top-nav-dropdown" alignRight>
-              <Link to="/user/profile" id="profile-button" className="dropdown-item nav-drop-down-item">User Settings</Link>
+              <Link to="/user/profile" id="profile-button" className="dropdown-item nav-drop-down-item">Profile</Link>
+              <Link to="/user/myUserRecord" id="profile-button" className="dropdown-item nav-drop-down-item">User Settings</Link>
 
               <NavDropdown.Divider/>
 

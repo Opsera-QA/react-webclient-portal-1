@@ -47,6 +47,7 @@ function IconCardContainerBase({ children, isLoading, titleBar, footerBar, class
 IconCardContainerBase.propTypes = {
   children: PropTypes.any,
   titleBar: PropTypes.object,
+  className: PropTypes.string,
   footerBar: PropTypes.object,
   isLoading: PropTypes.bool
 };
