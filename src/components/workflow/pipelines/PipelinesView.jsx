@@ -199,7 +199,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
   return (
     <div className="max-content-width" style={{minWidth: "505px"}}>
       <div className="mb-4">
-        <div className="mb-1 py-2 pl-2" style={{backgroundColor:"#E8E8E8"}}>
+        <div className="mb-1 py-2 px-2" style={{backgroundColor:"#E8E8E8"}}>
           {getFilterBar()}
         </div>
         <div className="px-3">

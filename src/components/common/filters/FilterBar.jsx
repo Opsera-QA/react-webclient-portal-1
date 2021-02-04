@@ -105,7 +105,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, saveC
     }
 
     return (
-      <Button variant="outline-primary" size="sm" onClick={() => {loadData();}} className="ml-2 mr-2">
+      <Button variant="outline-primary" size="sm" onClick={() => {loadData();}} className="ml-2">
         <span><FontAwesomeIcon icon={faSync} fixedWidth/></span>
       </Button>
     )
@@ -167,7 +167,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, saveC
             <div>{getRefreshButton()}</div>
           </div>
         </div>
-        <div className="py-2">
+        <div>
           <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} filters={filters} />
         </div>
       </>
@@ -190,7 +190,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, saveC
           </div>
         </div>
       </div>
-      <div className="py-2">
+      <div>
         <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} filters={filters} />
       </div>
     </>
