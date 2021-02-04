@@ -179,7 +179,7 @@ export default function Marketplace () {
         KPIs and configure them on your OpsERA Analytics Dashboards.
       `}
     >
-      <div className="px-3">
+      <div className="px-4">
         <Row>
           <Col>
             <KpiCategoryFilter filterDto={marketplaceFilterDto} setFilterDto={setMarketplaceFilterDto} setDataFunction={setFilterData}/>

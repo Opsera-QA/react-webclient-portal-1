@@ -20,14 +20,16 @@ function ToolCountTable({ data, isLoading }) {
   };
 
   return (
-    <CustomTable
-      columns={columns}
-      data={data}
-      rowStyling={rowStyling}
-      isLoading={isLoading}
-      tableTitle={"Tool Counts"}
-      type={"Tool Counts"}
-    />
+    <div className="px-2 pb-2">
+      <CustomTable
+        columns={columns}
+        data={data}
+        rowStyling={rowStyling}
+        isLoading={isLoading}
+        tableTitle={"Tool Counts"}
+        type={"Tool Counts"}
+      />
+    </div>
   );
 }
 

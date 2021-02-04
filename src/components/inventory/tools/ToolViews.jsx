@@ -72,7 +72,7 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
   };
 
   return (
-    <div className="px-2">
+    <div className="px-2 pb-2">
       {getFilterBar()}
       {getTableView()}
       <NewToolModal loadData={loadData} setShowModal={setShowCreateToolModal} showModal={showCreateToolModal}/>
