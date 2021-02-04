@@ -7,7 +7,7 @@ import SiteNotificationBanner from "components/admin/site_notifications/displaye
 
 function SiteNotificationDisplayer() {
   const location = useLocation();
-  const { getAccessToken } = useContext(AuthContext);
+  const { getAccessToken, getIsAuthenticated } = useContext(AuthContext);
   const [siteWideNotification, setSiteWideNotification] = useState(undefined);
   const [pipelinesNotification, setPipelinesNotification] = useState(undefined);
 
@@ -17,9 +17,9 @@ function SiteNotificationDisplayer() {
 
   const loadSiteNotifications = async () => {
     try {
-      const accessToken = getAccessToken();
+      const isAuthenticated = await getIsAuthenticated();
 
-      if (accessToken?.isAuthenticated) {
+      if (isAuthenticated) {
         const response = await siteNotificationActions.getSiteNotifications(getAccessToken);
         unpackNotifications(response?.data);
       }
