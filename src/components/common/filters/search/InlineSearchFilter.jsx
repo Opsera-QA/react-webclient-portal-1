@@ -55,7 +55,7 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
         onChange={e => validateAndSetData(e.target.value)}
       />
       <InputGroup.Append>
-        <Button variant="outline-primary filter-bg-white" onClick={handleSearch}>
+        <Button className="inline-filter-input filter-bg-white" variant="outline-primary" onClick={handleSearch}>
           {getSearchIcon()}
         </Button>
       </InputGroup.Append>
