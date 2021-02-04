@@ -83,9 +83,8 @@ function PipelineActivityLogTable({ data, loadData, isLoading, pipeline, pipelin
 
   const getDropdownFilters = () => {
     return (
-      <div>
+      <div className="pb-2">
         <PipelineRunFilter filterDto={pipelineActivityFilterDto} setFilterDto={setPipelineActivityFilterDto} maximumRunCount={pipeline?.workflow?.run_count}/>
-        <div className="my-2"><SearchFilter filterDto={pipelineActivityFilterDto} setFilterDto={setPipelineActivityFilterDto}/></div>
       </div>
       // {/*TODO: Make specific pipeline activity version when pulling specific tool identifiers is known*/}
       // {/*<ToolIdentifierFilter filterDto={pipelineActivityFilterDto}  setFilterDto={setPipelineActivityFilterDto} />*/}
@@ -102,8 +101,9 @@ function PipelineActivityLogTable({ data, loadData, isLoading, pipeline, pipelin
         tableTitle={"Pipeline Activity Logs"}
         titleIcon={faClipboardList}
         filters={["hide_status", "tool", "search", "run"]}
-        table={getPipelineActivityTable()}
+        body={getPipelineActivityTable()}
         dropdownFilters={getDropdownFilters()}
+        supportSearch={true}
       >
         <div className="px-2 d-flex">
           <div><BooleanFilter loadData={loadData} filterDto={pipelineActivityFilterDto} setFilterDto={setPipelineActivityFilterDto} fieldName={"hide_status"} /></div>

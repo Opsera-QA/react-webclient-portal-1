@@ -10,6 +10,7 @@ import {Col, Row} from "react-bootstrap";
 import ActiveFilterDisplayer from "../filters/ActiveFilterDisplayer";
 import FilterTitleBar from "../panels/table_screen_container/FilterTitleBar";
 import StackedFilterRemovalIcon from "components/common/icons/StackedFilterRemovalIcon";
+import InlineSearchFilter from "components/common/filters/search/InlineSearchFilter";
 
 function FilterContainer(
   {
@@ -22,8 +23,9 @@ function FilterContainer(
     children,
     loadData,
     isLoading,
-    table,
-    addRecordFunction
+    body,
+    addRecordFunction,
+    supportSearch
   }) {
   const resetFilters = async () => {
     let newFilterDto = new Model({...filterDto.getNewObjectFields()}, filterDto.getMetaData(), false);
@@ -132,10 +134,21 @@ function FilterContainer(
     )
   };
 
-  const getTableFilters = () => {
+  const getSearchBar = () => {
+    if (supportSearch) {
+      return (
+        <div className="mr-2 inline-search-filter my-auto">
+          <InlineSearchFilter filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} />
+        </div>
+      )
+    }
+  };
+
+  const getFilters = () => {
     return (
       <div className="ml-auto d-flex">
         <div className="d-flex">{children}</div>
+        {getSearchBar()}
         <div>{getNewRecordButton()}</div>
         <div>{getRefreshButton()}</div>
         <div>{getFilterButtons()}</div>
@@ -151,14 +164,14 @@ function FilterContainer(
     <div>
       <div className="filter-table content-container content-card-1 w-100">
         <div className="px-2 d-flex content-block-header">
-          <FilterTitleBar isLoading={isLoading} title={tableTitle} titleIcon={titleIcon} tableFilters={getTableFilters()}/>
+          <FilterTitleBar isLoading={isLoading} title={tableTitle} titleIcon={titleIcon} tableFilters={getFilters()}/>
         </div>
         <Row className="d-flex mx-0 py-1 active-filter-bar">
           <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} filters={filters}/>
         </Row>
       </div>
       <div>
-        {table}
+        {body}
       </div>
     </div>
   );
@@ -169,10 +182,11 @@ FilterContainer.propTypes = {
   setFilterDto: PropTypes.func,
   dropdownFilters: PropTypes.any,
   isLoading: PropTypes.bool,
+  supportSearch: PropTypes.bool,
   titleIcon: PropTypes.object,
   tableTitle:PropTypes.string,
   children: PropTypes.any,
-  table: PropTypes.object,
+  body: PropTypes.object,
   loadData: PropTypes.func,
   addRecordFunction: PropTypes.func,
   filters: PropTypes.array
