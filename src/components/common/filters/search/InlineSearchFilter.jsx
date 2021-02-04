@@ -50,7 +50,7 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
         disabled={disabled}
         placeholder="Search"
         value={filterDto.getData(fieldName)}
-        className="form-control inline-filter-input"
+        className="inline-search-filter inline-filter-input"
         onKeyPress={(event) => handleKeyPress(event)}
         onChange={e => validateAndSetData(e.target.value)}
       />
