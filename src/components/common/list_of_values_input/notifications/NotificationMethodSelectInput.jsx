@@ -8,7 +8,7 @@ export const notificationMethods = [
   {name: "Jira", value: "jira"},
   {name: "Teams", value: "teams"},
 ];
-
+// TODO :  Remove disabled array when implemented
 function NotificationMethodSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction }) {
   return (
     <SelectInputBase
@@ -19,7 +19,11 @@ function NotificationMethodSelectInput({ fieldName, dataObject, setDataObject, d
       setDataFunction={setDataFunction}
       valueField="value"
       textField="name"
-      disabled={disabled}
+      disabled={[
+        {name: "Email", value: "email"},
+        {name: "Jira", value: "jira"},
+        {name: "Teams", value: "teams"},
+      ]}
     />
   );
 }

@@ -18,8 +18,8 @@ function NotificationTypeSelectInput({ fieldName, dataObject, setDataObject, dis
       setDataFunction={setDataFunction}
       valueField="value"
       textField="name"
-      disabled={disabled}
-      // disabled={[ {name: "Metric", value: "metric"} ]}
+      // disabled={disabled}
+      disabled={[ {name: "Metric", value: "metric"} ]}
     />
   );
 }
