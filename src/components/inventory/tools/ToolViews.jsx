@@ -19,14 +19,14 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
     setShowCreateToolModal(true);
   };
 
+  const authorizedAction = (action, owner, objectRoles) => {
+    return workflowAuthorizedActions.toolRegistryItems(customerAccessRules, action, owner, objectRoles);
+  };
+
   const getFilterBar = () => {
     if (toolFilterDto == null) {
       return null;
     }
-
-    const authorizedAction = (action, owner, objectRoles) => {
-      return workflowAuthorizedActions.toolRegistryItems(customerAccessRules, action, owner, objectRoles);
-    };
 
     return(
       <FilterBar
@@ -72,7 +72,6 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
   };
 
   return (
-
     <div className="px-2 pb-2">
       {getFilterBar()}
       <TableCardView
