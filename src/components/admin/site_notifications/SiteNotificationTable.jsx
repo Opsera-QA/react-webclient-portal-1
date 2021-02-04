@@ -40,7 +40,7 @@ function SiteNotificationTable({ data, loadData, isLoading }) {
   };
 
   return (
-    <div>
+    <div className="px-2 pb-2">
       <CustomTable
         onRowSelect={onRowSelect}
         data={data}

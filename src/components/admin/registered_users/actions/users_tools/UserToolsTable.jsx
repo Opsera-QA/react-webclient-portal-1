@@ -29,7 +29,7 @@ function UserToolsTable({ data }) {
   );
 
   return (
-    <div className="p-2">
+    <div className="px-2 pb-2">
       <CustomTable
         columns={columns}
         data={data}

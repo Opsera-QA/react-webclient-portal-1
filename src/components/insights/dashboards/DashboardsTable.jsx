@@ -66,7 +66,7 @@ function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadD
   };
 
   return (
-    <div className="p-2">
+    <div className="px-2 pb-2">
       <CustomTable
         data={data}
         columns={columns}

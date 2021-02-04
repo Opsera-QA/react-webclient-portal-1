@@ -55,7 +55,7 @@ function KpiTable({ data, kpiFilterDto, setKpiFilterDto, isLoading, loadData }) 
   };
 
   return (
-    <div>
+    <div className="px-2 pb-2">
       <CustomTable
         onRowSelect={onRowSelect}
         isLoading={isLoading}

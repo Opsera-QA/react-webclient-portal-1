@@ -34,7 +34,7 @@ function LdapOrganizationAccountsTable({ldapOrganizationAccounts, ldapOrganizati
   };
 
   return (
-    <div>
+    <div className="px-2 pb-2">
       <CustomTable
         columns={columns}
         isLoading={isLoading}

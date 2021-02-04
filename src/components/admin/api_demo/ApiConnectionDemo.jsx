@@ -125,6 +125,7 @@ function ApiConnectionDemo() {
         API Test w/ Okta Authentication Token and Axios.js
       `}
     >
+      <div className="px-2 pb-2">
       <h6 style={{marginTop: 20}}>Response Package Breakdown:<br/>
         <small className="text-muted">This is confirmation the data is returned from the server and an example of
           breaking it down
@@ -192,6 +193,7 @@ function ApiConnectionDemo() {
                           size="lg"
                           handleCancelModal={() => setShowModal(false)}
                           handleConfirmModal={() => setShowModal(false)}/> : null}
+      </div>
     </ScreenContainer>
   );
 }

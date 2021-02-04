@@ -49,7 +49,7 @@ function LdapDepartmentsTable({ departmentData, departmentFilterDto, authorizedA
   };
 
   return (
-    <div>
+    <div className="px-2 pb-2">
       <CustomTable
         onRowSelect={onRowSelect}
         data={departmentData}
