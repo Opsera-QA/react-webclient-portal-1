@@ -131,11 +131,11 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, saveC
       <div className="d-flex">
         <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={popover} className="filter-popover">
           <div>
-            <Button type="outline-primary" size="sm"><span><FontAwesomeIcon icon={faFilter} fixedWidth/></span></Button>
+            <Button variant="outline-primary" size="sm"><span><FontAwesomeIcon icon={faFilter} fixedWidth/></span></Button>
           </div>
         </OverlayTrigger>
         <div>
-          <Button className={"ml-1"} disabled={filterDto.getData("activeFilters").length === 0} type="outline-primary" size="sm" onClick={() => resetFilters()}>
+          <Button className={"ml-1"} disabled={filterDto.getData("activeFilters").length === 0} variant="outline-primary" size="sm" onClick={() => resetFilters()}>
             <span>{getStackedFilterRemovalIcon()}</span>
           </Button>
         </div>
