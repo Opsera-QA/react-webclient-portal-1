@@ -153,36 +153,43 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, saveC
 
   if (leftAlignCustomButtons) {
     return (
-      <div className="d-flex justify-content-between">
-        <div className="d-flex">
-          {getCustomButtons()}
-          {/*{getViewToggle()}*/}
+      <>
+        <div className="justify-content-between d-flex">
+          <div className="d-flex">
+            <div>{getNewRecordButton()}</div>
+            {getCustomButtons()}
+            {/*{getViewToggle()}*/}
+          </div>
+          <div className="d-flex">
+            {getSearchBar()}
+            <div>{getFilterButtons()}</div>
+            <div>{getViewToggle()}</div>
+            <div>{getRefreshButton()}</div>
+          </div>
+        </div>
+        <div className="py-2">
           <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} filters={filters} />
         </div>
+      </>
+    );
+  }
+
+  return (
+    <div className="filter-bar">
+      <div className="justify-content-between d-flex">
         <div className="d-flex">
-          {getSearchBar()}
           <div>{getNewRecordButton()}</div>
+        </div>
+        <div className="d-flex">
+          {getCustomButtons()}
+          {getSearchBar()}
           <div>{getFilterButtons()}</div>
           <div>{getViewToggle()}</div>
           <div>{getRefreshButton()}</div>
         </div>
       </div>
-    );
-  }
-
-  return (
-    <div className="d-flex justify-content-between filter-bar mb-2">
-      <div className="d-flex">
-        {/*{getViewToggle()}*/}
+      <div className="py-2">
         <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} filters={filters} />
-      </div>
-      <div className="d-flex">
-        {getCustomButtons()}
-        {getSearchBar()}
-        <div>{getNewRecordButton()}</div>
-        <div>{getFilterButtons()}</div>
-        <div>{getViewToggle()}</div>
-        <div>{getRefreshButton()}</div>
       </div>
     </div>
   );
