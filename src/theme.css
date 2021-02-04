@@ -1174,6 +1174,10 @@ a.nav-link {
   background-color: #F3F3F1;
 }
 
+.filter-bg-white {
+  background-color: #F3F3F1;
+}
+
 .inline-search-filter {
   min-width: 350px;
 }
