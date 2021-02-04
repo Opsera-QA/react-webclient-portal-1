@@ -23,6 +23,10 @@ const toolFilterMetadata = {
       id: "sortOption",
     },
     {
+      label: "Tool Owner",
+      id: "owner"
+    },
+    {
       label: "Tag",
       id: "tag",
     },
@@ -48,6 +52,10 @@ const toolFilterMetadata = {
 
     if (filterDto.getData("tag") != null) {
       activeFilters.push({filterId: "tag", ...filterDto.getData("tag")});
+    }
+
+    if (filterDto.getData("owner") != null) {
+      activeFilters.push({filterId: "owner", ...filterDto.getData("owner")});
     }
 
     if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {

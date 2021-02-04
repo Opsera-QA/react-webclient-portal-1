@@ -30,12 +30,16 @@ function PaginationContainer({ isLoading, filterDto, setFilterDto, loadData, chi
     }
   };
 
+  if (filterDto == null) {
+    return children;
+  }
+
   // TODO: add styling 
   return (
     <>
-      {getTopPaginator()}
+      <div className="px-2">{getTopPaginator()}</div>
       {children}
-      {getBottomPaginator()}
+      <div className="px-2">{getBottomPaginator()}</div>
     </>
   );
 }
