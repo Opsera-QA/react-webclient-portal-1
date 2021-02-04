@@ -14,9 +14,9 @@ import PropertyInputContainer from "components/common/inputs/object/PropertyInpu
 const roleTypes = [
   {text: "Administrator", value: "administrator"},
   {text: "Manager", value: "manager"},
+  {text: "SecOps", value: "secops"},
   {text: "User", value: "user"},
   {text: "Guest", value: "guest"},
-  {text: "SecOps", value: "secops"}
 ];
 
 function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
@@ -372,7 +372,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
   const getIncompleteRoleMessage = () => {
     if (!lastRoleComplete()) {
       return (
-        <div className="w-100 ml-3">
+        <div className="w-100 pr-3 mb-1 text-muted small text-right">
           <FontAwesomeIcon className="text-warning mr-1" icon={faExclamationTriangle} fixedWidth />
           <span className="mt-1">Incomplete Roles Will Be Removed Upon Saving</span>
         </div>

@@ -145,8 +145,13 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
     return true; //owner can do all actions
   }
 
+  //if no objectRole data passed, then allow actions
+  if (objectRoles && objectRoles.length === 0) {
+    return true;
+  }
+
   const userObjectRole = calculateUserObjectRole(customerAccessRules.Email, customerAccessRules.Groups, objectRoles);
-  //console.log("userObjectRole: ", userObjectRole);
+  //console.log("userObjectRole: ", objectRoles);
   if (userObjectRole === "administrator") {
     return true; //all actions are authorized to administrator
   }
@@ -155,16 +160,28 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
     switch (action) {
     case "edit_tool_settings":
     case "use_tool_in_pipeline":
+    case "edit_tool_connection":
+    case "edit_tool_job_tabs":
+    case "edit_tool_account_tabs":
+    case "edit_tool_application_tabs":
+    case "edit_tool_projects_tabs":
+    case "create_tool":
       return true;
     default:
       return false; //all other options are disabled
     }
   }
 
-  if (customerAccessRules.PowerUser || userObjectRole === "manager") {
+  if (customerAccessRules.PowerUser1 || userObjectRole === "manager") {
     switch (action) {
     case "edit_tool_settings":
     case "use_tool_in_pipeline":
+    case "edit_tool_connection":
+    case "edit_tool_job_tabs":
+    case "edit_tool_account_tabs":
+    case "edit_tool_application_tabs":
+    case "edit_tool_projects_tabs":
+    case "create_tool":
       return true;
     default:
       return false; //all other options are disabled
@@ -175,6 +192,7 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
   if (userObjectRole === "user") {
     switch (action) {
     case "use_tool_in_pipeline": //not implemented yet
+    case "create_tool":
       return true;
     default:
       return false;
@@ -189,7 +207,7 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
 //compares the user email to the objectRoles data to see if the user has a specific role
 // (either directly or through group membership)
 const calculateUserObjectRole = (userEmail, userGroups, objectRoles) => {
-  if (!objectRoles || objectRoles.length === 0) {
+  if (!objectRoles || objectRoles.length === 0 || !userEmail) {
     return false;
   }
 
@@ -198,7 +216,6 @@ const calculateUserObjectRole = (userEmail, userGroups, objectRoles) => {
     if (!item.user || typeof item.user !== "string") {
       return false;
     }
-
     return item.user.toLowerCase() === userEmail.toLowerCase();
   });
 
@@ -213,7 +230,7 @@ const calculateUserObjectRole = (userEmail, userGroups, objectRoles) => {
 
   let userGroupsRole = [];
   groupRoles.forEach(function(item) {
-    if (userGroups.includes(item.group)) {
+    if (userGroups && userGroups.includes(item.group)) {
       userGroupsRole.push(item.role);
     }
   });

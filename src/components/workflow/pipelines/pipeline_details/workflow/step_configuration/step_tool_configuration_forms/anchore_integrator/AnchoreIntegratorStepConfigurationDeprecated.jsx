@@ -262,7 +262,7 @@ console.log(formData)
   return (
     <>
       <Form>
-        <Form.Group controlId="jenkinsList">
+        <Form.Group controlId="anchoreList">
           <Form.Label className="w-100">
             Step Tool*
             <OverlayTrigger
@@ -290,7 +290,7 @@ console.log(formData)
                 className="text-muted mr-1"
                 fixedWidth
               />
-              Loading Jenkins accounts from registry
+              Loading Anchore accounts from registry
             </div>
           ) : (
             <>

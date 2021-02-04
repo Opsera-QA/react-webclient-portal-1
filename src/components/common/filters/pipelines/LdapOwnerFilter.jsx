@@ -2,10 +2,10 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {getUsersByDomain} from "components/settings/ldap_users/user-functions";
 import DtoFilterSelectInput from "components/common/filters/input/DtoFilterSelectInput";
+import accountsActions from "components/admin/accounts/accounts-actions";
 
-function PipelineOwnerFilter({ filterDto, setFilterDto }) {
+function LdapOwnerFilter({ filterDto, setFilterDto }) {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -26,7 +26,7 @@ function PipelineOwnerFilter({ filterDto, setFilterDto }) {
       const userRoleAccess = await setAccessRoles(user);
       setAccessRoleData(userRoleAccess)
 
-      if (userRoleAccess.Type !== "sass-user" && ldap.domain != null)
+      if (userRoleAccess && userRoleAccess?.Type !== "sass-user" && ldap.domain != null)
       {
         await getUsers(ldap);
       }
@@ -40,12 +40,13 @@ function PipelineOwnerFilter({ filterDto, setFilterDto }) {
   }
 
   const getUsers = async (ldap) => {
-    let users = await getUsersByDomain(ldap.domain, getAccessToken);
+    let response = await accountsActions.getAccountUsers(getAccessToken);
     let userOptions = [];
+    const parsedUsers = response?.data;
 
-    if (users && users.length > 0) {
-      users.map((user, index) => {
-        userOptions.push({text: `Pipeline Owner: ${user["firstName"]} ${user["lastName"]}`, value:`${user["emailAddress"]}`});
+    if (Array.isArray(parsedUsers) && parsedUsers.length > 0) {
+      parsedUsers.map((user, index) => {
+        userOptions.push({text: `Owner: ${user.firstName} ${user.lastName}`, value:`${user._id}`});
       });
     }
 
@@ -58,16 +59,23 @@ function PipelineOwnerFilter({ filterDto, setFilterDto }) {
 
 
   return (
-    <div><DtoFilterSelectInput fieldName={"owner"} busy={isLoading} placeholderText={"Filter by Pipeline Owner"} setDataObject={setFilterDto} dataObject={filterDto} selectOptions={userOptions} /></div>
+    <DtoFilterSelectInput
+      fieldName={"owner"}
+      busy={isLoading}
+      placeholderText={"Filter by Owner"}
+      setDataObject={setFilterDto}
+      dataObject={filterDto}
+      selectOptions={userOptions}
+    />
   );
 }
 
 
-PipelineOwnerFilter.propTypes = {
+LdapOwnerFilter.propTypes = {
   filterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
 };
 
-export default PipelineOwnerFilter;
+export default LdapOwnerFilter;
 
 

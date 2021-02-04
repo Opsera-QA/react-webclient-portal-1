@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import PropTypes from "prop-types";
 import ToolJobsPanel from "./ToolJobsPanel";
@@ -26,9 +26,32 @@ import ToolPipelinesPanel from "./ToolPipelinesPanel";
 import ToolTaggingPanel from "./ToolTaggingPanel";
 import ToolProjectsPanel from "components/inventory/tools/tool_details/projects/ToolProjectsPanel";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
+import { AuthContext } from "contexts/AuthContext";
+import workflowAuthorizedActions
+  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
+  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
+  const [customerAccessRules, setCustomerAccessRules] = useState({});
+
+  useEffect(() => {
+    initRoleAccess().catch(error => {
+      throw { error };
+    });
+  }, [isLoading]);
+
+  const initRoleAccess = async () => {
+    const userRecord = await getUserRecord(); //RBAC Logic
+    const rules = await setAccessRoles(userRecord);
+    setCustomerAccessRules(rules);
+  };
+
+  const authorizedAction = (action, dataObject) => {
+    const owner = dataObject.owner;
+    const objectRoles = dataObject.roles;
+    return workflowAuthorizedActions.toolRegistryItems(customerAccessRules, action, owner, objectRoles);
+  };
 
   const handleTabClick = (activeTab) => e => {
     e.preventDefault();
@@ -44,8 +67,8 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case "jenkins":
       return (
         <>
-          <CustomTab icon={faAbacus} tabName={"jobs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Jobs"}/>
-          <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"}/>
+          <CustomTab icon={faAbacus} tabName={"jobs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Jobs"} disabled={!authorizedAction("edit_tool_job_tabs", toolData?.data)}/>
+          <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"} disabled={!authorizedAction("edit_tool_account_tabs", toolData?.data)}/>
           <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Logs"}/>
         </>
       );
@@ -53,7 +76,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case "octopus":
         return (
           <>
-            <CustomTab icon={faBrowser} tabName={"applications"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Applications"}/>
+            <CustomTab icon={faBrowser} tabName={"applications"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Applications"} disabled={!authorizedAction("edit_tool_application_tabs", toolData?.data)}/>
             <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Logs"}/>
           </>
         )
@@ -68,7 +91,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case "jira":
         return (
           <>
-            <CustomTab icon={faProjectDiagram} tabName={"projects"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Projects"}/>
+            <CustomTab icon={faProjectDiagram} tabName={"projects"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Projects"} disabled={!authorizedAction("edit_tool_projects_tabs", toolData?.data)}/>
           </>
           );
       default: return <></>;
@@ -81,7 +104,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Attributes"}/>
         <CustomTab icon={faDiceD20} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
-        <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"}/>
+        <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"} disabled={!authorizedAction("edit_tool_connection", toolData?.data)}/>
         {getDynamicTabs()}
       </CustomTabContainer>
     );
@@ -90,7 +113,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <ToolSummaryPanel toolData={toolData} setToolData={setToolData} setActiveTab={setActiveTab} />;
+        return <ToolSummaryPanel toolData={toolData} setToolData={setToolData} setActiveTab={setActiveTab} customerAccessRules={customerAccessRules} />;
       case "settings":
         return <ToolEditorPanel toolData={toolData} setToolData={setToolData} loadData={loadData} handleClose={toggleSummaryPanel} />;
       case "attributes":
@@ -116,7 +139,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
     }
   };
 
-  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
+  return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} customerAccessRules={customerAccessRules} />);
 }
 
 ToolDetailPanel.propTypes = {

@@ -23,6 +23,10 @@ const toolFilterMetadata = {
       id: "sortOption",
     },
     {
+      label: "Tool Owner",
+      id: "owner"
+    },
+    {
       label: "Tag",
       id: "tag",
     },
@@ -50,6 +54,10 @@ const toolFilterMetadata = {
       activeFilters.push({filterId: "tag", ...filterDto.getData("tag")});
     }
 
+    if (filterDto.getData("owner") != null) {
+      activeFilters.push({filterId: "owner", ...filterDto.getData("owner")});
+    }
+
     if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
       activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
     }
@@ -61,7 +69,8 @@ const toolFilterMetadata = {
     currentPage: 1,
     sortOption: {text: "Sort: Name", value: "name"},
     search: "",
-    activeFilters: []
+    activeFilters: [],
+    viewType: "list",
   },
   // TODO: If these are the same options everywhere, move to PageSort
   sortOptions: [

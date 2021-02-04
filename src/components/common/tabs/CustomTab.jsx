@@ -24,8 +24,8 @@ function CustomTab({activeTab, tabName, tabText, handleTabClick, icon, visible, 
     return (
       <li className="nav-item mr-1">
         <TooltipWrapper innerText={tabAccessRestricted}>
-          <div className={"nav-link disabled-tab danger-red"}>
-            <FontAwesomeIcon icon={faExclamationCircle} fixedWidth/><span className="ml-2 d-none d-lg-inline">{tabText}</span>
+          <div className={"nav-link disabled-tab"}>
+            <FontAwesomeIcon icon={icon} fixedWidth/><span className="ml-2 d-none d-lg-inline">{tabText}</span>
           </div>
         </TooltipWrapper>
       </li>

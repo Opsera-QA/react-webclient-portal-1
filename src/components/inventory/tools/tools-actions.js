@@ -55,7 +55,8 @@ toolsActions.getRoleLimitedToolRegistryList = async (toolFilterDto, getAccessTok
       tag: toolFilterDto.getFilterValue("tag"),
       status: toolFilterDto.getFilterValue("status"),
       tool: toolFilterDto.getFilterValue("toolIdentifier"),
-      search: toolFilterDto.getFilterValue("search")
+      search: toolFilterDto.getFilterValue("search"),
+      owner: toolFilterDto.getFilterValue("owner")
     }
   }
 

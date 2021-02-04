@@ -15,7 +15,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import cookieHelpers from "core/cookies/cookie-helpers";
 import pipelineActions from "components/workflow/pipeline-actions";
-import PipelineOwnerFilter from "components/common/filters/pipelines/PipelineOwnerFilter";
+import LdapOwnerFilter from "components/common/filters/pipelines/LdapOwnerFilter";
 import Model from "core/data_model/model";
 import TagFilter from "components/common/filters/tags/TagFilter";
 import DtoTopPagination from "components/common/pagination/DtoTopPagination";
@@ -94,7 +94,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
 
   const getDynamicFilter = () => {
     if (currentTab !== "owner") {
-      return (<PipelineOwnerFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>);
+      return (<LdapOwnerFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>);
     }
   };
 
@@ -105,7 +105,9 @@ function PipelinesView({ currentTab, setActiveTab }) {
         filterDto={pipelineFilterDto}
         setFilterDto={setPipelineFilterDto}
         filters={["status", "type", "search"]}
-        customButtons={getViewToggle()}
+        customButtons={getCustomButtons()}
+        saveCookies={saveCookies}
+        supportViewToggle={true}
         supportSearch={true}
         leftAlignCustomButtons={true}
       >
@@ -115,43 +117,14 @@ function PipelinesView({ currentTab, setActiveTab }) {
     );
   };
 
-  const switchView = () => {
-    let newPipelineFilterDto = pipelineFilterDto;
-    if (pipelineFilterDto.getData("viewType") === "list") {
-      newPipelineFilterDto.setData("viewType", "card");
-    } else {
-      newPipelineFilterDto.setData("viewType", "list");
-    }
-
-    saveCookies(newPipelineFilterDto);
-    setPipelineFilterDto({ ...newPipelineFilterDto });
-  };
-
-  const getViewToggle = () => {
-    const view = pipelineFilterDto.getData("viewType");
+  const getCustomButtons = () => {
     return (
-      <div className="d-flex">
-        <Button
-          variant={"primary"}
-          className="mr-2"
-          size="sm"
-          onClick={() => setActiveTab("catalog")}>
-          <span><FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Add New Pipeline</span>
-        </Button>
-        <Button
-          variant={view === "list" ? "primary" : "outline-secondary"}
-          className="mr-2"
-          size="sm"
-          onClick={() => switchView()}>
-          <FontAwesomeIcon icon={faList} fixedWidth/>
-        </Button>
-        <Button
-          variant={view !== "list" ? "primary" : "outline-secondary"}
-          size="sm"
-          onClick={() => switchView()}>
-          <FontAwesomeIcon icon={faThLarge} fixedWidth/>
-        </Button>
-      </div>
+      <Button
+        variant={"primary"}
+        size="sm"
+        onClick={() => setActiveTab("catalog")}>
+        <span><FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Add New Pipeline</span>
+      </Button>
     );
   };
 

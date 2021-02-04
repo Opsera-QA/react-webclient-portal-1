@@ -74,6 +74,10 @@ const jenkinsPipelineStepConfigurationMetadata = {
       label: "Build Arguments",
       id: "buildArgs",
     },
+    {
+      label: "Jenkins Agent",
+      id: "agentLabels",
+    },
   ],
   newModelBase: {
     jobType: "",
@@ -111,6 +115,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     isFullBackup: false,
     sfdcUnitTestType: "",
     workspace: "",
+    agentLabels:"",
   }
 };
 

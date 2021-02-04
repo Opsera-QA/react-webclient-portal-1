@@ -587,8 +587,7 @@ a.nav-link {
 /* disabled tab styling */
 .default-custom-tabs .nav-tabs > li .disabled-tab {
   background: #C3C1CE;
-  color: #dc3545 !important;
-  text-decoration: none;
+  color: #fff;
   cursor: not-allowed;
 }
 
@@ -675,12 +674,12 @@ a.nav-link {
 }
 
 .alternate-tabs .nav-tabs > li a.active, .alternate-tabs .nav-tabs > li a.active:focus {
-  background: #453191;
+  background: #CF940C;
   color: #fef7fd;
 }
 
 .alternate-tabs .nav-tabs > li a.active:hover {
-  background: #2e1956;
+  background: #CF940C;
   border-bottom-color: #46415C;
 }
 
@@ -700,14 +699,14 @@ a.nav-link {
 }
 
 .alternate-tabs .nav-tabs > li a.active {
-  background: #453191;
+  background: #CF940C;
   /*border-color: #1578dc;*/
-  border-bottom: 5px solid #8F86BB;
+  border-bottom: 5px solid #C3C1CE;
   text-decoration: none;
 }
 
 .alternate-tabs .nav-tabs .nav-item.show .nav-link, .alternate-tabs .nav-tabs .nav-link:hover {
-  border-color: #2e1956;
+  border-color: #CF940C;
 }
 
 .alternate-tabs .nav-tabs {
@@ -721,8 +720,7 @@ a.nav-link {
 }
 
 .alternate-tabs li a:hover {
-  color: #fff;
-  background: #241F3D;
+  border-color: #CF940C;
 }
 
 /* End Alternate Tab Styling */
@@ -765,7 +763,7 @@ a.nav-link {
 }
 
 .sub-navigation .nav-tabs > li .disabled-tab {
-  border-top: 5px solid #dc3545 !important;
+  border-top: 5px solid rgba(0, 0, 0, .15);
   cursor: not-allowed;
 }
 
@@ -1158,9 +1156,18 @@ a.nav-link {
 }
 
 /* End Status Card Styling */
+
 /* Filter bar styling */
+.popover-filter {
+  min-width: 600px; /* Max Width of the popover */
+}
+
 .filter-bar {
   height: 30px;
+}
+
+.inline-search-filter {
+  min-width: 350px;
 }
 
 .filter-title {

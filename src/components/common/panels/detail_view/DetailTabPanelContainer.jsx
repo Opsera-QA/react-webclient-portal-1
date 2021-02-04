@@ -4,10 +4,10 @@ import PropTypes from "prop-types";
 function DetailTabPanelContainer({ tabContainer, detailView }) {
   return (
     <div className="px-3 pb-3">
-      <div>
+      <div className="mt-1">
           {tabContainer}
       </div>
-      <div className="shaded-panel detail-panel-body">
+      <div className="shaded-panel detail-panel-body pt-1">
         {detailView}
       </div>
     </div>
