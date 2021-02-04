@@ -7,7 +7,7 @@ function TableCardView({ filterDto, tableView, cardView, data, isLoading }) {
   const getView = () => {
     if (isLoading && (!Array.isArray(data) || data.length === 0)) {
       // TODO: Make good looking loading display
-      return (<div className="ml-1"><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Data</div>);
+      return (<div className="info-text text-center p-5"><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Data</div>);
     }
 
     if (filterDto?.getData("viewType") === "card") {
