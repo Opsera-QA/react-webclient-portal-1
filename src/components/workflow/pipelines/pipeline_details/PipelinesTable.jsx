@@ -10,7 +10,7 @@ import {
 import pipelineMetadata from "./pipeline-metadata";
 import {useHistory} from "react-router-dom";
 
-function PipelinesTable({ data, isLoading }) {
+function PipelinesTable({ data, isLoading, paginationModel, setPaginationModel }) {
   let history = useHistory();
   const fields = pipelineMetadata.fields;
 
@@ -40,6 +40,8 @@ function PipelinesTable({ data, isLoading }) {
     <CustomTable
       columns={columns}
       onRowSelect={onRowSelect}
+      paginationDto={paginationModel}
+      setPaginationDto={setPaginationModel}
       initialState={initialState}
       data={data}
       isLoading={isLoading}
@@ -50,6 +52,8 @@ function PipelinesTable({ data, isLoading }) {
 PipelinesTable.propTypes = {
   data: PropTypes.array,
   isLoading: PropTypes.bool,
+  setPaginationModel: PropTypes.func,
+  paginationModel: PropTypes.object
 };
 
 export default PipelinesTable;

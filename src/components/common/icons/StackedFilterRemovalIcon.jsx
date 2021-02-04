@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFilter, faTimes} from "@fortawesome/pro-light-svg-icons";
 
-function StackedFilterRemovalIcon({}) {
+function StackedFilterRemovalIcon() {
   return (
     <span className="fa-layers fa-fw">
         <FontAwesomeIcon icon={faFilter}/>

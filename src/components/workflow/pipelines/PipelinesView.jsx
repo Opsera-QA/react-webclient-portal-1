@@ -125,25 +125,50 @@ function PipelinesView({ currentTab, setActiveTab }) {
       return (showList());
     }
 
-    return (showCards());
+    return (
+      <div className="px-3">
+        <div>
+          <DtoTopPagination
+            loadData={loadData}
+            isLoading={loading}
+            paginationDto={pipelineFilterDto}
+            setPaginationDto={setPipelineFilterDto}
+          />
+        </div>
+        {showCards()}
+        <div>
+          <DtoBottomPagination
+            loadData={loadData}
+            isLoading={loading}
+            paginationDto={pipelineFilterDto}
+            setPaginationDto={setPipelineFilterDto}
+          />
+        </div>
+      </div>
+    );
   };
 
   const showCards = () => {
     return (
-      <>
+      <Row>
         {data.response.map((item, idx) => (
           <Col key={idx} xl={6} md={12} className="p-2">
             <PipelineItem item={item}/>
           </Col>
         ))}
-      </>
+      </Row>
     );
   };
 
   const showList = () => {
     return (
       <Col sm={12} className="p-2">
-        <PipelinesTable isLoading={loading} data={data.response}/>
+        <PipelinesTable
+          isLoading={loading}
+          paginationModel={pipelineFilterDto}
+          setPaginationModel={setPipelineFilterDto}
+          data={data.response}
+        />
       </Col>
     );
   };
@@ -197,31 +222,13 @@ function PipelinesView({ currentTab, setActiveTab }) {
   }
 
   return (
-    <div className="max-content-width" style={{minWidth: "505px"}}>
-      <div className="mb-4">
-        <div className="mb-1 py-2 px-2" style={{backgroundColor:"#E8E8E8"}}>
+    <div style={{minWidth: "505px"}}>
+      <div>
+        <div className="mb-2 py-2 px-2" style={{backgroundColor:"#E8E8E8"}}>
           {getFilterBar()}
         </div>
-        <div className="px-3">
-          <div className="pt-1">
-            <DtoTopPagination
-              loadData={loadData}
-              isLoading={loading}
-              paginationDto={pipelineFilterDto}
-              setPaginationDto={setPipelineFilterDto}
-            />
-          </div>
-          <Row>
-            {getPipelinesBody()}
-          </Row>
-          <div className="pb-2">
-            <DtoBottomPagination
-              loadData={loadData}
-              isLoading={loading}
-              paginationDto={pipelineFilterDto}
-              setPaginationDto={setPipelineFilterDto}
-            />
-          </div>
+        <div>
+          {getPipelinesBody()}
         </div>
       </div>
     </div>
