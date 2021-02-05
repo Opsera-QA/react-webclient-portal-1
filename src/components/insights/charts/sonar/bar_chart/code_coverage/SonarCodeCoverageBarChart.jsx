@@ -11,7 +11,7 @@ import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
 import InfoDialog from "components/common/status_notifications/info";
 
-function SonarCodeCoverageBarChart( { date, persona } ) {
+function SonarCodeCoverageBarChart( { date, persona, tags } ) {
   const [showModal, setShowModal] = useState(false);
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
@@ -40,16 +40,12 @@ function SonarCodeCoverageBarChart( { date, persona } ) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
+    const apiUrl = "/analytics/metrics";
     const postBody = {
-      data: [
-        {
-          request: "sonarCodeCoverage",
-          metric: "bar",
-        },
-      ],
+      request: "sonarCodeCoverage",
       startDate: date.start,
       endDate: date.end,
+      tags: tags
     };
 
     try {

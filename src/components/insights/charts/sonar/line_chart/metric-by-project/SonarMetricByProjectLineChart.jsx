@@ -25,7 +25,7 @@ import "components/analytics/charts/charts.css";
   "new_technical_debt", "new_uncovered_conditions", "new_uncovered_lines", "new_violations", "new_vulnerabilities", "new_coverage",
   "new_line_coverage", "skipped_tests", "test_errors", "test_execution_time", "test_failures", "test_success_density", "tests",
  */
-function SonarMetricByProjectLineChart({ persona, sonarMeasure, date }) {
+function SonarMetricByProjectLineChart({ persona, sonarMeasure, date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -36,16 +36,12 @@ function SonarMetricByProjectLineChart({ persona, sonarMeasure, date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
+    const apiUrl = "/analytics/metrics";
     const postBody = {
-      data: [
-        {
-          request: "sonarMeasures-" + sonarMeasure,
-          metric: "stacked",
-        }
-      ],
+      request: "sonarMeasures-" + sonarMeasure,
       startDate: date.start, 
-      endDate: date.end
+      endDate: date.end,
+      tags: tags
     };
 
     try {
@@ -139,10 +135,10 @@ function SonarMetricByProjectLineChart({ persona, sonarMeasure, date }) {
                   border: "1px solid #ccc",
                 }}>
                   <div>
-                    <strong> Quality Gate: </strong> {node.point.data.info._source.qualityGate.status} <br />
-                    <strong> Qualifier: </strong>  {node.point.data.info._source.sonarqube_measures.component.qualifier} <br />
+                    <strong> Quality Gate: </strong> {node.point.data.status} <br />
+                    <strong> Qualifier: </strong>  {node.point.data.gate} <br />
                     <strong> Date: </strong> {node.point.data.xFormatted} <br></br>
-                    <strong>  {node.point.serieId}: {node.point.data.yFormatted}  </strong>
+                    <strong> {node.point.data.metric}: {node.point.data.yFormatted}  </strong>
                   </div>
 
                 </div>
