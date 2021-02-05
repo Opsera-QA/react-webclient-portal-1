@@ -253,7 +253,7 @@ const commandLineStepFormMetadata = {
     {
       label: "Script File Path",
       id: "scriptFilePath",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Script File Name",
