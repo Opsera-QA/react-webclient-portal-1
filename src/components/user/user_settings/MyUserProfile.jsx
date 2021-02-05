@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync, faSpinner } from "@fortawesome/pro-light-svg-icons";
-import { defineUserRole } from "utils/helpers";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import userActions from "components/user/user-actions";
@@ -12,7 +11,6 @@ import LdapSettingsPanel
 import Model from "core/data_model/model";
 import registeredUsersMetadata from "components/admin/registered_users/registered-users-metadata";
 import RegisteredUserSummary from "components/admin/registered_users/registered_user_details/RegisteredUserSummary";
-import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import AccessRoleField from "components/common/fields/access/AccessRoleField";
 
 function MyUserProfile() {
@@ -22,7 +20,7 @@ function MyUserProfile() {
   const [userModel, setUserModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
-  const [accessRole, setAccessRole] = useState("");
+  const [accessRole, setAccessRole] = useState(undefined);
 
   useEffect(() => {
     loadData();
