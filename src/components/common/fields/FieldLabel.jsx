@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 
 function FieldLabel({ field, fieldName }) {
   if (field == null) {
-    return <label className="mr-2 text-muted"><span>No Metadata For This Field [${fieldName}]:</span></label>;
+    return <label className="mb-0 mr-2 text-muted"><span>No Metadata For This Field [${fieldName}]:</span></label>;
   }
 
   if (field.label == null) {
     return <></>;
   }
 
-  return (<label className="mr-2 text-muted"><span>{field.label}:</span></label>);
+  return (<label className="mb-0 mr-2 text-muted"><span>{field.label}:</span></label>);
 }
 
 FieldLabel.propTypes = {
