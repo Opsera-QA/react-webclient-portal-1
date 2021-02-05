@@ -10,7 +10,7 @@ import CardView from "components/common/card/CardView";
 function ToolCardView({ data, toolFilterDto, setToolFilterDto, loadData, isLoading }) {
   const getCards = () => {
     if (!Array.isArray(data) || data.length === 0) {
-      return <></>;
+      return null;
     }
 
     return (
