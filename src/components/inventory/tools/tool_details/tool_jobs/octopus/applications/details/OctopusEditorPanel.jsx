@@ -27,6 +27,7 @@ import EnvironmentNameSelectInput from "./input/EnvironmentSelectInput";
 import AccountSelectInput from "./input/AccountSelectInput";
 import AWSToolSelectInput from "./input/AWSToolSelectInput";
 import ClusterSelectInput from "./input/ClusterSelectInput";
+import FeedTypeSelectInput from "./input/FeedTypeSelectInput";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -416,7 +417,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
               />
             </Col>
             <Col lg={12}>
-              <ListOfFeedsSelectInput
+              <FeedTypeSelectInput
                 fieldName={"feedType"}
                 dataObject={octopusApplicationDataDto}
                 setDataObject={setOctopusApplicationDataDto}
