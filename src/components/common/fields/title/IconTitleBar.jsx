@@ -4,8 +4,9 @@ import PropTypes from "prop-types";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import {cutOffExcessCharacters} from "components/common/helpers/string-helpers";
 
-function IconTitleBar({ title, titleIcon, isLoading, inactive }) {
+function IconTitleBar({ title, titleIcon, isLoading, inactive, characterLimit }) {
   const getStateColumn = () => {
     if (inactive != null) {
       return (
@@ -31,7 +32,7 @@ function IconTitleBar({ title, titleIcon, isLoading, inactive }) {
       </Col>
       <Col sm={12}>
         <div className="d-flex w-100 mt-2">
-          <div className="mx-auto title">{title}</div>
+          <div className="mx-auto icon-card-title">{cutOffExcessCharacters(title, characterLimit)}</div>
         </div>
       </Col>
       {getStateColumn()}
@@ -45,7 +46,12 @@ IconTitleBar.propTypes = {
   title: PropTypes.string,
   parentBreadcrumb: PropTypes.object,
   titleIcon: PropTypes.object,
+  characterLimit: PropTypes.number,
   isLoading: PropTypes.bool
+};
+
+IconTitleBar.defaultProps = {
+  characterLimit: 50
 };
 
 export default IconTitleBar;

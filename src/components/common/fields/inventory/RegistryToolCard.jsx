@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
 import {faWrench} from "@fortawesome/pro-light-svg-icons";
 import ToolLinkButton from "components/common/buttons/inventory/ToolLinkButton";
 import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
@@ -20,21 +19,25 @@ function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
   return (
     <IconCardContainerBase titleBar={getTitleBar()} isLoading={isLoading} className={"tool-registry-card"}>
       <div className="h-100 w-100">
-        <div className="description-height"><small><DescriptionField dataObject={toolData} fieldName={"description"}/></small></div>
-        <small>
+        <div className="description-height small">
+          <DescriptionField dataObject={toolData} fieldName={"description"} />
+        </div>
+        <div className="small">
           <CreateAndUpdateDateFieldBase
-            className={"mt-2"}
+            className={"mt-3 mb-1"}
             dataObject={toolData}
             createdAtFieldName={"createdAt"}
             updatedAtFieldName={"updatedAt"}
           />
-        </small>
-        <ToolLinkButton
-          toolId={toolData.getData("_id")}
-          className={"w-100 mt-auto ml-auto"}
-          loadToolInNewWindow={loadToolInNewWindow}
-          variant={"outline-primary"}
-        />
+        </div>
+        <div>
+          <ToolLinkButton
+            toolId={toolData.getData("_id")}
+            className={"w-100 mt-auto ml-auto"}
+            loadToolInNewWindow={loadToolInNewWindow}
+            variant={"outline-primary"}
+          />
+        </div>
       </div>
     </IconCardContainerBase>
   );

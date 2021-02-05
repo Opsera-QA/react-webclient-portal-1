@@ -129,15 +129,16 @@
   font-size: 75px;
 }
 
-.tool-registry-card .title {
+.tool-registry-card .icon-card-title {
   font-size: 13px;
   color: #2e1956;
   font-weight: bold;
-  min-height: 50px;
+  min-height: 40px;
+  max-height: 40px;
 }
 
 .tool-registry-card .description-height {
-  height: 50px;
+  height: 60px;
 }
 
 /* End Summary Card Styling */

@@ -23,3 +23,13 @@ export function generateUUID() {
     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
   );
 }
+
+export function cutOffExcessCharacters(initialString, characterLimit, postFix = "...") {
+  let parsedString = initialString;
+
+  if (parsedString != null && typeof parsedString === "string" && parsedString.length > characterLimit) {
+    parsedString = `${parsedString.substring(0, characterLimit)}${postFix}`;
+  }
+
+  return parsedString;
+}

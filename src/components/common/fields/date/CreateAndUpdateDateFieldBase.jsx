@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
 import FieldLabel from "components/common/fields/FieldLabel";
+import FieldContainer from "components/common/fields/FieldContainer";
 
 function CreateAndUpdateDateFieldBase({createdAtFieldName, updatedAtFieldName, dataObject, dateFormat, className}) {
   const [createdAtField] = useState(dataObject.getFieldById(createdAtFieldName));
@@ -13,10 +14,10 @@ function CreateAndUpdateDateFieldBase({createdAtFieldName, updatedAtFieldName, d
   };
 
   return (
-    <div className={className}>
+    <FieldContainer className={className}>
       <div><FieldLabel field={createdAtField} fieldName={createdAtFieldName} /><span>{getDate(createdAtField)}</span></div>
       <div><FieldLabel field={updatedAtField} fieldName={updatedAtFieldName} /><span>{getDate(updatedAtField)}</span></div>
-    </div>
+    </FieldContainer>
   );
 }
 

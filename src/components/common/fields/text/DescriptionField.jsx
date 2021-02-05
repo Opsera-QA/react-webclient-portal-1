@@ -1,27 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
+import {cutOffExcessCharacters} from "components/common/helpers/string-helpers";
 
-function DescriptionField({dataObject, fieldName, characterLimit}) {
-  const getParsedText = () => {
-    let description = dataObject.getData(fieldName);
-
-    if (description != null && description.length > characterLimit) {
-      description = `${description.substring(0, characterLimit)}...`;
-    }
-
-    return description;
-  };
-
+function DescriptionField({dataObject, fieldName, className, characterLimit}) {
   return (
-    <FieldContainer className="mt-0">
-      <span>{getParsedText()}</span>
+    <FieldContainer className={className}>
+      <span>{cutOffExcessCharacters(dataObject?.getData(fieldName), characterLimit)}</span>
     </FieldContainer>
   );
 }
 
 DescriptionField.propTypes = {
   fieldName: PropTypes.string,
+  className: PropTypes.string,
   dataObject: PropTypes.object,
   characterLimit: PropTypes.number
 };
