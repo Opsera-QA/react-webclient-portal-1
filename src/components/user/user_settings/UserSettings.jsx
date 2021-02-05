@@ -109,7 +109,7 @@ function UserSettings() {
     <ScreenContainer
       navigationTabContainer={getNavigationTabContainer()}
       breadcrumbDestination={getBreadcrumbDestination()}
-      isLoading={!accessRoleData || !isLdapUser}
+      isLoading={!accessRoleData || isLdapUser == null}
       pageDescription={`
           Review and manage your user profile information as well as platform settings from this page. Please note,
           profile details are
