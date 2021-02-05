@@ -127,8 +127,24 @@
 /* Summary Card Styling */
 .tool-registry-card .title-icon {
   height: 92px;
-  max-width: 92px;
-  font-size: 92px;
+  /*max-width: 92px;*/
+}
+
+.tool-registry-card .title-fa-icon {
+  font-size: 75px;
+  margin-top: 15px;
+}
+
+.tool-registry-card .small-title-icon {
+  margin-top: 30px;
+}
+
+.tool-registry-card .jira-icon {
+  margin-top: 25px;
+}
+
+.tool-registry-card .slack-icon {
+  margin-top: 15px;
 }
 
 .tool-registry-card .icon-card-title {
@@ -155,8 +171,6 @@
   font-weight: 300;
   line-height: 37.5px;
   white-space: nowrap;
-  margin-top: 35px;
-  margin-bottom: 40px;
 }
 
 /* End Summary Card Styling */

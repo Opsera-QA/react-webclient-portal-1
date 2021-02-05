@@ -1,20 +1,27 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faWrench} from "@fortawesome/pro-light-svg-icons";
 import ToolLinkButton from "components/common/buttons/inventory/ToolLinkButton";
 import IconCardContainerBase from "components/common/card_containers/IconCardContainerBase";
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import DescriptionField from "components/common/fields/text/DescriptionField";
 import CreateAndUpdateDateFieldBase from "components/common/fields/date/CreateAndUpdateDateFieldBase";
-import ToolIdentifierVendorIconField from "components/common/fields/icon/ToolIdentifierVendorIconField";
+import {getLargeVendorIconFromToolIdentifier} from "components/common/helpers/icon-helpers";
 
 function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
   const getTitleBar = () => {
-    console.log("tool Identifier: " + JSON.stringify(toolData.getData("tool_identifier")))
+    let icon = getLargeVendorIconFromToolIdentifier(process.env.REACT_APP_OPSERA_S3_STORAGE_URL, toolData?.getData("tool_identifier"));
+
+    if (typeof icon === "string") {
+      icon = (
+        <div className="d-flex w-100 h-100 mt-2 mb-4">
+          <div className="my-auto tool-title-text">{icon}</div>
+        </div>
+      );
+    }
+
     return (
       <IconTitleBar
-        className={"title"}
-        icon={<ToolIdentifierVendorIconField dataObject={toolData} fieldName={"tool_identifier"} />}
+        icon={icon}
         title={`${toolData.getData("name")}`}
         isLoading={isLoading}
       />

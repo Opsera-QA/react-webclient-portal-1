@@ -13,9 +13,10 @@ export function getLargeVendorIconFromToolIdentifier (s3Bucket, toolIdentifier) 
 
   switch (toolIdentifier) {
     case "jira":
-      return <Image src={`${vendorIconPrefix}/icons8-jira-64.png`} />;
+      return <Image src={`${vendorIconPrefix}/icons8-jira-64.png`} className={"jira-icon"} />;
     case "aws_account":
     case "elastic-beanstalk":
+    case "aws-deploy":
       return <Image src={`${vendorIconPrefix}/icons8-amazon-web-services-96.png`} />;
     case "bitbucket":
       return <Image src={`${vendorIconPrefix}/icons8-bitbucket-96.png`} />;
@@ -28,32 +29,48 @@ export function getLargeVendorIconFromToolIdentifier (s3Bucket, toolIdentifier) 
     case "azure":
       return <Image src={`${vendorIconPrefix}/cons8-azure-96.png`} />;
     case "octopus":
-      return <FontAwesomeIcon icon={faOctopusDeploy} fixedWidth style={{color: "#0D80D8"}} />;
+      return <FontAwesomeIcon icon={faOctopusDeploy} fixedWidth style={{color: "#0D80D8"}} className={"title-fa-icon"} />;
     case "slack":
-      return <Image src={`${vendorIconPrefix}/icons8-slack-80.png`} />;
+      return <Image src={`${vendorIconPrefix}/icons8-slack-80.png`} className={"slack-icon"} />;
     case "sfdc-configurator":
-      return <FontAwesomeIcon icon={faSalesforce} fixedWidth style={{color: "#0D80D8"}} />;
+      return <FontAwesomeIcon icon={faSalesforce} fixedWidth style={{color: "#0D80D8"}} className={"title-fa-icon"} />;
     case "jenkins":
       return <Image src={`${vendorIconPrefix}/icons8-jenkins-96.png`} />;
     case "teams":
-      return <Image src={`${vendorIconPrefix}/icons8-microsoft-teams-48.png`} />;
+      return <Image src={`${vendorIconPrefix}/icons8-microsoft-teams-48.png`} className={"small-title-icon"} />;
     case "terraform":
-      return <Image src={`${vendorIconPrefix}/hashicorp-terraform-48.png`} />;
+      return <Image src={`${vendorIconPrefix}/hashicorp-terraform-48.png`} className={"small-title-icon"} />;
     case "gcp-deploy":
-      return <Image src={`${vendorIconPrefix}/icons8-google-cloud-platform-64.png`} />;
+      return <Image src={`${vendorIconPrefix}/icons8-google-cloud-platform-64.png`} className={"small-title-icon"} />;
     case "selenium":
-      return <Image src={`${vendorIconPrefix}/icons8-selenium-50.png`} />;
+      return <Image src={`${vendorIconPrefix}/icons8-selenium-50.png`} className={"small-title-icon"} />;
     case "anchor":
       return <Image src={`${vendorIconPrefix}/anchor-96-256.png`} />;
     case "argo":
-      return <span className="tool-title-text">{getVendorTitle("argo")}</span>;
+      return getVendorTitle("argo");
+    case "sonar":
     // TODO: Find better icon for Sonar. It looks bad
-    // case "sonar":
-    //   return <Image src={`${vendorIconPrefix}/sonarcube-65-250.png`} />;
+      return getVendorTitle("sonar");
+    case "junit":
+      return getVendorTitle("junit");
+    case "nexus":
+      return <Image src={`${vendorIconPrefix}/nexus-122-116.png`} />;
+    case "spinnaker":
+      // TODO: Find better icon for spinnaker. It looks bad
+      return getVendorTitle("spinnaker");
+    case "teamcity":
+      return <Image src={`${vendorIconPrefix}/TeamCity-120-120.png`} />;
+    case "twistlock":
+      return getVendorTitle("twistlock");
+    case "xunit":
+      return getVendorTitle("twistlock");
+
+
+    // base example
     // case "":
     //   return <Image src={`${vendorIconPrefix}/`} />;
     default:
-      return <FontAwesomeIcon icon={faWrench} fixedWidth />;
+      return <FontAwesomeIcon icon={faWrench} fixedWidth className={"title-fa-icon"} />;
   }
 }
 
@@ -64,41 +81,53 @@ export function getVendorTitle (toolIdentifier) {
 
   switch (toolIdentifier) {
     case "jira":
-      return "";
+      return "Jira";
     case "aws_account":
-      return "";
+      return "AWS";
     case "elastic-beanstalk":
-      return "";
+      return "Elastic Beanstalk";
     case "bitbucket":
-      return "";
+      return "BitBucket";
     case "docker-push":
-      return "";
+      return "Docker";
     case "github":
-      return "";
+      return "Github";
     case "gitlab":
-      return "";
+      return "Gitlab";
     case "azure":
-      return "";
+      return "Azure";
     case "octopus":
-      return "";
+      return "Octopus Deploy";
+    case "sfdc":
+      return "Salesforce";
     case "slack":
-      return "";
+      return "Slack";
     case "jenkins":
-      return "";
+      return "Jenkins";
     case "teams":
-      return "";
+      return "Teams";
     case "terraform":
-      return "";
+      return "Terraform";
     case "gcp-deploy":
-      return "";
+      return "Google Cloud Platform";
+    case "junit":
+      return "JUnit";
     case "selenium":
-      return "";
+      return "Selenium";
     case "anchor":
-      return "";
+      return "Anchor";
     case "argo":
       return "Argo CD";
     case "sonar":
-      return "";
+      return "SonarQube";
+    case "spinnaker":
+      return "Spinnaker";
+    case "xunit":
+      return "xUnit";
+    case "teamcity":
+      return "TeamCity"
+    case "twistlock":
+      return "Twistlock"
     default:
       return "";
   }
