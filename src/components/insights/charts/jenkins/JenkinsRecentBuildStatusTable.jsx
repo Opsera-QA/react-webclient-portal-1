@@ -111,25 +111,17 @@ function RecentBuildsTable({ date, tags }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    let apiUrl = "/analytics/metrics";
-    let postBody = {
+    const apiUrl = "/analytics/metrics";
+    const postBody = {
       request: "jenkinsBuildRecent",
       startDate: date.start,
       endDate: date.end,
       tags: tags
     };
-    if (isEnvProd) {
-      apiUrl = "/analytics/activity";
-      postBody = {
-        requests: ["jenkinsBuildRecent"],
-        startDate: date.start,
-        endDate: date.end
-      };
-    }
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = isEnvProd ? res && res.data ? res : [] : res && res.data ? res.data.data[0].jenkinsBuildRecent : [] ;
+      let dataObject = res && res.data ? res.data.data[0].jenkinsBuildRecent : [] ;
       setData(dataObject);
       setLoading(false);
     } catch (err) {
