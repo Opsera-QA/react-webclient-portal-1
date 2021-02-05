@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {cutOffExcessCharacters} from "components/common/helpers/string-helpers";
 
-function IconTitleBar({ title, titleIcon, isLoading, inactive, characterLimit }) {
+function IconTitleBar({ title, icon, isLoading, inactive, characterLimit }) {
   const getStateColumn = () => {
     if (inactive != null) {
       return (
@@ -26,13 +26,13 @@ function IconTitleBar({ title, titleIcon, isLoading, inactive, characterLimit })
   return (
     <Row>
       <Col sm={12}>
-        <div className="d-flex w-100">
-          <div className="mx-auto title-icon"><FontAwesomeIcon icon={titleIcon} fixedWidth /></div>
+        <div className="d-flex w-100 mt-2 mb-4">
+          <div className="mx-auto title-icon">{icon}</div>
         </div>
       </Col>
       <Col sm={12}>
-        <div className="d-flex w-100 mt-2">
-          <div className="mx-auto icon-card-title">{cutOffExcessCharacters(title, characterLimit)}</div>
+        <div className="d-flex w-100 mt-2 pl-1">
+          <div className="icon-card-title">{cutOffExcessCharacters(title, characterLimit)}</div>
         </div>
       </Col>
       {getStateColumn()}
@@ -45,7 +45,7 @@ IconTitleBar.propTypes = {
   inactive: PropTypes.bool,
   title: PropTypes.string,
   parentBreadcrumb: PropTypes.object,
-  titleIcon: PropTypes.object,
+  icon: PropTypes.object,
   characterLimit: PropTypes.number,
   isLoading: PropTypes.bool
 };

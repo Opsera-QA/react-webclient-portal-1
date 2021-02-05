@@ -6,10 +6,19 @@ import IconCardContainerBase from "components/common/card_containers/IconCardCon
 import IconTitleBar from "components/common/fields/title/IconTitleBar";
 import DescriptionField from "components/common/fields/text/DescriptionField";
 import CreateAndUpdateDateFieldBase from "components/common/fields/date/CreateAndUpdateDateFieldBase";
+import ToolIdentifierVendorIconField from "components/common/fields/icon/ToolIdentifierVendorIconField";
 
 function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
   const getTitleBar = () => {
-    return <IconTitleBar className={"title"} titleIcon={faWrench} title={`${toolData.getData("name")}`} isLoading={isLoading} />;
+    console.log("tool Identifier: " + JSON.stringify(toolData.getData("tool_identifier")))
+    return (
+      <IconTitleBar
+        className={"title"}
+        icon={<ToolIdentifierVendorIconField dataObject={toolData} fieldName={"tool_identifier"} />}
+        title={`${toolData.getData("name")}`}
+        isLoading={isLoading}
+      />
+    );
   };
 
   if (isLoading) {
@@ -19,11 +28,11 @@ function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
   return (
     <IconCardContainerBase titleBar={getTitleBar()} isLoading={isLoading} className={"tool-registry-card"}>
       <div className="w-100">
-        <div className="description-height small">
+        <div className="description-height small pl-1">
           <DescriptionField dataObject={toolData} fieldName={"description"} />
         </div>
         <div className="date-and-button">
-          <div className="small">
+          <div className="small pl-1">
             <CreateAndUpdateDateFieldBase
               className={"mt-3 mb-1"}
               dataObject={toolData}
@@ -34,7 +43,7 @@ function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
           <div>
             <ToolLinkButton
               toolId={toolData.getData("_id")}
-              className={"w-100 mt-auto ml-auto"}
+              className={"w-100 mt-1"}
               loadToolInNewWindow={loadToolInNewWindow}
               variant={"outline-primary"}
             />
