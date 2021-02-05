@@ -1097,6 +1097,7 @@ function JenkinsStepConfiguration({
                       value={formData.rollbackBranchName || ""}
                       onChange={(e) => setFormData({ ...formData, rollbackBranchName: e.target.value })}
                     />
+                    <Form.Text className="text-muted">An Orphan branch will be created with only the back up specific files.</Form.Text>
                   </Form.Group>
                 )}
                 
@@ -1115,7 +1116,7 @@ function JenkinsStepConfiguration({
                       checked={formData.isNewBranch}
                       onChange={(e) => setFormData({ ...formData, isNewBranch: e.target.checked })}
                     />
-                    <Form.Text className="text-muted">Creates a new branch and push the artifacts</Form.Text>
+                    <Form.Text className="text-muted">Creates a new branch and push the artifacts.</Form.Text>
                   </Form.Group>
 
                   {formData.isNewBranch && 
@@ -1139,7 +1140,9 @@ function JenkinsStepConfiguration({
                       checked={formData.hasUpstreamBranch}
                       onChange={(e) => setFormData({ ...formData, hasUpstreamBranch: e.target.checked })}
                     />
-                    <Form.Text className="text-muted">Configure an upstream/source branch to which the artifacts will be pushed.</Form.Text>
+                    <Form.Text className="text-muted">Configure an upstream/source branch for merging the changes. 
+                      Files will be overwritten and conflicts if any will not be resolved.
+                      If no upstream branch is configured, then the new Artifact branch is created as an Orphan branch, having only the artifact files and no commit history. </Form.Text>
                   </Form.Group>
 
                   {formData.hasUpstreamBranch && 
