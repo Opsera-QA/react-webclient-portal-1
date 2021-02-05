@@ -147,6 +147,10 @@
   margin-top: 15px;
 }
 
+.tool-registry-card .wrench {
+  opacity: .8;
+}
+
 .tool-registry-card .icon-card-title {
   font-size: 13px;
   color: #2e1956;

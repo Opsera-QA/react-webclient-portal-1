@@ -63,14 +63,14 @@ export function getLargeVendorIconFromToolIdentifier (s3Bucket, toolIdentifier) 
     case "twistlock":
       return getVendorTitle("twistlock");
     case "xunit":
-      return getVendorTitle("twistlock");
+      return getVendorTitle("xunit");
 
 
     // base example
     // case "":
     //   return <Image src={`${vendorIconPrefix}/`} />;
     default:
-      return <FontAwesomeIcon icon={faWrench} fixedWidth className={"title-fa-icon"} />;
+      return <FontAwesomeIcon icon={faWrench} fixedWidth className={"title-fa-icon wrench"} />;
   }
 }
 
