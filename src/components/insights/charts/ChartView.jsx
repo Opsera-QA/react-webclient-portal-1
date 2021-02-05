@@ -175,29 +175,29 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
 
       // Sonar KPIs
       case "sonar-code-smells":
-        return (<SonarCodeSmellsLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<SonarCodeSmellsLineChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "sonar-maintainability-rating":
-        return (<SonarMaintainabilityRatingLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<SonarMaintainabilityRatingLineChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "sonar-bugs":
-        return (<SonarBugsCountLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<SonarBugsCountLineChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "sonar-new-bugs":
-        return (<SonarNewBugsCountLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<SonarNewBugsCountLineChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "sonar-reliability-rating":
-        return (<SonarReliabilityRatingLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<SonarReliabilityRatingLineChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "sonar-reliability-remediation-effort":
-        return (<SonarReliabilityRemediationEffortLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<SonarReliabilityRemediationEffortLineChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "sonar-vulnerabilities-by-project":
-        return (<SonarMetricByProjectLineChart persona={"developer"} date={getDateObject(kpiConfig)} sonarMeasure={"vulnerabilities"}/>);
+        return (<SonarMetricByProjectLineChart persona={"developer"} date={getDateObject(kpiConfig)} sonarMeasure={"vulnerabilities"} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "sonar-new-vulnerabilities-by-project":
-        return (<SonarMetricByProjectLineChart persona={"developer"} date={getDateObject(kpiConfig)} sonarMeasure={"new_vulnerabilities"}/>);
+        return (<SonarMetricByProjectLineChart persona={"developer"} date={getDateObject(kpiConfig)} sonarMeasure={"new_vulnerabilities"} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "sonar-new-technical-debt-by-project":
-        return (<SonarMetricByProjectLineChart persona={"developer"} date={getDateObject(kpiConfig)} sonarMeasure={"new_technical_debt"}/>);
+        return (<SonarMetricByProjectLineChart persona={"developer"} date={getDateObject(kpiConfig)} sonarMeasure={"new_technical_debt"} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "sonar-code-smells-by-project":
-        return (<SonarMetricByProjectLineChart persona={"developer"} date={getDateObject(kpiConfig)} sonarMeasure={"code_smells"}/>);
+        return (<SonarMetricByProjectLineChart persona={"developer"} date={getDateObject(kpiConfig)} sonarMeasure={"code_smells"} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "sonar-code-coverage":
-        return (<SonarCodeCoverageBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<SonarCodeCoverageBarChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "sonar-lines-to-cover":
-        return (<SonarLinesToCoverBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<SonarLinesToCoverBarChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
 
       // Jmeter KPIs
       case "jmeter-hits":
