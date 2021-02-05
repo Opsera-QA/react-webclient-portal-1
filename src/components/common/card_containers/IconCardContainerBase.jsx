@@ -37,9 +37,11 @@ function IconCardContainerBase({ children, isLoading, titleBar, footerBar, class
         {getCardTitle()}
       </Card.Title>
       <Card.Body className="h-100 px-2 py-0">
-        {getCardBody()}
+        {/*{getCardBody()}*/}
       </Card.Body>
-      {getCardFooter()}
+      <Card.Footer>
+        {getCardBody()}
+      </Card.Footer>
     </Card>
   );
 }
