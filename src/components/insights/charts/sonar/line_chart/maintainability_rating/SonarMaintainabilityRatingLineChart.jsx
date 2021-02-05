@@ -10,7 +10,7 @@ import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
 import InfoDialog from "components/common/status_notifications/info";
 
-function SonarMaintainabilityRatingLineChart({ persona, date }) {
+function SonarMaintainabilityRatingLineChart({ persona, date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -39,16 +39,12 @@ function SonarMaintainabilityRatingLineChart({ persona, date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
+    const apiUrl = "/analytics/metrics";
     const postBody = {
-      data: [
-        {
-          request: "sonarMaintainability",
-          metric: "line",
-        },
-      ],
+      request: "sonarMaintainability",
       startDate: date.start,
       endDate: date.end,
+      tags: tags
     };
 
     try {

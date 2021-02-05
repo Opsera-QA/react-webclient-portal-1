@@ -16,7 +16,7 @@ import ModalLogs from "components/common/modal/modalLogs";
 
 import LoadingDialog from "components/common/status_notifications/loading";
 
-function ReliabilityRemediationEffortLineChart({ persona, date }) {
+function ReliabilityRemediationEffortLineChart({ persona, date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -46,16 +46,12 @@ function ReliabilityRemediationEffortLineChart({ persona, date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
+    const apiUrl = "/analytics/metrics";
     const postBody = {
-      data: [
-        {
-          request: "reliabilityRemediationEffort",
-          metric: "line",
-        },
-      ],
+      request: "reliabilityRemediationEffort",
       startDate: date.start,
       endDate: date.end,
+      tags: tags
     };
 
     try {
