@@ -138,7 +138,13 @@
 }
 
 .tool-registry-card .description-height {
-  height: 60px;
+  min-height: 90px;
+  height: 100%;
+  max-height: 90px;
+}
+
+.tool-registry-card .date-and-button {
+  min-height: 69px;
 }
 
 /* End Summary Card Styling */
