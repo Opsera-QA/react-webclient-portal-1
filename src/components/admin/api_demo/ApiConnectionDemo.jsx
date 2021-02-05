@@ -55,17 +55,17 @@ function ApiConnectionDemo() {
     const apiUrls = ["/auth-demo", "/users", "/analytics/settings", "/tools"];
     try {
       const [authDemo, userProfile, analyticsProfile, tools] = await axiosApiServiceMultiGet(accessToken, apiUrls);
-      setAuthData(authDemo.data);
-      setUser(userProfile.data);
+      setAuthData(authDemo?.data);
+      setUser(userProfile?.data);
 
-      if (analyticsProfile != null && analyticsProfile.data != null) {
-        setAnalyticsProfile(analyticsProfile.data.profile[0]);
-        console.log("analyticsProfile: ", analyticsProfile.data.profile[0]);
+      if (analyticsProfile?.data != null) {
+        setAnalyticsProfile(analyticsProfile?.data?.profile[0]);
+        console.log("analyticsProfile: ", analyticsProfile?.data?.profile[0]);
       }
-      setTools(tools.data);
-      console.log("authDemo", authDemo.data);
-      console.log("userProfile", userProfile.data);
-      console.log("tools: ", tools.data);
+      setTools(tools?.data);
+      console.log("authDemo", authDemo?.data);
+      console.log("userProfile", userProfile?.data);
+      console.log("tools: ", tools?.data);
     } catch (error) {
       console.error(error);
       toastContext.showLoadingErrorDialog(error);
