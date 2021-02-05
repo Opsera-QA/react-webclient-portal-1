@@ -63,7 +63,7 @@ const INITIAL_DATA = {
   repository: "",
   branch: "",
   workspace: "",
-  agentLabels : "",
+  // agentLabels : "",
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback

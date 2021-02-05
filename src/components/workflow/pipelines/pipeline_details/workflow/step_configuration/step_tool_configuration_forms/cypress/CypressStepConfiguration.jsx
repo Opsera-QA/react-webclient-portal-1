@@ -67,7 +67,7 @@ const INITIAL_DATA = {
   branch: "",
   jsonPath: "",
   workspace: "",
-  agentLabels : "",
+  // agentLabels : "",
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -795,7 +795,7 @@ function CypressStepConfiguration({
                   />
                 ) : null}
               </Form.Group>
-              <Form.Group controlId="formJenkinsAgent">
+              {/* <Form.Group controlId="formJenkinsAgent">
                 <Form.Label className="w-100">
                   Jenkins Agent
                 </Form.Label>
@@ -811,7 +811,7 @@ function CypressStepConfiguration({
                   filter="contains"
                   onChange={(item)=> setFormData({...formData, agentLabels: item.agentLabel }) }
                 />
-              </Form.Group>
+              </Form.Group> */}
               </>
             )}
           </>

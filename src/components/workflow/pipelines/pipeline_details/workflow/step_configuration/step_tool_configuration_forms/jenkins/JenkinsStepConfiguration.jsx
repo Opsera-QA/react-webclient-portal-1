@@ -76,7 +76,7 @@ const INITIAL_DATA = {
   isNewBranch: false,
   hasUpstreamBranch: false,
   upstreamBranch: "",
-  agentLabels : "",
+  // agentLabels : "",
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -586,6 +586,14 @@ function JenkinsStepConfiguration({
     });
   }
 
+  const handleCreateNewBranchFlag = (e) => {
+    if(!e.target.checked) {
+      setFormData({ ...formData, isNewBranch: e.target.checked, branch: "", gitBranch: "", hasUpstreamBranch: false, upstreamBranch: "" });
+      return;
+    }
+    setFormData({ ...formData, isNewBranch: e.target.checked });
+  }
+
   const handleJobTypeChange = (selectedOption) => {
     setShowToast(false);
     setJobType(selectedOption.value);
@@ -889,7 +897,7 @@ function JenkinsStepConfiguration({
                       />
                     ) : null}
                   </Form.Group>
-                  <Form.Group controlId="formJenkinsAgent">
+                  {/* <Form.Group controlId="formJenkinsAgent">
                     <Form.Label className="w-100">
                       Jenkins Agent
                     </Form.Label>
@@ -905,7 +913,7 @@ function JenkinsStepConfiguration({
                       filter="contains"
                       onChange={(item)=> setFormData({...formData, agentLabels: item.agentLabel }) }
                     />
-                  </Form.Group>
+                  </Form.Group> */}
                   </>
                 )}
               </>
@@ -1057,7 +1065,7 @@ function JenkinsStepConfiguration({
               formData.jobType != "SFDC UNIT TESTING" &&
               formData.jobType != "SFDC DEPLOY" &&
               formData.jobType != "SFDC BACK UP" &&
-              !formData.isNewBranch &&
+              formData.jobType != "SFDC PUSH ARTIFACTS" &&
               !formData.isOrgToOrg && (
                 <Form.Group controlId="account" className="mt-2">
                   <Form.Label>Branch*</Form.Label>
@@ -1114,12 +1122,13 @@ function JenkinsStepConfiguration({
                       label={"Create a new backup branch?"}
                       id={`newBranch`}
                       checked={formData.isNewBranch}
-                      onChange={(e) => setFormData({ ...formData, isNewBranch: e.target.checked })}
+                      onChange={handleCreateNewBranchFlag}
                     />
                     <Form.Text className="text-muted">Creates a new branch and push the artifacts.</Form.Text>
                   </Form.Group>
-
-                  {formData.isNewBranch && 
+                
+                  {formData.isNewBranch ? 
+                  <>
                     <Form.Group controlId="gitBranchName">
                       <Form.Label>Branch Name*</Form.Label>
                       <Form.Control
@@ -1130,24 +1139,50 @@ function JenkinsStepConfiguration({
                         onChange={(e) => setFormData({ ...formData, gitBranch: e.target.value })}
                       />
                     </Form.Group>
+                  
+                    <Form.Group controlId="isNewBranch">
+                      <Form.Check inline
+                        type="checkbox"
+                        label={"Use an upstream branch?"}
+                        id={`hasUpstreamBranch`}
+                        checked={formData.hasUpstreamBranch}
+                        onChange={(e) => setFormData({ ...formData, hasUpstreamBranch: e.target.checked })}
+                      />
+                      <Form.Text className="text-muted">Configure an upstream/source branch. The Files will be overwritten when pushing the artifacts.
+                        If no upstream branch is configured, then the new Artifact branch is created as an Orphan branch, having only the artifact files and no commit history. </Form.Text>
+                    </Form.Group>
+
+                    {formData.hasUpstreamBranch && 
+                    <Form.Group controlId="account" className="mt-2">
+                      <Form.Label>Select Upstream Branch*</Form.Label>
+                      {isBranchSearching ? (
+                        <div className="form-text text-muted mt-2 p-2">
+                          <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
+                          Loading branches from selected repository
+                        </div>
+                      ) : (
+                        <>
+                          {branchList && branchList.length > 0 ? (
+                            <DropdownList
+                              data={branchList}
+                              value={branchList[branchList.findIndex((x) => x.value === formData.upstreamBranch)]}
+                              valueField="value"
+                              textField="name"
+                              filter="contains"
+                              onChange={handleUpstreamBranchChange}
+                            />
+                          ) : (
+                            <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
+                          )}
+                        </>
+                      )}
+                      {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
+                    </Form.Group>
                   }
-
-                  <Form.Group controlId="isNewBranch">
-                    <Form.Check inline
-                      type="checkbox"
-                      label={"Use an upstream branch?"}
-                      id={`hasUpstreamBranch`}
-                      checked={formData.hasUpstreamBranch}
-                      onChange={(e) => setFormData({ ...formData, hasUpstreamBranch: e.target.checked })}
-                    />
-                    <Form.Text className="text-muted">Configure an upstream/source branch for merging the changes. 
-                      Files will be overwritten and conflicts if any will not be resolved.
-                      If no upstream branch is configured, then the new Artifact branch is created as an Orphan branch, having only the artifact files and no commit history. </Form.Text>
-                  </Form.Group>
-
-                  {formData.hasUpstreamBranch && 
+                  </> 
+                  :
                   <Form.Group controlId="account" className="mt-2">
-                    <Form.Label>Select Upstream Branch*</Form.Label>
+                    <Form.Label>Branch*</Form.Label>
                     {isBranchSearching ? (
                       <div className="form-text text-muted mt-2 p-2">
                         <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
@@ -1158,11 +1193,11 @@ function JenkinsStepConfiguration({
                         {branchList && branchList.length > 0 ? (
                           <DropdownList
                             data={branchList}
-                            value={branchList[branchList.findIndex((x) => x.value === formData.upstreamBranch)]}
+                            value={branchList[branchList.findIndex((x) => x.value === formData.branch)]}
                             valueField="value"
                             textField="name"
                             filter="contains"
-                            onChange={handleUpstreamBranchChange}
+                            onChange={handleBranchChange}
                           />
                         ) : (
                           <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
@@ -1171,7 +1206,7 @@ function JenkinsStepConfiguration({
                     )}
                     {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
                   </Form.Group>
-                  }
+                  }                
 
                   <Form.Group controlId="xmlStep">
                     <Form.Label>Build/Xml Step Info*</Form.Label>
