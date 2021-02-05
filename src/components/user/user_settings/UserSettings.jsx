@@ -17,6 +17,7 @@ function UserSettings() {
   const history = useHistory();
   const [user, setUser] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLdapUser, setIsLdapUser] = useState(undefined);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [activeTab, setActiveTab] = useState(tab ? tab : "profile");
 
@@ -49,10 +50,16 @@ function UserSettings() {
     if (userRoleAccess && user) {
       setUser(user);
       setAccessRoleData(userRoleAccess);
-      let {ldap} = user;
 
-      if (ldap.domain)
-      {
+      if (userRoleAccess) {
+        let {ldap} = user;
+        const isLdapUser = userRoleAccess?.Type !== "sass-user" && ldap?.domain != null;
+
+        if (!isLdapUser && tab !== "profile") {
+          setActiveTab("profile");
+        }
+
+        setIsLdapUser(isLdapUser);
       }
     }
   };
@@ -92,7 +99,7 @@ function UserSettings() {
     return (
       <NavigationTabContainer>
         <NavigationTab icon={faIdCard} tabName={"profile"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My Profile"} />
-        <NavigationTab icon={faUser} tabName={"myUserRecord"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My Record"} visible={user != null && user?.ldap != null} />
+        <NavigationTab icon={faUser} tabName={"myUserRecord"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My Record"} visible={isLdapUser} />
         {/*<NavigationTab icon={faKey} tabName={"accessTokens"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Access Tokens"} />*/}
       </NavigationTabContainer>
     );
@@ -102,6 +109,7 @@ function UserSettings() {
     <ScreenContainer
       navigationTabContainer={getNavigationTabContainer()}
       breadcrumbDestination={getBreadcrumbDestination()}
+      isLoading={!accessRoleData || !isLdapUser}
       pageDescription={`
           Review and manage your user profile information as well as platform settings from this page. Please note,
           profile details are

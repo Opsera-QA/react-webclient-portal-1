@@ -31,6 +31,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
   const history = useHistory();
   const [fullName, setFullName] = useState("User Profile");
   const [accessRoleData, setAccessRoleData] = useState(null);
+  const [isLdapUser, setIsLdapUser] = useState(undefined);
 
   useEffect(() => {
     getRoles(userData);
@@ -41,6 +42,8 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
       const userRoleAccess = await setAccessRoles(user);
       if (userRoleAccess) {
         setAccessRoleData(userRoleAccess);
+        const isLdapUser = userRoleAccess?.Type !== "sass-user" && user?.ldap?.domain != null;
+        setIsLdapUser(isLdapUser);
       }
       setFullName(user.firstName + " " + user.lastName);
     } else {
@@ -160,7 +163,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
 
             <NavDropdown title={fullName} id="basic-nav-dropdown" className="top-nav-dropdown" alignRight>
               <Link to="/user/profile" id="profile-button" className="dropdown-item nav-drop-down-item">Profile</Link>
-              <Link to="/user/myUserRecord" id="profile-button" className="dropdown-item nav-drop-down-item">User Settings</Link>
+              {isLdapUser && <Link to="/user/myUserRecord" id="profile-button" className="dropdown-item nav-drop-down-item">User Settings</Link>}
 
               <NavDropdown.Divider/>
 
