@@ -32,7 +32,7 @@ function LdapUserDetailPanel({ ldapUserData, setLdapUserData, orgDomain, authori
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <LdapUserSummaryPanel ldapUserData={ldapUserData} setActiveTab={!hideSettings && setActiveTab} />;
+        return <LdapUserSummaryPanel ldapUserData={ldapUserData} setActiveTab={!hideSettings ? setActiveTab : null} />;
       case "settings":
         return <LdapUserEditorPanel setLdapUserData={setLdapUserData} authorizedActions={authorizedActions} ldapUserData={ldapUserData} orgDomain={orgDomain} handleClose={toggleSummaryPanel} />;
       default:
