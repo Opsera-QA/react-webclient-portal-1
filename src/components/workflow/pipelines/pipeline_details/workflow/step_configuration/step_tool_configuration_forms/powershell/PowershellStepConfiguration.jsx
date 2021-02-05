@@ -95,11 +95,11 @@ function PowershellStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
       <PowershellBitbucketWorkspaceInput dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto} />
       <PowershellGitRepositoryInput dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto} />
       <PowershellGitBranchInput  dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto} />
-      <AgentLabelsMultiSelectInput
+      {/* <AgentLabelsMultiSelectInput
         dataObject={powershellStepConfigurationDto}
         fieldName={"agentLabels"}
         setDataObject={setPowershellStepConfigurationDataDto}
-      />
+      /> */}
       <TextInputBase setDataObject={setPowershellStepConfigurationDataDto} dataObject={powershellStepConfigurationDto} fieldName={"scriptFilePath"} />
       <TextInputBase setDataObject={setPowershellStepConfigurationDataDto} dataObject={powershellStepConfigurationDto} fieldName={"scriptFileName"} />
       <TextInputBase setDataObject={setPowershellStepConfigurationDataDto} dataObject={powershellStepConfigurationDto} fieldName={"outputPath"} />
