@@ -13,8 +13,6 @@ import { green } from "colors";
 
 function JenkinsStatusByJobNameBarChart({ persona, date, tags }) {
   const contextType = useContext(AuthContext);
-  const {featureFlagHideItemInProd} = useContext(AuthContext)
-  const isEnvProd = featureFlagHideItemInProd();
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -42,26 +40,13 @@ function JenkinsStatusByJobNameBarChart({ persona, date, tags }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    let apiUrl = "/analytics/metrics";
-    let postBody = {
+    const apiUrl = "/analytics/metrics";
+    const postBody = {
       request: "jenkinsStatusByJobName",
       startDate: date.start,
       endDate: date.end,
       tags: tags
     };
-    if (isEnvProd) {
-      apiUrl = "/analytics/data";
-      postBody = {
-        data: [
-          {
-            request: "jenkinsStatusByJobName",
-            metric: "bar",
-          },
-        ],
-        startDate: date.start,
-        endDate: date.end
-      };
-    }
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
@@ -102,7 +87,7 @@ function JenkinsStatusByJobNameBarChart({ persona, date, tags }) {
             <ResponsiveBar
               data={data ? data.data : []}
               keys={config.keys}
-              indexBy={isEnvProd ? "key" : "_id"}
+              indexBy="_id"
               onClick={() => setShowModal(true)}
               margin={config.margin}
               padding={0.3}
