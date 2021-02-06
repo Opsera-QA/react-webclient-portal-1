@@ -798,7 +798,7 @@ function JUnitStepConfiguration({
                   />
                 ) : null}
               </Form.Group>
-              <Form.Group controlId="formJenkinsAgent">
+              {/* <Form.Group controlId="formJenkinsAgent">
                 <Form.Label className="w-100">
                   Jenkins Agent
                 </Form.Label>
@@ -814,7 +814,7 @@ function JUnitStepConfiguration({
                   filter="contains"
                   onChange={(item)=> setFormData({...formData, agentLabels: item.agentLabel }) }
                 />
-              </Form.Group>
+              </Form.Group> */}
               </>
             )}
           </>
