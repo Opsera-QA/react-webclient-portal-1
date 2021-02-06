@@ -13,8 +13,6 @@ import "components/analytics/charts/charts.css";
 
 function RecentBuildsTable({ date, tags }) {
   const contextType = useContext(AuthContext);
-  const {featureFlagHideItemInProd} = useContext(AuthContext)
-  const isEnvProd = featureFlagHideItemInProd();
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);

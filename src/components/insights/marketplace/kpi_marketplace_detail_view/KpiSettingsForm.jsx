@@ -17,18 +17,14 @@ import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarD
 
 function KpiSettingsForm({kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart, setKpis}) {
     const { getAccessToken } = useContext(AuthContext);
-    const {featureFlagHideItemInProd} = useContext(AuthContext)
-    const isEnvProd = featureFlagHideItemInProd();
     const [kpiSettings, setKpiSettings] = useState(new Model(kpiConfiguration, kpiConfigurationMetadata, false));
     const [kpiDateFilter, setKpiDateFilter] = useState(new Model(kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")], kpiDateFilterMetadata, false))
     const [kpiTagsFilter, setKpiTagsFilter] = useState(new Model(kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "tags")], kpiTagsFilterMetadata, false))
-    const tagFilterEnabled = isEnvProd ? ["opsera-pipeline-duration", "opsera-pipelines-by-user", "opsera-deployment-frequency", "opsera-recent-pipeline-status", "opsera-status-by-pipeline"] : 
-                                         ["opsera-pipeline-duration", "opsera-pipelines-by-user", "opsera-deployment-frequency", "opsera-recent-pipeline-status", "opsera-status-by-pipeline", 
-                                          "jenkins-builds-by-user", "jenkins-build-duration", "jenkins-status-by-job-name", "jenkins-recent-build-status", 
-                                          "sonar-code-smells", "sonar-maintainability-rating", "sonar-bugs", "sonar-new-bugs", "sonar-reliability-rating", "sonar-reliability-remediation-effort",
-                                          "sonar-vulnerabilities-by-project", "sonar-new-vulnerabilities-by-project", "sonar-new-technical-debt-by-project", "sonar-code-smells-by-project", 
-                                          "sonar-code-coverage", "sonar-lines-to-cover"
-                                        ];
+    const tagFilterEnabled = ["opsera-pipeline-duration", "opsera-pipelines-by-user", "opsera-deployment-frequency", "opsera-recent-pipeline-status", "opsera-status-by-pipeline", 
+                              "jenkins-builds-by-user", "jenkins-build-duration", "jenkins-status-by-job-name", "jenkins-recent-build-status", 
+                              "sonar-code-smells", "sonar-maintainability-rating", "sonar-bugs", "sonar-new-bugs", "sonar-reliability-rating", "sonar-reliability-remediation-effort",
+                              "sonar-vulnerabilities-by-project", "sonar-new-vulnerabilities-by-project", "sonar-new-technical-debt-by-project", "sonar-code-smells-by-project", 
+                              "sonar-code-coverage", "sonar-lines-to-cover"];
 
     const getKpiFilters = (filter) => {
         switch (filter.type) {
