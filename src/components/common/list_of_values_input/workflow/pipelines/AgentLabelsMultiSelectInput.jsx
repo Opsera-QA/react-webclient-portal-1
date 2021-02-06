@@ -6,7 +6,7 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 // TODO:  Check with mahantha to get the actual agent label values and update it here
 // TODO : un-comment when this feature is pushed - dependency ticket -KI-150 
-export const jenkinsAgentArray = [
+export const jenkinsAgentArray = [];
   // {
   //   "name": "Opsera Agent",
   //   "env" : "linux",
@@ -22,7 +22,7 @@ export const jenkinsAgentArray = [
   //   "env" : "linux",
   //   "agentLabel": "maven",
   // }
-];
+
 
 function AgentLabelsMultiSelectInput({ fieldName, dataObject, setDataObject, setDataFunction, disabled }) {
   const toastContext = useContext(DialogToastContext);
