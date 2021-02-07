@@ -579,7 +579,7 @@ a.nav-link {
 
 /* Default Custom Tab styling */
 .default-custom-tabs .nav-tabs .nav-item.show .nav-link, .default-custom-tabs .nav-tabs .nav-link {
-  background: rgba(0, 0, 0, .05);
+  border-color: rgba(0, 0, 0, .05);
   color: #6c757d;
   border-bottom: none;
 }
@@ -1129,7 +1129,7 @@ a.nav-link {
 }
 
 .page-description {
-  background-color: #E8E8E8;
+  /*background-color: #E8E8E8;*/
   min-height: 2em;
 }
 
