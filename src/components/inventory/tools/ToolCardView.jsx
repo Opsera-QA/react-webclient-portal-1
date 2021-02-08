@@ -26,7 +26,6 @@ function ToolCardView({ data, toolFilterDto, setToolFilterDto, loadData, isLoadi
 
   return (
     <CardView
-      title={"Tools"}
       isLoading={isLoading}
       loadData={loadData}
       setPaginationDto={setToolFilterDto}

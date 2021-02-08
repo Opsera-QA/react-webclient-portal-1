@@ -1,11 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {createPageSortOptions} from "../../filters/filterHelpers";
 import DropdownList from "react-widgets/lib/DropdownList";
+import {createPageSortOptions} from "components/common/filters/filterHelpers";
 
 function PageSort({ paginationDto, setPaginationDto, loadData, isLoading}) {
-  // const [field] = useState(dataObject.getFieldById(fieldName));
-
   const updateSortOption = (sortOption) => {
     paginationDto.setData("currentPage", 1);
     paginationDto.setData("sortOption", sortOption);
@@ -18,8 +16,7 @@ function PageSort({ paginationDto, setPaginationDto, loadData, isLoading}) {
   }
 
   return (
-    <div className="">
-      {/*<label><span>{field.label}</span></label>*/}
+    <div className="page-sort">
       <DropdownList
         data={createPageSortOptions(paginationDto.getMetaData()["sortOptions"], "Sort", "text")}
         valueField={"key"}

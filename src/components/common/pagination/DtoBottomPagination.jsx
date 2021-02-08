@@ -38,40 +38,48 @@ function DtoBottomPagination({ paginationDto, setPaginationDto, paginationStyle,
       return null;
     }
 
-    const paginationDisabled = isLoading || paginationDto.getData("totalCount") <= paginationDto.getData("pageSize");
-    const onFirstPage = paginationDto.getData("currentPage") === 1;
-    const onLastPage = paginationDto.getData("currentPage") === getTotalPages();
+    const paginationDisabled = isLoading || paginationDto == null || paginationDto.getData("totalCount") == null || paginationDto.getData("totalCount") <= paginationDto.getData("pageSize");
+    const onFirstPage = paginationDto?.getData("currentPage") === 1;
+    const onLastPage = paginationDto?.getData("currentPage") === getTotalPages();
 
     return (
         <Pagination disabled={paginationDisabled} className="justify-content-center my-1">
           <Pagination.Item disabled={onFirstPage || paginationDisabled} onClick={() => setPage(1)}>First</Pagination.Item>
-          <Pagination.Item disabled={onFirstPage || paginationDisabled} onClick={() => setPage(paginationDto.getData("currentPage") - 1)}>Previous</Pagination.Item>
+          <Pagination.Item disabled={onFirstPage || paginationDisabled} onClick={() => setPage(paginationDto?.getData("currentPage") - 1)}>Previous</Pagination.Item>
           {getPaginationItems()}
-          <Pagination.Item disabled={onLastPage || paginationDisabled} onClick={() => setPage(paginationDto.getData("currentPage") + 1)}>Next</Pagination.Item>
+          <Pagination.Item disabled={onLastPage || paginationDisabled} onClick={() => setPage(paginationDto?.getData("currentPage") + 1)}>Next</Pagination.Item>
           <Pagination.Item disabled={onLastPage || paginationDisabled} onClick={() => setPage(getTotalPages())}>Last</Pagination.Item>
         </Pagination>
     )
   };
 
+  if (!paginationDto || paginationDto?.getData("totalCount") == null) {
+    return null;
+  }
+
   if (paginationStyle === "stacked") {
     return (
-      <Row className="pagination-block small">
-        <Col sm={12} className="my-auto text-center">{getResultSummary(paginationDto, isLoading)}</Col>
-        <Col sm={12} className="my-auto">
-          {getPaginator()}
-        </Col>
-      </Row>
+      <div className="bottom-pagination">
+        <Row className="pagination-block small">
+          <Col sm={12} className="my-auto text-center">{getResultSummary(paginationDto, isLoading)}</Col>
+          <Col sm={12} className="my-auto">
+            {getPaginator()}
+          </Col>
+        </Row>
+      </div>
     )
   }
 
   return (
-    <Row className="pagination-block small">
-      <Col sm={4} className="my-auto">{getResultSummary(paginationDto, isLoading)}</Col>
-      <Col sm={4} className="my-auto">
-        {getPaginator()}
-      </Col>
-      <Col sm={4}/>
-    </Row>
+    <div className="bottom-pagination">
+      <div className="pagination-block small d-flex justify-content-between px-2">
+        <div className="my-auto">{getResultSummary(paginationDto, isLoading)}</div>
+        <div className="my-auto">
+          {getPaginator()}
+        </div>
+        <div />
+      </div>
+    </div>
   );
 }
 

@@ -3,17 +3,17 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { faClipboardList } from "@fortawesome/pro-light-svg-icons";
 import simpleNumberLocalizer from "react-widgets-simple-number";
-import PipelineTaskDetailViewer from "../../../../common/modal/PipelineTaskDetailViewer";
-import SearchFilter from "../../../../common/filters/search/SearchFilter";
-import PipelineRunFilter from "../../../../common/filters/pipelines/activity_logs/PipelineRunFilter";
-import FilterContainer from "components/common/table/FilterContainer";
-import BooleanFilter from "../../../../common/filters/input/BooleanFilter";
+import pipelineActivityMetadata
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-activity-metadata";
 import {
   getPipelineActivityStatusColumn,
   getTableDateColumn,
   getTableTextColumn
-} from "../../../../common/table/table-column-helpers";
-import pipelineActivityMetadata from "./pipeline-activity-metadata";
+} from "components/common/table/table-column-helpers";
+import PipelineRunFilter from "components/common/filters/pipelines/activity_logs/PipelineRunFilter";
+import FilterContainer from "components/common/table/FilterContainer";
+import BooleanFilter from "components/common/filters/input/BooleanFilter";
+import PipelineTaskDetailViewer from "components/common/modal/PipelineTaskDetailViewer";
 
 function PipelineActivityLogTable({ data, loadData, isLoading, pipeline, pipelineActivityFilterDto, setPipelineActivityFilterDto }) {
   const fields = pipelineActivityMetadata.fields;
@@ -43,7 +43,6 @@ function PipelineActivityLogTable({ data, loadData, isLoading, pipeline, pipelin
   };
 
   const selectRow = (row) => {
-    // return row.action !== "automation task" ? getRowInfo(row) : null;
     return getRowInfo(row);
   };
 
@@ -67,6 +66,7 @@ function PipelineActivityLogTable({ data, loadData, isLoading, pipeline, pipelin
   const getPipelineActivityTable = () => {
     return (
       <CustomTable
+        className={"table-no-border"}
         columns={columns}
         data={data}
         rowStyling={rowStyling}
@@ -83,11 +83,19 @@ function PipelineActivityLogTable({ data, loadData, isLoading, pipeline, pipelin
 
   const getDropdownFilters = () => {
     return (
-      <div className="pb-2">
+      <div className="pb-2 w-100">
         <PipelineRunFilter filterDto={pipelineActivityFilterDto} setFilterDto={setPipelineActivityFilterDto} maximumRunCount={pipeline?.workflow?.run_count}/>
       </div>
       // {/*TODO: Make specific pipeline activity version when pulling specific tool identifiers is known*/}
       // {/*<ToolIdentifierFilter filterDto={pipelineActivityFilterDto}  setFilterDto={setPipelineActivityFilterDto} />*/}
+    );
+  };
+  const getInlineFilters = () => {
+    return (
+      <div className="px-2 d-flex small">
+        <div><BooleanFilter loadData={loadData} filterDto={pipelineActivityFilterDto} setFilterDto={setPipelineActivityFilterDto} fieldName={"hide_status"} /></div>
+        <div className="px-2"><BooleanFilter loadData={loadData} filterDto={pipelineActivityFilterDto} setFilterDto={setPipelineActivityFilterDto} fieldName={"latest"} /></div>
+      </div>
     );
   };
 
@@ -100,16 +108,11 @@ function PipelineActivityLogTable({ data, loadData, isLoading, pipeline, pipelin
         isLoading={isLoading}
         title={"Pipeline Activity Logs"}
         titleIcon={faClipboardList}
-        filters={["hide_status", "tool", "search", "run"]}
         body={getPipelineActivityTable()}
         dropdownFilters={getDropdownFilters()}
         supportSearch={true}
-      >
-        <div className="px-2 d-flex">
-          <div><BooleanFilter loadData={loadData} filterDto={pipelineActivityFilterDto} setFilterDto={setPipelineActivityFilterDto} fieldName={"hide_status"} /></div>
-          <div className="px-2"><BooleanFilter loadData={loadData} filterDto={pipelineActivityFilterDto} setFilterDto={setPipelineActivityFilterDto} fieldName={"latest"} /></div>
-        </div>
-      </FilterContainer>
+        inlineFilters={getInlineFilters()}
+      />
       <PipelineTaskDetailViewer
         pipelineData={pipeline}
         pipelineTaskData={modalData}

@@ -1,10 +1,8 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import DropdownList from "react-widgets/lib/DropdownList";
 
 function PageSize({ paginationDto, setPaginationDto, loadData, isLoading, pageSizeList}) {
-  // const [field] = useState(dataObject.getFieldById(fieldName));
-
   const updatePageSize = (pageSize) => {
     paginationDto.setData("currentPage", 1);
     paginationDto.setData("pageSize", pageSize);
@@ -13,8 +11,7 @@ function PageSize({ paginationDto, setPaginationDto, loadData, isLoading, pageSi
   };
 
   return (
-    <div className="custom-filter-input my-auto mx-2">
-      {/*<label><span>{field.label}</span></label>*/}
+    <div className="page-size">
       <DropdownList
         data={pageSizeList}
         disabled={isLoading}

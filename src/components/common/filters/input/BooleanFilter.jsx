@@ -19,10 +19,10 @@ function BooleanFilter({ fieldName, loadData, filterDto, setFilterDto}) {
 
   return (
     <div className="d-flex mt-1">
-      <div className="mt-1">
+      <div>
         <Form.Check onChange={() => validateAndSetData(field.id, !filterDto.getData(fieldName))} type="switch" id={field.id} checked={!!filterDto.getData(fieldName)} label={""} />
       </div>
-      <span>{field.label}</span>
+      <div className="my-auto">{field.label}</div>
     </div>
   );
 }

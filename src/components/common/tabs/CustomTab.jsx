@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {tabAccessRestricted} from "components/common/tooltip/popover-text";
-import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 
 function CustomTab({activeTab, tabName, tabText, handleTabClick, icon, visible, disabled, toolTipText}) {
   const getTab = () => {

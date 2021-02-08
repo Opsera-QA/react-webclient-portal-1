@@ -9,8 +9,6 @@ import {
 import {useHistory} from "react-router-dom";
 import toolMetadata from "components/inventory/tools/tool-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 
 function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading }) {
   let history = useHistory();
@@ -22,9 +20,10 @@ function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "description")),
-      getTableTextColumn(getField(fields, "tool_identifier")),
+      getTableTextColumn(getField(fields, "tool_identifier"), "no-wrap-inline"),
+      getTableTextColumn(getField(fields, "owner_name"), "no-wrap-inline"),
       getTableDateColumn(getField(fields, "createdAt")),
       getTableBooleanIconColumn(getField(fields, "active")),
     ],
@@ -37,6 +36,7 @@ function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading
 
   return (
     <CustomTable
+      className="table-no-border"
       columns={columns}
       data={data}
       isLoading={isLoading}
@@ -45,7 +45,6 @@ function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading
       setPaginationDto={setToolFilterDto}
       rowStyling={rowStyling}
       loadData={loadData}
-      tableTitle={"Tools"}
     />
   );
 }

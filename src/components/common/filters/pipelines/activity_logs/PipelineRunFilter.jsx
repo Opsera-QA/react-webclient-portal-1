@@ -13,15 +13,19 @@ function PipelineRunFilter({ filterDto, setFilterDto, maximumRunCount}) {
   //   return <WarningDialog warningMessage={"No field was found for this filter"} />
   // }
 
+  if (filterDto == null) {
+    return null;
+  }
+
   return (
-    <div className="run-filter d-flex">
-      <span className="mt-2 mr-2">Run:</span>
+    <div className="w-100 d-flex">
+      <span className="mt-2 mr-2">Pipeline Run:</span>
       <NumberPicker
         type="number"
         placeholder={"Pipeline Run"}
         disabled={maximumRunCount ? maximumRunCount < 2 : false}
         value={filterDto.getData("run")}
-        className="max-content-width"
+        className="w-100"
         onChange={(data) => validateAndSetData("run", data)}
         min={0}
         max={maximumRunCount}

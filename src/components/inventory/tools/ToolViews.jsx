@@ -11,6 +11,8 @@ import ToolCardView from "components/inventory/tools/ToolCardView";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import LdapOwnerFilter from "components/common/filters/pipelines/LdapOwnerFilter";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faClipboardList, faTools} from "@fortawesome/pro-light-svg-icons";
 
 function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, saveCookies, customerAccessRules}) {
   const [showCreateToolModal, setShowCreateToolModal] = useState(false);
@@ -23,27 +25,24 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
     return workflowAuthorizedActions.toolRegistryItems(customerAccessRules, action, owner, objectRoles);
   };
 
-  const getFilterBar = () => {
+  const getDropdownFilters = () => {
     if (toolFilterDto == null) {
       return null;
     }
 
     return(
-      <FilterBar
-        loadData={loadData}
-        filterDto={toolFilterDto}
-        setFilterDto={setToolFilterDto}
-        filters={["status", "toolIdentifier", "tag", "search"]}
-        addRecordFunction={authorizedAction("create_tool") ? createNewTool : null}
-        supportSearch={true}
-        saveCookies={saveCookies}
-        supportViewToggle={true}
-      >
+      <>
         <StatusFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
         <LdapOwnerFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
         <ToolIdentifierFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
         <TagFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
-      </FilterBar>
+      </>
+    );
+  };
+
+  const getInlineFilters = () => {
+    return (
+      null
     );
   };
 
@@ -71,9 +70,8 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
     );
   };
 
-  return (
-    <div className="px-2 pb-2">
-      {getFilterBar()}
+  const getTableCardView = () => {
+    return (
       <TableCardView
         filterDto={toolFilterDto}
         data={data}
@@ -82,7 +80,28 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
         cardView={getCardView()}
         tableView={getTableView()}
       />
-      <NewToolModal loadData={loadData} setShowModal={setShowCreateToolModal} showModal={showCreateToolModal}/>
+    );
+  }
+
+  return (
+    <div className="px-2 pb-2">
+      <FilterContainer
+        loadData={loadData}
+        filterDto={toolFilterDto}
+        setFilterDto={setToolFilterDto}
+        addRecordFunction={authorizedAction("create_tool") ? createNewTool : null}
+        supportSearch={true}
+        saveCookies={saveCookies}
+        supportViewToggle={true}
+        isLoading={isLoading}
+        body={getTableCardView()}
+        dropdownFilters={getDropdownFilters()}
+        getInlineFilters={getInlineFilters()}
+        titleIcon={faTools}
+        title={"Tools"}
+      >
+        <NewToolModal loadData={loadData} setShowModal={setShowCreateToolModal} showModal={showCreateToolModal}/>
+      </FilterContainer>
     </div>
   );
 }

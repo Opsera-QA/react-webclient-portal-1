@@ -7,14 +7,12 @@ function PaginationContainer({ isLoading, filterDto, setFilterDto, loadData, chi
   const getTopPaginator = () => {
     if (filterDto && filterDto.getData("totalCount") != null) {
       return (
-        <div className="top-pagination pt-1 px-3">
-          <DtoTopPagination
-            paginationDto={filterDto}
-            setPaginationDto={setFilterDto}
-            isLoading={isLoading}
-            loadData={loadData}
-          />
-        </div>
+        <DtoTopPagination
+          paginationDto={filterDto}
+          setPaginationDto={setFilterDto}
+          isLoading={isLoading}
+          loadData={loadData}
+        />
       );
     }
   };
@@ -22,14 +20,12 @@ function PaginationContainer({ isLoading, filterDto, setFilterDto, loadData, chi
   const getBottomPaginator = () => {
     if (filterDto && filterDto.getData("totalCount") != null) {
       return (
-        <div className="px-2 py-1 table-footer">
-          <DtoBottomPagination
-            paginationDto={filterDto}
-            setPaginationDto={setFilterDto}
-            isLoading={isLoading}
-            loadData={loadData}
-          />
-        </div>
+        <DtoBottomPagination
+          paginationDto={filterDto}
+          setPaginationDto={setFilterDto}
+          isLoading={isLoading}
+          loadData={loadData}
+        />
       );
     }
   };
@@ -38,13 +34,12 @@ function PaginationContainer({ isLoading, filterDto, setFilterDto, loadData, chi
     return children;
   }
 
-  // TODO: add styling 
   return (
-    <>
-      <div className="px-2">{getTopPaginator()}</div>
+    <div className="pagination-container">
+      {getTopPaginator()}
       {children}
-      <div className="px-2">{getBottomPaginator()}</div>
-    </>
+      {getBottomPaginator()}
+    </div>
   );
 }
 

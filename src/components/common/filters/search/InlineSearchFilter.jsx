@@ -4,7 +4,7 @@ import {Button, InputGroup} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch, faSpinner} from "@fortawesome/pro-light-svg-icons";
 
-function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, fieldName}) {
+function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, fieldName, supportSearch, className}) {
   const [isLoading, setIsLoading] = useState(false);
 
   const validateAndSetData = (value) => {
@@ -40,26 +40,28 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
     }
   }
 
-  if (filterDto == null) {
+  if (filterDto == null || supportSearch !== true) {
     return null;
   }
 
   return (
-    <InputGroup size="sm">
-      <input
-        disabled={disabled}
-        placeholder="Search"
-        value={filterDto.getData(fieldName)}
-        className="inline-search-filter inline-filter-input"
-        onKeyPress={(event) => handleKeyPress(event)}
-        onChange={e => validateAndSetData(e.target.value)}
-      />
-      <InputGroup.Append>
-        <Button className="inline-filter-input filter-bg-white" variant="outline-primary" onClick={handleSearch}>
-          {getSearchIcon()}
-        </Button>
-      </InputGroup.Append>
-    </InputGroup>
+    <div className={className}>
+      <InputGroup size="sm">
+        <input
+          disabled={disabled}
+          placeholder="Search"
+          value={filterDto.getData(fieldName)}
+          className="inline-search-filter inline-filter-input"
+          onKeyPress={(event) => handleKeyPress(event)}
+          onChange={e => validateAndSetData(e.target.value)}
+        />
+        <InputGroup.Append>
+          <Button className="inline-filter-input filter-bg-white" variant="outline-primary" onClick={handleSearch}>
+            {getSearchIcon()}
+          </Button>
+        </InputGroup.Append>
+      </InputGroup>
+    </div>
   );
 }
 
@@ -68,7 +70,9 @@ InlineSearchFilter.propTypes = {
   setFilterDto: PropTypes.func,
   fieldName: PropTypes.string,
   loadData: PropTypes.func,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  supportSearch: PropTypes.bool,
+  className: PropTypes.string
 };
 
 InlineSearchFilter.defaultProps = {

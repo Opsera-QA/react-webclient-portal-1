@@ -34,11 +34,11 @@ function ActiveFilterDisplayer({filterDto, setFilterDto, loadData}) {
       )
     }
 
-    return <></>;
+    return null;
   };
 
   if (filterDto == null) {
-    return <></>;
+    return null;
   }
 
   return (getActiveFilters());

@@ -2,17 +2,21 @@ import React from "react";
 import PropTypes from "prop-types";
 import PageSort from "./page_options/PageSort";
 import PageSize from "./page_options/PageSize";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import {getResultSummary} from "./pagination-helpers";
 
 function DtoTopPagination({paginationDto, setPaginationDto, loadData, isLoading, pageSizeList }) {
+  if (!paginationDto || paginationDto?.getData("totalCount") == null) {
+    return null;
+  }
+
   return (
-    <Row className="small mb-1">
-      <Col className="px-0"><div className="mt-1 ml-2">{getResultSummary(paginationDto, isLoading)}</div></Col>
-      <Col className="px-0" sm={2}><PageSort paginationDto={paginationDto} setPaginationDto={setPaginationDto} loadData={loadData} isLoading={isLoading} /></Col>
-      <Col className="px-0" sm={2}><PageSize paginationDto={paginationDto} setPaginationDto={setPaginationDto} pageSizeList={pageSizeList} loadData={loadData}  isLoading={isLoading} /></Col>
-    </Row>
+    <div className="small top-pagination px-2 py-1 d-flex justify-content-between">
+      <div className="mt-1">{getResultSummary(paginationDto, isLoading)}</div>
+      <div className="d-flex">
+        <div className="mx-2"><PageSort paginationDto={paginationDto} setPaginationDto={setPaginationDto} loadData={loadData} isLoading={isLoading} /></div>
+        <div><PageSize paginationDto={paginationDto} setPaginationDto={setPaginationDto} pageSizeList={pageSizeList} loadData={loadData}  isLoading={isLoading} /></div>
+      </div>
+    </div>
   );
 }
 

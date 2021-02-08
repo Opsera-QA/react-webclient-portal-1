@@ -502,13 +502,10 @@ a.text-primary:hover, a.text-primary:focus {
 
 .custom-table .table-footer {
   background-color: #F3F3F1;
-  padding-top: 1em;
-  height: 2em;
 }
 
 .custom-table .top-pagination {
   background-color: #F3F3F1;
-  height: 2em;
 }
 
 .filter-table .active-filter-bar {
@@ -895,7 +892,7 @@ a.nav-link {
 
 .table-content-block {
   border: 1px solid #E3E1EE;
-  margin-top:3px;
+  border-collapse: collapse;
 }
 
 .content-container {
@@ -915,9 +912,6 @@ a.nav-link {
 
 /* Content Card 1 Styling */
 
-.content-card-1 {
-}
-
 .content-card-analytics {
   border: 1px solid #8fa4ba;
   border-radius: 5px;
@@ -932,14 +926,7 @@ a.nav-link {
   border-top-left-radius: 5px;*/
 }
 
-/*TODO: Style differently*/
-/*.content-card-1 .flat-top-content-block {*/
-/*border: 1px solid #8fa4ba;*/
-/*border-bottom-right-radius: 5px;*/
-/*border-bottom-left-radius: 5px;*/
-/*}*/
-
-.content-card-1 .content-block-header {
+.content-card-1 > .content-block-header {
   background-color: #7A756C;
   color: #fef7fd;
   line-height: 2.4em;
@@ -1161,6 +1148,33 @@ a.nav-link {
 
 /* End Status Card Styling */
 
+/* Pagination Container Styling */
+.pagination-container .top-pagination {
+  background-color: #F3F3F1;
+  /*height: 2em;*/
+}
+
+/*// TODO: add .pagination-container after updating table*/
+.top-pagination .page-sort {
+  width: 250px;
+}
+
+/*// TODO: add .pagination-container after updating table*/
+.top-pagination .page-size {
+  width: 250px;
+}
+
+.pagination-container .bottom-pagination {
+  background-color: #F3F3F1;
+}
+/* End Pagination Container Styling */
+
+/* Card Container Styling */
+.card-container {
+  background-color: #E8E8E8;
+}
+/* End Card Container Styling */
+
 /* Filter bar styling */
 .popover-filter {
   min-width: 600px; /* Max Width of the popover */
@@ -1223,6 +1237,66 @@ a.nav-link {
 
 /* End filter bar styling */
 
+/* Filter Container Styling */
+.filter-container {
+  border: 1px solid #cdd1d5;
+  border-collapse: collapse;
+}
+
+.filter-container .content-block-header {
+  background-color: #E8E8E8;
+  color: #46415C;
+}
+
+.filter-container .title-text-header {
+  font-size: 1rem;
+}
+
+.filter-container .content-block-body {
+  background-color: #dee2e6;
+  min-height: 150px;
+}
+
+.filter-container .content-block-footer {
+  border-top: 5px solid #B1AEA7;
+  background-color: #7A756C;
+  padding-top: 1em;
+  height: 1.5em;
+}
+
+.filter-container .selected {
+  background-color: #453191;
+  color: #fff;
+}
+
+.filter-container .even-row {
+  background-color: rgba(0, 0, 0, .05);
+  cursor: pointer;
+}
+
+.filter-container .odd-row .selected {
+  background: #6153A5;
+}
+
+.filter-container .even-row:hover {
+  background-color: #1578dc1f;
+}
+
+.filter-container .odd-row {
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.filter-container .odd-row:hover {
+  background-color: #1578dc1f;
+}
+
+.filter-container .footer {
+  background-color: #1578dc1f;
+  padding-top: 1em;
+  height: 2em;
+}
+
 /*Popover Styling*/
 
 .popover-title {
@@ -1234,7 +1308,7 @@ a.nav-link {
 }
 
 
-.pipeline-owner-popover {
+.owner-popover {
   min-width: 500px;
 }
 

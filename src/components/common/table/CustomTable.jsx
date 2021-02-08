@@ -18,7 +18,7 @@ export const defaultInitialState = {
   pageIndex: 0
 };
 
-function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, paginationOptions, showHeaderText, isLoading, tableTitle, createNewRecord, tableFilterBar, paginationDto, setPaginationDto, loadData }) {
+function CustomTable({ className, tableStyleName, type, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, paginationOptions, showHeaderText, isLoading, tableTitle, createNewRecord, tableFilterBar, paginationDto, setPaginationDto, loadData }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -107,27 +107,26 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
         </tr>
       );
     }
-    else {
-      return (
-        <>
-          {headerGroups.map((headerGroup, i) => (
-            <tr key={i}  {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column, j) => (getHeaderColumn(column, j)))}
-            </tr>
-          ))}
-          {paginationDto && paginationDto.getData("totalCount") != null &&
-          <tr key={"topPaginator"}>
-            <td className="top-pagination pt-1 px-3" colSpan="12">
-              <DtoTopPagination paginationDto={paginationDto}
-                                setPaginationDto={setPaginationDto}
-                                isLoading={isLoading}
-                                loadData={loadData}/>
-            </td>
+
+    return (
+      <>
+        {headerGroups.map((headerGroup, i) => (
+          <tr key={i}  {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map((column, j) => (getHeaderColumn(column, j)))}
           </tr>
-          }
-        </>
-      );
-    }
+        ))}
+        <tr key={"topPaginator"}>
+          <td colSpan="12">
+            <DtoTopPagination
+              paginationDto={paginationDto}
+              setPaginationDto={setPaginationDto}
+              isLoading={isLoading}
+              loadData={loadData}
+            />
+          </td>
+        </tr>
+      </>
+    );
   };
 
   const getHeaderColumn = (column, key) => {
@@ -164,20 +163,22 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
           <td colSpan="100%" className="info-text text-center p-3">{tableLoading()}</td>
         </tr>
       );
-    } else {
-      return (
-        <>
-          {rows.map((row, i) => {
-            return getTableRow(row, i);
-          })
-          }
-          {!isLoading && rows.length === 0 &&
-            <tr>
-              <td colSpan="100%" className="info-text text-center p-5">{noDataMessage ? noDataMessage : defaultNoDataMessage}</td>
-            </tr>}
-        </>
-      );
     }
+
+    return (
+      <>
+        {rows.map((row, i) => {
+          return getTableRow(row, i);
+        })
+        }
+        {!isLoading && rows.length === 0 &&
+        <tr>
+          <td colSpan="100%"
+              className="info-text text-center p-5">{noDataMessage ? noDataMessage : defaultNoDataMessage}</td>
+        </tr>
+        }
+      </>
+    );
   };
 
   // TODO: Remove when all tables are updated
@@ -193,14 +194,14 @@ function CustomTable({ tableStyleName, type, columns, data, noDataMessage, onRow
 
   const getNewPaginator = () => {
     return (
-        <div>{paginationDto && paginationDto.getData("totalCount") != null && <DtoBottomPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading} loadData={loadData} />}</div>
+       <DtoBottomPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading} loadData={loadData} />
     );
   }
 
   return (
     <div>
       {tableTitle && getTableTitleBar()}
-      <div className="table-content-block">
+      <div className={className}>
         <table className={tableStyleName} responsive="true" hover="true" {...getTableProps()}>
           <thead>
             {getTableHeader()}
@@ -239,7 +240,8 @@ CustomTable.propTypes = {
   tableFilterBar: PropTypes.object,
   paginationDto: PropTypes.object,
   setPaginationDto: PropTypes.func,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  className: PropTypes.string
 };
 
 CustomTable.defaultProps = {
@@ -249,7 +251,8 @@ CustomTable.defaultProps = {
   showHeaderText: true,
   data: [],
   isLoading: false,
-  tableTitle: ""
+  tableTitle: "",
+  className: "table-content-block"
 };
 
 export default CustomTable;
