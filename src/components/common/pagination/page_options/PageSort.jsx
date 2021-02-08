@@ -11,8 +11,8 @@ function PageSort({ paginationDto, setPaginationDto, loadData, isLoading}) {
     loadData(paginationDto);
   };
 
-  if (paginationDto.getMetaData()["sortOptions"] == null) {
-   return <></>;
+  if (paginationDto?.getMetaData()["sortOptions"] == null) {
+   return null;
   }
 
   return (
@@ -21,8 +21,7 @@ function PageSort({ paginationDto, setPaginationDto, loadData, isLoading}) {
         data={createPageSortOptions(paginationDto.getMetaData()["sortOptions"], "Sort", "text")}
         valueField={"key"}
         textField={"text"}
-        busy={isLoading}
-        // filter={filter}
+        disabled={isLoading || paginationDto?.getData("totalCount") == null}
         value={paginationDto.getData("sortOption")}
         placeholder={"Sort Page"}
         onChange={sortOption => updateSortOption(sortOption)}

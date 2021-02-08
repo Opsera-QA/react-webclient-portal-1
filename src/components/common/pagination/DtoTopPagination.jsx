@@ -5,7 +5,7 @@ import PageSize from "./page_options/PageSize";
 import {getResultSummary} from "./pagination-helpers";
 
 function DtoTopPagination({paginationDto, setPaginationDto, loadData, isLoading, pageSizeList }) {
-  if (!paginationDto || paginationDto?.getData("totalCount") == null) {
+  if (!paginationDto) {
     return null;
   }
 
