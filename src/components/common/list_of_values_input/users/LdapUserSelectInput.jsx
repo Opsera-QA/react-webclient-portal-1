@@ -5,7 +5,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function LdapUserSelectInput({ dataObject, setDataObject, fieldName, valueField, textField }) {
+function LdapUserSelectInput({ dataObject, setDataObject, fieldName, valueField, textField, showClearValueButton }) {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -64,6 +64,7 @@ function LdapUserSelectInput({ dataObject, setDataObject, fieldName, valueField,
       placeholderText={"Select User"}
       valueField={valueField}
       textField={textField}
+      showClearValueButton={showClearValueButton}
       setDataObject={setDataObject}
       dataObject={dataObject}
       selectOptions={users}
@@ -76,12 +77,14 @@ LdapUserSelectInput.propTypes = {
   setDataObject: PropTypes.func,
   fieldName: PropTypes.string,
   valueField: PropTypes.string,
+  showClearValueButton: PropTypes.bool,
   textField: PropTypes.string
 };
 
 LdapUserSelectInput.defaultProps = {
   valueField: "value",
-  textField: "text"
+  textField: "text",
+  showClearValueButton: true
 };
 
 export default LdapUserSelectInput;

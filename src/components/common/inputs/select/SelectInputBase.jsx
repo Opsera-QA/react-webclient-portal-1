@@ -2,10 +2,10 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import DropdownList from "react-widgets/lib/DropdownList";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTimes} from "@fortawesome/pro-light-svg-icons";
+import {faTag, faTimes} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, disabled}) {
+function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, disabled, showClearValueButton}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
@@ -36,11 +36,11 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
   //  one for setting and one for clearing.
   //  For now, I'm going to disable the clear button if you pass in setDataFunction
   const getClearDataIcon = () => {
-    if (dataObject.getData(field.id) !== "" && !disabled && setDataFunction == null) {
+    if (dataObject.getData(field.id) !== "" && !disabled && setDataFunction == null && showClearValueButton) {
       return (
         <TooltipWrapper innerText={"Clear this Value"}>
-          <span className="pointer danger-red" onClick={() => clearValue()}>
-            <FontAwesomeIcon icon={faTimes} className="mt-1 danger-red"/>
+          <span onClick={() => clearValue()} className="mx-1 mb-1 badge badge-light tag-badge pointer danger-red">
+            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>Clear Value
           </span>
         </TooltipWrapper>
       );
@@ -83,7 +83,12 @@ SelectInputBase.propTypes = {
   placeholderText: PropTypes.string,
   setDataFunction: PropTypes.func,
   busy: PropTypes.bool,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  allowValueClear: PropTypes.bool,
 };
+
+SelectInputBase.defaultProps = {
+  showClearValueButton: true
+}
 
 export default SelectInputBase;

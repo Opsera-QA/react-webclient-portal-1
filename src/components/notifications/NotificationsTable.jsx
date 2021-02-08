@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
@@ -8,21 +8,10 @@ import {
 } from "components/common/table/table-column-helpers";
 import notificationsMetadata from "./notifications-metadata";
 import {useHistory} from "react-router-dom";
-import NewNotificationModal from "./NewNotificationModal";
-import FilterBar from "components/common/filters/FilterBar";
-import StatusFilter from "components/common/filters/status/StatusFilter";
-import TagFilter from "components/common/filters/tags/TagFilter";
-import SearchFilter from "components/common/filters/search/SearchFilter";
-import NotificationTypeFilter from "components/common/filters/notifications/NotificationTypeFilter";
 
 function NotificationsTable({ data, notificationFilterDto, setNotificationFilterDto, loadData, isLoading }) {
-  const [showCreateNotificationModal, setShowCreateNotificationModal] = useState(false);
   let history = useHistory();
   const fields = notificationsMetadata.fields;
-
-  const tableInitialState = {
-    pageIndex: 0,
-  };
 
   const rowStyling = (row) => {
     return !row["values"].active ? " inactive-row" : "";
@@ -39,51 +28,22 @@ function NotificationsTable({ data, notificationFilterDto, setNotificationFilter
     []
   );
 
-  const createNewNotification = () => {
-    setShowCreateNotificationModal(true);
-  };
-
   const onRowSelect = (rowData) => {
     history.push(`/notifications/details/${rowData.original._id}`);
   };
 
-  const getFilterBar = () => {
-    if (notificationFilterDto == null) {
-      return null;
-    }
-
-    return(
-      <FilterBar
-        loadData={loadData}
-        filterDto={notificationFilterDto}
-        setFilterDto={setNotificationFilterDto}
-        addRecordFunction={createNewNotification}
-        supportSearch={true}
-      >
-        <StatusFilter filterDto={notificationFilterDto} setFilterDto={setNotificationFilterDto} />
-        <NotificationTypeFilter filterDto={notificationFilterDto} setFilterDto={setNotificationFilterDto} />
-        <TagFilter filterDto={notificationFilterDto} setFilterDto={setNotificationFilterDto} />
-      </FilterBar>
-    );
-  };
-
   return (
-    <div className="px-2 pb-2">
-      <CustomTable
-        columns={columns}
-        data={data}
-        isLoading={isLoading}
-        onRowSelect={onRowSelect}
-        paginationDto={notificationFilterDto}
-        setPaginationDto={setNotificationFilterDto}
-        rowStyling={rowStyling}
-        loadData={loadData}
-        tableFilterBar={getFilterBar()}
-        tableTitle={"Notification Policies"}
-        initialState={tableInitialState}
-      />
-      <NewNotificationModal loadData={loadData} setShowModal={setShowCreateNotificationModal} showModal={showCreateNotificationModal}/>
-    </div>
+    <CustomTable
+      className={"no-table-border"}
+      columns={columns}
+      data={data}
+      isLoading={isLoading}
+      onRowSelect={onRowSelect}
+      paginationDto={notificationFilterDto}
+      setPaginationDto={setNotificationFilterDto}
+      rowStyling={rowStyling}
+      loadData={loadData}
+    />
   );
 }
 

@@ -8,8 +8,15 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faFlag} from "@fortawesome/pro-light-svg-icons";
+import NewNotificationModal from "components/notifications/NewNotificationModal";
+import StatusFilter from "components/common/filters/status/StatusFilter";
+import NotificationTypeFilter from "components/common/filters/notifications/NotificationTypeFilter";
+import TagFilter from "components/common/filters/tags/TagFilter";
 
 function NotificationsView() {
+  const [showCreateNotificationModal, setShowCreateNotificationModal] = useState(false);
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -59,6 +66,32 @@ function NotificationsView() {
       setNotificationFilterDto({...newFilterDto});
   };
 
+  const getNotificationTable = () => {
+    return (
+      <NotificationsTable
+        isLoading={isLoading}
+        loadData={loadData}
+        data={notificationsList}
+        notificationFilterDto={notificationFilterDto}
+        setNotificationFilterDto={setNotificationFilterDto}
+      />
+    );
+  };
+
+  const getDropdownFilters = () => {
+    return (
+      <>
+        <StatusFilter filterDto={notificationFilterDto} setFilterDto={setNotificationFilterDto} className="mb-2" />
+        <NotificationTypeFilter filterDto={notificationFilterDto} setFilterDto={setNotificationFilterDto} className="mb-2" />
+        <TagFilter filterDto={notificationFilterDto} setFilterDto={setNotificationFilterDto} />
+      </>
+    );
+  };
+
+  const createNewNotification = () => {
+    setShowCreateNotificationModal(true);
+  };
+
   if (!accessRoleData) {
     return <LoadingDialog size="sm" />;
   }
@@ -68,13 +101,21 @@ function NotificationsView() {
   }
 
   return (
-    <NotificationsTable
-      isLoading={isLoading}
-      loadData={loadData}
-      data={notificationsList}
-      notificationFilterDto={notificationFilterDto}
-      setNotificationFilterDto={setNotificationFilterDto}
-    />
+    <div className="px-2 pb-2">
+      <FilterContainer
+        loadData={loadData}
+        filterDto={notificationFilterDto}
+        setFilterDto={setNotificationFilterDto}
+        addRecordFunction={createNewNotification}
+        supportSearch={true}
+        isLoading={isLoading}
+        body={getNotificationTable()}
+        dropdownFilters={getDropdownFilters()}
+        titleIcon={faFlag}
+        title={"Notification Policies"}
+      />
+      <NewNotificationModal loadData={loadData} setShowModal={setShowCreateNotificationModal} showModal={showCreateNotificationModal}/>
+    </div>
   );
 }
 

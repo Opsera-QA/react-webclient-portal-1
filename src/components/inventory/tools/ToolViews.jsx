@@ -98,9 +98,8 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
         inlineFilters={getInlineFilters()}
         titleIcon={faTools}
         title={"Tools"}
-      >
-        <NewToolModal loadData={loadData} setShowModal={setShowCreateToolModal} showModal={showCreateToolModal}/>
-      </FilterContainer>
+      />
+      <NewToolModal loadData={loadData} setShowModal={setShowCreateToolModal} showModal={showCreateToolModal}/>
     </div>
   );
 }

@@ -38,7 +38,7 @@ function ActionBarTransferToolButton({ toolData, loadTool }) {
   const popoverContent = (
       <div>
         <div className="pb-2">
-          <LdapUserSelectInput fieldName={"owner"} dataObject={toolCopy} setDataObject={setToolCopy} />
+          <LdapUserSelectInput fieldName={"owner"} dataObject={toolCopy} setDataObject={setToolCopy} showClearValueButton={false} />
         </div>
         <div className="d-flex justify-content-between">
           <div className="w-50 mr-1">

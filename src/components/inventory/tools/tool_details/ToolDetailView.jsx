@@ -10,6 +10,7 @@ import ActionBarBackButton from "components/common/actions/buttons/ActionBarBack
 import ActionBarDeleteToolButton from "components/common/actions/buttons/tool/ActionBarDeleteToolButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import toolsActions from "components/inventory/tools/tools-actions";
+import ActionBarTransferToolButton from "components/common/actions/buttons/tool/ActionBarTransferToolButton";
 
 function ToolDetailView() {
   const { id, tab } = useParams();
@@ -46,7 +47,8 @@ function ToolDetailView() {
         <div>
           <ActionBarBackButton path={"/inventory/tools"} />
         </div>
-        <div>
+        <div className="d-flex">
+          <ActionBarTransferToolButton toolData={toolData} loadTool={getTool} toolDataObject={toolData} />
           <ActionBarDeleteToolButton status={toolData?.getData("active")} toolDataObject={toolData} />
         </div>
       </ActionBarContainer>
