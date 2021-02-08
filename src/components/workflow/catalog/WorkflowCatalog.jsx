@@ -11,12 +11,11 @@ import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
 import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
 import Model from "core/data_model/model";
 import catalogFilterMetadata from "components/workflow/catalog/catalog-filter-metadata";
-import FilterBar from "components/common/filters/FilterBar";
 import TagFilter from "components/common/filters/tags/TagFilter";
-import DtoTopPagination from "components/common/pagination/DtoTopPagination";
-import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import PipelineTypeFilter from "components/common/filters/admin/templates/PipelineTypeFilter";
-import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
+import CardView from "components/common/card/CardView";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faOctagon, faTools} from "@fortawesome/pro-light-svg-icons";
 
 function WorkflowCatalog() {
   const contextType = useContext(AuthContext);
@@ -105,6 +104,7 @@ function WorkflowCatalog() {
     setTemplateId("");
   };
 
+  // TODO: Make workflowCardView
   const getWorkflowItems = () => {
     if (loading) {
       return (<LoadingDialog size="md" message="Loading pipeline template catalog"/>);
@@ -112,9 +112,9 @@ function WorkflowCatalog() {
 
     if (Array.isArray(workflowTemplates) && workflowTemplates.length > 0) {
       return (
-        <Row className="px-3">
+        <Row className="p-1">
           {workflowTemplates.map((item, idx) => (
-            <Col xl={6} md={12} key={idx} className="py-2">
+            <Col xl={6} md={12} key={idx} className={"p-1"}>
               <WorkflowCatalogItem
                 item={item}
                 parentCallback={callbackFunction}
@@ -130,17 +130,24 @@ function WorkflowCatalog() {
     return (<InformationDialog message="No Catalog Items Found"/>);
   };
 
-  const getFilterBar = () => {
+  const getDropdownFilters = () => {
     return (
-      <FilterBar
-        loadData={loadData}
-        filterDto={catalogFilterDto}
-        setFilterDto={setCatalogFilterDto}
-        supportSearch={true}
-      >
-        <TagFilter filterDto={catalogFilterDto} setFilterDto={setCatalogFilterDto}/>
+      <>
+        <TagFilter filterDto={catalogFilterDto} setFilterDto={setCatalogFilterDto} className={"mb-2"} />
         <PipelineTypeFilter filterDto={catalogFilterDto} setFilterDto={setCatalogFilterDto}/>
-      </FilterBar>
+      </>
+    );
+  };
+
+  const getWorkflowCardView = () => {
+    return (
+      <CardView
+        isLoading={loading}
+        loadData={loadData}
+        setPaginationDto={setCatalogFilterDto}
+        paginationDto={catalogFilterDto}
+        cards={getWorkflowItems()}
+      />
     );
   };
 
@@ -159,31 +166,18 @@ function WorkflowCatalog() {
   }
 
   return (
-    <div className="px-2">
-      <div>
-        {getFilterBar()}
-      </div>
-      <div>
-        <div className="px-2 mt-2">
-          <DtoTopPagination
-            loadData={loadData}
-            isLoading={loading}
-            paginationDto={catalogFilterDto}
-            setPaginationDto={setCatalogFilterDto}
-          />
-        </div>
-        <Row>
-          {getWorkflowItems()}
-        </Row>
-        <div className="pb-2">
-          <DtoBottomPagination
-            loadData={loadData}
-            isLoading={loading}
-            paginationDto={catalogFilterDto}
-            setPaginationDto={setCatalogFilterDto}
-          />
-        </div>
-      </div>
+    <div className="px-2 pb-2">
+      <FilterContainer
+        loadData={loadData}
+        filterDto={catalogFilterDto}
+        setFilterDto={setCatalogFilterDto}
+        supportSearch={true}
+        isLoading={loading}
+        body={getWorkflowCardView()}
+        dropdownFilters={getDropdownFilters()}
+        titleIcon={faOctagon}
+        title={"Pipeline Templates"}
+      />
       <ModalActivityLogsDialog
         header="Template Details" size="lg" jsonData={modalMessage} show={showModal}
         setParentVisibility={setShowModal}

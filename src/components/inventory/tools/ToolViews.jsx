@@ -80,7 +80,7 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
         tableView={getTableView()}
       />
     );
-  }
+  };
 
   return (
     <div className="px-2 pb-2">
