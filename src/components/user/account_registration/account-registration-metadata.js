@@ -52,6 +52,16 @@ const accountRegistrationMetadata = {
       id: "orgAccount",
       isRequired: true
     },
+    {
+      label: "LDAP Organization Account",
+      id: "ldapOrgAccount",
+      isRequired: true
+    },
+    {
+      label: "LDAP Organization Domain",
+      id: "ldapOrgDomain",
+      isRequired: true
+    },
   ],
   newObjectFields: {
     domain: "",
@@ -63,6 +73,8 @@ const accountRegistrationMetadata = {
     password: "",
     confirmPassword: "",
     orgAccount: "",
+    ldapOrgAccount: "",
+    ldapOrgDomain: "",
     street: "",
     city: "",
     state: "",

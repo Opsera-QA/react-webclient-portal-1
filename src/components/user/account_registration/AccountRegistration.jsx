@@ -43,6 +43,8 @@ function AccountRegistration() {
       if (accountResponse?.data) {
         setCompanyName(accountResponse.data?.orgName);
         newAccountDto.setData("company", accountResponse.data?.orgName);
+        newAccountDto.setData("ldapOrgAccount", accountResponse.data?.name);
+        newAccountDto.setData("ldapOrgDomain", accountResponse.data?.orgDomain);
         newAccountDto.setData("organizationName", accountResponse?.data?.description);
         newAccountDto.setData("orgAccount", accountResponse?.data?.name);
       }
