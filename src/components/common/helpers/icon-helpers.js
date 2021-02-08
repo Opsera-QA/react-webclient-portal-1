@@ -19,7 +19,7 @@ export function getLargeVendorIconFromToolIdentifier (s3Bucket, toolIdentifier) 
     case "aws-deploy":
       return <Image src={`${vendorIconPrefix}/icons8-amazon-web-services-96.png`} />;
     case "bitbucket":
-      return <Image src={`${vendorIconPrefix}/icons8-bitbucket-96.png`} />;
+      return <Image src={`${vendorIconPrefix}/bitbucket-76-75.png`} className={"bitbucket-icon"} />;
     case "docker-push":
       return <Image src={`${vendorIconPrefix}/icons8-docker-96.png`} />;
     case "github":
@@ -31,11 +31,11 @@ export function getLargeVendorIconFromToolIdentifier (s3Bucket, toolIdentifier) 
     case "octopus":
       return <FontAwesomeIcon icon={faOctopusDeploy} fixedWidth style={{color: "#0D80D8"}} className={"title-fa-icon"} />;
     case "slack":
-      return <Image src={`${vendorIconPrefix}/icons8-slack-80.png`} className={"slack-icon"} />;
+      return <Image src={`${vendorIconPrefix}/slack-64-252.png`} className={"slack-icon"} />;
     case "sfdc-configurator":
       return <FontAwesomeIcon icon={faSalesforce} fixedWidth style={{color: "#0D80D8"}} className={"title-fa-icon"} />;
     case "jenkins":
-      return <Image src={`${vendorIconPrefix}/icons8-jenkins-96.png`} />;
+      return <Image src={`${vendorIconPrefix}/jenkins-98-113.png`} className={"jenkins-icon"} />;
     case "teams":
       return <Image src={`${vendorIconPrefix}/icons8-microsoft-teams-48.png`} className={"small-title-icon"} />;
     case "terraform":
@@ -43,7 +43,7 @@ export function getLargeVendorIconFromToolIdentifier (s3Bucket, toolIdentifier) 
     case "gcp-deploy":
       return <Image src={`${vendorIconPrefix}/icons8-google-cloud-platform-64.png`} className={"small-title-icon"} />;
     case "selenium":
-      return <Image src={`${vendorIconPrefix}/icons8-selenium-50.png`} className={"small-title-icon"} />;
+      return <Image src={`${vendorIconPrefix}/selenium-64-261.png`} className={"selenium-icon"} />;
     case "anchor":
       return <Image src={`${vendorIconPrefix}/anchor-96-256.png`} />;
     case "argo":
@@ -51,19 +51,22 @@ export function getLargeVendorIconFromToolIdentifier (s3Bucket, toolIdentifier) 
     case "sonar":
     // TODO: Find better icon for Sonar. It looks bad
       return getVendorTitle("sonar");
+      // return <Image src={`${vendorIconPrefix}/sonarcube-65-250.png`} className={"sonarqube-icon"} />;
     case "junit":
-      return getVendorTitle("junit");
+      return <Image src={`${vendorIconPrefix}/junit-97-172.png`} className={"junit-icon"} />;
     case "nexus":
       return <Image src={`${vendorIconPrefix}/nexus-122-116.png`} />;
     case "spinnaker":
       // TODO: Find better icon for spinnaker. It looks bad
       return getVendorTitle("spinnaker");
     case "teamcity":
-      return <Image src={`${vendorIconPrefix}/TeamCity-120-120.png`} />;
+      return <Image src={`${vendorIconPrefix}/teamcity-120-120.png`} className={"teamcity-icon"} />;
     case "twistlock":
-      return getVendorTitle("twistlock");
+      return <Image src={`${vendorIconPrefix}/twistlock-64-254.png`} className={"twistlock-icon"} />;
     case "xunit":
-      return getVendorTitle("xunit");
+      return <Image src={`${vendorIconPrefix}/xunit-60-213.png`} className={"xunit-icon"} />;
+    case "ansible":
+      return <Image src={`${vendorIconPrefix}/ansible-98-124.png`} className={"ansible-icon"} />;
 
 
     // base example

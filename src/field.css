@@ -127,7 +127,7 @@
 /* Summary Card Styling */
 .tool-registry-card .title-icon {
   height: 92px;
-  /*max-width: 92px;*/
+  max-width: 100%;
 }
 
 .tool-registry-card .title-fa-icon {
@@ -142,11 +142,53 @@
 .tool-registry-card .jira-icon {
   margin-top: 25px;
   margin-right: 15px;
-  height: 50px;
+  max-width: 95%;
+}
+
+.tool-registry-card .sonarqube-icon {
+  margin-top: 30px;
+  max-width: 98%;
+}
+
+.tool-registry-card .junit-icon {
+  margin-top: 10px;
+  margin-left: 15px;
+  max-width: 75%;
+}
+
+.tool-registry-card .xunit-icon {
+  margin-top: 25px;
+  margin-left: 15px;
+  max-width: 80%;
+}
+
+.tool-registry-card .teamcity-icon {
+  margin-top: 10px;
+  margin-left: 25px;
+  max-width: 65%;
+}
+
+.tool-registry-card .twistlock-icon {
+  margin-top: 20px;
+  max-width: 98%;
 }
 
 .tool-registry-card .slack-icon {
-  margin-top: 15px;
+  margin-top: 30px;
+  max-width: 98%;
+}
+
+.tool-registry-card .selenium-icon {
+  margin-top: 20px;
+  max-width: 98%;
+}
+
+.tool-registry-card .jenkins-icon {
+  margin-top: 10px;
+}
+
+.tool-registry-card .bitbucket-icon {
+  margin-top: 10px;
 }
 
 .tool-registry-card .wrench {
