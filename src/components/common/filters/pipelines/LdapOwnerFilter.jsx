@@ -75,7 +75,7 @@ function LdapOwnerFilter({ filterDto, setFilterDto, className }) {
 LdapOwnerFilter.propTypes = {
   filterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
-  className: PropTypes.func
+  className: PropTypes.string
 };
 
 export default LdapOwnerFilter;
