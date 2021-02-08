@@ -76,9 +76,9 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
 
   const getTitleBar = () => {
     return (
-      <div className="d-flex pl-0 my-1">
+      <div className="d-flex pl-0 my-1 justify-content-between">
         <div><span className="h6 ml-1">{tableTitle}{getTableTitleLoader()}</span></div>
-        <div className="text-right">
+        <div>
           <NewRecordButton isLoading={isLoading} type={type} addRecordFunction={createNewRecord} size={"sm"} />
         </div>
       </div>
