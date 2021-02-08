@@ -334,6 +334,10 @@
   background-color: #1578dc;
 }
 
+.clear-value-badge {
+  font-weight: normal;
+}
+
 .badge-primary[href]:hover, .badge-primary[href]:focus {
   color: #fff;
   background-color: #082954;

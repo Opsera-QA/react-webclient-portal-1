@@ -39,7 +39,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
     if (dataObject.getData(field.id) !== "" && !disabled && setDataFunction == null && showClearValueButton) {
       return (
         <TooltipWrapper innerText={"Clear this Value"}>
-          <span onClick={() => clearValue()} className="my-auto badge badge-danger pointer">
+          <span onClick={() => clearValue()} className="my-auto badge badge-danger clear-value-badge pointer">
             <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>Clear Value
           </span>
         </TooltipWrapper>
