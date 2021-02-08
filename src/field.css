@@ -140,9 +140,9 @@
 }
 
 .tool-registry-card .jira-icon {
-  margin-top: 25px;
-  margin-right: 15px;
-  max-width: 95%;
+  margin-top: 15%;
+  margin-left: 10%;
+  max-width: 75%;
 }
 
 .tool-registry-card .sonarqube-icon {
