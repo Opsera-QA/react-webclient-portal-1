@@ -4,8 +4,8 @@ import {Button, InputGroup} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch, faSpinner} from "@fortawesome/pro-light-svg-icons";
 
-function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, fieldName, supportSearch, className}) {
-  const [isLoading, setIsLoading] = useState(false);
+function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, fieldName, supportSearch, className, isLoading}) {
+  const [isSearching, setIsSearching] = useState(false);
 
   const validateAndSetData = (value) => {
     let newFilterDto = {...filterDto};
@@ -16,18 +16,18 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
   const handleSearch = async () => {
     try {
       let newFilterDto = {...filterDto};
-      setIsLoading(true);
+      setIsSearching(true);
       newFilterDto.setData("currentPage", 1);
       setFilterDto({...newFilterDto});
       await loadData(newFilterDto);
     }
     finally {
-      setIsLoading(false);
+      setIsSearching(false);
     }
   };
 
   const getSearchIcon = () => {
-    if (isLoading) {
+    if (isSearching) {
       return <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>;
     }
 
@@ -40,7 +40,7 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
     }
   }
 
-  if (filterDto == null || supportSearch !== true) {
+  if (supportSearch !== true) {
     return null;
   }
 
@@ -48,15 +48,15 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
     <div className={className}>
       <InputGroup size="sm">
         <input
-          disabled={disabled}
+          disabled={disabled || isLoading || filterDto == null}
           placeholder="Search"
-          value={filterDto.getData(fieldName)}
+          value={filterDto?.getData(fieldName) || ""}
           className="inline-search-filter inline-filter-input"
           onKeyPress={(event) => handleKeyPress(event)}
           onChange={e => validateAndSetData(e.target.value)}
         />
         <InputGroup.Append>
-          <Button className="inline-filter-input filter-bg-white" variant="outline-primary" onClick={handleSearch}>
+          <Button className="inline-filter-input filter-bg-white" disabled={isLoading || disabled || filterDto == null} variant="outline-primary" onClick={handleSearch}>
             {getSearchIcon()}
           </Button>
         </InputGroup.Append>
@@ -72,6 +72,7 @@ InlineSearchFilter.propTypes = {
   loadData: PropTypes.func,
   disabled: PropTypes.bool,
   supportSearch: PropTypes.bool,
+  isLoading: PropTypes.bool,
   className: PropTypes.string
 };
 

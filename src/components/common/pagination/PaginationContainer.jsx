@@ -5,34 +5,26 @@ import DtoBottomPagination from "components/common/pagination/DtoBottomPaginatio
 
 function PaginationContainer({ isLoading, filterDto, setFilterDto, loadData, children }) {
   const getTopPaginator = () => {
-    if (filterDto && filterDto.getData("totalCount") != null) {
-      return (
-        <DtoTopPagination
-          paginationDto={filterDto}
-          setPaginationDto={setFilterDto}
-          isLoading={isLoading}
-          loadData={loadData}
-        />
-      );
-    }
+    return (
+      <DtoTopPagination
+        paginationDto={filterDto}
+        setPaginationDto={setFilterDto}
+        isLoading={isLoading}
+        loadData={loadData}
+      />
+    );
   };
 
   const getBottomPaginator = () => {
-    if (filterDto && filterDto.getData("totalCount") != null) {
-      return (
-        <DtoBottomPagination
-          paginationDto={filterDto}
-          setPaginationDto={setFilterDto}
-          isLoading={isLoading}
-          loadData={loadData}
-        />
-      );
-    }
+    return (
+      <DtoBottomPagination
+        paginationDto={filterDto}
+        setPaginationDto={setFilterDto}
+        isLoading={isLoading}
+        loadData={loadData}
+      />
+    );
   };
-
-  if (filterDto == null) {
-    return children;
-  }
 
   return (
     <div className="pagination-container">

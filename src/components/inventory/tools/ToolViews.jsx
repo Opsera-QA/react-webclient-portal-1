@@ -25,10 +25,6 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
   };
 
   const getDropdownFilters = () => {
-    if (toolFilterDto == null) {
-      return null;
-    }
-
     return(
       <>
         <StatusFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} className="mb-2" />

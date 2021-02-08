@@ -38,6 +38,10 @@ function FilterButtons({ dropdownFilters, filterDto, loadData, className, isLoad
   }
 
   const getPopover = () => {
+    if (filterDto == null || isLoading) {
+      return null;
+    }
+
     return (
     <Popover id="popover-basic" className="popover-filter">
       <Popover.Title as="h3" className="filter-title">
@@ -64,7 +68,7 @@ function FilterButtons({ dropdownFilters, filterDto, loadData, className, isLoad
           </div>
           <div className="w-50 ml-1">
             <Button variant="outline-secondary" size="sm" onClick={() => resetFilters()} className="w-100"
-                    disabled={filterDto.getData("activeFilters").length === 0 || isLoading}>
+                    disabled={isLoading || filterDto == null || filterDto?.getData("activeFilters").length === 0}>
               <span><span className="mr-2"><StackedFilterRemovalIcon/></span>Remove</span>
             </Button>
           </div>
@@ -74,7 +78,7 @@ function FilterButtons({ dropdownFilters, filterDto, loadData, className, isLoad
     );
   };
 
-  if (dropdownFilters == null || filterDto == null) {
+  if (dropdownFilters == null) {
     return null;
   }
 
@@ -83,11 +87,11 @@ function FilterButtons({ dropdownFilters, filterDto, loadData, className, isLoad
       <div className="d-flex">
         <OverlayTrigger trigger="click" rootClose placement="bottom" overlay={getPopover()} className="filter-popover">
           <div>
-            <Button disabled={isLoading} variant="outline-primary" size="sm"><span><FontAwesomeIcon icon={faFilter} fixedWidth/></span></Button>
+            <Button disabled={filterDto == null || isLoading} variant="outline-primary" size="sm"><span><FontAwesomeIcon icon={faFilter} fixedWidth/></span></Button>
           </div>
         </OverlayTrigger>
         <div>
-          <Button className={"ml-2"} disabled={filterDto?.getData("activeFilters").length === 0 || isLoading} variant="outline-primary" size="sm" onClick={() => resetFilters()}>
+          <Button className={"ml-2"} disabled={filterDto == null || filterDto?.getData("activeFilters").length === 0 || isLoading} variant="outline-primary" size="sm" onClick={() => resetFilters()}>
             <StackedFilterRemovalIcon />
           </Button>
         </div>

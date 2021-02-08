@@ -13,7 +13,7 @@ function ToolInventory({ customerAccessRules }) {
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
   const [toolRegistryList, setToolRegistryList] = useState([]);
-  const [toolFilterDto, setToolFilterDto] = useState(undefined);
+  const [toolFilterDto, setToolFilterDto] = useState(new Model({ ...toolFilterMetadata.newObjectFields }, toolFilterMetadata, false));
 
   useEffect(() => {
     getCookie().catch(error => {

@@ -4,23 +4,27 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faList, faThLarge} from "@fortawesome/pro-light-svg-icons";
 import Button from "react-bootstrap/Button";
 
-function ViewToggle({filterDto, setFilterDto, saveCookies, supportViewToggle, className}) {
+function ViewToggle({filterDto, setFilterDto, saveCookies, supportViewToggle, className, isLoading}) {
 
   const getViewToggle = () => {
-    const view = filterDto.getData("viewType");
+    const view = filterDto?.getData("viewType");
     return (
       <div className="d-flex">
         <Button
           variant={view === "list" ? "success" : "outline-secondary"}
           className="mr-2"
           size="sm"
-          onClick={() => switchView()}>
+          onClick={() => switchView()}
+          disabled={isLoading}
+        >
           <FontAwesomeIcon icon={faList} fixedWidth/>
         </Button>
         <Button
-          variant={view !== "list" ? "success" : "outline-secondary"}
+          variant={view === "card" ? "success" : "outline-secondary"}
           size="sm"
-          onClick={() => switchView()}>
+          onClick={() => switchView()}
+          disabled={isLoading}
+        >
           <FontAwesomeIcon icon={faThLarge} fixedWidth/>
         </Button>
       </div>
@@ -39,7 +43,7 @@ function ViewToggle({filterDto, setFilterDto, saveCookies, supportViewToggle, cl
     setFilterDto({ ...newFilterDto });
   };
 
-  if (filterDto == null || supportViewToggle !== true) {
+  if (supportViewToggle !== true) {
     return null;
   }
 
@@ -51,7 +55,8 @@ ViewToggle.propTypes = {
   setFilterDto: PropTypes.func,
   saveCookies: PropTypes.func,
   supportViewToggle: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  isLoading: PropTypes.bool
 };
 
 export default ViewToggle;
