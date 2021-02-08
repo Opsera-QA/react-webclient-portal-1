@@ -13,7 +13,7 @@ export function getLargeVendorIconFromToolIdentifier (s3Bucket, toolIdentifier) 
 
   switch (toolIdentifier) {
     case "jira":
-      return <Image src={`${vendorIconPrefix}/icons8-jira-64.png`} className={"jira-icon"} />;
+      return <Image src={`${vendorIconPrefix}/jira-74-220.png`} className={"jira-icon"} />;
     case "aws_account":
     case "elastic-beanstalk":
     case "aws-deploy":
