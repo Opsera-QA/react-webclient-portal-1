@@ -65,7 +65,7 @@ function FreeTrialSignup() {
   }
 
     return (
-      <div className="new-user-signup-form">
+      <div className="new-user-signup-form mt-2">
         <Form className="m-auto" noValidate onSubmit={e => e.preventDefault()}>
           <Card>
             <Card.Header as="h5" className="new-user-header">Sign Up For Opsera</Card.Header>
