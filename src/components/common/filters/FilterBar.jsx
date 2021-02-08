@@ -7,7 +7,7 @@ import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 import RefreshButton from "components/common/buttons/data/RefreshButton";
 import FilterButtons from "components/common/filters/buttons/FilterButtons";
 
-function FilterBar({ filterDto, setFilterDto, filters, children, loadData, isLoading, saveCookies, addRecordFunction, customButtons, supportSearch, supportViewToggle}) {
+function FilterBar({ filterDto, setFilterDto, children, loadData, isLoading, saveCookies, addRecordFunction, customButtons, supportSearch, supportViewToggle}) {
   const getCustomButtons = () => {
     if (children === undefined) {
       return null;
@@ -32,7 +32,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, isLoa
           </div>
         </div>
       </div>
-      <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} filters={filters} />
+      <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} />
     </>
   );
 }
@@ -49,7 +49,6 @@ FilterBar.propTypes = {
   children: PropTypes.any,
   loadData: PropTypes.func,
   addRecordFunction: PropTypes.func,
-  filters: PropTypes.array,
   isLoading: PropTypes.bool
 };
 

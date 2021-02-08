@@ -46,7 +46,6 @@ function KpiTable({ data, kpiFilterDto, setKpiFilterDto, isLoading, loadData }) 
         loadData={loadData}
         filterDto={kpiFilterDto}
         setFilterDto={setKpiFilterDto}
-        filters={["status", "search"]}
         supportSearch={true}
       >
         <StatusFilter filterDto={kpiFilterDto} setFilterDto={setKpiFilterDto} />

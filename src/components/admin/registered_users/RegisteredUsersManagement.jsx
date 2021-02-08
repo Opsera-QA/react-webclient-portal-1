@@ -71,7 +71,6 @@ function RegisteredUsersManagement() {
         loadData={loadData}
         filterDto={registeredUsersFilterDto}
         setFilterDto={setRegisteredUsersFilterDto}
-        filters={["search"]}
         supportSearch={true}
       />
     );

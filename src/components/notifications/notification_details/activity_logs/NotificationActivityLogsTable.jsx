@@ -92,7 +92,6 @@ function NotificationActivityLogsTable({ notificationData, allLogs }) {
         loadData={loadData}
         filterDto={notificationActivityFilterDto}
         setFilterDto={setNotificationActivityFilterDto}
-        filters={["status", "tag", "search"]}
         supportSearch={true}
       >
         <StatusFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} />

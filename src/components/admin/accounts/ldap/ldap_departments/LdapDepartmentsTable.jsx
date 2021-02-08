@@ -41,7 +41,6 @@ function LdapDepartmentsTable({ departmentData, departmentFilterDto, authorizedA
         filterDto={departmentFilterDto}
         setFilterDto={setDepartmentFilterDto}
         // activeFilterDto={activeDepartmentFilterDto}
-        // filters={["status", "toolIdentifier", "tag", "search"]}
         addRecordFunction={createNewDepartment}
       >
       </FilterBar>

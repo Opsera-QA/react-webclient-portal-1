@@ -102,7 +102,6 @@ function PipelinesView({ currentTab, setActiveTab }) {
         loadData={loadData}
         filterDto={pipelineFilterDto}
         setFilterDto={setPipelineFilterDto}
-        filters={["status", "type", "search"]}
         saveCookies={saveCookies}
         supportViewToggle={true}
         addRecordFunction={addPipeline}

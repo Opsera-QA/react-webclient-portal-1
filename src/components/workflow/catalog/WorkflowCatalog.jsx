@@ -136,7 +136,6 @@ function WorkflowCatalog() {
         loadData={loadData}
         filterDto={catalogFilterDto}
         setFilterDto={setCatalogFilterDto}
-        filters={["tag", "type", "search"]}
         supportSearch={true}
       >
         <TagFilter filterDto={catalogFilterDto} setFilterDto={setCatalogFilterDto}/>
