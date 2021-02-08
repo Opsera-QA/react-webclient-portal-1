@@ -120,7 +120,7 @@ function AccountRegistration() {
   }
 
   return (
-    <div className="new-user-signup-form">
+    <div className="new-user-signup-form mt-2">
       <Form className="full-signup-form m-auto" noValidate onSubmit={e => e.preventDefault()}>
         <Card>
           <Card.Header as="h5" className="new-user-header">{getTitle()}</Card.Header>
@@ -155,8 +155,8 @@ function AccountRegistration() {
               </div>
             </Row>
           </Card.Body>
-          <Card.Footer className="new-user-footer mr-2">
-            <RequiredFieldsMessage />
+          <Card.Footer className="new-user-footer">
+            <div className="pr-2"><RequiredFieldsMessage /></div>
           </Card.Footer>
         </Card>
       </Form>
