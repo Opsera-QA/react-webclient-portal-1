@@ -41,7 +41,7 @@ function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunct
     <div className={className}>
       <FilterSelectInputBase
         busy={isLoading}
-        setDataFunctionplaceholderText={"Filter by Tool"}
+        placeholderText={"Filter by Tool"}
         fieldName={fieldName}
         setDataObject={setFilterDto}
         dataObject={filterDto}

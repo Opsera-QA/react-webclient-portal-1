@@ -1196,6 +1196,10 @@ a.nav-link {
   min-width: 350px;
 }
 
+.inline-select-filter {
+  min-width: 250px;
+}
+
 .filter-title {
   background-color: #4D4283;
   border-bottom: 1px solid #46415C;

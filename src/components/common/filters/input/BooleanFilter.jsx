@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import WarningDialog from "../../status_notifications/WarningDialog";
 import {Form} from "react-bootstrap";
-import InputLabel from "../../form_fields/input/InputLabel";
+import WarningDialog from "components/common/status_notifications/WarningDialog";
 
 function BooleanFilter({ fieldName, loadData, filterDto, setFilterDto}) {
   const [field] = useState(filterDto.getFieldById(fieldName));

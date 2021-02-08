@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import ToolsTable from "components/inventory/tools/ToolsTable";
 import TableCardView from "components/common/table/TableCardView";
-import FilterBar from "components/common/filters/FilterBar";
 import StatusFilter from "components/common/filters/status/StatusFilter";
 import ToolIdentifierFilter from "components/common/filters/tools/ToolIdentifierFilter";
 import TagFilter from "components/common/filters/tags/TagFilter";
@@ -12,7 +11,7 @@ import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import LdapOwnerFilter from "components/common/filters/pipelines/LdapOwnerFilter";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faClipboardList, faTools} from "@fortawesome/pro-light-svg-icons";
+import {faTools} from "@fortawesome/pro-light-svg-icons";
 
 function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, saveCookies, customerAccessRules}) {
   const [showCreateToolModal, setShowCreateToolModal] = useState(false);
@@ -32,9 +31,9 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
 
     return(
       <>
-        <StatusFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
-        <LdapOwnerFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
-        <ToolIdentifierFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
+        <StatusFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} className="mb-2" />
+        <LdapOwnerFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} className="mb-2" />
+        <ToolIdentifierFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} className={"mb-2"} />
         <TagFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
       </>
     );
@@ -96,7 +95,7 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
         isLoading={isLoading}
         body={getTableCardView()}
         dropdownFilters={getDropdownFilters()}
-        getInlineFilters={getInlineFilters()}
+        inlineFilters={getInlineFilters()}
         titleIcon={faTools}
         title={"Tools"}
       >
