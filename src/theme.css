@@ -1158,14 +1158,16 @@ a.nav-link {
   /*height: 2em;*/
 }
 
-/*// TODO: add .pagination-container after updating table*/
 .top-pagination .page-sort {
   width: 250px;
 }
 
-/*// TODO: add .pagination-container after updating table*/
 .top-pagination .page-size {
   width: 250px;
+}
+
+.bottom-pagination .results-summary {
+  width: 100px;
 }
 
 .pagination-container .bottom-pagination {

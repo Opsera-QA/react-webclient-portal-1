@@ -73,11 +73,11 @@ function DtoBottomPagination({ paginationDto, setPaginationDto, paginationStyle,
   return (
     <div className="bottom-pagination">
       <div className="pagination-block small d-flex justify-content-between px-2">
-        <div className="my-auto">{getResultSummary(paginationDto, isLoading)}</div>
+        <div className="my-auto results-summary">{getResultSummary(paginationDto, isLoading)}</div>
         <div className="my-auto">
           {getPaginator()}
         </div>
-        <div />
+        <div className="results-summary" />
       </div>
     </div>
   );

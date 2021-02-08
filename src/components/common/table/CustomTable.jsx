@@ -216,7 +216,7 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
           </tbody>
           <tfoot>
             <tr>
-              <td colSpan="100%" className="px-2 py-1 table-footer">
+              <td colSpan="100%" className="py-1 table-footer">
                 {getOldPaginator()}
                 {getNewPaginator()}
               </td>
