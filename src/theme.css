@@ -723,6 +723,10 @@ a.nav-link {
 /* End Alternate Tab Styling */
 
 /* Sub-Navigation Tab Styling */
+.sub-navigation {
+  margin-top: 3px;
+}
+
 .sub-navigation .nav-tabs {
   display: inline-block;
 }
