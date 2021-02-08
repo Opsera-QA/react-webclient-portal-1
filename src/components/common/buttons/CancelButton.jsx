@@ -4,19 +4,18 @@ import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import  {faTimes} from "@fortawesome/free-solid-svg-icons";
 
-function CancelButton({isLoading, cancelFunction, size}) {
+function CancelButton({isLoading, cancelFunction, size, className}) {
 
   return (
-    <div>
-      <Button size={size} variant="secondary" disabled={isLoading} onClick={() => cancelFunction()}>
-        <span><FontAwesomeIcon icon={faTimes} className="mr-2" fixedWidth/>Cancel</span>
-      </Button>
-    </div>
+    <Button size={size} variant="secondary" className={className} disabled={isLoading} onClick={() => cancelFunction()}>
+      <span><FontAwesomeIcon icon={faTimes} className="mr-2" fixedWidth/>Cancel</span>
+    </Button>
   );
 }
 
 CancelButton.propTypes = {
   cancelFunction: PropTypes.func,
+  className: PropTypes.string,
   isLoading: PropTypes.bool,
   size: PropTypes.string
 };
