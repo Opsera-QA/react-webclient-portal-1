@@ -1,12 +1,10 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
-import DtoTextField from "../../../common/form_fields/dto_form_fields/dto-text-field";
-import SummaryPanelContainer from "../../../common/panels/detail_view/SummaryPanelContainer";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 
 function LdapUserSummaryPanel({ ldapUserData, setActiveTab } ) {
-
   if (ldapUserData == null) {
     return <></>;
   }
@@ -15,28 +13,28 @@ function LdapUserSummaryPanel({ ldapUserData, setActiveTab } ) {
     <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapUserData} fieldName={"firstName"}/>
+          <TextFieldBase dataObject={ldapUserData} fieldName={"firstName"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapUserData} fieldName={"lastName"}/>
+          <TextFieldBase dataObject={ldapUserData} fieldName={"lastName"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapUserData} fieldName={"name"}/>
+          <TextFieldBase dataObject={ldapUserData} fieldName={"name"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapUserData} fieldName={"preferredName"}/>
+          <TextFieldBase dataObject={ldapUserData} fieldName={"preferredName"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapUserData} fieldName={"emailAddress"}/>
+          <TextFieldBase dataObject={ldapUserData} fieldName={"emailAddress"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapUserData} fieldName={"site"}/>
+          <TextFieldBase dataObject={ldapUserData} fieldName={"site"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapUserData} fieldName={"departmentName"}/>
+          <TextFieldBase dataObject={ldapUserData} fieldName={"departmentName"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={ldapUserData} fieldName={"title"}/>
+          <TextFieldBase dataObject={ldapUserData} fieldName={"title"}/>
         </Col>
       </Row>
     </SummaryPanelContainer>
