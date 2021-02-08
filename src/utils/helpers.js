@@ -41,7 +41,7 @@ export function isOpseraPassword(password) {
 }
 
 export function matchesRegex(regex, value) {
-  return regex.test(String(value).toLowerCase());
+  return regex.test(String(value));
 }
 
 export function handleError(error) {
