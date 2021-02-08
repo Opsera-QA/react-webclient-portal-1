@@ -141,6 +141,8 @@
 
 .tool-registry-card .jira-icon {
   margin-top: 25px;
+  margin-right: 15px;
+  height: 50px;
 }
 
 .tool-registry-card .slack-icon {
