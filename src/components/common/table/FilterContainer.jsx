@@ -25,12 +25,14 @@ function FilterContainer(
   }) {
   const getInlineFilters = () => {
     return (
-      <div className="d-flex my-1 inline-filter-input">
-        {inlineFilters}
-        <InlineSearchFilter supportSearch={supportSearch} filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} className={"mr-2"} />
-        <ViewToggle supportViewToggle={supportViewToggle} filterDto={filterDto} setFilterDto={setFilterDto} saveCookies={saveCookies} className="mr-2" />
-        <RefreshButton isLoading={isLoading} loadData={loadData} className="mr-2" />
-        <FilterButtons isLoading={isLoading} loadData={loadData} dropdownFilters={dropdownFilters} filterDto={filterDto} />
+      <div className="my-1 inline-filter-input">
+        <div className="d-flex my-auto">
+          {inlineFilters}
+          <InlineSearchFilter supportSearch={supportSearch} filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} className={"mr-2"} />
+          <ViewToggle supportViewToggle={supportViewToggle} filterDto={filterDto} setFilterDto={setFilterDto} saveCookies={saveCookies} className="mr-2" />
+          <RefreshButton isLoading={isLoading} loadData={loadData} className="mr-2" />
+          <FilterButtons isLoading={isLoading} loadData={loadData} dropdownFilters={dropdownFilters} filterDto={filterDto} />
+        </div>
       </div>
     )
   };

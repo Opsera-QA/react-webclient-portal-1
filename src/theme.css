@@ -1208,6 +1208,10 @@ a.nav-link {
   white-space: nowrap;
 }
 
+.filter-title-text {
+  font-size: 1.2rem;
+}
+
 .filter-body {
   min-width: 250px;
 }

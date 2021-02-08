@@ -21,7 +21,7 @@ function FilterBar({ filterDto, setFilterDto, filters, children, loadData, isLoa
       <div className="filter-bar p-2">
         <div className="justify-content-between d-flex">
           <div>
-            <NewRecordButton addRecordFunction={addRecordFunction} type={filterDto?.getType()} isLoading={isLoading} />
+            <NewRecordButton addRecordFunction={addRecordFunction} type={filterDto?.getType()} isLoading={isLoading} variant="warning" />
           </div>
           <div className="d-flex">
             {getCustomButtons()}
