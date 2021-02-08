@@ -59,6 +59,7 @@ const accountRegistrationMetadata = {
     firstName: "",
     lastName: "",
     email: "",
+    confirmEmail: "",
     password: "",
     confirmPassword: "",
     orgAccount: "",
