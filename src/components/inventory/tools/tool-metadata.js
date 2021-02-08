@@ -20,8 +20,8 @@ const toolMetadata = {
       id: "name",
       isRequired: true,
       maxLength: 30,
-      // regexValidator: regexHelpers.regexTypes["generalTextWithSpaces"],
-      // formText: "Names can be up to 30 characters and consist of letters, numbers, spaces, dashes, colons, underscores, and periods"
+      regexValidator: regexHelpers.regexTypes["generalTextWithSpaces"],
+      formText: "Names can be up to 30 characters and can consist of letters, apostrophes, numbers, spaces, dashes, colons, underscores, and periods"
     },
     {
       label: "Account",
@@ -34,6 +34,10 @@ const toolMetadata = {
     {
       label: "Owner",
       id: "owner_name",
+    },
+    {
+      label: "Owner",
+      id: "owner",
     },
     {
       label: "Tool Identifier",
