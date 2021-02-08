@@ -2,10 +2,10 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import DtoFilterSelectInput from "components/common/filters/input/DtoFilterSelectInput";
 import accountsActions from "components/admin/accounts/accounts-actions";
+import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 
-function LdapOwnerFilter({ filterDto, setFilterDto }) {
+function LdapOwnerFilter({ filterDto, setFilterDto, className }) {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -26,9 +26,9 @@ function LdapOwnerFilter({ filterDto, setFilterDto }) {
       const userRoleAccess = await setAccessRoles(user);
       setAccessRoleData(userRoleAccess)
 
-      if (userRoleAccess && userRoleAccess?.Type !== "sass-user" && ldap.domain != null)
+      if (userRoleAccess && userRoleAccess?.Type !== "sass-user" && ldap?.domain != null)
       {
-        await getUsers(ldap);
+        await getUsers();
       }
     }
     catch (error) {
@@ -39,14 +39,14 @@ function LdapOwnerFilter({ filterDto, setFilterDto }) {
     }
   }
 
-  const getUsers = async (ldap) => {
+  const getUsers = async () => {
     let response = await accountsActions.getAccountUsers(getAccessToken);
     let userOptions = [];
     const parsedUsers = response?.data;
 
     if (Array.isArray(parsedUsers) && parsedUsers.length > 0) {
       parsedUsers.map((user, index) => {
-        userOptions.push({text: `Owner: ${user.firstName} ${user.lastName}`, value:`${user._id}`});
+        userOptions.push({text: `Owner: ${user.firstName} ${user.lastName} (${user.email})`, value:`${user._id}`});
       });
     }
 
@@ -59,21 +59,23 @@ function LdapOwnerFilter({ filterDto, setFilterDto }) {
 
 
   return (
-    <DtoFilterSelectInput
-      fieldName={"owner"}
-      busy={isLoading}
-      placeholderText={"Filter by Owner"}
-      setDataObject={setFilterDto}
-      dataObject={filterDto}
-      selectOptions={userOptions}
-    />
+    <div className={className}>
+      <FilterSelectInputBase
+        fieldName={"owner"}
+        busy={isLoading}
+        placeholderText={"Filter by Owner"}
+        setDataObject={setFilterDto}
+        dataObject={filterDto}
+        selectOptions={userOptions}
+      />
+    </div>
   );
 }
-
 
 LdapOwnerFilter.propTypes = {
   filterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
+  className: PropTypes.func
 };
 
 export default LdapOwnerFilter;
