@@ -47,8 +47,8 @@ function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, d
     if (dataObject.getData(field.id) !== "" && !disabled && setDataFunction == null) {
       return (
         <TooltipWrapper innerText={"Clear this Value"}>
-          <span className="pointer danger-red" onClick={() => clearValue()}>
-            <FontAwesomeIcon icon={faTimes} className="mt-1 danger-red"/>
+          <span onClick={() => clearValue()} className="my-auto badge badge-danger pointer">
+            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>Clear Value
           </span>
         </TooltipWrapper>
       );
