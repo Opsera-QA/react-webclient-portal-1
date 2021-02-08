@@ -1,7 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Row, Col, Button } from "react-bootstrap";
 import "../workflows.css";
-import PipelineItem from "./PipelineItem";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
@@ -16,8 +14,7 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import LdapOwnerFilter from "components/common/filters/pipelines/LdapOwnerFilter";
 import Model from "core/data_model/model";
 import TagFilter from "components/common/filters/tags/TagFilter";
-import DtoTopPagination from "components/common/pagination/DtoTopPagination";
-import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
+import PipelineCardView from "components/workflow/pipelines/PipelineCardView";
 import FilterBar from "components/common/filters/FilterBar";
 
 function PipelinesView({ currentTab, setActiveTab }) {
@@ -123,50 +120,24 @@ function PipelinesView({ currentTab, setActiveTab }) {
     }
 
     return (
-      <div className="px-3">
-        <div>
-          <DtoTopPagination
-            loadData={loadData}
-            isLoading={loading}
-            paginationDto={pipelineFilterDto}
-            setPaginationDto={setPipelineFilterDto}
-          />
-        </div>
-        {showCards()}
-        <div>
-          <DtoBottomPagination
-            loadData={loadData}
-            isLoading={loading}
-            paginationDto={pipelineFilterDto}
-            setPaginationDto={setPipelineFilterDto}
-          />
-        </div>
-      </div>
-    );
-  };
-
-  const showCards = () => {
-    return (
-      <Row>
-        {data.response.map((item, idx) => (
-          <Col key={idx} xl={6} md={12} className="p-2">
-            <PipelineItem item={item}/>
-          </Col>
-        ))}
-      </Row>
+      <PipelineCardView
+        isLoading={loading}
+        loadData={loadData}
+        data={data?.response}
+        pipelineFilterDto={pipelineFilterDto}
+        setPipelineFilterDto={setPipelineFilterDto}
+      />
     );
   };
 
   const showList = () => {
     return (
-      <div className="p-2">
         <PipelinesTable
           isLoading={loading}
           paginationModel={pipelineFilterDto}
           setPaginationModel={setPipelineFilterDto}
-          data={data.response}
+          data={data?.response}
         />
-      </div>
     );
   };
 
@@ -221,7 +192,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
   return (
     <div style={{minWidth: "505px"}}>
       <div>
-        <div className="mb-2">
+        <div>
           {getFilterBar()}
         </div>
         <div>

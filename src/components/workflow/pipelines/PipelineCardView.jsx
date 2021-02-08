@@ -1,0 +1,44 @@
+import React from "react";
+import PropTypes from "prop-types";
+import {Col} from "react-bootstrap";
+import Row from "react-bootstrap/Row";
+import CardView from "components/common/card/CardView";
+import PipelineItem from "components/workflow/pipelines/PipelineItem";
+
+function PipelineCardView({ data, pipelineFilterDto, setPipelineFilterDto, loadData, isLoading }) {
+  const getCards = () => {
+    if (!Array.isArray(data) || data.length === 0) {
+      return null;
+    }
+
+    return (
+      <Row>
+        {data.map((item, idx) => (
+          <Col key={idx} xl={6} md={12} className="p-2">
+            <PipelineItem item={item}/>
+          </Col>
+        ))}
+      </Row>
+    );
+  }
+
+  return (
+    <CardView
+      isLoading={isLoading}
+      loadData={loadData}
+      setPaginationDto={setPipelineFilterDto}
+      paginationDto={pipelineFilterDto}
+      cards={getCards()}
+    />
+  );
+}
+
+PipelineCardView.propTypes = {
+  data: PropTypes.array,
+  pipelineFilterDto: PropTypes.object,
+  setPipelineFilterDto: PropTypes.func,
+  loadData: PropTypes.func,
+  isLoading: PropTypes.bool
+};
+
+export default PipelineCardView;
