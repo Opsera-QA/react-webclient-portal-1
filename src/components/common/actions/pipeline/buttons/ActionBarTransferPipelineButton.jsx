@@ -1,18 +1,16 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUserEdit, faUserTimes, faPeopleArrows} from "@fortawesome/pro-light-svg-icons";
-//import Popover from "react-bootstrap/Popover";
-//import {Col, Row} from "react-bootstrap";
+import {faUserEdit, faPeopleArrows} from "@fortawesome/pro-light-svg-icons";
 import Button from "react-bootstrap/Button";
-//import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import {AuthContext} from "../../../../../contexts/AuthContext";
-import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import ActionBarPopoverButton from "../../buttons/ActionBarPopoverButton";
 import DropdownList from "react-widgets/lib/DropdownList";
-import accountsActions from "../../../../admin/accounts/accounts-actions";
-import pipelineActions from "../../../../workflow/pipeline-actions";
-import PopoverContainer from "../../../tooltip/PopoverContainer";
+import CancelButton from "components/common/buttons/CancelButton";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import accountsActions from "components/admin/accounts/accounts-actions";
+import pipelineActions from "components/workflow/pipeline-actions";
+import ActionBarPopoverButton from "components/common/actions/buttons/ActionBarPopoverButton";
+import PopoverContainer from "components/common/tooltip/PopoverContainer";
 
 function ActionBarTransferPipelineButton({ pipeline, loadPipeline }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -86,9 +84,7 @@ function ActionBarTransferPipelineButton({ pipeline, loadPipeline }) {
             </Button>
           </div>
           <div className="w-50 ml-1">
-            <Button type="primary" size="sm" onClick={() => document.body.click()} className="w-100">
-              <span><FontAwesomeIcon icon={faUserTimes} fixedWidth className="mr-2"/>Cancel</span>
-            </Button>
+            <CancelButton size={"sm"} className={"w-100"} cancelFunction={() => document.body.click()} />
           </div>
         </div>
       </div>
@@ -96,7 +92,7 @@ function ActionBarTransferPipelineButton({ pipeline, loadPipeline }) {
 
   return (
     <PopoverContainer
-      className={"pipeline-owner-popover"}
+      className={"owner-popover"}
       isLoading={isLoading}
       title={"Transfer Pipeline"}
       content={popoverContent}>
