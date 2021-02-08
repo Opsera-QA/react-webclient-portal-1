@@ -9,6 +9,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import DtoBottomPagination from "../pagination/DtoBottomPagination";
 import DtoTopPagination from "../pagination/DtoTopPagination";
+import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 
 export const defaultRowStyling = (row) => {
   return "";
@@ -73,28 +74,32 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
     }
   };
 
-  const getTableTitleBar = () => {
+  const getTitleBar = () => {
     return (
-      <div>
-        <Row className="d-flex justify-content-between mx-0">
-          <Col sm={3} className="d-flex pl-0 my-1">
-            <div><span className="h6 ml-1">{tableTitle}{getTableTitleLoader()}</span></div>
-          </Col>
-          {tableFilterBar
-            ? <Col className="pr-0"><div className="mt-0 mb-1"><div className="ml-auto">{tableFilterBar}</div></div></Col>
-            :
-            <div className="d-flex text-right">
-              {/*TODO: Remove old add button after removing everywhere*/}
-              {createNewRecord &&
-                <Button size="sm" onClick={() => { createNewRecord(); }}>
-                  <FontAwesomeIcon icon={faPlus}/><span className="ml-1">New {type}</span>
-                </Button>
-              }
-            </div>
-          }
-        </Row>
+      <div className="d-flex pl-0 my-1">
+        <div><span className="h6 ml-1">{tableTitle}{getTableTitleLoader()}</span></div>
+        <div className="text-right">
+          <NewRecordButton isLoading={isLoading} type={type} addRecordFunction={createNewRecord} size={"sm"} />
+        </div>
       </div>
     );
+  };
+
+  const getFilterTitleBar = () => {
+    return (
+      <div className="pl-0">
+        <div className="mb-2"><span className="h6 ml-1">{tableTitle}{getTableTitleLoader()}</span></div>
+        <div className="pr-0"><div className="mt-0"><div className="ml-auto">{tableFilterBar}</div></div></div>
+      </div>
+    );
+  };
+
+  const getTableTitleBar = () => {
+    if (tableFilterBar) {
+      return getFilterTitleBar();
+    }
+
+    return (getTitleBar());
   };
 
   const getTableHeader = () => {
