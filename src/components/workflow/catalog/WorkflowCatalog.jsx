@@ -15,7 +15,7 @@ import TagFilter from "components/common/filters/tags/TagFilter";
 import PipelineTypeFilter from "components/common/filters/admin/templates/PipelineTypeFilter";
 import CardView from "components/common/card/CardView";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faOctagon, faTools} from "@fortawesome/pro-light-svg-icons";
+import {faOctagon} from "@fortawesome/pro-light-svg-icons";
 
 function WorkflowCatalog() {
   const contextType = useContext(AuthContext);
@@ -114,7 +114,7 @@ function WorkflowCatalog() {
       return (
         <Row className="p-1">
           {workflowTemplates.map((item, idx) => (
-            <Col xl={6} md={12} key={idx} className={"p-1"}>
+            <Col lg={6} xs={12} key={idx} className={"p-1"}>
               <WorkflowCatalogItem
                 item={item}
                 parentCallback={callbackFunction}
@@ -126,8 +126,6 @@ function WorkflowCatalog() {
         </Row>
       );
     }
-
-    return (<InformationDialog message="No Catalog Items Found"/>);
   };
 
   const getDropdownFilters = () => {
@@ -147,6 +145,7 @@ function WorkflowCatalog() {
         setPaginationDto={setCatalogFilterDto}
         paginationDto={catalogFilterDto}
         cards={getWorkflowItems()}
+        noDataMessage={"No Catalog Items Found"}
       />
     );
   };

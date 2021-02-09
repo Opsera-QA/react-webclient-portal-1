@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 
-function CardView({ cards, isLoading, paginationDto, setPaginationDto, loadData }) {
+function CardView({ cards, isLoading, paginationDto, setPaginationDto, loadData, noDataMessage }) {
   if (!isLoading && cards == null) {
-    return <div className="info-text text-center p-5">No data is currently available</div>
+    return <div className="info-text text-center p-5">{noDataMessage}</div>
   }
 
   return (
@@ -29,7 +29,12 @@ CardView.propTypes = {
   title: PropTypes.string,
   paginationDto: PropTypes.object,
   setPaginationDto: PropTypes.func,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  noDataMessage: PropTypes.string
+};
+
+CardView.defaultProps = {
+  noDataMessage: "No data is currently available"
 };
 
 export default CardView;
