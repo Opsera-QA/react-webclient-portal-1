@@ -32,7 +32,7 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authori
       throw `User with email ${email} already exists. Please try another email address.`;
     }
 
-    return await accountsActions.createUser(ldapUserDataDto, getAccessToken);
+    return await accountsActions.createUser(orgDomain, ldapUserDataDto, getAccessToken);
   };
 
   const updateLdapUser = async () => {

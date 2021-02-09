@@ -224,11 +224,11 @@ accountsActions.updateUser = async (orgDomain, ldapUserDataDto, getAccessToken) 
   return await baseActions.apiPutCall(getAccessToken, apiUrl, postBody);
 };
 
-accountsActions.createUser = async (ldapUserDataDto, getAccessToken) => {
+accountsActions.createUser = async (orgDomain, ldapUserDataDto, getAccessToken) => {
   let postData = {
       ...ldapUserDataDto.getPersistData()
   }
-  const apiUrl = "/users/account/user/create";
+  const apiUrl = `/users/account/user/create?domain=${orgDomain}`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
