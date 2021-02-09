@@ -201,8 +201,13 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
     }
   }
 
-  //return for ReadOnly / Guest access
-  return false;
+  //return for ReadOnly / Guest access which for now will allow tool creation
+  switch (action) {
+  case "create_tool":
+    return true;
+  default:
+    return false;
+  }
 };
 
 
@@ -214,7 +219,7 @@ const calculateUserObjectRole = (userEmail, userGroups, objectRoles) => {
   }
 
   //filter out only user records (groups null)
-  const userRoles = objectRoles.filter(function (item) {
+  const userRoles = objectRoles.filter(function(item) {
     if (!item.user || typeof item.user !== "string") {
       return false;
     }
