@@ -39,7 +39,7 @@ function FilterButtons({ dropdownFilters, filterDto, loadData, className, isLoad
 
   const getPopover = () => {
     if (filterDto == null || isLoading) {
-      return null;
+      return <></>;
     }
 
     return (
