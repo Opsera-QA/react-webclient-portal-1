@@ -73,7 +73,7 @@ function AccountSettings() {
       console.log("accessRoleData", accessRoleData)
       return (
         <>
-          {!accessRoleData.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>}
+          {accessRoleData.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>}
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
           <BreadcrumbPageLink breadcrumbDestination={"mapping"}/>
