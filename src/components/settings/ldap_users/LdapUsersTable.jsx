@@ -50,6 +50,7 @@ function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loa
         showModal={showCreateUserModal}
         setShowModal={setShowCreateUserModal}
         loadData={loadData}
+        orgDomain={orgDomain}
       />
     </div>
   );

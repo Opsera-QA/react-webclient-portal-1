@@ -5,7 +5,7 @@ import {ldapUsersMetaData} from "components/settings/ldap_users/ldap-users-metad
 import LdapUserEditorPanel from "components/settings/ldap_users/users_detail_view/LdapUserEditorPanel";
 import CreateModal from "components/common/modal/CreateModal";
 
-function NewLdapUserModal({ setShowModal, showModal, loadData, authorizedActions } ) {
+function NewLdapUserModal({ setShowModal, showModal, loadData, authorizedActions, orgDomain } ) {
   const [ldapUserData, setLdapUserData] = useState(undefined);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ function NewLdapUserModal({ setShowModal, showModal, loadData, authorizedActions
 
   return (
     <CreateModal handleCancelModal={handleClose} objectType={"User"} showModal={showModal} loadData={loadData} >
-      <LdapUserEditorPanel authorizedActions={authorizedActions} setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} handleClose={handleClose} />
+      <LdapUserEditorPanel orgDomain={orgDomain} authorizedActions={authorizedActions} setLdapUserData={setLdapUserData} ldapUserData={ldapUserData} handleClose={handleClose} />
     </CreateModal>
   );
 }
@@ -28,7 +28,8 @@ NewLdapUserModal.propTypes = {
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
   loadData: PropTypes.func,
-  authorizedActions: PropTypes.array
+  authorizedActions: PropTypes.array,
+  orgDomain: PropTypes.string
 };
 
 export default NewLdapUserModal;
