@@ -90,7 +90,7 @@ function NonMembersPanel({selectedNonMembers, setSelectedNonMembers, nonMembers,
           {formatUsers()}
         </ul>
         <div className="px-3 mt-2">
-          <ClientSideBottomPaginator items={filteredNonmembers} setShownItems={setShownNonMembers} paginationStyle={"stacked"}/>
+          <ClientSideBottomPaginator items={filteredNonmembers} setShownItems={setShownNonMembers} paginationStyle={"stacked"} pageSize={50} />
         </div>
       </div>
     </div>
