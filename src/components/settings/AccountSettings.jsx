@@ -54,6 +54,8 @@ function AccountSettings() {
   };
 
   const getRolePageLinks = () => {
+    console.log("accessRoleData", accessRoleData);
+
     if (accessRoleData.Administrator || accessRoleData.OpseraAdministrator) {
       return (
         <>
@@ -70,7 +72,6 @@ function AccountSettings() {
 
     //for LDAP Power User role or Saas based user, show this (Saas based user gets the .Role of "power_user"
     if (accessRoleData.PowerUser || accessRoleData.SassPowerUser) {
-      console.log("accessRoleData", accessRoleData)
       return (
         <>
           {accessRoleData.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>}
