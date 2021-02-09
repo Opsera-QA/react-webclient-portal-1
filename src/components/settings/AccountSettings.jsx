@@ -70,6 +70,7 @@ function AccountSettings() {
 
     //for LDAP Power User role or Saas based user, show this (Saas based user gets the .Role of "power_user"
     if (accessRoleData.PowerUser || accessRoleData.Role === "power_user") {
+      console.log("accessRoleData", accessRoleData)
       return (
         <>
           {!accessRoleData.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>}
