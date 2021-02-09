@@ -9,6 +9,7 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import TagDetailPanel from "components/settings/tags/tags_detail_view/TagDetailPanel";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 function TagDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -72,6 +73,7 @@ function TagDetailView() {
       breadcrumbDestination={"tagDetailView"}
       title={tagData != null ? `Tag Details [${tagData["type"]}]` : undefined}
       metadata={tagEditorMetadata}
+      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
       dataObject={tagData}
       isLoading={isLoading}
       actionBar={getActionBar()}

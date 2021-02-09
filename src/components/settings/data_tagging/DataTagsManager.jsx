@@ -7,10 +7,7 @@ import { faProjectDiagram, faUser } from "@fortawesome/pro-light-svg-icons";
 import dataMappingActions from "./data-mapping-actions";
 import { Button, Card } from "react-bootstrap";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import Model from "core/data_model/model";
-import toolFilterMetadata from "components/inventory/tools/tool-filter-metadata";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
@@ -223,13 +220,10 @@ function Tagging() {
     );
   }
 
-  if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
-    return <AccessDeniedDialog roleData={accessRoleData} />;
-  }
-
   return (
     <ScreenContainer
       breadcrumbDestination={"mapping"}
+      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
       pageDescription={"Manage data mapping for the Opsera Analytics Engine."}
     >
       {getBody()}

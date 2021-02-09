@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import UsersMappingDetailPanel from "./UsersMappingDetailPanel";
-import { faProjectDiagram, faUser } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import dataMappingActions from "components/settings/data_tagging/data-mapping-actions";
@@ -10,7 +9,6 @@ import Model from "core/data_model/model";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
-import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 
 function UsersMappingDetailView() {
@@ -81,15 +79,11 @@ function UsersMappingDetailView() {
     );
   };
 
-  if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
-    return <AccessDeniedDialog roleData={accessRoleData} />;
-  }
-
   return (
     <DetailScreenContainer
       breadcrumbDestination={"userTaggingDetailView"}
       metadata={usersTagsMetadata}
-      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator}
+      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
       dataObject={usersMappingData}
       isLoading={isLoading}
       actionBar={getActionBar()}

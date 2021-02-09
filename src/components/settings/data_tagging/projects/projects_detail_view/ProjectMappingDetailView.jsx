@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import ProjectMappingDetailPanel from "./ProjectMappingDetailPanel";
-import { faProjectDiagram } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import dataMappingActions from "components/settings/data_tagging/data-mapping-actions";
@@ -9,7 +8,6 @@ import Model from "core/data_model/model";
 import projectTagsMetadata from "components/settings/data_tagging/projects/tagging-project-metadata";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
-import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 
@@ -77,7 +75,7 @@ function ProjectMappingDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"projectTaggingDetailView"}
-      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator}
+      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
       metadata={projectTagsMetadata}
       dataObject={projectMappingData}
       isLoading={isLoading}

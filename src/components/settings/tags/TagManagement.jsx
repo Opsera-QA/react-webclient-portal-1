@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "contexts/AuthContext";
-
-import LoadingDialog from "components/common/status_notifications/loading";
 import Model from "core/data_model/model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -49,7 +47,7 @@ function TagManagement() {
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      if (userRoleAccess?.PowerUser || userRoleAccess?.Administrator || userRoleAccess?.OpseraAdministrator) {
+      if (userRoleAccess?.PowerUser || userRoleAccess?.Administrator || userRoleAccess?.OpseraAdministrator || userRoleAccess?.SassPowerUser) {
         await getTags(filterDto);
       }
     }
@@ -59,7 +57,7 @@ function TagManagement() {
     <ScreenContainer
       breadcrumbDestination={"tagManagement"}
       isLoading={!accessRoleData}
-      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator}
+      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
     >
       <TagsTable
         loadData={loadData}
