@@ -23,7 +23,7 @@ function MyUserProfile() {
   const [accessRole, setAccessRole] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    loadData()
   }, []);
 
   const loadData = async () => {
@@ -65,7 +65,7 @@ function MyUserProfile() {
       <tr>
         <td>Opsera User Information</td>
         <td>
-          <RegisteredUserSummary userData={userModel} />
+          <RegisteredUserSummary userData={userModel} userAccess={accessRole} />
         </td>
       </tr>
     )
