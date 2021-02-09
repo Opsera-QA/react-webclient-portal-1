@@ -1,7 +1,7 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUserEdit, faUserTimes, faPeopleArrows} from "@fortawesome/pro-light-svg-icons";
+import {faUserEdit, faPeopleArrows} from "@fortawesome/pro-light-svg-icons";
 import Button from "react-bootstrap/Button";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -13,11 +13,36 @@ import CancelButton from "components/common/buttons/CancelButton";
 import Model from "core/data_model/model";
 
 function ActionBarTransferToolButton({ toolData, loadTool }) {
-  const { getAccessToken } = useContext(AuthContext);
+  const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [toolCopy, setToolCopy] = useState(new Model({...toolData.data}, toolData.getMetaData(), false));
   const [transferringOwner, setTransferringOwner] = useState(false);
+  const [canTransferTool, setCanTransferTool] = useState(undefined);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      setIsLoading(true);
+      const user = await getUserRecord();
+      const {ldap} = user;
+      const userRoleAccess = await setAccessRoles(user);
+
+      if (userRoleAccess && userRoleAccess?.Type !== "sass-user" && ldap.domain != null)
+      {
+        setCanTransferTool(true);
+      }
+    }
+    catch (error) {
+      console.error("Could not validate credentials.");
+    }
+    finally {
+      setIsLoading(false);
+    }
+  }
 
   const changeToolOwner = async () => {
     try {
@@ -54,6 +79,10 @@ function ActionBarTransferToolButton({ toolData, loadTool }) {
       </div>
     );
 
+  if (canTransferTool == null || canTransferTool !== true) {
+    return null;
+  }
+
   return (
     <PopoverContainer
       className={"owner-popover"}
@@ -61,7 +90,7 @@ function ActionBarTransferToolButton({ toolData, loadTool }) {
       title={"Transfer Tool"}
       content={popoverContent}>
       <div className="mx-2">
-        <ActionBarPopoverButton disabled={isLoading} icon={faPeopleArrows} popoverText={`Transfer tool to new Owner`} />
+        <ActionBarPopoverButton disabled={isLoading} icon={faPeopleArrows} popoverText={`Transfer Tool to new Owner`} />
       </div>
     </PopoverContainer>
   );
