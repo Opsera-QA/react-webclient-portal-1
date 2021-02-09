@@ -84,18 +84,17 @@ function AccountSettings() {
     }
   };
 
-  if (!accessRoleData || isLoading) {
+  if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
-  }
-
-  if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator && !userDetailsLink) {
-    return (<AccessDeniedDialog roleData={accessRoleData}/>);
   }
 
   return (
     <ScreenContainer
       breadcrumbDestination={"accountSettings"}
-      pageDescription={"Manage account settings from this dashboard."}>
+      pageDescription={"Manage account settings from this dashboard."}
+      accessDenied={!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator && !accessRoleData.SassPowerUser && !userDetailsLink}
+      isLoading={isLoading}
+    >
       <Row className="ml-3">
         {/*TODO: Make User Details Link Component*/}
         {userDetailsLink && accessRoleData?.Type !== "sass-user" &&
