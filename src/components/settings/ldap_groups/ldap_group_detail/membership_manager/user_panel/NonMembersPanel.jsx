@@ -82,9 +82,9 @@ function NonMembersPanel({selectedNonMembers, setSelectedNonMembers, nonMembers,
         </Button>
       </div>
       <div className="content-card-1 content-container">
-        <div className="px-2 content-block-header members-title">
-          <span><FontAwesomeIcon icon={faUsers} fixedWidth className="mr-2"/>Not Members</span>
-          <span>{nonMembers.length} {nonMembers.length !== 1 ? "users" : "user"}</span>
+        <div className="px-2 d-flex content-block-header justify-content-between">
+          <div><FontAwesomeIcon icon={faUsers} fixedWidth className="mr-2"/>Not Members</div>
+          <div>{nonMembers.length} {nonMembers.length !== 1 ? "users" : "user"}</div>
         </div>
         <ul className="list-group membership-list">
           {formatUsers()}

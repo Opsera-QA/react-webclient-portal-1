@@ -24,7 +24,7 @@ function UserCard({user, selectedUsers, setSelectedUsers}) {
 
   return (
     <li key={user.emailAddress} className={selectedUsers.includes(user) ? "p-2 member-list selected" : "p-2 member-list"} onClick={selectUser}>
-      <div className="mx-2 justify-content-between d-flex w-100">
+      <div className="px-2 justify-content-between d-flex w-100">
         <div>{user.name}</div>
         <div className={selectedUsers.includes(user) ? "" : "text-muted"}>{user.emailAddress}</div>
       </div>
