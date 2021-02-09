@@ -19,7 +19,9 @@ function AccountSettings() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    loadData().catch(error => {throw error;});
+    loadData().catch(error => {
+      throw error;
+    });
   }, []);
 
   const loadData = async () => {
@@ -37,10 +39,7 @@ function AccountSettings() {
   const getRoles = async () => {
     try {
       const user = await getUserRecord();
-      console.log("AccountSettings.getRoles.user:", user)
-
       const userRoleAccess = await setAccessRoles(user);
-      console.log("AccountSettings.getRoles.userRoleAccess:", userRoleAccess)
 
       if (userRoleAccess) {
         setAccessRoleData(userRoleAccess);
@@ -84,15 +83,13 @@ function AccountSettings() {
     }
   };
 
-  if (!accessRoleData || isLoading)
-    {
-      return (<LoadingDialog size="sm"/>);
-    }
+  if (!accessRoleData || isLoading) {
+    return (<LoadingDialog size="sm"/>);
+  }
 
-  if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator && !userDetailsLink)
-    {
-      return (<AccessDeniedDialog roleData={accessRoleData}/>);
-    }
+  if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator && !userDetailsLink) {
+    return (<AccessDeniedDialog roleData={accessRoleData}/>);
+  }
 
   return (
     <ScreenContainer
@@ -106,7 +103,7 @@ function AccountSettings() {
       </Row>
     </ScreenContainer>
   );
-  }
+}
 
-  export default AccountSettings;
+export default AccountSettings;
 

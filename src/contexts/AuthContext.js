@@ -71,7 +71,6 @@ const AuthContextProvider = (props) => {
     };
 
     const getUserRecord = async () => {
-      console.log("returning user data:", userData);
       return userData;
     };
 
@@ -107,8 +106,9 @@ const AuthContextProvider = (props) => {
             role = "power_user";
           } else if (groups.includes("Users")) {
             role = "user";
-          } else if (groups.includes("NonLDAPEndUser")) {
-            // if LDAP is null then we should set them as power user if they are member of everyone group, this is to support nonLDAP accounts
+          } else if (groups.includes("NonLDAPEndUser") || ldap.type === "sass-user") {
+            //setting Saas Based Access
+            console.log("setting saas-power-user");
             role = "power_user";
           }
 
