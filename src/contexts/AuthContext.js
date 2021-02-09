@@ -116,6 +116,7 @@ const AuthContextProvider = (props) => {
             ...customerAccessRules,
             Administrator: groups.includes("Administrators"),
             PowerUser: groups.includes("PowerUsers"),
+            SassPowerUser: ldap.type === "sass-user",
             User: groups.includes("Users"),
             UserId: user._id,
             Email: user.email,
