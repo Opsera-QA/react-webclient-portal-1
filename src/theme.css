@@ -512,10 +512,6 @@ a.text-primary:hover, a.text-primary:focus {
   background-color: #F3F3F1;
 }
 
-.filter-table .active-filter-bar {
-    background-color: #F3F3F1;
-}
-
 /* End Table Styling */
 /* End custom table styling */
 
@@ -1159,7 +1155,6 @@ a.nav-link {
 /* Pagination Container Styling */
 .pagination-container .top-pagination {
   background-color: #F3F3F1;
-  /*height: 2em;*/
 }
 
 .top-pagination .page-sort {
