@@ -4,7 +4,11 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
 import {Col} from "react-bootstrap";
 
-function PageLink({link, linkText, icon}) {
+function PageLink({link, linkText, icon, visible}) {
+  if (!visible) {
+    return null;
+  }
+
   return (
     <Col xs={12} md={6} lg={4} className="p-2">
       <Link to={link}><FontAwesomeIcon icon={icon} fixedWidth className="mr-2"/>{linkText}</Link>
@@ -15,7 +19,12 @@ function PageLink({link, linkText, icon}) {
 PageLink.propTypes = {
   linkText: PropTypes.string.isRequired,
   link: PropTypes.string.isRequired,
-  icon: PropTypes.object
+  icon: PropTypes.object,
+  visible: PropTypes.bool
+};
+
+PageLink.defaultProps = {
+  visible: true
 };
 
 export default PageLink;
