@@ -19,7 +19,7 @@ function AccountSettings() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    loadData();
+    loadData().catch(error => {throw error;});
   }, []);
 
   const loadData = async () => {
@@ -27,6 +27,7 @@ function AccountSettings() {
       setIsLoading(true);
       await getRoles();
     } catch (error) {
+      console.error(error);
       toastContext.showLoadingErrorDialog(error);
     } finally {
       setIsLoading(false);
@@ -34,13 +35,23 @@ function AccountSettings() {
   };
 
   const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-      const userDetailViewLink = await accountsActions.getUserDetailViewLink(getUserRecord);
-      setUsersDetailLink(userDetailViewLink);
+    try {
+      const user = await getUserRecord();
+      console.log("AccountSettings.getRoles.user:", user)
+
+      const userRoleAccess = await setAccessRoles(user);
+      console.log("AccountSettings.getRoles.userRoleAccess:", userRoleAccess)
+
+      if (userRoleAccess) {
+        setAccessRoleData(userRoleAccess);
+        const userDetailViewLink = await accountsActions.getUserDetailViewLink(getUserRecord);
+        setUsersDetailLink(userDetailViewLink);
+      }
+    } catch (error) {
+      console.error(error);
+      return Promise.reject(`Error getting access data: ${JSON.stringify(error)}`);
     }
+
   };
 
   const getRolePageLinks = () => {

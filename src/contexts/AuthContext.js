@@ -71,6 +71,7 @@ const AuthContextProvider = (props) => {
     };
 
     const getUserRecord = async () => {
+      console.log("returning user data:", userData);
       return userData;
     };
 
