@@ -42,6 +42,10 @@ workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, o
     return true; //all actions are authorized to administrator
   }
 
+  if (customerAccessRules.SassPowerUser) {
+    return true; //all  are authorized to Saas User
+  }
+
   if (process.env.REACT_APP_STACK === "free-trial") {
     return false; //all actions disabled for user?
   }
@@ -135,6 +139,10 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
 
   if (customerAccessRules.Administrator) {
     return true; //all actions are authorized to administrator
+  }
+
+  if (customerAccessRules.SassPowerUser) {
+    return true; //all  are authorized to Saas User
   }
 
   if (process.env.REACT_APP_STACK === "free-trial") {
