@@ -11,7 +11,7 @@ import "components/analytics/charts/charts.css";
 import InfoDialog from "components/common/status_notifications/info";
 import ModalLogs from "components/common/modal/modalLogs";
 
-function GitlabTotalCommitsByProjectChart({ persona, date }) {
+function GitlabTotalCommitsByProjectChart({ persona, date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -38,16 +38,12 @@ function GitlabTotalCommitsByProjectChart({ persona, date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
+    const apiUrl = "/analytics/metrics";
     const postBody = {
-      data: [
-        {
-          request: "gitlabTotalCommitsChart",
-          metric: "bar",
-        },
-      ],
+      request: "gitlabTotalCommitsChart",
       startDate: date.start,
       endDate: date.end,
+      tags: tags
     };
 
     try {

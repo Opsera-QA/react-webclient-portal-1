@@ -17,7 +17,7 @@ import ModalLogs from "components/common/modal/modalLogs";
 
 
 
-function JiraHealthBySprintBarChart( { persona, date } ) {
+function JiraHealthBySprintBarChart( { persona, date, tags } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -48,21 +48,17 @@ function JiraHealthBySprintBarChart( { persona, date } ) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";   
+    const apiUrl = "/analytics/metrics";   
     const postBody = {
-      data: [
-        { 
-          request: "jiraSprintHealthq1",
-          metric: "bar" 
-        }
-      ],
+      request: "jiraSprintHealth",
       startDate: date.start, 
-      endDate: date.end
+      endDate: date.end,
+      tags: tags
     };
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].jiraSprintHealthq1 : [];
+      let dataObject = res && res.data ? res.data.data[0].jiraSprintHealth : [];
       setData(dataObject);
       setLoading(false);
     }
@@ -94,11 +90,11 @@ function JiraHealthBySprintBarChart( { persona, date } ) {
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
               keys={config.keys}
-              indexBy="key"
+              indexBy="_id"
               margin={config.margin}
               padding={0.3}
               layout={"horizontal"}
-              colors={({ id, data }) => data[`${id}_color`]}
+              // colors={({ id, data }) => data[`${id}_color`]}
               borderColor={{ theme: "background" }}
               colorBy="id"
               defs={config.defs}

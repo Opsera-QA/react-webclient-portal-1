@@ -50,19 +50,14 @@ function JiraIssuesAssignedToMe() {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";   
+    const apiUrl = "/analytics/metrics";   
     const postBody = {
-      "data": [
-        {
-          "request": "jiraTicketsAssignedToMe",
-          "metric": "bar"
-        }        
-      ]
+        "request": "jiraTicketsAssignedToMe",
     };
     
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);     
-      let dataObject = res && res.data ? res.data.data[0] : [];      
+      let dataObject = res && res.data ? res.data.data[0] : [];    
       setData(dataObject);
       setLoading(false);
     }
@@ -76,20 +71,20 @@ function JiraIssuesAssignedToMe() {
     () => [
       {
         Header: "Ticket Number",
-        accessor: "Issue Number",
+        accessor: "issueKey",
         class: "cell-center no-wrap-inline"
       },
       {
         Header: "Issue Type",
-        accessor: "Issue Type",
+        accessor: "type",
       },
       {
         Header: "Priority",
-        accessor: "Issue Priority",
+        accessor: "priority",
       },
       {
         Header: "Summary",
-        accessor: "Issue Name",
+        accessor: "summary",
       }
     ],
     []
