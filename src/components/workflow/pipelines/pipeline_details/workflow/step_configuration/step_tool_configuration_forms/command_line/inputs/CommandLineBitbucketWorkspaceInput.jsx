@@ -3,6 +3,12 @@ import PropTypes from "prop-types";
 import BitbucketWorkspaceInput from "components/common/list_of_values_input/tools/bitbucket/BitbucketWorkspaceInput";
 
 function CommandLineBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
+  const setWorkspace = (fieldName, selectedOption) => {
+    let newDataObject = {...dataObject};
+    newDataObject.setData("workspace", selectedOption);
+    setDataObject({...newDataObject});
+  };
+
   if (dataObject.getData("service") !== "bitbucket") {
     return <></>;
   }
@@ -13,6 +19,7 @@ function CommandLineBitbucketWorkspaceInput({dataObject, setDataObject, disabled
        gitToolId={dataObject.getData("gitToolId")}
        dataObject={dataObject}
        setDataObject={setDataObject}
+       setDataFunction={setWorkspace}
        disabled={disabled}
      />
   );

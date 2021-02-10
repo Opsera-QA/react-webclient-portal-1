@@ -15,6 +15,10 @@ function GitRepositoryInput({ service, gitToolId, workspace, visible, fieldName,
   useEffect(() => {
     setRepositories([]);
     if (service && service !== "" && gitToolId && gitToolId !== "") {
+      if(service === "bitbucket" && (!workspace || workspace === "")) {
+        setRepositories([]);
+        return;
+      }
       loadData();
     }
   }, [service, gitToolId, workspace]);
@@ -48,7 +52,7 @@ function GitRepositoryInput({ service, gitToolId, workspace, visible, fieldName,
 
   const getNoRepositoriesMessage = () => {
     if (!isLoading && (repositories == null || repositories.length === 0) && service !== "" && gitToolId !== "") {
-      return ("Error fetching repositories!");
+      return ("No Repositories Found!");
     }
   }
 
