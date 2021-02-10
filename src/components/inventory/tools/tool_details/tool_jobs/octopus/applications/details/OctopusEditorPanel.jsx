@@ -81,10 +81,11 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
     return await OctopusActions.updateOctopusApplication(octopusApplicationDataDto, type, getAccessToken, appID);
   };
 
-  const deleteApplication = async () => {
-    await OctopusActions.deleteOctopusApplication(toolData._id, type, getAccessToken, appID);
-    handleClose();
-  };
+  // DISABLING DELETE AS MICROSERVICE FUNCTIONALITY IS NOT READY YET
+  // const deleteApplication = async () => {
+  //   await OctopusActions.deleteOctopusApplication(toolData._id, type, getAccessToken, appID);
+  //   handleClose();
+  // };
 
   if (isLoading || octopusApplicationDataDto === null || octopusApplicationDataDto === undefined) {
     return <Loading size="sm" />;
@@ -120,13 +121,13 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
               />
             </Col>
-            <div className="float-right ml-2">
+            <Col lg={12} className={"ml-1"}>
               <DtoToggleInput
                 setDataObject={setOctopusApplicationDataDto}
                 fieldName={"active"}
                 dataObject={octopusApplicationDataDto}
               />
-            </div>
+            </Col>
           </Row>
         )}
         {octopusApplicationDataDto && type && type === "account" && !isLoading && (
@@ -214,13 +215,13 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
               />
             </Col>
-            <div className="float-right ml-2">
+            <Col lg={12} className={"ml-1"}>
               <DtoToggleInput
                 setDataObject={setOctopusApplicationDataDto}
                 fieldName={"active"}
                 dataObject={octopusApplicationDataDto}
               />
-            </div>
+            </Col>
           </Row>
         )}
         {octopusApplicationDataDto && type && type === "target" && !isLoading && (
@@ -358,13 +359,13 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                   />
                 </Col>
               )}
-            <div className="float-right ml-2">
+            <Col lg={12} className={"ml-1"}>
               <DtoToggleInput
                 setDataObject={setOctopusApplicationDataDto}
                 fieldName={"active"}
                 dataObject={octopusApplicationDataDto}
               />
-            </div>
+            </Col>
           </Row>
         )}
         {octopusApplicationDataDto && type && type === "feed" && !isLoading && (
@@ -437,25 +438,25 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 disabled={appID ? true : false}
               />
             </Col>
-            <div className="float-right ml-2">
-              <DtoToggleInput
-                setDataObject={setOctopusApplicationDataDto}
-                fieldName={"active"}
-                dataObject={octopusApplicationDataDto}
-              />
-            </div>
+            <Col lg={12} className={"ml-1"}>
+                <DtoToggleInput
+                  setDataObject={setOctopusApplicationDataDto}
+                  fieldName={"active"}
+                  dataObject={octopusApplicationDataDto}
+                />
+            </Col>
           </Row>
         )}
         <Row>
-          {appID && (
-            <div className="mr-auto mt-3 px-3">
-              <Button variant="outline-primary" size="sm" onClick={() => setShowDeleteModal(true)}>
-                <FontAwesomeIcon icon={faTrash} className="danger-red" /> Delete{" "}
-                {type.charAt(0).toUpperCase() + type.slice(1)}
-              </Button>
-              <br />
-            </div>
-          )}
+          {/*{appID && (*/}
+          {/*  <div className="mr-auto mt-3 px-3">*/}
+          {/*    <Button variant="outline-primary" size="sm" onClick={() => setShowDeleteModal(true)}>*/}
+          {/*      <FontAwesomeIcon icon={faTrash} className="danger-red" /> Delete{" "}*/}
+          {/*      {type.charAt(0).toUpperCase() + type.slice(1)}*/}
+          {/*    </Button>*/}
+          {/*    <br />*/}
+          {/*  </div>*/}
+          {/*)}*/}
           <div className="ml-auto mt-3 px-3">
             <SaveButtonBase
               updateRecord={appID ? updateApplication : createApplication}
@@ -468,12 +469,12 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
           </div>
         </Row>
       </div>
-      <DeleteModal
-        showModal={showDeleteModal}
-        setShowModal={setShowDeleteModal}
-        dataObject={octopusApplicationDataDto}
-        handleDelete={deleteApplication}
-      />
+      {/*<DeleteModal*/}
+      {/*  showModal={showDeleteModal}*/}
+      {/*  setShowModal={setShowDeleteModal}*/}
+      {/*  dataObject={octopusApplicationDataDto}*/}
+      {/*  handleDelete={deleteApplication}*/}
+      {/*/>*/}
     </>
   );
 }
