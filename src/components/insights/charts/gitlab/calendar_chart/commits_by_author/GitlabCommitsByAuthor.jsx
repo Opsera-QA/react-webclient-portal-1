@@ -33,7 +33,7 @@ function GitlabCommitsByAuthor({ persona, date, tags }) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].gitlabTotalCommitsByUserAndDate : [];
-      var usersList = Object.keys(dataObject.data[0]);
+      var usersList = dataObject.data && dataObject.data.length > 0 ? Object.keys(dataObject.data[0]) : [];
       usersList = usersList.filter((value) => value != "date");
       setUsers(usersList);
       setData(dataObject);

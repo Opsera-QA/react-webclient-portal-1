@@ -125,7 +125,7 @@ function JiraVelocityBarChart({ persona, date, tags }) {
                   <br></br>
                   <strong> No. of Issues: </strong> {value}
                   <br></br>
-                  <strong> Percent Completed: </strong> {data.percent_completed}%<br></br>
+                  <strong> Percent Completed: </strong> {data.percentage}%<br></br>
                 </div>
               )}
               theme={{

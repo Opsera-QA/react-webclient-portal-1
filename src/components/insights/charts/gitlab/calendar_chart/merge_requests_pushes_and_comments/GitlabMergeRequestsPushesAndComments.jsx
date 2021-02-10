@@ -61,7 +61,7 @@ function GitlabMergeRequestsPushesAndComments({ persona, date, tags }) {
 
   if (loading) return <LoadingDialog size="sm" />;
   if (error) return <ErrorDialog error={error} />;
-  console.log(data);
+
   return (
     <>
       <ModalLogs

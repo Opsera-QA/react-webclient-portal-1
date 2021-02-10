@@ -165,7 +165,7 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
       case "jira-sprint-burndown":
         return (<JiraSprintBurndownLineChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "jira-issues-assigned-to-me":
-        return (<JiraIssuesAssignedToMe persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<JiraIssuesAssignedToMe persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
 
       // Anchore KPIs
       case "anchore-vulnerability-severity-by-package":
@@ -219,7 +219,7 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
       case "gitlab-merge-requests-by-user":
         return (<GitlabMergeRequestsByUserChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "gitlab-time-taken-to-complete-merge-request-review":
-        return (<GitlabTimeTakenToCompleteMergeRequestReview persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<GitlabTimeTakenToCompleteMergeRequestReview persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "gitlab-commits-by-author":
         return (<GitlabCommitsByAuthor persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "gitlab-merge-requests-pushes-and-comments":

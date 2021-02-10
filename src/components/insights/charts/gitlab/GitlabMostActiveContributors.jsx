@@ -112,8 +112,14 @@ function GitlabMostActiveContributors({ date, tags }) {
   if (loading) return <LoadingDialog size="sm" />;
   if (error) return <ErrorDialog error={error} />;
   if (typeof data !== "object" || data.gitlabMostActiveUsers === undefined || data.gitlabMostActiveUsers.status !== 200)
-    return <InfoDialog message="No log activity has been captured for this dashboard yet." />;
-
+    return (
+      <div className="new-chart mb-3" style={{ height: "300px" }}>
+        <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
+          <InfoDialog message="No Data is available for this chart at this time." />
+        </div>
+      </div>
+    )
+    
   return (
     <>
       {typeof data !== "object" ||

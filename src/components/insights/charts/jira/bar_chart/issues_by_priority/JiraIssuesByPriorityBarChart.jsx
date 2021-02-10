@@ -11,7 +11,7 @@ import "components/analytics/charts/charts.css";
 import InfoDialog from "components/common/status_notifications/info";
 import ModalLogs from "components/common/modal/modalLogs";
 
-function JiraIssuesByPriorityBarChart({ persona, date }) {
+function JiraIssuesByPriorityBarChart({ persona, date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -45,6 +45,7 @@ function JiraIssuesByPriorityBarChart({ persona, date }) {
       request: "jiraIssuesByPriority",
       startDate: date.start,
       endDate: date.end,
+      tags: tags
     };
 
     try {
