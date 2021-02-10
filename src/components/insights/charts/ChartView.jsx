@@ -153,17 +153,17 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
 
       // Jira KPIs
       case "jira-tickets-assigned-by-user":
-        return (<JiraTicketsAssignedByUserBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<JiraTicketsAssignedByUserBarChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "jira-issues-by-priority":
-        return (<JiraIssuesByPriorityBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<JiraIssuesByPriorityBarChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "jira-health-by-sprint":
-        return (<JiraHealthBySprintBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<JiraHealthBySprintBarChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "jira-velocity-report":
-        return (<JiraVelocityReportBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<JiraVelocityReportBarChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "jira-issues-created-vs-resolved":
-        return (<JiraIssuesCreatedVsResolvedLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<JiraIssuesCreatedVsResolvedLineChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "jira-sprint-burndown":
-        return (<JiraSprintBurndownLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<JiraSprintBurndownLineChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "jira-issues-assigned-to-me":
         return (<JiraIssuesAssignedToMe persona={"developer"} date={getDateObject(kpiConfig)}/>);
 

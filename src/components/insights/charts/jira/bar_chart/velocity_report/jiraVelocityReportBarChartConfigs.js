@@ -1,7 +1,7 @@
 export default {
   keys: [
-    "Committed",
-    "Completed"
+    "committed",
+    "completed"
   ],
   margin: {
     "top": 50,

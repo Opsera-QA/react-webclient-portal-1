@@ -24,7 +24,8 @@ function KpiSettingsForm({kpiConfiguration, setKpiConfiguration, dashboardData, 
                               "jenkins-builds-by-user", "jenkins-build-duration", "jenkins-status-by-job-name", "jenkins-recent-build-status", 
                               "sonar-code-smells", "sonar-maintainability-rating", "sonar-bugs", "sonar-new-bugs", "sonar-reliability-rating", "sonar-reliability-remediation-effort",
                               "sonar-vulnerabilities-by-project", "sonar-new-vulnerabilities-by-project", "sonar-new-technical-debt-by-project", "sonar-code-smells-by-project", 
-                              "sonar-code-coverage", "sonar-lines-to-cover"];
+                              "sonar-code-coverage", "sonar-lines-to-cover", "jira-tickets-assigned-by-user", "jira-issues-created-vs-resolved", "jira-velocity-report", 
+                              "jira-sprint-burndown", "jira-health-by-sprint", "jira-issues-by-priority"];
 
     const getKpiFilters = (filter) => {
         switch (filter.type) {
