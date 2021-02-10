@@ -1,5 +1,6 @@
 import {isAlphaNumeric, isDomain, isOpseraPassword, isWebsite, matchesRegex, validateEmail} from "../../utils/helpers";
 
+// TODO: We need to rework this
 export const validateData = (data) => {
   let errors = [];
 
