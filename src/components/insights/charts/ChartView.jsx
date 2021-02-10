@@ -213,21 +213,21 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
 
       // Gitlab KPIs
       case "gitlab-most-active-contributors":
-        return (<GitlabMostActiveContributors persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<GitlabMostActiveContributors persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "gitlab-merge-request-by-maximum-time":
-        return (<GitlabMergeRequestByMaximumTimeChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<GitlabMergeRequestByMaximumTimeChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "gitlab-merge-requests-by-user":
-        return (<GitlabMergeRequestsByUserChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<GitlabMergeRequestsByUserChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "gitlab-time-taken-to-complete-merge-request-review":
         return (<GitlabTimeTakenToCompleteMergeRequestReview persona={"developer"} date={getDateObject(kpiConfig)}/>);
       case "gitlab-commits-by-author":
-        return (<GitlabCommitsByAuthor persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<GitlabCommitsByAuthor persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "gitlab-merge-requests-pushes-and-comments":
-        return (<GitlabMergeRequestsPushesAndComments persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<GitlabMergeRequestsPushesAndComments persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "gitlab-total-commits-by-project":
-        return (<GitlabTotalCommitsByProjectChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<GitlabTotalCommitsByProjectChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "gitlab-recent-merge-requests":
-        return (<GitlabRecentMergeRequests persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<GitlabRecentMergeRequests persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
 
       // Cypress KPIs
       case "cypress-test-results":

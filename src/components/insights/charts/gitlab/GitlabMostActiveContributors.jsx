@@ -8,7 +8,7 @@ import CustomTable from "components/common/table/CustomTable";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-function GitlabMostActiveContributors({ date }) {
+function GitlabMostActiveContributors({ date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -89,16 +89,12 @@ function GitlabMostActiveContributors({ date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
+    const apiUrl = "/analytics/metrics";
     const postBody = {
-      data: [
-        {
-          request: "gitlabMostActiveUsers",
-          metric: "modifiedTable",
-        },
-      ],
+      request: "gitlabMostActiveUsers",
       startDate: date.start,
       endDate: date.end,
+      tags: tags
     };
 
     try {

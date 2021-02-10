@@ -1,5 +1,5 @@
 export default {
-  keys: ["Commits"],
+  keys: ["commits"],
   margin: {
     top: 50,
     right: 130,
