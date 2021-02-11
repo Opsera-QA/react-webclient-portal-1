@@ -4,6 +4,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import tokenActions from "components/user/user_settings/access_tokens/token-actions";
 import AccessTokenTable from "components/user/user_settings/access_tokens/AccessTokenTable";
+import AccessTokenEditorPanel from "components/user/user_settings/access_tokens/details/AccessTokenEditorPanel";
 
 function MyAccessTokens() {
   const toastContext = useContext(DialogToastContext);
@@ -77,6 +78,7 @@ function MyAccessTokens() {
 
   return (
     <div>
+      <AccessTokenEditorPanel cancelTokenSource={cancelTokenSource} />
       <AccessTokenTable loadData={loadData} isLoading={isLoading} data={accessTokens} isMounted={isMounted} cancelTokenSource={cancelTokenSource} />
     </div>
   );

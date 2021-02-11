@@ -2,8 +2,8 @@ import React, {useContext, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSave, faSpinner} from "@fortawesome/free-solid-svg-icons";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import {faSave, faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 // Note: this should only be used in special cases where Model-Wrapped objects don't make sense
 function StandaloneSaveButton({saveFunction, disable, type}) {

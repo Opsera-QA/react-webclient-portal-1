@@ -10,14 +10,14 @@ import {
   faTimesCircle, faTrash
 } from "@fortawesome/pro-light-svg-icons";
 import React from "react";
-import PipelineHelpers from "../../workflow/pipelineHelpers";
-import PipelineStatus from "../../workflow/pipelines/PipelineStatus";
-import DashboardFavoritesIcon from "../../common/icons/DashboardFavoritesIcon";
+import Model from "core/data_model/model";
+import PipelineTypesField from "components/common/form_fields/pipelines/PipelineTypesField";
+import PipelineStatus from "components/workflow/pipelines/PipelineStatus";
+import pipelineHelpers from "components/workflow/pipelineHelpers";
+import DashboardFavoritesIcon from "components/common/icons/DashboardFavoritesIcon";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
-import PipelineTypesField from "../form_fields/pipelines/PipelineTypesField";
-import pipelineMetadata from "../../workflow/pipelines/pipeline_details/pipeline-metadata";
-import Model from "../../../core/data_model/model";
-import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+import {Button} from "react-bootstrap";
+import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 
 const getTableHeader = (field) => {
   return field["label"];
@@ -240,7 +240,7 @@ export const getTablePipelineStatusColumn = (field) => {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     Cell: (workflow) => {
-      let pipelineStatus = PipelineHelpers.getPipelineStatus(workflow.row.original);
+      let pipelineStatus = pipelineHelpers.getPipelineStatus(workflow.row.original);
 
       switch (pipelineStatus) {
       case "failed":
@@ -294,15 +294,27 @@ export const getTableFavoriteColumn = (field, getAccessToken) => {
   };
 };
 
-export const getTableDeleteColumn = (deleteFunction) => {
+export const getTableDeleteColumn = (headerText, deleteFunction) => {
   return {
-    Header: "Expire Token Now",
+    Header: headerText,
     Cell: (props) => {
       return <FontAwesomeIcon icon={faTrash} className="pointer danger-red" onClick={() => {deleteFunction(props?.data[props?.row?.index]); }}/>
     },
     class: "no-wrap-inline"
   };
 };
+
+export const getTableButtonColumn = (headerText, variant, buttonText, buttonFunction) => {
+  return {
+    Header: headerText,
+    accessor: "row",
+    Cell: (props) => {
+      return <Button variant={variant} onClick={() => {buttonFunction(props?.data[props?.row?.index])}}>{buttonText}</Button>
+    },
+    class: "no-wrap-inline"
+  };
+};
+
 
 export const getTableBooleanIconColumn = (field) => {
   return {

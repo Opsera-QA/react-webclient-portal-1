@@ -15,10 +15,8 @@ export const accessTokenMetadata = {
       label: "Name",
       id: "name",
       isRequired: true,
-      lowercase: true,
       maxLength: 50,
-      inputMaskRegex: regexHelpers.regexTypes["generalTextWithSpaces"],
-      formText: "Group name must be unique and must begin with a letter."
+      regexValidator: regexHelpers.regexTypes["generalTextWithSpaces"],
     },
     {
       label: "Expires At",
@@ -30,11 +28,11 @@ export const accessTokenMetadata = {
       id: "scope",
     },
     {
-      label: "Created At",
+      label: "Created",
       id: "createdAt",
     },
     {
-      label: "Updated At",
+      label: "Updated",
       id: "updatedAt",
     },
     {
@@ -44,7 +42,7 @@ export const accessTokenMetadata = {
   ],
   newObjectFields: {
     name: "",
-    expiration: new Date(),
+    expiration: "1mo",
     scope: "pipeline",
   }
 }

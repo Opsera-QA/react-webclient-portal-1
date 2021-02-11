@@ -2,35 +2,29 @@ import React, {useContext, useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  getTableDateColumn, getTableDateTimeColumn, getTableDeleteColumn, getTableInfoIconColumn,
+  getTableButtonColumn,
+  getTableDateColumn, getTableDateTimeColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {accessTokenMetadata} from "components/user/user_settings/access_tokens/access-token-metadata";
-import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
-import DestructiveDeleteModal from "components/common/modal/DestructiveDeleteModal";
 import tokenActions from "components/user/user_settings/access_tokens/token-actions";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {useHistory} from "react-router-dom";
+import ExpireTokenModal from "components/user/user_settings/access_tokens/ExpireTokenModal";
 
 function AccessTokenTable({data, loadData, isMounted, isLoading, cancelTokenSource}) {
+  let fields = accessTokenMetadata.fields;
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
   const {getAccessToken} = useContext(AuthContext);
-  let fields = accessTokenMetadata.fields;
-  const [showActivityLogsModal, setShowActivityLogsModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showExpireModal, setShowExpireModal] = useState(false);
   const [selectedToken, setSelectedToken] = useState(undefined);
-
-  const showTokenLogs = (dataObject) => {
-    setSelectedToken(dataObject);
-    setShowActivityLogsModal(true);
-  };
 
   const toggleDeleteModal = (dataObject) => {
     setSelectedToken(dataObject);
-    setShowDeleteModal(true);
+    setShowExpireModal(true);
   };
 
   const columns = useMemo(
@@ -39,21 +33,20 @@ function AccessTokenTable({data, loadData, isMounted, isLoading, cancelTokenSour
       getTableTextColumn(getField(fields, "scope")),
       getTableDateColumn(getField(fields, "createdAt")),
       getTableDateTimeColumn(getField(fields, "expiration")),
-      getTableInfoIconColumn(showTokenLogs),
-      getTableDeleteColumn(toggleDeleteModal)
+      getTableButtonColumn("", "danger", "Expire", toggleDeleteModal)
     ],
     []
   );
 
   const noDataMessage = "No access tokens have been generated.";
 
-  const deleteToken = async () => {
+  const expireToken = async (token) => {
     try {
-      let response = await tokenActions.expireToken(getAccessToken, cancelTokenSource, selectedToken?._id);
+      let response = await tokenActions.expireToken(getAccessToken, cancelTokenSource, token?._id);
 
       if (isMounted?.current === true && response?.error == null) {
         toastContext.showDeleteSuccessResultDialog("Access Token");
-        setShowDeleteModal(false);
+        setShowExpireModal(false);
         loadData(cancelTokenSource);
       }
       else if (isMounted?.current === true)
@@ -84,8 +77,7 @@ function AccessTokenTable({data, loadData, isMounted, isLoading, cancelTokenSour
         tableTitle={"Access Tokens"}
         type={"Access Token"}
       />
-      <ModalActivityLogsDialog size={"sm"} header={"Token"} show={showActivityLogsModal} setParentVisibility={setShowActivityLogsModal} jsonData={selectedToken} />
-      <DestructiveDeleteModal showModal={showDeleteModal} setShowModal={setShowDeleteModal} deleteTopic={`Access Token [${selectedToken?._id}]`} handleDelete={deleteToken} />
+      <ExpireTokenModal showModal={showExpireModal} setShowModal={setShowExpireModal} expireToken={expireToken} />
     </div>
   );
 }
