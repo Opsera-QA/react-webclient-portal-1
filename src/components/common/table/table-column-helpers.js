@@ -7,7 +7,7 @@ import {
   faSpinner,
   faStop,
   faStopCircle,
-  faTimesCircle
+  faTimesCircle, faTrash
 } from "@fortawesome/pro-light-svg-icons";
 import React from "react";
 import PipelineHelpers from "../../workflow/pipelineHelpers";
@@ -17,6 +17,7 @@ import dashboardsActions from "components/insights/dashboards/dashboards-actions
 import PipelineTypesField from "../form_fields/pipelines/PipelineTypesField";
 import pipelineMetadata from "../../workflow/pipelines/pipeline_details/pipeline-metadata";
 import Model from "../../../core/data_model/model";
+import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 
 const getTableHeader = (field) => {
   return field["label"];
@@ -152,6 +153,17 @@ export const getTableDateColumn = (field) => {
   };
 };
 
+export const getTableDateTimeColumn = (field) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: (props) => {
+      return props.value ? format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a") : "";
+    },
+    class: "no-wrap-inline"
+  };
+};
+
 export const getPipelineActivityStatusColumn = (field) => {
   return {
     Header: getTableHeader(field),
@@ -282,6 +294,16 @@ export const getTableFavoriteColumn = (field, getAccessToken) => {
   };
 };
 
+export const getTableDeleteColumn = (deleteFunction) => {
+  return {
+    Header: "Expire Token Now",
+    Cell: (props) => {
+      return <FontAwesomeIcon icon={faTrash} className="pointer danger-red" onClick={() => {deleteFunction(props?.data[props?.row?.index]); }}/>
+    },
+    class: "no-wrap-inline"
+  };
+};
+
 export const getTableBooleanIconColumn = (field) => {
   return {
     Header: getTableHeader(field),
@@ -293,12 +315,11 @@ export const getTableBooleanIconColumn = (field) => {
   };
 };
 
-export const getTableInfoIconColumn = (showInformationFunction) => {
+export const getTableInfoIconColumn = (showInformationFunction, accessor = "row") => {
   return {
     Header: "Info",
-    accessor: "row",
     Cell: (props) => {
-      return <FontAwesomeIcon icon={faSearchPlus} className="pointer" onClick={() => {showInformationFunction(props["data"][props.row["index"]]); }}/>;
+      return <FontAwesomeIcon icon={faSearchPlus} className="pointer" onClick={() => {showInformationFunction(props?.data[props?.row?.index]); }}/>;
     },
   };
 };
