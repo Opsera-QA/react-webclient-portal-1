@@ -29,6 +29,8 @@ import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTa
 import { AuthContext } from "contexts/AuthContext";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+import AttributeEditorPanel from "components/inventory/tools/tool_details/AttributeEditorPanel";
+import ToggleTab from "components/common/tabs/detail_view/ToggleTab";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
@@ -60,6 +62,10 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
 
   const toggleSummaryPanel = () => {
     setActiveTab("summary");
+  };
+
+  const toggleAttributesPanel = () => {
+    setActiveTab("attributes");
   };
 
   const getDynamicTabs = () => {
@@ -102,7 +108,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
     return (
       <CustomTabContainer>
         <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <CustomTab icon={faList} tabName={"attributes"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Attributes"}/>
+        <ToggleTab icon={faList} tabName={"attributes"} settingsTabName={"attribute_settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Attributes"}/>
         <CustomTab icon={faDiceD20} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"} disabled={!authorizedAction("edit_tool_connection", toolData?.data)}/>
         {getDynamicTabs()}
@@ -117,7 +123,9 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case "settings":
         return <ToolEditorPanel toolData={toolData} setToolData={setToolData} loadData={loadData} handleClose={toggleSummaryPanel} />;
       case "attributes":
-        return <ToolAttributesPanel toolData={toolData}/>;
+        return <ToolAttributesPanel toolData={toolData} setActiveTab={setActiveTab} customerAccessRules={customerAccessRules} />;
+      case "attribute_settings":
+        return <AttributeEditorPanel toolData={toolData} setToolData={setToolData} loadData={loadData} handleClose={toggleAttributesPanel} />;
       case "configuration":
         return <ToolConfigurationPanel toolData={toolData} loadData={loadData}/>;
       case "jobs":

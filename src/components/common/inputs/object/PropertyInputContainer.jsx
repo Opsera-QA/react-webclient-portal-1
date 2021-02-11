@@ -10,7 +10,7 @@ function PropertyInputContainer({ children, titleIcon, titleText, field, errorMe
   const getTitleBar = () => {
     return (
       <div className="mx-2">
-        <div className="pt-2"><FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-1"/>{titleText}</div>
+        <div className="pt-2"><FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-2"/>{titleText}</div>
       </div>
     );
   };
@@ -18,7 +18,7 @@ function PropertyInputContainer({ children, titleIcon, titleText, field, errorMe
   const getAddPropertyButton = () => {
     return (
       <Row>
-        <div className="ml-auto mt-3 mr-3 d-flex">
+        <div className="ml-auto mt-2 mr-3 d-flex">
           <Button variant="secondary" disabled={!addAllowed} onClick={() => addProperty()} size="sm">
             <span className="text-white"><FontAwesomeIcon className="text-white mr-2" icon={faPlus} fixedWidth />Add {type}</span>
           </Button>
@@ -30,7 +30,7 @@ function PropertyInputContainer({ children, titleIcon, titleText, field, errorMe
   return (
     <div className="object-properties-input">
       <div className="content-container">
-        <div className="pl-2 pr-3 property-header">
+        <div className="pr-3 property-header">
           <h6>{getTitleBar()}</h6>
         </div>
         {children}

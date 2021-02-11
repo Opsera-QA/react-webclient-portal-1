@@ -1,11 +1,11 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import ActionBarButton from "./ActionBarButton";
 import {faCogs} from "@fortawesome/pro-light-svg-icons";
+import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
 
-function ActionBarEditorToggleButton({ setActiveTab }) {
+function ActionBarEditorToggleButton({ setActiveTab, settingsTab }) {
   const toggleEditorPanel = () => {
-    setActiveTab("settings");
+    setActiveTab(settingsTab);
   }
 
   return (
@@ -21,6 +21,11 @@ function ActionBarEditorToggleButton({ setActiveTab }) {
 
 ActionBarEditorToggleButton.propTypes = {
   setActiveTab: PropTypes.func,
+  settingsTab: PropTypes.string
+};
+
+ActionBarEditorToggleButton.defaultProps = {
+  settingsTab: "settings"
 };
 
 export default ActionBarEditorToggleButton;
