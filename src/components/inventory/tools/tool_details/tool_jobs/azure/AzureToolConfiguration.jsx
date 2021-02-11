@@ -40,6 +40,7 @@ function AzureToolConfiguration({ toolData }) {
       recordDto={azureConfigurationDto}
       persistRecord={saveAzureToolConfiguration}
       toolData={toolData}
+      toolConnectionCheckName={"azure"}
     >
       <Row>
         <Col sm={12}>
@@ -47,7 +48,7 @@ function AzureToolConfiguration({ toolData }) {
           <VaultTextInput dataObject={azureConfigurationDto} setDataObject={setAzureConfigurationDto} fieldName={"tenantId"}/>
           <VaultTextInput dataObject={azureConfigurationDto} setDataObject={setAzureConfigurationDto} fieldName={"applicationId"}/>
           <VaultTextInput dataObject={azureConfigurationDto} setDataObject={setAzureConfigurationDto} fieldName={"applicationPassword"} />
-          <VaultTextInput dataObject={azureConfigurationDto} setDataObject={setAzureConfigurationDto} fieldName={"applicationKey"} />
+          {/*<VaultTextInput dataObject={azureConfigurationDto} setDataObject={setAzureConfigurationDto} fieldName={"applicationKey"} />*/}
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>
