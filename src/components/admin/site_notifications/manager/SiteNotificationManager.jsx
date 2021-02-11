@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import siteNotificationActions from "components/admin/site_notifications/site-notification-actions";
@@ -7,6 +7,7 @@ import siteNotificationHelpers from "components/admin/site_notifications/site-no
 import SiteNotificationManagerDetailPanel
   from "components/admin/site_notifications/manager/SiteNotificationManagerDetailPanel";
 import siteNotificationMetadata from "components/admin/site_notifications/siteNotificationMetadata";
+import axios from "axios";
 
 function SiteNotificationManager() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -14,48 +15,72 @@ function SiteNotificationManager() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [siteWideNotificationData, setSiteWideNotificationData] = useState(undefined);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource) => {
     try {
       setIsLoading(true);
-      await getRoles();
+      await getRoles(cancelSource);
     }
     catch (error) {
-      if (!error?.error?.message?.includes(404)) {
+      if (isMounted?.current === true && !error?.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
         console.error(error);
       }
     }
     finally {
-      setIsLoading(false);
-    }
-  };
-
-  const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-
-      if (userRoleAccess?.OpseraAdministrator) {
-        await getSiteNotifications();
+      if (isMounted?.current === true) {
+        setIsLoading(false);
       }
     }
   };
 
-  const getSiteNotifications = async () => {
-    const response = await siteNotificationActions.getSiteNotifications(getAccessToken);
+  const getRoles = async (cancelSource) => {
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    if (isMounted?.current === true && userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+
+      if (userRoleAccess?.OpseraAdministrator) {
+        await getSiteNotifications(cancelSource);
+      }
+    }
+  };
+
+  const getSiteNotifications = async (cancelSource) => {
+    const response = await siteNotificationActions.getSiteNotifications(getAccessToken, cancelSource);
 
     await unpackNotifications(response?.data);
   };
 
   const unpackNotifications = (response) => {
     let siteWideNotification = siteNotificationHelpers.parseSiteNotification(response, "site");
-    setSiteWideNotificationData(siteWideNotification);
+
+    if (isMounted?.current === true) {
+      setSiteWideNotificationData(siteWideNotification);
+    }
   };
 
   return (

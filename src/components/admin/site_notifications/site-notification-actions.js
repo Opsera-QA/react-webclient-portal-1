@@ -15,9 +15,9 @@ siteNotificationActions.updateSiteNotification = async (siteNotificationDataDto,
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
-siteNotificationActions.getSiteNotifications = async (getAccessToken) => {
+siteNotificationActions.getSiteNotifications = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = "landing/message";
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 siteNotificationActions.getSiteNotification = async (siteNotificationId, getAccessToken) => {
