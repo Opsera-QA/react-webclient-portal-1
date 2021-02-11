@@ -64,8 +64,8 @@ function LdapUserManagement() {
     } catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
+        console.error(error);
       }
-      console.error(error);
     }
   };
 
