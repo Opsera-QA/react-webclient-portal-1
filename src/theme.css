@@ -506,6 +506,7 @@ a.text-primary:hover, a.text-primary:focus {
 
 .custom-table .table-footer {
   background-color: #F3F3F1;
+  min-height: 5px;
 }
 
 .custom-table .top-pagination {

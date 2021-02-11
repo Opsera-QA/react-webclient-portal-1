@@ -213,9 +213,11 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
           </tbody>
           <tfoot>
             <tr>
-              <td colSpan="100%" className="table-footer">
-                {getOldPaginator()}
-                {getNewPaginator()}
+              <td colSpan="100%">
+                <div className="table-footer">
+                  {getOldPaginator()}
+                  {getNewPaginator()}
+                </div>
               </td>
             </tr>
           </tfoot>
