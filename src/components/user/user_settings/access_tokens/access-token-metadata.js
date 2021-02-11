@@ -2,11 +2,11 @@ import regexHelpers from "utils/regexHelpers";
 
 // TODO: Move to server, pull with data
 export const accessTokenMetadata = {
-  idProperty: "name",
+  idProperty: "_id",
   type: "Access Token",
-  // detailView: function (record) {
-  //   return `/admin/organizations/details/${record.getData("name")}`;
-  // },
+  detailView: function (record) {
+    return `/user/accessTokens/details/${record.getData("_id")}`;
+  },
   detailViewTitle: function (record) {
     return `Access Token Details [${record.getData("name")}]`;
   },
@@ -37,10 +37,14 @@ export const accessTokenMetadata = {
       label: "Updated At",
       id: "updatedAt",
     },
+    {
+      label: "ID",
+      id: "_id",
+    },
   ],
   newObjectFields: {
     name: "",
-    id: new Date(),
+    expiration: new Date(),
     scope: "pipeline",
   }
 }

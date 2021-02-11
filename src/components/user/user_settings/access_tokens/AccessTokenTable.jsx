@@ -12,8 +12,10 @@ import DestructiveDeleteModal from "components/common/modal/DestructiveDeleteMod
 import tokenActions from "components/user/user_settings/access_tokens/token-actions";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import {useHistory} from "react-router-dom";
 
 function AccessTokenTable({data, loadData, isMounted, isLoading, cancelTokenSource}) {
+  const history = useHistory();
   const toastContext = useContext(DialogToastContext);
   const {getAccessToken} = useContext(AuthContext);
   let fields = accessTokenMetadata.fields;
@@ -49,8 +51,6 @@ function AccessTokenTable({data, loadData, isMounted, isLoading, cancelTokenSour
     try {
       let response = await tokenActions.expireToken(getAccessToken, cancelTokenSource, selectedToken?._id);
 
-      console.log("response: " + JSON.stringify(response));
-
       if (isMounted?.current === true && response?.error == null) {
         toastContext.showDeleteSuccessResultDialog("Access Token");
         setShowDeleteModal(false);
@@ -69,6 +69,10 @@ function AccessTokenTable({data, loadData, isMounted, isLoading, cancelTokenSour
     }
   }
 
+  const onRowSelect = (rowData, type) => {
+    history.push(`/user/accessTokens/details/${rowData.original._id}`);
+  };
+
   return (
     <div className="px-2 pb-2">
       <CustomTable
@@ -76,11 +80,12 @@ function AccessTokenTable({data, loadData, isMounted, isLoading, cancelTokenSour
         data={data}
         noDataMessage={noDataMessage}
         isLoading={isLoading}
+        onRowSelect={onRowSelect}
         tableTitle={"Access Tokens"}
         type={"Access Token"}
       />
       <ModalActivityLogsDialog size={"sm"} header={"Token"} show={showActivityLogsModal} setParentVisibility={setShowActivityLogsModal} jsonData={selectedToken} />
-      <DestructiveDeleteModal showModal={showDeleteModal} setShowModal={setShowDeleteModal} deleteTopic={"Access Token"} handleDelete={deleteToken} />
+      <DestructiveDeleteModal showModal={showDeleteModal} setShowModal={setShowDeleteModal} deleteTopic={`Access Token [${selectedToken?._id}]`} handleDelete={deleteToken} />
     </div>
   );
 }
