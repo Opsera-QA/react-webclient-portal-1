@@ -86,11 +86,9 @@ function LdapUserManagement() {
         }
         else {
           history.push(`/settings/${ldap.domain}/users/`);
-          await getUsersByDomain(ldap.domain, source);
         }
       } else if (ldap?.organization != null && authorizedActions?.includes("get_users")) {
         history.push(`/settings/${ldap.domain}/users/`);
-        await getUsersByDomain(ldap.domain, source);
       }
     }
   };
