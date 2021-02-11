@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { Form } from "react-bootstrap";
 import {
   faCheckCircle,
   faCircle, faOctagon,
@@ -298,6 +299,7 @@ export const getTableInfoIconColumn = (showInformationFunction) => {
     Header: "Info",
     accessor: "row",
     Cell: (props) => {
+      console.log('props ', props)
       return <FontAwesomeIcon icon={faSearchPlus} className="pointer" onClick={() => {showInformationFunction(props["data"][props.row["index"]]); }}/>;
     },
   };
@@ -338,4 +340,28 @@ export const getValueColumn = (field, valueFormat) => {
     default:
       return getTableTextColumn(field);
   }
+}
+
+export const getCheckBoxColumn = (handleChange, checkAll, selectedComponent) => {
+  return {
+    Header: "",
+    accessor: "row",
+    Cell: (props) => {      
+      const idx = props.row["index"];      
+      const item = props["data"][idx];
+      
+      console.log('checkAll ', checkAll);
+      console.log('selectedComponent ', selectedComponent);
+      
+      return <Form.Check
+        inline
+        type={"checkbox"}
+        name={item.committedFile}
+        id={idx}
+        disabled={checkAll}
+        checked={selectedComponent?.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
+        onChange = {(e) => handleChange(e, props["data"])}
+      />;
+    },
+  };
 }
