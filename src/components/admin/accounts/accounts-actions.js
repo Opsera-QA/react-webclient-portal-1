@@ -398,12 +398,21 @@ accountsActions.getOrganizationAccountMembers = async (organizationAccountName, 
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+// TODO: Remove when all use cancel token
 accountsActions.getOrganizationAccountByDomain = async (domain, getAccessToken) => {
   const postBody = {
     domain: domain
   }
   const apiUrl = "/users/account";
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+accountsActions.getOrganizationAccountByDomainV2 = async (domain, getAccessToken, cancelTokenSource) => {
+  const postBody = {
+    domain: domain
+  }
+  const apiUrl = "/users/account";
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 accountsActions.getOrganizationAccountByEmail = async (email, getAccessToken) => {
