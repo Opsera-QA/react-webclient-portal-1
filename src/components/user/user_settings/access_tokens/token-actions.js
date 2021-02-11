@@ -36,12 +36,12 @@ tokenActions.getTokenById = async (getAccessToken, cancelTokenSource, tokenId) =
 };
 
 tokenActions.expireToken = async (getAccessToken, cancelTokenSource, tokenId) => {
-  const apiUrl = `/users/tokens/expire/${tokenId}`;
+  const apiUrl = `/users/token/expire/${tokenId}`;
   return await baseActions.apiPatchCallV2(getAccessToken, cancelTokenSource, apiUrl)
 };
 
 tokenActions.getTokenActivity = async (getAccessToken, cancelTokenSource, tokenId) => {
-  const apiUrl = `/users/tokens/activity/${tokenId}`;
+  const apiUrl = `/users/token/activity/${tokenId}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl)
 };
 

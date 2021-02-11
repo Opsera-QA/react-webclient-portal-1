@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {useParams} from "react-router-dom";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import tokenActions from "components/user/user_settings/access_tokens/token-actions";
@@ -76,7 +75,11 @@ function MyAccessTokens() {
     }
   };
 
-  return (<AccessTokenTable loadData={loadData} isLoading={isLoading} data={accessTokens}/>);
+  return (
+    <div>
+      <AccessTokenTable loadData={loadData} isLoading={isLoading} data={accessTokens} isMounted={isMounted} cancelTokenSource={cancelTokenSource} />
+    </div>
+  );
 }
 
 export default MyAccessTokens;
