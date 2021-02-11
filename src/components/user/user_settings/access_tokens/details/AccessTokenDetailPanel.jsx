@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import ToolIdentifierSummaryPanel
-  from "components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierSummaryPanel";
-import ToolIdentifierEditorPanel
-  from "components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierEditorPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
-import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
+import AccessTokenSummaryPanel from "components/user/user_settings/access_tokens/details/AccessTokenSummaryPanel";
 
-function AccessTokenDetailPanel({ toolIdentifierData, setToolIdentifierData }) {
+function AccessTokenDetailPanel({ accessToken, setAccessToken, loadData }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -17,16 +13,12 @@ function AccessTokenDetailPanel({ toolIdentifierData, setToolIdentifierData }) {
     setActiveTab(activeTab);
   };
 
-  const toggleSummaryPanel = () => {
-    setActiveTab("summary");
-  };
-
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <ToolIdentifierSummaryPanel toolIdentifierData={toolIdentifierData} setActiveTab={setActiveTab} />;
-      case "settings":
-        return <ToolIdentifierEditorPanel setToolIdentifierData={setToolIdentifierData} toolIdentifierData={toolIdentifierData} handleClose={toggleSummaryPanel} />;
+        return <AccessTokenSummaryPanel accessToken={accessToken} />;
+      case "logs":
+        // return <AccessTokenLogTable setToolIdentifierData={setToolIdentifierData} toolIdentifierData={toolIdentifierData} />;
       default:
         return null;
     }
@@ -36,7 +28,6 @@ function AccessTokenDetailPanel({ toolIdentifierData, setToolIdentifierData }) {
     return (
       <CustomTabContainer>
         <SummaryTab activeTab={activeTab} handleTabClick={handleTabClick} />
-        <SettingsTab activeTab={activeTab} handleTabClick={handleTabClick} />
       </CustomTabContainer>
     )
   };
@@ -45,8 +36,9 @@ function AccessTokenDetailPanel({ toolIdentifierData, setToolIdentifierData }) {
 }
 
 AccessTokenDetailPanel.propTypes = {
-  toolIdentifierData: PropTypes.object,
-  setToolIdentifierData: PropTypes.func,
+  accessToken: PropTypes.object,
+  setAccessToken: PropTypes.func,
+  loadData: PropTypes.func,
 };
 
 export default AccessTokenDetailPanel;

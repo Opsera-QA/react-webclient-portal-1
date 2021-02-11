@@ -3,54 +3,29 @@ import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
-import ActivityField from "components/common/fields/boolean/ActivityField";
-import BooleanField from "components/common/fields/boolean/BooleanField";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
-import DateFieldBase from "components/common/fields/date/DateFieldBase";
-import TagField from "components/common/fields/multiple_items/TagField";
-import BooleanPropertiesField from "components/common/fields/multiple_items/BooleanPropertiesField";
+import DateTimeField from "components/common/fields/date/DateTimeField";
 
-function AccessTokenSummaryPanel({ toolIdentifierData, setActiveTab }) {
-  if (toolIdentifierData == null) {
+function AccessTokenSummaryPanel({ accessToken }) {
+  if (accessToken == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
   return (
-    <SummaryPanelContainer setActiveTab={setActiveTab}>
+    <SummaryPanelContainer>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={toolIdentifierData} fieldName={"name"}/>
+          <TextFieldBase dataObject={accessToken} fieldName={"name"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={toolIdentifierData} fieldName={"identifier"}/>
-        </Col>
-        <Col lg={12}>
-          <TextFieldBase dataObject={toolIdentifierData} fieldName={"description"}/>
+          <TextFieldBase dataObject={accessToken} fieldName={"scope"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={toolIdentifierData} fieldName={"tool_type_identifier"}/>
+          <DateTimeField dataObject={accessToken} fieldName={"createdAt"} />
         </Col>
         <Col lg={6}>
-          <DateFieldBase dataObject={toolIdentifierData} fieldName={"createdAt"}/>
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={toolIdentifierData} fieldName={"_id"}/>
-        </Col>
-        <Col lg={6}>
-          <ActivityField dataObject={toolIdentifierData} fieldName={"active"}/>
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={toolIdentifierData} fieldName={"usageType"}/>
-        </Col>
-        <Col lg={12}>
-          <TagField dataObject={toolIdentifierData} fieldName={"tags"}/>
-        </Col>
-        <Col lg={6}>
-          <BooleanField dataObject={toolIdentifierData} fieldName={"enabledInRegistry"}/>
-        </Col>
-        <Col lg={6}>
-          <BooleanPropertiesField dataObject={toolIdentifierData} fieldName={"properties"}/>
+          <DateTimeField dataObject={accessToken} fieldName={"expiration"} />
         </Col>
       </Row>
     </SummaryPanelContainer>
@@ -58,8 +33,7 @@ function AccessTokenSummaryPanel({ toolIdentifierData, setActiveTab }) {
 }
 
 AccessTokenSummaryPanel.propTypes = {
-  toolIdentifierData: PropTypes.object,
-  setActiveTab: PropTypes.func
+  accessToken: PropTypes.object,
 };
 
 export default AccessTokenSummaryPanel;

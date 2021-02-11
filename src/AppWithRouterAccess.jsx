@@ -92,6 +92,7 @@ import AccountRegistration from "components/user/account_registration/AccountReg
 import SiteNotificationManager from "components/admin/site_notifications/manager/SiteNotificationManager";
 import ToolCountsReport from "components/reports/tools/counts/ToolCountsReport";
 import UserSettings from "components/user/user_settings/UserSettings";
+import AccessTokenDetailView from "components/user/user_settings/access_tokens/details/AccessTokenDetailView";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -274,6 +275,7 @@ const AppWithRouterAccess = () => {
 
                   {/* User Settings */}
                   <SecureRoute path="/user/:tab?" exact component={UserSettings}/>
+                  <SecureRoute path="/user/accessTokens/details/:tokenId?" exact component={AccessTokenDetailView}/>
 
                   <SecureRoute path="/inventory/:view" exact component={Inventory}/>
                   <SecureRoute path="/inventory/tools/details/:id/:tab?" exact component={ToolDetailView}/>

@@ -5,12 +5,11 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
-import ToolIdentifierDetailPanel
-  from "components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierDetailPanel";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import tokenActions from "components/user/user_settings/access_tokens/token-actions";
 import axios from "axios";
 import {accessTokenMetadata} from "components/user/user_settings/access_tokens/access-token-metadata";
+import AccessTokenDetailPanel from "components/user/user_settings/access_tokens/details/AccessTokenDetailPanel";
 
 function AccessTokenDetailView() {
   const {tokenId} = useParams();
@@ -31,11 +30,14 @@ function AccessTokenDetailView() {
     setCancelTokenSource(source);
 
     isMounted.current = true;
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+
+    if (tokenId) {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
@@ -60,7 +62,7 @@ function AccessTokenDetailView() {
 
   const getToken = async (cancelSource) => {
     const response = await tokenActions.getTokenById(getAccessToken, cancelSource, tokenId);
-    const token = response?.data?.data;
+    const token = response?.data?.data[0];
 
     if (isMounted?.current === true && token) {
       setAccessToken(new Model(token, accessTokenMetadata, false));
@@ -94,10 +96,10 @@ function AccessTokenDetailView() {
       breadcrumbDestination={"accessTokenDetailView"}
       // accessDenied={!accessRoleData?.OpseraAdministrator}
       metadata={accessTokenMetadata}
-      dataObject={toolIdentifierData}
+      dataObject={accessToken}
       isLoading={isLoading}
       actionBar={getActionBar()}
-      detailPanel={<ToolIdentifierDetailPanel toolIdentifierData={accessToken} setToolIdentifierData={setAccessToken}/>}
+      detailPanel={<AccessTokenDetailPanel accessToken={accessToken} setAccessToken={setAccessToken} loadDat={loadData} />}
     />
   );
 }
