@@ -657,6 +657,8 @@ const SfdcPipelineModifiedFiles = ({
       setFromSFDC(true);
     }else if(tabSelection === 'git'){
       setFromGit(true);
+    }else if(tabSelection === 'destsfdc'){
+      setFromDestinationSFDC(true);
     }    
   };
 
@@ -701,6 +703,15 @@ const SfdcPipelineModifiedFiles = ({
     [],
   );
 
+  const destsfdccolumns = useMemo(
+    () => [
+      getTableTextColumn(fields.find(field => { return field.id === "componentType"})),
+      getTableTextColumn(fields.find(field => { return field.id === "committedFile"})),
+      getTableDateColumn(fields.find(field => { return field.id === "committedTime"}))
+    ],
+    [],
+  );
+
   const getSfdcModifiedFilesTable = () => {
     return (      
       <CustomTable
@@ -729,8 +740,22 @@ const SfdcPipelineModifiedFiles = ({
         initialState={initialState}
         paginationDto={gitFilterDto}
         setPaginationDto={setGitFilterDto}
-        checkAll={gitCheckAll}
-        selectedComponent={gitSelectedComponent}        
+      />
+    );
+  };
+
+  const getDestSfdcModifiedFilesTable = () => {
+    return (      
+      <CustomTable
+        className={"table-no-border"}
+        columns={destsfdccolumns}
+        data={destSfdcModified}              
+        isLoading={destSfdcLoading}
+        loadData={loadDestSfdcData}
+        noDataMessage={noDataMessage}
+        initialState={initialState}
+        paginationDto={destSfdcFilterDto}
+        setPaginationDto={setDestSfdcFilterDto}
       />
     );
   };
@@ -1214,11 +1239,15 @@ const SfdcPipelineModifiedFiles = ({
           <CustomTabContainer>
             <CustomTab activeTab={activeTab} tabText={"SFDC Files"} handleTabClick={handleTabClick} tabName={"sfdc"}
                       toolTipText={"SFDC Files"} icon={faSalesforce} />
-            <CustomTab activeTab={activeTab} tabText={"Git Files"} handleTabClick={handleTabClick} tabName={"git"}
+            { isOrgToOrg ? (
+              <CustomTab activeTab={activeTab} tabText={"Destination SFDC Files"} handleTabClick={handleTabClick} tabName={"destsfdc"}
+                      toolTipText={"Destination SFDC Files"} icon={faCode} />
+            ) : (
+              <CustomTab activeTab={activeTab} tabText={"Git Files"} handleTabClick={handleTabClick} tabName={"git"}
                       toolTipText={"Git Files"} icon={faCode} />
+            ) }                        
           </CustomTabContainer>
-          {activeTab === "sfdc" ? 
-          // getSfdcFilesView()            
+          {activeTab === "sfdc" ? (
             <FilterContainer
               loadData={loadSfdcData}
               filterDto={sfdcFilterDto}
@@ -1230,20 +1259,30 @@ const SfdcPipelineModifiedFiles = ({
               supportSearch={true}
               inlineFilters={getSfdcInlineFilters()}
             />
-           : activeTab === "git" ? (
-              // getGitFilesView()
-              <FilterContainer
-                loadData={loadGitData}
-                filterDto={gitFilterDto}
-                setFilterDto={setGitFilterDto}
-                isLoading={gitLoading}
-                title={"GIT Files"}
-                titleIcon={faCode}
-                body={getGitModifiedFilesTable()}              
-                supportSearch={true}
-                inlineFilters={getGitInlineFilters()}
-              />              
-            ) : null }
+          ) : activeTab === "git" ? (
+            <FilterContainer
+              loadData={loadGitData}
+              filterDto={gitFilterDto}
+              setFilterDto={setGitFilterDto}
+              isLoading={gitLoading}
+              title={"GIT Files"}
+              titleIcon={faCode}
+              body={getGitModifiedFilesTable()}              
+              supportSearch={true}
+              inlineFilters={getGitInlineFilters()}
+            />
+          ) : activeTab === "destsfdc" ? (
+            <FilterContainer
+              loadData={loadDestSfdcData}
+              filterDto={destSfdcFilterDto}
+              setFilterDto={setDestSfdcFilterDto}
+              isLoading={destSfdcLoading}
+              title={"Destination SFDC Files"}
+              titleIcon={faCode}
+              body={getDestSfdcModifiedFilesTable()}              
+              supportSearch={false}
+            />
+          ) : null }            
         </div>
         <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right">
           <Button
