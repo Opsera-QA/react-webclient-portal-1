@@ -10,6 +10,8 @@ import {accessTokenMetadata} from "components/user/user_settings/access_tokens/a
 import CreateButton from "components/common/buttons/saving/CreateButton";
 import TextAreaClipboardField from "components/common/fields/clipboard/TextAreaClipboardField";
 import {faKey} from "@fortawesome/pro-light-svg-icons";
+import AccessTokenExpirationSelectInput
+  from "components/common/list_of_values_input/users/access_tokens/AccessTokenExpirationSelectInput";
 
 function AccessTokenEditorPanel({ cancelTokenSource }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -48,10 +50,10 @@ function AccessTokenEditorPanel({ cancelTokenSource }) {
             <TextInputBase dataObject={accessToken} setDataObject={setAccessToken} fieldName={"name"}/>
           </div>
           <div>
-            <TextInputBase dataObject={accessToken} setDataObject={setAccessToken} fieldName={"scope"}/>
+            <AccessTokenExpirationSelectInput dataObject={accessToken} setDataObject={setAccessToken} fieldName={"expiration"} />
           </div>
           <div>
-            <TextInputBase dataObject={accessToken} setDataObject={setAccessToken} fieldName={"expiration"}/>
+            <TextInputBase dataObject={accessToken} setDataObject={setAccessToken} fieldName={"scope"}/>
           </div>
           <div className="mt-3">
             <CreateButton icon={faKey} addAnotherOption={false} disable={!accessToken.isModelValid2()} recordDto={accessToken} createRecord={createToken} size={"md"}/>
