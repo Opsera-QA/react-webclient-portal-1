@@ -5,7 +5,7 @@ import FieldLabel from "components/common/fields/FieldLabel";
 import {faTag} from "@fortawesome/pro-light-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-function TagField({dataObject, fieldName}) {
+function TagField({dataObject, fieldName, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   // TODO: After all pipelines are updated to new tags, remove this.
@@ -39,7 +39,7 @@ function TagField({dataObject, fieldName}) {
   };
 
   return (
-    <FieldContainer>
+    <FieldContainer className={className}>
       <FieldLabel fieldName={fieldName} field={field}/>
       <span className="item-field">
         {getTags()}
@@ -51,6 +51,7 @@ function TagField({dataObject, fieldName}) {
 TagField.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
+  className: PropTypes.string
 };
 
 export default TagField;

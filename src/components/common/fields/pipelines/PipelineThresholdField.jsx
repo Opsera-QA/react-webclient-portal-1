@@ -2,10 +2,10 @@ import React from "react";
 import PropTypes from "prop-types";
 import BooleanField from "components/common/fields/boolean/BooleanField";
 
-function PipelineThresholdField({ thresholdDataObject }) {
+function PipelineThresholdField({ thresholdDataObject, className }) {
   // TODO: Style
   return (
-    <div>
+    <div className={className}>
       <BooleanField dataObject={thresholdDataObject} fieldName={"completeFirst"} />
       <BooleanField dataObject={thresholdDataObject} fieldName={"ensureSuccess"} />
     </div>
@@ -14,6 +14,7 @@ function PipelineThresholdField({ thresholdDataObject }) {
 
 PipelineThresholdField.propTypes = {
   thresholdDataObject: PropTypes.object,
+  className: PropTypes.string
 };
 
 export default PipelineThresholdField;

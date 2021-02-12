@@ -47,7 +47,7 @@ function AccessTokenTable({data, loadData, isMounted, isLoading, cancelTokenSour
 
   const expireToken = async (token) => {
     try {
-      let response = await tokenActions.expireToken(getAccessToken, cancelTokenSource, token?._id);
+      await tokenActions.expireToken(getAccessToken, cancelTokenSource, token?._id);
 
       if (isMounted?.current === true) {
         toastContext.showDeleteSuccessResultDialog("Access Token");

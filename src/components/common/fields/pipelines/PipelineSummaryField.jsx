@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {format} from "date-fns";
-import TextField from "components/common/form_fields/text-field";
+import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 
 // TODO: Rework
-function PipelineSummaryField({pipelineData}) {
+function PipelineSummaryField({pipelineData, className}) {
   const constructPipelineSummaryText = () => {
     let lastRun = pipelineData.getPersistData()?.workflow?.last_run;
 
@@ -20,7 +20,7 @@ function PipelineSummaryField({pipelineData}) {
   };
 
   return (
-    <TextField label={"Summary"} value={constructPipelineSummaryText()}/>
+    <StandaloneTextFieldBase label={"Summary"} text={constructPipelineSummaryText()}/>
   );
 }
 
