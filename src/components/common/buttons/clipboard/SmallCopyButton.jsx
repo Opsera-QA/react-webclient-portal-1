@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faClipboardList, faClipboardListCheck} from "@fortawesome/pro-light-svg-icons";
+import {faClipboardCheck, faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 
 function SmallCopyButton({ copyString, size, className }) {
@@ -26,7 +26,7 @@ function SmallCopyButton({ copyString, size, className }) {
         variant={copiedToClipboard ? "success" : "outline-secondary"}
         onClick={() => {copyToClipboard()}}
         disabled={copyString == null}>
-        <FontAwesomeIcon icon={copiedToClipboard ? faClipboardListCheck : faClipboardList} fixedWidth />
+        <FontAwesomeIcon icon={copiedToClipboard ? faClipboardCheck : faClipboardList} fixedWidth />
       </Button>
     </ButtonTooltip>
   );
