@@ -13,10 +13,14 @@ const sfdcComponentFilterMetadata = {
       {
         label: "Class Filter",
         id: "classFilter",
+      },
+      {
+        label: "Check All",
+        id: "checkAll",
       }
     ],
     getActiveFilters(filterDto) {
-      console.log('filterDto ', filterDto)
+      
         let activeFilters = [];
     
         if (filterDto.getData("classFilter") != null) {
@@ -25,14 +29,14 @@ const sfdcComponentFilterMetadata = {
         if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
           activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
         }
-        
-        console.log('activeFilters ', activeFilters)
+                
         return activeFilters;
     },
     newObjectFields: {
       pageSize: 50,
       currentPage: 1,
       // classFilter: "",
+      checkAll: false,
       search: "",
       activeFilters: []
     }

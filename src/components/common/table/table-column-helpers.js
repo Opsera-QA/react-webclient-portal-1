@@ -342,25 +342,24 @@ export const getValueColumn = (field, valueFormat) => {
   }
 }
 
-export const getCheckBoxColumn = (handleChange, checkAll, selectedComponent) => {
+export const getCheckBoxColumn = (handleChange) => {
   return {
     Header: "",
     accessor: "row",
     Cell: (props) => {      
       const idx = props.row["index"];      
       const item = props["data"][idx];
-      
-      console.log('checkAll ', checkAll);
-      console.log('selectedComponent ', selectedComponent);
-      
       return <Form.Check
         inline
         type={"checkbox"}
         name={item.committedFile}
         id={idx}
-        disabled={checkAll}
-        checked={selectedComponent?.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
-        onChange = {(e) => handleChange(e, props["data"])}
+        disabled={item.checkAll}
+        checked={!!item.isChecked}
+        onChange = {() => {
+          item.isChecked = !item.isChecked;
+          handleChange(item);
+        }}
       />;
     },
   };

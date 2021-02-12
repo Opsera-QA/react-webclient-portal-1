@@ -42,6 +42,7 @@ import { format } from "date-fns";
 import FilterContainer from "components/common/table/FilterContainer";
 import SfdcComponentFilter from "components/common/filters/sfdccomponent/SfdcComponentFilter";
 import sfdcComponentFilterMetadata from './sfdc-component-filter-metadata';
+import BooleanFilter from "components/common/filters/input/BooleanFilter";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -108,7 +109,9 @@ const SfdcPipelineModifiedFiles = ({
   const [gitFilterDto, setGitFilterDto] = useState(new Model({ ...sfdcComponentFilterMetadata.newObjectFields }, sfdcComponentFilterMetadata, false));
   const [destSfdcFilterDto, setDestSfdcFilterDto] = useState(new Model({ ...filterMetadata.newObjectFields }, filterMetadata, false));
   const [activeTab, setActiveTab] = useState("sfdc");
-  const [abc, setAbc] = useState(["abc", "bca", "cab"]);
+  const [sfdcModifiedFilesTable, setSfdcModifiedFilesTable] = useState([]);
+  const [gitModifiedFilesTable, setGitModifiedFilesTable] = useState([]);
+  
   useEffect(() => {
     async function loadInitialData() {
       setLoading(true);
@@ -127,9 +130,8 @@ const SfdcPipelineModifiedFiles = ({
   }, []);
 
 
-  const loadSfdcData = async () => {
-
-    setSfdcLoading(true);
+  const loadSfdcData = async () => {    
+    setSfdcLoading(true);    
     try {
       const sfdcResponse = await sfdcPipelineActions.getListFromPipelineStorage({
         "pipelineId": pipelineId,
@@ -146,8 +148,9 @@ const SfdcPipelineModifiedFiles = ({
       newSfdcFilterDto.setData("activeFilters", newSfdcFilterDto.getActiveFilters());
       setSfdcFilterDto({ ...newSfdcFilterDto });      
       setSfdcModified(sfdcResponse.data.paginatedData.sfdcCommitList.data);
+      getSfdcTableData(sfdcResponse.data.paginatedData.sfdcCommitList.data);
       setAllSFDCComponentType(sfdcResponse.data.data.sfdcCommitList);
-      setAbc(["xyz", "yzx", "zxy"]);
+
       //storing _id so that we can edit this object
       setRecordId(sfdcResponse.data._id);
       
@@ -178,7 +181,7 @@ const SfdcPipelineModifiedFiles = ({
 
       setGitModified(gitResponse.data.paginatedData.gitCommitList.data);
       setAllGitComponentType(gitResponse.data.data.gitCommitList);
-
+      getGitTableData(gitResponse.data.paginatedData.gitCommitList.data);
       //storing _id so that we can edit this object
       setRecordId(gitResponse.data._id);
 
@@ -243,6 +246,20 @@ const SfdcPipelineModifiedFiles = ({
       setSfdcCheckAll(false);
     }
   },[allSFDCComponentType, sfdcSelectedComponent]);
+
+  useEffect(()=>{    
+    if(isEquals(sfdcSelectedComponent, sfdcModified) || sfdcSelectedComponent.length === 0){
+      getSfdcTableData(sfdcModified);
+    }    
+  },[sfdcSelectedComponent]);
+
+  useEffect(()=>{
+    console.log('in useEffect')
+    if(isEquals(gitSelectedComponent, gitModified) || gitSelectedComponent.length === 0){      
+      console.log('calling getGitTableData')
+      getGitTableData(gitModified);
+    }    
+  },[gitSelectedComponent]);
   
   useEffect(()=>{
     if(isEquals(destSFDCSelectedComponent, allDestSfdcComponentType)){
@@ -266,40 +283,34 @@ const SfdcPipelineModifiedFiles = ({
     </Tooltip>
   );
 
-  const handleSFDCComponentCheckNew = (e, data) => {
-    const newValue = e.target.name;
+  const handleSFDCComponentCheckNew = (data) => {
     
-    if (!e.target.checked) {
-      setSFDCSelectedComponent(sfdcSelectedComponent.filter((item) => item.committedFile !== newValue));
+    if (!data.isChecked) {
+      setSFDCSelectedComponent(sfdcSelectedComponent.filter((item) => item.committedFile !== data.committedFile));
       return;
     }
-
-    let newObj = data;
-    
-    let index = -1;
-    for (let i = 0; i < newObj.length; i++) {
-      if (newObj[i].committedFile === newValue) {
-        index = i;        
-        setSFDCSelectedComponent((sfdcSelectedComponent) => [...sfdcSelectedComponent, newObj[index]]);
-      }
+    const newObj = {
+      componentType: data.componentType,
+      committedFile: data.committedFile,
+      committedTime: data.committedTime,
+      commitAction: data.commitAction
     }
-    
+    setSFDCSelectedComponent((sfdcSelectedComponent) => [...sfdcSelectedComponent, newObj]);
   }
-
-  const handleGitComponentCheckNew = (e, data) => {    
-    const newValue = e.target.name;    
-    if (!e.target.checked) {
-      setGitSelectedComponent(gitSelectedComponent.filter((item) => item.committedFile !== newValue));
+  const handleGitComponentCheckNew = (data) => {    
+    if (!data.isChecked) {
+      setGitSelectedComponent(gitSelectedComponent.filter((item) => item.committedFile !== data.committedFile));
       return;
     }
-    let newObj = data;
-    let index = -1;
-    for (let i = 0; i < newObj.length; i++) {
-      if (newObj[i].committedFile === newValue) {
-        index = i;        
-        setGitSelectedComponent((gitSelectedComponent) => [...gitSelectedComponent, newObj[index]]);
-      }
+
+    const newObj = {
+      componentType: data.componentType,
+      committedFile: data.committedFile,
+      committedTime: data.committedTime,
+      commitAction: data.commitAction
     }
+
+    setGitSelectedComponent((gitSelectedComponent) => [...gitSelectedComponent, newObj]);
   };
 
   const handleSFDCComponentCheck = (e) => {
@@ -352,8 +363,20 @@ const SfdcPipelineModifiedFiles = ({
     }
   };
 
-  const handleCheckAllClickComponentTypesSfdc = () => {
-    handleCheckAllClickComponentTypes("sfdc");
+  const handleCheckAllClickComponentTypesSfdc = () => {    
+    if(sfdcFilterDto.getData("checkAll")){
+      handleCheckAllClickComponentTypes("sfdc");
+    }else{
+      handleUnCheckAllClickComponentTypes("sfdc");
+    }
+  }
+
+  const handleCheckAllClickComponentTypesGit = () => {    
+    if(gitFilterDto.getData("checkAll")){
+      handleCheckAllClickComponentTypes("git");
+    }else{
+      handleUnCheckAllClickComponentTypes("git");
+    }
   }
 
   const handleCheckAllClickComponentTypes = (type) => {
@@ -362,10 +385,6 @@ const SfdcPipelineModifiedFiles = ({
     case "sfdc":
       // setSFDCSelectedComponent(allSFDCComponentType);
       setSFDCSelectedComponent(sfdcModified);
-
-      console.log('sfdcModified ', sfdcModified)
-      console.log('sfdcSelectedComponent ', sfdcSelectedComponent)
-
       break;
     case "destSFDC":
       // setDestSFDCSelectedComponent(allDestSfdcComponentType);
@@ -399,6 +418,7 @@ const SfdcPipelineModifiedFiles = ({
   const handleSelectAll = (type) => {
     // const type = e.target.name;
     // set checkall flag for selected type 
+
     switch (type) {
       case "sfdc":
         setSfdcCheckAll(true);
@@ -659,14 +679,14 @@ const SfdcPipelineModifiedFiles = ({
     }
   ]
 
-  const noDataMessage = "Data not available";
+  const noDataMessage = "Modified Files Data not available for selected Criteria";
 
   const sfdccolumns = useMemo(
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "componentType"})),
       getTableTextColumn(fields.find(field => { return field.id === "committedFile"})),
       getTableDateColumn(fields.find(field => { return field.id === "committedTime"})),
-      getCheckBoxColumn(handleSFDCComponentCheckNew, sfdcCheckAll, sfdcSelectedComponent)      
+      getCheckBoxColumn(handleSFDCComponentCheckNew)      
     ],
     [],
   );
@@ -686,7 +706,7 @@ const SfdcPipelineModifiedFiles = ({
       <CustomTable
         className={"table-no-border"}
         columns={sfdccolumns}
-        data={sfdcModified}              
+        data={sfdcModifiedFilesTable}              
         isLoading={sfdcLoading}
         loadData={loadSfdcData}
         noDataMessage={noDataMessage}
@@ -702,7 +722,7 @@ const SfdcPipelineModifiedFiles = ({
       <CustomTable
         className={"table-no-border"}
         columns={gitcolumns}
-        data={gitModified}              
+        data={gitModifiedFilesTable}              
         isLoading={gitLoading}
         loadData={loadGitData}
         noDataMessage={noDataMessage}
@@ -715,29 +735,14 @@ const SfdcPipelineModifiedFiles = ({
     );
   };
 
-  const getSfdcInlineFilters = () => {
-
-    console.log('sfdcCheckAll ', sfdcCheckAll)
-
+  const getSfdcInlineFilters = () => {    
     return (
       <div className="px-2 d-flex small">
-        <div className="d-flex align-items-center">
-          <Form.Check
-            inline
-            type={"switch"}
-            label={"Check All"}
-            name={"Check All"}
-            id={"Check All SFDC"}
-            checked={sfdcCheckAll}
-            onChange={handleCheckAllClickComponentTypesSfdc}
-          />
-        </div>        
+        <div className="pr-4">
+          <BooleanFilter loadData={handleCheckAllClickComponentTypesSfdc} filterDto={sfdcFilterDto} setFilterDto={setSfdcFilterDto} fieldName={"checkAll"} />
+        </div>
         <div>
-          <SfdcComponentFilter 
-            componentType={componentType} 
-            filterDto={sfdcFilterDto} 
-            setFilterDto={setSfdcFilterDto} 
-          />
+          <SfdcComponentFilter componentType={componentType} filterDto={sfdcFilterDto} setFilterDto={setSfdcFilterDto} />
         </div>
       </div>
     );
@@ -746,10 +751,41 @@ const SfdcPipelineModifiedFiles = ({
   const getGitInlineFilters = () => {
     return (
       <div className="px-2 d-flex small">
+        <div className="pr-4">
+          <BooleanFilter loadData={handleCheckAllClickComponentTypesGit} filterDto={gitFilterDto} setFilterDto={setGitFilterDto} fieldName={"checkAll"} />
+        </div>        
         <div><SfdcComponentFilter componentType={componentType} filterDto={gitFilterDto} setFilterDto={setGitFilterDto} /></div>
       </div>
     );
   };
+
+  const getSfdcTableData = (sfdcData) => {
+    setSfdcModifiedFilesTable(sfdcData.map(d => {
+       return Object.assign(
+        {
+          checkAll: sfdcFilterDto.getData("checkAll"),
+          isChecked: sfdcSelectedComponent.some(selected => selected.componentType === d.componentType && selected.committedFile === d.committedFile && selected.commitAction === d.commitAction && selected.committedTime === d.committedTime)
+        },
+        d
+      )
+    }))
+  }
+
+  const getGitTableData = (gitData) => {        
+
+    console.log('gitData ', gitData)
+    console.log('gitData ', gitData)
+
+    setGitModifiedFilesTable(gitData.map(d => {
+      return Object.assign(
+        {
+          checkAll: gitFilterDto.getData("checkAll"),
+          isChecked: gitSelectedComponent.some(selected => selected.componentType === d.componentType && selected.committedFile === d.committedFile && selected.commitAction === d.commitAction && selected.committedTime === d.committedTime)
+        },
+        d
+      )
+    }))
+  }
 
   // const getSfdcFilterBar = () => {
   //   if (sfdcFilterDto == null) {
@@ -1220,6 +1256,23 @@ const SfdcPipelineModifiedFiles = ({
           >
             <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>
             Back
+          </Button>
+          <Button
+            variant="success"
+            size="sm"
+            className="mr-2"
+            onClick={() => {
+              setSave(true);
+              handleSelectAll(activeTab);
+            }}
+            disabled={checkDisabled()}
+          >
+            {save ? (
+              <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
+            ) : (
+              <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
+            )}
+            Use All Files
           </Button>            
           <Button
             variant="success"
