@@ -33,7 +33,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
   };
 
   const getClearDataIcon = () => {
-    if (dataObject.getData(field.id) !== "" && !disabled && (setDataFunction == null || clearDataFunction)) {
+    if (dataObject.getData(field.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
       return (
         <TooltipWrapper innerText={"Clear this Value"}>
           <span onClick={() => clearValue()} className="my-auto badge badge-danger clear-value-badge pointer">
