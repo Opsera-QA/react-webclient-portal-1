@@ -4,9 +4,9 @@ import regexHelpers from "utils/regexHelpers";
 export const accessTokenMetadata = {
   idProperty: "_id",
   type: "Access Token",
-  detailView: function (record) {
-    return `/user/accessTokens/details/${record.getData("_id")}`;
-  },
+  // detailView: function (record) {
+  //   return `/user/accessTokens/details/${record.getData("_id")}`;
+  // },
   detailViewTitle: function (record) {
     return `Access Token Details [${record.getData("name")}]`;
   },
