@@ -5,7 +5,7 @@ import FieldLabel from "components/common/fields/FieldLabel";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUser} from "@fortawesome/pro-light-svg-icons/faUser";
 
-function ContactField({dataObject, fieldName}) {
+function ContactField({dataObject, fieldName, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const getContacts = () => {
@@ -27,7 +27,7 @@ function ContactField({dataObject, fieldName}) {
   };
 
   return (
-    <FieldContainer>
+    <FieldContainer className={className}>
       <FieldLabel fieldName={fieldName} field={field}/>
       <span className="item-field">
         {getContacts()}
@@ -39,6 +39,7 @@ function ContactField({dataObject, fieldName}) {
 ContactField.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
+  className: PropTypes.string
 };
 
 export default ContactField;

@@ -5,7 +5,7 @@ import FieldLabel from "components/common/fields/FieldLabel";
 import {faUserFriends} from "@fortawesome/pro-light-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-function GroupField({dataObject, fieldName}) {
+function GroupField({dataObject, fieldName, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const getGroups = () => {
@@ -27,7 +27,7 @@ function GroupField({dataObject, fieldName}) {
   };
 
   return (
-    <FieldContainer>
+    <FieldContainer className={className}>
       <FieldLabel fieldName={fieldName} field={field}/>
       <span className="item-field">
         {getGroups()}
@@ -39,6 +39,7 @@ function GroupField({dataObject, fieldName}) {
 GroupField.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
+  className: PropTypes.string
 };
 
 export default GroupField;

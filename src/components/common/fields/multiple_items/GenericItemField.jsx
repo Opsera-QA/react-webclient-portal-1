@@ -4,7 +4,7 @@ import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 
 // TODO: Final styling when implementing
-function GenericItemField({dataObject, fieldName}) {
+function GenericItemField({dataObject, fieldName, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const getItems = () => {
@@ -24,7 +24,7 @@ function GenericItemField({dataObject, fieldName}) {
   };
 
   return (
-    <FieldContainer>
+    <FieldContainer className={className}>
       <FieldLabel fieldName={fieldName} field={field}/>
       <span className="item-field">
         {getItems()}
@@ -36,6 +36,7 @@ function GenericItemField({dataObject, fieldName}) {
 GenericItemField.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
+  className: PropTypes.string
 };
 
 export default GenericItemField;

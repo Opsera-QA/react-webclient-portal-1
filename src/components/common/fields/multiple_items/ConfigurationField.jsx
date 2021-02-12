@@ -5,7 +5,7 @@ import FieldLabel from "components/common/fields/FieldLabel";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 
-function ConfigurationField({dataObject, fieldName}) {
+function ConfigurationField({dataObject, fieldName, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const getItems = () => {
@@ -28,7 +28,7 @@ function ConfigurationField({dataObject, fieldName}) {
   };
 
   return (
-    <FieldContainer>
+    <FieldContainer className={className}>
       <FieldLabel fieldName={fieldName} field={field}/>
       <span className="item-field">
         {getItems()}
@@ -40,6 +40,7 @@ function ConfigurationField({dataObject, fieldName}) {
 ConfigurationField.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
+  className: PropTypes.string
 };
 
 export default ConfigurationField;

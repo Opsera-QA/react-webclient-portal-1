@@ -4,7 +4,7 @@ import ReactJson from "react-json-view";
 import FieldLabel from "components/common/fields/FieldLabel";
 import FieldContainer from "components/common/fields/FieldContainer";
 
-function JsonField({dataObject, fieldName}) {
+function JsonField({dataObject, fieldName, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const getJsonBody = () => {
@@ -17,7 +17,7 @@ function JsonField({dataObject, fieldName}) {
   }
 
   return (
-    <FieldContainer>
+    <FieldContainer className={className}>
       <div><FieldLabel field={field}/></div>
       <div className="ml-3">
         <ReactJson src={getJsonBody()} enableClipboard={false} displayDataTypes={false} collapsed={field.isCollapsed}/>
@@ -29,6 +29,7 @@ function JsonField({dataObject, fieldName}) {
 JsonField.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
+  className: PropTypes.string
 };
 
 export default JsonField;
