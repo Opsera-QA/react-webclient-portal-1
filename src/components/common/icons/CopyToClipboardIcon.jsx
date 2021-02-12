@@ -1,11 +1,10 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClipboardList, faClipboardListCheck} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 
-function SmallCopyButton({ copyString, size, className }) {
+function CopyToClipboardIcon({ copyString, className }) {
   const [copiedToClipboard, setCopiedToClipboard] = useState(false);
 
   const copyToClipboard = () => {
@@ -19,27 +18,21 @@ function SmallCopyButton({ copyString, size, className }) {
   };
 
   return (
-    <ButtonTooltip trigger={["click"]} innerText={"Copied to Clipboard!"}>
-      <Button
-        className={className}
-        size={size}
-        variant={copiedToClipboard ? "success" : "outline-secondary"}
+    <ButtonTooltip trigger={["hover"]} innerText={copiedToClipboard ? "Copied to Clipboard!" : "Copy to clipboard"}>
+      <FontAwesomeIcon
         onClick={() => {copyToClipboard()}}
-        disabled={copyString == null}>
-        <FontAwesomeIcon icon={copiedToClipboard ? faClipboardListCheck : faClipboardList} fixedWidth />
-      </Button>
+        icon={copiedToClipboard ? faClipboardListCheck : faClipboardList}
+        fixedWidth
+        className={className}
+      />
     </ButtonTooltip>
   );
 }
 
-SmallCopyButton.propTypes = {
+CopyToClipboardIcon.propTypes = {
   copyString: PropTypes.string,
   size: PropTypes.string,
   className: PropTypes.string
 };
 
-SmallCopyButton.defaultProps = {
-  size: "sm",
-};
-
-export default SmallCopyButton;
+export default CopyToClipboardIcon;
