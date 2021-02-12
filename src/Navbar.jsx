@@ -11,20 +11,6 @@ import { faUserCircle } from "@fortawesome/pro-light-svg-icons";
 
 import { renderTooltip } from "utils/helpers";
 
-// TODO: Move to suitable spot
-export const getAccessRolePermissionMessage = (accessRole) => {
-  switch (accessRole?.Role) {
-    case "administrator":
-      return "Administrator User Role: Your account has full access to the Opsera platform and its settings.";
-    case "power_user":
-      return "Power User Role: Your account has elevated privileges to to the Opsera platform.";
-    case "user":
-      return "Standard User Role: Your account has standard user access to the Opsera platform and inherits access based on individual item access roles.";
-    case "readonly":
-      return "Read Only Role: Your account does not have any privileges associated with the Opsera platform and can only view some data.";
-  }
-}
-
 function HeaderNavBar({ hideAuthComponents, userData }) {
   const { setAccessRoles, getAccessToken, featureFlagHideItemInProd, loginUserContext, logoutUserContext } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
