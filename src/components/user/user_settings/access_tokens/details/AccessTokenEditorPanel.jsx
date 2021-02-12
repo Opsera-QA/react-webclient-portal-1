@@ -43,7 +43,7 @@ function AccessTokenEditorPanel({ cancelTokenSource }) {
         <div className="mt-3"><strong>Generate a new Personal Access Token</strong></div>
       </div>
       <Row className="mx-1">
-        <Col md={6}>
+        <Col xs={12} md={6}>
           <div>
             <TextInputBase dataObject={accessToken} setDataObject={setAccessToken} fieldName={"name"}/>
           </div>
@@ -54,11 +54,13 @@ function AccessTokenEditorPanel({ cancelTokenSource }) {
             <TextInputBase dataObject={accessToken} setDataObject={setAccessToken} fieldName={"expiration"}/>
           </div>
           <div className="mt-3">
-            <CreateButton icon={faKey} addAnotherOption={false} recordDto={accessToken} createRecord={createToken} size={"md"}/>
+            <CreateButton icon={faKey} addAnotherOption={false} disable={!accessToken.isModelValid2()} recordDto={accessToken} createRecord={createToken} size={"md"}/>
           </div>
         </Col>
-        <Col md={6} className="my-auto">
+        <Col xs={12} md={6} className="mt-auto">
           <TextAreaClipboardField
+            className={"mt-2"}
+            rows={7}
             textAreaValue={generatedToken}
             description={`Please note: This token will not be able to be accessed again.`}
           />

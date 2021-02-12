@@ -26,7 +26,7 @@ function CopyToClipboardButton({ copyString }) {
   };
 
   return (
-    <Button variant={copiedToClipboard ? "success" : "outline-secondary"} onClick={() => {copyToClipboard()}}>
+    <Button variant={copiedToClipboard ? "success" : "outline-secondary"} onClick={() => {copyToClipboard()}} disabled={copyString == null}>
       {getLabel()}
     </Button>
   );

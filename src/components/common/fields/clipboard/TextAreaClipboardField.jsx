@@ -43,5 +43,4 @@ TextAreaClipboardField.defaultProps = {
   rows: 5
 };
 
-
 export default TextAreaClipboardField;
