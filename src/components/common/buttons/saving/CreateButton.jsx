@@ -12,7 +12,7 @@ import {
 import {useHistory} from "react-router-dom";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function CreateButton({recordDto, createRecord, disable, showSuccessToasts, lenient, setRecordDto, addAnotherOption, handleClose, size}) {
+function CreateButton({recordDto, createRecord, disable, showSuccessToasts, lenient, setRecordDto, addAnotherOption, handleClose, size, icon}) {
   const [isSaving, setIsSaving] = useState(false);
   const [addAnother, setAddAnother] = useState(false);
   const history = useHistory();
@@ -50,7 +50,7 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
       return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Saving</span>);
     }
 
-    return (<span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>{`Create ${recordDto.getType()}`}</span>);
+    return (<span><FontAwesomeIcon icon={icon} fixedWidth className="mr-2"/>{`Create ${recordDto.getType()}`}</span>);
   };
 
   const getAddAnotherCheckbox = () => {
@@ -84,13 +84,15 @@ CreateButton.propTypes = {
   handleClose: PropTypes.func,
   lenient: PropTypes.bool,
   addAnotherOption: PropTypes.bool,
-  size: PropTypes.string
+  size: PropTypes.string,
+  icon: PropTypes.object
 };
 
 CreateButton.defaultProps = {
   showSuccessToasts: true,
   addAnotherOption: true,
-  size: "sm"
+  size: "sm",
+  icon: faSave
 }
 
 export default CreateButton;
