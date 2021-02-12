@@ -304,17 +304,16 @@ export const getTableDeleteColumn = (headerText, deleteFunction) => {
   };
 };
 
-export const getTableButtonColumn = (headerText, variant, buttonText, buttonFunction) => {
+export const getTableButtonColumn = (accessor = "row", headerText, variant, buttonText, buttonFunction) => {
   return {
     Header: headerText,
-    accessor: "row",
+    accessor: accessor,
     Cell: (props) => {
       return <Button variant={variant} onClick={() => {buttonFunction(props?.data[props?.row?.index])}}>{buttonText}</Button>
     },
     class: "no-wrap-inline"
   };
 };
-
 
 export const getTableBooleanIconColumn = (field) => {
   return {

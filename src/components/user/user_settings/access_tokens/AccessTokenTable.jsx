@@ -27,13 +27,18 @@ function AccessTokenTable({data, loadData, isMounted, isLoading, cancelTokenSour
     setShowExpireModal(true);
   };
 
+  const viewDetails = (dataObject) => {
+    history.push(`/user/accessTokens/details/${dataObject?._id}`);
+  };
+
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "scope")),
       getTableDateColumn(getField(fields, "createdAt")),
       getTableDateTimeColumn(getField(fields, "expiration")),
-      getTableButtonColumn("", "danger", "Expire", toggleDeleteModal)
+      getTableButtonColumn("row", "Expire Now", "danger", "Expire", toggleDeleteModal),
+      getTableButtonColumn("_id", "View Details", "outline-primary", "View Details", viewDetails)
     ],
     []
   );
@@ -44,27 +49,20 @@ function AccessTokenTable({data, loadData, isMounted, isLoading, cancelTokenSour
     try {
       let response = await tokenActions.expireToken(getAccessToken, cancelTokenSource, token?._id);
 
-      if (isMounted?.current === true && response?.error == null) {
+      if (isMounted?.current === true) {
         toastContext.showDeleteSuccessResultDialog("Access Token");
         setShowExpireModal(false);
         loadData(cancelTokenSource);
-      }
-      else if (isMounted?.current === true)
-      {
-        toastContext.showDeleteFailureResultDialog("Access Token", response?.error);
       }
     }
     catch (error) {
       if (isMounted?.current === true) {
         toastContext.showDeleteFailureResultDialog("Access Token");
         console.error(error);
+        return false;
       }
     }
   }
-
-  const onRowSelect = (rowData, type) => {
-    history.push(`/user/accessTokens/details/${rowData.original._id}`);
-  };
 
   return (
     <div className="px-2 pb-2">
@@ -73,11 +71,10 @@ function AccessTokenTable({data, loadData, isMounted, isLoading, cancelTokenSour
         data={data}
         noDataMessage={noDataMessage}
         isLoading={isLoading}
-        onRowSelect={onRowSelect}
         tableTitle={"Access Tokens"}
         type={"Access Token"}
       />
-      <ExpireTokenModal showModal={showExpireModal} setShowModal={setShowExpireModal} expireToken={expireToken} />
+      <ExpireTokenModal token={selectedToken} showModal={showExpireModal} setShowModal={setShowExpireModal} expireToken={expireToken} />
     </div>
   );
 }

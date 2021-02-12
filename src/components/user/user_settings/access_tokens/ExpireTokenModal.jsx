@@ -1,13 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 
 function ExpireTokenModal({ token, expireToken, showModal, setShowModal }) {
-  const handleConfirm = () => {
-    showModal(false);
-    expireToken(token);
+  const [isExpiring, setIsExpiring] = useState(false);
+
+  const handleConfirm = async () => {
+    setIsExpiring(true);
+    const success = await expireToken(token);
+
+    if (success === false) {
+      setShowModal(false);
+    }
   };
 
   const handleClose = () => {
