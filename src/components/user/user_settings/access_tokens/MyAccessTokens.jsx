@@ -78,7 +78,7 @@ function MyAccessTokens() {
 
   return (
     <div>
-      <AccessTokenEditorPanel cancelTokenSource={cancelTokenSource} />
+      <div className="mb-3 mx-2"><AccessTokenEditorPanel cancelTokenSource={cancelTokenSource} /></div>
       <AccessTokenTable loadData={loadData} isLoading={isLoading} data={accessTokens} isMounted={isMounted} cancelTokenSource={cancelTokenSource} />
     </div>
   );
