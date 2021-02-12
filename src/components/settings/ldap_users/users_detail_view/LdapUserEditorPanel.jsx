@@ -78,13 +78,13 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authori
           <TextInputBase setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"division"}/>
         </Col>
         <Col lg={6}>
+          <TextInputBase setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"site"}/>
+        </Col>
+        <Col lg={6}>
           <TextInputBase disabled={true} setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"teams"} />
         </Col>
         <Col lg={6}>
-          <TextInputBase setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"departmentName"} />
-        </Col>
-        <Col lg={6}>
-          <TextInputBase setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"site"}/>
+          <TextInputBase disabled={true} setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"departmentName"} />
         </Col>
       </Row>
     </EditorPanelContainer>
