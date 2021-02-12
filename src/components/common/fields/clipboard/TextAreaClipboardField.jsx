@@ -1,22 +1,9 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
-import Button from "react-bootstrap/Button";
+import CopyToClipboardButton from "components/common/buttons/clipboard/CopyToClipboardButton";
 
-function TextAreaClipboardField({textAreaValue, description}) {
-  const [copiedToClipboard, setCopiedToClipboard] = useState(false);
-
-  const copyToClipboard = () => {
-    const dummy = document.createElement("textarea");
-    document.body.appendChild(dummy);
-    dummy.value = textAreaValue;
-    dummy.select();
-    document.execCommand("copy");
-    document.body.removeChild(dummy);
-    setCopiedToClipboard(true);
-  };
-
-
+function TextAreaClipboardField({textAreaValue, description, className, rows}) {
   const getDescription = () => {
     if (description) {
       return (
@@ -32,15 +19,15 @@ function TextAreaClipboardField({textAreaValue, description}) {
   }
 
   return (
-    <FieldContainer>
+    <FieldContainer className={className}>
       <textarea
         value={textAreaValue}
         disabled={true}
         className="form-control"
-        rows={5}
+        rows={rows}
       />
       {getDescription()}
-      <Button variant={"outline-secondary"} onClick={() => {copyToClipboard()}}>Copy to clipboard</Button>
+      <CopyToClipboardButton copyString={textAreaValue} />
     </FieldContainer>
   );
 }
@@ -48,6 +35,13 @@ function TextAreaClipboardField({textAreaValue, description}) {
 TextAreaClipboardField.propTypes = {
   textAreaValue: PropTypes.string,
   description: PropTypes.string,
+  className: PropTypes.string,
+  rows: PropTypes.number
 };
+
+TextAreaClipboardField.defaultProps = {
+  rows: 5
+};
+
 
 export default TextAreaClipboardField;

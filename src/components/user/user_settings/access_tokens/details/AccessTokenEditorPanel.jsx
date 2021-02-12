@@ -57,7 +57,7 @@ function AccessTokenEditorPanel({ cancelTokenSource }) {
             <CreateButton icon={faKey} addAnotherOption={false} recordDto={accessToken} createRecord={createToken} size={"md"}/>
           </div>
         </Col>
-        <Col md={6}>
+        <Col md={6} className="my-auto">
           <TextAreaClipboardField
             textAreaValue={generatedToken}
             description={`Please note: This token will not be able to be accessed again.`}
