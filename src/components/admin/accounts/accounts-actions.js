@@ -334,6 +334,11 @@ accountsActions.getOrganizations = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+accountsActions.getOrganizationsV2 = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = "/users/account/organizations";
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 accountsActions.createIdpAccount = async (ldapIdpAccountDataDto, getAccessToken) => {
   let postData = {
     ...ldapIdpAccountDataDto.getPersistData()
