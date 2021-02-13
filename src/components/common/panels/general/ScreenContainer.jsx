@@ -4,8 +4,10 @@ import AccessDeniedContainer from "components/common/panels/detail_view_containe
 import {getBreadcrumb} from "components/common/navigation/trails";
 import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import TitleBar from "components/common/fields/TitleBar";
+import RoleRequirementField from "components/common/fields/access/RoleRequirementField";
+import {meetsRequirements} from "components/common/helpers/role-helpers";
 
-function ScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading, accessDenied, showBreadcrumbTrail, navigationTabContainer }) {
+function ScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading, accessDenied, showBreadcrumbTrail, navigationTabContainer, accessRoleData, roleRequirement }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
 
   useEffect(() => {
@@ -60,6 +62,12 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
     )
   }
 
+  if (!isLoading && accessRoleData && roleRequirement && !meetsRequirements(roleRequirement, accessRoleData)) {
+    return (
+      <AccessDeniedContainer />
+    )
+  }
+
   return (
     <div className="max-content-width ml-2 max-content-height">
       {getTopNavigation()}
@@ -73,6 +81,7 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
             {getScreenBody()}
           </div>
         </div>
+        <RoleRequirementField className={"mx-2"} roleRequirement={roleRequirement} />
         <div className="content-block-footer"/>
       </div>
     </div>
@@ -87,7 +96,9 @@ ScreenContainer.propTypes = {
   children: PropTypes.any,
   accessDenied: PropTypes.bool,
   showBreadcrumbTrail: PropTypes.bool,
-  navigationTabContainer: PropTypes.object
+  navigationTabContainer: PropTypes.object,
+  accessRoleData: PropTypes.object,
+  roleRequirement: PropTypes.string,
 };
 
 export default ScreenContainer;
