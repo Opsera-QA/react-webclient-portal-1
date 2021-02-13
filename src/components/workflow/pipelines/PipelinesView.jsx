@@ -166,16 +166,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
     return (<LoadingDialog size="md" message="Loading..."/>);
   }
 
-  if (data && data.count === 0 && currentTab === "owner") {
-    const activeFilters = pipelineFilterDto.getActiveFilters();
-    if (activeFilters && activeFilters.length > 0) {
-      return (
-        <div className="px-2 max-content-width mx-auto" style={{ minWidth: "505px" }}>
-          <div className="my-5"><InfoDialog message="No pipelines meeting the filter requirements were found."/></div>
-        </div>
-      )
-    }
-
+  if (data && data.count === 0 && currentTab === "owner" && (pipelineFilterDto?.getActiveFilters() == null || pipelineFilterDto?.getActiveFilters()?.length === 0) ) {
     return (<><PipelineWelcomeView setActiveTab={setActiveTab}/></>);
   }
 
