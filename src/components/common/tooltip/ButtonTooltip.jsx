@@ -32,7 +32,7 @@ ButtonTooltip.propTypes = {
 
 ButtonTooltip.defaultProps = {
   placement: "top",
-  trigger: ["hover"]
+  trigger: ["hover", "focus"]
 };
 
 export default ButtonTooltip;

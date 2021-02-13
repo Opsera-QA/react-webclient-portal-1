@@ -15,7 +15,7 @@ function TooltipWrapper({ innerText, placement, children }) {
   };
 
   return (
-    <OverlayTrigger trigger={["hover"]} placement={placement} overlay={getPopover(innerText)}>
+    <OverlayTrigger trigger={["hover", "focus"]} placement={placement} overlay={getPopover(innerText)}>
       {children}
     </OverlayTrigger>
   );

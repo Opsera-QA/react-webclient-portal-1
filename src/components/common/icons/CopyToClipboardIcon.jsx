@@ -18,7 +18,7 @@ function CopyToClipboardIcon({ copyString, className }) {
   };
 
   return (
-    <ButtonTooltip trigger={["hover"]} innerText={copiedToClipboard ? "Copied to Clipboard!" : "Copy to clipboard"}>
+    <ButtonTooltip trigger={["hover", "focus"]} innerText={copiedToClipboard ? "Copied to Clipboard!" : "Copy to clipboard"}>
       <FontAwesomeIcon
         onClick={() => {copyToClipboard()}}
         icon={copiedToClipboard ? faClipboardCheck : faClipboardList}
