@@ -58,10 +58,15 @@ function LdapGroupManagement() {
       await getRoles(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+        console.error(error)
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true && orgDomain != null) {
+        setIsLoading(false);
+      }
     }
   }
 
@@ -87,9 +92,9 @@ function LdapGroupManagement() {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
     const {ldap} = user;
-    setCurrentUserEmail(user?.email);
 
-    if (userRoleAccess) {
+    if (isMounted?.current === true && userRoleAccess) {
+      setCurrentUserEmail(user?.email);
       if (orgDomain == null || (ldap?.domain !== orgDomain && !userRoleAccess?.OpseraAdministrator)) {
         history.push(`/settings/${ldap.domain}/groups`);
       }
