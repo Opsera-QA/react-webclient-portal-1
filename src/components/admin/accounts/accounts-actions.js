@@ -388,9 +388,15 @@ accountsActions.updateOrganization = async (ldapOrganizationDataDto, getAccessTo
   return await baseActions.apiPutCall(getAccessToken, apiUrl, postBody);
 };
 
+// TODO: Remove when updated to V2 everywhere
 accountsActions.getOrganizationByName = async (organizationName, getAccessToken) => {
   const apiUrl = `/users/account/organization/${organizationName}`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl);
+};
+
+accountsActions.getOrganizationByNameV2 = async (getAccessToken, cancelTokenSource, organizationName) => {
+  const apiUrl = `/users/account/organization/${organizationName}`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 accountsActions.getOrganizationOwnerEmailWithName = async (organizationName, getAccessToken) => {
