@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from "react";
+import React, {useContext, useState, useEffect, useRef} from "react";
 import {useParams} from "react-router-dom";
 import {faUserFriends} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -12,6 +12,7 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import axios from "axios";
 
 // TODO: Can we get an API Call to get role group names associated with an organization?
 const roleGroups = ["Administrators", "PowerUsers", "Users"];
@@ -27,12 +28,31 @@ function LdapGroupDetailView() {
   const [isLoading, setIsLoading] = useState(true);
   const [authorizedActions, setAuthorizedActions] = useState([]);
   const [canDelete, setCanDelete] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       await getRoles();
@@ -48,7 +68,7 @@ function LdapGroupDetailView() {
     }
   }
 
-  const getGroup = async () => {
+  const getGroup = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const response = await accountsActions.getGroup(orgDomain, groupName, getAccessToken);
 
@@ -64,13 +84,11 @@ function LdapGroupDetailView() {
         }
 
         setAuthorizedActions(authorizedActions);
-
-
       }
     }
   };
 
-  const getLdapUsers = async (domain) => {
+  const getLdapUsers = async (domain, cancelSource = cancelTokenSource) => {
     if (domain != null) {
       const response = await accountsActions.getLdapUsersWithDomain(domain, getAccessToken);
       let ldapUsers = response?.data;

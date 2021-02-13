@@ -421,7 +421,7 @@ accountsActions.getOrganizationAccountByDomain = async (domain, getAccessToken) 
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
-accountsActions.getOrganizationAccountByDomainV2 = async (domain, getAccessToken, cancelTokenSource) => {
+accountsActions.getOrganizationAccountByDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
   const postBody = {
     domain: domain
   }

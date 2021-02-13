@@ -3,6 +3,7 @@ import baseActions from "../../../../../utils/actionsBase";
 
 const departmentActions = {};
 
+// TODO: Remove when all references are updated
 departmentActions.getDepartmentsByDomain = async (domain, getAccessToken) => {
   let postBody = {
     domain: domain
@@ -13,6 +14,14 @@ departmentActions.getDepartmentsByDomain = async (domain, getAccessToken) => {
     .then((result) =>  {return result;})
     .catch(error => {return error;});
   return response;
+};
+
+departmentActions.getDepartmentsByDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
+  let postBody = {
+    domain: domain
+  };
+  const apiUrl = `/users/account/departments`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 departmentActions.getDepartment = async (domain, departmentName, getAccessToken) => {

@@ -1,50 +1,35 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 
 import PropTypes from "prop-types";
 import LdapOrganizationAccountEditorPanel from "./LdapOrganizationAccountEditorPanel";
-import Model from "core/data_model/model";
 import {faUsers, faUsersClass, faBuilding, faCubes} from "@fortawesome/pro-light-svg-icons";
-import {ldapIdpAccountsMetaData} from "components/admin/accounts/ldap/idp_accounts/ldap-idp-account-metadata";
-import LdapIdpAccountEditorPanel from "components/admin/accounts/ldap/idp_accounts/LdapIdpAccountEditorPanel";
-import LdapIdpAccountSummaryPanel from "components/admin/accounts/ldap/idp_accounts/LdapIdpAccountSummaryPanel";
 import LdapOrganizationAccountSummaryPanel
   from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountSummaryPanel";
-import LdapUsersTable from "components/settings/ldap_users/LdapUsersTable";
-import LdapGroupsTable from "components/settings/ldap_groups/LdapGroupsTable";
-import LdapDepartmentsTable from "components/admin/accounts/ldap/ldap_departments/LdapDepartmentsTable";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
+import LdapOrganizationAccountUsersPanel
+  from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountUsersPanel";
+import LdapOrganizationAccountGroupsPanel
+  from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountGroupsPanel";
+import LdapOrganizationAccountIdpPanel
+  from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountIdpPanel";
+import LdapOrganizationAccountDepartmentsPanel
+  from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountDepartmentsPanel";
 
 function LdapOrganizationAccountDetailPanel(
   {
     ldapOrganizationAccountData,
     setLdapOrganizationAccountData,
-    authorizedDepartmentActions,
-    ldapDepartmentData,
+    cancelTokenSource,
     loadData,
     authorizedActions,
-    authorizedIdpActions,
+    isMounted,
     organizationDomain,
+    currentUser
   }) {
-  const [showIdpEditPanel, setShowIdpEditPanel] = useState(false);
-  const [ldapIdpAccountData, setLdapIdpAccountData] = useState({});
   const [activeTab, setActiveTab] = useState("summary");
-
-  useEffect(() => {
-    loadIdpAccount();
-  }, []);
-
-  const loadIdpAccount = () => {
-    let idpAccounts = ldapOrganizationAccountData.getData("idpAccounts");
-    if (idpAccounts != null && idpAccounts.length > 0) {
-      setLdapIdpAccountData(new Model(idpAccounts[0], ldapIdpAccountsMetaData, false));
-    }
-    else {
-      setLdapIdpAccountData(new Model({...ldapIdpAccountsMetaData.newObjectFields}, ldapIdpAccountsMetaData, true));
-    }
-  };
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
@@ -57,59 +42,46 @@ function LdapOrganizationAccountDetailPanel(
     setActiveTab("summary");
   };
 
-  // TODO: Enable or remove
-  const getIdpAccountPanel = () => {
-    return <></>;
-
-    // if (showIdpEditPanel || ldapIdpAccountData.isNew()) {
-    //   return (
-    //     <LdapIdpAccountEditorPanel
-    //       setLdapIdpAccountData={setLdapIdpAccountData}
-    //       setShowIdpEditPanel={setShowIdpEditPanel}
-    //       ldapOrganizationAccountData={ldapOrganizationAccountData}
-    //       ldapIdpAccountData={ldapIdpAccountData}
-    //       authorizedActions={authorizedIdpActions}
-    //     />
-    //   );
-    // }
-    //
-    // return (
-    //   <LdapIdpAccountSummaryPanel
-    //     ldapIdpAccountData={ldapIdpAccountData}
-    //     setShowIdpEditPanel={setShowIdpEditPanel}
-    //     authorizedActions={authorizedIdpActions}
-    //   />
-    // );
-  };
-
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
         return <LdapOrganizationAccountSummaryPanel ldapOrganizationAccountData={ldapOrganizationAccountData} setActiveTab={setActiveTab}/>;
       case "users":
         return (
-          <div className="p-3">
-            <LdapUsersTable orgDomain={ldapOrganizationAccountData["orgDomain"]} userData={ldapOrganizationAccountData.getData("users")} loadData={loadData} />
-          </div>
+          <LdapOrganizationAccountUsersPanel
+            authorizedActions={authorizedActions}
+            loadData={loadData}
+            ldapOrganizationAccountData={ldapOrganizationAccountData}
+          />
         );
       case "groups":
         return (
-          <div className="p-3">
-            <LdapGroupsTable orgDomain={ldapOrganizationAccountData["orgDomain"]} groupData={ldapOrganizationAccountData.getData("groups")} useMembers={true} loadData={loadData} />
-          </div>
+          <LdapOrganizationAccountGroupsPanel
+            authorizedActions={authorizedActions}
+            loadData={loadData}
+            ldapOrganizationAccountData={ldapOrganizationAccountData}
+            currentUser={currentUser}
+          />
         );
       case "idpAccounts":
-        return(getIdpAccountPanel());
+        return(
+          <LdapOrganizationAccountIdpPanel
+            ldapOrganizationAccountData={ldapOrganizationAccountData}
+            authorizedActions={authorizedActions}
+            loadData={loadData}
+            isMounted={isMounted}
+            currentUser={currentUser}
+          />
+        );
       case "departments":
         return (
-          <div className="p-3">
-            <LdapDepartmentsTable
-              loadData={loadData}
-              departmentData={ldapDepartmentData}
-              authorizedActions={authorizedDepartmentActions}
-              domain={organizationDomain}
-            />
-          </div>
+          <LdapOrganizationAccountDepartmentsPanel
+            loadData={loadData}
+            isMounted={isMounted}
+            ldapOrganizationAccountData={ldapOrganizationAccountData}
+            cancelTokenSource={cancelTokenSource}
+            organizationDomain={organizationDomain}
+          />
         );
       case "settings":
         return (
@@ -148,12 +120,12 @@ function LdapOrganizationAccountDetailPanel(
 LdapOrganizationAccountDetailPanel.propTypes = {
   ldapOrganizationAccountData: PropTypes.object,
   setLdapOrganizationAccountData: PropTypes.func,
-  ldapDepartmentData: PropTypes.array,
   organizationDomain: PropTypes.string,
   loadData: PropTypes.func,
   authorizedActions: PropTypes.array,
-  authorizedIdpActions: PropTypes.array,
-  authorizedDepartmentActions: PropTypes.array
+  isMounted: PropTypes.object,
+  cancelTokenSource: PropTypes.object,
+  currentUser: PropTypes.object
 };
 
 export default LdapOrganizationAccountDetailPanel;

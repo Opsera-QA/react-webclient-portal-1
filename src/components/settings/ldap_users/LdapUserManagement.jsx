@@ -57,7 +57,7 @@ function LdapUserManagement() {
 
   const getUsersByDomain = async (ldapDomain, source) => {
     try {
-      let organizationResponse = await accountsActions.getOrganizationAccountByDomainV2(ldapDomain, getAccessToken, source);
+      let organizationResponse = await accountsActions.getOrganizationAccountByDomainV2(getAccessToken, source, ldapDomain);
       if (isMounted?.current === true && organizationResponse?.data?.users) {
         setUserList(organizationResponse?.data?.users);
       }
