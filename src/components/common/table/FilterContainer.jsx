@@ -21,16 +21,33 @@ function FilterContainer(
     addRecordFunction,
     supportSearch,
     supportViewToggle,
-    saveCookies
+    saveCookies,
+
+    // TODO: Remove after filters are used everywhere
+    type
   }) {
   const getInlineFilters = () => {
     return (
       <div className="my-1 inline-filter-input">
         <div className="d-flex my-auto">
           {inlineFilters}
-          <InlineSearchFilter isLoading={isLoading} supportSearch={supportSearch} filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} className={"mr-2"} />
-          <ViewToggle supportViewToggle={supportViewToggle} filterDto={filterDto} setFilterDto={setFilterDto} saveCookies={saveCookies} isLoading={isLoading} className="mr-2" />
-          <RefreshButton isLoading={isLoading} loadData={loadData} className="mr-2" />
+          <InlineSearchFilter
+            isLoading={isLoading}
+            supportSearch={supportSearch}
+            filterDto={filterDto}
+            setFilterDto={setFilterDto}
+            loadData={loadData}
+            className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-2" : null}
+          />
+          <ViewToggle
+            supportViewToggle={supportViewToggle}
+            filterDto={filterDto}
+            setFilterDto={setFilterDto}
+            saveCookies={saveCookies}
+            isLoading={isLoading}
+            className={dropdownFilters != null || loadData != null ? "mr-2" : null}
+          />
+          <RefreshButton isLoading={isLoading} loadData={loadData} className={dropdownFilters != null ? "mr-2" : null} />
           <FilterButtons isLoading={isLoading} loadData={loadData} dropdownFilters={dropdownFilters} filterDto={filterDto} />
         </div>
       </div>
@@ -44,6 +61,7 @@ function FilterContainer(
           <FilterTitleBar
             isLoading={isLoading}
             title={title}
+            type={type}
             filterDto={filterDto}
             titleIcon={titleIcon}
             inlineFilters={getInlineFilters()}
@@ -73,7 +91,8 @@ FilterContainer.propTypes = {
   addRecordFunction: PropTypes.func,
   supportViewToggle: PropTypes.bool,
   inlineFilters: PropTypes.any,
-  saveCookies: PropTypes.func
+  saveCookies: PropTypes.func,
+  type: PropTypes.string
 };
 
 export default FilterContainer;
