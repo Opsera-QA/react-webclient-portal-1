@@ -37,7 +37,7 @@ function FilterContainer(
             filterDto={filterDto}
             setFilterDto={setFilterDto}
             loadData={loadData}
-            className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-2" : null}
+            className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3" : null}
           />
           <ViewToggle
             supportViewToggle={supportViewToggle}

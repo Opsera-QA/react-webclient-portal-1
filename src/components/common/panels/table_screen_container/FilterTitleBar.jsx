@@ -20,7 +20,7 @@ function FilterTitleBar({ title, addRecordFunction, inlineFilters, filterDto, ti
         <div className="my-auto mr-2 filter-title-text">{getTitleIcon()}{title}</div>
         <div className="ml-2 my-auto"><NewRecordButton addRecordFunction={addRecordFunction} type={filterDto?.getType() || type} isLoading={isLoading} variant={"warning"} /></div>
       </div>
-      {inlineFilters}
+      <div className="my-1">{inlineFilters}</div>
     </div>
   );
 }
