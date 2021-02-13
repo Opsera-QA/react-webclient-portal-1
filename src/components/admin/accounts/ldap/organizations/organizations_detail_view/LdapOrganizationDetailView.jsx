@@ -11,6 +11,7 @@ import DetailScreenContainer from "components/common/panels/detail_view_containe
 import LdapOrganizationDetailPanel
   from "components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationDetailPanel";
 import axios from "axios";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
 function LdapOrganizationDetailView() {
   const history = useHistory();
@@ -110,7 +111,8 @@ function LdapOrganizationDetailView() {
     <DetailScreenContainer
       breadcrumbDestination={"ldapOrganizationDetailView"}
       metadata={ldapOrganizationMetaData}
-      accessDenied={!authorizedActions.includes("get_organization_details")}
+      accessRoleData={accessRoleData}
+      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       dataObject={ldapOrganizationData}
       isLoading={isLoading}
       actionBar={getActionBar()}

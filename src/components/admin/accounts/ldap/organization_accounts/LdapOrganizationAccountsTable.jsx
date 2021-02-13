@@ -7,6 +7,8 @@ import CustomTable from "components/common/table/CustomTable";
 import NewLdapOrganizationAccountModal
   from "components/admin/accounts/ldap/organization_accounts/NewLdapOrganizationAccountModal";
 import {getField} from "components/common/metadata/metadata-helpers";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faSitemap} from "@fortawesome/pro-light-svg-icons";
 
 function LdapOrganizationAccountsTable({ldapOrganizationAccounts, ldapOrganizationData, authorizedActions, isLoading, loadData }) {
   const [showCreateOrganizationAccountModal, setShowCreateOrganizationAccountModal] = useState(false);
@@ -33,16 +35,28 @@ function LdapOrganizationAccountsTable({ldapOrganizationAccounts, ldapOrganizati
     setShowCreateOrganizationAccountModal(true);
   };
 
-  return (
-    <div className="px-2 pb-2">
+  const getOrganizationAccountsTable = () => {
+    return (
       <CustomTable
+        className={"no-table-border"}
         columns={columns}
         isLoading={isLoading}
         data={ldapOrganizationAccounts}
-        createNewRecord={authorizedActions?.includes("create_organization_account") && createOrganizationAccount}
         onRowSelect={onRowSelect}
+      />
+    );
+  };
+
+  return (
+    <div className="px-2 pb-2">
+      <FilterContainer
+        loadData={loadData}
+        addRecordFunction={authorizedActions?.includes("create_organization_account") ? createOrganizationAccount : null}
+        isLoading={isLoading}
+        body={getOrganizationAccountsTable()}
+        titleIcon={faSitemap}
+        title={"Organization Accounts"}
         type={"Organization Account"}
-        tableTitle={"Organization Accounts"}
       />
       <NewLdapOrganizationAccountModal
         ldapOrganizationData={ldapOrganizationData}
