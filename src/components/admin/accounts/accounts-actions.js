@@ -286,12 +286,21 @@ accountsActions.getLdapGroupsWithEmail = async (emailAddress, getAccessToken) =>
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
+// TODO: Remove when V2 is wired up everywhere
 accountsActions.getLdapGroupsWithDomain = async (domain, getAccessToken) => {
   const postBody = {
     domain: domain
   };
   const apiUrl = "/users/account/groups";
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+accountsActions.getLdapGroupsWithDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
+  const postBody = {
+    domain: domain
+  };
+  const apiUrl = "/users/account/groups";
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 accountsActions.getUserByEmail = async (email, getAccessToken) => {

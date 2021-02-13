@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import {useHistory, useParams} from "react-router-dom";
 import LdapGroupsTable from "./LdapGroupsTable";
@@ -8,6 +8,8 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {faServer, faUsers} from "@fortawesome/pro-light-svg-icons";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import axios from "axios";
 
 function LdapGroupManagement() {
   const history = useHistory();
@@ -21,6 +23,8 @@ function LdapGroupManagement() {
   const toastContext = useContext(DialogToastContext);
   const [authorizedActions, setAuthorizedActions] = useState([]);
   const [activeTab, setActiveTab] = useState("userGroups");
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
@@ -28,13 +32,30 @@ function LdapGroupManagement() {
   };
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, [orgDomain]);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles();
+      await getRoles(cancelSource);
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -44,16 +65,16 @@ function LdapGroupManagement() {
     }
   }
 
-  const getGroupsByDomain = async (ldapDomain) => {
+  const getGroupsByDomain = async (ldapDomain, cancelSource = cancelTokenSource) => {
     if (ldapDomain != null) {
       try {
-        let response = await accountsActions.getLdapGroupsWithDomain(ldapDomain, getAccessToken);
+        let response = await accountsActions.getLdapGroupsWithDomainV2(getAccessToken, cancelSource, ldapDomain);
 
         if (response?.data) {
           let existingGroups = response?.data;
           const existingGroupNames = existingGroups.map((group) => {return group.name.toLowerCase()});
           setExistingGroupNames(existingGroupNames);
-;         setGroupList(existingGroups);
+          setGroupList(existingGroups);
         }
       } catch (error) {
         toastContext.showLoadingErrorDialog(error);
@@ -62,23 +83,24 @@ function LdapGroupManagement() {
     }
   };
 
-  const getRoles = async () => {
+  const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
     const {ldap} = user;
     setCurrentUserEmail(user?.email);
 
     if (userRoleAccess) {
+      if (orgDomain == null || (ldap?.domain !== orgDomain && !userRoleAccess?.OpseraAdministrator)) {
+        history.push(`/settings/${ldap.domain}/groups`);
+      }
+
       setAccessRoleData(userRoleAccess);
 
       let authorizedActions = await accountsActions.getAllowedGroupActions(userRoleAccess, ldap?.organization, getUserRecord, getAccessToken);
       setAuthorizedActions(authorizedActions);
 
-      if (orgDomain != null && userRoleAccess?.OpseraAdministrator) {
-        await getGroupsByDomain(orgDomain);
-      } else if (ldap.domain != null && authorizedActions?.includes("get_groups")) {
-        history.push(`/settings/${ldap.domain}/groups`);
-        await getGroupsByDomain(ldap.domain);
+      if (userRoleAccess?.OpseraAdministrator || authorizedActions?.includes("get_groups")) {
+        await getGroupsByDomain(orgDomain, cancelSource);
       }
     }
   };
@@ -139,8 +161,9 @@ function LdapGroupManagement() {
     <ScreenContainer
       isLoading={!accessRoleData}
       navigationTabContainer={getNavigationTabContainer()}
-      accessDenied={!authorizedActions.includes("get_groups")}
       breadcrumbDestination={"ldapGroupManagement"}
+      accessRoleData={accessRoleData}
+      roleRequirement={ROLE_LEVELS.POWER_USERS}
     >
       {getCurrentView()}
     </ScreenContainer>
