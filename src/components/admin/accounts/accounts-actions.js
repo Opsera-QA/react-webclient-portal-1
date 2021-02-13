@@ -232,7 +232,7 @@ accountsActions.createUser = async (orgDomain, ldapUserDataDto, getAccessToken) 
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
-accountsActions.getUsers = async (getAccessToken) => {
+accountsActions.getUsers = async (getAccessToken, cancelTokenSource) => {
   const urlParams = {
     params: {
       size: 10000,
@@ -240,7 +240,7 @@ accountsActions.getUsers = async (getAccessToken) => {
   };
 
   const apiUrl = `/users/get-users`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 accountsActions.getAccountUsers = async (getAccessToken) => {
