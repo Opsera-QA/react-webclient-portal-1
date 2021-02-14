@@ -16,6 +16,8 @@ import Model from "core/data_model/model";
 import TagFilter from "components/common/filters/tags/TagFilter";
 import PipelineCardView from "components/workflow/pipelines/PipelineCardView";
 import FilterBar from "components/common/filters/FilterBar";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faDraftingCompass, faTools} from "@fortawesome/pro-light-svg-icons";
 
 function PipelinesView({ currentTab, setActiveTab }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -89,24 +91,16 @@ function PipelinesView({ currentTab, setActiveTab }) {
 
   const getDynamicFilter = () => {
     if (currentTab !== "owner") {
-      return (<LdapOwnerFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>);
+      return (<LdapOwnerFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto} className={"mt-2"}/>);
     }
   };
 
-  const getFilterBar = () => {
+  const getDropdownFilters = () => {
     return (
-      <FilterBar
-        loadData={loadData}
-        filterDto={pipelineFilterDto}
-        setFilterDto={setPipelineFilterDto}
-        saveCookies={saveCookies}
-        supportViewToggle={true}
-        addRecordFunction={addPipeline}
-        supportSearch={true}
-      >
+      <>
         <TagFilter filterDto={pipelineFilterDto} setFilterDto={setPipelineFilterDto}/>
         {getDynamicFilter()}
-      </FilterBar>
+      </>
     );
   };
 
@@ -115,7 +109,11 @@ function PipelinesView({ currentTab, setActiveTab }) {
   };
 
   const getView = () => {
-    if (pipelineFilterDto.getData("viewType") === "list") {
+    if (loading) {
+      return (<LoadingDialog size="md" message="Loading pipelines..."/>);
+    }
+
+    if (pipelineFilterDto?.getData("viewType") === "list") {
       return (showList());
     }
 
@@ -162,10 +160,6 @@ function PipelinesView({ currentTab, setActiveTab }) {
     return (getView());
   };
 
-  if (loading) {
-    return (<LoadingDialog size="md" message="Loading..."/>);
-  }
-
   if (data && data.count === 0 && currentTab === "owner" && (pipelineFilterDto?.getActiveFilters() == null || pipelineFilterDto?.getActiveFilters()?.length === 0) ) {
     return (<><PipelineWelcomeView setActiveTab={setActiveTab}/></>);
   }
@@ -182,14 +176,20 @@ function PipelinesView({ currentTab, setActiveTab }) {
 
   return (
     <div style={{minWidth: "505px"}}>
-      <div>
-        <div>
-          {getFilterBar()}
-        </div>
-        <div>
-          {getPipelinesBody()}
-        </div>
-      </div>
+      <FilterContainer
+        loadData={loadData}
+        filterDto={pipelineFilterDto}
+        setFilterDto={setPipelineFilterDto}
+        addRecordFunction={addPipeline}
+        supportSearch={true}
+        saveCookies={saveCookies}
+        supportViewToggle={true}
+        isLoading={loading}
+        body={getPipelinesBody()}
+        dropdownFilters={getDropdownFilters()}
+        titleIcon={faDraftingCompass}
+        title={"Pipelines"}
+      />
     </div>
   );
 }
