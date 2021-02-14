@@ -51,12 +51,15 @@ function AccessTokenDetailView() {
       await getRoles(cancelSource);
     }
     catch (error) {
-      if (!error.error?.message?.includes(404)) {
+      if (isMounted?.current === true && !error.error?.message?.includes(404)) {
+        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -72,7 +75,7 @@ function AccessTokenDetailView() {
   const getRoles = async (cancelSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
+    if (isMounted?.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
       if (userRoleAccess?.OpseraAdministrator) {
