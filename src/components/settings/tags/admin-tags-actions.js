@@ -26,7 +26,7 @@ adminTagsActions.getAllTags = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
-adminTagsActions.getTags = async (tagFilterDto, getAccessToken) => {
+adminTagsActions.getTags = async (getAccessToken, cancelTokenSource, tagFilterDto) => {
   let sortOption = tagFilterDto.getData("sortOption");
   let type = tagFilterDto.getData("type");
   let status = tagFilterDto.getData("status");
@@ -43,7 +43,7 @@ adminTagsActions.getTags = async (tagFilterDto, getAccessToken) => {
     },
   };
 
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 adminTagsActions.getProjectTags = async (getAccessToken) => {
