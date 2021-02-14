@@ -4,6 +4,9 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import AccessTokenSummaryPanel from "components/user/user_settings/access_tokens/details/AccessTokenSummaryPanel";
+import CustomTab from "components/common/tabs/CustomTab";
+import {faTable} from "@fortawesome/pro-light-svg-icons";
+import AccessTokenLogPanel from "components/user/user_settings/access_tokens/details/logs/AccessTokenLogPanel";
 
 function AccessTokenDetailPanel({ accessToken, setAccessToken, loadData }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -18,7 +21,7 @@ function AccessTokenDetailPanel({ accessToken, setAccessToken, loadData }) {
       case "summary":
         return <AccessTokenSummaryPanel accessToken={accessToken} />;
       case "logs":
-        // return <AccessTokenLogTable setToolIdentifierData={setToolIdentifierData} toolIdentifierData={toolIdentifierData} />;
+        return <div className="mt-2"><AccessTokenLogPanel accessToken={accessToken} /></div>;
       default:
         return null;
     }
@@ -28,6 +31,7 @@ function AccessTokenDetailPanel({ accessToken, setAccessToken, loadData }) {
     return (
       <CustomTabContainer>
         <SummaryTab activeTab={activeTab} handleTabClick={handleTabClick} />
+        <CustomTab activeTab={activeTab} tabText={"Token Activity Log"} handleTabClick={handleTabClick} tabName={"logs"} icon={faTable} />
       </CustomTabContainer>
     )
   };

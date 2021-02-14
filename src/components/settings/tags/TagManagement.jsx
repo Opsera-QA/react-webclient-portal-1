@@ -13,7 +13,7 @@ function TagManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [tagList, setTagList] = useState(undefined);
+  const [tagList, setTagList] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const [tagFilterDto, setTagFilterDto] = useState(new Model({...tagFilterMetadata.newObjectFields}, tagFilterMetadata, false));
   const isMounted = useRef(false);

@@ -16,7 +16,7 @@ function AccessTokenDetailView() {
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [accessToken, setAccessToken] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -102,7 +102,7 @@ function AccessTokenDetailView() {
       dataObject={accessToken}
       isLoading={isLoading}
       actionBar={getActionBar()}
-      detailPanel={<AccessTokenDetailPanel accessToken={accessToken} setAccessToken={setAccessToken} loadDat={loadData} />}
+      detailPanel={<AccessTokenDetailPanel accessToken={accessToken} setAccessToken={setAccessToken} loadData={loadData} />}
     />
   );
 }

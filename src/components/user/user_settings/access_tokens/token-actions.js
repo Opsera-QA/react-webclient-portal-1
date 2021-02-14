@@ -40,19 +40,9 @@ tokenActions.expireToken = async (getAccessToken, cancelTokenSource, tokenId) =>
   return await baseActions.apiPatchCallV2(getAccessToken, cancelTokenSource, apiUrl)
 };
 
-tokenActions.getTokenActivity = async (getAccessToken, cancelTokenSource, tokenId) => {
+tokenActions.getTokenActivity = async (getAccessToken, cancelTokenSource, filterModel, tokenId = "") => {
   const apiUrl = `/users/token/activity/${tokenId}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl)
-};
-
-tokenActions.testTokenLogging = async (getAccessToken, cancelTokenSource, tokenModel) => {
-  const apiUrl = `/api/v1/demo_me`;
-
-  const postBody = {
-    ...tokenModel.getPersistData()
-  };
-
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody)
 };
 
 export default tokenActions;
