@@ -45,7 +45,7 @@ function AccessTokenDetailView() {
     }
   }, []);
 
-  const loadData = async (cancelSource) => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       await getRoles(cancelSource);
@@ -63,7 +63,7 @@ function AccessTokenDetailView() {
     }
   };
 
-  const getToken = async (cancelSource) => {
+  const getToken = async (cancelSource = cancelTokenSource) => {
     const response = await tokenActions.getTokenById(getAccessToken, cancelSource, tokenId);
     const token = response?.data?.data[0];
 
@@ -72,7 +72,7 @@ function AccessTokenDetailView() {
     }
   };
 
-  const getRoles = async (cancelSource) => {
+  const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
     if (isMounted?.current === true && userRoleAccess) {
