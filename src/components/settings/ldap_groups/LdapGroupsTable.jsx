@@ -11,7 +11,7 @@ import {
 import {getField} from "components/common/metadata/metadata-helpers";
 import {ldapGroupMetaData} from "components/settings/ldap_groups/ldap-groups-metadata";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faSitemap} from "@fortawesome/pro-light-svg-icons";
+import {faSitemap, faUserFriends} from "@fortawesome/pro-light-svg-icons";
 
 function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, loadData, currentUserEmail, useMembers, existingGroupNames }) {
   let fields = ldapGroupMetaData.fields;
@@ -64,7 +64,7 @@ function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, l
         addRecordFunction={!useMembers && authorizedActions ? createGroup : undefined}
         isLoading={isLoading}
         body={getGroupsTable()}
-        titleIcon={faSitemap}
+        titleIcon={faUserFriends}
         title={"Groups"}
         type={"Group"}
       />
