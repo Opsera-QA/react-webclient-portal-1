@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import DateTimePicker from 'react-widgets/lib/DateTimePicker'
 import Moment from "moment";
@@ -12,6 +12,12 @@ function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFuncti
   const [errorMessage, setErrorMessage] = useState("");
   Moment.locale("en");
   momentLocalizer();
+
+  useEffect(() => {
+    if (dataObject.getData(fieldName) !== "") {
+      setErrorMessage(dataObject.getFieldError(fieldName))
+    }
+  }, [dataObject]);
 
   const validateAndSetData = (value) => {
     let newDataObject;

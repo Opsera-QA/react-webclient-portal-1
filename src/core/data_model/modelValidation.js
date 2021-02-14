@@ -90,6 +90,16 @@ export const fieldValidation = (value, data, field) => {
     errorMessages.push(`You have selected ${value.length} values, but the maximum allowed is ${field.maxItems}`);
   }
 
+  if (field.mustBeAfter != null && value <= data.getData(field.mustBeAfter))
+  {
+    errorMessages.push(`${data.getLabel(field.id)} must be set to a date after ${data.getLabel(field.mustBeAfter)}.`);
+  }
+
+  if (field.mustBeBefore != null && value >= data.getData(field.mustBeBefore))
+  {
+    errorMessages.push(`${data.getLabel(field.id)} must be set to a date before ${data.getLabel(field.mustBeBefore)}.`);
+  }
+
   if (errorMessages.length === 0) {
     return undefined;
   }
