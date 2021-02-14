@@ -1,35 +1,60 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
+import axios from "axios";
 
 function TagFilter({ filterDto, setFilterDto, className }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [tagOptions, setTagOptions] = useState([]);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getTags();
+      await getTags(cancelSource);
     }
     catch (error) {
-      toastContext.showErrorDialog(undefined,"Could not load tags");
+      if (isMounted?.current === true) {
+        console.error(error);
+        toastContext.showErrorDialog(undefined,"Could not load tags");
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   }
 
-  const getTags = async () => {
-    const response = await adminTagsActions.getAllTags(getAccessToken);
+  const getTags = async (cancelSource = cancelTokenSource) => {
+    const response = await adminTagsActions.getAllTagsV2(getAccessToken, cancelSource);
     let tags = response?.data?.data;
     let tagOptions = [];
 
@@ -39,7 +64,9 @@ function TagFilter({ filterDto, setFilterDto, className }) {
       });
     }
 
-    setTagOptions(tagOptions);
+    if (isMounted?.current === true) {
+      setTagOptions(tagOptions);
+    }
   };
 
   return (

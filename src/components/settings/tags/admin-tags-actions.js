@@ -15,7 +15,18 @@ adminTagsActions.update = async (tagDataDto, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
+// Remove after wiring up V2
 adminTagsActions.getAllTags = async (getAccessToken) => {
+  const apiUrl = "/tags";
+  const urlParams = {
+    params: {
+      size: 10000,
+    },
+  };
+  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+};
+
+adminTagsActions.getAllTagsV2 = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = "/tags";
   const urlParams = {
     params: {
@@ -23,7 +34,7 @@ adminTagsActions.getAllTags = async (getAccessToken) => {
       page: 1,
     },
   };
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 adminTagsActions.getTags = async (getAccessToken, cancelTokenSource, tagFilterDto) => {
