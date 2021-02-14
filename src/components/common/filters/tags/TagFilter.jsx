@@ -54,7 +54,7 @@ function TagFilter({ filterDto, setFilterDto, className }) {
   }
 
   const getTags = async (cancelSource = cancelTokenSource) => {
-    const response = await adminTagsActions.getAllTagsV2(getAccessToken, cancelSource);
+    const response = await adminTagsActions.getAllTagsV2(getAccessToken, cancelSource, "active");
     let tags = response?.data?.data;
     let tagOptions = [];
 

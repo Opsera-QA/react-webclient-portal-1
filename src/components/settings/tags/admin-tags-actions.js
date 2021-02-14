@@ -26,12 +26,12 @@ adminTagsActions.getAllTags = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
-adminTagsActions.getAllTagsV2 = async (getAccessToken, cancelTokenSource) => {
+adminTagsActions.getAllTagsV2 = async (getAccessToken, cancelTokenSource, status = "active") => {
   const apiUrl = "/tags";
   const urlParams = {
     params: {
       size: 10000,
-      page: 1,
+      status: status,
     },
   };
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
