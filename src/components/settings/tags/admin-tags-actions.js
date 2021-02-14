@@ -70,9 +70,9 @@ adminTagsActions.getVisibleTags = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
-adminTagsActions.get = async (tagId, getAccessToken) => {
+adminTagsActions.getTag = async (getAccessToken, cancelTokenSource, tagId) => {
   const apiUrl = `/tags/${tagId}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 adminTagsActions.create = async (tagDataDto, getAccessToken) => {
