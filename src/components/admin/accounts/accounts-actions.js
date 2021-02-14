@@ -268,6 +268,7 @@ accountsActions.getLdapUsersWithEmail = async (emailAddress, getAccessToken) => 
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
+// TODO: Remove when V2 is wired up everywhere
 accountsActions.getLdapUsersWithDomain = async (domain, getAccessToken) => {
   const postBody = {
     domain: domain
@@ -276,7 +277,13 @@ accountsActions.getLdapUsersWithDomain = async (domain, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
-
+accountsActions.getLdapUsersWithDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
+  const postBody = {
+    domain: domain
+  };
+  const apiUrl = "/users/account/users";
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
 
 accountsActions.getLdapGroupsWithEmail = async (emailAddress, getAccessToken) => {
   const postBody = {
@@ -442,6 +449,7 @@ accountsActions.create = async (accountData, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, accountData);
 };
 
+// TODO: Remove when all references are updated to V2
 accountsActions.getGroup = async (orgDomain, groupName, getAccessToken) => {
   let postData = {
     domain: orgDomain,
@@ -450,6 +458,16 @@ accountsActions.getGroup = async (orgDomain, groupName, getAccessToken) => {
   const apiUrl = "/users/account/group";
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
+
+accountsActions.getGroupV2= async (getAccessToken, cancelTokenSource, orgDomain, groupName) => {
+  let postData = {
+    domain: orgDomain,
+    groupName: groupName,
+  };
+  const apiUrl = "/users/account/group";
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
+};
+
 
 accountsActions.updateGroup = async (orgDomain, ldapGroupDataDto, getAccessToken) => {
   let putData = {

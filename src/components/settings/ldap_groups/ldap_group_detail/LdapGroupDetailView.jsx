@@ -55,24 +55,26 @@ function LdapGroupDetailView() {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles();
+      await getRoles(cancelSource);
     }
     catch (error) {
-      if (!error?.error?.message?.includes(404)) {
+      if (isMounted.current === true && !error?.error?.message?.includes(404)) {
         console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted.current === true) {
+        setIsLoading(false);
+      }
     }
   }
 
   const getGroup = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
-    const response = await accountsActions.getGroup(orgDomain, groupName, getAccessToken);
+    const response = await accountsActions.getGroupV2(getAccessToken, cancelSource, orgDomain, groupName);
 
-    if (response?.data) {
+    if (isMounted.current === true && response?.data) {
       setLdapGroupData(new Model(response.data, ldapGroupMetaData, false));
       let isOwner = user.email === response.data["ownerEmail"];
 
@@ -90,16 +92,16 @@ function LdapGroupDetailView() {
 
   const getLdapUsers = async (domain, cancelSource = cancelTokenSource) => {
     if (domain != null) {
-      const response = await accountsActions.getLdapUsersWithDomain(domain, getAccessToken);
+      const response = await accountsActions.getLdapUsersWithDomainV2(getAccessToken, cancelSource, domain);
       let ldapUsers = response?.data;
 
-      if (ldapUsers) {
+      if (isMounted.current === true && ldapUsers) {
         setLdapUsers(ldapUsers);
       }
     }
   };
 
-  const getRoles = async () => {
+  const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     let {ldap} = user;
     setCurrentUserEmail(user.email);
@@ -123,8 +125,8 @@ function LdapGroupDetailView() {
       }
 
       if (authorizedActions.includes("get_group_details")) {
-        await getLdapUsers(orgDomain);
-        await getGroup();
+        await getLdapUsers(orgDomain, cancelSource);
+        await getGroup(cancelSource);
       }
     }
   };
