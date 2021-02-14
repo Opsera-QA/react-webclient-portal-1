@@ -28,7 +28,7 @@ function AccessTokenTable({data, loadData, isMounted, isLoading, cancelTokenSour
   };
 
   const viewDetails = (dataObject) => {
-    history.push(`/user/accessTokens/details/${dataObject?._id}`);
+    history.push(`/user/access-tokens/details/${dataObject?._id}`);
   };
 
   const columns = useMemo(
