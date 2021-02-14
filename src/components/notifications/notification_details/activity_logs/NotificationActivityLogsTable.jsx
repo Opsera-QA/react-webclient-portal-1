@@ -85,8 +85,8 @@ function NotificationActivityLogsTable({ notificationData, allLogs }) {
   const getDropdownFilters = () => {
     return (
       <>
-        <StatusFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} />
-        <NotificationTypeFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} />
+        <StatusFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} className={"mb-2"} />
+        <NotificationTypeFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} className={"mb-2"}/>
         <TagFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} />
       </>
     );
