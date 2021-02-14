@@ -6,6 +6,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import axios from "axios";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
 function LdapUserManagement() {
   const history = useHistory();
@@ -46,7 +47,10 @@ function LdapUserManagement() {
       await getRoles(source);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
     finally {
       if (isMounted?.current === true) {
@@ -74,7 +78,7 @@ function LdapUserManagement() {
     const {ldap, groups} = user;
     const userRoleAccess = await setAccessRoles(user);
 
-    if (isMounted && userRoleAccess) {
+    if (isMounted.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
       let authorizedActions = await accountsActions.getAllowedUserActions(userRoleAccess, ldap.organization, undefined, getUserRecord, getAccessToken);
@@ -96,8 +100,9 @@ function LdapUserManagement() {
   return (
     <ScreenContainer
       breadcrumbDestination={"ldapUserManagement"}
-      accessDenied={!authorizedActions?.includes("get_users")}
       isLoading={!accessRoleData}
+      roleRequirement={ROLE_LEVELS.USERS}
+      accessRoleData={accessRoleData}
     >
       <LdapUsersTable
         orgDomain={orgDomain}

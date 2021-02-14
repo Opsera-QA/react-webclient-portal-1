@@ -5,6 +5,8 @@ import { useHistory } from "react-router-dom";
 import {ldapUsersMetaData} from "./ldap-users-metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import NewLdapUserModal from "components/settings/ldap_users/NewLdapUserModal";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faSitemap} from "@fortawesome/pro-light-svg-icons";
 
 function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loadData }) {
   const [showCreateUserModal, setShowCreateUserModal] = useState(false);
@@ -34,16 +36,28 @@ function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loa
     setShowCreateUserModal(true);
   };
 
-  return (
-    <div className="px-2 pb-2">
+  const getUsersTable = () => {
+    return (
       <CustomTable
+        className={"no-table-border"}
         isLoading={isLoading}
-        tableTitle={"Users"}
         onRowSelect={onRowSelect}
         data={userData}
-        type={"User"}
         columns={columns}
-        createNewRecord={authorizedActions?.includes("create_user") && createUser}
+      />
+    );
+  };
+
+  return (
+    <div className="px-2 pb-2">
+      <FilterContainer
+        loadData={loadData}
+        addRecordFunction={authorizedActions?.includes("create_user") ? createUser : null}
+        isLoading={isLoading}
+        body={getUsersTable()}
+        titleIcon={faSitemap}
+        title={"Users"}
+        type={"User"}
       />
       <NewLdapUserModal
         authorizedActions={authorizedActions}
