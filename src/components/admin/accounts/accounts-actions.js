@@ -243,9 +243,15 @@ accountsActions.getUsers = async (getAccessToken, cancelTokenSource) => {
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+// TODO: Remove when V2 is wired up everywhere
 accountsActions.getAccountUsers = async (getAccessToken) => {
   const apiUrl = `/users/account-users`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+accountsActions.getAccountUsersV2 = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/users/account-users`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 accountsActions.getUserDetailViewLink = async (getUserRecord) => {

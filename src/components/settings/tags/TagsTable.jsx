@@ -9,15 +9,11 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
-import FilterBar from "components/common/filters/FilterBar";
 import NewTagModal from "components/settings/tags/NewTagModal";
 import StatusFilter from "components/common/filters/status/StatusFilter";
 import TagTypeFilter from "components/common/filters/tags/TagTypeFilter";
-import LdapOwnerFilter from "components/common/filters/pipelines/LdapOwnerFilter";
-import ToolIdentifierFilter from "components/common/filters/tools/ToolIdentifierFilter";
-import TagFilter from "components/common/filters/tags/TagFilter";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faTags, faTools} from "@fortawesome/pro-light-svg-icons";
+import {faTags} from "@fortawesome/pro-light-svg-icons";
 
 function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto }) {
   const history = useHistory();

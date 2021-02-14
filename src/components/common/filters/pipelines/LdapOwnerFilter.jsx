@@ -1,9 +1,10 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
+import axios from "axios";
 
 function LdapOwnerFilter({ filterDto, setFilterDto, className }) {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
@@ -12,35 +13,61 @@ function LdapOwnerFilter({ filterDto, setFilterDto, className }) {
   const [user, setUser] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [userOptions, setUserOptions] = useState([]);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       const user = await getUserRecord();
       const {ldap} = user;
       setUser(user);
       const userRoleAccess = await setAccessRoles(user);
-      setAccessRoleData(userRoleAccess)
 
-      if (userRoleAccess && userRoleAccess?.Type !== "sass-user" && ldap?.domain != null)
-      {
-        await getUsers();
+      if (isMounted.current === true && userRoleAccess) {
+        setAccessRoleData(userRoleAccess)
+
+        if (userRoleAccess?.Type !== "sass-user" && ldap?.domain != null) {
+          await getUsers(cancelSource);
+        }
       }
     }
     catch (error) {
-      toastContext.showErrorDialog(error,"Could not load users.");
+      if (isMounted.current === true) {
+        toastContext.showErrorDialog(error,"Could not load users.");
+        console.error(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted.current === true) {
+        setIsLoading(false);
+      }
     }
   }
 
-  const getUsers = async () => {
-    let response = await accountsActions.getAccountUsers(getAccessToken);
+  const getUsers = async (cancelSource = cancelTokenSource) => {
+    let response = await accountsActions.getAccountUsersV2(getAccessToken, cancelSource);
     let userOptions = [];
     const parsedUsers = response?.data;
 
@@ -50,13 +77,14 @@ function LdapOwnerFilter({ filterDto, setFilterDto, className }) {
       });
     }
 
-    setUserOptions(userOptions);
+    if (isMounted.current === true) {
+      setUserOptions(userOptions);
+    }
   };
 
   if (user == null || user.ldap?.domain == null || accessRoleData == null || accessRoleData?.Type === "sass-user") {
-    return <></>
+    return null;
   }
-
 
   return (
     <div className={className}>
