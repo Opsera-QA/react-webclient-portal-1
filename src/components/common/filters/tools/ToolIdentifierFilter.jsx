@@ -55,7 +55,7 @@ function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunct
   }
 
   const getToolList = async (cancelSource = cancelTokenSource) => {
-    const toolResponse = await toolManagementActions.getToolIdentifiersV2(getAccessToken, cancelSource, false, true);
+    const toolResponse = await toolManagementActions.getToolIdentifiersV2(getAccessToken, cancelSource, "active", true);
 
     if (toolResponse?.data) {
       setToolIdentifierFilterOptions(createFilterOptions(toolResponse?.data, "Tool", "name", "identifier"));

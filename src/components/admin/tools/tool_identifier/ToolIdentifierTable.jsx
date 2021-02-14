@@ -10,6 +10,8 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faTools} from "@fortawesome/pro-light-svg-icons";
 
 function ToolIdentifierTable({data, loadData, isLoading}) {
   const [showCreateToolIdentifierModal, setShowCreateToolIdentifierModal] = useState(false);
@@ -33,26 +35,38 @@ function ToolIdentifierTable({data, loadData, isLoading}) {
     return !row["values"].active ? " inactive-row" : "";
   };
 
-  const createToolType = () => {
+  const createToolIdentifier = () => {
     setShowCreateToolIdentifierModal(true);
   };
 
-  const selectedRow = (rowData, type) => {
+  const onRowSelect = (rowData, type) => {
     history.push(`/admin/tools/identifiers/details/${rowData.original._id}`);
+  };
+
+  const getToolIdentifierTable = () => {
+    return (
+      <CustomTable
+        className={"no-table-border"}
+        isLoading={isLoading}
+        onRowSelect={onRowSelect}
+        data={data}
+        columns={columns}
+        rowStyling={rowStyling}
+        noDataMessage={noDataMessage}
+      />
+    );
   };
 
   return (
     <div className="px-2 pb-2">
-      <CustomTable
-        columns={columns}
-        data={data}
-        rowStyling={rowStyling}
-        noDataMessage={noDataMessage}
+      <FilterContainer
+        loadData={loadData}
+        addRecordFunction={createToolIdentifier}
         isLoading={isLoading}
-        onRowSelect={selectedRow}
-        tableTitle={"Tool Identifiers"}
+        body={getToolIdentifierTable()}
+        titleIcon={faTools}
+        title={"Tool Identifiers"}
         type={"Tool Identifier"}
-        createNewRecord={createToolType}
       />
       <NewToolIdentifierModal setShowModal={setShowCreateToolIdentifierModal} loadData={loadData} showModal={showCreateToolIdentifierModal}/>
     </div>
