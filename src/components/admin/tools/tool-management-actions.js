@@ -49,14 +49,15 @@ toolManagementActions.getToolIdentifiers = async (getAccessToken, enabledInToolR
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-toolManagementActions.getToolIdentifiersV2 = async (getAccessToken, cancelTokenSource, hidden, enabledInToolRegistry) => {
-  const apiUrl = `/registry/tools?hidden=${hidden}&registry=${enabledInToolRegistry}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
-};
-
-toolManagementActions.getToolIdentifiersV2 = async (getAccessToken, cancelTokenSource, enabledInToolRegistry) => {
-  const apiUrl = `/registry/tools?hidden=true&registry=${enabledInToolRegistry}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+toolManagementActions.getToolIdentifiersV2 = async (getAccessToken, cancelTokenSource, status, enabledInToolRegistry) => {
+  const urlParams = {
+    params: {
+      status: status,
+      registry: enabledInToolRegistry
+    },
+  };
+  const apiUrl = `/registry/tools`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 toolManagementActions.createToolIdentifier = async (toolIdentifierDataDto, getAccessToken) => {
