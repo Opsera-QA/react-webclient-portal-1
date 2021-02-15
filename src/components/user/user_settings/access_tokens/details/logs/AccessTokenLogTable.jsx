@@ -36,15 +36,13 @@ function AccessTokenLogTable({isLoading, loadData, activityLogs}) {
   };
 
   return (
-    <div className="px-2 pb-2">
-      <FilterContainer
-        loadData={loadData}
-        isLoading={isLoading}
-        body={getActivityLogsTable()}
-        titleIcon={faTable}
-        title={"Token Activity Log"}
-      />
-    </div>
+    <FilterContainer
+      loadData={loadData}
+      isLoading={isLoading}
+      body={getActivityLogsTable()}
+      titleIcon={faTable}
+      title={"Token Activity Log"}
+    />
   );
 }
 
