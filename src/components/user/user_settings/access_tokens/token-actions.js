@@ -14,19 +14,18 @@ tokenActions.createToken = async (getAccessToken, cancelTokenSource, tokenModel)
 
 tokenActions.getTokens = async (getAccessToken, cancelTokenSource, tokenFilterModel) => {
   const apiUrl = "/users/tokens";
-  // let sortOption = tokenFilterModel.getData("sortOption");
+  const sortOption = tokenFilterModel.getData("sortOption");
 
-  // let urlParams = {
-  //   params: {
-  //     sort: sortOption ? sortOption.value : undefined,
-  //     page: tokenFilterModel.getData("currentPage"),
-  //     size: tokenFilterModel.getData("pageSize"),
-  //     search: tokenFilterModel.getFilterValue("search"),
-  //     owner: tokenFilterModel.getFilterValue("owner")
-  //   }
-  // }
+  const urlParams = {
+    params: {
+      sort: sortOption ? sortOption.value : undefined,
+      page: tokenFilterModel.getData("currentPage"),
+      size: tokenFilterModel.getData("pageSize"),
+      search: tokenFilterModel.getFilterValue("search"),
+    }
+  }
 
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, {})
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams)
 };
 
 tokenActions.getTokenById = async (getAccessToken, cancelTokenSource, tokenId) => {
@@ -40,9 +39,20 @@ tokenActions.expireToken = async (getAccessToken, cancelTokenSource, tokenId) =>
   return await baseActions.apiPatchCallV2(getAccessToken, cancelTokenSource, apiUrl)
 };
 
-tokenActions.getTokenActivity = async (getAccessToken, cancelTokenSource, filterModel, tokenId = "") => {
+tokenActions.getTokenActivity = async (getAccessToken, cancelTokenSource, tokenFilterModel, tokenId = "") => {
   const apiUrl = `/users/token/activity/${tokenId}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl)
+  const sortOption = tokenFilterModel.getData("sortOption");
+
+  const urlParams = {
+    params: {
+      sort: sortOption ? sortOption.value : undefined,
+      page: tokenFilterModel.getData("currentPage"),
+      size: tokenFilterModel.getData("pageSize"),
+      search: tokenFilterModel.getFilterValue("search"),
+    }
+  }
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams)
 };
 
 export default tokenActions;

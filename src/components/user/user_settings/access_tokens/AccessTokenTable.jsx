@@ -14,9 +14,9 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {useHistory} from "react-router-dom";
 import ExpireTokenModal from "components/user/user_settings/access_tokens/ExpireTokenModal";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faKey, faSitemap} from "@fortawesome/pro-light-svg-icons";
+import {faKey} from "@fortawesome/pro-light-svg-icons";
 
-function AccessTokenTable({accessTokenData, loadData, isMounted, isLoading, cancelTokenSource}) {
+function AccessTokenTable({accessTokenData, loadData, isMounted, isLoading, cancelTokenSource, setFilterModel, filterModel}) {
   let fields = accessTokenMetadata.fields;
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
@@ -73,6 +73,9 @@ function AccessTokenTable({accessTokenData, loadData, isMounted, isLoading, canc
         isLoading={isLoading}
         data={accessTokenData}
         noDataMessage={noDataMessage}
+        paginationDto={filterModel}
+        loadData={loadData}
+        setPaginationDto={setFilterModel}
         columns={columns}
       />
     );
@@ -86,6 +89,9 @@ function AccessTokenTable({accessTokenData, loadData, isMounted, isLoading, canc
         isLoading={isLoading}
         body={getAccessTokensTable()}
         titleIcon={faKey}
+        filterDto={filterModel}
+        setFilterDto={setFilterModel}
+        supportSearch={true}
         title={"Access Tokens"}
       />
       <ExpireTokenModal token={selectedToken} showModal={showExpireModal} setShowModal={setShowExpireModal} expireToken={expireToken} />
@@ -94,8 +100,10 @@ function AccessTokenTable({accessTokenData, loadData, isMounted, isLoading, canc
 }
 
 AccessTokenTable.propTypes = {
-  data: PropTypes.array,
+  accessTokenData: PropTypes.array,
   isLoading: PropTypes.bool,
+  filterModel: PropTypes.object,
+  setFilterModel: PropTypes.func,
   loadData: PropTypes.func,
   isMounted: PropTypes.object,
   cancelTokenSource: PropTypes.object,

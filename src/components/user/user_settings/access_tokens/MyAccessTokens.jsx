@@ -11,12 +11,14 @@ import CustomTab from "components/common/tabs/CustomTab";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 import AccessTokenLogPanel from "components/user/user_settings/access_tokens/details/logs/AccessTokenLogPanel";
-import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
+import Model from "core/data_model/model";
+import accessTokenFilterMetadata from "components/user/user_settings/access_tokens/access-token-filter-metadata";
 
 function MyAccessTokens() {
   const toastContext = useContext(DialogToastContext);
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
+  const [accessTokenFilterModel, setAccessTokenFilterModel] = useState(new Model({...accessTokenFilterMetadata.newObjectFields}, accessTokenFilterMetadata, false));
   const [isLoading, setIsLoading] = useState(true);
   const [accessTokens, setAccessTokens] = useState([]);
   const isMounted = useRef(false);
@@ -49,10 +51,10 @@ function MyAccessTokens() {
     }
   }, []);
 
-  const loadData = async (cancelSource) => {
+  const loadData = async (cancelSource = cancelTokenSource, filterModel = accessTokenFilterModel) => {
     try {
       setIsLoading(true);
-      await getRoles(cancelSource);
+      await getRoles(cancelSource, filterModel);
     }
     finally {
       if (isMounted?.current === true) {
@@ -61,25 +63,29 @@ function MyAccessTokens() {
     }
   };
 
-  const getRoles = async (cancelSource) => {
+  const getRoles = async (cancelSource = cancelTokenSource, filterModel = accessTokenFilterModel) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
       if (userRoleAccess?.OpseraAdministrator) {
-        await getAccessTokens(cancelSource);
+        await getAccessTokens(cancelSource, filterModel);
       }
     }
   };
 
-  const getAccessTokens = async (cancelSource) => {
+  const getAccessTokens = async (cancelSource = cancelTokenSource, filterModel = accessTokenFilterModel) => {
     try {
-      const accessTokenResponse = await tokenActions.getTokens(getAccessToken, cancelSource);
+      const accessTokenResponse = await tokenActions.getTokens(getAccessToken, cancelSource, filterModel);
       const tokens = accessTokenResponse?.data?.data;
 
       if (isMounted?.current === true && tokens) {
         setAccessTokens(tokens);
+        let newFilterModel = filterModel;
+        newFilterModel.setData("totalCount", accessTokenResponse?.data?.count);
+        newFilterModel.setData("activeFilters", newFilterModel.getActiveFilters());
+        setAccessTokenFilterModel({...newFilterModel});
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -104,7 +110,15 @@ function MyAccessTokens() {
         return (
           <>
             <AccessTokenEditorPanel cancelTokenSource={cancelTokenSource} />
-            <AccessTokenTable loadData={loadData} isLoading={isLoading} accessTokenData={accessTokens} isMounted={isMounted} cancelTokenSource={cancelTokenSource} />
+            <AccessTokenTable
+              loadData={loadData}
+              isLoading={isLoading}
+              accessTokenData={accessTokens}
+              isMounted={isMounted}
+              cancelTokenSource={cancelTokenSource}
+              filterModel={accessTokenFilterModel}
+              setFilterModel={setAccessTokenFilterModel}
+            />
           </>
         );
       case "logs":

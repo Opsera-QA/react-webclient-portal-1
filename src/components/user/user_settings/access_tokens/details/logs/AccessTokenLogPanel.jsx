@@ -5,6 +5,9 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import tokenActions from "components/user/user_settings/access_tokens/token-actions";
 import AccessTokenLogTable from "components/user/user_settings/access_tokens/details/logs/AccessTokenLogTable";
+import Model from "core/data_model/model";
+import accessTokenLogFilterMetadata
+  from "components/user/user_settings/access_tokens/details/logs/access-token-log-filter-metadata";
 
 function AccessTokenLogPanel({ accessToken }) {
   const [activityLogs, setActivityLogs] = useState([]);
@@ -13,6 +16,7 @@ function AccessTokenLogPanel({ accessToken }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
+  const [accessTokenLogFilterModel, setAccessTokenLogFilterModel] = useState(new Model({...accessTokenLogFilterMetadata.newObjectFields}, accessTokenLogFilterMetadata, false));
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -23,7 +27,7 @@ function AccessTokenLogPanel({ accessToken }) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
+    loadData(accessTokenLogFilterModel, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -35,10 +39,10 @@ function AccessTokenLogPanel({ accessToken }) {
     }
   }, []);
 
-  const loadData = async (filterDto = null, cancelSource = cancelTokenSource) => {
+  const loadData = async (filterModel = accessTokenLogFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles(filterDto, cancelSource);
+      await getRoles(filterModel, cancelSource);
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -53,28 +57,36 @@ function AccessTokenLogPanel({ accessToken }) {
     }
   };
 
-  const getRoles = async (filterDto = null, cancelSource = cancelTokenSource) => {
+  const getRoles = async (filterModel = accessTokenLogFilterModel, cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
     if (isMounted?.current === true && userRoleAccess) {
-      await getActivityLogs(filterDto, cancelSource);
+      await getActivityLogs(filterModel, cancelSource);
     }
   };
 
-  const getActivityLogs = async (filterDto = null, cancelSource = cancelTokenSource) => {
-    const response = await tokenActions.getTokenActivity(getAccessToken, cancelSource, filterDto, accessToken?.getData("_id"));
+  const getActivityLogs = async (filterModel = accessTokenLogFilterModel, cancelSource = cancelTokenSource) => {
+    const response = await tokenActions.getTokenActivity(getAccessToken, cancelSource, filterModel, accessToken?.getData("_id"));
     const activityLogData = response?.data?.data;
 
     if (isMounted?.current === true && activityLogData) {
       setActivityLogs(activityLogData);
-      // let newFilterDto = filterDto;
-      // newFilterDto.setData("totalCount", response?.data?.count);
-      // newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-      // setTagFilterDto({...newFilterDto});
+      let newFilterModel = filterModel;
+      newFilterModel.setData("totalCount", response?.data?.count);
+      newFilterModel.setData("activeFilters", newFilterModel.getActiveFilters());
+      setAccessTokenLogFilterModel({...newFilterModel});
     }
   };
 
-  return (<AccessTokenLogTable loadData={loadData} isLoading={isLoading} activityLogs={activityLogs}/>);
+  return (
+    <AccessTokenLogTable
+      loadData={loadData}
+      isLoading={isLoading}
+      activityLogs={activityLogs}
+      filterModel={accessTokenLogFilterModel}
+      setFilterModel={setAccessTokenLogFilterModel}
+    />
+  );
 }
 
 AccessTokenLogPanel.propTypes = {
