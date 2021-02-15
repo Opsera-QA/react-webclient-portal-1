@@ -40,11 +40,7 @@ function AccessTokenEditorPanel({ cancelTokenSource }) {
   return (
     <div>
       <div>
-        <div><strong>Personal Access Tokens</strong></div>
-        <div>You can generate multiple personal access tokens with unique expiration dates in order to interact with the
-          Opsera API.
-        </div>
-        <div className="object-properties-input my-3">
+        <div className="object-properties-input mb-3">
           <div className="content-container-border">
             <div className="my-auto property-header d-flex justify-content-between">
               <h6>

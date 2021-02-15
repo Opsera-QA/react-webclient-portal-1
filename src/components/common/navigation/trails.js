@@ -106,7 +106,7 @@ const breadcrumbs = {
   //General
   userProfile: {name: "userProfile", path: paths.userProfile, label: "My User Profile", icon: faIdCard},
   myUserRecord: {name: "myUserRecord", path: paths.userProfile, label: "My User Record", icon: faUser},
-  myAccessTokens: {name: "myAccessTokens", path: paths.userProfile, label: "Access Tokens", icon: faKey},
+  myAccessTokens: {name: "myAccessTokens", path: paths.userProfile, label: "Personal Access Tokens", icon: faKey},
   accessTokenDetailView: {name: "accessTokenDetailView", path: paths.userProfile, label: "Access Token Details", icon: faKey},
   home: {name: "home", path: paths.home, label: "Welcome back", icon: faHome},
 

@@ -82,6 +82,21 @@ function UserSettings() {
     }
   }
 
+  const getDescription = () => {
+    switch (activeTab) {
+      case "accessTokens":
+        return (
+          `You can generate multiple personal access tokens with unique expiration dates in order to interact with the
+          Opsera API.`
+        );
+      default:
+        return (
+          `Review and manage your user profile information as well as platform settings from this page. 
+          Please note, profile details are stored in your identify provider so some changes may not be possible from this portal at this time.`
+        );
+    }
+  }
+
   const getCurrentView = () => {
     switch (activeTab) {
       case "profile":
@@ -110,11 +125,7 @@ function UserSettings() {
       navigationTabContainer={getNavigationTabContainer()}
       breadcrumbDestination={getBreadcrumbDestination()}
       isLoading={!accessRoleData || isLdapUser == null}
-      pageDescription={`
-          Review and manage your user profile information as well as platform settings from this page. Please note,
-          profile details are
-          stored in your identify provider so some changes may not be possible from this portal at this time.
-      `}>
+      pageDescription={getDescription()}>
       {getCurrentView()}
     </ScreenContainer>
   );
