@@ -4,9 +4,11 @@ import { Multiselect } from 'react-widgets'
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import InputLabel from "components/common/inputs/info_text/InputLabel";
+import InputContainer from "components/common/inputs/InputContainer";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
-function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, disabled, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, showClearValueButton, clearDataFunction}) {
+function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, disabled, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, showClearValueButton, clearDataFunction, className}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
 
@@ -69,32 +71,13 @@ function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, d
     return parsedValues;
   };
 
-  const getInfoText = () => {
-    if (errorMessage != null && errorMessage !== "") {
-      return (
-        <div className="invalid-feedback">
-          <div>{errorMessage}</div>
-        </div>
-      );
-    }
-
-    return (
-      <small className="text-muted form-text">
-        <div>{field.formText}</div>
-      </small>
-    )
-  }
-
   if (field == null) {
     return <></>
   }
 
   return (
-    <div className="custom-multiselect-input m-2">
-      <div className="d-flex justify-content-between w-100">
-        <label><span>{field.label}{field.isRequired ? <span className="danger-red">*</span> : null} </span></label>
-        {getClearDataIcon()}
-      </div>
+    <InputContainer className={className ? className : "custom-multiselect-input"}>
+      <InputLabel field={field} inputPopover={getClearDataIcon()} />
       <Multiselect
         data={selectOptions}
         valueField={valueField}
@@ -107,8 +90,8 @@ function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, d
         disabled={disabled}
         onChange={newValue => setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)}
       />
-      {getInfoText()}
-    </div>
+      <InfoText errorMessage={errorMessage} field={field} />
+    </InputContainer>
   );
 }
 
@@ -130,6 +113,7 @@ MultiSelectInputBase.propTypes = {
     PropTypes.bool,
     PropTypes.array
   ]),
+  className: PropTypes.string,
 };
 
 MultiSelectInputBase.defaultProps = {

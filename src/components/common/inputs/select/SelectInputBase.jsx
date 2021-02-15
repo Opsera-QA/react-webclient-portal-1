@@ -2,8 +2,10 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import DropdownList from "react-widgets/lib/DropdownList";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTag, faTimes} from "@fortawesome/pro-light-svg-icons";
+import {faTimes} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import InputLabel from "components/common/inputs/info_text/InputLabel";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, disabled, clearDataFunction, showClearValueButton}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -46,10 +48,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
 
   return (
     <div className="custom-select-input m-2">
-      <div className="d-flex justify-content-between w-100">
-        <label><span>{field.label}{field.isRequired ? <span className="danger-red">*</span> : null} </span></label>
-        {getClearDataIcon()}
-      </div>
+      <InputLabel field={field} inputPopover={getClearDataIcon()} />
       <DropdownList
         data={selectOptions}
         valueField={valueField}
@@ -62,9 +61,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
         onChange={(data) => updateValue(data)}
         disabled={disabled}
       />
-      <small className="form-text text-muted">
-        <div>{field.formText}</div>
-      </small>
+      <InfoText field={field} />
     </div>
   );
 }
