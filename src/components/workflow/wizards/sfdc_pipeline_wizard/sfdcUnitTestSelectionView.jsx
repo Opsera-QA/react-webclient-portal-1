@@ -23,6 +23,7 @@ import { RenderWorkflowItem } from "components/workflow/approvalModal";
 import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
 import Model from "../../../../core/data_model/model";
 import filterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/filter-metadata";
+import { CSVtoArray, commonItems, differentItems } from "components/common/helpers/array-helpers";
 
 const SfdcUnitTestSelectionView = ({ 
   pipelineId, 
@@ -36,18 +37,21 @@ const SfdcUnitTestSelectionView = ({
   }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [save, setSave] = useState(false);
-  const [selectedStep, setSelectedStep] = useState([]);
+  const [selectedStep, setSelectedStep] = useState({});
   const [unitTestRecordId, setUnitTestRecordId] = useState("");
   const toastContext = useContext(DialogToastContext);
   const [loading, setLoading] = useState(false);
   const [unitTestListLoading, setUnitTestListLoading] = useState(false);
   const [unitTestClassesList, setUnitTestClassesList] = useState([]);
   const [selectedUnitTestClassesList, setSelectedUnitTestClassesList] = useState([]);
+  const [unusedTestClassesList, setUnusedTestClassesList] = useState([]);
+  const [inputFLag, setInputFlag] = useState(false);
+  const [enteredUnitTestClassesList, setEnteredUnitTestClassesList] = useState("");
   const [toolFilterDto, setToolFilterDto] = useState(new Model({...filterMetadata.newObjectFields}, filterMetadata, false));
  
   useEffect(() => {
     if(Object.keys(selectedStep).length > 0){
-      setSelectedUnitTestClassesList([])
+      setSelectedUnitTestClassesList({})
       getUnitTestList();
     }
   }, [selectedStep]);
@@ -130,8 +134,25 @@ const SfdcUnitTestSelectionView = ({
 
   const saveSelectedClasses = async() => {
     setSave(true);
+    if(!selectedStep || !selectedStep._id) {
+      toastContext.showLoadingErrorDialog("please select a unit test step");
+    }
     // let selectedList = selectedUnitTestClassesList.map(obj => obj.value)
     try {
+        // convert csv to array and compare with our list
+        let inputItems = CSVtoArray(enteredUnitTestClassesList);
+        if(inputItems === null){
+          toastContext.showLoadingErrorDialog("Please enter a valid input");
+          return;
+        }
+        let inputCommonItems = commonItems(inputItems,unitTestClassesList);
+        let diffItems = differentItems(inputItems,unitTestClassesList);
+
+        console.log(inputCommonItems.length);
+        console.log(diffItems);
+        if(diffItems && diffItems.length > 0 )
+        setUnusedTestClassesList(diffItems);
+  
       const saveResponse = await sfdcPipelineActions.setListToPipelineStorage(
         { 
           "recordId": unitTestRecordId, 
@@ -139,7 +160,7 @@ const SfdcUnitTestSelectionView = ({
           "pipelineId": pipelineId,  
           "stepId": selectedStep._id, 
           "dataType": "sfdc-unitTesting", 
-          "data": selectedUnitTestClassesList
+          "data": inputFLag ? inputCommonItems : selectedUnitTestClassesList
         }, getAccessToken);
       // TODO: add a success toast here
       toastContext.showUpdateSuccessResultDialog("Test Classes");
@@ -183,39 +204,83 @@ const SfdcUnitTestSelectionView = ({
           </div>
 
           {/* unit test dropdown selection goes here */}
-          <Row>
-            <Col sm={10}>
-              <div className="custom-multiselect-input m-2">
-                <Multiselect
-                  data={unitTestClassesList}
-                  // valueField="value"
-                  // textField="label"
-                  busy={unitTestListLoading}
-                  filter="contains"
-                  value={selectedUnitTestClassesList}
-                  placeholder="Select Test Classes"
-                  onChange={newValue => handleMultiSelect(newValue)}
+          {selectedStep && Object.keys(selectedStep).length > 0 && 
+            <Row>
+              <Col sm={10}>
+                <div className="custom-multiselect-input m-2">
+                  <Multiselect
+                    data={unitTestClassesList}
+                    // valueField="value"
+                    // textField="label"
+                    busy={unitTestListLoading}
+                    filter="contains"
+                    value={selectedUnitTestClassesList}
+                    placeholder="Select Test Classes"
+                    onChange={newValue => handleMultiSelect(newValue)}
+                  />
+                </div>
+                <Form.Check
+                  className="ml-2"
+                  type="switch"
+                  id="inputFLag"
+                  checked={inputFLag}
+                  label="Enter Test classes?"
+                  onChange={(e) => {
+                    setInputFlag(e.target.checked);
+                  }}
                 />
-              </div>
-            </Col>
-            <Col sm={2}>
-              <div className="m-2">
-                <Button
-                  variant="success"
-                  size="sm"
-                  onClick={() => saveSelectedClasses()}
-                  disabled={save || unitTestListLoading}
-                >
-                  {save ? (
-                    <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
-                  ) : (
-                    <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1" />
-                  )}
-                  Save
-                </Button>
-              </div>
-            </Col>
-          </Row>
+                {inputFLag && 
+                <div className="form-group m-2">
+                  {/* <label className="mr-2 text-muted"><span>Enter Unit test classes:</span></label> */}
+                  <textarea
+                    disabled={unitTestListLoading}
+                    value={enteredUnitTestClassesList}
+                    onChange={event => setEnteredUnitTestClassesList(event.target.value)}
+                    className="form-control"
+                    rows={5}
+                  />
+                  
+                  <small className="text-muted form-text">
+                    <div>Accepts comma separated values, please save the changes before going to next view</div>
+                  </small>
+                        {typeof unusedTestClassesList === "object" && unusedTestClassesList.length > 0 &&
+                          <>
+                            <div className="text-muted">Note: These items are skipped as they don't match the Unit test list.</div>
+                            <div className="invalid-feedback" style={{fontSize: "100%"}}>
+                              <div className="scroller">
+                                <div className="d-flex flex-wrap">
+                                    {unusedTestClassesList.map((item, idx) => (
+                                      <div key={idx} className="p-2 w-40">
+                                        {item}
+                                      </div>
+                                    ))}
+                                </div>
+                              </div>
+                            </div>
+                          </>
+                        }
+                  </div>
+                  }
+              </Col>
+              <Col sm={2}>
+                <div className="m-2">
+                  <Button
+                    variant="success"
+                    size="sm"
+                    onClick={() => saveSelectedClasses()}
+                    disabled={save || unitTestListLoading}
+                  >
+                    {save ? (
+                      <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
+                    ) : (
+                      <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1" />
+                    )}
+                    Save Test Classes
+                  </Button>
+                </div>
+              </Col>
+            </Row>
+          }
           
           </div>
           <div className="flex-container-bottom pr-2 mt-4 mb-2 text-right">
