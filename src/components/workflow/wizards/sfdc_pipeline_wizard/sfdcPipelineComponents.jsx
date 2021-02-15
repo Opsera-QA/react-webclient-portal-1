@@ -22,10 +22,13 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import sfdcPipelineActions from "./sfdc-pipeline-actions";
 import {isEqual} from "components/common/helpers/array-helpers"
+import DateTimeRangeInputBase from "components/common/inputs/date/DateTimeRangeInputBase";
 
 const INITIAL_COMPONENT_TYPES_FORM = {
   customerId: "", //ssoUsersID assgined at the Node layer
-  lastCommitTimeStamp: "", //asOfDate value as string
+  // lastCommitTimeStamp: "", //asOfDate value as string
+  lastCommitTimeFromStamp: "", //fromDate value as string
+  lastCommitTimeToStamp: "", //toDate value as string
   pipelineId: "",
   stepId: "", //assume for now it's the first
   nameSpacePrefix: "", // prefix
@@ -52,7 +55,15 @@ const SfdcPipelineComponents = ({
   asOfDate,
   setAsOfDate,
   selectedComp,
-  setSelectedComp
+  setSelectedComp,
+  selectedFromDate, 
+  setSelectedFromDate,
+  selectedToDate, 
+  setSelectedToDate,
+  fromDate, 
+  setFromDate,
+  toDate, 
+  setToDate
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
@@ -60,6 +71,7 @@ const SfdcPipelineComponents = ({
   const [configurationError, setConfigurationError] = useState(false);
   const [save, setSave] = useState(false);
   const [warning, setWarning] = useState(false);
+  const [dateRangeDto, setDateRangeDto] = useState(undefined);
   
   const [componentTypes, setComponentTypes] = useState([]);
   // const [selectedComponentTypes, setSelectedComponentTypes] = useState([]);
@@ -109,12 +121,63 @@ const SfdcPipelineComponents = ({
     />
   );
 
+  const dateFrom = (
+    <DateTimePicker
+      time={true}
+      min={new Date().setFullYear(new Date().getFullYear() - 1)}
+      max={selectedToDate}
+      defaultValue={selectedFromDate}
+      onChange={(value) => handleFromDateChange({ value })}
+      initialValue={new Date(new Date().setHours(0,0,0,0))}
+    />
+  );
+
+  const dateTo = (
+    <DateTimePicker
+      time={true}
+      min={selectedFromDate}
+      max={new Date()}
+      defaultValue={selectedToDate}
+      onChange={(value) => handleToDateChange({ value })}
+      initialValue={new Date(new Date().setHours(0,0,0,0))}
+    />
+  );
+
+
   const handleAsOfDateChange = (value) => {
     checkDateLimit(value.value);
     const date = Moment(value.value).toISOString();
     setSelectedDate(value.value);
     setAsOfDate(date);
   };
+
+  const handleFromDateChange = (value) => {
+    checkFromToDateLimit(value.value, selectedToDate)
+    const date = Moment(value.value).toISOString();
+    setSelectedFromDate(value.value);
+    setFromDate(date);
+  }
+
+  const handleToDateChange = (value) => {
+    checkFromToDateLimit(selectedFromDate, value.value)
+    const date = Moment(value.value).toISOString();
+    setSelectedToDate(value.value);
+    setToDate(date);
+  }
+
+  const checkFromToDateLimit = (from, to) => {
+    const fd = new Date(from)
+    const td = new Date(to)
+
+    const diff = td.getMonth() < fd.getMonth() ? td.getMonth() - fd.getMonth() + 12 : td.getMonth() - fd.getMonth();
+
+    if(diff >= 6){
+      setWarning(true);
+      return;
+    }
+    setWarning(false);
+    return;
+  }
 
   function checkDateLimit(date) {
     var selectedDate = new Date(date);
@@ -182,7 +245,9 @@ const SfdcPipelineComponents = ({
     const postBody = componentTypeForm;
     postBody.pipelineId = pipelineId;
     postBody.stepId = stepId;
-    postBody.lastCommitTimeStamp = isProfiles ? "1900-01-01T00:00:00.000Z" : asOfDate;
+    // postBody.lastCommitTimeStamp = isProfiles ? "1900-01-01T00:00:00.000Z" : asOfDate;
+    postBody.lastCommitTimeFromStamp = isProfiles ? "1900-01-01T00:00:00.000Z" : fromDate;
+    postBody.lastCommitTimeToStamp = isProfiles ? "1900-01-01T00:00:00.000Z" : toDate;
     postBody.componentTypes = isProfiles ? ["Profile"] : selectedComponentTypes;
     // postBody.componentTypes = isProfiles ? selectedComp : selectedComponentTypes;
     postBody.objectType = filtered[0];
@@ -305,8 +370,21 @@ const SfdcPipelineComponents = ({
                   className="fa-pull-right pointer pr-1"
                   onClick={() => document.body.click()}
                 /></OverlayTrigger>
-                    <div className="text-muted pl-1 pb-1">Date Filter:</div>
-                    {dateAsOf}
+                    <div className="text-muted pl-1 pb-1">From Date:</div>
+                    {dateFrom}
+                    <OverlayTrigger
+                  placement="right"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={renderTooltip("All files committed before this date will be included")}
+                  ><FontAwesomeIcon
+                  icon={faInfoCircle}
+                  className="fa-pull-right pointer pr-1 mt-2"
+                  onClick={() => document.body.click()}
+                /></OverlayTrigger>
+                    <div className="text-muted pl-1 pb-1 mt-2">To Date:</div>
+                    {dateTo}
+                    {/* <div className="text-muted pl-1 pb-1">Filter Date:</div>
+                    {dateAsOf} */}
                   </div>
                   {/* } */}
                   
@@ -522,6 +600,14 @@ SfdcPipelineComponents.propTypes = {
   setAsOfDate: PropTypes.func,
   selectedComp: PropTypes.object,
   setSelectedComp: PropTypes.func,
+  selectedFromDate: PropTypes.string, 
+  setSelectedFromDate: PropTypes.func,
+  selectedToDate: PropTypes.string,
+  setSelectedToDate: PropTypes.func,
+  fromDate: PropTypes.string,
+  setFromDate: PropTypes.func,
+  toDate: PropTypes.string,
+  setToDate: PropTypes.func
 };
 
 AccountDropDown.propTypes = {
