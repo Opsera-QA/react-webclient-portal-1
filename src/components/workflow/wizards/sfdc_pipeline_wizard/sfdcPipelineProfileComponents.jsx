@@ -40,6 +40,7 @@ import FilterContainer from "components/common/table/FilterContainer";
 import SfdcComponentFilter from "components/common/filters/sfdccomponent/SfdcComponentFilter";
 import sfdcComponentFilterMetadata from './sfdc-component-filter-metadata';
 import BooleanFilter from "components/common/filters/input/BooleanFilter";
+import ModifiedFilesTabView from "./tab_views/ModifiedFilesTabView";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -493,49 +494,15 @@ const SfdcPipelineProfileComponents = ({
     }))
   }
 
-  const initialState = {
-    pageIndex: 0
-  };
-  
-  const fields = [
-    {
-      label: "Component", 
-      id: "componentType"
-    },
-    {
-      label: "File", 
-      id: "committedFile"
-    },
-    {
-      label: "Commit Time", 
-      id: "committedTime"
-    }
-  ]
-
-  const noDataMessage = "Modified Files Data not available for selected Criteria";
-
-  const columns = useMemo(
-    () => [
-      getTableTextColumn(fields.find(field => { return field.id === "componentType"})),
-      getTableTextColumn(fields.find(field => { return field.id === "committedFile"})),
-      getTableDateColumn(fields.find(field => { return field.id === "committedTime"})),
-      getCheckBoxColumn(handleComponentCheckNew)      
-    ],
-    [],
-  );
-
-  const getModifiedFilesTable = () => {
-    return (      
-      <CustomTable
-        className={"table-no-border"}
-        columns={columns}
-        data={modifiedFilesTable}              
-        isLoading={loading}
+  const getModifiedFilesView = () => {
+    return (    
+      <ModifiedFilesTabView
+        data={modifiedFilesTable}
+        loading={loading}
         loadData={loadData}
-        noDataMessage={noDataMessage}
-        initialState={initialState}
         paginationDto={filterDto}
-        setPaginationDto={setFilterDto}        
+        setPaginationDto={setFilterDto}
+        handleComponentCheck={handleComponentCheckNew}
       />
     );
   };
@@ -572,7 +539,7 @@ const SfdcPipelineProfileComponents = ({
               isLoading={loading}
               title={"SFDC Files"}
               titleIcon={faSalesforce}
-              body={getModifiedFilesTable()}              
+              body={getModifiedFilesView()}              
               supportSearch={true}
               inlineFilters={getSfdcInlineFilters()}
             />
