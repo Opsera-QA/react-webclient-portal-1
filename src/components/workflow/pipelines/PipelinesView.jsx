@@ -135,6 +135,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
           paginationModel={pipelineFilterDto}
           setPaginationModel={setPipelineFilterDto}
           data={data?.response}
+          loadData={loadData}
         />
     );
   };
