@@ -68,7 +68,7 @@ function AccountRegistration() {
   };
 
   const loadRegistrationResponse = () => {
-    history.push("/registration");
+    history.push("/login");
   };
 
   // TODO: This check should be moved to register button when updating free trial/standard sign up forms next

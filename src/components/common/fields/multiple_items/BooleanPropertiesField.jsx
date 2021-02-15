@@ -5,7 +5,7 @@ import FieldLabel from "components/common/fields/FieldLabel";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBracketsCurly} from "@fortawesome/pro-light-svg-icons";
 
-function BooleanPropertiesField({dataObject, fieldName}) {
+function BooleanPropertiesField({dataObject, fieldName, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const getItems = () => {
@@ -29,7 +29,7 @@ function BooleanPropertiesField({dataObject, fieldName}) {
   };
 
   return (
-    <FieldContainer>
+    <FieldContainer className={className}>
       <FieldLabel fieldName={fieldName} field={field}/>
       <span className="item-field">
         {getItems()}
@@ -41,6 +41,7 @@ function BooleanPropertiesField({dataObject, fieldName}) {
 BooleanPropertiesField.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
+  className: PropTypes.string
 };
 
 export default BooleanPropertiesField;

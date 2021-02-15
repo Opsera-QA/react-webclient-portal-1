@@ -14,7 +14,7 @@ function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessR
 
   const authorizedAction = (action, dataObject) => {
     const owner = dataObject.owner;
-    const objectRoles = dataObject.roles;
+    const objectRoles = dataObject.ro;
     return workflowAuthorizedActions.toolRegistryItems(customerAccessRules, action, owner, objectRoles);
   };
 

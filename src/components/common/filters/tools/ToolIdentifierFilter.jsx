@@ -1,36 +1,61 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import toolsActions from "components/inventory/tools/tools-actions";
 import {createFilterOptions} from "components/common/filters/filterHelpers";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
+import axios from "axios";
+import toolManagementActions from "components/admin/tools/tool-management-actions";
 
 function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunction, className }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [toolIdentifierFilterOptions, setToolIdentifierFilterOptions] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setLoading(true);
-      await getToolList();
+      await getToolList(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
     finally {
-      setLoading(false);
+      if (isMounted?.current === true) {
+        setLoading(false);
+      }
     }
   }
 
-  const getToolList = async () => {
-    const toolResponse = await toolsActions.getTools(getAccessToken);
+  const getToolList = async (cancelSource = cancelTokenSource) => {
+    const toolResponse = await toolManagementActions.getToolIdentifiersV2(getAccessToken, cancelSource, "active", true);
 
     if (toolResponse?.data) {
       setToolIdentifierFilterOptions(createFilterOptions(toolResponse?.data, "Tool", "name", "identifier"));

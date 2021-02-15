@@ -10,15 +10,15 @@ import {
 import notificationActivityLogMetadata
   from "components/notifications/notification_details/activity_logs/notification-activity-log-metadata";
 import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
-import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import notificationsActions from "components/notifications/notifications-actions";
 import Model from "core/data_model/model";
 import notificationActivityLogFilterMetadata
   from "components/notifications/notification_details/activity_logs/notifications-activity-log-filter-metadata";
-import FilterBar from "components/common/filters/FilterBar";
 import StatusFilter from "components/common/filters/status/StatusFilter";
 import TagFilter from "components/common/filters/tags/TagFilter";
 import NotificationTypeFilter from "components/common/filters/notifications/NotificationTypeFilter";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faTable} from "@fortawesome/pro-light-svg-icons";
 
 function NotificationActivityLogsTable({ notificationData, allLogs }) {
   let fields = notificationActivityLogMetadata.fields;
@@ -82,28 +82,20 @@ function NotificationActivityLogsTable({ notificationData, allLogs }) {
     }
   };
 
-  const getFilterBar = () => {
-    if (notificationActivityFilterDto == null) {
-      return null;
-    }
-
-    return(
-      <FilterBar
-        loadData={loadData}
-        filterDto={notificationActivityFilterDto}
-        setFilterDto={setNotificationActivityFilterDto}
-        supportSearch={true}
-      >
-        <StatusFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} />
-        <NotificationTypeFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} />
+  const getDropdownFilters = () => {
+    return (
+      <>
+        <StatusFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} className={"mb-2"} />
+        <NotificationTypeFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} className={"mb-2"}/>
         <TagFilter filterDto={notificationActivityFilterDto} setFilterDto={setNotificationActivityFilterDto} />
-      </FilterBar>
+      </>
     );
   };
 
-  return (
-    <div className="px-2 pb-2">
+  const getNotificationActivityLogsTable = () => {
+    return (
       <CustomTable
+        className={"no-table-border"}
         columns={columns}
         data={logData}
         initialState={initialState}
@@ -111,8 +103,22 @@ function NotificationActivityLogsTable({ notificationData, allLogs }) {
         paginationDto={notificationActivityFilterDto}
         setPaginationDto={setNotificationActivityFilterDto}
         loadData={loadData}
-        tableFilterBar={getFilterBar()}
-        tableTitle={"Policy Activity Logs"}
+      />
+    );
+  };
+
+  return (
+    <div className="px-2 pb-2">
+      <FilterContainer
+        loadData={loadData}
+        isLoading={isLoading}
+        body={getNotificationActivityLogsTable()}
+        filterDto={notificationActivityFilterDto}
+        setFilterDto={setNotificationActivityFilterDto}
+        supportSearch={true}
+        dropdownFilters={getDropdownFilters()}
+        titleIcon={faTable}
+        title={"Policy Activity Logs"}
       />
       <ModalActivityLogsDialog size={"lg"} header={"Policy Activity Log"} jsonData={modalData} show={showModal} setParentVisibility={setShowModal} />
     </div>

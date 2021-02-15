@@ -10,6 +10,8 @@ import {
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {ldapGroupMetaData} from "components/settings/ldap_groups/ldap-groups-metadata";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faUserFriends} from "@fortawesome/pro-light-svg-icons";
 
 function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, loadData, currentUserEmail, useMembers, existingGroupNames }) {
   let fields = ldapGroupMetaData.fields;
@@ -43,16 +45,28 @@ function LdapGroupsTable({ groupData, orgDomain, isLoading, authorizedActions, l
     history.push(`/settings/${orgDomain}/groups/details/${rowData.original.name}`);
   };
 
-  return (
-    <div className="px-2 pb-2">
+  const getGroupsTable = () => {
+    return (
       <CustomTable
+        className={"no-table-border"}
         isLoading={isLoading}
         onRowSelect={onRowSelect}
         data={groupData}
         columns={columns}
-        tableTitle={"Groups"}
+      />
+    );
+  };
+
+  return (
+    <div className="px-2 pb-2">
+      <FilterContainer
+        loadData={loadData}
+        addRecordFunction={!useMembers && authorizedActions ? createGroup : undefined}
+        isLoading={isLoading}
+        body={getGroupsTable()}
+        titleIcon={faUserFriends}
+        title={"Groups"}
         type={"Group"}
-        createNewRecord={!useMembers && authorizedActions ? createGroup : undefined}
       />
       <NewLdapGroupModal
         loadData={loadData}

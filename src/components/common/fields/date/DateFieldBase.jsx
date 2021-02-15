@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import FieldLabel from "components/common/fields/FieldLabel";
 import FieldContainer from "components/common/fields/FieldContainer";
 
-function DateFieldBase({fieldName, dataObject, dateFormat}) {
+function DateFieldBase({fieldName, dataObject, dateFormat, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const getDate = () => {
@@ -13,7 +13,7 @@ function DateFieldBase({fieldName, dataObject, dateFormat}) {
   };
 
   return (
-    <FieldContainer>
+    <FieldContainer className={className}>
       <FieldLabel field={field} fieldName={fieldName} /><span>{getDate()}</span>
     </FieldContainer>
   );
@@ -22,7 +22,8 @@ function DateFieldBase({fieldName, dataObject, dateFormat}) {
 DateFieldBase.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
-  dateFormat: PropTypes.string
+  dateFormat: PropTypes.string,
+  className: PropTypes.string
 };
 
 DateFieldBase.defaultProps = {

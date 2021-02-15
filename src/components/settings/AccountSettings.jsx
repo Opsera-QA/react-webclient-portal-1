@@ -1,14 +1,13 @@
-import React, { useContext, useState, useEffect } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
-import LoadingDialog from "../common/status_notifications/loading";
+import React, {useContext, useState, useEffect, useRef} from "react";
 import { Row } from "react-bootstrap";
 import { faUser } from "@fortawesome/pro-light-svg-icons";
-import AccessDeniedDialog from "../common/status_notifications/accessDeniedInfo";
-import accountsActions from "../admin/accounts/accounts-actions";
-import { DialogToastContext } from "../../contexts/DialogToastContext";
-import PageLink from "../common/links/PageLink";
-import BreadcrumbPageLink from "../common/links/BreadcrumbPageLink";
-import ScreenContainer from "../common/panels/general/ScreenContainer";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {AuthContext} from "contexts/AuthContext";
+import accountsActions from "components/admin/accounts/accounts-actions";
+import BreadcrumbPageLink from "components/common/links/BreadcrumbPageLink";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import PageLink from "components/common/links/PageLink";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 function AccountSettings() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -17,11 +16,20 @@ function AccountSettings() {
   const toastContext = useContext(DialogToastContext);
   const [userDetailsLink, setUsersDetailLink] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
 
   useEffect(() => {
-    loadData().catch(error => {
-      throw error;
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
     });
+
+    return () => {
+      isMounted.current = false;
+    }
   }, []);
 
   const loadData = async () => {
@@ -29,33 +37,29 @@ function AccountSettings() {
       setIsLoading(true);
       await getRoles();
     } catch (error) {
-      console.error(error);
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
+      }
     } finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
   const getRoles = async () => {
-    try {
-      const user = await getUserRecord();
-      const userRoleAccess = await setAccessRoles(user);
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
 
-      if (userRoleAccess) {
-        setAccessRoleData(userRoleAccess);
-        const userDetailViewLink = await accountsActions.getUserDetailViewLink(getUserRecord);
-        setUsersDetailLink(userDetailViewLink);
-      }
-    } catch (error) {
-      console.error(error);
-      return Promise.reject(`Error getting access data: ${JSON.stringify(error)}`);
+    if (isMounted?.current === true && userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+      const userDetailViewLink = await accountsActions.getUserDetailViewLink(getUserRecord);
+      setUsersDetailLink(userDetailViewLink);
     }
-
   };
 
   const getRolePageLinks = () => {
-    console.log("accessRoleData", accessRoleData);
-
     if (accessRoleData.Administrator || accessRoleData.OpseraAdministrator) {
       return (
         <>
@@ -64,7 +68,7 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
           <BreadcrumbPageLink breadcrumbDestination={"mapping"}/>
-          {!envIsProd && <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"}/>}
+          <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"} visible={!envIsProd}/>
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
         </>
       );
@@ -78,7 +82,7 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
           <BreadcrumbPageLink breadcrumbDestination={"mapping"}/>
-          {!envIsProd && <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"}/>}
+          <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"} visible={!envIsProd}/>
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
         </>
       );
@@ -93,7 +97,7 @@ function AccountSettings() {
     <ScreenContainer
       breadcrumbDestination={"accountSettings"}
       pageDescription={"Manage account settings from this dashboard."}
-      accessDenied={!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator && !accessRoleData.SassPowerUser && !userDetailsLink}
+      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator && !accessRoleData?.SassPowerUser && !userDetailsLink}
       isLoading={isLoading}
     >
       <Row className="ml-3">

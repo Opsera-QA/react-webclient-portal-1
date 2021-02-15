@@ -11,7 +11,7 @@ import "components/analytics/charts/charts.css";
 import InfoDialog from "components/common/status_notifications/info";
 import ModalLogs from "components/common/modal/modalLogs";
 
-function JiraIssuesCreatedVsResolvedLineChart({ persona, date }) {
+function JiraIssuesCreatedVsResolvedLineChart({ persona, date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -22,21 +22,17 @@ function JiraIssuesCreatedVsResolvedLineChart({ persona, date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
+    const apiUrl = "/analytics/metrics";
     const postBody = {
-      data: [
-        {
-          request: "jiraIssuesCreatedByDate",
-          metric: "stacked",
-        },
-      ],
+      request: "jiraIssuesCreatedAndResolved",
       startDate: date.start,
       endDate: date.end,
+      tags: tags
     };
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].jiraIssuesCreatedByDate : [];
+      let dataObject = res && res.data ? res.data.data[0].jiraIssuesCreatedAndResolved : [];
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -69,7 +65,6 @@ function JiraIssuesCreatedVsResolvedLineChart({ persona, date }) {
   if (error) return <ErrorDialog error={error} />;
   // } else if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
   //   return (<ErrorDialog  error="No Data is available for this chart at this time." />);
-  else console.log(data.data);
   return (
     <>
       <ModalLogs

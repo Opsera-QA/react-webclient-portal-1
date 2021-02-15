@@ -8,16 +8,17 @@ import {
   faSpinner,
   faStop,
   faStopCircle,
-  faTimesCircle
+  faTimesCircle, faTrash
 } from "@fortawesome/pro-light-svg-icons";
 import React from "react";
-import PipelineHelpers from "../../workflow/pipelineHelpers";
-import PipelineStatus from "../../workflow/pipelines/PipelineStatus";
-import DashboardFavoritesIcon from "../../common/icons/DashboardFavoritesIcon";
+import Model from "core/data_model/model";
+import PipelineTypesField from "components/common/form_fields/pipelines/PipelineTypesField";
+import PipelineStatus from "components/workflow/pipelines/PipelineStatus";
+import pipelineHelpers from "components/workflow/pipelineHelpers";
+import DashboardFavoritesIcon from "components/common/icons/DashboardFavoritesIcon";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
-import PipelineTypesField from "../form_fields/pipelines/PipelineTypesField";
-import pipelineMetadata from "../../workflow/pipelines/pipeline_details/pipeline-metadata";
-import Model from "../../../core/data_model/model";
+import {Button} from "react-bootstrap";
+import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 
 const getTableHeader = (field) => {
   return field["label"];
@@ -153,6 +154,17 @@ export const getTableDateColumn = (field) => {
   };
 };
 
+export const getTableDateTimeColumn = (field) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: (props) => {
+      return props.value ? format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a") : "";
+    },
+    class: "no-wrap-inline"
+  };
+};
+
 export const getPipelineActivityStatusColumn = (field) => {
   return {
     Header: getTableHeader(field),
@@ -229,7 +241,7 @@ export const getTablePipelineStatusColumn = (field) => {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     Cell: (workflow) => {
-      let pipelineStatus = PipelineHelpers.getPipelineStatus(workflow.row.original);
+      let pipelineStatus = pipelineHelpers.getPipelineStatus(workflow.row.original);
 
       switch (pipelineStatus) {
       case "failed":
@@ -283,6 +295,27 @@ export const getTableFavoriteColumn = (field, getAccessToken) => {
   };
 };
 
+export const getTableDeleteColumn = (headerText, deleteFunction) => {
+  return {
+    Header: headerText,
+    Cell: (props) => {
+      return <FontAwesomeIcon icon={faTrash} className="pointer danger-red" onClick={() => {deleteFunction(props?.data[props?.row?.index]); }}/>
+    },
+    class: "no-wrap-inline"
+  };
+};
+
+export const getTableButtonColumn = (accessor = "row", headerText, variant, buttonText, buttonFunction) => {
+  return {
+    Header: headerText,
+    accessor: accessor,
+    Cell: (props) => {
+      return <Button variant={variant} onClick={() => {buttonFunction(props?.data[props?.row?.index])}}>{buttonText}</Button>
+    },
+    class: "no-wrap-inline"
+  };
+};
+
 export const getTableBooleanIconColumn = (field) => {
   return {
     Header: getTableHeader(field),
@@ -294,13 +327,12 @@ export const getTableBooleanIconColumn = (field) => {
   };
 };
 
-export const getTableInfoIconColumn = (showInformationFunction) => {
+export const getTableInfoIconColumn = (showInformationFunction, accessor = "row") => {
   return {
     Header: "Info",
     accessor: "row",
     Cell: (props) => {
-      console.log('props ', props)
-      return <FontAwesomeIcon icon={faSearchPlus} className="pointer" onClick={() => {showInformationFunction(props["data"][props.row["index"]]); }}/>;
+      return <FontAwesomeIcon icon={faSearchPlus} className="pointer" onClick={() => {showInformationFunction(props?.data[props?.row?.index]); }}/>;
     },
   };
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import { useParams } from "react-router-dom";
 import {AuthContext} from "contexts/AuthContext";
 import Model from "core/data_model/model";
@@ -9,7 +9,8 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import TagDetailPanel from "components/settings/tags/tags_detail_view/TagDetailPanel";
-import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import axios from "axios";
+import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
 function TagDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -17,42 +18,66 @@ function TagDetailView() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [tagData, setTagData] = useState(undefined);
   const { id } = useParams();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles();
-      await getTag(id);
+      await getRoles(cancelSource);
     }
     catch (error) {
-      if (!error?.error?.message?.includes(404)) {
+      if (isMounted.current === true && !error?.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
         console.error(error);
       }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
-  const getTag = async (tagId) => {
-    const response = await adminTagsActions.get(tagId, getAccessToken);
+  const getTag = async (cancelSource = cancelTokenSource) => {
+    const response = await adminTagsActions.getTag(getAccessToken, cancelSource, id);
 
-    if (response?.data) {
+    if (isMounted.current === true && response?.data) {
       setTagData(new Model(response.data, tagEditorMetadata, false));
     }
   };
 
-  const getRoles = async () => {
+  const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
+    if (isMounted.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
+
+      if (meetsRequirements(ROLE_LEVELS.POWER_USERS_AND_SASS, userRoleAccess) && id) {
+        await getTag(cancelSource);
+      }
     }
   };
 
@@ -71,9 +96,10 @@ function TagDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"tagDetailView"}
-      title={tagData != null ? `Tag Details [${tagData["type"]}]` : undefined}
+      title={`Tag Details ${tagData ? `[${tagData.type}]` : null}`}
       metadata={tagEditorMetadata}
-      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
+      roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+      accessRoleData={accessRoleData}
       dataObject={tagData}
       isLoading={isLoading}
       actionBar={getActionBar()}

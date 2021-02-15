@@ -9,10 +9,11 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
-import FilterBar from "components/common/filters/FilterBar";
 import NewTagModal from "components/settings/tags/NewTagModal";
 import StatusFilter from "components/common/filters/status/StatusFilter";
 import TagTypeFilter from "components/common/filters/tags/TagTypeFilter";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faTags} from "@fortawesome/pro-light-svg-icons";
 
 function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto }) {
   const history = useHistory();
@@ -41,35 +42,44 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto })
     setShowTagModal(true);
   };
 
-  const getFilterBar = () => {
+  const getDropdownFilters = () => {
     return(
-      <FilterBar
-        addRecordFunction={createTag}
-        loadData={loadData}
-        filterDto={tagFilterDto}
-        setFilterDto={setTagFilterDto}
-        filters={["status", "type", "search"]}
-        supportSearch={true}
-      >
-        <StatusFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
+      <>
+        <StatusFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} className={"mb-2"} />
         <TagTypeFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
-      </FilterBar>
+      </>
     );
   };
 
-  return (
-    <div className="px-2 pb-2">
+  const getTagsTable = () => {
+    return (
       <CustomTable
+        className="table-no-border"
         onRowSelect={onRowSelect}
         data={data}
         rowStyling={rowStyling}
         columns={columns}
         isLoading={isLoading}
-        tableTitle={"Tags"}
         loadData={loadData}
-        tableFilterBar={getFilterBar()}
         paginationDto={tagFilterDto}
         setPaginationDto={setTagFilterDto}
+      />
+    );
+  };
+
+  return (
+    <div className="px-2 pb-2">
+      <FilterContainer
+        loadData={loadData}
+        filterDto={tagFilterDto}
+        setFilterDto={setTagFilterDto}
+        addRecordFunction={createTag}
+        supportSearch={true}
+        isLoading={isLoading}
+        body={getTagsTable()}
+        dropdownFilters={getDropdownFilters()}
+        titleIcon={faTags}
+        title={"Tags"}
       />
       <NewTagModal showModal={showTagModal} loadData={loadData} setShowModal={setShowTagModal}/>
     </div>

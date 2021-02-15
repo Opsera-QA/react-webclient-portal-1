@@ -110,6 +110,7 @@ function OpseraBuildDurationBarChart({ persona, date, tags }) {
             legends={config.legends}
             tooltip={({ data, value, color }) => (
               <div>
+                <strong style={{ color }}> Pipeline ID: </strong> {data.pipelineId} <br></br>
                 <strong style={{ color }}> Duration: </strong> {value} minutes <br></br>
               </div>
             )}

@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {getAccessRolePermissionMessage} from "Navbar";
+import {getAccessRolePermissionMessage} from "components/common/helpers/role-helpers";
 
 function AccessRoleField({accessRole}) {
   if (accessRole == null) {

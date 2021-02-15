@@ -12,7 +12,7 @@ import {
 import {useHistory} from "react-router-dom";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function CreateButton({recordDto, createRecord, disable, showSuccessToasts, lenient, setRecordDto, addAnotherOption, handleClose}) {
+function CreateButton({recordDto, createRecord, disable, showSuccessToasts, lenient, setRecordDto, addAnotherOption, handleClose, size, icon}) {
   const [isSaving, setIsSaving] = useState(false);
   const [addAnother, setAddAnother] = useState(false);
   const history = useHistory();
@@ -50,7 +50,7 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
       return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Saving</span>);
     }
 
-    return (<span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-2"/>{`Create ${recordDto.getType()}`}</span>);
+    return (<span><FontAwesomeIcon icon={icon} fixedWidth className="mr-2"/>{`Create ${recordDto.getType()}`}</span>);
   };
 
   const getAddAnotherCheckbox = () => {
@@ -68,7 +68,7 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
     <div className="px-2 d-flex">
       {getAddAnotherCheckbox()}
       {/*TODO: Make sure button is not clickable until form is valid*/}
-      <Button size="sm" variant="primary" disabled={isSaving || disable} onClick={() => persistRecord()}>
+      <Button size={size} variant="primary" disabled={isSaving || disable} onClick={() => persistRecord()}>
         {getLabel()}
       </Button>
     </div>
@@ -83,12 +83,16 @@ CreateButton.propTypes = {
   showSuccessToasts: PropTypes.bool,
   handleClose: PropTypes.func,
   lenient: PropTypes.bool,
-  addAnotherOption: PropTypes.bool
+  addAnotherOption: PropTypes.bool,
+  size: PropTypes.string,
+  icon: PropTypes.object
 };
 
 CreateButton.defaultProps = {
   showSuccessToasts: true,
-  addAnotherOption: true
+  addAnotherOption: true,
+  size: "sm",
+  icon: faSave
 }
 
 export default CreateButton;

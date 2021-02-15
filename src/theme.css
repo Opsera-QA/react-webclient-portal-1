@@ -506,6 +506,7 @@ a.text-primary:hover, a.text-primary:focus {
 
 .custom-table .table-footer {
   background-color: #F3F3F1;
+  min-height: 5px;
 }
 
 .custom-table .top-pagination {
@@ -904,6 +905,10 @@ a.nav-link {
   /*border-radius: .25rem;*/
 }
 
+.content-container-border {
+  border: 1px solid #7368AA;
+}
+
 .content-container-shadow {
   /*-moz-box-shadow: 0px 2px 8px #8F86BB; !* Firefox *!
   -webkit-box-shadow: 0px 2px 8px #8F86BB; !* Safari, Chrome *!
@@ -1176,7 +1181,7 @@ a.nav-link {
 
 /* Card Container Styling */
 .card-container {
-  background-color: #E8E8E8;
+  background-color: #FFF;
 }
 /* End Card Container Styling */
 
@@ -1416,4 +1421,8 @@ a.nav-link {
 
 .text-muted-purple {
   color: #2e1956 !important;
+}
+
+.no-resize {
+  resize: none;
 }

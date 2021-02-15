@@ -4,9 +4,6 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown, faPlus, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import Pagination from "components/common/pagination";
-import {Button} from "react-bootstrap";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import DtoBottomPagination from "../pagination/DtoBottomPagination";
 import DtoTopPagination from "../pagination/DtoTopPagination";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
@@ -216,9 +213,11 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
           </tbody>
           <tfoot>
             <tr>
-              <td colSpan="100%" className="table-footer">
-                {getOldPaginator()}
-                {getNewPaginator()}
+              <td colSpan="100%">
+                <div className="table-footer">
+                  {getOldPaginator()}
+                  {getNewPaginator()}
+                </div>
               </td>
             </tr>
           </tfoot>

@@ -8,7 +8,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import toolsActions from "components/inventory/tools/tools-actions";
 
-function ToolNameField({ dataObject, fieldName }) {
+function ToolNameField({ dataObject, fieldName, className }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
   const toastContext = useContext(DialogToastContext);
   const {getAccessToken} = useContext(AuthContext);
@@ -53,7 +53,7 @@ function ToolNameField({ dataObject, fieldName }) {
   };
 
   return (
-    <FieldContainer>
+    <FieldContainer className={className}>
       <Label field={field}/>
       <span>{getToolName()}</span>
     </FieldContainer>
@@ -62,7 +62,8 @@ function ToolNameField({ dataObject, fieldName }) {
 
 ToolNameField.propTypes = {
   dataObject: PropTypes.object,
-  fieldName: PropTypes.string
+  fieldName: PropTypes.string,
+  className: PropTypes.string
 };
 
 export default ToolNameField;

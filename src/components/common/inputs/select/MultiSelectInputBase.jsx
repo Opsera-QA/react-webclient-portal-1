@@ -4,8 +4,9 @@ import { Multiselect } from 'react-widgets'
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, disabled, selectOptions, valueField, textField, placeholderText, setDataFunction, busy}) {
+function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, disabled, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, showClearValueButton, clearDataFunction}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
 
@@ -32,19 +33,16 @@ function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, d
   };
 
   const clearValue = () => {
-    if (setDataFunction) {
-      setDataFunction(field.id, []);
+    if (!setDataFunction) {
+      validateAndSetData(field.id, []);
     }
-    else {
-      validateAndSetData(field.id, [])
+    else if (clearDataFunction) {
+      clearDataFunction();
     }
   };
 
-  // TODO: We really need to pass in two functions if clearing out data on a complex function,
-  //  one for setting and one for clearing.
-  //  For now, I'm going to disable the clear button if you pass in setDataFunction
   const getClearDataIcon = () => {
-    if (dataObject.getData(field.id) !== "" && !disabled && setDataFunction == null) {
+    if (dataObject.getData(field.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
       return (
         <TooltipWrapper innerText={"Clear this Value"}>
           <span onClick={() => clearValue()} className="my-auto badge badge-danger clear-value-badge pointer">
@@ -126,10 +124,16 @@ MultiSelectInputBase.propTypes = {
   maxNumber: PropTypes.number,
   setDataFunction: PropTypes.func,
   busy: PropTypes.bool,
+  showClearValueButton: PropTypes.bool,
+  clearDataFunction: PropTypes.func,
   disabled: PropTypes.oneOfType([
     PropTypes.bool,
     PropTypes.array
   ]),
 };
+
+MultiSelectInputBase.defaultProps = {
+  showClearValueButton: true
+}
 
 export default MultiSelectInputBase;

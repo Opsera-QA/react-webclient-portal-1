@@ -1,5 +1,6 @@
 import {isAlphaNumeric, isDomain, isOpseraPassword, isWebsite, matchesRegex, validateEmail} from "../../utils/helpers";
 
+// TODO: We need to rework this
 export const validateData = (data) => {
   let errors = [];
 
@@ -87,6 +88,16 @@ export const fieldValidation = (value, data, field) => {
   if (field.maxItems != null && value.length > field.maxItems)
   {
     errorMessages.push(`You have selected ${value.length} values, but the maximum allowed is ${field.maxItems}`);
+  }
+
+  if (field.mustBeAfter != null && value <= data.getData(field.mustBeAfter))
+  {
+    errorMessages.push(`${data.getLabel(field.id)} must be set to a date after ${data.getLabel(field.mustBeAfter)}.`);
+  }
+
+  if (field.mustBeBefore != null && value >= data.getData(field.mustBeBefore))
+  {
+    errorMessages.push(`${data.getLabel(field.id)} must be set to a date before ${data.getLabel(field.mustBeBefore)}.`);
   }
 
   if (errorMessages.length === 0) {

@@ -4,7 +4,7 @@ import {getAssociatedPipelineStatusIcon} from "components/common/table/table-col
 import FieldLabel from "components/common/fields/FieldLabel";
 import FieldContainer from "components/common/fields/FieldContainer";
 
-function PipelineTaskStateField({ fieldName, dataObject }) {
+function PipelineTaskStateField({ fieldName, dataObject, className }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const getPipelineStateField = (pipelineState) => {
@@ -21,7 +21,7 @@ function PipelineTaskStateField({ fieldName, dataObject }) {
   }
 
   return (
-    <FieldContainer>
+    <FieldContainer className={className}>
       <FieldLabel field={field} /><span>{getPipelineStateField(dataObject.getData(fieldName))}</span>
     </FieldContainer>
   );
@@ -30,6 +30,7 @@ function PipelineTaskStateField({ fieldName, dataObject }) {
 PipelineTaskStateField.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
+  className: PropTypes.string
 };
 
 export default PipelineTaskStateField;

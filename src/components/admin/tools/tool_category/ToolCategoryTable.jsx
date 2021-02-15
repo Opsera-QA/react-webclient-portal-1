@@ -10,6 +10,8 @@ import {
 import NewToolCategoryModal from "components/admin/tools/tool_category/NewToolCategoryModal";
 import toolCategoryMetadata from "components/admin/tools/tool_category/tool-category-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
+import {faToolbox} from "@fortawesome/pro-light-svg-icons";
+import FilterContainer from "components/common/table/FilterContainer";
 
 function ToolCategoryTable({ data, loadData, isLoading }) {
   const [showCreateToolCategoryModal, setShowCreateToolCategoryModal] = useState(false);
@@ -30,7 +32,7 @@ function ToolCategoryTable({ data, loadData, isLoading }) {
     return !row["values"].active ? " inactive-row" : "";
   };
 
-  const selectedRow = (rowData, type) => {
+  const onRowSelect = (rowData, type) => {
     history.push(`/admin/tools/types/details/${rowData.original._id}`);
   };
 
@@ -38,18 +40,30 @@ function ToolCategoryTable({ data, loadData, isLoading }) {
     setShowCreateToolCategoryModal(true);
   };
 
+  const getToolCategoryTable = () => {
+    return (
+      <CustomTable
+        className={"no-table-border"}
+        isLoading={isLoading}
+        onRowSelect={onRowSelect}
+        data={data}
+        columns={columns}
+        rowStyling={rowStyling}
+      />
+    );
+  };
+
   return (
     <div className="px-2 pb-2">
-        <CustomTable
-          columns={columns}
-          data={data}
-          rowStyling={rowStyling}
-          onRowSelect={selectedRow}
-          isLoading={isLoading}
-          tableTitle={`Tool Categories`}
-          type={toolCategoryMetadata.type}
-          createNewRecord={createToolType}
-        />
+      <FilterContainer
+        loadData={loadData}
+        addRecordFunction={createToolType}
+        isLoading={isLoading}
+        body={getToolCategoryTable()}
+        titleIcon={faToolbox}
+        title={"Tool Categories"}
+        type={"Tool Category"}
+      />
       <NewToolCategoryModal setShowModal={setShowCreateToolCategoryModal} showModal={showCreateToolCategoryModal} loadData={loadData}/>
     </div>
   );

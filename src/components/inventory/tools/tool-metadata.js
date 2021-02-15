@@ -58,9 +58,8 @@ const toolMetadata = {
       id: "licensing",
     },
     {
-      label: "Location",
+      label: "Locations",
       id: "location",
-      type: "multi",
     },
     {
       label: "Classification",
@@ -71,17 +70,16 @@ const toolMetadata = {
       id: "contacts",
     },
     {
-      label: "Application",
+      label: "Applications",
       id: "applications",
     },
     {
-      label: "Organization",
+      label: "Organizations",
       id: "organization",
     },
     {
       label: "External Reference",
       id: "external_reference",
-      // fields: ["name", "description", "identifier"],
     },
     {
       label: "Active",

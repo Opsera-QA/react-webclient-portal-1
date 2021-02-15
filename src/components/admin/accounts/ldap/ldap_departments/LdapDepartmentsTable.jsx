@@ -31,10 +31,6 @@ function LdapDepartmentsTable({ departmentData, departmentFilterDto, authorizedA
   }
 
   const getFilterBar = () => {
-    if (departmentFilterDto == null) {
-      return null;
-    }
-
     return(
       <FilterBar
         loadData={loadData}

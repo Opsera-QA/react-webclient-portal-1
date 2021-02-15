@@ -9,11 +9,14 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import DtoTagManagerInput from "components/common/input/dto_input/dto-tag-manager-input";
 import ToolClassificationSelectInput
   from "components/common/list_of_values_input/inventory/ToolClassificationSelectInput";
-import DtoMultipleInput from "components/common/input/dto_input/dto-multiple-input";
 import RegistryToolIdentifierSelectInput
   from "components/inventory/tools/tool_details/input/RegistryToolIdentifierSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
+import RegistryToolLocationInput from "components/inventory/tools/tool_details/input/RegistryToolLocationInput";
+import RegistryToolApplicationsInput from "components/inventory/tools/tool_details/input/RegistryToolApplicationsInput";
+import RegistryToolOrganizationInput from "components/inventory/tools/tool_details/input/RegistryToolOrganizationInput";
+import RegistryToolContactInput from "components/inventory/tools/tool_details/input/RegistryToolContactInput";
 
 function ToolEditorPanel({ toolData, setToolData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -38,9 +41,26 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
     return await toolsActions.updateTool(toolDataDto, getAccessToken);
   };
 
-  if (isLoading) {
-    return (<LoadingDialog size="sm"/>);
-  }
+  const getDynamicFields = () => {
+    if (toolData?.isNew()) {
+      return (
+        <>
+          <Col lg={6}>
+            <RegistryToolLocationInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
+          </Col>
+          <Col lg={6}>
+            <RegistryToolContactInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
+          </Col>
+          <Col lg={6}>
+            <RegistryToolApplicationsInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
+          </Col>
+          <Col lg={6}>
+            <RegistryToolOrganizationInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
+          </Col>
+        </>
+      );
+    }
+  };
 
   return (
     <EditorPanelContainer
@@ -71,20 +91,9 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
           <ToolClassificationSelectInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
         </Col>
         <Col lg={6}>
-          <DtoMultipleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "value"]} fieldName={"location"} />
-        </Col>
-        <Col lg={6}>
-          <DtoMultipleInput disabledFields={["user_id"]} setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "email", "user_id"]} fieldName={"contacts"} />
-        </Col>
-        <Col lg={6}>
-          <DtoMultipleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "value"]} fieldName={"applications"} />
-        </Col>
-        <Col lg={6}>
-          <DtoMultipleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fields={["name", "value"]} fieldName={"organization"} />
-        </Col>
-        <Col lg={6}>
           <ActivityToggleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"active"}/>
         </Col>
+        {getDynamicFields()}
       </Row>
     </EditorPanelContainer>
   );

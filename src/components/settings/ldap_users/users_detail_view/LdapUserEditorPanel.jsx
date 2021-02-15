@@ -60,31 +60,31 @@ function LdapUserEditorPanel({ ldapUserData, orgDomain, setLdapUserData, authori
           <TextInputBase disabled={!ldapUserDataDto.isNew()} setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"name"} />
         </Col>
         <Col lg={6}>
+          <TextInputBase disabled={!ldapUserDataDto.isNew()} setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"emailAddress"} />
+        </Col>
+        <Col lg={4}>
           <TextInputBase setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"title"}/>
         </Col>
-        <Col lg={6}>
+        <Col lg={4}>
           <TextInputBase setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"firstName"}/>
         </Col>
-        <Col lg={6}>
+        <Col lg={4}>
           <TextInputBase setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"lastName"}/>
         </Col>
-        <Col lg={6}>
+        <Col lg={12}>
           <TextInputBase setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"preferredName"} />
-        </Col>
-        <Col lg={6}>
-          <TextInputBase disabled={!ldapUserDataDto.isNew()} setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"emailAddress"} />
         </Col>
         <Col lg={6}>
           <TextInputBase setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"division"}/>
         </Col>
         <Col lg={6}>
+          <TextInputBase setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"site"}/>
+        </Col>
+        <Col lg={6}>
           <TextInputBase disabled={true} setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"teams"} />
         </Col>
         <Col lg={6}>
-          <TextInputBase setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"departmentName"} />
-        </Col>
-        <Col lg={6}>
-          <TextInputBase setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"site"}/>
+          <TextInputBase disabled={true} setDataObject={setLdapUserDataDto} dataObject={ldapUserDataDto} fieldName={"departmentName"} />
         </Col>
       </Row>
     </EditorPanelContainer>

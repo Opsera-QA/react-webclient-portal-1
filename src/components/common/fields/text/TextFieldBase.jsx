@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 
-function TextFieldBase({dataObject, fieldName}) {
+function TextFieldBase({dataObject, fieldName, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
   return (
-    <FieldContainer>
+    <FieldContainer className={className}>
       <FieldLabel field={field}/>
       <span>{dataObject.getData(fieldName)}</span>
     </FieldContainer>
@@ -16,6 +16,7 @@ function TextFieldBase({dataObject, fieldName}) {
 TextFieldBase.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
+  className: PropTypes.string
 };
 
 export default TextFieldBase;

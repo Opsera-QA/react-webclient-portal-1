@@ -15,18 +15,29 @@ adminTagsActions.update = async (tagDataDto, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
+// Remove after wiring up V2
 adminTagsActions.getAllTags = async (getAccessToken) => {
   const apiUrl = "/tags";
   const urlParams = {
     params: {
       size: 10000,
-      page: 1,
     },
   };
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
-adminTagsActions.getTags = async (tagFilterDto, getAccessToken) => {
+adminTagsActions.getAllTagsV2 = async (getAccessToken, cancelTokenSource, status = "active") => {
+  const apiUrl = "/tags";
+  const urlParams = {
+    params: {
+      size: 10000,
+      status: status,
+    },
+  };
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+adminTagsActions.getTags = async (getAccessToken, cancelTokenSource, tagFilterDto) => {
   let sortOption = tagFilterDto.getData("sortOption");
   let type = tagFilterDto.getData("type");
   let status = tagFilterDto.getData("status");
@@ -43,7 +54,7 @@ adminTagsActions.getTags = async (tagFilterDto, getAccessToken) => {
     },
   };
 
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 adminTagsActions.getProjectTags = async (getAccessToken) => {
@@ -70,9 +81,9 @@ adminTagsActions.getVisibleTags = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
-adminTagsActions.get = async (tagId, getAccessToken) => {
+adminTagsActions.getTag = async (getAccessToken, cancelTokenSource, tagId) => {
   const apiUrl = `/tags/${tagId}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 adminTagsActions.create = async (tagDataDto, getAccessToken) => {

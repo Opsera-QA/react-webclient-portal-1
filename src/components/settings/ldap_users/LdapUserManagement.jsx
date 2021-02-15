@@ -1,11 +1,12 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import {useHistory, useParams} from "react-router-dom";
 import LdapUsersTable from "./LdapUsersTable";
-import {getOrganizationByDomain} from "components/admin/accounts/ldap/organizations/organization-functions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import axios from "axios";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
 function LdapUserManagement() {
   const history = useHistory();
@@ -16,40 +17,68 @@ function LdapUserManagement() {
   const [userList, setUserList] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const [authorizedActions, setAuthorizedActions] = useState([]);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, [orgDomain]);
 
-  const loadData = async () => {
+  const loadData = async (source) => {
     try {
       setIsLoading(true);
-      await getRoles();
+      await getRoles(source);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   }
 
-  const getUsersByDomain = async (ldapDomain) => {
+  const getUsersByDomain = async (ldapDomain, source) => {
     try {
-      let organization = await getOrganizationByDomain(ldapDomain, getAccessToken);
-      setUserList(organization["users"]);
+      let organizationResponse = await accountsActions.getOrganizationAccountByDomainV2(getAccessToken, source, ldapDomain);
+      if (isMounted?.current === true && organizationResponse?.data?.users) {
+        setUserList(organizationResponse?.data?.users);
+      }
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-      console.error(error);
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+        console.error(error);
+      }
     }
   };
 
-  const getRoles = async () => {
+  const getRoles = async (source) => {
     const user = await getUserRecord();
     const {ldap, groups} = user;
     const userRoleAccess = await setAccessRoles(user);
 
-    if (userRoleAccess) {
+    if (isMounted.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
       let authorizedActions = await accountsActions.getAllowedUserActions(userRoleAccess, ldap.organization, undefined, getUserRecord, getAccessToken);
@@ -57,15 +86,13 @@ function LdapUserManagement() {
 
       if (userRoleAccess?.OpseraAdministrator) {
         if (orgDomain != null) {
-          await getUsersByDomain(orgDomain);
+          await getUsersByDomain(orgDomain, source);
         }
         else {
           history.push(`/settings/${ldap.domain}/users/`);
-          await getUsersByDomain(ldap.domain);
         }
       } else if (ldap?.organization != null && authorizedActions?.includes("get_users")) {
         history.push(`/settings/${ldap.domain}/users/`);
-        await getUsersByDomain(ldap.domain);
       }
     }
   };
@@ -73,8 +100,9 @@ function LdapUserManagement() {
   return (
     <ScreenContainer
       breadcrumbDestination={"ldapUserManagement"}
-      accessDenied={!authorizedActions?.includes("get_users")}
       isLoading={!accessRoleData}
+      roleRequirement={ROLE_LEVELS.USERS}
+      accessRoleData={accessRoleData}
     >
       <LdapUsersTable
         orgDomain={orgDomain}

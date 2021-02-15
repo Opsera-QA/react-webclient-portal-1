@@ -22,19 +22,19 @@ const AzureConnectionMetadata = {
       id: "applicationPassword",
       isRequired: true
     },
-    {
-      label: "Secret Key",
-      id: "applicationKey",
-      isRequired: true
-    },
+    // {
+    //   label: "Secret Key",
+    //   id: "applicationKey",
+    //   isRequired: true
+    // },
   ],
   newObjectFields:
     {
       subscriptionId: "",
       tenantId: "",
       applicationId: "",
-      applicationPassword: "",
-      applicationKey: "",
+      applicationPassword: ""
+      // applicationKey: "",
     }
 };
 

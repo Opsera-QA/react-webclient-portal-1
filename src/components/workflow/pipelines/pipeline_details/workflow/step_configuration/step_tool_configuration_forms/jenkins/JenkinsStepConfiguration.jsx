@@ -76,6 +76,8 @@ const INITIAL_DATA = {
   isNewBranch: false,
   hasUpstreamBranch: false,
   upstreamBranch: "",
+  outputPath: "",
+  outputFileName: "",
   // agentLabels : "",
 };
 
@@ -1360,6 +1362,38 @@ function JenkinsStepConfiguration({
                     Enter runtime build arguments as a JSON Object
                   </small>
                  
+                  </>
+                )}
+
+                {/* gradle and maven specific attributes */}
+                {(formData.buildType === "gradle" || formData.buildType === "maven") && (
+                  <>
+                    <Form.Group controlId="outputPath">
+                      <Form.Label>Output File Path</Form.Label>
+                      <Form.Control
+                        maxLength="50"
+                        type="text"
+                        placeholder=""
+                        value={formData.outputPath || ""}
+                        onChange={(e) =>{
+                          setFormData({ ...formData, outputPath: e.target.value })
+                        }}
+                      />
+                      
+                    </Form.Group>
+                    <Form.Group controlId="outputFileName">
+                      <Form.Label>Output File Name</Form.Label>
+                      <Form.Control
+                        maxLength="50"
+                        type="text"
+                        placeholder=""
+                        value={formData.outputFileName || ""}
+                        onChange={(e) =>{
+                          setFormData({ ...formData, outputFileName: e.target.value })
+                        }}
+                      />
+                      <Form.Text>File name with extension is expected.</Form.Text>
+                    </Form.Group>
                   </>
                 )}
               </>

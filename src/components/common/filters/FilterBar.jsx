@@ -18,16 +18,30 @@ function FilterBar({ filterDto, setFilterDto, children, loadData, isLoading, sav
 
   return (
     <>
-      <div className="filter-bar px-2 py-1">
+      <div className="filter-bar p-2">
         <div className="justify-content-between d-flex">
           <div>
             <NewRecordButton addRecordFunction={addRecordFunction} type={filterDto?.getType()} isLoading={isLoading} variant="warning" />
           </div>
           <div className="d-flex">
             {getCustomButtons()}
-            <InlineSearchFilter supportSearch={supportSearch} filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} />
-            <ViewToggle supportViewToggle={supportViewToggle} filterDto={filterDto} setFilterDto={setFilterDto} saveCookies={saveCookies} className="mx-2" />
-            <RefreshButton isLoading={isLoading} loadData={loadData} className="mx-2" />
+            <InlineSearchFilter
+              isLoading={isLoading}
+              supportSearch={supportSearch}
+              filterDto={filterDto}
+              setFilterDto={setFilterDto}
+              loadData={loadData}
+              className={children != null || loadData != null || supportViewToggle ? "mr-3" : null}
+            />
+            <ViewToggle
+              supportViewToggle={supportViewToggle}
+              filterDto={filterDto}
+              setFilterDto={setFilterDto}
+              saveCookies={saveCookies}
+              isLoading={isLoading}
+              className={children != null || loadData != null ? "mr-2" : null}
+            />
+            <RefreshButton isLoading={isLoading} loadData={loadData} className={children != null ? "mr-2" : null} />
             <FilterButtons isLoading={isLoading} loadData={loadData} dropdownFilters={children} filterDto={filterDto} />
           </div>
         </div>

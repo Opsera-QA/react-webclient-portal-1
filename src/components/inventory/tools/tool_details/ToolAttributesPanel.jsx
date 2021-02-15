@@ -1,99 +1,65 @@
-import React, {useMemo} from "react";
+import React, {useEffect} from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table/CustomTable";
-import NameValueTable from "components/common/table/nameValueTable";
 import TagField from "components/common/fields/multiple_items/TagField";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import workflowAuthorizedActions
+  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+import NameValueFieldBase from "components/common/fields/multiple_items/NameValueFieldBase";
+import {faBrowser, faBuilding, faClipboardCheck, faIdCard, faSitemap} from "@fortawesome/pro-light-svg-icons";
+import ContactField from "components/common/fields/multiple_items/ContactField";
 
-function ToolAttributesPanel({ toolData }) {
-  const contactsColumns = useMemo(
-    () => [
-      {
-        Header: "Name",
-        accessor: "name",
-      },
-      {
-        Header: "Email",
-        accessor: "email",
-      },
-      {
-        Header: "ID",
-        accessor: "user_id",
-      },
-    ],
-    []
-  );
+function ToolAttributesPanel({ toolData, setActiveTab, customerAccessRules }) {
+  useEffect(() => {
+  }, [JSON.stringify(customerAccessRules)]);
 
-  const getTable = (data, tableColumns, object) => {
-    return (
-      <div>
-        <div className="text-center pb-1"><span className="text-muted">{object}</span></div>
-        <div className="mb-3">
-          <CustomTable
-            showHeaderText={false}
-            columns={tableColumns}
-            data={parseEmptyRows(data)}
-            noDataMessage={"No " + object + " are assigned to this tool."}
-          >
-          </CustomTable>
-        </div>
-      </div>
-    );
-  };
-
-  const parseEmptyRows = (data) => {
-    let parsedRows = [];
-
-    if (data && data.length > 0)
-    {
-      data.map((row, index) => {
-        if (row["name"] || row["value"]) {
-          parsedRows.push(row);
-        }
-      });
-    }
-
-    return parsedRows;
+  const authorizedAction = (action, dataObject) => {
+    const owner = dataObject.owner;
+    const objectRoles = dataObject.roles;
+    return workflowAuthorizedActions.toolRegistryItems(customerAccessRules, action, owner, objectRoles);
   };
 
   return (
-    <>{toolData && <>
-      <div className="scroll-y pt-2 px-3">
-        <Row>
-          <Col lg={6}>
-            <TagField dataObject={toolData} fieldName={"tags"} />
-          </Col>
-          <Col lg={6}>
-            <TextFieldBase dataObject={toolData} fieldName={"costCenter"} />
-          </Col>
-          <Col lg={6}>
-            <NameValueTable data={toolData["licensing"]} label={toolData.getFieldById("licensing").label}/>
-          </Col>
-          <Col lg={6}>
-            <NameValueTable data={toolData["compliance"]} label={toolData.getFieldById("compliance").label}/>
-          </Col>
-          <Col lg={6}>
-            <NameValueTable data={toolData["location"]} label={toolData.getFieldById("location").label}/>
-          </Col>
-          <Col lg={6}>
-            <NameValueTable data={toolData["applications"]} label={toolData.getFieldById("applications").label}/>
-          </Col>
-          <Col lg={6}>
-            <NameValueTable data={toolData["organization"]} label={toolData.getFieldById("organization").label}/>
-          </Col>
-          <Col lg={6}>
-            {getTable(toolData["contacts"], contactsColumns, "Contacts")}
-          </Col>
-        </Row>
-      </div>
-    </>}
-    </>
+    <SummaryPanelContainer
+      setActiveTab={setActiveTab}
+      editingAllowed={authorizedAction("edit_tool_settings", toolData?.data)}
+      settingsTab="attribute_settings"
+    >
+      <Row>
+        <Col lg={6}>
+          <TextFieldBase dataObject={toolData} fieldName={"costCenter"}/>
+        </Col>
+        <Col lg={12}>
+          <TagField dataObject={toolData} fieldName={"tags"}/>
+        </Col>
+        <Col lg={12}>
+          <NameValueFieldBase dataObject={toolData} fieldName={"licensing"} icon={faIdCard}/>
+        </Col>
+        <Col lg={12}>
+          <NameValueFieldBase dataObject={toolData} fieldName={"compliance"} icon={faClipboardCheck} />
+        </Col>
+        <Col lg={12}>
+          <NameValueFieldBase dataObject={toolData} fieldName={"location"} icon={faBuilding} />
+        </Col>
+        <Col lg={12}>
+          <NameValueFieldBase dataObject={toolData} fieldName={"applications"} icon={faBrowser} />
+        </Col>
+        <Col lg={12}>
+          <NameValueFieldBase dataObject={toolData} fieldName={"organization"} icon={faSitemap} />
+        </Col>
+        <Col lg={12}>
+          <ContactField dataObject={toolData} fieldName={"contacts"} />
+        </Col>
+      </Row>
+    </SummaryPanelContainer>
   );
 }
 
 ToolAttributesPanel.propTypes = {
   toolData: PropTypes.object,
+  setActiveTab: PropTypes.func,
+  customerAccessRules: PropTypes.object,
 }
 
 export default ToolAttributesPanel;

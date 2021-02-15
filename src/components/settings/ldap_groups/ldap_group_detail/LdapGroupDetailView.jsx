@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from "react";
+import React, {useContext, useState, useEffect, useRef} from "react";
 import {useParams} from "react-router-dom";
 import {faUserFriends} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -12,6 +12,7 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import axios from "axios";
 
 // TODO: Can we get an API Call to get role group names associated with an organization?
 const roleGroups = ["Administrators", "PowerUsers", "Users"];
@@ -27,32 +28,53 @@ function LdapGroupDetailView() {
   const [isLoading, setIsLoading] = useState(true);
   const [authorizedActions, setAuthorizedActions] = useState([]);
   const [canDelete, setCanDelete] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles();
+      await getRoles(cancelSource);
     }
     catch (error) {
-      if (!error?.error?.message?.includes(404)) {
+      if (isMounted.current === true && !error?.error?.message?.includes(404)) {
         console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted.current === true) {
+        setIsLoading(false);
+      }
     }
   }
 
-  const getGroup = async () => {
+  const getGroup = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
-    const response = await accountsActions.getGroup(orgDomain, groupName, getAccessToken);
+    const response = await accountsActions.getGroupV2(getAccessToken, cancelSource, orgDomain, groupName);
 
-    if (response?.data) {
+    if (isMounted.current === true && response?.data) {
       setLdapGroupData(new Model(response.data, ldapGroupMetaData, false));
       let isOwner = user.email === response.data["ownerEmail"];
 
@@ -64,24 +86,22 @@ function LdapGroupDetailView() {
         }
 
         setAuthorizedActions(authorizedActions);
-
-
       }
     }
   };
 
-  const getLdapUsers = async (domain) => {
+  const getLdapUsers = async (domain, cancelSource = cancelTokenSource) => {
     if (domain != null) {
-      const response = await accountsActions.getLdapUsersWithDomain(domain, getAccessToken);
+      const response = await accountsActions.getLdapUsersWithDomainV2(getAccessToken, cancelSource, domain);
       let ldapUsers = response?.data;
 
-      if (ldapUsers) {
+      if (isMounted.current === true && ldapUsers) {
         setLdapUsers(ldapUsers);
       }
     }
   };
 
-  const getRoles = async () => {
+  const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     let {ldap} = user;
     setCurrentUserEmail(user.email);
@@ -105,8 +125,8 @@ function LdapGroupDetailView() {
       }
 
       if (authorizedActions.includes("get_group_details")) {
-        await getLdapUsers(orgDomain);
-        await getGroup();
+        await getLdapUsers(orgDomain, cancelSource);
+        await getGroup(cancelSource);
       }
     }
   };

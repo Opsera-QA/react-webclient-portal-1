@@ -1,10 +1,12 @@
-import React, {useContext, useState, useEffect} from "react";
+import React, {useContext, useState, useEffect, useRef} from "react";
 import {useHistory} from "react-router-dom";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import LdapOrganizationsTable from "components/admin/accounts/ldap/organizations/LdapOrganizationsTable";
+import axios from "axios";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
 function LdapOrganizationManagement() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -14,48 +16,78 @@ function LdapOrganizationManagement() {
   const [authorizedActions, setAuthorizedActions] = useState(undefined);
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (source = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles();
+      await getRoles(source);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+        console.error(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   }
 
-  const loadOrganizations = async () => {
+  const loadOrganizations = async (source = cancelTokenSource) => {
     try {
-      const response = await accountsActions.getOrganizations(getAccessToken);
-      setLdapOrganizationData(response?.data);
+      const response = await accountsActions.getOrganizationsV2(getAccessToken, source);
+
+      if (isMounted?.current === true) {
+        setLdapOrganizationData(response?.data);
+      }
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-      console.error(error);
+      if (isMounted?.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+        console.error(error);
+      }
     }
   };
 
-  const getRoles = async () => {
+  const getRoles = async (source = cancelTokenSource) => {
     const user = await getUserRecord();
     const {ldap} = user;
     const userRoleAccess = await setAccessRoles(user);
+
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      let authorizedActions = await accountsActions.getAllowedOrganizationActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
+      let authorizedActions = await accountsActions.getAllowedOrganizationActions(userRoleAccess, ldap?.organization, getUserRecord, getAccessToken);
       setAuthorizedActions(authorizedActions);
 
       if (userRoleAccess?.OpseraAdministrator) {
-        await loadOrganizations();
+        await loadOrganizations(source);
       }
-      else if (ldap.organization != null && authorizedActions.includes("get_organization_details")) {
+      else if (ldap?.organization != null && authorizedActions.includes("get_organization_details")) {
         history.push(`/admin/organizations/details/${ldap.organization}`);
       }
     }
@@ -64,8 +96,9 @@ function LdapOrganizationManagement() {
   return (
     <ScreenContainer
       breadcrumbDestination={"ldapOrganizationManagement"}
-      accessDenied={!accessRoleData?.OpseraAdministrator}
       isLoading={!accessRoleData}
+      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
+      accessRoleData={accessRoleData}
     >
       <LdapOrganizationsTable
         isLoading={isLoading}

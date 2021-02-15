@@ -8,7 +8,7 @@ import {useHistory, useParams} from "react-router-dom";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import MyUserProfile from "components/user/user_settings/MyUserProfile";
-import MyAccessTokens from "components/user/user_settings/MyAccessTokens";
+import MyAccessTokens from "components/user/user_settings/access_tokens/MyAccessTokens";
 
 function UserSettings() {
   const { tab } = useParams();
@@ -100,7 +100,7 @@ function UserSettings() {
       <NavigationTabContainer>
         <NavigationTab icon={faIdCard} tabName={"profile"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My Profile"} />
         <NavigationTab icon={faUser} tabName={"myUserRecord"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My Record"} visible={isLdapUser} />
-        {/*<NavigationTab icon={faKey} tabName={"accessTokens"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Access Tokens"} />*/}
+        <NavigationTab icon={faKey} tabName={"accessTokens"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Access Tokens"} />
       </NavigationTabContainer>
     );
   }

@@ -1,5 +1,5 @@
 export default {
-  keys: ["TimeTaken"],
+  keys: ["MergeRequestTimeTaken"],
   margin: {
     top: 50,
     right: 130,

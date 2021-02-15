@@ -11,7 +11,7 @@ import "components/analytics/charts/charts.css";
 import InfoDialog from "components/common/status_notifications/info";
 import ModalLogs from "components/common/modal/modalLogs";
 
-function JiraIssuesByPriorityBarChart({ persona, date }) {
+function JiraIssuesByPriorityBarChart({ persona, date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -40,16 +40,12 @@ function JiraIssuesByPriorityBarChart({ persona, date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
+    const apiUrl = "/analytics/metrics";
     const postBody = {
-      data: [
-        {
-          request: "jiraIssuesByPriority",
-          metric: "bar",
-        },
-      ],
+      request: "jiraIssuesByPriority",
       startDate: date.start,
       endDate: date.end,
+      tags: tags
     };
 
     try {
@@ -93,11 +89,11 @@ function JiraIssuesByPriorityBarChart({ persona, date }) {
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
               keys={config.keys}
-              indexBy="project"
+              indexBy="_id"
               margin={config.margin}
               padding={0.3}
               layout={"horizontal"}
-              colors={({ id, data }) => data[`${id}_color`]}
+              // colors={({ id, data }) => data[`${id}_color`]}
               borderColor={{ theme: "background" }}
               colorBy="id"
               defs={config.defs}

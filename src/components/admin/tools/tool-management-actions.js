@@ -23,9 +23,15 @@ toolManagementActions.deleteToolType = async (toolTypeDataDto, getAccessToken) =
   return await baseActions.apiDeleteCall(getAccessToken, apiUrl);
 };
 
+// TODO: Remove after updating references to use Cancel Token
 toolManagementActions.getToolTypes = async (getAccessToken, hidden = true) => {
   const apiUrl = `/registry/types?hidden=${hidden}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+toolManagementActions.getToolTypesV2 = async (getAccessToken, cancelTokenSource, hidden = true) => {
+  const apiUrl = `/registry/types?hidden=${hidden}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 toolManagementActions.getToolTypeById = async (toolTypeId, getAccessToken) => {
@@ -41,6 +47,17 @@ toolManagementActions.getToolIdentifierById = async (toolIdentifierId, getAccess
 toolManagementActions.getToolIdentifiers = async (getAccessToken, enabledInToolRegistry) => {
   const apiUrl = `/registry/tools?hidden=true&registry=${enabledInToolRegistry}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+toolManagementActions.getToolIdentifiersV2 = async (getAccessToken, cancelTokenSource, status, enabledInToolRegistry) => {
+  const urlParams = {
+    params: {
+      status: status,
+      registry: enabledInToolRegistry
+    },
+  };
+  const apiUrl = `/registry/tools`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 toolManagementActions.createToolIdentifier = async (toolIdentifierDataDto, getAccessToken) => {

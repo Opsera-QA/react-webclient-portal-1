@@ -8,7 +8,10 @@ import { Table }  from "react-bootstrap";
 import CustomTable from "components/common/table/CustomTable";
 import "components/analytics/charts/charts.css";
 
-function JiraIssuesAssignedToMe() {
+function JiraIssuesAssignedToMe({persona, date, tags}) {
+  console.log(persona);
+  console.log(date);
+  console.log(tags);
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -50,19 +53,17 @@ function JiraIssuesAssignedToMe() {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";   
+    const apiUrl = "/analytics/metrics";   
     const postBody = {
-      "data": [
-        {
-          "request": "jiraTicketsAssignedToMe",
-          "metric": "bar"
-        }        
-      ]
+        "request": "jiraTicketsAssignedToMe",
+        startDate: date.start,
+        endDate: date.end,
+        tags: tags
     };
     
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);     
-      let dataObject = res && res.data ? res.data.data[0] : [];      
+      let dataObject = res && res.data ? res.data.data[0] : [];    
       setData(dataObject);
       setLoading(false);
     }
@@ -76,20 +77,20 @@ function JiraIssuesAssignedToMe() {
     () => [
       {
         Header: "Ticket Number",
-        accessor: "Issue Number",
+        accessor: "issueKey",
         class: "cell-center no-wrap-inline"
       },
       {
         Header: "Issue Type",
-        accessor: "Issue Type",
+        accessor: "type",
       },
       {
         Header: "Priority",
-        accessor: "Issue Priority",
+        accessor: "priority",
       },
       {
         Header: "Summary",
-        accessor: "Issue Name",
+        accessor: "summary",
       }
     ],
     []

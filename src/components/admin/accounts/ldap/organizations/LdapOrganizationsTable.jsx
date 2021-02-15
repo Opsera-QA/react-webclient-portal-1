@@ -6,6 +6,8 @@ import NewLdapOrganizationModal from "components/admin/accounts/ldap/organizatio
 import {ldapOrganizationMetaData} from "components/admin/accounts/ldap/organizations/ldap-organizations-metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
+import {faFlag, faSitemap} from "@fortawesome/pro-light-svg-icons";
+import FilterContainer from "components/common/table/FilterContainer";
 
 function LdapOrganizationsTable({data, isLoading, loadData, authorizedActions}) {
   const [showCreateOrganizationModal, setShowCreateOrganizationModal] = useState(false);
@@ -22,6 +24,19 @@ function LdapOrganizationsTable({data, isLoading, loadData, authorizedActions}) 
     []
   );
 
+  const getOrganizationsTable = () => {
+    return (
+      <CustomTable
+        className={"no-table-border"}
+        isLoading={isLoading}
+        onRowSelect={onRowSelect}
+        data={data}
+        loadData={loadData}
+        columns={columns}
+      />
+    );
+  };
+
   const onRowSelect = (selectedRow, type) => {
     history.push(`/admin/organizations/details/${selectedRow.original.name}`);
   };
@@ -32,15 +47,14 @@ function LdapOrganizationsTable({data, isLoading, loadData, authorizedActions}) 
 
   return (
     <div className="px-2 pb-2">
-      <CustomTable
-        isLoading={isLoading}
-        onRowSelect={onRowSelect}
-        tableTitle={"Organizations"}
-        type={"Organization"}
-        data={data}
+      <FilterContainer
         loadData={loadData}
-        createNewRecord={createOrganization}
-        columns={columns}
+        addRecordFunction={createOrganization}
+        isLoading={isLoading}
+        body={getOrganizationsTable()}
+        titleIcon={faSitemap}
+        title={"Organizations"}
+        type={"Organization"}
       />
       <NewLdapOrganizationModal
         showModal={showCreateOrganizationModal}

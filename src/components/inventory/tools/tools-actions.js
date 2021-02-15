@@ -39,6 +39,7 @@ toolsActions.createTool = async (toolDataDto, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
+// TODO: Replace with getToolIdentifiersV2 when all references are updated
 toolsActions.getTools = async (getAccessToken) => {
   const apiUrl = "/registry/tools";
   return await baseActions.apiGetCall(getAccessToken, apiUrl);

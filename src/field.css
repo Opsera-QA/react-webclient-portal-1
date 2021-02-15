@@ -18,6 +18,11 @@
   background: #E6E5E3;
 }
 
+.item-field .item-badge {
+  font-weight: normal;
+  background: #E6E5E3;
+}
+
 .item-field .filter-badge {
   font-weight: normal;
   background-color: #453191;

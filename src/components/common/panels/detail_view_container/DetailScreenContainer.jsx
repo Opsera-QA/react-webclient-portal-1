@@ -5,8 +5,10 @@ import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 import TitleBar from "components/common/fields/TitleBar";
 import {getBreadcrumb, getParentBreadcrumb} from "components/common/navigation/trails";
+import RoleRequirementField from "components/common/fields/access/RoleRequirementField";
+import {meetsRequirements} from "components/common/helpers/role-helpers";
 
-function DetailScreenContainer({ breadcrumbDestination, actionBar, dataObject, detailPanel, isLoading, accessDenied, metadata, showBreadcrumbTrail, navigationTabContainer }) {
+function DetailScreenContainer({ breadcrumbDestination, actionBar, dataObject, detailPanel, isLoading, accessDenied, metadata, showBreadcrumbTrail, navigationTabContainer, accessRoleData, roleRequirement }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const [parentBreadcrumb, setParentBreadcrumb] = useState(getParentBreadcrumb(breadcrumbDestination));
 
@@ -65,6 +67,12 @@ function DetailScreenContainer({ breadcrumbDestination, actionBar, dataObject, d
     )
   }
 
+  if (!isLoading && accessRoleData && roleRequirement && !meetsRequirements(roleRequirement, accessRoleData)) {
+    return (
+      <AccessDeniedContainer />
+    )
+  }
+
   if (!isLoading && dataObject == null) {
     return (
       <DataNotFoundContainer type={metadata?.type} breadcrumbDestination={breadcrumbDestination} />
@@ -84,12 +92,12 @@ function DetailScreenContainer({ breadcrumbDestination, actionBar, dataObject, d
             {getDetailBody()}
           </div>
         </div>
+        <RoleRequirementField className={"mx-2"} roleRequirement={roleRequirement} />
         <div className="content-block-footer"/>
       </div>
     </div>
   );
 }
-
 
 DetailScreenContainer.propTypes = {
   showBreadcrumbTrail: PropTypes.bool,
@@ -100,7 +108,9 @@ DetailScreenContainer.propTypes = {
   actionBar: PropTypes.object,
   isLoading: PropTypes.bool,
   accessDenied: PropTypes.bool,
-  metadata: PropTypes.object
+  metadata: PropTypes.object,
+  accessRoleData: PropTypes.object,
+  roleRequirement: PropTypes.string,
 };
 
 export default DetailScreenContainer;

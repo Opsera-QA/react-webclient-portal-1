@@ -6,21 +6,19 @@ import GenericItemField from "components/common/fields/multiple_items/GenericIte
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
+import StandaloneClipboardTextField from "components/common/fields/text/standalone/StandaloneClipboardTextField";
 
 function LdapOrganizationAccountSummaryPanel({ ldapOrganizationAccountData, setActiveTab }) {
   const getUrlString = () => {
-    const urlString = "New User Registration URL: " + process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL +"/account/registration/"+ ldapOrganizationAccountData.orgDomain
+    const urlString = "" + process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL +"/account/registration/"+ ldapOrganizationAccountData.orgDomain
     return (
-      <div className="mt-1">
-        <span className="text-muted">{urlString}</span>
-      </div>
+      <StandaloneClipboardTextField label={"New User Registration URL"} text={urlString} />
     );
   };
 
   if (ldapOrganizationAccountData == null) {
     return (<LoadingDialog size="sm"/>);
   }
-
 
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab}>
@@ -70,7 +68,8 @@ function LdapOrganizationAccountSummaryPanel({ ldapOrganizationAccountData, setA
         <Col lg={6}>
           <BooleanField fieldName={"oAuthEnabled"} dataObject={ldapOrganizationAccountData}/>
         </Col>
-        <Col lg={12}>
+        <Col lg={6}/>
+        <Col lg={6}>
           {getUrlString()}
         </Col>
       </Row>
