@@ -56,34 +56,32 @@ function AccessTokenEditorPanel({ cancelTokenSource }) {
                 </div>
               </h6>
             </div>
-          <Row className="mx-0 pb-3 pt-1">
-            <Col xs={12} md={6}>
-              <div>
+            <Row className="mx-0">
+              <Col xs={12} md={6}>
                 <TextInputBase dataObject={accessToken} setDataObject={setAccessToken} fieldName={"name"}/>
-              </div>
-              <div>
-                <AccessTokenExpirationSelectInput dataObject={accessToken} setDataObject={setAccessToken}
-                                                  fieldName={"expiration"}/>
-              </div>
-              <div>
-                <AccessTokenScopeRadioInput dataObject={accessToken} setDataObject={setAccessToken} />
-              </div>
-              <div className="mt-3">
-                <CreateButton icon={faKey} addAnotherOption={false} disable={!accessToken.isModelValid2()}
-                              recordDto={accessToken} createRecord={createToken} size={"md"}/>
-              </div>
-            </Col>
-            <Col xs={12} md={6} className="mt-auto">
-              <TextAreaClipboardField
-                allowResize={false}
-                className={"mt-2"}
-                rows={7}
-                textAreaValue={generatedToken}
-                description={`Please note: This token will not be able to be accessed again.`}
-              />
-            </Col>
-          </Row>
-        </div>
+              </Col>
+              <Col xs={12} md={6}>
+                <AccessTokenExpirationSelectInput dataObject={accessToken} setDataObject={setAccessToken} fieldName={"expiration"}/>
+              </Col>
+              <Col md={12}>
+                    <AccessTokenScopeRadioInput dataObject={accessToken} setDataObject={setAccessToken} />
+              </Col>
+              <Col md={12}>
+                <div className="">
+                  <CreateButton icon={faKey} addAnotherOption={false} disable={!accessToken.isModelValid2()}
+                                recordDto={accessToken} createRecord={createToken} size={"sm"}/>
+                </div>
+              </Col>
+              <Col xs={12} className="mt-auto mx-2">
+                <TextAreaClipboardField
+                  allowResize={false}
+                  rows={3}
+                  textAreaValue={generatedToken}
+                  description={`Please note: This token will not be able to be accessed again.`}
+                />
+              </Col>
+            </Row>
+          </div>
         </div>
       </div>
     </div>

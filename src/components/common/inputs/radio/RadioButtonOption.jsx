@@ -44,7 +44,7 @@ RadioButtonOption.propTypes = {
 };
 
 RadioButtonOption.defaultProps = {
-  className: "my-2"
+  className: "my-1"
 };
 
 export default RadioButtonOption;

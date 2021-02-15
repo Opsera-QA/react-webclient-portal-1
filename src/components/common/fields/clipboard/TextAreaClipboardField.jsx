@@ -7,7 +7,7 @@ function TextAreaClipboardField({textAreaValue, description, className, rows, al
   const getDescription = () => {
     if (description) {
       return (
-        <div className="my-2">
+        <div>
           {description}
         </div>
       );
@@ -23,8 +23,10 @@ function TextAreaClipboardField({textAreaValue, description, className, rows, al
         placeholder={"Generate a new token to get started."}
         rows={rows}
       />
-      {getDescription()}
-      <CopyToClipboardButton copyString={textAreaValue} />
+      <div className="d-flex justify-content-between mt-2">
+        {getDescription()}
+        <CopyToClipboardButton copyString={textAreaValue} />
+      </div>
     </FieldContainer>
   );
 }

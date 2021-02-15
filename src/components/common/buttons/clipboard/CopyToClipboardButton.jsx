@@ -37,4 +37,8 @@ CopyToClipboardButton.propTypes = {
   size: PropTypes.string
 };
 
+CopyToClipboardButton.defaultProps = {
+  size: "sm"
+}
+
 export default CopyToClipboardButton;
