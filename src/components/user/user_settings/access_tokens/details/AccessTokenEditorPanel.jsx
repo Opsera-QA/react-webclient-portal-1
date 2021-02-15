@@ -64,16 +64,19 @@ function AccessTokenEditorPanel({ cancelTokenSource }) {
                 <AccessTokenExpirationSelectInput dataObject={accessToken} setDataObject={setAccessToken} fieldName={"expiration"}/>
               </Col>
               <Col md={12}>
-                    <AccessTokenScopeRadioInput dataObject={accessToken} setDataObject={setAccessToken} />
+                <AccessTokenScopeRadioInput dataObject={accessToken} setDataObject={setAccessToken} />
               </Col>
               <Col md={12}>
-                <div className="">
-                  <CreateButton icon={faKey} addAnotherOption={false} disable={!accessToken.isModelValid2()}
-                                recordDto={accessToken} createRecord={createToken} size={"sm"}/>
-                </div>
+                <Row className="mx-0">
+                  <div className="ml-auto">
+                    <CreateButton icon={faKey} addAnotherOption={false} disable={!accessToken.isModelValid2()}
+                                  recordDto={accessToken} createRecord={createToken} size={"sm"}/>
+                  </div>
+                </Row>
               </Col>
-              <Col xs={12} className="mt-auto mx-2">
+              <Col md={12}>
                 <TextAreaClipboardField
+                  className={"m-2"}
                   allowResize={false}
                   rows={3}
                   textAreaValue={generatedToken}
