@@ -76,6 +76,8 @@ const INITIAL_DATA = {
   isNewBranch: false,
   hasUpstreamBranch: false,
   upstreamBranch: "",
+  outputPath: "",
+  outputFileName: "",
   // agentLabels : "",
 };
 
