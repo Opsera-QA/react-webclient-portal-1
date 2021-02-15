@@ -19,7 +19,7 @@ export const accessTokenMetadata = {
       regexValidator: regexHelpers.regexTypes["generalTextWithSpaces"],
     },
     {
-      label: "Expires At",
+      label: "Expires After",
       id: "expiration",
       isRequired: true,
     },

@@ -13,8 +13,10 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {useHistory} from "react-router-dom";
 import ExpireTokenModal from "components/user/user_settings/access_tokens/ExpireTokenModal";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faKey, faSitemap} from "@fortawesome/pro-light-svg-icons";
 
-function AccessTokenTable({data, loadData, isMounted, isLoading, cancelTokenSource}) {
+function AccessTokenTable({accessTokenData, loadData, isMounted, isLoading, cancelTokenSource}) {
   let fields = accessTokenMetadata.fields;
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
@@ -64,15 +66,27 @@ function AccessTokenTable({data, loadData, isMounted, isLoading, cancelTokenSour
     }
   }
 
-  return (
-    <div className="px-2 pb-2">
+  const getAccessTokensTable = () => {
+    return (
       <CustomTable
-        columns={columns}
-        data={data}
-        noDataMessage={noDataMessage}
+        className={"no-table-border"}
         isLoading={isLoading}
-        tableTitle={"Access Tokens"}
-        type={"Access Token"}
+        data={accessTokenData}
+        noDataMessage={noDataMessage}
+        columns={columns}
+      />
+    );
+  };
+
+
+  return (
+    <div>
+      <FilterContainer
+        loadData={loadData}
+        isLoading={isLoading}
+        body={getAccessTokensTable()}
+        titleIcon={faKey}
+        title={"Access Tokens"}
       />
       <ExpireTokenModal token={selectedToken} showModal={showExpireModal} setShowModal={setShowExpireModal} expireToken={expireToken} />
     </div>
