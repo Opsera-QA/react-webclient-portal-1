@@ -26,6 +26,7 @@ export const accessTokenMetadata = {
     {
       label: "Scope",
       id: "scope",
+      isRequired: true
     },
     {
       label: "Created",

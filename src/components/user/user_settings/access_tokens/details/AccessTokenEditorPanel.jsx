@@ -13,6 +13,8 @@ import {faKey, faKeySkeleton} from "@fortawesome/pro-light-svg-icons";
 import AccessTokenExpirationSelectInput
   from "components/common/list_of_values_input/users/access_tokens/AccessTokenExpirationSelectInput";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import AccessTokenScopeRadioInput
+  from "components/common/list_of_values_input/users/access_tokens/AccessTokenScopeRadioInput";
 
 function AccessTokenEditorPanel({ cancelTokenSource }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -21,7 +23,6 @@ function AccessTokenEditorPanel({ cancelTokenSource }) {
 
   const createToken = async () => {
     const response = await tokenActions.createToken(getAccessToken, cancelTokenSource, accessToken);
-    console.log("response: " + JSON.stringify(response));
     setAccessToken({...new Model({...accessTokenMetadata.newObjectFields}, accessTokenMetadata, true)});
 
     if (response?.data) {
@@ -65,7 +66,7 @@ function AccessTokenEditorPanel({ cancelTokenSource }) {
                                                   fieldName={"expiration"}/>
               </div>
               <div>
-                <TextInputBase dataObject={accessToken} setDataObject={setAccessToken} fieldName={"scope"}/>
+                <AccessTokenScopeRadioInput dataObject={accessToken} setDataObject={setAccessToken} />
               </div>
               <div className="mt-3">
                 <CreateButton icon={faKey} addAnotherOption={false} disable={!accessToken.isModelValid2()}
