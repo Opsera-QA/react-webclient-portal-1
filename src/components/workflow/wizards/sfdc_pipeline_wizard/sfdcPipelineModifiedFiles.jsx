@@ -253,10 +253,8 @@ const SfdcPipelineModifiedFiles = ({
     }    
   },[sfdcSelectedComponent]);
 
-  useEffect(()=>{
-    console.log('in useEffect')
-    if(isEquals(gitSelectedComponent, gitModified) || gitSelectedComponent.length === 0){      
-      console.log('calling getGitTableData')
+  useEffect(()=>{    
+    if(isEquals(gitSelectedComponent, gitModified) || gitSelectedComponent.length === 0){            
       getGitTableData(gitModified);
     }    
   },[gitSelectedComponent]);
@@ -286,7 +284,7 @@ const SfdcPipelineModifiedFiles = ({
   const handleSFDCComponentCheckNew = (data) => {
     
     if (!data.isChecked) {
-      setSFDCSelectedComponent(sfdcSelectedComponent.filter((item) => item.committedFile !== data.committedFile));
+      setSFDCSelectedComponent((sfdcSelectedComponent) => sfdcSelectedComponent.filter((item) => item.committedFile !== data.committedFile));
       return;
     }
     const newObj = {
@@ -299,7 +297,7 @@ const SfdcPipelineModifiedFiles = ({
   }
   const handleGitComponentCheckNew = (data) => {    
     if (!data.isChecked) {
-      setGitSelectedComponent(gitSelectedComponent.filter((item) => item.committedFile !== data.committedFile));
+      setGitSelectedComponent((gitSelectedComponent) => gitSelectedComponent.filter((item) => item.committedFile !== data.committedFile));
       return;
     }
 
@@ -797,10 +795,6 @@ const SfdcPipelineModifiedFiles = ({
   }
 
   const getGitTableData = (gitData) => {        
-
-    console.log('gitData ', gitData)
-    console.log('gitData ', gitData)
-
     setGitModifiedFilesTable(gitData.map(d => {
       return Object.assign(
         {
