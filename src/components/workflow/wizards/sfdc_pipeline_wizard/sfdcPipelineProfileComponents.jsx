@@ -103,7 +103,7 @@ const SfdcPipelineProfileComponents = ({
 
   useEffect(()=>{    
     if(isEquals(selectedProfileComponent, profileComponentList) || selectedProfileComponent.length === 0){
-      getProfileComponentTableData(profileComponentList);
+      getProfileComponentTableData(profileComponentList, allProfileComponentType);
     }    
   },[selectedProfileComponent]);
   
@@ -123,11 +123,13 @@ const SfdcPipelineProfileComponents = ({
       }
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.paginatedData.profileComponentList.count);
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());      
+      filterDto.setData("checkAll", isEquals(selectedProfileComponent, response.data.paginatedData.profileComponentList.data));
       setFilterDto({ ...newFilterDto });
 
       setProfileComponentList(response.data.paginatedData.profileComponentList.data);
-      getProfileComponentTableData(response.data.paginatedData.profileComponentList.data);
       setAllProfileComponentType(response.data.data.profileComponentList);
+      getProfileComponentTableData(response.data.paginatedData.profileComponentList.data, response.data.data.profileComponentList);      
 
       //storing _id so that we can edit this object
       setRecordId(response.data._id);
@@ -479,11 +481,11 @@ const SfdcPipelineProfileComponents = ({
     }
   }
 
-  const getProfileComponentTableData = (data) => {
+  const getProfileComponentTableData = (data, allProfile) => {
     setModifiedFilesTable(data.map(d => {
        return Object.assign(
         {
-          checkAll: filterDto.getData("checkAll"),
+          checkAll: isEquals(selectedProfileComponent, allProfile),
           isChecked: selectedProfileComponent.some(selected => selected.componentType === d.componentType && selected.committedFile === d.committedFile && selected.commitAction === d.commitAction && selected.committedTime === d.committedTime)          
         },
         d

@@ -146,11 +146,11 @@ const SfdcPipelineModifiedFiles = ({
       let newSfdcFilterDto = sfdcFilterDto;
       newSfdcFilterDto.setData("totalCount", sfdcResponse.data.paginatedData.sfdcCommitList.count);
       newSfdcFilterDto.setData("activeFilters", newSfdcFilterDto.getActiveFilters());
+      newSfdcFilterDto.setData("checkAll", isEquals(sfdcSelectedComponent, sfdcResponse.data.paginatedData.sfdcCommitList.data));
       setSfdcFilterDto({ ...newSfdcFilterDto });      
       setSfdcModified(sfdcResponse.data.paginatedData.sfdcCommitList.data);
-      getSfdcTableData(sfdcResponse.data.paginatedData.sfdcCommitList.data);
       setAllSFDCComponentType(sfdcResponse.data.data.sfdcCommitList);
-
+      getSfdcTableData(sfdcResponse.data.paginatedData.sfdcCommitList.data, sfdcResponse.data.data.sfdcCommitList);
       //storing _id so that we can edit this object
       setRecordId(sfdcResponse.data._id);
       
@@ -177,11 +177,12 @@ const SfdcPipelineModifiedFiles = ({
       let newGitFilterDto = gitFilterDto;
       newGitFilterDto.setData("totalCount", gitResponse.data.paginatedData.gitCommitList.count);
       newGitFilterDto.setData("activeFilters", newGitFilterDto.getActiveFilters());
+      newGitFilterDto.setData("checkAll", isEquals(gitSelectedComponent, gitResponse.data.paginatedData.gitCommitList.data));
       setGitFilterDto({ ...newGitFilterDto });
 
       setGitModified(gitResponse.data.paginatedData.gitCommitList.data);
       setAllGitComponentType(gitResponse.data.data.gitCommitList);
-      getGitTableData(gitResponse.data.paginatedData.gitCommitList.data);
+      getGitTableData(gitResponse.data.paginatedData.gitCommitList.data, gitResponse.data.data.gitCommitList);
       //storing _id so that we can edit this object
       setRecordId(gitResponse.data._id);
 
@@ -249,13 +250,13 @@ const SfdcPipelineModifiedFiles = ({
 
   useEffect(()=>{    
     if(isEquals(sfdcSelectedComponent, sfdcModified) || sfdcSelectedComponent.length === 0){
-      getSfdcTableData(sfdcModified);
+      getSfdcTableData(sfdcModified, allSFDCComponentType);
     }    
   },[sfdcSelectedComponent]);
 
   useEffect(()=>{    
     if(isEquals(gitSelectedComponent, gitModified) || gitSelectedComponent.length === 0){            
-      getGitTableData(gitModified);
+      getGitTableData(gitModified, allGitComponentType);
     }    
   },[gitSelectedComponent]);
   
@@ -782,11 +783,11 @@ const SfdcPipelineModifiedFiles = ({
     );
   };
 
-  const getSfdcTableData = (sfdcData) => {
+  const getSfdcTableData = (sfdcData, allSfdc) => {
     setSfdcModifiedFilesTable(sfdcData.map(d => {
        return Object.assign(
         {
-          checkAll: sfdcFilterDto.getData("checkAll"),
+          checkAll: isEquals(sfdcSelectedComponent, allSfdc),
           isChecked: sfdcSelectedComponent.some(selected => selected.componentType === d.componentType && selected.committedFile === d.committedFile && selected.commitAction === d.commitAction && selected.committedTime === d.committedTime)
         },
         d
@@ -794,11 +795,11 @@ const SfdcPipelineModifiedFiles = ({
     }))
   }
 
-  const getGitTableData = (gitData) => {        
+  const getGitTableData = (gitData, allGit) => {        
     setGitModifiedFilesTable(gitData.map(d => {
       return Object.assign(
         {
-          checkAll: gitFilterDto.getData("checkAll"),
+          checkAll: isEquals(gitSelectedComponent, allGit),
           isChecked: gitSelectedComponent.some(selected => selected.componentType === d.componentType && selected.committedFile === d.committedFile && selected.commitAction === d.commitAction && selected.committedTime === d.committedTime)
         },
         d
