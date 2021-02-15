@@ -43,6 +43,7 @@ import FilterContainer from "components/common/table/FilterContainer";
 import SfdcComponentFilter from "components/common/filters/sfdccomponent/SfdcComponentFilter";
 import sfdcComponentFilterMetadata from './sfdc-component-filter-metadata';
 import BooleanFilter from "components/common/filters/input/BooleanFilter";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -763,7 +764,9 @@ const SfdcPipelineModifiedFiles = ({
     return (
       <div className="px-2 d-flex small">
         <div className="pr-4">
-          <BooleanFilter loadData={handleCheckAllClickComponentTypesSfdc} filterDto={sfdcFilterDto} setFilterDto={setSfdcFilterDto} fieldName={"checkAll"} />
+          <TooltipWrapper innerText={"This will select all the items on this page only."}>
+            <BooleanFilter loadData={handleCheckAllClickComponentTypesSfdc} filterDto={sfdcFilterDto} setFilterDto={setSfdcFilterDto} fieldName={"checkAll"} />
+          </TooltipWrapper>
         </div>
         <div>
           <SfdcComponentFilter componentType={componentType} filterDto={sfdcFilterDto} setFilterDto={setSfdcFilterDto} />
@@ -776,7 +779,9 @@ const SfdcPipelineModifiedFiles = ({
     return (
       <div className="px-2 d-flex small">
         <div className="pr-4">
-          <BooleanFilter loadData={handleCheckAllClickComponentTypesGit} filterDto={gitFilterDto} setFilterDto={setGitFilterDto} fieldName={"checkAll"} />
+          <TooltipWrapper innerText={"This will select all the items on this page only."}>
+            <BooleanFilter loadData={handleCheckAllClickComponentTypesGit} filterDto={gitFilterDto} setFilterDto={setGitFilterDto} fieldName={"checkAll"} />
+          </TooltipWrapper>
         </div>        
         <div><SfdcComponentFilter componentType={componentType} filterDto={gitFilterDto} setFilterDto={setGitFilterDto} /></div>
       </div>
