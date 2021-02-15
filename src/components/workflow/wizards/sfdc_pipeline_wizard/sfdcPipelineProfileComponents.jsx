@@ -26,6 +26,20 @@ import Model from "../../../../core/data_model/model";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import PageSize from "components/common/pagination/page_options/PageSize";
 import { isEquals } from "components/common/helpers/array-helpers"
+import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import CustomTab from "components/common/tabs/CustomTab";
+import CustomTable from "components/common/table/CustomTable";
+import {
+  getTableDateColumn,
+  getTableTextColumn,
+  getCheckBoxColumn
+} from "components/common/table/table-column-helpers";
+import { format } from "date-fns";
+import FilterContainer from "components/common/table/FilterContainer";
+import SfdcComponentFilter from "components/common/filters/sfdccomponent/SfdcComponentFilter";
+import sfdcComponentFilterMetadata from './sfdc-component-filter-metadata';
+import BooleanFilter from "components/common/filters/input/BooleanFilter";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -60,7 +74,10 @@ const SfdcPipelineProfileComponents = ({
   const [allProfileComponentType, setAllProfileComponentType] = useState([]);
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [profileComponentList, setProfileComponentList] = useState([]);
-  const [filterDto, setFilterDto] = useState(new Model({ ...filterMetadata.newObjectFields }, filterMetadata, false));
+  const [filterDto, setFilterDto] = useState(new Model({ ...sfdcComponentFilterMetadata.newObjectFields }, sfdcComponentFilterMetadata, false));
+
+  const [activeTab, setActiveTab] = useState("sfdc");
+  const [modifiedFilesTable, setModifiedFilesTable] = useState([]);
 
   useEffect(() => {
     async function loadInitialData() {
@@ -73,6 +90,7 @@ const SfdcPipelineProfileComponents = ({
 
     setLoading(true);
     loadInitialData();
+    setFromProfiles(true);
   }, []);
 
   useEffect(()=>{
@@ -82,6 +100,12 @@ const SfdcPipelineProfileComponents = ({
       setProfileCompCheckAll(false);
     }
   },[allProfileComponentType, selectedProfileComponent]);
+
+  useEffect(()=>{    
+    if(isEquals(selectedProfileComponent, profileComponentList) || selectedProfileComponent.length === 0){
+      getProfileComponentTableData(profileComponentList, allProfileComponentType);
+    }    
+  },[selectedProfileComponent]);
   
 
   const loadData = async () => {
@@ -99,10 +123,13 @@ const SfdcPipelineProfileComponents = ({
       }
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.paginatedData.profileComponentList.count);
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());      
+      filterDto.setData("checkAll", isEquals(selectedProfileComponent, response.data.paginatedData.profileComponentList.data));
       setFilterDto({ ...newFilterDto });
 
       setProfileComponentList(response.data.paginatedData.profileComponentList.data);
       setAllProfileComponentType(response.data.data.profileComponentList);
+      getProfileComponentTableData(response.data.paginatedData.profileComponentList.data, response.data.data.profileComponentList);      
 
       //storing _id so that we can edit this object
       setRecordId(response.data._id);
@@ -263,6 +290,256 @@ const SfdcPipelineProfileComponents = ({
     );
   };
 
+  const getSfdcView = () => {
+    return (
+      <div className="d-flex w-100 pr-2">
+        <div className="col-5 list-item-container mr-1">
+          <div className="h6 opsera-blue">SFDC Files</div>
+
+          {profileComponentList && profileComponentList.length === 0 &&
+          <div className="info-text mt-3">NO FILES</div>}
+
+          <div className="d-flex w-100">
+            <div className="col-4">
+              <Form.Group controlId="fromProfiles">
+                <Form.Check
+                  type="checkbox"
+                  label="Push from SFDC"
+                  name="fromProfiles"
+                  // disabled={!sfdcComponentFilterObject.nameSpacePrefix || sfdcComponentFilterObject.nameSpacePrefix.length === 0}
+                  checked={fromProfiles ? fromProfiles : false}
+                  onChange={(e) => setFromProfiles(e.target.checked)}
+                />
+              </Form.Group>
+            </div>
+            <div className="col-9">
+              {fromProfiles && (
+                <div className="align-self-end">
+                    <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 250, hide: 400 }}
+                        overlay={renderTooltip("This will select all the items on this page only")}>
+                  <Button variant="secondary" size="sm" className="mr-1" disabled={profileCompCheckAll}
+                          onClick={() => handleCheckAllClickComponentTypes()}>
+                    <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>
+                    Check All
+                  </Button>
+                  </OverlayTrigger>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="mr-1"
+                    onClick={() => handleUnCheckAllClickComponentTypes()}
+                  >
+                    <FontAwesomeIcon icon={faSquare} fixedWidth className="mr-1"/>
+                    Uncheck All
+                  </Button> 
+                  <Button
+                    variant="success"
+                    size="sm"
+                    onClick={() => {
+                      handleSelectAll();
+                    }}
+                    disabled={checkDisabled()}
+                  >
+                    {save ? (
+                      <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
+                    ) : (
+                      <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
+                    )}
+                    Use All Files
+                  </Button>
+                  {/* <Form.Check
+                    style={{paddingTop: "10px", paddingBottom: "10px"}}
+                    inline
+                    type={"switch"}
+                    label={"Check All"}
+                    id="profileComp"
+                    name="profileComp"
+                    checked={profileCompCheckAll}
+                    onChange={handleSelectAll}
+                  /> */}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {fromProfiles &&
+          <div className="d-flex w-100 pr-2">
+            <div className="col-5 mr-1">
+              <DropdownList
+                data={componentType}
+                value={
+                  componentType[
+                    componentType.findIndex(
+                      (x) => x.value === formData.componentType,
+                    )
+                    ]
+                }
+                valueField="value"
+                textField="componentType"
+                placeholder="Please select a component type"
+                filter="contains"
+                onChange={handleComponentTypeChange}
+              />
+            </div>
+            <div className="col-7 mr-1">
+              <InputGroup className="mb-3">
+                <Form.Control
+                  placeholder="Search for the file name"
+                  value={formData.committedFile || ""}
+                  onChange={e => setFormData({ ...formData, committedFile: e.target.value })}
+                />
+                <InputGroup.Append>
+                  <Button variant="secondary" size="sm" onClick={handleSearch}>
+                    {componentsLoading ? (
+                      <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
+                    ) : (
+                      <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-1"/>
+                    )}
+                  </Button>
+                </InputGroup.Append>
+              </InputGroup>
+            </div>
+          </div>
+          }
+          { componentsLoading && (
+            <LoadingDialog size="sm"/> ) 
+          }
+          {
+            !componentsLoading && typeof profileComponentList === "object" &&
+            profileComponentList
+              .map((item, idx) => (
+                <div key={idx} className="d-flex justify-content-center">
+                  <div className="thick-list-item-container-green  w-100 force-text-wrap p-1">
+                    {item.commitAction && item.commitAction === "active" ? (
+                      <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1 green"/>
+                    ) : (
+                      <FontAwesomeIcon icon={faCode} fixedWidth className="mr-1 dark-grey"/>
+                    )}
+                    {item.componentType}: {item.committedFile}
+                  </div>
+                  <div className="p-1">
+                    {fromProfiles && (
+                      <Form.Check
+                        inline
+                        type={"checkbox"}
+                        name={item.committedFile}
+                        id={idx}
+                        disabled={profileCompCheckAll}
+                        checked={selectedProfileComponent.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
+                        onChange={handleComponentCheck}
+                      />
+                    )}
+                  </div>
+                </div>
+              ))}
+
+          {getPaginator(filterDto, setFilterDto, loading, loadData)}
+        </div>
+      </div>
+    )
+  }
+
+  const handleTabClick = (tabSelection) => e => {
+    e.preventDefault();
+    setActiveTab(tabSelection);    
+  };
+
+  const handleComponentCheckNew = (data) => {
+    if (!data.isChecked) {      
+      setSelectedProfileComponent((selectedProfileComponent) => selectedProfileComponent.filter((item) => item.committedFile !== data.committedFile));
+      return;
+    }
+    const newObj = {
+      componentType: data.componentType,
+      committedFile: data.committedFile,
+      committedTime: data.committedTime,
+      commitAction: data.commitAction
+    }
+    setSelectedProfileComponent((selectedProfileComponent) => [...selectedProfileComponent, newObj]);
+  }
+
+  const getSfdcInlineFilters = () => {    
+    return (
+      <div className="px-2 d-flex small">
+        <div className="pr-4">
+          <BooleanFilter loadData={handleCheckAllClickComponentTypesProfile} filterDto={filterDto} setFilterDto={setFilterDto} fieldName={"checkAll"} />
+        </div>
+        <div>
+          <SfdcComponentFilter componentType={componentType} filterDto={filterDto} setFilterDto={setFilterDto} />
+        </div>
+      </div>
+    );
+  };
+
+  const handleCheckAllClickComponentTypesProfile = () => {    
+    if(filterDto.getData("checkAll")){
+      setSelectedProfileComponent(profileComponentList);
+    }else{
+      setSelectedProfileComponent([]);
+    }
+  }
+
+  const getProfileComponentTableData = (data, allProfile) => {
+    setModifiedFilesTable(data.map(d => {
+       return Object.assign(
+        {
+          checkAll: isEquals(selectedProfileComponent, allProfile),
+          isChecked: selectedProfileComponent.some(selected => selected.componentType === d.componentType && selected.committedFile === d.committedFile && selected.commitAction === d.commitAction && selected.committedTime === d.committedTime)          
+        },
+        d
+      )
+    }))
+  }
+
+  const initialState = {
+    pageIndex: 0
+  };
+  
+  const fields = [
+    {
+      label: "Component", 
+      id: "componentType"
+    },
+    {
+      label: "File", 
+      id: "committedFile"
+    },
+    {
+      label: "Commit Time", 
+      id: "committedTime"
+    }
+  ]
+
+  const noDataMessage = "Modified Files Data not available for selected Criteria";
+
+  const columns = useMemo(
+    () => [
+      getTableTextColumn(fields.find(field => { return field.id === "componentType"})),
+      getTableTextColumn(fields.find(field => { return field.id === "committedFile"})),
+      getTableDateColumn(fields.find(field => { return field.id === "committedTime"})),
+      getCheckBoxColumn(handleComponentCheckNew)      
+    ],
+    [],
+  );
+
+  const getModifiedFilesTable = () => {
+    return (      
+      <CustomTable
+        className={"table-no-border"}
+        columns={columns}
+        data={modifiedFilesTable}              
+        isLoading={loading}
+        loadData={loadData}
+        noDataMessage={noDataMessage}
+        initialState={initialState}
+        paginationDto={filterDto}
+        setPaginationDto={setFilterDto}        
+      />
+    );
+  };
+
   if (error) {
     return (<div className="mt-3">
       <ErrorDialog error={error}/>
@@ -274,7 +551,7 @@ const SfdcPipelineProfileComponents = ({
   }
 
   return (
-    <div className="ml-5">
+    <div className="mx-5">
       <div className="flex-container">
         <div className="flex-container-top"></div>
         <div className="flex-container-content">
@@ -283,153 +560,23 @@ const SfdcPipelineProfileComponents = ({
             Listed below are the files with changes impacted in this pipeline run. Please confirm that you want to
             proceed with this operation.
           </div>
-
-          <div className="d-flex w-100 pr-2">
-            <div className="col-5 list-item-container mr-1">
-              <div className="h6 opsera-blue">SFDC Files</div>
-
-              {profileComponentList && profileComponentList.length === 0 &&
-              <div className="info-text mt-3">NO FILES</div>}
-
-              <div className="d-flex w-100">
-                <div className="col-4">
-                  <Form.Group controlId="fromProfiles">
-                    <Form.Check
-                      type="checkbox"
-                      label="Push from SFDC"
-                      name="fromProfiles"
-                      // disabled={!sfdcComponentFilterObject.nameSpacePrefix || sfdcComponentFilterObject.nameSpacePrefix.length === 0}
-                      checked={fromProfiles ? fromProfiles : false}
-                      onChange={(e) => setFromProfiles(e.target.checked)}
-                    />
-                  </Form.Group>
-                </div>
-                <div className="col-9">
-                  {fromProfiles && (
-                    <div className="align-self-end">
-                       <OverlayTrigger
-                            placement="top"
-                            delay={{ show: 250, hide: 400 }}
-                            overlay={renderTooltip("This will select all the items on this page only")}>
-                      <Button variant="secondary" size="sm" className="mr-1" disabled={profileCompCheckAll}
-                              onClick={() => handleCheckAllClickComponentTypes()}>
-                        <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>
-                        Check All
-                      </Button>
-                      </OverlayTrigger>
-                      <Button
-                        variant="secondary"
-                        size="sm"
-                        className="mr-1"
-                        onClick={() => handleUnCheckAllClickComponentTypes()}
-                      >
-                        <FontAwesomeIcon icon={faSquare} fixedWidth className="mr-1"/>
-                        Uncheck All
-                      </Button> 
-                      <Button
-                        variant="success"
-                        size="sm"
-                        onClick={() => {
-                          handleSelectAll();
-                        }}
-                        disabled={checkDisabled()}
-                      >
-                        {save ? (
-                          <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
-                        ) : (
-                          <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
-                        )}
-                        Use All Files
-                      </Button>
-                      {/* <Form.Check
-                        style={{paddingTop: "10px", paddingBottom: "10px"}}
-                        inline
-                        type={"switch"}
-                        label={"Check All"}
-                        id="profileComp"
-                        name="profileComp"
-                        checked={profileCompCheckAll}
-                        onChange={handleSelectAll}
-                      /> */}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {fromProfiles &&
-              <div className="d-flex w-100 pr-2">
-                <div className="col-5 mr-1">
-                  <DropdownList
-                    data={componentType}
-                    value={
-                      componentType[
-                        componentType.findIndex(
-                          (x) => x.value === formData.componentType,
-                        )
-                        ]
-                    }
-                    valueField="value"
-                    textField="componentType"
-                    placeholder="Please select a component type"
-                    filter="contains"
-                    onChange={handleComponentTypeChange}
-                  />
-                </div>
-                <div className="col-7 mr-1">
-                  <InputGroup className="mb-3">
-                    <Form.Control
-                      placeholder="Search for the file name"
-                      value={formData.committedFile || ""}
-                      onChange={e => setFormData({ ...formData, committedFile: e.target.value })}
-                    />
-                    <InputGroup.Append>
-                      <Button variant="secondary" size="sm" onClick={handleSearch}>
-                        {componentsLoading ? (
-                          <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
-                        ) : (
-                          <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-1"/>
-                        )}
-                      </Button>
-                    </InputGroup.Append>
-                  </InputGroup>
-                </div>
-              </div>
-              }
-              { componentsLoading && (
-                <LoadingDialog size="sm"/> ) 
-              }
-              {
-                !componentsLoading && typeof profileComponentList === "object" &&
-                profileComponentList
-                  .map((item, idx) => (
-                    <div key={idx} className="d-flex justify-content-center">
-                      <div className="thick-list-item-container-green  w-100 force-text-wrap p-1">
-                        {item.commitAction && item.commitAction === "active" ? (
-                          <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1 green"/>
-                        ) : (
-                          <FontAwesomeIcon icon={faCode} fixedWidth className="mr-1 dark-grey"/>
-                        )}
-                        {item.componentType}: {item.committedFile}
-                      </div>
-                      <div className="p-1">
-                        {fromProfiles && (
-                          <Form.Check
-                            inline
-                            type={"checkbox"}
-                            name={item.committedFile}
-                            id={idx}
-                            disabled={profileCompCheckAll}
-                            checked={selectedProfileComponent.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
-                            onChange={handleComponentCheck}
-                          />
-                        )}
-                      </div>
-                    </div>
-                  ))}
-
-              {getPaginator(filterDto, setFilterDto, loading, loadData)}
-            </div>
-          </div>
+          <CustomTabContainer>
+            <CustomTab activeTab={activeTab} tabText={"SFDC Files"} handleTabClick={handleTabClick} tabName={"sfdc"}
+                      toolTipText={"SFDC Files"} icon={faSalesforce} />            
+          </CustomTabContainer>
+          {activeTab === "sfdc" ? (
+            <FilterContainer
+              loadData={loadData}
+              filterDto={filterDto}
+              setFilterDto={setFilterDto}
+              isLoading={loading}
+              title={"SFDC Files"}
+              titleIcon={faSalesforce}
+              body={getModifiedFilesTable()}              
+              supportSearch={true}
+              inlineFilters={getSfdcInlineFilters()}
+            />
+          ) : null }          
         </div>
         <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right">
           <Button

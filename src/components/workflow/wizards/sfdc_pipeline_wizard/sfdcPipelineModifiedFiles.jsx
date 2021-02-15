@@ -16,6 +16,7 @@ import {
   faSearch,
   faStepForward,
 } from "@fortawesome/free-solid-svg-icons";
+import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import "../../workflows.css";
 import DropdownList from "react-widgets/lib/DropdownList";
 import ErrorDialog from "components/common/status_notifications/error";
@@ -29,6 +30,20 @@ import Model from "../../../../core/data_model/model";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import PageSize from "components/common/pagination/page_options/PageSize";
 import { isEquals } from "components/common/helpers/array-helpers"
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import CustomTab from "components/common/tabs/CustomTab";
+import CustomTable from "components/common/table/CustomTable";
+import {
+  getTableDateColumn,
+  getTableTextColumn,
+  getCheckBoxColumn
+} from "components/common/table/table-column-helpers";
+import { format } from "date-fns";
+import FilterContainer from "components/common/table/FilterContainer";
+import SfdcComponentFilter from "components/common/filters/sfdccomponent/SfdcComponentFilter";
+import sfdcComponentFilterMetadata from './sfdc-component-filter-metadata';
+import BooleanFilter from "components/common/filters/input/BooleanFilter";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -91,29 +106,33 @@ const SfdcPipelineModifiedFiles = ({
   const [allGitComponentType, setAllGitComponentType] = useState([]);
   const [allSFDCComponentType, setAllSFDCComponentType] = useState([]);
   const [allDestSfdcComponentType, setAllDestSfdcComponentType] = useState([]);
-  const [sfdcFilterDto, setSfdcFilterDto] = useState(new Model({ ...filterMetadata.newObjectFields }, filterMetadata, false));
-  const [gitFilterDto, setGitFilterDto] = useState(new Model({ ...filterMetadata.newObjectFields }, filterMetadata, false));
+  const [sfdcFilterDto, setSfdcFilterDto] = useState(new Model({ ...sfdcComponentFilterMetadata.newObjectFields }, sfdcComponentFilterMetadata, false));
+  const [gitFilterDto, setGitFilterDto] = useState(new Model({ ...sfdcComponentFilterMetadata.newObjectFields }, sfdcComponentFilterMetadata, false));
   const [destSfdcFilterDto, setDestSfdcFilterDto] = useState(new Model({ ...filterMetadata.newObjectFields }, filterMetadata, false));
-
+  const [activeTab, setActiveTab] = useState("sfdc");
+  const [sfdcModifiedFilesTable, setSfdcModifiedFilesTable] = useState([]);
+  const [gitModifiedFilesTable, setGitModifiedFilesTable] = useState([]);
+  
   useEffect(() => {
     async function loadInitialData() {
       setLoading(true);
       loadSfdcData();
       loadGitData();
       loadDestSfdcData();
-      let componentTypesArr = [{ "componentType": "All", "value": "" }];
+      let componentTypesArr = [{ "text": "All", "value": "" }];
       let uniqueComponentTypes =  isProfiles ? [...new Set(selectedComp.map(item => item))] : [...new Set(selectedComponentTypes.map(item => item))];
-      uniqueComponentTypes.map(item => componentTypesArr.push({ "componentType": item, "value": item }));
+      uniqueComponentTypes.map(item => componentTypesArr.push({ "text": item, "value": item }));
       setComponentType(componentTypesArr);
       setLoading(false);
+      setFromSFDC(true);
     }
 
     loadInitialData();
   }, []);
 
 
-  const loadSfdcData = async () => {
-    setSfdcLoading(true);
+  const loadSfdcData = async () => {    
+    setSfdcLoading(true);    
     try {
       const sfdcResponse = await sfdcPipelineActions.getListFromPipelineStorage({
         "pipelineId": pipelineId,
@@ -127,14 +146,15 @@ const SfdcPipelineModifiedFiles = ({
       }
       let newSfdcFilterDto = sfdcFilterDto;
       newSfdcFilterDto.setData("totalCount", sfdcResponse.data.paginatedData.sfdcCommitList.count);
-      setSfdcFilterDto({ ...newSfdcFilterDto });
-
+      newSfdcFilterDto.setData("activeFilters", newSfdcFilterDto.getActiveFilters());
+      newSfdcFilterDto.setData("checkAll", isEquals(sfdcSelectedComponent, sfdcResponse.data.paginatedData.sfdcCommitList.data));
+      setSfdcFilterDto({ ...newSfdcFilterDto });      
       setSfdcModified(sfdcResponse.data.paginatedData.sfdcCommitList.data);
       setAllSFDCComponentType(sfdcResponse.data.data.sfdcCommitList);
-
+      getSfdcTableData(sfdcResponse.data.paginatedData.sfdcCommitList.data, sfdcResponse.data.data.sfdcCommitList);
       //storing _id so that we can edit this object
       setRecordId(sfdcResponse.data._id);
-
+      
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     }
@@ -142,6 +162,7 @@ const SfdcPipelineModifiedFiles = ({
   };
 
   const loadGitData = async () => {
+
     setGitLoading(true);
     try {
       const gitResponse = await sfdcPipelineActions.getListFromPipelineStorage({
@@ -156,11 +177,13 @@ const SfdcPipelineModifiedFiles = ({
       }
       let newGitFilterDto = gitFilterDto;
       newGitFilterDto.setData("totalCount", gitResponse.data.paginatedData.gitCommitList.count);
+      newGitFilterDto.setData("activeFilters", newGitFilterDto.getActiveFilters());
+      newGitFilterDto.setData("checkAll", isEquals(gitSelectedComponent, gitResponse.data.paginatedData.gitCommitList.data));
       setGitFilterDto({ ...newGitFilterDto });
 
       setGitModified(gitResponse.data.paginatedData.gitCommitList.data);
       setAllGitComponentType(gitResponse.data.data.gitCommitList);
-
+      getGitTableData(gitResponse.data.paginatedData.gitCommitList.data, gitResponse.data.data.gitCommitList);
       //storing _id so that we can edit this object
       setRecordId(gitResponse.data._id);
 
@@ -225,6 +248,18 @@ const SfdcPipelineModifiedFiles = ({
       setSfdcCheckAll(false);
     }
   },[allSFDCComponentType, sfdcSelectedComponent]);
+
+  useEffect(()=>{    
+    if(isEquals(sfdcSelectedComponent, sfdcModified) || sfdcSelectedComponent.length === 0){
+      getSfdcTableData(sfdcModified, allSFDCComponentType);
+    }    
+  },[sfdcSelectedComponent]);
+
+  useEffect(()=>{    
+    if(isEquals(gitSelectedComponent, gitModified) || gitSelectedComponent.length === 0){            
+      getGitTableData(gitModified, allGitComponentType);
+    }    
+  },[gitSelectedComponent]);
   
   useEffect(()=>{
     if(isEquals(destSFDCSelectedComponent, allDestSfdcComponentType)){
@@ -248,13 +283,45 @@ const SfdcPipelineModifiedFiles = ({
     </Tooltip>
   );
 
+  const handleSFDCComponentCheckNew = (data) => {
+    
+    if (!data.isChecked) {
+      setSFDCSelectedComponent((sfdcSelectedComponent) => sfdcSelectedComponent.filter((item) => item.committedFile !== data.committedFile));
+      return;
+    }
+    const newObj = {
+      componentType: data.componentType,
+      committedFile: data.committedFile,
+      committedTime: data.committedTime,
+      commitAction: data.commitAction
+    }
+    setSFDCSelectedComponent((sfdcSelectedComponent) => [...sfdcSelectedComponent, newObj]);
+  }
+  const handleGitComponentCheckNew = (data) => {    
+    if (!data.isChecked) {
+      setGitSelectedComponent((gitSelectedComponent) => gitSelectedComponent.filter((item) => item.committedFile !== data.committedFile));
+      return;
+    }
+
+    const newObj = {
+      componentType: data.componentType,
+      committedFile: data.committedFile,
+      committedTime: data.committedTime,
+      commitAction: data.commitAction
+    }
+
+    setGitSelectedComponent((gitSelectedComponent) => [...gitSelectedComponent, newObj]);
+  };
+
   const handleSFDCComponentCheck = (e) => {
     const newValue = e.target.name;
+
     if (!e.target.checked) {
       setSFDCSelectedComponent(sfdcSelectedComponent.filter((item) => item.committedFile !== newValue));
       return;
     }
     let newObj = [...sfdcModified];
+    
     let index = -1;
     for (let i = 0; i < newObj.length; i++) {
       if (newObj[i].committedFile === newValue) {
@@ -280,8 +347,8 @@ const SfdcPipelineModifiedFiles = ({
     }
   };
 
-  const handleGitComponentCheck = (e) => {
-    const newValue = e.target.name;
+  const handleGitComponentCheck = (e) => {    
+    const newValue = e.target.name;    
     if (!e.target.checked) {
       setGitSelectedComponent(gitSelectedComponent.filter((item) => item.committedFile !== newValue));
       return;
@@ -290,11 +357,27 @@ const SfdcPipelineModifiedFiles = ({
     let index = -1;
     for (let i = 0; i < newObj.length; i++) {
       if (newObj[i].committedFile === newValue) {
-        index = i;
+        index = i;        
         setGitSelectedComponent((gitSelectedComponent) => [...gitSelectedComponent, newObj[index]]);
       }
     }
   };
+
+  const handleCheckAllClickComponentTypesSfdc = () => {    
+    if(sfdcFilterDto.getData("checkAll")){
+      handleCheckAllClickComponentTypes("sfdc");
+    }else{
+      handleUnCheckAllClickComponentTypes("sfdc");
+    }
+  }
+
+  const handleCheckAllClickComponentTypesGit = () => {    
+    if(gitFilterDto.getData("checkAll")){
+      handleCheckAllClickComponentTypes("git");
+    }else{
+      handleUnCheckAllClickComponentTypes("git");
+    }
+  }
 
   const handleCheckAllClickComponentTypes = (type) => {
     // for advanced obj selection we have to select items which are visible on this page itself not all
@@ -335,6 +418,7 @@ const SfdcPipelineModifiedFiles = ({
   const handleSelectAll = (type) => {
     // const type = e.target.name;
     // set checkall flag for selected type 
+
     switch (type) {
       case "sfdc":
         setSfdcCheckAll(true);
@@ -372,7 +456,7 @@ const SfdcPipelineModifiedFiles = ({
     let newFilterDto = sfdcFilterDto;
     newFilterDto.setData("pageSize", 50);
     newFilterDto.setData("currentPage", 1);
-    newFilterDto.setData("classFilter", formData.SFDCComponentType);
+    // newFilterDto.setData("classFilter", formData.SFDCComponentType);
     newFilterDto.setData("search", formData.SFDCCommittedFile);
     setSfdcFilterDto({ ...newFilterDto });
 
@@ -566,6 +650,571 @@ const SfdcPipelineModifiedFiles = ({
     );
   };
 
+  const handleTabClick = (tabSelection) => e => {
+    e.preventDefault();
+    setActiveTab(tabSelection);
+    if(tabSelection === 'sfdc'){
+      setFromSFDC(true);
+    }else if(tabSelection === 'git'){
+      setFromGit(true);
+    }else if(tabSelection === 'destsfdc'){
+      setFromDestinationSFDC(true);
+    }    
+  };
+
+  const initialState = {
+    pageIndex: 0
+  };
+  
+  const fields = [
+    {
+      label: "Component", 
+      id: "componentType"
+    },
+    {
+      label: "File", 
+      id: "committedFile"
+    },
+    {
+      label: "Commit Time", 
+      id: "committedTime"
+    }
+  ]
+
+  const noDataMessage = "Modified Files Data not available for selected Criteria";
+
+  const sfdccolumns = useMemo(
+    () => [
+      getTableTextColumn(fields.find(field => { return field.id === "componentType"})),
+      getTableTextColumn(fields.find(field => { return field.id === "committedFile"})),
+      getTableDateColumn(fields.find(field => { return field.id === "committedTime"})),
+      getCheckBoxColumn(handleSFDCComponentCheckNew)      
+    ],
+    [],
+  );
+
+  const gitcolumns = useMemo(
+    () => [
+      getTableTextColumn(fields.find(field => { return field.id === "componentType"})),
+      getTableTextColumn(fields.find(field => { return field.id === "committedFile"})),
+      getTableDateColumn(fields.find(field => { return field.id === "committedTime"})),
+      getCheckBoxColumn(handleGitComponentCheckNew)
+    ],
+    [],
+  );
+
+  const destsfdccolumns = useMemo(
+    () => [
+      getTableTextColumn(fields.find(field => { return field.id === "componentType"})),
+      getTableTextColumn(fields.find(field => { return field.id === "committedFile"})),
+      getTableDateColumn(fields.find(field => { return field.id === "committedTime"}))
+    ],
+    [],
+  );
+
+  const getSfdcModifiedFilesTable = () => {
+    return (      
+      <CustomTable
+        className={"table-no-border"}
+        columns={sfdccolumns}
+        data={sfdcModifiedFilesTable}              
+        isLoading={sfdcLoading}
+        loadData={loadSfdcData}
+        noDataMessage={noDataMessage}
+        initialState={initialState}
+        paginationDto={sfdcFilterDto}
+        setPaginationDto={setSfdcFilterDto}        
+      />
+    );
+  };
+
+  const getGitModifiedFilesTable = () => {
+    return (      
+      <CustomTable
+        className={"table-no-border"}
+        columns={gitcolumns}
+        data={gitModifiedFilesTable}              
+        isLoading={gitLoading}
+        loadData={loadGitData}
+        noDataMessage={noDataMessage}
+        initialState={initialState}
+        paginationDto={gitFilterDto}
+        setPaginationDto={setGitFilterDto}
+      />
+    );
+  };
+
+  const getDestSfdcModifiedFilesTable = () => {
+    return (      
+      <CustomTable
+        className={"table-no-border"}
+        columns={destsfdccolumns}
+        data={destSfdcModified}              
+        isLoading={destSfdcLoading}
+        loadData={loadDestSfdcData}
+        noDataMessage={noDataMessage}
+        initialState={initialState}
+        paginationDto={destSfdcFilterDto}
+        setPaginationDto={setDestSfdcFilterDto}
+      />
+    );
+  };
+
+  const getSfdcInlineFilters = () => {    
+    return (
+      <div className="px-2 d-flex small">
+        <div className="pr-4">
+          <TooltipWrapper innerText={"This will select all the items on this page only."}>
+            <BooleanFilter loadData={handleCheckAllClickComponentTypesSfdc} filterDto={sfdcFilterDto} setFilterDto={setSfdcFilterDto} fieldName={"checkAll"} />
+          </TooltipWrapper>
+        </div>
+        <div>
+          <SfdcComponentFilter componentType={componentType} filterDto={sfdcFilterDto} setFilterDto={setSfdcFilterDto} />
+        </div>
+      </div>
+    );
+  };
+
+  const getGitInlineFilters = () => {
+    return (
+      <div className="px-2 d-flex small">
+        <div className="pr-4">
+          <TooltipWrapper innerText={"This will select all the items on this page only."}>
+            <BooleanFilter loadData={handleCheckAllClickComponentTypesGit} filterDto={gitFilterDto} setFilterDto={setGitFilterDto} fieldName={"checkAll"} />
+          </TooltipWrapper>
+        </div>        
+        <div><SfdcComponentFilter componentType={componentType} filterDto={gitFilterDto} setFilterDto={setGitFilterDto} /></div>
+      </div>
+    );
+  };
+
+  const getSfdcTableData = (sfdcData, allSfdc) => {
+    setSfdcModifiedFilesTable(sfdcData.map(d => {
+       return Object.assign(
+        {
+          checkAll: isEquals(sfdcSelectedComponent, allSfdc),
+          isChecked: sfdcSelectedComponent.some(selected => selected.componentType === d.componentType && selected.committedFile === d.committedFile && selected.commitAction === d.commitAction && selected.committedTime === d.committedTime)
+        },
+        d
+      )
+    }))
+  }
+
+  const getGitTableData = (gitData, allGit) => {        
+    setGitModifiedFilesTable(gitData.map(d => {
+      return Object.assign(
+        {
+          checkAll: isEquals(gitSelectedComponent, allGit),
+          isChecked: gitSelectedComponent.some(selected => selected.componentType === d.componentType && selected.committedFile === d.committedFile && selected.commitAction === d.commitAction && selected.committedTime === d.committedTime)
+        },
+        d
+      )
+    }))
+  }
+
+  // const getSfdcFilterBar = () => {
+  //   if (sfdcFilterDto == null) {
+  //     return null;
+  //   }
+
+  //   return(
+  //     <FilterBar
+  //       loadData={loadSfdcData}
+  //       filterDto={sfdcFilterDto}
+  //       setFilterDto={setSfdcFilterDto}
+  //       supportSearch={true}
+  //       inlineChildren={true}
+  //     >
+        
+  //     </FilterBar>
+  //   );
+  // };
+  
+
+  const getSfdcFilesView = () => {
+    return (
+      <div className="col-12 list-item-container mr-1">
+        <div className="h6 opsera-blue">SFDC Files</div>
+
+        {sfdcModified && sfdcModified.length === 0 && <div className="info-text mt-3">NO FILES</div>}
+
+        <div className="d-flex w-100">
+          <div className="col-4">
+            <Form.Group controlId="fromSFDC">
+              <Form.Check
+                type="checkbox"
+                label="Push from SFDC"
+                name="fromSFDC"
+                // disabled={!sfdcComponentFilterObject.nameSpacePrefix || sfdcComponentFilterObject.nameSpacePrefix.length === 0}
+                checked={fromSFDC ? fromSFDC : false}
+                onChange={(e) => setFromSFDC(e.target.checked)}
+              />
+            </Form.Group>
+          </div>
+          <div className="col-9">
+            {fromSFDC && (
+              <div className="align-self-end">
+                <OverlayTrigger
+                placement="top"
+                delay={{ show: 250, hide: 400 }}
+                overlay={renderTooltip("This will select all the items on this page only")}>
+                  <Button variant="secondary" size="sm" className="mr-1" disabled={sfdcCheckAll}
+                          onClick={() => handleCheckAllClickComponentTypes("sfdc")}>
+                    <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>
+                    Check All
+                  </Button>
+                </OverlayTrigger>
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="mr-1"
+                  onClick={() => handleUnCheckAllClickComponentTypes("sfdc")}
+                >
+                  <FontAwesomeIcon icon={faSquare} fixedWidth className="mr-1"/>
+                  Uncheck All
+                </Button>
+                
+                <Button
+                  variant="success"
+                  size="sm"
+                  onClick={() => {
+                    setSave(true);
+                    handleSelectAll("sfdc");
+                  }}
+                  disabled={checkDisabled()}
+                >
+                  {save ? (
+                    <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
+                  ) : (
+                    <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
+                  )}
+                  Use All Files
+                </Button>
+                {/* <Form.Check
+                  style={{paddingTop: "10px", paddingBottom: "10px"}}
+                  inline
+                  type={"switch"}
+                  label={"Check All"}
+                  id="sfdc"
+                  name="sfdc"
+                  checked={sfdcCheckAll}
+                  onChange={handleSelectAll}
+                /> */}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {fromSFDC &&
+        <div className="d-flex w-100 pr-2">
+          <div className="col-5 mr-1">
+            <DropdownList
+              data={componentType}
+              value={
+                componentType[
+                  componentType.findIndex(
+                    (x) => x.value === formData.SFDCComponentType,
+                  )
+                  ]
+              }
+              valueField="value"
+              textField="componentType"
+              placeholder="Please select a component type"
+              filter="contains"
+              onChange={handleSFDCComponentTypeChange}
+            />
+          </div>
+          <div className="col-7 mr-1">
+            <InputGroup className="mb-3">
+              <Form.Control
+                placeholder="Search for the file name"
+                value={formData.SFDCCommittedFile || ""}
+                onChange={e => setFormData({ ...formData, SFDCCommittedFile: e.target.value })}
+              />
+              <InputGroup.Append>
+                <Button variant="secondary" size="sm" onClick={handleSfdcSearch}>
+                  {sfdcLoading ? (
+                    <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
+                  ) : (
+                    <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-1"/>
+                  )}
+                </Button>
+              </InputGroup.Append>
+            </InputGroup>
+          </div>
+        </div>
+        }
+        
+        { sfdcLoading && (
+          <LoadingDialog size="sm"/>
+        ) }
+
+        {!sfdcLoading && typeof sfdcModified === "object" &&
+        sfdcModified
+          // .filter(item => item.componentType.includes(formData.SFDCComponentType) && item.committedFile.toLowerCase().includes(formData.SFDCCommittedFile.toLowerCase()) )
+          .map((item, idx) => (
+            <div key={idx} className="d-flex justify-content-between align-items-center">
+              <div className="thick-list-item-container-green  wp-60 force-text-wrap p-1">
+                {item.commitAction && item.commitAction === "active" ? (
+                  <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1 green"/>
+                ) : (
+                  <FontAwesomeIcon icon={faCode} fixedWidth className="mr-1 dark-grey"/>
+                )}
+                {item.componentType}: {item.committedFile}
+              </div>
+              <div>
+                {format(new Date(item.committedTime), "yyyy-MM-dd', 'hh:mm a")}
+              </div>
+              <div className="p-1">
+                {fromSFDC && (
+                  <Form.Check
+                    inline
+                    type={"checkbox"}
+                    name={item.committedFile}
+                    id={idx}
+                    disabled={sfdcCheckAll}
+                    checked={sfdcSelectedComponent.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
+                    onChange={handleSFDCComponentCheck}
+                  />
+                )}
+              </div>
+            </div>
+          ))}
+
+        {/*pagination component goes here */}
+        {getPaginator(sfdcFilterDto, setSfdcFilterDto, sfdcLoading, loadSfdcData)}
+      </div>
+    )
+  }
+
+  const getGitFilesView = () => {
+    return (
+      <div className="col-12 list-item-container">
+        {isOrgToOrg ? (
+          <>
+            <div className="h6 opsera-blue">Destination SFDC Files</div>
+            {destSfdcModified && destSfdcModified.length === 0 && (
+              <div className="info-text mt-3">NO FILES</div>
+            )}
+
+            {destSfdcLoading ? (
+              <LoadingDialog size="sm"/>
+            ) : (
+              <>
+                {typeof destSfdcModified === "object" &&
+                destSfdcModified.map((item, idx) => (
+                  <div key={idx} className="d-flex justify-content-center">
+                    <div className="thick-list-item-container-green  w-100 force-text-wrap p-1">
+                      {item.commitAction && item.commitAction === "active" ? (
+                        <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1 green"/>
+                      ) : (
+                        <FontAwesomeIcon icon={faCode} fixedWidth className="mr-1 dark-grey"/>
+                      )}
+                      {item.componentType}: {item.committedFile}
+                    </div>
+                    <div className="p-1">
+                      {fromDestinationSFDC && (
+                        <Form.Check
+                          inline
+                          type={"checkbox"}
+                          name={item.committedFile}
+                          disabled={destSfdcCheckAll}
+                          id={idx}
+                          checked={destSFDCSelectedComponent.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
+                          onChange={handleDestSFDCComponentCheck}
+                        />
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </>
+            )}
+            {/* pagination goes here */}
+            {getPaginator(destSfdcFilterDto, setDestSfdcFilterDto, destSfdcLoading, loadDestSfdcData)}
+          </>
+        ) : (
+          <>
+            <div className="h6 opsera-blue">Git Files</div>
+            {gitModified && gitModified.length === 0 && <div className="info-text mt-3">NO FILES</div>}
+
+            <div className="d-flex w-100">
+              <div className="col-6">
+                <Form.Group controlId="fromGit">
+                  <Form.Check
+                    type="checkbox"
+                    label="Push from Git"
+                    name="fromGit"
+                    // disabled={!sfdcComponentFilterObject.nameSpacePrefix || sfdcComponentFilterObject.nameSpacePrefix.length === 0}
+                    checked={fromGit ? fromGit : false}
+                    onChange={(e) => setFromGit(e.target.checked)}
+                  />
+                </Form.Group>
+              </div>
+              <div className="col-9">
+                {fromGit && (
+                  <div className="align-self-end">
+                      <OverlayTrigger
+                      placement="top"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={renderTooltip("This will select all the items on this page only")}>
+                      <Button variant="secondary" size="sm" className="mr-1" disabled={gitCheckAll}
+                              onClick={() => handleCheckAllClickComponentTypes("git")}>
+                        <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>
+                        Check All
+                      </Button>
+                    </OverlayTrigger>
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      className="mr-1"
+                      onClick={() => handleUnCheckAllClickComponentTypes("git")}
+                    >
+                      <FontAwesomeIcon icon={faSquare} fixedWidth className="mr-1"/>
+                      Uncheck All
+                    </Button>
+                    
+                    <Button
+                      variant="success"
+                      size="sm"
+                      onClick={() => {
+                        setSave(true);
+                        handleSelectAll("git");
+                      }}
+                      disabled={checkDisabled()}
+                    >
+                      {save ? (
+                        <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
+                      ) : (
+                        <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
+                      )}
+                      Use All Files
+                    </Button>
+                    {/* <Form.Check
+                      style={{paddingTop: "10px", paddingBottom: "10px"}}
+                      inline
+                      type={"switch"}
+                      label={"Check All"}
+                      id="git"
+                      name="git"
+                      checked={gitCheckAll}
+                      onChange={handleSelectAll}
+                    /> */}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {fromGit &&
+            <div className="d-flex w-100 pr-2">
+              <div className="col-5">
+                <DropdownList
+                  data={componentType}
+                  value={
+                    componentType[
+                      componentType.findIndex(
+                        (x) => x.value === formData.gitComponentType,
+                      )
+                      ]
+                  }
+                  valueField="value"
+                  textField="text"
+                  placeholder="Please select a component type"
+                  filter="contains"
+                  onChange={handleGitComponentTypeChange}
+                />
+              </div>
+              <div className="col-7">
+                <InputGroup className="mb-3">
+                  <Form.Control
+                    placeholder="Search for the file name"
+                    value={formData.gitCommittedFile || ""}
+                    onChange={e => setFormData({ ...formData, gitCommittedFile: e.target.value })}
+                  />
+                  <InputGroup.Append>
+                    <Button variant="secondary" size="sm" onClick={handleGitSearch}>
+                      {gitLoading ? (
+                        <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
+                      ) : (
+                        <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-1"/>
+                      )}
+                    </Button>
+                  </InputGroup.Append>
+                </InputGroup>
+              </div>
+            </div>
+            }
+
+            {gitLoading ? (
+              <LoadingDialog size="sm"/>
+            ) : (
+              <>
+                {typeof gitModified === "object" &&
+                gitModified
+                  // .filter(item => item.componentType.includes(formData.gitComponentType) && item.committedFile.toLowerCase().includes(formData.gitCommittedFile.toLowerCase()) )
+                  .map((item, idx) => (
+                    <div key={idx} className="d-flex justify-content-between align-items-center">
+                      <div className="thick-list-item-container-green  wp-60 force-text-wrap p-1">
+                        {item.commitAction && item.commitAction === "added" && (
+                          <OverlayTrigger
+                            placement="top"
+                            overlay={<Tooltip id="button-tooltip-2">Added File</Tooltip>}
+                          >
+                          <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1 green"/>
+                          </OverlayTrigger>
+                        )}
+                        {item.commitAction && item.commitAction === "modified" && (
+                          <OverlayTrigger
+                            placement="top"
+                            overlay={<Tooltip id="added-tooltip">Modified File</Tooltip>}
+                          >
+                          <FontAwesomeIcon icon={faEdit} fixedWidth className="mr-1 yellow"/>
+                          </OverlayTrigger>
+                        )}
+                        {item.commitAction && item.commitAction === "removed" && (
+                          <OverlayTrigger
+                            placement="top"
+                            overlay={<Tooltip id="removed-tooltip">Removed File</Tooltip>}
+                          >
+                          <FontAwesomeIcon icon={faMinus} fixedWidth className="mr-1 red"/>
+                          </OverlayTrigger>
+                        )}
+                        {item.commitAction && item.commitAction === "renamed" && (
+                          <OverlayTrigger
+                            placement="top"
+                            overlay={<Tooltip id="renamed-tooltip">Renamed File</Tooltip>}
+                          >
+                          <FontAwesomeIcon icon={faPen} fixedWidth className="mr-1 dark-grey"/>
+                          </OverlayTrigger>
+                        )}
+                        {item.componentType}: {item.committedFile}
+                      </div>
+                      <div>
+                        {format(new Date(item.committedTime), "yyyy-MM-dd', 'hh:mm a")}
+                      </div>
+                      <div className="p-1">
+                        {fromGit && (
+                          <Form.Check
+                            inline
+                            type={"checkbox"}
+                            name={item.committedFile}
+                            id={idx}
+                            disabled={gitCheckAll}
+                            checked={gitSelectedComponent.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
+                            onChange={handleGitComponentCheck}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  ))}
+              </>
+            )}
+            {/* pagination goes here */}
+            {getPaginator(gitFilterDto, setGitFilterDto, gitLoading, loadGitData)}
+          </>
+        )}
+        </div>
+    )
+  }
 
   if (error) {
     return (<div className="mt-3">
@@ -578,7 +1227,7 @@ const SfdcPipelineModifiedFiles = ({
   }
 
   return (
-    <div className="ml-5">
+    <div className="mx-5">
       <div className="flex-container">
         <div className="flex-container-top"></div>
         <div className="flex-container-content">
@@ -587,379 +1236,53 @@ const SfdcPipelineModifiedFiles = ({
             Listed below are the files with changes impacted in this pipeline run. Please confirm that you want to
             proceed with this operation.
           </div>
-
-          <div className="d-flex w-100 pr-2">
-            <div className="col-5 list-item-container mr-1">
-              <div className="h6 opsera-blue">SFDC Files</div>
-
-              {sfdcModified && sfdcModified.length === 0 && <div className="info-text mt-3">NO FILES</div>}
-
-              <div className="d-flex w-100">
-                <div className="col-4">
-                  <Form.Group controlId="fromSFDC">
-                    <Form.Check
-                      type="checkbox"
-                      label="Push from SFDC"
-                      name="fromSFDC"
-                      // disabled={!sfdcComponentFilterObject.nameSpacePrefix || sfdcComponentFilterObject.nameSpacePrefix.length === 0}
-                      checked={fromSFDC ? fromSFDC : false}
-                      onChange={(e) => setFromSFDC(e.target.checked)}
-                    />
-                  </Form.Group>
-                </div>
-                <div className="col-9">
-                  {fromSFDC && (
-                    <div className="align-self-end">
-                      <OverlayTrigger
-                      placement="top"
-                      delay={{ show: 250, hide: 400 }}
-                      overlay={renderTooltip("This will select all the items on this page only")}>
-                        <Button variant="secondary" size="sm" className="mr-1" disabled={sfdcCheckAll}
-                                onClick={() => handleCheckAllClickComponentTypes("sfdc")}>
-                          <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>
-                          Check All
-                        </Button>
-                      </OverlayTrigger>
-                      <Button
-                        variant="secondary"
-                        size="sm"
-                        className="mr-1"
-                        onClick={() => handleUnCheckAllClickComponentTypes("sfdc")}
-                      >
-                        <FontAwesomeIcon icon={faSquare} fixedWidth className="mr-1"/>
-                        Uncheck All
-                      </Button>
-                      
-                      <Button
-                        variant="success"
-                        size="sm"
-                        onClick={() => {
-                          setSave(true);
-                          handleSelectAll("sfdc");
-                        }}
-                        disabled={checkDisabled()}
-                      >
-                        {save ? (
-                          <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
-                        ) : (
-                          <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
-                        )}
-                        Use All Files
-                      </Button>
-                      {/* <Form.Check
-                        style={{paddingTop: "10px", paddingBottom: "10px"}}
-                        inline
-                        type={"switch"}
-                        label={"Check All"}
-                        id="sfdc"
-                        name="sfdc"
-                        checked={sfdcCheckAll}
-                        onChange={handleSelectAll}
-                      /> */}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {fromSFDC &&
-              <div className="d-flex w-100 pr-2">
-                <div className="col-5 mr-1">
-                  <DropdownList
-                    data={componentType}
-                    value={
-                      componentType[
-                        componentType.findIndex(
-                          (x) => x.value === formData.SFDCComponentType,
-                        )
-                        ]
-                    }
-                    valueField="value"
-                    textField="componentType"
-                    placeholder="Please select a component type"
-                    filter="contains"
-                    onChange={handleSFDCComponentTypeChange}
-                  />
-                </div>
-                <div className="col-7 mr-1">
-                  <InputGroup className="mb-3">
-                    <Form.Control
-                      placeholder="Search for the file name"
-                      value={formData.SFDCCommittedFile || ""}
-                      onChange={e => setFormData({ ...formData, SFDCCommittedFile: e.target.value })}
-                    />
-                    <InputGroup.Append>
-                      <Button variant="secondary" size="sm" onClick={handleSfdcSearch}>
-                        {sfdcLoading ? (
-                          <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
-                        ) : (
-                          <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-1"/>
-                        )}
-                      </Button>
-                    </InputGroup.Append>
-                  </InputGroup>
-                </div>
-              </div>
-              }
-              
-              { sfdcLoading && (
-                <LoadingDialog size="sm"/>
-              ) }
-
-              {!sfdcLoading && typeof sfdcModified === "object" &&
-              sfdcModified
-                // .filter(item => item.componentType.includes(formData.SFDCComponentType) && item.committedFile.toLowerCase().includes(formData.SFDCCommittedFile.toLowerCase()) )
-                .map((item, idx) => (
-                  <div key={idx} className="d-flex justify-content-center">
-                    <div className="thick-list-item-container-green  w-100 force-text-wrap p-1">
-                      {item.commitAction && item.commitAction === "active" ? (
-                        <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1 green"/>
-                      ) : (
-                        <FontAwesomeIcon icon={faCode} fixedWidth className="mr-1 dark-grey"/>
-                      )}
-                      {item.componentType}: {item.committedFile}
-                    </div>
-                    <div className="p-1">
-                      {fromSFDC && (
-                        <Form.Check
-                          inline
-                          type={"checkbox"}
-                          name={item.committedFile}
-                          id={idx}
-                          disabled={sfdcCheckAll}
-                          checked={sfdcSelectedComponent.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
-                          onChange={handleSFDCComponentCheck}
-                        />
-                      )}
-                    </div>
-                  </div>
-                ))}
-
-              {/*pagination component goes here */}
-              {getPaginator(sfdcFilterDto, setSfdcFilterDto, sfdcLoading, loadSfdcData)}
-            </div>
-            <div className="col-7 list-item-container">
-              {isOrgToOrg ? (
-                <>
-                  <div className="h6 opsera-blue">Destination SFDC Files</div>
-                  {destSfdcModified && destSfdcModified.length === 0 && (
-                    <div className="info-text mt-3">NO FILES</div>
-                  )}
-
-                  {destSfdcLoading ? (
-                    <LoadingDialog size="sm"/>
-                  ) : (
-                    <>
-                      {typeof destSfdcModified === "object" &&
-                      destSfdcModified.map((item, idx) => (
-                        <div key={idx} className="d-flex justify-content-center">
-                          <div className="thick-list-item-container-green  w-100 force-text-wrap p-1">
-                            {item.commitAction && item.commitAction === "active" ? (
-                              <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1 green"/>
-                            ) : (
-                              <FontAwesomeIcon icon={faCode} fixedWidth className="mr-1 dark-grey"/>
-                            )}
-                            {item.componentType}: {item.committedFile}
-                          </div>
-                          <div className="p-1">
-                            {fromDestinationSFDC && (
-                              <Form.Check
-                                inline
-                                type={"checkbox"}
-                                name={item.committedFile}
-                                disabled={destSfdcCheckAll}
-                                id={idx}
-                                checked={destSFDCSelectedComponent.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
-                                onChange={handleDestSFDCComponentCheck}
-                              />
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </>
-                  )}
-                  {/* pagination goes here */}
-                  {getPaginator(destSfdcFilterDto, setDestSfdcFilterDto, destSfdcLoading, loadDestSfdcData)}
-                </>
-              ) : (
-                <>
-                  <div className="h6 opsera-blue">Git Files</div>
-                  {gitModified && gitModified.length === 0 && <div className="info-text mt-3">NO FILES</div>}
-
-                  <div className="d-flex w-100">
-                    <div className="col-6">
-                      <Form.Group controlId="fromGit">
-                        <Form.Check
-                          type="checkbox"
-                          label="Push from Git"
-                          name="fromGit"
-                          // disabled={!sfdcComponentFilterObject.nameSpacePrefix || sfdcComponentFilterObject.nameSpacePrefix.length === 0}
-                          checked={fromGit ? fromGit : false}
-                          onChange={(e) => setFromGit(e.target.checked)}
-                        />
-                      </Form.Group>
-                    </div>
-                    <div className="col-9">
-                      {fromGit && (
-                        <div className="align-self-end">
-                           <OverlayTrigger
-                            placement="top"
-                            delay={{ show: 250, hide: 400 }}
-                            overlay={renderTooltip("This will select all the items on this page only")}>
-                            <Button variant="secondary" size="sm" className="mr-1" disabled={gitCheckAll}
-                                    onClick={() => handleCheckAllClickComponentTypes("git")}>
-                              <FontAwesomeIcon icon={faCheck} fixedWidth className="mr-1"/>
-                              Check All
-                            </Button>
-                          </OverlayTrigger>
-                          <Button
-                            variant="secondary"
-                            size="sm"
-                            className="mr-1"
-                            onClick={() => handleUnCheckAllClickComponentTypes("git")}
-                          >
-                            <FontAwesomeIcon icon={faSquare} fixedWidth className="mr-1"/>
-                            Uncheck All
-                          </Button>
-                          
-                          <Button
-                            variant="success"
-                            size="sm"
-                            onClick={() => {
-                              setSave(true);
-                              handleSelectAll("git");
-                            }}
-                            disabled={checkDisabled()}
-                          >
-                            {save ? (
-                              <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
-                            ) : (
-                              <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
-                            )}
-                            Use All Files
-                          </Button>
-                          {/* <Form.Check
-                            style={{paddingTop: "10px", paddingBottom: "10px"}}
-                            inline
-                            type={"switch"}
-                            label={"Check All"}
-                            id="git"
-                            name="git"
-                            checked={gitCheckAll}
-                            onChange={handleSelectAll}
-                          /> */}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {fromGit &&
-                  <div className="d-flex w-100 pr-2">
-                    <div className="col-5">
-                      <DropdownList
-                        data={componentType}
-                        value={
-                          componentType[
-                            componentType.findIndex(
-                              (x) => x.value === formData.gitComponentType,
-                            )
-                            ]
-                        }
-                        valueField="value"
-                        textField="componentType"
-                        placeholder="Please select a component type"
-                        filter="contains"
-                        onChange={handleGitComponentTypeChange}
-                      />
-                    </div>
-                    <div className="col-7">
-                      <InputGroup className="mb-3">
-                        <Form.Control
-                          placeholder="Search for the file name"
-                          value={formData.gitCommittedFile || ""}
-                          onChange={e => setFormData({ ...formData, gitCommittedFile: e.target.value })}
-                        />
-                        <InputGroup.Append>
-                          <Button variant="secondary" size="sm" onClick={handleGitSearch}>
-                            {gitLoading ? (
-                              <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
-                            ) : (
-                              <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-1"/>
-                            )}
-                          </Button>
-                        </InputGroup.Append>
-                      </InputGroup>
-                    </div>
-                  </div>
-                  }
-
-                  {gitLoading ? (
-                    <LoadingDialog size="sm"/>
-                  ) : (
-                    <>
-                      {typeof gitModified === "object" &&
-                      gitModified
-                        // .filter(item => item.componentType.includes(formData.gitComponentType) && item.committedFile.toLowerCase().includes(formData.gitCommittedFile.toLowerCase()) )
-                        .map((item, idx) => (
-                          <div key={idx} className="d-flex justify-content-center">
-                            <div className="thick-list-item-container-green  w-100 force-text-wrap p-1">
-                              {item.commitAction && item.commitAction === "added" && (
-                                <OverlayTrigger
-                                  placement="top"
-                                  overlay={<Tooltip id="button-tooltip-2">Added File</Tooltip>}
-                                >
-                                <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1 green"/>
-                                </OverlayTrigger>
-                              )}
-                              {item.commitAction && item.commitAction === "modified" && (
-                                <OverlayTrigger
-                                  placement="top"
-                                  overlay={<Tooltip id="added-tooltip">Modified File</Tooltip>}
-                                >
-                                <FontAwesomeIcon icon={faEdit} fixedWidth className="mr-1 yellow"/>
-                                </OverlayTrigger>
-                              )}
-                              {item.commitAction && item.commitAction === "removed" && (
-                                <OverlayTrigger
-                                  placement="top"
-                                  overlay={<Tooltip id="removed-tooltip">Removed File</Tooltip>}
-                                >
-                                <FontAwesomeIcon icon={faMinus} fixedWidth className="mr-1 red"/>
-                                </OverlayTrigger>
-                              )}
-                              {item.commitAction && item.commitAction === "renamed" && (
-                                <OverlayTrigger
-                                  placement="top"
-                                  overlay={<Tooltip id="renamed-tooltip">Renamed File</Tooltip>}
-                                >
-                                <FontAwesomeIcon icon={faPen} fixedWidth className="mr-1 dark-grey"/>
-                                </OverlayTrigger>
-                              )}
-                              {item.componentType}: {item.committedFile}
-                            </div>
-                            <div className="p-1">
-                              {fromGit && (
-                                <Form.Check
-                                  inline
-                                  type={"checkbox"}
-                                  name={item.committedFile}
-                                  id={idx}
-                                  disabled={gitCheckAll}
-                                  checked={gitSelectedComponent.some(selected => selected.componentType === item.componentType && selected.committedFile === item.committedFile && selected.commitAction === item.commitAction && selected.committedTime === item.committedTime)}
-                                  onChange={handleGitComponentCheck}
-                                />
-                              )}
-                            </div>
-                          </div>
-                        ))}
-                    </>
-                  )}
-                  {/* pagination goes here */}
-                  {getPaginator(gitFilterDto, setGitFilterDto, gitLoading, loadGitData)}
-                </>
-              )}
-            </div>
-          </div>
-
+          <CustomTabContainer>
+            <CustomTab activeTab={activeTab} tabText={"SFDC Files"} handleTabClick={handleTabClick} tabName={"sfdc"}
+                      toolTipText={"SFDC Files"} icon={faSalesforce} />
+            { isOrgToOrg ? (
+              <CustomTab activeTab={activeTab} tabText={"Destination SFDC Files"} handleTabClick={handleTabClick} tabName={"destsfdc"}
+                      toolTipText={"Destination SFDC Files"} icon={faCode} />
+            ) : (
+              <CustomTab activeTab={activeTab} tabText={"Git Files"} handleTabClick={handleTabClick} tabName={"git"}
+                      toolTipText={"Git Files"} icon={faCode} />
+            ) }                        
+          </CustomTabContainer>
+          {activeTab === "sfdc" ? (
+            <FilterContainer
+              loadData={loadSfdcData}
+              filterDto={sfdcFilterDto}
+              setFilterDto={setSfdcFilterDto}
+              isLoading={sfdcLoading}
+              title={"SFDC Files"}
+              titleIcon={faSalesforce}
+              body={getSfdcModifiedFilesTable()}              
+              supportSearch={true}
+              inlineFilters={getSfdcInlineFilters()}
+            />
+          ) : activeTab === "git" ? (
+            <FilterContainer
+              loadData={loadGitData}
+              filterDto={gitFilterDto}
+              setFilterDto={setGitFilterDto}
+              isLoading={gitLoading}
+              title={"GIT Files"}
+              titleIcon={faCode}
+              body={getGitModifiedFilesTable()}              
+              supportSearch={true}
+              inlineFilters={getGitInlineFilters()}
+            />
+          ) : activeTab === "destsfdc" ? (
+            <FilterContainer
+              loadData={loadDestSfdcData}
+              filterDto={destSfdcFilterDto}
+              setFilterDto={setDestSfdcFilterDto}
+              isLoading={destSfdcLoading}
+              title={"Destination SFDC Files"}
+              titleIcon={faCode}
+              body={getDestSfdcModifiedFilesTable()}              
+              supportSearch={false}
+            />
+          ) : null }            
         </div>
         <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right">
           <Button
@@ -973,11 +1296,27 @@ const SfdcPipelineModifiedFiles = ({
             <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>
             Back
           </Button>
-
           <Button
             variant="success"
             size="sm"
+            className="mr-2"
             onClick={() => {
+              setSave(true);
+              handleSelectAll(activeTab);
+            }}
+            disabled={checkDisabled()}
+          >
+            {save ? (
+              <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
+            ) : (
+              <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
+            )}
+            Use All Files
+          </Button>            
+          <Button
+            variant="success"
+            size="sm"
+            onClick={() => {              
               setSave(true);
               handleApproveChanges();
             }}
