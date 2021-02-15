@@ -21,7 +21,6 @@ import "../../workflows.css";
 import DropdownList from "react-widgets/lib/DropdownList";
 import ErrorDialog from "components/common/status_notifications/error";
 import LoadingDialog from "components/common/status_notifications/loading";
-import { propTypes } from "react-widgets/lib/SelectList";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "../../../../contexts/DialogToastContext";
 import sfdcPipelineActions from "./sfdc-pipeline-actions";
@@ -44,6 +43,7 @@ import SfdcComponentFilter from "components/common/filters/sfdccomponent/SfdcCom
 import sfdcComponentFilterMetadata from './sfdc-component-filter-metadata';
 import BooleanFilter from "components/common/filters/input/BooleanFilter";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import ModifiedFilesTabView from "./tab_views/ModifiedFilesTabView";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -662,98 +662,38 @@ const SfdcPipelineModifiedFiles = ({
     }    
   };
 
-  const initialState = {
-    pageIndex: 0
-  };
-  
-  const fields = [
-    {
-      label: "Component", 
-      id: "componentType"
-    },
-    {
-      label: "File", 
-      id: "committedFile"
-    },
-    {
-      label: "Commit Time", 
-      id: "committedTime"
-    }
-  ]
-
-  const noDataMessage = "Modified Files Data not available for selected Criteria";
-
-  const sfdccolumns = useMemo(
-    () => [
-      getTableTextColumn(fields.find(field => { return field.id === "componentType"})),
-      getTableTextColumn(fields.find(field => { return field.id === "committedFile"})),
-      getTableDateColumn(fields.find(field => { return field.id === "committedTime"})),
-      getCheckBoxColumn(handleSFDCComponentCheckNew)      
-    ],
-    [],
-  );
-
-  const gitcolumns = useMemo(
-    () => [
-      getTableTextColumn(fields.find(field => { return field.id === "componentType"})),
-      getTableTextColumn(fields.find(field => { return field.id === "committedFile"})),
-      getTableDateColumn(fields.find(field => { return field.id === "committedTime"})),
-      getCheckBoxColumn(handleGitComponentCheckNew)
-    ],
-    [],
-  );
-
-  const destsfdccolumns = useMemo(
-    () => [
-      getTableTextColumn(fields.find(field => { return field.id === "componentType"})),
-      getTableTextColumn(fields.find(field => { return field.id === "committedFile"})),
-      getTableDateColumn(fields.find(field => { return field.id === "committedTime"}))
-    ],
-    [],
-  );
-
-  const getSfdcModifiedFilesTable = () => {
-    return (      
-      <CustomTable
-        className={"table-no-border"}
-        columns={sfdccolumns}
-        data={sfdcModifiedFilesTable}              
-        isLoading={sfdcLoading}
+  const getSfdcModifiedFilesView = () => {
+    return (  
+      <ModifiedFilesTabView 
+        data={sfdcModifiedFilesTable}        
+        loading={sfdcLoading}
         loadData={loadSfdcData}
-        noDataMessage={noDataMessage}
-        initialState={initialState}
         paginationDto={sfdcFilterDto}
-        setPaginationDto={setSfdcFilterDto}        
+        setPaginationDto={setSfdcFilterDto}
+        handleComponentCheck={handleSFDCComponentCheckNew}
       />
     );
   };
 
-  const getGitModifiedFilesTable = () => {
+  const getGitModifiedFilesView = () => {
     return (      
-      <CustomTable
-        className={"table-no-border"}
-        columns={gitcolumns}
-        data={gitModifiedFilesTable}              
-        isLoading={gitLoading}
+      <ModifiedFilesTabView 
+        data={gitModifiedFilesTable}        
+        loading={gitLoading}
         loadData={loadGitData}
-        noDataMessage={noDataMessage}
-        initialState={initialState}
         paginationDto={gitFilterDto}
         setPaginationDto={setGitFilterDto}
+        handleComponentCheck={handleGitComponentCheckNew}
       />
     );
   };
 
-  const getDestSfdcModifiedFilesTable = () => {
-    return (      
-      <CustomTable
-        className={"table-no-border"}
-        columns={destsfdccolumns}
-        data={destSfdcModified}              
-        isLoading={destSfdcLoading}
+  const getDestSfdcModifiedFilesView = () => {
+    return (  
+      <ModifiedFilesTabView 
+        data={destSfdcModified}        
+        loading={destSfdcLoading}
         loadData={loadDestSfdcData}
-        noDataMessage={noDataMessage}
-        initialState={initialState}
         paginationDto={destSfdcFilterDto}
         setPaginationDto={setDestSfdcFilterDto}
       />
@@ -1255,7 +1195,7 @@ const SfdcPipelineModifiedFiles = ({
               isLoading={sfdcLoading}
               title={"SFDC Files"}
               titleIcon={faSalesforce}
-              body={getSfdcModifiedFilesTable()}              
+              body={getSfdcModifiedFilesView()}              
               supportSearch={true}
               inlineFilters={getSfdcInlineFilters()}
             />
@@ -1267,7 +1207,7 @@ const SfdcPipelineModifiedFiles = ({
               isLoading={gitLoading}
               title={"GIT Files"}
               titleIcon={faCode}
-              body={getGitModifiedFilesTable()}              
+              body={getGitModifiedFilesView()}              
               supportSearch={true}
               inlineFilters={getGitInlineFilters()}
             />
@@ -1279,7 +1219,7 @@ const SfdcPipelineModifiedFiles = ({
               isLoading={destSfdcLoading}
               title={"Destination SFDC Files"}
               titleIcon={faCode}
-              body={getDestSfdcModifiedFilesTable()}              
+              body={getDestSfdcModifiedFilesView()}              
               supportSearch={false}
             />
           ) : null }            

@@ -61,7 +61,7 @@ const SfdcPipelineWizard = ({
   const [gitCheckAll, setGitCheckAll] = useState(false);
   const [profileCompCheckAll, setProfileCompCheckAll] = useState(false);
 
-  const [asOfDate, setAsOfDate] = useState(Moment(new Date(new Date().setHours(0,0,0,0))).toISOString());
+  const [asOfDate, setAsOfDate] = useState(Moment(new Date(new Date().setDate(new Date().getDate() - 40))).toISOString());
 
   const [selectedFromDate, setSelectedFromDate] = useState(new Date(new Date().setHours(0,0,0,0)));
   const [selectedToDate, setSelectedToDate] = useState(new Date(new Date().setHours(0,0,0,0)));
