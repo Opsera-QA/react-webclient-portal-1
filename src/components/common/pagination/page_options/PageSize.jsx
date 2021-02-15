@@ -14,7 +14,7 @@ function PageSize({ paginationDto, setPaginationDto, loadData, isLoading, pageSi
     <div className="page-size">
       <DropdownList
         data={pageSizeList}
-        disabled={isLoading}
+        disabled={isLoading || paginationDto?.getData("totalCount") == null}
         valueField='value'
         textField={item => item + " results per page"}
         defaultValue={paginationDto.getData("pageSize")}
