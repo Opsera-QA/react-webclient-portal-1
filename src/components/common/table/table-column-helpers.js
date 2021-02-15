@@ -310,9 +310,9 @@ export const getTableButtonColumn = (accessor = "row", headerText, variant, butt
     Header: headerText,
     accessor: accessor,
     Cell: (props) => {
-      return <Button variant={variant} onClick={() => {buttonFunction(props?.data[props?.row?.index])}}>{buttonText}</Button>
+      return <Button size={"sm"} variant={variant} onClick={() => {buttonFunction(props?.data[props?.row?.index])}}>{buttonText}</Button>
     },
-    class: "no-wrap-inline"
+    class: "no-wrap-inline py-1"
   };
 };
 
