@@ -225,3 +225,10 @@
 }
 
 /* End Summary Card Styling */
+
+
+/* Toggle Styling */
+.custom-switch .custom-control-label, input[type="checkbox" i] {
+  cursor: pointer !important;
+}
+/* End Toggle Styling*/
