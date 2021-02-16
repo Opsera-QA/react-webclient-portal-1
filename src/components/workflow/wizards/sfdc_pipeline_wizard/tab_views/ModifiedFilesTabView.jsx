@@ -13,9 +13,9 @@ function ModifiedFilesTabView({
     loadData,
     paginationDto,
     setPaginationDto,
-    handleComponentCheck
+    handleComponentCheck,
+    module
 }) {
-
   const initialState = {
     pageIndex: 0
   };
@@ -32,16 +32,52 @@ function ModifiedFilesTabView({
     {
       label: "Commit Time", 
       id: "committedTime"
+    },
+    {
+      label: "Committed By", 
+      id: "committedBy"
+    },
+    {
+      label: "Commit Action", 
+      id: "commitAction"
+    },
+    {
+      label: "SFDC File Id", 
+      id: "committedFileId"
     }
   ]
 
   const noDataMessage = "Modified Files Data not available for selected Criteria";
 
   const columnsWithCheckBoxCell = useMemo(
-    () => [
+    () => [      
       getTableTextColumn(fields.find(field => { return field.id === "componentType"})),
       getTableTextColumn(fields.find(field => { return field.id === "committedFile"})),
       getTableDateColumn(fields.find(field => { return field.id === "committedTime"})),
+      getCheckBoxColumn(handleComponentCheck)  
+    ],
+    [],
+  );
+
+  const sfdcColumnsWithCheckBoxCell = useMemo(
+    () => [
+      getTableTextColumn(fields.find(field => { return field.id === "committedFileId"})),
+      getTableTextColumn(fields.find(field => { return field.id === "componentType"})),
+      getTableTextColumn(fields.find(field => { return field.id === "committedFile"})),
+      getTableDateColumn(fields.find(field => { return field.id === "committedTime"})),
+      getTableTextColumn(fields.find(field => { return field.id === "committedBy"})),
+      getCheckBoxColumn(handleComponentCheck)  
+    ],
+    [],
+  );
+  
+  const gitColumnsWithCheckBoxCell = useMemo(
+    () => [
+      getTableTextColumn(fields.find(field => { return field.id === "commitAction"})),
+      getTableTextColumn(fields.find(field => { return field.id === "componentType"})),
+      getTableTextColumn(fields.find(field => { return field.id === "committedFile"})),
+      getTableDateColumn(fields.find(field => { return field.id === "committedTime"})),
+      getTableTextColumn(fields.find(field => { return field.id === "committedBy"})),
       getCheckBoxColumn(handleComponentCheck)  
     ],
     [],
@@ -63,7 +99,7 @@ function ModifiedFilesTabView({
       {/* table component goes here */}
       <CustomTable
         className={"table-no-border"}
-        columns={handleComponentCheck ? columnsWithCheckBoxCell : columnsWithOutCheckBoxCell}
+        columns={module === 'sfdc' ? sfdcColumnsWithCheckBoxCell : module === 'git' ? gitColumnsWithCheckBoxCell : columnsWithOutCheckBoxCell}
         data={data}              
         isLoading={loading}
         loadData={loadData}

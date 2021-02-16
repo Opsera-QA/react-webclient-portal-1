@@ -361,32 +361,35 @@ const SfdcPipelineComponents = ({
                       
                   </div>
                   : */}
-                  <div className="px-2">
+                  {isProfiles ? '' : (
+                    <div className="px-2">
                     <OverlayTrigger
-                  placement="right"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip("All files committed after this date will be included")}
-                  ><FontAwesomeIcon
-                  icon={faInfoCircle}
-                  className="fa-pull-right pointer pr-1"
-                  onClick={() => document.body.click()}
-                /></OverlayTrigger>
-                    <div className="text-muted pl-1 pb-1">From Date:</div>
-                    {dateFrom}
-                    <OverlayTrigger
-                  placement="right"
-                  delay={{ show: 250, hide: 400 }}
-                  overlay={renderTooltip("All files committed before this date will be included")}
-                  ><FontAwesomeIcon
-                  icon={faInfoCircle}
-                  className="fa-pull-right pointer pr-1 mt-2"
-                  onClick={() => document.body.click()}
-                /></OverlayTrigger>
+                      placement="right"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={renderTooltip("All files committed after this date will be included")}
+                      ><FontAwesomeIcon
+                      icon={faInfoCircle}
+                      className="fa-pull-right pointer pr-1"
+                      onClick={() => document.body.click()}
+                    /></OverlayTrigger>
+                        <div className="text-muted pl-1 pb-1">From Date:</div>
+                        {dateFrom}
+                        <OverlayTrigger
+                      placement="right"
+                      delay={{ show: 250, hide: 400 }}
+                      overlay={renderTooltip("All files committed before this date will be included")}
+                      ><FontAwesomeIcon
+                      icon={faInfoCircle}
+                      className="fa-pull-right pointer pr-1 mt-2"
+                      onClick={() => document.body.click()}
+                    /></OverlayTrigger>
                     <div className="text-muted pl-1 pb-1 mt-2">To Date:</div>
                     {dateTo}
                     {/* <div className="text-muted pl-1 pb-1">Filter Date:</div>
                     {dateAsOf} */}
-                  </div>
+                  </div>  
+                  )}
+                  
                   {/* } */}
                   
                   <div className="px-2">
