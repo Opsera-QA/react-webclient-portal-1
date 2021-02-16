@@ -1093,13 +1093,13 @@ a.nav-link {
 }
 
 .detail-container-body {
-  min-height: calc(100vh - 235px);
-  max-height: calc(100vh - 235px);
+  min-height: calc(100vh - 255px);
+  max-height: calc(100vh - 255px);
 }
 
 .screen-container-body {
-  min-height: calc(100vh - 235px);
-  max-height: calc(100vh - 235px);
+  min-height: calc(100vh - 255px);
+  max-height: calc(100vh - 255px);
   overflow-y: auto;
   overflow-x: hidden;
 }

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
-import { useParams } from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -10,9 +10,14 @@ import tokenActions from "components/user/user_settings/access_tokens/token-acti
 import axios from "axios";
 import {accessTokenMetadata} from "components/user/user_settings/access_tokens/access-token-metadata";
 import AccessTokenDetailPanel from "components/user/user_settings/access_tokens/details/AccessTokenDetailPanel";
+import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
+import NavigationTab from "components/common/tabs/navigation/NavigationTab";
+import {faIdCard, faKey, faUser} from "@fortawesome/pro-light-svg-icons";
+import {isAnLdapUser, ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
 function AccessTokenDetailView() {
   const {tokenId} = useParams();
+  const history = useHistory();
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -20,6 +25,7 @@ function AccessTokenDetailView() {
   const [accessToken, setAccessToken] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [isLdapUser, setIsLdapUser] = useState(false);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -77,6 +83,7 @@ function AccessTokenDetailView() {
     const userRoleAccess = await setAccessRoles(user);
     if (isMounted?.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
+      setIsLdapUser(isAnLdapUser(user, userRoleAccess));
 
       if (userRoleAccess?.OpseraAdministrator) {
         await getToken(cancelSource);
@@ -94,12 +101,29 @@ function AccessTokenDetailView() {
     );
   };
 
+  const handleTabClick = (tabSelection) => e => {
+    e.preventDefault();
+    history.push(`/user/${tabSelection}`);
+  };
+
+  const getNavigationTabContainer = () => {
+    return (
+      <NavigationTabContainer>
+        <NavigationTab icon={faIdCard} tabName={"profile"} handleTabClick={handleTabClick} activeTab={"accessTokens"} tabText={"My Profile"} />
+        <NavigationTab icon={faUser} tabName={"myUserRecord"} handleTabClick={handleTabClick} activeTab={"accessTokens"} tabText={"My Record"} visible={isLdapUser} />
+        <NavigationTab icon={faKey} tabName={"accessTokens"} handleTabClick={handleTabClick} activeTab={"accessTokens"} tabText={"Access Tokens"} />
+      </NavigationTabContainer>
+    );
+  }
+
   return (
     <DetailScreenContainer
       breadcrumbDestination={"accessTokenDetailView"}
-      // accessDenied={!accessRoleData?.OpseraAdministrator}
       metadata={accessTokenMetadata}
+      accessRoleData={accessRoleData}
+      roleRequirement={ROLE_LEVELS.USERS_AND_SASS}
       dataObject={accessToken}
+      navigationTabContainer={getNavigationTabContainer()}
       isLoading={isLoading}
       actionBar={getActionBar()}
       detailPanel={<AccessTokenDetailPanel accessToken={accessToken} setAccessToken={setAccessToken} loadData={loadData} />}
