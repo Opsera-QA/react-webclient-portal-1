@@ -115,18 +115,14 @@ userActions.logout = async (getAccessToken) => {
 };
 
 
-userActions.syncUser = async (getAccessToken) => {
+userActions.syncUser = async (getAccessToken, cancelTokenSource) => {
   let urlParams = {
     params: {
       sync: true
     }
   }
-  const accessToken = await getAccessToken();
   const apiUrl = `/users`;
-  const response = await axiosApiService(accessToken).get(apiUrl, urlParams)
-    .then((result) =>  {return result;})
-    .catch(error => {throw error;});
-  return response;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 userActions.getAWSRegions = async () => {
