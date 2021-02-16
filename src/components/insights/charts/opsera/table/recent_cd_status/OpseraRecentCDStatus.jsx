@@ -14,9 +14,10 @@ import {getField} from "components/common/metadata/metadata-helpers";
 function OpseraRecentCDTable({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = opseraRecentCdStatusMetadata.fields;
   const {getAccessToken} = useContext(AuthContext);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [metrics, setMetrics] = useState([]);const isMounted = useRef(false);
+  const [metrics, setMetrics] = useState([]);
+  const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
