@@ -52,6 +52,10 @@ const OctopusAccountMetadata = {
     {
       label: "Active",
       id: "active",
+    },
+    {
+      label: "ID",
+      id: "id"
     }
 ],
   newModelBase: {
@@ -66,6 +70,7 @@ const OctopusAccountMetadata = {
     spaceName : "",
     description: "",
     toolId : "",
+    id: "",
     active: true,
   }
 };

@@ -63,6 +63,10 @@ const OctopusTargetMetadata = {
     {
       label: "Active",
       id: "active",
+    },
+    {
+      label: "ID",
+      id: "id"
     }
 ],
   newModelBase: {
@@ -81,6 +85,7 @@ const OctopusTargetMetadata = {
     webAppName: "",
     webAppSlotName: "",
     cloudType: "",
+    id: "",
     active: true,
   }
 };

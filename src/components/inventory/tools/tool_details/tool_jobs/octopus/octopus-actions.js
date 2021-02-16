@@ -3,8 +3,9 @@ import baseActions from "../../../../../../utils/actionsBase";
 
 const octopusActions = {};
 
-octopusActions.deleteOctopusApplication = async (toolID, type, getAccessToken, appID) => {
+octopusActions.deleteOctopusApplication = async (toolID, type, getAccessToken, appID, octopusApplicationDto) => {
   const postBody = {
+    data: octopusApplicationDto.getPersistData(),
     type: "delete",
     item: type,
   };
