@@ -1119,6 +1119,8 @@ a.nav-link {
 
 .bottom-pagination .results-summary {
     width: 100px;
+    padding-top:5px;
+    padding-bottom: 5px;
 }
 
 .pagination-container .bottom-pagination {
