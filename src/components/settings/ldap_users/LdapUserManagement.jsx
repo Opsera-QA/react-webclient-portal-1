@@ -41,10 +41,10 @@ function LdapUserManagement() {
     }
   }, [orgDomain]);
 
-  const loadData = async (source) => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles(source);
+      await getRoles(cancelSource);
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -59,9 +59,9 @@ function LdapUserManagement() {
     }
   }
 
-  const getUsersByDomain = async (ldapDomain, source) => {
+  const getUsersByDomain = async (ldapDomain, cancelSource = cancelTokenSource) => {
     try {
-      let organizationResponse = await accountsActions.getOrganizationAccountByDomainV2(getAccessToken, source, ldapDomain);
+      let organizationResponse = await accountsActions.getOrganizationAccountByDomainV2(getAccessToken, cancelSource, ldapDomain);
       if (isMounted?.current === true && organizationResponse?.data?.users) {
         setUserList(organizationResponse?.data?.users);
       }
@@ -73,7 +73,7 @@ function LdapUserManagement() {
     }
   };
 
-  const getRoles = async (source) => {
+  const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const {ldap, groups} = user;
     const userRoleAccess = await setAccessRoles(user);
@@ -86,7 +86,7 @@ function LdapUserManagement() {
 
       if (userRoleAccess?.OpseraAdministrator) {
         if (orgDomain != null) {
-          await getUsersByDomain(orgDomain, source);
+          await getUsersByDomain(orgDomain, cancelSource);
         }
         else {
           history.push(`/settings/${ldap.domain}/users/`);
