@@ -8,7 +8,7 @@ import OpseraBuildDurationBarChart from "./opsera/bar_chart/build_duration/Opser
 import OpseraBuildsByUserBarChart from "./opsera/bar_chart/builds_by_user/OpseraBuildsByUserBarChart";
 import OpseraDeploymentFrequencyLineChart from "./opsera/line_chart/deployment_frequency/OpseraDeploymentFrequencyLineChart";
 import OpseraRecentPipelineStatus from "components/insights/charts/opsera/table/recent_pipeline_status/OpseraRecentPipelineStatus";
-import OpseraRecentCDStatus from "./opsera/OpseraRecentCDStatus";
+import OpseraRecentCDStatus from "components/insights/charts/opsera/table/recent_cd_status/OpseraRecentCDStatus";
 
 // Jenkins KPIs
 import JenkinsBuildsByUserBarChart from "./jenkins/bar_chart/builds_by_user/JenkinsBuildsByUserBarChart";
@@ -88,6 +88,7 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
       || kpiConfig?.kpi_identifier === "opsera-pipelines-by-user"
       || kpiConfig?.kpi_identifier === "opsera-deployment-frequency"
       || kpiConfig?.kpi_identifier === "opsera-recent-pipeline-status"
+      || kpiConfig?.kpi_identifier === "opsera-recent-cd-status"
     ) {
       return getChart();
     }
@@ -166,7 +167,14 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
           />
           );
       case "opsera-recent-cd-status":
-        return (<OpseraRecentCDStatus persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<OpseraRecentCDStatus
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
 
       // Jenkins KPIs
       case "jenkins-builds-by-user":

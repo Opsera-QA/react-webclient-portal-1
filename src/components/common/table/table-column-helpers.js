@@ -284,6 +284,38 @@ export const getTablePipelineStatusColumn = (field) => {
   };
 };
 
+export const getChartPipelineStatusColumn = (field) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: (props) => {
+      return props.value ? (
+        props.value === "failure" || props.value === "failed" ? (
+          <>
+            <div style={{ display: "flex", flexWrap: "nowrap" }}>
+              <div>
+                <FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" />
+              </div>
+              <div className="ml-1">{props.value}</div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div style={{ display: "flex", flexWrap: "nowrap" }}>
+              <div>
+                <FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" />
+              </div>
+              <div className="ml-1">{props.value}</div>
+            </div>
+          </>
+        )
+      ) : (
+        "unknown"
+      );
+    },
+  };
+};
+
 export const getTableFavoriteColumn = (field, getAccessToken) => {
   return {
     Header: getTableHeader(field),

@@ -1,40 +1,23 @@
 import React, {useEffect, useContext, useState, useMemo, useRef} from "react";
+import { AuthContext } from "contexts/AuthContext";
 import CustomTable from "components/common/table/CustomTable";
-import {AuthContext} from "contexts/AuthContext";
-import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import PropTypes from "prop-types";
+import "components/analytics/charts/charts.css";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import {
-  getChartPipelineStatusColumn,
-  getTableDateTimeColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers";
-import opseraRecentPipelineStatusMetadata
-  from "components/insights/charts/opsera/table/recent_pipeline_status/opsera-recent-pipeline-status-metadata";
+import PropTypes from "prop-types";
+import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import {getChartPipelineStatusColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
+import opseraRecentCdStatusMetadata
+  from "components/insights/charts/opsera/table/recent_cd_status/opsera-recent-cd-status-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
 
-function OpseraRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
-  const fields = opseraRecentPipelineStatusMetadata.fields;
+function OpseraRecentCDTable({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+  const fields = opseraRecentCdStatusMetadata.fields;
   const {getAccessToken} = useContext(AuthContext);
-  const [error, setError] = useState(undefined);
+  const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [metrics, setMetrics] = useState([]);
-  const isMounted = useRef(false);
+  const [metrics, setMetrics] = useState([]);const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  const noDataMessage = "No Data is available for this chart at this time";
-
-  const columns = useMemo(
-    () => [
-      getTableTextColumn(getField(fields, "run_count"), "cell-center no-wrap-inline"),
-      getTableTextColumn(getField(fields, "pipeline_name")),
-      getTableDateTimeColumn(getField(fields, "timestamp")),
-      getTableTextColumn(getField(fields, "duration")),
-      getChartPipelineStatusColumn(getField(fields, "status"))
-    ],
-    []
-  );
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -60,8 +43,8 @@ function OpseraRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, das
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineInfo", kpiConfiguration);
-      let dataObject = response?.data?.data[0]?.opseraPipelineInfo?.data;
+      const response = await chartsActions.getChartData(getAccessToken, cancelSource, "opseraCDMetrics", "bar", kpiConfiguration);
+      let dataObject = response?.data?.data[0]?.opseraCDMetrics?.data;
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -80,12 +63,25 @@ function OpseraRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, das
     }
   };
 
+  const noDataMessage = "No Data is available for this chart at this time";
+  const columns = useMemo(
+    () => [
+      getTableTextColumn(getField(fields, "run_count"), "cell-center no-wrap-inline"),
+      getTableTextColumn(getField(fields, "pipeline_name")),
+      getTableTextColumn(getField(fields, "step_name")),
+      getTableTextColumn(getField(fields, "tool")),
+      getTableTextColumn(getField(fields, "duration")),
+      getChartPipelineStatusColumn(getField(fields, "status")),
+    ],
+    []
+  );
+
   return (
     <div>
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage}/>}
+        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage} />}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
@@ -97,7 +93,7 @@ function OpseraRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, das
   );
 }
 
-OpseraRecentPipelineStatus.propTypes = {
+OpseraRecentCDTable.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -105,4 +101,4 @@ OpseraRecentPipelineStatus.propTypes = {
   setKpis: PropTypes.func
 };
 
-export default OpseraRecentPipelineStatus;
+export default OpseraRecentCDTable;
