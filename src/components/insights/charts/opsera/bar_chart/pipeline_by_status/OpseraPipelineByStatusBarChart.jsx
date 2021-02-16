@@ -8,10 +8,10 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import axios from "axios";
 
-function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
+function OpseraPipelineByStatusBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
-  const [data, setData] = useState([]);
+  const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
@@ -45,7 +45,7 @@ function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, setKpiConfi
       let dataObject = response?.data?.data[0]?.opseraPipelineByStatus?.data;
 
       if (isMounted?.current === true && dataObject) {
-        setData(dataObject);
+        setMetrics(dataObject);
       }
     }
     catch (error) {
@@ -62,14 +62,14 @@ function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, setKpiConfi
   };
 
   const getChartBody = () => {
-    if (data == null || data.length === 0) {
+    if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
 
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
         <ResponsiveBar
-          data={data}
+          data={metrics}
           keys={config.keys}
           indexBy="_id"
           onClick={() => setShowModal(true)}
@@ -126,13 +126,12 @@ function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, setKpiConfi
           setKpis={setKpis}
           isLoading={isLoading}
         />
-        <ModalLogs header="Status by Pipeline" size="lg" jsonMessage={data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+        <ModalLogs header="Status by Pipeline" size="lg" jsonMessage={metrics} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
       </div>
     );
 }
 
 OpseraPipelineByStatusBarChart.propTypes = {
-  persona: PropTypes.string,
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,

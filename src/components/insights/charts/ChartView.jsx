@@ -84,7 +84,10 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
   //  After everything is refactored,
   //  this should be deleted and we should just return getChart() at bottom of component instead
   const getView = () => {
-    if (kpiConfig?.kpi_identifier === "opsera-status-by-pipeline") {
+    if (
+      kpiConfig?.kpi_identifier === "opsera-status-by-pipeline"
+      || kpiConfig?.kpi_identifier === "opsera-pipeline-duration"
+    ) {
       return getChart();
     }
 
@@ -116,7 +119,6 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
       case "opsera-status-by-pipeline":
         return (
             <OpseraPipelineByStatusBarChart
-              persona={"developer"}
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -125,7 +127,15 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
             />
           );
       case "opsera-pipeline-duration":
-        return (<OpseraBuildDurationBarChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
+        return (
+          <OpseraBuildDurationBarChart
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
       case "opsera-pipelines-by-user":
         return (<OpseraBuildsByUserBarChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "opsera-deployment-frequency":

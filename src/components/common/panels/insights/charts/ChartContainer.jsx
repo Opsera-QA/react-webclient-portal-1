@@ -53,10 +53,13 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
       );
     }
 
+    // TODO: Rework when all are updated
     if (chart === null && !isLoading) {
       return (
-        <div className='max-content-width p-5 mt-5' style={{justifyContent: "center", alignItems: "center"}}>
-          <InfoDialog message="No Data is available for this chart at this time."/>
+        <div className="new-chart mb-3" style={{ height: "300px" }}>
+          <div className="max-content-width p-5 mt-5" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <InfoDialog message="No Data is available for this chart at this time." />
+          </div>
         </div>
       );
     }
