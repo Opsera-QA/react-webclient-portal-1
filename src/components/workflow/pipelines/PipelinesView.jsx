@@ -142,7 +142,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
 
   const getPipelinesBody = () => {
     if (data && data.count === 0) {
-      const activeFilters = pipelineFilterDto.getActiveFilters();
+      const activeFilters = pipelineFilterDto?.getActiveFilters();
       if (activeFilters && activeFilters.length > 0) {
         return (
           <div className="px-2 max-content-width mx-auto" style={{ minWidth: "505px" }}>
