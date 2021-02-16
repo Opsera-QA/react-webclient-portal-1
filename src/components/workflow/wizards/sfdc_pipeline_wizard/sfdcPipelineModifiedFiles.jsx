@@ -704,12 +704,16 @@ const SfdcPipelineModifiedFiles = ({
     return (
       <div className="px-2 d-flex small">
         <div className="pr-4">
-          <TooltipWrapper innerText={"This will select all the items on this page only."}>
-            <BooleanFilter loadData={handleCheckAllClickComponentTypesSfdc} filterDto={sfdcFilterDto} setFilterDto={setSfdcFilterDto} fieldName={"checkAll"} />
-          </TooltipWrapper>
+            <BooleanFilter
+              loadData={handleCheckAllClickComponentTypesSfdc}
+              filterDto={sfdcFilterDto}
+              setFilterDto={setSfdcFilterDto}
+              fieldName={"checkAll"}
+              toolTipText={"This will select all the items on this page only."}
+            />
         </div>
         <div>
-          <SfdcComponentFilter componentType={componentType} filterDto={sfdcFilterDto} setFilterDto={setSfdcFilterDto} />
+          <SfdcComponentFilter componentType={componentType} filterDto={sfdcFilterDto} setFilterDto={setSfdcFilterDto} inline={true} />
         </div>
       </div>
     );
@@ -719,11 +723,18 @@ const SfdcPipelineModifiedFiles = ({
     return (
       <div className="px-2 d-flex small">
         <div className="pr-4">
+          <BooleanFilter
+            loadData={handleCheckAllClickComponentTypesGit}
+            filterDto={gitFilterDto}
+            setFilterDto={setGitFilterDto}
+            fieldName={"checkAll"}
+            toolTipText={"This will select all the items on this page only."}
+          />
           <TooltipWrapper innerText={"This will select all the items on this page only."}>
             <BooleanFilter loadData={handleCheckAllClickComponentTypesGit} filterDto={gitFilterDto} setFilterDto={setGitFilterDto} fieldName={"checkAll"} />
           </TooltipWrapper>
-        </div>        
-        <div><SfdcComponentFilter componentType={componentType} filterDto={gitFilterDto} setFilterDto={setGitFilterDto} /></div>
+        </div>
+        <div><SfdcComponentFilter componentType={componentType} filterDto={gitFilterDto} setFilterDto={setGitFilterDto}  inline={true} /></div>
       </div>
     );
   };

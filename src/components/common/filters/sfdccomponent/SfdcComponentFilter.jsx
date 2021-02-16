@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 
-function SfdcComponentFilter({ componentType, filterDto, setFilterDto, className}) {
+function SfdcComponentFilter({ componentType, filterDto, setFilterDto, className, inline}) {
 
   const setData = (fieldName, value) => {    
     let newDataObject = filterDto;
@@ -17,6 +17,7 @@ function SfdcComponentFilter({ componentType, filterDto, setFilterDto, className
   return (
     <div className={className} style={{width: "200px"}}>
       <FilterSelectInputBase
+        inline={inline}
         fieldName={"classFilter"}
         placeholderText={"Filter By Component"}
         setDataObject={setFilterDto}
@@ -32,7 +33,8 @@ SfdcComponentFilter.propTypes = {
   componentType: PropTypes.arrayOf(PropTypes.object),
   filterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
+  inline: PropTypes.bool
 };
 
 export default SfdcComponentFilter;

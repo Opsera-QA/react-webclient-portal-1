@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import {Form} from "react-bootstrap";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function BooleanFilter({ fieldName, loadData, filterDto, setFilterDto}) {
+function BooleanFilter({ fieldName, loadData, filterDto, setFilterDto, inline, toolTipText}) {
   const [field] = useState(filterDto.getFieldById(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
@@ -12,18 +13,30 @@ function BooleanFilter({ fieldName, loadData, filterDto, setFilterDto}) {
     loadData(newDataObject);
   };
 
+  const getFilterBody = () => {
+    return (
+      <div className={`d-flex mt-1${inline ? ` inline-filter-input` : ``}`}>
+        <div>
+          <Form.Check onChange={() => validateAndSetData(field.id, !filterDto.getData(fieldName))} type="switch" id={field.id} checked={!!filterDto.getData(fieldName)} label={""} />
+        </div>
+        <div className="my-auto">{field.label}</div>
+      </div>
+    );
+  }
+
   if (field == null) {
     return <WarningDialog warningMessage={"No field was found for this filter"}/>
   }
 
-  return (
-    <div className="d-flex mt-1">
-      <div>
-        <Form.Check onChange={() => validateAndSetData(field.id, !filterDto.getData(fieldName))} type="switch" id={field.id} checked={!!filterDto.getData(fieldName)} label={""} />
-      </div>
-      <div className="my-auto">{field.label}</div>
-    </div>
-  );
+  if (toolTipText) {
+    return (
+      <TooltipWrapper innerText={"This will select all the items on this page only."}>
+        {getFilterBody()}
+      </TooltipWrapper>
+    );
+  }
+
+  return (getFilterBody());
 }
 
 BooleanFilter.propTypes = {
@@ -31,6 +44,7 @@ BooleanFilter.propTypes = {
   filterDto: PropTypes.object,
   loadData: PropTypes.func,
   setFilterDto: PropTypes.func,
+  inline: PropTypes.bool
 };
 
 export default BooleanFilter;
