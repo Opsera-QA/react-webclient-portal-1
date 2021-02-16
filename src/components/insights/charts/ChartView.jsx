@@ -87,6 +87,7 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
     if (
       kpiConfig?.kpi_identifier === "opsera-status-by-pipeline"
       || kpiConfig?.kpi_identifier === "opsera-pipeline-duration"
+      || kpiConfig?.kpi_identifier === "opsera-pipelines-by-user"
     ) {
       return getChart();
     }
@@ -137,7 +138,15 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
           />
         );
       case "opsera-pipelines-by-user":
-        return (<OpseraBuildsByUserBarChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
+        return (
+          <OpseraBuildsByUserBarChart
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
       case "opsera-deployment-frequency":
         return (<OpseraDeploymentFrequencyLineChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "opsera-recent-pipeline-status":
