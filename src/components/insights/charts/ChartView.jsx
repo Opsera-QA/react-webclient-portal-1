@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {faChartBar} from "@fortawesome/pro-light-svg-icons";
-import KpiSettingsForm from "../marketplace/kpi_marketplace_detail_view/KpiSettingsForm";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 
 // Opsera KPIs
@@ -9,7 +7,7 @@ import OpseraPipelineByStatusBarChart from "./opsera/bar_chart/pipeline_by_statu
 import OpseraBuildDurationBarChart from "./opsera/bar_chart/build_duration/OpseraBuildDurationBarChart";
 import OpseraBuildsByUserBarChart from "./opsera/bar_chart/builds_by_user/OpseraBuildsByUserBarChart";
 import OpseraDeploymentFrequencyLineChart from "./opsera/line_chart/deployment_frequency/OpseraDeploymentFrequencyLineChart";
-import OpseraRecentPipelineStatus from "./opsera/OpseraRecentPipelineStatus";
+import OpseraRecentPipelineStatus from "components/insights/charts/opsera/table/recent_pipeline_status/OpseraRecentPipelineStatus";
 import OpseraRecentCDStatus from "./opsera/OpseraRecentCDStatus";
 
 // Jenkins KPIs
@@ -89,6 +87,7 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
       || kpiConfig?.kpi_identifier === "opsera-pipeline-duration"
       || kpiConfig?.kpi_identifier === "opsera-pipelines-by-user"
       || kpiConfig?.kpi_identifier === "opsera-deployment-frequency"
+      || kpiConfig?.kpi_identifier === "opsera-recent-pipeline-status"
     ) {
       return getChart();
     }
@@ -112,8 +111,6 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
     return getDateObjectFromKpiConfiguration(kpiConfiguration);
   };
 
-  // TODO: chart is global in this component, so it doesn't need to be passed in to this or getDateObject,
-  //  unless those functions are moved into a helper component
   const getChart = () => {
     switch (kpiConfig?.kpi_identifier) {
 
@@ -159,7 +156,15 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
           />
         );
       case "opsera-recent-pipeline-status":
-        return (<OpseraRecentPipelineStatus persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
+        return (
+          <OpseraRecentPipelineStatus
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+          );
       case "opsera-recent-cd-status":
         return (<OpseraRecentCDStatus persona={"developer"} date={getDateObject(kpiConfig)}/>);
 
