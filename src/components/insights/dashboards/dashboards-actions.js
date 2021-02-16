@@ -10,12 +10,6 @@ dashboardsActions.create = async(dashboardDataDto, getAccessToken) => {
     return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
-// TODO: Remove when all references updated to V2
-dashboardsActions.get = async(id, getAccessToken) => {
-    const apiUrl = `/analytics/dashboard/${id}`
-    return baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
 dashboardsActions.getDashboardByIdV2 = async(getAccessToken, cancelTokenSource, id) => {
   const apiUrl = `/analytics/dashboard/${id}`
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
