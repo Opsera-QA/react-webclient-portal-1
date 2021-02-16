@@ -873,16 +873,18 @@ a.nav-link {
     background-color: #3D3B36;
     color: #fef7fd;
     line-height: 2.4em;
-    /*border-bottom: 5px solid #7368AA;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;*/
 }
 
 .content-card-1 > .content-block-header {
     background-color: #3D3B36;
     color: #fef7fd;
     line-height: 2.4em;
-    /*border-bottom: 3px solid #6E6690;*/
+}
+
+.content-card-1 > .content-block-header-inverse {
+    background-color: #E6E5E3;
+    color: #3D3B36;
+    line-height: 2.4em;
 }
 
 .content-card-1 .content-block-body {
