@@ -232,3 +232,9 @@
   cursor: pointer !important;
 }
 /* End Toggle Styling*/
+
+/* Radio Button Input Styling */
+.disabled-radio-option {
+  opacity: .7;
+}
+/* End Radio Button Input Styling */
