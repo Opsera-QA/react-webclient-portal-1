@@ -1,4 +1,8 @@
 import baseActions from "utils/actionsBase";
+import {
+  getDateObjectFromKpiConfiguration,
+  getTagsFromKpiConfiguration
+} from "components/insights/charts/charts-helpers";
 
 const chartsActions = {};
 
@@ -21,6 +25,21 @@ chartsActions.getChart = async (request, metric, date, getAccessToken) => {
 
 chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessToken) => {
   const apiUrl = "/analytics/metrics";
+
+  const postBody = {
+    request: request,
+    startDate: date.start,
+    endDate: date.end,
+    tags: tags
+  };
+
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody)
+};
+
+chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, cancelTokenSource, request, metric, kpiConfiguration) => {
+  const apiUrl = "/analytics/metrics";
+  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
+  const tags = getTagsFromKpiConfiguration(kpiConfiguration);
 
   const postBody = {
     request: request,

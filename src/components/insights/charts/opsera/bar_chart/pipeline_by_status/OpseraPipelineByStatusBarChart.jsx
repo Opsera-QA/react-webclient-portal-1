@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import config from "./opseraPipelineByStatusBarChartConfigs";
-import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
 import {AuthContext} from "contexts/AuthContext";
 import chartsActions from "components/insights/charts/charts-actions";
-import {getDateObjectFromKpiConfiguration, getTagsFromKpiConfiguration} from "components/insights/charts/charts-helpers";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import axios from "axios";
 
 function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -15,27 +14,50 @@ function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, setKpiConfi
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
-      const tags = getTagsFromKpiConfiguration(kpiConfiguration);
-      const response = await chartsActions.getChartMetrics("opseraPipelineByStatus", "bar", date, tags, getAccessToken);
-      console.log(response);
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineByStatus", "bar");
       let dataObject = response?.data?.data[0]?.opseraPipelineByStatus?.data;
-      setData(dataObject);
+
+      if (isMounted?.current === true && dataObject) {
+        setData(dataObject);
+      }
     }
     catch (error) {
-      console.error(error);
-      setError(error);
+      if (isMounted?.current === true) {
+        console.error(error);
+        setError(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -104,7 +126,6 @@ function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, setKpiConfi
           setKpis={setKpis}
           isLoading={isLoading}
         />
-        {/*TODO: Might make more sense to create KpiChartModal and put inside ChartContainer instead, if it's not too different between charts*/}
         <ModalLogs header="Status by Pipeline" size="lg" jsonMessage={data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
       </div>
     );

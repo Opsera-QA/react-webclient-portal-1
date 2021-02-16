@@ -31,6 +31,7 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
     }
   };
 
+  // TODO: Make ErrorChartContainer
   const getChartBody = () => {
     if (error) {
       return (
