@@ -1,18 +1,37 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DtoFilterSelectInput from "../input/DtoFilterSelectInput";
+import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 
-function DashboardTypeFilter({ filterDto, setFilterDto}) {
-  const typeOptions = [{text: "Pipeline", value: "pipeline"}, {text: "Planning", value: "planning"}, {text: "Security", value: "security"}, {text: "Quality", value: "quality"}, {text: "Operations", value: "operations"} ];
+const typeOptions = [
+  {text: "Pipeline", value: "pipeline"},
+  {text: "Planning", value: "planning"},
+  {text: "Security", value: "security"},
+  {text: "Quality", value: "quality"},
+  {text: "Operations", value: "operations"}
+];
+
+function DashboardTypeFilter({ filterModel, setFilterModel, className }) {
+  if (filterModel == null) {
+    return null;
+  }
+
   return (
-    <div><DtoFilterSelectInput fieldName={"type"} placeholderText={"Filter by Dashboard Type"} setDataObject={setFilterDto} dataObject={filterDto} selectOptions={typeOptions} /></div>
+    <div className={className}>
+      <FilterSelectInputBase
+        fieldName={"type"}
+        placeholderText={"Filter by Dashboard Type"}
+        setDataObject={setFilterModel}
+        dataObject={filterModel}
+        selectOptions={typeOptions}
+      />
+    </div>
   );
 }
 
-
 DashboardTypeFilter.propTypes = {
-  filterDto: PropTypes.object,
-  setFilterDto: PropTypes.func,
+  filterModel: PropTypes.object,
+  setFilterModel: PropTypes.func,
+  className: PropTypes.string
 };
 
 export default DashboardTypeFilter;
