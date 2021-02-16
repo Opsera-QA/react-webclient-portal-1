@@ -111,7 +111,7 @@ function OpseraPipelineByStatusBarChart({ kpiConfiguration, setKpiConfiguration,
         />
       </div>
     );
-  }
+  };
 
   return (
       <div>
