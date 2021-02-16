@@ -77,7 +77,7 @@ function RegistrationLanding() {
         <Row>
           <Col xl="12" className="pt-3">
             <div className="h5">Need help?</div>
-            <div className="medium-blue h6 mt-1">Send an email to support@opsera.io</div>
+            <div className="text-color h6 mt-1">Send an email to support@opsera.io</div>
           </Col>
         </Row>
       </div>

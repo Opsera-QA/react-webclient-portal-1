@@ -20,7 +20,7 @@ function FavoriteInput({fieldName, dataObject, setDataObject, disabled}) {
         <span className="action-bar-icon">
           <FontAwesomeIcon
             size="lg"
-            className={"opsera-gold pointer"}
+            className={"opsera-yellow pointer"}
             icon={dataObject.getData(field.id) ? faStarSolid : faStar}
             onClick={() => {validateAndSetData(!dataObject.getData(field.id))}}
           />

@@ -249,7 +249,7 @@ function PipelineWorkflow({
       </div>
 
       <div
-        className={"workflow-container p-2 dark-grey-border" + (zoomValue > 2 ? " scale-120-container" : "")}>
+        className={"workflow-container p-2 dark-grey" + (zoomValue > 2 ? " scale-120-container" : "")}>
         <div className={setZoomClass(zoomValue)}>
           <div className="source workflow-module-container workflow-module-container-width mt-2 mx-auto">
             {!softLoading ?

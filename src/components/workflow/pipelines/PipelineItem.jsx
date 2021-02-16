@@ -93,7 +93,7 @@ const PipelineItem = ({ item }) => {
     if (!type) {
       return (
         <TooltipWrapper innerText={"No Pipeline Type Assigned"}>
-          <FontAwesomeIcon icon={faDiceD20} className="ml-1 pipeline-blue-text" size="lg"/>
+          <FontAwesomeIcon icon={faDiceD20} className="ml-1 pipeline-text" size="lg"/>
         </TooltipWrapper>
       );
     }
@@ -102,25 +102,25 @@ const PipelineItem = ({ item }) => {
     case "sfdc":
       return (
         <TooltipWrapper innerText={`SalesForce`}>
-          <FontAwesomeIcon icon={faSalesforce} className="ml-1 pipeline-blue-text" size="lg"/>
+          <FontAwesomeIcon icon={faSalesforce} className="ml-1 pipeline-text" size="lg"/>
         </TooltipWrapper>
       );
     case "ai-ml":
       return (
         <TooltipWrapper innerText={"Machine Learning (AI)"}>
-          <FontAwesomeIcon icon={faMicrochip} className="ml-1 pipeline-blue-text" size="lg"/>
+          <FontAwesomeIcon icon={faMicrochip} className="ml-1 pipeline-text" size="lg"/>
         </TooltipWrapper>
       );
     case "sdlc":
       return (
         <TooltipWrapper innerText={"Software Development"}>
-          <FontAwesomeIcon icon={faBracketsCurly} className="ml-1 pipeline-blue-text" size="lg"/>
+          <FontAwesomeIcon icon={faBracketsCurly} className="ml-1 pipeline-text" size="lg"/>
         </TooltipWrapper>
       );
     default:
       return (
         <TooltipWrapper innerText={"No Pipeline Type Assigned"}>
-          <FontAwesomeIcon icon={faDiceD20} className="ml-1 pipeline-blue-text" size="lg"/>
+          <FontAwesomeIcon icon={faDiceD20} className="ml-1 pipeline-text" size="lg"/>
         </TooltipWrapper>
       );
     }

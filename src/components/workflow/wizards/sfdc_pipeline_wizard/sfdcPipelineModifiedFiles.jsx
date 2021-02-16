@@ -774,7 +774,7 @@ const SfdcPipelineModifiedFiles = ({
   const getSfdcFilesView = () => {
     return (
       <div className="col-12 list-item-container mr-1">
-        <div className="h6 opsera-blue">SFDC Files</div>
+        <div className="h6 opsera-secondary">SFDC Files</div>
 
         {sfdcModified && sfdcModified.length === 0 && <div className="info-text mt-3">NO FILES</div>}
 
@@ -932,7 +932,7 @@ const SfdcPipelineModifiedFiles = ({
       <div className="col-12 list-item-container">
         {isOrgToOrg ? (
           <>
-            <div className="h6 opsera-blue">Destination SFDC Files</div>
+            <div className="h6 opsera-secondary">Destination SFDC Files</div>
             {destSfdcModified && destSfdcModified.length === 0 && (
               <div className="info-text mt-3">NO FILES</div>
             )}
@@ -974,7 +974,7 @@ const SfdcPipelineModifiedFiles = ({
           </>
         ) : (
           <>
-            <div className="h6 opsera-blue">Git Files</div>
+            <div className="h6 opsera-secondary">Git Files</div>
             {gitModified && gitModified.length === 0 && <div className="info-text mt-3">NO FILES</div>}
 
             <div className="d-flex w-100">
