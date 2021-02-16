@@ -36,7 +36,7 @@ chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessTok
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody)
 };
 
-chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, cancelTokenSource, request, metric, kpiConfiguration) => {
+chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, cancelTokenSource, request, kpiConfiguration) => {
   const apiUrl = "/analytics/metrics";
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const tags = getTagsFromKpiConfiguration(kpiConfiguration);
@@ -48,7 +48,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, canc
     tags: tags
   };
 
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody)
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody)
 };
 
 export default chartsActions;

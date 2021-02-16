@@ -41,7 +41,7 @@ function OpseraPipelineByStatusBarChart({ persona, kpiConfiguration, setKpiConfi
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineByStatus", "bar");
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineByStatus", kpiConfiguration);
       let dataObject = response?.data?.data[0]?.opseraPipelineByStatus?.data;
 
       if (isMounted?.current === true && dataObject) {
