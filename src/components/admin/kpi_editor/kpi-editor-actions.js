@@ -37,9 +37,9 @@ KpiActions.getAllKpis = async (getAccessToken, status, policySupport) => {
   return baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
-KpiActions.get = async (kpiId, getAccessToken) => {
+KpiActions.getKpiById = async (getAccessToken, cancelTokenSource, kpiId) => {
   const apiUrl = `/analytics/kpi/configurations/${kpiId}`;
-  return baseActions.apiGetCall(getAccessToken, apiUrl);
+  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 KpiActions.createKpi = async (kpiDataDto, getAccessToken) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "contexts/AuthContext";
 import Model from "core/data_model/model";
@@ -10,6 +10,7 @@ import ActionBarBackButton from "components/common/actions/buttons/ActionBarBack
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import KpiDetailPanel from "components/admin/kpi_editor/kpi_detail_view/KpiDetailPanel";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import axios from "axios";
 
 function KpiDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -17,41 +18,63 @@ function KpiDetailView() {
   const [accessRoleData, setAccessRoleData] = useState({});
   const [kpiData, setKpiData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const { id } = useParams();
+  const { id } = useParams();  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles();
+      await getRoles(cancelSource);
     }
     catch (error) {
-      if (!error?.error?.message?.includes(404)) {
+      if (isMounted?.current === true && !error?.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
+        console.error(error)
       }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
-  };
+  }
 
-  const getKpi = async (tagId) => {
-    const response = await KpiActions.get(tagId, getAccessToken);
+  const getKpi = async (cancelSource = cancelTokenSource) => {
+    const response = await KpiActions.getKpiById(getAccessToken, cancelSource, id);
 
-    if (response?.data) {
+    if (isMounted?.current === true && response?.data) {
       setKpiData(new Model(response?.data, kpiMetaData, false));
     }
   };
 
-  const getRoles = async () => {
+  const getRoles = async (cancelToken = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
+
+    if (isMounted?.current === true && userRoleAccess && id != null) {
       setAccessRoleData(userRoleAccess);
-      await getKpi(id);
+      await getKpi(cancelToken);
     }
   };
 
