@@ -34,9 +34,9 @@ toolManagementActions.getToolTypesV2 = async (getAccessToken, cancelTokenSource,
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-toolManagementActions.getToolTypeById = async (toolTypeId, getAccessToken) => {
+toolManagementActions.getToolTypeByIdV2 = async (getAccessToken, cancelTokenSource, toolTypeId) => {
   const apiUrl = `/registry/type/${toolTypeId}`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 toolManagementActions.getToolIdentifierById = async (toolIdentifierId, getAccessToken) => {

@@ -18,7 +18,8 @@ function KpiDetailView() {
   const [accessRoleData, setAccessRoleData] = useState({});
   const [kpiData, setKpiData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const { id } = useParams();  const isMounted = useRef(false);
+  const { id } = useParams();
+  const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {

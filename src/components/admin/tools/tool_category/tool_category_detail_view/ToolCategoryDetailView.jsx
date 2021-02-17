@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import { useParams } from "react-router-dom";
 import Model from "core/data_model/model";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -9,6 +9,8 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ToolCategoryDetailPanel from "components/admin/tools/tool_category/tool_category_detail_view/ToolCategoryDetailPanel";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import axios from "axios";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
 function ToolCategoryDetailView() {
   const {toolTypeId} = useParams();
@@ -17,42 +19,64 @@ function ToolCategoryDetailView() {
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const [toolCategoryData, setToolCategoryData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles();
+      await getRoles(cancelSource);
     }
     catch (error) {
-      if (!error?.error?.message?.includes(404)) {
+      if (isMounted?.current === true && !error?.error?.message?.includes(404)) {
+        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
-  };
+  }
 
-  const getToolType = async (toolTypeId) => {
-    const response = await toolManagementActions.getToolTypeById(toolTypeId, getAccessToken);
-    if (response?.data?.length > 0) {
-      setToolCategoryData(new Model(response.data[0], toolCategoryMetadata, false));
-    }
-  };
-
-  const getRoles = async () => {
+  const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
+    if (isMounted?.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      if (userRoleAccess?.OpseraAdministrator === true) {
-        await getToolType(toolTypeId);
+      if (toolTypeId != null && userRoleAccess?.OpseraAdministrator === true) {
+        await getToolType(cancelSource);
       }
+    }
+  };
+
+  const getToolType = async (cancelSource = cancelTokenSource) => {
+    const response = await toolManagementActions.getToolTypeByIdV2(getAccessToken, cancelSource, toolTypeId);
+    if (response?.data?.length > 0) {
+      setToolCategoryData(new Model(response.data[0], toolCategoryMetadata, false));
     }
   };
 
@@ -70,7 +94,8 @@ function ToolCategoryDetailView() {
     <DetailScreenContainer
       breadcrumbDestination={"toolCategoryDetailView"}
       metadata={toolCategoryMetadata}
-      accessDenied={!accessRoleData?.OpseraAdministrator}
+      accessRoleData={accessRoleData}
+      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       dataObject={toolCategoryData}
       isLoading={isLoading}
       actionBar={getActionBar()}
