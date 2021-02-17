@@ -11,6 +11,7 @@ import ToolIdentifierTable from "components/admin/tools/tool_identifier/ToolIden
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import axios from "axios";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
 function ToolManagement() {
   const toastContext = useContext(DialogToastContext);
@@ -130,7 +131,8 @@ function ToolManagement() {
 
   return (
     <ScreenContainer
-      accessDenied={!accessRoleData?.OpseraAdministrator}
+      accessRoleData={accessRoleData}
+      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       isLoading={!accessRoleData}
       navigationTabContainer={getNavigationTabContainer()}
       breadcrumbDestination={"toolManagement"}
