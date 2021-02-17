@@ -12,7 +12,8 @@ function TemplateManagement() {
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [templateList, setTemplateList] = useState([]);  const isMounted = useRef(false);
+  const [templateList, setTemplateList] = useState([]);
+  const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
@@ -42,7 +43,7 @@ function TemplateManagement() {
       await getRoles(cancelSource);
     }
     catch (error) {
-      if (isMounted?.current === true && !error?.error?.message?.includes(404)) {
+      if (isMounted?.current === true) {
         console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }

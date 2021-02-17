@@ -45,7 +45,7 @@ toolsActions.getTools = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-toolsActions.getRoleLimitedToolRegistryList = async (toolFilterDto, getAccessToken) => {
+toolsActions.getRoleLimitedToolRegistryListV2 = async (getAccessToken, cancelTokenSource, toolFilterDto) => {
   let sortOption = toolFilterDto.getData("sortOption");
 
   let urlParams = {
@@ -62,7 +62,7 @@ toolsActions.getRoleLimitedToolRegistryList = async (toolFilterDto, getAccessTok
   }
 
   const apiUrl = `/registry/configs`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 toolsActions.getFullToolRegistryList = async (getAccessToken) => {
