@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import ToolsTable from "components/inventory/tools/ToolsTable";
 import TableCardView from "components/common/table/TableCardView";
 import StatusFilter from "components/common/filters/status/StatusFilter";
-import ToolIdentifierFilter from "components/common/filters/tools/ToolIdentifierFilter";
 import TagFilter from "components/common/filters/tags/TagFilter";
 import NewToolModal from "components/inventory/tools/NewToolModal";
 import PropTypes from "prop-types";
@@ -12,6 +11,7 @@ import workflowAuthorizedActions
 import LdapOwnerFilter from "components/common/filters/pipelines/LdapOwnerFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
+import InlineToolIdentifierFilter from "components/common/filters/tools/inline/InlineToolIdentifierFilter";
 
 function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, saveCookies, customerAccessRules}) {
   const [showCreateToolModal, setShowCreateToolModal] = useState(false);
@@ -29,7 +29,6 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
       <>
         <StatusFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} className="mb-2" />
         <LdapOwnerFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} className="mb-2" />
-        <ToolIdentifierFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} className={"mb-2"} />
         <TagFilter filterDto={toolFilterDto} setFilterDto={setToolFilterDto} />
       </>
     );
@@ -37,7 +36,7 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
 
   const getInlineFilters = () => {
     return (
-      null
+      <InlineToolIdentifierFilter filterModel={toolFilterDto} setFilterModel={setToolFilterDto} loadData={loadData} className={"mr-2"} />
     );
   };
 

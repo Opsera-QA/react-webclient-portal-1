@@ -25,7 +25,7 @@ function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, 
         valueField={valueField}
         textField={textField}
         filter={filter}
-        className={inline ? `inline-filter-input` : undefined}
+        className={inline ? `inline-filter-input inline-select-filter` : undefined}
         groupBy={groupBy}
         value={dataObject?.getData(fieldName)}
         busy={busy}

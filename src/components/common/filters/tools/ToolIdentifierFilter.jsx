@@ -7,7 +7,7 @@ import FilterSelectInputBase from "components/common/filters/input/FilterSelectI
 import axios from "axios";
 import toolManagementActions from "components/admin/tools/tool-management-actions";
 
-function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunction, className }) {
+function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunction, className, inline }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [toolIdentifierFilterOptions, setToolIdentifierFilterOptions] = useState([]);
@@ -68,6 +68,7 @@ function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunct
         busy={isLoading}
         placeholderText={"Filter by Tool"}
         fieldName={fieldName}
+        inline={inline}
         setDataObject={setFilterDto}
         dataObject={filterDto}
         setDataFunction={setDataFunction}
@@ -83,7 +84,8 @@ ToolIdentifierFilter.propTypes = {
   setFilterDto: PropTypes.func,
   fieldName: PropTypes.string,
   setDataFunction: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
+  inline: PropTypes.bool
 };
 
 ToolIdentifierFilter.defaultProps = {
