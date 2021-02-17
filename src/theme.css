@@ -1076,13 +1076,13 @@ a.nav-link {
 }
 
 .page-description {
-    background-color: #F8F8F8;
+    background-color: #FCFCFC;
     min-height: 2em;
 }
 
 .shaded-panel {
     /*border-radius: 5px;*/
-    background-color: #F8F8F8;
+    background-color: #FCFCFC;
 }
 
 .shaded-container {
