@@ -115,7 +115,7 @@ const SfdcPipelineModifiedFiles = ({
       loadSfdcData();
       loadGitData();
       loadDestSfdcData();
-      let componentTypesArr = [{ "text": "All", "value": "" }];
+      let componentTypesArr = [];
       let uniqueComponentTypes =  isProfiles ? [...new Set(selectedComp.map(item => item))] : [...new Set(selectedComponentTypes.map(item => item))];
       uniqueComponentTypes.map(item => componentTypesArr.push({ "text": item, "value": item }));
       setComponentType(componentTypesArr);

@@ -84,7 +84,7 @@ const SfdcPipelineProfileComponents = ({
   useEffect(() => {
     async function loadInitialData() {
       await loadData();
-      let componentTypesArr = [{ "componentType": "All", "value": "" }];
+      let componentTypesArr = [];
       let uniqueComponentTypes = [...new Set(selectedComponentTypes.map(item => item))];
       uniqueComponentTypes.map(item => componentTypesArr.push({ "componentType": item, "value": item }));
       setComponentType(componentTypesArr);
