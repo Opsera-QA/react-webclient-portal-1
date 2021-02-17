@@ -510,7 +510,7 @@ div.modal-footer {
 
 /* Custom Tab Styling */
 .nav-tabs {
-    border-bottom: none;
+    border-bottom: 1px solid #E6E5E3;
 }
 
 a.nav-link {
