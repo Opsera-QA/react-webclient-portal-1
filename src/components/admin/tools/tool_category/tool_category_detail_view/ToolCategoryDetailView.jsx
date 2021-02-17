@@ -75,7 +75,8 @@ function ToolCategoryDetailView() {
 
   const getToolType = async (cancelSource = cancelTokenSource) => {
     const response = await toolManagementActions.getToolTypeByIdV2(getAccessToken, cancelSource, toolTypeId);
-    if (response?.data?.length > 0) {
+
+    if (isMounted?.current === true && response?.data?.length > 0) {
       setToolCategoryData(new Model(response.data[0], toolCategoryMetadata, false));
     }
   };
