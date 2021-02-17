@@ -12,6 +12,8 @@ import FilterBar from "components/common/filters/FilterBar";
 import StatusFilter from "components/common/filters/status/StatusFilter";
 import NewKpiModal from "components/admin/kpi_editor/NewKpiModal";
 import {getField} from "components/common/metadata/metadata-helpers";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
 
 function KpiTable({ data, kpiFilterDto, setKpiFilterDto, isLoading, loadData }) {
   let fields = kpiMetaData.fields;
@@ -39,35 +41,40 @@ function KpiTable({ data, kpiFilterDto, setKpiFilterDto, isLoading, loadData }) 
     setShowKpiModal(true);
   };
 
-  const getFilterBar = () => {
-    return(
-      <FilterBar
-        addRecordFunction={createKpi}
-        loadData={loadData}
-        filterDto={kpiFilterDto}
-        setFilterDto={setKpiFilterDto}
-        supportSearch={true}
-      >
-        <StatusFilter filterDto={kpiFilterDto} setFilterDto={setKpiFilterDto} />
-      </FilterBar>
+  const getDropdownFilters = () => {
+    return (
+      <StatusFilter filterDto={kpiFilterDto} setFilterDto={setKpiFilterDto}/>
     );
   };
 
-  return (
-    <div className="px-2 pb-2">
+  const getKpiTable = () => {
+    return (
       <CustomTable
+        className={"no-table-border"}
         onRowSelect={onRowSelect}
         isLoading={isLoading}
         data={data}
         rowStyling={rowStyling}
         columns={columns}
-        createNewRecord={createKpi}
-        type={"KPI"}
-        tableTitle={"KPIs"}
         loadData={loadData}
-        tableFilterBar={getFilterBar()}
         paginationDto={kpiFilterDto}
         setPaginationDto={setKpiFilterDto}
+      />
+    );
+  };
+
+  return (
+    <div className="px-2 pb-2">
+      <FilterContainer
+        loadData={loadData}
+        dropdownFilters={getDropdownFilters()}
+        addRecordFunction={createKpi}
+        isLoading={isLoading}
+        body={getKpiTable()}
+        titleIcon={faFileInvoice}
+        title={"KPIs"}
+        filterDto={kpiFilterDto}
+        setFilterDto={setKpiFilterDto}
       />
       <NewKpiModal showModal={showKpiModal} setShowModal={setShowKpiModal} loadData={loadData}/>
     </div>
