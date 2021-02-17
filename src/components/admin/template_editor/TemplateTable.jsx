@@ -10,6 +10,8 @@ import {
 import NewTemplateModal from "components/admin/template_editor/NewTemplateModal";
 import templateEditorMetadata from "components/admin/template_editor/template-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faStream} from "@fortawesome/pro-light-svg-icons";
 
 function TemplateTable({ data, loadData, isLoading }) {
   const fields = templateEditorMetadata.fields;
@@ -36,7 +38,7 @@ function TemplateTable({ data, loadData, isLoading }) {
     return !row["values"].active ? " inactive-row" : "";
   };
 
-  const selectedRow = (rowData, type) => {
+  const onRowSelect = (rowData, type) => {
     history.push(`/admin/templates/details/${rowData.original._id}`);
   };
 
@@ -44,18 +46,30 @@ function TemplateTable({ data, loadData, isLoading }) {
     setShowCreateTemplateModal(true);
   };
 
+  const getTemplateTable = () => {
+    return (
+      <CustomTable
+        className={"no-table-border"}
+        isLoading={isLoading}
+        onRowSelect={onRowSelect}
+        noDataMessage={noDataMessage}
+        data={data}
+        columns={columns}
+        rowStyling={rowStyling}
+      />
+    );
+  };
+
   return (
     <div className="px-2 pb-2">
-      <CustomTable
-        columns={columns}
-        data={data}
-        onRowSelect={selectedRow}
-        noDataMessage={noDataMessage}
+      <FilterContainer
+        loadData={loadData}
+        addRecordFunction={createTemplate}
         isLoading={isLoading}
-        rowStyling={rowStyling}
-        tableTitle={"Pipeline Templates"}
+        body={getTemplateTable()}
+        titleIcon={faStream}
+        title={"Pipeline Templates"}
         type={"Pipeline Template"}
-        createNewRecord={createTemplate}
       />
       <NewTemplateModal setShowModal={setShowCreateTemplateModal} loadData={loadData} showModal={showCreateTemplateModal}/>
     </div>
