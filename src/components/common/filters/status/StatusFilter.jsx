@@ -8,27 +8,33 @@ const statusOptions = [
   {text: "Status: Inactive", value: "inactive"}
 ];
 
-function StatusFilter({ filterDto, setFilterDto, className}) {
+function StatusFilter({ filterDto, setFilterDto, className, fieldName, inline}) {
   if (filterDto == null) {
     return null;
   }
 
   return (
-    <div className={className}>
-      <FilterSelectInputBase
-        fieldName={"status"}
-        setDataObject={setFilterDto}
-        dataObject={filterDto}
-        selectOptions={statusOptions}
-      />
-    </div>
+    <FilterSelectInputBase
+      className={className}
+      fieldName={fieldName}
+      inline={inline}
+      setDataObject={setFilterDto}
+      dataObject={filterDto}
+      selectOptions={statusOptions}
+    />
   );
 }
 
 StatusFilter.propTypes = {
   filterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
+  fieldName: PropTypes.string,
+  inline: PropTypes.bool
+};
+
+StatusFilter.defaultProps = {
+  fieldName: "status"
 };
 
 export default StatusFilter;
