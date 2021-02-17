@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import toolCountsMetadata from "components/reports/tools/counts/tool-counts-metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faSitemap, faTally} from "@fortawesome/pro-light-svg-icons";
 
-function ToolCountTable({ data, isLoading }) {
+function ToolCountTable({ data, isLoading, loadData }) {
   let fields = toolCountsMetadata.fields;
 
   const columns = useMemo(
@@ -19,15 +21,26 @@ function ToolCountTable({ data, isLoading }) {
     return row["count"] === 0 ? " inactive-row" : "";
   };
 
-  return (
-    <div className="px-2 pb-2">
+  const getToolCountsTable = () => {
+    return (
       <CustomTable
+        className={"no-table-border"}
         columns={columns}
         data={data}
         rowStyling={rowStyling}
         isLoading={isLoading}
-        tableTitle={"Tool Counts"}
-        type={"Tool Counts"}
+      />
+    );
+  };
+
+  return (
+    <div className="px-2 pb-2">
+      <FilterContainer
+        loadData={loadData}
+        isLoading={isLoading}
+        body={getToolCountsTable()}
+        titleIcon={faTally}
+        title={"Tool Counts"}
       />
     </div>
   );
@@ -35,7 +48,8 @@ function ToolCountTable({ data, isLoading }) {
 
 ToolCountTable.propTypes = {
   data: PropTypes.array,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  loadData: PropTypes.func
 };
 
 export default ToolCountTable;

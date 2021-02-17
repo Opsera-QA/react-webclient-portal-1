@@ -67,20 +67,16 @@ function ToolCountsReport() {
     );
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
   return (
     <ScreenContainer
       breadcrumbDestination={"toolCountsReport"}
       pageDescription={"View tool usage counts"}
-      isLoading={isLoading}
+      isLoading={!accessRoleData}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.POWER_USERS}
       navigationTabContainer={getNavigationTabContainer()}
     >
-      <ToolCountTable isLoading={isLoading} data={toolCounts} />
+      <ToolCountTable isLoading={isLoading} data={toolCounts} loadData={loadData} />
     </ScreenContainer>
   );
 }
