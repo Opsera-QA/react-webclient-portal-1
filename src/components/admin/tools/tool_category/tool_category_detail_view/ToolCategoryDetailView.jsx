@@ -59,7 +59,7 @@ function ToolCategoryDetailView() {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();

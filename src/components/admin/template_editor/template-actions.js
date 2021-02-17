@@ -1,4 +1,5 @@
 import {axiosApiService} from "../../../api/apiService";
+import baseActions from "utils/actionsBase";
 
 const templateActions = {};
 
@@ -47,17 +48,9 @@ templateActions.deleteTemplate = async (templateDataDto, getAccessToken) => {
   return response;
 };
 
-templateActions.getTemplates = async (getAccessToken) => {
-  const accessToken = await getAccessToken();
+templateActions.getTemplatesV2 = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = "/pipelines/workflows?hidden=true";
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) => {
-      return result;
-    })
-    .catch(error => {
-      throw { error };
-    });
-  return response;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 templateActions.getTemplateById = async (templateId, getAccessToken) => {

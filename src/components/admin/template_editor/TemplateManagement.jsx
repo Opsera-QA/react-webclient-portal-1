@@ -1,58 +1,85 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import { AuthContext } from "contexts/AuthContext";
-
-import LoadingDialog from "components/common/status_notifications/loading";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import templateActions from "components/admin/template_editor/template-actions";
 import TemplateTable from "components/admin/template_editor/TemplateTable";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import axios from "axios";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
 function TemplateManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const [templateList, setTemplateList] = useState([]);
+  const [templateList, setTemplateList] = useState([]);  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles();
+      await getRoles(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true && !error?.error?.message?.includes(404)) {
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
     finally {
-      setIsLoading(false);
-    }
-  }
-
-  const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
-      setAccessRoleData(userRoleAccess);
-
-      if (userRoleAccess?.OpseraAdministrator) {
-        await getTemplates();
+      if (isMounted?.current === true) {
+        setIsLoading(false);
       }
     }
   };
 
-  const getTemplates = async () => {
-    const templateListResponse = await templateActions.getTemplates(getAccessToken);
-    setTemplateList(templateListResponse?.data);
+  const getRoles = async (cancelSource = cancelTokenSource) => {
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    if (isMounted?.current === true && userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+
+      if (userRoleAccess?.OpseraAdministrator === true) {
+        await getTemplates(cancelSource);
+      }
+    }
+  };
+
+  const getTemplates = async (cancelSource = cancelTokenSource) => {
+    const templateListResponse = await templateActions.getTemplatesV2(getAccessToken, cancelSource);
+
+    if (isMounted?.current === true) {
+      setTemplateList(templateListResponse?.data);
+    }
   };
 
   return (
     <ScreenContainer
       breadcrumbDestination={"templateManagement"}
       isLoading={!accessRoleData}
-      accessDenied={!accessRoleData?.OpseraAdministrator}
+      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
+      accessRoleData={accessRoleData}
     >
       <TemplateTable data={templateList} isLoading={isLoading} loadData={loadData}/>
     </ScreenContainer>
