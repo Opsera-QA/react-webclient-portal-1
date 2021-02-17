@@ -54,8 +54,16 @@
     color: #3D3B36;
 }
 
+.background-shading {
+    background-color: #FCFCFC;
+}
+
 /*END Official Colors*/
 
+
+.small-label-text {
+    font-size:.8rem;
+}
 
 .pointer {
     cursor: pointer

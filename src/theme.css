@@ -1217,7 +1217,7 @@ a.nav-link {
 
 /* Filter Container Styling */
 .filter-container {
-    border: 1px solid #cdd1d5;
+    border: 1px solid #E6E5E3;
     border-collapse: collapse;
 }
 
@@ -1231,7 +1231,7 @@ a.nav-link {
 }
 
 .filter-container .content-block-body {
-    background-color: #dee2e6;
+    background-color: #E6E5E3;
     min-height: 150px;
 }
 

@@ -8,7 +8,7 @@ function TabPanelContainer({ tabContainer, currentView }) {
           {tabContainer}
       </div>
       <div className="shaded-panel detail-panel-body">
-        <div className="pt-2 px-3">{currentView}</div>
+        <div className="pt-1">{currentView}</div>
       </div>
     </div>
   );
