@@ -3,19 +3,6 @@ import baseActions from "../../../../../utils/actionsBase";
 
 const departmentActions = {};
 
-// TODO: Remove when all references are updated
-departmentActions.getDepartmentsByDomain = async (domain, getAccessToken) => {
-  let postBody = {
-    domain: domain
-  };
-  const accessToken = await getAccessToken();
-  const apiUrl = `/users/account/departments`;
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {return error;});
-  return response;
-};
-
 departmentActions.getDepartmentsByDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
   let postBody = {
     domain: domain

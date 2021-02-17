@@ -338,8 +338,7 @@ const AppWithRouterAccess = () => {
                                component={LdapOrganizationAccountDetailView}/>
                   <SecureRoute path="/accounts/create" exact component={LdapCustomerOnboardView}/>
 
-                  {/*TODO: Move to settings?*/}
-                  <SecureRoute path="/admin/departments" exact component={LdapDepartmentManagement}/>
+                  <SecureRoute path="/admin/:orgDomain?/departments" exact component={LdapDepartmentManagement}/>
                   <SecureRoute path="/admin/:orgDomain/departments/details/:departmentName" exact
                                component={LdapDepartmentDetailView}/>
 
