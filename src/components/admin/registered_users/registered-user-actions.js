@@ -12,7 +12,7 @@ RegisteredUserActions.getUserRecord = async (userId, getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-RegisteredUserActions.getRegisteredUsers = async (filterDto, getAccessToken) => {
+RegisteredUserActions.getRegisteredUsersV2 = async (getAccessToken, cancelSourceToken, filterDto) => {
   let sortOption = filterDto.getData("sortOption");
 
   const urlParams = {
@@ -25,7 +25,7 @@ RegisteredUserActions.getRegisteredUsers = async (filterDto, getAccessToken) => 
   };
 
   const apiUrl = `/users/get-users`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelSourceToken, apiUrl, urlParams);
 };
 
 RegisteredUserActions.deactivateUser = async (userId, getAccessToken) => {

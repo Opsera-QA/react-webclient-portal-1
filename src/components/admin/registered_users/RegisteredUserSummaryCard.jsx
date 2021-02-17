@@ -22,10 +22,10 @@ function RegisteredUserSummaryCard({ registeredUsersData, loadData }) {
 
   useEffect(() => {
     initializeDto();
-  }, []);
+  }, [registeredUsersData]);
 
   const initializeDto = async () => {
-    setRegisteredUserDto(new Model(registeredUsersData, registeredUsersMetadata, false));
+    setRegisteredUserDto(new Model({...registeredUsersData}, registeredUsersMetadata, false));
   }
 
   const getTitleBar = () => {
