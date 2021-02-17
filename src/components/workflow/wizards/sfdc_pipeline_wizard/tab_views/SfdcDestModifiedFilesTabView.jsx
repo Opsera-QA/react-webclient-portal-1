@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useMemo }  from 'react'
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  getTableDateColumn,
+  getTableDateTimeColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import sfdcTableConstants from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-table-constants";
@@ -24,7 +24,7 @@ const SfdcDestModifiedFilesTabView = ({
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "componentType"})),
       getTableTextColumn(fields.find(field => { return field.id === "committedFile"})),
-      getTableDateColumn(fields.find(field => { return field.id === "committedTime"})),
+      getTableDateTimeColumn(fields.find(field => { return field.id === "committedTime"})),
     ],
     [],
   );

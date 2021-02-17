@@ -2,7 +2,7 @@ import React, { useMemo }  from 'react'
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  getTableDateColumn,
+  getTableDateTimeColumn,
   getTableTextColumn,
   getCheckBoxColumn
 } from "components/common/table/table-column-helpers";
@@ -31,7 +31,7 @@ const SfdcModifiedFilesTabView = ({
       getTableTextColumn(fields.find(field => { return field.id === "committedFileId"})),
       getTableTextColumn(fields.find(field => { return field.id === "componentType"})),
       getTableTextColumn(fields.find(field => { return field.id === "committedFile"})),
-      getTableDateColumn(fields.find(field => { return field.id === "committedTime"})),
+      getTableDateTimeColumn(fields.find(field => { return field.id === "committedTime"})),
       getTableTextColumn(fields.find(field => { return field.id === "committedBy"})),
       getCheckBoxColumn(handleComponentCheck)  
     ],
