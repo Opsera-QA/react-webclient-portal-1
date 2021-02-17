@@ -248,7 +248,7 @@ const SfdcPipelineComponents = ({
     // TODO: comment lastCommitTimeStamp once done testing 
     // postBody.lastCommitTimeStamp = isProfiles ? "1900-01-01T00:00:00.000Z" : asOfDate;
     postBody.lastCommitTimeFromStamp = isProfiles ? "1900-01-01T00:00:00.000Z" : fromDate;
-    postBody.lastCommitTimeToStamp = isProfiles ? "1900-01-01T00:00:00.000Z" : toDate;
+    postBody.lastCommitTimeToStamp = toDate;
     postBody.componentTypes = isProfiles ? ["Profile"] : selectedComponentTypes;
     // postBody.componentTypes = isProfiles ? selectedComp : selectedComponentTypes;
     postBody.objectType = filtered[0];
