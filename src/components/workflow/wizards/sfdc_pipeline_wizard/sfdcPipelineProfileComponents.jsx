@@ -466,7 +466,13 @@ const SfdcPipelineProfileComponents = ({
     return (
       <div className="px-2 d-flex small">
         <div className="pr-4">
-          <BooleanFilter loadData={handleCheckAllClickComponentTypesProfile} filterDto={filterDto} setFilterDto={setFilterDto} fieldName={"checkAll"} />
+          <BooleanFilter
+            toolTipText={"This will select all the items on this page only."}
+            loadData={handleCheckAllClickComponentTypes}
+            filterDto={filterDto}
+            setFilterDto={setFilterDto}
+            fieldName={"checkAll"}
+          />
         </div>
         <div>
           <SfdcComponentFilter componentType={componentType} filterDto={filterDto} setFilterDto={setFilterDto} />

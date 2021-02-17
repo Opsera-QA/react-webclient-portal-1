@@ -63,9 +63,13 @@ const SfdcModifiedFilesTabView = ({
     return (
       <div className="px-2 d-flex small">
         <div className="pr-4">
-          <TooltipWrapper innerText={"This will select all the items on this page only."}>
-            <BooleanFilter loadData={handleCheckAllClickComponentTypes} filterDto={filterDto} setFilterDto={setFilterDto} fieldName={"checkAll"} />
-          </TooltipWrapper>
+          <BooleanFilter
+            toolTipText={"This will select all the items on this page only."}
+            loadData={handleCheckAllClickComponentTypes}
+            filterDto={filterDto}
+            setFilterDto={setFilterDto}
+            fieldName={"checkAll"}
+          />
         </div>
         <div>
           <SfdcComponentFilter componentType={componentType} filterDto={filterDto} setFilterDto={setFilterDto} />
