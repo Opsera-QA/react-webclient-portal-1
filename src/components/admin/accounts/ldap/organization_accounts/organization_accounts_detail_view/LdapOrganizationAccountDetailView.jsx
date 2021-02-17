@@ -1,11 +1,10 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
-import { useParams } from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import {ldapOrganizationAccountMetaData} from "components/admin/accounts/ldap/organization_accounts/ldap-organization-account-metadata";
-import departmentActions from "components/admin/accounts/ldap/ldap_departments/department-functions";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
@@ -15,6 +14,7 @@ import axios from "axios";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
 function LdapOrganizationAccountDetailView() {
+  const history = useHistory();
   const { organizationDomain } = useParams();
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -76,6 +76,10 @@ function LdapOrganizationAccountDetailView() {
       setCurrentUser(user);
       setAccessRoleData(userRoleAccess);
 
+      if (organizationName == null || (!userRoleAccess?.OpseraAdministrator && ldap?.domain !== organizationDomain)) {
+        history.push(`/admin/organization-accounts/${organizationDomain}/details/`);
+      }
+
       let authorizedActions = await accountsActions.getAllowedOrganizationAccountActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
       setAuthorizedActions(authorizedActions);
 
@@ -107,7 +111,8 @@ function LdapOrganizationAccountDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"ldapOrganizationAccountDetailView"}
-      accessDenied={!authorizedActions?.includes("get_organization_account_details")}
+      accessRoleData={accessRoleData}
+      roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
       metadata={ldapOrganizationAccountMetaData}
       dataObject={ldapOrganizationAccountData}
       isLoading={isLoading}
