@@ -4,15 +4,17 @@ import {Button} from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faPlus} from "@fortawesome/pro-light-svg-icons";
 
-function NewRecordButton({ isLoading, variant, addRecordFunction, type, size }) {
+function NewRecordButton({ isLoading, variant, addRecordFunction, type, size, className }) {
   if (!addRecordFunction) {
     return <></>;
   }
 
   return (
-    <Button variant={variant} size={size} disabled={isLoading} onClick={() => {addRecordFunction();}}>
-      <span><FontAwesomeIcon icon={faPlus} className="mr-1" fixedWidth/>New {type}</span>
-    </Button>
+    <div className={className}>
+      <Button variant={variant} size={size} disabled={isLoading} onClick={() => {addRecordFunction();}}>
+        <span><FontAwesomeIcon icon={faPlus} className="mr-1" fixedWidth/>New {type}</span>
+      </Button>
+    </div>
   );
 }
 
@@ -21,7 +23,8 @@ NewRecordButton.propTypes = {
   isLoading: PropTypes.bool,
   type: PropTypes.string,
   variant: PropTypes.string,
-  size: PropTypes.string
+  size: PropTypes.string,
+  className: PropTypes.string
 };
 
 NewRecordButton.defaultProps = {

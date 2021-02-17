@@ -46,7 +46,7 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
 
   return (
     <div className={className}>
-      <InputGroup size="sm">
+      <InputGroup size="sm" className={"flex-nowrap"}>
         <input
           disabled={disabled || isLoading || filterDto == null}
           placeholder="Search"
@@ -77,7 +77,8 @@ InlineSearchFilter.propTypes = {
 };
 
 InlineSearchFilter.defaultProps = {
-  fieldName: "search"
+  fieldName: "search",
+  className: "inline-search-input-group"
 };
 
 export default InlineSearchFilter;

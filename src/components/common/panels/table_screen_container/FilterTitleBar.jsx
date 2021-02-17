@@ -17,8 +17,8 @@ function FilterTitleBar({ title, addRecordFunction, inlineFilters, filterDto, ti
   return (
     <div className="d-flex w-100 justify-content-between">
       <div className="title-text-header d-flex">
-        <div className="my-auto mr-2 filter-title-text">{getTitleIcon()}{title}</div>
-        <div className="ml-2 my-auto"><NewRecordButton addRecordFunction={addRecordFunction} type={filterDto?.getType() || type} isLoading={isLoading} variant={"warning"} /></div>
+        <div className="my-auto mr-2 filter-title-text text-nowrap">{getTitleIcon()}{title}</div>
+        <NewRecordButton className={"mx-2 my-auto text-nowrap"} addRecordFunction={addRecordFunction} type={filterDto?.getType() || type} isLoading={isLoading} variant={"warning"} />
       </div>
       <div className="my-1">{inlineFilters}</div>
     </div>
