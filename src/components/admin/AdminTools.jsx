@@ -5,6 +5,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import BreadcrumbPageLink from "components/common/links/BreadcrumbPageLink";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
 function AdminTools() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -39,7 +40,9 @@ function AdminTools() {
   return (
     <ScreenContainer
       breadcrumbDestination={"admin"}
-      accessDenied={!accessRoleData?.OpseraAdministrator}
+      isLoading={!accessRoleData}
+      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
+      accessRoleData={accessRoleData}
       pageDescription={"Listed below are administration tools for the platform."}
     >
       <Row className="ml-3">
