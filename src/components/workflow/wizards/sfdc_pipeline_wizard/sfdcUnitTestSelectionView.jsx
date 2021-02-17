@@ -71,7 +71,10 @@ const SfdcUnitTestSelectionView = ({
       // save the mongo record id so that we can update it when saving selected data
       setUnitTestRecordId(response.data._id);
       // get the selected data if the same record is already present in mongo
-      setSelectedUnitTestClassesList( response.data.data.testClasses.filter((ele)=> response.data.paginatedData.selectedTestClasses.includes(ele)) );
+      setSelectedUnitTestClassesList( response.data.data.testClasses.filter((ele)=> response.data.paginatedData.selectedTestClasses.includes(ele)));
+
+      // selected unit test classes
+      setEnteredUnitTestClassesList(response.data.data.testClasses.filter((ele)=> response.data.paginatedData.selectedTestClasses.includes(ele)).toString());
         
       let arrOfObj = response.data.data.testClasses;
       // let res = arrOfObj.map(function(el) {
@@ -164,6 +167,8 @@ const SfdcUnitTestSelectionView = ({
         }, getAccessToken);
       // TODO: add a success toast here
       toastContext.showUpdateSuccessResultDialog("Test Classes");
+      // fetch back the new results
+      await getUnitTestList();
 
     } catch (error) {
       console.error("Error getting API Data: ", error);

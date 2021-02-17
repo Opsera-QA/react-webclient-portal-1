@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import {faChartBar} from "@fortawesome/pro-light-svg-icons";
-import KpiSettingsForm from "../marketplace/kpi_marketplace_detail_view/KpiSettingsForm";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 
 // Opsera KPIs
@@ -9,8 +7,8 @@ import OpseraPipelineByStatusBarChart from "./opsera/bar_chart/pipeline_by_statu
 import OpseraBuildDurationBarChart from "./opsera/bar_chart/build_duration/OpseraBuildDurationBarChart";
 import OpseraBuildsByUserBarChart from "./opsera/bar_chart/builds_by_user/OpseraBuildsByUserBarChart";
 import OpseraDeploymentFrequencyLineChart from "./opsera/line_chart/deployment_frequency/OpseraDeploymentFrequencyLineChart";
-import OpseraRecentPipelineStatus from "./opsera/OpseraRecentPipelineStatus";
-import OpseraRecentCDStatus from "./opsera/OpseraRecentCDStatus";
+import OpseraRecentPipelineStatus from "components/insights/charts/opsera/table/recent_pipeline_status/OpseraRecentPipelineStatus";
+import OpseraRecentCDStatus from "components/insights/charts/opsera/table/recent_cd_status/OpseraRecentCDStatus";
 
 // Jenkins KPIs
 import JenkinsBuildsByUserBarChart from "./jenkins/bar_chart/builds_by_user/JenkinsBuildsByUserBarChart";
@@ -84,7 +82,14 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
   //  After everything is refactored,
   //  this should be deleted and we should just return getChart() at bottom of component instead
   const getView = () => {
-    if (kpiConfig?.kpi_identifier === "opsera-status-by-pipeline") {
+    if (
+      kpiConfig?.kpi_identifier === "opsera-status-by-pipeline"
+      || kpiConfig?.kpi_identifier === "opsera-pipeline-duration"
+      || kpiConfig?.kpi_identifier === "opsera-pipelines-by-user"
+      || kpiConfig?.kpi_identifier === "opsera-deployment-frequency"
+      || kpiConfig?.kpi_identifier === "opsera-recent-pipeline-status"
+      || kpiConfig?.kpi_identifier === "opsera-recent-cd-status"
+    ) {
       return getChart();
     }
 
@@ -107,8 +112,6 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
     return getDateObjectFromKpiConfiguration(kpiConfiguration);
   };
 
-  // TODO: chart is global in this component, so it doesn't need to be passed in to this or getDateObject,
-  //  unless those functions are moved into a helper component
   const getChart = () => {
     switch (kpiConfig?.kpi_identifier) {
 
@@ -116,7 +119,6 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
       case "opsera-status-by-pipeline":
         return (
             <OpseraPipelineByStatusBarChart
-              persona={"developer"}
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -125,15 +127,54 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
             />
           );
       case "opsera-pipeline-duration":
-        return (<OpseraBuildDurationBarChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
+        return (
+          <OpseraBuildDurationBarChart
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
       case "opsera-pipelines-by-user":
-        return (<OpseraBuildsByUserBarChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
+        return (
+          <OpseraBuildsByUserBarChart
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
       case "opsera-deployment-frequency":
-        return (<OpseraDeploymentFrequencyLineChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
+        return (
+          <OpseraDeploymentFrequencyLineChart
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
       case "opsera-recent-pipeline-status":
-        return (<OpseraRecentPipelineStatus persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
+        return (
+          <OpseraRecentPipelineStatus
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+          );
       case "opsera-recent-cd-status":
-        return (<OpseraRecentCDStatus persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<OpseraRecentCDStatus
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
 
       // Jenkins KPIs
       case "jenkins-builds-by-user":

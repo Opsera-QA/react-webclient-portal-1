@@ -105,7 +105,7 @@ function Pipelines() {
                    tabName={"sdlc"} toolTipText={"Software Development Pipelines"} icon={faBracketsCurly}/>
         <CustomTab activeTab={activeTab} tabText={"Machine Learning"} handleTabClick={handleTabClick}
                    tabName={"ai-ml"} toolTipText={"Machine Learning (AI) Pipelines"} icon={faMicrochip}/>
-        <CustomTab activeTab={activeTab} tabText={"SalesForce Pipelines"} handleTabClick={handleTabClick}
+        <CustomTab activeTab={activeTab} tabText={"SalesForce"} handleTabClick={handleTabClick}
                    tabName={"sfdc"} toolTipText={"SalesForce Pipelines"} icon={faSalesforce}/>
       </CustomTabContainer>
     );

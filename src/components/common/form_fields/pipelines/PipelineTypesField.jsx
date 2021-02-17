@@ -46,7 +46,7 @@ function PipelineTypesField({ fieldName, dataObject }) {
 
   return (
     <TooltipWrapper innerText={getTooltipText()}>
-      <FontAwesomeIcon icon={getTypeIcon()} className="ml-1 pipeline-blue-text" size="lg"/>
+      <FontAwesomeIcon icon={getTypeIcon()} className="ml-1 pipeline-text" size="lg"/>
     </TooltipWrapper>
   );
 }

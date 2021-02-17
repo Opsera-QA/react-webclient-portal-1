@@ -5,7 +5,7 @@ import WarningDialog from "components/common/status_notifications/WarningDialog"
 
 // TODO: Rewrite when time permits
 // TODO: Allow passing in error message that is displayed as the placeholderText instead of using toastContext
-function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, setDataFunction, valueField, textField, filter, placeholderText, busy}) {
+function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, setDataFunction, valueField, textField, filter, placeholderText, busy, className, inline}) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
@@ -19,12 +19,13 @@ function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, 
   }
 
   return (
-    <div className="my-auto">
+    <div className={className}>
       <DropdownList
         data={selectOptions}
         valueField={valueField}
         textField={textField}
         filter={filter}
+        className={inline ? `inline-filter-input` : undefined}
         groupBy={groupBy}
         value={dataObject?.getData(fieldName)}
         busy={busy}
@@ -46,14 +47,17 @@ FilterSelectInputBase.propTypes = {
   filter: PropTypes.string,
   placeholderText: PropTypes.string,
   setDataFunction: PropTypes.func,
-  busy: PropTypes.bool
+  busy: PropTypes.bool,
+  className: PropTypes.string,
+  inline: PropTypes.bool,
 };
 
 FilterSelectInputBase.defaultProps = {
   valueField: "value",
   textField: "text",
   filter: "contains",
-  placeholderText: "Select One"
+  placeholderText: "Select One",
+  className: "my-auto"
 }
 
 export default FilterSelectInputBase;

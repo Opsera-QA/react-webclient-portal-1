@@ -1,4 +1,4 @@
-import baseActions from "../../../utils/actionsBase";
+import baseActions from "utils/actionsBase";
 
 const dashboardsActions = {};
 
@@ -10,11 +10,12 @@ dashboardsActions.create = async(dashboardDataDto, getAccessToken) => {
     return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
-dashboardsActions.get = async(id, getAccessToken) => {
-    const apiUrl = `/analytics/dashboard/${id}`
-    return baseActions.apiGetCall(getAccessToken, apiUrl);
+dashboardsActions.getDashboardByIdV2 = async(getAccessToken, cancelTokenSource, id) => {
+  const apiUrl = `/analytics/dashboard/${id}`
+  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+// TODO: Remove when all references updated to V2
 dashboardsActions.getAll = async(dashboardFilterDto, getAccessToken) => {
     const apiUrl = "/analytics/dashboard";
     let sortOption = dashboardFilterDto.getData("sortOption");
@@ -34,6 +35,27 @@ dashboardsActions.getAll = async(dashboardFilterDto, getAccessToken) => {
   }
 
   return baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+};
+
+dashboardsActions.getAllDashboardsV2 = async(getAccessToken, cancelTokenSource, dashboardFilterDto) => {
+  const apiUrl = "/analytics/dashboard";
+  let sortOption = dashboardFilterDto.getData("sortOption");
+
+  let urlParams = {
+    params: {
+      sort: sortOption ? sortOption.value : undefined,
+      page: dashboardFilterDto.getData("currentPage"),
+      size: dashboardFilterDto.getData("pageSize"),
+      tag: dashboardFilterDto.getFilterValue("tag"),
+      status: dashboardFilterDto.getFilterValue("status"),
+      tool: dashboardFilterDto.getFilterValue("toolIdentifier"),
+      search: dashboardFilterDto.getFilterValue("search"),
+      favorites: dashboardFilterDto.getFilterValue("isFavorite"),
+      type: dashboardFilterDto.getFilterValue("type")
+    }
+  }
+
+  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 dashboardsActions.update = async(dashboardDataDto, getAccessToken) => {

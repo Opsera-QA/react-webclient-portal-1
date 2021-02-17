@@ -79,7 +79,7 @@ const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestr
               <>
               {xml && (
                 <div className="col-7 mr-1">
-                <div className="h6 opsera-blue">Package XML</div>
+                <div className="h6 opsera-secondary">Package XML</div>
                   {/* xml display goes here */}
                   <SyntaxHighlighter language="xml" style={docco}>
                     {xml}
@@ -94,7 +94,7 @@ const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestr
               <>
               {destructiveXml && destructiveXml.length > 0 && (
                 <div className="col-5 mr-1">
-                <div className="h6 opsera-blue">Destructive Package XML</div>
+                <div className="h6 opsera-secondary">Destructive Package XML</div>
                   {/* xml display goes here */}
                   <SyntaxHighlighter language="xml" style={docco}>
                     {destructiveXml}

@@ -1,6 +1,7 @@
 import { axiosApiService } from "../../../../../../../../api/apiService";
 import baseActions from "../../../../../../../../utils/actionsBase";
 import octopusActions from "../../../../../../../inventory/tools/tool_details/tool_jobs/octopus/octopus-actions";
+import nexusStepActions from "../nexus/nexus-step-actions";
 
 const OctopusStepActions = {};
 
@@ -148,5 +149,20 @@ OctopusStepActions.getTargetRoles = async (id, spaceId, getAccessToken) => {
   }
   return [];
 }
+
+OctopusStepActions.getNexusRepos = async (toolID, getAccessToken) => {
+  let postBody = {
+    params: {
+      tool: "nexus",
+      toolId: toolID,
+    }
+  }
+  const apiUrl = `/tools/nexus/repositories`;
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl, postBody);
+  if (response && response.status === 200) {
+    return response.data
+  }
+  return [];
+};
 
 export default OctopusStepActions;

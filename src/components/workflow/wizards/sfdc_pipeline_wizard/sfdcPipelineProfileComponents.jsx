@@ -296,7 +296,7 @@ const SfdcPipelineProfileComponents = ({
     return (
       <div className="d-flex w-100 pr-2">
         <div className="col-5 list-item-container mr-1">
-          <div className="h6 opsera-blue">SFDC Files</div>
+          <div className="h6 opsera-secondary">SFDC Files</div>
 
           {profileComponentList && profileComponentList.length === 0 &&
           <div className="info-text mt-3">NO FILES</div>}

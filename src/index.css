@@ -18,97 +18,44 @@
 }
 
 .yellow {
-    color: #f9c116;
+    color: #CF940C;
 }
 
 .green {
     color: green;
 }
 
+/*Official Opsera Color Pallette*/
 .opsera-yellow {
-    color: #F6D179;
+    color: #CF940C;
 }
 
-.opsera-banner-light-purple-background {
-    background-color: #453191;
+.opsera-primary {
+    color: #352F54
 }
 
-.opsera-banner-dark-purple-background {
-    background-color: #2e1956;
+.opsera-secondary {
+    color: #46415C;
 }
 
 .opsera-banner-text-on-purple-background {
     color: #fef7fd;
 }
 
-.opsera-purple-text-on-white-background {
-    color: #352F54;
-}
-
-.opsera-dark-purple {
-    color: #241F3D;
-}
-
-.opsera-purple {
-    color: #352F54;
-}
-
-.opsera-muted-purple {
-    color: #46415C;
-}
-
-.opsera-light-purple {
-    color: #9F97CA;
-}
-
-.opsera-light-gray {
+.light-grey {
     color: #E6E5E3;
 }
 
-.opsera-gold {
-    color: #CF940C;
-}
-
-.opsera-blue { /*replacing blue with purple; 1989F9 */
-    color: #8F86BB;
-}
-
-.nav-blue {
-    color: #6153A5;
-}
-
-.green-gradient {
-    color: #00AA84;
-}
-
 .dark-grey {
-    color: #6c757d;
+    color: #3D3B36;
 }
 
-.light-grey {
-    color: #c9cdd0;
+.text-color {
+    color: #3D3B36;
 }
 
-.light-grey2 {
-    color: #fafafb;
-}
+/*END Official Colors*/
 
-.dark-blue {
-    color: #0f3e84;
-}
-
-.medium-blue {
-    color: #8F86BB;
-}
-
-.dark-grey-background {
-    background-color: #CCCAC6;
-}
-
-.dark-grey-border {
-    border: #B1AEA7 solid 2px;
-    border-radius: 0;
-}
 
 .pointer {
     cursor: pointer
@@ -240,7 +187,7 @@ a:hover, .active {
 
 
 .max-content-width {
-    max-width: 1450px; /* 1250px*/
+    max-width: 1685px; /* 1250px*/
 }
 
 .max-content-width-1875 {

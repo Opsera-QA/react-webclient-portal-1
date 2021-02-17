@@ -115,7 +115,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, ldapUsers, orgDomain
   const getSearchBar = () => {
     return (
       <div className="membership-search d-flex mx-auto">
-        <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-2 opsera-dark-purple h-100" />
+        <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-2 opsera-primary h-100" />
         <input
           placeholder="Search"
           value={searchText}

@@ -1,18 +1,36 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DtoFilterSelectInput from "../input/DtoFilterSelectInput";
+import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 
-function FavoritesFilter({ filterDto, setFilterDto}) {
-  const favoritesOptions = [{text: "Show All", value: undefined}, {text: "Show Favorites", value: "favorites"} ];
+const favoritesOptions = [
+  {text: "Show All", value: undefined},
+  {text: "Show Favorites", value: "favorites"}
+];
+
+function FavoritesFilter({ filterModel, setFilterModel, className }) {
+
+  if (filterModel == null) {
+    return null;
+  }
+
   return (
-    <div><DtoFilterSelectInput fieldName={"isFavorite"} setDataObject={setFilterDto} dataObject={filterDto} selectOptions={favoritesOptions} /></div>
+    <div className={className}>
+      <FilterSelectInputBase
+        fieldName={"isFavorite"}
+        placeholderText={"Filter by Dashboard Type"}
+        setDataObject={setFilterModel}
+        dataObject={filterModel}
+        selectOptions={favoritesOptions}
+      />
+    </div>
   );
 }
 
 
 FavoritesFilter.propTypes = {
-  filterDto: PropTypes.object,
-  setFilterDto: PropTypes.func,
+  filterModel: PropTypes.object,
+  setFilterModel: PropTypes.func,
+  className: PropTypes.string
 };
 
 export default FavoritesFilter;

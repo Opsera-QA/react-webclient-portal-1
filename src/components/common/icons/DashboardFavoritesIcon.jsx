@@ -16,7 +16,7 @@ function DashboardFavoritesIcon({dashboard, dashboardsActions, getAccessToken}) 
   return (
     <div className="text-center">
       <FontAwesomeIcon
-        className={"opsera-gold"}
+        className={"opsera-yellow"}
         icon={favorite ? faStarSolid : faStar}
         onClick={(e) => {
           console.log(e);
