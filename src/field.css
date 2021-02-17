@@ -49,11 +49,12 @@
 
 /* Property Input Styling */
 .object-properties-input .property-header {
-    background-color: #46415C;
-    color: #fff;
-    height: 40px;
-    line-height: 2.4em;
+    background-color: #E6E5E3;
+    color: #3D3B36;
+    min-height: 40px;
+    /*line-height: 2.4em;*/
     border-bottom: 5px solid #E6E5E3;
+    font-size:1.1rem;
 }
 
 .object-properties-input .delete-button {

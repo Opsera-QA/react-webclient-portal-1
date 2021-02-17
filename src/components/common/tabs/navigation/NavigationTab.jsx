@@ -32,8 +32,8 @@ function NavigationTab({activeTab, tabName, tabText, handleTabClick, icon, visib
     return (
       <li className="mr-1">
         <TooltipWrapper innerText={tabAccessRestricted} placement={"bottom"}>
-          <div className={"nav-link disabled-tab danger-red"}>
-            <FontAwesomeIcon icon={faExclamationCircle} fixedWidth/><span className="ml-2 d-none d-lg-inline">{tabText}</span>
+          <div className={"nav-link disabled-tab"}>
+            {/*<FontAwesomeIcon icon={faExclamationCircle} fixedWidth/>*/}<span className="ml-2 d-none d-lg-inline">{tabText}</span>
           </div>
         </TooltipWrapper>
       </li>

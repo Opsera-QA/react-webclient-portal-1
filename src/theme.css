@@ -528,7 +528,7 @@ a.nav-link {
 .default-custom-tabs .nav-tabs > li .disabled-tab {
     background: #E6E5E3;
     color: #3D3B36;
-    opacity: .7;
+    opacity: .5;
     cursor: not-allowed;
 }
 
@@ -625,10 +625,11 @@ a.nav-link {
 }
 
 .alternate-tabs .nav-tabs .nav-item .disabled-tab {
-    background: #C3C1CE;
+    background: #E6E5E3;
     color: #fff;
-    border-bottom: 5px solid rgba(0, 0, 0, .15);
+    border-bottom: 5px solid #E6E5E3;
     cursor: not-allowed;
+    opacity: .5;
 }
 
 
@@ -710,6 +711,7 @@ a.nav-link {
 .sub-navigation .nav-tabs > li .disabled-tab {
     border-top: 5px solid #E6E5E3;
     cursor: not-allowed;
+    opacity: .5;
 }
 
 .sub-navigation .nav-tabs > li a {
@@ -834,22 +836,22 @@ a.nav-link {
 }
 
 .content-block-top {
-    border-top: 1px solid #d2d2d2;
+    border-top: 1px solid #E6E5E3;
     padding-top: 5px;
 }
 
 .table-content-block {
-    border: 1px solid #E3E1EE;
+    border: 1px solid #E6E5E3;
     border-collapse: collapse;
 }
 
 .content-container {
-    border: 1px solid #B1AEA7;
+    border: 1px solid #E6E5E3;
     /*border-radius: .25rem;*/
 }
 
 .content-container-border {
-    border: 1px solid #7368AA;
+    border: 1px solid #E6E5E3;
 }
 
 .content-container-shadow {
@@ -1172,7 +1174,7 @@ a.nav-link {
 }
 
 .filter-title-text {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 
 .filter-body {

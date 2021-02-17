@@ -39,18 +39,15 @@ function AccessTokenEditorPanel({ cancelTokenSource }) {
 
   return (
     <div>
-      <div>
         <div className="object-properties-input mb-3">
           <div className="content-container-border">
             <div className="my-auto property-header d-flex justify-content-between">
-              <h6>
                 <div className="mx-2">
                   <div className="pt-2">
                     <FontAwesomeIcon icon={faKeySkeleton} fixedWidth className="mr-2"/>
-                    Generate a new Personal Access Token
+                    Generate Personal Access Token
                   </div>
                 </div>
-              </h6>
             </div>
             <Row className="mx-0">
               <Col xs={12} md={6}>
@@ -82,7 +79,6 @@ function AccessTokenEditorPanel({ cancelTokenSource }) {
             </Row>
           </div>
         </div>
-      </div>
     </div>
   );
 }
