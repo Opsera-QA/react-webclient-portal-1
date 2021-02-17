@@ -41,6 +41,7 @@ import SfdcComponentFilter from "components/common/filters/sfdccomponent/SfdcCom
 import sfdcComponentFilterMetadata from './sfdc-component-filter-metadata';
 import BooleanFilter from "components/common/filters/input/BooleanFilter";
 import ModifiedFilesTabView from "./tab_views/ModifiedFilesTabView";
+import SfdcModifiedFilesTabView from "./tab_views/SfdcModifiedFilesTabView";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -532,16 +533,26 @@ const SfdcPipelineProfileComponents = ({
                       toolTipText={"SFDC Files"} icon={faSalesforce} />            
           </CustomTabContainer>
           {activeTab === "sfdc" ? (
-            <FilterContainer
+            // <FilterContainer
+            //   loadData={loadData}
+            //   filterDto={filterDto}
+            //   setFilterDto={setFilterDto}
+            //   isLoading={loading}
+            //   title={"SFDC Files"}
+            //   titleIcon={faSalesforce}
+            //   body={getModifiedFilesView()}              
+            //   supportSearch={true}
+            //   inlineFilters={getSfdcInlineFilters()}
+            // />
+            <SfdcModifiedFilesTabView 
               loadData={loadData}
               filterDto={filterDto}
               setFilterDto={setFilterDto}
-              isLoading={loading}
-              title={"SFDC Files"}
-              titleIcon={faSalesforce}
-              body={getModifiedFilesView()}              
-              supportSearch={true}
-              inlineFilters={getSfdcInlineFilters()}
+              loading={loading}
+              componentType={componentType}
+              data={modifiedFilesTable}
+              handleComponentCheck={handleComponentCheckNew}
+              handleCheckAllClickComponentTypes={handleCheckAllClickComponentTypesProfile}
             />
           ) : null }          
         </div>
