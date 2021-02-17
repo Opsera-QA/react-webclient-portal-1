@@ -1201,7 +1201,7 @@ a.nav-link {
     /*max-width: 150px;*/
 }
 
-.inline-filter-input {
+.inline-filter-input, .inline-filter-input .rw-widget-input, .inline-filter-input .rw-dropdown-list {
     height: 31px;
     max-height: 31px;
 }
