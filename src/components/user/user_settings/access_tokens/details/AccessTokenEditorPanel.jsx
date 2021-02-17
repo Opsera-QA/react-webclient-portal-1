@@ -9,7 +9,7 @@ import Model from "core/data_model/model";
 import {accessTokenMetadata} from "components/user/user_settings/access_tokens/access-token-metadata";
 import CreateButton from "components/common/buttons/saving/CreateButton";
 import TextAreaClipboardField from "components/common/fields/clipboard/TextAreaClipboardField";
-import {faKey, faKeySkeleton} from "@fortawesome/pro-light-svg-icons";
+import {faKey} from "@fortawesome/pro-light-svg-icons";
 import AccessTokenExpirationSelectInput
   from "components/common/list_of_values_input/users/access_tokens/AccessTokenExpirationSelectInput";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -44,7 +44,7 @@ function AccessTokenEditorPanel({ cancelTokenSource }) {
             <div className="my-auto property-header d-flex justify-content-between">
                 <div className="mx-2">
                   <div className="pt-2">
-                    <FontAwesomeIcon icon={faKeySkeleton} fixedWidth className="mr-2"/>
+                    <FontAwesomeIcon icon={faKey} fixedWidth className="mr-2"/>
                     Generate Personal Access Token
                   </div>
                 </div>
