@@ -5,8 +5,9 @@ import { useHistory } from "react-router-dom";
 import ldapDepartmentMetaData from "./ldap-department-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
-import FilterBar from "components/common/filters/FilterBar";
 import NewLdapDepartmentModal from "components/admin/accounts/ldap/ldap_departments/NewLdapDepartmentModal";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faBuilding} from "@fortawesome/pro-light-svg-icons";
 
 function LdapDepartmentsTable({ departmentData, departmentFilterDto, authorizedActions, setDepartmentFilterDto, domain, loadData, isLoading }) {
   const [showCreateDepartmentModal, setShowCreateDepartmentModal] = useState(false);
@@ -30,29 +31,28 @@ function LdapDepartmentsTable({ departmentData, departmentFilterDto, authorizedA
     setShowCreateDepartmentModal(true);
   }
 
-  const getFilterBar = () => {
-    return(
-      <FilterBar
-        loadData={loadData}
-        filterDto={departmentFilterDto}
-        setFilterDto={setDepartmentFilterDto}
-        // activeFilterDto={activeDepartmentFilterDto}
-        addRecordFunction={createNewDepartment}
-      >
-      </FilterBar>
+  const getDepartmentsTable = () => {
+    return (
+      <CustomTable
+        className={"no-table-border"}
+        isLoading={isLoading}
+        onRowSelect={onRowSelect}
+        data={departmentData}
+        columns={columns}
+      />
     );
   };
 
   return (
     <div className="px-2 pb-2">
-      <CustomTable
-        onRowSelect={onRowSelect}
-        data={departmentData}
-        columns={columns}
-        isLoading={isLoading}
-        tableTitle={"Departments"}
+      <FilterContainer
         loadData={loadData}
-        tableFilterBar={getFilterBar()}
+        addRecordFunction={createNewDepartment}
+        isLoading={isLoading}
+        body={getDepartmentsTable()}
+        titleIcon={faBuilding}
+        title={"Departments"}
+        type={"Department"}
       />
       <NewLdapDepartmentModal
         showModal={showCreateDepartmentModal}
