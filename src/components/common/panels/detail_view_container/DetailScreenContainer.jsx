@@ -92,7 +92,9 @@ function DetailScreenContainer({ breadcrumbDestination, actionBar, dataObject, d
             {getDetailBody()}
           </div>
         </div>
-        <RoleRequirementField className={"mx-2"} roleRequirement={roleRequirement} />
+        <div className="content-block-footer-text-container pt-2">
+          <RoleRequirementField className={"mx-2"} roleRequirement={roleRequirement} />
+        </div>
         <div className="content-block-footer"/>
       </div>
     </div>
