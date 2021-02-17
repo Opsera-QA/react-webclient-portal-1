@@ -5,7 +5,7 @@ import WarningDialog from "components/common/status_notifications/WarningDialog"
 
 // TODO: Rewrite when time permits
 // TODO: Allow passing in error message that is displayed as the placeholderText instead of using toastContext
-function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, setDataFunction, valueField, textField, filter, placeholderText, busy, className, inline}) {
+function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, setDataFunction, valueField, textField, filter, placeholderText, busy, className, inline, disabled}) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
@@ -28,6 +28,7 @@ function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, 
         className={inline ? `inline-filter-input inline-select-filter` : undefined}
         groupBy={groupBy}
         value={dataObject?.getData(fieldName)}
+        disabled={disabled}
         busy={busy}
         placeholder={placeholderText}
         onChange={(data) => setDataFunction ? setDataFunction(fieldName, data) : validateAndSetData(fieldName, data)}
@@ -50,6 +51,7 @@ FilterSelectInputBase.propTypes = {
   busy: PropTypes.bool,
   className: PropTypes.string,
   inline: PropTypes.bool,
+  disabeld: PropTypes.bool
 };
 
 FilterSelectInputBase.defaultProps = {

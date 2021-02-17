@@ -36,7 +36,13 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
 
   const getInlineFilters = () => {
     return (
-      <InlineToolIdentifierFilter filterModel={toolFilterDto} setFilterModel={setToolFilterDto} loadData={loadData} className={"mr-2"} />
+      <InlineToolIdentifierFilter
+        filterModel={toolFilterDto}
+        setFilterModel={setToolFilterDto}
+        loadData={loadData}
+        className={"mr-2"}
+        isLoading={isLoading}
+      />
     );
   };
 
