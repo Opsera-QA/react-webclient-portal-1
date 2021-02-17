@@ -11,17 +11,13 @@ departmentActions.getDepartmentsByDomainV2 = async (getAccessToken, cancelTokenS
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-departmentActions.getDepartment = async (domain, departmentName, getAccessToken) => {
+departmentActions.getDepartmentV2 = async (getAccessToken, cancelTokenSource, domain, departmentName) => {
   let postBody = {
     domain: domain,
     name: departmentName
   };
-  const accessToken = await getAccessToken();
   const apiUrl = `/users/account/department`;
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {return error;});
-  return response;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 departmentActions.createDepartment = async (orgDomain, departmentDto, getAccessToken) => {

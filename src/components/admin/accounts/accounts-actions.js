@@ -464,17 +464,7 @@ accountsActions.create = async (accountData, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, accountData);
 };
 
-// TODO: Remove when all references are updated to V2
-accountsActions.getGroup = async (orgDomain, groupName, getAccessToken) => {
-  let postData = {
-    domain: orgDomain,
-    groupName: groupName,
-  };
-  const apiUrl = "/users/account/group";
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
-};
-
-accountsActions.getGroupV2= async (getAccessToken, cancelTokenSource, orgDomain, groupName) => {
+accountsActions.getGroupV2 = async (getAccessToken, cancelTokenSource, orgDomain, groupName) => {
   let postData = {
     domain: orgDomain,
     groupName: groupName,

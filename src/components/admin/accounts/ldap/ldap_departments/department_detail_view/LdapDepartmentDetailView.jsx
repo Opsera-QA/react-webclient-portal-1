@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import { useParams } from "react-router-dom";
 import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
@@ -13,6 +13,8 @@ import ActionBarDestructiveDeleteButton from "components/common/actions/buttons/
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import LdapDepartmentDetailPanel
   from "components/admin/accounts/ldap/ldap_departments/department_detail_view/LdapDepartmentDetailPanel";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import axios from "axios";
 
 function LdapDepartmentDetailView() {
   const {departmentName, orgDomain} = useParams();
@@ -23,39 +25,62 @@ function LdapDepartmentDetailView() {
   const [ldapDepartmentData, setLdapDepartmentData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [authorizedActions, setAuthorizedActions] = useState([]);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles();
+      await getRoles(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted.current === true && !error?.error?.message?.includes(404)) {
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted.current === true) {
+        setIsLoading(false);
+      }
     }
   }
+  const getLdapDepartment = async (cancelSource = cancelTokenSource) => {
+    const response = await departmentActions.getDepartmentV2(getAccessToken, cancelSource, orgDomain, departmentName);
 
-  const getLdapDepartment = async () => {
-    const response = await departmentActions.getDepartment(orgDomain, departmentName, getAccessToken);
-
-    if (response?.data != null) {
+    if (isMounted.current === true && response?.data != null) {
       let newLdapDepartmentData = new Model({...response.data}, ldapDepartmentMetaData, false);
       setLdapDepartmentData(newLdapDepartmentData);
-      const groupResponse = await accountsActions.getGroup(orgDomain, newLdapDepartmentData.getData("departmentGroupName"), getAccessToken);
+      const groupResponse = await accountsActions.getGroupV2(getAccessToken, cancelSource, orgDomain, newLdapDepartmentData.getData("departmentGroupName"));
 
-      if (groupResponse?.data != null) {
+      if (isMounted.current === true && groupResponse?.data != null) {
         setLdapDepartmentGroupData(new Model({...groupResponse.data}, ldapGroupMetaData, false))
       }
     }
   };
 
-  const getRoles = async () => {
+  const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
@@ -68,7 +93,7 @@ function LdapDepartmentDetailView() {
         setAuthorizedActions(authorizedActions);
 
         if (authorizedActions?.includes("get_department_details")) {
-          await getLdapDepartment();
+          await getLdapDepartment(cancelSource);
         }
       }
     }
@@ -102,7 +127,8 @@ function LdapDepartmentDetailView() {
     <DetailScreenContainer
       breadcrumbDestination={"ldapDepartmentDetailView"}
       metadata={ldapDepartmentMetaData}
-      accessDenied={!authorizedActions?.includes("get_department_details")}
+      accessRoleData={accessRoleData}
+      roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
       dataObject={ldapDepartmentData}
       isLoading={isLoading}
       actionBar={getActionBar()}
