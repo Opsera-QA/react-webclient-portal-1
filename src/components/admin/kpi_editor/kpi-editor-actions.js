@@ -2,29 +2,6 @@ import baseActions from "utils/actionsBase";
 
 const KpiActions = {};
 
-// TODO: Remove when all references are updated to V2
-KpiActions.getKpis = async (kpiFilterDto, getAccessToken) => {
-  const apiUrl = "/analytics/kpi/configurations";
-  let sortOption = kpiFilterDto.getData("sortOption");
-  let status = kpiFilterDto.getData("status");
-  let policySupport = kpiFilterDto.getData("policySupport");
-
-  const urlParams = {
-    params: {
-      sort: sortOption ? sortOption.value : undefined,
-      size: kpiFilterDto.getData("pageSize"),
-      page: kpiFilterDto.getData("currentPage"),
-      tool: kpiFilterDto.getFilterValue("tool"),
-      category: kpiFilterDto.getFilterValue("category"),
-      status: status ? status.value : undefined,
-      policySupport: policySupport ? policySupport.value : undefined,
-      search: kpiFilterDto.getFilterValue("search")
-    },
-  };
-
-  return baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
-};
-
 KpiActions.getKpisV2 = async (getAccessToken, cancelTokenSource, kpiFilterDto) => {
   const apiUrl = "/analytics/kpi/configurations";
   let sortOption = kpiFilterDto.getData("sortOption");
