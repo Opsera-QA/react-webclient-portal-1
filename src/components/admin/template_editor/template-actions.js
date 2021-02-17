@@ -53,17 +53,9 @@ templateActions.getTemplatesV2 = async (getAccessToken, cancelTokenSource) => {
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-templateActions.getTemplateById = async (templateId, getAccessToken) => {
-  const accessToken = await getAccessToken();
+templateActions.getTemplateByIdV2 = async (getAccessToken, cancelTokenSource, templateId) => {
   const apiUrl = `/pipelines/workflows/${templateId}`;
-  const response = await axiosApiService(accessToken).get(apiUrl)
-    .then((result) => {
-      return result;
-    })
-    .catch(error => {
-      throw { error };
-    });
-  return response;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl)
 };
 
 export default templateActions;
