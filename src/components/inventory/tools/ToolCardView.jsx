@@ -16,7 +16,7 @@ function ToolCardView({ data, toolFilterDto, setToolFilterDto, loadData, isLoadi
     return (
       <Row>
         {data.map((toolData, index) => (
-          <Col key={index} sm={6} md={4} lg={3} xl={2} className="p-1">
+          <Col key={index} className="p-1">
             <RegistryToolCard toolData={new Model({ ...toolData }, toolMetadata, false)}/>
           </Col>
         ))}

@@ -131,6 +131,11 @@
 /* End Select input styling */
 
 /* Summary Card Styling */
+.tool-registry-card {
+    min-width: 200px;
+    width: 240px;
+}
+
 .tool-registry-card .title-icon {
   height: 92px;
   max-width: 100%;
@@ -203,14 +208,14 @@
 
 .tool-registry-card .icon-card-title {
   font-size: 13px;
-  color: #2e1956;
+  color: #3D3B36;
   font-weight: bold;
 }
 
 .tool-registry-card .description-height {
-  min-height: 90px;
+  min-height: 50px;
   height: 100%;
-  max-height: 90px;
+  /*max-height: 90px;*/
 }
 
 .tool-registry-card .date-and-button {

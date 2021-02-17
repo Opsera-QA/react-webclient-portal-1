@@ -4,7 +4,7 @@ import {Card} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 
-function IconCardContainerBase({ children, isLoading, titleBar, footerBar, className }) {
+function IconCardContainerBase({ children, isLoading, titleBar, footerBar, className, contentBody }) {
   const getCardTitle = () => {
     if (isLoading) {
       return (<div className="ml-1"><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Data</div>);
@@ -18,16 +18,12 @@ function IconCardContainerBase({ children, isLoading, titleBar, footerBar, class
       return (<div className="m-3" />);
     }
 
-    return children;
+    return contentBody;
   };
 
   const getCardFooter = () => {
-    if (footerBar) {
-      return (
-        <Card.Footer>
-          {footerBar}
-        </Card.Footer>
-      );
+    if (!isLoading) {
+      return children;
     }
   }
 
@@ -37,10 +33,10 @@ function IconCardContainerBase({ children, isLoading, titleBar, footerBar, class
         {getCardTitle()}
       </Card.Title>
       <Card.Body className="h-100 px-2 py-0">
-        {/*{getCardBody()}*/}
+        {getCardBody()}
       </Card.Body>
       <Card.Footer>
-        {getCardBody()}
+        {getCardFooter()}
       </Card.Footer>
     </Card>
   );
@@ -49,6 +45,7 @@ function IconCardContainerBase({ children, isLoading, titleBar, footerBar, class
 IconCardContainerBase.propTypes = {
   children: PropTypes.any,
   titleBar: PropTypes.object,
+  contentBody: PropTypes.object,
   className: PropTypes.string,
   footerBar: PropTypes.object,
   isLoading: PropTypes.bool

@@ -28,16 +28,24 @@ function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
     );
   };
 
+
+  const getDescription = () => {
+    return (
+      <div className="description-height small pl-1">
+      <DescriptionField dataObject={toolData} fieldName={"description"} />
+    </div>
+    );
+  }
+
+
+
   if (isLoading) {
     return <IconCardContainerBase titleBar={getTitleBar()} isLoading={isLoading} />;
   }
 
   return (
-    <IconCardContainerBase titleBar={getTitleBar()} isLoading={isLoading} className={"tool-registry-card"}>
+    <IconCardContainerBase titleBar={getTitleBar()} contentBody={getDescription()} isLoading={isLoading} className={"tool-registry-card"}>
       <div className="w-100">
-        <div className="description-height small pl-1">
-          <DescriptionField dataObject={toolData} fieldName={"description"} />
-        </div>
         <div className="date-and-button">
           <div className="small pl-1">
             <CreateAndUpdateDateFieldBase
@@ -52,7 +60,7 @@ function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
               toolId={toolData.getData("_id")}
               className={"w-100 mt-1"}
               loadToolInNewWindow={loadToolInNewWindow}
-              variant={"outline-primary"}
+              variant={"primary"}
             />
           </div>
         </div>
