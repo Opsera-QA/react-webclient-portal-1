@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {AuthContext} from "contexts/AuthContext";
@@ -10,6 +9,11 @@ import Model from "core/data_model/model";
 import DtoTagManagerInput from "components/common/input/dto_input/dto-tag-manager-input";
 import tagsUsedInPipelineMetadata from "components/reports/tags/pipelines/tags-used-in-pipeline-metadata";
 import TagArrayUsedInToolsField from "components/common/fields/tags/TagArrayUsedInToolsField";
+import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
+import NavigationTab from "components/common/tabs/navigation/NavigationTab";
+import {faAnalytics, faDraftingCompass, faTags, faTools} from "@fortawesome/pro-light-svg-icons";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import {useHistory} from "react-router-dom";
 
 function TagsUsedInToolsReport() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -17,6 +21,7 @@ function TagsUsedInToolsReport() {
   const { getUserRecord, setAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
+  let history = useHistory();
 
   useEffect(() => {
     loadData();
@@ -44,12 +49,24 @@ function TagsUsedInToolsReport() {
     }
   };
 
+  const handleTabClick = (tabSelection) => e => {
+    e.preventDefault();
+    history.push(`/reports/${tabSelection}`);
+  };
+
+  const getNavigationTabContainer = () => {
+    return (
+      <NavigationTabContainer>
+        <NavigationTab activeTab={"tags"} tabText={"All Reports"} handleTabClick={handleTabClick} tabName={"all"} icon={faAnalytics} />
+        <NavigationTab activeTab={"tags"} tabText={"Tool Reports"} handleTabClick={handleTabClick} tabName={"tools"} icon={faTools} />
+        <NavigationTab activeTab={"tags"} tabText={"Tag Reports"} handleTabClick={handleTabClick} tabName={"tags"} icon={faTags} />
+        <NavigationTab activeTab={"tags"} tabText={"Pipeline Reports"} handleTabClick={handleTabClick} tabName={"pipelines"} icon={faDraftingCompass} />
+      </NavigationTabContainer>
+    );
+  };
+
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
-  }
-
-  if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
-    return (<AccessDeniedDialog roleData={accessRoleData} />);
   }
 
   return (
@@ -57,6 +74,9 @@ function TagsUsedInToolsReport() {
       breadcrumbDestination={"tagsUsedInToolsReport"}
       pageDescription={"View which tools are in use by a specific tag combination"}
       isLoading={isLoading}
+      navigationTabContainer={getNavigationTabContainer()}
+      roleRequirement={ROLE_LEVELS.POWER_USERS}
+      accessRoleData={accessRoleData}
     >
       <Row className={"mb-3"}>
         <Col>

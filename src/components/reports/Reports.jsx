@@ -4,11 +4,12 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import {useParams} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import ToolReports from "components/reports/tools/ToolReports";
 import TagReports from "components/reports/tags/TagReports";
 import PipelineReports from "components/reports/pipelines/PipelineReports";
 import {faAnalytics, faDraftingCompass, faTags, faTools} from "@fortawesome/pro-light-svg-icons";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
 const reportsTypes = ["tools", "pipelines", "tags"];
 
@@ -22,6 +23,7 @@ const extractTab = (tab) => {
 
 function Reports() {
   const {tab} = useParams();
+  let history = useHistory();
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const { getUserRecord, setAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -30,10 +32,18 @@ function Reports() {
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
-    setActiveTab(tabSelection);
+
+    if (tabSelection !== activeTab) {
+      history.push(`/reports/${tabSelection}`);
+      setActiveTab(tabSelection);
+    }
   };
 
   useEffect(() => {
+    if (tab == null) {
+      history.push(`/reports/all`);
+    }
+
     loadData();
   }, []);
 
@@ -113,7 +123,8 @@ function Reports() {
       navigationTabContainer={getNavigationTabContainer()}
       breadcrumbDestination={getBreadcrumbDestination()}
       pageDescription={"View reports from this dashboard."}
-      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator}
+      accessRoleData={accessRoleData}
+      roleRequirement={ROLE_LEVELS.POWER_USERS}
       isLoading={isLoading}
     >
       {getCurrentView()}

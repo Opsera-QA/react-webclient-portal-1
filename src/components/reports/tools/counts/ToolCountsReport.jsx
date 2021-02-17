@@ -1,11 +1,15 @@
 import React, { useContext, useState, useEffect } from "react";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import toolsActions from "components/inventory/tools/tools-actions";
 import ToolCountTable from "components/reports/tools/counts/ToolCountTable";
+import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
+import NavigationTab from "components/common/tabs/navigation/NavigationTab";
+import {faAnalytics, faDraftingCompass, faTags, faTools} from "@fortawesome/pro-light-svg-icons";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import {useHistory} from "react-router-dom";
 
 function ToolCountsReport() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -14,6 +18,7 @@ function ToolCountsReport() {
   const { getUserRecord, setAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
+  let history = useHistory();
 
   useEffect(() => {
     loadData();
@@ -46,12 +51,24 @@ function ToolCountsReport() {
     }
   };
 
+  const handleTabClick = (tabSelection) => e => {
+    e.preventDefault();
+    history.push(`/reports/${tabSelection}`);
+  };
+
+  const getNavigationTabContainer = () => {
+    return (
+      <NavigationTabContainer>
+        <NavigationTab activeTab={"tools"} tabText={"All Reports"} handleTabClick={handleTabClick} tabName={"all"} icon={faAnalytics} />
+        <NavigationTab activeTab={"tools"} tabText={"Tool Reports"} handleTabClick={handleTabClick} tabName={"tools"} icon={faTools} />
+        <NavigationTab activeTab={"tools"} tabText={"Tag Reports"} handleTabClick={handleTabClick} tabName={"tags"} icon={faTags} />
+        <NavigationTab activeTab={"tools"} tabText={"Pipeline Reports"} handleTabClick={handleTabClick} tabName={"pipelines"} icon={faDraftingCompass} />
+      </NavigationTabContainer>
+    );
+  };
+
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
-  }
-
-  if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
-    return (<AccessDeniedDialog roleData={accessRoleData} />);
   }
 
   return (
@@ -59,6 +76,9 @@ function ToolCountsReport() {
       breadcrumbDestination={"toolCountsReport"}
       pageDescription={"View tool usage counts"}
       isLoading={isLoading}
+      accessRoleData={accessRoleData}
+      roleRequirement={ROLE_LEVELS.POWER_USERS}
+      navigationTabContainer={getNavigationTabContainer()}
     >
       <ToolCountTable isLoading={isLoading} data={toolCounts} />
     </ScreenContainer>
