@@ -10,9 +10,11 @@ function RefreshButton({ isLoading, loadData, variant, size, className }) {
   }
 
   return (
-    <Button variant={variant} size={size} className={className} disabled={isLoading} onClick={() => {loadData();}}>
-      <span><FontAwesomeIcon spin={isLoading} icon={faSync} fixedWidth /></span>
-    </Button>
+    <div className={className}>
+      <Button variant={variant} size={size} disabled={isLoading} onClick={() => {loadData();}}>
+        <span><FontAwesomeIcon spin={isLoading} icon={faSync} fixedWidth /></span>
+      </Button>
+    </div>
   );
 }
 
