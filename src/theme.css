@@ -1201,9 +1201,14 @@ a.nav-link {
     /*max-width: 150px;*/
 }
 
-.inline-filter-input, .inline-filter-input .rw-widget-input, .inline-filter-input .rw-dropdown-list {
+.inline-filter-input, .inline-filter-input .rw-widget-input {
     height: 31px;
     max-height: 31px;
+}
+
+.inline-filter-input .rw-dropdown-list-input {
+    height: 29px;
+    max-height: 29px;
 }
 
 /* End filter bar styling */
