@@ -430,10 +430,13 @@ const SfdcPipelineModifiedFiles = ({
         handleApproveChanges(true);
         break;
       case "destSFDC":
-        setSfdcCheckAll(false);
-        setDestSfdcCheckAll(true);
+        // setSfdcCheckAll(false);
+        // setDestSfdcCheckAll(true);
         setGitCheckAll(false);
-        setDestSFDCSelectedComponent(allDestSfdcComponentType);
+        setSfdcCheckAll(true);
+        setDestSfdcCheckAll(false);
+        setSFDCSelectedComponent(allSFDCComponentType);
+        // setDestSFDCSelectedComponent(allDestSfdcComponentType);
         handleApproveChanges(true);
         break;
       case "git":
@@ -496,8 +499,10 @@ const SfdcPipelineModifiedFiles = ({
       typeOfSelection = "sfdcCommitList"; 
     }
     if (fromDestinationSFDC) {
-      selectedList = (destSfdcCheckAll || checkall) ? "all" : [...destSFDCSelectedComponent];
-      typeOfSelection = "destSfdcCommitList"; 
+      // selectedList = (destSfdcCheckAll || checkall) ? "all" : [...destSFDCSelectedComponent];
+      // typeOfSelection = "destSfdcCommitList";
+      selectedList = (sfdcCheckAll || checkall) ? "all" : [...sfdcSelectedComponent];
+      typeOfSelection = "sfdcCommitList";
     }
     if (fromGit) {
       selectedList = (gitCheckAll || checkall) ? "all" : [...gitSelectedComponent];
@@ -1162,8 +1167,8 @@ const SfdcPipelineModifiedFiles = ({
               <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
             ) : (
               <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
-            )}
-            Use All Files
+            )}            
+            { activeTab === "git" ? 'Use All Git Files' : 'Use All SFDC Files' }
           </Button>            
           <Button
             variant="success"
@@ -1179,7 +1184,7 @@ const SfdcPipelineModifiedFiles = ({
             ) : (
               <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
             )}
-            Next
+            { activeTab === "git" ? 'Proceed with Selected Git Files' : 'Proceed with Selected SFDC Files' }
           </Button>
 
           <Button
