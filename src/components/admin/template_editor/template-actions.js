@@ -35,17 +35,9 @@ templateActions.updateTemplate = async (templateDataDto, getAccessToken) => {
   return response;
 };
 
-templateActions.deleteTemplate = async (templateDataDto, getAccessToken) => {
-  const accessToken = await getAccessToken();
+templateActions.deleteTemplateV2 = async (getAccessToken, cancelTokenSource, templateDataDto) => {
   const apiUrl = `/pipelines/workflows/${templateDataDto.getData("_id")}/delete`;
-  const response = await axiosApiService(accessToken).delete(apiUrl)
-    .then((result) => {
-      return result;
-    })
-    .catch(error => {
-      throw { error };
-    });
-  return response;
+  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 templateActions.getTemplatesV2 = async (getAccessToken, cancelTokenSource) => {

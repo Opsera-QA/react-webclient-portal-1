@@ -96,14 +96,14 @@ function TemplateDetailView() {
         <div>
           <ActionBarShowJsonButton dataObject={templateData} />
           {accessRoleData?.OpseraAdministrator === true
-            && <ActionBarDeleteButton2 relocationPath={"/admin/templates"} dataObject={templateData} handleDelete={deletePipeline}/>}
+            && <ActionBarDeleteButton2 relocationPath={"/admin/templates"} dataObject={templateData} handleDelete={deleteTemplate}/>}
         </div>
       </ActionBarContainer>
     );
   };
 
-  const deletePipeline = () => {
-    return templateActions.deleteTemplate(templateData, getAccessToken);
+  const deleteTemplate = () => {
+    return templateActions.deleteTemplateV2(getAccessToken, cancelTokenSource, templateData);
   };
 
   return (
