@@ -30,6 +30,9 @@ function EditRolesModal({showModal, dataObject, fieldName, handleClose, saveData
         <div className="content-block-shaded m-3">
           {toastContext.getInlineBanner()}
           <div className="p-3">
+            <div className="text-color mx-2 mb-2">Access Rules define who has privileges to interact with a resource.
+              Individual users or groups can be used to grant the access.  Owners and Administrators have full access, Managers and SecOps roles have
+              limited editing access while users can only run or use resources.</div>
             <RoleAccessInput dataObject={temporaryDataObject} setDataObject={setTemporaryDataObject} fieldName={fieldName} />
           </div>
         </div>

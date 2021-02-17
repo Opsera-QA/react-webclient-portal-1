@@ -354,7 +354,7 @@ function PipelineSummaryPanel({
   // TODO: This can be removed once dto components are wired up
   const getRoleBadges = (roles) => {
     if (roles == null || roles.length === 0) {
-      return <span>No Role Access Configurations Applied</span>;
+      return <span>No Access Rules Applied</span>;
     }
 
     return (
@@ -381,7 +381,7 @@ function PipelineSummaryPanel({
 
   const getRoleAccessField = () => {
     return (
-      <Col xs={12} className="py-2"><span className="text-muted mr-1">Roles:</span>
+      <Col xs={12} className="py-2"><span className="text-muted mr-1">Access Rules:</span>
 
         {!editRoles && pipeline.roles &&
           <span className="item-field role-access">{getRoleBadges(pipeline.roles)}</span>}

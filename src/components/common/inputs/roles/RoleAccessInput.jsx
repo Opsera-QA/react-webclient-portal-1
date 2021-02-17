@@ -356,13 +356,13 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
     return (
       <div className="d-flex justify-content-between page-description">
         <div className={"mr-auto ml-3 mt-1"}>
-          <span className="text-muted ml-5">Type</span>
+          {/*<span className="text-muted ml-5">Type</span>*/}
         </div>
-        <div className={"mx-auto mt-1"}>
+        <div className={"mr-auto mt-1"}>
           <span className="text-muted">Assignee</span>
         </div>
-        <div className={"mx-auto mr-5 mt-1"}>
-          <span className="text-muted">Role Type</span>
+        <div className={"mr-auto mt-1"}>
+          <span className="text-muted">Access Type</span>
         </div>
         <div />
       </div>

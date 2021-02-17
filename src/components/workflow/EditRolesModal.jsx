@@ -23,10 +23,13 @@ function EditRolesModal({visible, pipelineModel, setPipelineModel, onHide, onCli
   return (
     <Modal size={"lg"} show={visible} onHide={() => onHide()} className="tag-modal">
       <Modal.Header closeButton>
-        <Modal.Title>Edit Roles</Modal.Title>
+        <Modal.Title>Edit Access Rules</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="p-3">
+          <div className="text-color mx-2 mb-2">Access Rules define who has privileges to interact with a resource.
+          Individual users or groups can be used to grant the access.  Owners and Administrators have full access, Managers and SecOps roles have
+          limited editing access while users can only run or use resources.</div>
           <RoleAccessInput dataObject={pipelineModel} setDataObject={setDataFunction} fieldName={"roles"} />
         </div>
       </Modal.Body>

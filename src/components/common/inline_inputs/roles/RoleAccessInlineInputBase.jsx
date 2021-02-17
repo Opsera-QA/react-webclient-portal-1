@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, { useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPencilAlt} from "@fortawesome/pro-light-svg-icons";
@@ -17,7 +17,6 @@ function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData, v
       return (
         <div onClick={() => {setShowModal(true);}} className={"ml-2 mt-2 pointer text-muted edit-button"}>
           <FontAwesomeIcon icon={faPencilAlt} className="mr-1"/>
-          Edit Roles
         </div>
       );
     }

@@ -36,7 +36,7 @@ const toolMetadata = {
       id: "owner_name",
     },
     {
-      label: "Owner",
+      label: "Owner ID",
       id: "owner",
     },
     {
@@ -86,7 +86,7 @@ const toolMetadata = {
       id: "active",
     },
     {
-      label: "Roles",
+      label: "Access Rules",
       id: "roles",
     },
     {

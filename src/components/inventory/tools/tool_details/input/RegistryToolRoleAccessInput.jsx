@@ -17,7 +17,7 @@ function RegistryToolRoleAccessInput({fieldName, dataObject, setDataObject, disa
 
   const getNoDataMessage = () => {
     return (
-      <span>No Role Access Configurations Applied. All users can see or edit this {dataObject?.getType()}.</span>
+      <span>No Access Rules are currently applied. All users can see or edit this {dataObject?.getType()}.</span>
     );
   }
 
