@@ -58,6 +58,8 @@ const SfdcUnitTestSelectionView = ({
 
   const getUnitTestList = async (filterDto = toolFilterDto) => {
     setUnitTestListLoading(true);
+    setSelectedUnitTestClassesList([]);
+    setEnteredUnitTestClassesList("");
     try {
        let newFilterDto = filterDto;
        newFilterDto.setData("pageSize", 500);
