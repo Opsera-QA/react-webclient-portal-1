@@ -32,23 +32,22 @@ const OctopusFeedMetadata = {
       isRequired: true
     },
     {
-      label: "Password",
-      id: "password",
+      label: "Nexus Tool",
+      id: "nexusToolId",
       isRequired: true
     },
     {
-      label: "Username",
-      id: "username",
-      isRequired: true
-    },
-    {
-      label: "Feed URI",
-      id: "feedUri",
+      label: "Nexus Repository",
+      id: "nexusRepository",
       isRequired: true
     },
     {
       label: "Active",
       id: "active",
+    },
+    {
+      label: "ID",
+      id: "id"
     }
   ],
   newModelBase: {
@@ -59,9 +58,9 @@ const OctopusFeedMetadata = {
     feedType: "",
     toolId : "",
     spaceId : "",
-    password: "",
-    username: "",
-    feedUri: "",
+    nexusToolId: "",
+    nexusRepository: "",
+    id: "",
     active: true,
   }
 };

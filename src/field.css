@@ -49,11 +49,11 @@
 
 /* Property Input Styling */
 .object-properties-input .property-header {
-    background-color: #6E6690;
+    background-color: #46415C;
     color: #fff;
     height: 40px;
     line-height: 2.4em;
-    border-bottom: 5px solid #8F86BB;
+    border-bottom: 5px solid #E6E5E3;
 }
 
 .object-properties-input .delete-button {
@@ -225,3 +225,16 @@
 }
 
 /* End Summary Card Styling */
+
+
+/* Toggle Styling */
+.custom-switch .custom-control-label, input[type="checkbox" i] {
+  cursor: pointer !important;
+}
+/* End Toggle Styling*/
+
+/* Radio Button Input Styling */
+.disabled-radio-option {
+  opacity: .7;
+}
+/* End Radio Button Input Styling */

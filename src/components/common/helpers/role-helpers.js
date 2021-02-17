@@ -77,3 +77,7 @@ export const getAccessRoleRequirementMessage = (requirement) => {
       return "Any level User can access this.";
   }
 }
+
+export const isAnLdapUser = (user, accessRole) => {
+  return accessRole?.Type !== "sass-user" && user?.ldap?.domain != null;
+};

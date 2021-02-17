@@ -183,7 +183,7 @@ function PipelineWorkflowItemList({
                   overlay={renderTooltip({ message: "Move lower step up one position" })}>
                   <FontAwesomeIcon icon={faCaretSquareUp} size="lg"
                                    fixedWidth
-                                   className={index === 0 ? "fa-disabled" : "pointer dark-blue"}
+                                   className={index === 0 ? "fa-disabled" : "pointer dark-grey"}
                                    onClick={() => {
                                      handleMoveStep(item._id, index, "up");
                                    }}/>
@@ -221,7 +221,7 @@ function PipelineWorkflowItemList({
                   overlay={renderTooltip({ message: "Move upper step down one position" })}>
                   <FontAwesomeIcon icon={faCaretSquareDown} size="lg"
                                    fixedWidth
-                                   className={index === pipelineSteps.length - 1 ? "fa-disabled" : "pointer dark-blue"}
+                                   className={index === pipelineSteps.length - 1 ? "fa-disabled" : "pointer dark-grey"}
                                    onClick={() => {
                                      handleMoveStep(item._id, index, "down");
                                    }}/>

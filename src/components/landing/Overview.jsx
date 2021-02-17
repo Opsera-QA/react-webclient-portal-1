@@ -179,7 +179,7 @@ function OverviewLanding() {
                       <div className="mt-1">
                         {statsData.pendingPipelines.map((item, key) => (
                           <div
-                            className="h6 opsera-purple-text-on-white-background pointer"
+                            className="h6 pointer"
                             key={key}
                             onClick={() => {
                               loadPipelines(item._id);
@@ -215,7 +215,7 @@ function OverviewLanding() {
           <Row>
             <Col xl="12" className="pt-2">
               <div className="h5 text-muted-purple">Need help?</div>
-              <div className="opsera-purple-text-on-white-background h6 mt-1">Send an email to support@opsera.io</div>
+              <div className="h6 mt-1">Send an email to support@opsera.io</div>
             </Col>
           </Row>
         </div>

@@ -32,19 +32,19 @@
   background-color: #fff;
   color: #334152;
   border-style: solid;
-  border-color: #6c757d;
+  border-color: #3D3B36;
   border-width: 2px;
 }
 
 .catalog-card-title {
-  color: #6c757d;
+  color: #3D3B36;
   background-color: rgba(0, 0, 0, 0.03);
-  border-bottom: 2px solid #6c757d;
+  border-bottom: 2px solid #3D3B36;
 }
 
 .catalog-card-text {
   line-height: 1.54;
-  color: #6c757d;
+  color: #3D3B36;
   min-height: 100px;
 }
 
@@ -57,11 +57,11 @@
   min-height: 120px !important;
 }
 
-.pipeline-blue-text {
-  color: #241f3d;
+.pipeline-text {
+  color: #3D3B36;
 }
 
-.pipeline-blue-text:hover {
+.pipeline-text:hover {
   color: #46415c;
 }
 
@@ -109,7 +109,7 @@
 }
 
 .workflow-step-disabled {
-  border-color: #6c757d;
+  border-color: #3D3B36;
   border-width: 2px;
   opacity: 0.65;
 }

@@ -1,4 +1,4 @@
-import React,  { useState, useEffect, useContext } from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react';
 import { InputGroup, Form, CardColumns, Row, Col, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -24,6 +24,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import kpiMarketplaceFilterMetadata from "components/insights/marketplace/kpi-marketplace-filter-metadata";
 import MarketplaceCard from "components/insights/marketplace/MarketplaceCard";
 import KPIInfoModal from "components/insights/marketplace/KPIInfoModal";
+import axios from "axios";
 
 export default function Marketplace () {  
   const contextType = useContext(AuthContext);
@@ -36,51 +37,93 @@ export default function Marketplace () {
   const [dashboardId, setDashboardId] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [dashboardData, setDashboardData] = useState(undefined);
-  const [data, setData] = useState([]);
+  const [kpis, setKpis] = useState([]);
   const [loading, setLoading] = useState(false);
   const [dashboardLoading, setDashboardLoading] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState("");
   const [marketplaceFilterDto, setMarketplaceFilterDto] = useState(new Model({ ...kpiMarketplaceFilterMetadata.newObjectFields }, kpiMarketplaceFilterMetadata, false));
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   
   useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+
     const dashboardId  =  location?.state?.dashboardId;
     if(dashboardId) {
       setDashboardData(undefined);
       setDashboardId(dashboardId);
-      getDashboard(dashboardId);
+      getDashboard(dashboardId, source);
     }
-    loadData();
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setLoading(true);
       setShowModal(false);
-      await getMarketKPIData();
+      await getMarketKPIData(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-    }
-    finally {
-      setLoading(false);
-    }
-  };
-
-  const getDashboard = async (dashboardId) => {
-    try {
-      setDashboardLoading(true);
-      const response = await dashboardsActions.get(dashboardId, getAccessToken);
-      // console.log(response);
-      if (response != null && response.data) {
-        setDashboardData(new Model(response.data, dashboardMetadata, false));
-      }
-    } catch (error) {
-      if (!error?.error?.message?.includes(404)) {
+      if (isMounted?.current === true) {
+        console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
     }
     finally {
-      setDashboardLoading(false);
+      if (isMounted?.current === true) {
+        setLoading(false);
+      }
+    }
+  };
+
+  const getMarketKPIData = async (cancelSource = cancelTokenSource) => {
+    const kpiResponse = await KpiActions.getKpisV2(getAccessToken, cancelSource, marketplaceFilterDto);
+    const kpis = kpiResponse?.data?.data;
+
+    if (isMounted?.current === true && kpiResponse) {
+      let newFilterDto = marketplaceFilterDto;
+      newFilterDto.setData("totalCount", kpiResponse?.data?.count);
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
+      setMarketplaceFilterDto({...newFilterDto});
+      setKpis(kpis);
+    }
+  };
+
+  const getDashboard = async (dashboardId, cancelSource = cancelTokenSource) => {
+    try {
+      setDashboardLoading(true);
+      const response = await dashboardsActions.getDashboardByIdV2(getAccessToken, cancelSource, dashboardId);
+
+      if (isMounted?.current === true && response?.data) {
+        setDashboardData(new Model(response.data, dashboardMetadata, false));
+      }
+    } catch (error) {
+      if (isMounted?.current === true && !error?.error?.message?.includes(404)) {
+        toastContext.showLoadingErrorDialog(error);
+        console.error(error);
+      }
+    }
+    finally {
+      if (isMounted?.current === true) {
+        setDashboardLoading(false);
+      }
     }
   };
 
@@ -91,7 +134,6 @@ export default function Marketplace () {
     newFilterDto.setData("search", searchKeyword);
     setMarketplaceFilterDto({ ...newFilterDto });
 
-    // TODO: check with Todd on how this needs to be filtered, for now on every change it gets filtered
     await getMarketKPIData();
   };
 
@@ -123,26 +165,6 @@ export default function Marketplace () {
     await getMarketKPIData();
   };
 
-  const getMarketKPIData = async () => {
-    const res = await KpiActions.getKpis(marketplaceFilterDto, getAccessToken);
-    let dataObject = res?.data?.data;
-    // update the total count
-    let newFilterDto = marketplaceFilterDto;
-    newFilterDto.setData("totalCount", res.data.count);
-    newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
-    setMarketplaceFilterDto({...newFilterDto});
-    // update the data obj to render
-    setData(dataObject);
-  };
-
-  const getPaginator = (dtoObj, setDto, loading, loadData) => {
-    return (
-      <div className="mx-auto">{dtoObj && dtoObj.getData("totalCount") != null &&
-      <DtoBottomPagination paginationStyle={"stacked"} paginationDto={dtoObj} setPaginationDto={setDto} isLoading={loading}
-                           loadData={loadData}/>}</div>
-    );
-  };
-
   const openModal = (data) => {
     setSelectedItem(data);
     setShowModal(true);
@@ -153,17 +175,17 @@ export default function Marketplace () {
       return (<LoadingDialog size={"sm"}/>);
     }
 
-    if (data && data.length > 0) {
-      return (
-        <CardColumns>
-          {data.map((data, index) => {
-            return (<MarketplaceCard key={index} data={data} openModal={openModal}/>)
-          })}
-        </CardColumns>
-      );
+    if (!Array.isArray(kpis) || kpis.length === 0) {
+      return (<InlineInformation message={"No Marketplace Items Found"} />);
     }
 
-    return (<InlineInformation message={"No Marketplace Items Found"} />);
+    return (
+      <CardColumns>
+        {kpis.map((kpi, index) => {
+          return (<MarketplaceCard key={index} kpi={kpi} openModal={openModal}/>)
+        })}
+      </CardColumns>
+    );
   };
 
   if (error) {
@@ -212,8 +234,15 @@ export default function Marketplace () {
           </Col>
         </Row>
         <Row>
-          {/* pagination */}
-          {getPaginator(marketplaceFilterDto, setMarketplaceFilterDto, loading, getMarketKPIData)}
+          <div className="mx-auto">
+            <DtoBottomPagination
+              paginationStyle={"stacked"}
+              paginationDto={marketplaceFilterDto}
+              setPaginationDto={setMarketplaceFilterDto}
+              isLoading={loading}
+              loadData={loadData}
+            />
+          </div>
         </Row>
         <Row>
           {marketplaceFilterDto.getData("activeFilters").map((filter, key) => getFilterActiveButton(filter, key))}
@@ -222,11 +251,17 @@ export default function Marketplace () {
           {getMainBody()}
         </Row>
         <Row>
-          {/* pagination */}
-          {getPaginator(marketplaceFilterDto, setMarketplaceFilterDto, loading, getMarketKPIData)}
+          <div className="mx-auto">
+            <DtoBottomPagination
+              paginationStyle={"stacked"}
+              paginationDto={marketplaceFilterDto}
+              setPaginationDto={setMarketplaceFilterDto}
+              isLoading={loading}
+              loadData={loadData}
+            />
+          </div>
         </Row>
 
-        {/* modal for displaying complete info */}
         <KPIInfoModal setShowModal={setShowModal} showModal={showModal} kpiItem={selectedItem} dashboardData={dashboardData}/>
       </div>
     </ScreenContainer>

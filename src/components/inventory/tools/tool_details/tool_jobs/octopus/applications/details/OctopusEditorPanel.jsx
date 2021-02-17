@@ -28,6 +28,8 @@ import AccountSelectInput from "./input/AccountSelectInput";
 import AWSToolSelectInput from "./input/AWSToolSelectInput";
 import ClusterSelectInput from "./input/ClusterSelectInput";
 import FeedTypeSelectInput from "./input/FeedTypeSelectInput";
+import NexusSelectInput from "./input/NexusSelectInput";
+import NexusRepoSelectInput from "./input/NexusRepoSelectInput";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -81,11 +83,10 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
     return await OctopusActions.updateOctopusApplication(octopusApplicationDataDto, type, getAccessToken, appID);
   };
 
-  // DISABLING DELETE AS MICROSERVICE FUNCTIONALITY IS NOT READY YET
-  // const deleteApplication = async () => {
-  //   await OctopusActions.deleteOctopusApplication(toolData._id, type, getAccessToken, appID);
-  //   handleClose();
-  // };
+  const deleteApplication = async () => {
+    await OctopusActions.deleteOctopusApplication(toolData._id, type, getAccessToken, appID, octopusApplicationDataDto);
+    handleClose();
+  };
 
   if (isLoading || octopusApplicationDataDto === null || octopusApplicationDataDto === undefined) {
     return <Loading size="sm" />;
@@ -101,7 +102,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 setDataObject={setOctopusApplicationDataDto}
                 dataObject={octopusApplicationDataDto}
                 fieldName={"name"}
-                disabled={appID ? true : false}
+                disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
               />
             </Col>
             <Col lg={12}>
@@ -109,7 +110,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 setDataObject={setOctopusApplicationDataDto}
                 dataObject={octopusApplicationDataDto}
                 fieldName={"description"}
-                disabled={appID ? true : false}
+                disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
               />
             </Col>
             <Col lg={12}>
@@ -121,13 +122,6 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
               />
             </Col>
-            <Col lg={12} className={"ml-1"}>
-              <DtoToggleInput
-                setDataObject={setOctopusApplicationDataDto}
-                fieldName={"active"}
-                dataObject={octopusApplicationDataDto}
-              />
-            </Col>
           </Row>
         )}
         {octopusApplicationDataDto && type && type === "account" && !isLoading && (
@@ -137,7 +131,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 setDataObject={setOctopusApplicationDataDto}
                 dataObject={octopusApplicationDataDto}
                 fieldName={"name"}
-                disabled={appID ? true : false}
+                disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
               />
             </Col>
             <Col lg={12}>
@@ -145,7 +139,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 setDataObject={setOctopusApplicationDataDto}
                 dataObject={octopusApplicationDataDto}
                 fieldName={"description"}
-                disabled={appID ? true : false}
+                disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
               />
             </Col>
             <Col lg={12}>
@@ -208,18 +202,11 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 dataObject={octopusApplicationDataDto}
                 setDataObject={setOctopusApplicationDataDto}
                 disabled={
-                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceId").length === 0) || appID
+                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceId").length === 0) || appID && !octopusApplicationDataDto.getData("id")
                     ? true
                     : false
                 }
                 tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
-              />
-            </Col>
-            <Col lg={12} className={"ml-1"}>
-              <DtoToggleInput
-                setDataObject={setOctopusApplicationDataDto}
-                fieldName={"active"}
-                dataObject={octopusApplicationDataDto}
               />
             </Col>
           </Row>
@@ -231,7 +218,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 setDataObject={setOctopusApplicationDataDto}
                 dataObject={octopusApplicationDataDto}
                 fieldName={"name"}
-                disabled={appID ? true : false}
+                disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
               />
             </Col>
             <Col lg={12}>
@@ -249,7 +236,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 dataObject={octopusApplicationDataDto}
                 setDataObject={setOctopusApplicationDataDto}
                 disabled={
-                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceName").length === 0) || appID
+                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceName").length === 0) || appID && !octopusApplicationDataDto.getData("id")
                     ? true
                     : false
                 }
@@ -314,7 +301,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                     setDataObject={setOctopusApplicationDataDto}
                     disabled={
                       (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) ||
-                      appID
+                      appID && !octopusApplicationDataDto.getData("id")
                         ? true
                         : false
                     }
@@ -334,7 +321,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 dataObject={octopusApplicationDataDto}
                 setDataObject={setOctopusApplicationDataDto}
                 disabled={
-                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceId").length === 0) || appID
+                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceId").length === 0) || appID && !octopusApplicationDataDto.getData("id")
                     ? true
                     : false
                 }
@@ -359,13 +346,6 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                   />
                 </Col>
               )}
-            <Col lg={12} className={"ml-1"}>
-              <DtoToggleInput
-                setDataObject={setOctopusApplicationDataDto}
-                fieldName={"active"}
-                dataObject={octopusApplicationDataDto}
-              />
-            </Col>
           </Row>
         )}
         {octopusApplicationDataDto && type && type === "feed" && !isLoading && (
@@ -388,7 +368,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 setDataObject={setOctopusApplicationDataDto}
                 dataObject={octopusApplicationDataDto}
                 fieldName={"name"}
-                disabled={appID ? true : false}
+                disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
               />
             </Col>
             <Col lg={12}>
@@ -401,20 +381,22 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
               />
             </Col>
             <Col lg={12}>
-              <DtoTextInput
-                setDataObject={setOctopusApplicationDataDto}
+              <NexusSelectInput
+                fieldName={"nexusToolId"}
                 dataObject={octopusApplicationDataDto}
-                fieldName={"username"}
-                disabled={appID ? true : false}
+                setDataObject={setOctopusApplicationDataDto}
+                disabled={appID && !octopusApplicationDataDto.getData("id") ? true : false}
+                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
               />
             </Col>
             <Col lg={12}>
-              <DtoTextInput
-                setDataObject={setOctopusApplicationDataDto}
+              <NexusRepoSelectInput
+                fieldName={"nexusRepository"}
                 dataObject={octopusApplicationDataDto}
-                type={"password"}
-                fieldName={"password"}
-                disabled={appID ? true : false}
+                setDataObject={setOctopusApplicationDataDto}
+                disabled={(octopusApplicationDataDto && octopusApplicationDataDto.getData("nexusToolId") &&
+                octopusApplicationDataDto.getData("nexusToolId").length === 0) || appID && !octopusApplicationDataDto.getData("id") ? true : false}
+                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("nexusToolId") : ""}
               />
             </Col>
             <Col lg={12}>
@@ -423,40 +405,25 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 dataObject={octopusApplicationDataDto}
                 setDataObject={setOctopusApplicationDataDto}
                 disabled={
-                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceId").length === 0) || appID
+                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceId").length === 0) || appID && !octopusApplicationDataDto.getData("id")
                     ? true
                     : false
                 }
                 tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
               />
             </Col>
-            <Col lg={12}>
-              <DtoTextInput
-                setDataObject={setOctopusApplicationDataDto}
-                dataObject={octopusApplicationDataDto}
-                fieldName={"feedUri"}
-                disabled={appID ? true : false}
-              />
-            </Col>
-            <Col lg={12} className={"ml-1"}>
-                <DtoToggleInput
-                  setDataObject={setOctopusApplicationDataDto}
-                  fieldName={"active"}
-                  dataObject={octopusApplicationDataDto}
-                />
-            </Col>
           </Row>
         )}
         <Row>
-          {/*{appID && (*/}
-          {/*  <div className="mr-auto mt-3 px-3">*/}
-          {/*    <Button variant="outline-primary" size="sm" onClick={() => setShowDeleteModal(true)}>*/}
-          {/*      <FontAwesomeIcon icon={faTrash} className="danger-red" /> Delete{" "}*/}
-          {/*      {type.charAt(0).toUpperCase() + type.slice(1)}*/}
-          {/*    </Button>*/}
-          {/*    <br />*/}
-          {/*  </div>*/}
-          {/*)}*/}
+          {appID && (octopusApplicationDataDto && octopusApplicationDataDto.getData("id")) && (
+            <div className="mr-auto ml-2 mt-3 px-3">
+              <Button variant="outline-primary" size="sm" onClick={() => setShowDeleteModal(true)}>
+                <FontAwesomeIcon icon={faTrash} className="danger-red" /> Delete{" "}
+                {type.charAt(0).toUpperCase() + type.slice(1)}
+              </Button>
+              <br />
+            </div>
+          )}
           <div className="ml-auto mt-3 px-3">
             <SaveButtonBase
               updateRecord={appID ? updateApplication : createApplication}
@@ -469,12 +436,12 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
           </div>
         </Row>
       </div>
-      {/*<DeleteModal*/}
-      {/*  showModal={showDeleteModal}*/}
-      {/*  setShowModal={setShowDeleteModal}*/}
-      {/*  dataObject={octopusApplicationDataDto}*/}
-      {/*  handleDelete={deleteApplication}*/}
-      {/*/>*/}
+      <DeleteModal
+        showModal={showDeleteModal}
+        setShowModal={setShowDeleteModal}
+        dataObject={octopusApplicationDataDto}
+        handleDelete={deleteApplication}
+      />
     </>
   );
 }

@@ -11,18 +11,18 @@ function PageSort({ paginationDto, setPaginationDto, loadData, isLoading}) {
     loadData(paginationDto);
   };
 
-  if (paginationDto?.getMetaData()["sortOptions"] == null) {
+  if (paginationDto?.getMetaData()?.sortOptions == null) {
    return null;
   }
 
   return (
     <div className="page-sort">
       <DropdownList
-        data={createPageSortOptions(paginationDto.getMetaData()["sortOptions"], "Sort", "text")}
+        data={createPageSortOptions(paginationDto?.getMetaData()["sortOptions"], "Sort", "text")}
         valueField={"key"}
         textField={"text"}
         disabled={isLoading || paginationDto?.getData("totalCount") == null}
-        value={paginationDto.getData("sortOption")}
+        value={paginationDto?.getData("sortOption")}
         placeholder={"Sort Page"}
         onChange={sortOption => updateSortOption(sortOption)}
       />

@@ -1,7 +1,9 @@
 import { axiosApiService } from "../../../api/apiService";
+import baseActions from "utils/actionsBase";
 
 const analyticsProfileActions = {};
 
+// TODO: Remove when all references updated to V2
 analyticsProfileActions.fetchProfile = async (getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/analytics/profile/settings";
@@ -14,6 +16,11 @@ analyticsProfileActions.fetchProfile = async (getAccessToken) => {
       throw error;
     });
   return response;
+};
+
+analyticsProfileActions.fetchProfileV2 = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = "/analytics/profile/settings";
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 analyticsProfileActions.createProfile = async (getAccessToken) => {

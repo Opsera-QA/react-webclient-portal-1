@@ -9,6 +9,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import MyUserProfile from "components/user/user_settings/MyUserProfile";
 import MyAccessTokens from "components/user/user_settings/access_tokens/MyAccessTokens";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
 function UserSettings() {
   const { tab } = useParams();
@@ -125,6 +126,8 @@ function UserSettings() {
       navigationTabContainer={getNavigationTabContainer()}
       breadcrumbDestination={getBreadcrumbDestination()}
       isLoading={!accessRoleData || isLdapUser == null}
+      roleRequirement={ROLE_LEVELS.USERS_AND_SASS}
+      accessRoleData={accessRoleData}
       pageDescription={getDescription()}>
       {getCurrentView()}
     </ScreenContainer>

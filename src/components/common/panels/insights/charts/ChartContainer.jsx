@@ -31,6 +31,7 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
     }
   };
 
+  // TODO: Make ErrorChartContainer
   const getChartBody = () => {
     if (error) {
       return (
@@ -52,10 +53,13 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
       );
     }
 
+    // TODO: Rework when all are updated
     if (chart === null && !isLoading) {
       return (
-        <div className='max-content-width p-5 mt-5' style={{justifyContent: "center", alignItems: "center"}}>
-          <InfoDialog message="No Data is available for this chart at this time."/>
+        <div className="new-chart mb-3" style={{ height: "300px" }}>
+          <div className="max-content-width p-5 mt-5" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+            <InfoDialog message="No Data is available for this chart at this time." />
+          </div>
         </div>
       );
     }
@@ -73,7 +77,7 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
 
   return (
     <div className="content-container content-card-1">
-      <div className="px-2 content-block-header title-text-header-2">
+      <div className="px-2 content-block-header-inverse title-text-header-2">
         {getTitleBar()}
       </div>
       <div className="new-chart m-2 shaded-panel">

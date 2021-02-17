@@ -15,25 +15,25 @@ function PipelineActionBar({item, handleShareClick, handleScheduleClick, handleH
     <>
         <div className="action-bar p-0 my-auto">
           {handleDeleteClick && <OverlayTriggerWrapper message={`Delete this Pipeline`}>
-            <FontAwesomeIcon icon={faTrash} className="pipeline-blue-text float-right ml-3" onClick={() => handleDeleteClick()}/>
+            <FontAwesomeIcon icon={faTrash} className="pipeline-text float-right ml-3" onClick={() => handleDeleteClick()}/>
           </OverlayTriggerWrapper>}
           {handleShareClick && <OverlayTriggerWrapper message={`Share this Pipeline`}>
-            <FontAwesomeIcon icon={faShareAlt} className="pipeline-blue-text float-right ml-3" onClick={() => handleShareClick()}/>
+            <FontAwesomeIcon icon={faShareAlt} className="pipeline-text float-right ml-3" onClick={() => handleShareClick()}/>
           </OverlayTriggerWrapper>}
           {handleScheduleClick && <OverlayTriggerWrapper message={`Schedule this Pipeline`}>
-            <FontAwesomeIcon icon={faCalendarDay} className="pipeline-blue-text float-right ml-3" onClick={() => handleScheduleClick()}/>
+            <FontAwesomeIcon icon={faCalendarDay} className="pipeline-text float-right ml-3" onClick={() => handleScheduleClick()}/>
           </OverlayTriggerWrapper>}
           {handleHelpClick && <OverlayTriggerWrapper message={`Help`}>
-            <FontAwesomeIcon icon={faQuestion} className="pipeline-blue-text float-right ml-3" onClick={() => handleHelpClick()}/>
+            <FontAwesomeIcon icon={faQuestion} className="pipeline-text float-right ml-3" onClick={() => handleHelpClick()}/>
           </OverlayTriggerWrapper>}
           {handleSettingsClick && <OverlayTriggerWrapper message={`Configure This Pipeline`}>
-            <FontAwesomeIcon icon={faCog} className="pipeline-blue-text float-right ml-3" onClick={() => handleSettingsClick()}/>
+            <FontAwesomeIcon icon={faCog} className="pipeline-text float-right ml-3" onClick={() => handleSettingsClick()}/>
           </OverlayTriggerWrapper>}
           {handleRedoClick && <OverlayTriggerWrapper message={`Rerun This Pipeline`}>
-            <FontAwesomeIcon icon={faRedo} className="pipeline-blue-text float-right ml-3" onClick={() => handleRedoClick()}/>
+            <FontAwesomeIcon icon={faRedo} className="pipeline-text float-right ml-3" onClick={() => handleRedoClick()}/>
           </OverlayTriggerWrapper>}
           {handleUnlinkClick && <OverlayTriggerWrapper message={`Unlink This Pipeline`}>
-            <FontAwesomeIcon icon={faUnlink} className="pipeline-blue-text float-right ml-3" onClick={() => handleUnlinkClick()}/>
+            <FontAwesomeIcon icon={faUnlink} className="pipeline-text float-right ml-3" onClick={() => handleUnlinkClick()}/>
           </OverlayTriggerWrapper>}
         </div>
     </>

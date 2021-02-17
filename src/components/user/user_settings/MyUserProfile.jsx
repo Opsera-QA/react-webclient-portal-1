@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import { Button, Table } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSync, faSpinner } from "@fortawesome/pro-light-svg-icons";
@@ -12,6 +12,7 @@ import Model from "core/data_model/model";
 import registeredUsersMetadata from "components/admin/registered_users/registered-users-metadata";
 import RegisteredUserSummary from "components/admin/registered_users/registered_user_details/RegisteredUserSummary";
 import AccessRoleField from "components/common/fields/access/AccessRoleField";
+import axios from "axios";
 
 function MyUserProfile() {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
@@ -21,42 +22,70 @@ function MyUserProfile() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSyncing, setIsSyncing] = useState(false);
   const [accessRole, setAccessRole] = useState(undefined);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData()
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await fetchData();
+      await loadUserRecord();
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
-      console.error(error);
+      if (isMounted.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+        console.error(error);
+      }
     } finally {
-      setIsLoading(false);
+      if (isMounted.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
-  const fetchData = async () => {
+  const loadUserRecord = async () => {
     const user = await getUserRecord();
-    setUser(user);
-    setUserModel(new Model({...user}, registeredUsersMetadata, false));
-
     const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
+
+    if (isMounted.current === true && userRoleAccess) {
       setAccessRole(userRoleAccess);
+      setUser(user);
+      setUserModel(new Model({...user}, registeredUsersMetadata, false));
     }
   };
 
-  const syncUserData = async () => {
-    setIsSyncing(true);
+  const syncUserData = async (cancelSource = cancelTokenSource) => {
     try {
-      await userActions.syncUser(getAccessToken);
+      setIsSyncing(true);
+      await userActions.syncUser(getAccessToken, cancelSource);
     } catch (error) {
-      toastContext.showErrorDialog(error.message);
+      if (isMounted.current === true) {
+        toastContext.showErrorDialog(error);
+        console.error(error);
+      }
     } finally {
-      setIsSyncing(false);
+      if (isMounted.current === true) {
+        setIsSyncing(false);
+      }
     }
   };
 

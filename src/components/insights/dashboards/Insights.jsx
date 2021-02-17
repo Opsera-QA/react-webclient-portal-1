@@ -1,15 +1,15 @@
-import React, {useEffect, useState, useContext} from "react";
+import React, {useEffect, useState, useContext, useRef} from "react";
 import { AuthContext } from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
-import AccessDeniedDialog from "../../common/status_notifications/accessDeniedInfo";
-import {DialogToastContext} from "../../../contexts/DialogToastContext";
-import DashboardsTable from "./DashboardsTable";
-import dashboardsActions from "./dashboards-actions";
-import Model from "../../../core/data_model/model";
-import dashboardFilterMetadata from "./dashboard-filter-metadata";
-import analyticsProfileActions from "../../settings/analytics/analytics-profile-settings-actions";
-import AnalyticsProfileSettings from "../../settings/analytics/activateAnalyticsCard";
-import ScreenContainer from "../../common/panels/general/ScreenContainer";
+import Model from "core/data_model/model";
+import axios from "axios";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import dashboardFilterMetadata from "components/insights/dashboards/dashboard-filter-metadata";
+import analyticsProfileActions from "components/settings/analytics/analytics-profile-settings-actions";
+import dashboardsActions from "components/insights/dashboards/dashboards-actions";
+import DashboardsTable from "components/insights/dashboards/DashboardsTable";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import AnalyticsProfileSettings from "components/settings/analytics/activateAnalyticsCard";
 
 function Insights() {
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
@@ -19,46 +19,78 @@ function Insights() {
   const [dashboardFilterDto, setDashboardFilterDto] = useState(new Model({...dashboardFilterMetadata.newObjectFields}, dashboardFilterMetadata, false));
   const toastContext = useContext(DialogToastContext);
   const [profile, setProfile] = useState(undefined);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(dashboardFilterDto, source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async (filterDto = dashboardFilterDto) => {
+  const loadData = async (filterDto = dashboardFilterDto, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles(filterDto);
+      await getRoles(filterDto, cancelSource);
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+        console.error(error);
+      }
     } finally {
-      setIsLoading(false);
+      if (isMounted.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
-  const getProfile = async(filterDto = dashboardFilterDto) => {
-    let settings = await analyticsProfileActions.fetchProfile(getAccessToken);
-    setProfile(settings.data);
+  const getProfile = async(filterDto = dashboardFilterDto, cancelSource = cancelTokenSource) => {
+    let settings = await analyticsProfileActions.fetchProfileV2(getAccessToken, cancelSource);
 
-    if (settings?.data?.enabledToolsOn) {
-      await getDashboards(filterDto);
+    if (isMounted.current === true) {
+      setProfile(settings?.data);
+
+      if (settings?.data?.enabledToolsOn) {
+        await getDashboards(filterDto, cancelSource);
+      }
     }
   }
 
-  const getDashboards = async (filterDto = dashboardFilterDto) => {
-    const response = await dashboardsActions.getAll(filterDto, getAccessToken);
-    setDashboardsList(response.data.data);
-    let newFilterDto = filterDto;
-    newFilterDto.setData("totalCount", response.data.count);
-    newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-    setDashboardFilterDto({...newFilterDto});
+  const getDashboards = async (filterDto = dashboardFilterDto, cancelSource = cancelTokenSource) => {
+    const response = await dashboardsActions.getAllDashboardsV2(getAccessToken, cancelSource, filterDto);
+    const dashboards = response?.data?.data;
+
+    if (isMounted.current === true && dashboards) {
+      setDashboardsList(dashboards);
+      let newFilterDto = filterDto;
+      newFilterDto.setData("totalCount", response?.data?.count);
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+      setDashboardFilterDto({...newFilterDto});
+    }
   };
 
-  const getRoles = async (filterDto = dashboardFilterDto) => {
+  const getRoles = async (filterDto = dashboardFilterDto, cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
+
+    if (isMounted.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      await getProfile(filterDto);
+      await getProfile(filterDto, cancelSource);
     }
   };
 

@@ -34,6 +34,10 @@ const OctopusEnvironmentMetadata = {
     {
       label: "Active",
       id: "active",
+    },
+    {
+      label: "ID",
+      id: "id"
     }
 ],
   newModelBase: {
@@ -44,6 +48,7 @@ const OctopusEnvironmentMetadata = {
     description: "",
     toolId : "",
     spaceId : "",
+    id: "",
     active: true,
   }
 };
