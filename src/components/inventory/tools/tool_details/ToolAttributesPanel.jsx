@@ -27,28 +27,28 @@ function ToolAttributesPanel({ toolData, setActiveTab, customerAccessRules }) {
       settingsTab="attribute_settings"
     >
       <Row>
-        <Col lg={6}>
+        <Col sm={12} lg={6}>
           <TextFieldBase dataObject={toolData} fieldName={"costCenter"}/>
         </Col>
-        <Col lg={12}>
+        <Col sm={12} lg={6}>
           <TagField dataObject={toolData} fieldName={"tags"}/>
         </Col>
-        <Col lg={12}>
+        <Col sm={12} lg={6}>
           <NameValueFieldBase dataObject={toolData} fieldName={"licensing"} icon={faIdCard}/>
         </Col>
-        <Col lg={12}>
+        <Col sm={12} lg={6}>
           <NameValueFieldBase dataObject={toolData} fieldName={"compliance"} icon={faClipboardCheck} />
         </Col>
-        <Col lg={12}>
+        <Col sm={12} lg={6}>
           <NameValueFieldBase dataObject={toolData} fieldName={"location"} icon={faBuilding} />
         </Col>
-        <Col lg={12}>
+        <Col sm={12} lg={6}>
           <NameValueFieldBase dataObject={toolData} fieldName={"applications"} icon={faBrowser} />
         </Col>
-        <Col lg={12}>
+        <Col sm={12} lg={6}>
           <NameValueFieldBase dataObject={toolData} fieldName={"organization"} icon={faSitemap} />
         </Col>
-        <Col lg={12}>
+        <Col sm={12} lg={6}>
           <ContactField dataObject={toolData} fieldName={"contacts"} />
         </Col>
       </Row>
