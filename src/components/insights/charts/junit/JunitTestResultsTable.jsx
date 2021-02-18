@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "components/analytics/charts/charts.css";
 
 
-function JunitResultsTable({ date }) {
+function JunitResultsTable({ date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -53,17 +53,12 @@ function JunitResultsTable({ date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
+    const apiUrl = "/analytics/metrics";
     const postBody = {
-      data: [
-        {
-          request: "junitTestResults",
-          metric: "bar"
-        }
-      ]
-      ,
+      request: "junitTestResults",
       startDate: date.start,
-      endDate: date.end
+      endDate: date.end,
+      tags: tags
     };
 
     try {
@@ -82,11 +77,11 @@ function JunitResultsTable({ date }) {
     () => [
       {
         Header: "Job",
-        accessor: "jenkinsId",
+        accessor: "jobId",
       },
       {
         Header: "Run",
-        accessor: "run_count"
+        accessor: "runCount"
       },
       {
         Header: "Timestamp",
@@ -97,15 +92,15 @@ function JunitResultsTable({ date }) {
       },
       {
         Header: "Tests",
-        accessor: "total"
+        accessor: "testsRun"
       },
       {
         Header: "Passed",
-        accessor: "passed",
+        accessor: "testsPassed",
       },
       {
         Header: "Failed",
-        accessor: "failed",
+        accessor: "testsFailed",
       },
       {
         Header: "Duration(s)",

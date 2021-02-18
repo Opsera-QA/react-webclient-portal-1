@@ -13,7 +13,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ModalLogs from "components/common/modal/modalLogs";
 
-function AnchoreVulnerabilitiesByDateLineChart({ persona, date }) {
+function AnchoreVulnerabilitiesByDateLineChart({ persona, date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -24,21 +24,17 @@ function AnchoreVulnerabilitiesByDateLineChart({ persona, date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
+    const apiUrl = "/analytics/metrics";
     const postBody = {
-      data: [
-        {
-          request: "vulnerabilityTimeSeries",
-          metric: "stacked",
-        },
-      ],
+      request: "anchoreVulnerabilityFrequency",
       startDate: date.start,
       endDate: date.end,
+      tags: tags
     };
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].vulnerabilityTimeSeries : [];
+      let dataObject = res && res.data ? res.data.data[0].anchoreVulnerabilityFrequency : [];
       setData(dataObject);
       setLoading(false);
     } catch (err) {

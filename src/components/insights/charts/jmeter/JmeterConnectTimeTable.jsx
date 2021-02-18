@@ -7,7 +7,7 @@ import ErrorDialog from "components/common/status_notifications/error";
 import { Table }  from "react-bootstrap";
 import "components/analytics/charts/charts.css";
 
-function JMeterConnectTimeTable({ date }) {
+function JMeterConnectTimeTable({ date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -38,22 +38,17 @@ function JMeterConnectTimeTable({ date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";   
+    const apiUrl = "/analytics/metrics";   
     const postBody = {
-      "data": [
-        {
-          "request": "jmeterConnectTime",
-          "metric": "bar"
-        }        
-      ]
-      ,
+      request: "jmeterConnectTimeTable",
       startDate: date.start, 
-      endDate: date.end
+      endDate: date.end,
+      tags: tags
     };
     
     try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);     
-      let dataObject = res && res.data ? res.data.data[0] : [];      
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);   
+      let dataObject = res && res.data ? res.data.data[0].jmeterConnectTimeTable : [];      
       setData(dataObject);
       setLoading(false);
     }
@@ -62,12 +57,12 @@ function JMeterConnectTimeTable({ date }) {
       setLoading(false);
     }
   }
-  
+
   if(loading) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
-  } else if (typeof data !== "object" || data.jmeterConnectTime === undefined || data.jmeterConnectTime.status !== 200) {
+  } else if (typeof data !== "object" || data === undefined || data.status !== 200) {
     return (<>
       <div className="new-chart mb-3" style={{ height: "300px" }}>
         <div
@@ -81,7 +76,7 @@ function JMeterConnectTimeTable({ date }) {
   } else {
     return (
       <>
-        {data !== undefined && data.jmeterConnectTime.data.length > 0 ? 
+        {data !== undefined && data.data.length > 0 ? 
           <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
             <thead>
               <tr>
@@ -94,14 +89,14 @@ function JMeterConnectTimeTable({ date }) {
               </tr>
             </thead>
             <tbody>
-              {data.jmeterConnectTime.data.map(function (value, index) {
+              {data.data.map(function (value, index) {
                 return <tr key = {index}>
-                  <td>{value["jenkinsId"]}</td>
-                  <td>{value["testName"]}</td>
-                  <td>{value["mean"]}</td>
-                  <td>{value["min"]}</td>
-                  <td>{value["median"]}</td>
-                  <td>{value["max"]}</td>
+                  <td>{value["toolData"]["jenkinsJobId"]}</td>
+                  <td>{value["toolData"]["uri"]}</td>
+                  <td>{value["toolData"]["mean"]}</td>
+                  <td>{value["toolData"]["min"]}</td>
+                  <td>{value["toolData"]["median"]}</td>
+                  <td>{value["toolData"]["max"]}</td>
                 </tr>;
               })
               }

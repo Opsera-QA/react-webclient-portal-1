@@ -11,7 +11,7 @@ import { faTimesCircle, faCheckCircle, faSearchPlus, faSpinner } from "@fortawes
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "components/analytics/charts/charts.css";
 
-function XunitResultsTable({ date }) {
+function XunitResultsTable({ date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -52,22 +52,17 @@ function XunitResultsTable({ date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
+    const apiUrl = "/analytics/metrics";
     const postBody = {
-      data: [
-        {
-          request: "xunitTable",
-          metric: "bar"
-        }
-      ]
-      ,
+      request: "xunitTestResults",
       startDate: date.start,
-      endDate: date.end
+      endDate: date.end,
+      tags: tags
     };
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].xunitTable : [];
+      let dataObject = res && res.data ? res.data.data[0].xunitTestResults : [];
       setData(dataObject);
       setLoading(false);
     }
@@ -81,11 +76,11 @@ function XunitResultsTable({ date }) {
     () => [
       {
         Header: "Job",
-        accessor: "buildId"
+        accessor: "jobId"
       },
       {
         Header: "Run",
-        accessor: "run_count"
+        accessor: "runCount"
       },
       {
         Header: "Timestamp",
@@ -96,19 +91,19 @@ function XunitResultsTable({ date }) {
       },
       {
         Header: "Tests",
-        accessor: "Executed Tests",
+        accessor: "testsRun",
       },
       {
         Header: "Passed",
-        accessor: "Passed",
+        accessor: "testsPassed",
       },
       {
         Header: "Failed",
-        accessor: "Failed",
+        accessor: "testsFailed",
       },
       {
         Header: "Duration(s)",
-        accessor: "Total Duration"
+        accessor: "duration"
       }
     ],
     []

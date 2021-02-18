@@ -210,9 +210,9 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
 
       // Anchore KPIs
       case "anchore-vulnerability-severity-by-package":
-        return (<AnchoreVulnerabilitySeverityByPackageBarChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<AnchoreVulnerabilitySeverityByPackageBarChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "anchore-vulnerabilities-by-date":
-        return (<AnchoreVulnerabilitiesByDateLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<AnchoreVulnerabilitiesByDateLineChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
 
       // Sonar KPIs
       case "sonar-code-smells":
@@ -242,15 +242,15 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
 
       // Jmeter KPIs
       case "jmeter-hits":
-        return (<JmeterHitsLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<JmeterHitsLineChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "jmeter-errors":
-        return (<JmeterErrorsLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<JmeterErrorsLineChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "jmeter-throughput":
-        return (<JmeterThroughputLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<JmeterThroughputLineChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "jmeter-response-time":
-        return (<JmeterResponseTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<JmeterResponseTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
       case "jmeter-connect-time":
-        return (<JmeterConnectTimeTable persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<JmeterConnectTimeTable persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
 
       // Gitlab KPIs
       case "gitlab-most-active-contributors":
@@ -272,15 +272,15 @@ function ChartView({kpiConfiguration, dashboardData, index, loadChart, setKpis})
 
       // Cypress KPIs
       case "cypress-test-results":
-        return (<CypressTestResultsTable persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<CypressTestResultsTable persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
 
       // Junit KPIs
       case "junit-test-results":
-        return (<JunitTestResultsTable persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<JunitTestResultsTable persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
 
       // Xunit KPIs
       case "xunit-test-results":
-        return (<XunitTestResultsTable persona={"developer"} date={getDateObject(kpiConfig)}/>);
+        return (<XunitTestResultsTable persona={"developer"} date={getDateObject(kpiConfig)} tags={getTagsFromKpiConfiguration(kpiConfig)}/>);
 
       // Metricbeat KPIs
       case "metricbeat-kubernetes-cpu-usage":
