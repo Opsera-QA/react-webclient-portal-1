@@ -311,25 +311,23 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
 
   const getPropertyRow = (role, index) => {
     return (
-      <div>
-        <div className="d-flex my-2" key={index}>
-          <Col sm={11}>
-            <Row>
-              <Col sm={2}>
-                {getTypeInput(role, index)}
-              </Col>
-              <Col sm={5} className={"pl-1 pr-0"}>
-                {getAssigneeInput(role)}
-              </Col>
-              <Col sm={5} className={"pl-2 pr-1"}>
-                {getRoleTypeInput(role)}
-              </Col>
-            </Row>
-          </Col>
-          <Col sm={1} className={"pr-3 pl-0 delete-button"}>
-            {getDeletePropertyButton(index)}
-          </Col>
-        </div>
+      <div className="d-flex my-2" key={index}>
+        <Col sm={11}>
+          <Row>
+            <Col sm={2}>
+              {getTypeInput(role, index)}
+            </Col>
+            <Col sm={5} className={"pl-1 pr-0"}>
+              {getAssigneeInput(role)}
+            </Col>
+            <Col sm={5} className={"pl-2 pr-1"}>
+              {getRoleTypeInput(role)}
+            </Col>
+          </Row>
+        </Col>
+        <Col sm={1} className={"pr-3 pl-0 delete-button"}>
+          {getDeletePropertyButton(index)}
+        </Col>
       </div>
     );
   };
@@ -389,7 +387,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
       titleIcon={faIdCard}
       field={field}
       addProperty={addRole}
-      titleText={field.label}
+      titleText={"Roles"}
       errorMessage={errorMessage}
       type={"Role"}
       addAllowed={lastRoleComplete()}

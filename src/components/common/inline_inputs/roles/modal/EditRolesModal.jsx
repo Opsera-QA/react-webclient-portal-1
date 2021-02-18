@@ -24,7 +24,7 @@ function EditRolesModal({showModal, dataObject, fieldName, handleClose, saveData
   return (
     <Modal size={"lg"} show={showModal} onHide={() => handleClose()} className="tag-modal">
       <Modal.Header closeButton>
-        <Modal.Title>Edit Roles</Modal.Title>
+        <Modal.Title>Edit Access Rules</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div className="content-block-shaded m-3">
