@@ -1,5 +1,5 @@
 const seleniumPipelineStepConfigurationMetadata = {
-  type: "Jmeter Pipeline Step Configuration",
+  type: "Selenium Pipeline Step Configuration",
   fields: [
     {
       label: "Step Tool",
