@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "components/analytics/charts/charts.css";
 
 
-function CypressResultsTable({ date }) {
+function CypressResultsTable({ date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -55,17 +55,12 @@ function CypressResultsTable({ date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
+    const apiUrl = "/analytics/metrics";
     const postBody = {
-      data: [
-        {
-          request: "cypressTestResults",
-          metric: "bar"
-        }
-      ]
-      ,
+      request: "cypressTestResults",
       startDate: date.start,
-      endDate: date.end
+      endDate: date.end,
+      tags: tags
     };
 
     try {
@@ -85,11 +80,11 @@ function CypressResultsTable({ date }) {
     () => [
       {
         Header: "Job",
-        accessor: "jenkinsId",
+        accessor: "pipelineId",
       },
       {
         Header: "Run",
-        accessor: "run_count"
+        accessor: "runCount"
       },
       {
         Header: "Timestamp",
@@ -100,15 +95,15 @@ function CypressResultsTable({ date }) {
       },
       {
         Header: "Tests",
-        accessor: "total"
+        accessor: "testsRun"
       },
       {
         Header: "Passed",
-        accessor: "passed",
+        accessor: "testsPassed",
       },
       {
         Header: "Failed",
-        accessor: "failed",
+        accessor: "testsFailed",
       },
       {
         Header: "Duration(s)",

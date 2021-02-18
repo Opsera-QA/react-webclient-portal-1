@@ -15,7 +15,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ModalLogs from "components/common/modal/modalLogs";
 
-function JMeterThroughputLineChart({ persona, date }) {
+function JMeterThroughputLineChart({ persona, date, tags }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -45,21 +45,17 @@ function JMeterThroughputLineChart({ persona, date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
+    const apiUrl = "/analytics/metrics";
     const postBody = {
-      data: [
-        {
-          request: "jmeterThroughput",
-          metric: "line",
-        },
-      ],
+      request: "jmeterThroughputLineChart",
       startDate: date.start,
       endDate: date.end,
+      tags: tags
     };
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].jmeterThroughput : [];
+      let dataObject = res && res.data ? res.data.data[0].jmeterThroughputLineChart : [];
       setData(dataObject);
       setLoading(false);
     } catch (err) {
