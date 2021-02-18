@@ -36,7 +36,6 @@ import SfdcComponentFilter from "components/common/filters/sfdccomponent/SfdcCom
 import sfdcComponentFilterMetadata from './sfdc-component-filter-metadata';
 import BooleanFilter from "components/common/filters/input/BooleanFilter";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import ModifiedFilesTabView from "./tab_views/ModifiedFilesTabView";
 import SfdcModifiedFilesTabView from "./tab_views/SfdcModifiedFilesTabView";
 import GitModifiedFilesTabView from "./tab_views/GitModifiedFilesTabView";
 import SfdcDestModifiedFilesTabView from "./tab_views/SfdcDestModifiedFilesTabView";
@@ -528,17 +527,8 @@ const SfdcPipelineModifiedFiles = ({
           "typeOfSelection" : typeOfSelection,
           "data": selectedList,
         }, getAccessToken);
-        
-        const postBody = {
-          pipelineId: pipelineId,
-          stepId: stepId,
-          isProfiles: isProfiles,
-          componentTypes: isProfiles ? selectedComponentTypes : [],
-          // commitList: selectedList,
-          isSfdc: fromSFDC || fromDestinationSFDC ? true : false,
-        };
-
-        await generateXML(postBody);
+       
+        await generateXML();
       }
     } catch (err) {
       console.error("Error saving selected data: ", error);
@@ -590,9 +580,19 @@ const SfdcPipelineModifiedFiles = ({
     }
   };
 
-  const generateXML = async (data) => {
+  const generateXML = async () => {
     try {
-      const result = await sfdcPipelineActions.generateXML(data, getAccessToken);
+       
+      const postBody = {
+        pipelineId: pipelineId,
+        stepId: stepId,
+        isProfiles: isProfiles,
+        componentTypes: isProfiles ? selectedComponentTypes : [],
+        // commitList: selectedList,
+        isSfdc: fromSFDC || fromDestinationSFDC ? true : false,
+      };
+
+      const result = await sfdcPipelineActions.generateXML(postBody, getAccessToken);
 
       if (result.data.status != 200) {
         console.error("Error getting API Data: ", result.data.message);
@@ -1118,6 +1118,18 @@ const SfdcPipelineModifiedFiles = ({
               data={sfdcModifiedFilesTable}
               handleComponentCheck={handleSFDCComponentCheckNew}
               handleCheckAllClickComponentTypes={handleCheckAllClickComponentTypesSfdc}
+              fileUploadFlag={isProfiles ? false : true}
+              recordId={recordId}
+              updateAttribute= {isProfiles ? "profilesList" : "selectedFileList"}
+              callbackFunc={isProfiles ? getProfileComponentList : generateXML}
+              fromGit={fromGit}
+              fromSFDC={fromSFDC}
+              fromDestinationSFDC={fromDestinationSFDC}
+              fromProfileComponents={false}
+              allSFDCComponentType={allSFDCComponentType}
+              allGitComponentType={allGitComponentType}
+              allDestSfdcComponentType={allDestSfdcComponentType}
+              allProfileComponentType={[]}
             />              
           ) : activeTab === "git" ? (          
             <GitModifiedFilesTabView 
@@ -1129,6 +1141,16 @@ const SfdcPipelineModifiedFiles = ({
               data={gitModifiedFilesTable}
               handleComponentCheck={handleGitComponentCheckNew}
               handleCheckAllClickComponentTypes={handleCheckAllClickComponentTypesGit}
+              // fileUploadFlag={true}
+              // recordId={recordId}
+              // updateAttribute= {isProfiles ? "profilesList" : "selectedFileList"}
+              // callbackFunc={isProfiles ? getProfileComponentList : generateXML}
+              // fromGit={fromGit}
+              // fromSFDC={fromSFDC}
+              // fromDestinationSFDC={fromDestinationSFDC}
+              // allSFDCComponentType={allSFDCComponentType}
+              // allGitComponentType={allGitComponentType}
+              // allDestSfdcComponentType={allDestSfdcComponentType}   
             />
           ) : activeTab === "destsfdc" ? (            
             <SfdcDestModifiedFilesTabView 
@@ -1137,7 +1159,17 @@ const SfdcPipelineModifiedFiles = ({
               setFilterDto={setDestSfdcFilterDto}
               loading={destSfdcLoading}
               componentType={componentType}
-              data={destSfdcModified}              
+              data={destSfdcModified}
+              // fileUploadFlag={false}
+              // recordId={recordId}
+              // updateAttribute= {isProfiles ? "profilesList" : "selectedFileList"}
+              // callbackFunc={isProfiles ? getProfileComponentList : generateXML}
+              // fromGit={fromGit}
+              // fromSFDC={fromSFDC}
+              // fromDestinationSFDC={fromDestinationSFDC}  
+              // allSFDCComponentType={allSFDCComponentType}
+              // allGitComponentType={allGitComponentType}
+              // allDestSfdcComponentType={allDestSfdcComponentType}        
             />
           ) : null }            
         </div>

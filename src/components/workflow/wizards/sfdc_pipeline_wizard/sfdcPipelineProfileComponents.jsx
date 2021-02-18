@@ -40,7 +40,6 @@ import FilterContainer from "components/common/table/FilterContainer";
 import SfdcComponentFilter from "components/common/filters/sfdccomponent/SfdcComponentFilter";
 import sfdcComponentFilterMetadata from './sfdc-component-filter-metadata';
 import BooleanFilter from "components/common/filters/input/BooleanFilter";
-import ModifiedFilesTabView from "./tab_views/ModifiedFilesTabView";
 import SfdcModifiedFilesTabView from "./tab_views/SfdcModifiedFilesTabView";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
@@ -231,15 +230,7 @@ const SfdcPipelineProfileComponents = ({
       // setError(result.data.message);
       toastContext.showLoadingErrorDialog(error);
     } else {      
-      const postBody = {
-        pipelineId: pipelineId,
-        stepId: stepId,
-        isProfiles: isProfiles,
-        componentTypes: isProfiles ? selectedComponentTypes : "",
-        isSfdc: true,
-      };
-
-      await generateXML(postBody);
+      await generateXML();
     }
 
     } catch (err) {
@@ -250,9 +241,17 @@ const SfdcPipelineProfileComponents = ({
     
   };
 
-  const generateXML = async (data) => {
+  const generateXML = async () => {
     try {
-      const result = await sfdcPipelineActions.generateXML(data, getAccessToken);
+      const postBody = {
+        pipelineId: pipelineId,
+        stepId: stepId,
+        isProfiles: isProfiles,
+        componentTypes: isProfiles ? selectedComponentTypes : "",
+        isSfdc: true,
+      };
+
+      const result = await sfdcPipelineActions.generateXML(postBody, getAccessToken);
 
       if (result.data.status != 200) {
         console.error("Error getting API Data: ", result.data.message);
@@ -501,19 +500,6 @@ const SfdcPipelineProfileComponents = ({
     }))
   }
 
-  const getModifiedFilesView = () => {
-    return (    
-      <ModifiedFilesTabView
-        data={modifiedFilesTable}
-        loading={loading}
-        loadData={loadData}
-        paginationDto={filterDto}
-        setPaginationDto={setFilterDto}
-        handleComponentCheck={handleComponentCheckNew}
-      />
-    );
-  };
-
   if (error) {
     return (<div className="mt-3">
       <ErrorDialog error={error}/>
@@ -559,6 +545,18 @@ const SfdcPipelineProfileComponents = ({
               data={modifiedFilesTable}
               handleComponentCheck={handleComponentCheckNew}
               handleCheckAllClickComponentTypes={handleCheckAllClickComponentTypesProfile}
+              fileUploadFlag={true}
+              recordId={recordId}
+              updateAttribute= {"selectedFileList"}
+              callbackFunc={generateXML}
+              fromGit={false}
+              fromSFDC={false}
+              fromDestinationSFDC={false}
+              fromProfileComponents={true}
+              allSFDCComponentType={[]}
+              allGitComponentType={[]}
+              allDestSfdcComponentType={[]}
+              allProfileComponentType={allProfileComponentType}
             />
           ) : null }          
         </div>

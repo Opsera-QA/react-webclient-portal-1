@@ -33,3 +33,44 @@ export function cutOffExcessCharacters(initialString, characterLimit, postFix = 
 
   return parsedString;
 }
+
+export function camalize (str) {
+  return str.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
+}
+
+export function csvStringToObj  (csvString) {
+  const dataStringLines = csvString.split(/\r\n|\n/);
+  const headersRaw = dataStringLines[0].split(/,(?![^"]*"(?:(?:[^"]*"){2})*[^"]*$)/);
+  let headers = [];
+  headersRaw.map(header => {
+    headers.push(camalize(header));
+  })
+  // console.log(headers);
+  const list = [];
+  for (let i = 1; i < dataStringLines.length; i++) {
+    const row = dataStringLines[i].split(/,(?![^"]*"(?:(?:[^"]*"){2})*[^"]*$)/);
+    if (headers && row.length == headers.length) {
+      // console.log(row)
+      const obj = {};
+      for (let j = 0; j < headers.length; j++) {
+        let d = row[j];
+        if (d.length > 0) {
+          if (d[0] == '"')
+            d = d.substring(1, d.length - 1);
+          if (d[d.length - 1] == '"')
+            d = d.substring(d.length - 2, 1);
+        }
+        if (headers[j]) {
+          obj[headers[j]] = d;
+        }
+      }
+
+      // remove blank rows
+      if (Object.values(obj).filter(x => x).length > 0) {
+        list.push(obj);
+      }
+    }
+  }
+  // console.log(list);
+  return list;
+}
