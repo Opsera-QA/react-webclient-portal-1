@@ -5,30 +5,30 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 
-function TwistlockPipelineStepConfigurationSummaryPanel({ twislockDataObject, pipelineData, setActiveTab }) {
+function TwistlockPipelineStepConfigurationSummaryPanel({ twistlockDataObject, pipelineData, setActiveTab }) {
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={twislockDataObject} fieldName={"toolConfigId"} />
+          <TextFieldBase dataObject={twistlockDataObject} fieldName={"toolConfigId"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={twislockDataObject} fieldName={"jobType"} />
+          <TextFieldBase dataObject={twistlockDataObject} fieldName={"jobType"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={twislockDataObject} fieldName={"toolJobId"} />
+          <TextFieldBase dataObject={twistlockDataObject} fieldName={"toolJobId"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={twislockDataObject} fieldName={"gitCredential"} />
+          <TextFieldBase dataObject={twistlockDataObject} fieldName={"gitCredential"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={twislockDataObject} fieldName={"workspace"} />
+          <TextFieldBase dataObject={twistlockDataObject} fieldName={"workspace"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={twislockDataObject} fieldName={"repository"} />
+          <TextFieldBase dataObject={twistlockDataObject} fieldName={"repository"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={twislockDataObject} fieldName={"branch"} />
+          <TextFieldBase dataObject={twistlockDataObject} fieldName={"branch"} />
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
@@ -36,7 +36,7 @@ function TwistlockPipelineStepConfigurationSummaryPanel({ twislockDataObject, pi
 }
 
 TwistlockPipelineStepConfigurationSummaryPanel.propTypes = {
-  twislockDataObject: PropTypes.object,
+  twistlockDataObject: PropTypes.object,
   pipelineData: PropTypes.object,
   setActiveTab: PropTypes.func
 };
