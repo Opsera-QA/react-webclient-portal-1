@@ -8,7 +8,7 @@
 }
 
 .modal-xl {
-    min-width: 95vw !important;
+    min-width: 90vw !important;
 }
 
 .fa-disabled {
@@ -453,6 +453,11 @@ a.text-primary:hover, a.text-primary:focus {
 
 .custom-table .top-pagination {
     background-color: #E6E5E3;
+}
+
+.custom-table .wrap-cell-content{
+    max-width: 40vw;
+    word-wrap: break-word;
 }
 
 /* End Table Styling */
