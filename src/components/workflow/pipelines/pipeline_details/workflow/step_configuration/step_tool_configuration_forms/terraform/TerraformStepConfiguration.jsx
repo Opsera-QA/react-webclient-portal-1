@@ -18,7 +18,6 @@ import pipelineActions from "../../../../../../pipeline-actions";
 import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 
-
 const SCM_TOOL_LIST = [
   {
     name: "Gitlab",
@@ -321,7 +320,6 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       return
     }
   };
-
 
   if (isLoading || terraformStepConfigurationDto === undefined) {
     return <DetailPanelLoadingDialog />;
