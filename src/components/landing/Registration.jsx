@@ -15,7 +15,7 @@ function RegistrationLanding() {
         <Row>
           <Col xl="12">
             <div style={{ maxWidth: "1025px" }}>
-              <div className="h4 mb-3">Welcome to OpsERA!  Your DevSecOps Solution.</div>
+              <div className="h4 mb-3">Welcome to Opsera!  Your DevSecOps Solution.</div>
               <div className="h5 text-muted mb-5">Your registration has been processed successfully.  You will be contacted via email shortly with details on how to proceed.</div>
               
               <div className="row mx-n2 mt-3" style={{ minWidth:"1020px" }}>

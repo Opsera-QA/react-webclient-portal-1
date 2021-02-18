@@ -17,7 +17,7 @@ import {
   faLifeRing,
   faCogs,
   faChartNetwork,
-  faCaretSquareUp, faAnalytics, faEnvelope,
+  faCaretSquareUp, faAnalytics, faEnvelope, faCodeBranch,
 } from "@fortawesome/pro-light-svg-icons";
 import "./sidebar.css";
 
@@ -245,6 +245,14 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
           <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
             <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
             className="menu-text">Notifications</span></NavLink>
+
+          {featureFlagHideItemInProd ?
+            <></>
+            :
+            <NavLink className="nav-link" activeClassName="chosen" to="/git">
+              <FontAwesomeIcon size="lg" icon={faCodeBranch} fixedWidth/> <span
+              className="menu-text">Git</span></NavLink>
+          }
 
 
           <NavLink className="nav-link" activeClassName="chosen" to="/update">

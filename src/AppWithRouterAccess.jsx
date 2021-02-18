@@ -93,6 +93,7 @@ import SiteNotificationManager from "components/admin/site_notifications/manager
 import ToolCountsReport from "components/reports/tools/counts/ToolCountsReport";
 import UserSettings from "components/user/user_settings/UserSettings";
 import AccessTokenDetailView from "components/user/user_settings/access_tokens/details/AccessTokenDetailView";
+import GitComponent from "components/git/Git";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -304,6 +305,9 @@ const AppWithRouterAccess = () => {
 
                   {/* marketplace */}
                   <SecureRoute path="/insights/marketplace" component={Marketplace}/>
+
+                  {/* git tasks */}
+                  <SecureRoute path="/git" component={GitComponent}/>
 
                   {/* Administration Pages */}
                   <SecureRoute path="/admin" exact component={AdminTools}/>
