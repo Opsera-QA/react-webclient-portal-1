@@ -1,4 +1,4 @@
-import React, { useMemo }  from 'react'
+import React, { useState, useMemo }  from 'react'
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
@@ -12,6 +12,7 @@ import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import BooleanFilter from "components/common/filters/input/BooleanFilter";
 import SfdcComponentFilter from "components/common/filters/sfdccomponent/SfdcComponentFilter";
+import CSVFileUploadComponent from '../csv_file_upload/CSVFileUploadComponent';
 
 const SfdcModifiedFilesTabView = ({
   loadData,
@@ -21,8 +22,21 @@ const SfdcModifiedFilesTabView = ({
   componentType,
   data,
   handleComponentCheck,
-  handleCheckAllClickComponentTypes
+  handleCheckAllClickComponentTypes,
+  fileUploadFlag,
+  recordId,
+  updateAttribute,
+  callbackFunc,
+  fromGit,
+  fromSFDC,
+  fromDestinationSFDC,
+  fromProfileComponents,
+  allSFDCComponentType,
+  allGitComponentType,
+  allDestSfdcComponentType,
+  allProfileComponentType
 }) => {
+  const [files, setFiles] = useState([]);
 
   const fields = sfdcTableConstants.fields;
 
@@ -43,10 +57,26 @@ const SfdcModifiedFilesTabView = ({
     return (  
       <div>
         {/* upload component goes here */}
-        {/* TODO: Check if the component is being called from profiles or sfdc or git and then make csv upload changes */}
+        {fileUploadFlag && 
+          <CSVFileUploadComponent
+            recordId={recordId}
+            updateAttribute={updateAttribute}
+            callbackFunc={callbackFunc}
+            fromGit={fromGit}
+            fromSFDC={fromSFDC}
+            fromDestinationSFDC={fromDestinationSFDC}
+            fromProfileComponents={fromProfileComponents}
+            allSFDCComponentType={allSFDCComponentType}
+            allGitComponentType={allGitComponentType}
+            allDestSfdcComponentType={allDestSfdcComponentType}
+            allProfileComponentType={allProfileComponentType}
+            setFiles={setFiles}
+          />
+        }
+        
         {/* table component goes here */}
         <CustomTable
-          className={"table-no-border"}
+          className={"table-no-border" + (files.length > 0 ? " opacity-half" : " ") }
           columns={sfdcColumnsWithCheckBoxCell}
           data={data}              
           isLoading={loading}
@@ -102,7 +132,19 @@ SfdcModifiedFilesTabView.propTypes = {
   filterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
   handleComponentCheck: PropTypes.func,
-  handleCheckAllClickComponentTypes: PropTypes.func  
+  handleCheckAllClickComponentTypes: PropTypes.func,
+  fileUploadFlag:  PropTypes.bool,
+  recordId: PropTypes.string,
+  updateAttribute: PropTypes.string,
+  callbackFunc: PropTypes.func,
+  fromGit: PropTypes.bool,
+  fromSFDC: PropTypes.bool,
+  fromDestinationSFDC: PropTypes.bool,
+  fromProfileComponents: PropTypes.bool,
+  allSFDCComponentType: PropTypes.array,
+  allGitComponentType: PropTypes.array,
+  allDestSfdcComponentType: PropTypes.array,
+  allProfileComponentType: PropTypes.array,
 };
 
 export default SfdcModifiedFilesTabView;

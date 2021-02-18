@@ -88,5 +88,15 @@ sfdcPipelineActions.setSelectedComponents = async (postBody, getAccessToken) => 
     .catch(error => {throw { error };});
   return response;
 };
+// process and set csv data
+
+sfdcPipelineActions.uploadCSVData = async (postBody, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/sfdc/processcsv`;   
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
 
 export default sfdcPipelineActions;
