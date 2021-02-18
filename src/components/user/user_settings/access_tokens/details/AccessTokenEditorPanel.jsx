@@ -16,7 +16,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import AccessTokenScopeRadioInput
   from "components/common/list_of_values_input/users/access_tokens/AccessTokenScopeRadioInput";
 
-function AccessTokenEditorPanel({ cancelTokenSource }) {
+function AccessTokenEditorPanel({ cancelTokenSource, loadData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [accessToken, setAccessToken] = useState(new Model({...accessTokenMetadata.newObjectFields}, accessTokenMetadata, true));
   const [generatedToken, setGeneratedToken] = useState(undefined);
@@ -62,8 +62,14 @@ function AccessTokenEditorPanel({ cancelTokenSource }) {
               <Col md={12}>
                 <Row className="mx-0">
                   <div className="ml-auto">
-                    <CreateButton icon={faKey} addAnotherOption={false} disable={!accessToken.isModelValid2()}
-                                  recordDto={accessToken} createRecord={createToken} size={"sm"}/>
+                    <CreateButton
+                      icon={faKey}
+                      addAnotherOption={false}
+                      disable={!accessToken.isModelValid2()}
+                      recordDto={accessToken}
+                      handleClose={loadData}
+                      createRecord={createToken} size={"sm"}
+                    />
                   </div>
                 </Row>
               </Col>
@@ -85,6 +91,7 @@ function AccessTokenEditorPanel({ cancelTokenSource }) {
 
 AccessTokenEditorPanel.propTypes = {
   cancelTokenSource: PropTypes.object,
+  loadData: PropTypes.func
 };
 
 export default AccessTokenEditorPanel;

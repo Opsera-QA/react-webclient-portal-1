@@ -109,7 +109,7 @@ function MyAccessTokens() {
       case "summary":
         return (
           <>
-            <AccessTokenEditorPanel cancelTokenSource={cancelTokenSource} />
+            <AccessTokenEditorPanel cancelTokenSource={cancelTokenSource} loadData={loadData} />
             <AccessTokenTable
               loadData={loadData}
               isLoading={isLoading}
