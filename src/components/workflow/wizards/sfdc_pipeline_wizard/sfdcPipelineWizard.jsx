@@ -64,9 +64,9 @@ const SfdcPipelineWizard = ({
   const [asOfDate, setAsOfDate] = useState(Moment(new Date(new Date().setDate(new Date().getDate() - 40))).toISOString());
 
   const [selectedFromDate, setSelectedFromDate] = useState(new Date(new Date().setHours(0,0,0,0)));
-  const [selectedToDate, setSelectedToDate] = useState(new Date(new Date().setHours(new Date().getHours(),0,0,0)));
+  const [selectedToDate, setSelectedToDate] = useState(new Date());
   const [fromDate, setFromDate] = useState(Moment(new Date(new Date().setHours(0,0,0,0))).toISOString());
-  const [toDate, setToDate] = useState(Moment(new Date(new Date().setHours(new Date().getHours(),0,0,0))).toISOString());
+  const [toDate, setToDate] = useState(Moment(new Date()).toISOString());
 
   useEffect(() => {
     loadSfdcInitStep(pipeline.workflow.plan);
