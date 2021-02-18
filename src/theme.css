@@ -1070,8 +1070,8 @@ a.nav-link {
 }
 
 .detail-panel-body {
-    min-height: calc(92vh - 260px);
-    max-height: calc(92vh - 260px);
+    min-height: calc(92vh - 275px);
+    max-height: calc(92vh - 275px);
     overflow-y: auto;
 }
 
