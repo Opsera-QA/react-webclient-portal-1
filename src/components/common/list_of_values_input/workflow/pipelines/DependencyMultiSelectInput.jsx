@@ -6,39 +6,14 @@ import {AuthContext} from "contexts/AuthContext";
 
 export const itemArray = [
   {
-    "name": "Node Version 7",
-    "dependencyType" : "node",
-    "version": "7",
-  },
-  {
-    "name": "Node Version 8",
-    "dependencyType" : "node",
-    "version": "8",
-  },
-  {
-    "name": "Node Version 9",
-    "dependencyType" : "node",
-    "version": "9",
-  },
-  {
     "name": "Node Version 10",
     "dependencyType" : "node",
     "version": "10",
   },
   {
-    "name": "Node Version 11",
-    "dependencyType" : "node",
-    "version": "11",
-  },  
-  {
     "name": "Node Version 12",
     "dependencyType" : "node",
     "version": "12",
-  },
-  {
-    "name": "Node Version 13",
-    "dependencyType" : "node",
-    "version": "13",
   },
   {
     "name": "Node Version 14",
