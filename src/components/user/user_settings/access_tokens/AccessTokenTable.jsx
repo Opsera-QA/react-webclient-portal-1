@@ -39,8 +39,8 @@ function AccessTokenTable({accessTokenData, loadData, isMounted, isLoading, canc
       getTableTextColumn(getField(fields, "scope")),
       getTableDateColumn(getField(fields, "createdAt")),
       getTableDateTimeColumn(getField(fields, "expiration")),
-      getTableButtonColumn("row", "Expire Now", "danger", "Expire", toggleDeleteModal),
-      getTableButtonColumn("_id", "View Details", "outline-primary", "View Details", viewDetails)
+      getTableButtonColumn("row", "", "danger", "Expire", toggleDeleteModal),
+      getTableButtonColumn("_id", "", "outline-primary", "View Details", viewDetails)
     ],
     []
   );

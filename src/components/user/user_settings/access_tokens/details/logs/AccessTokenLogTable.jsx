@@ -1,7 +1,10 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import { getTableDateColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
+import {
+  getTableDateTimeColumn,
+  getTableTextColumn
+} from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
@@ -13,10 +16,9 @@ function AccessTokenLogTable({isLoading, loadData, activityLogs, filterModel, se
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "token_id")),
-      getTableTextColumn(getField(fields, "user_id")),
       getTableTextColumn(getField(fields, "target")),
       getTableTextColumn(getField(fields, "scope")),
-      getTableDateColumn(getField(fields, "createdAt")),
+      getTableDateTimeColumn(getField(fields, "createdAt")),
     ],
     []
   );

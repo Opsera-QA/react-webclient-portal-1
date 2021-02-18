@@ -22,7 +22,7 @@ export const accessTokenLogMetadata = {
       id: "user_id",
     },
     {
-      label: "Created",
+      label: "Used On",
       id: "createdAt",
     },
     {
