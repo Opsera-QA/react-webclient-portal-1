@@ -3,12 +3,13 @@ import PropTypes from "prop-types";
 import regexHelpers from "utils/regexHelpers";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBracketsCurly, faPlus, faTimes} from "@fortawesome/pro-light-svg-icons";
+import {faBracketsCurly, faExclamationTriangle, faPlus, faTimes} from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import {Combobox} from "react-widgets";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import InfoText from "components/common/form_fields/input/InfoText";
+import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 
 function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -51,7 +52,9 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
 
     if (newPropertyList && newPropertyList.length > 0) {
       newPropertyList.map((item) => {
-        newObject[item.name] = item.value;
+        if (item.name !== "" && item.value !== "") {
+          newObject[item.name] = item.value;
+        }
       });
     }
 
@@ -102,14 +105,6 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
       </Button>
     )
   };
-
-  const getAddPropertyButton = () => {
-    return (
-      <Button variant="link" onClick={() => addProperty()}>
-        <FontAwesomeIcon className="text-white" icon={faPlus} fixedWidth />
-      </Button>
-    );
-  }
 
   const getPropertyRow = (property, index) => {
     return (
@@ -163,37 +158,51 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
     );
   };
 
-  const getTitleBar = () => {
-    return (
-      <Row>
-        <Col className="mt-2" sm={11}>
-          <span><FontAwesomeIcon icon={faBracketsCurly} fixedWidth className="mr-1"/>{field.label}</span>
-        </Col>
-        <Col sm={1} className={"pr-3 pl-1"}>
-          {getAddPropertyButton()}
-        </Col>
-      </Row>
-    );
+  const isPropertyComplete = (property) => {
+    return property?.name !== "" && property?.value !== "";
   };
 
+  const lastPropertyComplete = () => {
+    let newPropertyList = properties;
+
+    if (newPropertyList.length === 0) {
+      return true;
+    }
+
+    let lastObject = newPropertyList[newPropertyList.length - 1];
+    return isPropertyComplete(lastObject);
+  };
+
+  const getIncompletePropertyMessage = () => {
+    if (!lastPropertyComplete()) {
+      return (
+        <div className="w-100 pr-3 mb-1 text-muted small text-right">
+          <FontAwesomeIcon className="text-warning mr-1" icon={faExclamationTriangle} fixedWidth />
+          <span className="mt-1">{`Incomplete ${field?.label} Will Be Removed From Saved Tag`}</span>
+        </div>
+      )
+    }
+  };
 
   if (field == null) {
     return <></>;
   }
 
   return (
-    <div className="object-properties-input">
-      <div className="content-container content-card-1">
-        <div className="pl-2 pr-3 property-header">
-          <h6>{getTitleBar()}</h6>
-        </div>
-        <div className="properties-body">
-          {getFieldBody()}
-        </div>
-        <div className="content-block-footer"/>
+    <PropertyInputContainer
+      titleIcon={faBracketsCurly}
+      field={field}
+      addProperty={addProperty}
+      titleText={field?.label}
+      errorMessage={errorMessage}
+      addAllowed={lastPropertyComplete()}
+      type={"property"}
+    >
+      <div className="properties-body">
+        {getFieldBody()}
       </div>
-      <InfoText field={field} errorMessage={errorMessage} />
-    </div>
+      {getIncompletePropertyMessage()}
+    </PropertyInputContainer>
   );
 }
 
@@ -202,6 +211,10 @@ TagConfigurationInput.propTypes = {
   dataObject: PropTypes.object,
   fields: PropTypes.array,
   fieldName: PropTypes.string
+};
+
+TagConfigurationInput.defaultProps = {
+  fieldName: "configuration"
 };
 
 export default TagConfigurationInput;
