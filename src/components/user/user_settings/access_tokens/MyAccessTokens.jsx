@@ -68,10 +68,7 @@ function MyAccessTokens() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-
-      if (userRoleAccess?.OpseraAdministrator) {
-        await getAccessTokens(cancelSource, filterModel);
-      }
+      await getAccessTokens(cancelSource, filterModel);
     }
   };
 
