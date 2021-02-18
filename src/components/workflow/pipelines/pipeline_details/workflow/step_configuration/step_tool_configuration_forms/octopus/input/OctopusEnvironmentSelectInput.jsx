@@ -53,6 +53,8 @@ function OctopusEnvironmentNameSelectInput({ fieldName, dataObject, setDataObjec
   };
 
   const handleDTOChange = async (fieldName, value) => {
+    dataObject.setData("environmentName","");
+    dataObject.setData("environmentId", "");
     if (fieldName === "environmentName") {
       let newDataObject = dataObject;
       newDataObject.setData("environmentName", value.name);
