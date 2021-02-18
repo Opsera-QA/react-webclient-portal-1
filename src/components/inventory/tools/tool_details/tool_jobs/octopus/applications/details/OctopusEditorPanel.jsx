@@ -8,12 +8,7 @@ import Row from "react-bootstrap/Row";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import DtoTextInput from "../../../../../../../common/input/dto_input/dto-text-input";
-import DtoToggleInput from "../../../../../../../common/input/dto_input/dto-toggle-input";
-import DtoSelectInput from "../../../../../../../common/input/dto_input/dto-select-input";
-import DtoMultiselectInput from "../../../../../../../common/input/dto_input/dto-multiselect-input";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
-import OctopusStepActions from "../../../../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
-import PipelineActions from "../../../../../../../workflow/pipeline-actions";
 import OctopusActions from "../../octopus-actions";
 import DeleteModal from "components/common/modal/DeleteModal";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
@@ -21,7 +16,6 @@ import CloudProviderSelectInput from "./input/CloudProviderSelectInput";
 import AzureToolSelectInput from "./input/AzureToolSelectInput";
 import CommunicationStyleSelectInput from "./input/CommunicationStyleSelectInput";
 import WebAppNameSelectInput from "./input/WebAppNameSelectInput";
-import ListOfFeedsSelectInput from "./input/ListofFeedsSelectInput";
 import SpaceNameSelectInput from "./input/SpaceNameSelectInput";
 import EnvironmentNameSelectInput from "./input/EnvironmentSelectInput";
 import AccountSelectInput from "./input/AccountSelectInput";
@@ -30,6 +24,7 @@ import ClusterSelectInput from "./input/ClusterSelectInput";
 import FeedTypeSelectInput from "./input/FeedTypeSelectInput";
 import NexusSelectInput from "./input/NexusSelectInput";
 import NexusRepoSelectInput from "./input/NexusRepoSelectInput";
+import TestConnectionButton from "./input/TestConnectionButton";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -76,16 +71,31 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
   };
 
   const createApplication = async () => {
-    return await OctopusActions.createOctopusApplication(octopusApplicationDataDto, type, getAccessToken);
+    try {
+      await OctopusActions.createOctopusApplication(octopusApplicationDataDto, type, getAccessToken);
+      handleClose()
+    } catch (error) {
+      toastContext.showCreateFailureResultDialog(type, error)
+    }
   };
 
   const updateApplication = async () => {
-    return await OctopusActions.updateOctopusApplication(octopusApplicationDataDto, type, getAccessToken, appID);
+    try {
+      await OctopusActions.updateOctopusApplication(octopusApplicationDataDto, type, getAccessToken, appID);
+      handleClose()
+    } catch (error) {
+      toastContext.showUpdateFailureResultDialog(type, error)
+    }
   };
 
   const deleteApplication = async () => {
-    await OctopusActions.deleteOctopusApplication(toolData._id, type, getAccessToken, appID, octopusApplicationDataDto);
-    handleClose();
+    try {
+      await OctopusActions.deleteOctopusApplication(toolData._id, type, getAccessToken, appID, octopusApplicationDataDto);
+      toastContext.showDeleteSuccessResultDialog(type && type.length > 2 ? type.charAt(0).toUpperCase() + type.slice(1) : "")
+      handleClose();
+    } catch (error) {
+      toastContext.showDeleteFailureResultDialog(type, error)
+    }
   };
 
   if (isLoading || octopusApplicationDataDto === null || octopusApplicationDataDto === undefined) {
@@ -95,6 +105,16 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
   return (
     <>
       <div className="scroll-y full-height">
+          <div className="d-flex justify-content-between px-2">
+            <div className="text-muted pt-1 pb-3">
+              Enter the required configuration information below. These settings will be used for Octopus {type ? type.charAt(0).toUpperCase() + type.slice(1) + " Creation" : ""}.
+            </div>
+            <div>
+              {appID && octopusApplicationDataDto.getData("id") && type && (type !== "environment") && (
+              <TestConnectionButton toolDataDto={octopusApplicationDataDto} />
+              )}
+            </div>
+          </div>
         {octopusApplicationDataDto && type && type === "environment" && !isLoading && (
           <Row>
             <Col lg={12}>
@@ -164,27 +184,10 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
               />
             </Col>
-            {octopusApplicationDataDto &&
-            octopusApplicationDataDto.getData("cloudType") === "AzureServicePrincipal" && (
-            <Col lg={12}>
-              <AzureToolSelectInput
-                fieldName={"azureToolConfigId"}
-                dataObject={octopusApplicationDataDto}
-                setDataObject={setOctopusApplicationDataDto}
-                disabled={
-                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) || appID
-                    ? true
-                    : false
-                }
-                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("cloudType") : ""}
-              />
-            </Col>)
-            }
-            {octopusApplicationDataDto &&
-            octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
+            {octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType") === "AzureServicePrincipal" && (
               <Col lg={12}>
-                <AWSToolSelectInput
-                  fieldName={"awsToolConfigId"}
+                <AzureToolSelectInput
+                  fieldName={"azureToolConfigId"}
                   dataObject={octopusApplicationDataDto}
                   setDataObject={setOctopusApplicationDataDto}
                   disabled={
@@ -194,15 +197,33 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                   }
                   tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("cloudType") : ""}
                 />
-              </Col>)
-            }
+              </Col>
+            )}
+            {octopusApplicationDataDto &&
+              octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
+                <Col lg={12}>
+                  <AWSToolSelectInput
+                    fieldName={"awsToolConfigId"}
+                    dataObject={octopusApplicationDataDto}
+                    setDataObject={setOctopusApplicationDataDto}
+                    disabled={
+                      (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) ||
+                      appID
+                        ? true
+                        : false
+                    }
+                    tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("cloudType") : ""}
+                  />
+                </Col>
+              )}
             <Col lg={12}>
               <EnvironmentNameSelectInput
                 fieldName={"environmentIds"}
                 dataObject={octopusApplicationDataDto}
                 setDataObject={setOctopusApplicationDataDto}
                 disabled={
-                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceId").length === 0) || appID && !octopusApplicationDataDto.getData("id")
+                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceId").length === 0) ||
+                  (appID && !octopusApplicationDataDto.getData("id"))
                     ? true
                     : false
                 }
@@ -236,7 +257,8 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 dataObject={octopusApplicationDataDto}
                 setDataObject={setOctopusApplicationDataDto}
                 disabled={
-                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceName").length === 0) || appID && !octopusApplicationDataDto.getData("id")
+                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceName").length === 0) ||
+                  (appID && !octopusApplicationDataDto.getData("id"))
                     ? true
                     : false
                 }
@@ -301,7 +323,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                     setDataObject={setOctopusApplicationDataDto}
                     disabled={
                       (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) ||
-                      appID && !octopusApplicationDataDto.getData("id")
+                      (appID && !octopusApplicationDataDto.getData("id"))
                         ? true
                         : false
                     }
@@ -321,7 +343,8 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 dataObject={octopusApplicationDataDto}
                 setDataObject={setOctopusApplicationDataDto}
                 disabled={
-                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceId").length === 0) || appID && !octopusApplicationDataDto.getData("id")
+                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceId").length === 0) ||
+                  (appID && !octopusApplicationDataDto.getData("id"))
                     ? true
                     : false
                 }
@@ -350,19 +373,6 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
         )}
         {octopusApplicationDataDto && type && type === "feed" && !isLoading && (
           <Row>
-            {!appID && (
-              <Col lg={12}>
-                <Card>
-                  <Card.Body>
-                    <Card.Subtitle className="text-muted">
-                      External Feed support is currently only available for Azure Cloud Accounts. In order to configure
-                      External Feeds for other cloud providers contact Opsera Support.
-                    </Card.Subtitle>
-                  </Card.Body>
-                </Card>
-              </Col>
-            )}
-
             <Col lg={12}>
               <DtoTextInput
                 setDataObject={setOctopusApplicationDataDto}
@@ -394,8 +404,14 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 fieldName={"nexusRepository"}
                 dataObject={octopusApplicationDataDto}
                 setDataObject={setOctopusApplicationDataDto}
-                disabled={(octopusApplicationDataDto && octopusApplicationDataDto.getData("nexusToolId") &&
-                octopusApplicationDataDto.getData("nexusToolId").length === 0) || appID && !octopusApplicationDataDto.getData("id") ? true : false}
+                disabled={
+                  (octopusApplicationDataDto &&
+                    octopusApplicationDataDto.getData("nexusToolId") &&
+                    octopusApplicationDataDto.getData("nexusToolId").length === 0) ||
+                  (appID && !octopusApplicationDataDto.getData("id"))
+                    ? true
+                    : false
+                }
                 tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("nexusToolId") : ""}
               />
             </Col>
@@ -405,7 +421,8 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 dataObject={octopusApplicationDataDto}
                 setDataObject={setOctopusApplicationDataDto}
                 disabled={
-                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceId").length === 0) || appID && !octopusApplicationDataDto.getData("id")
+                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceId").length === 0) ||
+                  (appID && !octopusApplicationDataDto.getData("id"))
                     ? true
                     : false
                 }
@@ -415,7 +432,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
           </Row>
         )}
         <Row>
-          {appID && (octopusApplicationDataDto && octopusApplicationDataDto.getData("id")) && (
+          {appID && octopusApplicationDataDto && octopusApplicationDataDto.getData("id") && (
             <div className="mr-auto ml-2 mt-3 px-3">
               <Button variant="outline-primary" size="sm" onClick={() => setShowDeleteModal(true)}>
                 <FontAwesomeIcon icon={faTrash} className="danger-red" /> Delete{" "}
