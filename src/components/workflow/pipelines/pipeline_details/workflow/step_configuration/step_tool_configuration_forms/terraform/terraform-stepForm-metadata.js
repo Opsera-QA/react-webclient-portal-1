@@ -58,7 +58,7 @@ const TerraformStepFormMetadata = {
     {
       label: "BitBucket Workspace",
       id: "bitbucketWorkspace",
-    }
+    },
   ],
   newModelBase: {
     toolActionType: "execute",
