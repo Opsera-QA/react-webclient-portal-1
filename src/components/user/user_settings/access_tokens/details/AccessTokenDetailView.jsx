@@ -84,10 +84,7 @@ function AccessTokenDetailView() {
     if (isMounted?.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
       setIsLdapUser(isAnLdapUser(user, userRoleAccess));
-
-      if (userRoleAccess?.OpseraAdministrator) {
-        await getToken(cancelSource);
-      }
+      await getToken(cancelSource);
     }
   };
 
