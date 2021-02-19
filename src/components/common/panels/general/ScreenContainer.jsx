@@ -7,7 +7,7 @@ import TitleBar from "components/common/fields/TitleBar";
 import RoleRequirementField from "components/common/fields/access/RoleRequirementField";
 import {meetsRequirements} from "components/common/helpers/role-helpers";
 
-function ScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading, accessDenied, showBreadcrumbTrail, navigationTabContainer, accessRoleData, roleRequirement }) {
+function ScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading, accessDenied, showBreadcrumbTrail, navigationTabContainer, accessRoleData, roleRequirement, hasTabContainer }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
 
   useEffect(() => {
@@ -56,6 +56,30 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
     return (children);
   };
 
+  const getBody = () => {
+    if (hasTabContainer === true) {
+      return (
+        <div className="detail-container-body">
+          {getPageDescription()}
+          <div className="shaded-container">
+            <div className="mt-2">
+              {getScreenBody()}
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="screen-container-body shaded-container">
+        {getPageDescription()}
+        <div className="mt-2">
+          {getScreenBody()}
+        </div>
+      </div>
+    );
+  };
+
   if (!isLoading && accessDenied) {
     return (
       <AccessDeniedContainer />
@@ -75,12 +99,7 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
         <div className="pl-2 content-block-header title-text-header-1">
           <TitleBar titleIcon={breadcrumb.icon} title={breadcrumb.label} isLoading={isLoading}/>
         </div>
-        <div className="screen-container-body shaded-container">
-          {getPageDescription()}
-          <div className="mt-2">
-            {getScreenBody()}
-          </div>
-        </div>
+        {getBody()}
         <div className="content-block-footer-text-container pt-2">
           <RoleRequirementField className={"mx-2"} roleRequirement={roleRequirement} />
         </div>
@@ -101,6 +120,7 @@ ScreenContainer.propTypes = {
   navigationTabContainer: PropTypes.object,
   accessRoleData: PropTypes.object,
   roleRequirement: PropTypes.string,
+  hasTabContainer: PropTypes.bool
 };
 
 export default ScreenContainer;

@@ -127,6 +127,7 @@ function Pipelines() {
       breadcrumbDestination={getCurrentBreadcrumbDestination()}
       navigationTabContainer={getNavigationTabContainer()}
       pageDescription={getPageDescription()}
+      hasTabContainer={activeTab !== "catalog"}
     >
       {getCurrentView()}
     </ScreenContainer>
