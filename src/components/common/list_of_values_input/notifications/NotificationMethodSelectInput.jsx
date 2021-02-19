@@ -20,9 +20,7 @@ function NotificationMethodSelectInput({ fieldName, dataObject, setDataObject, d
       valueField="value"
       textField="name"
       disabled={[
-        {name: "Email", value: "email"},
         {name: "Jira", value: "jira"},
-        {name: "Teams", value: "teams"},
       ]}
     />
   );
