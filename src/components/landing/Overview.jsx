@@ -115,7 +115,7 @@ function OverviewLanding() {
                   </ul>
                 </div>
 
-                <div className="h4 text-muted-purple mb-5">Welcome
+                <div className="h4 text-color mb-5">Welcome
                   back {userInfo && userInfo.firstName ? userInfo.firstName : null}!
                 </div>
 
@@ -159,14 +159,14 @@ function OverviewLanding() {
                 </div>
                 <div className="row mx-n2 mt-4">
                   <div className="col-md px-2 landing-content-module">
-                    <div className="h5 text-muted-purple">Toolchain Automation</div>
+                    <div className="h5 text-color">Toolchain Automation</div>
                     <div className="text-muted pr-2">
                       Get started in your DevOps journey with new tools or experiment with many of our tool offerings to
                       figure out your next steps.
                     </div>
                   </div>
                   <div className="col-md px-2 landing-content-module">
-                    <div className="h5 text-muted-purple">
+                    <div className="h5 text-color">
                       Declarative Pipelines
                       {statsData.pendingPipelines && statsData.pendingPipelines.length > 0 && (
                         <Badge variant="danger" className="ml-1">
@@ -199,7 +199,7 @@ function OverviewLanding() {
                     )}
                   </div>
                   <div className="col-md px-2 landing-content-module">
-                    <div className="h5 text-muted-purple">Insights</div>
+                    <div className="h5 text-color">Insights</div>
                     <div className="text-muted pr-2">Get real time observability across your various pipelines.</div>
                   </div>
                 </div>
@@ -214,7 +214,7 @@ function OverviewLanding() {
           </Row>
           <Row>
             <Col xl="12" className="pt-2">
-              <div className="h5 text-muted-purple">Need help?</div>
+              <div className="h5 text-color">Need help?</div>
               <div className="h6 mt-1">Send an email to support@opsera.io</div>
             </Col>
           </Row>
