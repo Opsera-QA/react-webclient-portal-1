@@ -4,7 +4,7 @@ import CustomTable from "components/common/table/CustomTable";
 import { AuthContext } from "contexts/AuthContext";
 import {
   getTableBooleanIconColumn,
-  getTableDateColumn, getTableInfoIconColumn,
+  getTableDateTimeColumn, getTableInfoIconColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import notificationActivityLogMetadata
@@ -48,7 +48,7 @@ function NotificationActivityLogsTable({ notificationData, allLogs }) {
       getTableTextColumn(fields.find(field => { return field.id === "type"})),
       getTableTextColumn(fields.find(field => { return field.id === "message"})),
       getTableBooleanIconColumn(fields.find(field => { return field.id === "status"})),
-      getTableDateColumn(fields.find(field => { return field.id === "createdAt"})),
+      getTableDateTimeColumn(fields.find(field => { return field.id === "createdAt"})),
       getTableInfoIconColumn(showActivityLog),
     ],
     [],
