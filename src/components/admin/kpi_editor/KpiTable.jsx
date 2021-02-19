@@ -8,7 +8,7 @@ import {
   getTableDateColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
-import FilterBar from "components/common/filters/FilterBar";
+//import FilterBar from "components/common/filters/FilterBar";
 import StatusFilter from "components/common/filters/status/StatusFilter";
 import NewKpiModal from "components/admin/kpi_editor/NewKpiModal";
 import {getField} from "components/common/metadata/metadata-helpers";

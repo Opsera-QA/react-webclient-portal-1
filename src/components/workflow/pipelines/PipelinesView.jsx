@@ -15,9 +15,9 @@ import LdapOwnerFilter from "components/common/filters/pipelines/LdapOwnerFilter
 import Model from "core/data_model/model";
 import TagFilter from "components/common/filters/tags/TagFilter";
 import PipelineCardView from "components/workflow/pipelines/PipelineCardView";
-import FilterBar from "components/common/filters/FilterBar";
+//import FilterBar from "components/common/filters/FilterBar";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faDraftingCompass, faTools} from "@fortawesome/pro-light-svg-icons";
+import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 
 function PipelinesView({ currentTab, setActiveTab }) {
   const { getAccessToken } = useContext(AuthContext);

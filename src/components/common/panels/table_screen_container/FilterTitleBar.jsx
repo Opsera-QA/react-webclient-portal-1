@@ -1,7 +1,7 @@
 import React from "react";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import {faSpinner} from "@fortawesome/pro-light-svg-icons";
+import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 
 function FilterTitleBar({ title, addRecordFunction, inlineFilters, filterDto, titleIcon, isLoading, type }) {
@@ -15,11 +15,14 @@ function FilterTitleBar({ title, addRecordFunction, inlineFilters, filterDto, ti
   };
 
   return (
-    <div className="d-flex w-100 justify-content-between">
-      <div className="title-text-header d-flex">
-        <div className="my-auto mr-2 filter-title-text text-nowrap">{getTitleIcon()}{title}</div>
-        <NewRecordButton className={"mx-2 my-auto text-nowrap"} addRecordFunction={addRecordFunction} type={filterDto?.getType() || type} isLoading={isLoading} variant={"warning"} />
-      </div>
+    <div className="d-flex w-100 justify-content-end">
+      <div className="my-auto mr-2 filter-title-text text-nowrap">{getTitleIcon()}{title}</div>
+
+      <div className="mx-auto"></div>
+
+      <NewRecordButton className={"mr-3 my-auto text-nowrap"} addRecordFunction={addRecordFunction}
+                       type={filterDto?.getType() || type} isLoading={isLoading} variant={"success"}/>
+
       <div className="my-1">{inlineFilters}</div>
     </div>
   );
@@ -32,7 +35,7 @@ FilterTitleBar.propTypes = {
   isLoading: PropTypes.bool,
   addRecordFunction: PropTypes.func,
   filterDto: PropTypes.object,
-  type: PropTypes.string
+  type: PropTypes.string,
 };
 
 export default FilterTitleBar;
