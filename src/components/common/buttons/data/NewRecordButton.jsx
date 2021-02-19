@@ -12,8 +12,8 @@ function NewRecordButton({ isLoading, variant, addRecordFunction, type, size, cl
   return (
     <div className={className}>
       <Button variant={variant} size={size} disabled={isLoading} onClick={() => {addRecordFunction();}}>
-        <FontAwesomeIcon icon={faPlus} className="mr-1" fixedWidth/>
-        <span className={"d-none d-xl-inline"}>New {type}</span>
+        <span className={"d-xl-none"}><FontAwesomeIcon icon={faPlus} fixedWidth/></span>
+        <span className={"d-none d-xl-inline"}><FontAwesomeIcon icon={faPlus} className="mr-1" fixedWidth/> New {type}</span>
       </Button>
     </div>
   );

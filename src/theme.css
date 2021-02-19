@@ -1162,14 +1162,6 @@ a.nav-link {
     background-color: #F3F3F1;
 }
 
-.inline-search-filter {
-    min-width: 350px;
-}
-
-.inline-select-filter {
-    min-width: 250px;
-}
-
 .filter-title {
     background-color: #4D4283;
     border-bottom: 1px solid #46415C;
@@ -1385,7 +1377,27 @@ a.nav-link {
 
 /* End Pipeline Summary Card styling */
 
-
 .no-resize {
     resize: none;
+}
+
+/*Media Queries*/
+@media (max-width: 1024px) {
+    .inline-search-filter {
+        min-width: 150px;
+    }
+
+    .inline-select-filter {
+        min-width: 100px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .inline-search-filter {
+        min-width: 350px;
+    }
+
+    .inline-select-filter {
+        min-width: 250px;
+    }
 }
