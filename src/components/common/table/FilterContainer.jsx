@@ -6,6 +6,7 @@ import ViewToggle from "components/common/view/ViewToggle";
 import RefreshButton from "components/common/buttons/data/RefreshButton";
 import FilterTitleBar from "components/common/panels/table_screen_container/FilterTitleBar";
 import ActiveFilterDisplayer from "components/common/filters/ActiveFilterDisplayer";
+import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 
 function FilterContainer(
   {
@@ -30,9 +31,14 @@ function FilterContainer(
     return (
       <div className="my-1 inline-filter-input">
         <div className="d-flex my-auto">
-
+          <NewRecordButton
+            className={"mr-2 my-auto text-nowrap"}
+            addRecordFunction={addRecordFunction}
+            type={filterDto?.getType() || type}
+            isLoading={isLoading}
+            variant={"success"}
+          />
           <span className="d-none d-lg-inline">{inlineFilters}</span>
-
           <InlineSearchFilter
             isLoading={isLoading}
             supportSearch={supportSearch}
