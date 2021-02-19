@@ -1,6 +1,8 @@
 const paths = {};
 
-paths.userProfile = "profile";
+paths.userProfile = "user/profile";
+paths.userRecord = "user/myUserRecord";
+paths.accessTokens = "user/accessTokens";
 paths.home = "";
 
 // Admin Paths

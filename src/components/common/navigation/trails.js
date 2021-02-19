@@ -7,7 +7,6 @@ import {
   faHexagon
 } from "@fortawesome/pro-light-svg-icons";
 
-// TODO: Now that this is getting big, we should break it up into files in the top level directories and then just accumulate all here
 const breadcrumbs = {
   // Inventory
   toolRegistry: {name: "toolRegistry", path: paths.toolRegistry, label: "Tool Registry", icon: faClipboardList},
@@ -32,7 +31,6 @@ const breadcrumbs = {
   toolManagement: {name: "toolManagement", path: paths.toolManagement, label: "Tool Management", icon: faWrench},
   deleteTools: {name: "deleteTools", path: paths.deleteTools, label: "Delete Tools", icon: faTimes},
 
-  // TODO: This needs to be updated to Tool Category
   toolCategoryDetailView: {name: "toolCategoryDetailView", path: paths.toolCategoryDetailView, label: "Tool Category Details", icon: faWrench},
   toolIdentifierDetailView: {name: "toolIdentifierDetailView", path: paths.toolIdentifierDetailView, label: "Tool Identifier Details", icon: faWrench},
   kpiManagement: {name: "kpiManagement", path: paths.kpiManagement, label: "KPI Management", icon: faFileInvoice},
@@ -105,8 +103,8 @@ const breadcrumbs = {
 
   //General
   userProfile: {name: "userProfile", path: paths.userProfile, label: "My User Profile", icon: faIdCard},
-  myUserRecord: {name: "myUserRecord", path: paths.userProfile, label: "My User Record", icon: faUser},
-  myAccessTokens: {name: "myAccessTokens", path: paths.userProfile, label: "Personal Access Tokens", icon: faKey},
+  myUserRecord: {name: "myUserRecord", path: paths.userRecord, label: "My User Record", icon: faUser},
+  myAccessTokens: {name: "myAccessTokens", path: paths.accessTokens, label: "Personal Access Tokens", icon: faKey},
   accessTokenDetailView: {name: "accessTokenDetailView", path: paths.userProfile, label: "Access Token Details", icon: faKey},
   home: {name: "home", path: paths.home, label: "Welcome back", icon: faHome},
 
