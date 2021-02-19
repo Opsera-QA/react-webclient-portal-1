@@ -23,7 +23,7 @@ function SidePanelTitleBar({ titleText, titleIcon, isLoading, handleClose }) {
   return (
     <div className="d-flex justify-content-between">
       <div><span>{getTitleIcon()}{titleText}</span></div>
-      <div className="mr-1 pointer" onClick={() => { handleClose();}}>
+      <div className="pointer" onClick={() => { handleClose();}}>
         <FontAwesomeIcon icon={faTimes} fixedWidth/>
       </div>
     </div>

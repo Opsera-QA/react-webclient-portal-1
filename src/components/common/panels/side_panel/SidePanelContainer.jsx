@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import SidePanelTitleBar from "components/common/panels/side_panel/SidePanelTitleBar";
 
-function SidePanelContainer({ children, titleText, titleIcon, showPanel, closePanel, loadData, isLoading}) {
+function SidePanelContainer({ children, titleText, titleIcon, showPanel, closePanel, loadData, isLoading, rightSide, showToasts}) {
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -21,11 +21,13 @@ function SidePanelContainer({ children, titleText, titleIcon, showPanel, closePa
   }
 
   return (
-    <div className="side-panel w-25 content-card-1">
-      <SidePanelTitleBar handleClose={handleClose} isLoading={isLoading} titleText={titleText} titleIcon={titleIcon} />
-      <div className="p-3 bg-white step-settings-container">
-        {toastContext.getInlineBanner()}
-        <div className="p-3">
+    <div className={`${rightSide ? `right-side-panel` : `left-side-panel`} side-panel content-card-1 w-25`}>
+      <div className="px-3 content-block-header title-text-header-1">
+        <SidePanelTitleBar handleClose={handleClose} isLoading={isLoading} titleText={titleText} titleIcon={titleIcon} />
+      </div>
+      <div className="bg-white scroll-y side-panel-body">
+        {showToasts && toastContext?.getInlineBanner()}
+        <div>
           {children}
         </div>
       </div>
@@ -41,7 +43,9 @@ SidePanelContainer.propTypes = {
   titleIcon: PropTypes.object,
   closePanel: PropTypes.func.isRequired,
   loadData: PropTypes.func.isRequired,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  rightSide: PropTypes.bool,
+  showToasts: PropTypes.bool
 };
 
 export default SidePanelContainer;

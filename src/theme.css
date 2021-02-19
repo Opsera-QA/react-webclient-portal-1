@@ -1401,3 +1401,32 @@ a.nav-link {
         min-width: 250px;
     }
 }
+
+/*TODO: Create container.css and pull all container-related styling into there*/
+
+/* Side Panel styling */
+.right-side-panel {
+    right: 0;
+}
+
+
+.left-side-panel {
+    left: 0;
+}
+
+.side-panel {
+    height: 100vh;
+    max-height: 100vh;
+    position: fixed;
+    top: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-top: 65px;
+    z-index: 1500;
+}
+
+.side-panel .side-panel-body {
+    overflow-y: auto;
+    max-height: calc(100vh - 150px);
+}
+/* End Side Panel styling */
