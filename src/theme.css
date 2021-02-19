@@ -1050,21 +1050,21 @@ a.nav-link {
 
 .detail-container-body {
     min-height: calc(100vh - 255px);
-    max-height: calc(100vh - 255px);
+    /*max-height: calc(100vh - 255px);*/
 }
 
 .screen-container-body {
     min-height: calc(100vh - 255px);
-    max-height: calc(100vh - 255px);
+    /*max-height: calc(100vh - 255px);
     overflow-y: auto;
-    overflow-x: hidden;
+    overflow-x: hidden;*/
 }
 
 .wide-screen-container-body {
     min-height: calc(100vh - 300px);
-    max-height: calc(100vh - 300px);
+    /*max-height: calc(100vh - 300px);
     overflow-y: auto;
-    overflow-x: auto;
+    overflow-x: auto;*/
 }
 
 
@@ -1076,8 +1076,8 @@ a.nav-link {
 
 .detail-panel-body {
     min-height: calc(92vh - 275px);
-    max-height: calc(92vh - 275px);
-    overflow-y: auto;
+    /*max-height: calc(92vh - 275px);
+    overflow-y: auto;*/
 }
 
 .page-description {
