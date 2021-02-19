@@ -30,14 +30,16 @@ function FilterContainer(
     return (
       <div className="my-1 inline-filter-input">
         <div className="d-flex my-auto">
-          {inlineFilters}
+
+          <span className="d-none d-lg-inline">{inlineFilters}</span>
+
           <InlineSearchFilter
             isLoading={isLoading}
             supportSearch={supportSearch}
             filterDto={filterDto}
             setFilterDto={setFilterDto}
             loadData={loadData}
-            className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3" : null}
+            className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
           />
           <ViewToggle
             supportViewToggle={supportViewToggle}
