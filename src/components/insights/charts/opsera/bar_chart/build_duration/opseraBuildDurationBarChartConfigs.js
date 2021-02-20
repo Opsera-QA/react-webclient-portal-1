@@ -43,7 +43,7 @@ export default {
     }
   ],
   axisBottom: {
-    "format": (d) => (typeof d === "string" ? d.substring(0, 6) : ""),
+    "format": (d) => (typeof d === "string" ? d.substring(0, 3) : ""),
     "tickSize": 5,
     "tickPadding": 5,
     "tickRotation": 0,
