@@ -105,6 +105,10 @@ import TwistlockPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/TwistlockPipelineStepConfigurationSummaryPanel";
 import twistlockPipelineStepConfigurationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/twistlockPipelineStepConfigurationMetadata";
+import S3PipelineStepConfigurationSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/s3/S3PipelineStepConfigurationSummaryPanel";
+import s3PipelineStepConfigurationMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/s3/s3PipelineStepConfigurationMetadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -112,7 +116,7 @@ function PipelineStepConfigurationSummary({
   const getModelWrappedObject = (metaData) => {
     return (new Model({...pipelineData?.tool?.configuration}, metaData, false))
   };
-  
+
   // TODO: Pass in already wrapped data object?
   const getStepConfigurationSummary = () => {
     switch (pipelineData?.tool?.tool_identifier) {
@@ -306,6 +310,12 @@ function PipelineStepConfigurationSummary({
           />
         );
       case "s3":
+        return (
+          <S3PipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            s3DataObject={getModelWrappedObject(s3PipelineStepConfigurationMetadata)}
+          />
+        );
       case "ssh-upload":
       case "cypress":
       case "docker-push":

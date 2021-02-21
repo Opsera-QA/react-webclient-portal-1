@@ -2,12 +2,13 @@ import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
-import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import PipelineStepSummaryPanelContainer
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 
-function S3PipelineStepConfigurationSummaryPanel({ s3DataObject, pipelineData, setActiveTab }) {
+function S3PipelineStepConfigurationSummaryPanel({ s3DataObject, pipelineData }) {
   return (
-    <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
+    <PipelineStepSummaryPanelContainer pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
           <TextFieldBase dataObject={s3DataObject} fieldName={"jobType"} />
@@ -32,7 +33,6 @@ function S3PipelineStepConfigurationSummaryPanel({ s3DataObject, pipelineData, s
 S3PipelineStepConfigurationSummaryPanel.propTypes = {
   s3DataObject: PropTypes.object,
   pipelineData: PropTypes.object,
-  setActiveTab: PropTypes.func
 };
 
 
