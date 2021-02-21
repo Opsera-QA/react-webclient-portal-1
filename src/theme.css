@@ -1404,29 +1404,39 @@ a.nav-link {
 
 /*TODO: Create container.css and pull all container-related styling into there*/
 
-/* Side Panel styling */
+/* Overlay Panel styling */
 .right-side-panel {
     right: 0;
+    box-shadow: -15px 0 0 rgba(0, 0, 0, .1);
 }
-
 
 .left-side-panel {
     left: 0;
 }
 
-.side-panel {
-    height: 100vh;
-    max-height: 100vh;
-    position: fixed;
-    top: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding-top: 65px;
-    z-index: 1500;
+.center-panel {
+    width: 75%;
+    left: 12.5%;
+    right: 12.5%;
+    margin: auto;
 }
 
-.side-panel .side-panel-body {
-    overflow-y: auto;
-    max-height: calc(100vh - 150px);
+.center-panel-shadow-background {
+    width: 100%;
+    background-color: rgba(0,0,0,0.7);
 }
-/* End Side Panel styling */
+
+.overlay-panel {
+    position: fixed;
+    top: 68px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: 1500;
+    bottom: 21px;
+}
+
+.overlay-panel .overlay-panel-body {
+    overflow-y: auto;
+    max-height: calc(100% - 48px);
+}
+/* End Overlay Panel styling */
