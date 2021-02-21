@@ -89,6 +89,10 @@ import commandLineStepFormMetadata from "./step_tool_configuration_forms/command
 import powershellStepFormMetadata from "./step_tool_configuration_forms/powershell/powershell-stepForm-metadata";
 import PowershellPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/powershell/PowershellPipelineStepConfigurationSummaryPanel";
+import SonarPipelineStepConfigurationSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/SonarPipelineStepConfigurationSummaryPanel";
+import sonarPipelineStepConfigurationMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStepConfigurationMetadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -261,6 +265,12 @@ function PipelineStepConfigurationSummary({
           />
         );
       case "sonar":
+        return (
+          <SonarPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            sonarDataObject={getModelWrappedObject(sonarPipelineStepConfigurationMetadata)}
+          />
+        );
       case "jmeter":
       case "selenium":
       case "twistlock":

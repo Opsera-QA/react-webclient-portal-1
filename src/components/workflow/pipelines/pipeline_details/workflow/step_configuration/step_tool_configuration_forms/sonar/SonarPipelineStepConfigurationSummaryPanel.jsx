@@ -6,39 +6,39 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 
-function SonarPipelineStepConfigurationSummaryPanel({ sonarPushDataObject, pipelineData, setActiveTab }) {
+function SonarPipelineStepConfigurationSummaryPanel({ sonarDataObject, pipelineData, setActiveTab }) {
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={sonarPushDataObject} fieldName={"toolConfigId"} />
+          <TextFieldBase dataObject={sonarDataObject} fieldName={"toolConfigId"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={sonarPushDataObject} fieldName={"jobType"} />
+          <TextFieldBase dataObject={sonarDataObject} fieldName={"jobType"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={sonarPushDataObject} fieldName={"jobName"} />
+          <TextFieldBase dataObject={sonarDataObject} fieldName={"jobName"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={sonarPushDataObject} fieldName={"toolJobId"} />
+          <TextFieldBase dataObject={sonarDataObject} fieldName={"toolJobId"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={sonarPushDataObject} fieldName={"sonarToolConfigId"} />
+          <TextFieldBase dataObject={sonarDataObject} fieldName={"sonarToolConfigId"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={sonarPushDataObject} fieldName={"gitCredential"} />
+          <TextFieldBase dataObject={sonarDataObject} fieldName={"gitCredential"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={sonarPushDataObject} fieldName={"workspace"} />
+          <TextFieldBase dataObject={sonarDataObject} fieldName={"workspace"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={sonarPushDataObject} fieldName={"repository"} />
+          <TextFieldBase dataObject={sonarDataObject} fieldName={"repository"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={sonarPushDataObject} fieldName={"branch"} />
+          <TextFieldBase dataObject={sonarDataObject} fieldName={"branch"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={sonarPushDataObject} fieldName={"sonarSourcePath"} />
+          <TextFieldBase dataObject={sonarDataObject} fieldName={"sonarSourcePath"} />
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
@@ -46,7 +46,7 @@ function SonarPipelineStepConfigurationSummaryPanel({ sonarPushDataObject, pipel
 }
 
 SonarPipelineStepConfigurationSummaryPanel.propTypes = {
-  sonarPushDataObject: PropTypes.object,
+  sonarDataObject: PropTypes.object,
   pipelineData: PropTypes.object,
   setActiveTab: PropTypes.func
 };
