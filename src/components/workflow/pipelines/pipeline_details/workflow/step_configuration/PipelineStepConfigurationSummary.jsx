@@ -113,6 +113,10 @@ import SshUploadDeployPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ssh_upload_deploy/SshUploadDeployPipelineStepConfigurationSummaryPanel";
 import sshUploadDeployPipelineStepConfigurationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ssh_upload_deploy/sshUploadDeployPipelineStepConfigurationMetadata";
+import CypressPipelineStepConfigurationSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/CypressPipelineStepConfigurationSummaryPanel";
+import cypressPipelineStepConfigurationMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/cypressPipelineStepConfigurationMetadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -328,6 +332,12 @@ function PipelineStepConfigurationSummary({
           />
         );
       case "cypress":
+        return (
+          <CypressPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            cypressDataObject={getModelWrappedObject(cypressPipelineStepConfigurationMetadata)}
+          />
+        );
       case "docker-push":
       case "sfdc-configurator":
       default:
