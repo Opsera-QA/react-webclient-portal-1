@@ -92,9 +92,15 @@ toolsActions.getToolLovs = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+// TODO: Remove when all references are updated to V2
 toolsActions.getRelevantPipelines = async (toolDto, getAccessToken) => {
   const apiUrl = `/registry/${toolDto.getData("_id")}/pipelines`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+toolsActions.getRelevantPipelinesV2 = async (getAccessToken, cancelTokenSource, toolDto) => {
+  const apiUrl = `/registry/${toolDto.getData("_id")}/pipelines`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 toolsActions.updateToolConfiguration = async (toolData, getAccessToken) => {
