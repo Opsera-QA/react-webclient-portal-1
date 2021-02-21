@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -17,30 +17,33 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
   const [addAnother, setAddAnother] = useState(false);
   const history = useHistory();
   let toastContext = useContext(DialogToastContext);
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    }
+  }, []);
 
   const persistRecord = async () => {
     setIsSaving(true);
 
     if (addAnother) {
       await persistNewRecordAndAddAnother(recordDto, toastContext, showSuccessToasts, createRecord, lenient, setRecordDto);
-      setIsSaving(false);
     }
     else if (recordDto.getDetailViewLink() != null) {
-      let response = await persistNewRecordAndViewDetails(recordDto, toastContext, showSuccessToasts, createRecord, lenient, history);
-
-      if (response === false) {
-        setIsSaving(false);
-      }
+      await persistNewRecordAndViewDetails(recordDto, toastContext, showSuccessToasts, createRecord, lenient, history);
     }
     else if (handleClose != null) {
-      let response = await persistNewRecordAndClose(recordDto, toastContext, showSuccessToasts, createRecord, lenient, handleClose);
-
-      if (response === false) {
-        setIsSaving(false);
-      }
+      await persistNewRecordAndClose(recordDto, toastContext, showSuccessToasts, createRecord, lenient, handleClose);
     }
     else {
       await persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient);
+    }
+
+    if (isMounted?.current === true) {
       setIsSaving(false);
     }
   }
