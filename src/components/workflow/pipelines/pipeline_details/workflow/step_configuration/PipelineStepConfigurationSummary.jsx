@@ -93,6 +93,10 @@ import SonarPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/SonarPipelineStepConfigurationSummaryPanel";
 import sonarPipelineStepConfigurationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sonar/sonarPipelineStepConfigurationMetadata";
+import JmeterPipelineStepConfigurationSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jmeter/JmeterPipelineStepConfigurationSummaryPanel";
+import jmeterPipelineStepConfigurationMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jmeter/jmeterPipelineStepConfigurationMetadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -272,6 +276,12 @@ function PipelineStepConfigurationSummary({
           />
         );
       case "jmeter":
+        return (
+          <JmeterPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            jmeterDataObject={getModelWrappedObject(jmeterPipelineStepConfigurationMetadata)}
+          />
+        );
       case "selenium":
       case "twistlock":
       case "s3":
