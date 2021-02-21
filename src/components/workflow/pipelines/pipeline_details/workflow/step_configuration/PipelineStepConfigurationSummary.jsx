@@ -97,6 +97,10 @@ import JmeterPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jmeter/JmeterPipelineStepConfigurationSummaryPanel";
 import jmeterPipelineStepConfigurationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jmeter/jmeterPipelineStepConfigurationMetadata";
+import SeleniumPipelineStepConfigurationSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/selenium/SeleniumPipelineStepConfigurationSummaryPanel";
+import seleniumPipelineStepConfigurationMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/selenium/seleniumPipelineStepConfigurationMetadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -283,6 +287,12 @@ function PipelineStepConfigurationSummary({
           />
         );
       case "selenium":
+        return (
+          <SeleniumPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            seleniumDataObject={getModelWrappedObject(seleniumPipelineStepConfigurationMetadata)}
+          />
+        );
       case "twistlock":
       case "s3":
       case "ssh-upload":
