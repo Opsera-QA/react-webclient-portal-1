@@ -121,6 +121,10 @@ import DockerPushPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/DockerPushPipelineStepConfigurationSummaryPanel";
 import dockerPushPipelineStepConfigurationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/dockerPushPipelineStepConfigurationMetadata";
+import SfdcPipelineStepConfigurationSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/SfdcPipelineStepConfigurationSummaryPanel";
+import sfdcPipelineStepConfigurationMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/sfdcPipelineStepConfigurationMetadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -350,6 +354,12 @@ function PipelineStepConfigurationSummary({
           />
         );
       case "sfdc-configurator":
+        return (
+          <SfdcPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            sfdcDataObject={getModelWrappedObject(sfdcPipelineStepConfigurationMetadata)}
+          />
+        );
       default:
         return (
           <SummaryPanelContainer>

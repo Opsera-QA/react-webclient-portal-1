@@ -25,9 +25,9 @@ function SfdcPipelineStepConfigurationSummaryPanel({ sfdcDataObject, pipelineDat
         <Col lg={6}>
           <TextFieldBase dataObject={sfdcDataObject} fieldName={"username"} />
         </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={sfdcDataObject} fieldName={"repository"} />
-        </Col>
+        {/*<Col lg={6}>*/}
+        {/*  <TextFieldBase dataObject={sfdcDataObject} fieldName={"repository"} />*/}
+        {/*</Col>*/}
         <Col lg={6}>
           <TextFieldBase dataObject={sfdcDataObject} fieldName={"branch"} />
         </Col>
