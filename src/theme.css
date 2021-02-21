@@ -1405,23 +1405,23 @@ a.nav-link {
 /*TODO: Create container.css and pull all container-related styling into there*/
 
 /* Overlay Panel styling */
-.right-side-panel {
+.right-side-overlay {
     right: 0;
     box-shadow: -15px 0 0 rgba(0, 0, 0, .1);
 }
 
-.left-side-panel {
+.left-side-overlay {
     left: 0;
 }
 
-.center-panel {
+.center-overlay {
     width: 75%;
     left: 12.5%;
     right: 12.5%;
     margin: auto;
 }
 
-.center-panel-shadow-background {
+.center-overlay-shadow-background {
     width: 100%;
     background-color: rgba(0,0,0,0.7);
 }

@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import {faSpinner, faTimes} from "@fortawesome/pro-light-svg-icons";
 
-function SidePanelTitleBar({ titleText, titleIcon, isLoading, handleClose }) {
+function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose }) {
   const getTitleIcon = () => {
     if (titleIcon) {
       return (
@@ -31,11 +31,11 @@ function SidePanelTitleBar({ titleText, titleIcon, isLoading, handleClose }) {
 }
 
 
-SidePanelTitleBar.propTypes = {
+OverlayTitleBar.propTypes = {
   titleText: PropTypes.string,
   titleIcon: PropTypes.object,
   handleClose: PropTypes.func,
   isLoading: PropTypes.bool
 };
 
-export default SidePanelTitleBar;
+export default OverlayTitleBar;

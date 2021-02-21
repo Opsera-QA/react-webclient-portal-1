@@ -1,9 +1,9 @@
 import React, {useContext, useEffect} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import SidePanelTitleBar from "components/common/panels/side_panel/SidePanelTitleBar";
+import OverlayTitleBar from "components/common/overlays/OverlayTitleBar";
 
-function CenterPanelContainer({ children, titleText, titleIcon, showPanel, closePanel, loadData, isLoading, showToasts}) {
+function CenterOverlayContainer({ children, titleText, titleIcon, showPanel, closePanel, loadData, isLoading, showToasts}) {
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -26,12 +26,12 @@ function CenterPanelContainer({ children, titleText, titleIcon, showPanel, close
   }
 
   return (
-    <div className={`overlay-panel center-panel-shadow-background`}>
-      <div className="center-panel content-card-1">
+    <div className={`overlay-panel center-overlay-shadow-background`}>
+      <div className="center-overlay content-card-1">
         <div className="px-3 content-block-header title-text-header-1">
-          <SidePanelTitleBar handleClose={handleClose} isLoading={isLoading} titleText={titleText} titleIcon={titleIcon} />
+          <OverlayTitleBar handleClose={handleClose} isLoading={isLoading} titleText={titleText} titleIcon={titleIcon} />
         </div>
-        <div className="bg-white scroll-y center-panel-body">
+        <div className="bg-white scroll-y overlay-panel-body">
           {showToasts && toastContext?.getInlineBanner()}
           <div>
             {children}
@@ -42,7 +42,7 @@ function CenterPanelContainer({ children, titleText, titleIcon, showPanel, close
   );
 }
 
-CenterPanelContainer.propTypes = {
+CenterOverlayContainer.propTypes = {
   children: PropTypes.any,
   titleText: PropTypes.string,
   showPanel: PropTypes.bool,
@@ -54,6 +54,6 @@ CenterPanelContainer.propTypes = {
   showToasts: PropTypes.bool
 };
 
-export default CenterPanelContainer;
+export default CenterOverlayContainer;
 
 

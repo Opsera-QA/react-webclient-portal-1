@@ -1,9 +1,9 @@
 import React, {useContext, useEffect} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import SidePanelTitleBar from "components/common/panels/side_panel/SidePanelTitleBar";
+import OverlayTitleBar from "components/common/overlays/OverlayTitleBar";
 
-function SidePanelContainer({ children, titleText, titleIcon, showPanel, closePanel, loadData, isLoading, rightSide, showToasts}) {
+function SideOverlayContainer({ children, titleText, titleIcon, showPanel, closePanel, loadData, isLoading, rightSide, showToasts}) {
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -26,9 +26,9 @@ function SidePanelContainer({ children, titleText, titleIcon, showPanel, closePa
   }
 
   return (
-    <div className={`${rightSide ? `right-side-panel` : `left-side-panel`} overlay-panel content-card-1 w-25`}>
+    <div className={`${rightSide ? `right-side-overlay` : `left-side-overlay`} overlay-panel content-card-1 w-25`}>
       <div className="px-3 content-block-header title-text-header-1">
-        <SidePanelTitleBar handleClose={handleClose} isLoading={isLoading} titleText={titleText} titleIcon={titleIcon} />
+        <OverlayTitleBar handleClose={handleClose} isLoading={isLoading} titleText={titleText} titleIcon={titleIcon} />
       </div>
       <div className="bg-white scroll-y overlay-panel-body">
         {showToasts && toastContext?.getInlineBanner()}
@@ -41,7 +41,7 @@ function SidePanelContainer({ children, titleText, titleIcon, showPanel, closePa
 }
 
 
-SidePanelContainer.propTypes = {
+SideOverlayContainer.propTypes = {
   children: PropTypes.any,
   titleText: PropTypes.string,
   showPanel: PropTypes.bool,
@@ -53,6 +53,6 @@ SidePanelContainer.propTypes = {
   showToasts: PropTypes.bool
 };
 
-export default SidePanelContainer;
+export default SideOverlayContainer;
 
 
