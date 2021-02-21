@@ -1,23 +1,22 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SidePanelContainer from "components/common/panels/side_panel/SidePanelContainer";
+import CenterPanelContainer from "components/common/panels/center_panel/CenterPanelContainer";
 
-function CreateSidePanel({ children, titleIcon, objectType, showPanel, closePanel, loadData}) {
+function CreateCenterPanel({ children, titleIcon, objectType, showPanel, closePanel, loadData}) {
   return (
-    <SidePanelContainer
+    <CenterPanelContainer
       loadData={loadData}
       closePanel={closePanel}
       showPanel={showPanel}
       titleText={`Create New ${objectType}`}
       titleIcon={titleIcon}
-      rightSide={true}
     >
       {children}
-    </SidePanelContainer>
+    </CenterPanelContainer>
   );
 }
 
-CreateSidePanel.propTypes = {
+CreateCenterPanel.propTypes = {
   children: PropTypes.any,
   objectType: PropTypes.string,
   showPanel: PropTypes.bool,
@@ -26,6 +25,6 @@ CreateSidePanel.propTypes = {
   loadData: PropTypes.func.isRequired,
 };
 
-export default CreateSidePanel;
+export default CreateCenterPanel;
 
 

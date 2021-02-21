@@ -13,6 +13,7 @@ import WarningBanner from "../components/common/status_notifications/banners/War
 import InlineError from "components/common/status_notifications/inline/InlineError";
 import {generateUUID} from "components/common/helpers/string-helpers";
 import SiteNotificationDisplayer from "components/admin/site_notifications/displayer/SiteNotificationDisplayer";
+import OverlayPanelContainer from "components/common/panels/OverlayPanelContainer";
 
 const notificationTypes = {
   FORM: "form",
@@ -26,6 +27,7 @@ function ToastContextProvider ({ children, navBar }) {
   // TODO: Wire up way to arrow through banners
   const [bannerMessages, setBannerMessages] = useState([]);
   const [inlineBanner, setInlineBanner] = useState(undefined);
+  const [overlayPanel, setOverlayPanel] = useState(undefined);
 
   const removeAllBanners = useCallback(() => {
       setBannerMessages(bannerMessages => []);
@@ -51,6 +53,16 @@ function ToastContextProvider ({ children, navBar }) {
       let newBannerMessage = {id: id, bannerMessage: bannerMessage, type: notificationType};
       setBannerMessages(bannerMessages => [...bannerMessages, newBannerMessage]);
     }, [setBannerMessages]
+  );
+
+  const addOverlayPanel = useCallback((overlayPanel) => {
+      setOverlayPanel(oldOverlayPanel => overlayPanel);
+    }, [setOverlayPanel]
+  );
+
+  const clearOverlayPanel = useCallback(() => {
+    setOverlayPanel(oldOverlayPanel => undefined);
+    }, [setOverlayPanel]
   );
 
   const setInlineMessage = useCallback((bannerMessage, id, notificationType) => {
@@ -321,6 +333,10 @@ function ToastContextProvider ({ children, navBar }) {
     addToast(errorToast, id, notificationTypes.FORM);
   };
 
+  const showOverlayPanel = (overlayPanel) => {
+    addOverlayPanel(overlayPanel)
+  };
+
   const getSuccessBanner = (message, id) => {
     return <SuccessBanner successMessage={message} removeBanner={removeBannerMessage} id={id} />
   };
@@ -442,11 +458,15 @@ function ToastContextProvider ({ children, navBar }) {
           getInlineBanner: getInlineBanner,
           removeInlineMessage: removeInlineMessage,
 
-          clearToastsArray: clearToastsArray //tmp solution till next version of toasts
+          clearToastsArray: clearToastsArray, //tmp solution till next version of toasts
+
+          showOverlayPanel: showOverlayPanel,
+          clearOverlayPanel: clearOverlayPanel
         }}>
         {navBar}
         <SiteNotificationDisplayer />
         <BannerMessageContainer bannerMessages={bannerMessages} />
+        <OverlayPanelContainer overlayPanel={overlayPanel} />
         {children}
         <Toaster toasts={toasts} />
       </DialogToastContext.Provider>
