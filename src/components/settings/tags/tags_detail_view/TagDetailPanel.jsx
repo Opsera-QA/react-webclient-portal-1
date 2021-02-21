@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
-import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
-import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
-import TagsSummaryPanel from "components/settings/tags/tags_detail_view/TagsSummaryPanel";
+import TagSummaryPanel from "components/settings/tags/tags_detail_view/TagSummaryPanel";
 import TagEditorPanel from "components/settings/tags/tags_detail_view/TagEditorPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
+import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
+import CustomTab from "components/common/tabs/CustomTab";
+import {faComputerClassic} from "@fortawesome/pro-light-svg-icons";
+import TagUsagePanel from "components/settings/tags/tags_detail_view/TagUsagePanel";
 
 function TagDetailPanel({ tagData, setTagData }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -22,8 +24,8 @@ function TagDetailPanel({ tagData, setTagData }) {
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <CustomTab activeTab={activeTab} tabText={"Usage"} handleTabClick={handleTabClick} tabName={"usage"} disabled={true} icon={faComputerClassic} />
       </CustomTabContainer>
     );
   };
@@ -31,9 +33,11 @@ function TagDetailPanel({ tagData, setTagData }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <TagsSummaryPanel tagData={tagData} setTagData={setTagData} setActiveTab={setActiveTab} />;
+        return <TagSummaryPanel tagData={tagData} setTagData={setTagData} setActiveTab={setActiveTab} />;
       case "settings":
-      return <TagEditorPanel setTagData={setTagData} tagData={tagData} handleClose={toggleSummaryPanel} />;
+        return <TagEditorPanel setTagData={setTagData} tagData={tagData} handleClose={toggleSummaryPanel} />;
+      case "usage":
+        return <TagUsagePanel tagData={tagData} />;
       default:
         return null;
     }

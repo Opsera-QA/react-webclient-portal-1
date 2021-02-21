@@ -8,7 +8,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import ConfigurationField from "components/common/fields/multiple_items/ConfigurationField";
 
-function TagsSummaryPanel({ tagData, setActiveTab }) {
+function TagSummaryPanel({ tagData, setActiveTab }) {
   if (tagData == null) {
     return <LoadingDialog size="sm" />;
   }
@@ -42,10 +42,10 @@ function TagsSummaryPanel({ tagData, setActiveTab }) {
   );
 }
 
-TagsSummaryPanel.propTypes = {
+TagSummaryPanel.propTypes = {
   tagData: PropTypes.object,
   setActiveTab: PropTypes.func
 };
 
 
-export default TagsSummaryPanel;
+export default TagSummaryPanel;

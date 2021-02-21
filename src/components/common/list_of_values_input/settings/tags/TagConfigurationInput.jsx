@@ -1,24 +1,38 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import regexHelpers from "utils/regexHelpers";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faBracketsCurly, faExclamationTriangle, faPlus, faTimes} from "@fortawesome/pro-light-svg-icons";
+import {faBracketsCurly, faExclamationTriangle, faTimes} from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import {Combobox} from "react-widgets";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
-import InfoText from "components/common/form_fields/input/InfoText";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
+import {AuthContext} from "contexts/AuthContext";
 
 function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
+  const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
+  const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState("");
   const [properties, setProperties] = useState([]);
 
   useEffect(() => {
-    loadData();
+    getRoles();
   }, []);
+
+  const getRoles = async () => {
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+
+      if (userRoleAccess?.OpseraAdministrator) {
+        await loadData();
+      }
+    }
+  };
 
   const loadData = () => {
     let currentData = dataObject.getData(fieldName);
@@ -184,7 +198,7 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
     }
   };
 
-  if (field == null) {
+  if (field == null || accessRoleData?.OpseraAdministrator !== true) {
     return <></>;
   }
 

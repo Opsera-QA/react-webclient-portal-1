@@ -19,11 +19,12 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto })
   const history = useHistory();
   let fields = tagEditorMetadata.fields;
   const [showTagModal, setShowTagModal] = useState(false);
+
   const columns = useMemo(
     () => [
+      getTableTextColumn(getField(fields, "_id")),
       getTableTextColumn(getField(fields, "type")),
       getTableTextColumn(getField(fields, "value")),
-      getTableTextColumn(getField(fields, "account")),
       getTableBooleanIconColumn(getField(fields, "active")),
       getTableDateColumn(getField(fields, "createdAt")),
     ],
