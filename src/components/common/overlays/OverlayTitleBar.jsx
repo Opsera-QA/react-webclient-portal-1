@@ -2,6 +2,7 @@ import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import {faSpinner, faTimes} from "@fortawesome/pro-light-svg-icons";
+import {Row} from "react-bootstrap";
 
 function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose }) {
   const getTitleIcon = () => {
@@ -14,9 +15,9 @@ function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose }) {
 
   if (titleText == null) {
     return (
-      <div className="pointer float-right" onClick={() => { handleClose();}}>
-        <FontAwesomeIcon icon={faTimes} fixedWidth/>
-      </div>
+      <Row className="title-text-header-1 w-100 p-1 mx-0 bg-white">
+        <FontAwesomeIcon className={"ml-auto dark-grey pointer"} icon={faTimes} fixedWidth onClick={() => { handleClose();}} />
+      </Row>
     );
   }
 
@@ -25,10 +26,12 @@ function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose }) {
   }
 
   return (
-    <div className="d-flex justify-content-between">
-      <div><span>{getTitleIcon()}{titleText}</span></div>
-      <div className="pointer" onClick={() => { handleClose();}}>
-        <FontAwesomeIcon icon={faTimes} fixedWidth/>
+    <div className="px-3 content-block-header title-text-header-1">
+      <div className="d-flex justify-content-between">
+        <div><span>{getTitleIcon()}{titleText}</span></div>
+        <div className="pointer" onClick={() => { handleClose();}}>
+          <FontAwesomeIcon icon={faTimes} fixedWidth/>
+        </div>
       </div>
     </div>
   );

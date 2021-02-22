@@ -22,9 +22,7 @@ function CenterOverlayContainer({ children, titleText, titleIcon, showPanel, han
   return (
     <div className={`overlay-panel center-overlay-shadow-background`}>
       <div className="center-overlay content-card-1">
-        <div className="px-3 content-block-header title-text-header-1">
-          <OverlayTitleBar handleClose={handleClose} isLoading={isLoading} titleText={titleText} titleIcon={titleIcon} />
-        </div>
+        <OverlayTitleBar handleClose={handleClose} isLoading={isLoading} titleText={titleText} titleIcon={titleIcon} />
         <div className="bg-white scroll-y overlay-panel-body">
           {showToasts && toastContext?.getInlineBanner()}
           <div>
