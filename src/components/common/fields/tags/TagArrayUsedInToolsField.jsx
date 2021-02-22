@@ -1,51 +1,72 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import Model from "core/data_model/model";
 import RegistryToolSummaryCard from "components/common/fields/inventory/RegistryToolSummaryCard";
 import toolMetadata from "components/inventory/tools/tool-metadata";
+import axios from "axios";
 
-function TagArrayUsedInToolsField({ dataObject }) {
-  const toastContext = useContext(DialogToastContext);
+function TagArrayUsedInToolsField({ tags }) {
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
-  }, [dataObject]);
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
 
-  const loadData = async () => {
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
+  }, [tags]);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      setIsLoading(true)
-      await loadPipelines();
+      setIsLoading(true);
+      await loadTools(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        console.error(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
-  };
+  }
 
-  const loadPipelines = async () => {
-    if (Array.isArray(dataObject.getData("tags")) && dataObject.getData("tags").length > 0) {
-      const response = await adminTagsActions.getRelevantTools(dataObject, getAccessToken);
+  const loadTools = async (cancelSource = cancelTokenSource) => {
+    if (Array.isArray(tags) && tags.length > 0) {
+      const response = await adminTagsActions.getRelevantToolsV2(getAccessToken, cancelSource, tags);
 
-      if (response?.data != null) {
+      if (isMounted?.current === true && response?.data != null) {
         setTools(response?.data?.data);
       }
     }
   };
 
-  // TODO: Create tool summary card
   const getToolCards = () => {
     return (
       <Row>
@@ -68,8 +89,8 @@ function TagArrayUsedInToolsField({ dataObject }) {
     return <LoadingDialog message={"Loading Tools"} size={"sm"} />;
   }
 
-  if (!isLoading && dataObject == null || dataObject.getData("tags").length === 0) {
-    return <></>;
+  if (!isLoading && tags == null || tags.length === 0) {
+    return null;
   }
 
   if (!isLoading && (tools == null || tools.length === 0)) {
@@ -94,7 +115,7 @@ function TagArrayUsedInToolsField({ dataObject }) {
 }
 
 TagArrayUsedInToolsField.propTypes = {
-  dataObject: PropTypes.object,
+  tags: PropTypes.array,
 };
 
 export default TagArrayUsedInToolsField;

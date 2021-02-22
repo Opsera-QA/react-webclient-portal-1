@@ -4,6 +4,7 @@ import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 import {faTag} from "@fortawesome/pro-light-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
 function TagField({dataObject, fieldName, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -31,7 +32,7 @@ function TagField({dataObject, fieldName, className}) {
       parsedTags.map((tag, i) => {
         return (
           <span key={i} className="mx-1 mb-1 badge badge-light tag-badge">
-            <FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/>{`${tag.type}: ${tag.value}`}
+            <FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/>{`${capitalizeFirstLetter(tag?.type)}: ${tag.value}`}
           </span>
         );
       })

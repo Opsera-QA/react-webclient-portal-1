@@ -1,10 +1,9 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
 import pipelineSummaryMetadata
@@ -12,35 +11,58 @@ import pipelineSummaryMetadata
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
+import axios from "axios";
 
-function SingleTagUsedInPipelinesField({ dataObject }) {
-  const toastContext = useContext(DialogToastContext);
+function SingleTagUsedInPipelinesField({ tag }) {
   const { getAccessToken } = useContext(AuthContext);
   const [pipelines, setPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
-  }, [dataObject]);
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
 
-  const loadData = async () => {
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
+  }, [tag]);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      setIsLoading(true)
-      await loadPipelines();
+      setIsLoading(true);
+      await loadPipelines(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        console.error(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
-  };
+  }
 
-  const loadPipelines = async () => {
-    if (dataObject.getData("tag") !== "") {
-      const response = await adminTagsActions.getRelevantPipelines(dataObject, getAccessToken);
+  const loadPipelines = async (cancelSource = cancelTokenSource) => {
+    if (tag != null) {
+      const response = await adminTagsActions.getRelevantPipelinesV2(getAccessToken, cancelSource, [tag]);
 
-      if (response?.data != null) {
+      if (isMounted?.current === true && response?.data != null) {
         setPipelines(response?.data?.data);
       }
     }
@@ -68,8 +90,8 @@ function SingleTagUsedInPipelinesField({ dataObject }) {
     return <LoadingDialog message={"Loading Pipelines"} size={"sm"} />;
   }
 
-  if (!isLoading && dataObject == null || dataObject.getData("tags") !== "") {
-    return <></>;
+  if (!isLoading && (tag == null || tag === "")) {
+    return null;
   }
 
   if (!isLoading && (pipelines == null || pipelines.length === 0)) {
@@ -77,7 +99,7 @@ function SingleTagUsedInPipelinesField({ dataObject }) {
       <div className="form-text text-muted ml-3">
         <div>
           <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
-          This tag is not currently used in any pipeline</span>
+          This tag is not currently applied on any pipeline</span>
         </div>
       </div>
     )
@@ -86,7 +108,7 @@ function SingleTagUsedInPipelinesField({ dataObject }) {
   return (
     <div>
       <div className="form-text text-muted mb-2">
-        <span>This tag is used in {pipelines.length} pipelines</span>
+        <span>This tag is applied on {pipelines.length} pipeline {pipelines?.length !== 1 ? 's' : ''}</span>
       </div>
       {getPipelineCards()}
     </div>
@@ -94,7 +116,7 @@ function SingleTagUsedInPipelinesField({ dataObject }) {
 }
 
 SingleTagUsedInPipelinesField.propTypes = {
-  dataObject: PropTypes.object,
+  tag: PropTypes.object,
 };
 
 export default SingleTagUsedInPipelinesField;

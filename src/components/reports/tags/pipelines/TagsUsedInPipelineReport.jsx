@@ -86,7 +86,7 @@ function TagsUsedInPipelineReport() {
       </Row>
       <Row className={"px-2"}>
         <Col>
-          <TagArrayUsedInPipelinesField dataObject={tagsUsedInPipelineDto}/>
+          <TagArrayUsedInPipelinesField tags={tagsUsedInPipelineDto?.getData("tags")}/>
         </Col>
       </Row>
     </ScreenContainer>

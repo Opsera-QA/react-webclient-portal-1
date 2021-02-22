@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
+import SingleTagUsedInPipelinesField from "components/common/fields/tags/SingleTagUsedInPipelinesField";
 
 function TagUsagePanel({ tagData }) {
   if (tagData == null) {
@@ -10,6 +11,8 @@ function TagUsagePanel({ tagData }) {
 
   return (
     <DetailPanelContainer>
+      {/*<TagArrayUsedInToolsField dataObject={} />*/}
+      <SingleTagUsedInPipelinesField tag={tagData?.getPersistData()} />
       {/*TODO: flush out tag usage after getting route from Divyesha. Should use same pipeline summary cards*/}
     </DetailPanelContainer>
   );
