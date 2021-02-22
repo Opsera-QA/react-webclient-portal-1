@@ -1,15 +1,17 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
-import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle, faTag} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import axios from "axios";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import Model from "core/data_model/model";
+import tagEditorMetadata from "components/settings/tags/tags-metadata";
+import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
+import TagUsagePanel from "components/settings/tags/tags_detail_view/TagUsagePanel";
 
 function TagCloud() {
   const toastContext = useContext(DialogToastContext);
@@ -70,12 +72,26 @@ function TagCloud() {
       <Row className="item-field">
         {tags.map((tag) => {
           return (
-            <span key={tag?._id} className="mx-1 mb-1 badge badge-light tag-badge">
+            <span key={tag?._id} className="mx-1 mb-1 badge badge-light tag-badge pointer" onClick={() => {showTagUsage(tag)}}>
               <FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/>{`${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`}
             </span>
           );
         })}
       </Row>
+    );
+  };
+
+  const clearOverlayPanel = () => {
+    toastContext.clearOverlayPanel();
+  };
+
+  const showTagUsage = (tag) => {
+    const tagModel = new Model(tag, tagEditorMetadata, false);
+
+    toastContext.showOverlayPanel(
+      <CreateCenterPanel showPanel={true} objectType={tagEditorMetadata?.type} loadData={loadData} closePanel={clearOverlayPanel}>
+        <TagUsagePanel tagData={tagModel} />
+      </CreateCenterPanel>
     );
   };
 

@@ -1,13 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
-import TextFieldBase from "components/common/form_fields/TextFieldBase";
 import {faWrench} from "@fortawesome/pro-light-svg-icons";
 import ToolLinkButton from "components/common/buttons/inventory/ToolLinkButton";
 import CardContainerBase from "components/common/card_containers/CardContainerBase";
 import TagField from "components/common/fields/multiple_items/TagField";
 import TitleBar from "components/common/fields/TitleBar";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
+import DescriptionField from "components/common/fields/text/DescriptionField";
 
 function RegistryToolSummaryCard({ toolData, isLoading, loadToolInNewWindow }) {
   const getTitleBar = () => {
@@ -21,7 +21,7 @@ function RegistryToolSummaryCard({ toolData, isLoading, loadToolInNewWindow }) {
   return (
     <CardContainerBase titleBar={getTitleBar()} isLoading={isLoading}>
       <div className="mb-2">
-        <TextFieldBase dataObject={toolData} fieldName={"description"}/>
+        <DescriptionField dataObject={toolData} fieldName={"description"}/>
       </div>
       <div className="mb-2">
         <TagField dataObject={toolData} fieldName={"tags"}/>
