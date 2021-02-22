@@ -13,7 +13,11 @@ function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose }) {
   };
 
   if (titleText == null) {
-    return null;
+    return (
+      <div className="pointer float-right" onClick={() => { handleClose();}}>
+        <FontAwesomeIcon icon={faTimes} fixedWidth/>
+      </div>
+    );
   }
 
   if (isLoading) {

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import OverlayTitleBar from "components/common/overlays/OverlayTitleBar";
 
-function CenterOverlayContainer({ children, titleText, titleIcon, showPanel, closePanel, loadData, isLoading, showToasts}) {
+function CenterOverlayContainer({ children, titleText, titleIcon, showPanel, handleClose, isLoading, showToasts}) {
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -13,12 +13,6 @@ function CenterOverlayContainer({ children, titleText, titleIcon, showPanel, clo
       document.body.style.overflow = 'hidden';
     }
   }, [showPanel]);
-
-  const handleClose = () => {
-    loadData();
-    toastContext.removeInlineMessage();
-    closePanel();
-  };
 
   if (!showPanel) {
     document.body.style.overflow = 'unset';
@@ -47,8 +41,7 @@ CenterOverlayContainer.propTypes = {
   titleText: PropTypes.string,
   showPanel: PropTypes.bool,
   titleIcon: PropTypes.object,
-  closePanel: PropTypes.func.isRequired,
-  loadData: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
   rightSide: PropTypes.bool,
   showToasts: PropTypes.bool

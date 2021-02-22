@@ -11,6 +11,10 @@ function ButtonTooltip({ innerText, placement, children, trigger }) {
     );
   }
 
+  if (innerText == null) {
+    return children;
+  }
+
   return (
     <OverlayTrigger
       placement={placement}

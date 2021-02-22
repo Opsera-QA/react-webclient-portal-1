@@ -1,11 +1,20 @@
-import React from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function CreateCenterPanel({ children, titleIcon, objectType, showPanel, closePanel, loadData}) {
+  const toastContext = useContext(DialogToastContext);
+
+  const handleClose = () => {
+    loadData();
+    toastContext.removeInlineMessage();
+    closePanel();
+  };
+
   return (
     <CenterOverlayContainer
-      loadData={loadData}
+      handleClose={handleClose}
       closePanel={closePanel}
       showPanel={showPanel}
       titleText={`Create New ${objectType}`}
