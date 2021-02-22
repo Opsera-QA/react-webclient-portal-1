@@ -1,9 +1,9 @@
 import React, { useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPencilAlt} from "@fortawesome/pro-light-svg-icons";
 import EditRolesModal from "components/common/inline_inputs/roles/modal/EditRolesModal";
 import RoleAccessField from "components/common/fields/multiple_items/RoleAccessField";
+import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
+import EditIcon from "components/common/icons/field/EditIcon";
 
 function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData, visible, noDataMessage}) {
   const [showModal, setShowModal] = useState(false);
@@ -12,13 +12,9 @@ function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData, v
     setShowModal(false);
   };
 
-  const getEditButton = () => {
+  const showEditor = () => {
     if (!disabled) {
-      return (
-        <div onClick={() => {setShowModal(true);}} className={"ml-2 mt-2 pointer text-muted edit-button"}>
-          <FontAwesomeIcon icon={faPencilAlt} className="mr-1"/>
-        </div>
-      );
+      setShowModal(true);
     }
   };
 
@@ -30,7 +26,13 @@ function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData, v
     <div className="role-access">
       <div className="d-flex">
         <div><RoleAccessField dataObject={dataObject} fieldName={fieldName} noDataMessage={noDataMessage} /></div>
-        <div>{getEditButton()}</div>
+        <div className="edit-button d-flex">
+          <EditIcon className={"ml-2 mt-2 text-muted"} editFunction={showEditor} disabled={disabled} tooltipBody={"Edit Access Rules"} />
+          {/*<LaunchHelpIcon*/}
+          {/*  helpComponent={""}*/}
+          {/*  className={"my-auto ml-2 text-muted"}*/}
+          {/*/>*/}
+        </div>
       </div>
       <EditRolesModal
         dataObject={dataObject}
