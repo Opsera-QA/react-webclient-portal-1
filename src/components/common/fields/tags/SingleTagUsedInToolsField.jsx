@@ -5,17 +5,16 @@ import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {AuthContext} from "contexts/AuthContext";
-import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
-import pipelineSummaryMetadata
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
-import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
+import Model from "core/data_model/model";
+import RegistryToolSummaryCard from "components/common/fields/inventory/RegistryToolSummaryCard";
+import toolMetadata from "components/inventory/tools/tool-metadata";
 import axios from "axios";
 
-function SingleTagUsedInPipelinesField({ tag }) {
+function SingleTagUsedInToolsField({ tag }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [pipelines, setPipelines] = useState([]);
+  const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -44,7 +43,7 @@ function SingleTagUsedInPipelinesField({ tag }) {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadPipelines(cancelSource);
+      await loadTools(cancelSource);
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -58,25 +57,26 @@ function SingleTagUsedInPipelinesField({ tag }) {
     }
   }
 
-  const loadPipelines = async (cancelSource = cancelTokenSource) => {
+  const loadTools = async (cancelSource = cancelTokenSource) => {
     if (tag != null) {
-      const response = await adminTagsActions.getRelevantPipelinesV2(getAccessToken, cancelSource, [tag]);
+      const response = await adminTagsActions.getRelevantToolsV2(getAccessToken, cancelSource, [tag]);
 
       if (isMounted?.current === true && response?.data != null) {
-        setPipelines(response?.data?.data);
+        console.log("response: " + JSON.stringify(response.data))
+        setTools(response?.data?.data);
       }
     }
   };
 
-  const getPipelineCards = () => {
+  const getToolCards = () => {
     return (
       <Row>
-        {pipelines.map((pipeline) => {
+        {tools.map((tool) => {
           return (
-            <Col md={6} key={pipeline._id}>
-              <PipelineSummaryCard
-                pipelineData={new Model(pipeline, pipelineSummaryMetadata, false)}
-                loadPipelineInNewWindow={false}
+            <Col md={6} key={tool._id}>
+              <RegistryToolSummaryCard
+                toolData={new Model(tool, toolMetadata, false)}
+                loadToolInNewWindow={false}
               />
             </Col>
           );
@@ -87,19 +87,19 @@ function SingleTagUsedInPipelinesField({ tag }) {
 
 
   if (isLoading) {
-    return <LoadingDialog message={"Loading Pipelines"} size={"sm"} />;
+    return <LoadingDialog message={"Loading Tools"} size={"sm"} />;
   }
 
-  if (!isLoading && (tag == null || tag === "")) {
+  if (!isLoading && tag == null) {
     return null;
   }
 
-  if (!isLoading && (pipelines == null || pipelines.length === 0)) {
+  if (!isLoading && (tools == null || tools.length === 0)) {
     return (
       <div className="form-text text-muted ml-3">
         <div>
           <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
-          This tag is not currently applied on any pipeline</span>
+          This tag is not currently applied on any tool</span>
         </div>
       </div>
     )
@@ -108,15 +108,15 @@ function SingleTagUsedInPipelinesField({ tag }) {
   return (
     <div>
       <div className="form-text text-muted mb-2">
-        <span>This tag is applied on {pipelines.length} pipeline{pipelines?.length !== 1 ? 's' : ''}</span>
+        <span>This tag is applied on {tools.length} tool{tools?.length !== 1 ? 's' : ''}</span>
       </div>
-      {getPipelineCards()}
+      {getToolCards()}
     </div>
   );
 }
 
-SingleTagUsedInPipelinesField.propTypes = {
+SingleTagUsedInToolsField.propTypes = {
   tag: PropTypes.object,
 };
 
-export default SingleTagUsedInPipelinesField;
+export default SingleTagUsedInToolsField;

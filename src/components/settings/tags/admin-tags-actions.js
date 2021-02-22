@@ -101,7 +101,7 @@ adminTagsActions.getRelevantPipelinesV2 = async (getAccessToken, cancelTokenSour
 
 adminTagsActions.getRelevantToolsV2 = async (getAccessToken, cancelTokenSource, tags) => {
   const apiUrl = `/reports/tools/tags`;
-  return await baseActions.apiPostCall(getAccessToken, cancelTokenSource, apiUrl, tags);
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, tags);
 };
 
 // TODO: This should be moved into that input component
