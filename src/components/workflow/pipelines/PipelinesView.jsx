@@ -186,6 +186,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
         saveCookies={saveCookies}
         supportViewToggle={true}
         isLoading={loading}
+        type={"Pipeline"}
         body={getPipelinesBody()}
         dropdownFilters={getDropdownFilters()}
         titleIcon={faDraftingCompass}
