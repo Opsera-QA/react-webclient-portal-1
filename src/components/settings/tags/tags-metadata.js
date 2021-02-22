@@ -7,7 +7,7 @@ const tagEditorMetadata = {
     return `/settings/tags/${record.getData("_id")}`;
   },
   detailViewTitle: function(record) {
-    return `Tag Details [${record?.getData("type")}]`;
+    return `Tag Details [${record?.getData("type")}: ${record?.getData("value")}]`;
   },
   fields: [
     {
