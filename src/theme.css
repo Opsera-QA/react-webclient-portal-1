@@ -382,6 +382,9 @@ a.text-primary:hover, a.text-primary:focus {
     height: 500px;
 }
 
+.modal-content {
+    top: 68px;
+}
 
 /* Table Style Changes */
 .custom-table-filter {

@@ -1,16 +1,17 @@
-import React, {useState} from "react";
+import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import HelpOverlayBase from "components/common/overlays/center/help/HelpOverlayBase";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function RoleAccessEditorHelpOverlay({ isLoading}) {
-  const [showPanel, setShowPanel] = useState(true);
+  const toastContext = useContext(DialogToastContext);
 
   const closePanel = () => {
-    setShowPanel(false);
+    toastContext.clearOverlayPanel();
   }
 
   return (
-    <HelpOverlayBase handleClose={closePanel} showPanel={showPanel} isLoading={isLoading} closePanel={closePanel}>
+    <HelpOverlayBase handleClose={closePanel} showPanel={true} isLoading={isLoading} closePanel={closePanel}>
       <div>This is a help document</div>
     </HelpOverlayBase>
   );

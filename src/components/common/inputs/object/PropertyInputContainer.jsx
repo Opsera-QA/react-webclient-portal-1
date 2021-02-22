@@ -5,12 +5,14 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Row from "react-bootstrap/Row";
 import {Button} from "react-bootstrap";
 import {faPlus} from "@fortawesome/pro-light-svg-icons";
+import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 
-function PropertyInputContainer({ children, titleIcon, titleText, field, errorMessage, addProperty, type, addAllowed }) {
+function PropertyInputContainer({ children, titleIcon, titleText, field, errorMessage, addProperty, type, addAllowed, helpComponent }) {
   const getTitleBar = () => {
     return (
-      <div className="mx-2">
-        <div className="pt-2"><FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-2"/>{titleText}</div>
+      <div className="px-2 pt-2 d-flex justify-content-between">
+        <div><FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-2"/>{titleText}</div>
+        <LaunchHelpIcon helpComponent={helpComponent} />
       </div>
     );
   };
@@ -30,7 +32,7 @@ function PropertyInputContainer({ children, titleIcon, titleText, field, errorMe
   return (
     <div className="object-properties-input">
       <div className="content-container">
-        <div className="pr-3 property-header">
+        <div className="property-header">
           <h6>{getTitleBar()}</h6>
         </div>
         {children}
@@ -49,7 +51,8 @@ PropertyInputContainer.propTypes = {
   errorMessage: PropTypes.string,
   type: PropTypes.string,
   addProperty: PropTypes.func,
-  addAllowed: PropTypes.bool
+  addAllowed: PropTypes.bool,
+  helpComponent: PropTypes.any
 };
 
 export default PropertyInputContainer;
