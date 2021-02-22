@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {OverlayTrigger, Popover, Tooltip} from "react-bootstrap";
+import {OverlayTrigger, Tooltip} from "react-bootstrap";
 
 function ButtonTooltip({ innerText, placement, children, trigger }) {
   const renderTooltip = (message) => {
