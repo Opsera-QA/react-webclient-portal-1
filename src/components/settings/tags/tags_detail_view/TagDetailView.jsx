@@ -96,7 +96,6 @@ function TagDetailView() {
   return (
     <DetailScreenContainer
       breadcrumbDestination={"tagDetailView"}
-      title={`Tag Details ${tagData ? `[${tagData.type}]` : null}`}
       metadata={tagEditorMetadata}
       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       accessRoleData={accessRoleData}

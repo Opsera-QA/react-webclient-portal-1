@@ -25,7 +25,7 @@ function TagDetailPanel({ tagData, setTagData }) {
     return (
       <CustomTabContainer>
         <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <CustomTab activeTab={activeTab} tabText={"Usage"} handleTabClick={handleTabClick} tabName={"usage"} disabled={true} icon={faComputerClassic} />
+        <CustomTab activeTab={activeTab} tabText={"Usage"} handleTabClick={handleTabClick} tabName={"usage"} icon={faComputerClassic} />
       </CustomTabContainer>
     );
   };
