@@ -12,6 +12,10 @@ function LaunchHelpIcon({ helpComponent, className }) {
     toastContext.showOverlayPanel(helpComponent);
   };
 
+  if (helpComponent == null) {
+    return null;
+  }
+
   return (
     <div className={className}>
       <ButtonTooltip innerText={"Launch Help"}>

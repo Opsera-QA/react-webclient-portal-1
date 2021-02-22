@@ -7,7 +7,9 @@ function CenterOverlayContainer({ children, titleText, titleIcon, showPanel, han
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
-    toastContext.removeInlineMessage();
+    if (showToasts) {
+      toastContext.removeInlineMessage();
+    }
 
     if (showPanel === true) {
       document.body.style.overflow = 'hidden';
@@ -21,11 +23,11 @@ function CenterOverlayContainer({ children, titleText, titleIcon, showPanel, han
 
   return (
     <div className={`overlay-panel center-overlay-shadow-background`}>
-      <div className="center-overlay content-card-1">
+      <div className="center-overlay content-card-1 bg-white">
         <OverlayTitleBar handleClose={handleClose} isLoading={isLoading} titleText={titleText} titleIcon={titleIcon} />
-        <div className="bg-white scroll-y overlay-panel-body">
+        <div className="overlay-panel-body">
           {showToasts && toastContext?.getInlineBanner()}
-          <div>
+          <div className="h-100 scroll-y">
             {children}
           </div>
         </div>
@@ -41,7 +43,6 @@ CenterOverlayContainer.propTypes = {
   titleIcon: PropTypes.object,
   handleClose: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
-  rightSide: PropTypes.bool,
   showToasts: PropTypes.bool
 };
 

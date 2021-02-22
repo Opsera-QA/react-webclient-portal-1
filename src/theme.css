@@ -1419,6 +1419,7 @@ a.nav-link {
     left: 12.5%;
     right: 12.5%;
     margin: auto;
+    min-height: 100%;
 }
 
 .center-overlay-shadow-background {
@@ -1433,10 +1434,11 @@ a.nav-link {
     overflow-y: auto;
     z-index: 1500;
     bottom: 21px;
+    max-height: calc(100% - 48px);
 }
 
 .overlay-panel .overlay-panel-body {
-    overflow-y: auto;
-    max-height: calc(100% - 48px);
+    min-height: 100%;
 }
+
 /* End Overlay Panel styling */
