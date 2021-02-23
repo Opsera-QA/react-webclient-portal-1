@@ -5,17 +5,16 @@ import WorkflowCatalogItem from "./WorkflowCatalogItem";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import pipelineActions from "components/workflow/pipeline-actions";
-import InformationDialog from "components/common/status_notifications/info";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
 import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
 import Model from "core/data_model/model";
 import catalogFilterMetadata from "components/workflow/catalog/catalog-filter-metadata";
 import TagFilter from "components/common/filters/tags/TagFilter";
-import PipelineTypeFilter from "components/common/filters/admin/templates/PipelineTypeFilter";
 import CardView from "components/common/card/CardView";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faOctagon} from "@fortawesome/pro-light-svg-icons";
+import InlinePipelineTypeFilter from "components/common/filters/admin/templates/inline/InlinePipelineTypeFilter";
 
 function WorkflowCatalog() {
   const contextType = useContext(AuthContext);
@@ -130,12 +129,15 @@ function WorkflowCatalog() {
 
   const getDropdownFilters = () => {
     return (
-      <>
-        <TagFilter filterDto={catalogFilterDto} setFilterDto={setCatalogFilterDto} className={"mb-2"} />
-        <PipelineTypeFilter filterDto={catalogFilterDto} setFilterDto={setCatalogFilterDto}/>
-      </>
+        <TagFilter filterDto={catalogFilterDto} setFilterDto={setCatalogFilterDto} />
     );
   };
+
+  const getInlineFilters = () => {
+    return (
+      <InlinePipelineTypeFilter loadData={loadData} filterModel={catalogFilterDto} setFilterModel={setCatalogFilterDto} className={"mr-2"} />
+    );
+  }
 
   const getWorkflowCardView = () => {
     return (
@@ -174,6 +176,7 @@ function WorkflowCatalog() {
         isLoading={loading}
         body={getWorkflowCardView()}
         dropdownFilters={getDropdownFilters()}
+        inlineFilters={getInlineFilters()}
         titleIcon={faOctagon}
         title={"Pipeline Templates"}
       />

@@ -35,7 +35,7 @@ const catalogFilterMetadata = {
       id: "activeFilters",
     },
     {
-      label: "Type",
+      label: "Pipeline Type",
       id: "type",
     },
   ],

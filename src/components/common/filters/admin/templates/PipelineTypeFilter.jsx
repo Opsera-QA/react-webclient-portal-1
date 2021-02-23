@@ -3,15 +3,21 @@ import PropTypes from "prop-types";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 
-function PipelineTypeFilter({ filterDto, setFilterDto, className }) {
+function PipelineTypeFilter({ filterDto, setFilterDto, setDataFunction, className, inline, fieldName }) {
+  if (filterDto == null) {
+    return null;
+  }
+
   return (
     <div className={className}>
       <FilterSelectInputBase
-        fieldName={"type"}
-        placeholderText={"Filter by Template Type"}
+        fieldName={fieldName}
+        placeholderText={"Filter by Pipeline Type"}
         setDataObject={setFilterDto}
+        setDataFunction={setDataFunction}
         dataObject={filterDto}
         selectOptions={pipelineHelpers.PIPELINE_TYPES_}
+        inline={inline}
       />
     </div>
   );
@@ -20,7 +26,14 @@ function PipelineTypeFilter({ filterDto, setFilterDto, className }) {
 PipelineTypeFilter.propTypes = {
   filterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
+  inline: PropTypes.bool,
+  setDataFunction: PropTypes.func,
+  fieldName: PropTypes.string
+};
+
+PipelineTypeFilter.defaultProps = {
+  fieldName: "type"
 };
 
 export default PipelineTypeFilter;
