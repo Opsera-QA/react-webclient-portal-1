@@ -5,6 +5,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import axios from "axios";
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
 function TagFilter({ filterDto, setFilterDto, className }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -60,7 +61,7 @@ function TagFilter({ filterDto, setFilterDto, className }) {
 
     if (Array.isArray(tags) && tags.length > 0) {
       tags.map((tag, index) => {
-        tagOptions.push({text: `Tag: ${tag["value"]}`, value: `${tag["type"]}:${tag["value"]}`, type: `${tag["type"]}`});
+        tagOptions.push({text: `${capitalizeFirstLetter(tag["type"])}: ${tag["value"]}`, value: `${tag["type"]}:${tag["value"]}`, type: `${tag["type"]}`});
       });
     }
 

@@ -42,8 +42,9 @@ const catalogFilterMetadata = {
   getActiveFilters(filterDto) {
     let activeFilters = [];
 
-    if (filterDto.getData("tag") !== "") {
-      activeFilters.push({filterId: "tag", ...filterDto.getData("tag")});
+    if (filterDto.getData("tag") != null) {
+      const tag = filterDto.getData("tag");
+      activeFilters.push({filterId: "tag", text: `Tag: ${tag?.value}`});
     }
 
     if (filterDto.getData("type") !== "") {
@@ -62,7 +63,6 @@ const catalogFilterMetadata = {
     sortOption: { value: "name", text: "Template Name (A-Za-z)" },
     search: "",
     type: "",
-    tag: "",
     activeFilters: []
   },
   sortOptions: [

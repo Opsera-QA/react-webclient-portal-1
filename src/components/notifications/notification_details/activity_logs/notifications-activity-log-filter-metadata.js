@@ -47,7 +47,8 @@ const notificationActivityLogFilterMetadata = {
     }
 
     if (filterDto.getData("tag") != null) {
-      activeFilters.push({filterId: "tag", ...filterDto.getData("tag")});
+      const tag = filterDto.getData("tag");
+      activeFilters.push({filterId: "tag", text: `Tag: ${tag?.value}`});
     }
 
     if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
