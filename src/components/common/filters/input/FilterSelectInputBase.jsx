@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DropdownList from "react-widgets/lib/DropdownList";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
+import InputLabel from "components/common/inputs/info_text/InputLabel";
 
 // TODO: Rewrite when time permits
 // TODO: Allow passing in error message that is displayed as the placeholderText instead of using toastContext
@@ -14,12 +15,21 @@ function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, 
     setDataObject({...newDataObject});
   };
 
+  const getInputLabel = () => {
+    if (!inline) {
+      return (
+        <InputLabel field={field} className={inline ? "mt-1 mr-2" : undefined}/>
+      );
+    }
+  }
+
   if (field == null) {
     return <WarningDialog warningMessage={"No field was found for this filter"} />
   }
 
   return (
     <div className={className}>
+      {getInputLabel()}
       <DropdownList
         data={selectOptions}
         valueField={valueField}
