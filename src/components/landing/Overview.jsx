@@ -1,4 +1,3 @@
-//landing page after user signs in
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
@@ -6,7 +5,7 @@ import { Row, Col, Badge } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import FreeTrialLandingView from "../free_trial/landing_page/Landing";
 import LoadingView from "../common/status_notifications/loading";
-import "./landing.css";
+import TagCloud from "components/common/fields/tags/TagCloud";
 
 function OverviewLanding() {
   const contextType = useContext(AuthContext);
@@ -91,9 +90,11 @@ function OverviewLanding() {
 
   if (!accessRoleData) {
     return (<LoadingView size="sm" message={"Loading user data"}/>);
-  } else if (process.env.REACT_APP_STACK === "free-trial") {
+  }
+  if (process.env.REACT_APP_STACK === "free-trial") {
     return (<FreeTrialLandingView/>);
-  } else {
+  }
+
     return (
       <>
         <div className="mt-3 ml-5 max-content-width-1080">
@@ -118,6 +119,9 @@ function OverviewLanding() {
                 <div className="h4 text-color mb-5">Welcome
                   back {userInfo && userInfo.firstName ? userInfo.firstName : null}!
                 </div>
+                {/*<Row className={"mb-2 mx-1"}>*/}
+                {/*  <TagCloud />*/}
+                {/*</Row>*/}
 
                 <div className="row mx-n2 mt-3">
                   <div className="col-md px-2 landing-content-module">
@@ -221,7 +225,6 @@ function OverviewLanding() {
         </div>
       </>
     );
-  }
 }
 
 export default OverviewLanding;
