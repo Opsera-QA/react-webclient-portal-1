@@ -60,17 +60,4 @@ const dashboardMetadata = {
   }
 };
 
-export const dashboardTypes = [
-  {type: "pipeline", value: "Pipeline"},
-  {type: "planning", value: "Planning"},
-  {type: "security", value: "Security"},
-  {type: "quality", value: "Quality"},
-  {type: "operations", value: "Operations"},
-];
-
-export const dashboardAccess = [
-  {type: "private", value: "Private"},
-  {type: "public", value: "My Organization"}
-]
-
 export default dashboardMetadata;

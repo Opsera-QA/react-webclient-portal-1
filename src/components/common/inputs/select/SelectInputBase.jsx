@@ -78,7 +78,10 @@ SelectInputBase.propTypes = {
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
   busy: PropTypes.bool,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array
+  ]),
   showClearValueButton: PropTypes.bool,
 };
 

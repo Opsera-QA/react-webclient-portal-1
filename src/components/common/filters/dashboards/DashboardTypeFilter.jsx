@@ -1,16 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
+import {dashboardTypes} from "components/common/list_of_values_input/insights/dashboards/DashboardTypeSelectInput";
 
-const typeOptions = [
-  {text: "Pipeline", value: "pipeline"},
-  {text: "Planning", value: "planning"},
-  {text: "Security", value: "security"},
-  {text: "Quality", value: "quality"},
-  {text: "Operations", value: "operations"}
-];
-
-function DashboardTypeFilter({ filterModel, setFilterModel, className }) {
+function DashboardTypeFilter({ filterModel, setFilterModel, className, fieldName }) {
   if (filterModel == null) {
     return null;
   }
@@ -18,11 +11,11 @@ function DashboardTypeFilter({ filterModel, setFilterModel, className }) {
   return (
     <div className={className}>
       <FilterSelectInputBase
-        fieldName={"type"}
+        fieldName={fieldName}
         placeholderText={"Filter by Dashboard Type"}
         setDataObject={setFilterModel}
         dataObject={filterModel}
-        selectOptions={typeOptions}
+        selectOptions={dashboardTypes}
       />
     </div>
   );
@@ -31,7 +24,12 @@ function DashboardTypeFilter({ filterModel, setFilterModel, className }) {
 DashboardTypeFilter.propTypes = {
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
+  fieldName: PropTypes.string
+};
+
+DashboardTypeFilter.defaultProps = {
+  fieldName: "type"
 };
 
 export default DashboardTypeFilter;

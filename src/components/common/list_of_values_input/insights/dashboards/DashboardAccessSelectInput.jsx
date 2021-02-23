@@ -1,7 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {dashboardAccess} from "components/insights/dashboards/dashboard-metadata";
+
+export const dashboardAccess = [
+  {type: "private", value: "Private"},
+  {type: "public", value: "My Organization"}
+]
 
 function DashboardAccessSelectInput({ fieldName, dataObject, setDataObject, disabled }) {
   return (

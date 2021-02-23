@@ -1,7 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {dashboardTypes} from "components/insights/dashboards/dashboard-metadata";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+
+export const dashboardTypes = [
+  {value: "pipeline", text: "Pipeline"},
+  {value: "planning", text: "Planning"},
+  {value: "security", text: "Security"},
+  {value: "quality", text: "Quality"},
+  {value: "operations", text: "Operations"},
+];
 
 function DashboardTypeSelectInput({ fieldName, dataObject, setDataObject, disabled }) {
   return (
@@ -10,8 +17,6 @@ function DashboardTypeSelectInput({ fieldName, dataObject, setDataObject, disabl
       dataObject={dataObject}
       setDataObject={setDataObject}
       selectOptions={dashboardTypes}
-      valueField="type"
-      textField="value"
       disabled={disabled}
     />
   );
@@ -21,7 +26,10 @@ DashboardTypeSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array
+  ]),
 };
 
 DashboardTypeSelectInput.defaultProps = {
