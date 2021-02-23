@@ -172,7 +172,7 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
   }
 
   return (
-    <InputContainer className="form-group custom-multiselect-input">
+    <InputContainer className="custom-multiselect-input">
       <InputLabel field={field} />
       <Multiselect
         data={[...tagOptions]}

@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {useContext, useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {useHistory} from "react-router-dom";
@@ -7,14 +7,16 @@ import {
   getTableDateColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
-import NewToolCategoryModal from "components/admin/tools/tool_category/NewToolCategoryModal";
 import toolCategoryMetadata from "components/admin/tools/tool_category/tool-category-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {faToolbox} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
+import NewToolModal from "components/inventory/tools/NewToolModal";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import NewToolCategoryOverlay from "components/admin/tools/tool_category/NewToolCategoryOverlay";
 
 function ToolCategoryTable({ data, loadData, isLoading }) {
-  const [showCreateToolCategoryModal, setShowCreateToolCategoryModal] = useState(false);
+  const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   let fields = toolCategoryMetadata.fields;
 
@@ -37,7 +39,7 @@ function ToolCategoryTable({ data, loadData, isLoading }) {
   };
 
   const createToolType = () => {
-    setShowCreateToolCategoryModal(true);
+    toastContext.showOverlayPanel(<NewToolCategoryOverlay loadData={loadData} />);
   };
 
   const getToolCategoryTable = () => {
@@ -54,18 +56,16 @@ function ToolCategoryTable({ data, loadData, isLoading }) {
   };
 
   return (
-    <div className="px-2 pb-2">
-      <FilterContainer
-        loadData={loadData}
-        addRecordFunction={createToolType}
-        isLoading={isLoading}
-        body={getToolCategoryTable()}
-        titleIcon={faToolbox}
-        title={"Tool Categories"}
-        type={"Tool Category"}
-      />
-      <NewToolCategoryModal setShowModal={setShowCreateToolCategoryModal} showModal={showCreateToolCategoryModal} loadData={loadData}/>
-    </div>
+    <FilterContainer
+      className={"px-2 pb-2"}
+      loadData={loadData}
+      addRecordFunction={createToolType}
+      isLoading={isLoading}
+      body={getToolCategoryTable()}
+      titleIcon={faToolbox}
+      title={"Tool Categories"}
+      type={"Tool Category"}
+    />
   );
 }
 

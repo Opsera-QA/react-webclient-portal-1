@@ -8,6 +8,7 @@ import toolManagementActions from "components/admin/tools/tool-management-action
 import DtoTagManagerInput from "components/common/input/dto_input/dto-tag-manager-input";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
+import TagManager from "components/common/inputs/tags/TagManager";
 
 function ToolCategoryEditorPanel({ toolCategoryData, setToolCategoryData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -50,16 +51,16 @@ function ToolCategoryEditorPanel({ toolCategoryData, setToolCategoryData, handle
           <TextInputBase fieldName={"name"} dataObject={toolCategoryDataDto} setDataObject={setToolCategoryDataDto}/>
         </Col>
         <Col lg={6}>
-          <ActivityToggleInput fieldName={"active"} dataObject={toolCategoryDataDto} setDataObject={setToolCategoryDataDto}/>
+          <TextInputBase fieldName={"identifier"} dataObject={toolCategoryDataDto} setDataObject={setToolCategoryDataDto}/>
         </Col>
-        <Col lg={6}>
+        <Col lg={12}>
           <TextInputBase fieldName={"description"} dataObject={toolCategoryDataDto} setDataObject={setToolCategoryDataDto}/>
         </Col>
         <Col lg={6}>
-          <TextInputBase fieldName={"identifier"} dataObject={toolCategoryDataDto} setDataObject={setToolCategoryDataDto}/>
+          <TagManager type={"tool"} dataObject={toolCategoryDataDto} setDataObject={setToolCategoryDataDto}/>
         </Col>
         <Col lg={6}>
-          <DtoTagManagerInput type={"tool"} dataObject={toolCategoryDataDto} fieldName={"tags"} setDataObject={setToolCategoryDataDto}/>
+          <ActivityToggleInput fieldName={"active"} dataObject={toolCategoryDataDto} setDataObject={setToolCategoryDataDto}/>
         </Col>
       </Row>
     </EditorPanelContainer>
