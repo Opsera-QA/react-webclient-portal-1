@@ -191,9 +191,9 @@ pipelineHelpers.PIPELINE_TYPES = [
 ];
 
 pipelineHelpers.PIPELINE_TYPES_ = [
-  { id: "sfdc", name: "SalesForce", groupId: "Pipeline Types" },
-  { id: "sdlc", name: "Software Development", groupId: "Pipeline Types" },
-  { id: "ai-ml", name: "Machine Learning (AI)", groupId: "Pipeline Types" },
+  { value: "sfdc", text: "SalesForce", groupId: "Pipeline Types" },
+  { value: "sdlc", text: "Software Development", groupId: "Pipeline Types" },
+  { value: "ai-ml", text: "Machine Learning (AI)", groupId: "Pipeline Types" },
 ];
 
 pipelineHelpers.formatStepOptions = (plan, stepId) => {

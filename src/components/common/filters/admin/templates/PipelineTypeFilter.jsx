@@ -1,18 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import DtoFilterSelectInput from "components/common/filters/input/DtoFilterSelectInput";
-import {createFilterOptions} from "components/common/filters/filterHelpers";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
+import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 
-function PipelineTypeFilter({ filterDto, setFilterDto }) {
+function PipelineTypeFilter({ filterDto, setFilterDto, className }) {
   return (
-    <div>
-      <DtoFilterSelectInput
+    <div className={className}>
+      <FilterSelectInputBase
         fieldName={"type"}
         placeholderText={"Filter by Template Type"}
         setDataObject={setFilterDto}
         dataObject={filterDto}
-        selectOptions={createFilterOptions(pipelineHelpers.PIPELINE_TYPES_, "Type", "name", "id")}
+        selectOptions={pipelineHelpers.PIPELINE_TYPES_}
       />
     </div>
   );
@@ -21,6 +20,7 @@ function PipelineTypeFilter({ filterDto, setFilterDto }) {
 PipelineTypeFilter.propTypes = {
   filterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
+  className: PropTypes.string
 };
 
 export default PipelineTypeFilter;
