@@ -86,12 +86,21 @@ adminTagsActions.getTag = async (getAccessToken, cancelTokenSource, tagId) => {
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+// TODO: Remove when all references are updated to createTagV2
 adminTagsActions.create = async (tagDataDto, getAccessToken) => {
   let postBody = {
     ...tagDataDto.getPersistData(),
   };
   const apiUrl = "/tags/create";
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+adminTagsActions.createTagV2 = async (getAccessToken, cancelTokenSource, tagDataDto) => {
+  let postBody = {
+    ...tagDataDto.getPersistData(),
+  };
+  const apiUrl = "/tags/create";
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 adminTagsActions.getRelevantPipelinesV2 = async (getAccessToken, cancelTokenSource, tags) => {
