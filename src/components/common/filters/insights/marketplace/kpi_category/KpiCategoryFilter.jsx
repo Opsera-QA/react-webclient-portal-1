@@ -27,7 +27,8 @@ KpiCategoryFilter.propTypes = {
   filterModel: PropTypes.object,
   setFilterModel: PropTypes.func,
   setDataFunction: PropTypes.func,
-  inline: PropTypes.bool
+  inline: PropTypes.bool,
+  className: PropTypes.string
 };
 
 KpiCategoryFilter.defaultProps = {

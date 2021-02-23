@@ -1,10 +1,12 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faStar} from "@fortawesome/pro-light-svg-icons";
 import {faStar as faStarSolid} from "@fortawesome/pro-solid-svg-icons";
+import {AuthContext} from "contexts/AuthContext";
 
-function DashboardFavoritesIcon({dashboard, dashboardsActions, getAccessToken}) {
+function DashboardFavoritesIcon({dashboard, dashboardsActions}) {
+  const {getAccessToken} = useContext(AuthContext);
   const [favorite, setFavorite] = useState(dashboard.isFavorite);
 
   const changeFavorite = (rowData) => {
@@ -31,7 +33,6 @@ function DashboardFavoritesIcon({dashboard, dashboardsActions, getAccessToken}) 
 DashboardFavoritesIcon.propTypes = {
     dashboard: PropTypes.object,
     dashboardsActions: PropTypes.object,
-    getAccessToken: PropTypes.func
   };
 
 export default DashboardFavoritesIcon;

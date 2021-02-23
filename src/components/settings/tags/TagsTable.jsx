@@ -11,7 +11,7 @@ import {
 import {getField} from "components/common/metadata/metadata-helpers";
 import NewTagModal from "components/settings/tags/NewTagModal";
 import StatusFilter from "components/common/filters/status/StatusFilter";
-import TagTypeFilter from "components/common/filters/tags/TagTypeFilter";
+import TagTypeFilter from "components/common/filters/tags/tag_type/TagTypeFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTags} from "@fortawesome/pro-light-svg-icons";
 

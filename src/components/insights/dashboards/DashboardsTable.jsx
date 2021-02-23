@@ -19,7 +19,6 @@ import {faChartNetwork} from "@fortawesome/pro-light-svg-icons";
 import InlineDashboardTypeFilter from "components/common/filters/dashboards/dashboard_type/InlineDashboardTypeFilter";
 
 function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadData, isLoading}) {
-  const {getAccessToken} = useContext(AuthContext);
   const [showCreateDashboardModal, setShowCreateDashboardModal] = useState(false);
   let history = useHistory();
   const fields = dashboardMetadata.fields;
@@ -30,7 +29,7 @@ function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadD
       getTableTextColumn(getField(fields, "description")),
       {...getTableTextColumn(getField(fields, "type")), class: "upper-case-first"},
       getTableDateColumn(getField(fields, "createdAt")),
-      getTableFavoriteColumn(getField(fields, "isFavorite"), getAccessToken),
+      getTableFavoriteColumn(getField(fields, "isFavorite")),
     ],
     []
   );

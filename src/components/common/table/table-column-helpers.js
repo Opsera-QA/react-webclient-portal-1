@@ -35,22 +35,23 @@ export const getTableTextColumnWithoutField = (header, accessor) => {
   };
 };
 
-export const getTableTextColumn = (field, classNames) => {
-  if (classNames) {
+export const getTableTextColumn = (field, className) => {
+  if (className) {
     return {
       Header: getTableHeader(field),
       accessor: getTableAccessor(field),
-      class: classNames
+      class: className
     };
   }
 
   return {
     Header: getTableHeader(field),
-    accessor: getTableAccessor(field)
+    accessor: getTableAccessor(field),
+    class: className ? className : undefined
   };
 };
 
-export const getStringifiedArrayColumn = (field) => {
+export const getStringifiedArrayColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
@@ -63,11 +64,11 @@ export const getStringifiedArrayColumn = (field) => {
 
       return "";
     },
-    class: "no-wrap-inline"
+    class: className ? className : "no-wrap-inline"
   };
 };
 
-export const getNameValueArrayColumn = (field) => {
+export const getNameValueArrayColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
@@ -82,11 +83,11 @@ export const getNameValueArrayColumn = (field) => {
 
       return "";
     },
-    class: "no-wrap-inline"
+    class: className ? className : "no-wrap-inline"
   };
 };
 
-export const getRoleArrayColumn = (field) => {
+export const getRoleArrayColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
@@ -101,11 +102,11 @@ export const getRoleArrayColumn = (field) => {
 
       return "";
     },
-    class: "no-wrap-inline"
+    class: className ? className : "no-wrap-inline"
   };
 };
 
-export const getContactArrayColumn = (field) => {
+export const getContactArrayColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
@@ -120,11 +121,11 @@ export const getContactArrayColumn = (field) => {
 
       return "";
     },
-    class: "no-wrap-inline"
+    class: className ? className : "no-wrap-inline"
   };
 };
 
-export const getTagArrayColumn = (field) => {
+export const getTagArrayColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
@@ -139,33 +140,33 @@ export const getTagArrayColumn = (field) => {
 
       return "";
     },
-    class: "no-wrap-inline"
+    class: className ? className : "no-wrap-inline"
   };
 };
 
-export const getTableDateColumn = (field) => {
+export const getTableDateColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     Cell: (props) => {
       return props.value ? format(new Date(props.value), "yyyy-MM-dd") : "";
     },
-    class: "no-wrap-inline"
+    class: className ? className : "no-wrap-inline"
   };
 };
 
-export const getTableDateTimeColumn = (field) => {
+export const getTableDateTimeColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     Cell: (props) => {
       return props.value ? format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a") : "";
     },
-    class: "no-wrap-inline"
+    class: className ? className : "no-wrap-inline"
   };
 };
 
-export const getPipelineActivityStatusColumn = (field) => {
+export const getPipelineActivityStatusColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
@@ -176,7 +177,8 @@ export const getPipelineActivityStatusColumn = (field) => {
           <div className="ml-1">{props.value}</div>
         </div>
       );
-    }
+    },
+    class: className ? className : undefined
   }
 };
 
@@ -225,18 +227,18 @@ export const getAssociatedPipelineStatusIcon = (pipelineStatus) => {
   }
 }
 
-export const getPipelineTypeColumn = (field) => {
+export const getPipelineTypeColumn = (field, className) => {
   return {
     Header: "",
     accessor: getTableAccessor(field),
     Cell: (workflow) => {
       return <PipelineTypesField fieldName={field.id} dataObject={new Model(workflow.row.original, pipelineMetadata, false)} />;
     },
-    class: "cell-center"
+    class: className ? className : "cell-center"
   };
 };
 
-export const getTablePipelineStatusColumn = (field) => {
+export const getTablePipelineStatusColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
@@ -280,11 +282,11 @@ export const getTablePipelineStatusColumn = (field) => {
         );
       }
     },
-    class: "text-left"
+    class: className ? className :  "text-left"
   };
 };
 
-export const getChartPipelineStatusColumn = (field) => {
+export const getChartPipelineStatusColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
@@ -313,82 +315,84 @@ export const getChartPipelineStatusColumn = (field) => {
         "unknown"
       );
     },
+    class: className ? className :  undefined
   };
 };
 
-export const getTableFavoriteColumn = (field, getAccessToken) => {
+export const getTableFavoriteColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     Cell: (props) => {
-      return <DashboardFavoritesIcon key={props.row.original._id} dashboard={props.row.original} dashboardsActions={dashboardsActions} getAccessToken={getAccessToken}/>
+      return <DashboardFavoritesIcon key={props.row.original._id} dashboard={props.row.original} dashboardsActions={dashboardsActions} />
     },
-    class: "no-wrap-inline"
+    class: className ? className :  "no-wrap-inline"
   };
 };
 
-export const getTableDeleteColumn = (headerText, deleteFunction) => {
+export const getTableDeleteColumn = (headerText, deleteFunction, className) => {
   return {
     Header: headerText,
     Cell: (props) => {
       return <FontAwesomeIcon icon={faTrash} className="pointer danger-red" onClick={() => {deleteFunction(props?.data[props?.row?.index]); }}/>
     },
-    class: "no-wrap-inline"
+    class: className ? className :  "no-wrap-inline"
   };
 };
 
-export const getTableButtonColumn = (accessor = "row", headerText, variant, buttonText, buttonFunction) => {
+export const getTableButtonColumn = (accessor = "row", headerText, variant, buttonText, buttonFunction, className) => {
   return {
     Header: headerText,
     accessor: accessor,
     Cell: (props) => {
       return <Button size={"sm"} variant={variant} onClick={() => {buttonFunction(props?.data[props?.row?.index])}}>{buttonText}</Button>
     },
-    class: "no-wrap-inline py-1"
+    class: className ? className :  "no-wrap-inline py-1"
   };
 };
 
-export const getTableBooleanIconColumn = (field) => {
+export const getTableBooleanIconColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     Cell: (props) => {
       return props.value ? <div><FontAwesomeIcon icon={faCheckCircle} className="green ml-2" /></div> :  <div><FontAwesomeIcon icon={faTimesCircle} className="red ml-2" /></div>;
     },
-    class: "text-left"
+    class: className ? className : "text-left"
   };
 };
 
-export const getTableInfoIconColumn = (showInformationFunction, accessor = "row") => {
+export const getTableInfoIconColumn = (showInformationFunction, accessor = "row", className) => {
   return {
     Header: "Info",
-    accessor: "row",
+    accessor: accessor,
     Cell: (props) => {
       return <FontAwesomeIcon icon={faSearchPlus} className="pointer" onClick={() => {showInformationFunction(props?.data[props?.row?.index]); }}/>;
     },
+    class: className ? className : undefined
   };
 };
 
 // This just takes the data field and returns the count inside the array
-export const getTableArrayCountColumn = (field) => {
+export const getTableArrayCountColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     Cell: (props) => {
       return props.value.length;
     },
-    class: "no-wrap-inline"
+    class: className ? className :  "no-wrap-inline"
   };
 };
 
-export const getCountColumnWithoutField = (header, accessor) => {
+export const getCountColumnWithoutField = (header, accessor, className) => {
   return {
     Header: header,
     accessor: accessor,
     Cell: (props) => {
       return props.value.length;
     },
-    class: "no-wrap-inline"
+    class: className ? className :  "no-wrap-inline"
   };
 };
 
