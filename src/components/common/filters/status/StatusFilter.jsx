@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 
 const statusOptions = [
-  {text: "Status: All", value: undefined},
-  {text: "Status: Active", value: "active"},
-  {text: "Status: Inactive", value: "inactive"}
+  {text: "All", value: undefined},
+  {text: "Active", value: "active"},
+  {text: "Inactive", value: "inactive"}
 ];
 
 function StatusFilter({ filterDto, setFilterDto, className, fieldName, inline}) {

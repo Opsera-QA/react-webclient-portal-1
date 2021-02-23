@@ -1,3 +1,5 @@
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+
 const notificationsFilterMetadata = {
   idProperty: "_id",
   type: "Notification Policy",
@@ -39,7 +41,7 @@ const notificationsFilterMetadata = {
     let activeFilters = [];
 
     if (filterDto.getData("status") != null) {
-      activeFilters.push({filterId: "status", ...filterDto.getData("status")});
+      activeFilters.push({filterId: "status", text: `Status: ${capitalizeFirstLetter(filterDto.getFilterValue("status"))}`});
     }
 
     if (filterDto.getData("type") != null) {

@@ -1,3 +1,5 @@
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+
 const dashboardFilterMetadata = {
     idProperty: "_id",
     type: "Dashboard",
@@ -37,9 +39,9 @@ const dashboardFilterMetadata = {
     ],
     getActiveFilters(filterDto) {
       let activeFilters = [];
-  
+
       if (filterDto.getData("status") != null) {
-        activeFilters.push({filterId: "status", ...filterDto.getData("status")});
+        activeFilters.push({filterId: "status", text: `Status: ${capitalizeFirstLetter(filterDto.getFilterValue("status"))}`});
       }
 
       if (filterDto.getData("type") != null) {

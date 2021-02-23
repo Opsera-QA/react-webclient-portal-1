@@ -1,3 +1,5 @@
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+
 const accessTokenFilterMetadata = {
   idProperty: "_id",
   type: "Access Token",
@@ -31,7 +33,7 @@ const accessTokenFilterMetadata = {
     let activeFilters = [];
 
     if (filterDto.getData("status") != null) {
-      activeFilters.push({filterId: "status", ...filterDto.getData("status")});
+      activeFilters.push({filterId: "status", text: `Status: ${capitalizeFirstLetter(filterDto.getFilterValue("status"))}`});
     }
 
     if (filterDto.getData("type") != null) {
