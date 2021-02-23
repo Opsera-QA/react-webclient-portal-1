@@ -4,7 +4,6 @@ import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "../../../contexts/DialogToastContext";
 import analyticsProfileActions from "./analytics-profile-settings-actions";
 import DtoTextInput from "../../common/input/dto_input/dto-text-input";
-import DtoToggleInput from "../../common/input/dto_input/dto-toggle-input";
 import DtoSelectInput from "../../common/input/dto_input/dto-select-input";
 import DtoMultiselectInput from "../../common/input/dto_input/dto-multiselect-input";
 import Model from "../../../core/data_model/model";
@@ -12,6 +11,7 @@ import AnalyticsProfileMetadata from "./analytics-profile-metadata";
 import ScreenContainer from "../../common/panels/general/ScreenContainer";
 import LoadingView from "../../common/status_notifications/loading";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
+import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 
 const DEFAULT_PERSONAS = [
   {
@@ -215,7 +215,7 @@ function AnalyticsProfileSettings() {
                 overlay={<Tooltip id="tooltip-disabled">Contact Opsera Support to disable analytics.</Tooltip>}
               >
                 <span className="mr-3">
-                  <DtoToggleInput
+                  <ActivityToggleInput
                     setDataObject={setAnalyticsProfileData}
                     fieldName={"active"}
                     dataObject={analyticsProfileData}

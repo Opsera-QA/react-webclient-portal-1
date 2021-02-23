@@ -8,12 +8,12 @@ import Row from "react-bootstrap/Row";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import DtoTextInput from "../../../../../../../common/input/dto_input/dto-text-input";
-import DtoToggleInput from "../../../../../../../common/input/dto_input/dto-toggle-input";
 import DtoSelectInput from "../../../../../../../common/input/dto_input/dto-select-input";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import argoActions from "../../argo-actions";
 import Modal from "components/common/modal/modal";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
+import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 
 function ArgoApplicationEditorPanel({ argoApplicationData, toolData, appID, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -133,7 +133,7 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, appID, hand
             />
           </Col>
           <Col lg={12}>
-            <DtoToggleInput
+            <ActivityToggleInput
               setDataObject={setArgoApplicationDataDto}
               fieldName={"active"}
               dataObject={argoApplicationDataDto}

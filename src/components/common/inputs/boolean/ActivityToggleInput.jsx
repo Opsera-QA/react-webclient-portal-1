@@ -35,7 +35,6 @@ ActivityToggleInput.propTypes = {
   setDataObject: PropTypes.func,
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
-  setData: PropTypes.func
 };
 
 export default ActivityToggleInput;
