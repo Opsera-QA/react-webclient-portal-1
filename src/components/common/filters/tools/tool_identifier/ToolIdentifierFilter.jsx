@@ -2,16 +2,16 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {createFilterOptions} from "components/common/filters/filterHelpers";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import axios from "axios";
 import toolManagementActions from "components/admin/tools/tool-management-actions";
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
 function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunction, className, inline, loadingData }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [toolIdentifierFilterOptions, setToolIdentifierFilterOptions] = useState([]);
-  const [isLoading, setLoading] = useState(false);
+  const [toolIdentifiers, setToolIdentifiers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -38,7 +38,7 @@ function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunct
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      setLoading(true);
+      setIsLoading(true);
       await getToolList(cancelSource);
     }
     catch (error) {
@@ -49,16 +49,25 @@ function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunct
     }
     finally {
       if (isMounted?.current === true) {
-        setLoading(false);
+        setIsLoading(false);
       }
     }
   }
 
   const getToolList = async (cancelSource = cancelTokenSource) => {
     const toolResponse = await toolManagementActions.getToolIdentifiersV2(getAccessToken, cancelSource, "active", true);
+    const toolIdentifiers = toolResponse?.data;
 
-    if (toolResponse?.data) {
-      setToolIdentifierFilterOptions(createFilterOptions(toolResponse?.data, "Tool", "name", "identifier"));
+    if (Array.isArray(toolIdentifiers) && toolIdentifiers.length > 0) {
+      const toolIdentifierOptions = [];
+
+      toolIdentifiers.map((toolIdentifier, index) => {
+        toolIdentifierOptions.push({text: `${toolIdentifier["name"]}`, value: `${toolIdentifier["identifier"]}`});
+      });
+
+      if (isMounted?.current === true) {
+        setToolIdentifiers(toolIdentifierOptions);
+      }
     }
   };
 
@@ -72,7 +81,7 @@ function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunct
       setDataObject={setFilterDto}
       dataObject={filterDto}
       setDataFunction={setDataFunction}
-      selectOptions={toolIdentifierFilterOptions}
+      selectOptions={toolIdentifiers}
       className={className}
     />
   );

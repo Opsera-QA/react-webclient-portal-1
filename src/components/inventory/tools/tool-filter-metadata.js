@@ -49,7 +49,7 @@ const toolFilterMetadata = {
     }
 
     if (filterDto.getData("toolIdentifier") != null) {
-      activeFilters.push({filterId: "toolIdentifier", ...filterDto.getData("toolIdentifier")});
+      activeFilters.push({filterId: "toolIdentifier", text: `Tool: ${filterDto.getFilterValue("toolIdentifier")}`});
     }
 
     if (filterDto.getData("tag") != null) {
