@@ -2,16 +2,16 @@ import React, {useState} from "react";
 import ToolsTable from "components/inventory/tools/ToolsTable";
 import TableCardView from "components/common/table/TableCardView";
 import StatusFilter from "components/common/filters/status/StatusFilter";
-import TagFilter from "components/common/filters/tags/TagFilter";
 import NewToolModal from "components/inventory/tools/NewToolModal";
 import PropTypes from "prop-types";
 import ToolCardView from "components/inventory/tools/ToolCardView";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
-import LdapOwnerFilter from "components/common/filters/pipelines/LdapOwnerFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
-import InlineToolIdentifierFilter from "components/common/filters/tools/inline/InlineToolIdentifierFilter";
+import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilter";
+import TagFilter from "components/common/filters/tags/tag/TagFilter";
+import InlineToolIdentifierFilter from "components/common/filters/tools/tool_identifier/InlineToolIdentifierFilter";
 
 function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, saveCookies, customerAccessRules}) {
   const [showCreateToolModal, setShowCreateToolModal] = useState(false);
