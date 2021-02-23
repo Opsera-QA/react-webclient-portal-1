@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, {useContext, useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
 import WorkflowCatalogItem from "./WorkflowCatalogItem";
@@ -15,6 +15,7 @@ import CardView from "components/common/card/CardView";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faOctagon} from "@fortawesome/pro-light-svg-icons";
 import InlinePipelineTypeFilter from "components/common/filters/admin/templates/pipeline_type/InlinePipelineTypeFilter";
+import axios from "axios";
 
 function WorkflowCatalog() {
   const contextType = useContext(AuthContext);
@@ -22,67 +23,95 @@ function WorkflowCatalog() {
   const toastContext = useContext(DialogToastContext);
   const [workflowTemplates, setWorkflowTemplates] = useState([]);
   const [inUseIds, setInUseIds] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [pipelineId, setPipelineId] = useState("");
   const [templateId, setTemplateId] = useState("");
   const [showFreeTrialModal, setShowFreeTrialModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
   const [accessRoleData, setAccessRoleData] = useState(null);
-  const [catalogFilterDto, setCatalogFilterDto] = useState(new Model({ ...catalogFilterMetadata.newObjectFields }, catalogFilterMetadata, false));
-
-  const callbackFunction = (item) => {
-    setModalMessage(item);
-    setShowModal(true);
-  };
+  const [catalogFilterModel, setCatalogFilterModel] = useState(new Model({ ...catalogFilterMetadata.newObjectFields }, catalogFilterMetadata, false));
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
     setShowFreeTrialModal(false); // for testing its true - edit this to false while pushing
     setPipelineId(""); // for testing its set a value - set this to empty while pushing
     setTemplateId("");
     setShowModal(false);
-    loadData();
+    
+    loadData(catalogFilterModel, source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-
-  const loadData = async (newCatalogFilterDto = catalogFilterDto) => {
+  const loadData = async (filterModel = catalogFilterModel, cancelSource = cancelTokenSource) => {
     try {
-      setLoading(true);
-      await loadRoles();
-      await loadWorkflowTemplates(newCatalogFilterDto);
-      await loadInUseIds();
-    } catch (error) {
-      toastContext.showSystemErrorBanner(error);
-      console.error(error.message);
-    } finally {
-      setLoading(false);
+      setIsLoading(true);
+      await getRoles(filterModel, cancelSource);
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
+      }
+    }
+    finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
-  const loadRoles = async () => {
+  const getRoles = async (filterModel = catalogFilterModel, cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
-    setAccessRoleData(userRoleAccess);
+
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+      await loadWorkflowTemplates(filterModel, cancelSource);
+      await loadInUseIds(cancelSource);
+    }
   };
 
-  const loadWorkflowTemplates = async (newCatalogFilterDto = catalogFilterDto) => {
-    const response = await pipelineActions.getWorkflowTemplates(newCatalogFilterDto, getAccessToken);
+  const loadWorkflowTemplates = async (filterModel = catalogFilterModel, cancelSource = cancelTokenSource) => {
+    const response = await pipelineActions.getWorkflowTemplatesV2(getAccessToken, cancelSource, filterModel);
 
-    if (response?.data) {
+    if (isMounted?.current === true && response?.data) {
       setWorkflowTemplates(response.data);
-      let newFilterDto = newCatalogFilterDto;
+      let newFilterDto = filterModel;
       newFilterDto.setData("totalCount", response.data.length);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-      setCatalogFilterDto({ ...newFilterDto });
+      setCatalogFilterModel({ ...newFilterDto });
     }
   };
 
-  const loadInUseIds = async () => {
-    const response = await pipelineActions.getInUseTemplates(getAccessToken);
+  const loadInUseIds = async (cancelSource = cancelTokenSource) => {
+    const response = await pipelineActions.getInUseTemplatesV2(getAccessToken, cancelSource);
 
-    if (response?.data) {
+    if (isMounted?.current === true && response?.data) {
       setInUseIds(response.data);
     }
+  };
+
+  const callbackFunction = (item) => {
+    setModalMessage(item);
+    setShowModal(true);
   };
 
   const openFreeTrialWizard = (pipelineId, templateId, templateType) => {
@@ -105,7 +134,7 @@ function WorkflowCatalog() {
 
   // TODO: Make workflowCardView
   const getWorkflowItems = () => {
-    if (loading) {
+    if (isLoading) {
       return (<LoadingDialog size="md" message="Loading pipeline template catalog"/>);
     }
 
@@ -129,23 +158,23 @@ function WorkflowCatalog() {
 
   const getDropdownFilters = () => {
     return (
-        <TagFilter filterDto={catalogFilterDto} setFilterDto={setCatalogFilterDto} />
+        <TagFilter filterModel={catalogFilterModel} setFilterDto={setCatalogFilterModel} />
     );
   };
 
   const getInlineFilters = () => {
     return (
-      <InlinePipelineTypeFilter loadData={loadData} filterModel={catalogFilterDto} setFilterModel={setCatalogFilterDto} className={"mr-2"} />
+      <InlinePipelineTypeFilter isLoading={isLoading} loadData={loadData} filterModel={catalogFilterModel} setFilterModel={setCatalogFilterModel} className={"mr-2"} />
     );
   }
 
   const getWorkflowCardView = () => {
     return (
       <CardView
-        isLoading={loading}
+        isLoading={isLoading}
         loadData={loadData}
-        setPaginationDto={setCatalogFilterDto}
-        paginationDto={catalogFilterDto}
+        setPaginationDto={setCatalogFilterModel}
+        paginationDto={catalogFilterModel}
         cards={getWorkflowItems()}
         noDataMessage={"No Catalog Items Found"}
       />
@@ -170,10 +199,10 @@ function WorkflowCatalog() {
     <div className="px-2 pb-2">
       <FilterContainer
         loadData={loadData}
-        filterDto={catalogFilterDto}
-        setFilterDto={setCatalogFilterDto}
+        filterDto={catalogFilterModel}
+        setFilterDto={setCatalogFilterModel}
         supportSearch={true}
-        isLoading={loading}
+        isLoading={isLoading}
         body={getWorkflowCardView()}
         dropdownFilters={getDropdownFilters()}
         inlineFilters={getInlineFilters()}

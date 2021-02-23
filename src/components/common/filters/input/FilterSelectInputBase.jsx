@@ -36,7 +36,7 @@ function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, 
         className={inline ? `inline-filter-input inline-select-filter` : undefined}
         groupBy={groupBy}
         value={dataObject?.getData(fieldName)}
-        disabled={disabled}
+        disabled={disabled || busy}
         busy={busy}
         placeholder={placeholderText}
         onChange={(data) => setDataFunction ? setDataFunction(fieldName, data) : validateAndSetData(fieldName, data)}

@@ -14,7 +14,7 @@ function InlinePipelineTypeFilter({ filterModel, setFilterModel, fieldName, clas
       className={className}
       filterDto={filterModel}
       setFilterDto={setFilterModel}
-      loadingData={isLoading}
+      isLoading={isLoading}
       fieldName={fieldName}
       setDataFunction={validateAndSetData}
       inline={true}

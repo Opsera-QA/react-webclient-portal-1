@@ -73,7 +73,7 @@ const breadcrumbs = {
 
   //Pipelines
   pipelines: {name: "pipelines", path: paths.pipelines, label: "Pipelines", icon: faDraftingCompass},
-  catalog: {name: "catalog", path: paths.pipelines, label: "Template Catalog", icon: faHexagon},
+  catalog: {name: "catalog", path: paths.pipelines, label: "Pipeline Catalog Library", icon: faHexagon},
   pipelineDetailView: {name: "pipelineDetailView", path: paths.pipelineDetailView, label: "Pipeline Details", icon: faDraftingCompass},
 
   //Insights

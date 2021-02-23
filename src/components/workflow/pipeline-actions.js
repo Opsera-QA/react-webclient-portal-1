@@ -6,27 +6,27 @@ import {axiosApiService} from "api/apiService";
 //  step for step configuration related ones (save to vault, tools, etc)
 const pipelineActions = {};
 
-pipelineActions.getWorkflowTemplates = async (catalogFilterDto, getAccessToken) => {
-  let sortOption = catalogFilterDto.getData("sortOption");
+pipelineActions.getWorkflowTemplatesV2 = async (getAccessToken, cancelTokenSource, catalogFilterModel) => {
+  let sortOption = catalogFilterModel.getData("sortOption");
 
   const urlParams = {
     params: {
       sort: sortOption ? sortOption.value : null,
-      size: catalogFilterDto.getData("pageSize"),
-      page: catalogFilterDto.getData("currentPage"),
-      search: catalogFilterDto.getFilterValue("search"),
-      type: catalogFilterDto.getFilterValue("type"),
-      tag: catalogFilterDto.getFilterValue("tag")
+      size: catalogFilterModel.getData("pageSize"),
+      page: catalogFilterModel.getData("currentPage"),
+      search: catalogFilterModel.getFilterValue("search"),
+      type: catalogFilterModel.getFilterValue("type"),
+      tag: catalogFilterModel.getFilterValue("tag")
     },
   };
 
   let apiUrl = `/pipelines/workflows`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-pipelineActions.getInUseTemplates = async (getAccessToken) => {
+pipelineActions.getInUseTemplatesV2 = async (getAccessToken, cancelTokenSource) => {
   let apiUrl = `/pipelines/workflows/inuse-templates`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 

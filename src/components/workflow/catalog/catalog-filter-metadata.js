@@ -48,7 +48,8 @@ const catalogFilterMetadata = {
     }
 
     if (filterDto.getData("type") !== "") {
-      activeFilters.push({filterId: "type", ...filterDto.getData("type")});
+      const type = filterDto.getData("type");
+      activeFilters.push({filterId: "tag", text: `Type: ${type?.text}`});
     }
 
     if (filterDto.getData("search") !== "") {
