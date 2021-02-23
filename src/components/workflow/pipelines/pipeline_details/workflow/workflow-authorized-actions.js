@@ -34,6 +34,10 @@ const workflowAuthorizedActions = {};
  *
  */
 workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, objectRoles) => {
+  if (customerAccessRules == null) {
+    return false;
+  }
+
   if (customerAccessRules.OpseraAdministrator) {
     return true; //all actions are authorized to Opsera Administrator
   }
@@ -133,6 +137,10 @@ workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, o
  *
  */
 workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owner, objectRoles) => {
+  if (customerAccessRules == null) {
+    return false;
+  }
+  
   if (customerAccessRules.OpseraAdministrator) {
     return true; //all actions are authorized to Opsera Administrator
   }
