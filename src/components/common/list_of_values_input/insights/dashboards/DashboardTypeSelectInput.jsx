@@ -17,6 +17,8 @@ function DashboardTypeSelectInput({ fieldName, dataObject, setDataObject, disabl
       dataObject={dataObject}
       setDataObject={setDataObject}
       selectOptions={dashboardTypes}
+      valueField="value"
+      textField="text"
       disabled={disabled}
     />
   );

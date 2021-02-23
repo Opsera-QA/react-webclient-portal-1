@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 export const dashboardAccess = [
-  {type: "private", value: "Private"},
-  {type: "public", value: "My Organization"}
+  {value: "private", text: "Private"},
+  {value: "public", text: "My Organization"}
 ]
 
 function DashboardAccessSelectInput({ fieldName, dataObject, setDataObject, disabled }) {
@@ -14,8 +14,8 @@ function DashboardAccessSelectInput({ fieldName, dataObject, setDataObject, disa
       dataObject={dataObject}
       setDataObject={setDataObject}
       selectOptions={dashboardAccess}
-      valueField="type"
-      textField="value"
+      valueField="value"
+      textField="text"
       disabled={disabled}
     />
   );
@@ -25,7 +25,10 @@ DashboardAccessSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array
+  ]),
 };
 
 DashboardAccessSelectInput.defaultProps = {
