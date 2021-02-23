@@ -6,7 +6,6 @@ import Row from "react-bootstrap/Row";
 import notificationsActions from "components/notifications/notifications-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import DtoTagManagerInput from "components/common/input/dto_input/dto-tag-manager-input";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import NotificationConfigurationPanel
   from "components/notifications/notification_details/configuration_forms/NotificationConfigurationPanel";
@@ -14,6 +13,7 @@ import NotificationMethodConfigurationPanel
   from "components/notifications/notification_details/notification_method_forms/NotificationMethodConfigurationPanel";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
+import TagManager from "components/common/inputs/tags/TagManager";
 
 function NotificationEditorPanel({ notificationData, setNotificationData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -75,12 +75,7 @@ function NotificationEditorPanel({ notificationData, setNotificationData, handle
                         fieldName={"description"}/>
         </Col>
           <Col lg={12}>
-            <DtoTagManagerInput
-              type={"notification"}
-              setDataObject={setNotificationDataDto}
-              dataObject={notificationDataDto}
-              fieldName={"tags"}
-            />
+            <TagManager type={"notification"} setDataObject={setNotificationDataDto} dataObject={notificationDataDto} />
           </Col>
       </Row>
       <NotificationConfigurationPanel

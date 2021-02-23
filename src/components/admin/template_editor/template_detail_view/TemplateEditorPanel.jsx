@@ -8,12 +8,12 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PipelineTypeMultiselectInput
   from "components/common/list_of_values_input/admin/pipeline_templates/PipelineTypeMultiselectInput";
-import DtoTagManagerInput from "components/common/input/dto_input/dto-tag-manager-input";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import LdapOrganizationAccountSelectInput
   from "components/common/list_of_values_input/admin/accounts/ldap_accounts/LdapOrganizationAccountSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import JsonInput from "components/common/inputs/object/JsonInput";
+import TagManager from "components/common/inputs/tags/TagManager";
 
 function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -73,7 +73,7 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
           <JsonInput fieldName={"plan"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
         </Col>
         <Col lg={6}>
-          <DtoTagManagerInput type={"template"} fieldName={"tags"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
+          <TagManager type={"template"} dataObject={templateDataDto} setDataObject={setTemplateDataDto}/>
         </Col>
       </Row>
     </EditorPanelContainer>

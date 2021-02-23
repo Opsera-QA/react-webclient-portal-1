@@ -6,8 +6,6 @@ import projectTagsMetadata from "components/settings/data_tagging/projects/taggi
 import Model from "core/data_model/model";
 import dataMappingActions from "components/settings/data_tagging/data-mapping-actions";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import DtoTagManagerInput from "components/common/input/dto_input/dto-tag-manager-input";
-import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import ProjectMappingToolIdentifierSelectInput
@@ -24,6 +22,7 @@ import JenkinsJobSelectInput
   from "../../../../common/list_of_values_input/settings/data_tagging/projects/JenkinsJobSelectInput";
 import SonarProjectSelectInput
   from "../../../../common/list_of_values_input/settings/data_tagging/projects/SonarProjectSelectInput";
+import TagManager from "components/common/inputs/tags/TagManager";
 
 function ProjectMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -149,7 +148,7 @@ function ProjectMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
         </Col>
         {getDynamicFields()}
         <Col lg={12}>
-          <DtoTagManagerInput
+          <TagManager
             type={"project"}
             dataObject={projectMappingDto}
             fieldName={"value"}

@@ -8,10 +8,10 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import ToolTypeSelectInput from "components/common/list_of_values_input/admin/tools/ToolTypeSelectInput";
 import ToolUsageTypeInput from "components/admin/tools/tool_identifier/ToolUsageTypeInput";
-import DtoTagManagerInput from "components/common/input/dto_input/dto-tag-manager-input";
 import DtoPropertiesInput from "components/common/input/dto_input/dto-properties-input";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import TagManager from "components/common/inputs/tags/TagManager";
 
 function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, handleClose} ) {
   const {getAccessToken} = useContext(AuthContext);
@@ -65,7 +65,7 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, 
           <ToolUsageTypeInput fieldName={"usageType"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
         </Col>
         <Col lg={6}>
-          <DtoTagManagerInput type={"tool"} dataObject={toolIdentifierDataDto} fieldName={"tags"} setDataObject={setToolIdentifierDataDto}/>
+          <TagManager type={"tool"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
         </Col>
         <Col lg={6}>
           <BooleanToggleInput dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto} fieldName={"enabledInRegistry"} />

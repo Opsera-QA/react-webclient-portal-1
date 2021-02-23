@@ -4,9 +4,7 @@ import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import toolsActions from "components/inventory/tools/tools-actions";
-import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import DtoTagManagerInput from "components/common/input/dto_input/dto-tag-manager-input";
 import ToolClassificationSelectInput
   from "components/common/list_of_values_input/inventory/ToolClassificationSelectInput";
 import RegistryToolIdentifierSelectInput
@@ -17,6 +15,7 @@ import RegistryToolLocationInput from "components/inventory/tools/tool_details/i
 import RegistryToolApplicationsInput from "components/inventory/tools/tool_details/input/RegistryToolApplicationsInput";
 import RegistryToolOrganizationInput from "components/inventory/tools/tool_details/input/RegistryToolOrganizationInput";
 import RegistryToolContactInput from "components/inventory/tools/tool_details/input/RegistryToolContactInput";
+import TagManager from "components/common/inputs/tags/TagManager";
 
 function ToolEditorPanel({ toolData, setToolData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -85,7 +84,7 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
           <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"costCenter"} />
         </Col>
         <Col lg={6}>
-          <DtoTagManagerInput type={"tool"} setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"tags"} />
+          <TagManager type={"tool"} setDataObject={setToolDataDto} dataObject={toolDataDto} />
         </Col>
         <Col lg={6}>
           <ToolClassificationSelectInput setDataObject={setToolDataDto} dataObject={toolDataDto} />

@@ -6,7 +6,6 @@ import Col from "react-bootstrap/Col";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
-import DtoTagManagerInput from "components/common/input/dto_input/dto-tag-manager-input";
 import tagsUsedInPipelineMetadata from "components/reports/tags/pipelines/tags-used-in-pipeline-metadata";
 import TagArrayUsedInToolsField from "components/common/fields/tags/TagArrayUsedInToolsField";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
@@ -14,6 +13,7 @@ import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {faAnalytics, faDraftingCompass, faTags, faTools} from "@fortawesome/pro-light-svg-icons";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import {useHistory} from "react-router-dom";
+import TagManager from "components/common/inputs/tags/TagManager";
 
 function TagsUsedInToolsReport() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -80,7 +80,7 @@ function TagsUsedInToolsReport() {
     >
       <Row className={"mb-3"}>
         <Col>
-          <DtoTagManagerInput type={"tags"} allowCreate={false} fieldName={"tags"} dataObject={tagsUsedInPipelineDto} setDataObject={setTagsUsedInPipelineDto}/>
+          <TagManager type={"tags"} allowCreate={false} fieldName={"tags"} dataObject={tagsUsedInPipelineDto} setDataObject={setTagsUsedInPipelineDto}/>
         </Col>
       </Row>
       <Row className={"px-2"}>
