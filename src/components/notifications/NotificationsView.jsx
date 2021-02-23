@@ -13,7 +13,7 @@ import {faFlag} from "@fortawesome/pro-light-svg-icons";
 import NewNotificationModal from "components/notifications/NewNotificationModal";
 import StatusFilter from "components/common/filters/status/StatusFilter";
 import NotificationTypeFilter from "components/common/filters/notifications/notification_type/NotificationTypeFilter";
-import TagFilter from "components/common/filters/tags/TagFilter";
+import TagFilter from "components/common/filters/tags/tag/TagFilter";
 
 function NotificationsView() {
   const [showCreateNotificationModal, setShowCreateNotificationModal] = useState(false);

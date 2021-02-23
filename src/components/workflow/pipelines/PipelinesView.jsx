@@ -13,7 +13,7 @@ import cookieHelpers from "core/cookies/cookie-helpers";
 import pipelineActions from "components/workflow/pipeline-actions";
 import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilter";
 import Model from "core/data_model/model";
-import TagFilter from "components/common/filters/tags/TagFilter";
+import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import PipelineCardView from "components/workflow/pipelines/PipelineCardView";
 //import FilterBar from "components/common/filters/FilterBar";
 import FilterContainer from "components/common/table/FilterContainer";

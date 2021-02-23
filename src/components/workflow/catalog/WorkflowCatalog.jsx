@@ -10,7 +10,7 @@ import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
 import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
 import Model from "core/data_model/model";
 import catalogFilterMetadata from "components/workflow/catalog/catalog-filter-metadata";
-import TagFilter from "components/common/filters/tags/TagFilter";
+import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import CardView from "components/common/card/CardView";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faOctagon} from "@fortawesome/pro-light-svg-icons";

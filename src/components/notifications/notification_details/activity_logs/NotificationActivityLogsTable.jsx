@@ -15,7 +15,7 @@ import Model from "core/data_model/model";
 import notificationActivityLogFilterMetadata
   from "components/notifications/notification_details/activity_logs/notifications-activity-log-filter-metadata";
 import StatusFilter from "components/common/filters/status/StatusFilter";
-import TagFilter from "components/common/filters/tags/TagFilter";
+import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import NotificationTypeFilter from "components/common/filters/notifications/notification_type/NotificationTypeFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
