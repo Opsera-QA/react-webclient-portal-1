@@ -25,6 +25,8 @@ import kpiMarketplaceFilterMetadata from "components/insights/marketplace/kpi-ma
 import MarketplaceCard from "components/insights/marketplace/MarketplaceCard";
 import KPIInfoModal from "components/insights/marketplace/KPIInfoModal";
 import axios from "axios";
+import InlineKpiCategoryFilter
+  from "components/common/filters/insights/marketplace/kpi_category/InlineKpiCategoryFilter";
 
 export default function Marketplace () {  
   const contextType = useContext(AuthContext);
@@ -54,7 +56,7 @@ export default function Marketplace () {
     setCancelTokenSource(source);
 
     isMounted.current = true;
-    loadData(source).catch((error) => {
+    loadData(marketplaceFilterDto, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -74,11 +76,11 @@ export default function Marketplace () {
     }
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (filterModel = marketplaceFilterDto, cancelSource = cancelTokenSource) => {
     try {
       setLoading(true);
       setShowModal(false);
-      await getMarketKPIData(cancelSource);
+      await getMarketKPIData(filterModel, cancelSource);
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -93,12 +95,12 @@ export default function Marketplace () {
     }
   };
 
-  const getMarketKPIData = async (cancelSource = cancelTokenSource) => {
-    const kpiResponse = await KpiActions.getKpisV2(getAccessToken, cancelSource, marketplaceFilterDto);
+  const getMarketKPIData = async (filterModel = marketplaceFilterDto, cancelSource = cancelTokenSource) => {
+    const kpiResponse = await KpiActions.getKpisV2(getAccessToken, cancelSource, filterModel);
     const kpis = kpiResponse?.data?.data;
 
     if (isMounted?.current === true && kpiResponse) {
-      let newFilterDto = marketplaceFilterDto;
+      let newFilterDto = filterModel;
       newFilterDto.setData("totalCount", kpiResponse?.data?.count);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
       setMarketplaceFilterDto({...newFilterDto});
@@ -204,7 +206,7 @@ export default function Marketplace () {
       <div className="px-4">
         <Row>
           <Col>
-            <KpiCategoryFilter filterDto={marketplaceFilterDto} setFilterDto={setMarketplaceFilterDto} setDataFunction={setFilterData}/>
+            <InlineKpiCategoryFilter filterModel={marketplaceFilterDto} setFilterModal={setMarketplaceFilterDto} loadData={loadData}/>
           </Col>
           <Col>
             <ToolIdentifierFilter

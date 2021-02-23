@@ -61,7 +61,7 @@ FilterSelectInputBase.propTypes = {
   busy: PropTypes.bool,
   className: PropTypes.string,
   inline: PropTypes.bool,
-  disabeld: PropTypes.bool
+  disabled: PropTypes.bool
 };
 
 FilterSelectInputBase.defaultProps = {

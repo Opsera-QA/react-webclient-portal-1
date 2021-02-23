@@ -63,19 +63,18 @@ function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunct
   };
 
   return (
-    <div className={className}>
-      <FilterSelectInputBase
-        busy={isLoading}
-        placeholderText={"Filter by Tool"}
-        fieldName={fieldName}
-        inline={inline}
-        disabled={loadingData}
-        setDataObject={setFilterDto}
-        dataObject={filterDto}
-        setDataFunction={setDataFunction}
-        selectOptions={toolIdentifierFilterOptions}
-      />
-    </div>
+    <FilterSelectInputBase
+      busy={isLoading}
+      placeholderText={"Filter by Tool"}
+      fieldName={fieldName}
+      inline={inline}
+      disabled={loadingData}
+      setDataObject={setFilterDto}
+      dataObject={filterDto}
+      setDataFunction={setDataFunction}
+      selectOptions={toolIdentifierFilterOptions}
+      className={className}
+    />
   );
 }
 

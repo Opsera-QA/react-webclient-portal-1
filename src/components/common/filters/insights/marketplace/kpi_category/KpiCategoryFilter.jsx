@@ -1,47 +1,32 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import DropdownList from "react-widgets/lib/DropdownList";
-import WarningDialog from "components/common/status_notifications/WarningDialog";
-import {createFilterOptions} from "components/common/filters/filterHelpers";
+import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import kpiLovHelpers from "components/common/list_of_values_input/admin/kpi_configurations/kpi-lov-helpers";
 
-function KpiCategoryFilter({ fieldName, filterDto, setFilterDto, setDataFunction}) {
-  const [field] = useState(filterDto.getFieldById(fieldName));
-
-  // TODO: Use this instead of the method inside marketplace.jsx
-  const validateAndSetData = (value) => {
-    let newDataObject = filterDto;
-    newDataObject.setData(fieldName, value);
-    setFilterDto({...newDataObject});
-  };
-
-  if (field == null) {
-    return <WarningDialog warningMessage={"No field was found for this filter"} />
+function KpiCategoryFilter({ fieldName, filterModel, setFilterModel, setDataFunction, inline}) {
+  if (filterModel == null) {
+    return null;
   }
 
   return (
-    <div>
-      {/*<label><span>{field.label}</span></label>*/}
-      <DropdownList
-        data={createFilterOptions(kpiLovHelpers.categories, "Category", "label", "id")}
-        textField="text"
-        valueField="value"
-        value={filterDto.getData(fieldName)}
-        placeholder="Category Filter"
-        filter="contains"
-        // TODO: Change to this when filters are updated
-        // onChange={(data) => validateAndSetData(data)}
-        onChange={(data) => setDataFunction(fieldName, data)}
-      />
-    </div>
+    <FilterSelectInputBase
+      inline={inline}
+      fieldName={fieldName}
+      placeholderText={"Filter By Category"}
+      setDataObject={setFilterModel}
+      dataObject={filterModel}
+      selectOptions={kpiLovHelpers.categories}
+      setDataFunction={setDataFunction}
+    />
   );
 }
 
 KpiCategoryFilter.propTypes = {
   fieldName: PropTypes.string,
-  filterDto: PropTypes.object,
-  setFilterDto: PropTypes.func,
+  filterModel: PropTypes.object,
+  setFilterModel: PropTypes.func,
   setDataFunction: PropTypes.func,
+  inline: PropTypes.bool
 };
 
 KpiCategoryFilter.defaultProps = {

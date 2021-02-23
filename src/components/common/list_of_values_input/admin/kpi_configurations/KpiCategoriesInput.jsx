@@ -10,8 +10,8 @@ function KpiCategoriesInput({ fieldName, dataObject, setDataObject, disabled }) 
       dataObject={dataObject}
       setDataObject={setDataObject}
       selectOptions={kpiLovHelpers.categories}
-      valueField="id"
-      textField="label"
+      valueField="value"
+      textField="text"
       disabled={disabled}
     />
   );
@@ -21,7 +21,10 @@ KpiCategoriesInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.array
+  ]),
 };
 
 KpiCategoriesInput.defaultProps = {

@@ -23,18 +23,18 @@ kpiLovHelpers.getFilterById = (id) => {
 };
 
 kpiLovHelpers.categories = [
-  {id: "pipeline", label: "Pipeline"},
-  {id: "security", label: "Security"},
-  {id: "quality", label: "Quality"},
-  {id: "software-development", label: "Software Development"},
-  {id: "software-testing", label: "Software Testing"},
-  {id: "source-code", label: "Source Code"},
-  {id: "operations", label: "Operations"},
-  {id: "planning", label: "Planning"}
+  {value: "pipeline", text: "Pipeline"},
+  {value: "security", text: "Security"},
+  {value: "quality", text: "Quality"},
+  {value: "software-development", text: "Software Development"},
+  {value: "software-testing", text: "Software Testing"},
+  {value: "source-code", text: "Source Code"},
+  {value: "operations", text: "Operations"},
+  {value: "planning", text: "Planning"}
 ];
 
 kpiLovHelpers.getCategoryById = (id) => {
-  return kpiLovHelpers.categories.find((filter) => filter.id === id);
+  return kpiLovHelpers.categories.find((filter) => filter.value === id);
 };
 
 export default kpiLovHelpers;
