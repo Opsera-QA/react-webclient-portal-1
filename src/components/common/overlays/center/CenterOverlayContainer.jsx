@@ -10,14 +10,9 @@ function CenterOverlayContainer({ children, titleText, titleIcon, showPanel, han
     if (showToasts) {
       toastContext.removeInlineMessage();
     }
-
-    if (showPanel === true) {
-      document.body.style.overflow = 'hidden';
-    }
   }, [showPanel]);
 
   if (!showPanel) {
-    document.body.style.overflow = 'unset';
     return null;
   }
 

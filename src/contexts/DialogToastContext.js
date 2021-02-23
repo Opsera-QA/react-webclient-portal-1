@@ -56,11 +56,16 @@ function ToastContextProvider ({ children, navBar }) {
   );
 
   const addOverlayPanel = useCallback((overlayPanel) => {
+      if (overlayPanel != null) {
+        document.body.style.overflow = 'hidden';
+      }
+
       setOverlayPanel(oldOverlayPanel => overlayPanel);
     }, [setOverlayPanel]
   );
 
   const clearOverlayPanel = useCallback(() => {
+    document.body.style.overflow = 'unset';
     setOverlayPanel(oldOverlayPanel => undefined);
     }, [setOverlayPanel]
   );
