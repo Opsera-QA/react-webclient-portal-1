@@ -212,6 +212,7 @@ export default function Marketplace () {
               setFilterDto={setMarketplaceFilterDto}
               filterDto={marketplaceFilterDto}
               fieldName={"tool"}
+              inline={true}
             />
           </Col>
           <Col>
