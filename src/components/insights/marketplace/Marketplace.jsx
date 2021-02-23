@@ -1,11 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
-import { InputGroup, Form, CardColumns, Row, Col, Button } from "react-bootstrap";
+import { CardColumns, Row, Col, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSpinner,
-  faSearch,
-  faTimes,
-} from "@fortawesome/pro-light-svg-icons";
+import {faTimes } from "@fortawesome/pro-light-svg-icons";
 import { useLocation } from 'react-router-dom';
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
@@ -14,8 +10,6 @@ import DtoBottomPagination from "components/common/pagination/DtoBottomPaginatio
 import "./marketplace.css";
 import KpiActions from 'components/admin/kpi_editor/kpi-editor-actions';
 import dashboardMetadata from "../dashboards/dashboard-metadata";
-import KpiCategoryFilter from "components/common/filters/insights/marketplace/kpi_category/KpiCategoryFilter";
-import ToolIdentifierFilter from "components/common/filters/tools/tool_identifier/ToolIdentifierFilter";
 import InlineInformation from "components/common/status_notifications/inline/InlineInformation";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
@@ -27,6 +21,8 @@ import KPIInfoModal from "components/insights/marketplace/KPIInfoModal";
 import axios from "axios";
 import InlineKpiCategoryFilter
   from "components/common/filters/insights/marketplace/kpi_category/InlineKpiCategoryFilter";
+import InlineToolIdentifierFilter from "components/common/filters/tools/tool_identifier/InlineToolIdentifierFilter";
+import InlineSearchFilter from "components/common/filters/search/InlineSearchFilter";
 
 export default function Marketplace () {  
   const contextType = useContext(AuthContext);
@@ -42,7 +38,6 @@ export default function Marketplace () {
   const [kpis, setKpis] = useState([]);
   const [loading, setLoading] = useState(false);
   const [dashboardLoading, setDashboardLoading] = useState(false);
-  const [searchKeyword, setSearchKeyword] = useState("");
   const [marketplaceFilterDto, setMarketplaceFilterDto] = useState(new Model({ ...kpiMarketplaceFilterMetadata.newObjectFields }, kpiMarketplaceFilterMetadata, false));
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -129,25 +124,6 @@ export default function Marketplace () {
     }
   };
 
-  const handleSearch = async () => {
-    let newFilterDto = marketplaceFilterDto;
-    newFilterDto.setData("pageSize", 10);
-    newFilterDto.setData("currentPage", 1);
-    newFilterDto.setData("search", searchKeyword);
-    setMarketplaceFilterDto({ ...newFilterDto });
-
-    await getMarketKPIData();
-  };
-
-  // TODO: This should really be triggered by a button that doesn't do it every filter change
-  const setFilterData = async (fieldName, value) => {
-    let newDataObject = marketplaceFilterDto;
-    newDataObject.setData(fieldName, value);
-    setMarketplaceFilterDto({...newDataObject});
-
-    await getMarketKPIData();
-  };
-  
   const getFilterActiveButton = (filter, key) => {
     return (
       <Button variant="primary" size="sm" className="mx-2 my-2 filterActiveBtn" key={key}>
@@ -209,31 +185,10 @@ export default function Marketplace () {
             <InlineKpiCategoryFilter filterModel={marketplaceFilterDto} setFilterModal={setMarketplaceFilterDto} loadData={loadData}/>
           </Col>
           <Col>
-            <ToolIdentifierFilter
-              setDataFunction={setFilterData}
-              setFilterDto={setMarketplaceFilterDto}
-              filterDto={marketplaceFilterDto}
-              fieldName={"tool"}
-              inline={true}
-            />
+            <InlineToolIdentifierFilter loadData={loadData} setFilterModel={setMarketplaceFilterDto} filterModel={marketplaceFilterDto} fieldName={"tool"} />
           </Col>
           <Col>
-            <InputGroup className="mb-3">
-              <Form.Control
-                placeholder="Search"
-                value={searchKeyword || ""}
-                onChange={e => setSearchKeyword(e.target.value)}
-              />
-              <InputGroup.Append>
-                <Button variant="primary" size="sm" onClick={handleSearch}>
-                  {loading ? (
-                    <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
-                  ) : (
-                    <FontAwesomeIcon icon={faSearch} fixedWidth className="mr-1"/>
-                  )}
-                </Button>
-              </InputGroup.Append>
-            </InputGroup>
+            <InlineSearchFilter loadData={loadData} supportSearch={true} filterDto={marketplaceFilterDto} setFilterDto={setMarketplaceFilterDto} />
           </Col>
         </Row>
         <Row>
