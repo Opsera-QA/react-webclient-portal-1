@@ -1,5 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
-import "../workflows.css";
+import React, {useContext, useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
@@ -15,49 +14,72 @@ import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilte
 import Model from "core/data_model/model";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import PipelineCardView from "components/workflow/pipelines/PipelineCardView";
-//import FilterBar from "components/common/filters/FilterBar";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
+import axios from "axios";
 
 function PipelinesView({ currentTab, setActiveTab }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [pipelineFilterDto, setPipelineFilterDto] = useState(undefined);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-  // Executed every time currentTab changes
   useEffect(() => {
-    getCookie();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    getCookie(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, [currentTab]);
 
-  const getCookie = async () => {
-    setLoading(true);
+
+  const getCookie = async (cancelSource = cancelTokenSource) => {
+    setIsLoading(true);
     let newPipelineFilterDto = new Model({ ...pipelineFilterMetadata.newObjectFields }, pipelineFilterMetadata, false);
     try {
       let storedSortOption = cookieHelpers.getCookie("pipelines-v2", "sortOption");
       let storedPageSize = cookieHelpers.getCookie("pipelines-v2", "pageSize");
       let storedViewType = cookieHelpers.getCookie("pipelines-v2", "viewType");
 
-      if (storedSortOption != null) {
+      if (isMounted?.current === true && storedSortOption != null) {
         newPipelineFilterDto.setData("sortOption", JSON.parse(storedSortOption));
       }
 
-      if (storedPageSize != null) {
+      if (isMounted?.current === true && storedPageSize != null) {
         newPipelineFilterDto.setData("pageSize", JSON.parse(storedPageSize));
       }
 
-      if (storedViewType != null) {
+      if (isMounted?.current === true && storedViewType != null) {
         newPipelineFilterDto.setData("viewType", JSON.parse(storedViewType));
       }
     } catch (error) {
-      cookieHelpers.setCookie("pipelines-v2", "sortOption", JSON.stringify(newPipelineFilterDto.getData("sortOption")));
-      cookieHelpers.setCookie("pipelines-v2", "pageSize", JSON.stringify(newPipelineFilterDto.getData("pageSize")));
-      cookieHelpers.setCookie("pipelines-v2", "viewType", JSON.stringify(newPipelineFilterDto.getData("viewType")));
-      console.error("Error loading cookie. Setting to default");
-      console.error(error);
+      if (isMounted?.current === true) {
+        cookieHelpers.setCookie("pipelines-v2", "sortOption", JSON.stringify(newPipelineFilterDto.getData("sortOption")));
+        cookieHelpers.setCookie("pipelines-v2", "pageSize", JSON.stringify(newPipelineFilterDto.getData("pageSize")));
+        cookieHelpers.setCookie("pipelines-v2", "viewType", JSON.stringify(newPipelineFilterDto.getData("viewType")));
+        console.error("Error loading cookie. Setting to default");
+        console.error(error);
+      }
     } finally {
-      await loadData(newPipelineFilterDto);
+      if (isMounted?.current === true) {
+        await loadData(newPipelineFilterDto, cancelSource);
+      }
     }
   };
 
@@ -67,25 +89,33 @@ function PipelinesView({ currentTab, setActiveTab }) {
     cookieHelpers.setCookie("pipelines-v2", "viewType", JSON.stringify(newPipelineFilterDto.getData("viewType")));
   };
 
-  const loadData = async (newPipelineFilterDto = pipelineFilterDto) => {
-    setLoading(true);
-
+  const loadData = async (newPipelineFilterDto = pipelineFilterDto, cancelSource = cancelTokenSource) => {
     try {
-      setData(undefined);
-      saveCookies(newPipelineFilterDto);
+      if (isMounted?.current === true) {
+        setIsLoading(true);
+        setData([]);
+        saveCookies(newPipelineFilterDto);
+      }
 
-      const response = await pipelineActions.getPipelines(newPipelineFilterDto, currentTab, getAccessToken);
-      setData(response?.data);
+      const response = await pipelineActions.getPipelinesV2(getAccessToken, cancelSource, newPipelineFilterDto, currentTab);
 
-      let newFilterDto = newPipelineFilterDto;
-      newFilterDto.setData("totalCount", response.data.count);
-      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-      setPipelineFilterDto({ ...newFilterDto });
+      if (isMounted?.current === true && response?.data) {
+        setData(response?.data);
+        let newFilterDto = newPipelineFilterDto;
+        newFilterDto.setData("totalCount", response.data.count);
+        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+        setPipelineFilterDto({...newFilterDto});
+      }
     } catch (error) {
-      console.error(error);
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        console.error(error);
+        console.log(error.error)
+        toastContext.showLoadingErrorDialog(error);
+      }
     } finally {
-      setLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -109,7 +139,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
   };
 
   const getView = () => {
-    if (loading) {
+    if (isLoading) {
       return (<LoadingDialog size="md" message="Loading pipelines..."/>);
     }
 
@@ -119,7 +149,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
 
     return (
       <PipelineCardView
-        isLoading={loading}
+        isLoading={isLoading}
         loadData={loadData}
         data={data?.response}
         pipelineFilterDto={pipelineFilterDto}
@@ -131,7 +161,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
   const showList = () => {
     return (
         <PipelinesTable
-          isLoading={loading}
+          isLoading={isLoading}
           paginationModel={pipelineFilterDto}
           setPaginationModel={setPipelineFilterDto}
           data={data?.response}
@@ -165,7 +195,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
     return (<><PipelineWelcomeView setActiveTab={setActiveTab}/></>);
   }
 
-  if (!data && !loading) {
+  if (!data && !isLoading) {
     return (
       <div className="px-2 max-content-width" style={{minWidth: "505px"}}>
         <div className="my-5">
@@ -185,7 +215,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
         supportSearch={true}
         saveCookies={saveCookies}
         supportViewToggle={true}
-        isLoading={loading}
+        isLoading={isLoading}
         type={"Pipeline"}
         body={getPipelinesBody()}
         dropdownFilters={getDropdownFilters()}

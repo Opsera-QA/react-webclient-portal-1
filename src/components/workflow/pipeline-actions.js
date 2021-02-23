@@ -30,7 +30,7 @@ pipelineActions.getInUseTemplatesV2 = async (getAccessToken, cancelTokenSource) 
 };
 
 
-pipelineActions.getPipelines = async (pipelineFilterDto, type, getAccessToken) => {
+pipelineActions.getPipelinesV2 = async (getAccessToken, cancelTokenSource, pipelineFilterDto, type) => {
   let sortOption = pipelineFilterDto.getData("sortOption");
 
   const urlParams = {
@@ -47,7 +47,7 @@ pipelineActions.getPipelines = async (pipelineFilterDto, type, getAccessToken) =
   };
 
   let apiUrl = `/pipelines`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 pipelineActions.getPipelineSummaries = async (pipelineIds, getAccessToken) => {
