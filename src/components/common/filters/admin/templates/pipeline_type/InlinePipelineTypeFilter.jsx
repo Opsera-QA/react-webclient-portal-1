@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import PipelineTypeFilter from "components/common/filters/admin/templates/PipelineTypeFilter";
+import PipelineTypeFilter from "components/common/filters/admin/templates/pipeline_type/PipelineTypeFilter";
 
 function InlinePipelineTypeFilter({ filterModel, setFilterModel, fieldName, className, loadData, isLoading }) {
   const validateAndSetData = (fieldName, value) => {

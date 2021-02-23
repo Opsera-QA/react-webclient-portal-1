@@ -14,7 +14,7 @@ import TagFilter from "components/common/filters/tags/TagFilter";
 import CardView from "components/common/card/CardView";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faOctagon} from "@fortawesome/pro-light-svg-icons";
-import InlinePipelineTypeFilter from "components/common/filters/admin/templates/inline/InlinePipelineTypeFilter";
+import InlinePipelineTypeFilter from "components/common/filters/admin/templates/pipeline_type/InlinePipelineTypeFilter";
 
 function WorkflowCatalog() {
   const contextType = useContext(AuthContext);
