@@ -41,7 +41,7 @@ const tagFilterMetadata = {
     }
 
     if (filterDto.getData("type") != null) {
-      activeFilters.push({filterId: "type", ...filterDto.getData("type")});
+      activeFilters.push({filterId: "type", text: `Status: ${filterDto.getFilterValue("type")}`});
     }
 
     if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {

@@ -1,25 +1,38 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {createFilterOptions} from "components/common/filters/filterHelpers";
-import {defaultTags} from "components/settings/tags/tags-metadata";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
+import {tagTypes} from "components/common/list_of_values_input/settings/tags/TagTypeSelectInput";
 
-function TagTypeFilter({ filterDto, setFilterDto}) {
+function TagTypeFilter({ fieldName, filterModel, setFilterModel, className, setDataFunction, inline}) {
+  if (filterModel == null) {
+    return null;
+  }
+  
   return (
-    <div>
-      <FilterSelectInputBase
-        fieldName={"type"}
-        placeholderText={"Filter by Tag Type"}
-        setDataObject={setFilterDto}
-        dataObject={filterDto}
-        selectOptions={createFilterOptions(defaultTags, "Tag", "value", "type")} /></div>
+    <FilterSelectInputBase
+      fieldName={fieldName}
+      placeholderText={"Filter by Tag Type"}
+      setDataObject={setFilterModel}
+      dataObject={filterModel}
+      selectOptions={tagTypes}
+      className={className}
+      setDataFunction={setDataFunction}
+      inline={inline}
+    />
   );
 }
 
-
 TagTypeFilter.propTypes = {
-  filterDto: PropTypes.object,
-  setFilterDto: PropTypes.func,
+  filterModel: PropTypes.object,
+  setFilterModel: PropTypes.func,
+  className: PropTypes.string,
+  setDataFunction: PropTypes.func,
+  inline: PropTypes.bool,
+  fieldName: PropTypes.string
+};
+
+TagTypeFilter.defaultProps = {
+  fieldName: "type"
 };
 
 export default TagTypeFilter;

@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { Multiselect } from 'react-widgets'
 import {AuthContext} from "../../../contexts/AuthContext";
-import tagEditorMetadata, {defaultTags} from "components/settings/tags/tags-metadata";
+import tagEditorMetadata from "components/settings/tags/tags-metadata";
 import adminTagsActions from "../../settings/tags/admin-tags-actions";
 import Model from "../../../core/data_model/model";
 import LoadingDialog from "../status_notifications/loading";
@@ -10,7 +10,7 @@ import LoadingDialog from "../status_notifications/loading";
 // TODO: Don't use this besides in pipeline summary editors. It's a temp component until I can wire up my new ones
 function TempTagManagerInput({ label, type, data, setData, disabled, filter, placeholderText, allowCreate, groupBy}) {
   const { getAccessToken } = useContext(AuthContext);
-  const [tagOptions, setTagOptions] = useState(defaultTags);
+  const [tagOptions, setTagOptions] = useState([]);
   const [componentLoading, setComponentLoading] = useState(true);
 
   useEffect(() => {
@@ -51,7 +51,7 @@ function TempTagManagerInput({ label, type, data, setData, disabled, filter, pla
   };
 
   const loadTagOptions = (tags) => {
-    let currentOptions = [...defaultTags];
+    let currentOptions = [];
     tags.map((tag, index) => {
       if (tag["type"] != null && tag["type"] !== "" && tag["value"] != null && tag["value"] !== "")
       {

@@ -51,15 +51,4 @@ const tagEditorMetadata = {
   }
 };
 
-export const defaultTags = [
-  {type: "pipeline", value: "Pipeline"},
-  {type: "application", value: "Application"},
-  {type: "project", value: "Project"},
-  {type: "release", value: "Release"},
-  {type: "tool", value: "Tool"},
-  {type: "custom", value: "Custom"},
-  {type: "template", value: "Template"},
-  {type: "notification", value: "Notification Policy"},
-];
-
 export default tagEditorMetadata;

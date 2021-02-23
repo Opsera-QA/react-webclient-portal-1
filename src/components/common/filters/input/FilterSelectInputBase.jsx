@@ -4,8 +4,6 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 
-// TODO: Rewrite when time permits
-// TODO: Allow passing in error message that is displayed as the placeholderText instead of using toastContext
 function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, setDataFunction, valueField, textField, filter, placeholderText, busy, className, inline, disabled}) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 

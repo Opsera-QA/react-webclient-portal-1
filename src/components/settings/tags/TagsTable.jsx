@@ -14,6 +14,7 @@ import StatusFilter from "components/common/filters/status/StatusFilter";
 import TagTypeFilter from "components/common/filters/tags/tag_type/TagTypeFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTags} from "@fortawesome/pro-light-svg-icons";
+import InlineTagTypeFilter from "components/common/filters/tags/tag_type/InlineTagTypeFilter";
 
 function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto }) {
   const history = useHistory();
@@ -44,11 +45,14 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto })
   };
 
   const getDropdownFilters = () => {
-    return(
-      <>
-        <StatusFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} className={"mb-2"} />
-        <TagTypeFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
-      </>
+    return (
+        <StatusFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
+    );
+  };
+
+  const getInlineFilters = () => {
+    return (
+      <InlineTagTypeFilter filterModel={tagFilterDto} setFilterModel={setTagFilterDto} loadData={loadData} className={"mr-2"} />
     );
   };
 
@@ -78,6 +82,7 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto })
         supportSearch={true}
         isLoading={isLoading}
         body={getTagsTable()}
+        inlineFilters={getInlineFilters()}
         dropdownFilters={getDropdownFilters()}
         titleIcon={faTags}
         title={"Tags"}

@@ -3,14 +3,13 @@ import PropTypes from "prop-types";
 import { Multiselect } from 'react-widgets'
 import adminTagsActions from "../../../settings/tags/admin-tags-actions";
 import {AuthContext} from "../../../../contexts/AuthContext";
-import {defaultTags} from "components/settings/tags/tags-metadata";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 
 function DtoTagManagerFilterInput({ fieldName, type, dataObject, setDataObject, disabled, filter, placeholderText, setDataFunction, allowCreate, groupBy }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [field] = useState(dataObject.getFieldById(fieldName));
-  const [tagOptions, setTagOptions] = useState(defaultTags);
+  const [tagOptions, setTagOptions] = useState([]);
   const [componentLoading, setComponentLoading] = useState(true);
 
   useEffect(() => {
@@ -59,7 +58,7 @@ function DtoTagManagerFilterInput({ fieldName, type, dataObject, setDataObject, 
   }
 
   const loadTagOptions = (tags) => {
-    let currentOptions = [...defaultTags];
+    let currentOptions = [];
     tags.map((tag, index) => {
       let tagOption = {type: tag["type"], value: tag["value"]};
       currentOptions.push(tagOption);

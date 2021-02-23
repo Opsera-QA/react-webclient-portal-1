@@ -5,7 +5,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import axios from "axios";
 import toolManagementActions from "components/admin/tools/tool-management-actions";
-import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
 function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunction, className, inline, loadingData }) {
   const { getAccessToken } = useContext(AuthContext);

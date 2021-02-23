@@ -1,7 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {defaultTags} from "components/settings/tags/tags-metadata";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+
+export const tagTypes = [
+  {value: "pipeline", text: "Pipeline"},
+  {value: "application", text: "Application"},
+  {value: "project", text: "Project"},
+  {value: "release", text: "Release"},
+  {value: "tool", text: "Tool"},
+  {value: "custom", text: "Custom"},
+  {value: "template", text: "Template"},
+  {value: "notification", text: "Notification Policy"},
+];
 
 function TagTypeSelectInput({ fieldName, dataObject, setDataObject, disabled}) {
   return (
@@ -10,9 +20,9 @@ function TagTypeSelectInput({ fieldName, dataObject, setDataObject, disabled}) {
         fieldName={fieldName}
         dataObject={dataObject}
         setDataObject={setDataObject}
-        selectOptions={defaultTags}
-        valueField={"type"}
-        textField={"value"}
+        selectOptions={tagTypes}
+        valueField={"value"}
+        textField={"text"}
         disabled={disabled}
       />
     </div>
