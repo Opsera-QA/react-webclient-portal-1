@@ -158,7 +158,7 @@ function WorkflowCatalog() {
 
   const getDropdownFilters = () => {
     return (
-        <TagFilter filterModel={catalogFilterModel} setFilterDto={setCatalogFilterModel} />
+        <TagFilter filterDto={catalogFilterModel} setFilterDto={setCatalogFilterModel} />
     );
   };
 
