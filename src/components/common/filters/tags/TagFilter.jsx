@@ -61,7 +61,7 @@ function TagFilter({ filterDto, setFilterDto, className }) {
 
     if (Array.isArray(tags) && tags.length > 0) {
       tags.map((tag, index) => {
-        tagOptions.push({text: `${capitalizeFirstLetter(tag["type"])}: ${tag["value"]}`, value: `${tag["type"]}:${tag["value"]}`, type: `${tag["type"]}`});
+        tagOptions.push({text: `${tag["value"]}`, value: `${tag["type"]}:${tag["value"]}`, type: `${capitalizeFirstLetter(tag["type"])}`});
       });
     }
 
