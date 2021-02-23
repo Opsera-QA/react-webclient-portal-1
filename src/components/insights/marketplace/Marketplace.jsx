@@ -1,12 +1,10 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
-import { CardColumns, Row, Col, Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faTimes } from "@fortawesome/pro-light-svg-icons";
+import { CardColumns } from "react-bootstrap";
+import {faChartArea} from "@fortawesome/pro-light-svg-icons";
 import { useLocation } from 'react-router-dom';
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import Model from "core/data_model/model";
-import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import "./marketplace.css";
 import KpiActions from 'components/admin/kpi_editor/kpi-editor-actions';
 import dashboardMetadata from "../dashboards/dashboard-metadata";
@@ -22,7 +20,9 @@ import axios from "axios";
 import InlineKpiCategoryFilter
   from "components/common/filters/insights/marketplace/kpi_category/InlineKpiCategoryFilter";
 import InlineToolIdentifierFilter from "components/common/filters/tools/tool_identifier/InlineToolIdentifierFilter";
-import InlineSearchFilter from "components/common/filters/search/InlineSearchFilter";
+import FilterContainer from "components/common/table/FilterContainer";
+import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
+import Row from "react-bootstrap/Row";
 
 export default function Marketplace () {  
   const contextType = useContext(AuthContext);
@@ -57,14 +57,6 @@ export default function Marketplace () {
       }
     });
 
-
-    const dashboardId  =  location?.state?.dashboardId;
-    if(dashboardId) {
-      setDashboardData(undefined);
-      setDashboardId(dashboardId);
-      getDashboard(dashboardId, source);
-    }
-
     return () => {
       source.cancel();
       isMounted.current = false;
@@ -76,6 +68,13 @@ export default function Marketplace () {
       setLoading(true);
       setShowModal(false);
       await getMarketKPIData(filterModel, cancelSource);
+
+      const dashboardId  =  location?.state?.dashboardId;
+      if(dashboardId) {
+        setDashboardData(undefined);
+        setDashboardId(dashboardId);
+        await getDashboard(dashboardId, cancelSource);
+      }
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -94,12 +93,13 @@ export default function Marketplace () {
     const kpiResponse = await KpiActions.getKpisV2(getAccessToken, cancelSource, filterModel);
     const kpis = kpiResponse?.data?.data;
 
-    if (isMounted?.current === true && kpiResponse) {
+    if (isMounted?.current === true && kpiResponse && kpis) {
+      setKpis(kpis);
       let newFilterDto = filterModel;
       newFilterDto.setData("totalCount", kpiResponse?.data?.count);
+      console.log("totalCount: " + JSON.stringify(kpiResponse.data.count))
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
       setMarketplaceFilterDto({...newFilterDto});
-      setKpis(kpis);
     }
   };
 
@@ -124,25 +124,6 @@ export default function Marketplace () {
     }
   };
 
-  const getFilterActiveButton = (filter, key) => {
-    return (
-      <Button variant="primary" size="sm" className="mx-2 my-2 filterActiveBtn" key={key}>
-        <span className="mx-2">{filter["text"]}</span>
-        <span className="ml-2" onClick={() => {removeFilterData(filter.filterId);}}>
-              <FontAwesomeIcon icon={faTimes} fixedWidth/>
-        </span>
-      </Button>
-    );
-  };
-  
-  const removeFilterData = async (fieldName) => {
-    let newDataObject = marketplaceFilterDto;
-    newDataObject.setData(fieldName, null);
-    newDataObject.setData("currentPage", 1);
-    setMarketplaceFilterDto({...newDataObject});
-    await getMarketKPIData();
-  };
-
   const openModal = (data) => {
     setSelectedItem(data);
     setShowModal(true);
@@ -158,12 +139,47 @@ export default function Marketplace () {
     }
 
     return (
-      <CardColumns>
-        {kpis.map((kpi, index) => {
-          return (<MarketplaceCard key={index} kpi={kpi} openModal={openModal}/>)
-        })}
-      </CardColumns>
+      <div className="px-2 pb-2">
+        <div>
+          <div className="mx-auto mt-1">
+            <DtoBottomPagination
+              paginationStyle={"stacked"}
+              paginationDto={marketplaceFilterDto}
+              setPaginationDto={setMarketplaceFilterDto}
+              isLoading={loading}
+              loadData={loadData}
+            />
+          </div>
+        </div>
+        <div>
+          <CardColumns>
+            {kpis.map((kpi, index) => {
+              return (<MarketplaceCard key={index} kpi={kpi} openModal={openModal}/>)
+            })}
+          </CardColumns>
+        </div>
+        <div>
+          <div className="mx-auto">
+            <DtoBottomPagination
+              paginationStyle={"stacked"}
+              paginationDto={marketplaceFilterDto}
+              setPaginationDto={setMarketplaceFilterDto}
+              isLoading={loading}
+              loadData={loadData}
+            />
+          </div>
+        </div>
+      </div>
     );
+  };
+
+  const getInlineFilters = () => {
+    return (
+      <div className="d-flex">
+        <InlineKpiCategoryFilter filterModel={marketplaceFilterDto} setFilterModal={setMarketplaceFilterDto} loadData={loadData} className={"mr-2"} />
+        <InlineToolIdentifierFilter loadData={loadData} setFilterModel={setMarketplaceFilterDto} filterModel={marketplaceFilterDto} fieldName={"tool"} className={"mr-2"} />
+      </div>
+    )
   };
 
   if (error) {
@@ -179,49 +195,19 @@ export default function Marketplace () {
         KPIs and configure them on your OpsERA Analytics Dashboards.
       `}
     >
-      <div className="px-4">
-        <Row>
-          <Col>
-            <InlineKpiCategoryFilter filterModel={marketplaceFilterDto} setFilterModal={setMarketplaceFilterDto} loadData={loadData}/>
-          </Col>
-          <Col>
-            <InlineToolIdentifierFilter loadData={loadData} setFilterModel={setMarketplaceFilterDto} filterModel={marketplaceFilterDto} fieldName={"tool"} />
-          </Col>
-          <Col>
-            <InlineSearchFilter loadData={loadData} supportSearch={true} filterDto={marketplaceFilterDto} setFilterDto={setMarketplaceFilterDto} />
-          </Col>
-        </Row>
-        <Row>
-          <div className="mx-auto">
-            <DtoBottomPagination
-              paginationStyle={"stacked"}
-              paginationDto={marketplaceFilterDto}
-              setPaginationDto={setMarketplaceFilterDto}
-              isLoading={loading}
-              loadData={loadData}
-            />
-          </div>
-        </Row>
-        <Row>
-          {marketplaceFilterDto.getData("activeFilters").map((filter, key) => getFilterActiveButton(filter, key))}
-        </Row>
-        <Row className="marketplace-cards">
-          {getMainBody()}
-        </Row>
-        <Row>
-          <div className="mx-auto">
-            <DtoBottomPagination
-              paginationStyle={"stacked"}
-              paginationDto={marketplaceFilterDto}
-              setPaginationDto={setMarketplaceFilterDto}
-              isLoading={loading}
-              loadData={loadData}
-            />
-          </div>
-        </Row>
-
-        <KPIInfoModal setShowModal={setShowModal} showModal={showModal} kpiItem={selectedItem} dashboardData={dashboardData}/>
-      </div>
+      <FilterContainer
+        loadData={loadData}
+        filterDto={marketplaceFilterDto}
+        setFilterDto={setMarketplaceFilterDto}
+        supportSearch={true}
+        isLoading={loading}
+        body={getMainBody()}
+        inlineFilters={getInlineFilters()}
+        titleIcon={faChartArea}
+        title={"KPIs"}
+        className={"px-2 pb-2"}
+      />
+      <KPIInfoModal setShowModal={setShowModal} showModal={showModal} kpiItem={selectedItem} dashboardData={dashboardData}/>
     </ScreenContainer>
   )
 }

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import kpiLovHelpers from "components/common/list_of_values_input/admin/kpi_configurations/kpi-lov-helpers";
 
-function KpiCategoryFilter({ fieldName, filterModel, setFilterModel, setDataFunction, inline}) {
+function KpiCategoryFilter({ fieldName, filterModel, setFilterModel, setDataFunction, inline, className}) {
   if (filterModel == null) {
     return null;
   }
@@ -12,6 +12,7 @@ function KpiCategoryFilter({ fieldName, filterModel, setFilterModel, setDataFunc
     <FilterSelectInputBase
       inline={inline}
       fieldName={fieldName}
+      className={className}
       placeholderText={"Filter By Category"}
       setDataObject={setFilterModel}
       dataObject={filterModel}
