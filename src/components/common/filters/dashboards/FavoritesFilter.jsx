@@ -4,7 +4,7 @@ import FilterSelectInputBase from "components/common/filters/input/FilterSelectI
 
 const favoritesOptions = [
   {text: "Show All", value: undefined},
-  {text: "Show Favorites", value: "favorites"}
+  {text: "Only Show Favorites", value: "favorites"}
 ];
 
 function FavoritesFilter({ filterModel, setFilterModel, className }) {
@@ -17,7 +17,7 @@ function FavoritesFilter({ filterModel, setFilterModel, className }) {
     <div className={className}>
       <FilterSelectInputBase
         fieldName={"isFavorite"}
-        placeholderText={"Filter by Dashboard Type"}
+        placeholderText={"Filter by Favorites"}
         setDataObject={setFilterModel}
         dataObject={filterModel}
         selectOptions={favoritesOptions}
