@@ -23,6 +23,7 @@ function FilterContainer(
     supportSearch,
     supportViewToggle,
     saveCookies,
+    className,
 
     // TODO: Remove after filters are used everywhere
     type
@@ -63,23 +64,25 @@ function FilterContainer(
   };
 
   return (
-    <div className="filter-container">
-      <div className="filter-title-bar w-100">
-        <div className="px-2 d-flex content-block-header">
-          <FilterTitleBar
-            isLoading={isLoading}
-            title={title}
-            type={type}
-            filterDto={filterDto}
-            titleIcon={titleIcon}
-            inlineFilters={getInlineFilters()}
-            addRecordFunction={addRecordFunction}
-          />
+    <div className={className}>
+      <div className="filter-container">
+        <div className="filter-title-bar w-100">
+          <div className="px-2 d-flex content-block-header">
+            <FilterTitleBar
+              isLoading={isLoading}
+              title={title}
+              type={type}
+              filterDto={filterDto}
+              titleIcon={titleIcon}
+              inlineFilters={getInlineFilters()}
+              addRecordFunction={addRecordFunction}
+            />
+          </div>
+          <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} />
         </div>
-        <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} />
-      </div>
-      <div>
-        {body}
+        <div>
+          {body}
+        </div>
       </div>
     </div>
   );
@@ -100,7 +103,8 @@ FilterContainer.propTypes = {
   supportViewToggle: PropTypes.bool,
   inlineFilters: PropTypes.any,
   saveCookies: PropTypes.func,
-  type: PropTypes.string
+  type: PropTypes.string,
+  className: PropTypes.string
 };
 
 export default FilterContainer;
