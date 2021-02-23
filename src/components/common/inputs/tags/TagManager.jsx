@@ -184,7 +184,7 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
         onCreate={(value) => handleCreate(value)}
         value={[...dataObject?.getData(fieldName)]}
         placeholder={errorMessage}
-        disabled={disabled}
+        disabled={disabled || isLoading}
         onChange={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
       />
       <InfoText field={field} errorMessage={errorMessage}/>

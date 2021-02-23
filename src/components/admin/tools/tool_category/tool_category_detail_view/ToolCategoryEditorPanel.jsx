@@ -5,7 +5,6 @@ import {Col, Row} from "react-bootstrap";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import toolManagementActions from "components/admin/tools/tool-management-actions";
-import DtoTagManagerInput from "components/common/input/dto_input/dto-tag-manager-input";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import TagManager from "components/common/inputs/tags/TagManager";

@@ -1441,7 +1441,7 @@ a.nav-link {
 }
 
 .overlay-panel .overlay-panel-body {
-    min-height: 100%;
+    min-height: 100% !important;
 }
 
 /* End Overlay Panel styling */

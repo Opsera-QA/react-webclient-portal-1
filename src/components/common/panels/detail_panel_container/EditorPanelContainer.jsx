@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Form from "react-bootstrap/Form";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PersistAndCloseButtonContainer from "components/common/buttons/saving/containers/PersistAndCloseButtonContainer";
@@ -36,15 +35,13 @@ function EditorPanelContainer({ children, isLoading, showRequiredFieldsMessage, 
   }
 
   return (
-    <Form className="scroll-y h-100">
-      <div className="p-3">
-        <div>{children}</div>
-        <div className="mr-3">
-          <div>{getPersistButtonContainer()}</div>
-          <div>{getRequiredFieldsMessage()}</div>
-        </div>
+    <div className="p-3 h-100">
+      <div>{children}</div>
+      <div className="mr-3">
+        <div>{getPersistButtonContainer()}</div>
+        <div>{getRequiredFieldsMessage()}</div>
       </div>
-    </Form>
+    </div>
   );
 }
 
