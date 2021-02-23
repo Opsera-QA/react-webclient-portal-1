@@ -11,11 +11,12 @@ import {
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import StatusFilter from "components/common/filters/status/StatusFilter";
-import DashboardTypeFilter from "components/common/filters/dashboards/DashboardTypeFilter";
+import DashboardTypeFilter from "components/common/filters/dashboards/dashboard_type/DashboardTypeFilter";
 import FavoritesFilter from "components/common/filters/dashboards/FavoritesFilter";
 import NewDashboardModal from "components/insights/dashboards/NewDashboardModal";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faChartNetwork} from "@fortawesome/pro-light-svg-icons";
+import InlineDashboardTypeFilter from "components/common/filters/dashboards/dashboard_type/InlineDashboardTypeFilter";
 
 function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadData, isLoading}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -46,10 +47,15 @@ function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadD
     return (
       <>
         <StatusFilter filterDto={dashboardFilterDto} setFilterDto={setDashboardFilterDto} className="mb-2" />
-        <DashboardTypeFilter filterModel={dashboardFilterDto} setFilterModel={setDashboardFilterDto} className="mb-2" />
         <FavoritesFilter filterModel={dashboardFilterDto} setFilterModel={setDashboardFilterDto}/>
       </>
     );
+  };
+
+  const getInlineFilters = () => {
+    return (
+      <InlineDashboardTypeFilter filterModel={dashboardFilterDto} setFilterModel={setDashboardFilterDto} loadData={loadData} className="mr-2" />
+    )
   };
 
   const getDashboardsTable = () => {
@@ -80,6 +86,7 @@ function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadD
         filterDto={dashboardFilterDto}
         setFilterDto={setDashboardFilterDto}
         dropdownFilters={getDropdownFilters()}
+        inlineFilters={getInlineFilters()}
       />
       <NewDashboardModal loadData={loadData} setShowModal={setShowCreateDashboardModal} showModal={showCreateDashboardModal}/>
     </div>
