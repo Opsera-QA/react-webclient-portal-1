@@ -12,7 +12,7 @@ import {
 import {getField} from "components/common/metadata/metadata-helpers";
 import StatusFilter from "components/common/filters/status/StatusFilter";
 import DashboardTypeFilter from "components/common/filters/dashboards/dashboard_type/DashboardTypeFilter";
-import FavoritesFilter from "components/common/filters/dashboards/FavoritesFilter";
+import FavoritesFilter from "components/common/filters/dashboards/favorites/FavoritesFilter";
 import NewDashboardModal from "components/insights/dashboards/NewDashboardModal";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faChartNetwork} from "@fortawesome/pro-light-svg-icons";

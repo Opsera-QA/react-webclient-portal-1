@@ -37,9 +37,9 @@ import {
 } from "components/common/table/table-column-helpers";
 import { format } from "date-fns";
 import FilterContainer from "components/common/table/FilterContainer";
-import SfdcComponentFilter from "components/common/filters/sfdccomponent/SfdcComponentFilter";
+import SfdcComponentFilter from "components/common/filters/sfdc/sfdc_component/SfdcComponentFilter";
 import sfdcComponentFilterMetadata from './sfdc-component-filter-metadata';
-import BooleanFilter from "components/common/filters/input/BooleanFilter";
+import BooleanFilter from "components/common/filters/boolean/BooleanFilter";
 import SfdcModifiedFilesTabView from "./tab_views/SfdcModifiedFilesTabView";
 
 //This must match the form below and the data object expected.  Each tools' data object is different

@@ -11,7 +11,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import cookieHelpers from "core/cookies/cookie-helpers";
 import pipelineActions from "components/workflow/pipeline-actions";
-import LdapOwnerFilter from "components/common/filters/pipelines/LdapOwnerFilter";
+import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilter";
 import Model from "core/data_model/model";
 import TagFilter from "components/common/filters/tags/TagFilter";
 import PipelineCardView from "components/workflow/pipelines/PipelineCardView";

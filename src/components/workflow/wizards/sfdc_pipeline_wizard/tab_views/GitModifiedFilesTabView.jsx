@@ -11,8 +11,8 @@ import sfdcTableConstants from "components/workflow/wizards/sfdc_pipeline_wizard
 import FilterContainer from "components/common/table/FilterContainer";
 import { faCode } from "@fortawesome/free-solid-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import BooleanFilter from "components/common/filters/input/BooleanFilter";
-import SfdcComponentFilter from "components/common/filters/sfdccomponent/SfdcComponentFilter";
+import BooleanFilter from "components/common/filters/boolean/BooleanFilter";
+import SfdcComponentFilter from "components/common/filters/sfdc/sfdc_component/SfdcComponentFilter";
 
 const GitModifiedFilesTabView = ({
   loadData,

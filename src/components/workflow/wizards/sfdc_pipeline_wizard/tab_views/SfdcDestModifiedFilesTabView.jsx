@@ -8,7 +8,7 @@ import {
 import sfdcTableConstants from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-table-constants";
 import FilterContainer from "components/common/table/FilterContainer";
 import { faCode } from "@fortawesome/free-solid-svg-icons";
-import SfdcComponentFilter from "components/common/filters/sfdccomponent/SfdcComponentFilter";
+import SfdcComponentFilter from "components/common/filters/sfdc/sfdc_component/SfdcComponentFilter";
 
 const SfdcDestModifiedFilesTabView = ({
   loadData,

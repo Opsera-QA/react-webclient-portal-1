@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ToolIdentifierFilter from "components/common/filters/tools/ToolIdentifierFilter";
+import ToolIdentifierFilter from "components/common/filters/tools/tool_identifier/ToolIdentifierFilter";
 
 function InlineToolIdentifierFilter({ filterModel, setFilterModel, fieldName, className, loadData, isLoading }) {
   const validateAndSetData = (fieldName, value) => {

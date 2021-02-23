@@ -14,8 +14,8 @@ import DtoBottomPagination from "components/common/pagination/DtoBottomPaginatio
 import "./marketplace.css";
 import KpiActions from 'components/admin/kpi_editor/kpi-editor-actions';
 import dashboardMetadata from "../dashboards/dashboard-metadata";
-import KpiCategoryFilter from "components/common/filters/insights/kpi_marketplace/KpiCategoryFilter";
-import ToolIdentifierFilter from "components/common/filters/tools/ToolIdentifierFilter";
+import KpiCategoryFilter from "components/common/filters/insights/marketplace/kpi_category/KpiCategoryFilter";
+import ToolIdentifierFilter from "components/common/filters/tools/tool_identifier/ToolIdentifierFilter";
 import InlineInformation from "components/common/status_notifications/inline/InlineInformation";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";

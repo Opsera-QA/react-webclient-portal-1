@@ -10,9 +10,9 @@ import {
   getTableDateColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
-import PipelineRunFilter from "components/common/filters/pipelines/activity_logs/PipelineRunFilter";
+import PipelineRunFilter from "components/common/filters/pipelines/activity_logs/pipeline_run/PipelineRunFilter";
 import FilterContainer from "components/common/table/FilterContainer";
-import BooleanFilter from "components/common/filters/input/BooleanFilter";
+import BooleanFilter from "components/common/filters/boolean/BooleanFilter";
 import PipelineTaskDetailViewer from "components/common/modal/PipelineTaskDetailViewer";
 
 function PipelineActivityLogTable({ data, loadData, isLoading, pipeline, pipelineActivityFilterDto, setPipelineActivityFilterDto }) {

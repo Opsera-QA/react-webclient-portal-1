@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DropdownList from "react-widgets/lib/DropdownList";
-import WarningDialog from "../../../status_notifications/WarningDialog";
-import {createFilterOptions} from "../../filterHelpers";
-import kpiLovHelpers from "../../../list_of_values_input/admin/kpi_configurations/kpi-lov-helpers";
+import WarningDialog from "components/common/status_notifications/WarningDialog";
+import {createFilterOptions} from "components/common/filters/filterHelpers";
+import kpiLovHelpers from "components/common/list_of_values_input/admin/kpi_configurations/kpi-lov-helpers";
 
 function KpiCategoryFilter({ fieldName, filterDto, setFilterDto, setDataFunction}) {
   const [field] = useState(filterDto.getFieldById(fieldName));
