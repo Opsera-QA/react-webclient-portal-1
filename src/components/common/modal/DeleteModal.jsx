@@ -5,8 +5,8 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {cannotBeUndone} from "../tooltip/popover-text";
 import {faTrash} from "@fortawesome/pro-light-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import DeleteButton from "components/common/buttons/delete/DeleteButton";
 
-// TODO: Improve styling
 function DeleteModal({ dataObject, showModal, setShowModal, handleDelete }) {
   const handleClose = () => {
     setShowModal(false);
@@ -36,9 +36,7 @@ function DeleteModal({ dataObject, showModal, setShowModal, handleDelete }) {
       </Modal.Body>
       <Modal.Footer>
         <Button size="sm" variant="secondary" onClick={handleClose}>Cancel</Button>
-        <TooltipWrapper innerText={cannotBeUndone}>
-          <Button size="sm" variant="danger" onClick={handleDelete}>Delete {dataObject.getType()}</Button>
-        </TooltipWrapper>
+        <DeleteButton dataObject={dataObject} deleteRecord={handleDelete} />
       </Modal.Footer>
     </Modal>
   );
