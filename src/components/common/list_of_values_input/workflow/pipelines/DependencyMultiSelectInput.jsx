@@ -252,9 +252,24 @@ export const itemArray = [
   {
     "name": "Ant Version 1.10.8",
     "dependencyType" : "ant",
-    "version": " 1.10.8",
+    "version": "1.10.8",
   },
 
+  {
+    "name": ".NET Version 2.1",
+    "dependencyType" : "dotnet",
+    "version": "2.1",
+  },
+  {
+    "name": ".NET Version 3.1",
+    "dependencyType" : "dotnet",
+    "version": "3.1",
+  },
+  {
+    "name": ".NET Version 5.0",
+    "dependencyType" : "dotnet",
+    "version": "5.0",
+  },
 
 ];
 
