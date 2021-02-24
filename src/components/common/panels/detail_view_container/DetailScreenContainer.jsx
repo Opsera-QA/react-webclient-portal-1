@@ -8,7 +8,7 @@ import {getBreadcrumb, getParentBreadcrumb} from "components/common/navigation/t
 import RoleRequirementField from "components/common/fields/access/RoleRequirementField";
 import {meetsRequirements} from "components/common/helpers/role-helpers";
 
-function DetailScreenContainer({ breadcrumbDestination, actionBar, dataObject, detailPanel, isLoading, accessDenied, metadata, showBreadcrumbTrail, navigationTabContainer, accessRoleData, roleRequirement }) {
+function DetailScreenContainer({ breadcrumbDestination, actionBar, dataObject, detailPanel, isLoading, accessDenied, metadata, showBreadcrumbTrail, navigationTabContainer, accessRoleData, roleRequirement, titleActionBar }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const [parentBreadcrumb, setParentBreadcrumb] = useState(getParentBreadcrumb(breadcrumbDestination));
 
@@ -41,6 +41,7 @@ function DetailScreenContainer({ breadcrumbDestination, actionBar, dataObject, d
         titleIcon={breadcrumb?.icon}
         title={dataObject?.getDetailViewTitle()}
         inactive={activeField ? dataObject?.getData(activeField) === false : false}
+        titleActionBar={titleActionBar}
       />
     );
   };
@@ -113,6 +114,7 @@ DetailScreenContainer.propTypes = {
   metadata: PropTypes.object,
   accessRoleData: PropTypes.object,
   roleRequirement: PropTypes.string,
+  titleActionBar: PropTypes.object
 };
 
 export default DetailScreenContainer;

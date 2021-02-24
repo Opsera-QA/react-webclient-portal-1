@@ -6,16 +6,11 @@ import {useHistory} from "react-router-dom";
 import {faArrowLeft} from "@fortawesome/pro-solid-svg-icons";
 import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
 
-// TODO: Move and rename
-function TitleBar({ title, titleIcon, parentBreadcrumb, isLoading, inactive }) {
+function TitleBar({ title, titleIcon, parentBreadcrumb, isLoading, inactive, titleActionBar }) {
   const history = useHistory();
 
   const handleBackButton = () => {
     history.push(`/${parentBreadcrumb.path}`);
-  }
-
-  if (isLoading) {
-    return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Data</span>);
   }
 
   const getBackButton = () => {
@@ -28,12 +23,32 @@ function TitleBar({ title, titleIcon, parentBreadcrumb, isLoading, inactive }) {
     }
   };
 
+  // TODO: Remove after wiring up TitleActionBar everywhere that uses this
+  const getInactiveText = () => {
+    if (inactive) {
+      return (<span className="text-white-50 mx-1">{inactive && "Inactive"}</span>);
+    }
+  };
+
+  const getRightSideItems = () => {
+    return (
+      <div className="ml-auto d-flex mr-1">
+        {getInactiveText()}
+        {titleActionBar}
+      </div>
+    )
+  };
+
+  if (isLoading) {
+    return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Data</span>);
+  }
+
   return (
     <div className="d-flex">
-      {/*{getBackButton()}*/}
       <div><span><FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-1"/>{title}</span></div>
-      <div className="ml-auto mr-1"><span className="text-white-50">{inactive && "Inactive"}</span></div>
-    </div>);
+      {getRightSideItems()}
+    </div>
+  );
 }
 
 
@@ -41,6 +56,7 @@ TitleBar.propTypes = {
   inactive: PropTypes.bool,
   title: PropTypes.string,
   parentBreadcrumb: PropTypes.object,
+  titleActionBar: PropTypes.object,
   titleIcon: PropTypes.object,
   isLoading: PropTypes.bool
 };

@@ -7,7 +7,7 @@ import TitleBar from "components/common/fields/TitleBar";
 import RoleRequirementField from "components/common/fields/access/RoleRequirementField";
 import {meetsRequirements} from "components/common/helpers/role-helpers";
 
-function ScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading, accessDenied, showBreadcrumbTrail, navigationTabContainer, accessRoleData, roleRequirement, hasTabContainer }) {
+function ScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading, accessDenied, showBreadcrumbTrail, navigationTabContainer, accessRoleData, roleRequirement, hasTabContainer, titleActionBar }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
 
   useEffect(() => {
@@ -97,7 +97,7 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
       {getTopNavigation()}
       <div className="content-container content-card-1 ">
         <div className="pl-2 content-block-header title-text-header-1">
-          <TitleBar titleIcon={breadcrumb.icon} title={breadcrumb.label} isLoading={isLoading}/>
+          <TitleBar titleIcon={breadcrumb.icon} title={breadcrumb.label} isLoading={isLoading} titleActionBar={titleActionBar}/>
         </div>
         {getBody()}
         <div className="content-block-footer-text-container pt-2">
@@ -118,6 +118,7 @@ ScreenContainer.propTypes = {
   accessDenied: PropTypes.bool,
   showBreadcrumbTrail: PropTypes.bool,
   navigationTabContainer: PropTypes.object,
+  titleActionBar: PropTypes.object,
   accessRoleData: PropTypes.object,
   roleRequirement: PropTypes.string,
   hasTabContainer: PropTypes.bool
