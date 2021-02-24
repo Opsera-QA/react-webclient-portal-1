@@ -34,6 +34,10 @@ import SourceCodeView from "./views/SourceCode/SourceCodeView_developer";
 import LoadingView from "../common/status_notifications/loading";
 import OperationsView from "./views/opserations_analytics/operationsViewAnalytics_developer";
 import AnalyticsProfileSettings from "../settings/analytics/activateAnalyticsCard";
+import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
+import NavigationTab from "components/common/tabs/navigation/NavigationTab";
+import {faServer, faTools} from "@fortawesome/pro-light-svg-icons";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 const INDICES = [
   "jenkins",
@@ -266,21 +270,20 @@ function Analytics() {
     }
   };
 
-  if (loadingProfile) return <LoadingView size="sm" />;
+  const getNavigationTabContainer = () => {
+    return (
+      <NavigationTabContainer>
+        <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={"analytics"} tabText={"Tools"} />
+        <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={"analytics"} tabText={"Platform"} />
+      </NavigationTabContainer>
+    );
+  }
 
-  return (
-    <>
+  const getBody = () => {
+    return (
+      <>
       <div className="mt-3">
         {error && <ErrorDialog error={error} align="top"/>}
-
-        <div className="max-content-width">
-          <div className="h4 mt-3 mb-4">Analytics</div>
-          <p>
-            OpsERA provides users with access to a vast repository of logging and analytics. Access all available
-            logging, reports and configurations around the OpsERA Analytics Platform or search your currently
-            configured logs repositories below.
-          </p>
-        </div>
 
         {
           !error && profile && !profile.enabledToolsOn &&
@@ -359,7 +362,24 @@ function Analytics() {
           </div>
         </div>}
       </div>
-    </>
+  </>
+    );
+
+  }
+
+  return (
+    <ScreenContainer
+      navigationTabContainer={getNavigationTabContainer()}
+      breadcrumbDestination={"analytics"}
+      isLoading={loadingProfile}
+      pageDescription={`
+            OpsERA provides users with access to a vast repository of logging and analytics. Access all available
+            logging, reports and configurations around the OpsERA Analytics Platform or search your currently
+            configured logs repositories below.
+      `}
+    >
+      {getBody()}
+    </ScreenContainer>
   );
 }
 
