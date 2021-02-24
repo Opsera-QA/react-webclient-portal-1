@@ -5,7 +5,7 @@ import { faBracketsCurly, faDiceD20, faHexagon, faMicrochip, faUser } from "@for
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import WorkflowCatalog from "components/workflow/catalog/WorkflowCatalog";
+import PipelineCatalogLibrary from "components/workflow/catalog/PipelineCatalogLibrary";
 import cookieHelpers from "core/cookies/cookie-helpers";
 import PipelinesView from "components/workflow/pipelines/PipelinesView";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
@@ -40,7 +40,7 @@ function Pipelines() {
   const getCurrentView = () => {
     switch (activeTab) {
     case "catalog":
-      return <WorkflowCatalog/>;
+      return <PipelineCatalogLibrary/>;
     case "all":
     case "owner":
     case "sdlc":

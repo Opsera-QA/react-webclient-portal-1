@@ -5,11 +5,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSearch, faHexagon, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import { format } from "date-fns";
 import React, { useContext, useEffect, useState } from "react";
-import { axiosApiService } from "../../../api/apiService";
-import { AuthContext } from "../../../contexts/AuthContext";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import {AuthContext} from "contexts/AuthContext";
+import {axiosApiService} from "api/apiService";
 
-const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard, accessRoleData, activeTemplates }) => {
+const PipelineCatalogItem = ({ item, parentCallback, openFreeTrialWizard, accessRoleData, activeTemplates }) => {
   const contextType = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
@@ -139,7 +139,7 @@ const WorkflowCatalogItem = ({ item, parentCallback, openFreeTrialWizard, access
   );
 };
 
-WorkflowCatalogItem.propTypes = {
+PipelineCatalogItem.propTypes = {
   item: PropTypes.object,
   parentCallback: PropTypes.func,
   openFreeTrialWizard: PropTypes.func,
@@ -147,4 +147,4 @@ WorkflowCatalogItem.propTypes = {
   activeTemplates: PropTypes.array,
 };
 
-export default WorkflowCatalogItem;
+export default PipelineCatalogItem;

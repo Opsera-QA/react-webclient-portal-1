@@ -1,7 +1,7 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import { Row, Col } from "react-bootstrap";
-import WorkflowCatalogItem from "./WorkflowCatalogItem";
+import PipelineCatalogItem from "components/workflow/catalog/PipelineCatalogItem";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import pipelineActions from "components/workflow/pipeline-actions";
@@ -17,7 +17,7 @@ import {faOctagon} from "@fortawesome/pro-light-svg-icons";
 import InlinePipelineTypeFilter from "components/common/filters/admin/templates/pipeline_type/InlinePipelineTypeFilter";
 import axios from "axios";
 
-function WorkflowCatalog() {
+function PipelineCatalogLibrary() {
   const contextType = useContext(AuthContext);
   const { setAccessRoles, getAccessToken, getUserRecord } = contextType;
   const toastContext = useContext(DialogToastContext);
@@ -33,6 +33,12 @@ function WorkflowCatalog() {
   const [catalogFilterModel, setCatalogFilterModel] = useState(new Model({ ...catalogFilterMetadata.newObjectFields }, catalogFilterMetadata, false));
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [activeTab, setActiveTab] = useState("all");
+
+  const handleTabClick = (tabSelection) => e => {
+    e.preventDefault();
+    setActiveTab(tabSelection);
+  };
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -143,7 +149,7 @@ function WorkflowCatalog() {
         <Row className="p-1">
           {workflowTemplates.map((item, idx) => (
             <Col lg={6} xs={12} key={idx} className={"p-1"}>
-              <WorkflowCatalogItem
+              <PipelineCatalogItem
                 item={item}
                 parentCallback={callbackFunction}
                 openFreeTrialWizard={openFreeTrialWizard}
@@ -218,8 +224,8 @@ function WorkflowCatalog() {
   );
 }
 
-WorkflowCatalog.propTypes = {
+PipelineCatalogLibrary.propTypes = {
   data: PropTypes.array,
 };
 
-export default WorkflowCatalog;
+export default PipelineCatalogLibrary;
