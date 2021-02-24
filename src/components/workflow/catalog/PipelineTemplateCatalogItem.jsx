@@ -4,48 +4,55 @@ import { Button, Card, Col, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faSearch, faHexagon, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import { format } from "date-fns";
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {AuthContext} from "contexts/AuthContext";
 import {axiosApiService} from "api/apiService";
 import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
 import pipelineActions from "components/workflow/pipeline-actions";
 import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
+import axios from "axios";
 
 const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates }) => {
+  let history = useHistory();
   const { getAccessToken } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [disabled, setDisabled] = useState(false);
   const [showFreeTrialModal, setShowFreeTrialModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [tempPipelineId, setTempPipelineId] = useState("");
-  let history = useHistory();
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
     if (template.readOnly || (template.singleUse === true && activeTemplates.includes(template?._id?.toString()))) {
       setDisabled(true);
     }
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, [template, activeTemplates]);
 
-  const showPipelineDetails = () => e => {
-    e.preventDefault();
+  const showPipelineDetails = () => {
     setShowModal(true);
   };
 
-  const handleAddClick = param => async e => {
-    e.preventDefault();
-    await postData(param._id);
-  };
-
-  // TODO: Wire up CancelToken
-  async function postData(templateId) {
-    setLoading(true);
-    const accessToken = await getAccessToken();
-    const apiUrl = `/pipelines/deploy/${templateId}`;
-    const params = {};
+  const deployTemplate = async () => {
     try {
-      const result = await axiosApiService(accessToken).post(apiUrl, params);
-      let newPipelineId = result.data !== undefined ? result.data._id : false;
+      setLoading(true);
+      const result = await pipelineActions.deployTemplateV2(getAccessToken, cancelTokenSource, template?._id);
+      let newPipelineId = result?.data?._id;
+
       if (newPipelineId) {
         // check if its a free trial and then proceed
         // if (!template.tags.some(el => el.value === "freetrial")) {
@@ -53,11 +60,15 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
         // }
         // openFreeTrialWizard(newPipelineId, templateId, "freetrial");
       }
-    } catch (err) {
-      console.error(err);
-      setLoading(false);
+    } catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        setLoading(false);
+      }
     } finally {
-      setLoading(false);
+      if (isMounted?.current === true) {
+        setLoading(false);
+      }
     }
   }
 
@@ -83,7 +94,7 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
     return (
       <Col>
         <TooltipWrapper innerText={"Create a new template from this template"}>
-          <Button variant="success" size="sm" className="mr-2 mt-2" onClick={handleAddClick(template)}>
+          <Button variant="success" size="sm" className="mr-2 mt-2" onClick={() => deployTemplate()}>
             {loading ?
               <><FontAwesomeIcon icon={faSpinner} spin fixedWidth/> Working</> :
               <><FontAwesomeIcon icon={faPlus} fixedWidth/> Create Pipeline</>
@@ -93,7 +104,7 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
         </TooltipWrapper>
 
         {accessRoleData.OpseraAdministrator &&
-        <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={showPipelineDetails(template)}>
+        <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={() => showPipelineDetails(template)}>
           <FontAwesomeIcon icon={faSearch} className="mr-1"/>Details</Button>
         }
       </Col>

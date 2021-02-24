@@ -215,14 +215,9 @@ pipelineActions.getLogs = async (pipelineId, getAccessToken) => {
   return response;
 };
 
-pipelineActions.deployTemplate = async (templateId, getAccessToken) => {
-  const accessToken = await getAccessToken();
+pipelineActions.deployTemplateV2 = async (getAccessToken, cancelTokenSource, templateId) => {
   const apiUrl = `/pipelines/deploy/${templateId}`;
-  const postBody = {};
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw { error };});
-  return response;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 pipelineActions.approve = async (templateId, postBody, getAccessToken) => {
