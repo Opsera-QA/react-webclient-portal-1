@@ -4,6 +4,9 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 import axios from "axios";
 import PipelineCatalog from "components/workflow/catalog/PipelineCatalog";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import CustomTab from "components/common/tabs/CustomTab";
+import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 
 function PipelineCatalogLibrary() {
   const { setAccessRoles, getAccessToken, getUserRecord } = useContext(AuthContext);
@@ -77,7 +80,39 @@ function PipelineCatalogLibrary() {
     }
   };
 
-  return (<PipelineCatalog source={activeTab === "customer" ? activeTab : undefined} activeTemplates={activeTemplates} />);
+  const getCurrentView = () => {
+    switch (activeTab) {
+      case "all":
+        return (
+          <>
+            <PipelineCatalog source={undefined} activeTemplates={activeTemplates} />
+          </>
+        );
+      case "customer":
+        return (
+          <>
+            <PipelineCatalog source={"customer"} activeTemplates={activeTemplates} />
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+
+  const getTabContainer = () => {
+    return (
+      <CustomTabContainer>
+        <CustomTab activeTab={activeTab} tabText={"Marketplace"} handleTabClick={handleTabClick} tabName={"all"} />
+        <CustomTab activeTab={activeTab} tabText={"Private Catalog"} handleTabClick={handleTabClick} tabName={"customer"} />
+      </CustomTabContainer>
+    );
+  };
+
+  return (
+    <div className={"px-3"}>
+      <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
+    </div>
+  );
 }
 
 PipelineCatalogLibrary.propTypes = {};

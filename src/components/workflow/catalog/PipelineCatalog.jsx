@@ -30,6 +30,7 @@ function PipelineCatalog({source, activeTemplates}) {
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
+    setWorkflowTemplates([]);
 
     loadData(catalogFilterModel, source).catch((error) => {
       if (isMounted?.current === true) {
@@ -121,7 +122,7 @@ function PipelineCatalog({source, activeTemplates}) {
       inlineFilters={getInlineFilters()}
       titleIcon={faOctagon}
       title={"Pipeline Templates"}
-      className={"px-2 pb-2"}
+      className={"pb-2"}
     />
   );
 }
