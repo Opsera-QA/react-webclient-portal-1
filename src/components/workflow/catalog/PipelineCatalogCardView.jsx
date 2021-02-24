@@ -3,74 +3,22 @@ import PropTypes from "prop-types";
 import {Col} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import CardView from "components/common/card/CardView";
-import PipelineCatalogItem from "components/workflow/catalog/PipelineCatalogItem";
-import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
-import pipelineActions from "components/workflow/pipeline-actions";
-import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
-import {AuthContext} from "contexts/AuthContext";
+import PipelineTemplateCatalogItem from "components/workflow/catalog/PipelineTemplateCatalogItem";
 
-function PipelineCatalogCardView({ data, catalogFilterModel, setCatalogFilterModel, loadData, isLoading, accessRoleData, inUseIds }) {
-  const { setAccessRoles, getAccessToken, getUserRecord } = useContext(AuthContext);
-  const [pipelineId, setPipelineId] = useState("");
-  const [templateId, setTemplateId] = useState("");
-  const [showFreeTrialModal, setShowFreeTrialModal] = useState(false);
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState(undefined);
-
-  const callbackFunction = (item) => {
-    setModalMessage(item);
-    setShowModal(true);
-  };
-
-  // TODO: Wire up cancel token
-  const handleClose = async () => {
-    setShowFreeTrialModal(false);
-    await pipelineActions.delete(pipelineId, getAccessToken);
-    setPipelineId("");
-    setTemplateId("");
-  };
-
-  const getFreeTrialModal = () => {
-    if (showFreeTrialModal) {
-      return (
-        <FreeTrialPipelineWizard
-          pipelineId={pipelineId}
-          templateId={templateId}
-          pipelineOrientation={""}
-          autoRun={false}
-          handleClose={handleClose}
-        />
-      );
-    }
-  }
-
-  const openFreeTrialWizard = (pipelineId, templateId, templateType) => {
-    if (!pipelineId) {
-      setTemplateId("");
-      setShowFreeTrialModal(false);
-      return;
-    }
-    setPipelineId(pipelineId);
-    setTemplateId(templateId);
-    setShowFreeTrialModal(true);
-  };
-
+function PipelineCatalogCardView({ data, catalogFilterModel, setCatalogFilterModel, loadData, isLoading, accessRoleData, activeTemplates }) {
   const getCards = () => {
     if (!Array.isArray(data) || data.length === 0) {
       return null;
     }
 
-
     return (
       <Row className="p-1">
-        {data.map((item, idx) => (
+        {data.map((template, idx) => (
           <Col lg={6} xs={12} key={idx} className={"p-1"}>
-            <PipelineCatalogItem
-              item={item}
-              parentCallback={callbackFunction}
-              openFreeTrialWizard={openFreeTrialWizard}
+            <PipelineTemplateCatalogItem
+              template={template}
               accessRoleData={accessRoleData}
-              activeTemplates={inUseIds}
+              activeTemplates={activeTemplates}
             />
           </Col>))}
       </Row>
@@ -87,8 +35,6 @@ function PipelineCatalogCardView({ data, catalogFilterModel, setCatalogFilterMod
         cards={getCards()}
         noDataMessage={"No Catalog Items Found"}
       />
-      {getFreeTrialModal()}
-      <ModalActivityLogsDialog header="Template Details" size="lg" jsonData={modalMessage} show={showModal} setParentVisibility={setShowModal} />
     </>
   );
 }
@@ -100,7 +46,7 @@ PipelineCatalogCardView.propTypes = {
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   accessRoleData: PropTypes.object,
-  inUseIds: PropTypes.array
+  activeTemplates: PropTypes.array
 };
 
 export default PipelineCatalogCardView;

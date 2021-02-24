@@ -12,7 +12,7 @@ import InlinePipelineTypeFilter from "components/common/filters/admin/templates/
 import axios from "axios";
 import PipelineCatalogCardView from "components/workflow/catalog/PipelineCatalogCardView";
 
-function PipelineCatalog({source, inUseIds}) {
+function PipelineCatalog({source, activeTemplates}) {
   const { setAccessRoles, getAccessToken, getUserRecord } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [workflowTemplates, setWorkflowTemplates] = useState([]);
@@ -92,7 +92,7 @@ function PipelineCatalog({source, inUseIds}) {
         catalogFilterModel={catalogFilterModel}
         setCatalogFilterModel={setCatalogFilterModel}
         accessRoleData={accessRoleData}
-        inUseIds={inUseIds}
+        activeTemplates={activeTemplates}
       />
     );
   };
@@ -128,7 +128,7 @@ function PipelineCatalog({source, inUseIds}) {
 
 PipelineCatalog.propTypes = {
   source: PropTypes.string,
-  inUseIds: PropTypes.array
+  activeTemplates: PropTypes.array
 };
 
 export default PipelineCatalog;

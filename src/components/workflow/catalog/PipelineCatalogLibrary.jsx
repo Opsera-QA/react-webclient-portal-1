@@ -8,7 +8,7 @@ import PipelineCatalog from "components/workflow/catalog/PipelineCatalog";
 function PipelineCatalogLibrary() {
   const { setAccessRoles, getAccessToken, getUserRecord } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [inUseIds, setInUseIds] = useState([]);
+  const [activeTemplates, setActiveTemplates] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [accessRoleData, setAccessRoleData] = useState(null);
   const isMounted = useRef(false);
@@ -73,11 +73,11 @@ function PipelineCatalogLibrary() {
     const response = await pipelineActions.getInUseTemplatesV2(getAccessToken, cancelSource);
 
     if (isMounted?.current === true && response?.data) {
-      setInUseIds(response.data);
+      setActiveTemplates(response.data);
     }
   };
 
-  return (<PipelineCatalog source={activeTab === "customer" ? activeTab : undefined} inUseIds={inUseIds} />);
+  return (<PipelineCatalog source={activeTab === "customer" ? activeTab : undefined} activeTemplates={activeTemplates} />);
 }
 
 PipelineCatalogLibrary.propTypes = {};
