@@ -7,7 +7,6 @@ import { format } from "date-fns";
 import React, {useContext, useEffect, useRef, useState} from "react";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {AuthContext} from "contexts/AuthContext";
-import {axiosApiService} from "api/apiService";
 import FreeTrialPipelineWizard from "components/workflow/wizards/deploy/freetrialPipelineWizard";
 import pipelineActions from "components/workflow/pipeline-actions";
 import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
@@ -119,13 +118,11 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
     return getEnabledBody()
   };
 
-  // TODO: Wire up cancel token
   const handleClose = async () => {
     setShowFreeTrialModal(false);
-    await pipelineActions.delete(tempPipelineId?._id, getAccessToken);
+    await pipelineActions.deletePipelineV2(getAccessToken, cancelTokenSource, tempPipelineId?._id);
     setTempPipelineId("");
   };
-
 
   const getFreeTrialModal = () => {
     if (showFreeTrialModal) {
