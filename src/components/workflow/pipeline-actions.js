@@ -6,7 +6,7 @@ import {axiosApiService} from "api/apiService";
 //  step for step configuration related ones (save to vault, tools, etc)
 const pipelineActions = {};
 
-pipelineActions.getWorkflowTemplatesV2 = async (getAccessToken, cancelTokenSource, catalogFilterModel) => {
+pipelineActions.getWorkflowTemplatesV2 = async (getAccessToken, cancelTokenSource, catalogFilterModel, source) => {
   let sortOption = catalogFilterModel.getData("sortOption");
 
   const urlParams = {
@@ -16,7 +16,8 @@ pipelineActions.getWorkflowTemplatesV2 = async (getAccessToken, cancelTokenSourc
       page: catalogFilterModel.getData("currentPage"),
       search: catalogFilterModel.getFilterValue("search"),
       type: catalogFilterModel.getFilterValue("type"),
-      tag: catalogFilterModel.getFilterValue("tag")
+      tag: catalogFilterModel.getFilterValue("tag"),
+      source: source ? source : undefined
     },
   };
 

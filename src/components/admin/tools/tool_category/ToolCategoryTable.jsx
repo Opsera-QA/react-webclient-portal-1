@@ -11,7 +11,6 @@ import toolCategoryMetadata from "components/admin/tools/tool_category/tool-cate
 import {getField} from "components/common/metadata/metadata-helpers";
 import {faToolbox} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
-import NewToolModal from "components/inventory/tools/NewToolModal";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import NewToolCategoryOverlay from "components/admin/tools/tool_category/NewToolCategoryOverlay";
 
