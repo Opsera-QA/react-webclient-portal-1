@@ -25,6 +25,7 @@ import FeedTypeSelectInput from "./input/FeedTypeSelectInput";
 import NexusSelectInput from "./input/NexusSelectInput";
 import NexusRepoSelectInput from "./input/NexusRepoSelectInput";
 import TestConnectionButton from "./input/TestConnectionButton";
+import EditModal from "components/common/modal/EditModal";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -32,6 +33,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
   const [octopusApplicationDataDto, setOctopusApplicationDataDto] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -73,19 +75,15 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
   const createApplication = async () => {
     try {
       await OctopusActions.createOctopusApplication(octopusApplicationDataDto, type, getAccessToken);
+      toastContext.showCreateSuccessResultDialog(type ? type.charAt(0).toUpperCase() + type.slice(1) : "")
       handleClose()
     } catch (error) {
-      toastContext.showCreateFailureResultDialog(type, error)
+      toastContext.showCreateFailureResultDialog(type ? type.charAt(0).toUpperCase() + type.slice(1) : "", error)
     }
   };
 
   const updateApplication = async () => {
-    try {
-      await OctopusActions.updateOctopusApplication(octopusApplicationDataDto, type, getAccessToken, appID);
-      handleClose()
-    } catch (error) {
-      toastContext.showUpdateFailureResultDialog(type, error)
-    }
+    return await OctopusActions.updateOctopusApplication(octopusApplicationDataDto, type, getAccessToken, appID);
   };
 
   const deleteApplication = async () => {
@@ -94,9 +92,13 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
       toastContext.showDeleteSuccessResultDialog(type && type.length > 2 ? type.charAt(0).toUpperCase() + type.slice(1) : "")
       handleClose();
     } catch (error) {
-      toastContext.showDeleteFailureResultDialog(type, error)
+      toastContext.showDeleteFailureResultDialog(type && type.length > 2 ? type.charAt(0).toUpperCase() + type.slice(1) : "", error)
     }
   };
+
+  const updateApplicationCaller= async () => {
+    setShowEditModal(true);
+  }
 
   if (isLoading || octopusApplicationDataDto === null || octopusApplicationDataDto === undefined) {
     return <Loading size="sm" />;
@@ -443,12 +445,13 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
           )}
           <div className="ml-auto mt-3 px-3">
             <SaveButtonBase
-              updateRecord={appID ? updateApplication : createApplication}
+              updateRecord={appID ? updateApplicationCaller : createApplication}
               setRecordDto={setOctopusApplicationDataDto}
               setData={setOctopusApplicationDataDto}
               createRecord={createApplication}
               recordDto={octopusApplicationDataDto}
               handleClose={handleClose}
+              showSuccessToasts={false}
             />
           </div>
         </Row>
@@ -458,6 +461,13 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
         setShowModal={setShowDeleteModal}
         dataObject={octopusApplicationDataDto}
         handleDelete={deleteApplication}
+      />
+      <EditModal
+        showModal={showEditModal}
+        setShowModal={setShowEditModal}
+        dataObject={octopusApplicationDataDto}
+        handleEdit={updateApplication}
+        handleClose={handleClose}
       />
     </>
   );
