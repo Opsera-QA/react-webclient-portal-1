@@ -85,7 +85,7 @@ function PipelineCatalogLibrary() {
       case "all":
         return (
           <>
-            <div className={"py-2"}>
+            <div className={"p-2"}>
               {`
                 Opsera provides pipeline templates for various functions and domains.
                 Listed below are the publicly available pipeline templates from Opsera.
@@ -97,7 +97,7 @@ function PipelineCatalogLibrary() {
       case "customer":
         return (
           <>
-            <div className={"py-2"}>
+            <div className={"p-2"}>
               {`
                 Your organization has a private repository of pipeline catalog templates.
                 Users can share their pipelines, publishing their framework to this catalog so that others can use it.

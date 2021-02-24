@@ -1,4 +1,4 @@
-import React, {useContext, useMemo, useState} from "react";
+import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {useHistory} from "react-router-dom";
@@ -14,7 +14,7 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import NewToolCategoryOverlay from "components/admin/tools/tool_category/NewToolCategoryOverlay";
 
-function ToolCategoryTable({ data, loadData, isLoading }) {
+function ToolCategoryTable({ data, loadData, isLoading, isMounted }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   let fields = toolCategoryMetadata.fields;
@@ -38,7 +38,7 @@ function ToolCategoryTable({ data, loadData, isLoading }) {
   };
 
   const createToolType = () => {
-    toastContext.showOverlayPanel(<NewToolCategoryOverlay loadData={loadData} />);
+    toastContext.showOverlayPanel(<NewToolCategoryOverlay loadData={loadData} isMounted={isMounted} />);
   };
 
   const getToolCategoryTable = () => {
@@ -71,7 +71,8 @@ function ToolCategoryTable({ data, loadData, isLoading }) {
 ToolCategoryTable.propTypes = {
   data: PropTypes.array,
   loadData: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  isMounted: PropTypes.object
 };
 
 export default ToolCategoryTable;

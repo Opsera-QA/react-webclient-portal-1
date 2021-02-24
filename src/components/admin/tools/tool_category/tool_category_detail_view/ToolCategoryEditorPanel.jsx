@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext"; 
 import {Col, Row} from "react-bootstrap";
@@ -8,28 +8,50 @@ import toolManagementActions from "components/admin/tools/tool-management-action
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import TagManager from "components/common/inputs/tags/TagManager";
+import axios from "axios";
 
 function ToolCategoryEditorPanel({ toolCategoryData, setToolCategoryData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [toolCategoryDataDto, setToolCategoryDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
   const loadData = async () => {
-    setIsLoading(true);
-    setToolCategoryDataDto(toolCategoryData);
-    setIsLoading(false);
+    if (isMounted?.current === true) {
+      setIsLoading(true);
+      setToolCategoryDataDto(toolCategoryData);
+      setIsLoading(false);
+    }
   };
 
   const createToolType = async () => {
-    return await toolManagementActions.createToolType(toolCategoryDataDto, getAccessToken);
+    return await toolManagementActions.createToolTypeV2(getAccessToken, cancelTokenSource, toolCategoryDataDto);
   };
 
   const updateToolType = async () => {
-    return await toolManagementActions.updateToolType(toolCategoryDataDto, getAccessToken);
+    return await toolManagementActions.updateToolTypeV2(getAccessToken, cancelTokenSource, toolCategoryDataDto);
   };
 
   if (isLoading) {

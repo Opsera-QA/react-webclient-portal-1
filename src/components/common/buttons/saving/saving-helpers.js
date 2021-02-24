@@ -7,6 +7,7 @@ export async function persistNewRecordAndViewDetails(recordDto, toastContext, sh
     let updatedDto = new Model(response?.data, recordDto.getMetaData(), false);
     let link = updatedDto.getDetailViewLink();
 
+    toastContext.clearOverlayPanel();
     if (link != null) {
       history.push(link);
     }
@@ -19,6 +20,7 @@ export async function persistNewRecordAndClose(recordDto, toastContext, showSucc
   let response = await persistNewRecord(recordDto, toastContext, showSuccessToasts, createRecord, lenient, true);
 
   if (response != null && response !== false && handleClose) {
+    toastContext.clearOverlayPanel();
     handleClose();
   }
 

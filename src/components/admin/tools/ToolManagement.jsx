@@ -110,7 +110,7 @@ function ToolManagement() {
   const getCurrentView = () => {
     switch (activeTab) {
       case "types":
-        return <ToolCategoryTable loadData={loadData} isLoading={isLoading} data={toolTypeList}/>;
+        return <ToolCategoryTable loadData={loadData} isLoading={isLoading} data={toolTypeList} isMounted={isMounted} />;
       case "identifiers":
         return <ToolIdentifierTable loadData={loadData} isLoading={isLoading} data={toolIdentifierList}/>;
       default:
