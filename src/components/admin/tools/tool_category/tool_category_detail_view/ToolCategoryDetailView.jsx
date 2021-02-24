@@ -11,6 +11,7 @@ import ToolCategoryDetailPanel from "components/admin/tools/tool_category/tool_c
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import axios from "axios";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 
 function ToolCategoryDetailView() {
   const {toolTypeId} = useParams();
@@ -81,15 +82,23 @@ function ToolCategoryDetailView() {
     }
   };
 
+  const deleteToolCategory = async () => {
+    return await toolManagementActions.deleteToolTypeV2(getAccessToken, cancelTokenSource, toolCategoryData);
+  }
+
   const getActionBar = () => {
     return (
       <ActionBarContainer>
         <div>
           <ActionBarBackButton path={"/admin/tools"} />
         </div>
+        {/*<div>*/}
+        {/*  <ActionBarDeleteButton2 dataObject={toolCategoryData} handleDelete={deleteToolCategory} relocationPath={"/admin/tools"} />*/}
+        {/*</div>*/}
       </ActionBarContainer>
     );
   };
+
 
   return (
     <DetailScreenContainer
