@@ -166,9 +166,6 @@ function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToo
     setIsLoading(true);
     let newDataObject = nexusStepConfigurationDto;
     newDataObject.setData("nexusToolConfigId", value.id);
-    newDataObject.setData("toolURL", value.configuration.toolURL);
-    newDataObject.setData("userName", value.configuration.userName);
-    newDataObject.setData("secretKey", value.configuration.secretKey);
     await getNexusRepositoriesList(newDataObject.nexusToolConfigId);
     setNexusStepConfigurationDataDto({...newDataObject});
     setIsLoading(false);
