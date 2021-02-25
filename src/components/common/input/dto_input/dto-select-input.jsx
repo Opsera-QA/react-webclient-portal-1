@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DropdownList from "react-widgets/lib/DropdownList";
+import InputContainer from "components/common/inputs/InputContainer";
+import InputLabel from "components/common/inputs/info_text/InputLabel";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 // TODO: Refactor into multiple components (selectInput, multiselectInput, multiselectWithCreate?)
 function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, filter, placeholderText, setDataFunction, allowCreate, setSelectOptions, valueFormatter, busy, disabled}) {
@@ -20,34 +23,30 @@ function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectO
     validateAndSetData(fieldName, newValue);
   }
 
+  if (field == null) {
+    return null;
+  }
+
   return (
-    field &&
-        <>
-          <div className="custom-select-input m-2">
-            <label><span>{field.label}{field.isRequired ? <span className="danger-red">*</span> : null } </span></label>
-            <DropdownList
-              allowCreate={allowCreate}
-              onCreate={name => handleCreate(name)}
-              data={selectOptions}
-              valueField={valueField}
-              textField={textField}
-              filter={filter}
-              groupBy={groupBy}
-              value={dataObject.getData(fieldName)}
-              valueComponent={valueFormatter}
-              busy={busy}
-              placeholder={placeholderText}
-              onChange={data => setDataFunction ? setDataFunction(fieldName, data) : validateAndSetData(fieldName, data[valueField])}
-              disabled={disabled}
-            />
-            <div className="invalid-feedback">
-              <div>{errorMessage}</div>
-            </div>
-            <small className="form-text text-muted">
-              <div>{field.formText}</div>
-            </small> 
-          </div>
-        </>
+    <InputContainer className="custom-select-input">
+      <InputLabel field={field} />
+      <DropdownList
+        allowCreate={allowCreate}
+        onCreate={name => handleCreate(name)}
+        data={selectOptions}
+        valueField={valueField}
+        textField={textField}
+        filter={filter}
+        groupBy={groupBy}
+        value={dataObject.getData(fieldName)}
+        valueComponent={valueFormatter}
+        busy={busy}
+        placeholder={placeholderText}
+        onChange={data => setDataFunction ? setDataFunction(fieldName, data) : validateAndSetData(fieldName, data[valueField])}
+        disabled={disabled}
+      />
+      <InfoText field={field} errorMessage={errorMessage} />
+    </InputContainer>
   );
 }
 

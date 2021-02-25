@@ -187,6 +187,7 @@ function AnalyticsProfileSettings() {
 
   return (
     <ScreenContainer breadcrumbDestination={"analyticsProfile"} pageDescription={"Opsera Analytics Engine Settings."}>
+      <div className={"p-2"}>
       {analyticsProfileData.getData("ldapAccount") && !analyticsProfileData.getData("ldapOwner") && (
         <Card>
           <Card.Body>
@@ -277,6 +278,7 @@ function AnalyticsProfileSettings() {
           </Row>
         </div>
       )}
+      </div>
     </ScreenContainer>
   );
 }
