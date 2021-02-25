@@ -4,7 +4,11 @@ import { Multiselect } from 'react-widgets'
 import adminTagsActions from "../../../settings/tags/admin-tags-actions";
 import {AuthContext} from "../../../../contexts/AuthContext";
 import {DialogToastContext} from "../../../../contexts/DialogToastContext";
+import InputContainer from "components/common/inputs/InputContainer";
+import InputLabel from "components/common/inputs/info_text/InputLabel";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
+// TODO: This should be refactored and renamed
 function DtoTagManagerFilterInput({ fieldName, type, dataObject, setDataObject, disabled, filter, placeholderText, setDataFunction, allowCreate, groupBy }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -88,32 +92,28 @@ function DtoTagManagerFilterInput({ fieldName, type, dataObject, setDataObject, 
     return (<div className="danger-red">Error for tag manager input: You forgot to wire up type!</div>);
   }
 
-    return (
-      field && type &&
-      <>
-        <div className="form-group custom-multiselect-input m-2">
-          <label><span>{field.label}{field.isRequired ? <span className="danger-red">*</span> : null} </span></label>
-          <Multiselect
-            data={[...tagOptions]}
-            textField={data => data["type"] + ": " + data["value"]}
-            filter={filter}
-            allowCreate={allowCreate}
-            groupBy={groupBy}
-            busy={componentLoading}
-            value={handleNull()}
-            placeholder={placeholderText}
-            disabled={disabled}
-            onChange={tag => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
-          />
-          {/*<div className="invalid-feedback">*/}
-          {/*  <div>{errorMessage}</div>*/}
-          {/*</div>*/}
-          <small className="form-text text-muted">
-            <div>{field.formText}</div>
-          </small>
-        </div>
-      </>
-    );
+  if (field == null) {
+    return null;
+  }
+
+  return (
+    <InputContainer className="custom-multiselect-input">
+      <InputLabel field={field} />
+      <Multiselect
+        data={[...tagOptions]}
+        textField={data => data["type"] + ": " + data["value"]}
+        filter={filter}
+        allowCreate={allowCreate}
+        groupBy={groupBy}
+        busy={componentLoading}
+        value={handleNull()}
+        placeholder={placeholderText}
+        disabled={disabled}
+        onChange={tag => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
+      />
+      <InfoText field={field} />
+    </InputContainer>
+  );
 }
 
 DtoTagManagerFilterInput.propTypes = {

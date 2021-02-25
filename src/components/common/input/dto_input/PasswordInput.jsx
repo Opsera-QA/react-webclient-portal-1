@@ -1,6 +1,10 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
+import InputContainer from "components/common/inputs/InputContainer";
+import InputLabel from "components/common/inputs/info_text/InputLabel";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
+// TODO: Use new PasswordComponent instead
 function PasswordInput({fieldName, dataObject, setDataObject, disabled}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
@@ -47,33 +51,18 @@ function PasswordInput({fieldName, dataObject, setDataObject, disabled}) {
     }
   };
 
-  const getInfoText = () => {
-    if (errorMessage != null && errorMessage !== "") {
-      return (
-        <div className="invalid-feedback">
-          <div>{errorMessage}</div>
-        </div>
-      );
-    }
-
-    return (
-      <small className="text-muted form-text">
-        <div>{field.formText}</div>
-      </small>
-    )
-  }
-
   return (
-    <>
-      {dataObject &&
-      <div className="form-group m-2">
-        <label>{field.label}{field.isRequired ?
-          <span className="danger-red">*</span> : null}</label>
-        <input type={"password"} disabled={disabled} value={dataObject.getData(fieldName)} className="form-control"
-               onChange={e => validateAndSetData(fieldName, e.target.value)}/>
-        {getInfoText()}
-      </div>}
-    </>
+    <InputContainer className="form-group">
+      <InputLabel field={field}/>
+      <input
+        type={"password"}
+        disabled={disabled}
+        value={dataObject?.getData(fieldName)}
+        className="form-control"
+        onChange={e => validateAndSetData(fieldName, e.target.value)}
+      />
+      <InfoText field={field} errorMessage={errorMessage} />
+    </InputContainer>
   );
 }
 

@@ -5,7 +5,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
-// TODO: Refactor into multiple components (selectInput, multiselectInput, multiselectWithCreate?)
+// TODO: Refactor any instances into multiple components (selectInput, multiselectInput). DON'T STORE OPTIONS INSIDE EDITOR PANELS, MAKE REUSABLE COMPONENTS
 function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, filter, placeholderText, setDataFunction, allowCreate, setSelectOptions, valueFormatter, busy, disabled}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
