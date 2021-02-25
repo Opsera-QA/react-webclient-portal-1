@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
 import { CardColumns } from "react-bootstrap";
-import {faChartArea} from "@fortawesome/pro-light-svg-icons";
 import { useLocation } from 'react-router-dom';
+import {useHistory} from "react-router-dom";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import Model from "core/data_model/model";
@@ -23,13 +23,16 @@ import InlineToolIdentifierFilter from "components/common/filters/tools/tool_ide
 import FilterContainer from "components/common/table/FilterContainer";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import Row from "react-bootstrap/Row";
+import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
+import NavigationTab from "components/common/tabs/navigation/NavigationTab";
+import {faAnalytics, faChartNetwork, faChartArea} from "@fortawesome/pro-light-svg-icons";
 
 export default function Marketplace () {  
   const contextType = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = contextType;
   const location = useLocation();
-
+  const history = useHistory();
   const [error, setErrors] = useState(false);
   const [selectedItem, setSelectedItem] = useState({});
   const [dashboardId, setDashboardId] = useState(false);
@@ -40,6 +43,7 @@ export default function Marketplace () {
   const [dashboardLoading, setDashboardLoading] = useState(false);
   const [marketplaceFilterDto, setMarketplaceFilterDto] = useState(new Model({ ...kpiMarketplaceFilterMetadata.newObjectFields }, kpiMarketplaceFilterMetadata, false));
   const isMounted = useRef(false);
+  const [activeTab, setActiveTab] = useState("marketplace");
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   
   useEffect(() => {
@@ -139,18 +143,7 @@ export default function Marketplace () {
     }
 
     return (
-      <div className="px-2 pb-2">
-        <div>
-          <div className="mx-auto mt-1">
-            <DtoBottomPagination
-              paginationStyle={"stacked"}
-              paginationDto={marketplaceFilterDto}
-              setPaginationDto={setMarketplaceFilterDto}
-              isLoading={loading}
-              loadData={loadData}
-            />
-          </div>
-        </div>
+      <div className="px-2 pb-2 pt-2">
         <div>
           <CardColumns>
             {kpis.map((kpi, index) => {
@@ -182,17 +175,49 @@ export default function Marketplace () {
     )
   };
 
+  const handleNavTabClick = (tabSelection) => async e => {
+    e.preventDefault();
+
+    if (tabSelection === "analytics") {
+      history.push(`/analytics`);
+      return;
+    }
+
+    if (tabSelection === "marketplace") {
+      history.push(`/insights/marketplace`);
+      return;
+    }
+
+    if (tabSelection === "dashboards") {
+      history.push(`/insights/dashboards`);
+      return;
+    }
+
+    setActiveTab(tabSelection);
+  };
+
+  const getNavigationTabContainer = () => {
+    return (
+      <NavigationTabContainer>
+        <NavigationTab icon={faChartNetwork} tabName={"dashboards"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Dashboards"} />
+        <NavigationTab icon={faChartArea} tabName={"marketplace"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Marketplace"} />
+        <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Analytics"} />
+      </NavigationTabContainer>
+    );
+  }
+
   if (error) {
     return <ErrorDialog error={error} />;
   }
 
   return (
     <ScreenContainer
+      navigationTabContainer={getNavigationTabContainer()}
       isLoading={loading}
       breadcrumbDestination={"marketplace"}
       pageDescription={`
-        OpsERA provides users with access to a vast repository of KPI. Access all available
-        KPIs and configure them on your OpsERA Analytics Dashboards.
+        Opsera provides users with access to a vast repository of KPI. Access all available
+        KPIs and configure them on your Opsera Analytics Dashboards.
       `}
     >
       <FilterContainer

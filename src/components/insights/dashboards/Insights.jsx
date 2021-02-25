@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useContext, useRef} from "react";
 import { AuthContext } from "contexts/AuthContext";
+import {useHistory} from "react-router-dom";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Model from "core/data_model/model";
 import axios from "axios";
@@ -10,9 +11,13 @@ import dashboardsActions from "components/insights/dashboards/dashboards-actions
 import DashboardsTable from "components/insights/dashboards/DashboardsTable";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import AnalyticsProfileSettings from "components/settings/analytics/activateAnalyticsCard";
+import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
+import NavigationTab from "components/common/tabs/navigation/NavigationTab";
+import {faAnalytics, faChartNetwork, faChartArea} from "@fortawesome/pro-light-svg-icons";
 
 function Insights() {
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
+  const history = useHistory();
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [dashboardsList, setDashboardsList] = useState(undefined);
@@ -20,6 +25,7 @@ function Insights() {
   const toastContext = useContext(DialogToastContext);
   const [profile, setProfile] = useState(undefined);
   const isMounted = useRef(false);
+  const [activeTab, setActiveTab] = useState("dashboards");
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
@@ -119,15 +125,47 @@ function Insights() {
     );
   };
 
+  const handleNavTabClick = (tabSelection) => async e => {
+    e.preventDefault();
+
+    if (tabSelection === "analytics") {
+      history.push(`/analytics`);
+      return;
+    }
+
+    if (tabSelection === "marketplace") {
+      history.push(`/insights/marketplace`);
+      return;
+    }
+
+    if (tabSelection === "dashboards") {
+      history.push(`/insights/dashboards`);
+      return;
+    }
+
+    setActiveTab(tabSelection);
+  };
+
+  const getNavigationTabContainer = () => {
+    return (
+      <NavigationTabContainer>
+        <NavigationTab icon={faChartNetwork} tabName={"dashboards"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Dashboards"} />
+        <NavigationTab icon={faChartArea} tabName={"marketplace"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Marketplace"} />
+        <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Analytics"} />
+      </NavigationTabContainer>
+    );
+  }
+
   if (!accessRoleData) {
     return (<LoadingDialog size="sm" message="Loading Insights"/>);
   }
 
   return (
     <ScreenContainer
+      navigationTabContainer={getNavigationTabContainer()}
       pageDescription={`
         Opsera provides users with access to a vast repository of logging and analytics. Access all available
-        logging, reports and configurations around the OpsERA Analytics Platform or search your currently
+        logging, reports and configurations around the Opsera Analytics Platform or search your currently
         configured logs repositories below.
       `}
       breadcrumbDestination={"insights"}

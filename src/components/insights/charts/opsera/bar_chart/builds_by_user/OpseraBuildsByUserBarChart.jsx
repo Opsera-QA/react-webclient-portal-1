@@ -43,7 +43,7 @@ function OpseraBuildsByUserBarChart({ kpiConfiguration, setKpiConfiguration, das
     try {
       setIsLoading(true);
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelinesByUser", kpiConfiguration);
-      let dataObject = response?.data?.data[0]?.opseraPipelineByStatus?.data;
+      let dataObject = response?.data?.data[0]?.opseraPipelinesByUser?.data;
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);

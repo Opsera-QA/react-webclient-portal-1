@@ -10,12 +10,16 @@ import dashboardsActions from "components/insights/dashboards/dashboards-actions
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+import ActionBarShowJsonButton from "components/common/actions/buttons/ActionBarShowJsonButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import DashboardEditorPanel from "components/insights/dashboards/dashboard_details/DashboardEditorPanel";
 import DashboardViewer from "components/insights/dashboards/dashboard_details/DashboardViewer";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import TitleActionBarContainer from "components/common/actions/TitleActionBarContainer.jsx";
+import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon.jsx";
+import {faChartNetwork, faChartArea} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 
 function DashboardDetailView() {
@@ -24,7 +28,8 @@ function DashboardDetailView() {
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
   const [dashboardData, setDashboardData] = useState(undefined);
-  const {getAccessToken} = useContext(AuthContext);
+  const [accessRoleData, setAccessRoleData] = useState(undefined);
+  const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -53,6 +58,7 @@ function DashboardDetailView() {
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       await getDashboard(cancelSource);
+      await getRoles(cancelSource)
     } catch (error) {
       if (isMounted.current === true && !error?.error?.message?.includes(404)) {
         console.error(error);
@@ -65,18 +71,11 @@ function DashboardDetailView() {
     }
   }
 
-  const handleTabClick = (tabSelection) => async e => {
-    e.preventDefault();
-
-    if (tabSelection === "dashboards") {
-      history.push(`/insights/dashboards`);
-      return;
-    }
-
-    setActiveTab(tabSelection);
-
-    if (tab !== tabSelection) {
-      history.push(`/insights/dashboards/${id}/${tabSelection}`);
+  const getRoles = async (cancelSource = cancelTokenSource) => {
+    const user = await getUserRecord();
+    const userRoleAccess = await setAccessRoles(user);
+    if (userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
     }
   };
 
@@ -92,9 +91,14 @@ function DashboardDetailView() {
     return await dashboardsActions.delete(dashboardData, getAccessToken);
   }
 
+  const handleClose = async () => {
+    setActiveTab("viewer");
+  }
+
   const getActionBar = () => {
     return (
       <ActionBarContainer>
+        {accessRoleData?.OpseraAdministrator === true && <ActionBarShowJsonButton dataObject={dashboardData} />}
         <div/>
         <div className="d-inline-flex float-right">
           <FavoriteInput dataObject={dashboardData} setDataObject={setDashboardData} fieldName={"isFavorite"}/>
@@ -108,18 +112,44 @@ function DashboardDetailView() {
     );
   };
 
+  const getTitleActionBar = () => {
+    return (
+      <TitleActionBarContainer>
+        <ToggleSettingsIcon activeTab={activeTab} setActiveTab={setActiveTab}/>
+      </TitleActionBarContainer>
+    );
+  }
+
+  const handleNavTabClick = (tabSelection) => async e => {
+    e.preventDefault();
+
+    if (tabSelection === "analytics") {
+      history.push(`/analytics`);
+      return;
+    }
+
+    if (tabSelection === "marketplace") {
+      history.push(`/insights/marketplace`);
+      return;
+    }
+
+    if (tabSelection === "dashboards") {
+      history.push(`/insights/dashboards`);
+      return;
+    }
+
+    setActiveTab(tabSelection);
+  };
+
   const getNavigationTabContainer = () => {
     return (
       <NavigationTabContainer>
-        <NavigationTab tabName={"dashboards"} icon={faArrowLeft} tabText={"Dashboards"} handleTabClick={handleTabClick}
-                       activeTab={activeTab}/>
-        <NavigationTab tabName={"viewer"} icon={faAnalytics} tabText={"Viewer"} handleTabClick={handleTabClick}
-                       activeTab={activeTab}/>
-        <NavigationTab tabName={"settings"} icon={faCogs} tabText={"Settings"} handleTabClick={handleTabClick}
-                       activeTab={activeTab}/>
+        <NavigationTab icon={faChartNetwork} tabName={"dashboards"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Dashboards"} />
+        <NavigationTab icon={faChartArea} tabName={"marketplace"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Marketplace"} />
+        <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Analytics"} />
       </NavigationTabContainer>
-    )
-  };
+    );
+  }
 
   if (activeTab === "settings") {
     return (
@@ -130,26 +160,27 @@ function DashboardDetailView() {
         navigationTabContainer={getNavigationTabContainer()}
         isLoading={isLoading}
         actionBar={getActionBar()}
-        detailPanel={<DashboardEditorPanel dashboardData={dashboardData} setDashboardData={setDashboardData}/>}
+        detailPanel={<DashboardEditorPanel dashboardData={dashboardData} setDashboardData={setDashboardData} handleClose={handleClose}/>}
       />
     );
   }
 
   return (
-    <ScreenContainer
+    <DetailScreenContainer
+      dataObject={dashboardData}
       navigationTabContainer={getNavigationTabContainer()}
       breadcrumbDestination={"dashboardDetails"}
       isLoading={isLoading}
       metadata={dashboardMetadata}
-    >
-      <DashboardViewer
+      titleActionBar={getTitleActionBar()}
+      detailPanel={<DashboardViewer
         dashboardData={dashboardData}
         breadcrumbDestination={"dashboardDetails"}
         managementViewLink={"/insights/dashboards"}
         managementTitle={"Dashboards"}
         type={"Dashboard"}
+      />}
       />
-    </ScreenContainer>
   )
 }
 
