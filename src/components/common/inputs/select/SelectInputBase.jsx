@@ -8,7 +8,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 
-function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, disabled, clearDataFunction, showClearValueButton}) {
+function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, disabled, clearDataFunction, showClearValueButton, errorMessage}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
@@ -62,7 +62,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
         onChange={(data) => updateValue(data)}
         disabled={disabled}
       />
-      <InfoText field={field} />
+      <InfoText field={field} errorMessage={errorMessage} />
     </InputContainer>
   );
 }
@@ -84,6 +84,7 @@ SelectInputBase.propTypes = {
     PropTypes.array
   ]),
   showClearValueButton: PropTypes.bool,
+  errorMessage: PropTypes.string
 };
 
 SelectInputBase.defaultProps = {

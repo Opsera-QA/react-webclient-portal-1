@@ -14,6 +14,7 @@ function ToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textF
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -46,7 +47,7 @@ function ToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textF
     catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
-        toastContext.showLoadingErrorDialog(error);
+        setErrorMessage("Could Not Load Tools");
       }
     }
     finally {
@@ -67,13 +68,13 @@ function ToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textF
   const getInfoText = () => {
     if (dataObject.getData(fieldName) !== "") {
       return (
-        <Link to={`/inventory/tools/details/${dataObject.getData(fieldName)}`}>
-          <span><FontAwesomeIcon icon={faTools} className="pr-1" />View Or Edit this Tool's Registry settings</span>
-        </Link>
+        <small className="text-muted">
+          <Link to={`/inventory/tools/details/${dataObject.getData(fieldName)}`}>
+            <span><FontAwesomeIcon icon={faTools} className="pr-1" />View Or Edit this Tool's Registry settings</span>
+          </Link>
+        </small>
       );
     }
-
-    return <span>Select a tool to get started.</span>
   };
 
   if (!isLoading && (tools == null || tools.length === 0)) {
@@ -99,12 +100,10 @@ function ToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textF
         valueField={valueField}
         textField={textField}
         className={className}
-        // placeholderText={placeholderText}
+        placeholderText={"Select a tool to get started."}
         disabled={disabled || isLoading}
       />
-      <small className="text-muted">
-        {getInfoText()}
-      </small>
+      {getInfoText()}
     </>
   );
 }
