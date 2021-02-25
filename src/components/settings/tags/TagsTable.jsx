@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {useContext, useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
@@ -9,14 +9,16 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
-import NewTagModal from "components/settings/tags/NewTagModal";
+import NewTagOverlay from "components/settings/tags/NewTagOverlay";
 import StatusFilter from "components/common/filters/status/StatusFilter";
-import TagTypeFilter from "components/common/filters/tags/tag_type/TagTypeFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTags} from "@fortawesome/pro-light-svg-icons";
 import InlineTagTypeFilter from "components/common/filters/tags/tag_type/InlineTagTypeFilter";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import TagTypeFilter from "components/common/filters/tags/tag_type/TagTypeFilter";
 
-function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto }) {
+function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, isMounted }) {
+  const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   let fields = tagEditorMetadata.fields;
   const [showTagModal, setShowTagModal] = useState(false);
@@ -41,12 +43,15 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto })
   };
 
   const createTag = () => {
-    setShowTagModal(true);
+    toastContext.showOverlayPanel(<NewTagOverlay loadData={loadData} isMounted={isMounted} />);
   };
 
   const getDropdownFilters = () => {
     return (
+      <>
+        <TagTypeFilter filterModel={tagFilterDto} setFilterModel={setTagFilterDto} className={"mb-2"} />
         <StatusFilter filterDto={tagFilterDto} setFilterDto={setTagFilterDto} />
+      </>
     );
   };
 
@@ -73,22 +78,20 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto })
   };
 
   return (
-    <div className="px-2 pb-2">
-      <FilterContainer
-        loadData={loadData}
-        filterDto={tagFilterDto}
-        setFilterDto={setTagFilterDto}
-        addRecordFunction={createTag}
-        supportSearch={true}
-        isLoading={isLoading}
-        body={getTagsTable()}
-        inlineFilters={getInlineFilters()}
-        dropdownFilters={getDropdownFilters()}
-        titleIcon={faTags}
-        title={"Tags"}
-      />
-      <NewTagModal showModal={showTagModal} loadData={loadData} setShowModal={setShowTagModal}/>
-    </div>
+    <FilterContainer
+      loadData={loadData}
+      filterDto={tagFilterDto}
+      setFilterDto={setTagFilterDto}
+      addRecordFunction={createTag}
+      supportSearch={true}
+      isLoading={isLoading}
+      body={getTagsTable()}
+      inlineFilters={getInlineFilters()}
+      dropdownFilters={getDropdownFilters()}
+      titleIcon={faTags}
+      title={"Tags"}
+      className={"px-2 pb-2"}
+    />
   );
 }
 

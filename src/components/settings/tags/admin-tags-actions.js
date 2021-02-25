@@ -7,12 +7,12 @@ adminTagsActions.delete = async (tagId, getAccessToken) => {
   return await baseActions.apiDeleteCall(getAccessToken, apiUrl);
 };
 
-adminTagsActions.update = async (tagDataDto, getAccessToken) => {
+adminTagsActions.updateTagV2 = async (getAccessToken, cancelTokenSource, tagDataDto) => {
   let postBody = {
     ...tagDataDto.getPersistData(),
   };
   const apiUrl = `/tags/${tagDataDto.getData("_id")}/update/`;
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 // Remove after wiring up V2

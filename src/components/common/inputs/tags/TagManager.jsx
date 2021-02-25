@@ -91,7 +91,7 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
 
   const saveNewTag = async (newTagDto) => {
     try {
-      await adminTagsActions.create(newTagDto, getAccessToken);
+      await adminTagsActions.createTagV2(getAccessToken, cancelTokenSource, newTagDto);
     }
     catch (error) {
       toastContext.showCreateFailureResultDialog("Tag");
