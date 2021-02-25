@@ -28,7 +28,7 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
             fieldName={fieldName}
             dataObject={dataObject}
             setDataObject={setDataObject}
-            value={"read_api"}
+            value={"api-readonly"}
             label={
               <span>
                 <div><strong>API Access (Read Only)</strong></div>
