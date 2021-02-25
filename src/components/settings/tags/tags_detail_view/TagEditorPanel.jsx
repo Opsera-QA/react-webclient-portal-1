@@ -9,6 +9,7 @@ import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TagTypeSelectInput from "components/common/list_of_values_input/settings/tags/TagTypeSelectInput";
 import TagConfigurationInput from "components/common/list_of_values_input/settings/tags/TagConfigurationInput";
+import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
 function TagEditorPanel({ tagData, setTagData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -42,6 +43,11 @@ function TagEditorPanel({ tagData, setTagData, handleClose }) {
       createRecord={createTag}
       updateRecord={updateTag}
     >
+      <InlineWarning className={"mb-2"}
+        warningMessage={`
+          Editing Type or Value on a Tag does not updating existing applications of the tag. If you edit these,
+          you will need to reapply the Tag to any place it is being used for the changes to take effect.
+        `} />
       <Row>
         <Col md={6}>
           <TagTypeSelectInput dataObject={tagDataDto} setDataObject={setTagDataDto}/>

@@ -23,9 +23,9 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto })
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "_id")),
       getTableTextColumn(getField(fields, "type")),
       getTableTextColumn(getField(fields, "value")),
+      getTableTextColumn(getField(fields, "_id")),
       getTableBooleanIconColumn(getField(fields, "active")),
       getTableDateColumn(getField(fields, "createdAt")),
     ],
