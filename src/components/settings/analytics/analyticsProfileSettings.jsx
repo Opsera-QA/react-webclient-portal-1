@@ -4,7 +4,6 @@ import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "../../../contexts/DialogToastContext";
 import analyticsProfileActions from "./analytics-profile-settings-actions";
 import DtoSelectInput from "../../common/input/dto_input/dto-select-input";
-import DtoMultiselectInput from "../../common/input/dto_input/dto-multiselect-input";
 import Model from "../../../core/data_model/model";
 import AnalyticsProfileMetadata from "./analytics-profile-metadata";
 import ScreenContainer from "../../common/panels/general/ScreenContainer";
@@ -12,6 +11,7 @@ import LoadingView from "../../common/status_notifications/loading";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
 
 const DEFAULT_PERSONAS = [
   {
@@ -253,7 +253,7 @@ function AnalyticsProfileSettings() {
               />
             </Col>
             <Col lg={12}>
-              <DtoMultiselectInput
+              <MultiSelectInputBase
                 setDataObject={setAnalyticsProfileData}
                 textField={"name"}
                 valueField={"id"}
