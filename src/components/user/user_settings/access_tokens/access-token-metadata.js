@@ -44,6 +44,6 @@ export const accessTokenMetadata = {
   newObjectFields: {
     name: "",
     expiration: "1mo",
-    scope: "pipeline",
+    scope: "api",
   }
 }

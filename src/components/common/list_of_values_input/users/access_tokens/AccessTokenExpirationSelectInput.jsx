@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 const expirationLengths = [
+  {text: "1 Day", value: "1d"},
   {text: "1 Week", value: "1w"},
   {text: "1 Month", value: "1mo"},
   {text: "2 Months", value: "2mo"},
