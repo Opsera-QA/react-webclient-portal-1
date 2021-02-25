@@ -78,7 +78,10 @@ const INITIAL_DATA = {
   upstreamBranch: "",
   outputPath: "",
   outputFileName: "",
-  // agentLabels : "",
+  inputFileName: "",
+  inputFilePath: "",
+  agentLabels : "",
+  autoScaleEnable: "",
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -460,6 +463,7 @@ function JenkinsStepConfiguration({
         jenkinsUrl: selectedOption.configuration.jenkinsUrl,
         jUserId: selectedOption.configuration.jUserId,
         jenkinsPort: selectedOption.configuration.jenkinsPort,
+        autoScaleEnable: selectedOption.configuration.autoScaleEnable,
         // jAuthToken: selectedOption.configuration.jAuthToken,
         gitToolId: "",
         repoId: "",
@@ -899,23 +903,26 @@ function JenkinsStepConfiguration({
                       />
                     ) : null}
                   </Form.Group>
-                  {/* <Form.Group controlId="formJenkinsAgent">
-                    <Form.Label className="w-100">
-                      Jenkins Agent
-                    </Form.Label>
+                  {formData.autoScaleEnable && 
+                    <Form.Group controlId="formJenkinsAgent">
+                      <Form.Label className="w-100">
+                        Jenkins Agent
+                      </Form.Label>
+                    
+                      <DropdownList
+                        data={jenkinsAgentArray}
+                        groupBy="env"
+                        valueField="agentLabel"
+                        textField="name"
+                        value={jenkinsAgentArray[
+                          jenkinsAgentArray.findIndex((x) => x.agentLabel === formData.agentLabels)
+                        ]}
+                        filter="contains"
+                        onChange={(item)=> setFormData({...formData, agentLabels: item.agentLabel }) }
+                      />
+                    </Form.Group>
+                  }
                   
-                    <DropdownList
-                      data={jenkinsAgentArray}
-                      groupBy="env"
-                      valueField="agentLabel"
-                      textField="name"
-                      value={jenkinsAgentArray[
-                        jenkinsAgentArray.findIndex((x) => x.agentLabel === formData.agentLabels)
-                      ]}
-                      filter="contains"
-                      onChange={(item)=> setFormData({...formData, agentLabels: item.agentLabel }) }
-                    />
-                  </Form.Group> */}
                   </>
                 )}
               </>
@@ -1368,6 +1375,33 @@ function JenkinsStepConfiguration({
                 {/* gradle and maven specific attributes */}
                 {(formData.buildType === "gradle" || formData.buildType === "maven") && (
                   <>
+                   <Form.Group controlId="inputFilePath">
+                      <Form.Label>Script File Path</Form.Label>
+                      <Form.Control
+                        maxLength="50"
+                        type="text"
+                        placeholder=""
+                        value={formData.inputFilePath || ""}
+                        onChange={(e) =>{
+                          setFormData({ ...formData, inputFilePath: e.target.value })
+                        }}
+                      />
+                      
+                    </Form.Group>
+                    <Form.Group controlId="inputFileName">
+                      <Form.Label>Script File Name</Form.Label>
+                      <Form.Control
+                        maxLength="50"
+                        type="text"
+                        placeholder=""
+                        value={formData.inputFileName || ""}
+                        onChange={(e) =>{
+                          setFormData({ ...formData, inputFileName: e.target.value })
+                        }}
+                      />
+                      <Form.Text>File name with extension is expected.</Form.Text>
+                    </Form.Group>
+
                     <Form.Group controlId="outputPath">
                       <Form.Label>Output File Path</Form.Label>
                       <Form.Control
