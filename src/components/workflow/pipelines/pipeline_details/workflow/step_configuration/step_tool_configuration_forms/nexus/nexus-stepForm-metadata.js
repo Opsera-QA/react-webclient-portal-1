@@ -26,18 +26,6 @@ const nexusStepFormMetadata = {
       id: "artifactStepId",
     },
     {
-      id: "toolURL",
-      isRequired: true
-    },
-    {
-      id: "userName",
-      isRequired: true
-    },
-    {
-      id: "secretKey",
-      isRequired: true
-    },
-    {
       label: "Use Run count as version?",
       id: "customVersion",
       isRequired: true
@@ -62,9 +50,6 @@ const nexusStepFormMetadata = {
     type: "",
     repositoryName: "",
     artifactStepId: "",
-    toolURL: "",
-    userName: "",
-    secretKey: "",
     customVersion: false,
     repositoryGroup : "",
     nexusToolConfigId: "",
