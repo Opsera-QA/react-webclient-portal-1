@@ -5,13 +5,13 @@ import defaultSignupFormFields from "components/user/signup/signup-form-fields.j
 import usStateList from "components/user/states";
 import "components/user/user.css";
 import Model from "core/data_model/model";
-import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import userActions from "components/user/user-actions";
 import RegisterButton from "components/common/buttons/saving/RegisterButton";
 import PasswordInput from "components/common/input/dto_input/PasswordInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function Signup() {
   const history = useHistory();
@@ -99,13 +99,13 @@ function Signup() {
           <Card.Body className="new-user-body-full p-3">
             <Row>
               <Col md={6}>
-                <DtoTextInput fieldName={"firstName"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"firstName"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={6}>
-                <DtoTextInput fieldName={"lastName"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"lastName"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={12}>
-                <DtoTextInput fieldName={"email"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"email"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={6}>
                 <PasswordInput fieldName={"password"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
@@ -114,22 +114,22 @@ function Signup() {
                 <PasswordInput fieldName={"confirmPassword"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={6}>
-                <DtoTextInput fieldName={"organizationName"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"organizationName"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={6}>
-                <DtoTextInput fieldName={"domain"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"domain"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={12}>
-                <DtoTextInput fieldName={"street"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"street"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={4}>
-                <DtoTextInput fieldName={"city"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"city"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={4}>
                 <DtoSelectInput selectOptions={usStateList} fieldName={"state"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={4}>
-                <DtoTextInput fieldName={"zip"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"zip"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={6}>
                 <DtoSelectInput selectOptions={cloudProviders} fieldName={"cloudProvider"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />

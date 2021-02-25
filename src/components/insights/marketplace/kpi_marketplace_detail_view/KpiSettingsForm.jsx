@@ -2,7 +2,6 @@ import React, { useState, useContext }  from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import EditorPanelContainer from "../../../common/panels/detail_panel_container/EditorPanelContainer";
-import DtoTextInput from "../../../common/input/dto_input/dto-text-input";
 import DateRangeInput from "components/common/inputs/date/DateRangeInput";
 import DtoTagManagerFilterInput from "../../../common/input/dto_input/dto-tag-manager-filter-input";
 import LenientSaveButton from "../../../common/buttons/saving/LenientSaveButton";
@@ -13,6 +12,7 @@ import Model from "../../../../core/data_model/model";
 import dashboardsActions from "../../dashboards/dashboards-actions";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 
 function KpiSettingsForm({kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart, setKpis}) {
@@ -78,7 +78,7 @@ function KpiSettingsForm({kpiConfiguration, setKpiConfiguration, dashboardData, 
     
     return (
         <EditorPanelContainer showRequiredFieldsMessage={false}>
-        <DtoTextInput fieldName={"kpi_name"} dataObject={kpiSettings} setDataObject={setKpiSettings}/>
+        <TextInputBase fieldName={"kpi_name"} dataObject={kpiSettings} setDataObject={setKpiSettings}/>
         {kpiSettings.getData("filters").map((filter, index) => 
             <div className="form-group m-2" key={index}> 
             {getKpiFilters(filter)}  

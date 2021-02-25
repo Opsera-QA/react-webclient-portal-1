@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
-import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import ToolConfigurationEditorPanelContainer
   from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
 import Row from "react-bootstrap/Row";
@@ -9,6 +8,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import spinnakerConnectionMetadata from "./spinnaker-connection-metadata";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function SpinnakerToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -37,7 +37,7 @@ function SpinnakerToolConfiguration({ toolData }) {
     >
       <Row>
         <Col sm={12}>
-          <DtoTextInput dataObject={spinnakerConfigurationDto} setDataObject={setSpinnakerConfigurationDto} fieldName={"toolURL"} />
+          <TextInputBase dataObject={spinnakerConfigurationDto} setDataObject={setSpinnakerConfigurationDto} fieldName={"toolURL"} />
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>

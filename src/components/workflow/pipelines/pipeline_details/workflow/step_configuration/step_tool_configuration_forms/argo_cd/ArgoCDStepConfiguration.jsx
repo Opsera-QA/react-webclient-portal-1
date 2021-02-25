@@ -9,13 +9,13 @@ import Model from "core/data_model/model";
 import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
-import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import GitYamlStepActions from "./argocd-step-actions";
 import pipelineActions from "components/workflow/pipeline-actions";
 import CloseButton from "../../../../../../../common/buttons/CloseButton";
 import { Link } from "react-router-dom";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 const YAML_SCM_TOOL = [
   {
@@ -484,14 +484,14 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
             busy={isBranchSearching}
             disabled={gitYAMLStepConfigurationDto.getData("gitRepository").length === 0 || isBranchSearching}
           />
-          <DtoTextInput
+          <TextInputBase
             setDataObject={setGitYAMLStepConfigurationDataDto}
             dataObject={gitYAMLStepConfigurationDto}
             fieldName={"gitFilePath"}
             disabled={gitYAMLStepConfigurationDto && gitYAMLStepConfigurationDto.getData("defaultBranch").length === 0}
           />
           {gitYAMLStepConfigurationDto.getData("type") === "bitbucket" && (
-            <DtoTextInput
+            <TextInputBase
               setDataObject={setGitYAMLStepConfigurationDataDto}
               dataObject={gitYAMLStepConfigurationDto}
               fieldName={"gitWorkspace"}

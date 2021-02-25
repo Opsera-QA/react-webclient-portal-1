@@ -3,7 +3,6 @@ import { Row, Col, Card, Button, OverlayTrigger, Tooltip } from "react-bootstrap
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "../../../contexts/DialogToastContext";
 import analyticsProfileActions from "./analytics-profile-settings-actions";
-import DtoTextInput from "../../common/input/dto_input/dto-text-input";
 import DtoSelectInput from "../../common/input/dto_input/dto-select-input";
 import DtoMultiselectInput from "../../common/input/dto_input/dto-multiselect-input";
 import Model from "../../../core/data_model/model";
@@ -12,6 +11,7 @@ import ScreenContainer from "../../common/panels/general/ScreenContainer";
 import LoadingView from "../../common/status_notifications/loading";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 const DEFAULT_PERSONAS = [
   {
@@ -225,7 +225,7 @@ function AnalyticsProfileSettings() {
               </OverlayTrigger>
             </Col>
             <Col lg={12}>
-              <DtoTextInput
+              <TextInputBase
                 setDataObject={setAnalyticsProfileData}
                 dataObject={analyticsProfileData}
                 fieldName={"enabledToolsOn"}
@@ -233,7 +233,7 @@ function AnalyticsProfileSettings() {
               />
             </Col>
             <Col lg={12}>
-              <DtoTextInput
+              <TextInputBase
                 setDataObject={setAnalyticsProfileData}
                 dataObject={analyticsProfileData}
                 fieldName={"esInstanceURL"}

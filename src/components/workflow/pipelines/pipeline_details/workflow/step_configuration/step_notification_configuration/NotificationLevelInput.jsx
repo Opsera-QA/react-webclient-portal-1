@@ -1,6 +1,6 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import DtoSelectInput from "../../../../../../common/input/dto_input/dto-select-input";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 const notificationLevels = [
   { value: "finished", label: "Step Completed", message: "You will receive notifications on this step's completion no matter what the status.", },
@@ -20,7 +20,7 @@ function NotificationLevelInput({ fieldName, dataObject, setDataObject, disabled
   }
 
   return (
-    <DtoSelectInput
+    <SelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}

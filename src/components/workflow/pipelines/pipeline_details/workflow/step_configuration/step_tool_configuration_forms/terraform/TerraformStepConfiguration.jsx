@@ -8,7 +8,6 @@ import Model from "core/data_model/model";
 import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
 import GitActionsHelper from "../../helpers/git-actions-helper.js";
 import JSONInput from "react-json-editor-ajrm";
@@ -17,6 +16,7 @@ import CloseButton from "../../../../../../../common/buttons/CloseButton";
 import pipelineActions from "../../../../../../pipeline-actions";
 import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 const SCM_TOOL_LIST = [
   {
@@ -415,7 +415,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             busy={isBranchSearching}
             disabled={terraformStepConfigurationDto.getData("gitRepository").length === 0 || isBranchSearching}
           />
-          <DtoTextInput
+          <TextInputBase
             setDataObject={setTerraformStepConfigurationDataDto}
             dataObject={terraformStepConfigurationDto}
             fieldName={"gitFilePath"}
@@ -434,7 +434,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             busy={isAwsSearching}
             disabled={isAwsSearching || terraformStepConfigurationDto && terraformStepConfigurationDto.getData("defaultBranch").length === 0}
           />
-          <DtoTextInput
+          <TextInputBase
             setDataObject={setTerraformStepConfigurationDataDto}
             dataObject={terraformStepConfigurationDto}
             fieldName={"accessKeyParamName"}
@@ -442,7 +442,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
               terraformStepConfigurationDto && terraformStepConfigurationDto.getData("awsToolConfigId") && terraformStepConfigurationDto.getData("awsToolConfigId").length === 0
             }
           />
-          <DtoTextInput
+          <TextInputBase
             setDataObject={setTerraformStepConfigurationDataDto}
             dataObject={terraformStepConfigurationDto}
             fieldName={"secrectKeyParamName"}
@@ -450,7 +450,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
               terraformStepConfigurationDto && terraformStepConfigurationDto.getData("awsToolConfigId") && terraformStepConfigurationDto.getData("awsToolConfigId").length === 0
             }
           />
-          <DtoTextInput
+          <TextInputBase
             setDataObject={setTerraformStepConfigurationDataDto}
             dataObject={terraformStepConfigurationDto}
             fieldName={"regionParamName"}

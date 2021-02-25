@@ -9,12 +9,12 @@ import Model from "core/data_model/model";
 import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
-import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import CloseButton from "../../../../../../../common/buttons/CloseButton"
 import JSONInput from "react-json-editor-ajrm";
 import locale    from "react-json-editor-ajrm/locale/en";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 const PLATFORM_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -219,7 +219,7 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
             busy={isAwsSearching}
             disabled={isAwsSearching}
           />
-          <DtoTextInput
+          <TextInputBase
             setDataObject={setEBSStepConfigurationDataDto}
             dataObject={ebsStepConfigurationDto}
             fieldName={"bucketName"}
@@ -245,7 +245,7 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
               onClick={() => document.body.click()}
             />
           </OverlayTrigger>
-          <DtoTextInput
+          <TextInputBase
             setDataObject={setEBSStepConfigurationDataDto}
             dataObject={ebsStepConfigurationDto}
             fieldName={"ec2KeyName"}
@@ -271,7 +271,7 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
               onClick={() => document.body.click()}
             />
           </OverlayTrigger>
-          <DtoTextInput
+          <TextInputBase
             setDataObject={setEBSStepConfigurationDataDto}
             dataObject={ebsStepConfigurationDto}
             fieldName={"port"}
@@ -288,19 +288,19 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
             fieldName={"platform"}
             disabled={ebsStepConfigurationDto && ebsStepConfigurationDto.getData("port").length === 0}
           />
-          <DtoTextInput
+          <TextInputBase
             setDataObject={setEBSStepConfigurationDataDto}
             dataObject={ebsStepConfigurationDto}
             fieldName={"applicationName"}
             disabled={ebsStepConfigurationDto && ebsStepConfigurationDto.getData("platform").length === 0}
           />
-          <DtoTextInput
+          <TextInputBase
             setDataObject={setEBSStepConfigurationDataDto}
             dataObject={ebsStepConfigurationDto}
             fieldName={"description"}
             disabled={ebsStepConfigurationDto && ebsStepConfigurationDto.getData("applicationName").length === 0}
           />
-          <DtoTextInput
+          <TextInputBase
             setDataObject={setEBSStepConfigurationDataDto}
             dataObject={ebsStepConfigurationDto}
             fieldName={"applicationVersionLabel"}
@@ -440,13 +440,13 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
             fieldName={"bucketAccess"}
             disabled={ebsStepConfigurationDto && ebsStepConfigurationDto.getData("s3ECRStepId").length === 0}
           />      
-          <DtoTextInput
+          <TextInputBase
             setDataObject={setEBSStepConfigurationDataDto}
             dataObject={ebsStepConfigurationDto}
             fieldName={"hostedZoneId"}
             disabled={ebsStepConfigurationDto && ebsStepConfigurationDto.getData("bucketAccess").length === 0}
           />
-          <DtoTextInput
+          <TextInputBase
             setDataObject={setEBSStepConfigurationDataDto}
             dataObject={ebsStepConfigurationDto}
             fieldName={"domainName"}

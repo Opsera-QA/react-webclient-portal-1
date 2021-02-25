@@ -13,7 +13,6 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import OctopusStepActions from "./octopus-step-actions";
 import CloseButton from "../../../../../../../common/buttons/CloseButton";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
-import DtoTextInput from "../../../../../../../common/input/dto_input/dto-text-input";
 import octopusActions from "../../../../../../../inventory/tools/tool_details/tool_jobs/octopus/octopus-actions";
 import OctopusToolSelectInput from "./input/OctopusToolSelectInput";
 import ProjectMappingToolSelectInput
@@ -29,6 +28,7 @@ import OctopusPlatformTypeSelectInput from "./input/OctopusPlatformTypeSelectInp
 import OctopusDeploymentTypeInputSelect from "./input/OctopusDeploymentTypeInputSelect";
 import OctopusFeedSelectInput from "./input/OctopusFeedSelectInput";
 import OctopusVersionSelectInput from "./input/OctopusVersionSelectInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -122,13 +122,13 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
             disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusToolId").length === 0}
             tool_prop={octopusStepConfigurationDto ? octopusStepConfigurationDto.getData("octopusToolId") : ""}
           />
-          <DtoTextInput
+          <TextInputBase
             setDataObject={setOctopusStepConfigurationDataDto}
             dataObject={octopusStepConfigurationDto}
             fieldName={"projectName"}
             disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
           />
-          <DtoTextInput
+          <TextInputBase
             setDataObject={setOctopusStepConfigurationDataDto}
             dataObject={octopusStepConfigurationDto}
             fieldName={"projectDescription"}
@@ -168,7 +168,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
             tool_prop={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName") ? octopusStepConfigurationDto.getData("spaceName") : ""}
           />
           {octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType") && octopusStepConfigurationDto.getData("octopusPlatformType") === "Kubernetes" &&
-            <DtoTextInput
+            <TextInputBase
               setDataObject={setOctopusStepConfigurationDataDto}
               dataObject={octopusStepConfigurationDto}
               fieldName={"namespace"}

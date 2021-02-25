@@ -7,13 +7,13 @@ import Loading from "../../../../../../../common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import DtoTextInput from "../../../../../../../common/input/dto_input/dto-text-input";
 import DtoSelectInput from "../../../../../../../common/input/dto_input/dto-select-input";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import argoActions from "../../argo-actions";
 import Modal from "components/common/modal/modal";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function ArgoApplicationEditorPanel({ argoApplicationData, toolData, appID, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -80,7 +80,7 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, appID, hand
       <div className="scroll-y full-height">
         <Row>
           <Col lg={12}>
-            <DtoTextInput
+            <TextInputBase
               setDataObject={setArgoApplicationDataDto}
               dataObject={argoApplicationDataDto}
               fieldName={"applicationName"}
@@ -112,21 +112,21 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, appID, hand
             />
           </Col>
           <Col lg={12}>
-            <DtoTextInput
+            <TextInputBase
               dataObject={argoApplicationDataDto}
               fieldName={"gitPath"}
               setDataObject={setArgoApplicationDataDto}
             />
           </Col>
           <Col lg={12}>
-            <DtoTextInput
+            <TextInputBase
               dataObject={argoApplicationDataDto}
               fieldName={"gitUrl"}
               setDataObject={setArgoApplicationDataDto}
             />
           </Col>
           <Col lg={12}>
-            <DtoTextInput
+            <TextInputBase
               dataObject={argoApplicationDataDto}
               fieldName={"branchName"}
               setDataObject={setArgoApplicationDataDto}
