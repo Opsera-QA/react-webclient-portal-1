@@ -22,7 +22,7 @@ function ActivityToggleInput({ fieldName, dataObject, setDataObject, disabled })
           id={field.id}
           checked={!!dataObject.getData(fieldName)}
           disabled={disabled}
-          label={dataObject?.getData(fieldName) === true ? "On" : "Off"}
+          label={<span className="mt-auto">{dataObject?.getData(fieldName) === true ? "On" : "Off"}</span>}
           onChange={() => {
             validateAndSetData(!dataObject.getData(fieldName));
           }}
