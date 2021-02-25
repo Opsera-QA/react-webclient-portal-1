@@ -5,12 +5,10 @@ import {faExclamationCircle, faTools} from "@fortawesome/pro-light-svg-icons";
 import {Link} from "react-router-dom";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import toolsActions from "components/inventory/tools/tools-actions";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 
 function ToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, className}) {
-  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -97,6 +95,7 @@ function ToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textF
         setDataObject={setDataObject}
         selectOptions={tools}
         busy={isLoading}
+        errorMessage={errorMessage}
         valueField={valueField}
         textField={textField}
         className={className}
