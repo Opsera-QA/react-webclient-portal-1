@@ -65,6 +65,19 @@ toolsActions.getRoleLimitedToolRegistryListV2 = async (getAccessToken, cancelTok
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+toolsActions.getFullRoleLimitedToolRegistryList = async (getAccessToken) => {
+  let urlParams = {
+    params: {
+      sort: "name",
+      size: 10000,
+    }
+  }
+
+
+  const apiUrl = `/registry/configs`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+};
+
 toolsActions.getFullToolRegistryList = async (getAccessToken) => {
   let urlParams = {
     params: {

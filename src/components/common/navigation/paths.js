@@ -75,10 +75,12 @@ paths.reports = "reports";
 paths.toolReports = paths.reports + "/tools";
 paths.toolsUsedInPipelineReport = paths.toolReports + "/tools-used-in-pipeline";
 paths.toolCountsReport = paths.toolReports + "/tool-counts";
+paths.detailedToolReport = paths.toolReports + "/detailed-tool-report";
 paths.tagReports = paths.reports + "/tags";
 paths.tagsUsedInPipelineReport = paths.tagReports + "/tags-used-in-pipeline";
 paths.tagsUsedInToolsReport = paths.tagReports + "/tags-used-in-tools";
 paths.pipelineReports = paths.reports + "/pipelines";
+paths.toolCountsReport = paths.toolReports + "/detailed-tool-report";
 
 //Inventory (Tool Registry) paths
 paths.toolRegistry = "inventory/tools";
