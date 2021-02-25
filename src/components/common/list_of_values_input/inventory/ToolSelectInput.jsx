@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle, faTools} from "@fortawesome/pro-light-svg-icons";
@@ -7,33 +7,61 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
+import axios from "axios";
 
-function ToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField}) {
+function ToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, className}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true)
-      await loadTools();
+      await loadTools(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true ) {
+        setIsLoading(false);
+      }
     }
   };
 
-  const loadTools = async () => {
-    const response = await toolsActions.getToolLovs(getAccessToken);
-    setTools(response?.data?.data);
+  const loadTools = async (cancelSource = cancelTokenSource) => {
+    const response = await toolsActions.getToolLovsV2(getAccessToken, cancelSource);
+
+    if (isMounted?.current === true && response?.data) {
+      setTools(response?.data?.data);
+    }
   };
 
   const getInfoText = () => {
@@ -61,7 +89,7 @@ function ToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textF
   }
 
   return (
-    <div>
+    <>
       <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
@@ -70,13 +98,14 @@ function ToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textF
         busy={isLoading}
         valueField={valueField}
         textField={textField}
+        className={className}
         // placeholderText={placeholderText}
         disabled={disabled || isLoading}
       />
-      <small className="text-muted ml-3">
+      <small className="text-muted">
         {getInfoText()}
       </small>
-    </div>
+    </>
   );
 }
 
@@ -86,7 +115,8 @@ ToolSelectInput.propTypes = {
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
-  valueField: PropTypes.string
+  valueField: PropTypes.string,
+  className: PropTypes.string
 };
 
 ToolSelectInput.defaultProps = {
