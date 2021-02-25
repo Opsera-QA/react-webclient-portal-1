@@ -38,53 +38,51 @@ function AccessTokenEditorPanel({ cancelTokenSource, loadData }) {
   }
 
   return (
-    <div>
-        <div className="object-properties-input mb-3">
-          <div className="content-container-border">
-            <div className="my-auto property-header d-flex justify-content-between">
-                <div className="mx-2">
-                  <div className="pt-2">
-                    <FontAwesomeIcon icon={faKey} fixedWidth className="mr-2"/>
-                    Generate Personal Access Token
-                  </div>
-                </div>
+    <div className="object-properties-input mb-3">
+      <div className="content-container-border">
+        <div className="my-auto property-header d-flex justify-content-between">
+          <div className="mx-2">
+            <div className="pt-2">
+              <FontAwesomeIcon icon={faKey} fixedWidth className="mr-2"/>
+              Generate Personal Access Token
             </div>
-            <Row className="mx-0">
-              <Col xs={12} md={6}>
-                <TextInputBase dataObject={accessToken} setDataObject={setAccessToken} fieldName={"name"}/>
-              </Col>
-              <Col xs={12} md={6}>
-                <AccessTokenExpirationSelectInput dataObject={accessToken} setDataObject={setAccessToken} fieldName={"expiration"}/>
-              </Col>
-              <Col md={12}>
-                <AccessTokenScopeRadioInput dataObject={accessToken} setDataObject={setAccessToken} />
-              </Col>
-              <Col md={12}>
-                <Row className="mx-0">
-                  <div className="ml-auto">
-                    <CreateButton
-                      icon={faKey}
-                      addAnotherOption={false}
-                      disable={!accessToken.isModelValid2()}
-                      recordDto={accessToken}
-                      handleClose={loadData}
-                      createRecord={createToken} size={"sm"}
-                    />
-                  </div>
-                </Row>
-              </Col>
-              <Col md={12}>
-                <TextAreaClipboardField
-                  className={"m-2 small-label-text"}
-                  allowResize={false}
-                  rows={3}
-                  textAreaValue={generatedToken}
-                  description={`Please note: This token will not be able to be accessed again.`}
-                />
-              </Col>
-            </Row>
           </div>
         </div>
+        <Row className="mx-0">
+          <Col xs={12} md={6}>
+            <TextInputBase dataObject={accessToken} setDataObject={setAccessToken} fieldName={"name"}/>
+          </Col>
+          <Col xs={12} md={6}>
+            <AccessTokenExpirationSelectInput dataObject={accessToken} setDataObject={setAccessToken} fieldName={"expiration"}/>
+          </Col>
+          <Col md={12}>
+            <AccessTokenScopeRadioInput dataObject={accessToken} setDataObject={setAccessToken}/>
+          </Col>
+          <Col md={12}>
+            <Row className="mx-0">
+              <div className="ml-auto">
+                <CreateButton
+                  icon={faKey}
+                  addAnotherOption={false}
+                  disable={!accessToken.checkCurrentValidity()}
+                  recordDto={accessToken}
+                  handleClose={loadData}
+                  createRecord={createToken} size={"sm"}
+                />
+              </div>
+            </Row>
+          </Col>
+          <Col md={12}>
+            <TextAreaClipboardField
+              className={"m-2 small-label-text"}
+              allowResize={false}
+              rows={3}
+              textAreaValue={generatedToken}
+              description={`Please note: This token will not be able to be accessed again.`}
+            />
+          </Col>
+        </Row>
+      </div>
     </div>
   );
 }
