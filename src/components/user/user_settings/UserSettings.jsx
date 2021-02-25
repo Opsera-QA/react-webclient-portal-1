@@ -3,11 +3,11 @@ import {faIdCard, faKey, faUser} from "@fortawesome/pro-light-svg-icons";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import MyUserRecord from "components/user/user_settings/MyUserRecord";
+import MyUserRecord from "components/user/user_settings/user_record/MyUserRecord";
 import {useHistory, useParams} from "react-router-dom";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import MyUserProfile from "components/user/user_settings/MyUserProfile";
+import MyUserProfile from "components/user/user_settings/profile/MyUserProfile";
 import MyAccessTokens from "components/user/user_settings/access_tokens/MyAccessTokens";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
