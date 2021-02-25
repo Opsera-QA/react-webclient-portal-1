@@ -6,13 +6,14 @@ import "components/analytics/charts/charts.css";
 import KpiSettingsForm from "components/insights/marketplace/kpi_marketplace_detail_view/KpiSettingsForm";
 import {getChartIconFromKpiConfiguration} from "components/insights/charts/charts-helpers";
 import InfoDialog from "components/common/status_notifications/info";
+import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon.jsx";
 
 function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, index, chart, isLoading, error, loadChart, setKpis }) {
   const [view, setView] = useState("chart");
 
-  const changeView = () => {
-    setView(view === "chart" ? "settings" : "chart");
-  }
+  // const changeView = () => {
+  //   setView(view === "chart" ? "settings" : "chart");
+  // }
 
   const getTitleBar = () => {
     if (isLoading) {
@@ -25,7 +26,7 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
       return (
         <div className="d-flex justify-content-between">
           <div><FontAwesomeIcon icon={getChartIconFromKpiConfiguration(kpiConfiguration)} fixedWidth className="mr-1"/>{kpiConfiguration?.kpi_name}</div>
-          <div><FontAwesomeIcon icon={faCogs} className="pointer" onClick={() => {changeView()}}/></div>
+          <div><ToggleSettingsIcon activeTab={view} setActiveTab={setView}/></div>
         </div>
       );
     }

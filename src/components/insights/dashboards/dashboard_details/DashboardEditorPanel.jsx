@@ -1,8 +1,7 @@
 import React, {useState, useContext, useEffect} from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import { Button, Col, Row } from "react-bootstrap";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
@@ -11,11 +10,13 @@ import DashboardTypeSelectInput
 import DashboardAccessSelectInput
   from "components/common/list_of_values_input/insights/dashboards/DashboardAccessSelectInput";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
+import ObjectJsonModal from "components/common/modal/ObjectJsonModal";
 
 function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [dashboardDataDto, setDashboardDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -64,6 +65,7 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
           </Col>
         </Row>
       </div>
+      <ObjectJsonModal header={`Viewing ${dashboardData.getData("name")} Details`} size="lg" show={showModal} jsonData={dashboardData.data} setParentVisibility={setShowModal}/>
     </EditorPanelContainer>
   );
 }

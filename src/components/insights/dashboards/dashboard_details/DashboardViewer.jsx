@@ -72,11 +72,6 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
             <span><FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Add New KPI</span>
           </Button>
         </div>
-        <div>
-          <Button className="mr-1" size="sm" onClick={() => setShowModal(true) }>
-            <span><FontAwesomeIcon icon={faSearch} fixedWidth className="mr-1"/>View JSON</span>
-          </Button>
-        </div>
       </div>
       {getKpiView()}
       <ObjectJsonModal header={`Viewing ${dashboardData.getData("name")} Details`} size="lg" show={showModal} jsonData={dashboardData.data} setParentVisibility={setShowModal}/>

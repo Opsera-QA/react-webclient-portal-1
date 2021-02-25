@@ -78,7 +78,7 @@ const breadcrumbs = {
 
   //Insights
   insights: {name: "insights", path: paths.insights, label: "Insights", icon: faChartNetwork},
-  analytics: {name: "analytics", path: paths.analytics, label: "Analytics", icon: faChartNetwork},
+  analytics: {name: "analytics", path: paths.analytics, label: "Analytics", icon: faAnalytics},
   dashboardDetails: {name: "dashboardDetails", path: paths.dashboardDetails, label: "Dashboard Details", icon: faChartNetwork},
   marketplace: {name: "marketplace", path: paths.marketplace, label: "Marketplace", icon: faChartArea},
 

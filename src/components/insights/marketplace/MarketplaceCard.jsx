@@ -5,7 +5,7 @@ import { formatDistanceToNowStrict } from "date-fns";
 
 export default function MarketplaceCard({ kpi, openModal }) {
   return (
-    <Card className="marketplace-card"  onClick={()=> openModal(kpi)}>
+    <Card className="marketplace-card pointer"  onClick={()=> openModal(kpi)}>
       <Card.Img variant="top"
         className="pt-2 pl-2 pr-2"
         src={kpi.thumbnailPath}

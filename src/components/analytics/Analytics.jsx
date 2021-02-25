@@ -5,6 +5,7 @@ import { axiosApiService } from "../../api/apiService";
 import ErrorDialog from "../common/status_notifications/error";
 // import LoadingDialog from "../common/status_notifications/loading";
 import ConfigurationsForm from "./configurationsForm";
+import {useHistory} from "react-router-dom";
 import { ListGroup, Tooltip, OverlayTrigger, Col, Row } from "react-bootstrap";
 import SummaryChartsView from "./views/pipeline/buildView_developer";
 import ReliabilityMetricsCharts from "./views/reliability/ReliabilityMetricsView";
@@ -36,7 +37,7 @@ import OperationsView from "./views/opserations_analytics/operationsViewAnalytic
 import AnalyticsProfileSettings from "../settings/analytics/activateAnalyticsCard";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faServer, faTools} from "@fortawesome/pro-light-svg-icons";
+import {faAnalytics, faChartNetwork, faChartArea} from "@fortawesome/pro-light-svg-icons";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 const INDICES = [
@@ -102,6 +103,7 @@ const DATELABELS = [
 
 function Analytics() {
   const contextType = useContext(AuthContext);
+  const history = useHistory();
   const [error, setErrors] = useState();
   const [settingsData, setSettingsData] = useState({});
   const [index, setIndex] = useState([]);
@@ -110,6 +112,7 @@ function Analytics() {
   const [selection, setSelection] = useState("pipeline");
   const [profile, setProfile] = useState({});
   const [label, setLabel] = useState("Last 3 Months");
+  const [activeTab, setActiveTab] = useState("analytics");
   const [date, setDate] = useState({
     start: "now-90d",
     end: "now",
@@ -270,11 +273,33 @@ function Analytics() {
     }
   };
 
+  const handleNavTabClick = (tabSelection) => async e => {
+    e.preventDefault();
+
+    if (tabSelection === "analytics") {
+      history.push(`/analytics`);
+      return;
+    }
+
+    if (tabSelection === "marketplace") {
+      history.push(`/insights/marketplace`);
+      return;
+    }
+
+    if (tabSelection === "dashboards") {
+      history.push(`/insights/dashboards`);
+      return;
+    }
+
+    setActiveTab(tabSelection);
+  };
+
   const getNavigationTabContainer = () => {
     return (
       <NavigationTabContainer>
-        <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={"analytics"} tabText={"Tools"} />
-        <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={"analytics"} tabText={"Platform"} />
+        <NavigationTab icon={faChartNetwork} tabName={"dashboards"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Dashboards"} />
+        <NavigationTab icon={faChartArea} tabName={"marketplace"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Marketplace"} />
+        <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Analytics"} />
       </NavigationTabContainer>
     );
   }
