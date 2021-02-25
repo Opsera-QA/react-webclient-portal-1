@@ -30,7 +30,7 @@ function NotificationsToggle({ fieldName, dataObject, setDataObject, disabled })
     <InputContainer>
       <Form.Check
         type="switch"
-        id={field.id}
+        id={field.label + "-" + field.id}
         checked={!!dataObject.getData(fieldName)}
         disabled={disabled}
         label={field.label}
