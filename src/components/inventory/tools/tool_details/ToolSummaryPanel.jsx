@@ -6,7 +6,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import RegistryToolRoleAccessInput from "components/inventory/tools/tool_details/input/RegistryToolRoleAccessInput";
 import workflowAuthorizedActions
-  from "../../../workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 
 function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessRules }) {
   useEffect(() => {

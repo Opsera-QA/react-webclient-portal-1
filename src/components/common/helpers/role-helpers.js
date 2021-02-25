@@ -1,6 +1,7 @@
 export const ROLE_LEVELS = {
   OPSERA_ADMINISTRATORS: "OPSERA_ADMINISTRATORS",
   ADMINISTRATORS: "ADMINISTRATORS",
+  ADMINISTRATORS_AND_SASS: "ADMINISTRATORS_AND_SASS",
   POWER_USERS: "POWER_USERS",
   POWER_USERS_AND_SASS: "POWER_USERS_AND_SASS",
   USERS: "USERS",
@@ -8,11 +9,17 @@ export const ROLE_LEVELS = {
 };
 
 export const meetsRequirements = (requirement, accessRoleData) => {
+  if (accessRoleData == null) {
+    return false;
+  }
+
   switch (requirement) {
     case ROLE_LEVELS.OPSERA_ADMINISTRATORS:
       return isOpseraAdministrator(accessRoleData);
     case ROLE_LEVELS.ADMINISTRATORS:
       return isAdministrator(accessRoleData);
+    case ROLE_LEVELS.ADMINISTRATORS_AND_SASS:
+      return isAdministratorOrSass(accessRoleData);
     case ROLE_LEVELS.POWER_USERS:
       return isPowerUser(accessRoleData);
     case ROLE_LEVELS.POWER_USERS_AND_SASS:
@@ -30,6 +37,10 @@ export const isOpseraAdministrator = (accessRoleData) => {
 
 export const isAdministrator = (accessRoleData) => {
   return accessRoleData?.OpseraAdministrator || accessRoleData?.Administrator;
+};
+
+export const isAdministratorOrSass = (accessRoleData) => {
+  return accessRoleData?.OpseraAdministrator || accessRoleData?.Administrator || accessRoleData?.SassPowerUser;
 };
 
 export const isPowerUser = (accessRoleData) => {

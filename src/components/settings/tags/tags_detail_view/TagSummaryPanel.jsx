@@ -7,14 +7,15 @@ import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import ConfigurationField from "components/common/fields/multiple_items/ConfigurationField";
+import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
-function TagSummaryPanel({ tagData, setActiveTab }) {
+function TagSummaryPanel({ tagData, setActiveTab, accessRoleData }) {
   if (tagData == null) {
     return <LoadingDialog size="sm" />;
   }
 
   return (
-    <SummaryPanelContainer setActiveTab={setActiveTab}>
+    <SummaryPanelContainer setActiveTab={meetsRequirements(ROLE_LEVELS.ADMINISTRATORS_AND_SASS, accessRoleData) ? setActiveTab : undefined}>
       <Row>
         <Col lg={6}>
           <TextFieldBase dataObject={tagData} fieldName={"_id"}/>
@@ -44,7 +45,8 @@ function TagSummaryPanel({ tagData, setActiveTab }) {
 
 TagSummaryPanel.propTypes = {
   tagData: PropTypes.object,
-  setActiveTab: PropTypes.func
+  setActiveTab: PropTypes.func,
+  accessRoleData: PropTypes.object
 };
 
 

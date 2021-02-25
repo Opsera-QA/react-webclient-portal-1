@@ -9,7 +9,7 @@ import CustomTab from "components/common/tabs/CustomTab";
 import {faComputerClassic} from "@fortawesome/pro-light-svg-icons";
 import TagUsagePanel from "components/settings/tags/tags_detail_view/TagUsagePanel";
 
-function TagDetailPanel({ tagData, setTagData }) {
+function TagDetailPanel({ tagData, setTagData, accessRoleData }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -33,7 +33,7 @@ function TagDetailPanel({ tagData, setTagData }) {
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <TagSummaryPanel tagData={tagData} setTagData={setTagData} setActiveTab={setActiveTab} />;
+        return <TagSummaryPanel tagData={tagData} setActiveTab={setActiveTab} accessRoleData={accessRoleData} />;
       case "settings":
         return <TagEditorPanel setTagData={setTagData} tagData={tagData} handleClose={toggleSummaryPanel} />;
       case "usage":
@@ -49,6 +49,7 @@ function TagDetailPanel({ tagData, setTagData }) {
 TagDetailPanel.propTypes = {
   tagData: PropTypes.object,
   setTagData: PropTypes.func,
+  accessRoleData: PropTypes.object
 };
 
 export default TagDetailPanel;

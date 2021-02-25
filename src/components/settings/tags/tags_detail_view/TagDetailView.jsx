@@ -102,7 +102,7 @@ function TagDetailView() {
       dataObject={tagData}
       isLoading={isLoading}
       actionBar={getActionBar()}
-      detailPanel={<TagDetailPanel setTagData={setTagData} tagData={tagData} />}
+      detailPanel={<TagDetailPanel setTagData={setTagData} tagData={tagData} accessRoleData={accessRoleData} />}
     />
   );
 }
