@@ -59,7 +59,7 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
   const getAddAnotherCheckbox = () => {
     if (addAnotherOption) {
       return (
-        <div className="d-flex mr-3 mt-auto">
+        <div className="d-flex ml-2 mb-1">
           <div><span className="text-muted mr-2">Add Another</span></div>
           <div><input className="mt-1" type="checkbox" checked={addAnother} onChange={() => setAddAnother(!addAnother)} /></div>
         </div>
@@ -69,13 +69,11 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
 
   return (
     <div className={className}>
-      <div className="d-flex">
-        {getAddAnotherCheckbox()}
-        {/*TODO: Make sure button is not clickable until form is valid*/}
-        <Button size={size} variant="primary" disabled={isSaving || disable} onClick={() => persistRecord()}>
-          {getLabel()}
-        </Button>
-      </div>
+      {getAddAnotherCheckbox()}
+      {/*TODO: Make sure button is not clickable until form is valid*/}
+      <Button size={size} variant="primary" disabled={isSaving || disable} onClick={() => persistRecord()}>
+        {getLabel()}
+      </Button>
     </div>
   );
 }
@@ -97,7 +95,7 @@ CreateButton.propTypes = {
 CreateButton.defaultProps = {
   showSuccessToasts: true,
   addAnotherOption: true,
-  size: "sm",
+  size: "md",
   icon: faSave
 }
 
