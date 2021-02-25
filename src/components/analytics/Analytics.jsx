@@ -398,8 +398,8 @@ function Analytics() {
       breadcrumbDestination={"analytics"}
       isLoading={loadingProfile}
       pageDescription={`
-            OpsERA provides users with access to a vast repository of logging and analytics. Access all available
-            logging, reports and configurations around the OpsERA Analytics Platform or search your currently
+            Opsera provides users with access to a vast repository of logging and analytics. Access all available
+            logging, reports and configurations around the Opsera Analytics Platform or search your currently
             configured logs repositories below.
       `}
     >
