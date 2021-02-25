@@ -2,9 +2,9 @@ import baseActions from "utils/actionsBase";
 
 const adminTagsActions = {};
 
-adminTagsActions.delete = async (tagId, getAccessToken) => {
+adminTagsActions.deleteTagV2 = async (getAccessToken, cancelTokenSource, tagId) => {
   const apiUrl = `/tags/${tagId}`;
-  return await baseActions.apiDeleteCall(getAccessToken, apiUrl);
+  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 adminTagsActions.updateTagV2 = async (getAccessToken, cancelTokenSource, tagDataDto) => {
@@ -81,7 +81,7 @@ adminTagsActions.getVisibleTags = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
-adminTagsActions.getTag = async (getAccessToken, cancelTokenSource, tagId) => {
+adminTagsActions.getTagV2 = async (getAccessToken, cancelTokenSource, tagId) => {
   const apiUrl = `/tags/${tagId}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
