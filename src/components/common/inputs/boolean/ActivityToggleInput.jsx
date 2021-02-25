@@ -15,16 +15,19 @@ function ActivityToggleInput({ fieldName, dataObject, setDataObject, disabled })
 
   return (
     <InputContainer>
-      <Form.Check
-        type="switch"
-        id={field.id}
-        checked={!!dataObject.getData(fieldName)}
-        disabled={disabled}
-        label={dataObject.getData(fieldName) ? "Active" : "Inactive"}
-        onChange={() => {
-          validateAndSetData(!dataObject.getData(fieldName));
-        }}
-      />
+      <div className={"d-flex justify-content-between"}>
+        <div>Show in Application</div>
+        <Form.Check
+          type="switch"
+          id={field.id}
+          checked={!!dataObject.getData(fieldName)}
+          disabled={disabled}
+          label={dataObject?.getData(fieldName) === true ? "On" : "Off"}
+          onChange={() => {
+            validateAndSetData(!dataObject.getData(fieldName));
+          }}
+        />
+      </div>
       <InfoText field={field} errorMessage={null}/>
     </InputContainer>
   );
