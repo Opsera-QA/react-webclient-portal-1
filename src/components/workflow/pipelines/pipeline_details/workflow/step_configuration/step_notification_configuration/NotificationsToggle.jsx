@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
-import Model from "../../../../../../../core/data_model/model";
+import Model from "core/data_model/model";
+import InputContainer from "components/common/inputs/InputContainer";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
-function NotificationsToggle({ dataObject, setDataObject, disabled }) {
+function NotificationsToggle({ fieldName, dataObject, setDataObject, disabled }) {
     const [field] = useState(dataObject.getFieldById("enabled"));
 
   const validateAndSetData = (fieldName, value) => {
@@ -25,19 +27,17 @@ function NotificationsToggle({ dataObject, setDataObject, disabled }) {
   }
 
   return (
-    <div className="form-group m-2">
-        <Form.Check
-          type="switch"
-          id={field.label + "-" + field.id}
-          checked={!!dataObject.getData("enabled")}
-          disabled={disabled}
-          label={field.label}
-          onChange={() => {validateAndSetData(field.id, !dataObject.getData("enabled"));}}
-        />
-      <small className="text-muted form-text">
-        <div>{field.formText}</div>
-      </small>
-    </div>
+    <InputContainer>
+      <Form.Check
+        type="switch"
+        id={field.id}
+        checked={!!dataObject.getData(fieldName)}
+        disabled={disabled}
+        label={field.label}
+        onChange={() => {validateAndSetData(field.id, !dataObject.getData(fieldName));}}
+      />
+      <InfoText field={field} errorMessage={null}/>
+    </InputContainer>
   );
 }
 
@@ -45,6 +45,11 @@ NotificationsToggle.propTypes = {
   disabled: PropTypes.bool,
   setDataObject: PropTypes.func,
   dataObject: PropTypes.object,
+  fieldName: PropTypes.string
+};
+
+NotificationsToggle.defaultProps = {
+  fieldName: "enabled"
 };
 
 export default NotificationsToggle;
