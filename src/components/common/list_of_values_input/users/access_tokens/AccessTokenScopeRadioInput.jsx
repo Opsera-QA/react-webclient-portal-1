@@ -14,14 +14,42 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
             fieldName={fieldName}
             dataObject={dataObject}
             setDataObject={setDataObject}
+            value={"api"}
+            label={
+              <span>
+                <div><strong>API Access</strong></div>
+                Grants complete read/write access to the API, including all Pipeline and Tool Registry routes based on individual resource access roles.
+             </span>
+            }
+          />
+        </Col>
+        <Col md={6}>
+          <RadioButtonOption
+            fieldName={fieldName}
+            dataObject={dataObject}
+            setDataObject={setDataObject}
+            value={"read_api"}
+            label={
+              <span>
+                <div><strong>API Access (Read Only)</strong></div>
+                Grants complete read access to the API, including all Pipeline and Tool Registry routes based on individual resource access roles.
+              </span>
+            }
+          />
+        </Col>
+        <Col md={6}>
+          <RadioButtonOption
+            fieldName={fieldName}
+            dataObject={dataObject}
+            setDataObject={setDataObject}
             value={"pipeline"}
             label={
               <span>
-            <div><strong>Pipeline Access</strong></div>
-            Grants access to the Pipeline orchestration API,
-            including updating data and run operations based on the role access permitted for this user in that pipeline.
-            Site wide roles and individual pipeline access rules are enforced.
-          </span>
+                <div><strong>Pipeline Access</strong></div>
+                Grants access to the Pipeline Orchestration API,
+                including updating data and run operations based on the role access permitted for this user in that pipeline.
+                Site wide roles and individual pipeline access rules are enforced.
+              </span>
             }
           />
         </Col>
@@ -31,12 +59,11 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
             dataObject={dataObject}
             setDataObject={setDataObject}
             value={"pipeline-readonly"}
-            disabled={true}
             label={
               <span>
-            <div><strong>Pipeline Logs (Read Only)</strong></div>
-           Grants read access only to the Pipeline API for getting log activity and status updates.  No actions are supported.
-          </span>
+                <div><strong>Pipeline Logs (Read Only)</strong></div>
+                Grants read access only to the Pipeline API for getting log activity and status updates.  No actions are supported.
+              </span>
             }
           />
         </Col>
@@ -47,14 +74,13 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
             dataObject={dataObject}
             setDataObject={setDataObject}
             value={"registry"}
-            disabled={true}
             label={
               <span>
-            <div><strong>Tool Registry Access</strong></div>
-            Grants access to the Tool Registry API,
-            including creating tools, updating data and account information based on the role access permitted for this user for that tool.
-            Site wide roles and individual tool access rules are enforced.
-          </span>
+                <div><strong>Tool Registry Access</strong></div>
+                Grants access to the Tool Registry API,
+                including creating tools, updating data and account information based on the role access permitted for this user for that tool.
+                Site wide roles and individual tool access rules are enforced.
+              </span>
             }
           />
         </Col>
@@ -64,12 +90,11 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
             dataObject={dataObject}
             setDataObject={setDataObject}
             value={"registry-readonly"}
-            disabled={true}
             label={
               <span>
-            <div><strong>Tool Registry (Read Only)</strong></div>
-            Grants read access only to the Tool Registry API for getting tool details or relevant log activity.  No actions are supported.
-          </span>
+                <div><strong>Tool Registry (Read Only)</strong></div>
+                Grants read access only to the Tool Registry API for getting tool details or relevant log activity.  No actions are supported.
+              </span>
             }
           />
         </Col>
