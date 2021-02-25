@@ -94,6 +94,7 @@ import ToolCountsReport from "components/reports/tools/counts/ToolCountsReport";
 import UserSettings from "components/user/user_settings/UserSettings";
 import AccessTokenDetailView from "components/user/user_settings/access_tokens/details/AccessTokenDetailView";
 import GitComponent from "components/git/Git";
+import DetailedToolReport from "./components/reports/tools/detailedReport/DetailedToolReport";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -298,6 +299,7 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/reports/tools/tool-counts" exact component={ToolCountsReport}/>
                   <SecureRoute path="/reports/tags/tags-used-in-pipeline" exact component={TagsUsedInPipelineReport}/>
                   <SecureRoute path="/reports/tags/tags-used-in-tools" exact component={TagsUsedInToolsReport}/>
+                  <SecureRoute path="/reports/tools/detailed-tool-report" exact component={DetailedToolReport}/>
 
                   { /*Notifications */}
                   <SecureRoute path="/notifications" exact component={Notifications}/>
