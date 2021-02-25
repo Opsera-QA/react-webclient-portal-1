@@ -12,7 +12,7 @@ import {
 import {useHistory} from "react-router-dom";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function CreateButton({recordDto, createRecord, disable, showSuccessToasts, lenient, setRecordDto, addAnotherOption, handleClose, size, icon}) {
+function CreateButton({recordDto, createRecord, disable, showSuccessToasts, lenient, setRecordDto, addAnotherOption, handleClose, size, icon, className}) {
   const [isSaving, setIsSaving] = useState(false);
   const [addAnother, setAddAnother] = useState(false);
   const history = useHistory();
@@ -68,12 +68,14 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
   };
 
   return (
-    <div className="px-2 d-flex">
-      {getAddAnotherCheckbox()}
-      {/*TODO: Make sure button is not clickable until form is valid*/}
-      <Button size={size} variant="primary" disabled={isSaving || disable} onClick={() => persistRecord()}>
-        {getLabel()}
-      </Button>
+    <div className={className}>
+      <div className="d-flex">
+        {getAddAnotherCheckbox()}
+        {/*TODO: Make sure button is not clickable until form is valid*/}
+        <Button size={size} variant="primary" disabled={isSaving || disable} onClick={() => persistRecord()}>
+          {getLabel()}
+        </Button>
+      </div>
     </div>
   );
 }
@@ -88,7 +90,8 @@ CreateButton.propTypes = {
   lenient: PropTypes.bool,
   addAnotherOption: PropTypes.bool,
   size: PropTypes.string,
-  icon: PropTypes.object
+  icon: PropTypes.object,
+  className: PropTypes.string
 };
 
 CreateButton.defaultProps = {
