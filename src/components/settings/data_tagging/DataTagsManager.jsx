@@ -117,7 +117,7 @@ function Tagging() {
           <Card.Header as="h5">Configure Tagging</Card.Header>
           <Card.Body>
             <Card.Text>
-              Welcome to the OpsERA Analytics Data Mapping Manager! You must configure project tags before mapping
+              Welcome to the Opsera Analytics Data Mapping Manager! You must configure project tags before mapping
               incoming data. Click the button below in order to visit the Opsera Tags Manager to create new tags.
             </Card.Text>
             <Button
@@ -141,7 +141,7 @@ function Tagging() {
           <Card.Header as="h5">Configure Tools</Card.Header>
           <Card.Body>
             <Card.Text>
-              Welcome to the OpsERA Analytics Data Mapping Manager! You must configure tools in the Opsera Tool Registry
+              Welcome to the Opsera Analytics Data Mapping Manager! You must configure tools in the Opsera Tool Registry
               before mapping incoming data. Click the button below in order to visit the Opsera Tool Registry to
               configure tools.
             </Card.Text>

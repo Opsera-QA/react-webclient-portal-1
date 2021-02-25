@@ -15,7 +15,7 @@ function InlineWarning({warningMessage, className}) {
   return (
     <div className={className}>
       <div className="row">
-        <div className="col-sm-12 my-auto warning-block text-center p-2">
+        <div className="col-sm-12 my-auto warning-text p-2">
           <span>{messageBody}</span>
         </div>
       </div>
