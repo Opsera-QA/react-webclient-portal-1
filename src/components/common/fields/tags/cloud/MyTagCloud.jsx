@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
-import LoadingDialog from "components/common/status_notifications/loading";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import axios from "axios";
 import TagsCloudBase from "components/common/fields/tags/cloud/TagsCloudBase";
@@ -47,7 +46,7 @@ function MyTagCloud({className}) {
   const loadData = async () => {
     try {
       setIsLoading(true)
-      await loadTags();
+      await loadSubscribedTags();
     }
     catch (error) {
       if (isMounted.current === true) {
@@ -58,6 +57,15 @@ function MyTagCloud({className}) {
       if (isMounted.current === true) {
         setIsLoading(false);
       }
+    }
+  };
+
+  const loadSubscribedTags = async () => {
+    const response = await adminTagsActions.getSubscribedTags( getAccessToken, cancelTokenSource);
+    let tags = response?.data?.data;
+
+    if (isMounted?.current === true && tags != null) {
+      setTags(tags.sort((tag1, tag2) => (tag1.total_usage_count < tag2.total_usage_count) ? 1 : -1));
     }
   };
 
@@ -73,14 +81,6 @@ function MyTagCloud({className}) {
         <TagUsagePanel tagData={tagModel} />
       </CenterOverlayContainer>
     );
-  };
-
-  const loadTags = async () => {
-    const response = await adminTagsActions.getSubscribedTags( getAccessToken, cancelTokenSource);
-
-    if (isMounted?.current === true && response?.data != null) {
-      setTags(response?.data?.data);
-    }
   };
 
   const getTooltip = (tagWithUsage) => {
