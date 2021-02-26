@@ -28,7 +28,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
 
   const clearValue = () => {
     if (!setDataFunction) {
-      validateAndSetData(field.id, []);
+      validateAndSetData(field.id, "");
     }
     else if (clearDataFunction) {
       clearDataFunction();
