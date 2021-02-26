@@ -135,7 +135,10 @@ const commandLineStepFormMetadata = {
       formText: "File name with extension is expected."
       // isRequired: true
     },
-
+    {
+      label: "Delete workspace before building",
+      id: "workspaceDeleteFlag",
+    },
     {
       id: "dependencies",
       // isRequired: true
@@ -198,6 +201,10 @@ const commandLineStepFormMetadata = {
       // label: "Select Account",
       id: "gitToolId",
       isRequired: true
+    },
+    {
+      label: "Delete workspace before building",
+      id: "workspaceDeleteFlag",
     },
     {
       id: "repoId",
@@ -327,6 +334,7 @@ const commandLineStepFormMetadata = {
     outputFileName: "",
     dependencies: {},
     dependencyType:"",
+    workspaceDeleteFlag: false,
 
     sourceScript: false,
     inputPath: "",

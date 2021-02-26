@@ -74,6 +74,7 @@ const INITIAL_DATA = {
   sfdcUnitTestType: "",
   workspace: "",
   workspaceName: "",
+  workspaceDeleteFlag: false,
   isNewBranch: false,
   hasUpstreamBranch: false,
   upstreamBranch: "",
@@ -1073,6 +1074,7 @@ function JenkinsStepConfiguration({
               formData.jobType != "SFDC BACK UP" &&
               formData.jobType != "SFDC PUSH ARTIFACTS" &&
               !formData.isOrgToOrg && (
+                <>
                 <Form.Group controlId="account" className="mt-2">
                   <Form.Label>Branch*</Form.Label>
                   {isBranchSearching ? (
@@ -1098,6 +1100,22 @@ function JenkinsStepConfiguration({
                   )}
                   {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
                 </Form.Group>
+                  <Form.Group controlId="workspaceDeleteFlag">
+                    <Form.Check inline
+                                type="checkbox"
+                                label={"Delete workspace before building"}
+                                id={`workspaceDeleteFlag`}
+                                checked={formData.workspaceDeleteFlag}
+                                onChange={(e) =>
+                                  setFormData({
+                                  ...formData,
+                                  workspaceDeleteFlag: e.target.checked
+                                })
+                                }
+                    />
+                    <Form.Text className="text-muted">Deletes the Jenkins workspace before building.</Form.Text>
+                  </Form.Group>
+              </>
               )}
 
               
