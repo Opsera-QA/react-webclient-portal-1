@@ -1,29 +1,33 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationCircle, faTag} from "@fortawesome/pro-light-svg-icons";
-import Row from "react-bootstrap/Row";
+import {faDiceD20, faExclamationCircle, faTag, faWrench} from "@fortawesome/pro-light-svg-icons";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function TagsCloudBase({ tags, onTagClick }) {
+function TagsCloudBase({ tagsWithUsage, onTagClick, className, getTooltip }) {
 
   const getTagCloud = () => {
     return (
-      <Row className="item-field">
-        {tags.map((tag) => {
+      <div className="item-field">
+        {tagsWithUsage.map((tagWithUsage) => {
+          const tag = tagWithUsage?.tag;
           return (
-            <span key={tag?._id} className="mx-1 mb-1 badge badge-light tag-badge pointer" onClick={() => {onTagClick(tag)}}>
-              <FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/>{`${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`}
-            </span>
+            <TooltipWrapper innerText={getTooltip(tagWithUsage)} key={tag?._id}>
+              <span className="mx-1 mb-1 badge badge-light tag-badge pointer" onClick={() => {onTagClick(tag)}}>
+                <span><FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/>{`${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`}</span>
+                <span><FontAwesomeIcon icon={faDiceD20} fixedWidth className="ml-3 mr-1"/>{tagWithUsage?.pipeline_usage_count}</span>
+                <span><FontAwesomeIcon icon={faWrench} fixedWidth className="mx-1"/>{tagWithUsage?.tool_usage_count}</span>
+              </span>
+            </TooltipWrapper>
           );
         })}
-      </Row>
+      </div>
     );
   };
 
-
   // TODO: pass in no tags message
-  if (tags == null || tags.length === 0) {
+  if (tagsWithUsage == null || tagsWithUsage.length === 0) {
     return (
       <div className="form-text text-muted ml-3">
         <div>
@@ -35,15 +39,17 @@ function TagsCloudBase({ tags, onTagClick }) {
   }
 
   return (
-    <div>
+    <div className={className}>
       {getTagCloud()}
     </div>
   );
 }
 
 TagsCloudBase.propTypes = {
-  tags: PropTypes.array,
-  onTagClick: PropTypes.func
+  tagsWithUsage: PropTypes.array,
+  onTagClick: PropTypes.func,
+  className: PropTypes.string,
+  getTooltip: PropTypes.func
 };
 
 export default TagsCloudBase;

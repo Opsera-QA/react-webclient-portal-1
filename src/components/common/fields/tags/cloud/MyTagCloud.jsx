@@ -1,4 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
+import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
@@ -11,8 +12,10 @@ import tagEditorMetadata from "components/settings/tags/tags-metadata";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import TagUsagePanel from "components/settings/tags/tags_detail_view/TagUsagePanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import {getSingularOrPluralString} from "components/common/helpers/string-helpers";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
-function MyTagCloud() {
+function MyTagCloud({className}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tags, setTags] = useState([]);
@@ -80,8 +83,27 @@ function MyTagCloud() {
     }
   };
 
+  const getTooltip = (tagWithUsage) => {
+    const tag = tagWithUsage?.tag;
+    const pipelineCount = tagWithUsage?.pipeline_usage_count;
+    const toolCount = tagWithUsage?.tool_usage_count;
+
+    return (
+      <div>
+        <div>
+          <span>
+            Tag [{tag?.type}: {tag?.value}] is applied on
+            <div><strong>{pipelineCount}</strong> {getSingularOrPluralString(pipelineCount, "Pipeline", "Pipelines")}</div>
+            <div><strong>{toolCount}</strong> {getSingularOrPluralString(toolCount, "Tool", "Tools")}</div>
+          </span>
+        </div>
+        <div>Click to view usage details</div>
+      </div>
+    );
+  };
+
   if (isLoading) {
-    return <LoadingDialog message={"Loading Tag Subscriptions"} size={"sm"} />;
+    return <span><LoadingIcon isLoading={isLoading} />Loading Tag Subscriptions</span>
   }
 
   if (!isLoading && (tags == null || tags.length === 0)) {
@@ -95,9 +117,16 @@ function MyTagCloud() {
     )
   }
 
-  return (<TagsCloudBase tags={tags} onTagClick={showTagUsage} />);
+  return (
+    <div className={className}>
+      <div className="mb-1">You are currently subscribed to <strong>{tags.length}</strong> tags.</div>
+      <TagsCloudBase tagsWithUsage={tags} onTagClick={showTagUsage} getTooltip={getTooltip} />
+    </div>
+  );
 }
 
-MyTagCloud.propTypes = {};
+MyTagCloud.propTypes = {
+  className: PropTypes.string
+};
 
 export default MyTagCloud;
