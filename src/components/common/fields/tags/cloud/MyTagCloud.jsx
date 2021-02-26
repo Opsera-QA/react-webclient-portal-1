@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
+import {faExclamationCircle, faTag} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import axios from "axios";
@@ -77,7 +77,14 @@ function MyTagCloud({className}) {
     const tagModel = new Model(tag, tagEditorMetadata, false);
 
     toastContext.showOverlayPanel(
-      <CenterOverlayContainer showPanel={true} objectType={tagEditorMetadata?.type} loadData={loadData} closePanel={clearOverlayPanel}>
+      <CenterOverlayContainer
+        showPanel={true}
+        objectType={tagEditorMetadata?.type}
+        loadData={loadData}
+        closePanel={clearOverlayPanel}
+        titleText={`[${tag?.type}: ${tag?.value}] Tag Usage`}
+        titleIcon={faTag}
+      >
         <TagUsagePanel tagData={tagModel} />
       </CenterOverlayContainer>
     );
