@@ -13,7 +13,7 @@ import tagEditorMetadata from "components/settings/tags/tags-metadata";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import TagUsagePanel from "components/settings/tags/tags_detail_view/TagUsagePanel";
 
-function TagCloud() {
+function AllTagsCloud() {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tags, setTags] = useState([]);
@@ -117,8 +117,8 @@ function TagCloud() {
   );
 }
 
-TagCloud.propTypes = {
+AllTagsCloud.propTypes = {
   // dataObject: PropTypes.object,
 };
 
-export default TagCloud;
+export default AllTagsCloud;

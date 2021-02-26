@@ -5,7 +5,7 @@ import { Row, Col, Badge } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import FreeTrialLandingView from "../free_trial/landing_page/Landing";
 import LoadingView from "../common/status_notifications/loading";
-import TagCloud from "components/common/fields/tags/TagCloud";
+import MyTagCloud from "components/common/fields/tags/cloud/MyTagCloud";
 
 function OverviewLanding() {
   const contextType = useContext(AuthContext);
@@ -120,7 +120,7 @@ function OverviewLanding() {
                   back {userInfo && userInfo.firstName ? userInfo.firstName : null}!
                 </div>
                 {/*<Row className={"mb-2 mx-1"}>*/}
-                {/*  <TagCloud />*/}
+                {/*  <MyTagCloud />*/}
                 {/*</Row>*/}
 
                 <div className="row mx-n2 mt-3">

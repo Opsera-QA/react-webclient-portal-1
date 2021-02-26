@@ -2,12 +2,12 @@ import React, {useContext, useState} from "react";
 import PropTypes from "prop-types";
 import ActionBarButton from "./ActionBarButton";
 import {faTrash} from "@fortawesome/pro-light-svg-icons";
-import DeleteModal from "../../modal/DeleteModal";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import {useHistory} from "react-router-dom";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import DeleteModal from "components/common/modal/DeleteModal";
 
 // TODO: This will supersede the other delete button
-function ActionBarDeleteButton2({handleDelete, relocationPath, dataObject}) {
+function ActionBarDeleteButton2({handleDelete, relocationPath, dataObject, className}) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -38,17 +38,18 @@ function ActionBarDeleteButton2({handleDelete, relocationPath, dataObject}) {
   }
 
   return (
-    <>
+    <div className={className}>
       <ActionBarButton action={toggleDeleteModal} icon={faTrash} iconClasses={"danger-red"} popoverText={`Delete this ${dataObject.getType()}`} />
       <DeleteModal showModal={showDeleteModal} setShowModal={setShowDeleteModal} dataObject={dataObject} handleDelete={deleteObject} />
-    </>
+    </div>
   );
 }
 
 ActionBarDeleteButton2.propTypes = {
   handleDelete: PropTypes.func,
   relocationPath: PropTypes.string,
-  dataObject: PropTypes.object
+  dataObject: PropTypes.object,
+  className: PropTypes.string
 };
 
 export default ActionBarDeleteButton2;

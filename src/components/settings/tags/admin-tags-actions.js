@@ -113,6 +113,31 @@ adminTagsActions.getRelevantToolsV2 = async (getAccessToken, cancelTokenSource, 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, tags);
 };
 
+adminTagsActions.subscribeToTag = async (getAccessToken, cancelTokenSource, tagId) => {
+  const apiUrl = `/tags/${tagId}/subscribe`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+adminTagsActions.unsubscribeFromTag = async (getAccessToken, cancelTokenSource, tagId) => {
+  const apiUrl = `/tags/${tagId}/unsubscribe`;
+  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+adminTagsActions.isSubscribed = async (getAccessToken, cancelTokenSource, tagId) => {
+  const apiUrl = `/tags/${tagId}/is_subscribed`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+adminTagsActions.getSubscribedTags = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/tags/subscriptions/tags`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+adminTagsActions.getSubscribedTagIds = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/tags/subscriptions/ids`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 // TODO: This should be moved into that input component
 adminTagsActions.configurationOptions = [
   {id: "costCenter", label: "Cost Center"}
