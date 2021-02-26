@@ -96,9 +96,9 @@ function TagDetailView() {
             <ActionBarBackButton path={"/settings/tags"} />
           </div>
           <div className="d-flex">
+            <TagSubscriptionIcon tagModel={tagData} className={"mr-3"} />
             {/*TODO: Hook requirements up inside action bar buttons/inputs*/}
-            {meetsRequirements(ROLE_LEVELS.ADMINISTRATORS_AND_SASS, accessRoleData) && <ActionBarDeleteButton2 dataObject={tagData} handleDelete={deleteTag} relocationPath={"/settings/tags"} className={"mr-2"} />}
-            {/*<TagSubscriptionIcon tagModel={tagData} />*/}
+            {meetsRequirements(ROLE_LEVELS.ADMINISTRATORS_AND_SASS, accessRoleData) && <ActionBarDeleteButton2 dataObject={tagData} handleDelete={deleteTag} relocationPath={"/settings/tags"} />}
           </div>
         </ActionBarContainer>
       );

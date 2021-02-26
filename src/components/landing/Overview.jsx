@@ -91,6 +91,7 @@ function OverviewLanding() {
   if (!accessRoleData) {
     return (<LoadingView size="sm" message={"Loading user data"}/>);
   }
+
   if (process.env.REACT_APP_STACK === "free-trial") {
     return (<FreeTrialLandingView/>);
   }
@@ -119,9 +120,9 @@ function OverviewLanding() {
                 <div className="h4 text-color mb-5">Welcome
                   back {userInfo && userInfo.firstName ? userInfo.firstName : null}!
                 </div>
-                {/*<Row className={"mb-2 mx-1"}>*/}
-                {/*  <MyTagCloud />*/}
-                {/*</Row>*/}
+                <Row className={"mb-2 mx-1"}>
+                  <MyTagCloud />
+                </Row>
 
                 <div className="row mx-n2 mt-3">
                   <div className="col-md px-2 landing-content-module">
