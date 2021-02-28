@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
-import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function SubscriptionIconBase({ handleSubscription, isSubscribed, showText, className, isLoading }) {
 
