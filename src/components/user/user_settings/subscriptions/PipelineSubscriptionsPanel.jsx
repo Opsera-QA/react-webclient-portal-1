@@ -12,8 +12,9 @@ import Row from "react-bootstrap/Row";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
+import PropTypes from "prop-types";
 
-function PipelineSubscriptionsPanel() {
+function PipelineSubscriptionsPanel({className}) {
   const [pipelines, setPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
@@ -93,19 +94,26 @@ function PipelineSubscriptionsPanel() {
   }
 
   return (
-    <Row>
-      {pipelines.map((pipeline) => {
-        return (
-          <Col md={6} key={pipeline._id}>
-            <PipelineSummaryCard
-              pipelineData={new Model(pipeline, pipelineSummaryMetadata, false)}
-              loadPipelineInNewWindow={false}
-            />
-          </Col>
-        );
-      })}
-    </Row>
+    <div className={className}>
+      <div className="mb-2">You are currently subscribed to <strong>{pipelines.length}</strong> pipelines.</div>
+      <Row>
+        {pipelines.map((pipeline) => {
+          return (
+            <Col md={6} key={pipeline._id}>
+              <PipelineSummaryCard
+                pipelineData={new Model(pipeline, pipelineSummaryMetadata, false)}
+                loadPipelineInNewWindow={false}
+              />
+            </Col>
+          );
+        })}
+      </Row>
+    </div>
   );
 }
+
+PipelineSubscriptionsPanel.propTypes = {
+  className: PropTypes.string
+};
 
 export default PipelineSubscriptionsPanel;

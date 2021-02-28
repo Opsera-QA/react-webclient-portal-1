@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import FreeTrialLandingView from "../free_trial/landing_page/Landing";
 import LoadingView from "../common/status_notifications/loading";
 import MyTagCloud from "components/common/fields/tags/cloud/MyTagCloud";
+import PipelineSubscriptionsPanel from "components/user/user_settings/subscriptions/PipelineSubscriptionsPanel";
 
 function OverviewLanding() {
   const contextType = useContext(AuthContext);
@@ -123,6 +124,9 @@ function OverviewLanding() {
                 <Row className={"mb-2 mx-1"}>
                   <MyTagCloud />
                 </Row>
+                {/*<Row className={"mb-2 mx-1"}>*/}
+                {/*  <PipelineSubscriptionsPanel />*/}
+                {/*</Row>*/}
 
                 <div className="row mx-n2 mt-3">
                   <div className="col-md px-2 landing-content-module">

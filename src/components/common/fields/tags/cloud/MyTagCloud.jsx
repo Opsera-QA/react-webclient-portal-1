@@ -126,7 +126,7 @@ function MyTagCloud({className}) {
 
   return (
     <div className={className}>
-      <div className="mb-1">You are currently subscribed to <strong>{tags.length}</strong> tags.</div>
+      <div className="mb-2">You are currently subscribed to <strong>{tags.length}</strong> tags.</div>
       <TagsCloudBase tagsWithUsage={tags} onTagClick={showTagUsage} getTooltip={getTooltip} />
     </div>
   );
