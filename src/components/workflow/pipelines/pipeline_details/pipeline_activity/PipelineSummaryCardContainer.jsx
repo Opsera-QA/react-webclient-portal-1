@@ -5,6 +5,7 @@ import {Card} from "react-bootstrap";
 import PipelineTypesField from "../../../../common/form_fields/pipelines/PipelineTypesField";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-solid-svg-icons";
+import PipelineSubscriptionIcon from "components/common/icons/subscription/PipelineSubscriptionIcon";
 
 function PipelineSummaryCardContainer({ children, isLoading, pipelineData }) {
   const getCardTitle = () => {
@@ -15,7 +16,8 @@ function PipelineSummaryCardContainer({ children, isLoading, pipelineData }) {
     return (
       <div className="d-flex justify-content-between w-100 mx-2">
         <div><span>{pipelineData.getData("name")}</span></div>
-        <div className="ml-auto">
+        <div className="d-flex ml-auto">
+          {/*<PipelineSubscriptionIcon pipelineModel={pipelineData} className={"mr-1"}/>*/}
           <PipelineTypesField dataObject={pipelineData}/>
         </div>
       </div>
