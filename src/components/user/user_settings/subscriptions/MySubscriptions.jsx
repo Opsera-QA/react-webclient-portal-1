@@ -1,0 +1,59 @@
+import React, {useEffect, useRef, useState} from "react";
+import axios from "axios";
+import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import CustomTab from "components/common/tabs/CustomTab";
+import {faDiceD20, faTag} from "@fortawesome/pro-light-svg-icons";
+import AccessTokenLogPanel from "components/user/user_settings/access_tokens/details/logs/AccessTokenLogPanel";
+import TagSubscriptionsPanel from "components/user/user_settings/subscriptions/TagSubscriptionsPanel";
+
+function MySubscriptions() {
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [activeTab, setActiveTab] = useState("tags");
+
+  const handleTabClick = (tabSelection) => e => {
+    e.preventDefault();
+    setActiveTab(tabSelection);
+  };
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
+  }, []);
+
+  const getTabContainer = () => {
+    return (
+      <CustomTabContainer>
+        <CustomTab activeTab={activeTab} tabText={"Tag Subscriptions"} handleTabClick={handleTabClick} tabName={"tags"} icon={faTag}/>
+        <CustomTab activeTab={activeTab} tabText={"Pipeline Subscriptions"} handleTabClick={handleTabClick} tabName={"pipelines"} icon={faDiceD20} disabled={true}/>
+      </CustomTabContainer>
+    );
+  };
+
+  const getCurrentView = () => {
+    switch (activeTab) {
+      case "tags":
+        return (<TagSubscriptionsPanel />);
+      case "pipelines":
+        return <AccessTokenLogPanel />;
+      default:
+        return null;
+    }
+  };
+
+  return (<div className="px-3"><TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} /></div>);
+}
+
+export default MySubscriptions;
+
