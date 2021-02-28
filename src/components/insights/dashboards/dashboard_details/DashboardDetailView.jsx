@@ -21,6 +21,10 @@ import TitleActionBarContainer from "components/common/actions/TitleActionBarCon
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon.jsx";
 import {faChartNetwork, faChartArea} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
+import ActionBarPublishDashboardToPrivateCatalogButton
+  from "components/common/actions/dashboard/ActionBarPublishDashboardToPrivateCatalogButton";
+import ActionBarPublishDashboardToPublicMarketplaceButton
+  from "components/common/actions/dashboard/ActionBarPublishDashboardToPublicMarketplaceButton";
 
 function DashboardDetailView() {
   const {tab, id} = useParams();
@@ -115,6 +119,8 @@ function DashboardDetailView() {
   const getTitleActionBar = () => {
     return (
       <TitleActionBarContainer>
+        <ActionBarPublishDashboardToPrivateCatalogButton dashboardData={dashboardData} className={"mr-2"} />
+        <ActionBarPublishDashboardToPublicMarketplaceButton dashboardData={dashboardData} className={"mr-2"} />
         <ToggleSettingsIcon activeTab={activeTab} setActiveTab={setActiveTab}/>
       </TitleActionBarContainer>
     );
