@@ -135,6 +135,10 @@
     box-shadow: none;
 }
 
+.success-button-color {
+    color: #019171;
+}
+
 .btn-success.disabled,
 .btn-success:disabled {
     color: #fff;

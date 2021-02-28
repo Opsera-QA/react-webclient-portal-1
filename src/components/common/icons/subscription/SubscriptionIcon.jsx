@@ -8,10 +8,6 @@ import LoadingIcon from "components/common/icons/LoadingIcon";
 function SubscriptionIconBase({ handleSubscription, isSubscribed, showText, className, isLoading }) {
 
   const getHelpText = () => {
-    if (isLoading) {
-      return <LoadingIcon isLoading={isLoading} />
-    }
-
     if (showText) {
       return <span className="ml-1">{isSubscribed ? "Subscribed" : "Not Subscribed"}</span>
     }
@@ -21,7 +17,7 @@ function SubscriptionIconBase({ handleSubscription, isSubscribed, showText, clas
     let classNames = "pointer";
 
     if (isSubscribed === true) {
-      classNames += " green";
+      classNames += " success-button-color";
     }
 
     return classNames;

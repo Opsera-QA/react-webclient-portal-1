@@ -4,6 +4,8 @@ import {Col} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
 import CardView from "components/common/card/CardView";
 import PipelineItem from "components/workflow/pipelines/PipelineItem";
+import Model from "core/data_model/model";
+import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 
 function PipelineCardView({ data, pipelineFilterDto, setPipelineFilterDto, loadData, isLoading }) {
   const getCards = () => {
@@ -15,7 +17,7 @@ function PipelineCardView({ data, pipelineFilterDto, setPipelineFilterDto, loadD
       <Row>
         {data.map((item, idx) => (
           <Col key={idx} xl={6} md={12} className="p-2">
-            <PipelineItem item={item}/>
+            <PipelineItem item={item} dataModel={new Model({...item}, pipelineMetadata, false)}/>
           </Col>
         ))}
       </Row>
