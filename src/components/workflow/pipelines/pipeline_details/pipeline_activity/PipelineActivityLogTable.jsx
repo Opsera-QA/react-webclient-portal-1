@@ -12,7 +12,7 @@ import {
 } from "components/common/table/table-column-helpers";
 import PipelineRunFilter from "components/common/filters/pipelines/activity_logs/pipeline_run/PipelineRunFilter";
 import FilterContainer from "components/common/table/FilterContainer";
-import BooleanFilter from "components/common/filters/boolean/BooleanFilter";
+import InlineBooleanFilter from "components/common/filters/boolean/InlineBooleanFilter";
 import PipelineTaskDetailViewer from "components/common/modal/PipelineTaskDetailViewer";
 
 function PipelineActivityLogTable({ data, loadData, isLoading, pipeline, pipelineActivityFilterDto, setPipelineActivityFilterDto }) {
@@ -93,8 +93,8 @@ function PipelineActivityLogTable({ data, loadData, isLoading, pipeline, pipelin
   const getInlineFilters = () => {
     return (
       <div className="px-2 d-flex small">
-        <div><BooleanFilter loadData={loadData} filterDto={pipelineActivityFilterDto} setFilterDto={setPipelineActivityFilterDto} fieldName={"hide_status"} /></div>
-        <div className="px-2"><BooleanFilter loadData={loadData} filterDto={pipelineActivityFilterDto} setFilterDto={setPipelineActivityFilterDto} fieldName={"latest"} /></div>
+        <div><InlineBooleanFilter loadData={loadData} filterDto={pipelineActivityFilterDto} setFilterDto={setPipelineActivityFilterDto} fieldName={"hide_status"} /></div>
+        <div className="px-2"><InlineBooleanFilter loadData={loadData} filterDto={pipelineActivityFilterDto} setFilterDto={setPipelineActivityFilterDto} fieldName={"latest"} /></div>
       </div>
     );
   };
