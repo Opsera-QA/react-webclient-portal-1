@@ -27,16 +27,12 @@ dashboardTemplatesActions.publishTemplateV2 = async(getAccessToken, cancelTokenS
 
 dashboardTemplatesActions.addTemplateToDashboards = async(getAccessToken, cancelTokenSource, templateId, catalog) => {
   const apiUrl = "/analytics/dashboard/add";
-  let urlParams = {
-    params: {
+  let params = {
       catalog: catalog === "private" ? catalog : "public",
       templateId: templateId
-    }
   };
 
-  console.log("urlParams: " + JSON.stringify(urlParams))
-
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, params);
 };
 
 export default dashboardTemplatesActions;
