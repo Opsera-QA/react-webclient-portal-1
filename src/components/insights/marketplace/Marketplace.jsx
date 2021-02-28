@@ -10,6 +10,7 @@ import CustomTab from "components/common/tabs/CustomTab";
 import "./marketplace.css";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import MarketplaceCharts from "components/insights/marketplace/charts/MarketplaceCharts";
+import MarketplaceDashboardCatalog from "components/insights/marketplace/dashboards/MarketplaceDashboardCatalog";
 
 function Marketplace () {
   const history = useHistory();
@@ -86,6 +87,7 @@ function Marketplace () {
       case "charts":
         return (<MarketplaceCharts dashboardId={dashboardId} />);
       case "dashboards":
+        return (<MarketplaceDashboardCatalog />);
       default:
         return null;
     }

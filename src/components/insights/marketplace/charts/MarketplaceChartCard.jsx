@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Card } from "react-bootstrap";
 import { formatDistanceToNowStrict } from "date-fns";
 
-export default function MarketplaceCard({ kpi, openModal }) {
+export default function MarketplaceChartCard({ kpi, openModal }) {
   return (
     <Card className="marketplace-card pointer"  onClick={()=> openModal(kpi)}>
       <Card.Img variant="top"
@@ -30,7 +30,7 @@ export default function MarketplaceCard({ kpi, openModal }) {
   )
 }
 
-MarketplaceCard.propTypes = {
+MarketplaceChartCard.propTypes = {
   kpi: PropTypes.object,
   openModal: PropTypes.func
 };

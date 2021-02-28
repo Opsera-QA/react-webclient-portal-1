@@ -1,31 +1,24 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
 import { CardColumns } from "react-bootstrap";
 import LoadingDialog from "components/common/status_notifications/loading";
-import ErrorDialog from "components/common/status_notifications/error";
 import Model from "core/data_model/model";
-import KpiActions from 'components/admin/kpi_editor/kpi-editor-actions';
 import InlineInformation from "components/common/status_notifications/inline/InlineInformation";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import kpiMarketplaceFilterMetadata from "components/insights/marketplace/charts/kpi-marketplace-filter-metadata";
-import MarketplaceChartCard from "components/insights/marketplace/charts/MarketplaceChartCard";
-import AddChartOverlay from "components/insights/marketplace/charts/AddChartOverlay";
 import axios from "axios";
-import InlineKpiCategoryFilter
-  from "components/common/filters/insights/marketplace/kpi_category/InlineKpiCategoryFilter";
-import InlineToolIdentifierFilter from "components/common/filters/tools/tool_identifier/InlineToolIdentifierFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import {faChartArea} from "@fortawesome/pro-light-svg-icons";
-import PropTypes from "prop-types";
+import dashboardTemplateFilterMetadata
+  from "components/insights/marketplace/dashboards/dashboard-template-filter-metadata";
+import dashboardTemplatesActions from "components/insights/marketplace/dashboards/dashboard-template-actions";
 
-function MarketplaceCharts ({ dashboardId }) {
+function MarketplaceDashboardCatalog ({ }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [error, setErrors] = useState(false);
-  const [kpis, setKpis] = useState([]);
+  const [dashboardTemplates, setDashboardTemplates] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [marketplaceFilterDto, setMarketplaceFilterDto] = useState(new Model({ ...kpiMarketplaceFilterMetadata.newObjectFields }, kpiMarketplaceFilterMetadata, false));
+  const [marketplaceFilterDto, setMarketplaceFilterDto] = useState(new Model({ ...dashboardTemplateFilterMetadata.newObjectFields }, dashboardTemplateFilterMetadata, false));
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   
@@ -36,8 +29,8 @@ function MarketplaceCharts ({ dashboardId }) {
 
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-
     isMounted.current = true;
+    
     loadData(marketplaceFilterDto, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -69,28 +62,24 @@ function MarketplaceCharts ({ dashboardId }) {
   };
 
   const getMarketKpiData = async (filterModel = marketplaceFilterDto, cancelSource = cancelTokenSource) => {
-    const kpiResponse = await KpiActions.getKpisV2(getAccessToken, cancelSource, filterModel);
-    const kpis = kpiResponse?.data?.data;
+    const response = await dashboardTemplatesActions.getDashboardTemplatesV2(getAccessToken, cancelSource, filterModel);
+    const dashboardTemplates = response?.data?.data;
 
-    if (isMounted?.current === true && kpiResponse && kpis) {
-      setKpis(kpis);
+    if (isMounted?.current === true && dashboardTemplates) {
+      setDashboardTemplates(dashboardTemplates);
       let newFilterDto = filterModel;
-      newFilterDto.setData("totalCount", kpiResponse?.data?.count);
+      newFilterDto.setData("totalCount", dashboardTemplates?.data?.count);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
       setMarketplaceFilterDto({...newFilterDto});
     }
   };
-
-  const openModal = (kpiData) => {
-    toastContext.showOverlayPanel(<AddChartOverlay kpiData={kpiData} dashboardId={dashboardId} />);
-  }
 
   const getMainBody = () => {
     if (loading) {
       return (<LoadingDialog size={"sm"}/>);
     }
 
-    if (!Array.isArray(kpis) || kpis.length === 0) {
+    if (!Array.isArray(dashboardTemplates) || dashboardTemplates.length === 0) {
       return (<InlineInformation message={"No Marketplace Items Found"} />);
     }
 
@@ -98,9 +87,7 @@ function MarketplaceCharts ({ dashboardId }) {
       <div className="px-2 pb-2 pt-2">
         <div>
           <CardColumns>
-            {kpis.map((kpi, index) => {
-              return (<MarketplaceChartCard key={index} kpi={kpi} openModal={openModal}/>)
-            })}
+            {JSON.stringify(dashboardTemplates)}
           </CardColumns>
         </div>
         <div>
@@ -121,15 +108,11 @@ function MarketplaceCharts ({ dashboardId }) {
   const getInlineFilters = () => {
     return (
       <div className="d-flex">
-        <InlineKpiCategoryFilter filterModel={marketplaceFilterDto} setFilterModal={setMarketplaceFilterDto} loadData={loadData} className={"mr-2"} />
-        <InlineToolIdentifierFilter loadData={loadData} setFilterModel={setMarketplaceFilterDto} filterModel={marketplaceFilterDto} fieldName={"tool"} className={"mr-2"} />
+        {/*<InlineKpiCategoryFilter filterModel={marketplaceFilterDto} setFilterModal={setMarketplaceFilterDto} loadData={loadData} className={"mr-2"} />*/}
+        {/*<InlineToolIdentifierFilter loadData={loadData} setFilterModel={setMarketplaceFilterDto} filterModel={marketplaceFilterDto} fieldName={"tool"} className={"mr-2"} />*/}
       </div>
     )
   };
-
-  if (error) {
-    return <ErrorDialog error={error} />;
-  }
 
   return (
     <FilterContainer
@@ -141,14 +124,12 @@ function MarketplaceCharts ({ dashboardId }) {
       body={getMainBody()}
       inlineFilters={getInlineFilters()}
       titleIcon={faChartArea}
-      title={"KPIs"}
+      title={"Dashboard Templates"}
       className={"pb-2"}
     />
   )
 }
 
-MarketplaceCharts.propTypes = {
-  dashboardId: PropTypes.string
-};
+MarketplaceDashboardCatalog.propTypes = {};
 
-export default MarketplaceCharts;
+export default MarketplaceDashboardCatalog;
