@@ -1,22 +1,23 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationCircle, faTag} from "@fortawesome/pro-light-svg-icons";
-import Row from "react-bootstrap/Row";
+import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import axios from "axios";
-import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import Model from "core/data_model/model";
 import tagEditorMetadata from "components/settings/tags/tags-metadata";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import TagUsagePanel from "components/settings/tags/tags_detail_view/TagUsagePanel";
+import TagsCloudBase from "components/common/fields/tags/cloud/TagsCloudBase";
+import {getSingularOrPluralString} from "components/common/helpers/string-helpers";
 
 function AllTagsCloud() {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tags, setTags] = useState([]);
+  const [subscribedTagIds, setSubscribedTagIds] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -42,10 +43,11 @@ function AllTagsCloud() {
     }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true)
-      await loadTags();
+      await loadTags(cancelSource);
+      await loadSubscribedTagIds(cancelSource);
     }
     catch (error) {
       if (isMounted.current === true) {
@@ -59,26 +61,24 @@ function AllTagsCloud() {
     }
   };
 
-  const loadTags = async () => {
-    const response = await adminTagsActions.getAllTagsV2(getAccessToken, cancelTokenSource);
+  const loadTags = async (cancelSource = cancelTokenSource) => {
+    const response = await adminTagsActions.getAllTagsV2(getAccessToken, cancelSource, undefined, true);
 
-    if (isMounted?.current === true && response?.data != null) {
-      setTags(response?.data?.data);
+    let tags = response?.data?.data;
+
+    if (isMounted?.current === true && tags != null) {
+      setTags(tags.sort((tag1, tag2) => (tag1.total_usage_count < tag2.total_usage_count) ? 1 : -1));
     }
   };
 
-  const getTagCloud = () => {
-    return (
-      <Row className="item-field">
-        {tags.map((tag) => {
-          return (
-            <span key={tag?._id} className="mx-1 mb-1 badge badge-light tag-badge pointer" onClick={() => {showTagUsage(tag)}}>
-              <FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/>{`${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`}
-            </span>
-          );
-        })}
-      </Row>
-    );
+  const loadSubscribedTagIds = async (cancelSource = cancelTokenSource) => {
+    const response = await adminTagsActions.getSubscribedTagIds(getAccessToken, cancelSource);
+
+    let subscribedIds = response?.data?.data;
+
+    if (isMounted?.current === true && subscribedIds != null) {
+      setSubscribedTagIds(subscribedIds.map((id) => {return id.object_id}));
+    }
   };
 
   const clearOverlayPanel = () => {
@@ -94,6 +94,27 @@ function AllTagsCloud() {
       </CreateCenterPanel>
     );
   };
+
+  const getTooltip = (tagWithUsage) => {
+    const tag = tagWithUsage?.tag;
+    const pipelineCount = tagWithUsage?.pipeline_usage_count;
+    const toolCount = tagWithUsage?.tool_usage_count;
+    const subscribeMessage = subscribedTagIds.includes(tag._id) ? "Click to Unsubscribe" : "Click to Subscribe";
+
+    return (
+      <div>
+        <div>
+          <span>
+            Tag [{tag?.type}: {tag?.value}] is applied on
+            <div><strong>{pipelineCount}</strong> {getSingularOrPluralString(pipelineCount, "Pipeline", "Pipelines")}</div>
+            <div><strong>{toolCount}</strong> {getSingularOrPluralString(toolCount, "Tool", "Tools")}</div>
+          </span>
+        </div>
+        <div>{subscribeMessage}</div>
+      </div>
+    );
+  };
+
 
   if (isLoading) {
     return <LoadingDialog message={"Loading Tags"} size={"sm"} />;
@@ -112,7 +133,7 @@ function AllTagsCloud() {
 
   return (
     <div>
-      {getTagCloud()}
+      <TagsCloudBase tagsWithUsage={tags} onTagClick={showTagUsage} getTooltip={getTooltip} subscribedTagIds={subscribedTagIds} />
     </div>
   );
 }

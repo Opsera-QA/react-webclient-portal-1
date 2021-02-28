@@ -8,6 +8,13 @@
   background: #E7E5ED;
 }
 
+.item-field .subscribed-tag-badge {
+    color: #fff;
+    font-weight: normal;
+    background-color: #00AA84;
+    border-color: #019171;
+}
+
 .item-field .generic-badge {
   font-weight: normal;
   background: #C7C3DD;

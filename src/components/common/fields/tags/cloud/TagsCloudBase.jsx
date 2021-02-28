@@ -1,23 +1,39 @@
 import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faDiceD20, faExclamationCircle, faTag, faWrench} from "@fortawesome/pro-light-svg-icons";
+import {faDiceD20, faExclamationCircle, faEye, faTag, faWrench} from "@fortawesome/pro-light-svg-icons";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function TagsCloudBase({ tagsWithUsage, onTagClick, className, getTooltip }) {
+function TagsCloudBase({ tagsWithUsage, onTagClick, className, getTooltip, subscribedTagIds }) {
+  const getSubscribedEye = (subscribed) => {
+    if (subscribed) {
+      return (<span><FontAwesomeIcon icon={faEye} fixedWidth className={"mx-1"}/></span>);
+    }
+  };
 
   const getTagCloud = () => {
     return (
       <div className="item-field">
         {tagsWithUsage.map((tagWithUsage) => {
           const tag = tagWithUsage?.tag;
+          const subscribed = subscribedTagIds?.includes(tag._id);
+          let classNames;
+
+          if (subscribed) {
+            classNames = "mx-1 mb-1 badge badge-light subscribed-tag-badge pointer";
+          }
+          else {
+            classNames = "mx-1 mb-1 badge badge-light tag-badge pointer";
+          }
+
           return (
             <TooltipWrapper innerText={getTooltip(tagWithUsage)} key={tag?._id}>
-              <span className="mx-1 mb-1 badge badge-light tag-badge pointer" style={getDynamicBadgeStyle(tagWithUsage)} onClick={() => {onTagClick(tag)}}>
+              <span className={classNames} style={getDynamicBadgeStyle(tagWithUsage)} onClick={() => {onTagClick(tag)}}>
                 <span><FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/>{`${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`}</span>
                 <span><FontAwesomeIcon icon={faDiceD20} fixedWidth className="ml-3 mr-1"/>{tagWithUsage?.pipeline_usage_count}</span>
                 <span><FontAwesomeIcon icon={faWrench} fixedWidth className="mx-1"/>{tagWithUsage?.tool_usage_count}</span>
+                {getSubscribedEye(subscribed)}
               </span>
             </TooltipWrapper>
           );
@@ -60,7 +76,8 @@ TagsCloudBase.propTypes = {
   tagsWithUsage: PropTypes.array,
   onTagClick: PropTypes.func,
   className: PropTypes.string,
-  getTooltip: PropTypes.func
+  getTooltip: PropTypes.func,
+  subscribedTagIds: PropTypes.array
 };
 
 export default TagsCloudBase;
