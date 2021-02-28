@@ -10,30 +10,15 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import analyticsActions from "components/settings/analytics/analytics-settings-actions";
 
 function Logs() {
-  const contextType = useContext(AuthContext);
+  const {getAccessToken} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [error, setErrors] = useState();
-  const [data, setData] = useState({});
-  const [tools, setTools] = useState({});
+  const [data, setData] = useState([]);
+  const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [profile, setProfile] = useState(true);
   const [isEnabled, setIsEnabled] = useState(true);
   const [enabledOn, setEnabledOn] = useState(true);
-  const INDICES = [
-    "jenkins",
-    "opsera-pipeline",
-    "jira",
-    "sonar",
-    "xunit",
-    "junit",
-    "jmeter",
-    "heartbeat",
-    "codeship",
-    "gitlab",
-    "metricbeat",
-    "cypress",
-    "anchore"
-  ];
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -77,25 +62,26 @@ function Logs() {
   };
 
   const loadSettings = async (cancelSource = cancelTokenSource) => {
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/settings";
-    const profile = await axiosApiService(accessToken).get(apiUrl);
     const response = await analyticsActions.getAnalyticsSettingsV2(getAccessToken, cancelSource);
 
     if (isMounted?.current === true && response?.data) {
-      setProfile(profile.data);
-      let dataObject = profile.data && profile.data.profile.length > 0 ? profile.data.profile[0] : {};
-      setIsEnabled(dataObject?.active || false);
-      setEnabledOn(!!(dataObject.enabledToolsOn && dataObject.enabledToolsOn.length !== 0));
+      const tempProfile = response?.data;
+      setProfile(tempProfile);
+      let profileData = tempProfile?.data?.profile?.length > 0 ? profile.data.profile[0] : {};
+      setIsEnabled(profileData?.active || false);
+      setEnabledOn(!!(profileData.enabledToolsOn && profileData.enabledToolsOn.length !== 0));
 
-      const tools = await axiosApiService(accessToken).post("/analytics/index", {index: INDICES});
-      const listOfTools = tools.data && Array.isArray(tools.data) ? tools.data : [];
-      if (listOfTools.includes("jenkins")) listOfTools.push("blueprint");
-      listOfTools.sort();
+      const toolResponse = await analyticsActions.getAnalyticsToolsV2(getAccessToken, cancelSource);
+      const listOfTools = Array.isArray(toolResponse?.data) ? toolResponse.data : [];
+
+      if (listOfTools) {
+        if (listOfTools.includes("jenkins")) {
+          listOfTools.push("blueprint");
+        }
+        listOfTools.sort();
+      }
 
       // console.log("Profile: ", profile);
-      const profileData = profile?.data?.profile[0];
       setData(profileData);
       setTools(listOfTools);
       // console.log(profile && profile.data.profile[0]);
@@ -108,6 +94,18 @@ function Logs() {
     }
   }
 
+  const getBody = () => {
+    if (isLoading) {
+      return <LoadingDialog size="sm" message="Loading..." />;
+    }
+
+    if (error) {
+      return <ErrorDialog error={error} align="top" />;
+    }
+
+    return (<SearchLogs tools={tools} />);
+  };
+
   return (
     <ScreenContainer
       isLoading={isLoading}
@@ -118,14 +116,9 @@ function Logs() {
           search your currently configured logs repositories below.
       `}
     >
-      {error && <ErrorDialog error={error} align="top" />}
-      {!error && (
-        <div className="shaded-panel p-3 mt-1">
-          {isLoading
-            ? <LoadingDialog size="sm" message="Loading..." />
-            : <SearchLogs tools={tools} />}
-        </div>
-      )}
+      <div className="px-3">
+        {getBody()}
+      </div>
     </ScreenContainer>
   );
 }
