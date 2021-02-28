@@ -25,14 +25,16 @@ dashboardTemplatesActions.publishTemplateV2 = async(getAccessToken, cancelTokenS
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-dashboardTemplatesActions.publishTemplateV2 = async(getAccessToken, cancelTokenSource, templateId, catalog) => {
+dashboardTemplatesActions.addTemplateToDashboards = async(getAccessToken, cancelTokenSource, templateId, catalog) => {
   const apiUrl = "/analytics/dashboard/add";
   let urlParams = {
     params: {
-      catalog: catalog,
+      catalog: catalog === "private" ? catalog : "public",
       templateId: templateId
     }
   };
+
+  console.log("urlParams: " + JSON.stringify(urlParams))
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };

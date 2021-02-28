@@ -12,6 +12,8 @@ import {faChartArea} from "@fortawesome/pro-light-svg-icons";
 import dashboardTemplateFilterMetadata
   from "components/insights/marketplace/dashboards/dashboard-template-filter-metadata";
 import dashboardTemplatesActions from "components/insights/marketplace/dashboards/dashboard-template-actions";
+import MarketplaceChartCard from "components/insights/marketplace/charts/MarketplaceChartCard";
+import DashboardTemplateCard from "components/insights/marketplace/dashboards/DashboardTemplateCard";
 
 function MarketplaceDashboardCatalog ({ }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -30,7 +32,7 @@ function MarketplaceDashboardCatalog ({ }) {
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    
+
     loadData(marketplaceFilterDto, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -84,10 +86,12 @@ function MarketplaceDashboardCatalog ({ }) {
     }
 
     return (
-      <div className="px-2 pb-2 pt-2">
+      <div className="px-2 pt-2">
         <div>
           <CardColumns>
-            {JSON.stringify(dashboardTemplates)}
+            {dashboardTemplates.map((dashboardTemplate, index) => {
+              return (<DashboardTemplateCard key={index} dashboardTemplate={dashboardTemplate} catalog={marketplaceFilterDto.getData("source")} />)
+            })}
           </CardColumns>
         </div>
         <div>
