@@ -4,18 +4,22 @@ const dashboardTemplatesActions = {};
 
 dashboardTemplatesActions.getDashboardTemplatesV2 = async(getAccessToken, cancelTokenSource, dashboardCatalogFilterModel) => {
     const apiUrl = "/analytics/dashboard/templates";
-    let urlParams = {
-      params: {
-        source: dashboardCatalogFilterModel.getData("source")
-      }
-    };
+  let urlParams = {
+    params: {
+      page: dashboardCatalogFilterModel.getData("currentPage"),
+      size: dashboardCatalogFilterModel.getData("pageSize"),
+      source: dashboardCatalogFilterModel.getFilterValue("source"),
+      search: dashboardCatalogFilterModel.getFilterValue("search"),
+      type: dashboardCatalogFilterModel.getFilterValue("type")
+    }
+  }
 
     return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 dashboardTemplatesActions.publishTemplateV2 = async(getAccessToken, cancelTokenSource, dashboardId, catalog) => {
   const apiUrl = "/analytics/dashboard/publish";
-  let params = {
+  const params = {
       catalog: catalog,
       dashboardId: dashboardId
   };
@@ -25,7 +29,7 @@ dashboardTemplatesActions.publishTemplateV2 = async(getAccessToken, cancelTokenS
 
 dashboardTemplatesActions.addTemplateToDashboards = async(getAccessToken, cancelTokenSource, templateId, catalog) => {
   const apiUrl = "/analytics/dashboard/add";
-  let params = {
+  const params = {
       catalog: catalog === "private" ? catalog : "public",
       templateId: templateId
   };

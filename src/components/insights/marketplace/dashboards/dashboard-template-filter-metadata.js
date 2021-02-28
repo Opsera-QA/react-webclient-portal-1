@@ -50,7 +50,7 @@ const dashboardTemplateFilterMetadata = {
     currentPage: 1,
     sort: "name",
     search: "",
-    source: "",
+    source: "public",
     persona: "",
     status: {text: "Status: Active", value: "active"},
     activeFilters: []
