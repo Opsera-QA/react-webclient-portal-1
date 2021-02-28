@@ -15,7 +15,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import kpiMarketplaceFilterMetadata from "components/insights/marketplace/kpi-marketplace-filter-metadata";
 import MarketplaceCard from "components/insights/marketplace/MarketplaceCard";
-import KPIInfoModal from "components/insights/marketplace/KPIInfoModal";
+import KpiInfoModal from "components/insights/marketplace/KpiInfoModal";
 import axios from "axios";
 import InlineKpiCategoryFilter
   from "components/common/filters/insights/marketplace/kpi_category/InlineKpiCategoryFilter";
@@ -232,7 +232,7 @@ export default function Marketplace () {
         title={"KPIs"}
         className={"px-2 pb-2"}
       />
-      <KPIInfoModal setShowModal={setShowModal} showModal={showModal} kpiItem={selectedItem} dashboardData={dashboardData}/>
+      <KpiInfoModal setShowModal={setShowModal} showModal={showModal} kpiItem={selectedItem} dashboardData={dashboardData}/>
     </ScreenContainer>
   )
 }

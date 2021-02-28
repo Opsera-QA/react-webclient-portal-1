@@ -13,7 +13,7 @@ import Model from "../../../core/data_model/model";
 import dashboardMetadata from "../dashboards/dashboard-metadata";
 import dashboardFilterMetadata from "../dashboards/dashboard-filter-metadata";
 
-function KPIInfoView({data, dashboardData, setShowModal}) {
+function KpiInfoView({data, dashboardData, setShowModal}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -150,10 +150,10 @@ function KPIInfoView({data, dashboardData, setShowModal}) {
     )
 }
 
-KPIInfoView.propTypes = {
+KpiInfoView.propTypes = {
   data: PropTypes.object,
   dashboardData: PropTypes.object,
   setShowModal: PropTypes.func,
 };
 
-export default KPIInfoView;
+export default KpiInfoView;

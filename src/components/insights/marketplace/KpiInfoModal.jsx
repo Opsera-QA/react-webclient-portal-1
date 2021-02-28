@@ -1,11 +1,11 @@
 import React from 'react'
 import {Button, Modal} from "react-bootstrap";
 import PropTypes from 'prop-types'
-import KPIInfoView from "./KPIInfoView";
+import KpiInfoView from "components/insights/marketplace/KpiInfoView";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {unsavedChanges} from "components/common/tooltip/popover-text";
 
-function KPIInfoModal({kpiItem, dashboardData, setShowModal, showModal }) {
+function KpiInfoModal({kpiItem, dashboardData, setShowModal, showModal }) {
   if (kpiItem == null) {
     return <></>;
   }
@@ -17,7 +17,7 @@ function KPIInfoModal({kpiItem, dashboardData, setShowModal, showModal }) {
       </Modal.Header>
       <Modal.Body>
         <div className="content-block-shaded m-3 p-3">
-            <KPIInfoView data={kpiItem} dashboardData={dashboardData} setShowModal={setShowModal} />
+            <KpiInfoView data={kpiItem} dashboardData={dashboardData} setShowModal={setShowModal} />
         </div>
       </Modal.Body>
       <Modal.Footer>
@@ -29,11 +29,11 @@ function KPIInfoModal({kpiItem, dashboardData, setShowModal, showModal }) {
   )
 }
 
-KPIInfoModal.propTypes = {
+KpiInfoModal.propTypes = {
   kpiItem: PropTypes.object,
   dashboardData: PropTypes.object,
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func
 };
 
-export default KPIInfoModal;
+export default KpiInfoModal;
