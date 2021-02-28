@@ -6,6 +6,7 @@ import CustomTab from "components/common/tabs/CustomTab";
 import {faDiceD20, faTag} from "@fortawesome/pro-light-svg-icons";
 import AccessTokenLogPanel from "components/user/user_settings/access_tokens/details/logs/AccessTokenLogPanel";
 import TagSubscriptionsPanel from "components/user/user_settings/subscriptions/TagSubscriptionsPanel";
+import PipelineSubscriptionsPanel from "components/user/user_settings/subscriptions/PipelineSubscriptionsPanel";
 
 function MySubscriptions() {
   const isMounted = useRef(false);
@@ -46,7 +47,7 @@ function MySubscriptions() {
       case "tags":
         return (<TagSubscriptionsPanel />);
       case "pipelines":
-        return <AccessTokenLogPanel />;
+        return <PipelineSubscriptionsPanel />;
       default:
         return null;
     }
