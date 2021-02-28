@@ -7,6 +7,7 @@ import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {faAnalytics, faChartNetwork, faChartArea} from "@fortawesome/pro-light-svg-icons";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
+import "./marketplace.css";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import MarketplaceCharts from "components/insights/marketplace/charts/MarketplaceCharts";
 
