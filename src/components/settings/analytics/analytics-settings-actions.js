@@ -1,10 +1,10 @@
-import { axiosApiService } from "../../../api/apiService";
 import baseActions from "utils/actionsBase";
+import {axiosApiService} from "api/apiService";
 
-const analyticsProfileActions = {};
+const analyticsActions = {};
 
 // TODO: Remove when all references updated to V2
-analyticsProfileActions.fetchProfile = async (getAccessToken) => {
+analyticsActions.fetchProfile = async (getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/analytics/profile/settings";
   const response = await axiosApiService(accessToken)
@@ -18,12 +18,17 @@ analyticsProfileActions.fetchProfile = async (getAccessToken) => {
   return response;
 };
 
-analyticsProfileActions.fetchProfileV2 = async (getAccessToken, cancelTokenSource) => {
+analyticsActions.getAnalyticsSettingsV2 = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/analytics/settings`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+analyticsActions.fetchProfileV2 = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = "/analytics/profile/settings";
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-analyticsProfileActions.createProfile = async (getAccessToken) => {
+analyticsActions.createProfile = async (getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/analytics/profile/create";
   const response = await axiosApiService(accessToken)
@@ -37,7 +42,7 @@ analyticsProfileActions.createProfile = async (getAccessToken) => {
   return response;
 };
 
-analyticsProfileActions.updateProfile = async (getAccessToken, postBody) => {
+analyticsActions.updateProfile = async (getAccessToken, postBody) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/analytics/update";
   const response = await axiosApiService(accessToken)
@@ -51,4 +56,4 @@ analyticsProfileActions.updateProfile = async (getAccessToken, postBody) => {
   return response;
 };
 
-export default analyticsProfileActions;
+export default analyticsActions;

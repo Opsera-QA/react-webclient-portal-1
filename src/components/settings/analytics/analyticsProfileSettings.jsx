@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { Row, Col, Card, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "../../../contexts/DialogToastContext";
-import analyticsProfileActions from "./analytics-profile-settings-actions";
+import analyticsActions from "components/settings/analytics/analytics-settings-actions";
 import DtoSelectInput from "../../common/input/dto_input/dto-select-input";
 import Model from "../../../core/data_model/model";
 import AnalyticsProfileMetadata from "./analytics-profile-metadata";
@@ -70,7 +70,7 @@ function AnalyticsProfileSettings() {
 
   const createProfile = async () => {
     try {
-      let res = await analyticsProfileActions.createProfile(getAccessToken);
+      let res = await analyticsActions.createProfile(getAccessToken);
       //this needs to trigger a full reload of app for now because so many queries check on the status of this record.
       if (res.status === 200) {
         window.location.reload();
@@ -88,7 +88,7 @@ function AnalyticsProfileSettings() {
 
   const updateProfile = async () => {
     try {
-      return await analyticsProfileActions.updateProfile(getAccessToken, analyticsProfileData.getPersistData());
+      return await analyticsActions.updateProfile(getAccessToken, analyticsProfileData.getPersistData());
     } catch (error) {
       console.log(error);
       toastContext.showServiceUnavailableDialog();
@@ -97,7 +97,7 @@ function AnalyticsProfileSettings() {
 
   const fetchProfile = async () => {
     try {
-      let response = await analyticsProfileActions.fetchProfile(getAccessToken);
+      let response = await analyticsActions.fetchProfile(getAccessToken);
       if (response && response.data) {
         return response.data;
       }

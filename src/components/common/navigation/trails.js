@@ -4,7 +4,7 @@ import {
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
   faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey,
-  faHexagon
+  faHexagon, faListAlt
 } from "@fortawesome/pro-light-svg-icons";
 
 const breadcrumbs = {
@@ -109,6 +109,7 @@ const breadcrumbs = {
   myAccessTokens: {name: "myAccessTokens", path: paths.accessTokens, label: "Personal Access Tokens", icon: faKey},
   accessTokenDetailView: {name: "accessTokenDetailView", path: paths.userProfile, label: "Access Token Details", icon: faKey},
   home: {name: "home", path: paths.home, label: "Welcome back", icon: faHome},
+  logs: {name: "logs", path: paths.logs, label: "Logs", icon: faListAlt},
 
   accessDenied: {name: "accessDenied", path: undefined, label: "Access Denied", icon: faEnvelope},
 };
