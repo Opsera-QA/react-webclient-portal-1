@@ -4,7 +4,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import axios from "axios";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faAnalytics, faChartNetwork, faChartArea} from "@fortawesome/pro-light-svg-icons";
+import {faAnalytics, faChartNetwork, faChartArea, faUserChart} from "@fortawesome/pro-light-svg-icons";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import "./marketplace.css";
@@ -76,7 +76,7 @@ function Marketplace () {
     return (
       <CustomTabContainer>
         <CustomTab activeTab={activeTab} tabText={"Charts"} icon={faChartArea} handleTabClick={handleTabClick} tabName={"charts"} />
-        {/*<CustomTab activeTab={activeTab} tabText={"Dashboards"} handleTabClick={handleTabClick} tabName={"dashboards"} />*/}
+        {/*<CustomTab activeTab={activeTab} tabText={"Dashboards"} icon={faUserChart} handleTabClick={handleTabClick} tabName={"dashboards"} />*/}
       </CustomTabContainer>
     );
   };
@@ -91,15 +91,28 @@ function Marketplace () {
     }
   };
 
+  const getPageDescription = () => {
+    switch (activeTab) {
+      case "charts":
+        return (`
+          Opsera provides users with access to a vast repository of KPI. Access all available
+          KPIs and configure them on your Opsera Analytics Dashboards.
+        `);
+      case "dashboards":
+        return (`
+          Opsera offers predefined dashboards focused on topics and personas.
+          There is a public catalog of Opsera provided dashboards by topic as well as a private catalog for sharing within your organization.
+        `);
+      default:
+        return null;
+    }
+  };
 
   return (
     <ScreenContainer
       navigationTabContainer={getNavigationTabContainer()}
       breadcrumbDestination={"marketplace"}
-      pageDescription={`
-        Opsera provides users with access to a vast repository of KPI. Access all available
-        KPIs and configure them on your Opsera Analytics Dashboards.
-      `}
+      pageDescription={getPageDescription()}
     >
       <div className={"px-3"}>
         <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
