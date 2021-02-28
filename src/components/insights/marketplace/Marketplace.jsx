@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {useHistory} from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import axios from "axios";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
@@ -13,6 +13,7 @@ import MarketplaceCharts from "components/insights/marketplace/charts/Marketplac
 
 function Marketplace () {
   const history = useHistory();
+  const { dashboardId } = useParams();
   const isMounted = useRef(false);
   const [activeTab, setActiveTab] = useState("charts");
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -83,7 +84,7 @@ function Marketplace () {
   const getCurrentView = () => {
     switch (activeTab) {
       case "charts":
-        return (<MarketplaceCharts />);
+        return (<MarketplaceCharts dashboardId={dashboardId} />);
       case "dashboards":
       default:
         return null;

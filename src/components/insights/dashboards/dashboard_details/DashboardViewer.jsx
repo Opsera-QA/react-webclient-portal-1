@@ -24,8 +24,7 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
   }
 
   const gotoMarketplace = () => {
-    // redirect to marketplace
-    history.push({ pathname:`/insights/marketplace`, state: {"dashboardId": dashboardData.getData("_id")}});
+    history.push({ pathname:`/insights/marketplace/${dashboardData.getData("_id")}`});
   }
 
   const getKpiView = () => {
