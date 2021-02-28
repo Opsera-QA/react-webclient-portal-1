@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import {axiosApiService} from "api/apiService";
 import ErrorDialog from "components/common/status_notifications/error";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SearchLogs from "components/logs/searchLogs";
@@ -67,7 +66,7 @@ function Logs() {
     if (isMounted?.current === true && response?.data) {
       const tempProfile = response?.data;
       setProfile(tempProfile);
-      let profileData = tempProfile?.data?.profile?.length > 0 ? profile.data.profile[0] : {};
+      let profileData = tempProfile.profile?.length > 0 ? tempProfile.profile[0] : {};
       setIsEnabled(profileData?.active || false);
       setEnabledOn(!!(profileData.enabledToolsOn && profileData.enabledToolsOn.length !== 0));
 
@@ -79,11 +78,11 @@ function Logs() {
           listOfTools.push("blueprint");
         }
         listOfTools.sort();
+        setTools(listOfTools);
       }
 
-      // console.log("Profile: ", profile);
+      // console.log("Profile: ", JSON.stringify(profileData));
       setData(profileData);
-      setTools(listOfTools);
       // console.log(profile && profile.data.profile[0]);
 
       if (typeof profileData.profile === "object" && profileData.profile.length === 0) {
