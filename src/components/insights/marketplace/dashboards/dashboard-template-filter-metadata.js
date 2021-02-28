@@ -23,6 +23,10 @@ const dashboardTemplateFilterMetadata = {
       id: "persona",
     },
     {
+      label: "Dashboard Type",
+      id: "type",
+    },
+    {
       label: "Search",
       id: "search",
     },    
@@ -36,7 +40,11 @@ const dashboardTemplateFilterMetadata = {
     let activeFilters = [];
 
     if (filterDto.getData("persona") != null && filterDto.getData("persona") !== "") {
-      activeFilters.push({filterId: "persona", text: `Persona: ${filterDto.getData("persona")}`});
+      activeFilters.push({filterId: "persona", text: `Persona: ${filterDto.getFilterValue("persona")}`});
+    }
+
+    if (filterDto.getData("type") != null && filterDto.getData("type") !== "") {
+      activeFilters.push({filterId: "type", text: `Dashboard Type: ${filterDto.getFilterValue("type")}`});
     }
     
     if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
@@ -50,6 +58,7 @@ const dashboardTemplateFilterMetadata = {
     currentPage: 1,
     sort: "name",
     search: "",
+    type: "",
     source: "public",
     persona: "",
     status: {text: "Status: Active", value: "active"},
