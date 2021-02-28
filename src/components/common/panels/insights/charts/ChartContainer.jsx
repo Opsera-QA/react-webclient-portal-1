@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import {faCogs, faExclamationCircle, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import "components/analytics/charts/charts.css";
-import KpiSettingsForm from "components/insights/marketplace/kpi_marketplace_detail_view/KpiSettingsForm";
+import KpiSettingsForm from "components/insights/marketplace/charts/KpiSettingsForm";
 import {getChartIconFromKpiConfiguration} from "components/insights/charts/charts-helpers";
 import InfoDialog from "components/common/status_notifications/info";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon.jsx";

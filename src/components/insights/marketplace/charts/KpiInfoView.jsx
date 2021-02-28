@@ -9,9 +9,9 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import { Row, Col } from "react-bootstrap";
 import DropdownList from "react-widgets/lib/DropdownList";
-import Model from "../../../core/data_model/model";
-import dashboardMetadata from "../dashboards/dashboard-metadata";
-import dashboardFilterMetadata from "../dashboards/dashboard-filter-metadata";
+import Model from "core/data_model/model";
+import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
+import dashboardFilterMetadata from "components/insights/dashboards/dashboard-filter-metadata";
 
 function KpiInfoView({data, dashboardData, setShowModal}) {
   const { getAccessToken } = useContext(AuthContext);
