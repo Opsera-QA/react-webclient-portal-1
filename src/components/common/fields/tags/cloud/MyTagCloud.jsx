@@ -13,10 +13,9 @@ import TagUsagePanel from "components/settings/tags/tags_detail_view/TagUsagePan
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {getSingularOrPluralString} from "components/common/helpers/string-helpers";
 import LoadingIcon from "components/common/icons/LoadingIcon";
-import NewToolCategoryOverlay from "components/admin/tools/tool_category/NewToolCategoryOverlay";
 import TagSubscriptionManager from "components/user/user_settings/subscriptions/TagSubscriptionManager";
 
-function MyTagCloud({className}) {
+function MyTagCloud({className, showNoSubscriptionsMessage}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tags, setTags] = useState([]);
@@ -115,35 +114,42 @@ function MyTagCloud({className}) {
     toastContext.showOverlayPanel(<TagSubscriptionManager loadData={loadData} isMounted={isMounted} />);
   };
 
-  if (isLoading) {
-    return <span><LoadingIcon isLoading={isLoading} />Loading Tag Subscriptions</span>
-  }
+  const getBody = () => {
+    if (isLoading) {
+      return (<div><LoadingIcon isLoading={isLoading} />Loading Tag Subscriptions</div>);
+    }
 
-  if (!isLoading && (tags == null || tags.length === 0)) {
-    return (
-      <div className="form-text text-muted ml-3">
+    if (Array.isArray(tags) && tags.length > 0) {
+      return (
         <div>
-          <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
-          You are not currently subscribed to any tags</span>
-          <strong className={"pointer ml-2"} onClick={() => {showTagSubscriptionManager()}}>Click here to manage tag subscriptions</strong>
-        </div>
-      </div>
-    )
-  }
+          <span>You are currently subscribed to <strong>{tags.length}</strong> tags.</span>
+          <TagsCloudBase tagsWithUsage={tags} onTagClick={showTagUsage} getTooltip={getTooltip} />
+        </div>);
+    }
+
+    if (showNoSubscriptionsMessage) {
+      return(
+        <span>
+          <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          You are not currently subscribed to any tags
+        </span>
+      );
+    }
+  };
 
   return (
     <div className={className}>
-      <div className="mb-2">
-        <span>You are currently subscribed to <strong>{tags.length}</strong> tags.</span>
-        <strong className={"pointer ml-2"} onClick={() => {showTagSubscriptionManager()}}>Click here to manage tag subscriptions</strong>
+      <div className="mb-2 item-field">
+        {getBody()}
+        {!isLoading && <div className={"m-1 badge badge-light filter-badge pointer"} onClick={() => {showTagSubscriptionManager()}}>Manage Tag Subscriptions</div>}
       </div>
-      <TagsCloudBase tagsWithUsage={tags} onTagClick={showTagUsage} getTooltip={getTooltip} />
     </div>
   );
 }
 
 MyTagCloud.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  showNoSubscriptionsMessage: PropTypes.bool
 };
 
 export default MyTagCloud;
