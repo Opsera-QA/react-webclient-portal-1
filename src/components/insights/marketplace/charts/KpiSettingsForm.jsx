@@ -89,7 +89,7 @@ function KpiSettingsForm({kpiConfiguration, setKpiConfiguration, dashboardData, 
       >
         <TextInputBase fieldName={"kpi_name"} dataObject={kpiSettings} setDataObject={setKpiSettings}/>
         {kpiSettings.getData("filters").map((filter, index) =>
-          <div className="form-group m-2" key={index}>
+          <div key={index}>
             {getKpiFilters(filter)}
           </div>
         )}

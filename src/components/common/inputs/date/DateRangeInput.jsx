@@ -5,6 +5,10 @@ import InputLabel from "components/common/form_fields/input/InputLabel";
 import InfoText from "components/common/form_fields/input/InfoText";
 import { Button } from "react-bootstrap";
 import { useEffect } from "react";
+import InputContainer from "components/common/inputs/InputContainer";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTimes} from "@fortawesome/pro-light-svg-icons";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 // TODO: If this can't be used elsewhere, Tejas, we should change the name to be KPI Specific.
 function DateRangeInput({ fieldName, dataObject, setDataObject }) {
@@ -54,9 +58,14 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
   };
 
   return (
-    <div className="form-group m-2 max-content-width">
-      <div>
-        <InputLabel field={field} />
+    <InputContainer>
+      <div className={"d-flex justify-content-between date-range-header"}>
+        <InputLabel field={field}/>
+        <TooltipWrapper innerText={"Clear this Value"}>
+          <span onClick={() => clearCalendar()} className="my-auto badge badge-danger clear-value-badge pointer">
+            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>Clear Value
+          </span>
+        </TooltipWrapper>
       </div>
       <DateRange
         startDatePlaceholder="Start Date"
@@ -69,18 +78,8 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
         onChange={(e) => dateChange(e.selection)}
         direction="horizontal"
       />
-      <Button
-        className="ml-3"
-        variant="outline-secondary"
-        size="sm"
-        type="button"
-        style={{ marginRight: "auto" }}
-        onClick={clearCalendar}
-      >
-        Clear
-      </Button>
       <InfoText field={field} errorMessage={errorMessage} />
-    </div>
+    </InputContainer>
   );
 }
 

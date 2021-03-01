@@ -255,3 +255,7 @@
   opacity: .7;
 }
 /* End Radio Button Input Styling */
+
+.date-range-header {
+    width: 332px;
+}
