@@ -47,7 +47,7 @@ function MySubscriptions() {
       case "tags":
         return (<TagSubscriptionsPanel />);
       case "pipelines":
-        return <PipelineSubscriptionsPanel />;
+        return <PipelineSubscriptionsPanel className={"p-3"} />;
       default:
         return null;
     }

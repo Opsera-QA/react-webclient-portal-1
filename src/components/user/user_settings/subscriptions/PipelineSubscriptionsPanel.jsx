@@ -79,7 +79,7 @@ function PipelineSubscriptionsPanel({className}) {
   };
 
   if (isLoading) {
-    return <span><LoadingIcon isLoading={isLoading} />Loading Pipeline Subscriptions</span>
+    return <div className={"m-3"}><LoadingIcon isLoading={isLoading} />Loading Pipeline Subscriptions</div>
   }
 
   if (!isLoading && (pipelines == null || pipelines.length === 0)) {
@@ -96,10 +96,10 @@ function PipelineSubscriptionsPanel({className}) {
   return (
     <div className={className}>
       <div className="mb-2">You are currently subscribed to <strong>{pipelines.length}</strong> pipelines.</div>
-      <Row>
+      <Row className={"mx-0"}>
         {pipelines.map((pipeline) => {
           return (
-            <Col md={6} key={pipeline._id}>
+            <Col className={"mx-0"} md={6} key={pipeline._id}>
               <PipelineSummaryCard
                 pipelineData={new Model(pipeline, pipelineSummaryMetadata, false)}
                 loadPipelineInNewWindow={false}
