@@ -13,6 +13,8 @@ import TagUsagePanel from "components/settings/tags/tags_detail_view/TagUsagePan
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {getSingularOrPluralString} from "components/common/helpers/string-helpers";
 import LoadingIcon from "components/common/icons/LoadingIcon";
+import NewToolCategoryOverlay from "components/admin/tools/tool_category/NewToolCategoryOverlay";
+import TagSubscriptionManager from "components/user/user_settings/subscriptions/TagSubscriptionManager";
 
 function MyTagCloud({className}) {
   const toastContext = useContext(DialogToastContext);
@@ -109,6 +111,10 @@ function MyTagCloud({className}) {
     );
   };
 
+  const showTagSubscriptionManager = () => {
+    toastContext.showOverlayPanel(<TagSubscriptionManager loadData={loadData} isMounted={isMounted} />);
+  };
+
   if (isLoading) {
     return <span><LoadingIcon isLoading={isLoading} />Loading Tag Subscriptions</span>
   }
@@ -119,6 +125,7 @@ function MyTagCloud({className}) {
         <div>
           <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
           You are not currently subscribed to any tags</span>
+          <strong className={"pointer ml-2"} onClick={() => {showTagSubscriptionManager()}}>Click here to manage tag subscriptions</strong>
         </div>
       </div>
     )
@@ -126,7 +133,10 @@ function MyTagCloud({className}) {
 
   return (
     <div className={className}>
-      <div className="mb-2">You are currently subscribed to <strong>{tags.length}</strong> tags.</div>
+      <div className="mb-2">
+        <span>You are currently subscribed to <strong>{tags.length}</strong> tags.</span>
+        <strong className={"pointer ml-2"} onClick={() => {showTagSubscriptionManager()}}>Click here to manage tag subscriptions</strong>
+      </div>
       <TagsCloudBase tagsWithUsage={tags} onTagClick={showTagUsage} getTooltip={getTooltip} />
     </div>
   );

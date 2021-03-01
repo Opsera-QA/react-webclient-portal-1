@@ -5,7 +5,7 @@ import {faDiceD20, faExclamationCircle, faEye, faTag, faWrench} from "@fortaweso
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function TagsCloudBase({ tagsWithUsage, onTagClick, className, getTooltip, subscribedTagIds }) {
+function TagsCloudBase({ tagsWithUsage, onTagClick, className, getTooltip, subscribedTagIds, isLoading }) {
   const getSubscribedEye = (subscribed) => {
     if (subscribed) {
       return (<span><FontAwesomeIcon icon={faEye} fixedWidth className={"mx-1"}/></span>);
@@ -29,7 +29,7 @@ function TagsCloudBase({ tagsWithUsage, onTagClick, className, getTooltip, subsc
 
           return (
             <TooltipWrapper innerText={getTooltip(tagWithUsage)} key={tag?._id}>
-              <span className={classNames} style={getDynamicBadgeStyle(tagWithUsage)} onClick={() => {onTagClick(tag)}}>
+              <span className={classNames} style={getDynamicBadgeStyle(tagWithUsage)} onClick={() => {handleClick(tag)}}>
                 <span><FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/>{`${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`}</span>
                 <span><FontAwesomeIcon icon={faDiceD20} fixedWidth className="ml-3 mr-1"/>{tagWithUsage?.pipeline_usage_count}</span>
                 <span><FontAwesomeIcon icon={faWrench} fixedWidth className="mx-1"/>{tagWithUsage?.tool_usage_count}</span>
@@ -40,6 +40,12 @@ function TagsCloudBase({ tagsWithUsage, onTagClick, className, getTooltip, subsc
         })}
       </div>
     );
+  };
+
+  const handleClick = (tag) => {
+    if (!isLoading) {
+      onTagClick(tag);
+    }
   };
 
   const getDynamicBadgeStyle = (tagWithUsage) => {
@@ -77,7 +83,8 @@ TagsCloudBase.propTypes = {
   onTagClick: PropTypes.func,
   className: PropTypes.string,
   getTooltip: PropTypes.func,
-  subscribedTagIds: PropTypes.array
+  subscribedTagIds: PropTypes.array,
+  isLoading: PropTypes.bool
 };
 
 export default TagsCloudBase;

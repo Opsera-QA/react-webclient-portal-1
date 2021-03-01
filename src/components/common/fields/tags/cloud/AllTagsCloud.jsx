@@ -129,7 +129,7 @@ function AllTagsCloud() {
 
   return (
     <div>
-      <TagsCloudBase tagsWithUsage={tags} onTagClick={handleTagSubscription} getTooltip={getTooltip} subscribedTagIds={subscribedTagIds} />
+      <TagsCloudBase isLoading={isLoading} tagsWithUsage={tags} onTagClick={handleTagSubscription} getTooltip={getTooltip} subscribedTagIds={subscribedTagIds} />
     </div>
   );
 }
