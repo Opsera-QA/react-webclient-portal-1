@@ -11,7 +11,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 function PublishDashboardIconBase({dashboardData, catalog, popoverText, className}) {
   const isMounted = useRef(false);
-  const { getAccessToken } = useContext(AuthContext);
+  const { getAccessToken, featureFlagHideItemInProd, featureFlagHideItemInTest } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -41,6 +41,10 @@ function PublishDashboardIconBase({dashboardData, catalog, popoverText, classNam
       }
     }
   };
+
+  if (featureFlagHideItemInProd() || featureFlagHideItemInTest()) {
+    return null;
+  }
 
   return (
     <div className={className}>
