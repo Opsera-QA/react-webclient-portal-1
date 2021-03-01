@@ -159,6 +159,15 @@ OctopusStepActions.validateItems = async (id, spaceId,type,dataObject, getAccess
   return [];
 }
 
+OctopusStepActions.validateProjectName = async (id, spaceId,projectName,dataObject, getAccessToken) => {
+  const apiUrl = `/tools/octopus/validate/project/${id}/${projectName}/${spaceId}`;
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
+  if (response && response.status === 200) {
+    return response.data
+  }
+  return [];
+}
+
 OctopusStepActions.getNexusRepos = async (toolID, getAccessToken) => {
   let postBody = {
     params: {
