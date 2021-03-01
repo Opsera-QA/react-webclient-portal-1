@@ -2,9 +2,9 @@ import React  from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import {tabAccessRestricted} from "components/common/tooltip/popover-text";
+import {tabAccessRestricted, tabDisabled} from "components/common/tooltip/popover-text";
 
-function CustomTab({activeTab, tabName, tabText, handleTabClick, icon, visible, disabled, toolTipText}) {
+function CustomTab({activeTab, tabName, tabText, handleTabClick, icon, visible, disabled, accessRestricted, toolTipText}) {
   const getIcon = () => {
     if (icon) {
       return (<FontAwesomeIcon icon={icon} fixedWidth className={"mr-2"} />);
@@ -25,10 +25,10 @@ function CustomTab({activeTab, tabName, tabText, handleTabClick, icon, visible, 
     return null;
   }
 
-  if (disabled) {
+  if (disabled || accessRestricted) {
     return (
       <li className="nav-item mr-1">
-        <TooltipWrapper innerText={tabAccessRestricted}>
+        <TooltipWrapper innerText={accessRestricted ? tabAccessRestricted : tabDisabled}>
           <div className={"nav-link disabled-tab"}>
             {getIcon()}<span className="d-none d-lg-inline">{tabText}</span>
           </div>
@@ -56,7 +56,8 @@ CustomTab.propTypes = {
   icon: PropTypes.object,
   visible: PropTypes.bool,
   toolTipText: PropTypes.string,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  accessRestricted: PropTypes.bool
 };
 
 CustomTab.defaultProps = {
