@@ -30,7 +30,7 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
   const getKpiView = () => {
     if (kpis == null || kpis.length === 0) {
       return (
-        <div className="my-5">
+        <div className="my-5" style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
           <InfoDialog size="m" message="Your dashboard is empty! Add KPIs using the Add New KPI button"/>
         </div>
       );
@@ -65,7 +65,8 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
 
   return (
     <div>
-      <div className="px-2 mb-1 d-flex justify-content-end">
+      <div className="px-2 mb-1 d-flex justify-content-between">
+      <div>{["developer", "manager", "executive"].includes(dashboardData?.data?.attributes?.persona) && <span className="tag upper-case-first">{dashboardData?.data?.attributes?.persona}</span>}</div>
         <div>
           <Button className="mr-1" size="sm" disabled={kpis.length >= 10} onClick={() => gotoMarketplace() }>
             <span><FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Add New KPI</span>
@@ -73,7 +74,6 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
         </div>
       </div>
       {getKpiView()}
-      <ObjectJsonModal header={`Viewing ${dashboardData.getData("name")} Details`} size="lg" show={showModal} jsonData={dashboardData.data} setParentVisibility={setShowModal}/>
     </div>
   );
 }
