@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -9,11 +9,24 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 function SaveButtonBase({recordDto, updateRecord, disable, showSuccessToasts, lenient, className}) {
   let toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    }
+  }, []);
+
 
   const persistRecord = async () => {
     setIsSaving(true);
     await persistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient);
-    setIsSaving(false);
+
+    if (isMounted.current === true) {
+      setIsSaving(false);
+    }
   }
 
   const getLabel = () => {
