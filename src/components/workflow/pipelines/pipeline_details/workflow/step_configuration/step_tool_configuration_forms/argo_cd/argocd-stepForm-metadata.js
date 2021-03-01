@@ -68,6 +68,10 @@ const ArgoCDStepFormMetadata = {
       id: "bitbucketWorkspace",
     },
     {
+      label: "BitBucket Workspace/Project",
+      id: "bitbucketWorkspaceName",
+    },
+    {
       label: "GIT URL",
       id: "gitUrl",
       isRequired: true,
@@ -95,6 +99,7 @@ const ArgoCDStepFormMetadata = {
     applicationName: "",
     gitRepositoryID: "",
     bitbucketWorkspace: "",
+    bitbucketWorkspaceName: "",
   },
 };
 

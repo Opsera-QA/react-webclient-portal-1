@@ -47,6 +47,10 @@ const projectTagsMetadata = {
       id: "tool_prop",
     },
     {
+      label: "Workspace/Project",
+      id: "tool_prop_name",
+    },
+    {
       label: "Active",
       id: "active",
     },

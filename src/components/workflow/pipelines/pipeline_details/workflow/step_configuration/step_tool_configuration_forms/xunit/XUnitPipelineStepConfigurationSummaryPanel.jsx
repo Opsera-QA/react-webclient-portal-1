@@ -25,7 +25,7 @@ function XUnitPipelineStepConfigurationSummaryPanel({ xunitPipelineStepData, pip
           <TextFieldBase dataObject={xunitPipelineStepData} fieldName={"gitCredential"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={xunitPipelineStepData} fieldName={"workspace"} />
+          <TextFieldBase dataObject={xunitPipelineStepData} fieldName={"workspaceName"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={xunitPipelineStepData} fieldName={"repository"} />

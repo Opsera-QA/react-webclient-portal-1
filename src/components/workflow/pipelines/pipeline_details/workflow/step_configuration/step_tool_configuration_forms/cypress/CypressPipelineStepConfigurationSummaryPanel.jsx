@@ -28,7 +28,7 @@ function CypressPipelineStepConfigurationSummaryPanel({ cypressDataObject, pipel
           <TextFieldBase dataObject={cypressDataObject} fieldName={"gitCredential"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={cypressDataObject} fieldName={"workspace"} />
+          <TextFieldBase dataObject={cypressDataObject} fieldName={"workspaceName"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={cypressDataObject} fieldName={"repository"} />

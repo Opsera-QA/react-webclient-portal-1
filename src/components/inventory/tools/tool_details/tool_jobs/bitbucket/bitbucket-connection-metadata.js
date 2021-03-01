@@ -32,6 +32,10 @@ const bitbucketConnectionMetadata = {
       label: "Enable Two-Factor Authentication",
       id: "twoFactorAuthentication",
     },
+    {
+      label: "API Type",
+      id: "apiType",
+    },
   ],
   fieldsAlt: [
     {
@@ -65,6 +69,11 @@ const bitbucketConnectionMetadata = {
       label: "Enable Two-Factor Authentication",
       id: "twoFactorAuthentication",
     },
+    {
+      label: "API Type",
+      id: "apiType",
+      isRequired: true,
+    },
   ],
   newObjectFields:
     {
@@ -73,7 +82,8 @@ const bitbucketConnectionMetadata = {
       accountPassword: "",
       secretPrivateKey: "",
       secretAccessTokenKey: "",
-      twoFactorAuthentication: false
+      twoFactorAuthentication: false,
+      apiType: "cloud"
     }
 };
 

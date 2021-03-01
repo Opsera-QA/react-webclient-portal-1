@@ -26,7 +26,7 @@ function JmeterPipelineStepConfigurationSummaryPanel({ jmeterDataObject, pipelin
           <TextFieldBase dataObject={jmeterDataObject} fieldName={"gitCredential"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={jmeterDataObject} fieldName={"workspace"} />
+          <TextFieldBase dataObject={jmeterDataObject} fieldName={"workspaceName"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={jmeterDataObject} fieldName={"repository"} />

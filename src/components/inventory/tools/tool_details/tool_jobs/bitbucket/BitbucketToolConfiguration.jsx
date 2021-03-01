@@ -10,7 +10,18 @@ import {AuthContext} from "contexts/AuthContext";
 import toolsActions from "components/inventory/tools/tools-actions";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
+const bitBucketApiTypeArray = [
+  {
+    "name": "Bitbucket Cloud",
+    "value": "cloud"
+  },
+  {
+    "name": "Bitbucket Server",
+    "value": "server"
+  }
+]
 function BitbucketToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [bitbucketConfigurationDto, setBitbucketConfigurationDto] = useState(undefined);
@@ -75,6 +86,18 @@ function BitbucketToolConfiguration({ toolData }) {
       </Col>
       <Col sm={12}>
         {getDynamicFields()}
+      </Col>
+      <Col sm={12}>
+        {/* select input for apiType */}
+        <SelectInputBase     
+          fieldName={"apiType"}
+          dataObject={bitbucketConfigurationDto}
+          setDataObject={setBitbucketConfigurationDto}
+          selectOptions={bitBucketApiTypeArray}
+          valueField="value"
+          textField="name"
+        />
+      
       </Col>
     </ToolConfigurationEditorPanelContainer>
   );

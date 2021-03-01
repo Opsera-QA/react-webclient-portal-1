@@ -29,7 +29,7 @@ function SonarPipelineStepConfigurationSummaryPanel({ sonarDataObject, pipelineD
           <TextFieldBase dataObject={sonarDataObject} fieldName={"gitCredential"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={sonarDataObject} fieldName={"workspace"} />
+          <TextFieldBase dataObject={sonarDataObject} fieldName={"workspaceName"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={sonarDataObject} fieldName={"repository"} />

@@ -67,6 +67,7 @@ const INITIAL_DATA = {
   repository: "",
   branch: "",
   workspace: "",
+  workspaceName: "",
   // agentLabels : "",
 };
 
@@ -444,6 +445,7 @@ function TwistlockStepConfiguration ({
         gitUserName: "",
         repository: "",
         workspace:"",
+        workspaceName: "",
         branch: "",
         toolJobId: "",
         toolJobType: "",
@@ -491,6 +493,7 @@ function TwistlockStepConfiguration ({
       sshUrl: "",
       repository: "",
       workspace:"",
+      workspaceName: "",
       branch: "",
       projectId: "",
       defaultBranch: "",
@@ -500,7 +503,8 @@ function TwistlockStepConfiguration ({
   const handleWorkspacesChange = (selectedOption) => {
     setFormData({
       ...formData,
-      workspace: selectedOption,
+      workspace: selectedOption.key,
+      workspaceName: selectedOption.name,
       repository: "",
       repoId: "",
       projectId: "",
@@ -870,7 +874,7 @@ function TwistlockStepConfiguration ({
 
         {formData.service && formData.service === "bitbucket" && formData.gitToolId && (
           <Form.Group controlId="account" className="mt-2">
-            <Form.Label>Workspace*</Form.Label>
+            <Form.Label>Workspace/Project*</Form.Label>
             {isWorkspacesSearching ? (
               <div className="form-text text-muted mt-2 p-2">
                 <FontAwesomeIcon
@@ -889,11 +893,11 @@ function TwistlockStepConfiguration ({
                     value={
                       workspacesList[
                         workspacesList.findIndex(
-                          (x) => x === formData.workspace,
+                          (x) => x.key === formData.workspace,
                         )
                         ]
                     }
-                    valueField="value"
+                    valueField="key"
                     textField="name"
                     filter="contains"
                     onChange={handleWorkspacesChange}

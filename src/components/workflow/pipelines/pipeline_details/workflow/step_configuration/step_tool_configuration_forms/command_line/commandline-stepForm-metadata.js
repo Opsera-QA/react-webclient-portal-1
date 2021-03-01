@@ -86,6 +86,11 @@ const commandLineStepFormMetadata = {
       id: "workspace",
       // isRequired: true
     },
+    {
+      label: "Workspace/Project",
+      id: "workspaceName",
+      // isRequired: true
+    },
 
     {
       label: "Branch",
@@ -228,6 +233,11 @@ const commandLineStepFormMetadata = {
       id: "workspace",
       // isRequired: true
     },
+    {
+      label: "Workspace/Project",
+      id: "workspaceName",
+      // isRequired: true
+    },
 
     {
       label: "Branch",
@@ -307,6 +317,7 @@ const commandLineStepFormMetadata = {
     gitCredential: "",  // name given on jenkins
 
     workspace: "",
+    workspaceName: "",
     repository: "",
     gitBranch: "",
 

@@ -14,6 +14,7 @@ function PowershellJenkinsAccountInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("repository", "");
     newDataObject.setData("gitBranch", "");
     newDataObject.setData("workspace", "");
+    newDataObject.setData("workspaceName", "");
     setDataObject({...newDataObject});
   };
 

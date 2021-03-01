@@ -67,6 +67,7 @@ const INITIAL_DATA = {
   branch: "",
   jsonPath: "",
   workspace: "",
+  workspaceName: "",
   // agentLabels : "",
 };
 
@@ -455,6 +456,7 @@ function CypressStepConfiguration({
         gitCredential: "",
         gitUserName: "",
         workspace:"",
+        workspaceName:"",
         repository: "",
         branch: "",
         toolJobId: "",
@@ -507,13 +509,15 @@ function CypressStepConfiguration({
       projectId: "",
       defaultBranch: "",
       workspace: "",
+      workspaceName:"",
     });
   };
 
   const handleWorkspacesChange = (selectedOption) => {
     setFormData({
       ...formData,
-      workspace: selectedOption,
+      workspace: selectedOption.key,
+      workspaceName: selectedOption.name,
       repository: "",
       repoId: "",
       projectId: "",
@@ -896,11 +900,11 @@ function CypressStepConfiguration({
                     value={
                       workspacesList[
                         workspacesList.findIndex(
-                          (x) => x === formData.workspace,
+                          (x) => x.key === formData.workspace,
                         )
                         ]
                     }
-                    valueField="value"
+                    valueField="key"
                     textField="name"
                     filter="contains"
                     onChange={handleWorkspacesChange}
