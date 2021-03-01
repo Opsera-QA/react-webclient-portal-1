@@ -64,6 +64,7 @@ const INITIAL_DATA = {
   repository: "",
   branch: "",
   workspace: "",
+  workspaceName: "",
   // agentLabels : "",
 };
 
@@ -460,6 +461,7 @@ function SeleniumStepConfiguration({
         gitUserName: "",
         repository: "",
         workspace:"",
+        workspaceName: "",
         branch: "",
         toolJobId: "",
         toolJobType: "",
@@ -508,6 +510,7 @@ function SeleniumStepConfiguration({
       sshUrl: "",
       repository: "",
       workspace:"",
+      workspaceName: "",
       branch: "",
       projectId: "",
       defaultBranch: "",
@@ -517,7 +520,8 @@ function SeleniumStepConfiguration({
   const handleWorkspacesChange = (selectedOption) => {
     setFormData({
       ...formData,
-      workspace: selectedOption,
+      workspace: selectedOption.key,
+      workspaceName: selectedOption.name,
       repository: "",
       repoId: "",
       projectId: "",
@@ -906,7 +910,7 @@ function SeleniumStepConfiguration({
                     value={
                       workspacesList[
                         workspacesList.findIndex(
-                          (x) => x === formData.workspace,
+                          (x) => x.key === formData.workspace,
                         )
                         ]
                     }

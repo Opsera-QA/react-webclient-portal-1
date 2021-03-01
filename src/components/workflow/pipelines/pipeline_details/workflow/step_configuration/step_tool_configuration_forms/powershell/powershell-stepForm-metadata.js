@@ -81,6 +81,11 @@ const powershellStepFormMetadata = {
       id: "workspace",
       // isRequired: true
     },
+    {
+      label: "Workspace/Project",
+      id: "workspaceName",
+      // isRequired: true
+    },
 
     {
       label: "Branch",
@@ -138,6 +143,7 @@ const powershellStepFormMetadata = {
     gitCredential: "",  // name given on jenkins
 
     workspace: "",
+    workspaceName: "",
     repository: "",
     gitBranch: "",
 

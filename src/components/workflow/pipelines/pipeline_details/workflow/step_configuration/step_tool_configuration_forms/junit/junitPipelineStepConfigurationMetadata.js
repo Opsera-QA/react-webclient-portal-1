@@ -29,7 +29,12 @@ const junitPipelineStepConfigurationMetadata = {
     {
       label: "Workspace",
       id: "workspace",
-      isRequired: true
+      // isRequired: true
+    },
+    {
+      label: "Workspace/Project",
+      id: "workspaceName",
+      // isRequired: true
     },
     {
       label: "Repository",

@@ -25,7 +25,7 @@ function JunitPipelineStepConfigurationSummaryPanel({ junitPipelineStepData, pip
           <TextFieldBase dataObject={junitPipelineStepData} fieldName={"gitCredential"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={junitPipelineStepData} fieldName={"workspace"} />
+          <TextFieldBase dataObject={junitPipelineStepData} fieldName={"workspaceName"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={junitPipelineStepData} fieldName={"repository"} />

@@ -303,7 +303,8 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
     }
     if (fieldName === "bitbucketWorkspace") {
       let newDataObject = gitYAMLStepConfigurationDto;
-      newDataObject.setData("bitbucketWorkspace", value);
+      newDataObject.setData("bitbucketWorkspace", value.key);
+      newDataObject.setData("bitbucketWorkspaceName", value.name);
       setGitYAMLStepConfigurationDataDto({ ...newDataObject });
       await searchRepositories(
         gitYAMLStepConfigurationDto.getData("type"),
@@ -450,7 +451,7 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
               dataObject={gitYAMLStepConfigurationDto}
               filter={"contains"}
               selectOptions={workspacesList ? workspacesList : []}
-              fieldName={"bitbucketWorkspace"}
+              fieldName={"bitbucketWorkspaceName"}
               busy={isWorkspacesSearching}
               disabled={gitYAMLStepConfigurationDto.getData("gitToolId").length === 0 || isWorkspacesSearching}
             />

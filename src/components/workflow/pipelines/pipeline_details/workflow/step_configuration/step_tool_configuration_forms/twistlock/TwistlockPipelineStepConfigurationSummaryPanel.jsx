@@ -22,7 +22,7 @@ function TwistlockPipelineStepConfigurationSummaryPanel({ twistlockDataObject, p
           <TextFieldBase dataObject={twistlockDataObject} fieldName={"gitCredential"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={twistlockDataObject} fieldName={"workspace"} />
+          <TextFieldBase dataObject={twistlockDataObject} fieldName={"workspaceName"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={twistlockDataObject} fieldName={"repository"} />

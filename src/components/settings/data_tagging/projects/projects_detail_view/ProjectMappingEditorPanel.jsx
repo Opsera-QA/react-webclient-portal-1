@@ -85,6 +85,7 @@ function ProjectMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
         <ProjectRepositorySelectInput
           dataObject={projectMappingDto}
           setDataObject={setProjectMappingDto}
+          tool_prop_name={projectMappingDto.getData("tool_prop_name")}
           tool_prop={projectMappingDto.getData("tool_prop")}
         />
       </Col>

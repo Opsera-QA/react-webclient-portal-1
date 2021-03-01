@@ -37,7 +37,7 @@ function PowershellPipelineStepConfigurationSummaryPanel({ powershellPipelineDat
           <TextFieldBase dataObject={powershellPipelineDataObject} fieldName={"gitCredential"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={powershellPipelineDataObject} fieldName={"workspace"} />
+          <TextFieldBase dataObject={powershellPipelineDataObject} fieldName={"workspaceName"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={powershellPipelineDataObject} fieldName={"repository"} />

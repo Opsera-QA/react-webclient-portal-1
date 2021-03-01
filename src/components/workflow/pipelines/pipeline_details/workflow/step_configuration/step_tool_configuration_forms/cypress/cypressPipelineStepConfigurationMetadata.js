@@ -29,7 +29,11 @@ const cypressPipelineStepConfigurationMetadata = {
     {
       label: "Workspace",
       id: "workspace",
-      isRequired: true
+      // isRequired: true  // not sure how its working when its isRequired
+    },
+    {
+      label: "Workspace/Project",
+      id: "workspaceName",
     },
     {
       label: "Repository",

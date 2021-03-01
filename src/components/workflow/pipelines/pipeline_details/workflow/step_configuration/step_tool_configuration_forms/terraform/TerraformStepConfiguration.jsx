@@ -247,6 +247,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       newDataObject.setData("defaultBranch", "");
       newDataObject.setData("gitFilePath", "");
       newDataObject.setData("bitbucketWorkspace", "");
+      newDataObject.setData("bitbucketWorkspaceName", "");
       setTerraformStepConfigurationDataDto({ ...newDataObject });
       await fetchSCMDetails(terraformStepConfigurationDto.data);
       return;
@@ -288,14 +289,15 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       );
       return;
       }
-    if (fieldName === "bitbucketWorkspace") {
+    if (fieldName === "bitbucketWorkspaceName") {
       let newDataObject = terraformStepConfigurationDto;
-      newDataObject.setData("bitbucketWorkspace", value);
+      newDataObject.setData("bitbucketWorkspace", value.key);
+      newDataObject.setData("bitbucketWorkspaceName", value.name);
       setTerraformStepConfigurationDataDto({ ...newDataObject });
       await searchRepositories(
         terraformStepConfigurationDto.getData("type"),
         terraformStepConfigurationDto.getData("gitToolId"),
-        value
+        value.key
       );
       return;
     }
@@ -381,11 +383,11 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
               setDataFunction={handleDTOChange}
               setDataObject={setTerraformStepConfigurationDataDto}
               textField={"name"}
-              valueField={"value"}
+              valueField={"key"}
               dataObject={terraformStepConfigurationDto}
               filter={"contains"}
               selectOptions={workspacesList ? workspacesList : []}
-              fieldName={"bitbucketWorkspace"}
+              fieldName={"bitbucketWorkspaceName"}
               busy={isWorkspacesSearching}
               disabled={terraformStepConfigurationDto.getData("gitToolId").length === 0 || isWorkspacesSearching}
             />

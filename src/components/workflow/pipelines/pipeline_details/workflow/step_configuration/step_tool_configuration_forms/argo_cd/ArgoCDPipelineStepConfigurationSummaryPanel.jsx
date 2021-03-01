@@ -55,7 +55,7 @@ function ArgoCDPipelineStepConfigurationSummaryPanel({ argoCdPipelineDataObject,
           <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"gitRepositoryID"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"bitbucketWorkspace"}/>
+          <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"bitbucketWorkspaceName"}/>
         </Col>
         <Col lg={6}>
           <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"gitUrl"}/>
