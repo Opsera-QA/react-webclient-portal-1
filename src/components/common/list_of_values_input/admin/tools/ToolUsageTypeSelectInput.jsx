@@ -1,32 +1,37 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import DtoSelectInput from "../../../common/input/dto_input/dto-select-input";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-const usageTypes = [
+export const toolUsageTypes = [
   {text: "No Usage Type", value: ""},
   {text: "Pipeline", value: "pipeline"},
   {text: "Account", value: "account"},
   {text: "Repository", value: "repository"},
 ];
 
-// TODO: If this is used elsewhere, move to common dto inputs
-function ToolUsageTypeInput({ fieldName, dataObject, setDataObject, disabled}) {
+function ToolUsageTypeSelectInput({ fieldName, dataObject, setDataObject, disabled}) {
   return (
-    <DtoSelectInput
+    <SelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      selectOptions={usageTypes}
+      selectOptions={toolUsageTypes}
+      valueField={"value"}
+      textField={"text"}
       disabled={disabled}
    />
   );
 }
 
-ToolUsageTypeInput.propTypes = {
+ToolUsageTypeSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool
 };
 
-export default ToolUsageTypeInput;
+ToolUsageTypeSelectInput.defaultProps = {
+  fieldName: "usageType"
+};
+
+export default ToolUsageTypeSelectInput;

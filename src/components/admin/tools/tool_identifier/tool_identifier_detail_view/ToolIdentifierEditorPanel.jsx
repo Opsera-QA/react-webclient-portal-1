@@ -7,7 +7,7 @@ import toolManagementActions from "components/admin/tools/tool-management-action
 import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import ToolTypeSelectInput from "components/common/list_of_values_input/admin/tools/ToolTypeSelectInput";
-import ToolUsageTypeInput from "components/admin/tools/tool_identifier/ToolUsageTypeInput";
+import ToolUsageTypeSelectInput from "components/common/list_of_values_input/admin/tools/ToolUsageTypeSelectInput";
 import DtoPropertiesInput from "components/common/input/dto_input/dto-properties-input";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
@@ -62,7 +62,7 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, 
           <ToolTypeSelectInput dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto} fieldName={"tool_type_identifier"}/>
         </Col>
         <Col lg={6}>
-          <ToolUsageTypeInput fieldName={"usageType"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
+          <ToolUsageTypeSelectInput dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
         </Col>
         <Col lg={6}>
           <TagManager type={"tool"} dataObject={toolIdentifierDataDto} setDataObject={setToolIdentifierDataDto}/>
