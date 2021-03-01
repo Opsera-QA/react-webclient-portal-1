@@ -17,16 +17,20 @@ function ActivityToggleInput({ fieldName, dataObject, setDataObject, disabled })
     <InputContainer>
       <div className={"d-flex justify-content-between"}>
         <div>Show in Application</div>
-        <Form.Check
-          type="switch"
-          id={field.id}
-          checked={!!dataObject.getData(fieldName)}
-          disabled={disabled}
-          label={<span className="mt-auto">{dataObject?.getData(fieldName) === true ? "On" : "Off"}</span>}
-          onChange={() => {
-            validateAndSetData(!dataObject.getData(fieldName));
-          }}
-        />
+        <div className={"d-flex"}>
+          <Form.Check
+            type="switch"
+            className={"toggle-button"}
+            id={field.id}
+            checked={!!dataObject.getData(fieldName)}
+            disabled={disabled}
+            label={<span className="mt-auto"> </span>}
+            onChange={() => {
+              validateAndSetData(!dataObject.getData(fieldName));
+            }}
+          />
+          <div className={"toggle-offset"}>{dataObject?.getData(fieldName) === true ? "On" : "Off"}</div>
+        </div>
       </div>
       <InfoText field={field} errorMessage={null}/>
     </InputContainer>
