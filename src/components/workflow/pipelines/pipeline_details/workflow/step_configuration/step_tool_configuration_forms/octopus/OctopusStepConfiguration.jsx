@@ -29,6 +29,7 @@ import OctopusDeploymentTypeInputSelect from "./input/OctopusDeploymentTypeInput
 import OctopusFeedSelectInput from "./input/OctopusFeedSelectInput";
 import OctopusVersionSelectInput from "./input/OctopusVersionSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import ValidateProjectButton from "./input/ValidateProjectButton";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -122,12 +123,30 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
             disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusToolId").length === 0}
             tool_prop={octopusStepConfigurationDto ? octopusStepConfigurationDto.getData("octopusToolId") : ""}
           />
-          <TextInputBase
-            setDataObject={setOctopusStepConfigurationDataDto}
-            dataObject={octopusStepConfigurationDto}
-            fieldName={"projectName"}
-            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
-          />
+          <Row>
+            <Col lg={8}>
+              <TextInputBase
+                setDataObject={setOctopusStepConfigurationDataDto}
+                dataObject={octopusStepConfigurationDto}
+                fieldName={"projectName"}
+                disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
+              />
+            </Col>
+            <Col lg={4}>
+              <ValidateProjectButton
+                toolDataDto={octopusStepConfigurationDto}
+                disable={
+                  (octopusStepConfigurationDto && octopusStepConfigurationDto.getData("projectName").length === 0) ||
+                  (stepTool &&
+                    stepTool.configuration &&
+                    stepTool.configuration.projectId &&
+                    stepTool.configuration.projectName &&
+                    octopusStepConfigurationDto &&
+                    stepTool.configuration.projectName === octopusStepConfigurationDto.getData("projectName"))
+                }
+              />
+            </Col>
+          </Row>
           <TextInputBase
             setDataObject={setOctopusStepConfigurationDataDto}
             dataObject={octopusStepConfigurationDto}
@@ -149,50 +168,84 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
             filter={"contains"}
             selectOptions={listOfSteps ? listOfSteps : []}
             fieldName={"ecrPushStepId"}
-            disabled={
-              listOfSteps.length === 0 || octopusStepConfigurationDto.getData("environmentName").length === 0
-            }
+            disabled={listOfSteps.length === 0 || octopusStepConfigurationDto.getData("environmentName").length === 0}
           />
           <OctopusTargetRolesSelectInput
             fieldName={"octopusTargetRoles"}
             dataObject={octopusStepConfigurationDto}
             setDataObject={setOctopusStepConfigurationDataDto}
-            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName") ? octopusStepConfigurationDto.getData("spaceName").length === 0 : true}
-            tool_prop={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName") ? octopusStepConfigurationDto.getData("spaceName") : ""}
+            disabled={
+              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+                ? octopusStepConfigurationDto.getData("spaceName").length === 0
+                : true
+            }
+            tool_prop={
+              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+                ? octopusStepConfigurationDto.getData("spaceName")
+                : ""
+            }
           />
           <OctopusPlatformTypeSelectInput
             fieldName={"octopusPlatformType"}
             dataObject={octopusStepConfigurationDto}
             setDataObject={setOctopusStepConfigurationDataDto}
-            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName") ? octopusStepConfigurationDto.getData("spaceName").length === 0 : true}
-            tool_prop={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName") ? octopusStepConfigurationDto.getData("spaceName") : ""}
+            disabled={
+              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+                ? octopusStepConfigurationDto.getData("spaceName").length === 0
+                : true
+            }
+            tool_prop={
+              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+                ? octopusStepConfigurationDto.getData("spaceName")
+                : ""
+            }
           />
-          {octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType") && octopusStepConfigurationDto.getData("octopusPlatformType") === "Kubernetes" &&
-            <TextInputBase
-              setDataObject={setOctopusStepConfigurationDataDto}
-              dataObject={octopusStepConfigurationDto}
-              fieldName={"namespace"}
-              disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
-            />
-          }
-          { octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType") && octopusStepConfigurationDto.getData("octopusPlatformType") === "Azure" &&
-            <>
-            <OctopusDeploymentTypeInputSelect
-            fieldName={"octopusDeploymentType"}
-            dataObject={octopusStepConfigurationDto}
-            setDataObject={setOctopusStepConfigurationDataDto}
-            disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType") ? octopusStepConfigurationDto.getData("octopusPlatformType").length === 0 : true}
-            tool_prop={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType") ? octopusStepConfigurationDto.getData("octopusPlatformType") : ""}
-            />
-            <OctopusFeedSelectInput
-              fieldName={"octopusFeedId"}
-              dataObject={octopusStepConfigurationDto}
-              setDataObject={setOctopusStepConfigurationDataDto}
-              disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName") ? octopusStepConfigurationDto.getData("spaceName").length === 0 : true}
-              tool_prop={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName") ? octopusStepConfigurationDto.getData("spaceName") : ""}
-            />
-            </>
-          }
+          {octopusStepConfigurationDto &&
+            octopusStepConfigurationDto.getData("octopusPlatformType") &&
+            octopusStepConfigurationDto.getData("octopusPlatformType") === "Kubernetes" && (
+              <TextInputBase
+                setDataObject={setOctopusStepConfigurationDataDto}
+                dataObject={octopusStepConfigurationDto}
+                fieldName={"namespace"}
+                disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
+              />
+            )}
+          {octopusStepConfigurationDto &&
+            octopusStepConfigurationDto.getData("octopusPlatformType") &&
+            octopusStepConfigurationDto.getData("octopusPlatformType") === "Azure" && (
+              <>
+                <OctopusDeploymentTypeInputSelect
+                  fieldName={"octopusDeploymentType"}
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  disabled={
+                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+                      ? octopusStepConfigurationDto.getData("octopusPlatformType").length === 0
+                      : true
+                  }
+                  tool_prop={
+                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+                      ? octopusStepConfigurationDto.getData("octopusPlatformType")
+                      : ""
+                  }
+                />
+                <OctopusFeedSelectInput
+                  fieldName={"octopusFeedId"}
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  disabled={
+                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+                      ? octopusStepConfigurationDto.getData("spaceName").length === 0
+                      : true
+                  }
+                  tool_prop={
+                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+                      ? octopusStepConfigurationDto.getData("spaceName")
+                      : ""
+                  }
+                />
+              </>
+            )}
           <Row className="mx-1 py-2">
             <SaveButtonBase
               recordDto={octopusStepConfigurationDto}
@@ -201,10 +254,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
               updateRecord={callbackFunction}
               lenient={true}
             />
-            <CloseButton
-              isLoading={isLoading}
-              closeEditorCallback={closeEditorPanel}
-            />
+            <CloseButton isLoading={isLoading} closeEditorCallback={closeEditorPanel} />
           </Row>
         </>
       )}
