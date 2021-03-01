@@ -37,7 +37,7 @@ function MySubscriptions() {
     return (
       <CustomTabContainer>
         <CustomTab activeTab={activeTab} tabText={"Tag Subscriptions"} handleTabClick={handleTabClick} tabName={"tags"} icon={faTag}/>
-        <CustomTab activeTab={activeTab} tabText={"Pipeline Subscriptions"} handleTabClick={handleTabClick} tabName={"pipelines"} icon={faDiceD20} disabled={true}/>
+        <CustomTab activeTab={activeTab} tabText={"Pipeline Subscriptions"} handleTabClick={handleTabClick} tabName={"pipelines"} icon={faDiceD20} />
       </CustomTabContainer>
     );
   };

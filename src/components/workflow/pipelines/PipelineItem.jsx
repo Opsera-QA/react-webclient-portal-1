@@ -136,7 +136,7 @@ const PipelineItem = ({ item, dataModel }) => {
               {item.name}
             </div>
             <div className="d-flex ml-auto mt-1 mr-1 text-muted small upper-case-first">
-              {/*<PipelineSubscriptionIcon pipelineModel={dataModel} className={"mr-2"} />*/}
+              <PipelineSubscriptionIcon pipelineModel={dataModel} className={"mr-2"} />
               {getFirstCategory()}
               {getPendingApprovalField()}
             </div>
