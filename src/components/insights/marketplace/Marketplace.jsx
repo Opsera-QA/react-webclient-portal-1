@@ -77,7 +77,7 @@ function Marketplace () {
     return (
       <CustomTabContainer>
         <CustomTab activeTab={activeTab} tabText={"Charts"} icon={faChartArea} handleTabClick={handleTabClick} tabName={"charts"} />
-        <CustomTab activeTab={activeTab} tabText={"Dashboards"} icon={faUserChart} handleTabClick={handleTabClick} tabName={"dashboards"} />
+        <CustomTab activeTab={activeTab} tabText={"Dashboards"} icon={faUserChart} handleTabClick={handleTabClick} tabName={"dashboards"} disabled={true} />
       </CustomTabContainer>
     );
   };
