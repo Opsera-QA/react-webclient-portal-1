@@ -68,6 +68,7 @@ const INITIAL_DATA = {
   jsonPath: "",
   workspace: "",
   workspaceName: "",
+  workspaceDeleteFlag: false
   // agentLabels : "",
 };
 
@@ -739,9 +740,9 @@ function CypressStepConfiguration({
               }
             />
           </Form.Group>
-        ) : 
+        ) :
         <>
-        
+
         {jobType === "opsera-job" && (
           <>
             {formData.jenkinsUrl && jenkinsList.length > 0 && (
@@ -803,7 +804,7 @@ function CypressStepConfiguration({
                 <Form.Label className="w-100">
                   Jenkins Agent
                 </Form.Label>
-              
+
                 <DropdownList
                   data={jenkinsAgentArray}
                   groupBy="env"
@@ -878,7 +879,7 @@ function CypressStepConfiguration({
           </Form.Group>
         )}
 
-        
+
         {formData.service && formData.service === "bitbucket" && formData.gitToolId && (
           <Form.Group controlId="account" className="mt-2">
             <Form.Label>Workspace*</Form.Label>
@@ -923,10 +924,10 @@ function CypressStepConfiguration({
           </Form.Group>
         )}
 
-        {formData.service && 
-        formData.gitToolId && 
-        (formData.service === "bitbucket"? 
-          formData.workspace 
+        {formData.service &&
+        formData.gitToolId &&
+        (formData.service === "bitbucket"?
+          formData.workspace
           && formData.workspace.length > 0 : true ) && (
           <Form.Group controlId="repo" className="mt-2">
             <Form.Label>Repository*</Form.Label>
@@ -972,6 +973,7 @@ function CypressStepConfiguration({
         )}
 
         {formData.service && formData.gitToolId && formData.repoId && (
+          <>
           <Form.Group controlId="account" className="mt-2">
             <Form.Label>Branch*</Form.Label>
             {isBranchSearching ? (
@@ -1011,6 +1013,22 @@ function CypressStepConfiguration({
             )}
             {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
           </Form.Group>
+            <Form.Group controlId="workspaceDeleteFlag">
+              <Form.Check inline
+                          type="checkbox"
+                          label={"Delete workspace before building"}
+                          id={`workspaceDeleteFlag`}
+                          checked={formData.workspaceDeleteFlag}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              workspaceDeleteFlag: e.target.checked
+                            })
+                          }
+              />
+              <Form.Text className="text-muted">Deletes the Jenkins workspace before building.</Form.Text>
+            </Form.Group>
+          </>
         )}
 
         {formData.jobType === "CYPRESS UNIT TESTING" && (
@@ -1026,7 +1044,7 @@ function CypressStepConfiguration({
                   setFormData({ ...formData, jsonPath: e.target.value })
                 }
               />
-            </Form.Group> 
+            </Form.Group>
             </>
           )
           }
@@ -1043,7 +1061,7 @@ function CypressStepConfiguration({
         </Form.Group>
         </>
         }
-        
+
         {jobType === "opsera-job" ? (
           <Button
             variant="primary"

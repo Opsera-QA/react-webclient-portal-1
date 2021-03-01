@@ -118,7 +118,11 @@ const powershellStepFormMetadata = {
     {
       label: "Job Name",
       id: "jobName"
-    }
+    },
+    {
+      label: "Delete workspace before building",
+      id: "workspaceDeleteFlag",
+    },
   ],
   newModelBase: {
 
@@ -152,7 +156,8 @@ const powershellStepFormMetadata = {
     scriptFilePath : "",
     scriptFileName : "",
     outputPath : "",
-    outputFileName : ""
+    outputFileName : "",
+    workspaceDeleteFlag: ""
   }
 };
 
