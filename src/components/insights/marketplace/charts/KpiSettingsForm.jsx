@@ -9,7 +9,7 @@ import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarD
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import DtoTagManagerFilterInput from "components/common/input/dto_input/dto-tag-manager-filter-input";
+import TagManager from "components/common/inputs/tags/TagManager";
 
 function KpiSettingsForm({kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart, setKpis}) {
     const { getAccessToken } = useContext(AuthContext);
@@ -39,7 +39,7 @@ function KpiSettingsForm({kpiConfiguration, setKpiConfiguration, dashboardData, 
       case "tags":
         return (
           <div>
-            <DtoTagManagerFilterInput
+            <TagManager
               type={"kpi_filter"}
               fieldName={"value"}
               setDataObject={setKpiTagsFilter}
