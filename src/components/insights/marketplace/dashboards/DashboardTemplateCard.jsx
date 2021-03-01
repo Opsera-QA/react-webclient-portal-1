@@ -60,10 +60,15 @@ export default function DashboardTemplateCard({ dashboardTemplate, catalog }) {
             {dashboardTemplate.description}
           </span>
         </Card.Text>
+        <Card.Text>
+          <span>
+            {dashboardTemplate.attributes?.persona}
+          </span>
+        </Card.Text>
           <ul className="tags">
-            {/*{kpi.tools.map((tool,idx)=>{*/}
-            {/*  return (idx < 8) ? <li key={idx}><span className="tag">{tool}</span></li> : null*/}
-            {/*})}*/}
+            {dashboardTemplate.tags.map((tag, index)=>{
+              return <li key={index}><span className="tag">{tag}</span></li>;
+            })}
           </ul>
         <Card.Text>
           {/*<small className="text-muted">Last updated {formatDistanceToNowStrict(new Date(kpi.updatedAt))} ago.</small>*/}
@@ -72,7 +77,7 @@ export default function DashboardTemplateCard({ dashboardTemplate, catalog }) {
           disabled={isSaving}
           onClick={() => addTemplateToDashboards()}>
           {isSaving && (<FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>)}
-          Add to dashboard
+          Add to My Dashboards
         </Button>
       </Card.Body>
     </Card>

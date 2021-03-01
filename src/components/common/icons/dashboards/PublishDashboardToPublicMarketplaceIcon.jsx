@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import ActionBarPublishDashboardButtonBase
-  from "components/common/actions/dashboard/ActionBarPublishDashboardButtonBase";
+import PublishDashboardIconBase
+  from "components/common/icons/dashboards/PublishDashboardIconBase";
 import {AuthContext} from "contexts/AuthContext";
 
-function ActionBarPublishDashboardToPublicMarketplaceButton({dashboardData, className}) {
+function PublishDashboardToPublicMarketplaceIcon({dashboardData, className}) {
   const {getUserRecord, setAccessRoles} = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const isMounted = useRef(false);
@@ -39,7 +39,7 @@ function ActionBarPublishDashboardToPublicMarketplaceButton({dashboardData, clas
   }
 
   return (
-    <ActionBarPublishDashboardButtonBase
+    <PublishDashboardIconBase
       className={className}
       dashboardData={dashboardData}
       catalog={"public"}
@@ -48,9 +48,9 @@ function ActionBarPublishDashboardToPublicMarketplaceButton({dashboardData, clas
   );
 }
 
-ActionBarPublishDashboardToPublicMarketplaceButton.propTypes = {
+PublishDashboardToPublicMarketplaceIcon.propTypes = {
   dashboardData: PropTypes.object,
   className: PropTypes.string
 };
 
-export default ActionBarPublishDashboardToPublicMarketplaceButton;
+export default PublishDashboardToPublicMarketplaceIcon;

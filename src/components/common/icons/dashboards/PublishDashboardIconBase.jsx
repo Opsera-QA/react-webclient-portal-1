@@ -1,13 +1,15 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {faShareSquare} from "@fortawesome/pro-light-svg-icons";
+import {faCogs, faShareSquare} from "@fortawesome/pro-light-svg-icons";
 import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import dashboardTemplatesActions from "components/insights/marketplace/dashboards/dashboard-template-actions";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-function ActionBarPublishDashboardButtonBase({dashboardData, catalog, popoverText, className}) {
+function PublishDashboardIconBase({dashboardData, catalog, popoverText, className}) {
   const isMounted = useRef(false);
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -41,15 +43,24 @@ function ActionBarPublishDashboardButtonBase({dashboardData, catalog, popoverTex
   };
 
   return (
-    <ActionBarButton action={addDashboardToPrivateCatalog} icon={faShareSquare} popoverText={popoverText} className={className} />
+    <div className={className}>
+      <TooltipWrapper innerText={popoverText}>
+        <FontAwesomeIcon
+          onClick={() => {addDashboardToPrivateCatalog()}}
+          icon={faShareSquare}
+          fixedWidth
+          className={"pointer"}
+        />
+      </TooltipWrapper>
+    </div>
   );
 }
 
-ActionBarPublishDashboardButtonBase.propTypes = {
+PublishDashboardIconBase.propTypes = {
   dashboardData: PropTypes.object,
   catalog: PropTypes.string,
   popoverText: PropTypes.string,
   className: PropTypes.string
 };
 
-export default ActionBarPublishDashboardButtonBase;
+export default PublishDashboardIconBase;

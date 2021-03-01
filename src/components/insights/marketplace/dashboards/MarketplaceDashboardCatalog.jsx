@@ -16,6 +16,8 @@ import DashboardTemplateCard from "components/insights/marketplace/dashboards/Da
 import InlineDashboardTemplateSourceFilterInput
   from "components/common/filters/insights/marketplace/dashboards/InlineDashboardTemplateSourceFilterInput";
 import InlineDashboardTypeFilter from "components/common/filters/dashboards/dashboard_type/InlineDashboardTypeFilter";
+import InlineDashboardPersonaFilter
+  from "components/common/filters/dashboards/dashboard_persona/InlineDashboardPersonaFilter";
 
 function MarketplaceDashboardCatalog ({ }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -115,7 +117,7 @@ function MarketplaceDashboardCatalog ({ }) {
     return (
       <div className="d-flex">
         <InlineDashboardTemplateSourceFilterInput filterModel={dashboardTemplateFilterModel} setFilterModel={setDashboardTemplateFilterModel} loadData={loadData} className={"mr-2"} />
-        {/*TODO: Create Persona Inline Filter after Tejas's persona dropdown is merged in*/}
+        {/*<InlineDashboardPersonaFilter filterModel={dashboardTemplateFilterModel} setFilterModel={setDashboardTemplateFilterModel} loadData={loadData} className={"mr-2"} />*/}
         <InlineDashboardTypeFilter loadData={loadData} setFilterModel={setDashboardTemplateFilterModel} filterModel={dashboardTemplateFilterModel} className={"mr-2"} />
       </div>
     )
