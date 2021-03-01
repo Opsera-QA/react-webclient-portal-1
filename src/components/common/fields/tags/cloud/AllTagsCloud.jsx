@@ -1,20 +1,14 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import axios from "axios";
-import Model from "core/data_model/model";
-import tagEditorMetadata from "components/settings/tags/tags-metadata";
-import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
-import TagUsagePanel from "components/settings/tags/tags_detail_view/TagUsagePanel";
 import TagsCloudBase from "components/common/fields/tags/cloud/TagsCloudBase";
 import {getSingularOrPluralString} from "components/common/helpers/string-helpers";
 
 function AllTagsCloud() {
-  const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tags, setTags] = useState([]);
   const [subscribedTagIds, setSubscribedTagIds] = useState([]);
@@ -81,18 +75,20 @@ function AllTagsCloud() {
     }
   };
 
-  const clearOverlayPanel = () => {
-    toastContext.clearOverlayPanel();
-  };
+  const handleTagSubscription = async (tag) => {
+    const isSubscribed = subscribedTagIds.includes(tag._id);
 
-  const showTagUsage = (tag) => {
-    const tagModel = new Model(tag, tagEditorMetadata, false);
-
-    toastContext.showOverlayPanel(
-      <CreateCenterPanel showPanel={true} objectType={tagEditorMetadata?.type} loadData={loadData} closePanel={clearOverlayPanel}>
-        <TagUsagePanel tagData={tagModel} />
-      </CreateCenterPanel>
-    );
+    if (isSubscribed === true) {
+      await adminTagsActions.unsubscribeFromTag(getAccessToken, cancelTokenSource, tag?._id);
+      let newSubscriptions = subscribedTagIds.filter((id) => {return id !== tag?._id});
+      setSubscribedTagIds([...newSubscriptions]);
+    }
+    else {
+      await adminTagsActions.subscribeToTag(getAccessToken, cancelTokenSource, tag?._id);
+      let newSubscriptions = subscribedTagIds;
+      newSubscriptions.push(tag?._id);
+      setSubscribedTagIds([...newSubscriptions]);
+    }
   };
 
   const getTooltip = (tagWithUsage) => {
@@ -133,7 +129,7 @@ function AllTagsCloud() {
 
   return (
     <div>
-      <TagsCloudBase tagsWithUsage={tags} onTagClick={showTagUsage} getTooltip={getTooltip} subscribedTagIds={subscribedTagIds} />
+      <TagsCloudBase tagsWithUsage={tags} onTagClick={handleTagSubscription} getTooltip={getTooltip} subscribedTagIds={subscribedTagIds} />
     </div>
   );
 }
