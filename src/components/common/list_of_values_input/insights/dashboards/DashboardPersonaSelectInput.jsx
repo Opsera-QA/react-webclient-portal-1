@@ -1,8 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Model from "core/data_model/model";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {dashboardAttributesMetadata} from "components/insights/dashboards/dashboard-metadata";
 
 export const dashboardPersonas = [
   {value: "developer", text: "Developer"},
