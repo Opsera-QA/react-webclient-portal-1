@@ -69,6 +69,7 @@ const INITIAL_DATA = {
   sonarSourcePath: "",
   workspace: "",
   workspaceName: "",
+  workspaceDeleteFlag: false
   // agentLabels : "",
 };
 
@@ -1116,6 +1117,7 @@ function SonarStepConfiguration({
             )}
 
             {formData.service && formData.gitToolId && formData.repoId && (
+              <>
               <Form.Group controlId="account" className="mt-2">
                 <Form.Label>Branch*</Form.Label>
                 {isBranchSearching ? (
@@ -1155,6 +1157,22 @@ function SonarStepConfiguration({
                 )}
                 {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
               </Form.Group>
+                <Form.Group controlId="workspaceDeleteFlag">
+                  <Form.Check inline
+                              type="checkbox"
+                              label={"Delete workspace before building"}
+                              id={`workspaceDeleteFlag`}
+                              checked={formData.workspaceDeleteFlag}
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  workspaceDeleteFlag: e.target.checked
+                                })
+                              }
+                  />
+                  <Form.Text className="text-muted">Deletes the Jenkins workspace before building.</Form.Text>
+                </Form.Group>
+              </>
             )}
             <Form.Group controlId="path">
               <Form.Label>Sonar Source Path</Form.Label>
