@@ -507,7 +507,7 @@ function LogSearch({tools, sideBySide}) {
               </Col>
             </Row>
 
-            <Row className="mt-2 mx-0">
+            <Row className="my-2 mx-0">
               <Col className="text-right">
                 <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
                   <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />

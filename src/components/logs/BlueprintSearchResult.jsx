@@ -4,9 +4,9 @@ import ModalLogs from "components/common/modal/modalLogs";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearchPlus } from "@fortawesome/pro-light-svg-icons";
 import { format } from "date-fns";
+import InfoDialog from "components/common/status_notifications/info";
 
 function BlueprintSearchResult({ searchResults }) {
-  console.log(searchResults);
   const [showModal, setShowModal] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
 
@@ -15,30 +15,33 @@ function BlueprintSearchResult({ searchResults }) {
     setShowModal(true);
   };
 
-  return (   
-    <>
-      {searchResults.length > 0 ?
-        <div className="mb-1 mt-3 bordered-content-block p-3 max-content-width"> 
-          <div>
-            
-            {searchResults.map((item, idx) => (
-              
-              <div key={idx} className="console-text-invert">
-                <div>
-                  <FontAwesomeIcon icon={faSearchPlus}
-                    className="ml-1"
-                    size="lg"
-                    style={{ cursor: "pointer", float: "right" }}
-                    onClick= {() => { handleClick(item); }} />
-                </div>
-                <h3>Build: {item["full_name"]}</h3>
-                <b>Timestamp: {format(new Date(item["build_timestamp"]), "yyyy-MM-dd', 'hh:mm a")}</b>
-                <br></br>
-                {item["log"]}
-              </div>
-            ))}
+  if (searchResults.length === 0) {
+    return <InfoDialog message="No results found."/>;
+  }
 
-            {/* <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
+  return (
+    <div>
+      {searchResults.map((item, idx) => (
+
+        <div key={idx} className="console-text-invert bordered-content-block p-3">
+          <div>
+            <FontAwesomeIcon
+              icon={faSearchPlus}
+              className="ml-1"
+              size="lg"
+              style={{cursor: "pointer", float: "right"}}
+              onClick={() => {
+                handleClick(item);
+              }}/>
+          </div>
+          <h3>Build: {item["full_name"]}</h3>
+          <b>Timestamp: {format(new Date(item["build_timestamp"]), "yyyy-MM-dd', 'hh:mm a")}</b>
+          <br />
+          {item["log"]}
+        </div>
+      ))}
+
+      {/* <Table striped bordered hover className="mt-4 table-sm" style={{ fontSize:"small" }}>
         {searchResults.length > 0 ? <thead>
           <tr>
             <th style={{ width: "5%" }}>Build</th>
@@ -69,10 +72,9 @@ function BlueprintSearchResult({ searchResults }) {
           ))}
         </tbody>
       </Table> */}
-          </div>
-        </div>  : ""}
-      <ModalLogs header={"Build: " + modalMessage.full_name} size="lg" jsonMessage={modalMessage} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
-    </>
+      <ModalLogs header={"Build: " + modalMessage.full_name} size="lg" jsonMessage={modalMessage} dataType="bar"
+                 show={showModal} setParentVisibility={setShowModal}/>
+    </div>
   );
 }
 
