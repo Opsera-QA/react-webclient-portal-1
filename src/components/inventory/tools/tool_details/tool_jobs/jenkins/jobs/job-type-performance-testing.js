@@ -5,19 +5,9 @@ const JenkinsJobTypePerformanceTesting = {
     type: "select",
     options: [
       {
-        "name": "Opsera Agent (Linux)",
+        "name": "Ubuntu Agent",
         "env" : "linux",
-        "agentLabel": "opsera",
-      },
-      {
-        "name": "Node Agent (Linux)",
-        "env" : "linux",
-        "agentLabel": "nodejs",
-      },
-      {
-        "name": "Maven Agent (Linux)",
-        "env" : "linux",
-        "agentLabel": "maven",
+        "value": "generic-linux",
       }
     ],
     value: "",  
