@@ -11,6 +11,7 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
 
 const bitBucketApiTypeArray = [
   {
@@ -56,7 +57,7 @@ function BitbucketToolConfiguration({ toolData }) {
     if (bitbucketConfigurationDto.getData("twoFactorAuthentication") === true) {
       return (
         <div>
-          <VaultTextInput type={"password"} dataObject={bitbucketConfigurationDto} setDataObject={setBitbucketConfigurationDto} fieldName={"secretPrivateKey"}/>
+          <VaultTextAreaInput type={"password"} dataObject={bitbucketConfigurationDto} setDataObject={setBitbucketConfigurationDto} fieldName={"secretPrivateKey"}/>
           <VaultTextInput type={"password"} dataObject={bitbucketConfigurationDto} setDataObject={setBitbucketConfigurationDto} fieldName={"secretAccessTokenKey"}/>
         </div>
       );
