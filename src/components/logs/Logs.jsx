@@ -7,6 +7,12 @@ import LogSearch from "components/logs/LogSearch";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import analyticsActions from "components/settings/analytics/analytics-settings-actions";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
+import CustomTab from "components/common/tabs/CustomTab";
+import {faTable} from "@fortawesome/pro-light-svg-icons";
+import AccessTokenLogPanel from "components/user/user_settings/access_tokens/details/logs/AccessTokenLogPanel";
+import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 
 function Logs() {
   const {getAccessToken} = useContext(AuthContext);
@@ -14,9 +20,14 @@ function Logs() {
   const [error, setErrors] = useState();
   const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [sideBySide, setSideBySide] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [activeTab, setActiveTab] = useState("tabbed");
+
+  const handleTabClick = (tabSelection) => e => {
+    e.preventDefault();
+    setActiveTab(tabSelection);
+  };
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -95,16 +106,25 @@ function Logs() {
       return <ErrorDialog error={error} align="top" />;
     }
 
-    if (sideBySide) {
+    if (activeTab === "comparison") {
       return (
         <div className={"d-flex"}>
-          <div className={"w-50 pr-2"}><LogSearch tools={tools} sideBySide={sideBySide} /></div>
-          <div className={"w-50 pl-2"}><LogSearch tools={tools} sideBySide={sideBySide} /></div>
+          <div className={"w-50 pr-2"}><LogSearch tools={tools} sideBySide={true} /></div>
+          <div className={"w-50 pl-2"}><LogSearch tools={tools} sideBySide={true} /></div>
         </div>
       );
     }
 
-    return (<LogSearch tools={tools} sideBySide={sideBySide} />);
+    return (<LogSearch tools={tools} sideBySide={activeTab === "comparison"} />);
+  };
+
+  const getTabContainer = () => {
+    return (
+      <CustomTabContainer>
+        <CustomTab activeTab={activeTab} tabText={"Tabbed View"} handleTabClick={handleTabClick} tabName={"tabbed"} />
+        <CustomTab activeTab={activeTab} tabText={"Side By Side"} handleTabClick={handleTabClick} tabName={"comparison"} />
+      </CustomTabContainer>
+    );
   };
 
   return (
@@ -117,9 +137,7 @@ function Logs() {
           search your currently configured logs repositories below.
       `}
     >
-      <div className="px-3">
-        {getBody()}
-      </div>
+      <div className="px-3"><TabPanelContainer currentView={getBody()} tabContainer={getTabContainer()} /></div>
     </ScreenContainer>
   );
 }

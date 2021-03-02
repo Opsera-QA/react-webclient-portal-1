@@ -396,7 +396,7 @@ function LogSearch({tools, sideBySide}) {
   };
 
   const getPaginator = () => {
-    if (logData?.total?.value > 0 && filterType !== "blueprint" && filterType !== "commit") {
+    if (logData?.total?.value > pageSize && filterType !== "blueprint" && filterType !== "commit") {
       return (
         <Pagination
           total={logData.total.value}
