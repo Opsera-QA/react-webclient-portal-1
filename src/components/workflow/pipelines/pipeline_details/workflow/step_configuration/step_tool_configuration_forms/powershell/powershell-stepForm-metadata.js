@@ -113,6 +113,10 @@ const powershellStepFormMetadata = {
     {
       label: "Job Name",
       id: "jobName"
+    },
+    {
+      label: "Auto-Scaling Enabled?",
+      id: "autoScaleEnable"
     }
   ],
   newModelBase: {
@@ -142,6 +146,7 @@ const powershellStepFormMetadata = {
     gitBranch: "",
 
     agentLabels: "",
+    autoScaleEnable: false,
 
     scriptFilePath : "",
     scriptFileName : "",
