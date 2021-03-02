@@ -1,12 +1,9 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
 import { Row } from "react-bootstrap";
-import { faUser } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import accountsActions from "components/admin/accounts/accounts-actions";
 import BreadcrumbPageLink from "components/common/links/BreadcrumbPageLink";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import PageLink from "components/common/links/PageLink";
 import LoadingDialog from "components/common/status_notifications/loading";
 
 function AccountSettings() {
@@ -14,7 +11,6 @@ function AccountSettings() {
   const { getUserRecord, setAccessRoles, featureFlagHideItemInProd } = useContext(AuthContext);
   const envIsProd = featureFlagHideItemInProd();
   const toastContext = useContext(DialogToastContext);
-  const [userDetailsLink, setUsersDetailLink] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
 
@@ -54,8 +50,6 @@ function AccountSettings() {
 
     if (isMounted?.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      const userDetailViewLink = await accountsActions.getUserDetailViewLink(getUserRecord);
-      setUsersDetailLink(userDetailViewLink);
     }
   };
 
@@ -97,13 +91,12 @@ function AccountSettings() {
     <ScreenContainer
       breadcrumbDestination={"accountSettings"}
       pageDescription={"Manage account settings from this dashboard."}
-      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator && !accessRoleData?.SassPowerUser && !userDetailsLink}
+      accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator && !accessRoleData?.SassPowerUser}
       isLoading={isLoading}
     >
       <Row className="ml-3">
         {/*TODO: Make User Details Link Component*/}
-        {userDetailsLink && accessRoleData?.Type !== "sass-user" &&
-        <PageLink link={userDetailsLink} icon={faUser} linkText={"My User Record"}/>}
+        {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"} />}
         {getRolePageLinks()}
       </Row>
     </ScreenContainer>

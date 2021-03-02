@@ -68,7 +68,7 @@ function LdapUserDetailView() {
       return (
         <ActionBarContainer>
           <div>
-            <ActionBarBackButton path={"/settings/users"} />
+            {(accessRoleData?.Administrator || accessRoleData?.OpseraAdministrator) && <ActionBarBackButton path={"/settings/users"} />}
           </div>
           <div>
           </div>

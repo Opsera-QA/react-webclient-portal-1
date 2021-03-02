@@ -101,7 +101,7 @@ function LdapUserManagement() {
     <ScreenContainer
       breadcrumbDestination={"ldapUserManagement"}
       isLoading={!accessRoleData}
-      roleRequirement={ROLE_LEVELS.USERS}
+      roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
       accessRoleData={accessRoleData}
     >
       <LdapUsersTable
