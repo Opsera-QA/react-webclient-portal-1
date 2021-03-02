@@ -6,11 +6,11 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {unsavedChanges} from "components/common/tooltip/popover-text";
 
-function CloseButton({ isLoading, closeEditorCallback }) {
+function CloseButton({ isLoading, closeEditorCallback, size, className }) {
   return (
-    <div className="mx-1">
+    <div className={className}>
       <TooltipWrapper innerText={unsavedChanges}>
-        <Button size="md" variant="secondary" disabled={isLoading} onClick={() => closeEditorCallback()}>
+        <Button size={size} variant="secondary" disabled={isLoading} onClick={() => closeEditorCallback()}>
           <span><FontAwesomeIcon icon={faTimes} className="mr-1" fixedWidth/>Close</span>
         </Button>
       </TooltipWrapper>
@@ -21,6 +21,13 @@ function CloseButton({ isLoading, closeEditorCallback }) {
 CloseButton.propTypes = {
   closeEditorCallback: PropTypes.func,
   isLoading: PropTypes.bool,
+  size: PropTypes.string,
+  className: PropTypes.string
+};
+
+CloseButton.defaultProps = {
+  size: "md",
+  className: "mx-1"
 };
 
 export default CloseButton;

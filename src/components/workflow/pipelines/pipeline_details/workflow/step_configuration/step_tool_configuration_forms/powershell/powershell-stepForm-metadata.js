@@ -81,6 +81,11 @@ const powershellStepFormMetadata = {
       id: "workspace",
       // isRequired: true
     },
+    {
+      label: "Workspace/Project",
+      id: "workspaceName",
+      // isRequired: true
+    },
 
     {
       label: "Branch",
@@ -117,7 +122,11 @@ const powershellStepFormMetadata = {
     {
       label: "Auto-Scaling Enabled?",
       id: "autoScaleEnable"
-    }
+    },
+    {
+      label: "Delete workspace before building",
+      id: "workspaceDeleteFlag",
+    },
   ],
   newModelBase: {
 
@@ -142,6 +151,7 @@ const powershellStepFormMetadata = {
     gitCredential: "",  // name given on jenkins
 
     workspace: "",
+    workspaceName: "",
     repository: "",
     gitBranch: "",
 
@@ -151,7 +161,8 @@ const powershellStepFormMetadata = {
     scriptFilePath : "",
     scriptFileName : "",
     outputPath : "",
-    outputFileName : ""
+    outputFileName : "",
+    workspaceDeleteFlag: ""
   }
 };
 

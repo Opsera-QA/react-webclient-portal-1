@@ -6,7 +6,7 @@ import Model from "core/data_model/model";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import dashboardFilterMetadata from "components/insights/dashboards/dashboard-filter-metadata";
-import analyticsProfileActions from "components/settings/analytics/analytics-profile-settings-actions";
+import analyticsActions from "components/settings/analytics/analytics-settings-actions";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import DashboardsTable from "components/insights/dashboards/DashboardsTable";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
@@ -66,7 +66,7 @@ function Insights() {
   };
 
   const getProfile = async(filterDto = dashboardFilterDto, cancelSource = cancelTokenSource) => {
-    let settings = await analyticsProfileActions.fetchProfileV2(getAccessToken, cancelSource);
+    let settings = await analyticsActions.fetchProfileV2(getAccessToken, cancelSource);
 
     if (isMounted.current === true) {
       setProfile(settings?.data);

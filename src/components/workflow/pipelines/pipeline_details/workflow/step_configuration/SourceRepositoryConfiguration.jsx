@@ -37,6 +37,7 @@ const INITIAL_DATA = {
   repository: "",
   branch: "",
   workspace: "",
+  workspaceName: "",
   key: "",
   trigger_active: false,
 };
@@ -181,6 +182,10 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
 
   const fetchRepos = async (service, accountId, workspaces) => {
     setIsRepoSearching(true);
+    if(service === "bitbucket" && workspaces.length < 1 ) {
+      setRepoList([]);
+      return;
+    }
     try {
       let results = await pipelineActions.searchRepositories(service, accountId, workspaces, getAccessToken);
       if (typeof (results) != "object") {
@@ -242,6 +247,7 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
       username: selectedOption.configuration ? selectedOption.configuration.accountUsername : "",
       password: selectedOption.configuration ? selectedOption.configuration.accountPassword : "",
       workspace: "",
+      workspaceName: "",
       repository: "",
       branch: "",
     });
@@ -250,7 +256,8 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
   const handleWorkspacesChange = (selectedOption) => {
     setFormData({
       ...formData,
-      workspace: selectedOption,
+      workspace: selectedOption.key,
+      workspaceName: selectedOption.name,
       repository: "",
       gitUrl: "",
       sshUrl: "",
@@ -289,6 +296,7 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
       branch: "",
       key: "",
       workspace: "",
+      workspaceName: "",
       repoId: "",
       gitUrl: "",
       sshUrl: "",
@@ -305,7 +313,7 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
   const callbackFunction = async () => {
     if (validateRequiredFields()) {
       setIsSaving(true);
-      let { name, service, accountId, username, password, repository, branch, key, trigger_active, repoId, sshUrl, gitUrl, workspace } = formData;
+      let { name, service, accountId, username, password, repository, branch, key, trigger_active, repoId, sshUrl, gitUrl, workspace, workspaceName } = formData;
       const item = {
         name: name,
         service: service,
@@ -313,6 +321,7 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
         username: username,
         password: password,
         workspace: workspace,
+        workspaceName: workspaceName,
         repository: repository,
         repoId: repoId,
         gitUrl: gitUrl,
@@ -368,6 +377,7 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
       password: "",
       repository: "",
       workspace: "",
+      workspaceName: "",
       repoId: "",
       gitUrl: "",
       sshUrl: "",
@@ -507,7 +517,7 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
 
           {formData.service && formData.service === "bitbucket" && formData.accountId && (
             <Form.Group controlId="account" className="mt-2">
-              <Form.Label>Workspace*</Form.Label>
+              <Form.Label>Workspace/Project*</Form.Label>
               {isWorkspacesSearching ? (
                 <div className="form-text text-muted mt-2 p-2">
                   <FontAwesomeIcon
@@ -526,11 +536,11 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
                       value={
                         workspacesList[
                           workspacesList.findIndex(
-                            (x) => x === formData.workspace,
+                            (x) => x.key === formData.workspace,
                           )
                           ]
                       }
-                      valueField="value"
+                      valueField="key"
                       textField="name"
                       filter="contains"
                       onChange={handleWorkspacesChange}

@@ -1,15 +1,16 @@
 import React, {useContext, useEffect, useState} from "react";
-import {faIdCard, faKey, faUser} from "@fortawesome/pro-light-svg-icons";
+import {faEye, faIdCard, faKey, faUser} from "@fortawesome/pro-light-svg-icons";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import MyUserRecord from "components/user/user_settings/MyUserRecord";
+import MyUserRecord from "components/user/user_settings/user_record/MyUserRecord";
 import {useHistory, useParams} from "react-router-dom";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import MyUserProfile from "components/user/user_settings/MyUserProfile";
+import MyUserProfile from "components/user/user_settings/profile/MyUserProfile";
 import MyAccessTokens from "components/user/user_settings/access_tokens/MyAccessTokens";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import MySubscriptions from "components/user/user_settings/subscriptions/MySubscriptions";
 
 function UserSettings() {
   const { tab } = useParams();
@@ -77,6 +78,8 @@ function UserSettings() {
         return "myUserRecord";
       case "accessTokens":
         return "myAccessTokens";
+      case "subscriptions":
+        return "subscriptions";
       case "profile":
       default:
         return "userProfile";
@@ -106,6 +109,8 @@ function UserSettings() {
         return <MyUserRecord />;
       case "accessTokens":
         return <MyAccessTokens />;
+      case "subscriptions":
+        return <MySubscriptions />;
       default:
         return null;
     }
@@ -117,6 +122,7 @@ function UserSettings() {
         <NavigationTab icon={faIdCard} tabName={"profile"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My Profile"} />
         <NavigationTab icon={faUser} tabName={"myUserRecord"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"My Record"} visible={isLdapUser} />
         <NavigationTab icon={faKey} tabName={"accessTokens"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Access Tokens"} />
+        <NavigationTab icon={faEye} tabName={"subscriptions"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Subscriptions"} />
       </NavigationTabContainer>
     );
   }

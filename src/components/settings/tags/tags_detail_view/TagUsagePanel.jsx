@@ -14,7 +14,6 @@ function TagUsagePanel({ tagData }) {
     <DetailPanelContainer>
       <SingleTagUsedInToolsField tag={tagData?.getPersistData()} />
       <SingleTagUsedInPipelinesField tag={tagData?.getPersistData()} />
-      {/*TODO: flush out tag usage after getting route from Divyesha. Should use same pipeline summary cards*/}
     </DetailPanelContainer>
   );
 }

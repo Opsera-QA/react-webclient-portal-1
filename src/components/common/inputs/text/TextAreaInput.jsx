@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import InputLabel from "../../form_fields/input/InputLabel";
-import InfoText from "../../form_fields/input/InfoText";
+import InputContainer from "components/common/inputs/InputContainer";
+import InputLabel from "components/common/inputs/info_text/InputLabel";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
 function TextAreaInput({ fieldName, dataObject, setDataObject, disabled }) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
@@ -15,7 +16,7 @@ function TextAreaInput({ fieldName, dataObject, setDataObject, disabled }) {
   };
 
   return (
-    <div className="form-group m-2">
+    <InputContainer>
       <InputLabel field={field}/>
       <textarea
         disabled={disabled}
@@ -24,7 +25,7 @@ function TextAreaInput({ fieldName, dataObject, setDataObject, disabled }) {
         rows={5}
       />
       <InfoText field={field} errorMessage={errorMessage}/>
-    </div>
+    </InputContainer>
   );
 }
 

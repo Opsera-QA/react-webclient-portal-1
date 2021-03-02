@@ -4,7 +4,7 @@ import CenterOverlayContainer from "components/common/overlays/center/CenterOver
 
 function HelpOverlayBase({ children, showPanel, closePanel, isLoading, className}) {
   return (
-    <CenterOverlayContainer handleClose={closePanel} showPanel={showPanel} isLoading={isLoading}>
+    <CenterOverlayContainer closePanel={closePanel} showPanel={showPanel} isLoading={isLoading}>
       <div className={className}>
         {children}
       </div>

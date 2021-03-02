@@ -11,6 +11,9 @@ import DetailScreenContainer from "components/common/panels/detail_view_containe
 import TagDetailPanel from "components/settings/tags/tags_detail_view/TagDetailPanel";
 import axios from "axios";
 import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
+import TitleActionBarContainer from "components/common/actions/TitleActionBarContainer";
+import TagSubscriptionIcon from "components/common/icons/subscription/TagSubscriptionIcon";
 
 function TagDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -62,7 +65,7 @@ function TagDetailView() {
   };
 
   const getTag = async (cancelSource = cancelTokenSource) => {
-    const response = await adminTagsActions.getTag(getAccessToken, cancelSource, id);
+    const response = await adminTagsActions.getTagV2(getAccessToken, cancelSource, id);
 
     if (isMounted.current === true && response?.data) {
       setTagData(new Model(response.data, tagEditorMetadata, false));
@@ -81,12 +84,21 @@ function TagDetailView() {
     }
   };
 
+  const deleteTag = async () => {
+    return await adminTagsActions.deleteTagV2(getAccessToken, cancelTokenSource, tagData?.getData("_id"))
+  }
+
   const getActionBar = () => {
     if (tagData != null) {
       return (
         <ActionBarContainer>
           <div>
             <ActionBarBackButton path={"/settings/tags"} />
+          </div>
+          <div className="d-flex">
+            <TagSubscriptionIcon tagModel={tagData} className={"mr-3"} />
+            {/*TODO: Hook requirements up inside action bar buttons/inputs*/}
+            {meetsRequirements(ROLE_LEVELS.ADMINISTRATORS_AND_SASS, accessRoleData) && <ActionBarDeleteButton2 dataObject={tagData} handleDelete={deleteTag} relocationPath={"/settings/tags"} />}
           </div>
         </ActionBarContainer>
       );

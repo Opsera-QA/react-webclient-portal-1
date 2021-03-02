@@ -34,7 +34,7 @@ import CustomTab from "components/common/tabs/CustomTab";
 import { format } from "date-fns";
 import SfdcComponentFilter from "components/common/filters/sfdc/sfdc_component/SfdcComponentFilter";
 import sfdcComponentFilterMetadata from './sfdc-component-filter-metadata';
-import BooleanFilter from "components/common/filters/boolean/BooleanFilter";
+import InlineBooleanFilter from "components/common/filters/boolean/InlineBooleanFilter";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import SfdcModifiedFilesTabView from "./tab_views/SfdcModifiedFilesTabView";
 import GitModifiedFilesTabView from "./tab_views/GitModifiedFilesTabView";

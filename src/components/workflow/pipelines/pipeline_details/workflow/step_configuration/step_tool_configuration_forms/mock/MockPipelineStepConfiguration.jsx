@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import mockPipelineStepConfigurationMetadata from "./mock-pipeline-step-configuration-metadata";
-import DtoTextInput from "../../../../../../../common/input/dto_input/dto-text-input";
 import PipelineStepEditorPanelContainer
   from "../../../../../../../common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function MockPipelineStepConfiguration({ stepTool, parentCallback, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -63,8 +63,8 @@ function MockPipelineStepConfiguration({ stepTool, parentCallback, closeEditorPa
       persistRecord={callbackFunction}
       isLoading={isLoading}
     >
-      <DtoTextInput dataObject={mockPipelineStepConfigurationDto} setDataObject={setMockPipelineStepConfigurationDataDto} fieldName={"mockTextOne"}/>
-      <DtoTextInput dataObject={mockPipelineStepConfigurationDto} setDataObject={setMockPipelineStepConfigurationDataDto} fieldName={"mockTextTwo"}/>
+      <TextInputBase dataObject={mockPipelineStepConfigurationDto} setDataObject={setMockPipelineStepConfigurationDataDto} fieldName={"mockTextOne"}/>
+      <TextInputBase dataObject={mockPipelineStepConfigurationDto} setDataObject={setMockPipelineStepConfigurationDataDto} fieldName={"mockTextTwo"}/>
     </PipelineStepEditorPanelContainer>
   );
 }

@@ -24,6 +24,10 @@ export function generateUUID() {
   );
 }
 
+export function getSingularOrPluralString(count, singularText, pluralText) {
+  return count === 1 ? singularText : pluralText;
+}
+
 export function cutOffExcessCharacters(initialString, characterLimit, postFix = "...") {
   let parsedString = initialString;
 

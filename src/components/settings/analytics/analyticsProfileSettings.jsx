@@ -2,16 +2,16 @@ import React, { useEffect, useContext, useState } from "react";
 import { Row, Col, Card, Button, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "../../../contexts/DialogToastContext";
-import analyticsProfileActions from "./analytics-profile-settings-actions";
-import DtoTextInput from "../../common/input/dto_input/dto-text-input";
+import analyticsActions from "components/settings/analytics/analytics-settings-actions";
 import DtoSelectInput from "../../common/input/dto_input/dto-select-input";
-import DtoMultiselectInput from "../../common/input/dto_input/dto-multiselect-input";
 import Model from "../../../core/data_model/model";
 import AnalyticsProfileMetadata from "./analytics-profile-metadata";
 import ScreenContainer from "../../common/panels/general/ScreenContainer";
 import LoadingView from "../../common/status_notifications/loading";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
 
 const DEFAULT_PERSONAS = [
   {
@@ -70,7 +70,7 @@ function AnalyticsProfileSettings() {
 
   const createProfile = async () => {
     try {
-      let res = await analyticsProfileActions.createProfile(getAccessToken);
+      let res = await analyticsActions.createProfile(getAccessToken);
       //this needs to trigger a full reload of app for now because so many queries check on the status of this record.
       if (res.status === 200) {
         window.location.reload();
@@ -88,7 +88,7 @@ function AnalyticsProfileSettings() {
 
   const updateProfile = async () => {
     try {
-      return await analyticsProfileActions.updateProfile(getAccessToken, analyticsProfileData.getPersistData());
+      return await analyticsActions.updateProfile(getAccessToken, analyticsProfileData.getPersistData());
     } catch (error) {
       console.log(error);
       toastContext.showServiceUnavailableDialog();
@@ -97,7 +97,7 @@ function AnalyticsProfileSettings() {
 
   const fetchProfile = async () => {
     try {
-      let response = await analyticsProfileActions.fetchProfile(getAccessToken);
+      let response = await analyticsActions.fetchProfile(getAccessToken);
       if (response && response.data) {
         return response.data;
       }
@@ -187,6 +187,7 @@ function AnalyticsProfileSettings() {
 
   return (
     <ScreenContainer breadcrumbDestination={"analyticsProfile"} pageDescription={"Opsera Analytics Engine Settings."}>
+      <div className={"p-2"}>
       {analyticsProfileData.getData("ldapAccount") && !analyticsProfileData.getData("ldapOwner") && (
         <Card>
           <Card.Body>
@@ -225,7 +226,7 @@ function AnalyticsProfileSettings() {
               </OverlayTrigger>
             </Col>
             <Col lg={12}>
-              <DtoTextInput
+              <TextInputBase
                 setDataObject={setAnalyticsProfileData}
                 dataObject={analyticsProfileData}
                 fieldName={"enabledToolsOn"}
@@ -233,7 +234,7 @@ function AnalyticsProfileSettings() {
               />
             </Col>
             <Col lg={12}>
-              <DtoTextInput
+              <TextInputBase
                 setDataObject={setAnalyticsProfileData}
                 dataObject={analyticsProfileData}
                 fieldName={"esInstanceURL"}
@@ -253,7 +254,7 @@ function AnalyticsProfileSettings() {
               />
             </Col>
             <Col lg={12}>
-              <DtoMultiselectInput
+              <MultiSelectInputBase
                 setDataObject={setAnalyticsProfileData}
                 textField={"name"}
                 valueField={"id"}
@@ -277,6 +278,7 @@ function AnalyticsProfileSettings() {
           </Row>
         </div>
       )}
+      </div>
     </ScreenContainer>
   );
 }

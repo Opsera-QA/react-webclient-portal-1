@@ -5,7 +5,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import emailNotificationMetadata
   from "components/notifications/notification_details/notification_method_forms/email/emailNotificationMetadata";
 import {Row, Col} from "react-bootstrap";
-import DtoTextInput from "components/common/input/dto_input/dto-text-input";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function EmailNotificationMethodConfigurationPanel({ notificationDataDto, notificationMethodDataDto, setNotificationMethodDataDto }) {
   useEffect(() => {loadData();}, []);
@@ -22,7 +22,7 @@ function EmailNotificationMethodConfigurationPanel({ notificationDataDto, notifi
   return (
     <Row>
       <Col lg={12}>
-        <DtoTextInput dataObject={notificationMethodDataDto} setDataObject={setNotificationMethodDataDto} fieldName={"address"} />
+        <TextInputBase dataObject={notificationMethodDataDto} setDataObject={setNotificationMethodDataDto} fieldName={"address"} />
       </Col>
     </Row>
   );

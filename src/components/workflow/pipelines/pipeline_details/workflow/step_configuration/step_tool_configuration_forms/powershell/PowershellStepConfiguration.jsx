@@ -21,6 +21,7 @@ import PowershellBitbucketWorkspaceInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/powershell/inputs/PowershellBitbucketWorkspaceInput";
 import AgentLabelsMultiSelectInput
   from "../../../../../../../common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
+import WorkspaceDeleteToggleInput from "../command_line/inputs/WorkspaceDeleteToggleInput";
 
 function PowershellStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -104,6 +105,7 @@ function PowershellStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
       <TextInputBase setDataObject={setPowershellStepConfigurationDataDto} dataObject={powershellStepConfigurationDto} fieldName={"scriptFileName"} />
       <TextInputBase setDataObject={setPowershellStepConfigurationDataDto} dataObject={powershellStepConfigurationDto} fieldName={"outputPath"} />
       <TextInputBase setDataObject={setPowershellStepConfigurationDataDto} dataObject={powershellStepConfigurationDto} fieldName={"outputFileName"} />
+      <WorkspaceDeleteToggleInput dataObject={powershellStepConfigurationDto} setDataObject={setPowershellStepConfigurationDataDto} fieldName={"workspaceDeleteFlag"} />
     </PipelineStepEditorPanelContainer>
   );
 }

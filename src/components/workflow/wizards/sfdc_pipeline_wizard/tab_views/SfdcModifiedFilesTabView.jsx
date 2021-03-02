@@ -10,7 +10,7 @@ import sfdcTableConstants from "components/workflow/wizards/sfdc_pipeline_wizard
 import FilterContainer from "components/common/table/FilterContainer";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import BooleanFilter from "components/common/filters/boolean/BooleanFilter";
+import InlineBooleanFilter from "components/common/filters/boolean/InlineBooleanFilter";
 import SfdcComponentFilter from "components/common/filters/sfdc/sfdc_component/SfdcComponentFilter";
 import CSVFileUploadComponent from '../csv_file_upload/CSVFileUploadComponent';
 
@@ -94,7 +94,7 @@ const SfdcModifiedFilesTabView = ({
     return (
       <div className="px-2 d-flex small">
         <div className="pr-4">
-          <BooleanFilter
+          <InlineBooleanFilter
             toolTipText={"This will select all the items on this page only."}
             loadData={handleCheckAllClickComponentTypes}
             filterDto={filterDto}

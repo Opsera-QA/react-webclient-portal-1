@@ -4,7 +4,7 @@ import {Form} from "react-bootstrap";
 import WarningDialog from "components/common/status_notifications/WarningDialog";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function BooleanFilter({ fieldName, loadData, filterDto, setFilterDto, inline, toolTipText}) {
+function InlineBooleanFilter({ fieldName, loadData, filterDto, setFilterDto, inline, toolTipText}) {
   const [field] = useState(filterDto.getFieldById(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
@@ -39,7 +39,7 @@ function BooleanFilter({ fieldName, loadData, filterDto, setFilterDto, inline, t
   return (getFilterBody());
 }
 
-BooleanFilter.propTypes = {
+InlineBooleanFilter.propTypes = {
   fieldName: PropTypes.string,
   filterDto: PropTypes.object,
   loadData: PropTypes.func,
@@ -47,4 +47,4 @@ BooleanFilter.propTypes = {
   inline: PropTypes.bool
 };
 
-export default BooleanFilter;
+export default InlineBooleanFilter;

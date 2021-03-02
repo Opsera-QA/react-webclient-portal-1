@@ -86,6 +86,11 @@ const commandLineStepFormMetadata = {
       id: "workspace",
       // isRequired: true
     },
+    {
+      label: "Workspace/Project",
+      id: "workspaceName",
+      // isRequired: true
+    },
 
     {
       label: "Branch",
@@ -130,7 +135,10 @@ const commandLineStepFormMetadata = {
       formText: "File name with extension is expected."
       // isRequired: true
     },
-
+    {
+      label: "Delete workspace before building",
+      id: "workspaceDeleteFlag",
+    },
     {
       id: "dependencies",
       // isRequired: true
@@ -199,6 +207,10 @@ const commandLineStepFormMetadata = {
       isRequired: true
     },
     {
+      label: "Delete workspace before building",
+      id: "workspaceDeleteFlag",
+    },
+    {
       id: "repoId",
     },
     
@@ -230,6 +242,11 @@ const commandLineStepFormMetadata = {
     {
       label: "Workspace",
       id: "workspace",
+      // isRequired: true
+    },
+    {
+      label: "Workspace/Project",
+      id: "workspaceName",
       // isRequired: true
     },
 
@@ -314,6 +331,7 @@ const commandLineStepFormMetadata = {
     gitCredential: "",  // name given on jenkins
 
     workspace: "",
+    workspaceName: "",
     repository: "",
     gitBranch: "",
 
@@ -324,6 +342,7 @@ const commandLineStepFormMetadata = {
     outputFileName: "",
     dependencies: {},
     dependencyType:"",
+    workspaceDeleteFlag: false,
 
     sourceScript: false,
     inputPath: "",

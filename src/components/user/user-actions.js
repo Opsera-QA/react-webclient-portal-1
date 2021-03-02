@@ -5,6 +5,7 @@ import baseActions from "../../utils/actionsBase";
 // TODO: Rename with whatever name makes sense
 const userActions = {};
 
+// TODO: Remove after upgrading to V2 (IN Analytics Settings Actions)
 userActions.getAnalyticsSettings = async (getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/analytics/settings`;

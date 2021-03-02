@@ -22,11 +22,11 @@ import JiraStepNotificationWorkflowStepInput from "./jira/JiraStepNotificationWo
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import JiraStepNotificationParentTicketInput from "./jira/JiraStepNotificationParentTicketInput";
 import slackStepNotificationMetadata from "./slack/slackStepNotificationMetadata";
-import DtoTextInput from "../../../../../../common/input/dto_input/dto-text-input";
 import emailStepNotificationMetadata from "./email/emailStepNotificationMetadata";
 import jiraStepApprovalMetadata from "./jira/jiraStepApprovalMetadata";
 import SlackStepNotificationToolInput from "./slack/SlackStepNotificationToolInput";
 import JiraStepNotificationProjectUserInput from "./jira/JiraStepNotificationProjectUserInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function StepNotificationConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
   const toastContext = useContext(DialogToastContext);
@@ -161,7 +161,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
         </small>
         <NotificationLevelInput dataObject={slackDto} setDataObject={setSlackDto} fieldName={"event"} />
         <SlackStepNotificationToolInput setDataObject={setSlackDto} dataObject={slackDto} />
-        <DtoTextInput dataObject={slackDto} setDataObject={setSlackDto} fieldName={"channel"} />
+        <TextInputBase dataObject={slackDto} setDataObject={setSlackDto} fieldName={"channel"} />
       </div>
     );
   };
@@ -265,7 +265,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
     return (
       <div className="my-4">
         <NotificationsToggle disabled={true} dataObject={emailDto} setDataObject={setEmailDto} fieldName={"enabled"} />
-        <DtoTextInput disabled={true} dataObject={emailDto} setDataObject={setEmailDto} fieldName={"address"} />
+        <TextInputBase disabled={true} dataObject={emailDto} setDataObject={setEmailDto} fieldName={"address"} />
         <NotificationLevelInput disabled={true} dataObject={emailDto} setDataObject={setEmailDto} fieldName={"event"} />
       </div>
     )

@@ -2,9 +2,9 @@ import baseActions from "utils/actionsBase";
 
 const adminTagsActions = {};
 
-adminTagsActions.delete = async (tagId, getAccessToken) => {
+adminTagsActions.deleteTagV2 = async (getAccessToken, cancelTokenSource, tagId) => {
   const apiUrl = `/tags/${tagId}`;
-  return await baseActions.apiDeleteCall(getAccessToken, apiUrl);
+  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 adminTagsActions.updateTagV2 = async (getAccessToken, cancelTokenSource, tagDataDto) => {
@@ -26,12 +26,13 @@ adminTagsActions.getAllTags = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
-adminTagsActions.getAllTagsV2 = async (getAccessToken, cancelTokenSource, status = "active") => {
+adminTagsActions.getAllTagsV2 = async (getAccessToken, cancelTokenSource, status = "active", usage = false) => {
   const apiUrl = "/tags";
   const urlParams = {
     params: {
       size: 10000,
       status: status,
+      usage: usage
     },
   };
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
@@ -81,7 +82,7 @@ adminTagsActions.getVisibleTags = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
-adminTagsActions.getTag = async (getAccessToken, cancelTokenSource, tagId) => {
+adminTagsActions.getTagV2 = async (getAccessToken, cancelTokenSource, tagId) => {
   const apiUrl = `/tags/${tagId}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
@@ -111,6 +112,31 @@ adminTagsActions.getRelevantPipelinesV2 = async (getAccessToken, cancelTokenSour
 adminTagsActions.getRelevantToolsV2 = async (getAccessToken, cancelTokenSource, tags) => {
   const apiUrl = `/reports/tools/tags`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, tags);
+};
+
+adminTagsActions.subscribeToTag = async (getAccessToken, cancelTokenSource, tagId) => {
+  const apiUrl = `/tags/${tagId}/subscribe`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+adminTagsActions.unsubscribeFromTag = async (getAccessToken, cancelTokenSource, tagId) => {
+  const apiUrl = `/tags/${tagId}/unsubscribe`;
+  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+adminTagsActions.isSubscribed = async (getAccessToken, cancelTokenSource, tagId) => {
+  const apiUrl = `/tags/${tagId}/is_subscribed`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+adminTagsActions.getSubscribedTags = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/tags/subscriptions/tags`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+adminTagsActions.getSubscribedTagIds = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/tags/subscriptions/ids`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 // TODO: This should be moved into that input component

@@ -5,7 +5,7 @@ import { Row, Col, Badge } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import FreeTrialLandingView from "../free_trial/landing_page/Landing";
 import LoadingView from "../common/status_notifications/loading";
-import TagCloud from "components/common/fields/tags/TagCloud";
+import MyTagCloud from "components/common/fields/tags/cloud/MyTagCloud";
 
 function OverviewLanding() {
   const contextType = useContext(AuthContext);
@@ -14,7 +14,7 @@ function OverviewLanding() {
   const [accessRoleData, setAccessRoleData] = useState();
   const [summaryStats, setSummaryStats] = useState([]);
   const history = useHistory();
-  const { getUserRecord, setAccessRoles } = contextType;
+  const { getAccessToken, getUserRecord, setAccessRoles, featureFlagHideItemInProd, featureFlagHideItemInTest } = contextType;
   let userAccess = {};
 
   useEffect(() => {
@@ -37,7 +37,6 @@ function OverviewLanding() {
 
   const loadData = async () => {
     try {
-      const { getAccessToken } = contextType;
       const accessToken = await getAccessToken();
       let apiUrl = "/landing/stats";
       const response = await axiosApiService(accessToken).get(apiUrl, {});
@@ -91,6 +90,7 @@ function OverviewLanding() {
   if (!accessRoleData) {
     return (<LoadingView size="sm" message={"Loading user data"}/>);
   }
+
   if (process.env.REACT_APP_STACK === "free-trial") {
     return (<FreeTrialLandingView/>);
   }
@@ -116,12 +116,12 @@ function OverviewLanding() {
                   </ul>
                 </div>
 
-                <div className="h4 text-color mb-5">Welcome
+                <div className="h4 text-color mb-2">Welcome
                   back {userInfo && userInfo.firstName ? userInfo.firstName : null}!
                 </div>
-                {/*<Row className={"mb-2 mx-1"}>*/}
-                {/*  <TagCloud />*/}
-                {/*</Row>*/}
+                <Row className={"mb-3 mx-1"}>
+                  {!featureFlagHideItemInProd() && !featureFlagHideItemInTest() && <MyTagCloud />}
+                </Row>
 
                 <div className="row mx-n2 mt-3">
                   <div className="col-md px-2 landing-content-module">

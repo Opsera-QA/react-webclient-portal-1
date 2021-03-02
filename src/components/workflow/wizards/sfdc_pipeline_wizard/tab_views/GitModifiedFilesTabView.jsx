@@ -11,7 +11,7 @@ import sfdcTableConstants from "components/workflow/wizards/sfdc_pipeline_wizard
 import FilterContainer from "components/common/table/FilterContainer";
 import { faCode } from "@fortawesome/free-solid-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import BooleanFilter from "components/common/filters/boolean/BooleanFilter";
+import InlineBooleanFilter from "components/common/filters/boolean/InlineBooleanFilter";
 import SfdcComponentFilter from "components/common/filters/sfdc/sfdc_component/SfdcComponentFilter";
 
 const GitModifiedFilesTabView = ({
@@ -66,7 +66,7 @@ const GitModifiedFilesTabView = ({
       <div className="px-2 d-flex small">
         <div className="pr-4">
           <TooltipWrapper innerText={"This will select all the items on this page only."}>
-            <BooleanFilter loadData={handleCheckAllClickComponentTypes} filterDto={filterDto} setFilterDto={setFilterDto} fieldName={"checkAll"} />
+            <InlineBooleanFilter loadData={handleCheckAllClickComponentTypes} filterDto={filterDto} setFilterDto={setFilterDto} fieldName={"checkAll"} />
           </TooltipWrapper>
         </div>        
         <div><SfdcComponentFilter componentType={componentType} filterDto={filterDto} setFilterDto={setFilterDto} /></div>

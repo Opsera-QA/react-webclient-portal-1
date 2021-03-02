@@ -12,7 +12,7 @@ function LoadingIcon({ isLoading }) {
 }
 
 LoadingIcon.propTypes = {
-  isLoading: PropTypes.object,
+  isLoading: PropTypes.bool,
 };
 
 export default LoadingIcon;

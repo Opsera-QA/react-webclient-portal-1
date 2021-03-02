@@ -194,7 +194,11 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
 
-          <div className="d-flex flex-row">
+          <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards">
+            <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
+            className="menu-text">Insights</span></NavLink>
+
+          {/*<div className="d-flex flex-row">
             <div>
               <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards"
                        onClick={() => setInsights(true)}>
@@ -221,7 +225,7 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
 
             <NavLink className="nav-link" activeClassName="chosen" to="/analytics">
               <span className="menu-text-sub">Analytics</span></NavLink>
-          </>}
+          </>}*/}
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
@@ -296,36 +300,12 @@ function SaasUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHideIte
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
 
-          <div className="d-flex flex-row">
-            <div>
-              <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards"
-                       onClick={() => setInsights(true)}>
-                <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
-                className="menu-text">Insights</span>
-              </NavLink>
-            </div>
-            <div className="text-center pointer flex-grow-1 pr-2 pt-2"
-                 onClick={() => setInsights(insights => !insights)}>
-              {insights ?
-                <FontAwesomeIcon size="sm" icon={faCaretSquareUp} fixedWidth/> :
-                <></>}
-            </div>
-          </div>
-
-          {insights && <>
-            <NavLink className="nav-link no-wrap" activeClassName="chosen" exact to="/insights/dashboards">
-              <span className="menu-text-sub">My Dashboards</span>
-            </NavLink>
-
-            <NavLink className="nav-link" activeClassName="chosen" exact to="/insights/marketplace">
-              <span className="menu-text-sub">Marketplace</span>
-            </NavLink>
-
-            <NavLink className="nav-link" activeClassName="chosen" to="/analytics">
-              <span className="menu-text-sub">Analytics</span></NavLink>
-          </>}
+          <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards">
+            <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
+            className="menu-text">Insights</span></NavLink>
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
+
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
             className="menu-text">Tool Registry</span></NavLink>
@@ -377,36 +357,12 @@ function AccountAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFla
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
 
-          <div className="d-flex flex-row">
-            <div>
-              <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards"
-                       onClick={() => setInsights(true)}>
-                <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
-                className="menu-text">Insights</span>
-              </NavLink>
-            </div>
-            <div className="text-center pointer flex-grow-1 pr-2 pt-2"
-                 onClick={() => setInsights(insights => !insights)}>
-              {insights ?
-                <FontAwesomeIcon size="sm" icon={faCaretSquareUp} fixedWidth/> :
-                <></>}
-            </div>
-          </div>
-
-          {insights && <>
-            <NavLink className="nav-link no-wrap" activeClassName="chosen" exact to="/insights/dashboards">
-              <span className="menu-text-sub">My Dashboards</span>
-            </NavLink>
-
-            <NavLink className="nav-link" activeClassName="chosen" exact to="/insights/marketplace">
-              <span className="menu-text-sub">Marketplace</span>
-            </NavLink>
-
-            <NavLink className="nav-link" activeClassName="chosen" to="/analytics">
-              <span className="menu-text-sub">Analytics</span></NavLink>
-          </>}
+          <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards">
+            <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
+            className="menu-text">Insights</span></NavLink>
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
+
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
             className="menu-text">Tool Registry</span></NavLink>
@@ -457,36 +413,12 @@ function AccountPowerUserNav({ accessRole, featureFlagHideItemInProd, featureFla
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
 
-          <div className="d-flex flex-row">
-            <div>
-              <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards"
-                       onClick={() => setInsights(true)}>
-                <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
-                className="menu-text">Insights</span>
-              </NavLink>
-            </div>
-            <div className="text-center pointer flex-grow-1 pr-2 pt-2"
-                 onClick={() => setInsights(insights => !insights)}>
-              {insights ?
-                <FontAwesomeIcon size="sm" icon={faCaretSquareUp} fixedWidth/> :
-                <></>}
-            </div>
-          </div>
-
-          {insights && <>
-            <NavLink className="nav-link no-wrap" activeClassName="chosen" exact to="/insights/dashboards">
-              <span className="menu-text-sub">My Dashboards</span>
-            </NavLink>
-
-            <NavLink className="nav-link" activeClassName="chosen" exact to="/insights/marketplace">
-              <span className="menu-text-sub">Marketplace</span>
-            </NavLink>
-
-            <NavLink className="nav-link" activeClassName="chosen" to="/analytics">
-              <span className="menu-text-sub">Analytics</span></NavLink>
-          </>}
+          <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards">
+            <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
+            className="menu-text">Insights</span></NavLink>
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
+
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
             className="menu-text">Tool Registry</span></NavLink>
@@ -538,36 +470,12 @@ function DefaultUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHide
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
 
-          <div className="d-flex flex-row">
-            <div>
-              <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards"
-                       onClick={() => setInsights(true)}>
-                <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
-                className="menu-text">Insights</span>
-              </NavLink>
-            </div>
-            <div className="text-center pointer flex-grow-1 pr-2 pt-2"
-                 onClick={() => setInsights(insights => !insights)}>
-              {insights ?
-                <FontAwesomeIcon size="sm" icon={faCaretSquareUp} fixedWidth/> :
-                <></>}
-            </div>
-          </div>
-
-          {insights && <>
-            <NavLink className="nav-link no-wrap" activeClassName="chosen" exact to="/insights/dashboards">
-              <span className="menu-text-sub">My Dashboards</span>
-            </NavLink>
-
-            <NavLink className="nav-link" activeClassName="chosen" exact to="/insights/marketplace">
-              <span className="menu-text-sub">Marketplace</span>
-            </NavLink>
-
-            <NavLink className="nav-link" activeClassName="chosen" to="/analytics">
-              <span className="menu-text-sub">Analytics</span></NavLink>
-          </>}
+          <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards">
+            <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
+            className="menu-text">Insights</span></NavLink>
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
+
           <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
             className="menu-text">Tool Registry</span></NavLink>

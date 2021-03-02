@@ -1,113 +1,124 @@
-import React, { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../contexts/AuthContext"; //New AuthContext State
-import { axiosApiService } from "../../api/apiService";
-import ErrorDialog from "../common/status_notifications/error";
-import LoadingDialog from "../common/status_notifications/loading";
-import SearchLogs from "./searchLogs";
-import "./logs.css";
+import React, {useContext, useEffect, useRef, useState} from "react";
+import {AuthContext} from "contexts/AuthContext";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import ErrorDialog from "components/common/status_notifications/error";
+import LoadingDialog from "components/common/status_notifications/loading";
+import SearchLogs from "components/logs/searchLogs";
+import axios from "axios";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import analyticsActions from "components/settings/analytics/analytics-settings-actions";
 
 function Logs() {
-  const contextType = useContext(AuthContext);
+  const {getAccessToken} = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [error, setErrors] = useState();
-  const [data, setData] = useState({});
-  const [tools, setTools] = useState({});
-  const [loadingProfile, setLoadingProfile] = useState(false);
-  const [token, setToken] = useState();
+  const [data, setData] = useState([]);
+  const [tools, setTools] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [profile, setProfile] = useState(true);
   const [isEnabled, setIsEnabled] = useState(true);
   const [enabledOn, setEnabledOn] = useState(true);
-  const INDICES = [
-    "jenkins",
-    "opsera-pipeline",
-    "jira",
-    "sonar",
-    "xunit",
-    "junit",
-    "jmeter",
-    "heartbeat",
-    "codeship",
-    "gitlab",
-    "metricbeat",
-    "cypress",
-    "anchore"
-  ];
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        // console.log("FETCHING DATA");
-        await fetchData();
-      } catch (err) {
-        if (err.name === "AbortError") {
-          // console.log("Request was canceled via controller.abort");
-          return;
-        }
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
       }
-    };
-    runEffect();
+    });
 
     return () => {
-      controller.abort();
-    };
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  async function fetchData() {
-    setLoadingProfile(true);
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/settings";
-    setToken(accessToken);
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      const profile = await axiosApiService(accessToken).get(apiUrl);
-      setProfile(profile.data);
-      let dataObject = profile.data && profile.data.profile.length > 0 ? profile.data.profile[0] : {};
-      setIsEnabled(dataObject.active !== undefined ? dataObject.active : false);
-      setEnabledOn(dataObject.enabledToolsOn && dataObject.enabledToolsOn.length !== 0 ? true : false);
+      setIsLoading(true);
+      await loadSettings(cancelSource);
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
+      }
+    }
+    finally {
+      if (isMounted?.current === true ) {
+        setIsLoading(false);
+      }
+    }
+  };
 
-      const tools = await axiosApiService(accessToken).post("/analytics/index", { index: INDICES });
-      const listOfTools = tools.data && Array.isArray(tools.data) ? tools.data : [];
-      if (listOfTools.includes("jenkins")) listOfTools.push("blueprint");
-      listOfTools.sort();
+  const loadSettings = async (cancelSource = cancelTokenSource) => {
+    const response = await analyticsActions.getAnalyticsSettingsV2(getAccessToken, cancelSource);
 
-      // console.log("Profile: ", profile);
-      setData(profile && profile.data.profile[0]);
-      setTools(listOfTools);
+    if (isMounted?.current === true && response?.data) {
+      const tempProfile = response?.data;
+      setProfile(tempProfile);
+      let profileData = tempProfile.profile?.length > 0 ? tempProfile.profile[0] : {};
+      setIsEnabled(profileData?.active || false);
+      setEnabledOn(!!(profileData.enabledToolsOn && profileData.enabledToolsOn.length !== 0));
+
+      const toolResponse = await analyticsActions.getAnalyticsToolsV2(getAccessToken, cancelSource);
+      const listOfTools = Array.isArray(toolResponse?.data) ? toolResponse.data : [];
+
+      if (listOfTools) {
+        if (listOfTools.includes("jenkins")) {
+          listOfTools.push("blueprint");
+        }
+        listOfTools.sort();
+        setTools(listOfTools);
+      }
+
+      // console.log("Profile: ", JSON.stringify(profileData));
+      setData(profileData);
       // console.log(profile && profile.data.profile[0]);
 
-      if (typeof data.profile === "object" && data.profile.length === 0) {
+      if (typeof profileData.profile === "object" && profileData.profile.length === 0) {
         setErrors(
           "Warning!  Profile settings associated with your account are incomplete.  Log searching will be unavailable until this is fixed."
         );
       }
-
-      setLoadingProfile(false);
-    } catch (err) {
-      // console.log(err.message);
-      setLoadingProfile(false);
-      setErrors(err);
     }
   }
 
-  return (
-    <div className="mb-3 max-charting-width">
-      {error && <ErrorDialog error={error} align="top" />}
+  const getBody = () => {
+    if (isLoading) {
+      return <LoadingDialog size="sm" message="Loading..." />;
+    }
 
-      <div className="max-content-width">
-        <div className="h4 mt-3 mb-4">Logs</div>
+    if (error) {
+      return <ErrorDialog error={error} align="top" />;
+    }
+
+    return (<SearchLogs tools={tools} />);
+  };
+
+  return (
+    <ScreenContainer
+      isLoading={isLoading}
+      breadcrumbDestination={"logs"}
+      pageDescription={`
           Opsera provides users with access to a vast repository of logging with industry leading search and filtering
           capability. Access all available logging, reports and configurations around the Opsera Analytics Platform or
           search your currently configured logs repositories below.
+      `}
+    >
+      <div className="px-3">
+        {getBody()}
       </div>
-
-      {!error && (
-        <div className="shaded-panel p-3 mt-1">
-          {loadingProfile
-            ? <LoadingDialog size="sm" message="Loading..." />
-            : <SearchLogs tools={tools} />}
-        </div>
-      )}
-    </div>
+    </ScreenContainer>
   );
 }
 

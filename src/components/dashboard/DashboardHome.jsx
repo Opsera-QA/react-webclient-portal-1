@@ -8,7 +8,7 @@ import DropdownList from "react-widgets/lib/DropdownList";
 // import PipelineDashboard from "../../components/dashboard/Pipeline";
 // import SecOpsDashboard from "../../components/dashboard/SecOps";
 // import TestingDashboard from "../../components/dashboard/Testing";
-import LogsDashboard from "../../components/dashboard/Logs";
+import LogsDashboard from "components/dashboard/LogsDashboard";
 import LoadingDialog from "../common/status_notifications/loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheckCircle, faQuestion } from "@fortawesome/free-solid-svg-icons";

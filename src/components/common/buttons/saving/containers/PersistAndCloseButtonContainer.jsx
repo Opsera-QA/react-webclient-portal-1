@@ -31,8 +31,8 @@ function PersistAndCloseButtonContainer({ recordDto, setRecordDto, updateRecord,
 
   // Don't show close button when using create modal. At least for now
   const getCloseButton = () => {
-    if (!recordDto.isNew() && handleClose) {
-      return (<CloseButton closeEditorCallback={handleClose}/>);
+    if (handleClose) {
+      return (<CloseButton closeEditorCallback={handleClose} className={recordDto.isNew() ? "mt-auto mx-1" : undefined}/>);
     }
   };
 

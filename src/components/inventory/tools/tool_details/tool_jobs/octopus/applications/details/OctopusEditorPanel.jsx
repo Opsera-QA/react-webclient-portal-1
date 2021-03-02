@@ -7,7 +7,6 @@ import Loading from "../../../../../../../common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import DtoTextInput from "../../../../../../../common/input/dto_input/dto-text-input";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import OctopusActions from "../../octopus-actions";
 import DeleteModal from "components/common/modal/DeleteModal";
@@ -26,6 +25,7 @@ import NexusSelectInput from "./input/NexusSelectInput";
 import NexusRepoSelectInput from "./input/NexusRepoSelectInput";
 import TestConnectionButton from "./input/TestConnectionButton";
 import EditModal from "components/common/modal/EditModal";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -120,7 +120,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
         {octopusApplicationDataDto && type && type === "environment" && !isLoading && (
           <Row>
             <Col lg={12}>
-              <DtoTextInput
+              <TextInputBase
                 setDataObject={setOctopusApplicationDataDto}
                 dataObject={octopusApplicationDataDto}
                 fieldName={"name"}
@@ -128,7 +128,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
               />
             </Col>
             <Col lg={12}>
-              <DtoTextInput
+              <TextInputBase
                 setDataObject={setOctopusApplicationDataDto}
                 dataObject={octopusApplicationDataDto}
                 fieldName={"description"}
@@ -149,7 +149,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
         {octopusApplicationDataDto && type && type === "account" && !isLoading && (
           <Row>
             <Col lg={12}>
-              <DtoTextInput
+              <TextInputBase
                 setDataObject={setOctopusApplicationDataDto}
                 dataObject={octopusApplicationDataDto}
                 fieldName={"name"}
@@ -157,7 +157,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
               />
             </Col>
             <Col lg={12}>
-              <DtoTextInput
+              <TextInputBase
                 setDataObject={setOctopusApplicationDataDto}
                 dataObject={octopusApplicationDataDto}
                 fieldName={"description"}
@@ -237,7 +237,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
         {octopusApplicationDataDto && type && type === "target" && !isLoading && (
           <Row>
             <Col lg={12}>
-              <DtoTextInput
+              <TextInputBase
                 setDataObject={setOctopusApplicationDataDto}
                 dataObject={octopusApplicationDataDto}
                 fieldName={"name"}
@@ -376,7 +376,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
         {octopusApplicationDataDto && type && type === "feed" && !isLoading && (
           <Row>
             <Col lg={12}>
-              <DtoTextInput
+              <TextInputBase
                 setDataObject={setOctopusApplicationDataDto}
                 dataObject={octopusApplicationDataDto}
                 fieldName={"name"}

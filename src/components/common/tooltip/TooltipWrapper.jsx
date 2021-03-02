@@ -14,6 +14,10 @@ function TooltipWrapper({ innerText, placement, children }) {
     );
   };
 
+  if (innerText == null) {
+    return children;
+  }
+
   return (
     <OverlayTrigger trigger={["hover", "focus"]} placement={placement} overlay={getPopover(innerText)}>
       {children}
@@ -22,7 +26,7 @@ function TooltipWrapper({ innerText, placement, children }) {
 }
 
 TooltipWrapper.propTypes = {
-  innerText: PropTypes.string,
+  innerText: PropTypes.any,
   children: PropTypes.any,
   placement: PropTypes.string
 };

@@ -62,7 +62,6 @@ function SingleTagUsedInToolsField({ tag }) {
       const response = await adminTagsActions.getRelevantToolsV2(getAccessToken, cancelSource, [tag]);
 
       if (isMounted?.current === true && response?.data != null) {
-        console.log("response: " + JSON.stringify(response.data))
         setTools(response?.data?.data);
       }
     }

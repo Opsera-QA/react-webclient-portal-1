@@ -71,12 +71,11 @@ function NotificationEditorPanel({ notificationData, setNotificationData, handle
           <ActivityToggleInput dataObject={notificationDataDto} setDataObject={setNotificationDataDto} fieldName={"active"} />
         </Col>
         <Col lg={12}>
-          <TextInputBase setDataObject={setNotificationDataDto} dataObject={notificationDataDto}
-                        fieldName={"description"}/>
+          <TextInputBase setDataObject={setNotificationDataDto} dataObject={notificationDataDto} fieldName={"description"}/>
         </Col>
-          <Col lg={12}>
-            <TagManager type={"notification"} setDataObject={setNotificationDataDto} dataObject={notificationDataDto} />
-          </Col>
+        <Col lg={12}>
+          <TagManager type={"notification"} setDataObject={setNotificationDataDto} dataObject={notificationDataDto}/>
+        </Col>
       </Row>
       <NotificationConfigurationPanel
         notificationConfigurationData={notificationConfigurationDataDto}
@@ -90,10 +89,9 @@ function NotificationEditorPanel({ notificationData, setNotificationData, handle
         notificationMethodDataDto={notificationMethodDataDto}
         setNotificationMethodDataDto={setNotificationMethodDataDto}
       />
-      <Col lg={12}>
+      <Col lg={12} className={"px-0"}>
         <TextAreaInput setDataObject={setNotificationDataDto} dataObject={notificationDataDto} fieldName={"nextSteps"}/>
       </Col>
-
     </EditorPanelContainer>
   );
 }

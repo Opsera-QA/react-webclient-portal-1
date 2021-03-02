@@ -58,12 +58,32 @@ dashboardsActions.getAllDashboardsV2 = async(getAccessToken, cancelTokenSource, 
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+dashboardsActions.getAllDashboardsLovV2 = async(getAccessToken, cancelTokenSource) => {
+  const apiUrl = "/analytics/dashboard";
+
+  let urlParams = {
+    params: {
+      size: 10000,
+    }
+  }
+
+  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 dashboardsActions.update = async(dashboardDataDto, getAccessToken) => {
     const apiUrl = `/analytics/dashboard/${dashboardDataDto.getData('_id')}/update`
     let postData = {
       ...dashboardDataDto.getPersistData()
     }
     return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
+}
+
+dashboardsActions.updateDashboardV2 = async(dashboardData, getAccessToken) => {
+  const apiUrl = `/analytics/dashboard/${dashboardData.getData('_id')}/update`
+  let postData = {
+    ...dashboardData.getPersistData()
+  }
+  return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 }
 
 dashboardsActions.updateFavorite = async(rowData, getAccessToken) => {

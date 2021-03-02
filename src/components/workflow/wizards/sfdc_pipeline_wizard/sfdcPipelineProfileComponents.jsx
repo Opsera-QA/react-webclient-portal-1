@@ -39,7 +39,7 @@ import { format } from "date-fns";
 import FilterContainer from "components/common/table/FilterContainer";
 import SfdcComponentFilter from "components/common/filters/sfdc/sfdc_component/SfdcComponentFilter";
 import sfdcComponentFilterMetadata from './sfdc-component-filter-metadata';
-import BooleanFilter from "components/common/filters/boolean/BooleanFilter";
+import InlineBooleanFilter from "components/common/filters/boolean/InlineBooleanFilter";
 import SfdcModifiedFilesTabView from "./tab_views/SfdcModifiedFilesTabView";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
@@ -465,7 +465,7 @@ const SfdcPipelineProfileComponents = ({
     return (
       <div className="px-2 d-flex small">
         <div className="pr-4">
-          <BooleanFilter
+          <InlineBooleanFilter
             toolTipText={"This will select all the items on this page only."}
             loadData={handleCheckAllClickComponentTypes}
             filterDto={filterDto}

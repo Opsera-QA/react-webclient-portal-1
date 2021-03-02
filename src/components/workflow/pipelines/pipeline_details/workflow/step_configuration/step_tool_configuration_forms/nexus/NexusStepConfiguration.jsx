@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 import nexusStepFormMetadata from "./nexus-stepForm-metadata";
 import Model from "core/data_model/model";
 import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
-import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import LoadingDialog from "components/common/status_notifications/loading";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import _ from "lodash";
@@ -16,6 +15,7 @@ import nexusStepActions from "./nexus-step-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 const NEXUS_STEP_TYPES = [
   {
@@ -271,13 +271,13 @@ function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToo
           />
           {nexusStepConfigurationDto.getData("type") !== "" &&
             <>
-              <DtoTextInput
+              <TextInputBase
                 setDataFunction={handleGroupNameChange}
                 setDataObject={setNexusStepConfigurationDataDto}
                 dataObject={nexusStepConfigurationDto}
                 fieldName={"groupName"}
               />
-              <DtoTextInput
+              <TextInputBase
                 setDataFunction={handleArtifactNameChange}
                 setDataObject={setNexusStepConfigurationDataDto}
                 dataObject={nexusStepConfigurationDto}

@@ -451,6 +451,7 @@ function PipelineSummaryPanel({
           <Col sm={3}>
             <PipelineSummaryActionBar
               pipeline={pipeline}
+              pipelineModel={pipelineModel}
               handleDeleteClick={authorizedAction("delete_pipeline_btn", pipeline.owner) ? handleDeleteClick : undefined}
               handleDuplicateClick={authorizedAction("duplicate_pipeline_btn", pipeline.owner) ? handleCopyPipeline : undefined}
               handleViewClick={authorizedAction("view_template_pipeline_btn", pipeline.owner) ? handleViewClick : undefined}

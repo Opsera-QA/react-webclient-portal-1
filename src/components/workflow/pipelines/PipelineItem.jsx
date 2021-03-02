@@ -10,13 +10,14 @@ import PipelineStatus from "./PipelineStatus";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import {
-  faDiceD20, faBracketsCurly, faMicrochip, faClock, faFlag, faPause,
+  faDiceD20, faBracketsCurly, faMicrochip, faFlag, faPause,
   faSearch,
   faSpinner, faStop,
   faTimesCircle, faCheckCircle,
 } from "@fortawesome/pro-light-svg-icons";
+import PipelineSubscriptionIcon from "components/common/icons/subscription/PipelineSubscriptionIcon";
 
-const PipelineItem = ({ item }) => {
+const PipelineItem = ({ item, dataModel }) => {
   let history = useHistory();
 
   const handleDetailsClick = param => e => {
@@ -134,7 +135,8 @@ const PipelineItem = ({ item }) => {
             <div>
               {item.name}
             </div>
-            <div className="ml-auto mt-1 mr-1 text-muted small upper-case-first">
+            <div className="d-flex ml-auto mt-1 mr-1 text-muted small upper-case-first">
+              <PipelineSubscriptionIcon pipelineModel={dataModel} className={"mr-2"} />
               {getFirstCategory()}
               {getPendingApprovalField()}
             </div>
@@ -221,6 +223,7 @@ const PipelineItem = ({ item }) => {
 
 PipelineItem.propTypes = {
   item: PropTypes.object,
+  dataModel: PropTypes.object
 };
 
 export default PipelineItem;

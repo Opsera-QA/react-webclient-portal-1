@@ -26,6 +26,10 @@ const dashboardMetadata = {
       id: "type",
     },
     {
+      label: "Attributes",
+      id: "attributes",
+    },
+    {
       label: "Visibility",
       id: "visibility",
     },
@@ -55,8 +59,23 @@ const dashboardMetadata = {
     name: "",
     description: "",
     visibility: "private",
+    type: "",
     active: true,
-    configuration: []
+    configuration: [],
+    attributes: {}
+  }
+};
+
+export const dashboardAttributesMetadata = {
+  type: "Dashboard Attributes",
+  fields: [
+    {
+      label: "Persona",
+      id: "persona"
+    }
+  ],
+  newObjectFields: {
+    persona: ""
   }
 };
 

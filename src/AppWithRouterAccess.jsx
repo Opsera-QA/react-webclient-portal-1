@@ -306,7 +306,7 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/notifications/details/:id" exact component={NotificationDetailView}/>
 
                   {/* marketplace */}
-                  <SecureRoute path="/insights/marketplace" component={Marketplace}/>
+                  <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace}/>
 
                   {/* git tasks */}
                   <SecureRoute path="/git" component={GitComponent}/>

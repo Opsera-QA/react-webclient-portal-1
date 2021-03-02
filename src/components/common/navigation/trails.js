@@ -4,7 +4,7 @@ import {
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
   faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey,
-  faHexagon
+  faHexagon, faListAlt, faEye
 } from "@fortawesome/pro-light-svg-icons";
 
 const breadcrumbs = {
@@ -106,9 +106,11 @@ const breadcrumbs = {
   //General
   userProfile: {name: "userProfile", path: paths.userProfile, label: "My User Profile", icon: faIdCard},
   myUserRecord: {name: "myUserRecord", path: paths.userRecord, label: "My User Record", icon: faUser},
+  subscriptions: {name: "subscriptions", path: paths.userRecord, label: "My Subscriptions", icon: faEye},
   myAccessTokens: {name: "myAccessTokens", path: paths.accessTokens, label: "Personal Access Tokens", icon: faKey},
   accessTokenDetailView: {name: "accessTokenDetailView", path: paths.userProfile, label: "Access Token Details", icon: faKey},
   home: {name: "home", path: paths.home, label: "Welcome back", icon: faHome},
+  logs: {name: "logs", path: paths.logs, label: "Logs", icon: faListAlt},
 
   accessDenied: {name: "accessDenied", path: undefined, label: "Access Denied", icon: faEnvelope},
 };
@@ -212,6 +214,7 @@ const trails = {
   userProfile: {parent: undefined, breadcrumb: breadcrumbs.userProfile},
   myUserRecord: {parent: "userProfile", breadcrumb: breadcrumbs.myUserRecord},
   myAccessTokens: {parent: "userProfile", breadcrumb: breadcrumbs.myAccessTokens},
+  subscriptions: {parent: "userProfile", breadcrumb: breadcrumbs.subscriptions},
   accessTokenDetailView: {parent: "myAccessTokens", breadcrumb: breadcrumbs.accessTokenDetailView},
   home: {parent: undefined, breadcrumb: breadcrumbs.home},
 

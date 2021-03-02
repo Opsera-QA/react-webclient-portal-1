@@ -42,9 +42,10 @@ function ProjectMappingWorkspaceSelectInput({ fieldName, dataObject, setDataObje
   };
 
   const handleDTOChange = async (fieldName, value) => {
-    if (fieldName === "tool_prop") {
+    if (fieldName === "tool_prop_name") {
       let newDataObject = dataObject;
-      newDataObject.setData("tool_prop", value);
+      newDataObject.setData("tool_prop", value.key);
+      newDataObject.setData("tool_prop_name", value.name);
       setDataObject({ ...newDataObject });
       return;
     }
@@ -77,9 +78,9 @@ ProjectMappingWorkspaceSelectInput.propTypes = {
 };
 
 ProjectMappingWorkspaceSelectInput.defaultProps = {
-  fieldName: "tool_prop",
-  valueField: "value",
-  textField: "value"
+  fieldName: "tool_prop_name",
+  valueField: "key",
+  textField: "name"
 };
 
 export default ProjectMappingWorkspaceSelectInput;

@@ -14,7 +14,7 @@ function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData, setActiveTab }
 
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab}>
-      <Row>
+      <Row className={"mx-0 mb-2"}>
         <Col lg={6}>
           <TextFieldBase dataObject={ldapGroupData} fieldName={"name"}/>
         </Col>
@@ -36,10 +36,8 @@ function LdapGroupSummaryPanel({ ldapGroupData, domain, loadData, setActiveTab }
         <Col lg={12}>
           <LdapGroupPermissionsField dataObject={ldapGroupData} />
         </Col>
-        <Col lg={12} className="pt-2">
-          <LdapUsersTable loadData={loadData} orgDomain={domain} userData={ldapGroupData.getData("members")} />
-        </Col>
       </Row>
+      <LdapUsersTable loadData={loadData} orgDomain={domain} userData={ldapGroupData.getData("members")} />
     </SummaryPanelContainer>
   );
 }

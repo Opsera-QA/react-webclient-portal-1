@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import InputLabel from "components/common/form_fields/input/InputLabel";
 import InfoText from "components/common/form_fields/input/InfoText";
+import InputContainer from "components/common/inputs/InputContainer";
 
 // TODO: I made this its own component in case we want to do specific styling,
 //  but if not just use new text component when implemented
@@ -19,7 +20,7 @@ function WebsitePathInput({ fieldName, dataObject, setDataObject, disabled }) {
 
   // TODO: When V2 of dto text input is implemented, put here
   return (
-    <div className="form-group m-2">
+    <InputContainer>
       <InputLabel field={field}/>
       <input
         disabled={disabled}
@@ -28,7 +29,7 @@ function WebsitePathInput({ fieldName, dataObject, setDataObject, disabled }) {
         className="form-control"
       />
       <InfoText field={field} errorMessage={errorMessage}/>
-    </div>
+    </InputContainer>
   );
 }
 

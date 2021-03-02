@@ -8,7 +8,6 @@ import Model from "core/data_model/model";
 import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import DtoTextInput from "components/common/input/dto_input/dto-text-input";
 import { DialogToastContext, showServiceUnavailableDialog } from "contexts/DialogToastContext";
 import GitActionsHelper from "../../helpers/git-actions-helper.js";
 import JSONInput from "react-json-editor-ajrm";
@@ -17,6 +16,7 @@ import CloseButton from "../../../../../../../common/buttons/CloseButton";
 import pipelineActions from "../../../../../../pipeline-actions";
 import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 const SCM_TOOL_LIST = [
   {
@@ -247,6 +247,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       newDataObject.setData("defaultBranch", "");
       newDataObject.setData("gitFilePath", "");
       newDataObject.setData("bitbucketWorkspace", "");
+      newDataObject.setData("bitbucketWorkspaceName", "");
       setTerraformStepConfigurationDataDto({ ...newDataObject });
       await fetchSCMDetails(terraformStepConfigurationDto.data);
       return;
@@ -288,14 +289,15 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       );
       return;
       }
-    if (fieldName === "bitbucketWorkspace") {
+    if (fieldName === "bitbucketWorkspaceName") {
       let newDataObject = terraformStepConfigurationDto;
-      newDataObject.setData("bitbucketWorkspace", value);
+      newDataObject.setData("bitbucketWorkspace", value.key);
+      newDataObject.setData("bitbucketWorkspaceName", value.name);
       setTerraformStepConfigurationDataDto({ ...newDataObject });
       await searchRepositories(
         terraformStepConfigurationDto.getData("type"),
         terraformStepConfigurationDto.getData("gitToolId"),
-        value
+        value.key
       );
       return;
     }
@@ -381,11 +383,11 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
               setDataFunction={handleDTOChange}
               setDataObject={setTerraformStepConfigurationDataDto}
               textField={"name"}
-              valueField={"value"}
+              valueField={"key"}
               dataObject={terraformStepConfigurationDto}
               filter={"contains"}
               selectOptions={workspacesList ? workspacesList : []}
-              fieldName={"bitbucketWorkspace"}
+              fieldName={"bitbucketWorkspaceName"}
               busy={isWorkspacesSearching}
               disabled={terraformStepConfigurationDto.getData("gitToolId").length === 0 || isWorkspacesSearching}
             />
@@ -415,7 +417,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             busy={isBranchSearching}
             disabled={terraformStepConfigurationDto.getData("gitRepository").length === 0 || isBranchSearching}
           />
-          <DtoTextInput
+          <TextInputBase
             setDataObject={setTerraformStepConfigurationDataDto}
             dataObject={terraformStepConfigurationDto}
             fieldName={"gitFilePath"}
@@ -434,7 +436,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             busy={isAwsSearching}
             disabled={isAwsSearching || terraformStepConfigurationDto && terraformStepConfigurationDto.getData("defaultBranch").length === 0}
           />
-          <DtoTextInput
+          <TextInputBase
             setDataObject={setTerraformStepConfigurationDataDto}
             dataObject={terraformStepConfigurationDto}
             fieldName={"accessKeyParamName"}
@@ -442,7 +444,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
               terraformStepConfigurationDto && terraformStepConfigurationDto.getData("awsToolConfigId") && terraformStepConfigurationDto.getData("awsToolConfigId").length === 0
             }
           />
-          <DtoTextInput
+          <TextInputBase
             setDataObject={setTerraformStepConfigurationDataDto}
             dataObject={terraformStepConfigurationDto}
             fieldName={"secrectKeyParamName"}
@@ -450,7 +452,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
               terraformStepConfigurationDto && terraformStepConfigurationDto.getData("awsToolConfigId") && terraformStepConfigurationDto.getData("awsToolConfigId").length === 0
             }
           />
-          <DtoTextInput
+          <TextInputBase
             setDataObject={setTerraformStepConfigurationDataDto}
             dataObject={terraformStepConfigurationDto}
             fieldName={"regionParamName"}

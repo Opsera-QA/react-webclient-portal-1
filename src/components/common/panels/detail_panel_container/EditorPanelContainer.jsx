@@ -37,7 +37,7 @@ function EditorPanelContainer({ children, isLoading, showRequiredFieldsMessage, 
   return (
     <div className="p-3 h-100">
       <div>{children}</div>
-      <div className="mr-3">
+      <div>
         <div>{getPersistButtonContainer()}</div>
         <div>{getRequiredFieldsMessage()}</div>
       </div>

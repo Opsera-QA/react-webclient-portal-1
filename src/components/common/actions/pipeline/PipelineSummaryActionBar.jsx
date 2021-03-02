@@ -6,10 +6,12 @@ import ActionBarTransferPipelineButton from "./buttons/ActionBarTransferPipeline
 import ActionBarViewButton from "../buttons/ActionBarViewButton";
 import ActionBarPublishPipelineButton from "./buttons/ActionBarPublishPipelineButton";
 import ActionBarEditAccessRolesButton from "components/common/actions/buttons/ActionBarEditAccessRolesButton";
+import PipelineSubscriptionIcon from "components/common/icons/subscription/PipelineSubscriptionIcon";
 
-function PipelineSummaryActionBar({canTransferPipeline, handleDuplicateClick, handleDeleteClick, handleEditAccessRolesClick, handleViewClick, handlePublishClick, pipeline, loadPipeline}) {
+function PipelineSummaryActionBar({pipelineModel, canTransferPipeline, handleDuplicateClick, handleDeleteClick, handleEditAccessRolesClick, handleViewClick, handlePublishClick, pipeline, loadPipeline}) {
   return (
     <div className="text-muted action-bar justify-content-end d-flex pb-2">
+      <div className="ml-3"><PipelineSubscriptionIcon pipelineModel={pipelineModel} /></div>
       {handleViewClick && <div className="ml-3"><ActionBarViewButton handleViewClick={handleViewClick} itemName={"Pipeline"} data={pipeline} /></div>}
       {handlePublishClick && <div className="ml-3"><ActionBarPublishPipelineButton handlePublishClick={handlePublishClick} itemId={pipeline._id} /></div>}
       {handleDuplicateClick && <div className="ml-3"><ActionBarDuplicateButton handleDuplicateClick={handleDuplicateClick} itemName={"Pipeline"} itemId={pipeline._id} /></div>}
@@ -29,6 +31,7 @@ PipelineSummaryActionBar.propTypes = {
   handlePublishClick: PropTypes.func,
   handleEditAccessRolesClick: PropTypes.func,
   pipeline: PropTypes.object,
+  pipelineModel: PropTypes.object
 };
 
 export default PipelineSummaryActionBar;

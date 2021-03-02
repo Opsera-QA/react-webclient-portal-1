@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -6,14 +6,27 @@ import {faSave, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import {persistUpdatedRecord} from "./saving-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function SaveButtonBase({recordDto, updateRecord, disable, showSuccessToasts, lenient}) {
+function SaveButtonBase({recordDto, updateRecord, disable, showSuccessToasts, lenient, className}) {
   let toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    }
+  }, []);
+
 
   const persistRecord = async () => {
     setIsSaving(true);
     await persistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient);
-    setIsSaving(false);
+
+    if (isMounted.current === true) {
+      setIsSaving(false);
+    }
   }
 
   const getLabel = () => {
@@ -25,7 +38,7 @@ function SaveButtonBase({recordDto, updateRecord, disable, showSuccessToasts, le
   };
 
   return (
-    <div className="mx-1">
+    <div className={className}>
       <Button size="md" variant="primary" disabled={isSaving || disable || (!lenient && !recordDto.isChanged())} onClick={() => persistRecord()}>
         {getLabel()}
       </Button>
@@ -38,7 +51,8 @@ SaveButtonBase.propTypes = {
   updateRecord: PropTypes.func,
   disable: PropTypes.bool,
   showSuccessToasts: PropTypes.bool,
-  lenient: PropTypes.bool
+  lenient: PropTypes.bool,
+  className: PropTypes.string
 };
 
 SaveButtonBase.defaultProps = {

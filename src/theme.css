@@ -135,6 +135,10 @@
     box-shadow: none;
 }
 
+.success-button-color {
+    color: #019171;
+}
+
 .btn-success.disabled,
 .btn-success:disabled {
     color: #fff;
@@ -1032,7 +1036,7 @@ a.nav-link {
 
 /* Action Bar styling */
 .action-bar-icon:hover {
-    color: #E6E5E3;
+    color: #3D3B36;
 }
 
 /* End Action Bar styling */

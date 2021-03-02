@@ -7,10 +7,10 @@ import "components/inventory/tools/tools.css";
 import {platformList} from "./jenkins-create-account-metadata";
 import DropdownList from "react-widgets/lib/DropdownList";
 import {AuthContext} from "../../../../../../../contexts/AuthContext";
-import DtoTextInput from "../../../../../../common/input/dto_input/dto-text-input";
 import LoadingDialog from "../../../../../../common/status_notifications/loading";
 import {DialogToastContext} from "../../../../../../../contexts/DialogToastContext";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -115,10 +115,10 @@ function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData }) {
             </div>
           </Col>
           <Col lg={12}>
-            <DtoTextInput fieldName={"credentialsId"} dataObject={jenkinsAccountDataDto} setDataObject={setJenkinsAccountDataDto} />
+            <TextInputBase fieldName={"credentialsId"} dataObject={jenkinsAccountDataDto} setDataObject={setJenkinsAccountDataDto} />
           </Col>
           <Col lg={12}>
-            <DtoTextInput fieldName={"credentialsDescription"} dataObject={jenkinsAccountDataDto} setDataObject={setJenkinsAccountDataDto} />
+            <TextInputBase fieldName={"credentialsDescription"} dataObject={jenkinsAccountDataDto} setDataObject={setJenkinsAccountDataDto} />
           </Col>
           <Col lg={12}>
             <div className="m-2">

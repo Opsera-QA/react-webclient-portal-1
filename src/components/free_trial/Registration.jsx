@@ -2,13 +2,13 @@ import React, {useContext, useEffect, useState} from "react";
 import { Card, Form } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import registrationMetadata from "./freetrial-metadata";
-import DtoTextInput from "../common/input/dto_input/dto-text-input";
 import Model from "../../core/data_model/model";
 import LoadingDialog from "../common/status_notifications/loading";
 import {DialogToastContext} from "../../contexts/DialogToastContext";
 import userActions from "../user/user-actions";
 import RegisterButton from "../common/buttons/saving/RegisterButton";
 import PasswordInput from "../common/input/dto_input/PasswordInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function FreeTrialSignup() {
   const [isLoading, setIsLoading] = useState(false);
@@ -72,32 +72,32 @@ function FreeTrialSignup() {
             <Card.Body className="new-user-body">
               <div className="signupForm p-2">
                 <div className="pr-3 pb-3">
-                  <DtoTextInput
+                  <TextInputBase
                     fieldName={"firstName"}
                     setDataObject={setRegistrationDataDto}
                     dataObject={registrationDataDto}
                   />
-                  <DtoTextInput
+                  <TextInputBase
                     fieldName={"lastName"}
                     setDataObject={setRegistrationDataDto}
                     dataObject={registrationDataDto}
                   />
-                  <DtoTextInput
+                  <TextInputBase
                     fieldName={"email"}
                     setDataObject={setRegistrationDataDto}
                     dataObject={registrationDataDto}
                   />
-                  <DtoTextInput
+                  <TextInputBase
                     fieldName={"company"}
                     setDataObject={setRegistrationDataDto}
                     dataObject={registrationDataDto}
                   />
-                  <DtoTextInput
+                  <TextInputBase
                     fieldName={"domain"}
                     setDataObject={setRegistrationDataDto}
                     dataObject={registrationDataDto}
                   />
-                  <DtoTextInput
+                  <TextInputBase
                     fieldName={"title"}
                     setDataObject={setRegistrationDataDto}
                     dataObject={registrationDataDto}

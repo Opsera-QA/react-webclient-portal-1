@@ -4,8 +4,8 @@ import Row from "react-bootstrap/Row";
 
 function SaveButtonContainer({ children }) {
   return (
-    <Row>
-      <div className="ml-auto mt-3 mr-2 d-flex">
+    <Row className="mx-0">
+      <div className="ml-auto mt-3 d-flex">
         {children}
       </div>
     </Row>

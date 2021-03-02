@@ -25,7 +25,7 @@ function SeleniumPipelineStepConfigurationSummaryPanel({ seleniumDataObject, pip
           <TextFieldBase dataObject={seleniumDataObject} fieldName={"gitCredential"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={seleniumDataObject} fieldName={"workspace"} />
+          <TextFieldBase dataObject={seleniumDataObject} fieldName={"workspaceName"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={seleniumDataObject} fieldName={"repository"} />

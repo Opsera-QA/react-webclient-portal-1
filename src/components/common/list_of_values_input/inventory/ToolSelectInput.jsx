@@ -1,51 +1,78 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle, faTools} from "@fortawesome/pro-light-svg-icons";
 import {Link} from "react-router-dom";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import toolsActions from "components/inventory/tools/tools-actions";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
+import axios from "axios";
 
-function ToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField}) {
-  const toastContext = useContext(DialogToastContext);
+function ToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, className}) {
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true)
-      await loadTools();
+      await loadTools(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        console.error(error);
+        setErrorMessage("Could Not Load Tools");
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true ) {
+        setIsLoading(false);
+      }
     }
   };
 
-  const loadTools = async () => {
-    const response = await toolsActions.getToolLovs(getAccessToken);
-    setTools(response?.data?.data);
+  const loadTools = async (cancelSource = cancelTokenSource) => {
+    const response = await toolsActions.getToolLovsV2(getAccessToken, cancelSource);
+
+    if (isMounted?.current === true && response?.data) {
+      setTools(response?.data?.data);
+    }
   };
 
   const getInfoText = () => {
     if (dataObject.getData(fieldName) !== "") {
       return (
-        <Link to={`/inventory/tools/details/${dataObject.getData(fieldName)}`}>
-          <span><FontAwesomeIcon icon={faTools} className="pr-1" />View Or Edit this Tool's Registry settings</span>
-        </Link>
+        <small className="text-muted">
+          <Link to={`/inventory/tools/details/${dataObject.getData(fieldName)}`}>
+            <span><FontAwesomeIcon icon={faTools} className="pr-1" />View Or Edit this Tool's Registry settings</span>
+          </Link>
+        </small>
       );
     }
-
-    return <span>Select a tool to get started.</span>
   };
 
   if (!isLoading && (tools == null || tools.length === 0)) {
@@ -61,22 +88,22 @@ function ToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textF
   }
 
   return (
-    <div>
+    <>
       <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
         setDataObject={setDataObject}
         selectOptions={tools}
         busy={isLoading}
+        errorMessage={errorMessage}
         valueField={valueField}
         textField={textField}
-        // placeholderText={placeholderText}
+        className={className}
+        placeholderText={"Select a tool to get started."}
         disabled={disabled || isLoading}
       />
-      <small className="text-muted ml-3">
-        {getInfoText()}
-      </small>
-    </div>
+      {getInfoText()}
+    </>
   );
 }
 
@@ -86,7 +113,8 @@ ToolSelectInput.propTypes = {
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
-  valueField: PropTypes.string
+  valueField: PropTypes.string,
+  className: PropTypes.string
 };
 
 ToolSelectInput.defaultProps = {
