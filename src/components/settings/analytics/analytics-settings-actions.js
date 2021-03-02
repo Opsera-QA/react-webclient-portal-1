@@ -49,6 +49,16 @@ analyticsActions.getAnalyticsToolsV2 = async (getAccessToken, cancelTokenSource)
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+analyticsActions.getBlueprintFilterData = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/analytics/search/filter`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+analyticsActions.getPipelineFilterData = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/pipelines`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 analyticsActions.fetchProfileV2 = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = "/analytics/profile/settings";
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
@@ -67,6 +77,25 @@ analyticsActions.createProfile = async (getAccessToken) => {
     });
   return response;
 };
+
+analyticsActions.searchLogsV2 = async (getAccessToken, cancelTokenSource, searchTerm, startDate, endDate, filterType, customFilters, currentPage, pageSize) => {
+  const urlParams = {
+    search: searchTerm,
+    date: startDate !== 0 && endDate === 0 ? startDate : undefined,
+    start: startDate !== 0 && endDate !== 0 ? startDate : undefined,
+    end: startDate !== 0 && endDate !== 0 ? endDate : undefined,
+    filter: {
+      index: filterType,
+      customFilter: customFilters,
+    },
+    page: currentPage,
+    size: pageSize,
+  };
+  let apiUrl = filterType === "blueprint" ? "/analytics/blueprint" : "/analytics/search";
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 
 analyticsActions.updateProfile = async (getAccessToken, postBody) => {
   const accessToken = await getAccessToken();

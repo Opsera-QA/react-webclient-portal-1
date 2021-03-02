@@ -3,7 +3,7 @@ import {AuthContext} from "contexts/AuthContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import ErrorDialog from "components/common/status_notifications/error";
 import LoadingDialog from "components/common/status_notifications/loading";
-import SearchLogs from "components/logs/searchLogs";
+import LogSearch from "components/logs/LogSearch";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import analyticsActions from "components/settings/analytics/analytics-settings-actions";
@@ -12,12 +12,8 @@ function Logs() {
   const {getAccessToken} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [error, setErrors] = useState();
-  const [data, setData] = useState([]);
   const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [profile, setProfile] = useState(true);
-  const [isEnabled, setIsEnabled] = useState(true);
-  const [enabledOn, setEnabledOn] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -65,10 +61,7 @@ function Logs() {
 
     if (isMounted?.current === true && response?.data) {
       const tempProfile = response?.data;
-      setProfile(tempProfile);
       let profileData = tempProfile.profile?.length > 0 ? tempProfile.profile[0] : {};
-      setIsEnabled(profileData?.active || false);
-      setEnabledOn(!!(profileData.enabledToolsOn && profileData.enabledToolsOn.length !== 0));
 
       const toolResponse = await analyticsActions.getAnalyticsToolsV2(getAccessToken, cancelSource);
       const listOfTools = Array.isArray(toolResponse?.data) ? toolResponse.data : [];
@@ -82,7 +75,6 @@ function Logs() {
       }
 
       // console.log("Profile: ", JSON.stringify(profileData));
-      setData(profileData);
       // console.log(profile && profile.data.profile[0]);
 
       if (typeof profileData.profile === "object" && profileData.profile.length === 0) {
@@ -102,7 +94,7 @@ function Logs() {
       return <ErrorDialog error={error} align="top" />;
     }
 
-    return (<SearchLogs tools={tools} />);
+    return (<LogSearch tools={tools} />);
   };
 
   return (
