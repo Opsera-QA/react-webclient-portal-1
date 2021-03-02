@@ -40,12 +40,11 @@ const LoginForm = ({ authClient }) => {
     e.preventDefault();
     setLoading(true);
 
-    authClient.signIn({ username, password })
+    authClient.signInWithCredentials({ username, password })
       .then(res => {
         setErrorMessage(false);
         setMessage(false);
         const sessionToken = res.sessionToken;
-        //oktaAuth.signInWithRedirect({ sessionToken })
 
         const tokenOptions = {
           sessionToken: sessionToken,
@@ -70,7 +69,7 @@ const LoginForm = ({ authClient }) => {
             console.log("Error on getWithoutPrompt, trying fallback", err);
             //handleFallbackGetLoginWithPrompt(tokenOptions);
             handleFallbackSignInReactHook(sessionToken);
-            setErrorMessage(err.message);
+            //setErrorMessage(err.message);
             setLoading(false);
           });
       })
@@ -86,7 +85,7 @@ const LoginForm = ({ authClient }) => {
     oktaAuth.signInWithRedirect({ sessionToken })
   }
 
-  const handleFallbackGetLoginWithPrompt = (options) => {
+  /*const handleFallbackGetLoginWithPrompt = (options) => {
     authClient.token.getWithoutPrompt(options)
       .then(function(res) {
         let tokens = res.tokens;
@@ -99,7 +98,7 @@ const LoginForm = ({ authClient }) => {
         setErrorMessage(err.message);
         setLoading(false);
       });
-  };
+  };*/
 
 
   //uses Okta Login widet for federated login.
