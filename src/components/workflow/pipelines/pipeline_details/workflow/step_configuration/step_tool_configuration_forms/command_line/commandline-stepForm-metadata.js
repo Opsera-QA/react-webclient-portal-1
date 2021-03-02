@@ -148,6 +148,10 @@ const commandLineStepFormMetadata = {
       id: "agentLabels",
       // isRequired: true
     },
+    {
+      label: "Auto-Scaling Enabled?",
+      id: "autoScaleEnable"
+    }
       
   ],
   fieldsAlt: [
@@ -299,7 +303,10 @@ const commandLineStepFormMetadata = {
       id: "agentLabels",
       // isRequired: true
     },
-      
+    {
+      label: "Auto-Scaling Enabled?",
+      id: "autoScaleEnable"
+    }
   ],
   newModelBase: {
 
@@ -329,6 +336,7 @@ const commandLineStepFormMetadata = {
     gitBranch: "",
 
     agentLabels: "",
+    autoScaleEnable: false,
 
     outputPath: "",
     outputFileName: "",

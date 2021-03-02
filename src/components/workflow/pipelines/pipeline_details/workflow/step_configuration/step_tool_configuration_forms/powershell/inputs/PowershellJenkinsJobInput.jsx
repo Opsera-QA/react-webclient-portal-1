@@ -9,6 +9,7 @@ function PowershellJenkinsJobInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("toolJobId", selectedOption._id);
     newDataObject.setData("jobType", selectedOption.type[0]);
     newDataObject.setData("jobName", "");
+    newDataObject.setData("agentLabels", selectedOption.configuration?.agentLabels || "");
     setDataObject({...newDataObject});
   };
 

@@ -11,6 +11,7 @@ import ToolConfigurationEditorPanelContainer
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import JenkinsProxyToggle from "components/inventory/tools/tool_details/tool_jobs/jenkins/JenkinsProxyToggle";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 function JenkinsToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -73,6 +74,7 @@ function JenkinsToolConfiguration({ toolData }) {
           <TextInputBase dataObject={jenkinsConfigurationDto} setDataObject={setJenkinsConfigurationDto} fieldName={"jUserId"} />
           <JenkinsProxyToggle dataObject={jenkinsConfigurationDto} setDataObject={setJenkinsConfigurationDto} fieldName={"proxyEnable"} />
           {getDynamicFields()}
+          <BooleanToggleInput dataObject={jenkinsConfigurationDto} setDataObject={setJenkinsConfigurationDto} fieldName={"autoScaleEnable"} />
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>

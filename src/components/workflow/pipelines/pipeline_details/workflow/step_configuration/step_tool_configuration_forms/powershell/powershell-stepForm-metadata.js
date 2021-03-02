@@ -120,6 +120,10 @@ const powershellStepFormMetadata = {
       id: "jobName"
     },
     {
+      label: "Auto-Scaling Enabled?",
+      id: "autoScaleEnable"
+    },
+    {
       label: "Delete workspace before building",
       id: "workspaceDeleteFlag",
     },
@@ -152,6 +156,7 @@ const powershellStepFormMetadata = {
     gitBranch: "",
 
     agentLabels: "",
+    autoScaleEnable: false,
 
     scriptFilePath : "",
     scriptFileName : "",

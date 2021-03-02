@@ -36,6 +36,10 @@ const jenkinsConnectionMetadata = {
       label: "Jenkins Password",
       id: "jPassword",
     },
+    {
+      label: "Auto-Scaling Enabled?",
+      id: "autoScaleEnable",
+    },
 ],
   fieldsAlt: [
     {
@@ -75,6 +79,10 @@ const jenkinsConnectionMetadata = {
       id: "jPassword",
       isRequired: true
     },
+    {
+      label: "Auto-Scaling Enabled?",
+      id: "autoScaleEnable",
+    },
   ],
   newObjectFields: {
     jenkinsUrl: "",
@@ -84,7 +92,8 @@ const jenkinsConnectionMetadata = {
     jPassword: "",
     proxyUserName: "",
     proxyPassword: "",
-    proxyEnable: false
+    proxyEnable: false,
+    autoScaleEnable: false
   }
 };
 
