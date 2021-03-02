@@ -27,7 +27,7 @@ function LogSearchResult({ searchResults, submittedSearchTerm }) {
   };
 
   const handleHighlightText = (item) => {
-    var thisStringItem = JSON.stringify(item, null, 2);
+    let thisStringItem = JSON.stringify(item, null, 2);
     return thisStringItem.substring(
       thisStringItem.lastIndexOf(submittedSearchTerm) - 500,
       thisStringItem.lastIndexOf(submittedSearchTerm) + 500

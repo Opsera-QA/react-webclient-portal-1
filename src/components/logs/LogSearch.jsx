@@ -8,7 +8,6 @@ import { Form, Button, Overlay, Popover, Row, Col } from "react-bootstrap";
 import { format, addDays } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCalendar } from "@fortawesome/pro-light-svg-icons";
-import "./logs.css";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import { DateRangePicker } from "react-date-range";
@@ -25,7 +24,6 @@ function LogSearch({tools, sideBySide}) {
   const [error, setErrors] = useState(false);
   const [logData, setLogData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [noResults, setNoResults] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilters] = useState([]);
   const [filterType, setFilterType] = useState(Array.isArray(tools) && tools.length > 0 ? tools[0] : "");
@@ -101,7 +99,6 @@ function LogSearch({tools, sideBySide}) {
     setJobFilter("");
     setPipelineFilter("");
     setStepFilter("");
-    setNoResults(false);
     setSubmittedSearchTerm(null);
   };
 
@@ -123,11 +120,11 @@ function LogSearch({tools, sideBySide}) {
 
   const getFormattedCustomFilters = () => {
     let filterArray = [];
-    if (filterType === "blueprint") {
-      if (jobFilter) {
-        filterArray.push(jobFilter.value);
-      }
+
+    if (filterType === "blueprint" && jobFilter) {
+      filterArray.push(jobFilter.value);
     }
+
     if (filterType === "opsera-pipeline") {
       if (pipelineFilter) {
         filterArray.push({ Pipeline: pipelineFilter.value });
@@ -136,6 +133,7 @@ function LogSearch({tools, sideBySide}) {
         filterArray.push({ Step: stepFilter.value });
       }
     }
+
     return filterArray;
   };
 
@@ -179,13 +177,8 @@ function LogSearch({tools, sideBySide}) {
   //     if (response) {
   //       searchResults =
   //         response?.data?.hits ? response.data.hits : [];
-  //       setNoResults(searchResults == null || searchResults.length === 0);
   //       setLogData(searchResults);
   //     }
-  //     else {
-  //       setNoResults(true);
-  //     }
-  //
   //   }
   //   catch (error) {
   //     console.error(error)
@@ -223,11 +216,6 @@ function LogSearch({tools, sideBySide}) {
         if (result) {
           searchResults =
             result.data.hasOwnProperty("hits") && result.data.hits.hasOwnProperty("hits") ? result.data.hits : [];
-        }
-        if (searchResults.hits.length === 0) {
-          setNoResults(true);
-        } else {
-          setNoResults(false);
         }
         setLogData(searchResults);
         setIsLoading(false);
@@ -311,12 +299,13 @@ function LogSearch({tools, sideBySide}) {
     setTarget(event.target);
     if (date[0].startDate && date[0].endDate) {
       let startDate = format(new Date(date[0].startDate), "MM/dd");
-      let endDate = format(new Date(date[0].endDate), "MM/dd");
-      if (endDate === 0) {
+      if (date[0].endDate === 0) {
         setEDate(startDate);
       } else {
+        let endDate = format(new Date(date[0].endDate), "MM/dd");
         setEDate(endDate);
       }
+
       setSDate(startDate);
     }
   };
@@ -377,36 +366,42 @@ function LogSearch({tools, sideBySide}) {
       return <LoadingDialog size="sm" />;
     }
 
-    if (!isLoading && !searchTerm && submitted) {
-      return (<InfoDialog message="Search term required." />);
-    }
+    if (submitted) {
 
-    if (logData?.hits && Object.keys(logData.hits).length === 0 && searchTerm) {
-     return (<InfoDialog message="No results found." />);
-    }
+      if (!searchTerm) {
+        return (<InfoDialog message="Search term required." />);
+      }
 
-    if (Object.keys(logData).length > 0) {
-      switch (filterType) {
-        case "blueprint":
-          return (<BlueprintSearchResult searchResults={logData.hits} />);
-        case "commit":
-          return (
-            <>
-              <LogSearchResult searchResults={logData.hits} submittedSearchTerm={submittedSearchTerm} />
-              <CommitSearchResult searchResults={logData.hits} />
-            </>
+      if ((logData?.hits == null || Object.keys(logData.hits).length === 0)) {
+        return (<InfoDialog message="No results found." />);
+      }
+
+      if (Object.keys(logData).length > 0) {
+        switch (filterType) {
+          case "blueprint":
+            return (<BlueprintSearchResult searchResults={logData?.hits} />);
+          case "commit":
+            return (
+              // TODO: Not sure if we want to show both, but this was a bug in legacy code if not
+              <>
+                <LogSearchResult searchResults={logData?.hits} submittedSearchTerm={submittedSearchTerm} />
+                <CommitSearchResult searchResults={logData?.hits} />
+              </>
             );
-        default:
-          return (<LogSearchResult searchResults={logData.hits} submittedSearchTerm={submittedSearchTerm} />);
+          default:
+            return (<LogSearchResult searchResults={logData?.hits} submittedSearchTerm={submittedSearchTerm} />);
+        }
       }
     }
   };
 
+  // TODO: Queries need to be updated to use new filter logic, also not sure why it pretends there are 30 if no total is given
   const getPaginator = () => {
-    if (Object.keys(logData).length > 0 && filterType !== "blueprint" && filterType !== "commit" && !noResults) {
+    if (logData?.total > 0 && filterType !== "blueprint" && filterType !== "commit") {
+      console.log("logData: " + JSON.stringify(logData.total))
       return (
         <Pagination
-          total={logData.total.value || 30}
+          total={logData.total}
           currentPage={currentPage}
           pageSize={pageSize}
           onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)}
@@ -479,11 +474,11 @@ function LogSearch({tools, sideBySide}) {
 
   if (!tools.length > 0) {
     return (
-    <div className="mt-3 bordered-content-block p-3 max-content-width" style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}> 
-    <Row>
-        <InfoDialog message="No logs found for this account" />
-    </Row>
-  </div>
+      <div className="mt-3 bordered-content-block p-3 d-flex" style={{justifyContent: "center", alignItems: "center"}}>
+        <Row>
+          <InfoDialog message="No logs found for this account"/>
+        </Row>
+      </div>
     );
   }
 
@@ -512,7 +507,7 @@ function LogSearch({tools, sideBySide}) {
               </Col>
             </Row>
 
-            <Row className="mt-2">
+            <Row className="mt-2 mx-0">
               <Col className="text-right">
                 <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
                   <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />
