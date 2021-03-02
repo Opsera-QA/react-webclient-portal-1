@@ -395,13 +395,11 @@ function LogSearch({tools, sideBySide}) {
     }
   };
 
-  // TODO: Queries need to be updated to use new filter logic, also not sure why it pretends there are 30 if no total is given
   const getPaginator = () => {
-    if (logData?.total > 0 && filterType !== "blueprint" && filterType !== "commit") {
-      console.log("logData: " + JSON.stringify(logData.total))
+    if (logData?.total?.value > 0 && filterType !== "blueprint" && filterType !== "commit") {
       return (
         <Pagination
-          total={logData.total}
+          total={logData.total.value}
           currentPage={currentPage}
           pageSize={pageSize}
           onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)}
