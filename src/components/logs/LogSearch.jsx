@@ -241,7 +241,6 @@ function LogSearch({tools, sideBySide}) {
 
   const fetchFilterData = async () => {
     if (filterType === "blueprint") {
-      console.log("fetching filter data");
       setFilters([]);
       const response = await analyticsActions.getBlueprintFilterData(getAccessToken);
       let filterDataApiResponse = response?.data?.hits?.hits;
@@ -324,30 +323,33 @@ function LogSearch({tools, sideBySide}) {
 
   const closeCalender = () => {
     setCalendar(false);
+
     if (date[0].startDate && date[0].endDate) {
       let startDate = format(new Date(date[0].startDate), "MM/dd");
-      let endDate = format(new Date(date[0].endDate), "MM/dd");
-      if (endDate === 0) {
+      setSDate(startDate);
+
+      if (date[0].endDate === 0) {
         setEDate(startDate);
       } else {
+        let endDate = format(new Date(date[0].endDate), "MM/dd");
         setEDate(endDate);
       }
-      setSDate(startDate);
     }
   };
 
   const dateChange = (item) => {
     setDate([item.selection]);
+
     if (item.selection) {
       let startDate = format(item.selection.startDate, "MM/dd");
-      let endDate = format(item.selection.endDate, "MM/dd");
+      setSDate(startDate);
 
-      if (endDate === 0) {
+      if (item.selection.endDate === 0) {
         setEDate(startDate);
       } else {
+        let endDate = format(item.selection.endDate, "MM/dd");
         setEDate(endDate);
       }
-      setSDate(startDate);
     }
   };
 
@@ -416,8 +418,8 @@ function LogSearch({tools, sideBySide}) {
   const getDynamicFields = () => {
     if (filterType === "opsera-pipeline") {
       return (
-        <>
-          <Col md={3} className="py-1">
+        <div>
+          <Col>
             <DropdownList
               data={filterOptions}
               busy={Object.keys(filterOptions).length === 0}
@@ -432,7 +434,7 @@ function LogSearch({tools, sideBySide}) {
               onToggle={fetchFilterData}
             />
           </Col>
-          <Col className="py-1">
+          <Col>
             <DropdownList
               data={pipelineFilter.steps}
               busy={Object.keys(filterOptions).length === 0}
@@ -446,29 +448,29 @@ function LogSearch({tools, sideBySide}) {
               onChange={setStepFilter}
             />
           </Col>
-        </>
+        </div>
       );
     }
 
-    if (filterType === "blueprint") {
-      return (
-        <Col md={3} className="py-1">
-          <DropdownList
-            data={filterOptions}
-            busy={Object.keys(filterOptions).length === 0}
-            disabled={Object.keys(filterOptions).length === 0}
-            className="basic-single"
-            valueField='value'
-            textField='label'
-            filter='contains'
-            placeholder={"Select Job Name"}
-            value={jobFilter}
-            onChange={setJobFilter}
-            onToggle={fetchFilterData}
-          />
-        </Col>
-      );
-    }
+    // if (filterType === "blueprint") {
+    //   return (
+    //     <Col md={3} className="py-1">
+    //       <DropdownList
+    //         data={filterOptions}
+    //         busy={Object.keys(filterOptions).length === 0}
+    //         disabled={Object.keys(filterOptions).length === 0}
+    //         className="basic-single"
+    //         valueField='value'
+    //         textField='label'
+    //         filter='contains'
+    //         placeholder={"Select Job Name"}
+    //         value={jobFilter}
+    //         onChange={setJobFilter}
+    //         onToggle={fetchFilterData}
+    //       />
+    //     </Col>
+    //   );
+    // }
   };
 
   if (error) {
@@ -486,11 +488,10 @@ function LogSearch({tools, sideBySide}) {
   }
 
   return (
-      <>
         <div>
           <Form onSubmit={handleFormSubmit}>
-            <Row>
-              <Col className="py-1">
+            <Row className={"mx-0 py-2"}>
+              <Col>
                 <DropdownList
                   data={Array.isArray(tools) ? tools : []}
                   defaultValue={Array.isArray(tools) ? tools[0] : []}
@@ -502,7 +503,7 @@ function LogSearch({tools, sideBySide}) {
                 />
               </Col>
               {getDynamicFields()}
-              <Col className="py-1" md={filterType === "opsera-pipeline" ? 3 : 9}>
+              <Col>
                 <Form.Control
                   placeholder={filterType === "blueprint" ? "Enter Build Number" : "Search logs"}
                   value={searchTerm}
@@ -571,11 +572,9 @@ function LogSearch({tools, sideBySide}) {
               </Col>
             </Row>
           </Form>
+          {getBottom()}
+          {getPaginator()}
         </div>
-
-        {getBottom()}
-        {getPaginator()}
-      </>
     );
   }
 
