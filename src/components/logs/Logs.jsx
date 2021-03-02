@@ -14,6 +14,7 @@ function Logs() {
   const [error, setErrors] = useState();
   const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [sideBySide, setSideBySide] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -94,7 +95,16 @@ function Logs() {
       return <ErrorDialog error={error} align="top" />;
     }
 
-    return (<LogSearch tools={tools} />);
+    if (sideBySide) {
+      return (
+        <div className={"d-flex"}>
+          <div className={"w-50 pr-2"}><LogSearch tools={tools} sideBySide={sideBySide} /></div>
+          <div className={"w-50 pl-2"}><LogSearch tools={tools} sideBySide={sideBySide} /></div>
+        </div>
+      );
+    }
+
+    return (<LogSearch tools={tools} sideBySide={sideBySide} />);
   };
 
   return (

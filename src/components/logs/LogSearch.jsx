@@ -20,7 +20,7 @@ import Pagination from "components/common/pagination";
 import analyticsActions from "components/settings/analytics/analytics-settings-actions";
 import {ApiService} from "api/apiService";
 
-function LogSearch({tools}) {
+function LogSearch({tools, sideBySide}) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [logData, setLogData] = useState([]);
@@ -413,6 +413,64 @@ function LogSearch({tools}) {
     }
   };
 
+  const getDynamicFields = () => {
+    if (filterType === "opsera-pipeline") {
+      return (
+        <>
+          <Col md={3} className="py-1">
+            <DropdownList
+              data={filterOptions}
+              busy={Object.keys(filterOptions).length === 0}
+              disabled={Object.keys(filterOptions).length === 0}
+              // disabled={true}
+              valueField="value"
+              textField="label"
+              filter="contains"
+              value={pipelineFilter}
+              placeholder={"Select Pipeline Name"}
+              onChange={opseraPipelineSelectChange}
+              onToggle={fetchFilterData}
+            />
+          </Col>
+          <Col className="py-1">
+            <DropdownList
+              data={pipelineFilter.steps}
+              busy={Object.keys(filterOptions).length === 0}
+              disabled={Object.keys(pipelineFilter).length === 0}
+              // disabled={true}
+              valueField="value"
+              textField="label"
+              filter="contains"
+              value={stepFilter}
+              placeholder={"Select Step"}
+              onChange={setStepFilter}
+            />
+          </Col>
+        </>
+      );
+    }
+
+    if (filterType === "blueprint") {
+      return (
+        <Col md={3} className="py-1">
+          <DropdownList
+            data={filterOptions}
+            busy={Object.keys(filterOptions).length === 0}
+            disabled={Object.keys(filterOptions).length === 0}
+            className="basic-single"
+            valueField='value'
+            textField='label'
+            filter='contains'
+            placeholder={"Select Job Name"}
+            value={jobFilter}
+            onChange={setJobFilter}
+            onToggle={fetchFilterData}
+          />
+        </Col>
+      );
+    }
+  };
+
   if (error) {
     return <ErrorDialog error={error} />;
   } 
@@ -429,7 +487,7 @@ function LogSearch({tools}) {
 
   return (
       <>
-        <div className="max-content-width">
+        <div>
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col className="py-1">
@@ -443,58 +501,7 @@ function LogSearch({tools}) {
                   onChange={handleSelectChange}
                 />
               </Col>
-              {filterType === "opsera-pipeline" ? (
-                <Col md={3} className="py-1">
-                  {filterType === "opsera-pipeline" && (
-                    <DropdownList
-                      data={filterOptions}
-                      busy={Object.keys(filterOptions).length == 0 ? true : false}
-                      disabled={Object.keys(filterOptions).length == 0 ? true : false}
-                      // disabled={true}
-                      valueField="value"
-                      textField="label"
-                      filter="contains"
-                      value={pipelineFilter}
-                      placeholder={"Select Pipeline Name"}
-                      onChange={opseraPipelineSelectChange}
-                      onToggle={fetchFilterData}
-                    />
-                  )}
-                  {/* {filterType === "blueprint" && 
-                  <DropdownList
-                    data={filterOptions} 
-                    busy={Object.keys(filterOptions).length == 0 ? true : false}
-                    disabled={Object.keys(filterOptions).length == 0 ? true : false}
-                    className="basic-single"
-                    valueField='value'
-                    textField='label'
-                    filter='contains'
-                    placeholder={"Select Job Name"}
-                    value={jobFilter}
-                    onChange={setJobFilter}    
-                    onToggle={fetchFilterData}         
-                  />
-                } */}
-                </Col>
-              ) : (
-                ""
-              )}
-              {filterType === "opsera-pipeline" && (
-                <Col className="py-1">
-                    <DropdownList
-                      data={pipelineFilter.steps}
-                      busy={Object.keys(filterOptions).length == 0 ? true : false}
-                      disabled={Object.keys(pipelineFilter).length == 0 ? true : false}
-                      // disabled={true}
-                      valueField="value"
-                      textField="label"
-                      filter="contains"
-                      value={stepFilter}
-                      placeholder={"Select Step"}
-                      onChange={setStepFilter}
-                    />
-                </Col>
-              )}
+              {getDynamicFields()}
               <Col className="py-1" md={filterType === "opsera-pipeline" ? 3 : 9}>
                 <Form.Control
                   placeholder={filterType === "blueprint" ? "Enter Build Number" : "Search logs"}
@@ -573,7 +580,8 @@ function LogSearch({tools}) {
   }
 
   LogSearch.propTypes = {
-    tools: PropTypes.array
+    tools: PropTypes.array,
+    sideBySide: PropTypes.bool
   };
 
 export default LogSearch;
