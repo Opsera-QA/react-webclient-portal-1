@@ -26,7 +26,6 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import JSONInput from "react-json-editor-ajrm";
 import locale    from "react-json-editor-ajrm/locale/en";
 import CloseButton from "../../../../../../../common/buttons/CloseButton";
-import {jenkinsAgentArray} from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -902,27 +901,7 @@ function JenkinsStepConfiguration({
                         onChange={handleJobChange}
                       />
                     ) : null}
-                  </Form.Group>
-                  {formData.autoScaleEnable && 
-                    <Form.Group controlId="formJenkinsAgent">
-                      <Form.Label className="w-100">
-                        Jenkins Agent
-                      </Form.Label>
-                    
-                      <DropdownList
-                        data={jenkinsAgentArray}
-                        groupBy="env"
-                        valueField="agentLabel"
-                        textField="name"
-                        value={jenkinsAgentArray[
-                          jenkinsAgentArray.findIndex((x) => x.agentLabel === formData.agentLabels)
-                        ]}
-                        filter="contains"
-                        onChange={(item)=> setFormData({...formData, agentLabels: item.agentLabel }) }
-                      />
-                    </Form.Group>
-                  }
-                  
+                  </Form.Group>  
                   </>
                 )}
               </>
