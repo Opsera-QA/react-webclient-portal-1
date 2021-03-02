@@ -13,6 +13,8 @@ import CustomTab from "components/common/tabs/CustomTab";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 import AccessTokenLogPanel from "components/user/user_settings/access_tokens/details/logs/AccessTokenLogPanel";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
+import {Row} from "react-bootstrap";
+import InfoDialog from "components/common/status_notifications/info";
 
 function Logs() {
   const {getAccessToken} = useContext(AuthContext);
@@ -104,6 +106,16 @@ function Logs() {
 
     if (error) {
       return <ErrorDialog error={error} align="top" />;
+    }
+
+    if (!Array.isArray(tools) || tools.length === 0) {
+      return (
+        <div className="mt-3 bordered-content-block p-3 d-flex" style={{justifyContent: "center", alignItems: "center"}}>
+          <Row>
+            <InfoDialog message="No logs found for this account"/>
+          </Row>
+        </div>
+      );
     }
 
     if (activeTab === "comparison") {

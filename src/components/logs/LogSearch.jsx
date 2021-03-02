@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
-import ErrorDialog from "components/common/status_notifications/error";
 import { Form, Button, Overlay, Popover, Row, Col } from "react-bootstrap";
 import { format, addDays } from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,13 +20,11 @@ import {ApiService} from "api/apiService";
 
 function LogSearch({tools, sideBySide}) {
   const { getAccessToken } = useContext(AuthContext);
-  const [error, setErrors] = useState(false);
   const [logData, setLogData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilters] = useState([]);
   const [filterType, setFilterType] = useState(Array.isArray(tools) && tools.length > 0 ? tools[0] : "");
-  const [multiFilter, setMultiFilter] = useState([]);
   const [jobFilter, setJobFilter] = useState("");
   const [pipelineFilter, setPipelineFilter] = useState("");
   const [stepFilter, setStepFilter] = useState("");
@@ -95,7 +92,6 @@ function LogSearch({tools, sideBySide}) {
     setCalenderActivation(false);
     setEDate("");
     setSDate("");
-    setMultiFilter([]);
     setJobFilter("");
     setPipelineFilter("");
     setStepFilter("");
@@ -106,7 +102,6 @@ function LogSearch({tools, sideBySide}) {
     setFilters([]);
     submitClicked(false);
     setLogData([]);
-    setMultiFilter([]);
     setJobFilter("");
     setPipelineFilter("");
     setStepFilter("");
@@ -465,20 +460,6 @@ function LogSearch({tools, sideBySide}) {
     //   );
     // }
   };
-
-  if (error) {
-    return <ErrorDialog error={error} />;
-  } 
-
-  if (!tools.length > 0) {
-    return (
-      <div className="mt-3 bordered-content-block p-3 d-flex" style={{justifyContent: "center", alignItems: "center"}}>
-        <Row>
-          <InfoDialog message="No logs found for this account"/>
-        </Row>
-      </div>
-    );
-  }
 
   return (
         <div>
