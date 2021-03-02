@@ -18,6 +18,7 @@ import Pagination from "components/common/pagination";
 import analyticsActions from "components/settings/analytics/analytics-settings-actions";
 import {ApiService} from "api/apiService";
 
+// TODO: This entire form needs to be completely refactored
 function LogSearch({tools, sideBySide}) {
   const { getAccessToken } = useContext(AuthContext);
   const [logData, setLogData] = useState([]);
@@ -31,6 +32,8 @@ function LogSearch({tools, sideBySide}) {
   const [calenderActivation, setCalenderActivation] = useState(false);
   const [submitted, submitClicked] = useState(false);
   const [submittedSearchTerm, setSubmittedSearchTerm] = useState(null);
+  const [logDataTabData, setLogDataTabData] = useState([]);
+  const [currentLogTab, setCurrentLogTab] = useState([]);
 
   const [date, setDate] = useState([
     {
@@ -461,90 +464,106 @@ function LogSearch({tools, sideBySide}) {
     // }
   };
 
+  const getSearchFields = () => {
+    return (
+      <Row className={"mx-0 py-2"}>
+        <Col>
+          <DropdownList
+            data={Array.isArray(tools) ? tools : []}
+            defaultValue={Array.isArray(tools) ? tools[0] : []}
+            className="basic-single"
+            valueField="value"
+            textField="label"
+            filter="contains"
+            onChange={handleSelectChange}
+          />
+        </Col>
+        {getDynamicFields()}
+        <Col>
+          <Form.Control
+            placeholder={filterType === "blueprint" ? "Enter Build Number" : "Search logs"}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </Col>
+      </Row>
+    );
+  };
+
+  const getSearchButtons = () => {
+    return (
+      <Row className="my-2 mx-0">
+        <Col className="text-right">
+          <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
+            <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />
+            {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
+          </Button>
+          <Button variant="primary" className="ml-1" type="submit">
+            Search
+          </Button>
+          <Button variant="outline-secondary" className="ml-1" type="button" onClick={cancelSearchClicked}>
+            Clear
+          </Button>
+          {getDateRangeButton()}
+        </Col>
+      </Row>
+    );
+  };
+
+  const getDateRangeButton = () => {
+    return (
+      <Overlay
+        show={calendar}
+        target={target}
+        placement="bottom"
+        container={ref.current}
+        containerPadding={20}
+      >
+        <Popover className="max-content-width">
+          <Popover.Title>
+            <div style={{ display: "flex" }}>
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                type="button"
+                style={{ marginRight: "auto" }}
+                onClick={clearCalendar}
+              >
+                Clear
+              </Button>
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                type="button"
+                style={{ marginLeft: "auto" }}
+                onClick={closeCalender}
+              >
+                X
+              </Button>
+            </div>
+          </Popover.Title>
+          <Popover.Content ref={node}>
+            <DateRangePicker
+              startDatePlaceholder="Start Date"
+              endDatePlaceholder="End Date"
+              onChange={dateChange}
+              showSelectionPreview={true}
+              moveRangeOnFirstSelection={false}
+              months={1}
+              ranges={date}
+              direction="horizontal"
+            />
+          </Popover.Content>
+        </Popover>
+      </Overlay>
+    );
+  };
+
   return (
         <div>
           <Form onSubmit={handleFormSubmit}>
-            <Row className={"mx-0 py-2"}>
-              <Col>
-                <DropdownList
-                  data={Array.isArray(tools) ? tools : []}
-                  defaultValue={Array.isArray(tools) ? tools[0] : []}
-                  className="basic-single"
-                  valueField="value"
-                  textField="label"
-                  filter="contains"
-                  onChange={handleSelectChange}
-                />
-              </Col>
-              {getDynamicFields()}
-              <Col>
-                <Form.Control
-                  placeholder={filterType === "blueprint" ? "Enter Build Number" : "Search logs"}
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-              </Col>
-            </Row>
-
-            <Row className="my-2 mx-0">
-              <Col className="text-right">
-                <Button variant="outline-secondary" type="button" onClick={toggleCalendar}>
-                  <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />
-                  {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
-                </Button>
-                <Button variant="primary" className="ml-1" type="submit">
-                  Search
-                </Button>
-                <Button variant="outline-secondary" className="ml-1" type="button" onClick={cancelSearchClicked}>
-                  Clear
-                </Button>
-
-                <Overlay
-                  show={calendar}
-                  target={target}
-                  placement="bottom"
-                  container={ref.current}
-                  containerPadding={20}
-                >
-                  <Popover className="max-content-width">
-                    <Popover.Title>
-                      <div style={{ display: "flex" }}>
-                        <Button
-                          variant="outline-secondary"
-                          size="sm"
-                          type="button"
-                          style={{ marginRight: "auto" }}
-                          onClick={clearCalendar}
-                        >
-                          Clear
-                        </Button>
-                        <Button
-                          variant="outline-secondary"
-                          size="sm"
-                          type="button"
-                          style={{ marginLeft: "auto" }}
-                          onClick={closeCalender}
-                        >
-                          X
-                        </Button>
-                      </div>
-                    </Popover.Title>
-                    <Popover.Content ref={node}>
-                      <DateRangePicker
-                        startDatePlaceholder="Start Date"
-                        endDatePlaceholder="End Date"
-                        onChange={dateChange}
-                        showSelectionPreview={true}
-                        moveRangeOnFirstSelection={false}
-                        months={1}
-                        ranges={date}
-                        direction="horizontal"
-                      />
-                    </Popover.Content>
-                  </Popover>
-                </Overlay>
-              </Col>
-            </Row>
+            {getSearchFields()}
+            {getSearchButtons()}
           </Form>
           {getBottom()}
           {getPaginator()}
