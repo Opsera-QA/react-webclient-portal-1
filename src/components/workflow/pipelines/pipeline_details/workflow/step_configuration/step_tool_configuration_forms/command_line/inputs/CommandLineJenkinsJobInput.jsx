@@ -3,12 +3,13 @@ import PropTypes from "prop-types";
 import JenkinsJobInput from "components/common/list_of_values_input/tools/jenkins/JenkinsJobInput";
 
 function CommandLineJenkinsJobInput({dataObject, setDataObject, disabled}) {
-  const setJenkinsJob = (fieldName, selectedOption) => {
+  const setJenkinsJob = (fieldName, selectedOption) => {    
     let newDataObject = {...dataObject};
     newDataObject.setData("toolJobName", selectedOption.name);
     newDataObject.setData("toolJobId", selectedOption._id);
     newDataObject.setData("jobType", selectedOption.type[0]);
     newDataObject.setData("jobName", "");
+    newDataObject.setData("agentLabels", selectedOption.configuration?.agentLabels || "");    
     setDataObject({...newDataObject});
   };
 
