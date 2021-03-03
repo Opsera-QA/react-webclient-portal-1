@@ -5,7 +5,7 @@ import { faExclamationTriangle, faSpinner } from "@fortawesome/pro-light-svg-ico
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { DialogToastContext } from "../../../contexts/DialogToastContext";
 
-function EditModal({ dataObject, showModal, setShowModal, handleEdit,handleClose }) {
+function EditWarningModalToolRegistry({ dataObject, showModal, setShowModal, handleEdit,handleClose }) {
   const [editing, setEditing] = useState(false);
   const toastContext = useContext(DialogToastContext);
 
@@ -53,7 +53,7 @@ function EditModal({ dataObject, showModal, setShowModal, handleEdit,handleClose
                 </div>
               </Col>
               <Col sm={11}>
-                <div>Editing an {dataObject.getType()} does not change the configuration in the pipeline.</div>
+                <div>Editing {dataObject.getType()} does not change the configuration in the pipeline.</div>
                 <div>Visit the <strong>Usage</strong> tab to view a list of pipelines that require attention.</div>
               </Col>
             </Row>
@@ -68,7 +68,7 @@ function EditModal({ dataObject, showModal, setShowModal, handleEdit,handleClose
   );
 }
 
-EditModal.propTypes = {
+EditWarningModalToolRegistry.propTypes = {
   dataObject: PropTypes.object,
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
@@ -76,6 +76,6 @@ EditModal.propTypes = {
   handleClose: PropTypes.func
 };
 
-export default EditModal;
+export default EditWarningModalToolRegistry;
 
 
