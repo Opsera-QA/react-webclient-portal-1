@@ -24,7 +24,7 @@ import FeedTypeSelectInput from "./input/FeedTypeSelectInput";
 import NexusSelectInput from "./input/NexusSelectInput";
 import NexusRepoSelectInput from "./input/NexusRepoSelectInput";
 import TestConnectionButton from "./input/TestConnectionButton";
-import EditModal from "components/common/modal/EditModal";
+import EditWarningModalToolRegistry from "components/common/modal/EditWarningModalToolRegistry";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
@@ -462,7 +462,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
         dataObject={octopusApplicationDataDto}
         handleDelete={deleteApplication}
       />
-      <EditModal
+      <EditWarningModalToolRegistry
         showModal={showEditModal}
         setShowModal={setShowEditModal}
         dataObject={octopusApplicationDataDto}

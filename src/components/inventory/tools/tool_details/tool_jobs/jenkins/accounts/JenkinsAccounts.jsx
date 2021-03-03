@@ -3,17 +3,33 @@ import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import JenkinsAccountsTable from "./JenkinsAccountsTable";
+import Model from "core/data_model/model";
+
 
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import NewJenkinsAccountModal from "./NewJenkinsAccountModal";
+import jenkinsCreateAccountMetadata from "./jenkins-create-account-metadata";
 
 function JenkinsAccounts({ toolData, loadData, isLoading }) {
   const [showCreateAccountModal, setShowCreateAccountModal] = useState(false);
+  const [jenkinsAccountData, setJenkinsAccountData] = useState(undefined);
+  const [applicationId, setApplicationID] = useState(undefined);
 
   const createJenkinsAccount = () => {
+    setJenkinsAccountData(new Model(jenkinsCreateAccountMetadata.newModelBase, jenkinsCreateAccountMetadata, true));
+    setApplicationID(undefined)
     setShowCreateAccountModal(true);
   }
+
+  const selectedJobRow = (rowData) => {
+    let newDataObject = toolData.getData("accounts")[rowData.index];
+    setApplicationID(newDataObject.gitCredential);
+    setJenkinsAccountData(
+      new Model(toolData.getData("accounts")[rowData.index], jenkinsCreateAccountMetadata, false)
+    );
+    setShowCreateAccountModal(true);
+  };
 
   return (
     <div>
@@ -24,8 +40,8 @@ function JenkinsAccounts({ toolData, loadData, isLoading }) {
           </Button>
           <br/>
         </div>
-      <JenkinsAccountsTable isLoading={isLoading} data={toolData.getData("accounts")}/>
-      <NewJenkinsAccountModal showModal={showCreateAccountModal} setShowModal={setShowCreateAccountModal} toolData={toolData} loadData={loadData} />
+      <JenkinsAccountsTable isLoading={isLoading} data={toolData.getData("accounts")} selectedRow={(rowData) => selectedJobRow(rowData)}/>
+      <NewJenkinsAccountModal showModal={showCreateAccountModal} setShowModal={setShowCreateAccountModal} toolData={toolData} loadData={loadData} jenkinsAccountDataDto={jenkinsAccountData} credentialId={applicationId}/>
     </div>
   );
 }
