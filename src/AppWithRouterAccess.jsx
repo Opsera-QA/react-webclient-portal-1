@@ -95,6 +95,7 @@ import UserSettings from "components/user/user_settings/UserSettings";
 import AccessTokenDetailView from "components/user/user_settings/access_tokens/details/AccessTokenDetailView";
 import GitComponent from "components/git/Git";
 import DetailedToolReport from "./components/reports/tools/detailedReport/DetailedToolReport";
+import GitTaskDetailView from "components/git/git_task_details/GitTaskDetailView";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -309,7 +310,8 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace}/>
 
                   {/* git tasks */}
-                  <SecureRoute path="/git" component={GitComponent}/>
+                  <SecureRoute path="/git" exact component={GitComponent}/>
+                  <SecureRoute path="/git/details/:id" exact component={GitTaskDetailView}/>
 
                   {/* Administration Pages */}
                   <SecureRoute path="/admin" exact component={AdminTools}/>

@@ -23,7 +23,7 @@ import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 SyntaxHighlighter.registerLanguage("xml", xml);
 
-const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestructiveXml, isProfiles, setView, modifiedFiles, xml, destructiveXml, createJenkinsJob, recordId, unitTestSteps }) => {
+const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestructiveXml, isProfiles, setView, modifiedFiles, xml, destructiveXml, createJenkinsJob, recordId, unitTestSteps, gitTaskData, gitTaskId, closePanel }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [save, setSave] = useState(false);
   const toastContext = useContext(DialogToastContext);
@@ -33,7 +33,14 @@ const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestr
     async function loadInitialData () {
       setLoading(true);
       try {
-        const response = await sfdcPipelineActions.getListFromPipelineStorage({"pipelineId": pipelineId, "stepId": stepId, "dataType": "sfdc-packageXml", "fetchAttribute": "packageXml" }, "", getAccessToken);
+        let postBody = {
+            "pipelineId": gitTaskData ? "N/A" : pipelineId, 
+            "stepId": gitTaskData ? "N/A" : stepId, 
+            "dataType": gitTaskData ? "sync-sfdc-repo" : "sfdc-packageXml", 
+            "gitTaskId": gitTaskData ? gitTaskId : false,
+            "fetchAttribute": "packageXml"
+           }
+        const response = await sfdcPipelineActions.getListFromPipelineStorage(postBody, "", getAccessToken);
         
         if(!response.data.data || !response.data.data.packageXml) {
           toastContext.showLoadingErrorDialog("something went wrong! not a valid object");
@@ -150,6 +157,10 @@ const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestr
             size="sm"
             className="ml-2"
             onClick={() => {
+              if(gitTaskData) {
+                closePanel();
+                return;
+              }
               handleClose();
             }}
           >
@@ -176,6 +187,9 @@ SfdcPipelineXMLView.propTypes = {
   recordId: PropTypes.string,
   createJenkinsJob: PropTypes.func,
   unitTestSteps: PropTypes.array,
+  gitTaskData: PropTypes.object,
+  gitTaskId: PropTypes.string,
+  closePanel: PropTypes.func
 };
 
 export default SfdcPipelineXMLView;

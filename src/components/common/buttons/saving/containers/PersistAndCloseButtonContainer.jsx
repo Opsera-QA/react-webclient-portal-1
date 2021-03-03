@@ -7,7 +7,7 @@ import LenientSaveButton from "components/common/buttons/saving/LenientSaveButto
 import CloseButton from "components/common/buttons/CloseButton";
 
 // TODO: If it makes sense, merge this with PersistButtonContainer
-function PersistAndCloseButtonContainer({ recordDto, setRecordDto, updateRecord, createRecord, handleClose, addAnotherOption, disable, lenient }) {
+function PersistAndCloseButtonContainer({ recordDto, setRecordDto, updateRecord, createRecord, handleClose, addAnotherOption, disable, lenient, extraButtons }) {
   const getSaveButton = () => {
     if (recordDto.isNew()){
       return (
@@ -37,7 +37,7 @@ function PersistAndCloseButtonContainer({ recordDto, setRecordDto, updateRecord,
   };
 
   return (
-    <SaveButtonContainer>
+    <SaveButtonContainer extraButtons={extraButtons}>
       {getCloseButton()}
       {getSaveButton()}
     </SaveButtonContainer>
@@ -52,7 +52,8 @@ PersistAndCloseButtonContainer.propTypes = {
   handleClose: PropTypes.func,
   disable: PropTypes.bool,
   addAnotherOption: PropTypes.bool,
-  lenient: PropTypes.bool
+  lenient: PropTypes.bool,
+  extraButtons: PropTypes.any
 };
 
 PersistAndCloseButtonContainer.defaultProps = {

@@ -2,10 +2,11 @@ import React  from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 
-function SaveButtonContainer({ children }) {
+function SaveButtonContainer({ children, extraButtons }) {
   return (
-    <Row className="mx-0">
-      <div className="ml-auto mt-3 d-flex">
+    <Row className="mx-0 mt-3 d-flex">
+      {extraButtons}
+      <div className="ml-auto d-flex">
         {children}
       </div>
     </Row>
@@ -13,6 +14,7 @@ function SaveButtonContainer({ children }) {
 }
 
 SaveButtonContainer.propTypes = {
+  extraButtons: PropTypes.any,
   children: PropTypes.any
 };
 

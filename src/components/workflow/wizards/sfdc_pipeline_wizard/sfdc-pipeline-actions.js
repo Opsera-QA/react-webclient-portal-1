@@ -99,4 +99,14 @@ sfdcPipelineActions.uploadCSVData = async (postBody, getAccessToken) => {
   return response;
 };
 
+// git task create job and trigger
+sfdcPipelineActions.gitTaskTrigger = async (postBody, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/pipelines/sfdc/gittask`;   
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
 export default sfdcPipelineActions;
