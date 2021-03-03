@@ -121,6 +121,22 @@ export class Model {
     }
   };
 
+  getArrayData = (fieldName) => {
+    let currentValue = this.data[fieldName];
+
+    if (currentValue == null) {
+      return [];
+    }
+
+    if (!Array.isArray(currentValue)) {
+      console.error(`Value was not saved as array. Returning in array.`);
+      console.error(`Value: ${JSON.stringify(currentValue)}`);
+      return [currentValue];
+    }
+
+    return currentValue;
+  };
+
   isModelValid = () => {
     return validateData(this);
   };
