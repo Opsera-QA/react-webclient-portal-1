@@ -245,8 +245,8 @@
   cursor: pointer !important;
 }
 
-.toggle-offset {
-    margin-top: 1px;
+.toggle-alignment {
+    margin-top: .9rem;
 }
 /* End Toggle Styling*/
 

@@ -17,6 +17,7 @@ function BooleanToggleInput({ fieldName, dataObject, setDataObject, disabled }) 
     <InputContainer>
       <Form.Check
         type="switch"
+        className={"toggle-alignment"}
         id={field.id}
         checked={!!dataObject.getData(fieldName)}
         disabled={disabled}

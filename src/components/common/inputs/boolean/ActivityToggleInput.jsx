@@ -15,12 +15,12 @@ function ActivityToggleInput({ fieldName, dataObject, setDataObject, disabled })
 
   return (
     <InputContainer>
-      <div className={"d-flex justify-content-between"}>
+      <label><span> </span></label>
+      <div className={"d-flex toggle-alignment"}>
         <div>Show in Application</div>
-        <div className={"d-flex"}>
+        <div className={"ml-3"}>
           <Form.Check
             type="switch"
-            className={"toggle-button"}
             id={field.id}
             checked={!!dataObject.getData(fieldName)}
             disabled={disabled}
@@ -29,7 +29,6 @@ function ActivityToggleInput({ fieldName, dataObject, setDataObject, disabled })
               validateAndSetData(!dataObject.getData(fieldName));
             }}
           />
-          <div className={"toggle-offset"}>{dataObject?.getData(fieldName) === true ? "On" : "Off"}</div>
         </div>
       </div>
       <InfoText field={field} errorMessage={null}/>
