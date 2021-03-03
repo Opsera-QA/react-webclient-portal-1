@@ -51,7 +51,7 @@ function CustomTab({activeTab, tabName, tabText, handleTabClick, icon, visible, 
 CustomTab.propTypes = {
   activeTab: PropTypes.string.isRequired,
   handleTabClick: PropTypes.func.isRequired,
-  tabName: PropTypes.string.isRequired,
+  tabName: PropTypes.any.isRequired,
   tabText: PropTypes.string.isRequired,
   icon: PropTypes.object,
   visible: PropTypes.bool,

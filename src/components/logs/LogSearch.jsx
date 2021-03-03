@@ -17,11 +17,13 @@ import CommitSearchResult from "./CommitSearchResult";
 import Pagination from "components/common/pagination";
 import analyticsActions from "components/settings/analytics/analytics-settings-actions";
 import {ApiService} from "api/apiService";
+import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
+import CustomTab from "components/common/tabs/CustomTab";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 
 // TODO: This entire form needs to be completely refactored
 function LogSearch({tools, sideBySide}) {
   const { getAccessToken } = useContext(AuthContext);
-  const [logData, setLogData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOptions, setFilters] = useState([]);
@@ -32,8 +34,8 @@ function LogSearch({tools, sideBySide}) {
   const [calenderActivation, setCalenderActivation] = useState(false);
   const [submitted, submitClicked] = useState(false);
   const [submittedSearchTerm, setSubmittedSearchTerm] = useState(null);
-  const [logDataTabData, setLogDataTabData] = useState([]);
-  const [currentLogTab, setCurrentLogTab] = useState([]);
+  const [logTabData, setLogTabData] = useState([]);
+  const [currentLogTab, setCurrentLogTab] = useState(0);
 
   const [date, setDate] = useState([
     {
@@ -51,12 +53,10 @@ function LogSearch({tools, sideBySide}) {
   const [pageSize, setPageSize] = useState(10);
   const node = useRef();
 
-  const handleFormSubmit = (e) => {
+  const searchLogs = async (newTab) => {
     setCurrentPage(1);
     submitClicked(true);
     setSubmittedSearchTerm(searchTerm);
-    e.preventDefault();
-    setLogData([]);
     let startDate = 0;
     let endDate = 0;
     if (date[0].startDate && date[0].endDate) {
@@ -72,12 +72,7 @@ function LogSearch({tools, sideBySide}) {
       }
     }
 
-    if (searchTerm) {
-      getSearchResults(startDate, endDate);
-    } else {
-      setIsLoading(false);
-      setLogData([]);
-    }
+    await getSearchResults(startDate, endDate, newTab);
   };
 
   const cancelSearchClicked = () => {
@@ -90,7 +85,6 @@ function LogSearch({tools, sideBySide}) {
     ]);
     setCalendar(false);
     submitClicked(false);
-    setLogData([]);
     setSearchTerm("");
     setCalenderActivation(false);
     setEDate("");
@@ -104,7 +98,6 @@ function LogSearch({tools, sideBySide}) {
   const handleSelectChange = (selectedOption) => {
     setFilters([]);
     submitClicked(false);
-    setLogData([]);
     setJobFilter("");
     setPipelineFilter("");
     setStepFilter("");
@@ -186,9 +179,12 @@ function LogSearch({tools, sideBySide}) {
   //   }
   // };
 
-  const getSearchResults = async (startDate, endDate) => {
+  const getSearchResults = async (startDate, endDate, newTab) => {
     setIsLoading(true);
-    setLogData([]);
+    let newLogTab = newTab === true && logTabData.length < 4 ? currentLogTab + 1 : currentLogTab;
+    setCurrentLogTab(newLogTab);
+    let newLogTabData = logTabData;
+
     const accessToken = await getAccessToken();
     let route = "/analytics/search";
     if (filterType === "blueprint") {
@@ -215,23 +211,63 @@ function LogSearch({tools, sideBySide}) {
           searchResults =
             result.data.hasOwnProperty("hits") && result.data.hits.hasOwnProperty("hits") ? result.data.hits : [];
         }
-        setLogData(searchResults);
+        newLogTabData[newLogTab] = searchResults;
+        setLogTabData(newLogTabData);
         setIsLoading(false);
       })
       .catch(function (error) {
-        setLogData([]);
         setIsLoading(false);
         // setErrors(error.toJSON());
+        newLogTabData[newLogTab] = [];
+        setLogTabData(newLogTabData);
       });
   };
 
-  const fetchFilterData = async () => {
-    if (filterType === "blueprint") {
-      setFilters([]);
-      const response = await analyticsActions.getBlueprintFilterData(getAccessToken);
-      let filterDataApiResponse = response?.data?.hits?.hits;
+  const getBlueprintFilterData = async () => {
+    setFilters([]);
+    const response = await analyticsActions.getBlueprintFilterData(getAccessToken);
+    let filterDataApiResponse = response?.data?.hits?.hits;
 
-      if (Array.isArray(filterDataApiResponse) && filterDataApiResponse.length > 0) {
+    if (Array.isArray(filterDataApiResponse) && filterDataApiResponse.length > 0) {
+      let formattedFilterData = [];
+
+      // In the API response, since react-widget can't process nested dataset. We need to add a property to group the dataset
+      // We are adding 'type': which is label here to achieve groupBy in react-widget
+      filterDataApiResponse.forEach((filterGroup) => {
+        filterGroup["options"].map((filters) => {
+          filters["type"] = filterGroup["label"];
+        });
+        //Since we add type to the dataset, we only need 'options' for the dropdown
+        formattedFilterData.push(...filterGroup["options"]);
+      });
+      let filteredData = formattedFilterData.filter((filterSet) => filterSet.type === "Job Names");
+      setFilters(filteredData);
+    }
+  };
+
+  const getOpseraPipelineFilterData = async () => {
+    setFilters([]);
+    const response = await analyticsActions.getPipelineFilterData(getAccessToken);
+    let items = response?.data?.response;
+
+    if (Array.isArray(items) && items.length > 0) {
+      let formattedItems = [];
+      for (const item in items) {
+        let array = [];
+        const pipeline = response?.data?.response[item];
+        const plan = pipeline?.workflow?.plan;
+
+        if (plan) {
+          plan.forEach((step) =>
+            array.push({label: step.name, value: step._id})
+          );
+
+          formattedItems.push({value: pipeline._id, label: pipeline.name, steps: array});
+        }
+      }
+
+      if (formattedItems.length > 0) {
+        let filterDataApiResponse = [{label: "My Pipelines", options: formattedItems}];
         let formattedFilterData = [];
 
         // In the API response, since react-widget can't process nested dataset. We need to add a property to group the dataset
@@ -240,54 +276,26 @@ function LogSearch({tools, sideBySide}) {
           filterGroup["options"].map((filters) => {
             filters["type"] = filterGroup["label"];
           });
+          // console.log(filterDataApiResponse);
+
           //Since we add type to the dataset, we only need 'options' for the dropdown
           formattedFilterData.push(...filterGroup["options"]);
         });
-        let filteredData = formattedFilterData.filter((filterSet) => filterSet.type === "Job Names");
-        setFilters(filteredData);
+
+        setFilters(formattedFilterData);
       }
+    }
+  };
+
+  const fetchFilterData = async () => {
+    if (filterType === "blueprint") {
+      // These filters' dropdown was commented out so I commented this out to prevent an unnecessary data pull.
+      // TODO: Rewire up when necessary
+      // await getBlueprintFilterData();
     }
 
     if (filterType === "opsera-pipeline") {
-      setFilters([]);
-      const response = await analyticsActions.getPipelineFilterData(getAccessToken);
-      let items = response?.data?.response;
-
-      if (Array.isArray(items) && items.length > 0) {
-        let formattedItems = [];
-        for (const item in items) {
-          let array = [];
-          const pipeline = response?.data?.response[item];
-          const plan = pipeline?.workflow?.plan;
-
-          if (plan) {
-            plan.forEach((step) =>
-              array.push({label: step.name, value: step._id})
-            );
-
-            formattedItems.push({value: pipeline._id, label: pipeline.name, steps: array});
-          }
-        }
-
-        if (formattedItems.length > 0) {
-          let filterDataApiResponse = [{label: "My Pipelines", options: formattedItems}];
-          let formattedFilterData = [];
-
-          // In the API response, since react-widget can't process nested dataset. We need to add a property to group the dataset
-          // We are adding 'type': which is label here to achieve groupBy in react-widget
-          filterDataApiResponse.forEach((filterGroup) => {
-            filterGroup["options"].map((filters) => {
-              filters["type"] = filterGroup["label"];
-            });
-            // console.log(filterDataApiResponse);
-
-            //Since we add type to the dataset, we only need 'options' for the dropdown
-            formattedFilterData.push(...filterGroup["options"]);
-          });
-
-          setFilters(formattedFilterData);
-        }
-      }
+      await getOpseraPipelineFilterData();
     }
   };
 
@@ -352,23 +360,17 @@ function LogSearch({tools, sideBySide}) {
     setEDate(undefined);
   };
 
-  //Every time we select a new filter, update the list. But only for blueprint and pipeline
-  useEffect(() => {
-    if (filterType === "blueprint" || filterType === "opsera-pipeline") {
-      fetchFilterData();
-    }
-  }, [filterType]);
-
   const getBottom = () => {
     if (isLoading) {
       return <LoadingDialog size="sm" />;
     }
 
     if (submitted) {
-
       if (!searchTerm) {
         return (<InfoDialog message="Search term required." />);
       }
+
+      const logData = logTabData[currentLogTab];
 
       if ((logData?.hits == null || Object.keys(logData.hits).length === 0)) {
         return (<InfoDialog message="No results found." />);
@@ -393,11 +395,13 @@ function LogSearch({tools, sideBySide}) {
     }
   };
 
+  // TODO: Create child component
   const getPaginator = () => {
-    if (logData?.total?.value > pageSize && filterType !== "blueprint" && filterType !== "commit") {
+    const currentData = logTabData[currentLogTab];
+    if (filterType !== "blueprint" && filterType !== "commit" && currentData?.total?.value > pageSize) {
       return (
         <Pagination
-          total={logData.total.value}
+          total={currentData.total.value}
           currentPage={currentPage}
           pageSize={pageSize}
           onClick={(pageNumber, pageSize) => gotoPage(pageNumber, pageSize)}
@@ -409,7 +413,7 @@ function LogSearch({tools, sideBySide}) {
   const getDynamicFields = () => {
     if (filterType === "opsera-pipeline") {
       return (
-        <div>
+        <>
           <Col>
             <DropdownList
               data={filterOptions}
@@ -439,7 +443,7 @@ function LogSearch({tools, sideBySide}) {
               onChange={setStepFilter}
             />
           </Col>
-        </div>
+        </>
       );
     }
 
@@ -490,6 +494,16 @@ function LogSearch({tools, sideBySide}) {
     );
   };
 
+  const getNewTabButton = () => {
+    if (!sideBySide && logTabData.length > 0 && logTabData.length < 4) {
+      return (
+        <Button variant="primary" className="ml-1" type="submit" onClick={() => {searchLogs(true)}}>
+          Open In New Tab
+        </Button>
+      );
+    }
+  };
+
   const getSearchButtons = () => {
     return (
       <Row className="my-2 mx-0">
@@ -498,9 +512,10 @@ function LogSearch({tools, sideBySide}) {
             <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />
             {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
           </Button>
-          <Button variant="primary" className="ml-1" type="submit">
+          <Button variant="primary" className="ml-1" onClick={() => {searchLogs()}}>
             Search
           </Button>
+          {getNewTabButton()}
           <Button variant="outline-secondary" className="ml-1" type="button" onClick={cancelSearchClicked}>
             Clear
           </Button>
@@ -559,17 +574,35 @@ function LogSearch({tools, sideBySide}) {
     );
   };
 
-  return (
-        <div>
-          <Form onSubmit={handleFormSubmit}>
-            {getSearchFields()}
-            {getSearchButtons()}
-          </Form>
-          {getBottom()}
-          {getPaginator()}
-        </div>
+    const handleTabClick = (activeTab) => e => {
+      e.preventDefault();
+      setCurrentLogTab(activeTab);
+    };
+
+  const getTabContainer = () => {
+    if (logTabData.length === 0) {
+      return null;
+    }
+
+    return (
+      <CustomTabContainer>
+        <CustomTab activeTab={currentLogTab} tabText={"Results"} handleTabClick={handleTabClick} tabName={0} />
+        {logTabData.length >= 2 && <CustomTab activeTab={currentLogTab} tabText={"Results #2"} handleTabClick={handleTabClick} tabName={1} />}
+        {logTabData.length >= 3 && <CustomTab activeTab={currentLogTab} tabText={"Results #3"} handleTabClick={handleTabClick} tabName={2} />}
+        {logTabData.length >= 3 && <CustomTab activeTab={currentLogTab} tabText={"Results #4"} handleTabClick={handleTabClick} tabName={3} />}
+      </CustomTabContainer>
     );
-  }
+  };
+
+  return (
+    <div>
+      {getSearchFields()}
+      {getSearchButtons()}
+      <div className="px-3"><TabPanelContainer currentView={getBottom()} tabContainer={getTabContainer()} /></div>
+      {getPaginator()}
+    </div>
+  );
+}
 
   LogSearch.propTypes = {
     tools: PropTypes.array,
