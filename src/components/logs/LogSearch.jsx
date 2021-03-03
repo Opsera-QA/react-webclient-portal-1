@@ -580,16 +580,12 @@ function LogSearch({tools, sideBySide}) {
     };
 
   const getTabContainer = () => {
-    if (logTabData.length === 0) {
-      return null;
-    }
-
     return (
       <CustomTabContainer>
-        <CustomTab activeTab={currentLogTab} tabText={"Results"} handleTabClick={handleTabClick} tabName={0} />
-        {logTabData.length >= 2 && <CustomTab activeTab={currentLogTab} tabText={"Results #2"} handleTabClick={handleTabClick} tabName={1} />}
-        {logTabData.length >= 3 && <CustomTab activeTab={currentLogTab} tabText={"Results #3"} handleTabClick={handleTabClick} tabName={2} />}
-        {logTabData.length >= 3 && <CustomTab activeTab={currentLogTab} tabText={"Results #4"} handleTabClick={handleTabClick} tabName={3} />}
+        <CustomTab activeTab={currentLogTab} tabText={"Results"} handleTabClick={handleTabClick} tabName={0} visible={logTabData.length >= 1} />
+        <CustomTab activeTab={currentLogTab} tabText={"Results #2"} handleTabClick={handleTabClick} tabName={1} visible={logTabData.length >= 2} />
+        <CustomTab activeTab={currentLogTab} tabText={"Results #2"} handleTabClick={handleTabClick} tabName={2} visible={logTabData.length >= 3} />
+        <CustomTab activeTab={currentLogTab} tabText={"Results #2"} handleTabClick={handleTabClick} tabName={3} visible={logTabData.length >= 4} />
       </CustomTabContainer>
     );
   };
