@@ -83,7 +83,10 @@ const SfdcPipelineModifiedFiles = ({
   destSfdcCheckAll,
   setDestSfdcCheckAll,
   gitCheckAll,
-  setGitCheckAll
+  setGitCheckAll,
+  gitTaskData,
+  gitTaskId,
+  closePanel
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -110,6 +113,17 @@ const SfdcPipelineModifiedFiles = ({
   
   useEffect(() => {
     async function loadInitialData() {
+      if(gitTaskData) {
+        setLoading(true);
+        loadSfdcData();
+        let componentTypesArr = [];
+        let uniqueComponentTypes =  isProfiles ? [...new Set(selectedComp.map(item => item))] : [...new Set(selectedComponentTypes.map(item => item))];
+        uniqueComponentTypes.map(item => componentTypesArr.push({ "text": item, "value": item }));
+        setComponentType(componentTypesArr);
+        setLoading(false);
+        setFromSFDC(true);
+        return;
+      }
       setLoading(true);
       loadSfdcData();
       loadGitData();
@@ -130,9 +144,10 @@ const SfdcPipelineModifiedFiles = ({
     setSfdcLoading(true);    
     try {
       const sfdcResponse = await sfdcPipelineActions.getListFromPipelineStorage({
-        "pipelineId": pipelineId,
-        "stepId": stepId,
-        "dataType": "sfdc-packageXml",
+        "pipelineId": gitTaskData ? "N/A" : pipelineId,
+        "stepId": gitTaskData ? "N/A" : stepId,
+        "dataType": gitTaskData ? "sync-sfdc-repo" : "sfdc-packageXml",
+        "gitTaskId": gitTaskData ? gitTaskId : false,
         "fetchAttribute": "sfdcCommitList",
       }, sfdcFilterDto, getAccessToken);
 
@@ -520,9 +535,10 @@ const SfdcPipelineModifiedFiles = ({
       } else {
         await sfdcPipelineActions.setListToPipelineStorage({
           "recordId": recordId,
-          "pipelineId": pipelineId,
-          "stepId": stepId,
-          "dataType": "sfdc-packageXml",
+          "pipelineId": gitTaskData ? "N/A" :pipelineId,
+          "stepId": gitTaskData ? "N/A" : stepId,
+          "dataType": gitTaskData ? "sync-sfdc-repo" : "sfdc-packageXml",
+          "gitTaskId": gitTaskData ? gitTaskId : false,
           "updateAttribute": "selectedFileList",
           "typeOfSelection" : typeOfSelection,
           "data": selectedList,
@@ -584,8 +600,9 @@ const SfdcPipelineModifiedFiles = ({
     try {
        
       const postBody = {
-        pipelineId: pipelineId,
-        stepId: stepId,
+        pipelineId: gitTaskData ? "N/A" : pipelineId,
+        stepId: gitTaskData ? "N/A" : stepId,
+        gitTaskId: gitTaskData ? gitTaskId : false,
         isProfiles: isProfiles,
         componentTypes: isProfiles ? selectedComponentTypes : [],
         // commitList: selectedList,
@@ -1101,10 +1118,10 @@ const SfdcPipelineModifiedFiles = ({
             <CustomTab activeTab={activeTab} tabText={"SFDC Files"} handleTabClick={handleTabClick} tabName={"sfdc"}
                       toolTipText={"SFDC Files"} icon={faSalesforce} />
             { isOrgToOrg ? (
-              <CustomTab activeTab={activeTab} tabText={"Destination SFDC Files"} handleTabClick={handleTabClick} tabName={"destsfdc"}
+              <CustomTab activeTab={activeTab} tabText={"Destination SFDC Files"} handleTabClick={handleTabClick} tabName={"destsfdc"} disabled={gitTaskData ? true : false}
                       toolTipText={"Destination SFDC Files"} icon={faCode} />
             ) : (
-              <CustomTab activeTab={activeTab} tabText={"Git Files"} handleTabClick={handleTabClick} tabName={"git"}
+              <CustomTab activeTab={activeTab} tabText={"Git Files"} handleTabClick={handleTabClick} tabName={"git"} disabled={gitTaskData ? true : false}
                       toolTipText={"Git Files"} icon={faCode} />
             ) }                        
           </CustomTabContainer>
@@ -1130,6 +1147,7 @@ const SfdcPipelineModifiedFiles = ({
               allGitComponentType={allGitComponentType}
               allDestSfdcComponentType={allDestSfdcComponentType}
               allProfileComponentType={[]}
+              gitTaskData={gitTaskData}
             />              
           ) : activeTab === "git" ? (          
             <GitModifiedFilesTabView 
@@ -1224,6 +1242,10 @@ const SfdcPipelineModifiedFiles = ({
             size="sm"
             className="ml-2"
             onClick={() => {
+              if(gitTaskData) {
+                closePanel();
+                return;
+              }
               handleClose();
             }}
           >
@@ -1270,6 +1292,9 @@ SfdcPipelineModifiedFiles.propTypes = {
   setDestSfdcCheckAll: PropTypes.func,
   gitCheckAll: PropTypes.bool,
   setGitCheckAll: PropTypes.func,
+  gitTaskData: PropTypes.object,
+  gitTaskId: PropTypes.string,
+  closePanel: PropTypes.func
 };
 
 export default SfdcPipelineModifiedFiles;

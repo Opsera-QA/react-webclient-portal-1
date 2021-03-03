@@ -34,7 +34,8 @@ const SfdcModifiedFilesTabView = ({
   allSFDCComponentType,
   allGitComponentType,
   allDestSfdcComponentType,
-  allProfileComponentType
+  allProfileComponentType,
+  gitTaskData
 }) => {
   const [files, setFiles] = useState([]);
 
@@ -71,6 +72,7 @@ const SfdcModifiedFilesTabView = ({
             allDestSfdcComponentType={allDestSfdcComponentType}
             allProfileComponentType={allProfileComponentType}
             setFiles={setFiles}
+            gitTaskData={gitTaskData}
           />
         }
         
@@ -145,6 +147,7 @@ SfdcModifiedFilesTabView.propTypes = {
   allGitComponentType: PropTypes.array,
   allDestSfdcComponentType: PropTypes.array,
   allProfileComponentType: PropTypes.array,
+  gitTaskData: PropTypes.object
 };
 
 export default SfdcModifiedFilesTabView;

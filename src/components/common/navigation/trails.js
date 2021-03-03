@@ -4,7 +4,7 @@ import {
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
   faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey,
-  faHexagon, faListAlt, faEye
+  faHexagon, faListAlt, faEye, faCodeBranch,
 } from "@fortawesome/pro-light-svg-icons";
 
 const breadcrumbs = {
@@ -102,6 +102,10 @@ const breadcrumbs = {
   //Notifications
   notificationManagement : { name: "notificationManagement", path: paths.notificationManagement, label: "Notification Management", icon: faEnvelope},
   notificationDetailView: {name: "notificationDetailView", path: paths.notificationDetailView, label: "Notification Details", icon: faEnvelope},
+
+  //GIT Tasks
+  gitTasksManagement : { name: "gitTasksManagement", path: paths.gitTasks, label: "Git Task Management", icon: faCodeBranch},
+  gitTasksDetailView: {name: "gitTasksDetailView", path: paths.gitTasksDetailView, label: "Git Task Details", icon: faCodeBranch},
 
   //General
   userProfile: {name: "userProfile", path: paths.userProfile, label: "My User Profile", icon: faIdCard},
@@ -209,6 +213,9 @@ const trails = {
   notificationManagement : {parent: undefined, breadcrumb: breadcrumbs.notificationManagement},
   notificationDetailView: {parent: "notificationManagement", breadcrumb: breadcrumbs.notificationDetailView},
 
+  //Git Tasks
+  gitTasksManagement : {parent: undefined, breadcrumb: breadcrumbs.gitTasksManagement},
+  gitTasksDetailView: {parent: "gitTasksManagement", breadcrumb: breadcrumbs.gitTasksDetailView},
 
   // General
   userProfile: {parent: undefined, breadcrumb: breadcrumbs.userProfile},

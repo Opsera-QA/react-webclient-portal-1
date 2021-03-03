@@ -40,6 +40,7 @@ const SfdcPipelineComponents = ({
   pipelineId,
   stepId,
   setView,  
+  stepToolConfig,
   nameSpacePrefix,
   setNameSpacePrefix,
   isProfiles,
@@ -63,7 +64,10 @@ const SfdcPipelineComponents = ({
   fromDate, 
   setFromDate,
   toDate, 
-  setToDate
+  setToDate,
+  gitTaskData,
+  gitTaskId,
+  closePanel
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
@@ -243,8 +247,10 @@ const SfdcPipelineComponents = ({
       return formData[key];
     });
     const postBody = componentTypeForm;
-    postBody.pipelineId = pipelineId;
-    postBody.stepId = stepId;
+    postBody.pipelineId = gitTaskData ? "N/A" : pipelineId;
+    postBody.stepId = gitTaskData ? "N/A" : stepId;
+    postBody.gitTaskId = gitTaskData ? gitTaskId : false;
+    postBody.gitTaskSFDCToolId = gitTaskData ? stepToolConfig.sfdcToolId : false;
     // TODO: comment lastCommitTimeStamp once done testing 
     // postBody.lastCommitTimeStamp = isProfiles ? "1900-01-01T00:00:00.000Z" : asOfDate;
     postBody.lastCommitTimeFromStamp = isProfiles ? "1900-01-01T00:00:00.000Z" : fromDate;
@@ -259,11 +265,14 @@ const SfdcPipelineComponents = ({
   };
 
   const storeSelectedComponents = async (data) => {
+    console.log(stepToolConfig)
     // TODO: Make a call to store the selected components to pipeline storage selectedComponents
     const postBody = {
-      "dataType" : "sfdc-packageXml",
-      "pipelineId" : pipelineId,
-      "stepId" : stepId,
+      "dataType" : gitTaskData ? "sync-sfdc-repo" : "sfdc-packageXml",
+      "pipelineId" : gitTaskData ? "N/A" : pipelineId,
+      "stepId" : gitTaskData ? "N/A" : stepId,
+      "gitTaskId": gitTaskData ? gitTaskId : false,
+      "gitTaskSFDCToolId": gitTaskData ? stepToolConfig.sfdcToolId : false,
       "updateAttribute": "selectedComponents",
       "data" :  selectedComponentTypes,
     };
@@ -593,6 +602,7 @@ SfdcPipelineComponents.propTypes = {
   isProfiles: PropTypes.bool,
   setSelectedComponentTypes: PropTypes.func,
   selectedComponentTypes: PropTypes.array,
+  stepToolConfig: PropTypes.object,
   setModifiedFiles: PropTypes.func,
   handleClose: PropTypes.func,
   setSfdcComponentFilterObject: PropTypes.func,
@@ -611,7 +621,10 @@ SfdcPipelineComponents.propTypes = {
   fromDate: PropTypes.string,
   setFromDate: PropTypes.func,
   toDate: PropTypes.string,
-  setToDate: PropTypes.func
+  setToDate: PropTypes.func,
+  gitTaskData: PropTypes.object,
+  gitTaskId: PropTypes.string,
+  closePanel: PropTypes.func
 };
 
 AccountDropDown.propTypes = {

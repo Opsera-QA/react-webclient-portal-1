@@ -28,6 +28,7 @@ function CSVFileUploadComponent({
   allDestSfdcComponentType,
   allProfileComponentType,
   setFiles,
+  gitTaskData
 }) {
 
   const fileInputRef = useRef();
@@ -244,7 +245,7 @@ function CSVFileUploadComponent({
         "recordId": recordId,
         "updateAttribute": updateAttribute,
         "typeOfSelection": typeOfSelection,
-        "dataType": "sfdc-packageXml",
+        "dataType":  gitTaskData ? "sync-sfdc-repo" : "sfdc-packageXml",
         "data": matchedItems, // TODO: the final obj should be added here
       };
       //  TODO: this needs to be changed so dont call this yet
@@ -367,7 +368,8 @@ CSVFileUploadComponent.propTypes = {
   allGitComponentType: PropTypes.array,
   allDestSfdcComponentType: PropTypes.array,
   allProfileComponentType: PropTypes.array,
-  setFiles: PropTypes.func
+  setFiles: PropTypes.func,
+  gitTaskData: PropTypes.object
 }
 
 export default CSVFileUploadComponent

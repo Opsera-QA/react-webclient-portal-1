@@ -10,6 +10,7 @@ import { faGalacticSenate } from "@fortawesome/free-brands-svg-icons";
 import sfdcPipelineActions from "./sfdc-pipeline-actions";
 import SfdcPipelineProfileComponents from "./sfdcPipelineProfileComponents";
 import SfdcUnitTestSelectionView from "./sfdcUnitTestSelectionView";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 const INITIAL_OBJECT_TYPES = {
   managed: false,
@@ -23,8 +24,11 @@ const SfdcPipelineWizard = ({
   handlePipelineWizardRequest,
   handleClose,
   refreshPipelineActivityData,
+  gitTaskData,
+  closePanel
 }) => {
   const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [error, setError] = useState(false);
   const [view, setView] = useState(1);
   const [modifiedFiles, setModifiedFiles] = useState([]);
@@ -68,7 +72,17 @@ const SfdcPipelineWizard = ({
   const [fromDate, setFromDate] = useState(Moment(new Date(new Date().setHours(0,0,0,0))).toISOString());
   const [toDate, setToDate] = useState(Moment(new Date()).toISOString());
 
+  // git tasks specific data
+  const [gitTaskId, setGitTaskId] = useState("");
+
+
   useEffect(() => {
+    if(gitTaskData) {
+      setGitTaskId(gitTaskData.getData("_id"));
+      setStepToolConfig(gitTaskData.getData("configuration"))
+      setStepToolConfigId(gitTaskData.getData("configuration").toolConfigId)
+      return;
+    }
     loadSfdcInitStep(pipeline.workflow.plan);
   }, []);
 
@@ -100,6 +114,29 @@ const SfdcPipelineWizard = ({
   }
 
   const createJenkinsJob = async () => {
+    let createJobResponse;
+
+    if(gitTaskData) {
+      // TODO: call a new MS to create and trigger
+      try {
+        createJobResponse = await sfdcPipelineActions.gitTaskTrigger({"gitTaskId" : gitTaskId}, getAccessToken);
+        console.log("createJobResponse: ", createJobResponse);
+      } catch (error) {
+        console.log("Error posting to API: ", error);
+        setError(error);
+        createJobResponse = error;
+      }
+  
+      if (createJobResponse && createJobResponse.data && createJobResponse.data.message && createJobResponse.data.message.status === "EXECUTED") {
+        // TODO: add a success toast
+        toastContext.showInformationToast("A request to start this task has been submitted.  It will begin shortly.", 20);
+        // close modal
+        closePanel();
+      } else {
+        setError(createJobResponse && createJobResponse.data && createJobResponse.data.message);
+      }
+      return;
+    }
 
      const postBody = {
       pipelineId: pipelineId,
@@ -116,7 +153,6 @@ const SfdcPipelineWizard = ({
     // console.log(postBody);
 
     //create jenkins job and automate job creation/updation of validate and deploy jobs
-    let createJobResponse;
     try {
       createJobResponse = await sfdcPipelineActions.createJobs(postBody, getAccessToken);
       console.log("createJobResponse: ", createJobResponse);
@@ -172,6 +208,9 @@ const SfdcPipelineWizard = ({
             setFromDate={setFromDate}
             toDate={toDate}
             setToDate={setToDate}
+            gitTaskData={gitTaskData}
+            gitTaskId={gitTaskId}
+            closePanel={closePanel}
           />
         );
       case 2:
@@ -211,6 +250,9 @@ const SfdcPipelineWizard = ({
             setDestSfdcCheckAll={setDestSfdcCheckAll}
             gitCheckAll={gitCheckAll}
             setGitCheckAll={setGitCheckAll}
+            gitTaskData={gitTaskData}
+            gitTaskId={gitTaskId}
+            closePanel={closePanel}
           />
        );
       case 3:
@@ -259,6 +301,9 @@ const SfdcPipelineWizard = ({
             createJenkinsJob={createJenkinsJob}
             recordId={recordId}
             unitTestSteps={unitTestSteps}
+            gitTaskData={gitTaskData}
+            gitTaskId={gitTaskId}
+            closePanel={closePanel}
           />
         );
 
@@ -289,7 +334,7 @@ const SfdcPipelineWizard = ({
     );
   } else {
     return (
-      <div className="modal-xl">
+      <div className="modal-l">
         {getBody()}
       </div>
     );
@@ -302,6 +347,8 @@ SfdcPipelineWizard.propTypes = {
   handlePipelineWizardRequest: PropTypes.func,
   handleClose: PropTypes.func,
   refreshPipelineActivityData: PropTypes.func,
+  gitTaskData: PropTypes.object,
+  closePanel: PropTypes.func
 };
 
 export default SfdcPipelineWizard;
