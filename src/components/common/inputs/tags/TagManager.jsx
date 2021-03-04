@@ -74,7 +74,8 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
 
   const removeOldTags = async () => {
     let newTags = [];
-    dataObject.getData(fieldName).map((tag, index) => {
+
+    dataObject.getArrayData(fieldName).map((tag, index) => {
       if (tag["type"] != null && tag["type"] !== "" && tag["value"] != null && tag["value"] !== "")
       {
         let tagOption = {type: tag["type"], value: tag["value"]};
