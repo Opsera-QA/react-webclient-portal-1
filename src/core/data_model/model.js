@@ -283,6 +283,7 @@ export class Model {
     return this.metaData;
   };
 
+  // TODO: Make filterModel and move filter related options there
   getActiveFilters = () => {
     return this.metaData.getActiveFilters(this);
   };
@@ -290,6 +291,12 @@ export class Model {
   getFilterValue = (fieldName) => {
     let filter = this.getData(fieldName);
     return filter != null && filter["value"] != null ? filter["value"] : filter;
+  };
+
+  // TODO: Add option to prepend text
+  getFilterText = (fieldName) => {
+    let filter = this.getData(fieldName);
+    return filter != null && filter["text"] != null ? filter["text"] : filter;
   };
 
   getMaxLength = (field) => {

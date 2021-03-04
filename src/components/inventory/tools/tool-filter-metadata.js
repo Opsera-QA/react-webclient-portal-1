@@ -58,7 +58,7 @@ const toolFilterMetadata = {
     }
 
     if (filterDto.getData("owner") != null) {
-      activeFilters.push({filterId: "owner", ...filterDto.getData("owner")});
+      activeFilters.push({filterId: "owner", text: `Owner: ${filterDto.getFilterText("owner")}`});
     }
 
     if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
