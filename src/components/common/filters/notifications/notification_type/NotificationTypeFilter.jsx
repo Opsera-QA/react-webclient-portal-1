@@ -1,24 +1,22 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {notificationTypes} from "components/common/list_of_values_input/notifications/NotificationTypeSelectInput";
-import {createFilterOptions} from "components/common/filters/filterHelpers";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 
-function NotificationTypeFilter({ filterDto, setFilterDto, fieldName, setDataFunction, className}) {
-  const [notificationTypeFilterOptions, setNotificationTypeFilterOptions] = useState(createFilterOptions(notificationTypes, "Type", "name", "value"));
-
+function NotificationTypeFilter({ filterDto, setFilterDto, fieldName, setDataFunction, className, inline}) {
   return (
-    <div className={className}>
-      <FilterSelectInputBase
-        busy={notificationTypeFilterOptions == null}
-        placeholderText={"Filter by Type"}
-        fieldName={fieldName}
-        setDataObject={setFilterDto}
-        dataObject={filterDto}
-        setDataFunction={setDataFunction}
-        selectOptions={notificationTypeFilterOptions}
-      />
-    </div>
+    <FilterSelectInputBase
+      placeholderText={"Filter by Notification Type"}
+      fieldName={fieldName}
+      className={className}
+      setDataObject={setFilterDto}
+      dataObject={filterDto}
+      setDataFunction={setDataFunction}
+      selectOptions={notificationTypes}
+      textField={"name"}
+      valueField={"value"}
+      inline={inline}
+    />
   );
 }
 
@@ -28,7 +26,8 @@ NotificationTypeFilter.propTypes = {
   setFilterDto: PropTypes.func,
   fieldName: PropTypes.string,
   setDataFunction: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
+  inline: PropTypes.bool
 };
 
 NotificationTypeFilter.defaultProps = {

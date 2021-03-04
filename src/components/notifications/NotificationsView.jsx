@@ -14,6 +14,8 @@ import NewNotificationModal from "components/notifications/NewNotificationModal"
 import StatusFilter from "components/common/filters/status/StatusFilter";
 import NotificationTypeFilter from "components/common/filters/notifications/notification_type/NotificationTypeFilter";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
+import InlineNotificationTypeFilter
+  from "components/common/filters/notifications/notification_type/InlineNotificationTypeFilter";
 
 function NotificationsView() {
   const [showCreateNotificationModal, setShowCreateNotificationModal] = useState(false);
@@ -88,6 +90,10 @@ function NotificationsView() {
     );
   };
 
+  const getInlineFilters = () => {
+    return <InlineNotificationTypeFilter filterModel={notificationFilterDto} setFilterModel={setNotificationFilterDto} loadData={loadData} className={"mr-2"}/>;
+  };
+
   const createNewNotification = () => {
     setShowCreateNotificationModal(true);
   };
@@ -107,6 +113,7 @@ function NotificationsView() {
         filterDto={notificationFilterDto}
         setFilterDto={setNotificationFilterDto}
         addRecordFunction={createNewNotification}
+        inlineFilters={getInlineFilters()}
         supportSearch={true}
         isLoading={isLoading}
         body={getNotificationTable()}

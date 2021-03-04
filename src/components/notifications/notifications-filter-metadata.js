@@ -45,7 +45,7 @@ const notificationsFilterMetadata = {
     }
 
     if (filterDto.getData("type") != null) {
-      activeFilters.push({filterId: "type", ...filterDto.getData("type")});
+      activeFilters.push({filterId: "type", text: `Type: ${capitalizeFirstLetter(filterDto.getFilterValue("type"))}`});
     }
 
     if (filterDto.getData("tag") != null) {
