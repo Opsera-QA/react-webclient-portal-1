@@ -45,8 +45,8 @@ export default function DashboardTemplateCard({ dashboardTemplate, catalog }) {
         <div className="item-field">
           {dashboardTemplate.tags.map((tag, i) => {
             return (
-              <span key={i} className="mx-1 mb-1 badge badge-light tag-badge">
-              <FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/>{`${capitalizeFirstLetter(tag?.type)}: ${tag.value}`}
+              <span key={i} className="mr-1 mb-1 badge badge-light tag-badge">
+                <FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/>{`${capitalizeFirstLetter(tag?.type)}: ${tag.value}`}
               </span>
             );
          })}
