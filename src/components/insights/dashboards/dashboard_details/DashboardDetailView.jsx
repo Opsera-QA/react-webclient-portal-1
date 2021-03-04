@@ -119,8 +119,8 @@ function DashboardDetailView() {
   const getTitleActionBar = () => {
     return (
       <TitleActionBarContainer>
-        <PublishDashboardToPrivateCatalogIcon dashboardData={dashboardData} className={"mr-2"} />
-        <PublishDashboardToPublicMarketplaceIcon dashboardData={dashboardData} className={"mr-2"} />
+        <PublishDashboardToPrivateCatalogIcon dashboardData={dashboardData} className={"mr-3"} />
+        <PublishDashboardToPublicMarketplaceIcon dashboardData={dashboardData} className={"mr-3"} />
         <ToggleSettingsIcon activeTab={activeTab} setActiveTab={setActiveTab}/>
       </TitleActionBarContainer>
     );
