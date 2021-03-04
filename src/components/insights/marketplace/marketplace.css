@@ -35,10 +35,6 @@
   padding: 0;
 }
 
-.tags li {
-  float: left;
-}
-
 .tag {
   background: #eee;
   border-radius: 3px 0 0 3px;

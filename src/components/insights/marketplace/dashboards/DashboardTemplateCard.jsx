@@ -47,38 +47,71 @@ export default function DashboardTemplateCard({ dashboardTemplate, catalog }) {
     }
   };
 
-  return (
-    <Card className="marketplace-card">
-      {/*<Card.Img variant="top"*/}
-      {/*  className="pt-2 pl-2 pr-2"*/}
-      {/*  src={kpi.thumbnailPath}*/}
-      {/*/>*/}
-      <Card.Body>
-      <Card.Title>{dashboardTemplate.name}</Card.Title>
+  // TODO: add images
+  const getImage = () => {
+    return null;
+    // {/*<Card.Img variant="top"*/}
+    // {/*  className="pt-2 pl-2 pr-2"*/}
+    // {/*  src={kpi.thumbnailPath}*/}
+    // {/*/>*/}
+  };
+
+  const getDescriptionField = () => {
+    if (dashboardTemplate?.description) {
+      return (
         <Card.Text>
           <span className="overflow-text">
             {dashboardTemplate.description}
           </span>
         </Card.Text>
-        <Card.Text>
-          <span>
-            {dashboardTemplate.attributes?.persona}
-          </span>
-        </Card.Text>
-          <ul className="tags">
-            {dashboardTemplate.tags.map((tag, index)=>{
-              return <li key={index}><span className="tag">{tag}</span></li>;
-            })}
-          </ul>
-        <Card.Text>
-          {/*<small className="text-muted">Last updated {formatDistanceToNowStrict(new Date(kpi.updatedAt))} ago.</small>*/}
-        </Card.Text>
-        <Button
-          disabled={isSaving}
-          onClick={() => addTemplateToDashboards()}>
-          {isSaving && (<FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>)}
-          Add to My Dashboards
-        </Button>
+      );
+    }
+  };
+
+  const getPersonaField = () => {
+    if (dashboardTemplate.attributes?.persona) {
+      return (
+
+        <div className="tags">
+          <span className="tag">{dashboardTemplate.attributes?.persona}</span>
+        </div>
+      );
+    }
+  };
+
+  const getTagsField = () => {
+    if (Array.isArray(dashboardTemplate?.tags) && dashboardTemplate.tags.length > 0) {
+      return (
+        <ul className="tags">
+          {dashboardTemplate.tags.map((tag, index)=>{
+            return <li key={index}><span className="tag">{tag}</span></li>;
+          })}
+        </ul>
+      );
+    }
+  };
+
+  // TODO: Make separate button component
+  const getAddTemplateButton = () => {
+    return (
+      <Button
+        disabled={isSaving}
+        onClick={() => addTemplateToDashboards()}>
+        {isSaving && (<FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>)}
+        Add to My Dashboards
+      </Button>
+    );
+  };
+
+  return (
+    <Card className="marketplace-card">
+      {getImage()}
+      <Card.Body>
+      <Card.Title>{dashboardTemplate.name}</Card.Title>
+        {getDescriptionField()}
+        {getPersonaField()}
+        {getTagsField()}
+        {getAddTemplateButton()}
       </Card.Body>
     </Card>
   )
