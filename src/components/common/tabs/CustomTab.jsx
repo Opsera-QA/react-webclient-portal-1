@@ -3,12 +3,26 @@ import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {tabAccessRestricted, tabDisabled} from "components/common/tooltip/popover-text";
+import {faTimes} from "@fortawesome/pro-light-svg-icons";
 
-function CustomTab({activeTab, tabName, tabText, handleTabClick, icon, visible, disabled, accessRestricted, toolTipText}) {
+function CustomTab({activeTab, tabName, tabText, handleTabClick, icon, visible, disabled, accessRestricted, toolTipText, closeTab}) {
   const getIcon = () => {
     if (icon) {
       return (<FontAwesomeIcon icon={icon} fixedWidth className={"mr-2"} />);
     }
+  };
+
+  const getClosableTab = () => {
+    return (
+      <li className="nav-item mr-1">
+        <div className={"d-flex nav-link " + (activeTab === tabName ? "active" : "")}>
+          <span onClick={handleTabClick(tabName)} className={"pointer mr-2"}>
+            {getIcon()}<span className="d-none d-lg-inline">{tabText}</span>
+          </span>
+          <FontAwesomeIcon icon={faTimes} className="mt-1 pointer" onClick={() => { closeTab(tabName);}} />
+        </div>
+      </li>
+    );
   };
 
   const getTab = () => {
@@ -36,6 +50,19 @@ function CustomTab({activeTab, tabName, tabText, handleTabClick, icon, visible, 
       </li>
     );
   }
+
+  if (closeTab && activeTab === tabName) {
+    if (toolTipText) {
+      return (
+        <TooltipWrapper innerText={toolTipText}>
+          {getClosableTab()}
+        </TooltipWrapper>
+      );
+    }
+
+    return getClosableTab();
+  }
+
 
   if (toolTipText) {
    return (
