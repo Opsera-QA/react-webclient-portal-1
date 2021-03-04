@@ -5,7 +5,7 @@ import {faTools} from "@fortawesome/pro-light-svg-icons";
 import Button from "react-bootstrap/Button";
 import {useHistory} from "react-router-dom";
 
-function ToolLinkButton({toolId, loadToolInNewWindow, className, variant}) {
+function ToolLinkButton({toolId, loadToolInNewWindow, className, variant, closePanel}) {
   let history = useHistory();
 
   const loadTool = () => {
@@ -14,6 +14,10 @@ function ToolLinkButton({toolId, loadToolInNewWindow, className, variant}) {
     }
     else {
       history.push(`/inventory/tools/details/${toolId}`);
+
+      if (closePanel) {
+        closePanel();
+      }
     }
   };
 
@@ -28,7 +32,8 @@ ToolLinkButton.propTypes = {
   toolId: PropTypes.string,
   className: PropTypes.string,
   variant: PropTypes.string,
-  loadToolInNewWindow: PropTypes.bool
+  loadToolInNewWindow: PropTypes.bool,
+  closePanel: PropTypes.func
 };
 
 export default ToolLinkButton;

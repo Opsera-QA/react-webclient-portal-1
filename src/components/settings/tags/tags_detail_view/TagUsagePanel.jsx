@@ -5,21 +5,22 @@ import DetailPanelContainer from "components/common/panels/detail_panel_containe
 import SingleTagUsedInPipelinesField from "components/common/fields/tags/SingleTagUsedInPipelinesField";
 import SingleTagUsedInToolsField from "components/common/fields/tags/SingleTagUsedInToolsField";
 
-function TagUsagePanel({ tagData }) {
+function TagUsagePanel({ tagData, closePanel }) {
   if (tagData == null) {
     return <LoadingDialog size="sm" />;
   }
 
   return (
     <DetailPanelContainer>
-      <SingleTagUsedInToolsField tag={tagData?.getPersistData()} />
-      <SingleTagUsedInPipelinesField tag={tagData?.getPersistData()} />
+      <SingleTagUsedInToolsField tag={tagData?.getPersistData()} closePanel={closePanel} />
+      <SingleTagUsedInPipelinesField tag={tagData?.getPersistData()} closePanel={closePanel} />
     </DetailPanelContainer>
   );
 }
 
 TagUsagePanel.propTypes = {
   tagData: PropTypes.object,
+  closePanel: PropTypes.func
 };
 
 export default TagUsagePanel;

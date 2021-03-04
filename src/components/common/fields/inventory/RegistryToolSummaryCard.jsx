@@ -9,7 +9,7 @@ import TitleBar from "components/common/fields/TitleBar";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
 import DescriptionField from "components/common/fields/text/DescriptionField";
 
-function RegistryToolSummaryCard({ toolData, isLoading, loadToolInNewWindow }) {
+function RegistryToolSummaryCard({ toolData, isLoading, loadToolInNewWindow, closePanel }) {
   const getTitleBar = () => {
     return <TitleBar titleIcon={faWrench} title={`Tool: [${toolData.getData("name")}]`} isLoading={isLoading} inactive={toolData?.getData("active") !== true} />;
   };
@@ -29,7 +29,7 @@ function RegistryToolSummaryCard({ toolData, isLoading, loadToolInNewWindow }) {
       <div className="d-flex justify-content-between">
         <DateFieldBase dataObject={toolData} fieldName={"createdAt"}/>
         <DateFieldBase dataObject={toolData} fieldName={"updatedAt"}/>
-        <ToolLinkButton toolId={toolData.getData("_id")} loadToolInNewWindow={loadToolInNewWindow}/>
+        <ToolLinkButton toolId={toolData.getData("_id")} loadToolInNewWindow={loadToolInNewWindow} closePanel={closePanel}/>
       </div>
     </CardContainerBase>
   );
@@ -38,7 +38,8 @@ function RegistryToolSummaryCard({ toolData, isLoading, loadToolInNewWindow }) {
 RegistryToolSummaryCard.propTypes = {
   toolData: PropTypes.object,
   isLoading: PropTypes.bool,
-  loadToolInNewWindow: PropTypes.bool
+  loadToolInNewWindow: PropTypes.bool,
+  closePanel: PropTypes.func
 };
 
 export default RegistryToolSummaryCard;

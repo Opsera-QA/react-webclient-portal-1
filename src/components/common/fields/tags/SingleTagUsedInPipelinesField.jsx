@@ -13,7 +13,7 @@ import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import axios from "axios";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
-function SingleTagUsedInPipelinesField({ tag }) {
+function SingleTagUsedInPipelinesField({ tag, closePanel }) {
   const { getAccessToken } = useContext(AuthContext);
   const [pipelines, setPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -77,6 +77,7 @@ function SingleTagUsedInPipelinesField({ tag }) {
               <PipelineSummaryCard
                 pipelineData={new Model(pipeline, pipelineSummaryMetadata, false)}
                 loadPipelineInNewWindow={false}
+                closePanel={closePanel}
               />
             </Col>
           );
@@ -116,6 +117,7 @@ function SingleTagUsedInPipelinesField({ tag }) {
 
 SingleTagUsedInPipelinesField.propTypes = {
   tag: PropTypes.object,
+  closePanel: PropTypes.func
 };
 
 export default SingleTagUsedInPipelinesField;

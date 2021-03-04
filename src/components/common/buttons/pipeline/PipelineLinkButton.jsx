@@ -6,7 +6,7 @@ import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import Button from "react-bootstrap/Button";
 import {useHistory} from "react-router-dom";
 
-function PipelineLinkButton({pipelineId, loadPipelineInNewWindow}) {
+function PipelineLinkButton({pipelineId, loadPipelineInNewWindow, closePanel}) {
   let history = useHistory();
 
   const loadPipeline = () => {
@@ -15,6 +15,10 @@ function PipelineLinkButton({pipelineId, loadPipelineInNewWindow}) {
     }
     else {
       history.push(`/workflow/details/${pipelineId}`);
+
+      if (closePanel) {
+        closePanel();
+      }
     }
   };
 
@@ -27,7 +31,8 @@ function PipelineLinkButton({pipelineId, loadPipelineInNewWindow}) {
 
 PipelineLinkButton.propTypes = {
   pipelineId: PropTypes.string,
-  loadPipelineInNewWindow: PropTypes.bool
+  loadPipelineInNewWindow: PropTypes.bool,
+  closePanel: PropTypes.func
 };
 
 export default PipelineLinkButton;

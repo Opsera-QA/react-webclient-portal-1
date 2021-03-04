@@ -12,7 +12,7 @@ import toolMetadata from "components/inventory/tools/tool-metadata";
 import axios from "axios";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
-function SingleTagUsedInToolsField({ tag }) {
+function SingleTagUsedInToolsField({ tag, closePanel }) {
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -76,6 +76,7 @@ function SingleTagUsedInToolsField({ tag }) {
               <RegistryToolSummaryCard
                 toolData={new Model(tool, toolMetadata, false)}
                 loadToolInNewWindow={false}
+                closePanel={closePanel}
               />
             </Col>
           );
@@ -116,6 +117,7 @@ function SingleTagUsedInToolsField({ tag }) {
 
 SingleTagUsedInToolsField.propTypes = {
   tag: PropTypes.object,
+  closePanel: PropTypes.func
 };
 
 export default SingleTagUsedInToolsField;

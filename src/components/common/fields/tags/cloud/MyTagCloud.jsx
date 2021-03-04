@@ -86,7 +86,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
         titleText={`[${tag?.type}: ${tag?.value}] Tag Usage`}
         titleIcon={faTag}
       >
-        <TagUsagePanel tagData={tagModel} />
+        <TagUsagePanel tagData={tagModel} closePanel={clearOverlayPanel} />
       </CenterOverlayContainer>
     );
   };
