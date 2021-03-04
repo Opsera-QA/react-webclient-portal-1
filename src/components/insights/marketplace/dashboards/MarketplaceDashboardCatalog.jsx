@@ -1,29 +1,23 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
-import { CardColumns } from "react-bootstrap";
-import LoadingDialog from "components/common/status_notifications/loading";
 import Model from "core/data_model/model";
-import InlineInformation from "components/common/status_notifications/inline/InlineInformation";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import FilterContainer from "components/common/table/FilterContainer";
-import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import {faChartArea} from "@fortawesome/pro-light-svg-icons";
 import dashboardTemplateFilterMetadata
   from "components/insights/marketplace/dashboards/dashboard-template-filter-metadata";
 import dashboardTemplatesActions from "components/insights/marketplace/dashboards/dashboard-template-actions";
-import DashboardTemplateCard from "components/insights/marketplace/dashboards/DashboardTemplateCard";
 import InlineDashboardTemplateSourceFilterInput
   from "components/common/filters/insights/marketplace/dashboards/InlineDashboardTemplateSourceFilterInput";
 import InlineDashboardTypeFilter from "components/common/filters/dashboards/dashboard_type/InlineDashboardTypeFilter";
-import InlineDashboardPersonaFilter
-  from "components/common/filters/dashboards/dashboard_persona/InlineDashboardPersonaFilter";
+import DashboardTemplateCardView from "components/insights/marketplace/dashboards/DashboardTemplateCardView";
 
 function MarketplaceDashboardCatalog ({ }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [dashboardTemplates, setDashboardTemplates] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [dashboardTemplateFilterModel, setDashboardTemplateFilterModel] = useState(new Model({ ...dashboardTemplateFilterMetadata.newObjectFields }, dashboardTemplateFilterMetadata, false));
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -51,7 +45,7 @@ function MarketplaceDashboardCatalog ({ }) {
 
   const loadData = async (filterModel = dashboardTemplateFilterModel, cancelSource = cancelTokenSource) => {
     try {
-      setLoading(true);
+      setIsLoading(true);
       await getDashboardTemplates(filterModel, cancelSource);
     }
     catch (error) {
@@ -62,7 +56,7 @@ function MarketplaceDashboardCatalog ({ }) {
     }
     finally {
       if (isMounted?.current === true) {
-        setLoading(false);
+        setIsLoading(false);
       }
     }
   };
@@ -81,35 +75,14 @@ function MarketplaceDashboardCatalog ({ }) {
   };
 
   const getMainBody = () => {
-    if (loading) {
-      return (<LoadingDialog size={"sm"}/>);
-    }
-
-    if (!Array.isArray(dashboardTemplates) || dashboardTemplates.length === 0) {
-      return (<InlineInformation message={"No Marketplace Items Found"} />);
-    }
-
     return (
-      <div className="px-2 pt-2">
-        <div>
-          <CardColumns>
-            {dashboardTemplates.map((dashboardTemplate, index) => {
-              return (<DashboardTemplateCard key={index} dashboardTemplate={dashboardTemplate} catalog={dashboardTemplateFilterModel?.getFilterValue("source")} />)
-            })}
-          </CardColumns>
-        </div>
-        <div>
-          <div className="mx-auto">
-            <DtoBottomPagination
-              paginationStyle={"stacked"}
-              paginationDto={dashboardTemplateFilterModel}
-              setPaginationDto={setDashboardTemplateFilterModel}
-              isLoading={loading}
-              loadData={loadData}
-            />
-          </div>
-        </div>
-      </div>
+      <DashboardTemplateCardView
+        loadData={loadData}
+        isLoading={isLoading}
+        dashboardTemplateFilterModel={dashboardTemplateFilterModel}
+        dashboardTemplates={dashboardTemplates}
+        setDashboardTemplateFilterModel={setDashboardTemplateFilterModel}
+      />
     );
   };
 
@@ -129,7 +102,7 @@ function MarketplaceDashboardCatalog ({ }) {
       filterDto={dashboardTemplateFilterModel}
       setFilterDto={setDashboardTemplateFilterModel}
       supportSearch={true}
-      isLoading={loading}
+      isLoading={isLoading}
       body={getMainBody()}
       inlineFilters={getInlineFilters()}
       titleIcon={faChartArea}
