@@ -73,7 +73,7 @@ function LdapOwnerFilter({ filterDto, setFilterDto, className }) {
 
     if (Array.isArray(parsedUsers) && parsedUsers.length > 0) {
       parsedUsers.map((user, index) => {
-        userOptions.push({text: `Owner: ${user.firstName} ${user.lastName} (${user.email})`, value:`${user._id}`});
+        userOptions.push({text: `${user.firstName} ${user.lastName} (${user.email})`, value:`${user._id}`});
       });
     }
 
