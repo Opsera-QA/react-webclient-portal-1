@@ -1,54 +1,12 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import {Button, Card} from "react-bootstrap";
+import {Card} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
-import {DialogToastContext} from "contexts/DialogToastContext";
-import dashboardTemplatesActions from "components/insights/marketplace/dashboards/dashboard-template-actions";
-import {AuthContext} from "contexts/AuthContext";
 import {faTag} from "@fortawesome/pro-light-svg-icons";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import AddDashboardTemplateButton from "components/common/buttons/dashboards/AddDashboardButton";
 
 export default function DashboardTemplateCard({ dashboardTemplate, catalog }) {
-  const isMounted = useRef(false);
-  const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [isSaving, setIsSaving] = useState(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    isMounted.current = true;
-
-    return () => {
-      source.cancel();
-      isMounted.current = false;
-    }
-  }, []);
-
-  const addTemplateToDashboards = async (cancelSource = cancelTokenSource) => {
-    try {
-      setIsSaving(true);
-      await dashboardTemplatesActions.addTemplateToDashboards(getAccessToken, cancelSource, dashboardTemplate._id, catalog);
-      toastContext.showFormSuccessToast("Added Template to Dashboards");
-    } catch (error) {
-      if (isMounted?.current === true) {
-        console.log(error);
-        toastContext.showServiceUnavailableDialog();
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsSaving(false);
-      }
-    }
-  };
-
   // TODO: add images
   const getImage = () => {
     return null;
@@ -97,19 +55,6 @@ export default function DashboardTemplateCard({ dashboardTemplate, catalog }) {
     }
   };
 
-  // TODO: Make separate button component
-  const getAddTemplateButton = () => {
-    return (
-      <Button
-        className={"mt-2"}
-        disabled={isSaving}
-        onClick={() => addTemplateToDashboards()}>
-        {isSaving && (<FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>)}
-        Add to My Dashboards
-      </Button>
-    );
-  };
-
   return (
     <Card className="marketplace-card">
       {getImage()}
@@ -118,7 +63,7 @@ export default function DashboardTemplateCard({ dashboardTemplate, catalog }) {
         {getDescriptionField()}
         {getPersonaField()}
         {getTagsField()}
-        {getAddTemplateButton()}
+        <AddDashboardTemplateButton catalog={catalog} dashboardTemplate={dashboardTemplate} className={"mt-3"} />
       </Card.Body>
     </Card>
   )
