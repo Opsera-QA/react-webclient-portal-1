@@ -17,13 +17,11 @@ function MarketplaceChartCardView({ marketplaceCharts, marketplaceChartFilterMod
     }
 
     return (
-      <div className="my-2">
-        <CardColumns>
-          {marketplaceCharts.map((kpi, index) => {
-            return (<MarketplaceChartCard key={index} kpi={kpi} dashboardId={dashboardId}/>)
-          })}
-        </CardColumns>
-      </div>
+      <CardColumns>
+        {marketplaceCharts.map((kpi, index) => {
+          return (<MarketplaceChartCard key={index} kpi={kpi} dashboardId={dashboardId}/>)
+        })}
+      </CardColumns>
     );
   }
 

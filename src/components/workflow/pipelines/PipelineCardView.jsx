@@ -14,7 +14,7 @@ function PipelineCardView({ data, pipelineFilterDto, setPipelineFilterDto, loadD
     }
 
     return (
-      <Row>
+      <Row className={"mx-0"}>
         {data.map((item, idx) => (
           <Col key={idx} xl={6} md={12} className="p-2">
             <PipelineItem item={item} dataModel={new Model({...item}, pipelineMetadata, false)}/>

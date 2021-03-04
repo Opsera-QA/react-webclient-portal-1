@@ -12,9 +12,9 @@ function PipelineCatalogCardView({ data, catalogFilterModel, setCatalogFilterMod
     }
 
     return (
-      <Row className="p-1">
+      <Row className="mx-0">
         {data.map((template, idx) => (
-          <Col lg={6} xs={12} key={idx} className={"p-1"}>
+          <Col lg={6} xs={12} key={idx} className={"p-2"}>
             <PipelineTemplateCatalogItem
               template={template}
               accessRoleData={accessRoleData}
@@ -26,16 +26,14 @@ function PipelineCatalogCardView({ data, catalogFilterModel, setCatalogFilterMod
   }
 
   return (
-    <>
-      <CardView
-        isLoading={isLoading}
-        loadData={loadData}
-        setPaginationDto={setCatalogFilterModel}
-        paginationDto={catalogFilterModel}
-        cards={getCards()}
-        noDataMessage={"No Catalog Items Found"}
-      />
-    </>
+    <CardView
+      isLoading={isLoading}
+      loadData={loadData}
+      setPaginationDto={setCatalogFilterModel}
+      paginationDto={catalogFilterModel}
+      cards={getCards()}
+      noDataMessage={"No Catalog Items Found"}
+    />
   );
 }
 

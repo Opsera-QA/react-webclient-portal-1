@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {CardColumns, Col} from "react-bootstrap";
+import {CardColumns} from "react-bootstrap";
 import CardView from "components/common/card/CardView";
 import DashboardTemplateCard from "components/insights/marketplace/dashboards/DashboardTemplateCard";
 import InlineInformation from "components/common/status_notifications/inline/InlineInformation";
@@ -17,13 +17,11 @@ function DashboardTemplateCardView({ dashboardTemplates, dashboardTemplateFilter
     }
 
     return (
-      <div className="my-2">
-        <CardColumns>
-          {dashboardTemplates.map((dashboardTemplate, index) => {
-            return (<DashboardTemplateCard key={index} dashboardTemplate={dashboardTemplate} catalog={dashboardTemplateFilterModel?.getFilterValue("source")} />)
-          })}
-        </CardColumns>
-      </div>
+      <CardColumns>
+        {dashboardTemplates.map((dashboardTemplate, index) => {
+          return (<DashboardTemplateCard key={index} dashboardTemplate={dashboardTemplate} catalog={dashboardTemplateFilterModel?.getFilterValue("source")} />)
+        })}
+      </CardColumns>
     );
   }
 

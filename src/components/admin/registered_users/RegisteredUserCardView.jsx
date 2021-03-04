@@ -14,10 +14,10 @@ function RegisteredUserCardView({ data, registeredUsersFilterDto, setRegisteredU
     const users = [...data];
 
     return (
-      <Row className="py-2 px-0">
+      <Row className="mx-0">
         {users.map((user, index) => {
           return (
-            <Col lg={12} className={"px-1"} key={index}>
+            <Col lg={12} className={"px-0"} key={index}>
               <RegisteredUserSummaryCard registeredUsersData={user} loadData={loadData} />
             </Col>
           );

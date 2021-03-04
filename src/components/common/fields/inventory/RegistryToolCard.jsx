@@ -45,24 +45,22 @@ function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
 
   return (
     <IconCardContainerBase titleBar={getTitleBar()} contentBody={getDescription()} isLoading={isLoading} className={"tool-registry-card"}>
-      <div className="w-100">
-        <div className="date-and-button">
-          <div className="small pl-1">
-            <CreateAndUpdateDateFieldBase
-              className={"mt-3 mb-1"}
-              dataObject={toolData}
-              createdAtFieldName={"createdAt"}
-              updatedAtFieldName={"updatedAt"}
-            />
-          </div>
-          <div>
-            <ToolLinkButton
-              toolId={toolData.getData("_id")}
-              className={"w-100 mt-1"}
-              loadToolInNewWindow={loadToolInNewWindow}
-              variant={"primary"}
-            />
-          </div>
+      <div className="date-and-button">
+        <div className="small pl-1">
+          <CreateAndUpdateDateFieldBase
+            className={"mt-3 mb-1"}
+            dataObject={toolData}
+            createdAtFieldName={"createdAt"}
+            updatedAtFieldName={"updatedAt"}
+          />
+        </div>
+        <div>
+          <ToolLinkButton
+            toolId={toolData.getData("_id")}
+            className={"w-100 mt-1"}
+            loadToolInNewWindow={loadToolInNewWindow}
+            variant={"primary"}
+          />
         </div>
       </div>
     </IconCardContainerBase>
