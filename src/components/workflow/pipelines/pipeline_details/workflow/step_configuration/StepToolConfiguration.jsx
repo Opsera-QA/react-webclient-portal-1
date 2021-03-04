@@ -39,8 +39,10 @@ import ParallelProcessPipelineStepConfiguration
 import ConditionalOperationPipelineStepConfiguration
   from "./step_tool_configuration_forms/conditional_operation/ConditionalOperationPipelineStepConfiguration";
 import PowershellStepConfiguration from "./step_tool_configuration_forms/powershell/PowershellStepConfiguration";
+import DotNetStepConfiguration from "./step_tool_configuration_forms/dotnet/DotNetStepConfiguration";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import pipelineActions from "../../../../pipeline-actions";
+import NUnitStepConfiguration from "./step_tool_configuration_forms/nunit/NUnitStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -575,6 +577,38 @@ function StepToolConfiguration({
       case "powershell":
         return (
           <PowershellStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "dotnet":
+        return (
+          <DotNetStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "nunit":
+        return (
+          <NUnitStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}

@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import commandLineStepFormMetadata from "../commandline-stepForm-metadata";
 import InputContainer from "components/common/inputs/InputContainer";
 import {Form} from "react-bootstrap";
 

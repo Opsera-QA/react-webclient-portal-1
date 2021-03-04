@@ -33,6 +33,10 @@ export const jobTypes = [
     value: "CYPRESS UNIT TESTING"
   },
   {
+    label: "NUnit Unit Test",
+    value: "NUNIT_UNIT_TESTING"
+  },
+  {
     label: "Docker Push",
     value: "DOCKER PUSH"
   },

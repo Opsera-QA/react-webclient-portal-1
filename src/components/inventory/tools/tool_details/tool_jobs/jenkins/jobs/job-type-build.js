@@ -16,7 +16,11 @@ const JenkinsJobTypeBuild = {
       {
         name: "Docker",
         value: "docker"
-      }            
+      },
+      {
+        name: "MS Build",
+        value: "msbuild"
+      }
     ],    
     toShow: true,
     disabled: false,
@@ -44,7 +48,11 @@ const JenkinsJobTypeBuild = {
       {
         name: "Docker",
         value: "docker"
-      }            
+      },
+      {
+        name: "MS Build",
+        value: "msbuild"
+      }
     ],    
     toShow: true,
     disabled: false,
@@ -124,22 +132,22 @@ const JenkinsJobTypeBuild = {
       isRequired: false 
     }
   },
-  // buildArgs: {
-  //   label: "Build Args",
-  //   id: "buildArgs",
-  //   type: "",
-  //   value: "",
-  //   linkedId: "buildType",
-  //   linkedValue: "docker",      
-  //   toShow: true,
-  //   disabled: false,
-  //   touched: false,
-  //   isValid: false,
-  //   errorMessage: "",    
-  //   rules: {
-  //     isRequired: false 
-  //   }
-  // },
+  commandLineArgs: {
+    label: "Command Line Arguments",
+    id: "commandLineArgs",
+    type: "",
+    value: "",
+    linkedId: "buildType",
+    linkedValue: "msbuild",
+    toShow: true,
+    disabled: false,
+    touched: false,
+    isValid: false,
+    errorMessage: "",
+    rules: {
+      isRequired: false
+    }
+  },
 };
 
 export default JenkinsJobTypeBuild;

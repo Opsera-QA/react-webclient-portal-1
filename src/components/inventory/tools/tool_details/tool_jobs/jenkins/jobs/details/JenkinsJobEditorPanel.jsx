@@ -15,6 +15,7 @@ import JobTypePerformanceTesting from "../job-type-performance-testing.js";
 import JenkinsJobTypeShellScript from "../job-type-shell-script.js";
 import JenkinsJobTypeUnitFunctionalTest from "../job-type-unit-functional-testing.js";
 import JenkinsJobTypePushToGit from "../job-type-push-to-git.js";
+import JenkinsJobTypeNUnitUnitTesting from "../job-type-nunit";
 import JobTypeSFDC from "../job-type-sfdc";
 import { jobTypes } from "../jenkins-job-metadata";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
@@ -81,6 +82,9 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData, handleClose }) {
       break;
     case "SFDC PUSH ARTIFACTS":
       updateJenkinsForm({ ...JenkinsJobTypePushToGit });
+      break;
+    case "NUNIT_UNIT_TESTING":
+      updateJenkinsForm({ ...JenkinsJobTypeNUnitUnitTesting });
       break;
     }
     setFormType(type);
