@@ -182,7 +182,6 @@ function LogSearch({tools, sideBySide}) {
   const getSearchResults = async (startDate, endDate, newTab) => {
     setIsLoading(true);
     let newLogTab = newTab === true && logTabData.length < 4 ? currentLogTab + 1 : currentLogTab;
-    setCurrentLogTab(newLogTab);
     let newLogTabData = logTabData;
 
     const accessToken = await getAccessToken();
@@ -221,6 +220,8 @@ function LogSearch({tools, sideBySide}) {
         newLogTabData[newLogTab] = [];
         setLogTabData(newLogTabData);
       });
+
+    setCurrentLogTab(newLogTab);
   };
 
   const getBlueprintFilterData = async () => {
@@ -574,18 +575,24 @@ function LogSearch({tools, sideBySide}) {
     );
   };
 
-    const handleTabClick = (activeTab) => e => {
-      e.preventDefault();
-      setCurrentLogTab(activeTab);
-    };
+  const handleTabClick = (activeTab) => e => {
+    e.preventDefault();
+    setCurrentLogTab(activeTab);
+  };
+
+  const closeTab = (tabName) => {
+    let newArray = logTabData;
+    newArray.splice(tabName, 1);
+    setLogTabData([...newArray]);
+  };
 
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <CustomTab activeTab={currentLogTab} tabText={"Results"} handleTabClick={handleTabClick} tabName={0} visible={logTabData.length >= 1} />
-        <CustomTab activeTab={currentLogTab} tabText={"Results #2"} handleTabClick={handleTabClick} tabName={1} visible={logTabData.length >= 2} />
-        <CustomTab activeTab={currentLogTab} tabText={"Results #3"} handleTabClick={handleTabClick} tabName={2} visible={logTabData.length >= 3} />
-        <CustomTab activeTab={currentLogTab} tabText={"Results #4"} handleTabClick={handleTabClick} tabName={3} visible={logTabData.length >= 4} />
+        <CustomTab activeTab={currentLogTab} tabText={"Results"} handleTabClick={handleTabClick} tabName={0} />
+        <CustomTab activeTab={currentLogTab} tabText={"Results #2"} handleTabClick={handleTabClick} tabName={1} visible={logTabData.length >= 2} closeTab={closeTab}/>
+        <CustomTab activeTab={currentLogTab} tabText={"Results #3"} handleTabClick={handleTabClick} tabName={2} visible={logTabData.length >= 3} closeTab={closeTab}/>
+        <CustomTab activeTab={currentLogTab} tabText={"Results #4"} handleTabClick={handleTabClick} tabName={3} visible={logTabData.length >= 4} closeTab={closeTab} />
       </CustomTabContainer>
     );
   };
@@ -594,7 +601,7 @@ function LogSearch({tools, sideBySide}) {
     <div>
       {getSearchFields()}
       {getSearchButtons()}
-      <div className="px-3"><TabPanelContainer currentView={getBottom()} tabContainer={getTabContainer()} /></div>
+      <div className="p-2"><TabPanelContainer currentView={getBottom()} tabContainer={getTabContainer()} /></div>
       {getPaginator()}
     </div>
   );
