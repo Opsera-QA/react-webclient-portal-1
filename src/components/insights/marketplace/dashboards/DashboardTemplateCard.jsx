@@ -101,6 +101,7 @@ export default function DashboardTemplateCard({ dashboardTemplate, catalog }) {
   const getAddTemplateButton = () => {
     return (
       <Button
+        className={"mt-2"}
         disabled={isSaving}
         onClick={() => addTemplateToDashboards()}>
         {isSaving && (<FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>)}

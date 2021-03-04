@@ -47,8 +47,7 @@ const dashboardMetadata = {
     {
       label: "Description",
       id: "description",
-      maxLength: 255,
-      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
+      maxLength: 255
     },
     {
       label: "Active",
