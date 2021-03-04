@@ -125,6 +125,12 @@ import SfdcPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/SfdcPipelineStepConfigurationSummaryPanel";
 import sfdcPipelineStepConfigurationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/sfdcPipelineStepConfigurationMetadata";
+import DotNetPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/dotnet/DotNetPipelineStepConfigurationSummaryPanel";
+import dotnetStepFormMetadata from "./step_tool_configuration_forms/dotnet/dotnet-stepForm-metadata";
+import NUnitPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/nunit/NUnitPipelineStepConfigurationSummaryPanel";
+import nunitStepFormMetadata from "./step_tool_configuration_forms/nunit/nunit-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -295,6 +301,20 @@ function PipelineStepConfigurationSummary({
           <PowershellPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             powershellPipelineDataObject={getModelWrappedObject(powershellStepFormMetadata)}
+          />
+        );
+      case "dotnet":
+        return (
+          <DotNetPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            dotNetPipelineDataObject={getModelWrappedObject(dotnetStepFormMetadata)}
+          />
+        );
+      case "nunit":
+        return (
+          <NUnitPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            nunitPipelineDataObject={getModelWrappedObject(nunitStepFormMetadata)}
           />
         );
       case "sonar":
