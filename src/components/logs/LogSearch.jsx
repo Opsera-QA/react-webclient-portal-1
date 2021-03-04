@@ -181,7 +181,7 @@ function LogSearch({tools, sideBySide}) {
 
   const getSearchResults = async (startDate, endDate, newTab) => {
     setIsLoading(true);
-    let newLogTab = newTab === true && logTabData.length < 4 ? currentLogTab + 1 : currentLogTab;
+    let newLogTab = newTab === true && logTabData.length < 4 ? logTabData.length : currentLogTab;
     let newLogTabData = logTabData;
 
     const accessToken = await getAccessToken();
