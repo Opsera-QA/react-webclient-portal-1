@@ -54,16 +54,23 @@ const dashboardTemplateFilterMetadata = {
     return activeFilters;
   },
   newObjectFields: {
-    pageSize: 10,
+    pageSize: 25,
     currentPage: 1,
     sort: "name",
     search: "",
     type: "",
     source: "public",
     persona: "",
+    sortOption: {text: "Sort: Name", value: "name"},
     status: {text: "Status: Active", value: "active"},
     activeFilters: []
-  }
+  },
+  sortOptions: [
+    {text: "Oldest", option: "oldest"},
+    {text: "Newest", option: "newest"},
+    {text: "Type", option: "type"},
+    {text: "Name", option: "name"},
+  ]
 };
 
 export default dashboardTemplateFilterMetadata;

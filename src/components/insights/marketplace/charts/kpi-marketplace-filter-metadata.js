@@ -50,13 +50,19 @@ const kpiMarketplaceFilterMetadata = {
     return activeFilters;
   },
   newObjectFields: {
-    pageSize: 10,
+    pageSize: 25,
     currentPage: 1,
     sort: "name",
     search: "",
+    sortOption: {text: "Sort: Name", value: "name"},
     status: {text: "Status: Active", value: "active"},
     activeFilters: []
-  }
+  },
+  sortOptions: [
+    {text: "Oldest", option: "oldest"},
+    {text: "Newest", option: "newest"},
+    {text: "Name", option: "name"},
+  ]
 };
 
 export default kpiMarketplaceFilterMetadata;
