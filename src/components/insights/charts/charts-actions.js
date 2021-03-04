@@ -1,7 +1,9 @@
 import baseActions from "utils/actionsBase";
 import {
   getDateObjectFromKpiConfiguration,
-  getTagsFromKpiConfiguration
+  getTagsFromKpiConfiguration,
+  getJenkinsResultFromKpiConfiguration,
+  getJenkinsJobUrlFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 
 const chartsActions = {};
@@ -59,27 +61,16 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, canc
   const apiUrl = "/analytics/metrics";
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const tags = getTagsFromKpiConfiguration(kpiConfiguration);
+  const jenkinsResult = getJenkinsResultFromKpiConfiguration(kpiConfiguration);
+  const jenkinsJobUrl = getJenkinsJobUrlFromKpiConfiguration(kpiConfiguration);
 
   const postBody = {
     request: request,
     startDate: date.start,
     endDate: date.end,
-    tags: tags
-  };
-
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody)
-};
-
-chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, cancelTokenSource, request, kpiConfiguration) => {
-  const apiUrl = "/analytics/metrics";
-  const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
-  const tags = getTagsFromKpiConfiguration(kpiConfiguration);
-
-  const postBody = {
-    request: request,
-    startDate: date.start,
-    endDate: date.end,
-    tags: tags
+    tags: tags,
+    jenkinsResult: jenkinsResult,
+    jenkinsJobUrl: jenkinsJobUrl,
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody)

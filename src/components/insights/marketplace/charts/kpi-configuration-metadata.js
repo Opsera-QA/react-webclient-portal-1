@@ -61,4 +61,32 @@ export const kpiTagsFilterMetadata = {
   ]
 };
 
+export const kpiJenkinsResultFilterMetadata = {
+  type: "Jenkins Result Filter",
+  fields: [
+    {
+      label: "Type",
+      id: "type"
+    },
+    {
+      label: "Result",
+      id: "value"
+    }
+  ]
+};
+
+export const kpiJenkinsJobUrlFilterMetadata = {
+  type: "Jenkins Job URL Filter",
+  fields: [
+    {
+      label: "Type",
+      id: "type"
+    },
+    {
+      label: "Job URL",
+      id: "value"
+    }
+  ]
+};
+
 export default kpiConfigurationMetadata;
