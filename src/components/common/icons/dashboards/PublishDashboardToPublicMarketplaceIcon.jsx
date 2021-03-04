@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import PublishDashboardIconBase
   from "components/common/icons/dashboards/PublishDashboardIconBase";
 import {AuthContext} from "contexts/AuthContext";
+import {faShareAll} from "@fortawesome/pro-light-svg-icons";
 
 function PublishDashboardToPublicMarketplaceIcon({dashboardData, className}) {
   const {getUserRecord, setAccessRoles} = useContext(AuthContext);
@@ -43,6 +44,7 @@ function PublishDashboardToPublicMarketplaceIcon({dashboardData, className}) {
       className={className}
       dashboardData={dashboardData}
       catalog={"public"}
+      icon={faShareAll}
       popoverText={`Publish this Dashboard to the Public Marketplace.`}
     />
   );

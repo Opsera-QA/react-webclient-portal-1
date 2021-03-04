@@ -1,7 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {faCogs, faShareSquare} from "@fortawesome/pro-light-svg-icons";
-import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
+import {faShareSquare} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
@@ -9,9 +8,9 @@ import dashboardTemplatesActions from "components/insights/marketplace/dashboard
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-function PublishDashboardIconBase({dashboardData, catalog, popoverText, className}) {
+function PublishDashboardIconBase({dashboardData, catalog, popoverText, className, icon}) {
   const isMounted = useRef(false);
-  const { getAccessToken, featureFlagHideItemInProd, featureFlagHideItemInTest } = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -42,16 +41,12 @@ function PublishDashboardIconBase({dashboardData, catalog, popoverText, classNam
     }
   };
 
-  if (featureFlagHideItemInProd() || featureFlagHideItemInTest()) {
-    return null;
-  }
-
   return (
     <div className={className}>
       <TooltipWrapper innerText={popoverText}>
         <FontAwesomeIcon
           onClick={() => {addDashboardToPrivateCatalog()}}
-          icon={faShareSquare}
+          icon={icon}
           fixedWidth
           className={"pointer"}
         />
@@ -64,7 +59,8 @@ PublishDashboardIconBase.propTypes = {
   dashboardData: PropTypes.object,
   catalog: PropTypes.string,
   popoverText: PropTypes.string,
-  className: PropTypes.string
+  className: PropTypes.string,
+  icon: PropTypes.object
 };
 
 export default PublishDashboardIconBase;
