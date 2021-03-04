@@ -4,6 +4,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import SingleTagUsedInPipelinesField from "components/common/fields/tags/SingleTagUsedInPipelinesField";
 import SingleTagUsedInToolsField from "components/common/fields/tags/SingleTagUsedInToolsField";
+import SingleTagUsedInDashboardField from "components/common/fields/tags/cloud/SingleTagUsedInDashboardField";
 
 function TagUsagePanel({ tagData, closePanel }) {
   if (tagData == null) {
@@ -14,6 +15,7 @@ function TagUsagePanel({ tagData, closePanel }) {
     <DetailPanelContainer>
       <SingleTagUsedInToolsField tag={tagData?.getPersistData()} closePanel={closePanel} />
       <SingleTagUsedInPipelinesField tag={tagData?.getPersistData()} closePanel={closePanel} />
+      {/*<SingleTagUsedInDashboardField tag={tagData?.getPersistData()} closePanel={closePanel} />*/}
     </DetailPanelContainer>
   );
 }

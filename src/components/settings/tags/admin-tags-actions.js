@@ -114,6 +114,11 @@ adminTagsActions.getRelevantToolsV2 = async (getAccessToken, cancelTokenSource, 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, tags);
 };
 
+adminTagsActions.getRelevantDashboardsV2 = async (getAccessToken, cancelTokenSource, tags) => {
+  const apiUrl = `/reports/dashboards/tags`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, tags);
+};
+
 adminTagsActions.subscribeToTag = async (getAccessToken, cancelTokenSource, tagId) => {
   const apiUrl = `/tags/${tagId}/subscribe`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);

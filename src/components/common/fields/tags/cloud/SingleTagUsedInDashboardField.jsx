@@ -1,0 +1,123 @@
+import React, {useContext, useEffect, useRef, useState} from "react";
+import PropTypes from "prop-types";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import {AuthContext} from "contexts/AuthContext";
+import adminTagsActions from "components/settings/tags/admin-tags-actions";
+import Model from "core/data_model/model";
+import axios from "axios";
+import LoadingIcon from "components/common/icons/LoadingIcon";
+import DashboardSummaryCard from "components/common/fields/dashboards/DashboardSummaryCard";
+import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
+
+function SingleTagUsedInDashboardField({ tag, closePanel }) {
+  const { getAccessToken } = useContext(AuthContext);
+  const [dashboards, setDashboards] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
+  }, [tag]);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+      await loadDashboards(cancelSource);
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+      }
+    }
+    finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  }
+
+  const loadDashboards = async (cancelSource = cancelTokenSource) => {
+    if (tag != null) {
+      const response = await adminTagsActions.getRelevantDashboardsV2(getAccessToken, cancelSource, [tag]);
+
+      if (isMounted?.current === true && response?.data != null) {
+        setDashboards(response?.data?.data);
+      }
+    }
+  };
+
+  const getToolCards = () => {
+    return (
+      <Row>
+        {dashboards.map((dashboard) => {
+          return (
+            <Col md={6} key={dashboard._id}>
+              <DashboardSummaryCard
+                da={new Model(dashboard, dashboardMetadata, false)}
+                loadDashboardsInNewWindow={false}
+                closePanel={closePanel}
+              />
+            </Col>
+          );
+        })}
+      </Row>
+    );
+  };
+
+
+  if (isLoading) {
+    return <div className={"mb-2"}><LoadingIcon isLoading={isLoading} />Loading Tool Usage</div>;
+  }
+
+  if (!isLoading && tag == null) {
+    return null;
+  }
+
+  if (!isLoading && (dashboards == null || dashboards.length === 0)) {
+    return (
+      <div className="text-muted mb-2">
+        <div>
+          <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+          This tag is not currently applied on any tool</span>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      <div className="text-muted mb-2">
+        <span>This tag is applied on {dashboards.length} dashboard{dashboards?.length !== 1 ? 's' : ''}</span>
+      </div>
+      {getToolCards()}
+    </div>
+  );
+}
+
+SingleTagUsedInDashboardField.propTypes = {
+  tag: PropTypes.object,
+  closePanel: PropTypes.func
+};
+
+export default SingleTagUsedInDashboardField;

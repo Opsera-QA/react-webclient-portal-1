@@ -62,7 +62,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
   };
 
   const loadSubscribedTags = async () => {
-    const response = await adminTagsActions.getSubscribedTags( getAccessToken, cancelTokenSource);
+    const response = await adminTagsActions.getSubscribedTags(getAccessToken, cancelTokenSource);
     let tags = response?.data?.data;
 
     if (isMounted?.current === true && tags != null) {
@@ -95,6 +95,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
     const tag = tagWithUsage?.tag;
     const pipelineCount = tagWithUsage?.pipeline_usage_count;
     const toolCount = tagWithUsage?.tool_usage_count;
+    const dashboardCount = tagWithUsage?.dashboard_usage_count;
 
     return (
       <div>
@@ -103,6 +104,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
             Tag [{tag?.type}: {tag?.value}] is applied on
             <div><strong>{pipelineCount}</strong> {getSingularOrPluralString(pipelineCount, "Pipeline", "Pipelines")}</div>
             <div><strong>{toolCount}</strong> {getSingularOrPluralString(toolCount, "Tool", "Tools")}</div>
+            {/*<div><strong>{dashboardCount}</strong> {getSingularOrPluralString(dashboardCount, "Dashboard", "Dashboards")}</div>*/}
           </span>
         </div>
         <div>Click to view usage details</div>
