@@ -10,8 +10,11 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ErrorDialog from "components/common/status_notifications/error";
 
-function MetricbeatOutNetworkTrafficByTimeLineChart({ persona, date }) {
+function MetricbeatOutNetworkTrafficByTimeLineChart({ persona, date , tags}) {
   const contextType = useContext(AuthContext);
+  const {featureFlagHideItemInProd, featureFlagHideItemInTest} = useContext(AuthContext);
+  const envIsProd = featureFlagHideItemInProd();
+  const envIsTest = featureFlagHideItemInTest(); 
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -21,23 +24,32 @@ function MetricbeatOutNetworkTrafficByTimeLineChart({ persona, date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
-    const postBody = {
-      data: [
-        {
-          request: "OutNetworkTrafficByTime",
-          metric: "line",
-        },
-      ],
+    let apiUrl = "/analytics/metrics";
+    let postBody = {
+      request: "metricbeatOutNetworkTrafficByTime",
       startDate: date.start,
       endDate: date.end,
-      // podName: "prometheus-alertmanager-d47577c4b-7lhhj",
-      // podName: "ip-192-168-253-154.us-west-2.compute.internal",
+      tags: tags
     };
+    if (envIsProd || envIsTest) {
+      apiUrl = "/analytics/data";
+      postBody = {
+        data: [
+          {
+            request: "OutNetworkTrafficByTime",
+            metric: "line",
+          },
+        ],
+        startDate: date.start,
+        endDate: date.end,
+        // podName: "prometheus-alertmanager-d47577c4b-7lhhj",
+        // podName: "ip-192-168-253-154.us-west-2.compute.internal",
+      };
+    }
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].OutNetworkTrafficByTime : [];
+      let dataObject = (envIsProd || envIsTest) ? res && res.data ? res.data.data[0].OutNetworkTrafficByTime : [] : res && res.data ? res.data.data[0].metricbeatOutNetworkTrafficByTime : [];
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -112,7 +124,7 @@ function MetricbeatOutNetworkTrafficByTimeLineChart({ persona, date }) {
                   border: "1px solid #ccc",
                 }}
               >
-                <strong style={{ color }}> Date & Time: </strong> {String(point.data.xFormatted)}
+                <strong style={{ color }}> Date & Time: </strong> {String(point.data.x)}
                 <br></br>
                 <strong style={{ color }}> Node Name: </strong> {point.serieId}
                 <br></br>
