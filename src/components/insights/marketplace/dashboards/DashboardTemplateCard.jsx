@@ -9,8 +9,6 @@ import dashboardTemplatesActions from "components/insights/marketplace/dashboard
 import {AuthContext} from "contexts/AuthContext";
 import {faTag} from "@fortawesome/pro-light-svg-icons";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
-import FieldLabel from "components/common/fields/FieldLabel";
-import FieldContainer from "components/common/fields/FieldContainer";
 
 export default function DashboardTemplateCard({ dashboardTemplate, catalog }) {
   const isMounted = useRef(false);

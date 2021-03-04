@@ -1,3 +1,5 @@
+import regexHelpers from "utils/regexHelpers";
+
 const dashboardMetadata = {
   idProperty: "_id",
   type: "Dashboard",
@@ -40,7 +42,9 @@ const dashboardMetadata = {
     },
     {
       label: "Description",
-      id: "description"
+      id: "description",
+      maxLength: 255,
+      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
     },
     {
       label: "Active",
