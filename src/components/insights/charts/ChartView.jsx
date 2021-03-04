@@ -59,6 +59,7 @@ import GitlabCommitsByAuthor from "./gitlab/calendar_chart/commits_by_author/Git
 import GitlabMergeRequestsPushesAndComments from "./gitlab/calendar_chart/merge_requests_pushes_and_comments/GitlabMergeRequestsPushesAndComments";
 import GitlabTotalCommitsByProjectChart from "./gitlab/pie_chart/total_commits_by_project/GitlabTotalCommitsByProjectChart";
 import GitlabRecentMergeRequests from "./gitlab/GitlabRecentMergeRequests";
+import GitlabPendingMergeRequests from "./gitlab/GitlabPendingMergeRequests.jsx";
 
 // Github KPIs
 import GithubMergeRequestsByUser from "./github/bar_chart/merge_requests_by_user/GithubMergeRequestsByUserChart";
@@ -510,6 +511,14 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "gitlab-recent-merge-requests":
         return (
           <GitlabRecentMergeRequests
+            persona={"developer"}
+            date={getDateObject(kpiConfig)}
+            tags={getTagsFromKpiConfiguration(kpiConfig)}
+          />
+        );
+      case "gitlab-pending-merge-requests":
+        return (
+          <GitlabPendingMergeRequests
             persona={"developer"}
             date={getDateObject(kpiConfig)}
             tags={getTagsFromKpiConfiguration(kpiConfig)}
