@@ -183,7 +183,7 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
         groupBy={"type"}
         busy={isLoading}
         onCreate={(value) => handleCreate(value)}
-        value={dataObject?.getArrayData(fieldName)}
+        value={[...dataObject?.getArrayData(fieldName)]}
         placeholder={errorMessage}
         disabled={disabled || isLoading}
         onChange={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}

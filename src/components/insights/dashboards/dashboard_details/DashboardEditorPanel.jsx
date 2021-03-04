@@ -15,6 +15,8 @@ import DashboardPersonaSelectInput
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import ObjectJsonModal from "components/common/modal/ObjectJsonModal";
 import {dashboardAttributesMetadata} from "components/insights/dashboards/dashboard-metadata";
+import TagManager from "components/common/inputs/tags/TagManager";
+
 function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [dashboardDataDto, setDashboardDataDto] = useState({});
@@ -73,7 +75,10 @@ function DashboardEditorPanel({ dashboardData, setDashboardData, handleClose }) 
           <Col md={12}>
             <TextInputBase fieldName={"description"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
           </Col>
-          <Col md={3}>
+          <Col md={6}>
+            <TagManager type={"dashboard"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
+          </Col>
+          <Col md={6}>
             <ActivityToggleInput fieldName={"active"} setDataObject={setDashboardDataDto} dataObject={dashboardDataDto}/>
           </Col>
         </Row>

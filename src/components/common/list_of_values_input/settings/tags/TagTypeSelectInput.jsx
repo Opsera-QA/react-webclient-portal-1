@@ -11,6 +11,7 @@ export const tagTypes = [
   {value: "custom", text: "Custom"},
   {value: "template", text: "Template"},
   {value: "notification", text: "Notification Policy"},
+  {value: "dashboard", text: "Dashboard"},
 ];
 
 function TagTypeSelectInput({ fieldName, dataObject, setDataObject, disabled}) {

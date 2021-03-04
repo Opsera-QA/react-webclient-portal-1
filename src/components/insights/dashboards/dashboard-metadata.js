@@ -28,6 +28,10 @@ const dashboardMetadata = {
       id: "type",
     },
     {
+      label: "Tags",
+      id: "tags",
+    },
+    {
       label: "Attributes",
       id: "attributes",
     },
@@ -65,6 +69,7 @@ const dashboardMetadata = {
     visibility: "private",
     type: "",
     active: true,
+    tags: [],
     configuration: [],
     attributes: {}
   }
