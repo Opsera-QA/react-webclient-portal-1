@@ -69,7 +69,6 @@ const dashboardTemplateFilterMetadata = {
     {text: "Oldest", option: "oldest"},
     {text: "Newest", option: "newest"},
     {text: "Type", option: "type"},
-    {text: "Name", option: "name"},
   ]
 };
 

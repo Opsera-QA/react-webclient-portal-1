@@ -68,7 +68,7 @@ function MarketplaceDashboardCatalog ({ }) {
     if (isMounted?.current === true && dashboardTemplates) {
       setDashboardTemplates(dashboardTemplates);
       let newFilterDto = filterModel;
-      newFilterDto.setData("totalCount", dashboardTemplates?.data?.count);
+      newFilterDto.setData("totalCount", response?.data?.count);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
       setDashboardTemplateFilterModel({...newFilterDto});
     }

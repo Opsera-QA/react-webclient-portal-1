@@ -3,9 +3,12 @@ import baseActions from "utils/actionsBase";
 const dashboardTemplatesActions = {};
 
 dashboardTemplatesActions.getDashboardTemplatesV2 = async(getAccessToken, cancelTokenSource, dashboardCatalogFilterModel) => {
-    const apiUrl = "/analytics/dashboard/templates";
+  const apiUrl = "/analytics/dashboard/templates";
+  let sortOption = dashboardCatalogFilterModel?.getData("sortOption");
+
   let urlParams = {
     params: {
+      sort: sortOption ? sortOption.value : undefined,
       page: dashboardCatalogFilterModel.getData("currentPage"),
       size: dashboardCatalogFilterModel.getData("pageSize"),
       source: dashboardCatalogFilterModel.getFilterValue("source"),
@@ -14,7 +17,7 @@ dashboardTemplatesActions.getDashboardTemplatesV2 = async(getAccessToken, cancel
     }
   }
 
-    return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 dashboardTemplatesActions.publishTemplateV2 = async(getAccessToken, cancelTokenSource, dashboardId, catalog) => {
