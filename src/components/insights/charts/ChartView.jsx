@@ -17,7 +17,7 @@ import JenkinsStatusByJobNameBarChart from "./jenkins/bar_chart/status_by_job_na
 import JenkinsDeploymentFrequencyLineChart from "./jenkins/line_chart/deployment_frequency/JenkinsDeploymentFrequencyLineChart";
 import JenkinsChangeFailureRate from "./jenkins/JenkinsChangeFailureRate";
 import JenkinsDeploymentsCountsBarChart from "./jenkins/bar_chart/deployments_counts/JenkinsDeploymentsCountsBarChart";
-import JenkinsRecentBuildStatusTable from "./jenkins/JenkinsRecentBuildStatusTable";
+import JenkinsRecentPipelineStatus from "components/insights/charts/jenkins/table/recent_pipeline_status/JenkinsRecentBuildStatusTable";
 
 // Jira KPIs
 import JiraIssuesByPriorityBarChart from "./jira/bar_chart/issues_by_priority/JiraIssuesByPriorityBarChart";
@@ -86,10 +86,8 @@ import MetricbeatCpuUsageByTimeLineChart from "./metricbeat/line_chart/cpu_usage
 import MetricbeatInNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/in_network_usage/MetricbeatInNetworkTrafficByTimeLineChart";
 import MetricbeatMemoryUsageByTimeLineChart from "./metricbeat/line_chart/memory_usage/MetricbeatMemoryUsageByTimeLineChart";
 import MetricbeatOutNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/out_network_usage/MetricbeatOutNetworkTrafficByTimeLineChart";
-import {
-  getDateObjectFromKpiConfiguration,
-  getTagsFromKpiConfiguration,
-} from "components/insights/charts/charts-helpers";
+
+import {getDateObjectFromKpiConfiguration,getTagsFromKpiConfiguration} from "components/insights/charts/charts-helpers";
 
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
   const [kpiConfig, setKpiConfig] = useState(kpiConfiguration);
@@ -103,7 +101,12 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       kpiConfig?.kpi_identifier === "opsera-pipelines-by-user" ||
       kpiConfig?.kpi_identifier === "opsera-deployment-frequency" ||
       kpiConfig?.kpi_identifier === "opsera-recent-pipeline-status" ||
-      kpiConfig?.kpi_identifier === "opsera-recent-cd-status"
+      kpiConfig?.kpi_identifier === "opsera-recent-cd-status" ||
+      kpiConfig?.kpi_identifier === "jenkins-build-duration" ||
+      kpiConfig?.kpi_identifier === "jenkins-builds-by-user" ||
+      kpiConfig?.kpi_identifier === "jenkins-status-by-job-name" ||
+      kpiConfig?.kpi_identifier === "jenkins-recent-build-status"
+
     ) {
       return getChart();
     }
@@ -195,25 +198,31 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "jenkins-builds-by-user":
         return (
           <JenkinsBuildsByUserBarChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "jenkins-build-duration":
         return (
           <JenkinsBuildDurationBarChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "jenkins-status-by-job-name":
         return (
           <JenkinsStatusByJobNameBarChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "jenkins-deployment-frequency":
@@ -224,10 +233,12 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return <JenkinsDeploymentsCountsBarChart persona={"developer"} date={getDateObject(kpiConfig)} />;
       case "jenkins-recent-build-status":
         return (
-          <JenkinsRecentBuildStatusTable
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+          <JenkinsRecentPipelineStatus
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
 

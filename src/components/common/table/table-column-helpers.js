@@ -292,7 +292,7 @@ export const getChartPipelineStatusColumn = (field, className) => {
     accessor: getTableAccessor(field),
     Cell: (props) => {
       return props.value ? (
-        props.value === "failure" || props.value === "failed" ? (
+        props.value === "FAILURE" || props.value === "failed" || props.value === "failure" ? (
           <>
             <div style={{ display: "flex", flexWrap: "nowrap" }}>
               <div>
@@ -302,6 +302,16 @@ export const getChartPipelineStatusColumn = (field, className) => {
             </div>
           </>
         ) : (
+          props.value === "UNSTABLE" || props.value === "unstable" ? (
+            <>
+              <div style={{ display: "flex", flexWrap: "nowrap" }}>
+                <div>
+                  <FontAwesomeIcon icon={faCircle} className="cell-icon yellow" />
+                </div>
+                <div className="ml-1">{props.value}</div>
+              </div>
+            </>
+          ) : (
           <>
             <div style={{ display: "flex", flexWrap: "nowrap" }}>
               <div>
@@ -310,8 +320,8 @@ export const getChartPipelineStatusColumn = (field, className) => {
               <div className="ml-1">{props.value}</div>
             </div>
           </>
-        )
-      ) : (
+          )
+      )) : (
         "unknown"
       );
     },

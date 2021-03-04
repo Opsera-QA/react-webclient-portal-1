@@ -14,8 +14,10 @@ kpiLovHelpers.getChartTypeById = (id) => {
 };
 
 kpiLovHelpers.filters = [
-  {id: {"type": "tags", "value": null}, label: "Date"},
-  {id: {"type": "date", "value": null}, label: "Tag"},
+  {id: {"type": "tags", "value": []}, label: "Tags"},
+  {id: {"type": "date", "value": null}, label: "Date"},
+  {id: {"type": "jenkins-result", "value": ""}, label: "Jenkins Result"},
+  {id: {"type": "jenkins-job-url", "value": ""}, label: "Jenkins Build URL"},
 ];
 
 kpiLovHelpers.getFilterById = (id) => {

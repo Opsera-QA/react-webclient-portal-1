@@ -22,6 +22,30 @@ export function getTagsFromKpiConfiguration(kpiConfiguration) {
   return null;
 }
 
+export function getJenkinsResultFromKpiConfiguration(kpiConfiguration) {
+  if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-result")]?.value && 
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-result")]?.value.length > 0) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-result")].value;
+  }
+  return null;
+}
+
+export function getJenkinsJobUrlFromKpiConfiguration(kpiConfiguration) {
+  if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-job-url")]?.value && 
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-job-url")]?.value.length > 0) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-job-url")].value;
+  }
+  return null;
+}
+
+export function getJenkinsBuildNumberFromKpiConfiguration(kpiConfiguration) {
+  if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-build-number")]?.value && 
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-build-number")]?.value.length > 0) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-build-number")].value;
+  }
+  return null;
+}
+
 export function getChartIconFromKpiConfiguration(kpiConfiguration) {
   return faChartBar;
 }

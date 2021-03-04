@@ -42,7 +42,7 @@ function OpseraDeploymentFrequencyLineChart({ kpiConfiguration, setKpiConfigurat
     try {
       setIsLoading(true);
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineDeploymentFrequency", kpiConfiguration);
-      const dataObject = response?.data?.data[0]?.opseraPipelineDeploymentFrequency?.data;
+      const dataObject = response?.data && response?.data?.data[0]?.opseraPipelineDeploymentFrequency.status === 200 ? response?.data?.data[0]?.opseraPipelineDeploymentFrequency?.data : [];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
