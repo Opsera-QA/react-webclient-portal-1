@@ -4,6 +4,7 @@ import PageSort from "./page_options/PageSort";
 import PageSize from "./page_options/PageSize";
 import {getResultSummary} from "./pagination-helpers";
 
+// TODO: Rename
 function DtoTopPagination({paginationDto, setPaginationDto, loadData, isLoading, pageSizeList }) {
   if (!paginationDto) {
     return null;

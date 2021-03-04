@@ -1,9 +1,17 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types';
 import { Card } from "react-bootstrap";
 import { formatDistanceToNowStrict } from "date-fns";
+import AddChartOverlay from "components/insights/marketplace/charts/AddChartOverlay";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
-export default function MarketplaceChartCard({ kpi, openModal }) {
+export default function MarketplaceChartCard({ kpi, dashboardId }) {
+  const toastContext = useContext(DialogToastContext);
+
+  const openModal = () => {
+    toastContext.showOverlayPanel(<AddChartOverlay kpiData={kpi} dashboardId={dashboardId} />);
+  }
+
   return (
     <Card className="marketplace-card pointer"  onClick={()=> openModal(kpi)}>
       <Card.Img variant="top"
@@ -32,5 +40,5 @@ export default function MarketplaceChartCard({ kpi, openModal }) {
 
 MarketplaceChartCard.propTypes = {
   kpi: PropTypes.object,
-  openModal: PropTypes.func
+  dashboardId: PropTypes.string
 };

@@ -1,30 +1,23 @@
 import React, {useState, useEffect, useContext, useRef} from 'react';
-import { CardColumns } from "react-bootstrap";
-import LoadingDialog from "components/common/status_notifications/loading";
-import ErrorDialog from "components/common/status_notifications/error";
 import Model from "core/data_model/model";
 import KpiActions from 'components/admin/kpi_editor/kpi-editor-actions';
-import InlineInformation from "components/common/status_notifications/inline/InlineInformation";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import kpiMarketplaceFilterMetadata from "components/insights/marketplace/charts/kpi-marketplace-filter-metadata";
-import MarketplaceChartCard from "components/insights/marketplace/charts/MarketplaceChartCard";
-import AddChartOverlay from "components/insights/marketplace/charts/AddChartOverlay";
 import axios from "axios";
 import InlineKpiCategoryFilter
   from "components/common/filters/insights/marketplace/kpi_category/InlineKpiCategoryFilter";
 import InlineToolIdentifierFilter from "components/common/filters/tools/tool_identifier/InlineToolIdentifierFilter";
 import FilterContainer from "components/common/table/FilterContainer";
-import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import {faChartArea} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
+import MarketplaceChartCardView from "components/insights/marketplace/charts/MarketplaceChartCardView";
 
 function MarketplaceCharts ({ dashboardId }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [error, setErrors] = useState(false);
   const [kpis, setKpis] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [marketplaceFilterDto, setMarketplaceFilterDto] = useState(new Model({ ...kpiMarketplaceFilterMetadata.newObjectFields }, kpiMarketplaceFilterMetadata, false));
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -52,7 +45,7 @@ function MarketplaceCharts ({ dashboardId }) {
 
   const loadData = async (filterModel = marketplaceFilterDto, cancelSource = cancelTokenSource) => {
     try {
-      setLoading(true);
+      setIsLoading(true);
       await getMarketKpiData(filterModel, cancelSource);
     }
     catch (error) {
@@ -63,7 +56,7 @@ function MarketplaceCharts ({ dashboardId }) {
     }
     finally {
       if (isMounted?.current === true) {
-        setLoading(false);
+        setIsLoading(false);
       }
     }
   };
@@ -81,40 +74,16 @@ function MarketplaceCharts ({ dashboardId }) {
     }
   };
 
-  const openModal = (kpiData) => {
-    toastContext.showOverlayPanel(<AddChartOverlay kpiData={kpiData} dashboardId={dashboardId} />);
-  }
-
   const getMainBody = () => {
-    if (loading) {
-      return (<LoadingDialog size={"sm"}/>);
-    }
-
-    if (!Array.isArray(kpis) || kpis.length === 0) {
-      return (<InlineInformation message={"No Marketplace Items Found"} />);
-    }
-
     return (
-      <div className="px-2 pb-2 pt-2">
-        <div>
-          <CardColumns>
-            {kpis.map((kpi, index) => {
-              return (<MarketplaceChartCard key={index} kpi={kpi} openModal={openModal}/>)
-            })}
-          </CardColumns>
-        </div>
-        <div>
-          <div className="mx-auto">
-            <DtoBottomPagination
-              paginationStyle={"stacked"}
-              paginationDto={marketplaceFilterDto}
-              setPaginationDto={setMarketplaceFilterDto}
-              isLoading={loading}
-              loadData={loadData}
-            />
-          </div>
-        </div>
-      </div>
+      <MarketplaceChartCardView
+        isLoading={isLoading}
+        loadData={loadData}
+        dashboardId={dashboardId}
+        marketplaceChartFilterModel={marketplaceFilterDto}
+        marketplaceCharts={kpis}
+        setMarketplaceChartFilterModel={setMarketplaceFilterDto}
+      />
     );
   };
 
@@ -127,17 +96,13 @@ function MarketplaceCharts ({ dashboardId }) {
     )
   };
 
-  if (error) {
-    return <ErrorDialog error={error} />;
-  }
-
   return (
     <FilterContainer
       loadData={loadData}
       filterDto={marketplaceFilterDto}
       setFilterDto={setMarketplaceFilterDto}
       supportSearch={true}
-      isLoading={loading}
+      isLoading={isLoading}
       body={getMainBody()}
       inlineFilters={getInlineFilters()}
       titleIcon={faChartArea}

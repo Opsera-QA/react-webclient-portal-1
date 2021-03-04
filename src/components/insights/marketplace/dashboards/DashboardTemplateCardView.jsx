@@ -17,11 +17,13 @@ function DashboardTemplateCardView({ dashboardTemplates, dashboardTemplateFilter
     }
 
     return (
-      <CardColumns className={"mt-2"}>
-        {dashboardTemplates.map((dashboardTemplate, index) => {
-          return (<DashboardTemplateCard key={index} dashboardTemplate={dashboardTemplate} catalog={dashboardTemplateFilterModel?.getFilterValue("source")} />)
-        })}
-      </CardColumns>
+      <div className="my-2">
+        <CardColumns>
+          {dashboardTemplates.map((dashboardTemplate, index) => {
+            return (<DashboardTemplateCard key={index} dashboardTemplate={dashboardTemplate} catalog={dashboardTemplateFilterModel?.getFilterValue("source")} />)
+          })}
+        </CardColumns>
+      </div>
     );
   }
 
