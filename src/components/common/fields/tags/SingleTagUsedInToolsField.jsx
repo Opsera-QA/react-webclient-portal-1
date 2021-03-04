@@ -5,12 +5,12 @@ import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {AuthContext} from "contexts/AuthContext";
-import LoadingDialog from "components/common/status_notifications/loading";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import Model from "core/data_model/model";
 import RegistryToolSummaryCard from "components/common/fields/inventory/RegistryToolSummaryCard";
 import toolMetadata from "components/inventory/tools/tool-metadata";
 import axios from "axios";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function SingleTagUsedInToolsField({ tag }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -86,7 +86,7 @@ function SingleTagUsedInToolsField({ tag }) {
 
 
   if (isLoading) {
-    return <LoadingDialog message={"Loading Tools"} size={"sm"} />;
+    return <div className={"mb-2"}><LoadingIcon isLoading={isLoading} />Loading Tool Usage</div>;
   }
 
   if (!isLoading && tag == null) {
@@ -95,7 +95,7 @@ function SingleTagUsedInToolsField({ tag }) {
 
   if (!isLoading && (tools == null || tools.length === 0)) {
     return (
-      <div className="form-text text-muted ml-3">
+      <div className="text-muted mb-2">
         <div>
           <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
           This tag is not currently applied on any tool</span>
@@ -106,7 +106,7 @@ function SingleTagUsedInToolsField({ tag }) {
 
   return (
     <div>
-      <div className="form-text text-muted mb-2">
+      <div className="text-muted mb-2">
         <span>This tag is applied on {tools.length} tool{tools?.length !== 1 ? 's' : ''}</span>
       </div>
       {getToolCards()}

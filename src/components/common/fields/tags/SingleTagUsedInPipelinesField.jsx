@@ -9,9 +9,9 @@ import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/
 import pipelineSummaryMetadata
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 import Model from "core/data_model/model";
-import LoadingDialog from "components/common/status_notifications/loading";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import axios from "axios";
+import LoadingIcon from "components/common/icons/LoadingIcon";
 
 function SingleTagUsedInPipelinesField({ tag }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -85,9 +85,8 @@ function SingleTagUsedInPipelinesField({ tag }) {
     );
   };
 
-
   if (isLoading) {
-    return <LoadingDialog message={"Loading Pipelines"} size={"sm"} />;
+    return <span><LoadingIcon isLoading={isLoading} />Loading Pipeline Usage</span>;
   }
 
   if (!isLoading && (tag == null || tag === "")) {
@@ -96,7 +95,7 @@ function SingleTagUsedInPipelinesField({ tag }) {
 
   if (!isLoading && (pipelines == null || pipelines.length === 0)) {
     return (
-      <div className="form-text text-muted ml-3">
+      <div className="text-muted mb-2">
         <div>
           <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
           This tag is not currently applied on any pipeline</span>
@@ -107,7 +106,7 @@ function SingleTagUsedInPipelinesField({ tag }) {
 
   return (
     <div>
-      <div className="form-text text-muted mb-2">
+      <div className="text-muted mb-2">
         <span>This tag is applied on {pipelines.length} pipeline{pipelines?.length !== 1 ? 's' : ''}</span>
       </div>
       {getPipelineCards()}
