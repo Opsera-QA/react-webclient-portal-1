@@ -7,6 +7,10 @@ import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import dashboardTemplatesActions from "components/insights/marketplace/dashboards/dashboard-template-actions";
 import {AuthContext} from "contexts/AuthContext";
+import {faTag} from "@fortawesome/pro-light-svg-icons";
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import FieldLabel from "components/common/fields/FieldLabel";
+import FieldContainer from "components/common/fields/FieldContainer";
 
 export default function DashboardTemplateCard({ dashboardTemplate, catalog }) {
   const isMounted = useRef(false);
@@ -82,11 +86,15 @@ export default function DashboardTemplateCard({ dashboardTemplate, catalog }) {
   const getTagsField = () => {
     if (Array.isArray(dashboardTemplate?.tags) && dashboardTemplate.tags.length > 0) {
       return (
-        <ul className="tags">
-          {dashboardTemplate.tags.map((tag, index)=>{
-            return <li key={index}><span className="tag">{tag}</span></li>;
-          })}
-        </ul>
+        <div className="item-field">
+          {dashboardTemplate.tags.map((tag, i) => {
+            return (
+              <span key={i} className="mx-1 mb-1 badge badge-light tag-badge">
+              <FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/>{`${capitalizeFirstLetter(tag?.type)}: ${tag.value}`}
+              </span>
+            );
+         })}
+        </div>
       );
     }
   };
