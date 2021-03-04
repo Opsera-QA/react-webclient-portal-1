@@ -10,8 +10,11 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ErrorDialog from "components/common/status_notifications/error";
 
-function MetricbeatInNetworkTrafficByTimeLineChart({ persona, date }) {
+function MetricbeatInNetworkTrafficByTimeLineChart({ persona, date ,tags }) {
   const contextType = useContext(AuthContext);
+  const {featureFlagHideItemInProd, featureFlagHideItemInTest} = useContext(AuthContext);
+  const envIsProd = featureFlagHideItemInProd();
+  const envIsTest = featureFlagHideItemInTest(); 
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -21,21 +24,30 @@ function MetricbeatInNetworkTrafficByTimeLineChart({ persona, date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
-    const postBody = {
-      data: [
-        {
-          request: "InNetworkTrafficByTime",
-          metric: "line",
-        },
-      ],
+    let apiUrl = "/analytics/metrics";
+    let postBody = {
+      request: "metricbeatInNetworkTrafficByTime",
       startDate: date.start,
       endDate: date.end,
+      tags: tags
     };
+    if (envIsProd || envIsTest) {
+      apiUrl = "/analytics/data";
+      postBody = {
+        data: [
+          {
+            request: "InNetworkTrafficByTime",
+            metric: "line",
+          },
+        ],
+        startDate: date.start,
+        endDate: date.end,
+      };
+    }
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].InNetworkTrafficByTime : [];
+      let dataObject = (envIsProd || envIsTest) ? res && res.data ? res.data.data[0].InNetworkTrafficByTime : [] : res && res.data ? res.data.data[0].metricbeatInNetworkTrafficByTime : [];
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -110,7 +122,7 @@ function MetricbeatInNetworkTrafficByTimeLineChart({ persona, date }) {
                   border: "1px solid #ccc",
                 }}
               >
-                <strong style={{ color }}> Date & Time: </strong> {String(point.data.xFormatted)}
+                <strong style={{ color }}> Date & Time: </strong> {String(point.data.x)}
                 <br></br>
                 <strong style={{ color }}> Node Name: </strong> {point.serieId}
                 <br></br>

@@ -10,8 +10,11 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ErrorDialog from "components/common/status_notifications/error";
 
-function MetricbeatCpuUsageByTimeLineChart({ persona, date }) {
+function MetricbeatCpuUsageByTimeLineChart({ persona, date , tags}) {
   const contextType = useContext(AuthContext);
+  const {featureFlagHideItemInProd, featureFlagHideItemInTest} = useContext(AuthContext);
+  const envIsProd = featureFlagHideItemInProd();
+  const envIsTest = featureFlagHideItemInTest();
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -21,8 +24,16 @@ function MetricbeatCpuUsageByTimeLineChart({ persona, date }) {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
-    const postBody = {
+    let apiUrl = "/analytics/metrics";
+    let postBody = {
+      request: "metricbeatCpuUsageByTime",
+      startDate: date.start,
+      endDate: date.end,
+      tags: tags
+    };
+    if (envIsProd || envIsTest) {
+     apiUrl = "/analytics/data";
+     postBody = {
       data: [
         {
           request: "cpuUsageByTime",
@@ -33,11 +44,12 @@ function MetricbeatCpuUsageByTimeLineChart({ persona, date }) {
       endDate: date.end,
       // podName: "prometheus-alertmanager-d47577c4b-7lhhj",
       // podName: "ip-192-168-253-154.us-west-2.compute.internal",
-    };
+      }
+    }
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].cpuUsageByTime : [];
+      let dataObject = (envIsProd || envIsTest) ? res && res.data ? res.data.data[0].cpuUsageByTime : [] : res && res.data ? res.data.data[0].metricbeatCpuUsageByTime : [];
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -115,7 +127,7 @@ function MetricbeatCpuUsageByTimeLineChart({ persona, date }) {
                   border: "1px solid #ccc",
                 }}
               >
-                <strong style={{ color }}> Date & Time: </strong> {String(point.data.xFormatted)}
+                <strong style={{ color }}> Date & Time: </strong> {String(point.data.x)}
                 <br></br>
                 <strong style={{ color }}> Node Name: </strong> {point.serieId}
                 <br></br>
