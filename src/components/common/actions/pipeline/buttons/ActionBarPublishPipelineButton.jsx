@@ -1,7 +1,7 @@
 import React  from "react";
 import PropTypes from "prop-types";
 import ActionBarButton from "../../buttons/ActionBarButton";
-import {faShareSquare} from "@fortawesome/pro-light-svg-icons";
+import {faShareAll} from "@fortawesome/pro-light-svg-icons";
 
 function ActionBarPublishPipelineButton({handlePublishClick, itemId}) {
 
@@ -10,7 +10,7 @@ function ActionBarPublishPipelineButton({handlePublishClick, itemId}) {
   }
 
   return (
-    <ActionBarButton action={publish} icon={faShareSquare} popoverText={`Publish this Pipeline to the shared Catalog`} />
+    <ActionBarButton action={publish} icon={faShareAll} popoverText={`Publish this Pipeline to the shared Catalog`} />
   );
 }
 
