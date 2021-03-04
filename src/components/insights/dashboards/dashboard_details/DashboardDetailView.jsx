@@ -2,7 +2,7 @@ import React, {useContext, useState, useEffect, useRef} from "react";
 import Model from "core/data_model/model";
 import {useHistory} from "react-router-dom";
 import {useParams} from "react-router-dom";
-import {faArrowLeft, faAnalytics, faCogs} from "@fortawesome/pro-light-svg-icons";
+import {faAnalytics} from "@fortawesome/pro-light-svg-icons";
 import FavoriteInput from "components/common/inputs/boolean/FavoriteInput";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
@@ -16,7 +16,6 @@ import DashboardEditorPanel from "components/insights/dashboards/dashboard_detai
 import DashboardViewer from "components/insights/dashboards/dashboard_details/DashboardViewer";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import TitleActionBarContainer from "components/common/actions/TitleActionBarContainer.jsx";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon.jsx";
 import {faChartNetwork, faChartArea} from "@fortawesome/pro-light-svg-icons";
@@ -61,7 +60,6 @@ function DashboardDetailView() {
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      await getDashboard(cancelSource);
       await getRoles(cancelSource)
     } catch (error) {
       if (isMounted.current === true && !error?.error?.message?.includes(404)) {
@@ -80,6 +78,7 @@ function DashboardDetailView() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
+      await getDashboard(cancelSource);
     }
   };
 
