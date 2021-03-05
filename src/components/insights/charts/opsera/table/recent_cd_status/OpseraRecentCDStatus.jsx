@@ -44,8 +44,8 @@ function OpseraRecentCDTable({ kpiConfiguration, setKpiConfiguration, dashboardD
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await chartsActions.getChartData(getAccessToken, cancelSource, "opseraCDMetrics", "bar", kpiConfiguration);
-      let dataObject = response?.data?.data[0]?.opseraCDMetrics?.data;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraRecentCDStatus", kpiConfiguration);
+      let dataObject = response?.data?.data[0]?.opseraRecentCDStatus?.data;
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);

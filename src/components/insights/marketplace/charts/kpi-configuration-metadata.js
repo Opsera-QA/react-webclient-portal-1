@@ -89,4 +89,18 @@ export const kpiJenkinsJobUrlFilterMetadata = {
   ]
 };
 
+export const kpiJenkinsBuildNumberFilterMetadata = {
+  type: "Jenkins Build Number Filter",
+  fields: [
+    {
+      label: "Type",
+      id: "type"
+    },
+    {
+      label: "Build Number",
+      id: "value"
+    }
+  ]
+};
+
 export default kpiConfigurationMetadata;

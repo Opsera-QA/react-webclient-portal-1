@@ -18,6 +18,7 @@ kpiLovHelpers.filters = [
   {id: {"type": "date", "value": null}, label: "Date"},
   {id: {"type": "jenkins-result", "value": ""}, label: "Jenkins Result"},
   {id: {"type": "jenkins-job-url", "value": ""}, label: "Jenkins Build URL"},
+  {id: {"type": "jenkins-build-number", "value": []}, label: "Jenkins Build Number"}
 ];
 
 kpiLovHelpers.getFilterById = (id) => {
