@@ -4,6 +4,7 @@ import {
   getTagsFromKpiConfiguration,
   getJenkinsResultFromKpiConfiguration,
   getJenkinsJobUrlFromKpiConfiguration,
+  getJenkinsBuildNumberFromKpiConfiguration
 } from "components/insights/charts/charts-helpers";
 
 const chartsActions = {};
@@ -63,6 +64,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, canc
   const tags = getTagsFromKpiConfiguration(kpiConfiguration);
   const jenkinsResult = getJenkinsResultFromKpiConfiguration(kpiConfiguration);
   const jenkinsJobUrl = getJenkinsJobUrlFromKpiConfiguration(kpiConfiguration);
+  const jenkinsBuildNumber = getJenkinsBuildNumberFromKpiConfiguration(kpiConfiguration);
 
   const postBody = {
     request: request,
@@ -71,6 +73,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, canc
     tags: tags,
     jenkinsResult: jenkinsResult,
     jenkinsJobUrl: jenkinsJobUrl,
+    jenkinsBuildNumber: jenkinsBuildNumber
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody)
