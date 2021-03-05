@@ -13,7 +13,7 @@ import InlineDashboardTemplateSourceFilterInput
 import InlineDashboardTypeFilter from "components/common/filters/dashboards/dashboard_type/InlineDashboardTypeFilter";
 import DashboardTemplateCardView from "components/insights/marketplace/dashboards/DashboardTemplateCardView";
 
-function MarketplaceDashboardCatalog ({ }) {
+function MarketplaceDashboardCatalog () {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [dashboardTemplates, setDashboardTemplates] = useState([]);

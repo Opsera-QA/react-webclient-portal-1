@@ -13,7 +13,19 @@ function DashboardTemplateCardView({ dashboardTemplates, dashboardTemplateFilter
     }
 
     if (!Array.isArray(dashboardTemplates) || dashboardTemplates.length === 0) {
-      return (<InlineInformation message={"No Dashboard Templates Found"} />);
+      return (
+        <div className={"py-5"}>
+          <InlineInformation
+            message={
+              `
+                No Dashboard Templates Found. 
+                You can publish a dashboard to your private catalog by viewing its details. 
+                Opsera will be providing pre-made dashboards in the public catalog in the future. 
+              `
+            }
+          />
+        </div>
+      );
     }
 
     return (
