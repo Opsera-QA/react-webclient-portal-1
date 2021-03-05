@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDiceD20, faExclamationCircle, faEye, faTag, faWrench} from "@fortawesome/pro-light-svg-icons";
@@ -21,10 +21,10 @@ function TagsCloudBase({ tagsWithUsage, onTagClick, className, getTooltip, subsc
           let classNames;
 
           if (subscribed) {
-            classNames = "mx-1 mb-1 badge badge-light subscribed-tag-badge pointer";
+            classNames = "mr-1 mb-1 badge badge-light subscribed-tag-badge pointer";
           }
           else {
-            classNames = "mx-1 mb-1 badge badge-light tag-badge pointer";
+            classNames = "mr-1 mb-1 badge badge-light tag-badge pointer";
           }
 
           return (
