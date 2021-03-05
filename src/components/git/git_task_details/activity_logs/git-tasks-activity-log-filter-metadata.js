@@ -62,7 +62,7 @@ const gitTasksActivityLogFilterMetadata = {
   newObjectFields: {
     pageSize: 50,
     currentPage: 1,
-    sortOption: {text: "Sort: Name", value: "name"},
+    sortOption: {text: "Newest", option: "newest"},
     search: "",
     activeFilters: []
   },
