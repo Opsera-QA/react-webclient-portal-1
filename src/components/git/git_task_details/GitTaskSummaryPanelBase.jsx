@@ -10,29 +10,29 @@ function GitTaskSummaryPanelBase({ gitTasksData, setActiveTab, gitTaskTypeSummar
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
-        <Col lg={6}>
-          <TextFieldBase dataObject={gitTasksData} fieldName={"name"} />
+        <Col md={6}>
+          <TextFieldBase dataObject={gitTasksData} fieldName={"name"}/>
         </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={gitTasksData} fieldName={"type"} />
+        <Col md={6}>
+          <TextFieldBase dataObject={gitTasksData} fieldName={"_id"}/>
         </Col>
-        <Col lg={12}>
-          <TextFieldBase dataObject={gitTasksData} fieldName={"description"} />
+        <Col md={6}>
+          <TextFieldBase dataObject={gitTasksData} fieldName={"type"}/>
         </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={gitTasksData} fieldName={"_id"} />
+        <Col md={6}>
+          <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"}/>
         </Col>
-        <Col lg={6}>
-          <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
+        <Col md={6}>
+          <TextFieldBase dataObject={gitTasksData} fieldName={"tool_identifier"}/>
         </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={gitTasksData} fieldName={"tool_identifier"} />
+        <Col md={12} className={"pt-1"}>
+          <TextFieldBase dataObject={gitTasksData} fieldName={"description"}/>
         </Col>
-        <Col lg={6}>
-          <TagField dataObject={gitTasksData} fieldName={"tags"} />
+        <Col md={12} className={"pt-1"}>
+          <TagField dataObject={gitTasksData} fieldName={"tags"}/>
         </Col>
       </Row>
-      <div className="px-3">{gitTaskTypeSummaryCard}</div>
+      <div className="px-3 mt-3">{gitTaskTypeSummaryCard}</div>
     </SummaryPanelContainer>
   );
 }
@@ -41,6 +41,6 @@ GitTaskSummaryPanelBase.propTypes = {
   gitTasksData: PropTypes.object,
   setActiveTab: PropTypes.func,
   gitTaskTypeSummaryCard: PropTypes.object,
-}
+};
 
 export default GitTaskSummaryPanelBase;

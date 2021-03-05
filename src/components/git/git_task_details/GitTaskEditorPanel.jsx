@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
@@ -12,7 +12,7 @@ import GitTasksConfigurationPanel
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TagManager from "components/common/inputs/tags/TagManager";
 import { Button } from "react-bootstrap";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import SFDCViewOverlay from "./configuration_forms/sfdc/SFDCViewOverlay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -46,7 +46,7 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async () => {
@@ -54,7 +54,7 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
       setGitTasksDataDto(gitTasksData);
     }
   };
-  
+
   const createGitTask = async () => {
     const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
     gitTasksDataDto.setData("configuration", configuration);
@@ -70,24 +70,24 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
   const handleRunTask = () => {
     // console.log("Run task open wizard", gitTasksData.getData("_id"));
 
-    if(gitTasksData.getData("type") !== "sync-sfdc-repo") {
+    if (gitTasksData.getData("type") !== "sync-sfdc-repo") {
       return;
     }
     // open wizard views
-    toastContext.showOverlayPanel(<SFDCViewOverlay gitTasksData={gitTasksData} />);
-  }
+    toastContext.showOverlayPanel(<SFDCViewOverlay gitTasksData={gitTasksData}/>);
+  };
 
   const getExtraButtons = () => {
     // TODO: Make run task button
     if (runTask === true) {
       return (
-        <Button  variant="primary"  onClick={handleRunTask}>
+        <Button variant="primary" onClick={handleRunTask}>
           <FontAwesomeIcon icon={faPlay} fixedWidth className="mr-1"/> Run Task
         </Button>
       );
     }
   };
-  
+
   if (gitTasksDataDto == null) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -106,20 +106,29 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
         || (gitTasksConfigurationDataDto == null || !gitTasksConfigurationDataDto.checkCurrentValidity())
       }
     >
+      {runTask === true &&
+        <div>Listed below are all settings related to this task. If you want to run the task, please confirm all
+          settings
+          and then click the Run button at the bottom of the form. This will trigger the job which will take a few
+          minutes to
+          complete. The status of this job will be updated in the Activity logs. Please consult those logs for all
+          details on
+          this action.
+        </div>}
       <Row>
         <Col lg={6}>
           <TextInputBase setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto} fieldName={"name"}/>
         </Col>
         <Col lg={6}>
-          <ActivityToggleInput dataObject={gitTasksDataDto} setDataObject={setGitTasksDataDto} fieldName={"active"} />
+          <ActivityToggleInput dataObject={gitTasksDataDto} setDataObject={setGitTasksDataDto} fieldName={"active"}/>
         </Col>
         <Col lg={12}>
           <TextInputBase setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto}
-                        fieldName={"description"}/>
+                         fieldName={"description"}/>
         </Col>
-          <Col lg={12}>
-            <TagManager type={"gitTask"} setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto} />
-          </Col>
+        <Col lg={12}>
+          <TagManager type={"gitTask"} setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto}/>
+        </Col>
       </Row>
       <GitTasksConfigurationPanel
         gitTasksConfigurationData={gitTasksConfigurationDataDto}
