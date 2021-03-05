@@ -12,7 +12,7 @@ import toolMetadata from "components/inventory/tools/tool-metadata";
 import axios from "axios";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
-function SingleTagUsedInToolsField({ tag, closePanel }) {
+function SingleTagUsedInToolsField({ tag, closePanel, className }) {
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -106,7 +106,7 @@ function SingleTagUsedInToolsField({ tag, closePanel }) {
   }
 
   return (
-    <div>
+    <div className={className}>
       <div className="text-muted mb-2">
         <span>This tag is applied on {tools.length} tool{tools?.length !== 1 ? 's' : ''}</span>
       </div>
@@ -117,7 +117,8 @@ function SingleTagUsedInToolsField({ tag, closePanel }) {
 
 SingleTagUsedInToolsField.propTypes = {
   tag: PropTypes.object,
-  closePanel: PropTypes.func
+  closePanel: PropTypes.func,
+  className: PropTypes.string
 };
 
 export default SingleTagUsedInToolsField;

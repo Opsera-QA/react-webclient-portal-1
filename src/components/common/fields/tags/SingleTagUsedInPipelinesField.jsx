@@ -13,7 +13,7 @@ import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import axios from "axios";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
-function SingleTagUsedInPipelinesField({ tag, closePanel }) {
+function SingleTagUsedInPipelinesField({ tag, closePanel, className }) {
   const { getAccessToken } = useContext(AuthContext);
   const [pipelines, setPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -96,17 +96,19 @@ function SingleTagUsedInPipelinesField({ tag, closePanel }) {
 
   if (!isLoading && (pipelines == null || pipelines.length === 0)) {
     return (
-      <div className="text-muted mb-2">
-        <div>
+      <div className={className}>
+        <div className="text-muted mb-2">
+          <div>
           <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
           This tag is not currently applied on any pipeline</span>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div>
+    <div className={className}>
       <div className="text-muted mb-2">
         <span>This tag is applied on {pipelines.length} pipeline{pipelines?.length !== 1 ? 's' : ''}</span>
       </div>
@@ -117,7 +119,8 @@ function SingleTagUsedInPipelinesField({ tag, closePanel }) {
 
 SingleTagUsedInPipelinesField.propTypes = {
   tag: PropTypes.object,
-  closePanel: PropTypes.func
+  closePanel: PropTypes.func,
+  className: PropTypes.string
 };
 
 export default SingleTagUsedInPipelinesField;
