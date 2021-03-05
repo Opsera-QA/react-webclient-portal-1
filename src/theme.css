@@ -1436,12 +1436,11 @@ a.nav-link {
 
 .overlay-panel {
     position: fixed;
-    top: 68px;
     overflow-x: hidden;
     overflow-y: auto;
     z-index: 1500;
-    bottom: 21px;
-    max-height: calc(100% - 48px);
+    height: 100%;
+    max-height: 100%;
 }
 
 .overlay-panel .overlay-panel-body {

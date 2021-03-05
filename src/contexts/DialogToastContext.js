@@ -469,10 +469,10 @@ function ToastContextProvider ({ children, navBar }) {
           showOverlayPanel: showOverlayPanel,
           clearOverlayPanel: clearOverlayPanel
         }}>
+        <OverlayPanelContainer overlayPanel={overlayPanel} />
         {navBar}
         <SiteNotificationDisplayer />
         <BannerMessageContainer bannerMessages={bannerMessages} />
-        <OverlayPanelContainer overlayPanel={overlayPanel} />
         {children}
         <Toaster toasts={toasts} />
       </DialogToastContext.Provider>
