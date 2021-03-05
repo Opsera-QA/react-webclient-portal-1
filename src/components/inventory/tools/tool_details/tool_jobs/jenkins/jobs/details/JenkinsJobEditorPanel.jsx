@@ -146,7 +146,7 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData, handleClose }) {
   const formFieldType = (formField) => {
     switch (formField.type) {
     case "select":
-      return <Form.Control as="select" disabled={formField.id === "agentLabels" ? !toolData.configuration.autoScaleEnable : formField.disabled } value={formField.value}
+      return <Form.Control as="select" disabled={formField.disabled } value={formField.value}
                             onChange={e => handleFormChange(formField, e.target.value)}>
             <option name="Select One" value="" disabled={false}>Select One</option>
             {formField.options.map((option, i) => (
@@ -329,7 +329,6 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData, handleClose }) {
                 </Col>
               </Form.Group>
               }
-              
               </>
             );
           } else if (formField.linkedId && jenkinsFormList[formField.linkedId].value === formField.linkedValue) {

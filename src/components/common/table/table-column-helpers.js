@@ -8,7 +8,7 @@ import {
   faSpinner,
   faStop,
   faStopCircle,
-  faTimesCircle, faTrash
+  faTimesCircle, faTrash, faPlay
 } from "@fortawesome/pro-light-svg-icons";
 import React from "react";
 import Model from "core/data_model/model";
@@ -356,6 +356,19 @@ export const getTableButtonColumn = (accessor = "row", headerText, variant, butt
     accessor: accessor,
     Cell: (props) => {
       return <Button size={"sm"} variant={variant} onClick={() => {buttonFunction(props?.data[props?.row?.index])}}>{buttonText}</Button>
+    },
+    class: className ? className :  "no-wrap-inline py-1"
+  };
+};
+
+export const getGitTaskTableRunButtonColumn = (accessor = "row", headerText, variant, buttonText, buttonFunction, className) => {
+  return {
+    Header: headerText,
+    accessor: accessor,
+    Cell: (props) => {
+      return <Button size={"sm"} variant={variant} disabled={props?.data[props?.row?.index].status === "running"} onClick={() => {buttonFunction(props?.data[props?.row?.index])}} >
+        {props?.data[props?.row?.index].status === "running" ? (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Running </span>) : (<span><FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/> {buttonText} </span> ) }
+        </Button>
     },
     class: className ? className :  "no-wrap-inline py-1"
   };

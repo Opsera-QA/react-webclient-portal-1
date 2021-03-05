@@ -10,9 +10,11 @@ import CenterOverlayContainer from "components/common/overlays/center/CenterOver
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
 import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/sfdcPipelineWizard";
+import {useHistory} from "react-router-dom";
 
 function SFDCViewOverlay({ gitTasksData }) {
   const toastContext = useContext(DialogToastContext);
+  let history = useHistory();
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -36,6 +38,7 @@ function SFDCViewOverlay({ gitTasksData }) {
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
+    history.push({pathname: `/git/`});
   };
 
   return (
