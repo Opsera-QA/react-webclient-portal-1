@@ -19,7 +19,7 @@ function DashboardTemplateCardView({ dashboardTemplates, dashboardTemplateFilter
             message={
               `
                 No Dashboard Templates Found. 
-                You can publish a dashboard to your private catalog by viewing its details. 
+                You can publish a dashboard to your private catalog when viewing its details. 
                 Opsera will be providing pre-made dashboards in the public catalog in the future. 
               `
             }
