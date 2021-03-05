@@ -6,7 +6,7 @@ import SubscriptionIcon from "components/common/icons/subscription/SubscriptionI
 import pipelineActions from "components/workflow/pipeline-actions";
 
 function PipelineSubscriptionIcon({ pipelineModel, showText, className }) {
-  const { getAccessToken } = useContext(AuthContext);
+  const { getAccessToken, featureFlagHideItemInProd, featureFlagHideItemInTest } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(undefined);
   const isMounted = useRef(false);
@@ -68,6 +68,10 @@ function PipelineSubscriptionIcon({ pipelineModel, showText, className }) {
       setIsSubscribed(response?.data === true);
     }
   };
+
+  if (featureFlagHideItemInProd() || featureFlagHideItemInTest()) {
+    return null;
+  }
 
   return (
     <SubscriptionIcon
