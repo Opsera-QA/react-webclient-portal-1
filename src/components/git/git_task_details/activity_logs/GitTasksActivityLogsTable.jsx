@@ -19,6 +19,7 @@ import TagFilter from "components/common/filters/tags/tag/TagFilter";
 // import NotificationTypeFilter from "components/common/filters/notifications/notification_type/NotificationTypeFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
+import GitTaskActivityDetailViewer from "./GitTaskActivityDetailViewer";
 
 function GitTasksActivityLogsTable({ gitTasksData, allLogs }) {
   let fields = gitTasksActivityLogMetadata.fields;
@@ -34,8 +35,7 @@ function GitTasksActivityLogsTable({ gitTasksData, allLogs }) {
   }, []);
 
   const showActivityLog = (row) => {
-    setModalData(row);
-    setShowModal(true);
+    console.log(row);
   };
 
   const columns = useMemo(
@@ -43,12 +43,18 @@ function GitTasksActivityLogsTable({ gitTasksData, allLogs }) {
       getTableTextColumn(fields.find(field => { return field.id === "name"})),
       getTableTextColumn(fields.find(field => { return field.id === "type"})),
       getTableTextColumn(fields.find(field => { return field.id === "message"})),
+      getTableTextColumn(fields.find(field => { return field.id === "log_type"})),
       getTableBooleanIconColumn(fields.find(field => { return field.id === "status"})),
       getTableDateTimeColumn(fields.find(field => { return field.id === "createdAt"})),
       getTableInfoIconColumn(showActivityLog),
     ],
     [],
   );
+
+  const onRowSelect = (rowData) => {
+    setModalData(rowData.original);
+    setShowModal(true);
+  }
 
   const loadData = async (filterDto = gitTasksActivityFilterDto) => {
     try {
@@ -93,6 +99,7 @@ function GitTasksActivityLogsTable({ gitTasksData, allLogs }) {
         columns={columns}
         data={logData}
         isLoading={isLoading}
+        onRowSelect={onRowSelect}
         paginationDto={gitTasksActivityFilterDto}
         setPaginationDto={setGitTasksActivityFilterDto}
         loadData={loadData}
@@ -113,7 +120,12 @@ function GitTasksActivityLogsTable({ gitTasksData, allLogs }) {
         titleIcon={faTable}
         title={"Git Tasks Activity Logs"}
       />
-      <ModalActivityLogsDialog size={"lg"} header={"Git Tasks Activity Log"} jsonData={modalData} show={showModal} setParentVisibility={setShowModal} />
+      {/* <ModalActivityLogsDialog size={"lg"} header={"Git Tasks Activity Log"} jsonData={modalData} show={showModal} setParentVisibility={setShowModal} /> */}
+      <GitTaskActivityDetailViewer
+        gitTaskActivityData={modalData}
+        showModal={showModal}
+        setShowModal={setShowModal}
+      />
     </div>
   );
 }

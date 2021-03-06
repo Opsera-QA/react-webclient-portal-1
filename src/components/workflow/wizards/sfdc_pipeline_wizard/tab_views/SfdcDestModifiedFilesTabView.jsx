@@ -49,7 +49,7 @@ const SfdcDestModifiedFilesTabView = ({
     return (
       <div className="px-2 d-flex small">        
         <div>
-          <SfdcComponentFilter componentType={componentType} filterDto={filterDto} setFilterDto={setFilterDto} />
+          <SfdcComponentFilter componentType={componentType} filterDto={filterDto} setFilterDto={setFilterDto} inline={true} />
         </div>
       </div>
     );

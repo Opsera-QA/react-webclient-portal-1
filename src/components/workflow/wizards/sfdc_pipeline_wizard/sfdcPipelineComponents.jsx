@@ -517,7 +517,7 @@ const SfdcPipelineComponents = ({
 
               <div className="mx-2">
                 <div className="text-muted">Select Components:</div>
-                <div className="scroller">
+                <div className={gitTaskData ? "" : "scroller"}>
                 <div className="d-flex flex-wrap">
                   {loading ? (
                     <LoadingDialog size="sm" />
