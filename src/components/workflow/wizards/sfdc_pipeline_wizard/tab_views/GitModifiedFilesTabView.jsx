@@ -69,7 +69,7 @@ const GitModifiedFilesTabView = ({
             <InlineBooleanFilter loadData={handleCheckAllClickComponentTypes} filterDto={filterDto} setFilterDto={setFilterDto} fieldName={"checkAll"} />
           </TooltipWrapper>
         </div>        
-        <div><SfdcComponentFilter componentType={componentType} filterDto={filterDto} setFilterDto={setFilterDto} /></div>
+        <div><SfdcComponentFilter componentType={componentType} filterDto={filterDto} setFilterDto={setFilterDto} inline={true} /></div>
       </div>
     );
   };

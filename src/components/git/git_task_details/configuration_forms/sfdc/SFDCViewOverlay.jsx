@@ -12,7 +12,7 @@ import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
 import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/sfdcPipelineWizard";
 import {useHistory} from "react-router-dom";
 
-function SFDCViewOverlay({ gitTasksData }) {
+function SFDCViewOverlay({ gitTasksData, refreshData }) {
   const toastContext = useContext(DialogToastContext);
   let history = useHistory();
   const { getAccessToken } = useContext(AuthContext);
@@ -38,7 +38,8 @@ function SFDCViewOverlay({ gitTasksData }) {
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
-    history.push({pathname: `/git/`});
+    refreshData();
+    history.push(`/git`);
   };
 
   return (
@@ -59,6 +60,7 @@ function SFDCViewOverlay({ gitTasksData }) {
 
 SFDCViewOverlay.propTypes = {
   gitTasksData: PropTypes.object,
+  refreshData: PropTypes.func
 };
 
 export default SFDCViewOverlay;

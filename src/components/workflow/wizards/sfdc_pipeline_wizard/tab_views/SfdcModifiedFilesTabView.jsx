@@ -105,7 +105,7 @@ const SfdcModifiedFilesTabView = ({
           />
         </div>
         <div>
-          <SfdcComponentFilter componentType={componentType} filterDto={filterDto} setFilterDto={setFilterDto} />
+          <SfdcComponentFilter componentType={componentType} filterDto={filterDto} setFilterDto={setFilterDto} inline={true} />
         </div>
       </div>
     );

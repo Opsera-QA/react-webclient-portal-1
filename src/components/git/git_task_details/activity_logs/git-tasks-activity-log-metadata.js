@@ -1,6 +1,6 @@
 const gitTasksActivityLogMetadata = {
   idProperty: "_id",
-  type: "Git Tasks",
+  type: "Git Tasks Activity",
   fields: [
     {
       label: "Name",
@@ -11,10 +11,6 @@ const gitTasksActivityLogMetadata = {
       id: "type",
     },
     {
-      label: "Status",
-      id: "status",
-    },
-    {
       label: "Message",
       id: "message",
     },
@@ -23,12 +19,24 @@ const gitTasksActivityLogMetadata = {
       id: "active",
     },
     {
+      label: "Run Count",
+      id: "run_count",
+    },
+    {
+      label: "Git Task Id",
+      id: "task_id",
+    },
+    {
       label: "Configuration",
       id: "configuration",
     },
     {
       label: "Status",
       id: "status",
+    },
+    {
+      label: "Log Type",
+      id: "log_type",
     },
     {
       label: "Tags",
