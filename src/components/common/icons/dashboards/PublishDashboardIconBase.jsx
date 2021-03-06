@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {faShareSquare} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
@@ -32,7 +31,7 @@ function PublishDashboardIconBase({dashboardData, catalog, popoverText, classNam
   const addDashboardToPrivateCatalog = async (cancelSource = cancelTokenSource) => {
     try {
       await dashboardTemplatesActions.publishTemplateV2(getAccessToken, cancelSource, dashboardData.getData("_id"), catalog);
-      toastContext.showFormSuccessToast("Added Dashboard to Private Catalog");
+      toastContext.showFormSuccessToast(`Added Dashboard to the ${catalog} Catalog`);
     } catch (error) {
       if (isMounted?.current === true) {
         console.log(error);
