@@ -1426,7 +1426,8 @@ a.nav-link {
     left: 12.5%;
     right: 12.5%;
     margin: auto;
-    min-height: 100%;
+    min-height: 50%;
+    margin-top: 10px;
 }
 
 .center-overlay-shadow-background {
