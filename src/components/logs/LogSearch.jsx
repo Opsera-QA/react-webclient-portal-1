@@ -20,6 +20,7 @@ import {ApiService} from "api/apiService";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import PipelineFilterSelectInput from "components/logs/PipelineFilterSelectInput";
 
 // TODO: This entire form needs to be completely refactored
 function LogSearch({tools, sideBySide}) {
@@ -246,57 +247,11 @@ function LogSearch({tools, sideBySide}) {
     }
   };
 
-  const getOpseraPipelineFilterData = async () => {
-    setFilters([]);
-    const response = await analyticsActions.getPipelineFilterData(getAccessToken);
-    let items = response?.data?.response;
-
-    if (Array.isArray(items) && items.length > 0) {
-      let formattedItems = [];
-      for (const item in items) {
-        let array = [];
-        const pipeline = response?.data?.response[item];
-        const plan = pipeline?.workflow?.plan;
-
-        if (plan) {
-          plan.forEach((step) =>
-            array.push({label: step.name, value: step._id})
-          );
-
-          formattedItems.push({value: pipeline._id, label: pipeline.name, steps: array});
-        }
-      }
-
-      if (formattedItems.length > 0) {
-        let filterDataApiResponse = [{label: "My Pipelines", options: formattedItems}];
-        let formattedFilterData = [];
-
-        // In the API response, since react-widget can't process nested dataset. We need to add a property to group the dataset
-        // We are adding 'type': which is label here to achieve groupBy in react-widget
-        filterDataApiResponse.forEach((filterGroup) => {
-          filterGroup["options"].map((filters) => {
-            filters["type"] = filterGroup["label"];
-          });
-          // console.log(filterDataApiResponse);
-
-          //Since we add type to the dataset, we only need 'options' for the dropdown
-          formattedFilterData.push(...filterGroup["options"]);
-        });
-
-        setFilters(formattedFilterData);
-      }
-    }
-  };
-
   const fetchFilterData = async () => {
     if (filterType === "blueprint") {
       // These filters' dropdown was commented out so I commented this out to prevent an unnecessary data pull.
       // TODO: Rewire up when necessary
       // await getBlueprintFilterData();
-    }
-
-    if (filterType === "opsera-pipeline") {
-      await getOpseraPipelineFilterData();
     }
   };
 
@@ -414,37 +369,7 @@ function LogSearch({tools, sideBySide}) {
   const getDynamicFields = () => {
     if (filterType === "opsera-pipeline") {
       return (
-        <>
-          <Col>
-            <DropdownList
-              data={filterOptions}
-              busy={Object.keys(filterOptions).length === 0}
-              disabled={Object.keys(filterOptions).length === 0}
-              // disabled={true}
-              valueField="value"
-              textField="label"
-              filter="contains"
-              value={pipelineFilter}
-              placeholder={"Select Pipeline Name"}
-              onChange={opseraPipelineSelectChange}
-              onToggle={fetchFilterData}
-            />
-          </Col>
-          <Col>
-            <DropdownList
-              data={pipelineFilter.steps}
-              busy={Object.keys(filterOptions).length === 0}
-              disabled={Object.keys(pipelineFilter).length === 0}
-              // disabled={true}
-              valueField="value"
-              textField="label"
-              filter="contains"
-              value={stepFilter}
-              placeholder={"Select Step"}
-              onChange={setStepFilter}
-            />
-          </Col>
-        </>
+          <PipelineFilterSelectInput opseraPipelineSelectChange={opseraPipelineSelectChange} pipelineFilter={pipelineFilter} setStepFilter={setStepFilter} stepFilter={stepFilter} />
       );
     }
 
