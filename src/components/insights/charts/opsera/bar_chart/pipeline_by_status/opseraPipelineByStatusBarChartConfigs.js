@@ -1,7 +1,7 @@
 export default {
   keys: [
-    "successful",
-    "failed"
+    "Successful",
+    "Failed"
   ],
   margin: {
     "top": 50,

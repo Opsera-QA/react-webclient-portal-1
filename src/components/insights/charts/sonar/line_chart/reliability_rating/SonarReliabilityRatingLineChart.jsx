@@ -14,6 +14,7 @@ import { axiosApiService } from "../../../../../../api/apiService";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ModalLogs from "components/common/modal/modalLogs";
+import { format } from "date-fns";
 
 function ReliabilityRatingLineChart({ persona, date, tags }) {
   const contextType = useContext(AuthContext);
@@ -50,7 +51,7 @@ function ReliabilityRatingLineChart({ persona, date, tags }) {
       request: "reliabilityRating",
       startDate: date.start,
       endDate: date.end,
-      tags: tags
+      tags: tags,
     };
 
     try {
@@ -109,15 +110,20 @@ function ReliabilityRatingLineChart({ persona, date, tags }) {
               colors={{ scheme: "category10" }}
               legends={config.legends}
               tooltip={({ point, color }) => (
-                <div style={{
-                  background: "white",
-                  padding: "9px 12px",
-                  border: "1px solid #ccc",
-                }}>
-                  <strong style={{ color }}>
-                  Timestamp: </strong> {point.data.x}<br></br>
-                  <strong style={{ color }}>  Rating: </strong> {point.data.y === 1 && <>A</>} {point.data.y === 2 && <>B</>} {point.data.y === 3 && <>C</>}  {point.data.y === 4 && <>D</>}  {point.data.y === 5 && <>E</>} <br></br>
-                  <strong style={{ color }}>  Project Key: </strong> {point.data.key}
+                <div
+                  style={{
+                    background: "white",
+                    padding: "9px 12px",
+                    border: "1px solid #ccc",
+                  }}
+                >
+                  <strong style={{ color }}>Timestamp: </strong>
+                  {format(new Date(point.data.x), "yyyy-MM-dd', 'hh:mm a")}
+                  <br></br>
+                  <strong style={{ color }}> Rating: </strong> {point.data.y === 1 && <>A</>}
+                  {point.data.y === 2 && <>B</>} {point.data.y === 3 && <>C</>} {point.data.y === 4 && <>D</>}
+                  {point.data.y === 5 && <>E</>} <br></br>
+                  <strong style={{ color }}> Project Key: </strong> {point.data.key}
                 </div>
               )}
               theme={{

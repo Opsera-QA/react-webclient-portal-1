@@ -13,6 +13,7 @@ import { AuthContext } from "../../../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../../../api/apiService";
 import InfoDialog from "components/common/status_notifications/info";
 import ModalLogs from "components/common/modal/modalLogs";
+import { format } from "date-fns";
 
 import LoadingDialog from "components/common/status_notifications/loading";
 
@@ -51,7 +52,7 @@ function ReliabilityRemediationEffortLineChart({ persona, date, tags }) {
       request: "reliabilityRemediationEffort",
       startDate: date.start,
       endDate: date.end,
-      tags: tags
+      tags: tags,
     };
 
     try {
@@ -109,15 +110,18 @@ function ReliabilityRemediationEffortLineChart({ persona, date, tags }) {
               colors={{ scheme: "category10" }}
               // legends={config.legends}
               tooltip={({ point, color }) => (
-                <div style={{
-                  background: "white",
-                  padding: "9px 12px",
-                  border: "1px solid #ccc",
-                }}>
-                  <strong style={{ color }}>
-                  Timestamp: </strong> {point.data.x}<br></br>
-                  <strong style={{ color }}>  Time: </strong> {point.data.y} mins<br></br>
-                  <strong style={{ color }}>  Project Key: </strong> {point.data.key}
+                <div
+                  style={{
+                    background: "white",
+                    padding: "9px 12px",
+                    border: "1px solid #ccc",
+                  }}
+                >
+                  <strong style={{ color }}>Timestamp: </strong>
+                  {format(new Date(point.data.x), "yyyy-MM-dd', 'hh:mm a")}
+                  <br></br>
+                  <strong style={{ color }}> Time: </strong> {point.data.y} mins<br></br>
+                  <strong style={{ color }}> Project Key: </strong> {point.data.key}
                 </div>
               )}
               theme={{

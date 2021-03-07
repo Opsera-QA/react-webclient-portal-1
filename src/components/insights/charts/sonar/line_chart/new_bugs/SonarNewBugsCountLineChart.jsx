@@ -14,6 +14,7 @@ import { axiosApiService } from "../../../../../../api/apiService";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ModalLogs from "components/common/modal/modalLogs";
+import { format } from "date-fns";
 
 function NewBugsCountLineChart({ persona, date, tags }) {
   const contextType = useContext(AuthContext);
@@ -50,7 +51,7 @@ function NewBugsCountLineChart({ persona, date, tags }) {
       request: "newBugs",
       startDate: date.start,
       endDate: date.end,
-      tags: tags
+      tags: tags,
     };
 
     try {
@@ -108,15 +109,19 @@ function NewBugsCountLineChart({ persona, date, tags }) {
               colors={{ scheme: "category10" }}
               legends={config.legends}
               tooltip={({ point, color }) => (
-                <div style={{
-                  background: "white",
-                  padding: "9px 12px",
-                  border: "1px solid #ccc",
-                }}>
-                  <strong style={{ color }}>
-            Timestamp: </strong> {point.data.x}<br></br>
-                  <strong style={{ color }}>  New Bugs: </strong> {point.data.y}<br></br>
-                  <strong style={{ color }}>  Project Key: </strong> {point.data.key}
+                <div
+                  style={{
+                    background: "white",
+                    padding: "9px 12px",
+                    border: "1px solid #ccc",
+                  }}
+                >
+                  <strong style={{ color }}>Timestamp: </strong>
+                  {format(new Date(point.data.x), "yyyy-MM-dd', 'hh:mm a")}
+                  <br></br>
+                  <strong style={{ color }}> New Bugs: </strong> {point.data.y}
+                  <br></br>
+                  <strong style={{ color }}> Project Key: </strong> {point.data.key}
                 </div>
               )}
               theme={{
