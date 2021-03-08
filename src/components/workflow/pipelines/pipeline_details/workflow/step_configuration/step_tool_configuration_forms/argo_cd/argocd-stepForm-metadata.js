@@ -74,12 +74,12 @@ const ArgoCDStepFormMetadata = {
     {
       label: "GIT URL",
       id: "gitUrl",
-      isRequired: true,
+      // isRequired: true,
     },
     {
       label: "SSH URL",
       id: "sshUrl",
-      isRequired: true,
+      // isRequired: true,
     },
   ],
   newModelBase: {

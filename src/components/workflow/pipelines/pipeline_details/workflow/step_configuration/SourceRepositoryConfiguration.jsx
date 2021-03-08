@@ -270,8 +270,8 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
       ...formData,
       repository: selectedOption.name,
       repoId: selectedOption.id,
-      gitUrl: selectedOption.httpUrl,
-      sshUrl: selectedOption.sshUrl,
+      gitUrl: selectedOption.httpUrl || "",
+      sshUrl: selectedOption.sshUrl || "",
       branch: "",
     });
   };

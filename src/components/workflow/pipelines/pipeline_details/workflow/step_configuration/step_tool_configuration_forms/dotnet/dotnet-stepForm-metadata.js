@@ -64,12 +64,12 @@ const dotnetStepFormMetadata = {
     },
     {
       id: "gitUrl",
-      isRequired: true
+      // isRequired: true
     },
     
     {
       id: "sshUrl",
-      isRequired: true
+      // isRequired: true
     },
     
     {

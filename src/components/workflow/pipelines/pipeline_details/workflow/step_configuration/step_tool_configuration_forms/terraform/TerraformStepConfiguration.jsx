@@ -278,8 +278,8 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       }
       newDataObject.setData("gitRepository", repoName);
       newDataObject.setData("gitRepositoryID", value.value);
-      newDataObject.setData("sshUrl", value.sshUrl);
-      newDataObject.setData("gitUrl", value.httpUrl);
+      newDataObject.setData("sshUrl", value.sshUrl || "");
+      newDataObject.setData("gitUrl", value.httpUrl || "");
       setTerraformStepConfigurationDataDto({ ...newDataObject });
       await searchBranches(
         terraformStepConfigurationDto.getData("type"),
