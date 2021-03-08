@@ -19,6 +19,7 @@ import DashboardFavoritesIcon from "components/common/icons/dashboards/Dashboard
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import {Button} from "react-bootstrap";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
+import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date-helpers";
 
 const getTableHeader = (field) => {
   return field["label"];
@@ -161,6 +162,18 @@ export const getTableDateTimeColumn = (field, className) => {
     accessor: getTableAccessor(field),
     Cell: (props) => {
       return props.value ? format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a") : "";
+    },
+    class: className ? className : "no-wrap-inline"
+  };
+};
+
+export const getTableDateAndTimeUntilValueColumn = (header, id, fakeColumn = "fakeColumn", className) => {
+  return {
+    Header: header,
+    accessor: fakeColumn,
+    Cell: (props) => {
+      const row = props.row.original;
+      return row[id] ? convertFutureDateToDhmsFromNowString(new Date(row[id])) : "";
     },
     class: className ? className : "no-wrap-inline"
   };
@@ -350,12 +363,12 @@ export const getTableDeleteColumn = (headerText, deleteFunction, className) => {
   };
 };
 
-export const getTableButtonColumn = (accessor = "row", headerText, variant, buttonText, buttonFunction, className) => {
+export const getTableButtonColumn = (accessor = "row", headerText, variant, buttonText, buttonFunction, className, buttonClassName) => {
   return {
     Header: headerText,
     accessor: accessor,
     Cell: (props) => {
-      return <Button size={"sm"} variant={variant} onClick={() => {buttonFunction(props?.data[props?.row?.index])}}>{buttonText}</Button>
+      return <Button size={"sm"} variant={variant} className={buttonClassName} onClick={() => {buttonFunction(props?.data[props?.row?.index])}}>{buttonText}</Button>
     },
     class: className ? className :  "no-wrap-inline py-1"
   };

@@ -449,6 +449,16 @@ a.text-primary:hover, a.text-primary:focus {
     opacity: .6;
 }
 
+.custom-table tr.expiring-within-a-week {
+    background-color: #fff;
+    color: #dc3545;
+}
+
+.custom-table tr.expiring-within-a-day {
+    background-color: #e59da5;
+    color: #fff;
+}
+
 .custom-table .table-row:hover {
     background-color: #E6E5E3;
 }

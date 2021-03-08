@@ -2,7 +2,7 @@ import React, {useContext, useMemo, useState} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  getTableButtonColumn,
+  getTableButtonColumn, getTableDateAndTimeUntilValueColumn,
   getTableDateColumn, getTableDateTimeColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
@@ -15,6 +15,7 @@ import {useHistory} from "react-router-dom";
 import ExpireTokenModal from "components/user/user_settings/access_tokens/ExpireTokenModal";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faKey} from "@fortawesome/pro-light-svg-icons";
+import {convertFutureDateToDhmsFromNowString, getDaysUntilDate} from "components/common/helpers/date-helpers";
 
 function AccessTokenTable({accessTokenData, loadData, isMounted, isLoading, cancelTokenSource, setFilterModel, filterModel}) {
   let fields = accessTokenMetadata.fields;
@@ -39,6 +40,7 @@ function AccessTokenTable({accessTokenData, loadData, isMounted, isLoading, canc
       getTableTextColumn(getField(fields, "scope")),
       getTableDateColumn(getField(fields, "createdAt")),
       getTableDateTimeColumn(getField(fields, "expiration")),
+      getTableDateAndTimeUntilValueColumn("Time Until Expiration", "expiration"),
       getTableButtonColumn("row", "", "danger", "Expire", toggleDeleteModal),
       getTableButtonColumn("_id", "", "outline-primary", "View Details", viewDetails)
     ],
@@ -66,6 +68,26 @@ function AccessTokenTable({accessTokenData, loadData, isMounted, isLoading, canc
     }
   }
 
+  const rowStyling = (row) => {
+    const daysUntilDate = getDaysUntilDate(new Date(row["values"]?.expiration));
+    console.log("days until date: " + JSON.stringify(daysUntilDate))
+
+
+    if (daysUntilDate == null || daysUntilDate >= 7) {
+      return "";
+    }
+
+    if (daysUntilDate <= -1 || daysUntilDate === 0) {
+      return " expiring-within-a-day";
+    }
+
+    if (daysUntilDate <= 6) {
+      return " expiring-within-a-week";
+    }
+
+    return "";
+  };
+
   const getAccessTokensTable = () => {
     return (
       <CustomTable
@@ -75,6 +97,7 @@ function AccessTokenTable({accessTokenData, loadData, isMounted, isLoading, canc
         noDataMessage={noDataMessage}
         paginationDto={filterModel}
         loadData={loadData}
+        rowStyling={rowStyling}
         setPaginationDto={setFilterModel}
         columns={columns}
       />
