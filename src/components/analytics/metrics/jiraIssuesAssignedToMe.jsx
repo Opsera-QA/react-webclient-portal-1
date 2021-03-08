@@ -123,8 +123,6 @@ function JiraIssuesAssignedToMe() {
         data={data.jiraTicketsAssignedToMe.data}
         rowStyling={""}
         noDataMessage={noDataMessage}
-        // initialState={initialState}
-        // paginationOptions={paginationOptions}
       >
       </CustomTable>
     </>

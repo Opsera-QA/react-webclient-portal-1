@@ -234,9 +234,6 @@ function GitlabRecentMergeRequestsTable({ date, tags }) {
             data={data.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime.data}
             rowStyling={""}
             noDataMessage={noDataMessage}
-            // initialState={initialState}
-            // paginationOptions={paginationOptions}
-            // paginationOptions={getPaginationOptions()}
           ></CustomTable>
         </>
       )}

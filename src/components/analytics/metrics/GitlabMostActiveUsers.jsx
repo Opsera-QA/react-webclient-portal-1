@@ -145,8 +145,6 @@ function GitlabMostActiveUsers({ date }) {
             rowStyling={""}
             noDataMessage={noDataMessage}
             initialState={initialState}
-            // paginationOptions={paginationOptions}
-            // paginationOptions={getPaginationOptions()}
           ></CustomTable>
         </>
       )}

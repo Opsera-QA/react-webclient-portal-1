@@ -148,8 +148,6 @@ function GithubMostActiveContributors({ date, tags }) {
             rowStyling={""}
             noDataMessage={noDataMessage}
             initialState={initialState}
-            // paginationOptions={paginationOptions}
-            // paginationOptions={getPaginationOptions()}
           ></CustomTable>
         </>
       )}

@@ -131,9 +131,6 @@ function GithubRecentMergeRequestsTable({ date, tags }) {
             data={data.githubTimeTakenToCompleteMergeRequestReviewAndPushTime.data}
             rowStyling={""}
             noDataMessage={noDataMessage}
-            // initialState={initialState}
-            // paginationOptions={paginationOptions}
-            // paginationOptions={getPaginationOptions()}
           ></CustomTable>
         </>
       )}

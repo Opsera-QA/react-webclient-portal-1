@@ -131,9 +131,6 @@ function GithubPendingMergeRequests({ date, tags }) {
             data={data.githubPendingMergeRequests.data}
             rowStyling={""}
             noDataMessage={noDataMessage}
-            // initialState={initialState}
-            // paginationOptions={paginationOptions}
-            // paginationOptions={getPaginationOptions()}
           ></CustomTable>
         </>
       )}

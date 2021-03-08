@@ -122,8 +122,6 @@ function JiraIssuesAssignedToMe({persona, date, tags}) {
         data={data.jiraTicketsAssignedToMe.data}
         rowStyling={""}
         noDataMessage={noDataMessage}
-        // initialState={initialState}
-        // paginationOptions={paginationOptions}
       >
       </CustomTable>
     </>

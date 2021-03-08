@@ -155,8 +155,6 @@ function OpseraRecentCDTable({ date }) {
               data={data.data}
               rowStyling={""}
               noDataMessage={noDataMessage}
-              // initialState={initialState}
-              // paginationOptions={paginationOptions}
             ></CustomTable>
           </>
         )}

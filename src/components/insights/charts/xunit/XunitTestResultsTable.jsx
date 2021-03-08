@@ -134,7 +134,6 @@ function XunitResultsTable({ date, tags }) {
               rowStyling={""}
               noDataMessage={noDataMessage}
               initialState={initialState}
-              // paginationOptions={paginationOptions}
             >
             </CustomTable>
           </>

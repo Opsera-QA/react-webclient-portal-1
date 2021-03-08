@@ -131,9 +131,6 @@ function GitlabPendingMergeRequests({ date, tags }) {
             data={data.gitlabPendingMergeRequests.data}
             rowStyling={""}
             noDataMessage={noDataMessage}
-            // initialState={initialState}
-            // paginationOptions={paginationOptions}
-            // paginationOptions={getPaginationOptions()}
           ></CustomTable>
         </>
       )}

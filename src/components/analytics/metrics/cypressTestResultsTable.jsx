@@ -148,7 +148,6 @@ function CypressResultsTable({ date }) {
               rowStyling={""}
               noDataMessage={noDataMessage}
               initialState={initialState}
-              // paginationOptions={paginationOptions}
             >
             </CustomTable>
           </>
