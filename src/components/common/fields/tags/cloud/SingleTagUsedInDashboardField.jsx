@@ -60,7 +60,6 @@ function SingleTagUsedInDashboardField({ tag, closePanel, className }) {
   const loadDashboards = async (cancelSource = cancelTokenSource) => {
     if (tag != null) {
       const response = await adminTagsActions.getRelevantDashboardsV2(getAccessToken, cancelSource, [tag]);
-      console.log("response: " + JSON.stringify(response));
 
       if (isMounted?.current === true && response?.data != null) {
         setDashboards(response?.data?.data);
@@ -68,7 +67,7 @@ function SingleTagUsedInDashboardField({ tag, closePanel, className }) {
     }
   };
 
-  const getToolCards = () => {
+  const getDashboardCards = () => {
     return (
       <Row>
         {dashboards.map((dashboard) => {
@@ -113,7 +112,7 @@ function SingleTagUsedInDashboardField({ tag, closePanel, className }) {
       <div className="text-muted mb-2">
         <span>This tag is applied on {dashboards.length} dashboard{dashboards?.length !== 1 ? 's' : ''}</span>
       </div>
-      {getToolCards()}
+      {getDashboardCards()}
     </div>
   );
 }
