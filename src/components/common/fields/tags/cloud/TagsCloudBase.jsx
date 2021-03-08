@@ -21,10 +21,10 @@ function TagsCloudBase({ tagsWithUsage, onTagClick, className, getTooltip, subsc
           let classNames;
 
           if (subscribed) {
-            classNames = "mr-1 mb-1 badge badge-light subscribed-tag-badge pointer";
+            classNames = "mr-3 mb-3 badge badge-light subscribed-tag-badge pointer";
           }
           else {
-            classNames = "mr-1 mb-1 badge badge-light tag-badge pointer";
+            classNames = "mr-3 mb-3 badge badge-light tag-badge pointer";
           }
 
           return (

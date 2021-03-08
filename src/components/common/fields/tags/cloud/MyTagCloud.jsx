@@ -124,7 +124,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
     if (Array.isArray(tags) && tags.length > 0) {
       return (
         <div>
-          <div className={"mb-2"}>You are currently subscribed to <strong>{tags.length}</strong> tags.</div>
+          <div className={"mb-3"}>You are currently subscribed to <strong>{tags.length}</strong> tags.</div>
           <TagsCloudBase tagsWithUsage={tags} onTagClick={showTagUsage} getTooltip={getTooltip} />
         </div>);
     }
@@ -141,7 +141,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
 
   return (
     <div className={className}>
-      <div className="mb-2 item-field">
+      <div className="mb-3 item-field">
         {getBody()}
         {!isLoading && <div className={"mt-3 badge badge-light filter-badge pointer"} onClick={() => {showTagSubscriptionManager()}}>Manage Tag Subscriptions</div>}
       </div>

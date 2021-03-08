@@ -116,7 +116,7 @@ function OverviewLanding() {
                   </ul>
                 </div>
 
-                <div className="h4 text-color mb-2">Welcome
+                <div className="h4 text-color mb-3">Welcome
                   back {userInfo && userInfo.firstName ? userInfo.firstName : null}!
                 </div>
                 <Row className={"mb-3 mx-1"}>
