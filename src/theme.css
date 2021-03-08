@@ -461,6 +461,7 @@ a.text-primary:hover, a.text-primary:focus {
 
 .custom-table .table-row:hover {
     background-color: #E6E5E3;
+    color: #3D3B36;
 }
 
 .custom-table .table-footer {
