@@ -33,7 +33,7 @@ function TagsCloudBase({ tagsWithUsage, onTagClick, className, getTooltip, subsc
                 <span><FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/>{`${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`}</span>
                 <span className="ml-3"><FontAwesomeIcon icon={faDiceD20} fixedWidth className="mr-1"/>{tagWithUsage?.pipeline_usage_count}</span>
                 <span className="ml-2"><FontAwesomeIcon icon={faWrench} fixedWidth className="mr-1"/>{tagWithUsage?.tool_usage_count}</span>
-                <span className="ml-2"><FontAwesomeIcon icon={faChartNetwork} fixedWidth className="mr-1"/>{tagWithUsage?.dashboard_usage_count}</span>
+                {/*<span className="ml-2"><FontAwesomeIcon icon={faChartNetwork} fixedWidth className="mr-1"/>{tagWithUsage?.dashboard_usage_count}</span>*/}
                 {getSubscribedEye(subscribed)}
               </span>
             </TooltipWrapper>

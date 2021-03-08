@@ -104,7 +104,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
             Tag [{tag?.type}: {tag?.value}] is applied on
             <div><strong>{pipelineCount}</strong> {getSingularOrPluralString(pipelineCount, "Pipeline", "Pipelines")}</div>
             <div><strong>{toolCount}</strong> {getSingularOrPluralString(toolCount, "Tool", "Tools")}</div>
-            <div><strong>{dashboardCount}</strong> {getSingularOrPluralString(dashboardCount, "Dashboard", "Dashboards")}</div>
+            {/*<div><strong>{dashboardCount}</strong> {getSingularOrPluralString(dashboardCount, "Dashboard", "Dashboards")}</div>*/}
           </span>
         </div>
         <div>Click to view usage details</div>

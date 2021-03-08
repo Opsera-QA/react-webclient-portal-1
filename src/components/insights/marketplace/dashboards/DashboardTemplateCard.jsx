@@ -11,7 +11,6 @@ import Model from "core/data_model/model";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import dashboardTemplatesActions from "components/insights/marketplace/dashboards/dashboard-template-actions";
-import accountsActions from "components/admin/accounts/accounts-actions";
 
 export default function DashboardTemplateCard({ dashboardTemplate, catalog, loadData }) {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
