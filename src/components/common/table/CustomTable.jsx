@@ -39,7 +39,7 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
     let response = "";
     if (columnDefinitions && id){
       Object.keys(columnDefinitions).forEach(function(key) {
-        if (columnDefinitions[key].accessor === id) {
+        if (columnDefinitions[key].accessor === id && columnDefinitions[key].class != null) {
           response = columnDefinitions[key].class;
         }      
       });      
