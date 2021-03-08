@@ -92,6 +92,7 @@ const breadcrumbs = {
   tagReports: {name: "tagReports", path: paths.tagReports, label: "Tag Reports", icon: faTags},
   pipelineReports: {name: "pipelineReports", path: paths.pipelineReports, label: "Pipeline Reports", icon: faDraftingCompass},
   detailedToolReport: {name: "detailedToolReport", path: paths.detailedToolReport, label: "DetailedToolReport", icon: faFileInvoice},
+  tagsUsedInDashboardsReport: {name: "tagsUsedInDashboardsReport", path: paths.tagsUsedInDashboardsReport, label: "Tags Used In Dashboards", icon: faTags},
 
   //Analytics
   analyticsProfile: {name: "analyticsProfile", path: paths.analyticsProfile, label: "Analytics Profile", icon: faChartNetwork},
@@ -202,6 +203,7 @@ const trails = {
   tagReports: {parent: "reports", breadcrumb: breadcrumbs.tagReports},
   pipelineReports: {parent: "reports", breadcrumb: breadcrumbs.pipelineReports},
   detailedToolReport: {parent: "reports", breadcrumb: breadcrumbs.detailedToolReport},
+  tagsUsedInDashboardsReport: {parent: "tagReports", breadcrumb: breadcrumbs.tagsUsedInDashboardsReport},
 
   // Analytics
   analyticsProfile: {parent: "accountSettings", breadcrumb: breadcrumbs.analyticsProfile},
