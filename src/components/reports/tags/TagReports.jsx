@@ -7,6 +7,7 @@ function TagReports() {
     <Row className="ml-3">
       <BreadcrumbPageLink breadcrumbDestination={"tagsUsedInPipelineReport"}/>
       <BreadcrumbPageLink breadcrumbDestination={"tagsUsedInToolsReport"}/>
+      <BreadcrumbPageLink breadcrumbDestination={"tagsUsedInDashboardsReport"}/>
     </Row>
   );
 }

@@ -5,17 +5,17 @@ import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {AuthContext} from "contexts/AuthContext";
-import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
-import pipelineSummaryMetadata
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
-import Model from "core/data_model/model";
+import LoadingDialog from "components/common/status_notifications/loading";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
+import Model from "core/data_model/model";
+import DashboardSummaryCard from "components/common/fields/dashboards/DashboardSummaryCard";
 import axios from "axios";
+import dashboardMetadata from "../../../insights/dashboards/dashboard-metadata";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
-function SingleTagUsedInPipelinesField({ tag, closePanel, className }) {
+function TagArrayUsedInDashboardsField({ tags }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [pipelines, setPipelines] = useState([]);
+  const [dashboards, setDashboards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -39,12 +39,12 @@ function SingleTagUsedInPipelinesField({ tag, closePanel, className }) {
       source.cancel();
       isMounted.current = false;
     }
-  }, [tag]);
+  }, [tags]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadPipelines(cancelSource);
+      await loadDashboards(cancelSource);
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -58,26 +58,25 @@ function SingleTagUsedInPipelinesField({ tag, closePanel, className }) {
     }
   }
 
-  const loadPipelines = async (cancelSource = cancelTokenSource) => {
-    if (tag != null) {
-      const response = await adminTagsActions.getRelevantPipelinesV2(getAccessToken, cancelSource, [tag]);
+  const loadDashboards = async (cancelSource = cancelTokenSource) => {
+    if (Array.isArray(tags) && tags.length > 0) {
+      const response = await adminTagsActions.getRelevantDashboardsV2(getAccessToken, cancelSource, tags);
 
       if (isMounted?.current === true && response?.data != null) {
-        setPipelines(response?.data?.data);
+        setDashboards(response?.data?.data);
       }
     }
   };
 
-  const getPipelineCards = () => {
+  const getDashboardCards = () => {
     return (
       <Row>
-        {pipelines.map((pipeline) => {
+        {dashboards.map((dashboard) => {
           return (
-            <Col md={6} key={pipeline._id}>
-              <PipelineSummaryCard
-                pipelineData={new Model(pipeline, pipelineSummaryMetadata, false)}
-                loadPipelineInNewWindow={false}
-                closePanel={closePanel}
+            <Col md={6} key={dashboard._id}>
+              <DashboardSummaryCard
+                dashboardModel={new Model(dashboard, dashboardMetadata, false)}
+                loadDashboardInNewWindow={false}
               />
             </Col>
           );
@@ -86,41 +85,38 @@ function SingleTagUsedInPipelinesField({ tag, closePanel, className }) {
     );
   };
 
+
   if (isLoading) {
-    return <div className={"mb-2"}><LoadingIcon isLoading={isLoading} />Loading Pipeline Usage</div>;
+    return <div className={"mb-2"}><LoadingIcon isLoading={isLoading} />Loading Dashboards</div>;
   }
 
-  if (!isLoading && (tag == null || tag === "")) {
+  if (!isLoading && tags == null || tags.length === 0) {
     return null;
   }
 
-  if (!isLoading && (pipelines == null || pipelines.length === 0)) {
+  if (!isLoading && (dashboards == null || dashboards.length === 0)) {
     return (
-      <div className={className}>
-        <div className="text-muted mb-2">
-          <div>
+      <div className="form-text text-muted ml-3">
+        <div>
           <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
-          This tag is not currently applied on any pipeline</span>
-          </div>
+          This tag combination is not currently applied on any dashboard</span>
         </div>
       </div>
     )
   }
 
   return (
-    <div className={className}>
-      <div className="text-muted mb-2">
-        <span>This tag is applied on {pipelines.length} pipeline{pipelines?.length !== 1 ? 's' : ''}</span>
+    <div>
+      <div className="form-text text-muted mb-2">
+        <span>This tag combination is used on {dashboards.length} dashboards</span>
       </div>
-      {getPipelineCards()}
+      {getDashboardCards()}
     </div>
   );
 }
 
-SingleTagUsedInPipelinesField.propTypes = {
-  tag: PropTypes.object,
-  closePanel: PropTypes.func,
-  className: PropTypes.string
+TagArrayUsedInDashboardsField.propTypes = {
+  tags: PropTypes.array,
 };
 
-export default SingleTagUsedInPipelinesField;
+export default TagArrayUsedInDashboardsField;

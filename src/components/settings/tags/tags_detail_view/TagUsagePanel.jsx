@@ -15,7 +15,7 @@ function TagUsagePanel({ tagData, closePanel }) {
     <DetailPanelContainer>
       <SingleTagUsedInToolsField tag={tagData?.getPersistData()} closePanel={closePanel} className={"mb-3"} />
       <SingleTagUsedInPipelinesField tag={tagData?.getPersistData()} closePanel={closePanel} className={"mb-3"} />
-      {/*<SingleTagUsedInDashboardField tag={tagData?.getPersistData()} closePanel={closePanel} />*/}
+      <SingleTagUsedInDashboardField tag={tagData?.getPersistData()} closePanel={closePanel} />
     </DetailPanelContainer>
   );
 }

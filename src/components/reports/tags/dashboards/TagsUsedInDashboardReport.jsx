@@ -6,8 +6,8 @@ import Col from "react-bootstrap/Col";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
-import tagsUsedInPipelineMetadata from "components/reports/tags/pipelines/tags-used-in-pipeline-metadata";
-import TagArrayUsedInToolsField from "components/common/fields/tags/TagArrayUsedInToolsField";
+import tagsUsedInDashboardMetadata from "components/reports/tags/dashboards/tags-used-in-dashboard-metadata";
+import TagArrayUsedInDashboardsField from "components/common/fields/tags/TagArrayUsedInDashboardsField";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {faAnalytics, faDraftingCompass, faTags, faTools} from "@fortawesome/pro-light-svg-icons";
@@ -15,9 +15,9 @@ import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import {useHistory} from "react-router-dom";
 import TagManager from "components/common/inputs/tags/TagManager";
 
-function TagsUsedInToolsReport() {
+function TagsUsedInDashboardsReport() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const [tagsUsedInPipelineDto, setTagsUsedInPipelineDto] = useState(undefined);
+  const [tagsUsedInDashboardDto, setTagsUsedInDashboardDto] = useState(undefined);
   const { getUserRecord, setAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -45,7 +45,7 @@ function TagsUsedInToolsReport() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      setTagsUsedInPipelineDto(new Model(tagsUsedInPipelineMetadata.newObjectFields, tagsUsedInPipelineMetadata, true));
+      setTagsUsedInDashboardDto(new Model(tagsUsedInDashboardMetadata.newObjectFields, tagsUsedInDashboardMetadata, true));
     }
   };
 
@@ -61,7 +61,6 @@ function TagsUsedInToolsReport() {
         <NavigationTab activeTab={"tags"} tabText={"Tool Reports"} handleTabClick={handleTabClick} tabName={"tools"} icon={faTools} />
         <NavigationTab activeTab={"tags"} tabText={"Tag Reports"} handleTabClick={handleTabClick} tabName={"tags"} icon={faTags} />
         <NavigationTab activeTab={"tags"} tabText={"Pipeline Reports"} handleTabClick={handleTabClick} tabName={"pipelines"} icon={faDraftingCompass} />
-        <NavigationTab activeTab={"tags"} tabText={"Dashboard Reports"} handleTabClick={handleTabClick} tabName={"dashboards"} icon={faDraftingCompass} />
       </NavigationTabContainer>
     );
   };
@@ -72,26 +71,25 @@ function TagsUsedInToolsReport() {
 
   return (
     <ScreenContainer
-      breadcrumbDestination={"tagsUsedInToolsReport"}
-      pageDescription={"View which tools are in use by a specific tag combination"}
+      breadcrumbDestination={"tagsUsedInDashboardsReport"}
+      pageDescription={"View which dashboards are in use by a specific tag combination"}
       isLoading={isLoading}
       navigationTabContainer={getNavigationTabContainer()}
       roleRequirement={ROLE_LEVELS.POWER_USERS}
       accessRoleData={accessRoleData}
     >
-      <Row className={"mb-3"}>
+      <Row className={"mb-3 mx-0"}>
         <Col>
-          <TagManager type={"tags"} allowCreate={false} fieldName={"tags"} dataObject={tagsUsedInPipelineDto} setDataObject={setTagsUsedInPipelineDto}/>
+          <TagManager type={"tags"} allowCreate={false} fieldName={"tags"} dataObject={tagsUsedInDashboardDto} setDataObject={setTagsUsedInDashboardDto}/>
         </Col>
       </Row>
-      <Row className={"px-2"}>
+      <Row className={"px-2 mx-0"}>
         <Col>
-          <TagArrayUsedInToolsField tags={tagsUsedInPipelineDto?.getData("tags")}/>
+          <TagArrayUsedInDashboardsField tags={tagsUsedInDashboardDto?.getData("tags")}/>
         </Col>
       </Row>
     </ScreenContainer>
   );
 }
 
-export default TagsUsedInToolsReport;
-
+export default TagsUsedInDashboardsReport;

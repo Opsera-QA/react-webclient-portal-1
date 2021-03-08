@@ -12,7 +12,7 @@ import LoadingIcon from "components/common/icons/LoadingIcon";
 import DashboardSummaryCard from "components/common/fields/dashboards/DashboardSummaryCard";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 
-function SingleTagUsedInDashboardField({ tag, closePanel }) {
+function SingleTagUsedInDashboardField({ tag, closePanel, className }) {
   const { getAccessToken } = useContext(AuthContext);
   const [dashboards, setDashboards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -60,6 +60,7 @@ function SingleTagUsedInDashboardField({ tag, closePanel }) {
   const loadDashboards = async (cancelSource = cancelTokenSource) => {
     if (tag != null) {
       const response = await adminTagsActions.getRelevantDashboardsV2(getAccessToken, cancelSource, [tag]);
+      console.log("response: " + JSON.stringify(response));
 
       if (isMounted?.current === true && response?.data != null) {
         setDashboards(response?.data?.data);
@@ -74,7 +75,7 @@ function SingleTagUsedInDashboardField({ tag, closePanel }) {
           return (
             <Col md={6} key={dashboard._id}>
               <DashboardSummaryCard
-                da={new Model(dashboard, dashboardMetadata, false)}
+                dashboardModel={new Model(dashboard, dashboardMetadata, false)}
                 loadDashboardsInNewWindow={false}
                 closePanel={closePanel}
               />
@@ -87,7 +88,7 @@ function SingleTagUsedInDashboardField({ tag, closePanel }) {
 
 
   if (isLoading) {
-    return <div className={"mb-2"}><LoadingIcon isLoading={isLoading} />Loading Tool Usage</div>;
+    return <div className={"mb-2"}><LoadingIcon isLoading={isLoading} />Loading Dashboard Usage</div>;
   }
 
   if (!isLoading && tag == null) {
@@ -96,17 +97,19 @@ function SingleTagUsedInDashboardField({ tag, closePanel }) {
 
   if (!isLoading && (dashboards == null || dashboards.length === 0)) {
     return (
-      <div className="text-muted mb-2">
-        <div>
-          <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
-          This tag is not currently applied on any tool</span>
+      <div className={className}>
+        <div className="text-muted mb-2">
+          <div>
+            <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
+            This tag is not currently applied on any dashboard</span>
+          </div>
         </div>
       </div>
     )
   }
 
   return (
-    <div>
+    <div className={className}>
       <div className="text-muted mb-2">
         <span>This tag is applied on {dashboards.length} dashboard{dashboards?.length !== 1 ? 's' : ''}</span>
       </div>
@@ -117,7 +120,8 @@ function SingleTagUsedInDashboardField({ tag, closePanel }) {
 
 SingleTagUsedInDashboardField.propTypes = {
   tag: PropTypes.object,
-  closePanel: PropTypes.func
+  closePanel: PropTypes.func,
+  className: PropTypes.string
 };
 
 export default SingleTagUsedInDashboardField;

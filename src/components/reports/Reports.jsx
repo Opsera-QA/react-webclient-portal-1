@@ -100,6 +100,7 @@ function Reports() {
         <NavigationTab activeTab={activeTab} tabText={"Tool Reports"} handleTabClick={handleTabClick} tabName={"tools"} icon={faTools} />
         <NavigationTab activeTab={activeTab} tabText={"Tag Reports"} handleTabClick={handleTabClick} tabName={"tags"} icon={faTags} />
         <NavigationTab activeTab={activeTab} tabText={"Pipeline Reports"} handleTabClick={handleTabClick} tabName={"pipelines"} icon={faDraftingCompass} />
+        {/*<NavigationTab activeTab={activeTab} tabText={"Dashboard Reports"} handleTabClick={handleTabClick} tabName={"dashboards"} icon={faDraftingCompass} />*/}
       </NavigationTabContainer>
     );
   };
@@ -112,6 +113,8 @@ function Reports() {
         return "pipelineReports";
       case "tags":
         return "tagReports";
+      case "dashboards":
+        return "dashboardReports";
       case "all":
       default:
         return "reports";

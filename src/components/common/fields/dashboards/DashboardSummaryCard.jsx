@@ -11,7 +11,7 @@ import DashboardLinkButton from "components/common/buttons/dashboards/DashboardL
 
 function DashboardSummaryCard({ dashboardModel, isLoading, loadDashboardInNewWindow, closePanel }) {
   const getTitleBar = () => {
-    return <TitleBar titleIcon={faWrench} title={`Tool: [${dashboardModel.getData("name")}]`} isLoading={isLoading} />;
+    return <TitleBar titleIcon={faWrench} title={`Dashboard: [${dashboardModel.getData("name")}]`} isLoading={isLoading} />;
   };
 
   if (isLoading) {

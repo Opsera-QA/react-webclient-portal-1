@@ -24,6 +24,10 @@ const dashboardMetadata = {
       id: "createdAt"
     },
     {
+      label: "Last Update",
+      id: "updatedAt"
+    },
+    {
       label: "Type",
       id: "type",
     },

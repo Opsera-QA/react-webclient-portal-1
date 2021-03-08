@@ -96,6 +96,7 @@ import AccessTokenDetailView from "components/user/user_settings/access_tokens/d
 import GitComponent from "components/git/Git";
 import DetailedToolReport from "./components/reports/tools/detailedReport/DetailedToolReport";
 import GitTaskDetailView from "components/git/git_task_details/GitTaskDetailView";
+import TagsUsedInDashboardsReport from "components/reports/tags/dashboards/TagsUsedInDashboardReport";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -300,6 +301,7 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/reports/tools/tool-counts" exact component={ToolCountsReport}/>
                   <SecureRoute path="/reports/tags/tags-used-in-pipeline" exact component={TagsUsedInPipelineReport}/>
                   <SecureRoute path="/reports/tags/tags-used-in-tools" exact component={TagsUsedInToolsReport}/>
+                  <SecureRoute path="/reports/tags/tags-used-in-dashboards" exact component={TagsUsedInDashboardsReport}/>
                   <SecureRoute path="/reports/tools/detailed-tool-report" exact component={DetailedToolReport}/>
 
                   { /*Notifications */}
