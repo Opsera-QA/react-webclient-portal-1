@@ -21,7 +21,7 @@ dashboardTemplatesActions.getDashboardTemplatesV2 = async(getAccessToken, cancel
 };
 
 dashboardTemplatesActions.publishTemplateV2 = async(getAccessToken, cancelTokenSource, dashboardId, catalog) => {
-  const apiUrl = "/analytics/dashboard/publish";
+  const apiUrl = "/analytics/dashboard/templates/publish";
   const params = {
       catalog: catalog,
       dashboardId: dashboardId
@@ -31,13 +31,18 @@ dashboardTemplatesActions.publishTemplateV2 = async(getAccessToken, cancelTokenS
 };
 
 dashboardTemplatesActions.addTemplateToDashboards = async(getAccessToken, cancelTokenSource, templateId, catalog) => {
-  const apiUrl = "/analytics/dashboard/add";
+  const apiUrl = "/analytics/dashboard/templates/add";
   const params = {
       catalog: catalog === "private" ? catalog : "public",
       templateId: templateId
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, params);
+};
+
+dashboardTemplatesActions.deleteTemplate = async(getAccessToken, cancelTokenSource, templateId, catalog) => {
+  const apiUrl = `/analytics/dashboard/templates/${catalog}/${templateId}`;
+  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 export default dashboardTemplatesActions;

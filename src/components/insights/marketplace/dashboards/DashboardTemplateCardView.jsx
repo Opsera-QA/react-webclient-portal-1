@@ -31,7 +31,15 @@ function DashboardTemplateCardView({ dashboardTemplates, dashboardTemplateFilter
     return (
       <CardColumns>
         {dashboardTemplates.map((dashboardTemplate, index) => {
-          return (<DashboardTemplateCard key={index} dashboardTemplate={dashboardTemplate} catalog={dashboardTemplateFilterModel?.getFilterValue("source")} />)
+          let source = dashboardTemplateFilterModel?.getFilterValue("source");
+          return (
+            <DashboardTemplateCard
+              key={index}
+              dashboardTemplate={dashboardTemplate}
+              catalog={source === "customer" ? "private" : "public"}
+              loadData={loadData}
+            />
+         );
         })}
       </CardColumns>
     );
