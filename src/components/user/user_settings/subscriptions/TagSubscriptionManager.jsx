@@ -25,7 +25,7 @@ function TagSubscriptionManager({loadData, isMounted}) {
         <AllTagsCloud />
       </div>
       <SaveButtonContainer>
-        <CloseButton className={"p-3"} size={"sm"} closeEditorCallback={closePanel} />
+        <CloseButton className={"p-3"} size={"sm"} closeEditorCallback={closePanel} showUnsavedChangesMessage={false} />
       </SaveButtonContainer>
     </CenterOverlayContainer>
   );
