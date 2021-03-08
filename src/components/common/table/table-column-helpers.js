@@ -15,7 +15,7 @@ import Model from "core/data_model/model";
 import PipelineTypesField from "components/common/form_fields/pipelines/PipelineTypesField";
 import PipelineStatus from "components/workflow/pipelines/PipelineStatus";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
-import DashboardFavoritesIcon from "components/common/icons/DashboardFavoritesIcon";
+import DashboardFavoritesIcon from "components/common/icons/dashboards/DashboardFavoritesIcon";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import {Button} from "react-bootstrap";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
