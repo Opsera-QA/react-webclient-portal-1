@@ -22,7 +22,7 @@ const argoApplicationsMetadata = {
     {
       label: "Git URL",
       id: "gitUrl",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Namespace",

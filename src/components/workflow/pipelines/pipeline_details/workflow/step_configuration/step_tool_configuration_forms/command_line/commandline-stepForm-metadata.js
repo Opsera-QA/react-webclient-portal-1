@@ -67,12 +67,12 @@ const commandLineStepFormMetadata = {
     },
     {
       id: "gitUrl",
-      isRequired: true
+      // isRequired: true
     },
     
     {
       id: "sshUrl",
-      isRequired: true
+      // isRequired: true
     },
     
     {
@@ -225,12 +225,12 @@ const commandLineStepFormMetadata = {
     },
     {
       id: "gitUrl",
-      isRequired: true
+      // isRequired: true
     },
     
     {
       id: "sshUrl",
-      isRequired: true
+      // isRequired: true
     },
     
     {
