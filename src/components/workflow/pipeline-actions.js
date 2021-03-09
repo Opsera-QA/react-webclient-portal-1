@@ -254,6 +254,7 @@ pipelineActions.createFreeTrialPipeline = async (postBody, getAccessToken) => {
   return response;
 };
 
+// TODO: Migrate to V2. Also, construct the array inside wherever you pull the data so it's flexible.
 pipelineActions.getToolsList = async (service, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/registry/properties/${service}`;
@@ -279,6 +280,11 @@ pipelineActions.getToolsList = async (service, getAccessToken) => {
     })
     .catch(error => {throw { error };});
   return response;
+};
+
+pipelineActions.getToolsListV2 = async (getAccessToken, cancelTokenSource, service) => {
+  const apiUrl = `/registry/properties/${service}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 pipelineActions.getPipelineUsageToolList = async (getAccessToken) => {

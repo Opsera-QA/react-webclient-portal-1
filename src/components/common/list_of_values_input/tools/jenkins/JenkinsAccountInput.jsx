@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
@@ -6,48 +6,87 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
+import axios from "axios";
 
-function JenkinsAccountInput({ jenkinsId, visible, fieldName, dataObject, setDataObject, setDataFunction, disabled, configurationRequired}) {
+function JenkinsAccountInput({ jenkinsId, visible, fieldName, dataObject, setDataObject, setDataFunction, disabled, configurationRequired, className}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [jenkinsTools, setJenkinsTools] = useState([]);
   const [jenkinsAccounts, setJenkinsAccounts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
     setJenkinsAccounts([]);
+
     if (jenkinsId !== "" && jenkinsId != null) {
       loadJenkinsAccounts();
     }
   }, [jenkinsId, jenkinsTools]);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadTools();
+      await loadTools(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        toastContext.showErrorDialog("Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry.");
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
-  const loadTools = async () => {
-    const response = await pipelineActions.getToolsList("jenkins", getAccessToken);
+  const loadTools = async (cancelSource = cancelTokenSource) => {
+    const response = await pipelineActions.getToolsListV2(getAccessToken, cancelSource, "jenkins");
 
-    if (response && Array.isArray(response)) {
-      if (configurationRequired) {
-        const filteredTools = response?.filter((tool) => {return tool.configuration != null && Object.entries(tool.configuration).length > 0 });
-        setJenkinsTools(filteredTools)
-      }
-      else {
-        setJenkinsTools(response);
+    if (isMounted?.current === true && response?.data) {
+      let tools = [];
+      let toolsResponseData = response.data;
+      toolsResponseData.map((item) => {
+        tools.push({
+          name: item.name,
+          id: item._id,
+          configuration: item.configuration,
+          accounts: item.accounts,
+          jobs: item.jobs,
+        });
+      });
+
+      if (tools) {
+        if (configurationRequired) {
+          const filteredTools = tools?.filter((tool) => {return tool.configuration != null && Object.entries(tool.configuration).length > 0 });
+          setJenkinsTools(filteredTools);
+        }
+        else {
+          setJenkinsTools(tools);
+        }
       }
     }
   };
@@ -55,9 +94,12 @@ function JenkinsAccountInput({ jenkinsId, visible, fieldName, dataObject, setDat
   const loadJenkinsAccounts = () => {
     setIsLoading(true);
     const index = jenkinsTools.findIndex((x) => x.id === jenkinsId);
-    const jobs = index && jenkinsTools[index]?.accounts ? jenkinsTools[index].accounts : [];
-    setJenkinsAccounts(jobs);
-    setIsLoading(false);
+
+    if (isMounted?.current === true && index !== -1) {
+      const jobs = jenkinsTools[index]?.accounts ? jenkinsTools[index].accounts : [];
+      setJenkinsAccounts(jobs);
+      setIsLoading(false);
+    }
   };
 
   const getNoJobsMessage = () => {
@@ -76,7 +118,7 @@ function JenkinsAccountInput({ jenkinsId, visible, fieldName, dataObject, setDat
   }
 
   return (
-    <div>
+    <div className={className}>
       <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
@@ -102,7 +144,8 @@ JenkinsAccountInput.propTypes = {
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   typeFilter: PropTypes.string,
-  configurationRequired: PropTypes.bool
+  configurationRequired: PropTypes.bool,
+  className: PropTypes.string
 };
 
 JenkinsAccountInput.defaultProps = {
