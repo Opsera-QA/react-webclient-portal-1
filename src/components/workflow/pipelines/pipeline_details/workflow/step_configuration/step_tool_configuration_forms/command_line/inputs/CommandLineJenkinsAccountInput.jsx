@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import JenkinsAccountInput from "components/common/list_of_values_input/tools/jenkins/JenkinsAccountInput";
 
-function CommandLineJenkinsAccountInput({dataObject, setDataObject, disabled}) {
+function CommandLineJenkinsAccountInput({dataObject, setDataObject, disabled, className}) {
   const setJenkinsAccount = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
     newDataObject.setData("gitCredential", selectedOption.gitCredential);
@@ -22,11 +22,12 @@ function CommandLineJenkinsAccountInput({dataObject, setDataObject, disabled}) {
      <JenkinsAccountInput
        fieldName={"gitCredential"}
        jenkinsId={dataObject?.getData("toolConfigId")}
+       className={className}
        requireConfiguration={true}
        dataObject={dataObject}
        setDataObject={setDataObject}
        setDataFunction={setJenkinsAccount}
-       disabled={disabled}
+       disabled={disabled || dataObject?.getData("toolJobId") === ""}
      />
   );
 }
@@ -35,6 +36,7 @@ CommandLineJenkinsAccountInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
+  className: PropTypes.string
 };
 
 export default CommandLineJenkinsAccountInput;
