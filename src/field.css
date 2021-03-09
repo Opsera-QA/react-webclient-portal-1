@@ -4,8 +4,9 @@
 }
 
 .item-field .tag-badge {
-  font-weight: normal;
-  background: #E7E5ED;
+    font-weight: normal;
+    background: #E7E5ED;
+    padding: 5px;
 }
 
 .item-field .subscribed-tag-badge {
@@ -16,42 +17,44 @@
 }
 
 .item-field .generic-badge {
-  font-weight: normal;
-  background: #C7C3DD;
+    font-weight: normal;
+    background: #C7C3DD;
 }
 
 .item-field .group-badge {
-  font-weight: normal;
-  background: #E6E5E3;
+    font-weight: normal;
+    background: #E6E5E3;
 }
 
 .item-field .item-badge {
-  font-weight: normal;
-  background: #E6E5E3;
+    font-weight: normal;
+    background: #E6E5E3;
 }
 
 .item-field .filter-badge {
-  font-weight: normal;
-  background-color: #453191;
-  color: #fff;
+    font-weight: normal;
+    background-color: #453191;
+    color: #fff;
 }
+
 /* End Item Field */
 
 
 /* Role Access Input Styling */
 .role-access .group-badge {
-  font-weight: normal;
-  background: #E6E5E3;
+    font-weight: normal;
+    background: #E6E5E3;
 }
 
 .role-access .user-badge {
-  font-weight: normal;
-  background: #b2dbff;
+    font-weight: normal;
+    background: #b2dbff;
 }
 
 .role-access .edit-button {
-  min-width: 100px;
+    min-width: 100px;
 }
+
 /* End Role Access Input Styling */
 
 /* Property Input Styling */
@@ -61,7 +64,7 @@
     min-height: 40px;
     /*line-height: 2.4em;*/
     border-bottom: 5px solid #E6E5E3;
-    font-size:1.1rem;
+    font-size: 1.1rem;
 }
 
 .object-properties-input .delete-button {
@@ -86,6 +89,7 @@
     /* this is based on form input's height, with a couple extra pixels added */
     height: calc(1.5em + .75rem + 2px);
 }
+
 /* End Property Input Styling */
 
 /* Group Membership Input Panel */
@@ -144,97 +148,97 @@
 }
 
 .tool-registry-card .title-icon {
-  height: 92px;
-  max-width: 100%;
+    height: 92px;
+    max-width: 100%;
 }
 
 .tool-registry-card .title-fa-icon {
-  font-size: 75px;
-  margin-top: 15px;
+    font-size: 75px;
+    margin-top: 15px;
 }
 
 .tool-registry-card .small-title-icon {
-  margin-top: 30px;
+    margin-top: 30px;
 }
 
 .tool-registry-card .jira-icon {
-  margin-top: 15%;
-  margin-left: 10%;
-  max-width: 75%;
+    margin-top: 15%;
+    margin-left: 10%;
+    max-width: 75%;
 }
 
 .tool-registry-card .sonarqube-icon {
-  margin-top: 30px;
-  max-width: 98%;
+    margin-top: 30px;
+    max-width: 98%;
 }
 
 .tool-registry-card .junit-icon {
-  margin-top: 10px;
-  margin-left: 15px;
-  max-width: 75%;
+    margin-top: 10px;
+    margin-left: 15px;
+    max-width: 75%;
 }
 
 .tool-registry-card .xunit-icon {
-  margin-top: 25px;
-  margin-left: 15px;
-  max-width: 80%;
+    margin-top: 25px;
+    margin-left: 15px;
+    max-width: 80%;
 }
 
 .tool-registry-card .teamcity-icon {
-  margin-top: 10px;
-  margin-left: 25px;
-  max-width: 65%;
+    margin-top: 10px;
+    margin-left: 25px;
+    max-width: 65%;
 }
 
 .tool-registry-card .twistlock-icon {
-  margin-top: 20px;
-  max-width: 98%;
+    margin-top: 20px;
+    max-width: 98%;
 }
 
 .tool-registry-card .slack-icon {
-  margin-top: 30px;
-  max-width: 98%;
+    margin-top: 30px;
+    max-width: 98%;
 }
 
 .tool-registry-card .selenium-icon {
-  margin-top: 20px;
-  max-width: 98%;
+    margin-top: 20px;
+    max-width: 98%;
 }
 
 .tool-registry-card .jenkins-icon {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 .tool-registry-card .bitbucket-icon {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
 .tool-registry-card .wrench {
-  opacity: .8;
+    opacity: .8;
 }
 
 .tool-registry-card .icon-card-title {
-  font-size: 13px;
-  color: #3D3B36;
-  font-weight: bold;
+    font-size: 13px;
+    color: #3D3B36;
+    font-weight: bold;
 }
 
 .tool-registry-card .description-height {
-  min-height: 50px;
-  height: 100%;
-  /*max-height: 90px;*/
+    min-height: 50px;
+    height: 100%;
+    /*max-height: 90px;*/
 }
 
 .tool-registry-card .date-and-button {
-  min-height: 69px;
+    min-height: 69px;
 }
 
 .tool-title-text {
-  font-family: 'Lato', sans-serif;
-  font-size: 35px;
-  font-weight: 300;
-  line-height: 37.5px;
-  white-space: nowrap;
+    font-family: 'Lato', sans-serif;
+    font-size: 35px;
+    font-weight: 300;
+    line-height: 37.5px;
+    white-space: nowrap;
 }
 
 /* End Summary Card Styling */
@@ -242,18 +246,20 @@
 
 /* Toggle Styling */
 .custom-switch .custom-control-label, input[type="checkbox" i] {
-  cursor: pointer !important;
+    cursor: pointer !important;
 }
 
 .toggle-alignment {
     margin-top: .9rem;
 }
+
 /* End Toggle Styling*/
 
 /* Radio Button Input Styling */
 .disabled-radio-option {
-  opacity: .7;
+    opacity: .7;
 }
+
 /* End Radio Button Input Styling */
 
 .date-range-header {

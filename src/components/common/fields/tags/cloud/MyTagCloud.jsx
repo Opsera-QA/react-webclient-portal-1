@@ -118,7 +118,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
 
   const getBody = () => {
     if (isLoading) {
-      return (<div><LoadingIcon isLoading={isLoading} />Loading Tag Subscriptions</div>);
+      return (<div><LoadingIcon isLoading={isLoading} />Loading tag subscriptions</div>);
     }
 
     if (Array.isArray(tags) && tags.length > 0) {
@@ -143,7 +143,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
     <div className={className}>
       <div className="mb-3 item-field">
         {getBody()}
-        {!isLoading && <div className={"mt-3 badge badge-light filter-badge pointer"} onClick={() => {showTagSubscriptionManager()}}>Manage Tag Subscriptions</div>}
+        {!isLoading && <div className={"mt-2 btn btn-sm btn-outline-secondary"} onClick={() => {showTagSubscriptionManager()}}>Manage Tag Subscriptions</div>}
       </div>
     </div>
   );
