@@ -10,6 +10,7 @@ import config from "./sonarCodeCoverageBarChartConfigs";
 import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
 import InfoDialog from "components/common/status_notifications/info";
+import { format } from "date-fns";
 
 function SonarLinesToCoverBarChart({ date, persona, tags }) {
   const [showModal, setShowModal] = useState(false);
@@ -102,11 +103,11 @@ function SonarLinesToCoverBarChart({ date, persona, tags }) {
             motionStiffness={90}
             motionDamping={15}
             //   legends={config.legends}
-            tooltip={({ indexValue, value, id, color, data }) => (
+            tooltip={({ indexValue, value, color, data }) => (
               <div>
                 <strong style={{ color }}>
-              Timestamp: </strong> {indexValue}<br></br>
-                <strong style={{ color }}>  {id}: </strong> {value} <br></br>
+              Timestamp: </strong> {format(new Date(indexValue), "yyyy-MM-dd', 'hh:mm a")}<br></br>
+                <strong style={{ color }}>  Uncovered Lines: </strong> {value} <br></br>
                 <strong style={{ color }}> Project Key: </strong> {data.key}
               </div>
             )}
