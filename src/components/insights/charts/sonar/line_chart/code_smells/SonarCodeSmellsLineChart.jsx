@@ -9,6 +9,7 @@ import config from "./sonarCodeSmellsLineChartConfigs";
 import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
 import InfoDialog from "components/common/status_notifications/info";
+import { format } from "date-fns";
 
 function SonarCodeSmellsLineChart({ persona, date, tags }) {
   console.log(tags);
@@ -108,7 +109,7 @@ function SonarCodeSmellsLineChart({ persona, date, tags }) {
                   border: "1px solid #ccc",
                 }}
               >
-                <strong style={{ color }}>Timestamp: </strong> {point.data.x}
+                <strong style={{ color }}>Timestamp: </strong> {format(new Date(point.data.x), "yyyy-MM-dd', 'hh:mm a")}
                 <br></br>
                 <strong style={{ color }}> Code Smells: </strong> {point.data.y}<br></br>
                 <strong style={{ color }}> Key: </strong> {point.data.key}

@@ -9,6 +9,7 @@ import config from "./sonarMaintainabilityRatingLineChartConfigs";
 import "components/analytics/charts/charts.css";
 import ModalLogs from "components/common/modal/modalLogs";
 import InfoDialog from "components/common/status_notifications/info";
+import { format } from "date-fns";
 
 function SonarMaintainabilityRatingLineChart({ persona, date, tags }) {
   const contextType = useContext(AuthContext);
@@ -107,9 +108,11 @@ function SonarMaintainabilityRatingLineChart({ persona, date, tags }) {
                   border: "1px solid #ccc",
                 }}
               >
-                <strong style={{ color }}>Timestamp: </strong> {point.data.x}
+                <strong style={{ color }}>Timestamp: </strong> {format(new Date(point.data.x), "yyyy-MM-dd', 'hh:mm a")}
                 <br></br>
-                <strong style={{ color }}> Maintainability Rating: </strong> {point.data.y}<br></br>
+                <strong style={{ color }}> Maintainability Rating: </strong> {point.data.y === 1 && <>A</>}
+                  {point.data.y === 2 && <>B</>} {point.data.y === 3 && <>C</>} {point.data.y === 4 && <>D</>}
+                  {point.data.y === 5 && <>E</>}<br></br>
                 <strong style={{ color }}> Key: </strong> {point.data.key}
               </div>
             )}
