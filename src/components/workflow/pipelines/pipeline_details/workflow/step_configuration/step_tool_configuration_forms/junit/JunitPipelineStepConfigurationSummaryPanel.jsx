@@ -34,25 +34,13 @@ function JunitPipelineStepConfigurationSummaryPanel({ junitPipelineStepData, pip
           <TextFieldBase dataObject={junitPipelineStepData} fieldName={"branch"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={junitPipelineStepData} fieldName={"rollbackBranchName"} />
-        </Col>
-        <Col lg={6}>
           <TextFieldBase dataObject={junitPipelineStepData} fieldName={"gitBranch"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={junitPipelineStepData} fieldName={"stepIdXML"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={junitPipelineStepData} fieldName={"dockerName"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={junitPipelineStepData} fieldName={"dockerTagName"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={junitPipelineStepData} fieldName={"dockerPath"} />
-        </Col>
-        <Col lg={6}>
-          <JsonField dataObject={junitPipelineStepData} fieldName={"buildArgs"} />
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>

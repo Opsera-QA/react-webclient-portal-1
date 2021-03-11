@@ -9,9 +9,6 @@ import CustomTable from "components/common/table/CustomTable";
 import "components/analytics/charts/charts.css";
 
 function JiraIssuesAssignedToMe({persona, date, tags}) {
-  console.log(persona);
-  console.log(date);
-  console.log(tags);
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [loading, setLoading] = useState(false);

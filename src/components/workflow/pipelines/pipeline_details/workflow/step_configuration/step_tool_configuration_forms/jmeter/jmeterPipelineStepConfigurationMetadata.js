@@ -17,6 +17,11 @@ const jmeterPipelineStepConfigurationMetadata = {
       isRequired: true
     },
     {
+      label: "Jenkins Job",
+      id: "toolJobName",
+      isRequired: true
+    },
+    {
       label: "Job",
       id: "toolJobId",
       isRequired: true
@@ -47,28 +52,19 @@ const jmeterPipelineStepConfigurationMetadata = {
       isRequired: true
     },
     {
-      label: "Rollback Branch Name",
-      id: "rollbackBranchName",
-    },
-    {
       label: "Branch Name",
       id: "gitBranch",
       isRequired: true
     },
     {
-      label: "Build/Xml Step Info",
-      id: "stepIdXML",
-      isRequired: true
-    },
-    {
       label: "Docker Name",
       id: "dockerName",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Docker Tag",
       id: "dockerTagName",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "JMeter Export File Name",
@@ -81,16 +77,8 @@ const jmeterPipelineStepConfigurationMetadata = {
       isRequired: true
     },
     {
-      label: "Docker File Path",
-      id: "dockerPath",
-    },
-    {
-      label: "Build Arguments",
-      id: "buildArgs",
-    },
-    {
-      label: "Jenkins Agent",
-      id: "agentLabels",
+      label: "Delete workspace before building",
+      id: "workspaceDeleteFlag",
     },
   ],
   newModelBase: {
@@ -122,7 +110,7 @@ const jmeterPipelineStepConfigurationMetadata = {
     jmeterExportFileName: "",
     jmeterFileName: "",
     workspace: "",
-    // agentLabels : "",
+    workspaceDeleteFlag: false
   }
 };
 

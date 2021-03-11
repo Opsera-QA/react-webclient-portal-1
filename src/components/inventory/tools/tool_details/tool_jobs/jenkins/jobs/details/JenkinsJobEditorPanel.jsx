@@ -21,6 +21,7 @@ import { jobTypes } from "../jenkins-job-metadata";
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import Modal from "../../../../../../../common/modal/modal";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
+import JenkinsJobTypeArtifactoryDockerPush from "../job-type-artifactory-docker-push";
 
 function JenkinsJobEditorPanel({ toolData, jobData, loadData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -73,6 +74,9 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData, handleClose }) {
       break;
     case "DOCKER PUSH":
       updateJenkinsForm({ ...JenkinsJobTypeDockerPush });
+      break;
+    case "ARTIFACTORY_DOCKER_PUSH":
+      updateJenkinsForm({...JenkinsJobTypeArtifactoryDockerPush});
       break;
     case "SEND S3":
       updateJenkinsForm({ ...JenkinsJobTypeSendToS3 });

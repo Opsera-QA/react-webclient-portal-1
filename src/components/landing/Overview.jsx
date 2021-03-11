@@ -97,7 +97,7 @@ function OverviewLanding() {
 
     return (
       <>
-        <div className="mt-3 ml-5 max-content-width-1080">
+        <div className="mt-3 ml-5 max-content-width">
           <Row>
             <Col xl="12">
               <div className="max-content-width">

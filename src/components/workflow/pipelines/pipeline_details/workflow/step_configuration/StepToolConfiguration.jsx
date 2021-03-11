@@ -43,6 +43,8 @@ import DotNetStepConfiguration from "./step_tool_configuration_forms/dotnet/DotN
 import {DialogToastContext} from "contexts/DialogToastContext";
 import pipelineActions from "../../../../pipeline-actions";
 import NUnitStepConfiguration from "./step_tool_configuration_forms/nunit/NUnitStepConfiguration";
+import JFrogDockerStepConfiguration
+  from "./step_tool_configuration_forms/jfrog_artifactory_docker/JFrogDockerStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -622,6 +624,22 @@ function StepToolConfiguration({
             closeEditorPanel={closeEditorPanel}
           />
         );
+      case "jfrog_artifactory_docker":
+        return (
+          <JFrogDockerStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+            />
+        )
     }
   }
 

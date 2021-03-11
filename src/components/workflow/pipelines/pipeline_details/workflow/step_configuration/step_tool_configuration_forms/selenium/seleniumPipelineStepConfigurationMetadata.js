@@ -17,6 +17,11 @@ const seleniumPipelineStepConfigurationMetadata = {
       isRequired: true
     },
     {
+      label: "Jenkins Job",
+      id: "toolJobName",
+      isRequired: true
+    },
+    {
       label: "Job",
       id: "toolJobId",
       isRequired: true
@@ -47,46 +52,19 @@ const seleniumPipelineStepConfigurationMetadata = {
       isRequired: true
     },
     {
-      label: "Rollback Branch Name",
-      id: "rollbackBranchName",
-    },
-    {
       label: "Branch Name",
       id: "gitBranch",
       isRequired: true
     },
     {
-      label: "Build/Xml Step Info",
-      id: "stepIdXML",
-      isRequired: true
-    },
-    {
       label: "Docker Name",
       id: "dockerName",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Docker Tag",
       id: "dockerTagName",
-      isRequired: true
-    },
-    {
-      label: "JMeter Export File Name",
-      id: "jmeterExportFileName",
-      isRequired: true
-    },
-    {
-      label: "JMeter File Name",
-      id: "jmeterFileName",
-      isRequired: true
-    },
-    {
-      label: "Docker File Path",
-      id: "dockerPath",
-    },
-    {
-      label: "Build Arguments",
-      id: "buildArgs",
+      // isRequired: true
     },
     {
       label: "Jenkins Agent",
@@ -103,7 +81,6 @@ const seleniumPipelineStepConfigurationMetadata = {
     jobName: "",
     toolJobId: "",
     toolJobType: "",
-
     accountUsername: "",
     projectId: "",
     defaultBranch: "",

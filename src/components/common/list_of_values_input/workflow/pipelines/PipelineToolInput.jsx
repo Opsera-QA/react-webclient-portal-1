@@ -8,7 +8,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 
-function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visible, fieldName, dataObject, setDataObject, setDataFunction, disabled, configurationRequired}) {
+function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, configurationRequired}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
@@ -87,6 +87,7 @@ function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visibl
         valueField="id"
         textField="name"
         placeholderText={placeholderText}
+        clearDataFunction={clearDataFunction}
         disabled={disabled || isLoading}
       />
       <small className="text-muted ml-3">

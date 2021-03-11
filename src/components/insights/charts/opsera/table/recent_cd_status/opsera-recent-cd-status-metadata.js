@@ -19,7 +19,7 @@ const opseraRecentCdStatusMetadata = {
       id: "tool",
     },
     {
-      label: "Duration",
+      label: "Duration (Mins)",
       id: "duration",
     },
     {

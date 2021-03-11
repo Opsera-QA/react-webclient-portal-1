@@ -41,6 +41,10 @@ export const jobTypes = [
     value: "DOCKER PUSH"
   },
   {
+    label: "Artifactory Docker Push",
+    value: "ARTIFACTORY_DOCKER_PUSH"
+  },
+  {
     label: "Push to Git",
     value: "SFDC PUSH ARTIFACTS"
   },
