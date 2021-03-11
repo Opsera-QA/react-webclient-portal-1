@@ -8,7 +8,7 @@ import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 import axios from "axios";
 
-function JenkinsAccountInput({ jenkinsId, visible, fieldName, dataObject, setDataObject, setDataFunction, disabled, configurationRequired, className}) {
+function JenkinsAccountInput({ jenkinsId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, configurationRequired, className}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [jenkinsTools, setJenkinsTools] = useState([]);
@@ -128,6 +128,7 @@ function JenkinsAccountInput({ jenkinsId, visible, fieldName, dataObject, setDat
         busy={isLoading}
         valueField="gitCredential"
         textField="gitCredential"
+        clearDataFunction={clearDataFunction}
         disabled={disabled || isLoading || jenkinsId === "" || jenkinsAccounts?.length === 0}
       />
       {getNoJobsMessage()}

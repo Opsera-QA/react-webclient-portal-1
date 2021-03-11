@@ -17,6 +17,11 @@ const twistlockPipelineStepConfigurationMetadata = {
       isRequired: true
     },
     {
+      label: "Jenkins Job",
+      id: "toolJobName",
+      isRequired: true
+    },
+    {
       label: "Job",
       id: "toolJobId",
       isRequired: true
@@ -47,29 +52,20 @@ const twistlockPipelineStepConfigurationMetadata = {
       isRequired: true
     },
     {
-      label: "Rollback Branch Name",
-      id: "rollbackBranchName",
-    },
-    {
       label: "Branch Name",
       id: "gitBranch",
       isRequired: true
     },
     {
-      label: "Build/Xml Step Info",
-      id: "stepIdXML",
-      isRequired: true
-    },
-    {
       label: "Docker Name",
       id: "dockerName",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Docker Tag",
       id: "dockerTagName",
-      isRequired: true
-    },
+      // isRequired: true
+    }
   ],
   newModelBase: {
     jobType: "", //hardcoded, every step wil have a hardcoded jobType is what i know needs to check with Todd.
@@ -81,7 +77,6 @@ const twistlockPipelineStepConfigurationMetadata = {
     jobName: "",
     toolJobId: "",
     toolJobType: "",
-
     accountUsername: "",
     projectId: "",
     defaultBranch: "",
@@ -98,6 +93,7 @@ const twistlockPipelineStepConfigurationMetadata = {
     repository: "",
     branch: "",
     workspace: "",
+    workspaceDeleteFlag: false
     // agentLabels : "",
   }
 };

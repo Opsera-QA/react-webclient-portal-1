@@ -7,7 +7,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 
-function JenkinsJobInput({ jenkinsId, visible, typeFilter, fieldName, dataObject, setDataObject, setDataFunction, disabled, configurationRequired}) {
+function JenkinsJobInput({ jenkinsId, visible, typeFilter, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, configurationRequired}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [jenkinsTools, setJenkinsTools] = useState([]);
@@ -94,6 +94,7 @@ function JenkinsJobInput({ jenkinsId, visible, typeFilter, fieldName, dataObject
         busy={isLoading}
         valueField="name"
         textField="name"
+        clearDataFunction={clearDataFunction}
         disabled={disabled || isLoading || jenkinsId === "" || jenkinsJobs?.length === 0}
       />
       {getNoJobsMessage()}
