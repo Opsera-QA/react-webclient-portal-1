@@ -131,6 +131,9 @@ import dotnetStepFormMetadata from "./step_tool_configuration_forms/dotnet/dotne
 import NUnitPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/nunit/NUnitPipelineStepConfigurationSummaryPanel";
 import nunitStepFormMetadata from "./step_tool_configuration_forms/nunit/nunit-stepForm-metadata";
+import JFrogDockerPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/jfrog_artifactory_docker/JFrogDockerPipelineStepConfigurationSummaryPanel";
+import jfrogStepFormMetadata from "./step_tool_configuration_forms/jfrog_artifactory_docker/jfrog-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -380,6 +383,13 @@ function PipelineStepConfigurationSummary({
             sfdcDataObject={getModelWrappedObject(sfdcPipelineStepConfigurationMetadata)}
           />
         );
+      case "jfrog_artifactory_docker":
+        return (
+          <JFrogDockerPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            jFrogPipelineDataObject={getModelWrappedObject(jfrogStepFormMetadata)}
+          />
+        )
       default:
         return (
           <SummaryPanelContainer>
