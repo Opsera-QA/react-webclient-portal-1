@@ -34,25 +34,13 @@ function XUnitPipelineStepConfigurationSummaryPanel({ xunitPipelineStepData, pip
           <TextFieldBase dataObject={xunitPipelineStepData} fieldName={"branch"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={xunitPipelineStepData} fieldName={"rollbackBranchName"} />
-        </Col>
-        <Col lg={6}>
           <TextFieldBase dataObject={xunitPipelineStepData} fieldName={"gitBranch"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={xunitPipelineStepData} fieldName={"stepIdXML"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={xunitPipelineStepData} fieldName={"dockerName"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={xunitPipelineStepData} fieldName={"dockerTagName"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={xunitPipelineStepData} fieldName={"dockerPath"} />
-        </Col>
-        <Col lg={6}>
-          <JsonField dataObject={xunitPipelineStepData} fieldName={"buildArgs"} />
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>

@@ -6,7 +6,7 @@ import {AuthContext} from "contexts/AuthContext";
 import GitActionsHelper
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/helpers/git-actions-helper";
 
-function GitRepositoryInput({ service, gitToolId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, disabled}) {
+function GitRepositoryInput({ service, gitToolId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [repositories, setRepositories] = useState([]);
@@ -66,6 +66,7 @@ function GitRepositoryInput({ service, gitToolId, workspace, visible, fieldName,
         selectOptions={repositories}
         busy={isLoading}
         placeholderText={getNoRepositoriesMessage()}
+        clearDataFunction={clearDataFunction}
         valueField="name"
         textField="name"
         disabled={disabled || isLoading || repositories.length === 0}

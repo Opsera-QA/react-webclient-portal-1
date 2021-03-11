@@ -43,18 +43,12 @@ function JmeterPipelineStepConfigurationSummaryPanel({ jmeterDataObject, pipelin
         <Col lg={6}>
           <TextFieldBase dataObject={jmeterDataObject} fieldName={"gitBranch"} />
         </Col>
-        {/*<Col lg={6}>*/}
-        {/*  <TextFieldBase dataObject={jmeterDataObject} fieldName={"stepIdXML"} />*/}
-        {/*</Col>*/}
         <Col lg={6}>
           <TextFieldBase dataObject={jmeterDataObject} fieldName={"dockerName"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={jmeterDataObject} fieldName={"dockerTagName"} />
-        </Col>
-        <Col lg={6}>
-          <JsonField dataObject={jmeterDataObject} fieldName={"buildArgs"} />
-        </Col>
+        </Col>        
       </Row>
     </PipelineStepSummaryPanelContainer>
   );

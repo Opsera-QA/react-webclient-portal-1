@@ -6,7 +6,7 @@ import {AuthContext} from "contexts/AuthContext";
 import GitActionsHelper
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/helpers/git-actions-helper";
 
-function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, disabled}) {
+function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [branches, setBranches] = useState([]);
@@ -62,6 +62,7 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
         selectOptions={branches}
         busy={isLoading}
         placeholderText={getNoBranchesMessage()}
+        clearDataFunction={clearDataFunction}
         valueField="name"
         textField="name"
         disabled={disabled || isLoading || branches.length === 0}
