@@ -39,11 +39,11 @@ function GithubRecentMergeRequestsTable({ date, tags }) {
         accessor: "AuthorName",
       },
       {
-        Header: "Assignee",
+        Header: "Reviewer",
         accessor: "AssigneeName",
       },
       {
-        Header: "Merge Request",
+        Header: "Merge Request Title",
         accessor: "MergeRequestTitle",
       },
       {

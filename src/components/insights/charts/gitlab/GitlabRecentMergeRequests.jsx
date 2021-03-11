@@ -79,11 +79,11 @@ function GitlabRecentMergeRequestsTable({ date, tags }) {
         // },
       },
       {
-        Header: "Assignee",
+        Header: "Reviewer",
         accessor: "AssigneeName",
       },
       {
-        Header: "Merge Request",
+        Header: "Merge Request Title",
         accessor: "MergeRequestTitle",
       },
       {
