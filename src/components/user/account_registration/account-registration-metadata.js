@@ -1,3 +1,5 @@
+import regexHelpers from "utils/regexHelpers";
+
 const accountRegistrationMetadata = {
   idProperty: "name",
   type: "Account Registration",
@@ -5,12 +7,16 @@ const accountRegistrationMetadata = {
     {
       label: "First Name",
       id: "firstName",
-      isRequired: true
+      isRequired: true,
+      regexValidator: regexHelpers.regexTypes.nameField,
+      maxLength: 50
     },
     {
       label: "Last Name",
       id: "lastName",
-      isRequired: true
+      isRequired: true,
+      regexValidator: regexHelpers.regexTypes.nameField,
+      maxLength: 50
     },
     {
       label: "Email",
@@ -29,23 +35,10 @@ const accountRegistrationMetadata = {
       matchField: "email"
     },
     {
-      label: "Password",
-      id: "password",
-      type: "password",
-      isRequired: true,
-      isOpseraPassword: true,
-      matchField: "confirmPassword"
-    },
-    {
-      label: "Confirm Password",
-      id: "confirmPassword",
-      type: "password",
-      isRequired: true,
-      matchField: "password"
-    },
-    {
       label: "Company",
       id: "company",
+      regexValidator: regexHelpers.regexTypes.nameField,
+      maxLength: 50
     },
     {
       label: "Organization Account",
@@ -70,8 +63,6 @@ const accountRegistrationMetadata = {
     lastName: "",
     email: "",
     confirmEmail: "",
-    password: "",
-    confirmPassword: "",
     orgAccount: "",
     ldapOrgAccount: "",
     ldapOrgDomain: "",
