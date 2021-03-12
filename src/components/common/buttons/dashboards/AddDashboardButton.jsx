@@ -2,10 +2,9 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSpinner, faSync, faCheckCircle, faExclamationTriangle, faPlus} from "@fortawesome/pro-light-svg-icons";
+import {faSpinner, faCheckCircle, faExclamationTriangle, faPlus} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
 import dashboardTemplatesActions from "components/insights/marketplace/dashboards/dashboard-template-actions";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 
 function AddDashboardTemplateButton({ disable, dashboardTemplate, catalog, className }) {
@@ -59,7 +58,7 @@ function AddDashboardTemplateButton({ disable, dashboardTemplate, catalog, class
       return "danger";
     }
 
-    return ("primary");
+    return ("secondary");
   };
 
   const getLabel = () => {
@@ -82,6 +81,7 @@ function AddDashboardTemplateButton({ disable, dashboardTemplate, catalog, class
     <div className={className}>
       <Button
         variant={getVariant()}
+        size={"sm"}
         disabled={isSaving || disable}
         onClick={() => addTemplateToDashboards()}>
         {getLabel()}
@@ -97,4 +97,4 @@ AddDashboardTemplateButton.propTypes = {
   className: PropTypes.string
 };
 
-export default AddDashboardTemplateButton;
+export default React.memo(AddDashboardTemplateButton);
