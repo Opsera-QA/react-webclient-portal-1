@@ -41,11 +41,11 @@ function TagDetailPanel({ tagData, setTagData, accessRoleData }) {
       case "settings":
         return <TagEditorPanel setTagData={setTagData} tagData={tagData} handleClose={toggleSummaryPanel} />;
       case "tools":
-        return <SingleTagUsedInToolsField tag={tagData?.getPersistData()} />;
+        return <SingleTagUsedInToolsField tag={tagData?.getPersistData()} className={"m-2"} />;
       case "pipelines":
-        return <SingleTagUsedInPipelinesField tag={tagData?.getPersistData()} />;
+        return <SingleTagUsedInPipelinesField tag={tagData?.getPersistData()} className={"m-2"} />;
       case "dashboards":
-        return <SingleTagUsedInDashboardsField tag={tagData?.getPersistData()} />;
+        return <SingleTagUsedInDashboardsField tag={tagData?.getPersistData()} className={"m-2"} />;
       default:
         return null;
     }
