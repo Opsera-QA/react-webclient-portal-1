@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSave, faSpinner} from "@fortawesome/free-solid-svg-icons";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
 import {persistNewRecord} from "./saving-helpers";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function RegisterButton({recordDto, createAccount, disable, lenient}) {
   let toastContext = useContext(DialogToastContext);
