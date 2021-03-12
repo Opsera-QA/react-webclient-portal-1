@@ -14,17 +14,17 @@ function TagsCloudBase({ tagsWithUsage, onTagClick, className, getTooltip, subsc
 
   const getTagCloud = () => {
     return (
-      <div className="item-field">
+      <div className="custom-badge-field">
         {tagsWithUsage.map((tagWithUsage) => {
           const tag = tagWithUsage?.tag;
           const subscribed = subscribedTagIds?.includes(tag._id);
           let classNames;
 
           if (subscribed) {
-            classNames = "mr-3 mb-3 badge badge-light subscribed-tag-badge pointer";
+            classNames = "mr-3 mb-2 custom-badge subscribed-tag-badge pointer";
           }
           else {
-            classNames = "mr-3 mb-3 badge badge-light tag-badge pointer";
+            classNames = "mr-3 mb-2 custom-badge pointer";
           }
 
           return (

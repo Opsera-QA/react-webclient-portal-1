@@ -4,15 +4,16 @@ import { useHistory } from "react-router-dom";
 import { Button, Col, Row } from "react-bootstrap";
 import InfoDialog from "components/common/status_notifications/info";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faPlus, faSearch} from "@fortawesome/pro-light-svg-icons";
+import {faPlus, faSearch, faUsers} from "@fortawesome/pro-light-svg-icons";
 import DataNotFoundContainer from "components/common/panels/detail_view_container/DataNotFoundContainer";
 import DataNotFoundDialog from "components/common/status_notifications/data_not_found/DataNotFoundDialog";
 import ChartView from "components/insights/charts/ChartView";
+import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
+import CustomBadge from "components/common/badges/CustomBadge";
 
 function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLink, managementTitle, type}) {
   const history = useHistory();
   const [kpis, setKpis] = useState([]);
-  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     loadData(dashboardData);
@@ -65,9 +66,15 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
   return (
     <div>
       <div className="px-2 mb-1 d-flex justify-content-between">
-      <div>{["developer", "manager", "executive"].includes(dashboardData?.data?.attributes?.persona) && <span className="tag upper-case-first">{dashboardData?.data?.attributes?.persona}</span>}</div>
+        <CustomBadgeContainer>
+          <CustomBadge
+            className={"upper-case-first"}
+            badgeText={dashboardData?.data?.attributes?.persona}
+            icon={faUsers}
+          />
+        </CustomBadgeContainer>
         <div>
-          <Button className="mr-1" size="sm" disabled={kpis.length >= 10} onClick={() => gotoMarketplace() }>
+          <Button className="mr-1" size="sm" disabled={kpis.length >= 10} onClick={() => gotoMarketplace()}>
             <span><FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Add New KPI</span>
           </Button>
         </div>

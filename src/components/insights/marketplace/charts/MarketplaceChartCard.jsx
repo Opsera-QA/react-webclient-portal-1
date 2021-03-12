@@ -1,23 +1,27 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Card } from "react-bootstrap";
 import { formatDistanceToNowStrict } from "date-fns";
-import AddChartOverlay from "components/insights/marketplace/charts/AddChartOverlay";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import {faWrench} from "@fortawesome/pro-light-svg-icons";
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
+import CustomBadge from "components/common/badges/CustomBadge";
+import ViewDashboardDetailsButton from "components/common/buttons/dashboards/ViewChartDetailsButton";
 
 export default function MarketplaceChartCard({ kpi, dashboardId }) {
-  const toastContext = useContext(DialogToastContext);
+  const getChartImage = () => {
+    const imageUrl = kpi?.thumbnailPath;
 
-  const openModal = () => {
-    toastContext.showOverlayPanel(<AddChartOverlay kpiData={kpi} dashboardId={dashboardId} />);
+    if (imageUrl && imageUrl !== "") {
+      return (
+        <Card.Img variant="top" className="pt-2 px-2" src={kpi.thumbnailPath} />
+      );
+    }
   }
 
   return (
-    <Card className="marketplace-card pointer"  onClick={()=> openModal(kpi)}>
-      <Card.Img variant="top"
-        className="pt-2 pl-2 pr-2"
-        src={kpi.thumbnailPath}
-      />
+    <Card>
+      {getChartImage()}
       <Card.Body>
       <Card.Title>{kpi.name}</Card.Title>
         <Card.Text>
@@ -25,14 +29,21 @@ export default function MarketplaceChartCard({ kpi, dashboardId }) {
             {kpi.description}
           </span>
         </Card.Text>
-          <ul className="tags">
-            {kpi.tools.map((tool,idx)=>{
-              return (idx < 8) ? <li key={idx}><span className="tag">{tool}</span></li> : null
-            })}
-          </ul>
-        <Card.Text>
-          <small className="text-muted">Last updated {formatDistanceToNowStrict(new Date(kpi.updatedAt))} ago.</small>
-        </Card.Text>
+
+        <CustomBadgeContainer>
+          {kpi.tools.map((tool, index) => {
+
+            if (index > 8) {
+              return;
+            }
+
+            return (<CustomBadge key={index} badgeText={capitalizeFirstLetter(tool)} className={"mr-2 mb-1"} icon={faWrench} />);
+          })}
+        </CustomBadgeContainer>
+          <div className={"mt-3 justify-content-between d-flex"}>
+            <ViewDashboardDetailsButton dashboardId={dashboardId} marketplaceChart={kpi} />
+            <small className="text-muted mt-auto">Last updated {formatDistanceToNowStrict(new Date(kpi.updatedAt))} ago.</small>
+          </div>
       </Card.Body>
     </Card>
   )
