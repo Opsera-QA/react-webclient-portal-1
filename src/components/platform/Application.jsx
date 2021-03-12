@@ -40,8 +40,18 @@ function Application(props) {
     apiCall.get()
       .then(function (response) {
         let apiResponse = response.data;
-        let filteredDropdownData = apiResponse.filter((app) => { return app.type != "pipeline"; });
-        setDropdownData(filteredDropdownData);
+
+        apiResponse.map((application, index) => {
+          if (application.type === "pipeline") {
+            return null;
+          }
+
+          application.name = application.name.slice(0, 20);
+          return application;
+        });
+
+
+        setDropdownData(apiResponse);
         setAppStatus({ error: null, message: "" });
         setFetching(false);
       })
@@ -244,7 +254,7 @@ function Application(props) {
                     type="submit"
                     onClick={handleCreateClick}
                     loading={checkingAppName ? "true" : undefined}
-                    disabled={!!appNameError || !appName || appName.length < 3 || appName > 20 || applicationStatus === "success"}>
+                    disabled={!!appNameError || !appName || appName.length < 3 || appName.length > 20 || applicationStatus === "success"}>
                     Create
                   </Button>
                 </Form>
