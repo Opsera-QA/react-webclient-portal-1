@@ -87,7 +87,7 @@ function SingleTagUsedInPipelinesField({ tag, closePanel, className }) {
   };
 
   if (isLoading) {
-    return <div className={"mb-2"}><LoadingIcon isLoading={isLoading} />Loading Pipeline Usage</div>;
+    return <div className={"my-2"}><LoadingIcon isLoading={isLoading} />Loading Pipeline Usage</div>;
   }
 
   if (!isLoading && (tag == null || tag === "")) {

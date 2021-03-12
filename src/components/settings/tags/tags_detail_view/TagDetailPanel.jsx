@@ -6,8 +6,10 @@ import TagEditorPanel from "components/settings/tags/tags_detail_view/TagEditorP
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import CustomTab from "components/common/tabs/CustomTab";
-import {faComputerClassic} from "@fortawesome/pro-light-svg-icons";
-import TagUsagePanel from "components/settings/tags/tags_detail_view/TagUsagePanel";
+import {faChartNetwork, faDiceD20, faWrench} from "@fortawesome/pro-light-svg-icons";
+import SingleTagUsedInToolsField from "components/common/fields/tags/SingleTagUsedInToolsField";
+import SingleTagUsedInPipelinesField from "components/common/fields/tags/SingleTagUsedInPipelinesField";
+import SingleTagUsedInDashboardsField from "components/common/fields/tags/cloud/SingleTagUsedInDashboardsField";
 
 function TagDetailPanel({ tagData, setTagData, accessRoleData }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -25,7 +27,9 @@ function TagDetailPanel({ tagData, setTagData, accessRoleData }) {
     return (
       <CustomTabContainer>
         <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <CustomTab activeTab={activeTab} tabText={"Usage"} handleTabClick={handleTabClick} tabName={"usage"} icon={faComputerClassic} />
+        <CustomTab tabText={"Tool Usage"} handleTabClick={handleTabClick} icon={faWrench} activeTab={activeTab} tabName={"tools"} />
+        <CustomTab tabText={"Pipeline Usage"} handleTabClick={handleTabClick} icon={faDiceD20} activeTab={activeTab} tabName={"pipelines"} />
+        <CustomTab tabText={"Dashboard Usage"} handleTabClick={handleTabClick} icon={faChartNetwork} activeTab={activeTab} tabName={"dashboards"} />
       </CustomTabContainer>
     );
   };
@@ -36,8 +40,12 @@ function TagDetailPanel({ tagData, setTagData, accessRoleData }) {
         return <TagSummaryPanel tagData={tagData} setActiveTab={setActiveTab} accessRoleData={accessRoleData} />;
       case "settings":
         return <TagEditorPanel setTagData={setTagData} tagData={tagData} handleClose={toggleSummaryPanel} />;
-      case "usage":
-        return <TagUsagePanel tagData={tagData} />;
+      case "tools":
+        return <SingleTagUsedInToolsField tag={tagData?.getPersistData()} />;
+      case "pipelines":
+        return <SingleTagUsedInPipelinesField tag={tagData?.getPersistData()} />;
+      case "dashboards":
+        return <SingleTagUsedInDashboardsField tag={tagData?.getPersistData()} />;
       default:
         return null;
     }
