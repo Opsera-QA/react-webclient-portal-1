@@ -10,7 +10,6 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import userActions from "components/user/user-actions";
 import RegisterButton from "components/common/buttons/saving/RegisterButton";
-import PasswordInput from "components/common/input/dto_input/PasswordInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function Signup() {
@@ -106,12 +105,6 @@ function Signup() {
               </Col>
               <Col md={12}>
                 <TextInputBase fieldName={"email"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
-              </Col>
-              <Col md={6}>
-                <PasswordInput fieldName={"password"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
-              </Col>
-              <Col md={6}>
-                <PasswordInput fieldName={"confirmPassword"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={6}>
                 <TextInputBase fieldName={"organizationName"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />

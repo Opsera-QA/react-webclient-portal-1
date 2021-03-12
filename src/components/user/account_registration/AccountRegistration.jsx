@@ -10,11 +10,8 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import RegisterButton from "components/common/buttons/saving/RegisterButton";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 import accountRegistrationMetadata from "components/user/account_registration/account-registration-metadata";
-import OpseraPasswordInput from "components/common/inputs/text/OpseraPasswordInput";
 import {AuthContext} from "contexts/AuthContext";
 import TempTextInput from "components/common/inputs/text/TempTextInput";
-import DataNotFoundDialog from "components/common/status_notifications/data_not_found/DataNotFoundDialog";
-import ErrorBanner from "components/common/status_notifications/banners/ErrorBanner";
 
 function AccountRegistration() {
   const { domain } = useParams();
@@ -143,12 +140,6 @@ function AccountRegistration() {
               </Col>
               <Col md={12}>
                 <TempTextInput fieldName={"confirmEmail"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
-              </Col>
-              <Col md={12}>
-                <OpseraPasswordInput fieldName={"password"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
-              </Col>
-              <Col md={12}>
-                <OpseraPasswordInput fieldName={"confirmPassword"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
               </Col>
             </Row>
             <Row>

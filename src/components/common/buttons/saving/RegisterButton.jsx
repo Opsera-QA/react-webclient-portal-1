@@ -27,7 +27,7 @@ function RegisterButton({recordDto, createAccount, disable, lenient}) {
 
   return (
     <div className="mx-1">
-      <Button size="sm" variant="success" id="login-button" className="register-button" disabled={isSaving || disable || !recordDto.isModelValid2()} onClick={() => createOpseraAccount()}>
+      <Button size="sm" variant="success" id="login-button" className="register-button" disabled={isSaving || disable || !recordDto.checkCurrentValidity()} onClick={() => createOpseraAccount()}>
         {getLabel("Save")}
       </Button>
     </div>

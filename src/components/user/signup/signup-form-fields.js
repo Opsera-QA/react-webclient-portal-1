@@ -98,6 +98,7 @@ const defaultSignupFormFields = {
     organizationName: "",
     firstName: "",
     lastName: "",
+    company: "",
     email: "",
     street: "",
     city: "",
