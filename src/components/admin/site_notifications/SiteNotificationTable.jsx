@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {useMemo, useContext } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
@@ -8,13 +8,15 @@ import {
   getTableDateColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
-import NewSiteNotificationModal from "components/admin/site_notifications/NewSiteNotificationModal";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import NewSiteNotificationOverlay from "components/admin/site_notifications/NewSiteNotificationOverlay";
 import {getField} from "components/common/metadata/metadata-helpers";
 
-function SiteNotificationTable({ data, loadData, isLoading }) {
+function SiteNotificationTable({ data, loadData, isLoading, isMounted, siteNotificationDataDto, setSiteNotificationDto }) {
+  const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   let fields = siteNotificationMetadata.fields;
-  const [showCreateModal, setShowCreateModal] = useState(false);
+  // const [showCreateModal, setShowCreateModal] = useState(false);
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "type")),
@@ -35,13 +37,17 @@ function SiteNotificationTable({ data, loadData, isLoading }) {
     pageIndex: 0
   };
 
+  // const createSiteNotification = () => {
+  //   setShowCreateModal(true);
+  // };
+
   const createSiteNotification = () => {
-    setShowCreateModal(true);
+    toastContext.showOverlayPanel(<NewSiteNotificationOverlay loadData={loadData} isMounted={isMounted} />);
   };
 
   return (
-    <div className="px-2 pb-2">
       <CustomTable
+        className="px-2 pb-2"
         onRowSelect={onRowSelect}
         data={data}
         columns={columns}
@@ -51,9 +57,9 @@ function SiteNotificationTable({ data, loadData, isLoading }) {
         tableTitle={"Site Notifications"}
         createNewRecord={createSiteNotification}
         loadData={loadData}
+        paginationDto={siteNotificationDataDto}
+        setPaginationDto={setSiteNotificationDto}
       />
-      <NewSiteNotificationModal showModal={showCreateModal} loadData={loadData} setShowModal={setShowCreateModal}/>
-    </div>
   );
 }
 
@@ -61,6 +67,9 @@ SiteNotificationTable.propTypes = {
   data: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
+  isMounted: PropTypes.object,
+  siteNotificationDataDto: PropTypes.object,
+  setSiteNotificationDto: PropTypes.func
 };
 
 export default SiteNotificationTable;
