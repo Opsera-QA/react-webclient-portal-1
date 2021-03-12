@@ -12,7 +12,7 @@ import LoadingIcon from "components/common/icons/LoadingIcon";
 import DashboardSummaryCard from "components/common/fields/dashboards/DashboardSummaryCard";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 
-function SingleTagUsedInDashboardField({ tag, closePanel, className }) {
+function SingleTagUsedInDashboardsField({ tag, closePanel, className }) {
   const { getAccessToken } = useContext(AuthContext);
   const [dashboards, setDashboards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -87,7 +87,7 @@ function SingleTagUsedInDashboardField({ tag, closePanel, className }) {
 
 
   if (isLoading) {
-    return <div className={"mb-2"}><LoadingIcon isLoading={isLoading} />Loading Dashboard Usage</div>;
+    return <div className={"my-2"}><LoadingIcon isLoading={isLoading} />Loading Dashboard Usage</div>;
   }
 
   if (!isLoading && tag == null) {
@@ -117,10 +117,10 @@ function SingleTagUsedInDashboardField({ tag, closePanel, className }) {
   );
 }
 
-SingleTagUsedInDashboardField.propTypes = {
+SingleTagUsedInDashboardsField.propTypes = {
   tag: PropTypes.object,
   closePanel: PropTypes.func,
   className: PropTypes.string
 };
 
-export default SingleTagUsedInDashboardField;
+export default SingleTagUsedInDashboardsField;

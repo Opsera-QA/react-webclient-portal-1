@@ -113,6 +113,44 @@ function KpiInfoView({kpiData, dashboardId, handleClose}) {
     }
  };
 
+  const getDescriptionField = () => {
+    if (kpiData?.description?.length > 1) {
+      return (
+        <div className="d-flex flex-wrap">
+          {kpiData.description}
+        </div>
+      );
+    }
+  };
+
+  const getToolsField = () => {
+    if (kpiData.tools?.length > 1) {
+      return (
+        <div className={"py-2"}>
+          <ul className="tags">
+            {kpiData.tools.map((tool, idx)=>{
+              return ( <li key={idx}><span className="tag">{tool}</span></li> )
+            })}
+          </ul>
+        </div>
+      );
+    }
+  };
+
+  const getCategoriesField = () => {
+    if (kpiData.category?.length > 1) {
+      return (
+        <div className={"py-2"}>
+          <ul className="tags">
+            {kpiData.category.map((category, idx)=>{
+              return ( <li key={idx}><span className="tag">{category}</span></li> )
+            })}
+          </ul>
+        </div>
+      );
+    }
+  };
+
   if (kpiData == null) {
     return null;
   }
@@ -137,28 +175,9 @@ function KpiInfoView({kpiData, dashboardId, handleClose}) {
               </div>
 
               <div className="mx-3">
-                {kpiData.description.length > 1 && <div>
-                <div className="text-muted py-2">Description:</div>
-                <div className="d-flex flex-wrap">
-                 {kpiData.description}
-                </div>
-                </div>}
-
-                  {kpiData.tools.length > 1 && <div> <div className="text-muted py-2">Tools:</div>
-                    <ul className="tags">
-                      {kpiData.tools.map((tool, idx)=>{
-                        return ( <li key={idx}><span className="tag">{tool}</span></li> )
-                      })}
-                    </ul>
-                    </div>}
-
-                  {kpiData.category.length > 1 && <div> <div className="text-muted py-2">Categories:</div>
-                    <ul className="tags">
-                      {kpiData.category.map((category, idx)=>{
-                        return ( <li key={idx}><span className="tag">{category}</span></li> )
-                      })}
-                    </ul></div>}
-
+                {getDescriptionField()}
+                {getToolsField()}
+                {getCategoriesField()}
               </div>
             </>
         </div>
@@ -182,7 +201,7 @@ function KpiInfoView({kpiData, dashboardId, handleClose}) {
         </div>
         </div>
       </div>
-    )
+  );
 }
 
 KpiInfoView.propTypes = {

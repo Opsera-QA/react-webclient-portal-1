@@ -18,4 +18,4 @@ SaveButtonContainer.propTypes = {
   children: PropTypes.any
 };
 
-export default SaveButtonContainer;
+export default React.memo(SaveButtonContainer);

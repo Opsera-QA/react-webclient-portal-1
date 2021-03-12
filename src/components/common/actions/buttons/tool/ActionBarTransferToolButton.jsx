@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUserEdit, faPeopleArrows} from "@fortawesome/pro-light-svg-icons";
+import {faShareAlt} from "@fortawesome/pro-light-svg-icons";
 import Button from "react-bootstrap/Button";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -12,7 +12,7 @@ import LdapUserSelectInput from "components/common/list_of_values_input/users/Ld
 import CancelButton from "components/common/buttons/CancelButton";
 import Model from "core/data_model/model";
 
-function ActionBarTransferToolButton({ toolData, loadTool }) {
+function ActionBarTransferToolButton({ toolData, loadTool, className }) {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -69,7 +69,7 @@ function ActionBarTransferToolButton({ toolData, loadTool }) {
           <div className="w-50 mr-1">
             <Button type="primary" size="sm" disabled={transferringOwner} onClick={() => changeToolOwner()}
                     className="w-100">
-              <span className="pr-3"><FontAwesomeIcon icon={faUserEdit} fixedWidth className="mr-2"/>Transfer</span>
+              <span className="pr-3"><FontAwesomeIcon icon={faShareAlt} fixedWidth className="mr-2"/>Transfer</span>
             </Button>
           </div>
           <div className="w-50 ml-1">
@@ -89,8 +89,8 @@ function ActionBarTransferToolButton({ toolData, loadTool }) {
       isLoading={isLoading}
       title={"Transfer Tool"}
       content={popoverContent}>
-      <div className="mx-2">
-        <ActionBarPopoverButton disabled={isLoading} icon={faPeopleArrows} popoverText={`Transfer Tool to new Owner`} />
+      <div className={className}>
+        <ActionBarPopoverButton disabled={isLoading} icon={faShareAlt} popoverText={`Transfer Tool to new Owner`} />
       </div>
     </PopoverContainer>
   );
@@ -98,7 +98,8 @@ function ActionBarTransferToolButton({ toolData, loadTool }) {
 
 ActionBarTransferToolButton.propTypes = {
   toolData: PropTypes.object,
-  loadTool: PropTypes.func
+  loadTool: PropTypes.func,
+  className: PropTypes.string
 };
 
 export default ActionBarTransferToolButton;

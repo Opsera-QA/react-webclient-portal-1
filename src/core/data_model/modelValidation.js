@@ -109,7 +109,7 @@ export const fieldValidation = (value, data, field) => {
 
 
 const minLengthValidator = (value, minLength) => {
-  if (value.length > 0) {
+  if (value && value.length > 0) {
     return value.length >= minLength;
   } else {
     return false;
@@ -118,7 +118,7 @@ const minLengthValidator = (value, minLength) => {
 };
 
 const maxLengthValidator = (value, maxLength) => {
-  if (value.length > 0) {
+  if (value && value.length > 0) {
     return value.length <= maxLength;
   } else {
     return true;

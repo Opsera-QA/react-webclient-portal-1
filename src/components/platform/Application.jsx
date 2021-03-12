@@ -40,8 +40,18 @@ function Application(props) {
     apiCall.get()
       .then(function (response) {
         let apiResponse = response.data;
-        let filteredDropdownData = apiResponse.filter((app) => { return app.type != "pipeline"; });
-        setDropdownData(filteredDropdownData);
+
+        apiResponse.map((application, index) => {
+          if (application.type === "pipeline") {
+            return null;
+          }
+
+          application.name = application.name.slice(0, 20);
+          return application;
+        });
+
+
+        setDropdownData(apiResponse);
         setAppStatus({ error: null, message: "" });
         setFetching(false);
       })
@@ -66,20 +76,27 @@ function Application(props) {
   };
 
   const handleAppNameChange = ({ target: { name, value } }) => {
-    let error = null;
-    const regex = RegExp('^[A-Za-z0-9][A-Za-z0-9-]*$');
-    if( !regex.test(value)) error = "No special chars allowed except";
-    if (value.length > 20) error = "App Name has to be 20 chars or less";
-    if (value.length > 1 && !isAlphaNumeric(value))
-      error = "App Name has to be alphanumeric";
-    setAppName(value);
-    setAppNameError(error);
+    const regex = RegExp('^[A-Za-z0-9-.]*$');
+    const trimmedValue = value.trim();
+
+    if (trimmedValue.length > 20) {
+      setAppNameError("Application Names must be less than 20 characters.");
+      return;
+    }
+
+    if(!regex.test(trimmedValue)) {
+      setAppNameError("No special chars allowed except dashes and periods.");
+      return;
+    }
+
+    setAppNameError(null);
+    setAppName(trimmedValue);
   };
 
   const handleCreateClick = async (e) => {
     e.preventDefault();
 
-    if (appName.trim().length < 1) {
+    if (appName.trim().length < 3 || appName.trim().length > 20) {
       setAppNameError(true);
       return;
     }
@@ -226,8 +243,9 @@ function Application(props) {
                         value={appName}
                         onChange={handleAppNameChange}
                         isInvalid={appNameError}
-                        disabled={applicationStatus === "success" ? true : false}
+                        disabled={applicationStatus === "success"}
                       />
+                      <Form.Control.Feedback type={"info"}>Application Names must be between 3 and 20 characters. Numbers, Letters, Dashes, and Periods are allowed.</Form.Control.Feedback>
                       <Form.Control.Feedback type="invalid">{appNameError}</Form.Control.Feedback>
                     </Form.Group>
                   </Form.Row>
@@ -236,7 +254,7 @@ function Application(props) {
                     type="submit"
                     onClick={handleCreateClick}
                     loading={checkingAppName ? "true" : undefined}
-                    disabled={!!appNameError || !appName || !appName.length || applicationStatus === "success"}>
+                    disabled={!!appNameError || !appName || appName.length < 3 || appName.length > 20 || applicationStatus === "success"}>
                     Create
                   </Button>
                 </Form>
@@ -252,7 +270,7 @@ function Application(props) {
                       <Form.Group>
                         <Form.Control as="select"
                           defaultValue=""
-                          hidden={(!fetching && dropdownData.length > 0) ? false : true}
+                          hidden={(!(!fetching && dropdownData.length > 0))}
                           onChange={handleDropdownChange}
                           style={{ marginTop: 25 }}>
                           <option value="" disabled>{fetching ? "loading..." : "Select Application to Edit"}</option>

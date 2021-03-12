@@ -1,8 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {Card} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTag} from "@fortawesome/pro-light-svg-icons";
+import {faClipboard, faTag, faUsers} from "@fortawesome/pro-light-svg-icons";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import AddDashboardTemplateButton from "components/common/buttons/dashboards/AddDashboardButton";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
@@ -11,6 +10,8 @@ import Model from "core/data_model/model";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import dashboardTemplatesActions from "components/insights/marketplace/dashboards/dashboard-template-actions";
+import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
+import CustomBadge from "components/common/badges/CustomBadge";
 
 export default function DashboardTemplateCard({ dashboardTemplate, catalog, loadData }) {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
@@ -76,29 +77,21 @@ export default function DashboardTemplateCard({ dashboardTemplate, catalog, load
     }
   };
 
-  const getPersonaField = () => {
-    if (dashboardTemplate.attributes?.persona) {
-      return (
-
-        <div className="tags">
-          <span className="tag">{dashboardTemplate.attributes?.persona}</span>
-        </div>
-      );
-    }
-  };
-
   const getTagsField = () => {
     if (Array.isArray(dashboardTemplate?.tags) && dashboardTemplate.tags.length > 0) {
       return (
-        <div className="item-field">
+        <CustomBadgeContainer>
           {dashboardTemplate.tags.map((tag, i) => {
             return (
-              <span key={i} className="mr-1 mb-1 badge badge-light tag-badge">
-                <FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/>{`${capitalizeFirstLetter(tag?.type)}: ${tag.value}`}
-              </span>
+              <CustomBadge
+                key={i}
+                className={"mr-2 mb-1"}
+                icon={faTag}
+                badgeText={`${capitalizeFirstLetter(tag?.type)}: ${tag.value}`}
+              />
             );
          })}
-        </div>
+        </CustomBadgeContainer>
       );
     }
   };
@@ -109,18 +102,21 @@ export default function DashboardTemplateCard({ dashboardTemplate, catalog, load
   };
 
   return (
-    <Card className="marketplace-card">
+    <Card>
       {getImage()}
       <Card.Body>
       <Card.Title>{dashboardTemplate.name}</Card.Title>
         {getDescriptionField()}
         {getOwnerNameField()}
-        {getPersonaField()}
+        <CustomBadgeContainer>
+          <CustomBadge icon={faUsers} className="mr-1 upper-case-first" badgeText={dashboardTemplate.attributes?.persona} />
+          <CustomBadge icon={faClipboard} className={"upper-case-first"} badgeText={dashboardTemplate.type} />
+        </CustomBadgeContainer>
         {getTagsField()}
         <div className={"d-flex justify-content-between mt-3"}>
           <AddDashboardTemplateButton catalog={catalog} dashboardTemplate={dashboardTemplate} />
           <ActionBarDeleteButton2
-            className={"mt-2"}
+            className={"mt-auto"}
             dataObject={new Model({...dashboardTemplate}, dashboardTemplateMetadata, false)}
             handleDelete={deleteTemplate}
             visible={canDelete}

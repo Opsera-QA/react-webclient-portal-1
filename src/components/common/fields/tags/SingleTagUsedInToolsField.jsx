@@ -87,7 +87,7 @@ function SingleTagUsedInToolsField({ tag, closePanel, className }) {
 
 
   if (isLoading) {
-    return <div className={"mb-2"}><LoadingIcon isLoading={isLoading} />Loading Tool Usage</div>;
+    return <div className={"my-2"}><LoadingIcon isLoading={isLoading} />Loading Tool Usage</div>;
   }
 
   if (!isLoading && tag == null) {
@@ -96,7 +96,7 @@ function SingleTagUsedInToolsField({ tag, closePanel, className }) {
 
   if (!isLoading && (tools == null || tools.length === 0)) {
     return (
-      <div className="text-muted mb-2">
+      <div className="text-muted m-2">
         <div>
           <span><FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
           This tag is not currently applied on any tool</span>

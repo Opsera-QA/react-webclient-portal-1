@@ -1,102 +1,105 @@
-// TODO: Pull directly from node server --
-//  also write way to pull text from a properties file for easier language localization
-import {isOpseraPassword} from "utils/helpers";
+import regexHelpers from "utils/regexHelpers";
 
 const defaultSignupFormFields = {
   fields: [
     {
-    label: "First Name",
-    id: "firstName",
-    isRequired: true
-  },
+      label: "First Name",
+      id: "firstName",
+      regexValidator: regexHelpers.regexTypes.nameField,
+      isRequired: true,
+      maxLength: 50
+    },
     {
-    label: "Last Name",
-    id: "lastName",
-    isRequired: true
-  },
+      label: "Last Name",
+      id: "lastName",
+      regexValidator: regexHelpers.regexTypes.nameField,
+      isRequired: true,
+      maxLength: 50
+    },
     {
-    label: "Email",
-    id: "email",
-    isRequired: true,
-    isEmail: true,
-    lowercase: true
-  },
+      label: "Email",
+      id: "email",
+      isRequired: true,
+      isEmail: true,
+      lowercase: true
+    },
     {
-    label: "Company",
-    id: "organizationName",
-    isRequired: true
-  },
+      label: "Company",
+      id: "organizationName",
+      regexValidator: regexHelpers.regexTypes.nameField,
+      isRequired: true,
+      maxLength: 50
+    },
     {
-    label: "Password",
-    id: "password",
-    type: "password",
-    isRequired: true,
-    isOpseraPassword: true,
-    matchField: "confirmPassword"
-  },
+      label: "Street",
+      id: "street",
+      regexValidator: regexHelpers.regexTypes.nameField,
+      isRequired: true,
+      maxLength: 150
+    },
     {
-    label: "Confirm Password",
-    id: "confirmPassword",
-    type: "password",
-    isRequired: true,
-    matchField: "password"
-  },
+      label: "City",
+      id: "city",
+      regexValidator: regexHelpers.regexTypes.nameField,
+      isRequired: true,
+      maxLength: 50
+    },
     {
-    label: "Street",
-    id: "street",
-  },
+      label: "State",
+      id: "state",
+      regexValidator: regexHelpers.regexTypes.nameField,
+      isRequired: true,
+      maxLength: 50
+    },
     {
-    label: "City",
-    id: "city",
-    isRequired: true
-  },
+      label: "Zip",
+      id: "zip",
+      isRequired: true,
+      regexValidator: regexHelpers.regexTypes.limitedTextWithSpaces,
+      maxLength: 12
+    },
     {
-    label: "State",
-    id: "state",
-    isRequired: true
-  },
+      label: "Resource Subdomain Name",
+      id: "domain",
+      fieldText: "When new resources are created for this account, this will be the default sub-domain name used when building DNS records.",
+      inputMaskRegex: /^[A-Za-z0-9][A-Za-z0-9-]*$/,
+      isDomain: true,
+      isRequired: true,
+      maxLength: 50,
+      lowercase: true
+    },
     {
-    label: "Zip",
-    id: "zip",
-    isRequired: true
-  },
+      label: "Title",
+      id: "title",
+      regexValidator: regexHelpers.regexTypes.nameField,
+      isRequired: true,
+      maxLength: 50
+    },
     {
-    label: "Resource Subdomain Name",
-    id: "domain",
-    fieldText: "When new resources are created for this account, this will be the default sub-domain name used when building DNS records.",
-    inputMaskRegex: /^[A-Za-z0-9][A-Za-z0-9-]*$/,
-    isDomain: true,
-    isRequired: true,
-    maxLength: 10,
-    lowercase: true
-  },
+      label: "Company",
+      id: "company",
+      regexValidator: regexHelpers.regexTypes.nameField,
+      isRequired: true,
+      maxLength: 50
+    },
     {
-    label: "Title",
-    id: "title",
-  },
+      label: "Cloud Provider",
+      id: "cloudProvider",
+      isRequired: true
+    },
     {
-    label: "Company",
-    id: "company",
-  },
-    {
-    label: "Cloud Provider",
-    id: "cloudProvider",
-    isRequired: true
-  },
-    {
-    label: "Region",
-    id: "cloudProviderRegion",
-    isRequired: true
-  },
-    ],
+      label: "Region",
+      id: "cloudProviderRegion",
+      isRequired: true
+    },
+  ],
   newObjectFields: {
     domain: "",
     organizationName: "",
     firstName: "",
     lastName: "",
+    company: "",
     email: "",
-    password: "",
-    confirmPassword: "",
     street: "",
     city: "",
     state: "",
@@ -105,7 +108,5 @@ const defaultSignupFormFields = {
     cloudProviderRegion: "us-east-2"
   }
 };
-
-// TODO: Make attribute and configuration inner objects and fields once I figure out the best way to deal with inner-fields
 
 export default defaultSignupFormFields;

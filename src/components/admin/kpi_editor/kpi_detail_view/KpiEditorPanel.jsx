@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
@@ -15,16 +15,35 @@ import KpiToolsInput from "components/common/list_of_values_input/admin/kpi_conf
 import KpiFiltersInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiFiltersInput";
 import KpiCategoriesInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiCategoriesInput";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
-import  NotificationConditionTriggerSelectInput
-  from "components/common/list_of_values_input/notifications/NotificationConditionTriggerSelectInput";
+import NotificationConditionTriggerSelectInput from "components/common/list_of_values_input/notifications/NotificationConditionTriggerSelectInput";
+import axios from "axios";
 
-function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
+function KpiEditorPanel({ kpiData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(true);
   const [kpiDataDto, setKpiDataDto] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
   const loadData = async () => {
@@ -34,11 +53,11 @@ function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
   };
 
   const createKpi = async () => {
-    return await KpiActions.createKpi(kpiDataDto, getAccessToken);
-  }
+    return await KpiActions.createKpiV2(getAccessToken, cancelTokenSource, kpiDataDto);
+  };
 
   const updateKpi = async () => {
-   return await KpiActions.updateKpi(kpiDataDto, getAccessToken);
+    return await KpiActions.updateKpiV2(getAccessToken, cancelTokenSource, kpiDataDto);
   };
 
   if (kpiDataDto == null) {
@@ -47,6 +66,7 @@ function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
 
   return (
     <EditorPanelContainer
+      isLoading={isLoading}
       updateRecord={updateKpi}
       recordDto={kpiDataDto}
       createRecord={createKpi}
@@ -55,27 +75,31 @@ function KpiEditorPanel({ kpiData, setKpiData, handleClose }) {
     >
       <Row>
         <Col lg={6}>
-          <TextInputBase dataObject={kpiDataDto} fieldName={"name"} setDataObject={setKpiDataDto}/>
-          <TextInputBase dataObject={kpiDataDto} fieldName={"identifier"} setDataObject={setKpiDataDto}/>
+          <TextInputBase dataObject={kpiDataDto} fieldName={"name"} setDataObject={setKpiDataDto} />
+          <TextInputBase dataObject={kpiDataDto} fieldName={"identifier"} setDataObject={setKpiDataDto} />
           <KpiChartTypeInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
           <KpiToolsInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
           <KpiFiltersInput dataObject={kpiDataDto} fieldName={"supported_filters"} setDataObject={setKpiDataDto} />
-          <JsonInput dataObject={kpiDataDto} fieldName={"dataPoints"} setDataObject={setKpiDataDto}/>
+          <JsonInput dataObject={kpiDataDto} fieldName={"dataPoints"} setDataObject={setKpiDataDto} />
           <KpiCategoriesInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} />
-          <NotificationConditionTriggerSelectInput dataObject={kpiDataDto} setDataObject={setKpiDataDto} fieldName={"yAxis"}/>
-          <WebsitePathInput dataObject={kpiDataDto} fieldName={"thumbnailPath"} setDataObject={setKpiDataDto}/>
+          <NotificationConditionTriggerSelectInput
+            dataObject={kpiDataDto}
+            setDataObject={setKpiDataDto}
+            fieldName={"yAxis"}
+          />
+          <WebsitePathInput dataObject={kpiDataDto} fieldName={"thumbnailPath"} setDataObject={setKpiDataDto} />
         </Col>
         <Col lg={6}>
-          <JsonInput dataObject={kpiDataDto} fieldName={"settings"} setDataObject={setKpiDataDto}/>
+          <JsonInput dataObject={kpiDataDto} fieldName={"settings"} setDataObject={setKpiDataDto} />
         </Col>
         <Col lg={12}>
-          <TextAreaInput dataObject={kpiDataDto} fieldName={"description"} setDataObject={setKpiDataDto}/>
-          
+          <TextAreaInput dataObject={kpiDataDto} fieldName={"description"} setDataObject={setKpiDataDto} />
+
           <div className="text-muted pl-1 pb-1">Policy Support:</div>
-          <ActivityToggleInput setDataObject={setKpiDataDto} fieldName={"policySupport"} dataObject={kpiData}/>
-          
+          <ActivityToggleInput setDataObject={setKpiDataDto} fieldName={"policySupport"} dataObject={kpiData} />
+
           <div className="text-muted pl-1 pb-1">Status:</div>
-          <ActivityToggleInput setDataObject={setKpiDataDto} fieldName={"active"} dataObject={kpiData}/>
+          <ActivityToggleInput setDataObject={setKpiDataDto} fieldName={"active"} dataObject={kpiData} />
         </Col>
       </Row>
     </EditorPanelContainer>
@@ -89,5 +113,3 @@ KpiEditorPanel.propTypes = {
 };
 
 export default KpiEditorPanel;
-
-

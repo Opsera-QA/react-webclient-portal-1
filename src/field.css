@@ -9,13 +9,6 @@
     padding: 5px;
 }
 
-.item-field .subscribed-tag-badge {
-    color: #fff;
-    font-weight: normal;
-    background-color: #00AA84;
-    border-color: #019171;
-}
-
 .item-field .generic-badge {
     font-weight: normal;
     background: #C7C3DD;
@@ -265,3 +258,43 @@
 .date-range-header {
     width: 332px;
 }
+
+/* Custom Badge styling */
+.custom-badge-field {
+    list-style: none;
+}
+
+.custom-badge {
+    background: #eee;
+    border-radius: 3px 0 0 3px;
+    display: inline-block;
+    font-size: small;
+    height: 26px;
+    line-height: 26px;
+    padding: 0 10px 0 5px;
+    position: relative;
+    margin: 0 10px 10px 0;
+}
+
+.custom-badge::after {
+    background: #fff;
+    border-bottom: 13px solid transparent;
+    border-left: 10px solid #eee;
+    border-top: 13px solid transparent;
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.custom-badge-field .subscribed-tag-badge {
+    color: #fff;
+    font-weight: normal;
+    background-color: #00AA84;
+    border-color: #019171;
+}
+
+.custom-badge-field .subscribed-tag-badge::after {
+    border-left: 10px solid #00AA84;
+}
+/* End Custom Badge styling */

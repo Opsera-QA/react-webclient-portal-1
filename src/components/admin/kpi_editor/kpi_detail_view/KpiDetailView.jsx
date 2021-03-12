@@ -1,15 +1,16 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "contexts/AuthContext";
 import Model from "core/data_model/model";
 import kpiMetaData from "components/admin/kpi_editor/kpi-metadata";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import KpiActions from "components/admin/kpi_editor/kpi-editor-actions";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import KpiDetailPanel from "components/admin/kpi_editor/kpi_detail_view/KpiDetailPanel";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import { meetsRequirements, ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import axios from "axios";
 
 function KpiDetailView() {
@@ -40,26 +41,24 @@ function KpiDetailView() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
-  }, []);
+    };
+  },[]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       await getRoles(cancelSource);
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true && !error?.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
-        console.error(error)
+        console.error(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const getKpi = async (cancelSource = cancelTokenSource) => {
     const response = await KpiActions.getKpiById(getAccessToken, cancelSource, id);
@@ -69,13 +68,15 @@ function KpiDetailView() {
     }
   };
 
-  const getRoles = async (cancelToken = cancelTokenSource) => {
+  const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
-
-    if (isMounted?.current === true && userRoleAccess && id != null) {
+    if (isMounted.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      await getKpi(cancelToken);
+
+      if (meetsRequirements(ROLE_LEVELS.OPSERA_ADMINISTRATORS, userRoleAccess) && id) {
+        await getKpi(cancelSource);
+      }
     }
   };
 
@@ -86,7 +87,9 @@ function KpiDetailView() {
           <ActionBarBackButton path={"/admin/kpis"} />
         </div>
         <div>
-          <ActionBarDeleteButton2 dataObject={kpiData} relocationPath={"/admin/kpis"} handleDelete={handleDelete} />
+          {meetsRequirements(ROLE_LEVELS.OPSERA_ADMINISTRATORS, accessRoleData) && (
+            <ActionBarDeleteButton2 dataObject={kpiData} relocationPath={"/admin/kpis"} handleDelete={handleDelete} />
+          )}
         </div>
       </ActionBarContainer>
     );
@@ -94,16 +97,18 @@ function KpiDetailView() {
 
   const handleDelete = async () => {
     return await KpiActions.deleteKpi(kpiData, getAccessToken);
-  }
+  };
 
   return (
     <DetailScreenContainer
+     roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       breadcrumbDestination={"kpiDetailView"}
+      accessRoleData={accessRoleData}
       metadata={kpiMetaData}
       dataObject={kpiData}
       isLoading={isLoading}
       actionBar={getActionBar()}
-      detailPanel={<KpiDetailPanel setKpiData={setKpiData} kpiData={kpiData} />}
+      detailPanel={<KpiDetailPanel setKpiData={setKpiData} kpiData={kpiData} accessRoleData={accessRoleData} />}
     />
   );
 }
