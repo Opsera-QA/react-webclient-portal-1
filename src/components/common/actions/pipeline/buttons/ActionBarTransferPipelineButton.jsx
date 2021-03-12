@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUserEdit, faPeopleArrows} from "@fortawesome/pro-light-svg-icons";
+import {faShareAlt} from "@fortawesome/pro-light-svg-icons";
 import Button from "react-bootstrap/Button";
 import DropdownList from "react-widgets/lib/DropdownList";
 import CancelButton from "components/common/buttons/CancelButton";
@@ -80,7 +80,7 @@ function ActionBarTransferPipelineButton({ pipeline, loadPipeline }) {
           <div className="w-50 mr-1">
             <Button type="primary" size="sm" disabled={transferringPipeline} onClick={() => changePipelineOwner()}
                     className="w-100">
-              <span className="pr-3"><FontAwesomeIcon icon={faUserEdit} fixedWidth className="mr-2"/>Transfer</span>
+              <span className="pr-3"><FontAwesomeIcon icon={faShareAlt} fixedWidth className="mr-2"/>Transfer</span>
             </Button>
           </div>
           <div className="w-50 ml-1">
@@ -97,7 +97,7 @@ function ActionBarTransferPipelineButton({ pipeline, loadPipeline }) {
       title={"Transfer Pipeline"}
       content={popoverContent}>
       <div>
-        <ActionBarPopoverButton disabled={isLoading} icon={faPeopleArrows} popoverText={`Transfer Pipeline to new Owner`} />
+        <ActionBarPopoverButton disabled={isLoading} icon={faShareAlt} popoverText={`Transfer Pipeline to new Owner`} />
       </div>
     </PopoverContainer>
   );
