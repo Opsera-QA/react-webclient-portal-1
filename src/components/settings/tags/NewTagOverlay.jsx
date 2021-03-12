@@ -25,7 +25,7 @@ function NewTagOverlay({ loadData, isMounted }) {
     </CreateCenterPanel>
   );
 }
-
+ 
 NewTagOverlay.propTypes = {
   isMounted: PropTypes.object,
   loadData: PropTypes.func,

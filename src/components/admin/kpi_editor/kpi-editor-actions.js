@@ -17,7 +17,7 @@ KpiActions.getKpisV2 = async (getAccessToken, cancelTokenSource, kpiFilterDto) =
       category: kpiFilterDto.getFilterValue("category"),
       status: status ? status.value : undefined,
       policySupport: policySupport ? policySupport.value : undefined,
-      search: kpiFilterDto.getFilterValue("search")
+      search: kpiFilterDto.getFilterValue("search"),
     },
   };
 
@@ -31,7 +31,7 @@ KpiActions.getAllKpis = async (getAccessToken, status, policySupport) => {
       pageSize: 10000,
       status: status ? status.value : undefined,
       policySupport: policySupport ? policySupport.value : undefined,
-    }
+    },
   };
 
   return baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
@@ -42,18 +42,34 @@ KpiActions.getKpiById = async (getAccessToken, cancelTokenSource, kpiId) => {
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+KpiActions.createKpiV2 = async (getAccessToken, cancelTokenSource, kpiDataDto) => {
+  let postBody = {
+    ...kpiDataDto.getPersistData(),
+  };
+  const apiUrl = "analytics/kpi/configurations/create";
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 KpiActions.createKpi = async (kpiDataDto, getAccessToken) => {
   let postData = {
-    ...kpiDataDto.getPersistData()
-  }
+    ...kpiDataDto.getPersistData(),
+  };
   const apiUrl = "analytics/kpi/configurations/create";
   return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
+KpiActions.updateKpiV2 = async (getAccessToken, cancelTokenSource, kpiDataDto) => {
+  let postBody = {
+    ...kpiDataDto.getPersistData(),
+  };
+  const apiUrl = `analytics/kpi/configurations/${kpiDataDto.getData("_id")}/update`;
+  return baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 KpiActions.updateKpi = async (kpiDataDto, getAccessToken) => {
   let postData = {
-    ...kpiDataDto.getPersistData()
-  }
+    ...kpiDataDto.getPersistData(),
+  };
   const apiUrl = `/analytics/kpi/configurations/${kpiDataDto.getData("_id")}/update/`;
   return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
