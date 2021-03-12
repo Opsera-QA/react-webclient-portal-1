@@ -16,7 +16,6 @@ function SiteNotificationTable({ data, loadData, isLoading, isMounted, siteNotif
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   let fields = siteNotificationMetadata.fields;
-  // const [showCreateModal, setShowCreateModal] = useState(false);
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "type")),
@@ -36,10 +35,6 @@ function SiteNotificationTable({ data, loadData, isLoading, isMounted, siteNotif
   const initialState = {
     pageIndex: 0
   };
-
-  // const createSiteNotification = () => {
-  //   setShowCreateModal(true);
-  // };
 
   const createSiteNotification = () => {
     toastContext.showOverlayPanel(<NewSiteNotificationOverlay loadData={loadData} isMounted={isMounted} />);
