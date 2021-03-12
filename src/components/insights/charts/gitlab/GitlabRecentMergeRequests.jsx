@@ -79,7 +79,11 @@ function GitlabRecentMergeRequestsTable({ date, tags }) {
         // },
       },
       {
-        Header: "Merge Request",
+        Header: "Reviewer",
+        accessor: "AssigneeName",
+      },
+      {
+        Header: "Merge Request Title",
         accessor: "MergeRequestTitle",
       },
       {
@@ -134,7 +138,7 @@ function GitlabRecentMergeRequestsTable({ date, tags }) {
       request: "gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime",
       startDate: date.start,
       endDate: date.end,
-      tags: tags
+      tags: tags,
     };
 
     try {
@@ -227,8 +231,7 @@ function GitlabRecentMergeRequestsTable({ date, tags }) {
         </>
       ) : (
         <>
-          <div className="mt-3 d-flex justify-content-between">
-          </div>
+          <div className="mt-3 d-flex justify-content-between"></div>
           <CustomTable
             columns={columns}
             data={data.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime.data}
