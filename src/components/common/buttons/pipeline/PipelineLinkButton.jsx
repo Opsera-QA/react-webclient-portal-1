@@ -24,7 +24,7 @@ function PipelineLinkButton({pipelineId, loadPipelineInNewWindow, closePanel}) {
 
   return (
     <Button onClick={() => loadPipeline()} className="mb-2" size={"sm"}>
-      <span className="small my-auto"><FontAwesomeIcon icon={faDraftingCompass} className="pr-1" fixedWidth/>View Pipeline</span>
+      <span className="my-auto"><FontAwesomeIcon icon={faDraftingCompass} className="pr-1" fixedWidth/>View</span>
     </Button>
   );
 }

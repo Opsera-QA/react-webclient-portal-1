@@ -7,6 +7,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import PipelineLinkButton from "components/common/buttons/pipeline/PipelineLinkButton";
 import PipelineTaskStateField from "components/common/fields/workflow/pipelines/PipelineTaskStateField";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
+import DescriptionField from "components/common/fields/text/DescriptionField";
 
 function ParallelPipelineTaskSummaryCard({ pipelineData }) {
   return (
@@ -15,8 +16,8 @@ function ParallelPipelineTaskSummaryCard({ pipelineData }) {
         <TextFieldBase dataObject={pipelineData} fieldName={"runNumber"}/>
         <PipelineTaskStateField dataObject={pipelineData} fieldName={"state"}/>
       </div>
-      <div className="mb-2">
-        <TextFieldBase dataObject={pipelineData} fieldName={"description"}/>
+      <div className="mb-1">
+        <DescriptionField dataObject={pipelineData} fieldName={"description"}/>
       </div>
       <div className="d-flex justify-content-between align-items-end">
         <DateFieldBase dataObject={pipelineData} fieldName={"createdAt"}/>

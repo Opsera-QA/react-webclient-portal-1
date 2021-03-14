@@ -28,7 +28,7 @@ function CardContainerBase({ children, isLoading, titleBar, footerBar }) {
           {getCardTitle()}
         </div>
       </Card.Title>
-      <Card.Body className="h-100">
+      <Card.Body className="h-100 p-0">
         {getCardBody()}
       </Card.Body>
       <Card.Footer>

@@ -69,35 +69,37 @@ function RegisteredUserSummaryCard({ registeredUsersData, loadData }) {
 
   return (
     <CardContainerBase titleBar={getTitleBar()}>
-      <small>
-        <Row>
-          <Col sm={12} md={6} lg={3}>
-            <TextFieldBase dataObject={registeredUserDto} fieldName={"firstName"}/>
-          </Col>
-          <Col sm={12} md={6} lg={3}>
-            <TextFieldBase dataObject={registeredUserDto} fieldName={"lastName"}/>
-          </Col>
-          <Col sm={12} md={6} lg={3}>
-            <TextFieldBase dataObject={registeredUserDto} fieldName={"email"}/>
-          </Col>
-          <Col sm={12} md={6} lg={3}>
-            <Button variant="primary" size="sm" onClick={() => {gotoProfile();}} className="w-100">User Settings</Button>
-          </Col>
-          <Col sm={12} md={6} lg={3}>
-            <TextFieldBase dataObject={registeredUserDto} fieldName={"organizationName"}/>
-          </Col>
-          <Col sm={12} md={6} lg={3}>
-            <TextFieldBase dataObject={registeredUserDto} fieldName={"domain"}/>
-          </Col>
-          <Col sm={12} md={6} lg={3}>
-            <DateFieldBase dataObject={registeredUserDto} fieldName={"createdAt"}/>
-          </Col>
-          <Col sm={12} md={6} lg={3}>
-            <DeactivateUserButton loadData={loadData} userId={registeredUserDto.getData("_id")}/>
-          </Col>
-        </Row>
-        {getTools()}
-      </small>
+      <div className={"m-2"}>
+        <small>
+          <Row>
+            <Col sm={12} md={6} lg={3}>
+              <TextFieldBase dataObject={registeredUserDto} fieldName={"firstName"}/>
+            </Col>
+            <Col sm={12} md={6} lg={3}>
+              <TextFieldBase dataObject={registeredUserDto} fieldName={"lastName"}/>
+            </Col>
+            <Col sm={12} md={6} lg={3}>
+              <TextFieldBase dataObject={registeredUserDto} fieldName={"email"}/>
+            </Col>
+            <Col sm={12} md={6} lg={3}>
+              <Button variant="primary" size="sm" onClick={() => {gotoProfile();}} className="w-100">User Settings</Button>
+            </Col>
+            <Col sm={12} md={6} lg={3}>
+              <TextFieldBase dataObject={registeredUserDto} fieldName={"organizationName"}/>
+            </Col>
+            <Col sm={12} md={6} lg={3}>
+              <TextFieldBase dataObject={registeredUserDto} fieldName={"domain"}/>
+            </Col>
+            <Col sm={12} md={6} lg={3}>
+              <DateFieldBase dataObject={registeredUserDto} fieldName={"createdAt"}/>
+            </Col>
+            <Col sm={12} md={6} lg={3}>
+              <DeactivateUserButton loadData={loadData} userId={registeredUserDto.getData("_id")}/>
+            </Col>
+          </Row>
+          {getTools()}
+        </small>
+      </div>
     </CardContainerBase>
   );
 }

@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TextFieldBase from "components/common/form_fields/TextFieldBase";
 import PipelineSummaryCardContainer from "./PipelineSummaryCardContainer";
 import PipelineLinkButton from "components/common/buttons/pipeline/PipelineLinkButton";
 import TagField from "components/common/fields/multiple_items/TagField";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
+import DescriptionField from "components/common/fields/text/DescriptionField";
 
 function PipelineSummaryCard({ pipelineData, isLoading, loadPipelineInNewWindow, closePanel }) {
   if (isLoading) {
@@ -13,11 +13,11 @@ function PipelineSummaryCard({ pipelineData, isLoading, loadPipelineInNewWindow,
 
   return (
     <PipelineSummaryCardContainer pipelineData={pipelineData} isLoading={isLoading}>
-      <div className="mb-2">
-        <TextFieldBase dataObject={pipelineData} fieldName={"description"}/>
+      <div className="mb-1">
+        <DescriptionField dataObject={pipelineData} fieldName={"description"}/>
       </div>
       <div className="mb-2">
-        <TagField dataObject={pipelineData} fieldName={"tags"}/>
+        <TagField dataObject={pipelineData} fieldName={"tags"} showLabel={false}/>
       </div>
       <div className="d-flex justify-content-between">
         <DateFieldBase dataObject={pipelineData} fieldName={"createdAt"}/>
