@@ -40,7 +40,6 @@ function TagUsagePanel({ tagData, closePanel }) {
     }
   };
 
-
   if (tagData == null) {
     return <LoadingDialog size="sm" />;
   }

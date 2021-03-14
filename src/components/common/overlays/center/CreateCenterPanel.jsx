@@ -11,6 +11,7 @@ function CreateCenterPanel({ children, titleIcon, objectType, closePanel}) {
       titleText={`Create New ${objectType}`}
       titleIcon={titleIcon}
       showToasts={true}
+      showCloseButton={false}
     >
       {children}
     </CenterOverlayContainer>

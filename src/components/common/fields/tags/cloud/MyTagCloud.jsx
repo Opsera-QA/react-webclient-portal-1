@@ -14,6 +14,8 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {capitalizeFirstLetter, getSingularOrPluralString} from "components/common/helpers/string-helpers";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import TagSubscriptionManager from "components/user/user_settings/subscriptions/TagSubscriptionManager";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import TagSubscriptionIcon from "components/common/icons/subscription/TagSubscriptionIcon";
 
 function MyTagCloud({className, showNoSubscriptionsMessage}) {
   const toastContext = useContext(DialogToastContext);
@@ -74,6 +76,17 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
     toastContext.clearOverlayPanel();
   };
 
+  const getActionBar = (tagModel) => {
+    if (tagModel != null) {
+      return (
+        <ActionBarContainer>
+          <div />
+          <TagSubscriptionIcon tagModel={tagModel} />
+        </ActionBarContainer>
+      );
+    }
+  };
+
   const showTagUsage = (tag) => {
     const tagModel = new Model(tag, tagEditorMetadata, false);
 
@@ -85,6 +98,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
         closePanel={clearOverlayPanel}
         titleText={`[${capitalizeFirstLetter(tag?.type)}: ${capitalizeFirstLetter(tag?.value)}] Tag Usage`}
         titleIcon={faTag}
+        actionBar={getActionBar(tagModel)}
       >
         <TagUsagePanel tagData={tagModel} closePanel={clearOverlayPanel} />
       </CenterOverlayContainer>
@@ -101,7 +115,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
       <div>
         <div>
           <span>
-            Tag [{tag?.type}: {tag?.value}] is applied on
+            Tag [{capitalizeFirstLetter(tag?.type)}: {capitalizeFirstLetter(tag?.value)}] is applied on
             <div><strong>{pipelineCount}</strong> {getSingularOrPluralString(pipelineCount, "Pipeline", "Pipelines")}</div>
             <div><strong>{toolCount}</strong> {getSingularOrPluralString(toolCount, "Tool", "Tools")}</div>
             <div><strong>{dashboardCount}</strong> {getSingularOrPluralString(dashboardCount, "Dashboard", "Dashboards")}</div>

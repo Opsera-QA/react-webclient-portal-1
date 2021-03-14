@@ -7,6 +7,10 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {unsavedChanges} from "components/common/tooltip/popover-text";
 
 function CloseButton({ isLoading, closeEditorCallback, size, className, showUnsavedChangesMessage }) {
+  if (closeEditorCallback == null) {
+    return null;
+  }
+
   return (
     <div className={className}>
       <TooltipWrapper innerText={showUnsavedChangesMessage ? unsavedChanges : undefined}>
