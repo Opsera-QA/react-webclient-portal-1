@@ -11,7 +11,7 @@ import tagEditorMetadata from "components/settings/tags/tags-metadata";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import TagUsagePanel from "components/settings/tags/tags_detail_view/TagUsagePanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {getSingularOrPluralString} from "components/common/helpers/string-helpers";
+import {capitalizeFirstLetter, getSingularOrPluralString} from "components/common/helpers/string-helpers";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import TagSubscriptionManager from "components/user/user_settings/subscriptions/TagSubscriptionManager";
 
@@ -83,7 +83,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
         objectType={tagEditorMetadata?.type}
         loadData={loadData}
         closePanel={clearOverlayPanel}
-        titleText={`[${tag?.type}: ${tag?.value}] Tag Usage`}
+        titleText={`[${capitalizeFirstLetter(tag?.type)}: ${capitalizeFirstLetter(tag?.value)}] Tag Usage`}
         titleIcon={faTag}
       >
         <TagUsagePanel tagData={tagModel} closePanel={clearOverlayPanel} />

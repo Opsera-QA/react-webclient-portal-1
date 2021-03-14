@@ -32,7 +32,7 @@ function TagField({dataObject, fieldName, className, showLabel}) {
     return (
       parsedTags.map((tag, i) => {
         return (
-          <CustomBadge icon={faTag} badgeText={`${capitalizeFirstLetter(tag?.type)}: ${tag.value}`} key={i} />
+          <CustomBadge icon={faTag} className={""} badgeText={`${capitalizeFirstLetter(tag?.type)}: ${capitalizeFirstLetter(tag.value)}`} key={i} />
         );
       })
     );
