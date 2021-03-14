@@ -44,11 +44,11 @@ function BitbucketToolConfiguration({ toolData }) {
   const saveBitbucketToolConfiguration = async () => {
     let newConfiguration = bitbucketConfigurationDto.getPersistData();
     const accountPasswordVaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`;
-    newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(bitbucketConfigurationDto, "accountPassword", newConfiguration.accountPassword, accountPasswordVaultKey, getAccessToken);
+    newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(bitbucketConfigurationDto, "accountPassword", newConfiguration.accountPassword, accountPasswordVaultKey, getAccessToken, toolData.getData("_id"));
     const secretPrivateVaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}-secretPrivateKey`;
-    newConfiguration.secretPrivateKey = await toolsActions.saveKeyPasswordToVault(bitbucketConfigurationDto, "secretPrivateKey", newConfiguration.secretPrivateKey, secretPrivateVaultKey, getAccessToken);
+    newConfiguration.secretPrivateKey = await toolsActions.saveKeyPasswordToVault(bitbucketConfigurationDto, "secretPrivateKey", newConfiguration.secretPrivateKey, secretPrivateVaultKey, getAccessToken, toolData.getData("_id"));
     const secretAccessTokenVaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}-secretAccessTokenKey`;
-    newConfiguration.secretAccessTokenKey = await toolsActions.saveKeyPasswordToVault(bitbucketConfigurationDto,"secretAccessTokenKey", newConfiguration.secretAccessTokenKey, secretAccessTokenVaultKey, getAccessToken);
+    newConfiguration.secretAccessTokenKey = await toolsActions.saveKeyPasswordToVault(bitbucketConfigurationDto,"secretAccessTokenKey", newConfiguration.secretAccessTokenKey, secretAccessTokenVaultKey, getAccessToken, toolData.getData("_id"));
     const item = {configuration: newConfiguration};
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };

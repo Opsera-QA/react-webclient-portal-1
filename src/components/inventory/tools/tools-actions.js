@@ -22,6 +22,15 @@ toolsActions.deleteVaultRecordsForToolId = async (toolDataDto,getAccessToken) =>
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 }
 
+toolsActions.deleteOwnerVaultRecordsForToolId = async (toolDataDto,getAccessToken) => {
+  const apiUrl = `/vault/tool/delete`;
+  let id = toolDataDto.getData("_id")
+  let postBody = {
+    id : id
+  }
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+}
+
 toolsActions.updateTool = async (toolDataDto, getAccessToken) => {
   const postBody = {
     ...toolDataDto.getPersistData()
@@ -139,8 +148,8 @@ toolsActions.savePasswordToVault = async (toolData, toolConfigurationData, field
     const toolId = toolData.getData("_id");
     const toolIdentifier = toolData.getData("tool_identifier");
     const keyName = `${toolId}-${toolIdentifier}-${fieldName}`;
-    const body = { "key": `${keyName}`, "value": value };
-    const response = await pipelineActions.saveToVault(body, getAccessToken);
+    const body = { "key": `${keyName}`, "value": value, "toolId": toolId };
+    const response = await pipelineActions.saveToolRegistryRecordToVault(body, getAccessToken);
     return response?.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : {};
   }
 
@@ -149,10 +158,10 @@ toolsActions.savePasswordToVault = async (toolData, toolConfigurationData, field
   return typeof currentValue === "string" ? {} : currentValue;
 };
 
-toolsActions.saveKeyPasswordToVault = async (toolConfigurationData, fieldName, value, key, getAccessToken) => {
+toolsActions.saveKeyPasswordToVault = async (toolConfigurationData, fieldName, value, key, getAccessToken, toolId) => {
   if (toolConfigurationData.isChanged(fieldName) && value != null && typeof(value) === "string") {
-    const body = { "key": key, "value": value };
-    const response = await pipelineActions.saveToVault(body, getAccessToken);
+    const body = { "key": key, "value": value, "toolId": toolId };
+    const response = await pipelineActions.saveToolRegistryRecordToVault(body, getAccessToken);
     return response?.status === 200 ? { name: "Vault Secured Key", vaultKey: key } : {};
   }
 

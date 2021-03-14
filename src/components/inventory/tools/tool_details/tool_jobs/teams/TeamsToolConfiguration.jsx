@@ -27,7 +27,7 @@ function TeamsToolConfiguration({ toolData }) {
 
     // key as only toolID as requested by Purushoth!
     const vaultKey = toolData.getData("_id");
-    newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(teamsConfigurationDto,"webhookUrl", newConfiguration.webhookUrl, vaultKey, getAccessToken);
+    newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(teamsConfigurationDto,"webhookUrl", newConfiguration.webhookUrl, vaultKey, getAccessToken, toolData.getData("_id"));
     const item = { configuration: newConfiguration };
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };

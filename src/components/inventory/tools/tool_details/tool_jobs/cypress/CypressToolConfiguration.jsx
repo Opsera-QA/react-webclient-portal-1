@@ -25,7 +25,7 @@ function CypressToolConfiguration({ toolData }) {
   const saveCypressToolConfiguration = async () => {
     let newConfiguration = cypressConfigurationDto.getPersistData();
     const vaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`;
-    newConfiguration.jAuthToken = await toolsActions.saveKeyPasswordToVault(cypressConfigurationDto, "jAuthToken", newConfiguration.jAuthToken, vaultKey, getAccessToken);
+    newConfiguration.jAuthToken = await toolsActions.saveKeyPasswordToVault(cypressConfigurationDto, "jAuthToken", newConfiguration.jAuthToken, vaultKey, getAccessToken, toolData.getData("_id"));
     const item = { configuration: newConfiguration };
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };

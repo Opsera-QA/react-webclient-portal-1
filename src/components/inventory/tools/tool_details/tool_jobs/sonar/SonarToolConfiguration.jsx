@@ -26,7 +26,7 @@ function SonarToolConfiguration( { toolData }) {
   const saveSonarToolConfiguration = async () => {
     let newConfiguration = sonarConfigurationDto.getPersistData();
     const vaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`;
-    newConfiguration.sonarAuthToken = await toolsActions.saveKeyPasswordToVault(sonarConfigurationDto,"sonarAuthToken", newConfiguration.sonarAuthToken, vaultKey, getAccessToken);
+    newConfiguration.sonarAuthToken = await toolsActions.saveKeyPasswordToVault(sonarConfigurationDto,"sonarAuthToken", newConfiguration.sonarAuthToken, vaultKey, getAccessToken, toolData.getData("_id"));
     const item = { configuration: newConfiguration };
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };

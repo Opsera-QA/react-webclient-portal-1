@@ -26,7 +26,7 @@ function AnchoreScanToolConfiguration({ toolData }) {
   const saveAnchoreScanToolConfiguration = async () => {
     let newConfiguration = anchoreScanConfigurationDto.getPersistData();
     const vaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`;
-    newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(anchoreScanConfigurationDto, "accountPassword", newConfiguration.accountPassword, vaultKey, getAccessToken);
+    newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(anchoreScanConfigurationDto, "accountPassword", newConfiguration.accountPassword, vaultKey, getAccessToken, toolData.getData("_id"));
     const item = {configuration: newConfiguration};
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };

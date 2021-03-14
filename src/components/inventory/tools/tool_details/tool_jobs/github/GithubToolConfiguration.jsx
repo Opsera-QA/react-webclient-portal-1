@@ -32,9 +32,9 @@ function GithubToolConfiguration({ toolData }) {
   const saveGithubToolConfiguration = async () => {
     let newConfiguration = githubConfigurationDto.getPersistData();
     const simpleVaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`
-    newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(githubConfigurationDto, "accountPassword", newConfiguration.accountPassword, simpleVaultKey, getAccessToken);
-    newConfiguration.secretPrivateKey = await toolsActions.savePasswordToVault(toolData, githubConfigurationDto, "secretPrivateKey", newConfiguration.secretPrivateKey, getAccessToken);
-    newConfiguration.secretAccessTokenKey = await toolsActions.savePasswordToVault(toolData, githubConfigurationDto, "secretAccessTokenKey", newConfiguration.secretAccessTokenKey, getAccessToken);
+    newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(githubConfigurationDto, "accountPassword", newConfiguration.accountPassword, simpleVaultKey, getAccessToken, toolData.getData("_id"));
+    newConfiguration.secretPrivateKey = await toolsActions.savePasswordToVault(toolData, githubConfigurationDto, "secretPrivateKey", newConfiguration.secretPrivateKey, getAccessToken, toolData.getData("_id"));
+    newConfiguration.secretAccessTokenKey = await toolsActions.savePasswordToVault(toolData, githubConfigurationDto, "secretAccessTokenKey", newConfiguration.secretAccessTokenKey, getAccessToken, toolData.getData("_id"));
     const item = { configuration: newConfiguration };
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };

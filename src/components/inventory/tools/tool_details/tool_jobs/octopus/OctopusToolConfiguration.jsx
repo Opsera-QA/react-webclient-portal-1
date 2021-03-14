@@ -26,7 +26,7 @@ function OctopusToolConfiguration({ toolData }) {
   const saveOctopusToolConfiguration = async () => {
     let newConfiguration = octopusConfigurationDto.getPersistData();
     const octopusApiVaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}-secretKey`;
-    newConfiguration.octopusApiKey = await toolsActions.saveKeyPasswordToVault(octopusConfigurationDto, "octopusApiKey", newConfiguration.octopusApiKey, octopusApiVaultKey, getAccessToken);
+    newConfiguration.octopusApiKey = await toolsActions.saveKeyPasswordToVault(octopusConfigurationDto, "octopusApiKey", newConfiguration.octopusApiKey, octopusApiVaultKey, getAccessToken, toolData.getData("_id"));
     const item = { configuration: newConfiguration };
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };
