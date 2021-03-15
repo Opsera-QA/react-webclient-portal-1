@@ -20,9 +20,10 @@ function AddChartOverlay({ kpiData, dashboardId }) {
       titleText={`[${kpiData.name}] Chart Details`}
       titleIcon={faUserChart}
       showToasts={true}
+      showCloseButton={false}
     >
       <div className={"p-3"}>
-        <MarketplaceChartInfoPanel kpiData={kpiData} dashboardId={dashboardId} handleClose={closePanel} />
+        <MarketplaceChartInfoPanel kpiData={kpiData} dashboardId={dashboardId} closePanel={closePanel} />
       </div>
     </CenterOverlayContainer>
   );

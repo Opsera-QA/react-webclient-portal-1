@@ -1,28 +1,23 @@
 import React, {useState, useContext, useEffect, useRef} from "react";
-import { Button, Image } from "react-bootstrap";
+import { Image } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { formatDistanceToNowStrict } from "date-fns";
 import PropTypes from 'prop-types'
-import { DialogToastContext } from "contexts/DialogToastContext";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import { Row, Col } from "react-bootstrap";
 import axios from "axios";
 import Model from "core/data_model/model";
 import dashboardSelectMetadata from "components/insights/marketplace/charts/dashboard-select-metadata";
-import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import MarketplaceDashboardInput from "components/insights/marketplace/charts/MarketplaceDashboardInput";
+import AddToDashboardButton from "components/common/buttons/dashboards/AddToDashboardButton";
 
-function MarketplaceChartInfoPanel({kpiData, dashboardId, handleClose}) {
+function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
   const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
-  const [dashboardSelectData, setDashboardSelectData] = useState(undefined);
+  const [selectedDashboardData, setSelectedDashboardData] = useState(undefined);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
@@ -54,7 +49,7 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, handleClose}) {
         await getDashboardById(cancelSource);
       }
       else {
-        setDashboardSelectData(new Model({...dashboardSelectMetadata?.newObjectFields}, dashboardSelectMetadata, false));
+        setSelectedDashboardData(new Model({...dashboardSelectMetadata?.newObjectFields}, dashboardSelectMetadata, false));
       }
     }
     catch (error) {
@@ -73,55 +68,15 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, handleClose}) {
     let response = await dashboardsActions.getDashboardByIdV2(getAccessToken, cancelSource, dashboardId);
 
     if (isMounted?.current === true && response?.data) {
-      setDashboardSelectData(new Model({dashboard: response.data}, dashboardSelectMetadata, false));
+      setSelectedDashboardData(new Model({dashboard: response.data}, dashboardSelectMetadata, false));
     }
   };
-  
-  const addKPIToDashboard = async () => {
-    try {
-      setIsSaving(true);
-
-      let newDashboard = new Model(dashboardSelectData.getData("dashboard"), dashboardMetadata, false);
-      let newConfigObj = newDashboard.getData("configuration");
-
-      const configObj = {
-        kpi_identifier: kpiData.identifier,
-        kpi_name: kpiData.name,
-        kpi_category: kpiData.category,
-        kpi_settings: kpiData.settings,
-        filters: kpiData.supported_filters,
-        tags: [],
-        active: kpiData.active,
-      };
-
-      newConfigObj.push(configObj);
-
-      newDashboard.setData("configuration", newConfigObj);
-      await dashboardsActions.update(newDashboard, getAccessToken);
-
-      toastContext.showUpdateSuccessResultDialog("Dashboard KPI");
-      handleClose();
-    } catch (error) {
-      if (isMounted?.current === true) {
-        console.log(error);
-        toastContext.showServiceUnavailableDialog();
-      }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsSaving(false);
-      }
-    }
- };
 
   const getImageField = () => {
     if (kpiData?.thumbnailPath) {
       return (
-        <div className="mt-3">
-          <div className="px-2">
-            {/* TODO: placeholder image for now, needs to be changed when done */}
-            {/* <Image src="https://via.placeholder.com/800x500.png" className="kpi-image"/> */}
-            <Image src={kpiData.thumbnailPath} className="kpi-image"/>
-          </div>
+        <div className="mt-3 px-2">
+          <Image src={kpiData.thumbnailPath} className="kpi-image"/>
         </div>
       );
     }
@@ -169,52 +124,41 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, handleClose}) {
     return null;
   }
 
-  if (isLoading || dashboardSelectData == null) {
+  if (isLoading || selectedDashboardData == null) {
     return <LoadingDialog size={"sm"} message={"Loading"} />;
   }
 
   return (
     <div>
-      <div className="flex-container">
-        <div className="flex-container-content">
-        <div className="h5">{kpiData.name}</div>
-          <small className="text-muted">Last updated {formatDistanceToNowStrict(new Date(kpiData.updatedAt))} ago.</small>
-            <>
-              <div className="mx-3">
-                {getImageField()}
-                {getDescriptionField()}
-                {getToolsField()}
-                {getCategoriesField()}
-              </div>
-            </>
-        </div>
-
-        <div className="flex-container-bottom pr-2 mt-4 mb-2" >
-         <Row className={"d-flex"}>
-           <Col md={12} className="py-1">
-             <MarketplaceDashboardInput setDataObject={setDashboardSelectData} dataObject={dashboardSelectData} />
-           </Col>
-         </Row>
-          <SaveButtonContainer>
-            <div className="ml-auto">
-              <Button
-                disabled={isSaving || dashboardSelectData?.getData("dashboard")?.configuration == null || dashboardSelectData?.getData("dashboard")?.configuration.length >= 10}
-                onClick={() => addKPIToDashboard()}>
-                {isSaving && (<FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>)}
-                Add to dashboard
-              </Button>
-            </div>
-          </SaveButtonContainer>
-        </div>
-        </div>
+      <div className="h5">{kpiData.name}</div>
+      <small className="text-muted">Last updated {formatDistanceToNowStrict(new Date(kpiData.updatedAt))} ago.</small>
+      <div className="mx-3">
+        {getImageField()}
+        {getDescriptionField()}
+        {getToolsField()}
+        {getCategoriesField()}
       </div>
+
+      <div className="flex-container-bottom pr-2 mt-4 mb-2">
+        <Row className={"d-flex"}>
+          <Col md={12} className="py-1">
+            <MarketplaceDashboardInput setDataObject={setSelectedDashboardData} dataObject={selectedDashboardData}/>
+          </Col>
+        </Row>
+        <SaveButtonContainer>
+          <div className="ml-auto">
+            <AddToDashboardButton closePanel={closePanel} kpiData={kpiData} selectedDashboardData={selectedDashboardData} />
+          </div>
+        </SaveButtonContainer>
+      </div>
+    </div>
   );
 }
 
 MarketplaceChartInfoPanel.propTypes = {
   kpiData: PropTypes.object,
   dashboardId: PropTypes.string,
-  handleClose: PropTypes.func
+  closePanel: PropTypes.func
 };
 
 export default MarketplaceChartInfoPanel;
