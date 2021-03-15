@@ -113,6 +113,20 @@ function KpiInfoView({kpiData, dashboardId, handleClose}) {
     }
  };
 
+  const getImageField = () => {
+    if (kpiData?.thumbnailPath) {
+      return (
+        <div className="mt-3">
+          <div className="px-2">
+            {/* TODO: placeholder image for now, needs to be changed when done */}
+            {/* <Image src="https://via.placeholder.com/800x500.png" className="kpi-image"/> */}
+            <Image src={kpiData.thumbnailPath} className="kpi-image"/>
+          </div>
+        </div>
+      );
+    }
+  };
+
   const getDescriptionField = () => {
     if (kpiData?.description?.length > 1) {
       return (
@@ -166,15 +180,8 @@ function KpiInfoView({kpiData, dashboardId, handleClose}) {
         <div className="h5">{kpiData.name}</div>
           <small className="text-muted">Last updated {formatDistanceToNowStrict(new Date(kpiData.updatedAt))} ago.</small>
             <>
-              <div className="mt-3 mr-3">                                    
-                <div className="px-2">
-                  {/* TODO: placeholder image for now, needs to be changed when done */}
-                  {/* <Image src="https://via.placeholder.com/800x500.png" className="kpi-image"/> */}
-                  <Image src={kpiData.thumbnailPath} className="kpi-image"/>
-                </div>
-              </div>
-
               <div className="mx-3">
+                {getImageField()}
                 {getDescriptionField()}
                 {getToolsField()}
                 {getCategoriesField()}
