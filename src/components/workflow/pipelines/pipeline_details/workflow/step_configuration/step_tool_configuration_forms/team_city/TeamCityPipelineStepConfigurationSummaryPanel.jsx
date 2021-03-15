@@ -1,10 +1,10 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
-import DtoTextField from "../../../../../../../common/form_fields/dto_form_fields/dto-text-field";
-import LoadingDialog from "../../../../../../../common/status_notifications/loading";
-import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
+import LoadingDialog from "components/common/status_notifications/loading";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import PipelineStepSummaryPanelContainer
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 
 function TeamCityPipelineStepConfigurationSummaryPanel({ teamCityPipelineDataObject, pipelineData, setActiveTab }) {
 
@@ -16,16 +16,16 @@ function TeamCityPipelineStepConfigurationSummaryPanel({ teamCityPipelineDataObj
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <DtoTextField dataObject={teamCityPipelineDataObject} fieldName={"teamcityApiURL"}/>
+          <TextFieldBase dataObject={teamCityPipelineDataObject} fieldName={"teamcityApiURL"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={teamCityPipelineDataObject} fieldName={"teamcityUsername"}/>
+          <TextFieldBase dataObject={teamCityPipelineDataObject} fieldName={"teamcityUsername"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={teamCityPipelineDataObject} fieldName={"teamcityBuildTypeId"}/>
+          <TextFieldBase dataObject={teamCityPipelineDataObject} fieldName={"teamcityBuildTypeId"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={teamCityPipelineDataObject} fieldName={"teamcityProjectId"}/>
+          <TextFieldBase dataObject={teamCityPipelineDataObject} fieldName={"teamcityProjectId"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>

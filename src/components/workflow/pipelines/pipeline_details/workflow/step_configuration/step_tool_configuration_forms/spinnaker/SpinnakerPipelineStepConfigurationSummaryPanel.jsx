@@ -1,10 +1,10 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
-import DtoTextField from "../../../../../../../common/form_fields/dto_form_fields/dto-text-field";
-import LoadingDialog from "../../../../../../../common/status_notifications/loading";
-import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
+import LoadingDialog from "components/common/status_notifications/loading";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import PipelineStepSummaryPanelContainer
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 
 function SpinnakerPipelineStepConfigurationSummaryPanel({ spinnakerPipelineDataObject, pipelineData, setActiveTab }) {
 
@@ -16,16 +16,16 @@ function SpinnakerPipelineStepConfigurationSummaryPanel({ spinnakerPipelineDataO
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <DtoTextField dataObject={spinnakerPipelineDataObject} fieldName={"spinnakerId"}/>
+          <TextFieldBase dataObject={spinnakerPipelineDataObject} fieldName={"spinnakerId"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={spinnakerPipelineDataObject} fieldName={"toolURL"}/>
+          <TextFieldBase dataObject={spinnakerPipelineDataObject} fieldName={"toolURL"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={spinnakerPipelineDataObject} fieldName={"applicationName"}/>
+          <TextFieldBase dataObject={spinnakerPipelineDataObject} fieldName={"applicationName"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={spinnakerPipelineDataObject} fieldName={"pipelineName"}/>
+          <TextFieldBase dataObject={spinnakerPipelineDataObject} fieldName={"pipelineName"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>

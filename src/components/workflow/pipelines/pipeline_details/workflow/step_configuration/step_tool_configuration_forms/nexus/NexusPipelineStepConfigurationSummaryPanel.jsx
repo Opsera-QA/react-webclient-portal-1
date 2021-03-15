@@ -1,10 +1,10 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
-import DtoTextField from "../../../../../../../common/form_fields/dto_form_fields/dto-text-field";
-import LoadingDialog from "../../../../../../../common/status_notifications/loading";
-import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
+import LoadingDialog from "components/common/status_notifications/loading";
+import PipelineStepSummaryPanelContainer
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
 
 function NexusPipelineStepConfigurationSummaryPanel({ nexusPipelineDataObject, pipelineData, setActiveTab }) {
 
@@ -16,19 +16,19 @@ function NexusPipelineStepConfigurationSummaryPanel({ nexusPipelineDataObject, p
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <DtoTextField dataObject={nexusPipelineDataObject} fieldName={"groupName"}/>
+          <TextFieldBase dataObject={nexusPipelineDataObject} fieldName={"groupName"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={nexusPipelineDataObject} fieldName={"artifactName"}/>
+          <TextFieldBase dataObject={nexusPipelineDataObject} fieldName={"artifactName"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={nexusPipelineDataObject} fieldName={"type"}/>
+          <TextFieldBase dataObject={nexusPipelineDataObject} fieldName={"type"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={nexusPipelineDataObject} fieldName={"repositoryName"}/>
+          <TextFieldBase dataObject={nexusPipelineDataObject} fieldName={"repositoryName"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={nexusPipelineDataObject} fieldName={"artifactStepId"}/>
+          <TextFieldBase dataObject={nexusPipelineDataObject} fieldName={"artifactStepId"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
@@ -40,6 +40,5 @@ NexusPipelineStepConfigurationSummaryPanel.propTypes = {
   pipelineData: PropTypes.object,
   setActiveTab: PropTypes.func
 };
-
 
 export default NexusPipelineStepConfigurationSummaryPanel;

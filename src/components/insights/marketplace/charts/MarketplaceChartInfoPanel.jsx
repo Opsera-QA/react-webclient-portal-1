@@ -14,7 +14,7 @@ import MarketplaceDashboardInput from "components/insights/marketplace/charts/Ma
 import AddToDashboardButton from "components/common/buttons/dashboards/AddToDashboardButton";
 import CustomBadge from "components/common/badges/CustomBadge";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
-import {faWrench} from "@fortawesome/pro-light-svg-icons";
+import {faList, faWrench} from "@fortawesome/pro-light-svg-icons";
 import CancelButton from "components/common/buttons/CancelButton";
 
 function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
@@ -79,7 +79,7 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
   const getImageField = () => {
     if (kpiData?.thumbnailPath) {
       return (
-        <div className="my-2 px-2">
+        <div className="px-2">
           <Image src={kpiData.thumbnailPath} className="kpi-image"/>
         </div>
       );
@@ -89,7 +89,7 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
   const getDescriptionField = () => {
     if (kpiData?.description?.length > 1) {
       return (
-        <div className="d-flex flex-wrap">
+        <div>
           {kpiData.description}
         </div>
       );
@@ -113,10 +113,10 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
   const getCategoriesField = () => {
     if (kpiData.category?.length > 0) {
       return (
-        <div className={"py-2"}>
+        <div className={"my-2"}>
           <CustomBadgeContainer>
             {kpiData.category.map((category, index)=>{
-              return (<CustomBadge key={index} icon={faWrench} badgeText={category} />);
+              return (<CustomBadge key={index} icon={faList} badgeText={category} />);
             })}
           </CustomBadgeContainer>
         </div>
@@ -138,7 +138,7 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
         <div className="h5">{kpiData.name}</div>
         <small className="text-muted">Last updated {formatDistanceToNowStrict(new Date(kpiData.updatedAt))} ago.</small>
       </div>
-      <div className="mx-3">
+      <div className="my-2">
         {getImageField()}
         {getDescriptionField()}
         {getToolsField()}
@@ -152,8 +152,8 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
           </Col>
         </Row>
         <SaveButtonContainer>
-          <div className="ml-auto">
-            <CancelButton cancelFunction={closePanel} size={"sm"} />
+          <div className="d-flex ml-auto">
+            <CancelButton cancelFunction={closePanel} size={"sm"} className={"mr-2"} />
             <AddToDashboardButton closePanel={closePanel} kpiData={kpiData} selectedDashboardData={selectedDashboardData} />
           </div>
         </SaveButtonContainer>
