@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEye} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
+import IconBase from "components/common/icons/IconBase";
 
 function SubscriptionIconBase({ handleSubscription, isSubscribed, showText, className, isLoading }) {
 
@@ -31,7 +32,7 @@ function SubscriptionIconBase({ handleSubscription, isSubscribed, showText, clas
       <div className={getClassNames()} onClick={() => {handleSubscription()}}>
         <ButtonTooltip innerText={isSubscribed ? "Click to Unsubscribe" : "Click to Subscribe"}>
           <span>
-            <FontAwesomeIcon icon={faEye} fixedWidth />
+            <IconBase isLoading={isLoading} className={"mr-2 my-auto"} icon={faEye} />
             {getHelpText()}
           </span>
         </ButtonTooltip>
