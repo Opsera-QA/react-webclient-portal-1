@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
+import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle, faTag} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
@@ -11,9 +12,11 @@ import tagEditorMetadata from "components/settings/tags/tags-metadata";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import TagUsagePanel from "components/settings/tags/tags_detail_view/TagUsagePanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {getSingularOrPluralString} from "components/common/helpers/string-helpers";
+import {capitalizeFirstLetter, getSingularOrPluralString} from "components/common/helpers/string-helpers";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import TagSubscriptionManager from "components/user/user_settings/subscriptions/TagSubscriptionManager";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import TagSubscriptionIcon from "components/common/icons/subscription/TagSubscriptionIcon";
 
 function MyTagCloud({className, showNoSubscriptionsMessage}) {
   const toastContext = useContext(DialogToastContext);
@@ -74,6 +77,17 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
     toastContext.clearOverlayPanel();
   };
 
+  const getActionBar = (tagModel) => {
+    if (tagModel != null) {
+      return (
+        <ActionBarContainer>
+          <div />
+          <TagSubscriptionIcon tagModel={tagModel} />
+        </ActionBarContainer>
+      );
+    }
+  };
+
   const showTagUsage = (tag) => {
     const tagModel = new Model(tag, tagEditorMetadata, false);
 
@@ -83,8 +97,9 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
         objectType={tagEditorMetadata?.type}
         loadData={loadData}
         closePanel={clearOverlayPanel}
-        titleText={`[${tag?.type}: ${tag?.value}] Tag Usage`}
+        titleText={`[${capitalizeFirstLetter(tag?.type)}: ${capitalizeFirstLetter(tag?.value)}] Tag Usage`}
         titleIcon={faTag}
+        actionBar={getActionBar(tagModel)}
       >
         <TagUsagePanel tagData={tagModel} closePanel={clearOverlayPanel} />
       </CenterOverlayContainer>
@@ -101,10 +116,10 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
       <div>
         <div>
           <span>
-            Tag [{tag?.type}: {tag?.value}] is applied on
+            Tag [{capitalizeFirstLetter(tag?.type)}: {capitalizeFirstLetter(tag?.value)}] is applied on
             <div><strong>{pipelineCount}</strong> {getSingularOrPluralString(pipelineCount, "Pipeline", "Pipelines")}</div>
             <div><strong>{toolCount}</strong> {getSingularOrPluralString(toolCount, "Tool", "Tools")}</div>
-            {/*<div><strong>{dashboardCount}</strong> {getSingularOrPluralString(dashboardCount, "Dashboard", "Dashboards")}</div>*/}
+            <div><strong>{dashboardCount}</strong> {getSingularOrPluralString(dashboardCount, "Dashboard", "Dashboards")}</div>
           </span>
         </div>
         <div>Click to view usage details</div>
@@ -118,7 +133,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
 
   const getBody = () => {
     if (isLoading) {
-      return (<div><LoadingIcon isLoading={isLoading} />Loading tag subscriptions</div>);
+      return (<div><LoadingIcon isLoading={isLoading} className={"mr-2 my-auto"} />Loading subscriptions</div>);
     }
 
     if (Array.isArray(tags) && tags.length > 0) {
@@ -139,11 +154,13 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
     }
   };
 
+  /*<div className={"mt-2 btn btn-sm btn-outline-secondary"} onClick={() => {showTagSubscriptionManager()}}>Manage Tag Subscriptions</div>*/
   return (
     <div className={className}>
-      <div className="mb-3 item-field">
+      <div className="mb-1 item-field">
         {getBody()}
-        {!isLoading && <div className={"mt-2 btn btn-sm btn-outline-secondary"} onClick={() => {showTagSubscriptionManager()}}>Manage Tag Subscriptions</div>}
+        {!isLoading && <Button variant="outline-secondary" size="sm" onClick={() => {showTagSubscriptionManager()}}>
+          <FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/> Tag Subscriptions</Button> }
       </div>
     </div>
   );

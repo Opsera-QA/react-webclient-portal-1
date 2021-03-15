@@ -69,20 +69,6 @@ const defaultSignupFormFields = {
       lowercase: true
     },
     {
-      label: "Title",
-      id: "title",
-      regexValidator: regexHelpers.regexTypes.nameField,
-      isRequired: true,
-      maxLength: 50
-    },
-    {
-      label: "Company",
-      id: "company",
-      regexValidator: regexHelpers.regexTypes.nameField,
-      isRequired: true,
-      maxLength: 50
-    },
-    {
       label: "Cloud Provider",
       id: "cloudProvider",
       isRequired: true

@@ -1,20 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
-import {Card} from "react-bootstrap";
-import PipelineTypesField from "../../../../common/form_fields/pipelines/PipelineTypesField";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-solid-svg-icons";
 import PipelineSubscriptionIcon from "components/common/icons/subscription/PipelineSubscriptionIcon";
+import CardContainerBase from "components/common/card_containers/CardContainerBase";
+import PipelineTypesField from "components/common/form_fields/pipelines/PipelineTypesField";
 
 function PipelineSummaryCardContainer({ children, isLoading, pipelineData }) {
-  const getCardTitle = () => {
+  const getTitleBar = () => {
     if (isLoading) {
       return (<div className="ml-1"><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Pipelines</div>);
     }
 
     return (
-      <div className="d-flex justify-content-between w-100 mx-2">
+      <div className="d-flex justify-content-between w-100">
         <div><span>{pipelineData.getData("name")}</span></div>
         <div className="d-flex ml-auto">
           <PipelineSubscriptionIcon pipelineModel={pipelineData} className={"mr-1"}/>
@@ -33,17 +32,11 @@ function PipelineSummaryCardContainer({ children, isLoading, pipelineData }) {
   };
 
   return (
-    <Card className="mb-2 pipeline-summary-card">
-      <Card.Title>
-        <div className="d-flex pipeline-card-title small p-1">
-          {getCardTitle()}
-        </div>
-      </Card.Title>
-      <Card.Body className="py-0 px-3 h-100 small">
+    <CardContainerBase titleBar={getTitleBar()} isLoading={isLoading}>
+      <div className={"px-2"}>
         {getCardBody()}
-      </Card.Body>
-      <Card.Footer />
-    </Card>
+      </div>
+    </CardContainerBase>
   );
 }
 

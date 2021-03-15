@@ -1,12 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { AuthContext } from "contexts/AuthContext";
-
 import siteNotificationActions from "./site-notification-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import SiteNotificationTable from "./SiteNotificationTable";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
-import TableScreenContainer from "components/common/panels/table_screen_container/TableScreenContainer";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import axios from "axios"
+import { truncateString } from "components/common/helpers/string-helpers";
 
 function SiteNotificationManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -14,37 +16,62 @@ function SiteNotificationManagement() {
   const [isLoading, setIsLoading] = useState(true);
   const [siteNotifications, setSiteNotifications] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+  
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+  
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+  
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles();
+      await getRoles(cancelSource);
     }
     catch (error) {
+      console.error(error);
       toastContext.showLoadingErrorDialog(error);
     }
     finally {
+      if(isMounted?.current === true){
       setIsLoading(false);
+      }
     }
   };
 
-  const getSiteNotifications = async () => {
-    const response = await siteNotificationActions.getSiteNotifications(getAccessToken);
+  const getSiteNotifications = async (cancelSource = cancelTokenSource) => {
+    const response = await siteNotificationActions.getSiteNotifications(getAccessToken, cancelSource);
+    if (response.data){
+      response.data.forEach(notification => notification.message = truncateString(notification.message,100));
+    }
     setSiteNotifications(response?.data);
   };
 
-  const getRoles = async () => {
+  const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
+    if (isMounted?.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      if (userRoleAccess?.OpseraAdministrator) {
-        await getSiteNotifications();
+      if (meetsRequirements(ROLE_LEVELS.OPSERA_ADMINISTRATORS, userRoleAccess)) {
+        await getSiteNotifications(cancelSource);
       }
     }
   };
@@ -58,11 +85,18 @@ function SiteNotificationManagement() {
   }
 
   return (
-    <TableScreenContainer
+    <ScreenContainer
       breadcrumbDestination={"siteNotificationManagement"}
-      title={"Site Notification Management"}
-      tableComponent={<SiteNotificationTable loadData={loadData} isLoading={isLoading} data={siteNotifications} />}
-    />
+      isLoading={!accessRoleData}
+      accessRoleData={accessRoleData}
+      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
+      >
+      <SiteNotificationTable 
+        loadData={loadData}
+        isLoading={isLoading} 
+        data={siteNotifications} 
+      />
+    </ScreenContainer>
   );
 
 }

@@ -27,6 +27,7 @@ import JiraVelocityReportBarChart from "./jira/bar_chart/velocity_report/JiraVel
 import JiraIssuesCreatedVsResolvedLineChart from "./jira/line_chart/issues_created_vs_resolved/JiraIssuesCreatedVsResolvedLineChart";
 import JiraIssuesAssignedToMe from "./jira/JiraIssuesAssignedToMe";
 import JiraSprintBurndownLineChart from "./jira/line_chart/sprint_burndown/JiraSprintBurndownLineChart";
+import JiraLeadTimeLineChart from "./jira/line_chart/lead_time/JiraLeadTimeLineChart";
 
 // Anchore KPIs
 import AnchoreVulnerabilitySeverityByPackageBarChart from "./anchore/bar_chart/vulnerability_severity_by_package/AnchoreVulnerabilitySeverityByPackageBarChart";
@@ -42,6 +43,7 @@ import SonarReliabilityRemediationEffortLineChart from "./sonar/line_chart/relia
 import SonarMetricByProjectLineChart from "./sonar/line_chart/metric-by-project/SonarMetricByProjectLineChart";
 import SonarCodeCoverageBarChart from "./sonar/bar_chart/code_coverage/SonarCodeCoverageBarChart";
 import SonarLinesToCoverBarChart from "./sonar/bar_chart/code_coverage/SonarLinesToCoverBarChart";
+import SonarRatings from "./sonar/SonarRatings";
 
 // Jmeter KPIs
 import JmeterHitsLineChart from "./jmeter/line_chart/hits/JmeterHitsLineChart";
@@ -119,7 +121,9 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       kpiConfig?.kpi_identifier === "jenkins-build-duration" ||
       kpiConfig?.kpi_identifier === "jenkins-builds-by-user" ||
       kpiConfig?.kpi_identifier === "jenkins-status-by-job-name" ||
-      kpiConfig?.kpi_identifier === "jenkins-recent-build-status"
+      kpiConfig?.kpi_identifier === "jenkins-recent-build-status" ||
+      kpiConfig?.kpi_identifier === "sonar-ratings" ||
+      kpiConfig?.kpi_identifier === "jira-lead-time"
     ) {
       return getChart();
     }
@@ -312,6 +316,16 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             tags={getTagsFromKpiConfiguration(kpiConfig)}
           />
         );
+      case "jira-lead-time":
+        return (
+          <JiraLeadTimeLineChart
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
 
       // Anchore KPIs
       case "anchore-vulnerability-severity-by-package":
@@ -430,6 +444,16 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             persona={"developer"}
             date={getDateObject(kpiConfig)}
             tags={getTagsFromKpiConfiguration(kpiConfig)}
+          />
+        );
+      case "sonar-ratings":
+        return (
+          <SonarRatings
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
 

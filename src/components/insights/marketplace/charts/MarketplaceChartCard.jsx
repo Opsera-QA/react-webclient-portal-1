@@ -7,6 +7,7 @@ import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
 import ViewDashboardDetailsButton from "components/common/buttons/dashboards/ViewChartDetailsButton";
+import {faList} from "@fortawesome/pro-solid-svg-icons";
 
 export default function MarketplaceChartCard({ kpi, dashboardId }) {
   const getChartImage = () => {
@@ -19,17 +20,9 @@ export default function MarketplaceChartCard({ kpi, dashboardId }) {
     }
   }
 
-  return (
-    <Card>
-      {getChartImage()}
-      <Card.Body>
-      <Card.Title>{kpi.name}</Card.Title>
-        <Card.Text>
-          <span className="overflow-text">
-            {kpi.description}
-          </span>
-        </Card.Text>
-
+  const getToolsField = () => {
+    if (kpi.tools?.length > 0) {
+      return (
         <CustomBadgeContainer>
           {kpi.tools.map((tool, index) => {
 
@@ -40,10 +33,44 @@ export default function MarketplaceChartCard({ kpi, dashboardId }) {
             return (<CustomBadge key={index} badgeText={capitalizeFirstLetter(tool)} className={"mr-2 mb-1"} icon={faWrench} />);
           })}
         </CustomBadgeContainer>
-          <div className={"mt-3 justify-content-between d-flex"}>
-            <ViewDashboardDetailsButton dashboardId={dashboardId} marketplaceChart={kpi} />
-            <small className="text-muted mt-auto">Last updated {formatDistanceToNowStrict(new Date(kpi.updatedAt))} ago.</small>
-          </div>
+      );
+    }
+  };
+
+  const getCategoriesField = () => {
+    if (kpi.category?.length > 0) {
+      return (
+        <CustomBadgeContainer>
+          {kpi.category.map((tool, index) => {
+
+            if (index > 8) {
+              return;
+            }
+
+            return (<CustomBadge key={index} badgeText={capitalizeFirstLetter(tool)} className={"mr-2 mb-1"} icon={faList} />);
+          })}
+        </CustomBadgeContainer>
+      );
+    }
+  };
+
+  return (
+    <Card>
+      {getChartImage()}
+      <Card.Body>
+        <Card.Title>{kpi.name}</Card.Title>
+        <Card.Text>
+          <span className="overflow-text">
+            {kpi.description}
+          </span>
+        </Card.Text>
+        {getToolsField()}
+        {getCategoriesField()}
+        <div className={"mt-3 justify-content-between d-flex"}>
+          <ViewDashboardDetailsButton dashboardId={dashboardId} marketplaceChart={kpi}/>
+          <small className="text-muted mt-auto">Last
+            updated {formatDistanceToNowStrict(new Date(kpi.updatedAt))} ago.</small>
+        </div>
       </Card.Body>
     </Card>
   )

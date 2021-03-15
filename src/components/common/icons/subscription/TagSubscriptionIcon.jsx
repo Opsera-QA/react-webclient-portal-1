@@ -59,6 +59,8 @@ function TagSubscriptionIcon({ tagModel, showText, className }) {
   };
 
   const handleTagSubscription = async () => {
+    setIsLoading(true);
+
     if (isSubscribed === true) {
       const response = await adminTagsActions.unsubscribeFromTag(getAccessToken, cancelTokenSource, tagModel?.getData("_id"));
       setIsSubscribed(response?.status !== 200);
@@ -66,6 +68,10 @@ function TagSubscriptionIcon({ tagModel, showText, className }) {
     else {
       const response = await adminTagsActions.subscribeToTag(getAccessToken, cancelTokenSource, tagModel?.getData("_id"));
       setIsSubscribed(response?.data === true);
+    }
+
+    if (isMounted?.current === true) {
+      setIsLoading(false);
     }
   };
 

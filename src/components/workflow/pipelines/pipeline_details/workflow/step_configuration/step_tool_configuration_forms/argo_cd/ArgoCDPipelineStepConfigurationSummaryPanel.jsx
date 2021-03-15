@@ -1,10 +1,10 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
-import DtoTextField from "../../../../../../../common/form_fields/dto_form_fields/dto-text-field";
-import LoadingDialog from "../../../../../../../common/status_notifications/loading";
-import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import PipelineStepSummaryPanelContainer
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 function ArgoCDPipelineStepConfigurationSummaryPanel({ argoCdPipelineDataObject, pipelineData, setActiveTab }) {
 
@@ -16,52 +16,52 @@ function ArgoCDPipelineStepConfigurationSummaryPanel({ argoCdPipelineDataObject,
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"type"}/>
+          <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"type"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"gitToolId"}/>
+          <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"gitToolId"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"gitRepository"}/>
+          <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"gitRepository"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"defaultBranch"}/>
+          <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"defaultBranch"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"dockerStepID"}/>
+          <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"dockerStepID"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"existingContent"}/>
+          <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"existingContent"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"toolConfigId"}/>
+          <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"toolConfigId"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"toolUrl"}/>
+          <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"toolUrl"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"userName"}/>
+          <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"userName"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"applicationName"}/>
+          <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"applicationName"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"gitFilePath"}/>
+          <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"gitFilePath"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"gitWorkspace"}/>
+          <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"gitWorkspace"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"gitRepositoryID"}/>
+          <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"gitRepositoryID"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"bitbucketWorkspaceName"}/>
+          <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"bitbucketWorkspaceName"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"gitUrl"}/>
+          <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"gitUrl"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={argoCdPipelineDataObject} fieldName={"sshUrl"}/>
+          <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"sshUrl"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
@@ -73,6 +73,5 @@ ArgoCDPipelineStepConfigurationSummaryPanel.propTypes = {
   pipelineData: PropTypes.object,
   setActiveTab: PropTypes.func
 };
-
 
 export default ArgoCDPipelineStepConfigurationSummaryPanel;

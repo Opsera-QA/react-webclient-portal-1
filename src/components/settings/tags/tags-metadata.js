@@ -1,4 +1,6 @@
 // TODO: put metadata on node server and pull down that way?
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+
 const tagEditorMetadata = {
   idProperty: "_id",
   type: "Tag",
@@ -7,7 +9,7 @@ const tagEditorMetadata = {
     return `/settings/tags/${record.getData("_id")}`;
   },
   detailViewTitle: function(record) {
-    return `Tag Details [${record?.getData("type")}: ${record?.getData("value")}]`;
+    return `Tag Details [${capitalizeFirstLetter(record?.getData("type"))}: ${capitalizeFirstLetter(record?.getData("value"))}]`;
   },
   fields: [
     {

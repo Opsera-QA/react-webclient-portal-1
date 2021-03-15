@@ -26,6 +26,10 @@
 
 /*  Buttons  */
 
+.button-tooltip {
+    z-index: 2000;
+}
+
 .btn {
     border-radius: .1rem;
 }
@@ -1436,9 +1440,7 @@ a.nav-link {
     width: 75%;
     left: 12.5%;
     right: 12.5%;
-    margin: auto;
-    min-height: 50%;
-    margin-top: 10px;
+    margin: 10px auto auto;
 }
 
 .center-overlay-shadow-background {

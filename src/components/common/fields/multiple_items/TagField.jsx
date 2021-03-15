@@ -7,7 +7,7 @@ import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
 
-function TagField({dataObject, fieldName, className}) {
+function TagField({dataObject, fieldName, className, showLabel}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   // TODO: After all pipelines are updated to new tags, remove this.
@@ -32,7 +32,7 @@ function TagField({dataObject, fieldName, className}) {
     return (
       parsedTags.map((tag, i) => {
         return (
-          <CustomBadge icon={faTag} badgeText={`${capitalizeFirstLetter(tag?.type)}: ${tag.value}`} key={i} />
+          <CustomBadge icon={faTag} className={""} badgeText={`${capitalizeFirstLetter(tag?.type)}: ${capitalizeFirstLetter(tag.value)}`} key={i} />
         );
       })
     );
@@ -41,7 +41,7 @@ function TagField({dataObject, fieldName, className}) {
   return (
     <FieldContainer className={className}>
       <CustomBadgeContainer>
-        <FieldLabel fieldName={fieldName} field={field}/>
+        <FieldLabel fieldName={fieldName} field={field} showLabel={showLabel}/>
         {getTags()}
       </CustomBadgeContainer>
     </FieldContainer>
@@ -51,7 +51,8 @@ function TagField({dataObject, fieldName, className}) {
 TagField.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
-  className: PropTypes.string
+  className: PropTypes.string,
+  showLabel: PropTypes.bool
 };
 
 export default TagField;

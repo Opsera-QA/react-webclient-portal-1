@@ -87,7 +87,7 @@ function TagArrayUsedInDashboardsField({ tags }) {
 
 
   if (isLoading) {
-    return <div className={"mb-2"}><LoadingIcon isLoading={isLoading} />Loading Dashboards</div>;
+    return <div className={"mb-2"}><LoadingIcon isLoading={isLoading} className={"mr-2 my-auto"} />Loading Dashboards</div>;
   }
 
   if (!isLoading && tags == null || tags.length === 0) {

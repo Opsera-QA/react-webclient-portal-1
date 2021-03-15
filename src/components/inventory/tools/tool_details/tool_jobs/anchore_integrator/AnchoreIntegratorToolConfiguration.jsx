@@ -26,7 +26,7 @@ function AnchoreIntegratorToolConfiguration({ toolData }) {
   const saveAnchoreIntegratorToolConfiguration = async () => {
       let newConfiguration = anchoreIntegratorConfigurationDto.getPersistData();
       const vaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`;
-      newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(anchoreIntegratorConfigurationDto, "accountPassword", newConfiguration.accountPassword, vaultKey, getAccessToken);
+      newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(anchoreIntegratorConfigurationDto, "accountPassword", newConfiguration.accountPassword, vaultKey, getAccessToken, toolData.getData("_id"));
       const item = { configuration: newConfiguration };
       return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };

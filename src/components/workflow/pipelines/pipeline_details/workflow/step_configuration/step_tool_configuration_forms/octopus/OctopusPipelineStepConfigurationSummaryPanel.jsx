@@ -1,10 +1,10 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
-import DtoTextField from "../../../../../../../common/form_fields/dto_form_fields/dto-text-field";
-import LoadingDialog from "../../../../../../../common/status_notifications/loading";
-import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import LoadingDialog from "components/common/status_notifications/loading";
+import PipelineStepSummaryPanelContainer
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 
 function OctopusPipelineStepConfigurationSummaryPanel({ octopusPipelineDataObject, pipelineData, setActiveTab }) {
 
@@ -16,28 +16,31 @@ function OctopusPipelineStepConfigurationSummaryPanel({ octopusPipelineDataObjec
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <DtoTextField dataObject={octopusPipelineDataObject} fieldName={"toolURL"}/>
+          <TextFieldBase dataObject={octopusPipelineDataObject} fieldName={"toolURL"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={octopusPipelineDataObject} fieldName={"spaceName"}/>
+          <TextFieldBase dataObject={octopusPipelineDataObject} fieldName={"spaceName"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={octopusPipelineDataObject} fieldName={"projectName"}/>
+          <TextFieldBase dataObject={octopusPipelineDataObject} fieldName={"projectName"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={octopusPipelineDataObject} fieldName={"environmentName"}/>
+          <TextFieldBase dataObject={octopusPipelineDataObject} fieldName={"environmentName"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={octopusPipelineDataObject} fieldName={"octopusToolId"}/>
+          <TextFieldBase dataObject={octopusPipelineDataObject} fieldName={"octopusToolId"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={octopusPipelineDataObject} fieldName={"spaceId"}/>
+          <TextFieldBase dataObject={octopusPipelineDataObject} fieldName={"spaceId"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={octopusPipelineDataObject} fieldName={"projectId"}/>
+          <TextFieldBase dataObject={octopusPipelineDataObject} fieldName={"projectId"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={octopusPipelineDataObject} fieldName={"environmentId"}/>
+          <TextFieldBase dataObject={octopusPipelineDataObject} fieldName={"environmentId"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={octopusPipelineDataObject} fieldName={"octopusPhysicalPath"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>

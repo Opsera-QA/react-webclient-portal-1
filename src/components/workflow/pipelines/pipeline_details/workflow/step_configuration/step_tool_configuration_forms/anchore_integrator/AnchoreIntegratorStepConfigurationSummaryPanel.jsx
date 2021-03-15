@@ -1,10 +1,10 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
-import DtoTextField from "../../../../../../../common/form_fields/dto_form_fields/dto-text-field";
-import LoadingDialog from "../../../../../../../common/status_notifications/loading";
-import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
+import LoadingDialog from "components/common/status_notifications/loading";
+import PipelineStepSummaryPanelContainer
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
 
 function AnchoreIntegratorStepConfigurationSummaryPanel({ anchoreDataObject, pipelineData, setActiveTab }) {
 
@@ -16,16 +16,16 @@ function AnchoreIntegratorStepConfigurationSummaryPanel({ anchoreDataObject, pip
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <DtoTextField dataObject={anchoreDataObject} fieldName={"anchoreToolConfigId"}/>
+          <TextFieldBase dataObject={anchoreDataObject} fieldName={"anchoreToolConfigId"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={anchoreDataObject} fieldName={"anchoreUrl"}/>
+          <TextFieldBase dataObject={anchoreDataObject} fieldName={"anchoreUrl"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={anchoreDataObject} fieldName={"accountUsername"}/>
+          <TextFieldBase dataObject={anchoreDataObject} fieldName={"accountUsername"}/>
         </Col>
         <Col lg={6}>
-          <DtoTextField dataObject={anchoreDataObject} fieldName={"ecrPushStepId"}/>
+          <TextFieldBase dataObject={anchoreDataObject} fieldName={"ecrPushStepId"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>

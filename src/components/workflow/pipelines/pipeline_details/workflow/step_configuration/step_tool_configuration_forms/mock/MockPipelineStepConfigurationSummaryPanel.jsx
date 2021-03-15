@@ -1,10 +1,10 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
-import "components/inventory/tools/tools.css";
-import DtoTextField from "../../../../../../../common/form_fields/dto_form_fields/dto-text-field";
-import LoadingDialog from "../../../../../../../common/status_notifications/loading";
-import PipelineStepSummaryPanelContainer from "../../PipelineStepSummaryPanelContainer";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import LoadingDialog from "components/common/status_notifications/loading";
+import PipelineStepSummaryPanelContainer
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 
 function MockPipelineStepConfigurationSummaryPanel({ mockPipelineDataObject, pipelineData, setActiveTab }) {
 
@@ -16,10 +16,10 @@ function MockPipelineStepConfigurationSummaryPanel({ mockPipelineDataObject, pip
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col>
-          <DtoTextField dataObject={mockPipelineDataObject} fieldName={"mockTextOne"}/>
+          <TextFieldBase dataObject={mockPipelineDataObject} fieldName={"mockTextOne"}/>
         </Col>
         <Col>
-          <DtoTextField dataObject={mockPipelineDataObject} fieldName={"mockTextTwo"}/>
+          <TextFieldBase dataObject={mockPipelineDataObject} fieldName={"mockTextTwo"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>

@@ -5,7 +5,7 @@ import {OverlayTrigger, Tooltip} from "react-bootstrap";
 function ButtonTooltip({ innerText, placement, children, trigger }) {
   const renderTooltip = (message) => {
     return (
-      <Tooltip id="button-tooltip">
+      <Tooltip id="button-tooltip" className={"button-tooltip"}>
         {message}
       </Tooltip>
     );

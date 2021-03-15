@@ -29,6 +29,9 @@ regexHelpers.regexTypes = {
 
   // Letters, numbers and spaces allowed
   alphanumericPlusSpaces: /^[A-Za-z0-9 ]*$/,
+
+  // Letters, numbers, dashes, slashes, underscores, and periods allowed - char limit 0 to 100
+  pathField: /^[A-Za-z0-9\-_./\\]*$/,
 };
 
 export default regexHelpers;

@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {faTag} from "@fortawesome/pro-light-svg-icons";
 import AllTagsCloud from "components/common/fields/tags/cloud/AllTagsCloud";
-import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
-import CloseButton from "components/common/buttons/CloseButton";
 
 function TagSubscriptionManager({loadData, isMounted}) {
   const toastContext = useContext(DialogToastContext);
@@ -24,9 +22,6 @@ function TagSubscriptionManager({loadData, isMounted}) {
         <div className="mb-4">Click a Tag to manage subscription status.</div>
         <AllTagsCloud />
       </div>
-      <SaveButtonContainer>
-        <CloseButton className={"p-3"} size={"sm"} closeEditorCallback={closePanel} showUnsavedChangesMessage={false} />
-      </SaveButtonContainer>
     </CenterOverlayContainer>
   );
 }

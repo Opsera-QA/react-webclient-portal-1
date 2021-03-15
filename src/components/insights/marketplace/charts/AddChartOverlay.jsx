@@ -1,9 +1,9 @@
 import React, {useContext} from 'react'
 import PropTypes from 'prop-types'
-import KpiInfoView from "components/insights/marketplace/charts/KpiInfoView";
+import MarketplaceChartInfoPanel from "components/insights/marketplace/charts/MarketplaceChartInfoPanel";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
+import {faUserChart} from "@fortawesome/pro-light-svg-icons";
 
 function AddChartOverlay({ kpiData, dashboardId }) {
   const toastContext = useContext(DialogToastContext);
@@ -17,12 +17,13 @@ function AddChartOverlay({ kpiData, dashboardId }) {
     <CenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`KPI Details`}
-      titleIcon={faFileInvoice}
+      titleText={`[${kpiData.name}] Chart Details`}
+      titleIcon={faUserChart}
       showToasts={true}
+      showCloseButton={false}
     >
       <div className={"p-3"}>
-        <KpiInfoView kpiData={kpiData} dashboardId={dashboardId} handleClose={closePanel} />
+        <MarketplaceChartInfoPanel kpiData={kpiData} dashboardId={dashboardId} closePanel={closePanel} />
       </div>
     </CenterOverlayContainer>
   );

@@ -11,6 +11,7 @@ import RegistryToolSummaryCard from "components/common/fields/inventory/Registry
 import toolMetadata from "components/inventory/tools/tool-metadata";
 import axios from "axios";
 import LoadingIcon from "components/common/icons/LoadingIcon";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 function SingleTagUsedInToolsField({ tag, closePanel, className }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -87,7 +88,7 @@ function SingleTagUsedInToolsField({ tag, closePanel, className }) {
 
 
   if (isLoading) {
-    return <div className={"my-2"}><LoadingIcon isLoading={isLoading} />Loading Tool Usage</div>;
+    return <div className={"my-2"}><LoadingDialog size={"md"} message={"Loading Tool Usage"} isLoading={isLoading} /></div>;
   }
 
   if (!isLoading && tag == null) {

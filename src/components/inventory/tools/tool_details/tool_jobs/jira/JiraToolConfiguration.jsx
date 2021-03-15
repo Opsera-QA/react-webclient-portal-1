@@ -27,7 +27,7 @@ function JiraToolConfiguration({ toolData }) {
   const saveJiraToolConfiguration = async () => {
     let newConfiguration = jiraConfigurationDto.getPersistData();
     const vaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}-secretKey`;
-    newConfiguration.vaultSecretKey = await toolsActions.saveKeyPasswordToVault(jiraConfigurationDto, "vaultSecretKey", newConfiguration.vaultSecretKey, vaultKey, getAccessToken);
+    newConfiguration.vaultSecretKey = await toolsActions.saveKeyPasswordToVault(jiraConfigurationDto, "vaultSecretKey", newConfiguration.vaultSecretKey, vaultKey, getAccessToken, toolData.getData("_id"));
     const item = { configuration: newConfiguration };
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
   };

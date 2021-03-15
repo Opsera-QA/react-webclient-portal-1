@@ -78,12 +78,12 @@ dashboardsActions.update = async(dashboardDataDto, getAccessToken) => {
     return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 }
 
-dashboardsActions.updateDashboardV2 = async(dashboardData, getAccessToken) => {
+dashboardsActions.updateDashboardV2 = async(getAccessToken, cancelTokenSource, dashboardData) => {
   const apiUrl = `/analytics/dashboard/${dashboardData.getData('_id')}/update`
   let postData = {
     ...dashboardData.getPersistData()
   }
-  return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
+  return baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
 }
 
 dashboardsActions.updateFavorite = async(rowData, getAccessToken) => {

@@ -1,3 +1,5 @@
+import regexHelpers from "utils/regexHelpers";
+
 const octopusStepFormMetadata = {
     type: "Octopus API Configuration",
     idProperty: "_id",
@@ -91,6 +93,12 @@ const octopusStepFormMetadata = {
       {
         label: "Package ID",
         id: "packageId"
+      },
+      {
+        label: "Physical Path",
+        id: "octopusPhysicalPath",
+        regexValidator: regexHelpers.regexTypes.pathField,
+        maxLength: 100
       }
     ],
     newModelBase:
@@ -114,7 +122,8 @@ const octopusStepFormMetadata = {
         octopusFeedId: "",
         deploymentId : "",
         octopusVersion: "",
-        packageId: ""
+        packageId: "",
+        octopusPhysicalPath: ""
       }
   };
   

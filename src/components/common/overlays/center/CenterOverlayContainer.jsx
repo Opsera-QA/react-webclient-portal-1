@@ -2,8 +2,10 @@ import React, {useContext, useEffect} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import OverlayTitleBar from "components/common/overlays/OverlayTitleBar";
+import CloseButton from "components/common/buttons/CloseButton";
+import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 
-function CenterOverlayContainer({ children, titleText, titleIcon, showPanel, closePanel, isLoading, showToasts}) {
+function CenterOverlayContainer({ children, actionBar, titleText, titleIcon, showPanel, closePanel, isLoading, showToasts, showCloseButton, buttonContainer}) {
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -11,6 +13,20 @@ function CenterOverlayContainer({ children, titleText, titleIcon, showPanel, clo
       toastContext.removeInlineMessage();
     }
   }, [showPanel]);
+
+  const getButtons = () => {
+    if (buttonContainer) {
+      return buttonContainer;
+    }
+
+    if (showCloseButton === true) {
+      return (
+        <SaveButtonContainer>
+          <CloseButton className={"p-3"} size={"sm"} closeEditorCallback={closePanel} showUnsavedChangesMessage={false} />
+        </SaveButtonContainer>
+      );
+    }
+  };
 
   if (!showPanel) {
     return null;
@@ -20,9 +36,13 @@ function CenterOverlayContainer({ children, titleText, titleIcon, showPanel, clo
     <div className={`overlay-panel center-overlay-shadow-background`}>
       <div className="center-overlay content-card-1 bg-white">
         <OverlayTitleBar handleClose={closePanel} isLoading={isLoading} titleText={titleText} titleIcon={titleIcon} />
+        {actionBar}
         <div className="overlay-panel-body">
           {showToasts && toastContext?.getInlineBanner()}
           {children}
+        </div>
+        <div className={"mt-auto"}>
+          {getButtons()}
         </div>
       </div>
     </div>
@@ -36,7 +56,14 @@ CenterOverlayContainer.propTypes = {
   titleIcon: PropTypes.object,
   closePanel: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
-  showToasts: PropTypes.bool
+  showToasts: PropTypes.bool,
+  actionBar: PropTypes.object,
+  showCloseButton: PropTypes.bool,
+  buttonContainer: PropTypes.object
+};
+
+CenterOverlayContainer.defaultProps = {
+  showCloseButton: true
 };
 
 export default CenterOverlayContainer;

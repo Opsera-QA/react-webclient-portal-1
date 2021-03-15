@@ -22,8 +22,8 @@ function DashboardLinkButton({dashboardId, loadDashboardInNewWindow, className, 
   };
 
   return (
-    <Button onClick={() => loadDashboard()} className={className ? className : "mb-2 small"} size={"sm"} variant={variant}>
-      <span className="my-auto"><FontAwesomeIcon icon={faChartNetwork} className="pr-1" fixedWidth/>View Dashboard</span>
+    <Button onClick={() => loadDashboard()} className={className ? className : "mb-2"} size={"sm"} variant={variant}>
+      <span className="my-auto"><FontAwesomeIcon icon={faChartNetwork} className="pr-1" fixedWidth/>View</span>
     </Button>
   );
 }
