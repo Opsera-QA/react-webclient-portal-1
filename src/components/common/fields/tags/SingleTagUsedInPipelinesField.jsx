@@ -12,6 +12,7 @@ import Model from "core/data_model/model";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import axios from "axios";
 import LoadingIcon from "components/common/icons/LoadingIcon";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 function SingleTagUsedInPipelinesField({ tag, closePanel, className }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -87,7 +88,7 @@ function SingleTagUsedInPipelinesField({ tag, closePanel, className }) {
   };
 
   if (isLoading) {
-    return <div className={"my-2"}><LoadingIcon isLoading={isLoading} />Loading Pipeline Usage</div>;
+    return <div className={"my-2"}><LoadingDialog size={"md"} message={"Loading Pipeline Usage"} isLoading={isLoading} /></div>;
   }
 
   if (!isLoading && (tag == null || tag === "")) {

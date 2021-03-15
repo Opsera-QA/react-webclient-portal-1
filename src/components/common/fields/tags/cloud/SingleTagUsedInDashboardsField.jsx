@@ -11,6 +11,7 @@ import axios from "axios";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 import DashboardSummaryCard from "components/common/fields/dashboards/DashboardSummaryCard";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 function SingleTagUsedInDashboardsField({ tag, closePanel, className }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -87,7 +88,7 @@ function SingleTagUsedInDashboardsField({ tag, closePanel, className }) {
 
 
   if (isLoading) {
-    return <div className={"my-2"}><LoadingIcon isLoading={isLoading} />Loading Dashboard Usage</div>;
+    return <div className={"my-2"}><LoadingDialog size={"md"} message={"Loading Dashboard Usage"} isLoading={isLoading} /></div>;
   }
 
   if (!isLoading && tag == null) {
