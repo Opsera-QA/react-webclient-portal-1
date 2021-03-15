@@ -4,7 +4,7 @@ import InlineSearchFilter from "components/common/filters/search/InlineSearchFil
 import FilterButtons from "components/common/filters/buttons/FilterButtons";
 import ViewToggle from "components/common/view/ViewToggle";
 import RefreshButton from "components/common/buttons/data/RefreshButton";
-import FilterTitleBar from "components/common/panels/table_screen_container/FilterTitleBar";
+import FilterTitleBar from "components/common/table/FilterTitleBar";
 import ActiveFilterDisplayer from "components/common/filters/ActiveFilterDisplayer";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 
