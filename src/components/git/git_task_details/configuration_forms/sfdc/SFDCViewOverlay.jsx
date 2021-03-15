@@ -1,10 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from 'react'
 import PropTypes from 'prop-types'
-import KpiInfoView from "components/insights/marketplace/charts/KpiInfoView";
 import axios from "axios";
-import dashboardsActions from "components/insights/dashboards/dashboards-actions";
-import Model from "core/data_model/model";
-import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import {AuthContext} from "contexts/AuthContext";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";

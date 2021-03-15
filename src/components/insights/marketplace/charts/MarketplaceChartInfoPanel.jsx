@@ -16,7 +16,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import MarketplaceDashboardInput from "components/insights/marketplace/charts/MarketplaceDashboardInput";
 
-function KpiInfoView({kpiData, dashboardId, handleClose}) {
+function MarketplaceChartInfoPanel({kpiData, dashboardId, handleClose}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
@@ -211,10 +211,10 @@ function KpiInfoView({kpiData, dashboardId, handleClose}) {
   );
 }
 
-KpiInfoView.propTypes = {
+MarketplaceChartInfoPanel.propTypes = {
   kpiData: PropTypes.object,
   dashboardId: PropTypes.string,
   handleClose: PropTypes.func
 };
 
-export default KpiInfoView;
+export default MarketplaceChartInfoPanel;
