@@ -110,6 +110,8 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "github-recent-merge-requests",
     "github-most-active-contributors",
     "github-pending-merge-requests",
+    "sonar-ratings",
+    "jira-lead-time"
   ];
 
   const getKpiFilters = (filter) => {

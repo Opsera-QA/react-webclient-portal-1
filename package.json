@@ -17,6 +17,7 @@
     "@nivo/legends": "^0.61.1",
     "@nivo/line": "^0.61.1",
     "@nivo/pie": "^0.61.1",
+    "@nivo/scatterplot": "^0.67.0",
     "@okta/okta-auth-js": "^4.7.2",
     "@okta/okta-react": "^4.1.0",
     "@okta/okta-signin-widget": "^5.4.2",
