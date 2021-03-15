@@ -55,17 +55,16 @@ function RegistrationLanding() {
               <div className="row mx-n2 mt-4" style={{ minWidth: "1020px" }}>
                 <div className="col-md px-2 landing-content-module">
                   <div className="h5">Toolchain Automation</div>
-                  <div className="text-muted">Get started in your DevOps journey or experiment with many of our tool
-                    offerings to figure out your next steps.
+                  <div className="text-muted">You choose your tools, we take care of the rest. Put together the perfect CI/CD stack that fits your organization’s goals with zero vendor lock-in.
                   </div>
                 </div>
                 <div className="col-md px-2 landing-content-module">
                   <div className="h5">Declarative Pipelines</div>
-                  <div className="text-muted">Orchestrate workflows across various technologies and platforms.</div>
+                  <div className="text-muted">Pipeline workflows follow a declarative model so you focus on what is required — not how it’s accomplished — including: software builds, security scans, unit testing, and deployments.</div>
                 </div>
                 <div className="col-md px-2 landing-content-module">
                   <div className="h5">Analytics and Intelligence</div>
-                  <div className="text-muted">Get real time observability across your various pipelines.</div>
+                  <div className="text-muted">Comprehensive software delivery analytics across your CI/CD process in a unified view — including Lead Time, Change Failure Rate, Deployment Frequency, and Time to Restore.</div>
                 </div>
               </div>
 

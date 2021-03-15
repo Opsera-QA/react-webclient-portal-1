@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
-import { Row, Col, Badge } from "react-bootstrap";
+import { Row, Col, Badge, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import FreeTrialLandingView from "../free_trial/landing_page/Landing";
 import LoadingView from "../common/status_notifications/loading";
@@ -14,7 +14,13 @@ function OverviewLanding() {
   const [accessRoleData, setAccessRoleData] = useState();
   const [summaryStats, setSummaryStats] = useState([]);
   const history = useHistory();
-  const { getAccessToken, getUserRecord, setAccessRoles, featureFlagHideItemInProd, featureFlagHideItemInTest } = contextType;
+  const {
+    getAccessToken,
+    getUserRecord,
+    setAccessRoles,
+    featureFlagHideItemInProd,
+    featureFlagHideItemInTest,
+  } = contextType;
   let userAccess = {};
 
   useEffect(() => {
@@ -95,136 +101,135 @@ function OverviewLanding() {
     return (<FreeTrialLandingView/>);
   }
 
-    return (
-      <>
-        <div className="mt-3 ml-5 max-content-width">
-          <Row>
-            <Col xl="12">
-              <div className="max-content-width">
-                <div className="alternate-tabs text-right">
-                  <ul className="nav nav-tabs mb-2">
-                    {
-                      summaryStats &&
-                      summaryStats.map(function(item, index) {
-                        return (
-                          <li className="nav-item" key={index}>
-                            <a className={"nav-link"} href="#" onClick={handleTabClick(index)}>{item.name}: {item.value}</a>
-                          </li>
-                        );
-                      })
-                    }
-                  </ul>
-                </div>
+  return (
+    <>
+      <div className="mt-3 ml-5 max-content-width">
 
-                <div className="h4 text-color mb-3">Welcome
-                  back {userInfo && userInfo.firstName ? userInfo.firstName : null}!
-                </div>
-                <Row className={"mb-3 mx-1"}>
-                  {!featureFlagHideItemInProd() && !featureFlagHideItemInTest() && <MyTagCloud />}
-                </Row>
+        <div className="max-content-width">
+          <div className="alternate-tabs text-right">
+            <ul className="nav nav-tabs mb-2">
+              {
+                summaryStats &&
+                summaryStats.map(function(item, index) {
+                  return (
+                    <li className="nav-item" key={index}>
+                      <a className={"nav-link"} href="#"
+                         onClick={handleTabClick(index)}>{item.name}: {item.value}</a>
+                    </li>
+                  );
+                })
+              }
+            </ul>
+          </div>
 
-                <div className="row mx-n2 mt-3">
-                  <div className="col-md px-2 landing-content-module">
-                    <img
-                      alt="Toolchain Automation"
-                      src="/img/platform.png"
-                      width="195"
-                      height="225"
-                      className="d-inline-block align-top pointer"
-                      onClick={() => {
-                        loadPlatforms();
-                      }}
-                    />
-                  </div>
-                  <div className="col-md px-2 landing-content-module">
-                    <img
-                      alt="Declarative Pipelines"
-                      src="/img/pipeline.png"
-                      width="195"
-                      height="225"
-                      className="d-inline-block align-top pointer"
-                      onClick={() => {
-                        loadPipelines();
-                      }}
-                    />
-                  </div>
-                  <div className="col-md px-2 landing-content-module">
-                    <img
-                      alt="Insights"
-                      src="/img/analytics.png"
-                      width="195"
-                      height="225"
-                      className="d-inline-block align-top pointer"
-                      onClick={() => {
-                        loadAnalytics();
-                      }}
-                    />
-                  </div>
-                </div>
-                <div className="row mx-n2 mt-4">
-                  <div className="col-md px-2 landing-content-module">
-                    <div className="h5 text-color">Toolchain Automation</div>
-                    <div className="text-muted pr-2">
-                      Get started in your DevOps journey with new tools or experiment with many of our tool offerings to
-                      figure out your next steps.
-                    </div>
-                  </div>
-                  <div className="col-md px-2 landing-content-module">
-                    <div className="h5 text-color">
-                      Declarative Pipelines
-                      {statsData.pendingPipelines && statsData.pendingPipelines.length > 0 && (
-                        <Badge variant="danger" className="ml-1">
-                          New
-                        </Badge>
-                      )}
-                    </div>
+          <div className="h4 text-color mb-3">Welcome
+            back {userInfo && userInfo.firstName ? userInfo.firstName : null}!
+          </div>
+          <div className={"mb-3 mx-1"}>
+            {!featureFlagHideItemInProd() && !featureFlagHideItemInTest() && <MyTagCloud/>}
+          </div>
 
-                    {statsData.pendingPipelines && statsData.pendingPipelines.length > 0 ? (
-                      <div className="mt-1">
-                        {statsData.pendingPipelines.map((item, key) => (
-                          <div
-                            className="h6 pointer"
-                            key={key}
-                            onClick={() => {
-                              loadPipelines(item._id);
-                            }}
-                          >
-                            {item.name}
-                            <Badge variant="warning" className="ml-1" size="sm">
-                              Approval Required
-                            </Badge>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <div className="text-muted pr-2">
-                        Orchestrate workflows across various technologies and platforms.
-                      </div>
-                    )}
-                  </div>
-                  <div className="col-md px-2 landing-content-module">
-                    <div className="h5 text-color">Insights</div>
-                    <div className="text-muted pr-2">Get real time observability across your various pipelines.</div>
-                  </div>
-                </div>
+          <hr/>
 
+          <div className="row mx-n2 mt-3">
+            <div className="col-md px-2 landing-content-module">
+              <img
+                alt="Toolchain Automation"
+                src="/img/platform.png"
+                width="195"
+                height="225"
+                className="d-inline-block align-top pointer"
+                onClick={() => {
+                  loadPlatforms();
+                }}
+              />
+            </div>
+            <div className="col-md px-2 landing-content-module">
+              <img
+                alt="Declarative Pipelines"
+                src="/img/pipeline.png"
+                width="195"
+                height="225"
+                className="d-inline-block align-top pointer"
+                onClick={() => {
+                  loadPipelines();
+                }}
+              />
+            </div>
+            <div className="col-md px-2 landing-content-module">
+              <img
+                alt="Insights"
+                src="/img/analytics.png"
+                width="195"
+                height="225"
+                className="d-inline-block align-top pointer"
+                onClick={() => {
+                  loadAnalytics();
+                }}
+              />
+            </div>
+          </div>
+          <div className="row mx-n2 mt-4">
+            <div className="col-md px-2 landing-content-module">
+              <div className="h5 text-color">Toolchain Automation</div>
+              <div className="text-muted pr-2">
+                You choose your tools, we take care of the rest. Put together the perfect CI/CD stack that fits your
+                organization’s goals with zero vendor lock-in.
               </div>
-            </Col>
-          </Row>
-          <Row>
-            <Col xl="12" className="pt-4">
-              <hr style={{ width: "820px", textAlign: "left", marginLeft: "0" }}/>
-            </Col>
-          </Row>
-          <Row>
-            <Col xl="12" className="pt-2">
-              <div className="h5 text-color">Need help?</div>
-              <div className="h6 mt-1">Send an email to support@opsera.io</div>
-            </Col>
-          </Row>
+            </div>
+            <div className="col-md px-2 landing-content-module">
+              <div className="h5 text-color">
+                Declarative Pipelines
+                {statsData.pendingPipelines && statsData.pendingPipelines.length > 0 && (
+                  <Badge variant="danger" className="ml-1" style={{ fontSize: "small" }}>
+                    New Pipeline Alerts
+                  </Badge>
+                )}
+              </div>
+              <div className="text-muted pr-2">
+                Pipeline workflows follow a declarative model so you focus on what is required — not how it’s
+                accomplished — including: software builds, security scans, unit testing, and deployments.
+              </div>
+
+              {statsData.pendingPipelines && statsData.pendingPipelines.length > 0 && (
+                <div className="mt-2">
+                  {statsData.pendingPipelines.map((item, key) => (
+                    <div key={key} className={"my-1"}>
+                      <Button
+                        variant="outline-secondary" size="sm"
+                        style={{ minWidth: "125px" }}
+                        onClick={() => {
+                          loadPipelines(item._id);
+                        }}
+                      >
+                        {item.name.substring(0, 20)}
+                      </Button>
+                      <Badge variant="warning" className="ml-1" size="sm">
+                        Approval
+                      </Badge>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+            <div className="col-md px-2 landing-content-module">
+              <div className="h5 text-color">Insights</div>
+              <div className="text-muted pr-2">
+                Comprehensive software delivery analytics across your CI/CD process in a unified view — including Lead
+                Time, Change Failure Rate, Deployment Frequency, and Time to Restore.
+              </div>
+            </div>
+          </div>
+
         </div>
-      </>
-    );
+        <hr/>
+
+        <div className="h5 text-color">Need help?</div>
+        <div className="h6 mt-1 mb-5">Send an email to support@opsera.io</div>
+
+      </div>
+    </>
+  );
 }
 
 export default OverviewLanding;

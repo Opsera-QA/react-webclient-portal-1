@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
+import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle, faTag} from "@fortawesome/pro-light-svg-icons";
 import {AuthContext} from "contexts/AuthContext";
@@ -132,7 +133,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
 
   const getBody = () => {
     if (isLoading) {
-      return (<div><LoadingIcon isLoading={isLoading} />Loading tag subscriptions</div>);
+      return (<div><LoadingIcon isLoading={isLoading} />Loading subscriptions</div>);
     }
 
     if (Array.isArray(tags) && tags.length > 0) {
@@ -153,11 +154,12 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
     }
   };
 
+  /*<div className={"mt-2 btn btn-sm btn-outline-secondary"} onClick={() => {showTagSubscriptionManager()}}>Manage Tag Subscriptions</div>*/
   return (
     <div className={className}>
-      <div className="mb-3 item-field">
+      <div className="mb-1 item-field">
         {getBody()}
-        {!isLoading && <div className={"mt-2 btn btn-sm btn-outline-secondary"} onClick={() => {showTagSubscriptionManager()}}>Manage Tag Subscriptions</div>}
+        {!isLoading && <Button variant="outline-secondary" size="sm" onClick={() => {showTagSubscriptionManager()}}>Manage Tag Subscriptions</Button> }
       </div>
     </div>
   );
