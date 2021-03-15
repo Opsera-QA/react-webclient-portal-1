@@ -343,7 +343,7 @@ function ToastContextProvider ({ children, navBar }) {
     addOverlayPanel(overlayPanel)
   };
 
-  const showInlineErrorMessage = (type, error) => {
+  const showInlineErrorMessage = (error) => {
     let id = generateUUID();
     let inlineErrorBanner = getInlineErrorBanner(error, id);
     setInlineMessage(inlineErrorBanner, id, notificationTypes.FORM);
