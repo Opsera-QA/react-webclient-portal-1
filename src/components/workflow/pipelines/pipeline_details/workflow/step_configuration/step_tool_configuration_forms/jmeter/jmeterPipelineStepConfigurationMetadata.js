@@ -14,7 +14,7 @@ const jmeterPipelineStepConfigurationMetadata = {
     {
       label: "Job Name",
       id: "jobName",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Jenkins Job",
