@@ -37,8 +37,6 @@ const accountRegistrationMetadata = {
     {
       label: "Company",
       id: "company",
-      regexValidator: regexHelpers.regexTypes.nameField,
-      maxLength: 50
     },
     {
       label: "Organization Account",
