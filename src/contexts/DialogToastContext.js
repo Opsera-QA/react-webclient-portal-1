@@ -343,6 +343,12 @@ function ToastContextProvider ({ children, navBar }) {
     addOverlayPanel(overlayPanel)
   };
 
+  const showInlineErrorMessage = (type, error) => {
+    let id = generateUUID();
+    let inlineErrorBanner = getInlineErrorBanner(error, id);
+    setInlineMessage(inlineErrorBanner, id, notificationTypes.FORM);
+  }
+
   const getSuccessBanner = (message, id) => {
     return <SuccessBanner successMessage={message} removeBanner={removeBannerMessage} id={id} />
   };
@@ -451,6 +457,7 @@ function ToastContextProvider ({ children, navBar }) {
           showFormErrorToast: showFormErrorToast,
 
           //Inline Errors
+          showInlineErrorMessage: showInlineErrorMessage,
           showInlineUpdateFailureMessage: showInlineUpdateFailureMessage,
 
           // TODO: Remove when everything is using the banner ones.
