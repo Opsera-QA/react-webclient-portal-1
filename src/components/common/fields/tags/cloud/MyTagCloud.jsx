@@ -159,7 +159,8 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
     <div className={className}>
       <div className="mb-1 item-field">
         {getBody()}
-        {!isLoading && <Button variant="outline-secondary" size="sm" onClick={() => {showTagSubscriptionManager()}}>Manage Tag Subscriptions</Button> }
+        {!isLoading && <Button variant="outline-secondary" size="sm" onClick={() => {showTagSubscriptionManager()}}>
+          <FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/> Tag Subscriptions</Button> }
       </div>
     </div>
   );
