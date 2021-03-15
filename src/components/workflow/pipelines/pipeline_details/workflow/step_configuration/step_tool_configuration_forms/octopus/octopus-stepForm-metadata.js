@@ -97,7 +97,8 @@ const octopusStepFormMetadata = {
       {
         label: "Physical Path",
         id: "octopusPhysicalPath",
-        regexValidator: regexHelpers.regexTypes.pathField
+        regexValidator: regexHelpers.regexTypes.pathField,
+        maxLength: 100
       }
     ],
     newModelBase:
