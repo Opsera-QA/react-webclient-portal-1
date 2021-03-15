@@ -12,6 +12,10 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import MarketplaceDashboardInput from "components/insights/marketplace/charts/MarketplaceDashboardInput";
 import AddToDashboardButton from "components/common/buttons/dashboards/AddToDashboardButton";
+import CustomBadge from "components/common/badges/CustomBadge";
+import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
+import {faWrench} from "@fortawesome/pro-light-svg-icons";
+import CancelButton from "components/common/buttons/CancelButton";
 
 function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -75,7 +79,7 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
   const getImageField = () => {
     if (kpiData?.thumbnailPath) {
       return (
-        <div className="mt-3 px-2">
+        <div className="my-2 px-2">
           <Image src={kpiData.thumbnailPath} className="kpi-image"/>
         </div>
       );
@@ -93,28 +97,28 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
   };
 
   const getToolsField = () => {
-    if (kpiData.tools?.length > 1) {
+    if (kpiData.tools?.length > 0) {
       return (
-        <div className={"py-2"}>
-          <ul className="tags">
-            {kpiData.tools.map((tool, idx)=>{
-              return ( <li key={idx}><span className="tag">{tool}</span></li> )
+        <div className={"my-2"}>
+          <CustomBadgeContainer>
+            {kpiData.tools.map((tool, index)=>{
+              return (<CustomBadge key={index} icon={faWrench} badgeText={tool} />);
             })}
-          </ul>
+          </CustomBadgeContainer>
         </div>
       );
     }
   };
 
   const getCategoriesField = () => {
-    if (kpiData.category?.length > 1) {
+    if (kpiData.category?.length > 0) {
       return (
         <div className={"py-2"}>
-          <ul className="tags">
-            {kpiData.category.map((category, idx)=>{
-              return ( <li key={idx}><span className="tag">{category}</span></li> )
+          <CustomBadgeContainer>
+            {kpiData.category.map((category, index)=>{
+              return (<CustomBadge key={index} icon={faWrench} badgeText={category} />);
             })}
-          </ul>
+          </CustomBadgeContainer>
         </div>
       );
     }
@@ -130,8 +134,10 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
 
   return (
     <div>
-      <div className="h5">{kpiData.name}</div>
-      <small className="text-muted">Last updated {formatDistanceToNowStrict(new Date(kpiData.updatedAt))} ago.</small>
+      <div className={"d-flex justify-content-between"}>
+        <div className="h5">{kpiData.name}</div>
+        <small className="text-muted">Last updated {formatDistanceToNowStrict(new Date(kpiData.updatedAt))} ago.</small>
+      </div>
       <div className="mx-3">
         {getImageField()}
         {getDescriptionField()}
@@ -139,7 +145,7 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
         {getCategoriesField()}
       </div>
 
-      <div className="flex-container-bottom pr-2 mt-4 mb-2">
+      <div className="mt-3">
         <Row className={"d-flex"}>
           <Col md={12} className="py-1">
             <MarketplaceDashboardInput setDataObject={setSelectedDashboardData} dataObject={selectedDashboardData}/>
@@ -147,6 +153,7 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
         </Row>
         <SaveButtonContainer>
           <div className="ml-auto">
+            <CancelButton cancelFunction={closePanel} size={"sm"} />
             <AddToDashboardButton closePanel={closePanel} kpiData={kpiData} selectedDashboardData={selectedDashboardData} />
           </div>
         </SaveButtonContainer>
