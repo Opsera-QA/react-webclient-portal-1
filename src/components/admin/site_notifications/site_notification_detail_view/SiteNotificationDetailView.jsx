@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { useParams } from "react-router-dom";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -10,7 +10,9 @@ import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarD
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import SiteNotificationDetailPanel
   from "components/admin/site_notifications/site_notification_detail_view/SiteNotificationDetailPanel";
+import { meetsRequirements, ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import Model from "core/data_model/model";
+import axios from "axios"
 
 function SiteNotificationDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -19,46 +21,67 @@ function SiteNotificationDetailView() {
   const [siteNotificationData, setSiteNotificationData] = useState(undefined);
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
-  }, []);
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
 
-  const loadData = async () => {
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  },[]);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles();
-    }
-    catch (error) {
-      if (!error?.error?.message?.includes(404)) {
+      await getRoles(cancelSource);
+    } catch (error) {
+      if (isMounted?.current === true && !error?.error?.message?.includes(404)) {
         toastContext.showLoadingErrorDialog(error);
         console.error(error);
       }
-    }
-    finally {
-      setIsLoading(false);
+    } finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
-  const getSiteNotification = async () => {
-    const response = await siteNotificationActions.getSiteNotification(id, getAccessToken);
+  const getSiteNotification = async (cancelSource = cancelTokenSource) => {
+    const response = await siteNotificationActions.getSiteNotificationV2(id, getAccessToken, cancelSource);
 
-    if (response?.data) {
+    if (isMounted?.current === true && response?.data) {
       setSiteNotificationData(new Model(response.data, siteNotificationMetadata, false));
     }
   };
 
-  const getRoles = async () => {
+  const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
-    if (userRoleAccess) {
+    if (isMounted.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      if (userRoleAccess?.OpseraAdministrator) {
-        await getSiteNotification();
+      if (meetsRequirements(ROLE_LEVELS.OPSERA_ADMINISTRATORS, userRoleAccess) && id) {
+        await getSiteNotification(cancelSource);
       }
     }
   };
+
+  
 
   const getActionBar = () => {
     if (siteNotificationData != null) {
@@ -68,7 +91,9 @@ function SiteNotificationDetailView() {
             <ActionBarBackButton path={"/admin/site-notifications"}/>
           </div>
           <div>
+          {meetsRequirements(ROLE_LEVELS.OPSERA_ADMINISTRATORS, accessRoleData) && (
             <ActionBarDeleteButton2 dataObject={siteNotificationData} relocationPath={"/admin/site-notifications"} handleDelete={handleDelete}/>
+          )}
           </div>
         </ActionBarContainer>
       );
@@ -81,13 +106,14 @@ function SiteNotificationDetailView() {
 
   return (
     <DetailScreenContainer
+      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       breadcrumbDestination={"siteNotificationDetailView"}
-      accessDenied={!accessRoleData?.OpseraAdministrator}
+      accessRoleData={accessRoleData}
       metadata={siteNotificationMetadata}
       dataObject={siteNotificationData}
       isLoading={isLoading}
       actionBar={getActionBar()}
-      detailPanel={<SiteNotificationDetailPanel setSiteNotificationData={setSiteNotificationData} siteNotificationData={siteNotificationData} />}
+      detailPanel={<SiteNotificationDetailPanel setSiteNotificationData={setSiteNotificationData} siteNotificationData={siteNotificationData} accessRoleData={accessRoleData} />}
     />
   );
 }

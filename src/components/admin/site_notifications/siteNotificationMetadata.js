@@ -1,3 +1,5 @@
+import regexHelpers from "utils/regexHelpers";
+
 const siteNotificationMetadata = {
   idProperty: "_id",
   type: "Site Notification",
@@ -11,7 +13,8 @@ const siteNotificationMetadata = {
     },
     {
       label: "Header",
-      id: "header"
+      id: "header",
+      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
     },
     {
       label: "View",
@@ -20,7 +23,8 @@ const siteNotificationMetadata = {
     {
       label: "Message",
       id: "message",
-      maxLength: 250
+      maxLength: 250,
+      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
     },
     {
       label: "FQDN Link",

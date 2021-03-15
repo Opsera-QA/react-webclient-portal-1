@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from "react";
+import React, {useState, useContext, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Row from "react-bootstrap/Row";
@@ -12,28 +12,50 @@ import SiteNotificationViewInput
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import siteNotificationActions from "components/admin/site_notifications/site-notification-actions";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
+import axios from "axios"
 
-function SiteNotificationEditorPanel({ siteNotificationData, setSiteNotificationData, handleClose }) {
+function SiteNotificationEditorPanel({ siteNotificationData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [siteNotificationDto, setSiteNotificationDto] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
   const loadData = async () => {
-    setIsLoading(true);
-    setSiteNotificationDto(siteNotificationData);
-    setIsLoading(false);
+    if(isMounted?.current === true){
+      setIsLoading(true);
+      setSiteNotificationDto(siteNotificationData);
+      setIsLoading(false);
+    }
   };
 
   const createSiteNotification = async () => {
-    return await siteNotificationActions.createSiteNotification(siteNotificationDto, getAccessToken);
+    return await siteNotificationActions.createSiteNotificationV2(siteNotificationDto, getAccessToken, cancelTokenSource);
   };
 
   const updateSiteNotification = async () => {
-    return await siteNotificationActions.updateSiteNotification(siteNotificationDto, getAccessToken);
+    return await siteNotificationActions.updateSiteNotificationV2(siteNotificationDto, getAccessToken, cancelTokenSource);
   };
 
   if (siteNotificationDto == null) {
@@ -42,6 +64,7 @@ function SiteNotificationEditorPanel({ siteNotificationData, setSiteNotification
 
   return (
     <EditorPanelContainer
+      isLoading={isLoading}
       recordDto={siteNotificationDto}
       handleClose={handleClose}
       setRecordDto={setSiteNotificationDto}
