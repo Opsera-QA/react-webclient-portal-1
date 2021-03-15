@@ -39,6 +39,9 @@ function OctopusPipelineStepConfigurationSummaryPanel({ octopusPipelineDataObjec
         <Col lg={6}>
           <DtoTextField dataObject={octopusPipelineDataObject} fieldName={"environmentId"}/>
         </Col>
+        <Col lg={6}>
+          <DtoTextField dataObject={octopusPipelineDataObject} fieldName={"octopusPhysicalPath"}/>
+        </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
   );
