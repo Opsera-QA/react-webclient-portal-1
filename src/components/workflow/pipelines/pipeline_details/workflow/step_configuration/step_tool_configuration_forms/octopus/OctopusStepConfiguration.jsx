@@ -246,6 +246,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                 />
               </>
             )}
+            <TextInputBase dataObject={octopusStepConfigurationDto} setDataObject={setOctopusStepConfigurationDataDto} fieldName={"octopusPhysicalPath"} />
           <Row className="mx-1 py-2">
             <SaveButtonBase
               recordDto={octopusStepConfigurationDto}
