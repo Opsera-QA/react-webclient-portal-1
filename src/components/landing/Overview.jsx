@@ -197,7 +197,7 @@ function OverviewLanding() {
                     <div key={key} className={"my-1"}>
                       <Button
                         variant="outline-secondary" size="sm"
-                        style={{ minWidth: "125px" }}
+                        style={{ minWidth: "175px" }}
                         onClick={() => {
                           loadPipelines(item._id);
                         }}
