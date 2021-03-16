@@ -27,7 +27,6 @@ function LdapOrganizationAccountDetailView() {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -76,15 +75,13 @@ function LdapOrganizationAccountDetailView() {
       setCurrentUser(user);
       setAccessRoleData(userRoleAccess);
 
-      if (organizationName == null || (!userRoleAccess?.OpseraAdministrator && ldap?.domain !== organizationDomain)) {
-        history.push(`/admin/organization-accounts/${organizationDomain}/details/`);
-      }
+      if (userRoleAccess?.OpseraAdministrator) {
+        let authorizedActions = await accountsActions.getAllowedOrganizationAccountActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
+        setAuthorizedActions(authorizedActions);
 
-      let authorizedActions = await accountsActions.getAllowedOrganizationAccountActions(userRoleAccess, ldap.organization, getUserRecord, getAccessToken);
-      setAuthorizedActions(authorizedActions);
-
-      if (authorizedActions?.includes("get_organization_account_details")) {
-        await loadOrganizationAccount(cancelSource);
+        if (authorizedActions?.includes("get_organization_account_details")) {
+          await loadOrganizationAccount(cancelSource);
+        }
       }
     }
   };
@@ -112,7 +109,7 @@ function LdapOrganizationAccountDetailView() {
     <DetailScreenContainer
       breadcrumbDestination={"ldapOrganizationAccountDetailView"}
       accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
+      roleRequirement={ROLE_LEVELS.OPSERA_ADMINISTRATORS}
       metadata={ldapOrganizationAccountMetaData}
       dataObject={ldapOrganizationAccountData}
       isLoading={isLoading}
