@@ -122,9 +122,10 @@ function MaintainabilityLineChart({ persona, date }) {
               tooltip={({ point, color }) => (
                 <div
                   style={{
-                    background: "white",
-                    padding: "9px 12px",
-                    border: "1px solid #ccc",
+                    // background: "white",
+                    // padding: "9px 12px",
+                    // border: "1px solid #ccc",
+                    color: 'red'
                   }}
                 >
                   <strong style={{ color }}> Number of Deployments: </strong> {point.data.y}
