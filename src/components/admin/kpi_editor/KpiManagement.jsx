@@ -64,14 +64,12 @@ function KpiManagement() {
   const getKpis = async (filterDto = kpiFilterDto, cancelSource = cancelTokenSource) => {
     const response = await KpiActions.getKpisV2(getAccessToken, cancelSource, filterDto);
 
-    if (isMounted?.current === true && response?.data) {
-      response.data.data.forEach(kpi => kpi.description = truncateString(kpi.description, 100));
+    if (isMounted?.current === true && response?.data?.data) {
       setKpiList(response.data.data);
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.count);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
       setKpiFilterDto({ ...newFilterDto });
-      console.log(response.data.data)
     }
   };
 
