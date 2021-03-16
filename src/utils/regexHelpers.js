@@ -35,6 +35,9 @@ regexHelpers.regexTypes = {
 
   // Letters, numbers, dashes, and periods allowed
   domainNameField: /^[A-Za-z0-9\-.]*$/,
+
+  //Mongo ID
+  mongoId: /^[0-9a-fA-F]{24}$/,
 };
 
 export default regexHelpers;

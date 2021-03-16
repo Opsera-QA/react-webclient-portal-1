@@ -80,7 +80,7 @@ export const fieldValidation = (value, data, field) => {
     errorMessages.push(`${data.getLabel(field.id)} and ${data.getLabel(field.matchField)} must match.`);
   }
 
-  if (field.regexValidator != null && !matchesRegex(field.regexValidator, value))
+  if (field.regexValidator != null && value !== "" && !matchesRegex(field.regexValidator, value))
   {
     errorMessages.push("Does not meet field requirements.");
   }
