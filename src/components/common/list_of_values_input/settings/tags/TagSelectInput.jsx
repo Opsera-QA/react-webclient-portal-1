@@ -1,101 +1,151 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationCircle} from "@fortawesome/free-solid-svg-icons";
-import {Link} from "react-router-dom";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { Multiselect } from 'react-widgets'
 import {AuthContext} from "contexts/AuthContext";
+import axios from "axios";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
-import {faTag} from "@fortawesome/pro-light-svg-icons";
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import InputContainer from "components/common/inputs/InputContainer";
+import InputLabel from "components/common/inputs/info_text/InputLabel";
+import InfoText from "components/common/inputs/info_text/InfoText";
 
-function TagSelectInput({ fieldName, dataObject, setDataObject, setDataFunction, disabled, textField, valueField}) {
-  const toastContext = useContext(DialogToastContext);
+function TagSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction, showLabel, className}) {
   const { getAccessToken } = useContext(AuthContext);
-  const [tags, setTags] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [field] = useState(dataObject.getFieldById(fieldName));
+  const [tagOptions, setTagOptions] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      setIsLoading(true)
-      await loadTags();
+      setIsLoading(true);
+      await getTags(cancelSource);
+      await removeOldTags();
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        setErrorMessage("Could not load tags.");
+        console.error(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
-  const loadTags = async () => {
-    const response = await adminTagsActions.getAllTags(getAccessToken);
-    setTags(response?.data?.data);
+  const getTags = async (cancelSource = cancelTokenSource) => {
+    const response = await adminTagsActions.getAllTagsV2(getAccessToken, cancelSource);
+    let tags = response?.data?.data;
+
+    if (isMounted?.current === true && Array.isArray(tags) && tags.length > 0) {
+      loadTagOptions(tags);
+    }
   };
 
-  const getInfoText = () => {
-    if (dataObject.getData(fieldName) !== "") {
-      return (
-        <Link to={`/settings/tags/${dataObject.getData(fieldName)}`}>
-          <span><FontAwesomeIcon icon={faTag} className="pr-1" />View Or Edit this Tag's settings</span>
-        </Link>
-      );
+  const removeOldTags = async () => {
+    let newTags = [];
+
+    dataObject.getArrayData(fieldName).map((tag, index) => {
+      if (tag["type"] != null && tag["type"] !== "" && tag["value"] != null && tag["value"] !== "")
+      {
+        let tagOption = {type: tag["type"], value: tag["value"]};
+        newTags.push(tagOption);
+      }
+    });
+    let newDataObject = dataObject;
+    newDataObject.setData(fieldName, newTags);
+
+    if (isMounted?.current === true) {
+      setDataObject({...newDataObject});
+    }
+  }
+
+  const loadTagOptions = (tags) => {
+    let currentOptions = [];
+
+    tags.map((tag, index) => {
+      let tagOption = {type: tag["type"], value: tag["value"]};
+      currentOptions.push(tagOption);
+    });
+
+    if (isMounted?.current === true) {
+      setTagOptions(currentOptions);
+    }
+  }
+
+  const validateAndSetData = (fieldName, value) => {
+    let newDataObject = dataObject;
+    newDataObject.setData(fieldName, value);
+
+    if (isMounted?.current === true) {
+      setDataObject({...newDataObject});
+    }
+  };
+
+  const getPlaceholderText = () => {
+    if (errorMessage) {
+      return errorMessage;
     }
 
-    return <span>Select a tag to get started.</span>
+    return "Select Tag"
   };
 
-  if (!isLoading && (tags == null || tags.length === 0)) {
-    return (
-      <div className="form-text text-muted p-2">
-        <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
-        No tags have been registered.
-        Please go to
-        <Link to="/settings/tags">Tags</Link> and add an entry for this repository in order to
-        proceed.
-      </div>
-    )
+  if (field == null) {
+    return null;
   }
 
   return (
-    <div>
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        setDataFunction={setDataFunction}
-        selectOptions={tags}
-        busy={isLoading}
-        valueField={valueField}
-        textField={(tag) => {`${tag["type"]}: ${tag["value"]}`}}
+    <InputContainer>
+      <InputLabel field={field} />
+      <Multiselect
+        data={[...tagOptions]}
+        textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + data["value"]}
+        filter={"contains"}
         groupBy={"type"}
-        // placeholderText={placeholderText}
+        busy={isLoading}
+        value={[...dataObject?.getArrayData(fieldName)]}
+        placeholder={getPlaceholderText()}
         disabled={disabled || isLoading}
+        onChange={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
       />
-      <small className="text-muted ml-3">
-        {getInfoText()}
-      </small>
-    </div>
+      <InfoText field={field} errorMessage={errorMessage} />
+    </InputContainer>
   );
 }
 
 TagSelectInput.propTypes = {
+  setDataObject: PropTypes.func,
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
   setDataFunction: PropTypes.func,
+  showLabel: PropTypes.bool,
   disabled: PropTypes.bool,
-  textField: PropTypes.string,
-  valueField: PropTypes.string
-};
-
-TagSelectInput.defaultProps = {
-  valueField: "_id",
-  textField: "name"
+  className: PropTypes.string
 };
 
 export default TagSelectInput;
