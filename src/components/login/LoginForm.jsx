@@ -191,7 +191,7 @@ const LoginForm = ({ authClient }) => {
       setMessage(false);
       setErrorMessage(false);
 
-      if (response.data) { //valid account so allow it to continue login
+      if (response.data?.loginAllowed) { //valid account so allow it to continue login
         setUsername(lookupAccountEmail);
         setViewType("login");
         return;
