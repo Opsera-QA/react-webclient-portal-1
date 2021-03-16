@@ -68,7 +68,9 @@ function LdapOrganizationAccountSummaryPanel({ ldapOrganizationAccountData, setA
         <Col lg={6}>
           <BooleanField fieldName={"oAuthEnabled"} dataObject={ldapOrganizationAccountData}/>
         </Col>
-        <Col lg={6}/>
+        <Col lg={6}>
+          <TextFieldBase dataObject={ldapOrganizationAccountData} fieldName={"idpBaseUrl"}/>
+        </Col>
         <Col lg={6}>
           {getUrlString()}
         </Col>

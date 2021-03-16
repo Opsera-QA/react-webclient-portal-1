@@ -32,6 +32,9 @@ regexHelpers.regexTypes = {
 
   // Letters, numbers, dashes, slashes, underscores, and periods allowed
   pathField: /^[A-Za-z0-9\-_./\\]*$/,
+
+  // Letters, numbers, dashes, and periods allowed
+  domainNameField: /^[A-Za-z0-9\-.]*$/,
 };
 
 export default regexHelpers;
