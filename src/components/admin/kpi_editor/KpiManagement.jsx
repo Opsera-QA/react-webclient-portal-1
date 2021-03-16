@@ -7,7 +7,6 @@ import kpiFilterMetadata from "components/admin/kpi_editor/kpi-filter-metadata";
 import KpiTable from "components/admin/kpi_editor/KpiTable";
 import KpiActions from "components/admin/kpi_editor/kpi-editor-actions";
 import { meetsRequirements, ROLE_LEVELS } from "components/common/helpers/role-helpers";
-import {truncateString} from "components/common/helpers/string-helpers"
 import axios from "axios";
 
 
