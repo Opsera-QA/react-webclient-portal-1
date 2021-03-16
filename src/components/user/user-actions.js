@@ -22,8 +22,8 @@ userActions.isEmailAvailable = async (emailAddress) => {
   return await apiCall
     .post()
     .then(function (response) {
-      if (response.data) {
-        return false;
+      if (response.data?.loginAllowed === true) {
+        return false; //cannot create new account beacuse this account is already enabled
       } else {
         return true;
       }

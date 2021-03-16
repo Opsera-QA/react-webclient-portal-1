@@ -4,6 +4,7 @@ import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import kpiMetaData from "components/admin/kpi_editor/kpi-metadata";
 import {
+  getLimitedTableTextColumn,
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn,
@@ -23,7 +24,7 @@ function KpiTable({ data, loadData, isLoading, kpiFilterDto, setKpiFilterDto, is
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "description")),
+      getLimitedTableTextColumn(getField(fields, "description"), 100),
       getTableBooleanIconColumn(getField(fields, "active")),
       getTableDateColumn(getField(fields, "createdAt")),
     ],

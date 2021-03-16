@@ -8,13 +8,12 @@ import AccessDeniedDialog from "components/common/status_notifications/accessDen
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import axios from "axios"
-import { truncateString } from "components/common/helpers/string-helpers";
 
 function SiteNotificationManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [siteNotifications, setSiteNotifications] = useState(undefined);
+  const [siteNotifications, setSiteNotifications] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -58,10 +57,9 @@ function SiteNotificationManagement() {
 
   const getSiteNotifications = async (cancelSource = cancelTokenSource) => {
     const response = await siteNotificationActions.getSiteNotifications(getAccessToken, cancelSource);
-    if (response.data){
-      response.data.forEach(notification => notification.message = truncateString(notification.message,100));
+    if (response?.data){
+      setSiteNotifications(response?.data);
     }
-    setSiteNotifications(response?.data);
   };
 
   const getRoles = async (cancelSource = cancelTokenSource) => {

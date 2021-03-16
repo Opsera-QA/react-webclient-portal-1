@@ -20,6 +20,7 @@ import dashboardsActions from "components/insights/dashboards/dashboards-actions
 import {Button} from "react-bootstrap";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date-helpers";
+import {truncateString} from "components/common/helpers/string-helpers";
 
 const getTableHeader = (field) => {
   return field["label"];
@@ -49,6 +50,17 @@ export const getTableTextColumn = (field, className) => {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     class: className ? className : undefined
+  };
+};
+
+export const getLimitedTableTextColumn = (field, maxLength, className) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    class: className ? className : undefined,
+    Cell: (props) => {
+      return props.value ? truncateString(props.value, maxLength) : "";
+    },
   };
 };
 

@@ -191,14 +191,14 @@ const LoginForm = ({ authClient }) => {
       setMessage(false);
       setErrorMessage(false);
 
-      if (response.data) { //valid account so allow it to continue login
+      if (response.data?.loginAllowed) { //valid account so allow it to continue login
         setUsername(lookupAccountEmail);
         setViewType("login");
         return;
       }
 
       //account isn't ready for login (check customer DB settings)
-      setMessage("Congratulations, your account set up is in progress and it should be available shortly. Please check back in few minutes or contact us for assistance!");
+      setMessage("Congratulations, your account set up is in progress and it should be available shortly. Please check back soon or contact us for assistance!");
     } catch (err) {
       console.log(err);
       setErrorMessage(err);

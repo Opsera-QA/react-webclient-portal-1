@@ -4,6 +4,7 @@ import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import siteNotificationMetadata from "components/admin/site_notifications/siteNotificationMetadata";
 import {
+  getLimitedTableTextColumn,
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn
@@ -21,7 +22,7 @@ function SiteNotificationTable({ data, loadData, isLoading, isMounted, siteNotif
       getTableTextColumn(getField(fields, "type")),
       getTableTextColumn(getField(fields, "header")),
       getTableTextColumn(getField(fields, "view")),
-      getTableTextColumn(getField(fields, "message")),
+      getLimitedTableTextColumn(getField(fields, "message"), 100),
       getTableDateColumn(getField(fields, "expiration")),
       getTableBooleanIconColumn(getField(fields, "active")),
     ],
