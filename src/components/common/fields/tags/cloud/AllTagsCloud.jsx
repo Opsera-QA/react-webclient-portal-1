@@ -13,6 +13,7 @@ function AllTagsCloud() {
   const [tags, setTags] = useState([]);
   const [subscribedTagIds, setSubscribedTagIds] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [subscribingToTag, setSubscribingToTag] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -76,6 +77,8 @@ function AllTagsCloud() {
   };
 
   const handleTagSubscription = async (tag) => {
+    setSubscribingToTag(tag._id);
+
     const isSubscribed = subscribedTagIds.includes(tag._id);
 
     if (isSubscribed === true) {
@@ -88,6 +91,10 @@ function AllTagsCloud() {
       let newSubscriptions = subscribedTagIds;
       newSubscriptions.push(tag?._id);
       setSubscribedTagIds([...newSubscriptions]);
+    }
+
+    if (isMounted?.current === true) {
+      setSubscribingToTag(undefined);
     }
   };
 
@@ -129,7 +136,14 @@ function AllTagsCloud() {
 
   return (
     <div>
-      <TagsCloudBase isLoading={isLoading} tagsWithUsage={tags} onTagClick={handleTagSubscription} getTooltip={getTooltip} subscribedTagIds={subscribedTagIds} />
+      <TagsCloudBase
+        isLoading={isLoading}
+        subscribingToTag={subscribingToTag}
+        tagsWithUsage={tags}
+        onTagClick={handleTagSubscription}
+        getTooltip={getTooltip}
+        subscribedTagIds={subscribedTagIds}
+      />
     </div>
   );
 }
