@@ -6,6 +6,9 @@ import AccessDeniedDialog from "components/common/status_notifications/accessDen
 function AccessDeniedContainer() {
   return (
     <div className="max-content-width mb-2 ml-2">
+      <div className="mb-3">
+        <div className="sub-navigation-block" />
+      </div>
       <div className="content-container content-card-1 ">
         <div className="pl-2 content-block-header title-text-header-1">
           <FontAwesomeIcon icon={faExclamationTriangle} fixedWidth className="mr-1"/>Access Denied!

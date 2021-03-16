@@ -5,7 +5,7 @@
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
 import ErrorDialog from "../../common/status_notifications/error";
-import config from "./opseraDeploymentFrequencyLineChartConfigs";
+// import config from "./opseraDeploymentFrequencyLineChartConfigs";
 import "./charts.css";
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -13,6 +13,8 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
+import { defaultConfig, getColor, assignBooleanColors } from '../../insights/charts/charts-views';
+import ChartTooltip from '../../insights/charts/ChartTooltip';
 
 function OpseraDeploymentFrequencyLineChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -40,6 +42,7 @@ function OpseraDeploymentFrequencyLineChart({ persona, date }) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].opseraSuccessfulDeploymentFrequency : [];
+      assignBooleanColors(dataObject.data);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -93,10 +96,12 @@ function OpseraDeploymentFrequencyLineChart({ persona, date }) {
             </div>
           ) : (
             <ResponsiveLine
+              {...defaultConfig('Number of Deployments', 'Date', false, true, 'wholeNumbers', 'monthDate')}
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
               indexBy="date"
-              margin={{ top: 50, right: 110, bottom: 80, left: 120 }}
+              colors={getColor}
+              // colorBy="color"
               xScale={{
                 type: "time",
                 format: "%Y-%m-%d",
@@ -106,44 +111,17 @@ function OpseraDeploymentFrequencyLineChart({ persona, date }) {
                 type: "linear",
                 stacked: false,
               }}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              pointSize={10}
-              pointBorderWidth={8}
-              pointLabel="y"
-              pointLabelYOffset={-12}
-              useMesh={true}
-              lineWidth={3.5}
-              legends={config.legends}
-              colors={(d) => d.color}
-              tooltip={({ point, color }) => (
-                <div
-                  style={{
-                    background: "white",
-                    padding: "9px 12px",
-                    border: "1px solid #ccc",
-                  }}
-                >
-                  <strong style={{ color }}> Date: </strong> {String(point.data.xFormatted)}
-                  <br></br>
-                  <strong style={{ color }}> Number of Deployments: </strong> {point.data.y}
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
+              tooltip={({ point }) => <ChartTooltip title1 = "Date"
+                                             title2 = "Number of Deployments"
+                                             value1 = {String(point.data.xFormatted)}
+                                             value2 = {point.data.y} />}
             />
           )}
         </div>
       </>
     );
 }
+
 OpseraDeploymentFrequencyLineChart.propTypes = {
   persona: PropTypes.string,
 };

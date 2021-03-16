@@ -41,26 +41,27 @@ accountsActions.getAllowedOrganizationAccountActions = async (customerAccessRule
   const user = await getUserRecord();
   const {ldap} = user;
   const userOrganization = ldap["organization"];
+
   if (customerAccessRules.OpseraAdministrator) {
     return ["get_organization_accounts", "get_organization_account_details", "create_organization_account", "update_organization_account"];
   }
-  else if (userOrganization !== organizationName) {
-    // User from another organization not allowed to do anything with another org, unless they are an Opsera administrator
+  // else if (userOrganization !== organizationName) {
+  //   // User from another organization not allowed to do anything with another org, unless they are an Opsera administrator
+  //   return [];
+  // }
+  //
+  // let orgAccountOwner = await accountsActions.isOrganizationAccountOwner(user);
+  // let orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
+  //
+  // if (orgOwner) {
+  //   return ["get_organization_account_details", "create_organization_account", "update_organization_account"];
+  // }
+  // else if (orgAccountOwner || customerAccessRules.Administrator) {
+  //   return ["get_organization_account_details", "update_organization_account"];
+  // }
+  // else {
     return [];
-  }
-
-  let orgAccountOwner = await accountsActions.isOrganizationAccountOwner(user);
-  let orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
-
-  if (orgOwner) {
-    return ["get_organization_account_details", "create_organization_account", "update_organization_account"];
-  }
-  else if (orgAccountOwner || customerAccessRules.Administrator) {
-    return ["get_organization_account_details", "update_organization_account"];
-  }
-  else {
-    return [];
-  }
+  // }
 };
 
 accountsActions.getAllowedIdpAccountActions = async (customerAccessRules, organizationName, getUserRecord, getAccessToken) => {

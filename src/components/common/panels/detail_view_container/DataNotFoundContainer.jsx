@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationTriangle} from "@fortawesome/pro-light-svg-icons";
-import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import {getParentBreadcrumb} from "components/common/navigation/trails";
 import DataNotFoundDialog from "components/common/status_notifications/data_not_found/DataNotFoundDialog";
 
@@ -28,10 +27,11 @@ function DataNotFoundContainer({ breadcrumbDestination, type, children }) {
     }
   }
 
-
   return (
     <div className="max-content-width mb-2 ml-2">
-      <BreadcrumbTrail destination={breadcrumbDestination} />
+      <div className="mb-3">
+        <div className="sub-navigation-block" />
+      </div>
       <div className="content-container content-card-1 ">
         <div className="pl-2 content-block-header title-text-header-1">
           <FontAwesomeIcon icon={faExclamationTriangle} fixedWidth className="mr-1"/>{type} Not Found!

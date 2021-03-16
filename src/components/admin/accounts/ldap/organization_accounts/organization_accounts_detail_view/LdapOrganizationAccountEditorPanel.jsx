@@ -146,6 +146,13 @@ function LdapOrganizationAccountEditorPanel({ldapOrganizationAccountData, ldapOr
             setDataObject={setLdapOrganizationAccountDataDto}
           />
         </Col>
+        <Col lg={12}>
+          <TextInputBase
+            fieldName={"idpBaseUrl"}
+            dataObject={ldapOrganizationAccountDataDto}
+            setDataObject={setLdapOrganizationAccountDataDto}
+          />
+        </Col>
         {/*<Col>*/}
         {/*  <ItemInput field={fields.idpReturnAttributes} setData={setFormField}*/}
         {/*             formData={formData}/>*/}

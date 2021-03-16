@@ -9,15 +9,14 @@ import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-
-
+import { defaultConfig, getColor, assignBooleanColors } from '../../insights/charts/charts-views';
+import ChartTooltip from '../../insights/charts/ChartTooltip';
 function OpseraPipelineByStatusBarChar( { persona, date  } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -38,7 +37,6 @@ function OpseraPipelineByStatusBarChar( { persona, date  } ) {
     };
   }, []);
 
-
   const fetchData = async () => {
     setLoading(true);
     const { getAccessToken } = contextType;
@@ -58,6 +56,7 @@ function OpseraPipelineByStatusBarChar( { persona, date  } ) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].opseraPipelineByStatus : [];
+      // assignBooleanColors(dataObject.data);
       setData(dataObject);
       setLoading(false);
     }
@@ -78,7 +77,6 @@ function OpseraPipelineByStatusBarChar( { persona, date  } ) {
   } else {
     return (
       <>
-      
         <ModalLogs header="Status by Pipeline" size="lg" jsonMessage={data ? data.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
@@ -90,45 +88,21 @@ function OpseraPipelineByStatusBarChar( { persona, date  } ) {
             :
             <ResponsiveBar
               data={data ? data.data : []}
+              {...defaultConfig('Pipeline Name', 'Number of Pipelines', 
+                                true, true, 'cutoffString', 'wholeNumbers')}
               keys={config.keys}
               indexBy="pipeline_id"
               onClick={() => setShowModal(true)}
-              margin={config.margin}
-              padding={0.3}
               layout={"horizontal"}
-              colors={(bar) => bar.id === "Successful" ? "green" : "red"}
-              borderColor={{ theme: "background" }}
+              // colors={d => getColor(d.data)}
+              colors={(bar) => bar.id === "Successful" ? "#1B9E77" : "#E57373"}
               colorBy="id"
-              defs={config.defs}
-              fill={config.fill}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              enableLabel={false}
-              borderRadius={0}
-              labelSkipWidth={12}
-              labelSkipHeight={12}
-              labelTextColor="inherit:darker(2)"
-              animate={true}
-              motionStiffness={90}
-              borderWidth={2}
-              motionDamping={15}
-              legends={config.legends}
-              tooltip={({ indexValue, color, value, id }) => (
-                <div>
-                  <strong style={{ color }}>
-                Pipeline: </strong> {indexValue}<br></br>
-                  <strong style={{ color }}> {id} Builds: </strong> {value}
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
+              tooltip={({ indexValue, value, id, color }) => <ChartTooltip title1 = "Pipeline"
+                                             title2 = {`${id} Builds`}
+                                             value1 = {indexValue}
+                                             value2 = {value}
+                                             color = {color}
+                                             style = {false} />}
             />
           }
         </div>

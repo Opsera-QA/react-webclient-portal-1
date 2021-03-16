@@ -15,7 +15,6 @@ export const defaultRowStyling = (row) => {
 export const defaultInitialState = {
   pageIndex: 0
 };
-
 function CustomTable({ className, tableStyleName, type, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, paginationOptions, showHeaderText, isLoading, tableTitle, createNewRecord, tableFilterBar, paginationDto, setPaginationDto, loadData }) {
   const {
     getTableProps,

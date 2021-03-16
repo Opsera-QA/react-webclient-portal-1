@@ -4,12 +4,13 @@ import { ResponsiveBar } from "@nivo/bar";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import InfoDialog from "../../common/status_notifications/info";
-import config from "./opseraBuildDurationBarChartConfigs";
+// import config from "./opseraBuildDurationBarChartConfigs";
 import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-
+import { defaultConfig, getColor, assignStandardColors } from '../../insights/charts/charts-views';
+import ChartTooltip from '../../insights/charts/ChartTooltip';
 function OpseraBuildDurationBarChart({ persona, date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
@@ -37,6 +38,7 @@ function OpseraBuildDurationBarChart({ persona, date }) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].opseraPipelineDuration : [];
+      assignStandardColors(dataObject.data, true);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -88,43 +90,19 @@ function OpseraBuildDurationBarChart({ persona, date }) {
           </div>
         ) : (
           <ResponsiveBar
+            {...defaultConfig('Duration (Minutes)', 'Pipeline Run', 
+                      false, true, 'wholeNumbers', 'values')}
             data={data ? data.data : []}
-            keys={config.keys}
+            keys={["value"]}
             layout="vertical"
             indexBy="item_number"
             onClick={() => setShowModal(true)}
-            margin={config.margin}
-            padding={0.3}
-            colors={{ scheme: "category10" }}
-            borderColor={{ theme: "background" }}
             colorBy="id"
-            defs={config.defs}
-            fill={config.fill}
-            axisTop={null}
-            axisRight={null}
-            axisBottom={config.axisBottom}
-            axisLeft={config.axisLeft}
-            enableLabel={false}
-            borderRadius={5}
-            labelSkipWidth={12}
-            labelSkipHeight={12}
-            labelTextColor="inherit:darker(2)"
-            animate={true}
-            motionStiffness={90}
-            motionDamping={15}
-            legends={config.legends}
-            tooltip={({ data, value, color }) => (
-              <div>
-                <strong style={{ color }}> Duration: </strong> {value} minutes <br></br>
-              </div>
-            )}
-            theme={{
-              tooltip: {
-                container: {
-                  fontSize: "16px",
-                },
-              },
-            }}
+            colors={d => getColor(d.data)}
+            tooltip={({ value, color }) => <ChartTooltip title1 = 'Duration'
+                                             value1 = {`${value} minutes`}
+                                             style = {false}
+                                             color = {color} />}
           />
         )}
       </div>
