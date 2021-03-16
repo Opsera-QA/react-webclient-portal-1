@@ -11,7 +11,7 @@ import opseraRecentCdStatusMetadata
   from "components/insights/charts/opsera/table/recent_cd_status/opsera-recent-cd-status-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
 
-function OpseraRecentCDTable({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function OpseraRecentCDStatusTable({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = opseraRecentCdStatusMetadata.fields;
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -94,7 +94,7 @@ function OpseraRecentCDTable({ kpiConfiguration, setKpiConfiguration, dashboardD
   );
 }
 
-OpseraRecentCDTable.propTypes = {
+OpseraRecentCDStatusTable.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -102,4 +102,4 @@ OpseraRecentCDTable.propTypes = {
   setKpis: PropTypes.func
 };
 
-export default OpseraRecentCDTable;
+export default OpseraRecentCDStatusTable;
