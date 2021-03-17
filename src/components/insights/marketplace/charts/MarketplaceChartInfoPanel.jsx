@@ -79,7 +79,7 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
   const getImageField = () => {
     if (kpiData?.thumbnailPath) {
       return (
-        <div className="px-2">
+        <div className="mx-2 mb-2">
           <Image src={kpiData.thumbnailPath} className="kpi-image"/>
         </div>
       );
@@ -89,7 +89,7 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
   const getDescriptionField = () => {
     if (kpiData?.description?.length > 1) {
       return (
-        <div>
+        <div className={"mb-2"}>
           {kpiData.description}
         </div>
       );
@@ -99,13 +99,11 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
   const getToolsField = () => {
     if (kpiData.tools?.length > 0) {
       return (
-        <div className={"my-2"}>
-          <CustomBadgeContainer>
-            {kpiData.tools.map((tool, index)=>{
-              return (<CustomBadge key={index} icon={faWrench} badgeText={tool} />);
-            })}
-          </CustomBadgeContainer>
-        </div>
+        <CustomBadgeContainer>
+          {kpiData.tools.map((tool, index) => {
+            return (<CustomBadge key={index} icon={faWrench} badgeText={tool}/>);
+          })}
+        </CustomBadgeContainer>
       );
     }
   };
@@ -113,13 +111,11 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
   const getCategoriesField = () => {
     if (kpiData.category?.length > 0) {
       return (
-        <div className={"my-2"}>
-          <CustomBadgeContainer>
-            {kpiData.category.map((category, index)=>{
-              return (<CustomBadge key={index} icon={faList} badgeText={category} />);
-            })}
-          </CustomBadgeContainer>
-        </div>
+        <CustomBadgeContainer>
+          {kpiData.category.map((category, index) => {
+            return (<CustomBadge key={index} icon={faList} badgeText={category}/>);
+          })}
+        </CustomBadgeContainer>
       );
     }
   };
@@ -147,7 +143,7 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
 
       <div className="mt-3">
         <Row className={"d-flex"}>
-          <Col md={12} className="py-1">
+          <Col md={12}>
             <MarketplaceDashboardInput setDataObject={setSelectedDashboardData} dataObject={selectedDashboardData}/>
           </Col>
         </Row>
