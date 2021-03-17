@@ -1,23 +1,29 @@
+// AN-115
+// Dashboard Planning Tab 
+// Persona Executives/Managers
+// Worked on By Shrey Malhotra
+
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { ResponsiveBar } from "@nivo/bar";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { ResponsiveBar } from "@nivo/bar";
 import { axiosApiService } from "../../../api/apiService";
-import InfoDialog from "../../common/status_notifications/info";
-import config from "./opseraPipelineByStatusBarChartConfigs";
-import "./charts.css";
-import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-import { defaultConfig, getColor, assignBooleanColors } from '../../insights/charts/charts-views';
+import config from "./jiraHealthBySprintConfigs";
+import "./charts.css";
+import InfoDialog from "../../common/status_notifications/info";
+import ModalLogs from "../../common/modal/modalLogs";
+import { defaultConfig, assignHealthColors } from '../../insights/charts/charts-views';
 import ChartTooltip from '../../insights/charts/ChartTooltip';
-function OpseraPipelineByStatusBarChar( { persona, date  } ) {
+
+function JiraHealthBySprintBarChart( { persona, date } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
+  
   useEffect(() => {    
     const controller = new AbortController();
     const runEffect = async () => {
@@ -35,7 +41,8 @@ function OpseraPipelineByStatusBarChar( { persona, date  } ) {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [date]);
+
 
   const fetchData = async () => {
     setLoading(true);
@@ -44,9 +51,9 @@ function OpseraPipelineByStatusBarChar( { persona, date  } ) {
     const apiUrl = "/analytics/data";   
     const postBody = {
       data: [
-        {
-          "request": "opseraPipelineByStatus",
-          "metric": "bar"
+        { 
+          request: "jiraSprintHealthq1",
+          metric: "bar" 
         }
       ],
       startDate: date.start, 
@@ -55,8 +62,8 @@ function OpseraPipelineByStatusBarChar( { persona, date  } ) {
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].opseraPipelineByStatus : [];
-      // assignBooleanColors(dataObject.data);
+      let dataObject = res?.data?.data[0] ? res.data.data[0].jiraSprintHealthq1 : [];
+      assignHealthColors(dataObject?.data);
       setData(dataObject);
       setLoading(false);
     }
@@ -67,42 +74,38 @@ function OpseraPipelineByStatusBarChar( { persona, date  } ) {
     }
   };
 
-  
   if(loading) {
     return (<LoadingDialog size="sm" />);
   } else if (error) {
     return (<ErrorDialog  error={error} />);
   // } else if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
-  //   return (<div style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}><ErrorDialog error="No Data is available for this chart at this time." /></div>);
-  } else {
+  //   return (<ErrorDialog  error="No Data is available for this chart at this time." />);
+  } else {    
     return (
       <>
-        <ModalLogs header="Status by Pipeline" size="lg" jsonMessage={data ? data.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+        <ModalLogs header="Jira: Health" size="lg" jsonMessage={data.data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
-          <div className="chart-label-text">Opsera: Status By Pipeline</div>
+          <div className="chart-label-text">Jira: Health</div>
           {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />
             </div>
-            :
+            : 
             <ResponsiveBar
               data={data ? data.data : []}
-              {...defaultConfig('Pipeline Name', 'Number of Pipelines', 
-                                true, true, 'cutoffString', 'wholeNumbers')}
-              keys={config.keys}
-              indexBy="pipeline_id"
+              {...defaultConfig("Project", "Number of Issues", 
+                                false, true, 'cutoffString', "wholeNumbers")}
               onClick={() => setShowModal(true)}
+              keys={config.keys}
+              indexBy="key"
               layout={"horizontal"}
-              // colors={d => getColor(d.data)}
-              colors={(bar) => bar.id === "Successful" ? "#1B9E77" : "#E57373"}
+              colors={({ id, data }) => data[`${id}_color`]}
               colorBy="id"
-              tooltip={({ indexValue, value, id, color }) => <ChartTooltip title1 = "Pipeline"
-                                             title2 = {`${id} Builds`}
-                                             value1 = {indexValue}
-                                             value2 = {value}
-                                             color = {color}
-                                             style = {false} />}
+              tooltip={({ indexValue, value, id }) => <ChartTooltip 
+                      titles={["Project", "Issue Stage", "Number of Issues"]}
+                      values={[indexValue, id, value]}
+                      style = {false} />}
             />
           }
         </div>
@@ -110,10 +113,8 @@ function OpseraPipelineByStatusBarChar( { persona, date  } ) {
     );
   }
 }
-
-OpseraPipelineByStatusBarChar.propTypes = {
-  data: PropTypes.object,
+JiraHealthBySprintBarChart.propTypes = {
   persona: PropTypes.string
 };
 
-export default OpseraPipelineByStatusBarChar;
+export default JiraHealthBySprintBarChart;

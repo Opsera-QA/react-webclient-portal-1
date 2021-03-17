@@ -6,12 +6,11 @@ import { ResponsiveBar } from "@nivo/bar";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-import config from "./jiraTicketsAssignedByUserBarChartConfigs";
 import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
-
-
+import { defaultConfig, getColor, assignStandardColors } from '../../insights/charts/charts-views';
+import ChartTooltip from '../../insights/charts/ChartTooltip';
 
 function JiraTicketsAssignedByUserBarChart( { persona, date } ) {
   const contextType = useContext(AuthContext);
@@ -59,7 +58,8 @@ function JiraTicketsAssignedByUserBarChart( { persona, date } ) {
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].jiraTicketsAssignedByUser : [];
+      let dataObject = res?.data?.data[0] ? res.data.data[0].jiraTicketsAssignedByUser : [];
+      assignStandardColors(dataObject?.data, true);
       setData(dataObject);
       setLoading(false);
     }
@@ -69,7 +69,6 @@ function JiraTicketsAssignedByUserBarChart( { persona, date } ) {
       setErrors(err.message);
     }
   };
-
 
   //This needs to be more intelligent than just checking for precense of data.  Node can return a status 400 error from ES, and that would fail this.
   if(loading) {
@@ -93,45 +92,19 @@ function JiraTicketsAssignedByUserBarChart( { persona, date } ) {
             : 
             <ResponsiveBar
               data={data ? data.data : []}
+              {...defaultConfig("Users", "Number of Tickets Assigned", 
+                                true, true, "cutoffString", "wholeNumbers")}
               onClick={() => setShowModal(true)}
-              keys={config.keys}
+              keys={["count"]}
               indexBy="user"
-              margin={config.margin}
-              padding={0.3}
               layout={"horizontal"}
-              colors={{ scheme: "dark2" }}
-              borderColor={{ theme: "background" }}
+              colors={d => getColor(d.data)}
               colorBy="id"
-              defs={config.defs}
-              fill={config.fill}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              labelSkipWidth={12}
-              labelSkipHeight={12}
-              enableLabel={false}
-              borderRadius={5}
-              labelTextColor="inherit:darker(2)"
-              animate={true}
-              motionStiffness={90}
-              borderWidth={2}
-              motionDamping={15}
-              legends={config.legends}
-              tooltip={({ indexValue, value, color }) => (
-                <div>
-                  <strong style={{ color }}>  User: </strong> {indexValue}<br></br>
-                  <strong style={{ color }}>  No. of Tickets: </strong> {value} Tickets<br></br>
-                  {/* <strong style={{ color }}>  Percentage: </strong> {data.percentage}% */}
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
+              tooltip={({ indexValue, value, color }) => <ChartTooltip 
+                                            titles={["User", "Number of Tickets"]}
+                                            values={[indexValue, value]}
+                                            color = {color}
+                                            style={false} />}
             />
           }
         </div>

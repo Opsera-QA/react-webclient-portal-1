@@ -4,20 +4,19 @@ import { ResponsiveBar } from "@nivo/bar";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import InfoDialog from "../../common/status_notifications/info";
-import config from "./vulnerabilityByPackageBarChartConfigs";
 import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
+import { defaultConfig, getColorById, assignBooleanColors } from '../../insights/charts/charts-views';
+import ChartTooltip from '../../insights/charts/ChartTooltip';
 
-
-function VulnerabilityByPackageBarChart( { persona, date  } ) {
+function OpseraPipelineByStatusBarChart( { persona, date  } ) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
 
   useEffect(() => {    
     const controller = new AbortController();
@@ -38,7 +37,6 @@ function VulnerabilityByPackageBarChart( { persona, date  } ) {
     };
   }, []);
 
-
   const fetchData = async () => {
     setLoading(true);
     const { getAccessToken } = contextType;
@@ -47,7 +45,7 @@ function VulnerabilityByPackageBarChart( { persona, date  } ) {
     const postBody = {
       data: [
         {
-          "request": "vulnerabilityByPackage",
+          "request": "opseraPipelineByStatus",
           "metric": "bar"
         }
       ],
@@ -57,7 +55,8 @@ function VulnerabilityByPackageBarChart( { persona, date  } ) {
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].vulnerabilityByPackage : [];
+      let dataObject = res?.data?.data[0] ? res.data.data[0].opseraPipelineByStatus : [];
+      assignBooleanColors(dataObject?.data);
       setData(dataObject);
       setLoading(false);
     }
@@ -78,11 +77,10 @@ function VulnerabilityByPackageBarChart( { persona, date  } ) {
   } else {
     return (
       <>
-      
-        <ModalLogs header="Vulnerability Severity by Package" size="lg" jsonMessage={data ? data.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+        <ModalLogs header="Status by Pipeline" size="lg" jsonMessage={data ? data.data : []} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
-          <div className="chart-label-text">Anchore: Vulnerability Severity by Package</div>
+          <div className="chart-label-text">Opsera: Status By Pipeline</div>
           {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
             <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
               <InfoDialog message="No Data is available for this chart at this time." />
@@ -90,45 +88,19 @@ function VulnerabilityByPackageBarChart( { persona, date  } ) {
             :
             <ResponsiveBar
               data={data ? data.data : []}
-              keys={config.keys}
-              indexBy="package_name"
+              {...defaultConfig('Pipeline Name', 'Number of Pipelines', 
+                                true, true, 'cutoffString', 'wholeNumbers')}
+              keys={["Successful", "Failed"]}
+              indexBy="pipeline_id"
               onClick={() => setShowModal(true)}
-              margin={config.margin}
-              padding={0.3}
               layout={"horizontal"}
-              colors={({ id, data }) => data[`${id}_color`]}
-              borderColor={{ theme: "background" }}
               colorBy="id"
-              defs={config.defs}
-              fill={config.fill}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              enableLabel={false}
-              borderRadius={0}
-              labelSkipWidth={12}
-              labelSkipHeight={12}
-              labelTextColor="inherit:darker(2)"
-              animate={true}
-              motionStiffness={90}
-              borderWidth={2}
-              motionDamping={15}
-              legends={config.legends}
-              tooltip={({ indexValue, color, value, id }) => (
-                <div>
-                  <strong style={{ color }}>
-                Package Name: </strong> {indexValue}<br></br>
-                  <strong style={{ color }}> {id} Vulnerabilities: </strong> {value}
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
+              colors={getColorById}
+              tooltip={({ indexValue, value, id, color }) => <ChartTooltip 
+                                            titles = {["Pipeline", `${id} Builds`]}
+                                            values = {[indexValue, value]}
+                                            color = {color}
+                                            style = {false} />}
             />
           }
         </div>
@@ -137,9 +109,9 @@ function VulnerabilityByPackageBarChart( { persona, date  } ) {
   }
 }
 
-VulnerabilityByPackageBarChart.propTypes = {
+OpseraPipelineByStatusBarChart.propTypes = {
   data: PropTypes.object,
   persona: PropTypes.string
 };
 
-export default VulnerabilityByPackageBarChart;
+export default OpseraPipelineByStatusBarChart;

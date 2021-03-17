@@ -13,11 +13,11 @@ import JenkinsBuildsByUserBarChart from "../../charts/jenkinsBuildsByUserBarChar
 import JenkinsStatusByJobNameBarChart from "../../charts/jenkinsStatusByJobNameBarChart";
 import DeploymentFrequencyLineChart from "../../charts/deploymentFrequencyLineChart.jsx";
 import RecentBuildsTable from "../../metrics/RecentBuildsTable.jsx";
-import OpseraPipelineByStatusBarChart from "../../charts/opseraPipelineByStatusBarChart";
-import OpseraBuildDurationBarChart from "../../charts/opseraBuildDurationBarChart";
-import OpseraBuildsByUserBarChart from "../../charts/opseraBuildsByUserBarChart";
+import OpseraPipelineByStatusBarChart from "../../charts/OpseraPipelineByStatusBarChart";
+import OpseraBuildDurationBarChart from "../../charts/OpseraBuildDurationBarChart";
+import OpseraBuildsByUserBarChart from "../../charts/OpseraBuildsByUserBarChart";
 import OpseraRecentPipelineStatus from "../../metrics/OpseraRecentPipelineStatus.jsx";
-import OpseraDeploymentFrequencyLineChart from "../../charts/opseraDeploymentFrequencyLineChart.jsx";
+import OpseraDeploymentFrequencyLineChart from "../../charts/OpseraDeploymentFrequencyLineChart.jsx";
 import { Row } from "react-bootstrap";
 
 function BuildView_Executive({ persona, date, index }) {
