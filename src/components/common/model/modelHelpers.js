@@ -1,4 +1,5 @@
 import Model from "core/data_model/model";
+import {kpiDateFilterMetadata} from "components/insights/marketplace/charts/kpi-configuration-metadata";
 
 const modelHelpers = {};
 
@@ -24,6 +25,34 @@ modelHelpers.getPipelineStepConfigurationThresholdModel = (pipelineStepConfigura
     return new Model({...thresholdMetadata.newObjectFields}, thresholdMetadata, true);
   }
   return new Model(threshold, thresholdMetadata, false);
+};
+
+// TODO: Tejas, you need to write newObjectFields for each passed in metadata
+modelHelpers.getDashboardFilterModel = (kpiConfiguration, type, dashboardFilterMetadata) => {
+  let dashboardFilters = kpiConfiguration.filters;
+  let index = dashboardFilters?.findIndex((filter) => filter.type === type);
+
+  if (index == null || index === -1) {
+    return new Model({...dashboardFilterMetadata?.newObjectFields}, dashboardFilterMetadata, true);
+  }
+
+  return new Model({...dashboardFilters[index]}, dashboardFilterMetadata, false);
+};
+
+modelHelpers.setDashboardFilterModelField = (kpiConfiguration, type, newValue) => {
+  let dashboardFilters = kpiConfiguration.getArrayData("filters");
+  let index = dashboardFilters?.findIndex((filter) => filter.type === type);
+
+  if (index == null || index === -1) {
+    dashboardFilters.push({ type: type, value: newValue});
+  }
+  else {
+    dashboardFilters[index].value = newValue;
+  }
+
+  kpiConfiguration.setData("filters", dashboardFilters);
+
+  return kpiConfiguration;
 };
 
 

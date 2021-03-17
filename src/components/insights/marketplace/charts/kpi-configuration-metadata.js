@@ -44,7 +44,10 @@ export const kpiDateFilterMetadata = {
       label: "Date",
       id: "value"
     }
-  ]
+  ],
+  newObjectFields: {
+    value: undefined
+  }
 };
 
 export const kpiTagsFilterMetadata = {
@@ -58,7 +61,10 @@ export const kpiTagsFilterMetadata = {
       label: "Tags",
       id: "value"
     }
-  ]
+  ],
+  newObjectFields: {
+    value: []
+  }
 };
 
 export const kpiJenkinsResultFilterMetadata = {
@@ -72,7 +78,10 @@ export const kpiJenkinsResultFilterMetadata = {
       label: "Result",
       id: "value"
     }
-  ]
+  ],
+  newObjectFields: {
+    value: ""
+  }
 };
 
 export const kpiJenkinsJobUrlFilterMetadata = {
@@ -86,7 +95,10 @@ export const kpiJenkinsJobUrlFilterMetadata = {
       label: "Job URL",
       id: "value"
     }
-  ]
+  ],
+  newObjectFields: {
+    value: ""
+  }
 };
 
 export const kpiJenkinsBuildNumberFilterMetadata = {
@@ -100,7 +112,10 @@ export const kpiJenkinsBuildNumberFilterMetadata = {
       label: "Build Number",
       id: "value"
     }
-  ]
+  ],
+  newObjectFields: {
+    value: []
+  }
 };
 
 export default kpiConfigurationMetadata;
