@@ -12,7 +12,7 @@ import JenkinsBuildDurationBarChart from "../../charts/jenkinsBuildDurationBarCh
 import JenkinsBuildsByUserBarChart from "../../charts/jenkinsBuildsByUserBarChart";
 import JenkinsStatusByJobNameBarChart from "../../charts/jenkinsStatusByJobNameBarChart";
 import DeploymentFrequencyLineChart from "../../charts/deploymentFrequencyLineChart.jsx";
-import RecentBuildsTable from "../../metrics/recentBuildsTable.jsx";
+import RecentBuildsTable from "../../metrics/RecentBuildsTable.jsx";
 import OpseraPipelineByStatusBarChart from "../../charts/opseraPipelineByStatusBarChart";
 import OpseraBuildDurationBarChart from "../../charts/opseraBuildDurationBarChart";
 import OpseraBuildsByUserBarChart from "../../charts/opseraBuildsByUserBarChart";
