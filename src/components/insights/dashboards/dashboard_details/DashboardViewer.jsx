@@ -1,30 +1,38 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
-import { Button, Col, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import InfoDialog from "components/common/status_notifications/info";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faPlus, faSearch, faUsers} from "@fortawesome/pro-light-svg-icons";
+import {faUsers} from "@fortawesome/pro-light-svg-icons";
 import DataNotFoundContainer from "components/common/panels/detail_view_container/DataNotFoundContainer";
 import DataNotFoundDialog from "components/common/status_notifications/data_not_found/DataNotFoundDialog";
 import ChartView from "components/insights/charts/ChartView";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
+import DashboardFilterTagInput from "components/insights/dashboards/DashboardFilterTagInput";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import NewRecordButton from "components/common/buttons/data/NewRecordButton";
+import modelHelpers from "components/common/model/modelHelpers";
+import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata";
 
 function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLink, managementTitle, type}) {
   const history = useHistory();
+  const [dashboardDataDto, setDashboardDataDto] = useState(dashboardData);
   const [kpis, setKpis] = useState([]);
+  const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(modelHelpers.getDashboardFilterModel(dashboardDataDto, "tags", dashboardFiltersMetadata));
+
 
   useEffect(() => {
-    loadData(dashboardData);
+    loadData(dashboardDataDto);
   }, []);
 
   const loadData = async (newDashboardData) => {
+    setDashboardDataDto({...newDashboardData});
     setKpis(newDashboardData?.data?.configuration);
   }
 
   const gotoMarketplace = () => {
-    history.push({ pathname:`/insights/marketplace/${dashboardData.getData("_id")}`});
+    history.push({ pathname:`/insights/marketplace/${dashboardDataDto.getData("_id")}`});
   }
 
   const getKpiView = () => {
@@ -42,7 +50,7 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
           {kpis.map(function (kpiConfiguration, index) {
             return (
               <Col xl={6} md={12} className="p-2" key={kpiConfiguration._id}>
-                <ChartView kpiConfiguration={kpiConfiguration} dashboardData={dashboardData} index={index} loadChart={loadData} setKpis={setKpis}/>
+                <ChartView kpiConfiguration={kpiConfiguration} dashboardData={dashboardDataDto} index={index} loadChart={loadData} setKpis={setKpis}/>
               </Col>
             )
           })}
@@ -51,7 +59,7 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
     )
   };
 
-  if (dashboardData == null) {
+  if (dashboardDataDto == null) {
     return (
       <DataNotFoundContainer type={type} breadcrumbDestination={breadcrumbDestination}>
         <DataNotFoundDialog
@@ -65,24 +73,30 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
 
   return (
     <div>
-      <div className="px-2 mb-1 d-flex justify-content-between">
+      <ActionBarContainer>
         <CustomBadgeContainer>
           <CustomBadge
             className={"upper-case-first"}
-            badgeText={dashboardData?.data?.attributes?.persona}
+            badgeText={dashboardDataDto?.data?.attributes?.persona}
             icon={faUsers}
           />
-        </CustomBadgeContainer>
-        <div>
-          <Button className="mr-1" size="sm" disabled={kpis.length >= 10} onClick={() => gotoMarketplace()}>
-            <span><FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Add New KPI</span>
-          </Button>
+        </CustomBadgeContainer>       
+        <div className="d-flex">
+          {/* <DashboardFilterTagInput
+            dataObject={dashboardFilterTagsModel}
+            setDataObject={setDashboardFilterTagsModel}
+            loadData={loadData}
+            className={"mx-2"}
+            dashboardData={dashboardDataDto}
+          /> */}
+          <NewRecordButton addRecordFunction={gotoMarketplace} disabled={kpis.length >= 10} type={"Kpi"} />
         </div>
-      </div>
+      </ActionBarContainer>
       {getKpiView()}
     </div>
   );
 }
+
 
 DashboardViewer.propTypes = {
   dashboardData: PropTypes.object,

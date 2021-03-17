@@ -64,6 +64,14 @@ const dashboardMetadata = {
     {
       label: "Configuration",
       id: "configuration"
+    },
+    {
+      label: "Filters",
+      id: "filters"
+    },
+    {
+      label: "Tags Filter",
+      id: "filters.tags"
     }
   ],
   newObjectFields: {
@@ -89,6 +97,19 @@ export const dashboardAttributesMetadata = {
   newObjectFields: {
     persona: ""
   }
+};
+
+export const dashboardFiltersMetadata = {
+  type: "Dashboard Tags Filter",
+  fields: [
+    {
+      label: "Tags",
+      id: "tags"
+    }
+  ],
+  newObjectFields: {
+    tags: []
+  },
 };
 
 export default dashboardMetadata;
