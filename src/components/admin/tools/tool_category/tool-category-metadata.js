@@ -15,13 +15,13 @@ const toolCategoryMetadata = {
       label: "Name",
       id: "name",
       isRequired: true,
-      maxLength: 25,
+      maxLength: 50,
       regexValidator: regexHelpers.regexTypes.limitedTextWithSpaces
     },
     {
       label: "Description",
       id: "description",
-      maxLength: 255,
+      maxLength: 1000,
       regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
     },
     {

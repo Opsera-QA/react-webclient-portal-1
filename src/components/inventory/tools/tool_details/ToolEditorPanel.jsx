@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
@@ -16,14 +16,34 @@ import RegistryToolApplicationsInput from "components/inventory/tools/tool_detai
 import RegistryToolOrganizationInput from "components/inventory/tools/tool_details/input/RegistryToolOrganizationInput";
 import RegistryToolContactInput from "components/inventory/tools/tool_details/input/RegistryToolContactInput";
 import TagManager from "components/common/inputs/tags/TagManager";
+import axios from "axios"
 
-function ToolEditorPanel({ toolData, setToolData, handleClose }) {
+function ToolEditorPanel({ toolData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [toolDataDto, setToolDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
   const loadData = async () => {
@@ -33,11 +53,11 @@ function ToolEditorPanel({ toolData, setToolData, handleClose }) {
   };
 
   const createTool = async () => {
-    return await toolsActions.createTool(toolDataDto, getAccessToken);
+    return await toolsActions.createToolV2(getAccessToken, cancelTokenSource, toolDataDto);
   };
 
   const updateTool = async () => {
-    return await toolsActions.updateTool(toolDataDto, getAccessToken);
+    return await toolsActions.updateToolV2(getAccessToken, cancelTokenSource, toolDataDto);
   };
 
   const getDynamicFields = () => {

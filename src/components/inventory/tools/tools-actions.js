@@ -40,12 +40,29 @@ toolsActions.updateTool = async (toolDataDto, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
+toolsActions.updateToolV2 = async (getAccessToken, cancelTokenSource, toolDataDto) => {
+  const postBody = {
+    ...toolDataDto.getPersistData()
+  }
+  let id = toolDataDto.getData("_id");
+  const apiUrl = `/registry/${id}/update`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 toolsActions.createTool = async (toolDataDto, getAccessToken) => {
   const postBody = {
     ...toolDataDto.getPersistData()
   }
   const apiUrl = "/registry/create";
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+toolsActions.createToolV2 = async (getAccessToken, cancelTokenSource, toolDataDto) => {
+  const postBody = {
+    ...toolDataDto.getPersistData()
+  }
+  const apiUrl = "/registry/create";
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 // TODO: Replace with getToolIdentifiersV2 when all references are updated
@@ -107,6 +124,11 @@ toolsActions.getFullToolById = async (id, getAccessToken) => {
 toolsActions.getRoleLimitedToolById = async (id, getAccessToken) => {
   const apiUrl = `/registry/configs/${id}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+toolsActions.getRoleLimitedToolByIdV2 = async (id, getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/registry/configs/${id}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 // TODO: Remove when all references are updated to V2
