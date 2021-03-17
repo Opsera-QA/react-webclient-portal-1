@@ -19,6 +19,14 @@ templateActions.createTemplate = async (templateDataDto, getAccessToken) => {
   return response;
 };
 
+templateActions.createTemplateV2 = async (getAccessToken, cancelTokenSource, templateDataDto) => {
+  let postBody = {
+    ...templateDataDto.getPersistData(),
+  };
+  const apiUrl = "/pipelines/workflows/create";
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 templateActions.updateTemplate = async (templateDataDto, getAccessToken) => {
   const postBody = {
     ...templateDataDto.getPersistData()
@@ -33,6 +41,14 @@ templateActions.updateTemplate = async (templateDataDto, getAccessToken) => {
       throw { error };
     });
   return response;
+};
+
+templateActions.updateTemplateV2 = async (getAccessToken, cancelTokenSource, templateDataDto) => {
+  let postBody = {
+    ...templateDataDto.getPersistData(),
+  };
+  const apiUrl = `/pipelines/workflows/${templateDataDto.getData("_id")}/update`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 templateActions.deleteTemplateV2 = async (getAccessToken, cancelTokenSource, templateDataDto) => {

@@ -1,27 +1,29 @@
-import React, {useMemo, useState} from "react";
+import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {useHistory} from "react-router-dom";
 import {
+  getLimitedTableTextColumn,
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
-import NewTemplateModal from "components/admin/template_editor/NewTemplateModal";
+import NewTemplateOverlay from "components/admin/template_editor/NewTemplateOverlay";
 import templateEditorMetadata from "components/admin/template_editor/template-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faStream} from "@fortawesome/pro-light-svg-icons";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
-function TemplateTable({ data, loadData, isLoading }) {
-  const fields = templateEditorMetadata.fields;
-  const [showCreateTemplateModal, setShowCreateTemplateModal] = useState(false);
+function TemplateTable({ data, loadData, isLoading, templateFilterDto, setTemplateFilterDto, isMounted }) {
+  const toastContext = useContext(DialogToastContext);
   const history = useHistory();
+  let fields = templateEditorMetadata.fields;
 
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "description")),
+      getLimitedTableTextColumn(getField(fields, "description"), 100),
       getTableDateColumn(getField(fields, "createdAt")),
       getTableTextColumn(getField(fields, "account")),
       getTableBooleanIconColumn(getField(fields, "readOnly")),
@@ -43,7 +45,7 @@ function TemplateTable({ data, loadData, isLoading }) {
   };
 
   const createTemplate = () => {
-    setShowCreateTemplateModal(true);
+    toastContext.showOverlayPanel(<NewTemplateOverlay loadData={loadData} isMounted={isMounted} />);
   };
 
   const getTemplateTable = () => {
@@ -61,7 +63,6 @@ function TemplateTable({ data, loadData, isLoading }) {
   };
 
   return (
-    <div className="px-2 pb-2">
       <FilterContainer
         loadData={loadData}
         addRecordFunction={createTemplate}
@@ -70,16 +71,18 @@ function TemplateTable({ data, loadData, isLoading }) {
         titleIcon={faStream}
         title={"Pipeline Templates"}
         type={"Pipeline Template"}
+        className="px-2 pb-2"
       />
-      <NewTemplateModal setShowModal={setShowCreateTemplateModal} loadData={loadData} showModal={showCreateTemplateModal}/>
-    </div>
   );
 }
 
 TemplateTable.propTypes = {
   data: PropTypes.array,
   loadData: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  isMounted: PropTypes.object,
+  templateFilterDto: PropTypes.object,
+  setTemplateFilterDto: PropTypes.func
 };
 
 export default TemplateTable;
