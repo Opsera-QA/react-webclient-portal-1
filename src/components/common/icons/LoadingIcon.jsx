@@ -10,7 +10,7 @@ function LoadingIcon({ isLoading, className }) {
 
   return (
     <span className={className}>
-      <FontAwesomeIcon icon={faSpinner} spin />
+      <FontAwesomeIcon icon={faSpinner} spin fixedWidth />
     </span>
   );
 }
