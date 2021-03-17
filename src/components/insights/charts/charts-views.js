@@ -1,8 +1,12 @@
+const successColor = "#1B9E77";
+const failColor = "#E57373";
+const mainColor = "#6153A5";
+
 const standardColors = ['#4D4283', '#7F74B9', '#BFB9DC', '#F3B931', '#F7D076', '#FBE8BA'];
 
 export const assignStandardColors = (data, uniColor = false) => {
   data.forEach((data, i) => {
-    data.color = uniColor ? "#6153A5" : standardColors[i];
+    data.color = uniColor ? mainColor : standardColors[i];
   });
 };
 
@@ -11,9 +15,20 @@ export const assignBooleanColors = data => {
     data.sort((a, b) => a.id > b.id ? 1 : -1); // to display success before fail in legend
   }
   data.forEach(data => {
-    data.color = (data.id === "Success" || data.Successful) ? "#1B9E77" : "#E57373";
+    data.color = (data.id === "Success" || data.Successful) ? successColor : failColor;
   });
   return data.color;
+};
+
+export const assignTaskColors = data => {
+  data.forEach(data => {
+    data.Story_color = standardColors[0];
+    data.Task_color = standardColors[1];
+    data.Subtask_color = standardColors[2];
+    data.Bug_color = "#F3B931";
+  });
+  
+  return data;
 };
 
 export const getColor = data => data.color;
@@ -39,7 +54,6 @@ export const defaultConfig = (leftAxisTitle, bottomAxisTitle,
       lineWidth: 3.5,
       // xScale: { type: "point" },
       // yScale: { 
-      //   type: "linear", 
       //   min: "auto", 
       //   max: "auto", 
       //   reverse: false

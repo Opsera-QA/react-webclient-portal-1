@@ -4,9 +4,9 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheckCircle, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import CustomTable from "../../common/table/CustomTable";
+import SuccessIcon from '../../common/icons/table/SuccessIcon';
+import FailIcon from '../../common/icons/table/FailIcon';
 import { format } from "date-fns";
 
 function OpseraRecentPipelineStatus({ date }) {
@@ -35,13 +35,13 @@ function OpseraRecentPipelineStatus({ date }) {
   const columns = useMemo(
     () => [
       {
-        Header: "Run",
-        accessor: "run_count",
-        class: "cell-center no-wrap-inline",
-      },
-      {
         Header: "Pipeline Name",
         accessor: "pipeline_name",
+      },
+      {
+        Header: "Run",
+        accessor: "run_count",
+        class: "no-wrap-inline",
       },
       {
         Header: "Completed At",
@@ -60,23 +60,9 @@ function OpseraRecentPipelineStatus({ date }) {
         Cell: (props) => {
           return props.value ? (
             props.value === "failure" || props.value === "failed" ? (
-              <>
-                <div style={{ display: "flex", flexWrap: "nowrap" }}>
-                  <div>
-                    <FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" />
-                  </div>
-                  <div className="ml-1">{props.value}</div>
-                </div>
-              </>
-            ) : (
-              <>
-                <div style={{ display: "flex", flexWrap: "nowrap" }}>
-                  <div>
-                    <FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" />
-                  </div>
-                  <div className="ml-1">{props.value}</div>
-                </div>
-              </>
+              <FailIcon />
+              ) : (
+              <SuccessIcon />
             )
           ) : (
             "unknown"
@@ -140,7 +126,8 @@ function OpseraRecentPipelineStatus({ date }) {
               <div className="h6 activity-label-text mb-2">Opsera: Recent Pipeline Status</div>
             </div>
             <div className="table-content-block">
-              <CustomTable columns={columns} data={data.data} noDataMessage={noDataMessage} />
+              <CustomTable columns={columns} data={data.data} noDataMessage={noDataMessage}
+                          noFooter={true} />
             </div>
           </>
         )}

@@ -15,7 +15,8 @@ export const defaultRowStyling = (row) => {
 export const defaultInitialState = {
   pageIndex: 0
 };
-function CustomTable({ className, tableStyleName, type, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, paginationOptions, showHeaderText, isLoading, tableTitle, createNewRecord, tableFilterBar, paginationDto, setPaginationDto, loadData }) {
+
+function CustomTable({ className, tableStyleName, type, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, paginationOptions, showHeaderText, isLoading, tableTitle, createNewRecord, tableFilterBar, paginationDto, setPaginationDto, loadData, noFooter=false }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -210,16 +211,18 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
           <tbody {...getTableBodyProps()}>
               {getTableBody()}
           </tbody>
-          <tfoot>
-            <tr>
-              <td colSpan="100%">
-                <div className="table-footer">
-                  {getOldPaginator()}
-                  {getNewPaginator()}
-                </div>
-              </td>
-            </tr>
-          </tfoot>
+          {!noFooter && (
+            <tfoot>
+              <tr>
+                <td colSpan="100%">
+                  <div className="table-footer">
+                    {getOldPaginator()}
+                    {getNewPaginator()}
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+          )}
         </table>
       </div>
     </div>

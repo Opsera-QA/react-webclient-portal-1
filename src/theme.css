@@ -439,7 +439,7 @@ a.text-primary:hover, a.text-primary:focus {
 .custom-table .table-row {
     margin-bottom: 2em;
     line-height: 2em;
-    border-bottom: 1px solid #E6E5E3;
+    /* border-bottom: 1px solid #E6E5E3; */
     color: #3D3B36;
     background-color: #fff;
 }
@@ -480,6 +480,20 @@ a.text-primary:hover, a.text-primary:focus {
 .custom-table .wrap-cell-content{
     max-width: 40vw;
     word-wrap: break-word;
+}
+
+.custom-table .status-icon {
+  display: flex;
+  justify-content: center;
+  width: 1rem;
+}
+
+.custom-table > thead > tr > th {
+  background: rgba(230, 229, 227, .5);
+}
+
+.custom-table > tbody > tr:nth-child(even) {
+  background: rgba(230, 229, 227, .5); /* Same color as #E6E5E3, only slightly more transparent */
 }
 
 /* End Table Styling */
@@ -870,6 +884,7 @@ a.nav-link {
 .table-content-block {
     border: 1px solid #E6E5E3;
     border-collapse: collapse;
+    border-radius: 0.25rem;
 }
 
 .content-container {
