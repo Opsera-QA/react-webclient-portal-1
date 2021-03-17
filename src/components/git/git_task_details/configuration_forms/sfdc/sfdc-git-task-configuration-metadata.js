@@ -1,126 +1,139 @@
+import regexHelpers from "utils/regexHelpers";
+
 const sfdcGitTaskConfigurationMetadata = {
   type: "SFDC Git Task Configuration",
-  //  TODO: This needs to be changed accordingly
   fields: [
     {
       label: "Select Jenkins Tool",
       id: "toolConfigId",
-      isRequired: true
+      isRequired: true,
+      maxLength: 24,
+      regexValidator: regexHelpers.regexTypes.mongoId
     },
     {
       label: "Jenkins Tool Name",
       id: "toolName",
-      isRequired: true
-    },    
+      isRequired: true,
+      maxLength: 25,
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+    },  
     {
-      // label: "Jenkins Job Name",
+      label: "Auto Scaling",
+      id: "autoScaleEnable"
+    },
+    {
+      label: "Agent Label",
+      id: "agentLabels",
+      regexValidator: regexHelpers.regexTypes.generalTextWithoutSpacesPeriod,
+      maxLength: 50
+    },  
+    {
+      label: "Jenkins Job Name",
       id: "jobName",
+      maxLength: 100,
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
     },
     {
       label: "Select SCM Type",
       id: "service",
-      isRequired: true
-    },
-    
+      isRequired: true,
+      maxLength: 10,
+      regexValidator: regexHelpers.regexTypes.loweCaseLetters
+    },    
     {
       label: "Select Account",
       id: "gitCredential",
-      isRequired: true
+      isRequired: true,
+      maxLength: 50,
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
     },
     {
-      // label: "Select Account",
       id: "gitToolId",
-      isRequired: true
+      isRequired: true,
+      maxLength: 24,
+      regexValidator: regexHelpers.regexTypes.mongoId
     },        
     {
       id: "projectId",
+      maxLength: 20,
+      regexValidator: regexHelpers.regexTypes.generalText
     },
     {
       id: "gitUrl",
-      // isRequired: true
     },
     
     {
       id: "sshUrl",
-      // isRequired: true
     },
-    
     {
       label: "Repository",
       id: "repository",
-      isRequired: true
+      isRequired: true,
+      maxLength: 255,
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
     },
     
     {
       label: "Workspace",
       id: "workspace",
-      // isRequired: true
+      maxLength: 255,
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
     },
     {
       label: "Workspace/Project",
       id: "workspaceName",
-      // isRequired: true
+      maxLength: 255,
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
     },
 
     {
       label: "Branch",
       id: "gitBranch",
-      isRequired: true
+      isRequired: true,
+      maxLength: 255,
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
     },
     {
       id: "sfdcToolId",
-      isRequired: true
+      isRequired: true,
+      maxLength: 24,
+      regexValidator: regexHelpers.regexTypes.mongoId
     },
     {
       label: "SFDC Account",
       id: "sfdcToolName",
-      isRequired: true
+      isRequired: true,
+      maxLength: 255,
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
     },
   ],
   newObjectFields:
     {
     type: "",
-
     jobType: "",
     toolConfigId: "",
+    autoScaleEnable: false,
     toolName: "",
     jobName: "",
-
+    agentLabels: "",
     toolJobId: "",
-     
     projectId: "",
-  
-    buildType: "ant", // or sfdx
+    buildType: "ant",
     gitToolId: "",
     gitUrl: "",
     sshUrl: "",
     service: "",
-
-    gitCredential: "",  // name given on jenkins
-
+    gitCredential: "",
     workspace: "",
     workspaceName: "",
     repository: "",
     gitBranch: "",
     defaultBranch: "",
     dependencyType:"",
-
-    // sfdc specific
-    
     sfdcToolId: "",
     sfdcToolName: "",
     accountUsername: "",
     }
 };
-
-// jenkinsToolId
-// jobName  // jenkins job name
-// gitToolId
-// service // gitlab/github/bitbucket
-// workspace  // only for bitbucket
-// repository
-// gitBranch
-// sfdcToolId
-// buildType // ant/sfdx
 
 export default sfdcGitTaskConfigurationMetadata;

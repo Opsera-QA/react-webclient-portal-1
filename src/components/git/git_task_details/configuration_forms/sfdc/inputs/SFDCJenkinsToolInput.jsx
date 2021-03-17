@@ -5,8 +5,9 @@ import PipelineToolInput from "components/common/list_of_values_input/workflow/p
 function SFDCJenkinsToolInput({dataObject, setDataObject, disabled}) {
   const setJenkinsTool = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
-    newDataObject.setData("toolConfigId", selectedOption.id);
-    newDataObject.setData("toolName",selectedOption.name);
+    newDataObject.setData("toolConfigId", selectedOption?.id);
+    newDataObject.setData("toolName", selectedOption?.name);
+    newDataObject.setData("autoScaleEnable", selectedOption?.configuration?.autoScaleEnable);
     newDataObject.setData("toolJobName", "");
     newDataObject.setData("toolJobId", "");
     newDataObject.setData("jobType", "");
