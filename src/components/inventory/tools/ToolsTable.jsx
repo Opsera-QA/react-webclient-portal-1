@@ -2,6 +2,7 @@ import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
+  getLimitedTableTextColumn,
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn
@@ -21,7 +22,7 @@ function ToolsTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
-      getTableTextColumn(getField(fields, "description")),
+      getLimitedTableTextColumn(getField(fields, "description"), 100),
       getTableTextColumn(getField(fields, "tool_identifier"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "owner_name"), "no-wrap-inline"),
       getTableDateColumn(getField(fields, "createdAt")),

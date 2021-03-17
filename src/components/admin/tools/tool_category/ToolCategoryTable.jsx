@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {useHistory} from "react-router-dom";
 import {
+  getLimitedTableTextColumn,
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn
@@ -22,13 +23,13 @@ function ToolCategoryTable({ data, loadData, isLoading, isMounted }) {
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "description")),
+      getLimitedTableTextColumn(getField(fields, "description"), 100),
       getTableDateColumn(getField(fields, "createdAt")),
       getTableBooleanIconColumn(getField(fields, "active")),
     ],
     []
   );
-
+ 
   const rowStyling = (row) => {
     return !row["values"].active ? " inactive-row" : "";
   };

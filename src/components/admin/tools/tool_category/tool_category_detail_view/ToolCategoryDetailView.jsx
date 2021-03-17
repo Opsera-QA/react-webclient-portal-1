@@ -10,7 +10,7 @@ import ActionBarBackButton from "components/common/actions/buttons/ActionBarBack
 import ToolCategoryDetailPanel from "components/admin/tools/tool_category/tool_category_detail_view/ToolCategoryDetailPanel";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import axios from "axios";
-import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 
 function ToolCategoryDetailView() {
@@ -92,9 +92,9 @@ function ToolCategoryDetailView() {
         <div>
           <ActionBarBackButton path={"/admin/tools"} />
         </div>
-        {/*<div>*/}
-        {/*  <ActionBarDeleteButton2 dataObject={toolCategoryData} handleDelete={deleteToolCategory} relocationPath={"/admin/tools"} />*/}
-        {/*</div>*/}
+        <div>
+        {meetsRequirements(ROLE_LEVELS.OPSERA_ADMINISTRATORS, accessRoleData) && <ActionBarDeleteButton2 dataObject={toolCategoryData} handleDelete={deleteToolCategory} relocationPath={"/admin/tools"} />}
+        </div>
       </ActionBarContainer>
     );
   };

@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, {useContext} from "react";
 import ToolsTable from "components/inventory/tools/ToolsTable";
 import TableCardView from "components/common/table/TableCardView";
 import StatusFilter from "components/common/filters/status/StatusFilter";
-import NewToolModal from "components/inventory/tools/NewToolModal";
+import NewToolOverlay from "components/inventory/tools/NewToolOverlay";
 import PropTypes from "prop-types";
 import ToolCardView from "components/inventory/tools/ToolCardView";
 import workflowAuthorizedActions
@@ -12,12 +12,13 @@ import {faTools} from "@fortawesome/pro-light-svg-icons";
 import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilter";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import InlineToolIdentifierFilter from "components/common/filters/tools/tool_identifier/InlineToolIdentifierFilter";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
-function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, saveCookies, customerAccessRules}) {
-  const [showCreateToolModal, setShowCreateToolModal] = useState(false);
+function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, saveCookies, customerAccessRules, isMounted}) {
+  const toastContext = useContext(DialogToastContext);
 
   const createNewTool = () => {
-    setShowCreateToolModal(true);
+    toastContext.showOverlayPanel(<NewToolOverlay loadData={loadData} isMounted={isMounted}/>);
   };
 
   const authorizedAction = (action, owner, objectRoles) => {
@@ -84,7 +85,6 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
   };
 
   return (
-    <div className="px-2 pb-2">
       <FilterContainer
         loadData={loadData}
         filterDto={toolFilterDto}
@@ -99,9 +99,8 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
         inlineFilters={getInlineFilters()}
         titleIcon={faTools}
         title={"Tools"}
+        className="px-2 pb-2"
       />
-      <NewToolModal loadData={loadData} setShowModal={setShowCreateToolModal} showModal={showCreateToolModal}/>
-    </div>
   );
 }
 
@@ -114,6 +113,7 @@ ToolViews.propTypes = {
   loadData: PropTypes.func,
   saveCookies: PropTypes.func,
   customerAccessRules: PropTypes.object,
+  isMounted: PropTypes.object
 };
 
 export default ToolViews;
