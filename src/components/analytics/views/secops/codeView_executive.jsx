@@ -8,13 +8,13 @@ import LoadingDialog from "../../../common/status_notifications/loading";
 import ErrorDialog from "../../../common/status_notifications/error";
 import InfoDialog from "../../../common/status_notifications/info";
 import SummaryCountBlocksView from "../summaryCountBlocksView";
-import SonarMaintainabilityLineChart from "../../charts/sonarMaintainabilityLineChart";
-import SonarCodeSmellsLineChart from "../../charts/sonarCodeSmellsLineChart";
+import SonarMaintainabilityLineChart from "../../charts/SonarMaintainabilityLineChart";
+import SonarCodeSmellsLineChart from "../../charts/SonarCodeSmellsLineChart";
 import SonarCodeCategoriesNO_VALUEPieChart from "../../charts/sonarCodeCategoriesNO_VALUEPieChart";
 import SonarCodeCategoriesOKPieChart from "../../charts/sonarCodeCategoriesOKPieChart";
 import TwistlockVulnerability from "../../charts/twistlockVulnerabilityLineChart";
-import VulnerabilityLineChart from "../../charts/vulnerabilityTimeSeriesLineChart";
-import VulnerabilityByPackage from "../../charts/vulnerabilityByPackageBarChart";
+import VulnerabilityLineChart from "../../charts/VulnerabilityTimeSeriesLineChart";
+import VulnerabilityByPackage from "../../charts/VulnerabilityByPackageBarChart";
 import { Row } from "react-bootstrap";
 
 function CodeView_Executive({ persona, date, index }) {
