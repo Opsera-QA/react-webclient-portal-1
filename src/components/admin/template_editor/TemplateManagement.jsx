@@ -70,8 +70,8 @@ function TemplateManagement() {
   const getTemplates = async (cancelSource = cancelTokenSource) => {
     const templateListResponse = await templateActions.getTemplatesV2(getAccessToken, cancelSource);
 
-    if (isMounted?.current === true) {
-      setTemplateList(templateListResponse?.data);
+    if (isMounted?.current === true && templateListResponse?.data) {
+      setTemplateList(templateListResponse.data);
     }
   };
 

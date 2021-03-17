@@ -1,3 +1,5 @@
+import regexHelpers from "utils/regexHelpers";
+
 const templateEditorMetadata = {
   idProperty: "_id",
   type: "Pipeline Template",
@@ -13,7 +15,9 @@ const templateEditorMetadata = {
       label: "Name",
       id: "name",
       minLength: 3,
+      maxLength:50,
       isRequired: true,
+      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
     },
     {
       label: "ID",
@@ -23,7 +27,9 @@ const templateEditorMetadata = {
       label: "Description",
       id: "description",
       minLength: 3,
+      maxLength:1000,
       isRequired: true,
+      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
     },
     {
       label: "Type",

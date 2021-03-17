@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState, useRef} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
 import pipelineActions from "../../../../workflow/pipeline-actions";
@@ -10,32 +10,57 @@ import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Link} from "react-router-dom";
 import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
+import axios from 'axios';
 
 function PipelineMultiSelectInput({ currentPipelineId, visible, fieldName, dataObject, setDataObject, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [pipelines, setPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true)
-      await loadPipelines();
+      await loadPipelines(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if(isMounted?.current === true){
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if(isMounted?.current === true){
+        setIsLoading(false);
+      }
     }
   };
 
-  const loadPipelines = async () => {
-    const response = await pipelineActions.getAllPipelines(getAccessToken);
+  const loadPipelines = async (cancelSource = cancelTokenSource) => {
+    const response = await pipelineActions.getAllPipelinesV2(getAccessToken, cancelSource);
     if (response?.data?.response) {
       let pipelines = formatPipelines(response?.data?.response);
       setPipelines(pipelines);
