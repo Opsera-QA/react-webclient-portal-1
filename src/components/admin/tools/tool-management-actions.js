@@ -68,12 +68,28 @@ toolManagementActions.createToolIdentifier = async (toolIdentifierDataDto, getAc
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
+toolManagementActions.createToolIdentifierV2 = async (getAccessToken, cancelTokenSource, toolIdentifierDataDto) => {
+  let postData = {
+    ...toolIdentifierDataDto.getPersistData()
+  }
+  const apiUrl = "/registry/tool/create";
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
+};
+
 toolManagementActions.updateToolIdentifier = async (toolIdentifierDataDto, getAccessToken) => {
   const postBody = {
     ...toolIdentifierDataDto.getPersistData()
   }
   const apiUrl = `/registry/tool/${toolIdentifierDataDto.getData("_id")}/update`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+toolManagementActions.updateToolIdentifierV2 = async (getAccessToken, cancelTokenSource, toolIdentifierDataDto) => {
+  const postBody = {
+    ...toolIdentifierDataDto.getPersistData()
+  }
+  const apiUrl = `/registry/tool/${toolIdentifierDataDto.getData("_id")}/update`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 toolManagementActions.deleteToolIdentifier = async (toolIdentifierDataDto, getAccessToken) => {

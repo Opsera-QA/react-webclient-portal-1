@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Col, Row } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
@@ -12,25 +12,50 @@ import DtoPropertiesInput from "components/common/input/dto_input/dto-properties
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TagManager from "components/common/inputs/tags/TagManager";
+import axios from "axios"
 
-function ToolIdentifierEditorPanel( {toolIdentifierData, setToolIdentifierData, handleClose} ) {
+function ToolIdentifierEditorPanel( {toolIdentifierData, handleClose} ) {
   const {getAccessToken} = useContext(AuthContext);
   const [toolIdentifierDataDto, setToolIdentifierDataDto] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
   const loadData = async () => {
-    setToolIdentifierDataDto(toolIdentifierData);
+    if (isMounted?.current === true){
+      setIsLoading(true);
+      setToolIdentifierDataDto(toolIdentifierData);
+      setIsLoading(false);
+    }
   };
 
   const createToolIdentifier = async () => {
-    return await toolManagementActions.createToolIdentifier(toolIdentifierDataDto, getAccessToken);
+    return await toolManagementActions.createToolIdentifierV2(getAccessToken, cancelTokenSource, toolIdentifierDataDto);
   };
 
   const updateToolIdentifier = async () => {
-    return await toolManagementActions.updateToolIdentifier(toolIdentifierDataDto, getAccessToken);
+    return await toolManagementActions.updateToolIdentifierV2(getAccessToken, cancelTokenSource, toolIdentifierDataDto);
   };
 
   if (toolIdentifierDataDto == null) {
