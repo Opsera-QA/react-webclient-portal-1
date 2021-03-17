@@ -551,13 +551,13 @@ a:hover, .active {
 
 .error-text {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-    color: #ff7b7b;
+    color: #dc3545;
     padding: 5px;
 }
 
 .info-text {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-    color: #7F74B9;
+    color: #3D3B36;
     padding: 5px;
 }
 
