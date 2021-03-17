@@ -15,12 +15,28 @@ notificationsActions.updateNotification = async (notificationDataDto, getAccessT
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
+notificationsActions.updateNotificationV2 = async (getAccessToken, cancelTokenSource,notificationDataDto) => {
+  const postBody = {
+    ...notificationDataDto.getPersistData()
+  }
+  const apiUrl = `/notifications/${notificationDataDto.getData("_id")}/update`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 notificationsActions.createNotification = async (notificationDataDto, getAccessToken) => {
   const postBody = {
     ...notificationDataDto.getPersistData()
   }
   const apiUrl = "/notifications/create";
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+notificationsActions.createNotificationV2 = async (getAccessToken, cancelTokenSource, notificationDataDto) => {
+  const postBody = {
+    ...notificationDataDto.getPersistData()
+  }
+  const apiUrl = "/notifications/create";
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 notificationsActions.getNotificationsList = async (notificationDataDto, getAccessToken) => {
@@ -46,6 +62,11 @@ notificationsActions.getNotificationsList = async (notificationDataDto, getAcces
 notificationsActions.getNotificationById = async (id, getAccessToken) => {
   const apiUrl = `/notifications/${id}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+notificationsActions.getNotificationByIdV2 = async (getAccessToken, cancelTokenSource, id) => {
+  const apiUrl = `/notifications/${id}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 notificationsActions.getNotificationActivityLogs = async (notificationDataDto, notificationActivityFilterDto, getAccessToken) => {

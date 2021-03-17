@@ -1,3 +1,5 @@
+import regexHelpers from "utils/regexHelpers";
+
 const notificationsMetadata = {
   idProperty: "_id",
   type: "Notification Policy",
@@ -16,11 +18,15 @@ const notificationsMetadata = {
     {
       label: "Name",
       id: "name",
-      isRequired: true
+      isRequired: true,
+      maxLength: 50,
+      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
     },
     {
       label: "Description",
       id: "description",
+      maxLength: 1000,
+      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
     },
     {
       label: "Owner",

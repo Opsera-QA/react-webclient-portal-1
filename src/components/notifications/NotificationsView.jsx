@@ -1,5 +1,6 @@
 import { AuthContext } from "contexts/AuthContext";
 import React, { useContext, useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import "./notifications.css";
 import NotificationsTable from "./NotificationsTable";
 import notificationsFilterMetadata from "./notifications-filter-metadata";
@@ -10,15 +11,14 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faFlag} from "@fortawesome/pro-light-svg-icons";
-import NewNotificationModal from "components/notifications/NewNotificationModal";
+import NewNotificationOverlay from "components/notifications/NewNotificationOverlay";
 import StatusFilter from "components/common/filters/status/StatusFilter";
 import NotificationTypeFilter from "components/common/filters/notifications/notification_type/NotificationTypeFilter";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import InlineNotificationTypeFilter
   from "components/common/filters/notifications/notification_type/InlineNotificationTypeFilter";
 
-function NotificationsView() {
-  const [showCreateNotificationModal, setShowCreateNotificationModal] = useState(false);
+function NotificationsView({isMounted}) {
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -95,7 +95,7 @@ function NotificationsView() {
   };
 
   const createNewNotification = () => {
-    setShowCreateNotificationModal(true);
+   toastContext.showOverlayPanel(<NewNotificationOverlay loadData={loadData} isMounted={isMounted} />);
   };
 
   if (!accessRoleData) {
@@ -107,8 +107,9 @@ function NotificationsView() {
   }
 
   return (
-    <div className="px-2 pb-2">
+  
       <FilterContainer
+        className="px-2 pb-2"
         loadData={loadData}
         filterDto={notificationFilterDto}
         setFilterDto={setNotificationFilterDto}
@@ -121,10 +122,10 @@ function NotificationsView() {
         titleIcon={faFlag}
         title={"Notification Policies"}
       />
-      <NewNotificationModal loadData={loadData} setShowModal={setShowCreateNotificationModal} showModal={showCreateNotificationModal}/>
-    </div>
   );
 }
 
-
+NotificationsView.propTypes ={
+isMounted: PropTypes.object,
+}
 export default NotificationsView;
