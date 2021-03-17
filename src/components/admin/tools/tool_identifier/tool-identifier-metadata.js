@@ -1,3 +1,5 @@
+import regexHelpers from "utils/regexHelpers";
+
 const toolIdentifierMetadata = {
   idProperty: "_id",
   type: "Tool Identifier",
@@ -12,11 +14,15 @@ const toolIdentifierMetadata = {
     {
       label: "Name",
       id: "name",
-      isRequired: true
+      isRequired: true,
+      maxLength: 50,
+      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
     },
     {
       label: "Description",
       id: "description",
+      maxLength: 1000, 
+      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
     },
     {
       label: "Usage Type",
