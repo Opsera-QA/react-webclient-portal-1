@@ -12,6 +12,7 @@ import SFDCBitbucketWorkspaceInput from "./inputs/SFDCBitbucketWorkspaceInput";
 import SFDCGitRepositoryInput from "./inputs/SFDCGitRepositoryInput";
 import SFDCGitBranchInput from "./inputs/SFDCGitBranchInput";
 import SFDCToolInput from "./inputs/SFDCToolInput";
+import AgentLabelsMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
 
 function SFDCGitTaskEditorPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   useEffect(() => {loadData();}, []);
@@ -25,32 +26,37 @@ function SFDCGitTaskEditorPanel({ gitTasksDataDto, gitTasksConfigurationData, se
     return (<LoadingDialog size="sm"/>);
   }
 
+  const getDynamicFields = () => {
+    if(gitTasksConfigurationData.getData("autoScaleEnable") === true){
+      return (
+        <Col lg={12}>
+          <AgentLabelsMultiSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"agentLabels"} />
+        </Col>
+      );
+    }
+  }
+
   return (
     <Row>
       <Col lg={12}>
-        {/* jenkins tool selection */}
         <SFDCJenkinsToolInput  dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
       </Col>
       <Col lg={12}>
-        {/* SFDC Selection */}
         <SFDCToolInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
       </Col>
       <Col lg={12}>
-        {/* account */}
         <SFDCJenkinsAccountInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} gitTasksDataDto={gitTasksDataDto} />
       </Col>
       <Col lg={12}>
-        {/* workspace */}
-        <SFDCBitbucketWorkspaceInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />       
+        <SFDCBitbucketWorkspaceInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
       </Col>
       <Col lg={12}>
-        {/* repo */}
         <SFDCGitRepositoryInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
       </Col>
       <Col lg={12}>
-        {/* branch */}
         <SFDCGitBranchInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
       </Col>
+      {getDynamicFields()}
     </Row>
   );
 }
