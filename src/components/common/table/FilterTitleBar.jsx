@@ -1,21 +1,27 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import { faSpinner } from "@fortawesome/pro-light-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
-function FilterTitleBar({ title, inlineFilters, titleIcon, isLoading }) {
-  // TODO: Make component
-  const getTitleIcon = () => {
-    if (isLoading) {
-      return <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>;
-    }
+function FilterTitleBar({ title, inlineFilters, titleIcon, isLoading, stackFilters }) {
 
-    return <FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-1"/>;
-  };
+  if (stackFilters) {
+    return (
+      <div className="w-100 my-1">
+        <div className="d-none d-lg-block my-auto mr-2 filter-title-text text-nowrap">
+          <span><IconBase icon={titleIcon} isLoading={isLoading} className={"mr-1"}/>{title}</span>
+        </div>
+        <div className="d-flex">
+          <div className="my-1">{inlineFilters}</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="d-flex w-100 justify-content-between">
-      <div className="d-none d-lg-block my-auto mr-2 filter-title-text text-nowrap">{getTitleIcon()}{title}</div>
+      <div className="d-none d-lg-block my-auto mr-2 filter-title-text text-nowrap">
+        <span><IconBase icon={titleIcon} isLoading={isLoading} className={"mr-1"} />{title}</span>
+      </div>
       <div className="d-flex">
         <div className="my-1">{inlineFilters}</div>
       </div>
@@ -28,6 +34,7 @@ FilterTitleBar.propTypes = {
   titleIcon: PropTypes.object,
   inlineFilters: PropTypes.any,
   isLoading: PropTypes.bool,
+  stackFilters: PropTypes.bool
 };
 
 export default FilterTitleBar;

@@ -4,12 +4,9 @@ import { Multiselect } from 'react-widgets'
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
-import InfoText from "components/common/inputs/info_text/InfoText";
-import InputContainer from "components/common/inputs/InputContainer";
-import InputLabel from "components/common/inputs/info_text/InputLabel";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
-function TagMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction, showLabel}) {
+function TagMultiSelectInputBase({ fieldName, dataObject, setDataObject, disabled, setDataFunction, className}) {
   const { getAccessToken } = useContext(AuthContext);
   const [field] = useState(dataObject.getFieldById(fieldName));
   const [tagOptions, setTagOptions] = useState([]);
@@ -120,8 +117,7 @@ function TagMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, s
   }
 
   return (
-    <InputContainer className="custom-multiselect-input">
-      <InputLabel field={field} />
+    <div className={className}>
       <Multiselect
         data={[...tagOptions]}
         textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + data["value"]}
@@ -133,23 +129,21 @@ function TagMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, s
         disabled={disabled || isLoading}
         onChange={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
       />
-      <InfoText field={field} errorMessage={errorMessage}/>
-    </InputContainer>
+    </div>
   );
 }
 
-TagMultiSelectInput.propTypes = {
+TagMultiSelectInputBase.propTypes = {
   setDataObject: PropTypes.func,
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataFunction: PropTypes.func,
-  showLabel: PropTypes.bool,
   disabled: PropTypes.bool,
   className: PropTypes.string
 };
 
-TagMultiSelectInput.defaultProps = {
+TagMultiSelectInputBase.defaultProps = {
   fieldName: "tags"
 }
 
-export default TagMultiSelectInput;
+export default TagMultiSelectInputBase;

@@ -122,7 +122,7 @@ export class Model {
   };
 
   getArrayData = (fieldName) => {
-    let currentValue = this.data[fieldName];
+    let currentValue = this.getData(fieldName);
 
     if (currentValue == null) {
       return [];
