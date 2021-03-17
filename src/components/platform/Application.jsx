@@ -11,12 +11,13 @@ import { NewAppContext } from "./context";
 import { ApiService } from "api/apiService";
 import ErrorDialog from "components/common/status_notifications/error";
 import SuccessDialog from "components/common/status_notifications/SuccessDialog";
-import { handleError, isAlphaNumeric } from "utils/helpers";
+import { handleError } from "utils/helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWrench, faClipboardList } from "@fortawesome/free-solid-svg-icons";
+import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import ContainerScan from "./ContainerScan";
 import LoadingDialog from "../common/status_notifications/loading";
+import regexHelpers from "utils/regexHelpers";
 
 function Application(props) {
   const { data, saving, gotoInventory, token, user, reset, setAppDetails, appid, setState, isEKS } = useContext(NewAppContext);
@@ -76,21 +77,22 @@ function Application(props) {
   };
 
   const handleAppNameChange = ({ target: { name, value } }) => {
-    const regex = RegExp('^[A-Za-z0-9-.]*$');
+    // const regex = RegExp('^[A-Za-z0-9-]*$');
+    const regex = RegExp(regexHelpers.regexTypes.domainField);
     const trimmedValue = value.trim();
-
+    setAppName(trimmedValue);
     if (trimmedValue.length > 20) {
       setAppNameError("Application Names must be less than 20 characters.");
       return;
     }
 
     if(!regex.test(trimmedValue)) {
-      setAppNameError("No special chars allowed except dashes and periods.");
+      setAppNameError("Name must start and end with an alphanumeric character. Dash and alphanumeric are allowed otherwise.");
       return;
     }
 
     setAppNameError(null);
-    setAppName(trimmedValue);
+    // setAppName(trimmedValue);
   };
 
   const handleCreateClick = async (e) => {
@@ -245,7 +247,7 @@ function Application(props) {
                         isInvalid={appNameError}
                         disabled={applicationStatus === "success"}
                       />
-                      <Form.Control.Feedback type={"info"}>Application Names must be between 3 and 20 characters. Numbers, Letters, Dashes, and Periods are allowed.</Form.Control.Feedback>
+                      <Form.Control.Feedback type={"info"}>Application Names must be between 3 and 20 characters. Numbers, Letters and Dashes are allowed.</Form.Control.Feedback>
                       <Form.Control.Feedback type="invalid">{appNameError}</Form.Control.Feedback>
                     </Form.Group>
                   </Form.Row>
