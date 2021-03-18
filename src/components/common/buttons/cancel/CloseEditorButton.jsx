@@ -5,9 +5,7 @@ import CloseButton from "components/common/buttons/CloseButton";
 function CloseEditorButton({ dataModel, isLoading, closeEditorCallback, size, className, showUnsavedChangesMessage }) {
   const handleClose = () => {
     if (dataModel) {
-      console.log("resetting data: " + JSON.stringify(dataModel.getData("name")));
       dataModel.resetData();
-      console.log("reset data: " + JSON.stringify(dataModel.getData("name")));
     }
 
     closeEditorCallback();
