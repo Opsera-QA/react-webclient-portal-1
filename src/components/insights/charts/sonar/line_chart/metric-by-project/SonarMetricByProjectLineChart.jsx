@@ -1,16 +1,14 @@
 // Analytics  Security Tab, Dashboard, Node Ticket AN-48 and AN-49 (persona : Developer/Manager/Executive)
 
-import React, { useState, useEffect, useContext, useCallback } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "../../../../../../contexts/AuthContext";
-import { axiosApiService } from "../../../../../../api/apiService";
 import { ResponsiveLine } from "@nivo/line";
-import LoadingDialog from "components/common/status_notifications/loading";
-import ErrorDialog from "components/common/status_notifications/error";
 import config from "./sonarMetricByProjectLineChartConfigs";
-import InfoDialog from "components/common/status_notifications/info";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import ModalLogs from "components/common/modal/modalLogs";
-import "components/analytics/charts/charts.css";
+import axios from "axios";
+import chartsActions from "components/insights/charts/charts-actions";
+import {AuthContext} from "contexts/AuthContext";
+import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 
 /**
  *
@@ -25,56 +23,59 @@ import "components/analytics/charts/charts.css";
   "new_technical_debt", "new_uncovered_conditions", "new_uncovered_lines", "new_violations", "new_vulnerabilities", "new_coverage",
   "new_line_coverage", "skipped_tests", "test_errors", "test_execution_time", "test_failures", "test_success_density", "tests",
  */
-function SonarMetricByProjectLineChart({ persona, sonarMeasure, date, tags }) {
-  const contextType = useContext(AuthContext);
-  const [error, setErrors] = useState(false);
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+function SonarMetricByProjectLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis, sonarMeasure }) {
+  const {getAccessToken} = useContext(AuthContext);
+  const [error, setError] = useState(undefined);
+  const [metrics, setMetrics] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/metrics";
-    const postBody = {
-      request: "sonarMeasures-" + sonarMeasure,
-      startDate: date.start, 
-      endDate: date.end,
-      tags: tags
-    };
-
-    try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0]["sonarMeasures-" + sonarMeasure] : [];
-      setData(dataObject);
-      setLoading(false);
-    }
-    catch (err) {
-      console.log(err);
-      setLoading(false);
-      setErrors(err.message);
-    }
-  }, [contextType, date]);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        await fetchData();
-      } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
       }
-    };
-    runEffect();
+    });
 
     return () => {
-      controller.abort();
-    };
-  }, [fetchData]);
+      source.cancel();
+      isMounted.current = false;
+    }
+  }, [JSON.stringify(dashboardData)]);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "sonarMeasures-" + sonarMeasure, kpiConfiguration, dashboardTags);
+      const dataObject = response?.data && response?.data?.data[0]?.["sonarMeasures-" + sonarMeasure].status === 200 ? response?.data?.data[0]?.["sonarMeasures-" + sonarMeasure]?.data : [];
+
+      if (isMounted?.current === true && dataObject) {
+        setMetrics(dataObject);
+      }
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        setError(error);
+      }
+    }
+    finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
 
   const formatTitle = (str) => {
     var i, frags = str.split("_");
@@ -84,25 +85,15 @@ function SonarMetricByProjectLineChart({ persona, sonarMeasure, date, tags }) {
     return frags.join(" ");
   };
 
-  //This needs to be more intelligent than just checking for precense of data.  Node can return a status 400 error from ES, and that would fail this.
-  if (loading) {
-    return (<LoadingDialog size="sm" />);
-  } else if (error) {
-    return (<ErrorDialog error={error} />);
-  } else {
+  const getChartBody = () => {
+    if (!Array.isArray(metrics) || metrics.length === 0) {
+      return null;
+    }
 
     return (
-      <>
-        <ModalLogs header={formatTitle(sonarMeasure)} size="lg" jsonMessage={data&& data.data && data.data} dataType="line" show={showModal} setParentVisibility={setShowModal} />
-
-        <div className="new-chart mb-3" style={{ height: "300px" }}>
-          {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
-            <div className='max-content-width p-5 mt-5' style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <InfoDialog message="No Data is available for this chart at this time." />
-            </div>
-            :
+      <div className="new-chart mb-3" style={{height: "300px"}}>
             <ResponsiveLine
-              data={data ? data.data : []}
+              data={metrics}
               onClick={() => setShowModal(true)}
 
               margin={{ top: 40, right: 110, bottom: 70, left: 40 }}
@@ -117,7 +108,7 @@ function SonarMetricByProjectLineChart({ persona, sonarMeasure, date, tags }) {
               }}
               axisBottom={{
                 format: "%b %d",
-                tickValues: data.maxLength && data.maxLength > 10 ? 10 : 'every 1 days',
+                tickValues: metrics.maxLength && metrics.maxLength > 10 ? 10 : 'every 1 days',
                 tickRotation: -25,
                 legendOffset: -12,
               }}              
@@ -150,17 +141,43 @@ function SonarMetricByProjectLineChart({ persona, sonarMeasure, date, tags }) {
                   },
                 },
               }}
-            />
-          }
+            />        
         </div>
-      </>
     );
   }
+  return (
+    <div>
+      <ChartContainer
+        title={kpiConfiguration?.kpi_name}
+        kpiConfiguration={kpiConfiguration}
+        setKpiConfiguration={setKpiConfiguration}
+        chart={getChartBody()}
+        loadChart={loadData}
+        dashboardData={dashboardData}
+        index={index}
+        error={error}
+        setKpis={setKpis}
+        isLoading={isLoading}
+      />
+      <ModalLogs
+        header={formatTitle(sonarMeasure)}
+        size="lg"
+        jsonMessage={metrics}
+        dataType="bar"
+        show={showModal}
+        setParentVisibility={setShowModal}
+      />
+    </div>
+  );
 }
 
 
 SonarMetricByProjectLineChart.propTypes = {
-  persona: PropTypes.string,
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  index: PropTypes.number,
+  setKpiConfiguration: PropTypes.func,
+  setKpis: PropTypes.func,
   sonarMeasure: PropTypes.string
 };
 
