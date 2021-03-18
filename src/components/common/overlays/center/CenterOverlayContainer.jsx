@@ -5,7 +5,7 @@ import OverlayTitleBar from "components/common/overlays/OverlayTitleBar";
 import CloseButton from "components/common/buttons/CloseButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 
-function CenterOverlayContainer({ children, actionBar, titleText, titleIcon, showPanel, closePanel, isLoading, showToasts, showCloseButton, buttonContainer}) {
+function CenterOverlayContainer({ children, actionBar, titleText, titleIcon, showPanel, closePanel, isLoading, showToasts, showCloseButton, buttonContainer, fullWidth}) {
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
@@ -28,13 +28,21 @@ function CenterOverlayContainer({ children, actionBar, titleText, titleIcon, sho
     }
   };
 
+  const getStyling = () => {
+    if (fullWidth === true) {
+      return ("full-width-center-overlay content-card-1 bg-white");
+    }
+
+    return ("center-overlay content-card-1 bg-white");
+  };
+
   if (!showPanel) {
     return null;
   }
 
   return (
     <div className={`overlay-panel center-overlay-shadow-background`}>
-      <div className="center-overlay content-card-1 bg-white">
+      <div className={getStyling()}>
         <OverlayTitleBar handleClose={closePanel} isLoading={isLoading} titleText={titleText} titleIcon={titleIcon} />
         {actionBar}
         <div className="overlay-panel-body">
@@ -59,7 +67,8 @@ CenterOverlayContainer.propTypes = {
   showToasts: PropTypes.bool,
   actionBar: PropTypes.object,
   showCloseButton: PropTypes.bool,
-  buttonContainer: PropTypes.object
+  buttonContainer: PropTypes.object,
+  fullWidth: PropTypes.bool
 };
 
 CenterOverlayContainer.defaultProps = {

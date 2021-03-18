@@ -1156,11 +1156,11 @@ a.nav-link {
 }
 
 .top-pagination .page-sort {
-    width: 250px;
+    width: 150px;
 }
 
 .top-pagination .page-size {
-    width: 250px;
+    width: 150px;
 }
 
 .bottom-pagination .results-summary {
@@ -1456,6 +1456,11 @@ a.nav-link {
     left: 12.5%;
     right: 12.5%;
     margin: 10px auto auto;
+}
+
+/* TODO: Remove and change to w-100 if no custom styling is needed*/
+.full-width-center-overlay {
+    width: 100%;
 }
 
 .center-overlay-shadow-background {

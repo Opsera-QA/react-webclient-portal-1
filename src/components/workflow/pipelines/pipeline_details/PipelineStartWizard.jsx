@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
-import { Button, OverlayTrigger, Popover, Modal } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStepForward, faPlay, faSpinner } from "@fortawesome/pro-light-svg-icons";
+import {faStepForward, faPlay, faSpinner, faWandMagic} from "@fortawesome/pro-light-svg-icons";
 import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/sfdcPipelineWizard";
+import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, pipeline, handleClose, handlePipelineWizardRequest, refreshPipelineActivityData }) {
+  const toastContext = useContext(DialogToastContext);
 
-  const popover = (
-    <Popover id="popover-basic">
-      <Popover.Content>
-       Warning! Closing this window will prevent the pipeline from starting.
-      </Popover.Content>
-    </Popover>
-  );
+  const closePanel = () => {
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
+  };
 
   const getBody = () => {
     if (pipelineType !== "sfdc" && pipelineOrientation === "middle") {
@@ -32,19 +32,16 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, p
   };
 
   return (
-    <Modal size={"xl"} show={true} onHide={handleClose} className={"pipeline-start-wizard-modal"} id="pipelineWizardModal" backdrop="static">
-      <Modal.Header closeButton>
-        <Modal.Title>Pipeline Start Wizard</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        {getBody()}
-      </Modal.Body>
-      <Modal.Footer>
-        <OverlayTrigger trigger={["hover", "focus"]} placement="top" overlay={popover}>
-          <Button size="sm" variant="secondary" onClick={handleClose}>Close</Button>
-        </OverlayTrigger>
-      </Modal.Footer>
-    </Modal>
+    <CenterOverlayContainer
+      closePanel={closePanel}
+      showPanel={true}
+      titleText={`Pipeline Start Wizard`}
+      titleIcon={faWandMagic}
+      showToasts={true}
+      fullWidth={true}
+    >
+      {getBody()}
+    </CenterOverlayContainer>
   );
 
 }

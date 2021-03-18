@@ -1,145 +1,110 @@
-import React, { useEffect, useContext, useState, useMemo } from "react";
-import { AuthContext } from "../../../../contexts/AuthContext";
-import { axiosApiService } from "../../../../api/apiService";
-import LoadingDialog from "components/common/status_notifications/loading";
-import InfoDialog from "components/common/status_notifications/info";
-import ErrorDialog from "components/common/status_notifications/error";
-import { Table }  from "react-bootstrap";
-import { format } from "date-fns";
+import React, {useEffect, useContext, useState, useMemo, useRef} from "react";
 import CustomTable from "components/common/table/CustomTable";
-import { faTimesCircle, faCheckCircle, faSearchPlus, faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "components/analytics/charts/charts.css";
+import {AuthContext} from "contexts/AuthContext";
+import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import PropTypes from "prop-types";
+import axios from "axios";
+import chartsActions from "components/insights/charts/charts-actions";
+import {
+  getTableDateTimeColumn,
+  getTableTextColumn
+} from "components/common/table/table-column-helpers";
+import xunitTestResultsTableMetadata
+  from "./xunit-test-results-metadata.js";
+import {getField} from "components/common/metadata/metadata-helpers";
 
-function XunitResultsTable({ date, tags }) {
-  const contextType = useContext(AuthContext);
-  const [error, setErrors] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
+function XunitTestResultsTable({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
+  const fields = xunitTestResultsTableMetadata.fields;
+  const {getAccessToken} = useContext(AuthContext);
+  const [error, setError] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
+  const [metrics, setMetrics] = useState([]);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
   const noDataMessage = "No Data is available for this chart at this time";
-  const initialState = {
-    pageIndex: 0,
-    sortBy: [
-      {
-        id: "timestamp",
-        desc: true
-      }
-    ]
-  };
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        await fetchData();
-
-      } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }
-      }
-    };
-    runEffect();
-
-    return () => {
-      controller.abort();
-    };
-  }, [date]);
-
-
-  async function fetchData() {
-    setLoading(true);
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/metrics";
-    const postBody = {
-      request: "xunitTestResults",
-      startDate: date.start,
-      endDate: date.end,
-      tags: tags
-    };
-
-    try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].xunitTestResults : [];
-      setData(dataObject);
-      setLoading(false);
-    }
-    catch (err) {
-      setErrors(err);
-      setLoading(false);
-    }
-  }
 
   const columns = useMemo(
     () => [
-      {
-        Header: "Job",
-        accessor: "jobId"
-      },
-      {
-        Header: "Run",
-        accessor: "runCount"
-      },
-      {
-        Header: "Timestamp",
-        accessor: "timestamp",
-        Cell: (props) => {
-          return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
-        }
-      },
-      {
-        Header: "Tests",
-        accessor: "testsRun",
-      },
-      {
-        Header: "Passed",
-        accessor: "testsPassed",
-      },
-      {
-        Header: "Failed",
-        accessor: "testsFailed",
-      },
-      {
-        Header: "Duration(s)",
-        accessor: "duration"
-      }
+      getTableTextColumn(getField(fields, "jobId"), "cell-center no-wrap-inline"),
+      getTableTextColumn(getField(fields, "runCount")),
+      getTableDateTimeColumn(getField(fields, "timestamp")),
+      getTableTextColumn(getField(fields, "testsRun")),
+      getTableTextColumn(getField(fields, "testsPassed")),
+      getTableTextColumn(getField(fields, "testsFailed")),
+      getTableTextColumn(getField(fields, "duration"))    
     ],
     []
   );
 
-  if(loading) {
-    return (<LoadingDialog size="sm" />);
-  } else if (error) {
-    return (<ErrorDialog  error={error} />);
-  } else {
-    return (
-      <>
-        {(typeof data !== "object" || data === undefined || Object.keys(data).length === 1 || data.status !== 200) ?
-          <>
-            <div className="new-chart mb-3" style={{ height: "300px" }}>
-              <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
-                <InfoDialog message="No Data is available for this chart at this time." />
-              </div>
-            </div>
-          </>
-          :
-          <>
-            <div className="mt-3 d-flex justify-content-between">
-            </div>
-            <CustomTable
-              columns={columns}
-              data={data.data}
-              rowStyling={""}
-              noDataMessage={noDataMessage}
-              initialState={initialState}
-            >
-            </CustomTable>
-          </>
-        }
-      </>
-    );}
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
+  }, [JSON.stringify(dashboardData)]);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "xunitTestResults", kpiConfiguration, dashboardTags);
+      let dataObject = response?.data?.data[0]?.xunitTestResults?.data;
+
+      if (isMounted?.current === true && dataObject) {
+        setMetrics(dataObject);
+      }
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        setError(error);
+      }
+    }
+    finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  return (
+    <div>
+      <ChartContainer
+        kpiConfiguration={kpiConfiguration}
+        setKpiConfiguration={setKpiConfiguration}
+        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage}/>}
+        loadChart={loadData}
+        dashboardData={dashboardData}
+        index={index}
+        error={error}
+        setKpis={setKpis}
+        isLoading={isLoading}
+      />
+    </div>
+  );
 }
 
-export default XunitResultsTable;
+XunitTestResultsTable.propTypes = {
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  index: PropTypes.number,
+  setKpiConfiguration: PropTypes.func,
+  setKpis: PropTypes.func
+};
+
+export default XunitTestResultsTable;

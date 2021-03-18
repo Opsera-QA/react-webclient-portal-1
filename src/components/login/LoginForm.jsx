@@ -10,6 +10,7 @@ import { faArrowLeft } from "@fortawesome/pro-solid-svg-icons";
 import { AuthContext } from "../../contexts/AuthContext";
 import "@okta/okta-signin-widget/dist/css/okta-sign-in.min.css";
 import { useOktaAuth } from "@okta/okta-react";
+
 const OktaSignIn = require("@okta/okta-signin-widget");
 
 const LoginForm = ({ authClient }) => {
@@ -82,8 +83,8 @@ const LoginForm = ({ authClient }) => {
 
   //works for if password is expired or 2FA engaged.  Would prefer to use the next funciton though
   const handleFallbackSignInReactHook = (sessionToken) => {
-    oktaAuth.signInWithRedirect({ sessionToken })
-  }
+    oktaAuth.signInWithRedirect({ sessionToken });
+  };
 
   /*const handleFallbackGetLoginWithPrompt = (options) => {
     authClient.token.getWithoutPrompt(options)
@@ -180,12 +181,11 @@ const LoginForm = ({ authClient }) => {
   };
 
 
-  //TODO: In future customer IDP may be returned here (based on email lookup to LDAP) and then used in new federated login
   const handleDomainLookupSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     const apiUrl = "/users/check-email";
-    const params = { "email": lookupAccountEmail, "checkAccountLoginStatus": true };
+    const params = { "email": lookupAccountEmail, "checkAccountLoginStatus": true, "hostname": window.location.hostname };
     try {
       const response = await axiosApiService().post(apiUrl, params); //this lookup is currently FF in Node
       setMessage(false);
@@ -212,7 +212,7 @@ const LoginForm = ({ authClient }) => {
   if (viewType === "login") {
     return (
       <Row className="mt-4">
-        <Col md={5} className="p-4"><WelcomeMessage/></Col>
+        <Col md={5} className="p-4"><WelcomeMessage /></Col>
         <Col>
           <div className="d-flex align-items-center justify-content-center">
             <div className="auth-box-w">
@@ -230,9 +230,10 @@ const LoginForm = ({ authClient }) => {
                     Sign in
                   </div>
 
-                  {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage}/>}
+                  {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage} />}
 
-                  {message && <InformationDialog message={message} alignment="top" setInformationMessage={setMessage}/>}
+                  {message &&
+                  <InformationDialog message={message} alignment="top" setInformationMessage={setMessage} />}
 
                   <form onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -241,7 +242,7 @@ const LoginForm = ({ authClient }) => {
                              id="username" type="text"
                              value={username}
                              disabled={true}
-                             onChange={handleUsernameChange}/>
+                             onChange={handleUsernameChange} />
                       <div className="pre-icon os-icon os-icon-user-male-circle"></div>
                     </div>
                     <div className="form-group">
@@ -249,7 +250,7 @@ const LoginForm = ({ authClient }) => {
                       <input className="form-control"
                              id="password" type="password"
                              value={password}
-                             onChange={handlePasswordChange}/>
+                             onChange={handlePasswordChange} />
                       <div className="pre-icon os-icon os-icon-fingerprint"></div>
                     </div>
                     <div className="buttons-w text-center">
@@ -260,7 +261,7 @@ const LoginForm = ({ authClient }) => {
                               onClick={() => {
                                 setViewType("domain");
                               }}>
-                        <FontAwesomeIcon icon={faArrowLeft} className="mr-1" size="sm" fixedWidth/>
+                        <FontAwesomeIcon icon={faArrowLeft} className="mr-1" size="sm" fixedWidth />
                         Back
                       </Button>
 
@@ -269,7 +270,7 @@ const LoginForm = ({ authClient }) => {
                               style={{ width: "46%" }}
                               type="submit"
                               disabled={!username || !password}>
-                        {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth/>}
+                        {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth />}
                         Log In</Button>
                     </div>
                     <div className="text-center">
@@ -314,9 +315,9 @@ const LoginForm = ({ authClient }) => {
             Reset Password
           </h4>
 
-          {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage}/>}
+          {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage} />}
 
-          {message && <InformationDialog message={message} alignment="top" setInformationMessage={setMessage}/>}
+          {message && <InformationDialog message={message} alignment="top" setInformationMessage={setMessage} />}
 
           <form onSubmit={handleResetPasswordSubmit}>
             <div className="form-group">
@@ -324,13 +325,13 @@ const LoginForm = ({ authClient }) => {
               <input className="form-control"
                      id="username" type="text"
                      value={resetEmailAddress}
-                     onChange={handleResetEmailChange}/>
+                     onChange={handleResetEmailChange} />
               <div className="pre-icon os-icon os-icon-user-male-circle"></div>
             </div>
 
             <div className="buttons-w">
               <Button variant="success" className="w-100 mb-3" type="submit" disabled={!resetEmailAddress}>
-                {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth/>}
+                {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth />}
                 Reset Password</Button>
             </div>
             <div className="text-center">
@@ -348,7 +349,7 @@ const LoginForm = ({ authClient }) => {
   if (viewType === "domain") {
     return (
       <Row className="mt-4">
-        <Col md={5} className="p-4"><WelcomeMessage/></Col>
+        <Col md={5} className="p-4"><WelcomeMessage /></Col>
         <Col>
           <div className="d-flex align-items-center justify-content-center">
             <div className="auth-box-w">
@@ -363,9 +364,9 @@ const LoginForm = ({ authClient }) => {
                 Sign in
               </h4>
 
-              {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage}/>}
+              {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage} />}
 
-              {message && <InformationDialog message={message} alignment="top" setMessage={setMessage}/>}
+              {message && <InformationDialog message={message} alignment="top" setMessage={setMessage} />}
 
               <form onSubmit={handleDomainLookupSubmit}>
                 <div className="form-group">
@@ -373,14 +374,14 @@ const LoginForm = ({ authClient }) => {
                   <input className="form-control"
                          id="username" type="text"
                          value={lookupAccountEmail}
-                         onChange={handleLookupAccountEmailChange}/>
+                         onChange={handleLookupAccountEmailChange} />
                   <div className="pre-icon os-icon os-icon-user-male-circle"></div>
                 </div>
 
                 <div className="buttons-w">
                   <Button variant="warning" className="w-100 mb-3" type="submit"
                           disabled={!lookupAccountEmail || errorMessage}>
-                    {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth/>}
+                    {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth />}
                     Next</Button>
                 </div>
               </form>

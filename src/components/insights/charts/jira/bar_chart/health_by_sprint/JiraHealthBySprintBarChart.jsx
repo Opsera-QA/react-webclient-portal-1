@@ -3,91 +3,78 @@
 // Persona Executives/Managers
 // Worked on By Shrey Malhotra
 
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "../../../../../../contexts/AuthContext";
-import { axiosApiService } from "../../../../../../api/apiService";
 import { ResponsiveBar } from "@nivo/bar";
-import LoadingDialog from "components/common/status_notifications/loading";
-import ErrorDialog from "components/common/status_notifications/error";
 import config from "./jiraHealthBySprintConfigs";
-import "components/analytics/charts/charts.css";
-import InfoDialog from "components/common/status_notifications/info";
 import ModalLogs from "components/common/modal/modalLogs";
-
-
-
-function JiraHealthBySprintBarChart( { persona, date, tags } ) {
-  const contextType = useContext(AuthContext);
-  const [error, setErrors] = useState(false);
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+import {AuthContext} from "contexts/AuthContext";
+import axios from "axios";
+import chartsActions from "components/insights/charts/charts-actions";
+import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+function JiraHealthBySprintBarChart( { kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis } ) {
+  const { getAccessToken } = useContext(AuthContext);
+  const [error, setError] = useState(undefined);
+  const [metrics, setMetrics] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  
-  useEffect(() => {    
-    const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        await fetchData();
-      } catch (err) {
-        if (err.name === "AbortError") {
-          console.log("Request was canceled via controller.abort");
-          return;
-        }        
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
       }
-    };
-    runEffect();
+    });
 
     return () => {
-      controller.abort();
-    };
-  }, [date]);
-
-
-  const fetchData = async () => {
-    setLoading(true);
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/metrics";   
-    const postBody = {
-      request: "jiraSprintHealth",
-      startDate: date.start, 
-      endDate: date.end,
-      tags: tags
-    };
-
-    try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].jiraSprintHealth : [];
-      setData(dataObject);
-      setLoading(false);
+      source.cancel();
+      isMounted.current = false;
     }
-    catch (err) {
-      console.log(err.message);
-      setLoading(false);
-      setErrors(err.message);
+  }, [JSON.stringify(dashboardData)]);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "jiraSprintHealth", kpiConfiguration, dashboardTags);
+      let dataObject = response?.data ? response?.data?.data[0]?.jiraSprintHealth?.data : [];
+
+      if (isMounted?.current === true && dataObject) {
+        setMetrics(dataObject);
+      }
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        setError(error);
+      }
+    }
+    finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
-  if(loading) {
-    return (<LoadingDialog size="sm" />);
-  } else if (error) {
-    return (<ErrorDialog  error={error} />);
-  // } else if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
-  //   return (<ErrorDialog  error="No Data is available for this chart at this time." />);
-  } else {    
-    return (
-      <>
-        <ModalLogs header="Jira: Health" size="lg" jsonMessage={data.data} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+  const getChartBody = () => {
+    if (!Array.isArray(metrics) || metrics.length === 0) {
+      return null;
+    }
 
-        <div className="new-chart mb-3" style={{ height: "300px" }}>
-          {(typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) ?
-            <div className='max-content-width p-5 mt-5' style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}>
-              <InfoDialog message="No Data is available for this chart at this time." />
-            </div>
-            : 
+    return (
+      <div className="new-chart mb-3" style={{height: "300px"}}>
             <ResponsiveBar
-              data={data ? data.data : []}
+              data={metrics}
               onClick={() => setShowModal(true)}
               keys={config.keys}
               indexBy="_id"
@@ -128,14 +115,41 @@ function JiraHealthBySprintBarChart( { persona, date, tags } ) {
                 },
               }}
             />
-          }
         </div>
-      </>
     );
   }
+
+  return (
+    <div>
+      <ChartContainer
+        title={kpiConfiguration?.kpi_name}
+        kpiConfiguration={kpiConfiguration}
+        setKpiConfiguration={setKpiConfiguration}
+        chart={getChartBody()}
+        loadChart={loadData}
+        dashboardData={dashboardData}
+        index={index}
+        error={error}
+        setKpis={setKpis}
+        isLoading={isLoading}
+      />
+      <ModalLogs
+        header="Sprint Health"
+        size="lg"
+        jsonMessage={metrics}
+        dataType="bar"
+        show={showModal}
+        setParentVisibility={setShowModal}
+      />
+    </div>
+  );
 }
 JiraHealthBySprintBarChart.propTypes = {
-  persona: PropTypes.string
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  index: PropTypes.number,
+  setKpiConfiguration: PropTypes.func,
+  setKpis: PropTypes.func
 };
 
 export default JiraHealthBySprintBarChart;

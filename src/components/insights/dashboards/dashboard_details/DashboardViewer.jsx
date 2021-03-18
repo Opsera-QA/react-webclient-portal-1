@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { AuthContext } from "contexts/AuthContext";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
@@ -14,13 +15,14 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 import modelHelpers from "components/common/model/modelHelpers";
 import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata";
+import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 
 function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLink, managementTitle, type}) {
+  const { getAccessToken } = useContext(AuthContext);
   const history = useHistory();
   const [dashboardDataDto, setDashboardDataDto] = useState(dashboardData);
   const [kpis, setKpis] = useState([]);
   const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(modelHelpers.getDashboardFilterModel(dashboardDataDto, "tags", dashboardFiltersMetadata));
-
 
   useEffect(() => {
     loadData(dashboardDataDto);
@@ -33,6 +35,10 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
 
   const gotoMarketplace = () => {
     history.push({ pathname:`/insights/marketplace/${dashboardDataDto.getData("_id")}`});
+  }
+
+  const validateAndSaveData = async () => {
+    return await dashboardsActions.update(dashboardData, getAccessToken);
   }
 
   const getKpiView = () => {
@@ -86,6 +92,7 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
             dataObject={dashboardFilterTagsModel}
             setDataObject={setDashboardFilterTagsModel}
             loadData={loadData}
+            saveData={validateAndSaveData}
             className={"mx-2"}
             dashboardData={dashboardDataDto}
           /> */}

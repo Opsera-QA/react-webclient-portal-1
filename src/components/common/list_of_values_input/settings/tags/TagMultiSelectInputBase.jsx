@@ -115,7 +115,6 @@ function TagMultiSelectInputBase({ fieldName, dataObject, setDataObject, disable
   if (field == null) {
     return null;
   }
-
   return (
     <div className={className}>
       <Multiselect

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import {faCogs, faExclamationCircle, faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {faCogs, faTag, faExclamationCircle, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import "components/analytics/charts/charts.css";
 import KpiSettingsForm from "components/insights/marketplace/charts/KpiSettingsForm";
 import {getChartIconFromKpiConfiguration} from "components/insights/charts/charts-helpers";
@@ -84,6 +84,17 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
       <div className="new-chart m-2 shaded-panel">
         {getChartBody()}
       </div>
+      {/* <span className="item-field">
+            {kpiConfiguration.data.filters[kpiConfiguration.data.filters.findIndex((obj) => obj.type === "tags")].value.map((item, idx) => {
+              if (typeof item !== "string")
+                return (
+                  <span key={idx} className="mx-1 mb-1 badge badge-light tag-badge">
+            <FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/><span
+                    className="mr-1">{item.type}:</span>{item.value}
+            </span>
+                );
+            })}
+          </span> */}
     </div>
   );
 }
