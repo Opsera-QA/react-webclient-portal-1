@@ -13,7 +13,8 @@ import {
 import gitlabMostActiveContributorsMetadata
   from "components/insights/charts/gitlab/table/most_active_contributors/gitlab-most-active-contributors-metadata.js";
 import {getField} from "components/common/metadata/metadata-helpers";
-
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
   const fields = gitlabMostActiveContributorsMetadata.fields;
   const {getAccessToken} = useContext(AuthContext);
@@ -27,7 +28,21 @@ function GitlabMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "AuthorName"), "cell-center no-wrap-inline"),
+      {
+        Header: "Author Name",
+        accessor: "AuthorName",
+        // class: "cell-center no-wrap-inline",
+        Cell: (props) => {
+          return (
+            <div style={{ display: "flex", flexWrap: "nowrap" }}>
+              <div>
+                <FontAwesomeIcon icon={faStar} className="cell-icon green" />
+              </div>
+              <div className="ml-1">{props.value}</div>
+            </div>
+          );
+        },
+      },
       getTableTextColumn(getField(fields, "commitCount")),
     ],
     []

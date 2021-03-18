@@ -743,17 +743,21 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "github-most-active-contributors":
         return (
           <GithubMostActiveContributors
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "github-recent-merge-requests":
         return (
           <GithubRecentMergeRequests
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "github-time-taken-to-complete-merge-request-review":
@@ -789,9 +793,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "github-pending-merge-requests":
         return (
           <GithubPendingMergeRequests
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
 
