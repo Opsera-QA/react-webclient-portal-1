@@ -1,87 +1,75 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
-import { AuthContext } from "../../../../../../contexts/AuthContext";
-import { axiosApiService } from "../../../../../../api/apiService";
-import LoadingDialog from "components/common/status_notifications/loading";
-import ErrorDialog from "components/common/status_notifications/error";
 import config from "./githubMergeRequestsByUserChartConfig";
-import "components/analytics/charts/charts.css";
-import InfoDialog from "components/common/status_notifications/info";
 import ModalLogs from "components/common/modal/modalLogs";
-
-function GithubMergeRequestsByUser({ persona, date, tags }) {
-  const contextType = useContext(AuthContext);
-  const [error, setErrors] = useState(false);
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+import {AuthContext} from "contexts/AuthContext";
+import axios from "axios";
+import chartsActions from "components/insights/charts/charts-actions";
+import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+function GithubMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+  const { getAccessToken } = useContext(AuthContext);
+  const [error, setError] = useState(undefined);
+  const [metrics, setMetrics] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        await fetchData();
-      } catch (err) {
-        if (err.name === "AbortError") return;
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
       }
-    };
-    runEffect();
+    });
 
     return () => {
-      controller.abort();
-    };
-  }, [date]);
+      source.cancel();
+      isMounted.current = false;
+    }
+  }, [JSON.stringify(dashboardData)]);
 
-  const fetchData = async () => {
-    setLoading(true);
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/metrics";
-    const postBody = {
-      request: "githubMergeRequestsByUser",
-      startDate: date.start,
-      endDate: date.end,
-      tags: tags,
-    };
-
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res?.data ? res.data.data[0].githubMergeRequestsByUser : [];
-      setData(dataObject);
-      setLoading(false);
-    } catch (err) {
-      console.log(err.message);
-      setLoading(false);
-      setErrors(false);
+      setIsLoading(true);
+      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "githubMergeRequestsByUser", kpiConfiguration, dashboardTags);
+      let dataObject = response?.data ? response?.data?.data[0]?.githubMergeRequestsByUser?.data : [];
+
+      if (isMounted?.current === true && dataObject) {
+        setMetrics(dataObject);
+      }
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        setError(error);
+      }
+    }
+    finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
-  if (loading) return <LoadingDialog size="sm" />;
-  if (error) return <ErrorDialog error={error} />;
+  const getChartBody = () => {
+    if (!Array.isArray(metrics) || metrics.length === 0) {
+      return null;
+    }
 
   return (
-    <>
-      <ModalLogs
-        header="Merge Requests by User"
-        size="lg"
-        jsonMessage={data.data}
-        dataType="bar"
-        show={showModal}
-        setParentVisibility={setShowModal}
-      />
-
-      <div className="new-chart mb-3" style={{ height: "300px" }}>
-        {typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200 ? (
-          <div
-            className="max-content-width p-5 mt-5"
-            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
-          >
-            <InfoDialog message="No Data is available for this chart at this time." />
-          </div>
-        ) : (
+    <div className="new-chart mb-3" style={{height: "300px"}}>
           <ResponsiveBar
-            data={data ? data.data : []}
+            data={metrics}
             onClick={() => setShowModal(true)}
             keys={config.keys}
             indexBy="_id"
@@ -115,14 +103,42 @@ function GithubMergeRequestsByUser({ persona, date, tags }) {
               },
             }}
           />
-        )}
       </div>
-    </>
+  );
+  }
+
+  return (
+    <div>
+      <ChartContainer
+        title={kpiConfiguration?.kpi_name}
+        kpiConfiguration={kpiConfiguration}
+        setKpiConfiguration={setKpiConfiguration}
+        chart={getChartBody()}
+        loadChart={loadData}
+        dashboardData={dashboardData}
+        index={index}
+        error={error}
+        setKpis={setKpis}
+        isLoading={isLoading}
+      />
+      <ModalLogs
+        header="Merge Requests By User"
+        size="lg"
+        jsonMessage={metrics}
+        dataType="bar"
+        show={showModal}
+        setParentVisibility={setShowModal}
+      />
+    </div>
   );
 }
 
-GithubMergeRequestsByUser.prototypes = {
-  persona: PropTypes.string,
+GithubMergeRequestsByUser.propTypes = {
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  index: PropTypes.number,
+  setKpiConfiguration: PropTypes.func,
+  setKpis: PropTypes.func
 };
 
 export default GithubMergeRequestsByUser;

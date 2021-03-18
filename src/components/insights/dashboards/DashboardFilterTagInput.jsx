@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TagMultiSelectInputBase from "components/common/list_of_values_input/settings/tags/TagMultiSelectInputBase";
+import LenientSaveButton from "components/common/buttons/saving/LenientSaveButton";
 import modelHelpers from "components/common/model/modelHelpers";
-
-function DashboardFilterTagInput({ dataObject, setDataObject, dashboardData, loadData, className, fieldName}) {
+function DashboardFilterTagInput({ dataObject, setDataObject, dashboardData, loadData, saveData, className, fieldName}) {
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
     newDataObject.setData(fieldName, value);
@@ -12,8 +12,8 @@ function DashboardFilterTagInput({ dataObject, setDataObject, dashboardData, loa
     loadData(newDataModel);
   };
 
-
   return (
+    <div className="d-flex my-auto">
     <TagMultiSelectInputBase
       className={className}
       showLabel={false}
@@ -22,6 +22,8 @@ function DashboardFilterTagInput({ dataObject, setDataObject, dashboardData, loa
       setDataObject={setDataObject}
       setDataFunction={validateAndSetData}
     />
+    <LenientSaveButton size={"sm"} recordDto={dashboardData} updateRecord={saveData}/>
+    </div>
   );
 }
 
@@ -31,11 +33,12 @@ DashboardFilterTagInput.propTypes = {
   dashboardData: PropTypes.object,
   setDataObject: PropTypes.func,
   loadData: PropTypes.func,
+  saveData: PropTypes.func,
   fieldName: PropTypes.string
 };
 
 DashboardFilterTagInput.defaultProps = {
-  fieldName: "tags"
+  fieldName: "value"
 }
 
 export default DashboardFilterTagInput;

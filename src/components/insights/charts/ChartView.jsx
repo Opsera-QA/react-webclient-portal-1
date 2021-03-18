@@ -26,7 +26,7 @@ import JiraTicketsAssignedByUserBarChart from "./jira/bar_chart/tickets_assigned
 import JiraHealthBySprintBarChart from "./jira/bar_chart/health_by_sprint/JiraHealthBySprintBarChart";
 import JiraVelocityReportBarChart from "./jira/bar_chart/velocity_report/JiraVelocityReportBarChart";
 import JiraIssuesCreatedVsResolvedLineChart from "./jira/line_chart/issues_created_vs_resolved/JiraIssuesCreatedVsResolvedLineChart";
-import JiraIssuesAssignedToMe from "./jira/JiraIssuesAssignedToMe";
+import JiraIssuesAssignedToMe from "./jira/table/issues_assigned_to_me/JiraIssuesAssignedToMe";
 import JiraSprintBurndownLineChart from "./jira/line_chart/sprint_burndown/JiraSprintBurndownLineChart";
 import JiraLeadTimeLineChart from "./jira/line_chart/lead_time/JiraLeadTimeLineChart";
 
@@ -51,29 +51,29 @@ import JmeterHitsLineChart from "./jmeter/line_chart/hits/JmeterHitsLineChart";
 import JmeterErrorsLineChart from "./jmeter/line_chart/errors/JmeterErrorsLineChart";
 import JmeterThroughputLineChart from "./jmeter/line_chart/throughput/JmeterThroughputLineChart";
 import JmeterResponseTimeLineChart from "./jmeter/line_chart/response_time/JmeterResponseTimeLineChart";
-import JmeterConnectTimeTable from "./jmeter/JmeterConnectTimeTable";
+import JmeterConnectTimeTable from "./jmeter/table/connect_time/JmeterConnectTimeTable";
 
 // Gitlab KPIs
-import GitlabMostActiveContributors from "./gitlab/GitlabMostActiveContributors";
+import GitlabMostActiveContributors from "./gitlab/table/most_active_contributors/GitlabMostActiveContributors";
 import GitlabMergeRequestByMaximumTimeChart from "./gitlab/bar_chart/merge_request_by_maximum_time/GitlabMergeRequestByMaximumTimeChart";
 import GitlabMergeRequestsByUserChart from "./gitlab/bar_chart/merge_requests_by_user/GitlabMergeRequestsByUserChart";
 import GitlabTimeTakenToCompleteMergeRequestReview from "./gitlab/bar_chart/time_taken_to_complete_merge_request_review/GitlabTimeTakenToCompleteMergeRequestReview";
 import GitlabCommitsByAuthor from "./gitlab/calendar_chart/commits_by_author/GitlabCommitsByAuthor";
 import GitlabMergeRequestsPushesAndComments from "./gitlab/calendar_chart/merge_requests_pushes_and_comments/GitlabMergeRequestsPushesAndComments";
 import GitlabTotalCommitsByProjectChart from "./gitlab/pie_chart/total_commits_by_project/GitlabTotalCommitsByProjectChart";
-import GitlabRecentMergeRequests from "./gitlab/GitlabRecentMergeRequests";
-import GitlabPendingMergeRequests from "./gitlab/GitlabPendingMergeRequests.jsx";
+import GitlabRecentMergeRequests from "./gitlab/table/recent_merge_requests/GitlabRecentMergeRequests";
+import GitlabPendingMergeRequests from "./gitlab/table/pending_merge_requests/GitlabPendingMergeRequests.jsx";
 
 // Github KPIs
 import GithubMergeRequestsByUser from "./github/bar_chart/merge_requests_by_user/GithubMergeRequestsByUserChart";
 import GithubMergeRequestsPushesAndComments from "./github/calendar_chart/merge_requests_pushes_and_comments/GithubMergeRequestsPushesAndComments";
 import GithubTotalCommitsByProjectChart from "./github/pie_chart/total_commits_by_project/GithubTotalCommitsByProjectChart";
-import GithubMostActiveContributors from "./github/GithubMostActiveContributors";
-import GithubRecentMergeRequests from "./github/GithubRecentMergeRequests";
+import GithubMostActiveContributors from "./github/table/most_active_contributors/GithubMostActiveContributors";
+import GithubRecentMergeRequests from "./github/table/recent_merge_requests/GithubRecentMergeRequests";
 import GithubTimeTakenToCompleteMergeRequestReview from "./github/bar_chart/time_taken_to_complete_merge_request_review/GithubTimeTakenToCompleteMergeRequestReview";
 import GithubMergeRequestByMaximumTimeChart from "./github/bar_chart/merge_request_by_maximum_time/GithubMergeRequestByMaximumTimeChart";
 import GithubCommitsByAuthor from "./github/calendar_chart/commits_by_author/GithubCommitsByAuthor";
-import GithubPendingMergeRequests from "./github/GithubPendingMergeRequests";
+import GithubPendingMergeRequests from "./github/table/pending_merge_requests/GithubPendingMergeRequests";
 
 // Bitbucket KPIs
 import BitbucketMostActiveContributors from "./bitbucket/table/bitbucket_most_active_contributors/BitbucketMostActiveContributors";
@@ -114,28 +114,13 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
   //  this should be deleted and we should just return getChart() at bottom of component instead
   const getView = () => {
     if (
-      kpiConfig?.kpi_identifier === "opsera-status-by-pipeline" ||
-      kpiConfig?.kpi_identifier === "opsera-pipeline-duration" ||
-      kpiConfig?.kpi_identifier === "opsera-pipelines-by-user" ||
-      kpiConfig?.kpi_identifier === "opsera-deployment-frequency" ||
-      kpiConfig?.kpi_identifier === "opsera-recent-pipeline-status" ||
-      kpiConfig?.kpi_identifier === "opsera-recent-cd-status" ||
-      kpiConfig?.kpi_identifier === "jenkins-build-duration" ||
-      kpiConfig?.kpi_identifier === "jenkins-builds-by-user" ||
-      kpiConfig?.kpi_identifier === "jenkins-status-by-job-name" ||
-      kpiConfig?.kpi_identifier === "jenkins-recent-build-status" ||
-      kpiConfig?.kpi_identifier === "sonar-ratings" ||
-      kpiConfig?.kpi_identifier === "jira-lead-time" ||
-      kpiConfig?.kpi_identifier === "bitbucket-merge-request-by-maximum-time" ||
-      kpiConfig?.kpi_identifier === "bitbucket-merge-requests-by-user" ||
-      kpiConfig?.kpi_identifier === "bitbucket-time-taken-to-complete-merge-request-review" ||
-      kpiConfig?.kpi_identifier === "bitbucket-most-active-contributors" ||
-      kpiConfig?.kpi_identifier === "bitbucket-pending-merge-requests" ||
-      kpiConfig?.kpi_identifier === "bitbucket-recent-merge-requests" ||
-      kpiConfig?.kpi_identifier === "bitbucket-commits-by-author" ||
-      kpiConfig?.kpi_identifier === "bitbucket-merge-requests-pushes-and-comments" ||
-      kpiConfig?.kpi_identifier === "bitbucket-total-commits-by-project" ||
-      kpiConfig?.kpi_identifier === "opsera-mean-time-to-restore"
+      kpiConfig?.kpi_identifier !== "jenkins-deployment-frequency" &&
+      kpiConfig?.kpi_identifier !== "jenkins-change-failure-rate" &&
+      kpiConfig?.kpi_identifier !== "jenkins-deployments-counts" &&
+      kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-cpu-usage" &&
+      kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-memory-usage" &&
+      kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-in-network-usage" &&
+      kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-out-network-usage"
     ) {
       return getChart();
     }
@@ -285,57 +270,71 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "jira-tickets-assigned-by-user":
         return (
           <JiraTicketsAssignedByUserBarChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "jira-issues-by-priority":
         return (
           <JiraIssuesByPriorityBarChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "jira-health-by-sprint":
         return (
           <JiraHealthBySprintBarChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "jira-velocity-report":
         return (
           <JiraVelocityReportBarChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "jira-issues-created-vs-resolved":
         return (
           <JiraIssuesCreatedVsResolvedLineChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "jira-sprint-burndown":
         return (
           <JiraSprintBurndownLineChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "jira-issues-assigned-to-me":
         return (
           <JiraIssuesAssignedToMe
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "jira-lead-time":
@@ -353,17 +352,21 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "anchore-vulnerability-severity-by-package":
         return (
           <AnchoreVulnerabilitySeverityByPackageBarChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "anchore-vulnerabilities-by-date":
         return (
           <AnchoreVulnerabilitiesByDateLineChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
 
@@ -371,101 +374,125 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "sonar-code-smells":
         return (
           <SonarCodeSmellsLineChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "sonar-maintainability-rating":
         return (
           <SonarMaintainabilityRatingLineChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "sonar-bugs":
         return (
           <SonarBugsCountLineChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "sonar-new-bugs":
         return (
           <SonarNewBugsCountLineChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "sonar-reliability-rating":
         return (
           <SonarReliabilityRatingLineChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "sonar-reliability-remediation-effort":
         return (
           <SonarReliabilityRemediationEffortLineChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "sonar-vulnerabilities-by-project":
         return (
           <SonarMetricByProjectLineChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
             sonarMeasure={"vulnerabilities"}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
           />
         );
       case "sonar-new-vulnerabilities-by-project":
         return (
           <SonarMetricByProjectLineChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
             sonarMeasure={"new_vulnerabilities"}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
           />
         );
       case "sonar-new-technical-debt-by-project":
         return (
           <SonarMetricByProjectLineChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
             sonarMeasure={"new_technical_debt"}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
           />
         );
       case "sonar-code-smells-by-project":
         return (
           <SonarMetricByProjectLineChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
             sonarMeasure={"code_smells"}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
           />
         );
       case "sonar-code-coverage":
         return (
           <SonarCodeCoverageBarChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "sonar-lines-to-cover":
         return (
           <SonarLinesToCoverBarChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "sonar-ratings":
@@ -483,41 +510,51 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "jmeter-hits":
         return (
           <JmeterHitsLineChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "jmeter-errors":
         return (
           <JmeterErrorsLineChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "jmeter-throughput":
         return (
           <JmeterThroughputLineChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "jmeter-response-time":
         return (
           <JmeterResponseTimeLineChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "jmeter-connect-time":
         return (
           <JmeterConnectTimeTable
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
 
@@ -525,73 +562,91 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "gitlab-most-active-contributors":
         return (
           <GitlabMostActiveContributors
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "gitlab-merge-request-by-maximum-time":
         return (
           <GitlabMergeRequestByMaximumTimeChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "gitlab-merge-requests-by-user":
         return (
           <GitlabMergeRequestsByUserChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "gitlab-time-taken-to-complete-merge-request-review":
         return (
           <GitlabTimeTakenToCompleteMergeRequestReview
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "gitlab-commits-by-author":
         return (
           <GitlabCommitsByAuthor
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "gitlab-merge-requests-pushes-and-comments":
         return (
           <GitlabMergeRequestsPushesAndComments
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "gitlab-total-commits-by-project":
         return (
           <GitlabTotalCommitsByProjectChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "gitlab-recent-merge-requests":
         return (
           <GitlabRecentMergeRequests
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "gitlab-pending-merge-requests":
         return (
           <GitlabPendingMergeRequests
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
 
@@ -599,9 +654,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "cypress-test-results":
         return (
           <CypressTestResultsTable
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
 
@@ -609,9 +666,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "junit-test-results":
         return (
           <JunitTestResultsTable
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
 
@@ -619,9 +678,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "xunit-test-results":
         return (
           <XunitTestResultsTable
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
 
@@ -639,25 +700,31 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "github-merge-requests-by-user":
         return (
           <GithubMergeRequestsByUser
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "github-merge-requests-pushes-and-comments":
         return (
           <GithubMergeRequestsPushesAndComments
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "github-total-commits-by-project":
         return (
           <GithubTotalCommitsByProjectChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "github-most-active-contributors":
@@ -679,25 +746,31 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "github-time-taken-to-complete-merge-request-review":
         return (
           <GithubTimeTakenToCompleteMergeRequestReview
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "github-merge-request-by-maximum-time":
         return (
           <GithubMergeRequestByMaximumTimeChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "github-commits-by-author":
         return (
           <GithubCommitsByAuthor
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "github-pending-merge-requests":
