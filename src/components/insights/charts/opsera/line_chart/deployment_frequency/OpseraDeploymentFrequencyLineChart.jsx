@@ -9,7 +9,6 @@ import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColor, assignBooleanColors } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
-
 function OpseraDeploymentFrequencyLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
