@@ -75,6 +75,17 @@ import GithubMergeRequestByMaximumTimeChart from "./github/bar_chart/merge_reque
 import GithubCommitsByAuthor from "./github/calendar_chart/commits_by_author/GithubCommitsByAuthor";
 import GithubPendingMergeRequests from "./github/GithubPendingMergeRequests";
 
+// Bitbucket KPIs
+import BitbucketMostActiveContributors from "./bitbucket/table/bitbucket_most_active_contributors/BitbucketMostActiveContributors";
+import BitbucketMergeRequestByMaximumTimeChart from "./bitbucket/bar_chart/merge_request_by_maximum_time/BitbucketMergeRequestByMaximumTimeChart";
+import BitbucketMergeRequestsByUserChart from "./bitbucket/bar_chart/merge_requests_by_user/BitbucketMergeRequestsByUserChart";
+import BitbucketTimeTakenToCompleteMergeRequestReview from "./bitbucket/bar_chart/time_taken_to_complete_merge_request_review/BitbucketTimeTakenToCompleteMergeRequestReview";
+import BitbucketCommitsByAuthor from "./bitbucket/calendar_chart/commits_by_author/BitbucketCommitsByAuthor";
+import BitbucketMergeRequestsPushesAndComments from "./bitbucket/calendar_chart/merge_requests_pushes_and_comments/BitbucketMergeRequestsPushesAndComments";
+import BitbucketTotalCommitsByProjectChart from "./bitbucket/pie_chart/total_commits_by_project/BitbucketTotalCommitsByProjectChart";
+import BitbucketRecentMergeRequests from "./bitbucket/table/bitbucket-recent-merge-requests/BitbucketRecentMergeRequests";
+import BitbucketPendingMergeRequests from "./bitbucket/table/bitbucket-pending-merge-requests/BitbucketPendingMergeRequests.jsx";
+
 // Cypress KPIs
 import CypressTestResultsTable from "./cypress/CypressTestResultsTable";
 
@@ -90,7 +101,10 @@ import MetricbeatInNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/i
 import MetricbeatMemoryUsageByTimeLineChart from "./metricbeat/line_chart/memory_usage/MetricbeatMemoryUsageByTimeLineChart";
 import MetricbeatOutNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/out_network_usage/MetricbeatOutNetworkTrafficByTimeLineChart";
 
-import {getDateObjectFromKpiConfiguration,getTagsFromKpiConfiguration} from "components/insights/charts/charts-helpers";
+import {
+  getDateObjectFromKpiConfiguration,
+  getTagsFromKpiConfiguration,
+} from "components/insights/charts/charts-helpers";
 
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
   const [kpiConfig, setKpiConfig] = useState(kpiConfiguration);
@@ -111,6 +125,15 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       kpiConfig?.kpi_identifier === "jenkins-recent-build-status" ||
       kpiConfig?.kpi_identifier === "sonar-ratings" ||
       kpiConfig?.kpi_identifier === "jira-lead-time" ||
+      kpiConfig?.kpi_identifier === "bitbucket-merge-request-by-maximum-time" ||
+      kpiConfig?.kpi_identifier === "bitbucket-merge-requests-by-user" ||
+      kpiConfig?.kpi_identifier === "bitbucket-time-taken-to-complete-merge-request-review" ||
+      kpiConfig?.kpi_identifier === "bitbucket-most-active-contributors" ||
+      kpiConfig?.kpi_identifier === "bitbucket-pending-merge-requests" ||
+      kpiConfig?.kpi_identifier === "bitbucket-recent-merge-requests" ||
+      kpiConfig?.kpi_identifier === "bitbucket-commits-by-author" ||
+      kpiConfig?.kpi_identifier === "bitbucket-merge-requests-pushes-and-comments" ||
+      kpiConfig?.kpi_identifier === "bitbucket-total-commits-by-project" ||
       kpiConfig?.kpi_identifier === "opsera-mean-time-to-restore"
     ) {
       return getChart();
@@ -682,6 +705,98 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             persona={"developer"}
             date={getDateObject(kpiConfig)}
             tags={getTagsFromKpiConfiguration(kpiConfig)}
+          />
+        );
+
+      // Bitbucket KPIs
+      case "bitbucket-most-active-contributors":
+        return (
+          <BitbucketMostActiveContributors
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
+      case "bitbucket-merge-request-by-maximum-time":
+        return (
+          <BitbucketMergeRequestByMaximumTimeChart
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
+      case "bitbucket-merge-requests-by-user":
+        return (
+          <BitbucketMergeRequestsByUserChart
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
+      case "bitbucket-time-taken-to-complete-merge-request-review":
+        return (
+          <BitbucketTimeTakenToCompleteMergeRequestReview
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
+      case "bitbucket-commits-by-author":
+        return (
+          <BitbucketCommitsByAuthor
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
+      case "bitbucket-merge-requests-pushes-and-comments":
+        return (
+          <BitbucketMergeRequestsPushesAndComments
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
+      case "bitbucket-total-commits-by-project":
+        return (
+          <BitbucketTotalCommitsByProjectChart
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
+      case "bitbucket-recent-merge-requests":
+        return (
+          <BitbucketRecentMergeRequests
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
+      case "bitbucket-pending-merge-requests":
+        return (
+          <BitbucketPendingMergeRequests
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
     }

@@ -3,8 +3,13 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import DateRangeInput from "components/common/inputs/date/DateRangeInput";
 import kpiConfigurationMetadata from "components/insights/marketplace/charts/kpi-configuration-metadata";
-import {kpiDateFilterMetadata, kpiTagsFilterMetadata, 
-  kpiJenkinsResultFilterMetadata, kpiJenkinsJobUrlFilterMetadata, kpiJenkinsBuildNumberFilterMetadata} from "components/insights/marketplace/charts/kpi-configuration-metadata";
+import {
+  kpiDateFilterMetadata,
+  kpiTagsFilterMetadata,
+  kpiJenkinsResultFilterMetadata,
+  kpiJenkinsJobUrlFilterMetadata,
+  kpiJenkinsBuildNumberFilterMetadata,
+} from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import Model from "core/data_model/model";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
@@ -18,11 +23,21 @@ import modelHelpers from "components/common/model/modelHelpers";
 function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [kpiSettings, setKpiSettings] = useState(new Model(kpiConfiguration, kpiConfigurationMetadata, false));
-  const [kpiDateFilter, setKpiDateFilter] = useState(modelHelpers.getDashboardFilterModel(kpiConfiguration, "date", kpiDateFilterMetadata));
-  const [kpiTagsFilter, setKpiTagsFilter] = useState(modelHelpers.getDashboardFilterModel(kpiConfiguration, "tags", kpiTagsFilterMetadata));
-  const [kpiJenkinsResultFilter, setKpiJenkinsResultFilter] = useState(modelHelpers.getDashboardFilterModel(kpiConfiguration, "jenkins-result", kpiJenkinsResultFilterMetadata));
-  const [kpiJenkinsJobUrlFilter, setKpiJenkinsJobUrlFilter] = useState(modelHelpers.getDashboardFilterModel(kpiConfiguration, "jenkins-job-url", kpiJenkinsJobUrlFilterMetadata));
-  const [kpiJenkinsBuildNumberFilter, setKpiJenkinsBuildNumberFilter] = useState(modelHelpers.getDashboardFilterModel(kpiConfiguration, "jenkins-build-number", kpiJenkinsBuildNumberFilterMetadata));
+  const [kpiDateFilter, setKpiDateFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "date", kpiDateFilterMetadata)
+  );
+  const [kpiTagsFilter, setKpiTagsFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "tags", kpiTagsFilterMetadata)
+  );
+  const [kpiJenkinsResultFilter, setKpiJenkinsResultFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "jenkins-result", kpiJenkinsResultFilterMetadata)
+  );
+  const [kpiJenkinsJobUrlFilter, setKpiJenkinsJobUrlFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "jenkins-job-url", kpiJenkinsJobUrlFilterMetadata)
+  );
+  const [kpiJenkinsBuildNumberFilter, setKpiJenkinsBuildNumberFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "jenkins-build-number", kpiJenkinsBuildNumberFilterMetadata)
+  );
 
   const tagFilterEnabled = [
     "opsera-pipeline-duration",
@@ -84,7 +99,16 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "github-pending-merge-requests",
     "sonar-ratings",
     "jira-lead-time",
-    "opsera-mean-time-to-restore"
+    "bitbucket-merge-request-by-maximum-time",
+    "bitbucket-merge-requests-by-user",
+    "bitbucket-time-taken-to-complete-merge-request-review",
+    "bitbucket-merge-requests-pushes-and-comments",
+    "bitbucket-total-commits-by-project",
+    "bitbucket-commits-by-author",
+    "bitbucket-recent-merge-requests",
+    "bitbucket-most-active-contributors",
+    "bitbucket-pending-merge-requests",
+    "opsera-mean-time-to-restore",
   ];
 
   const getKpiFilters = (filter) => {
@@ -107,36 +131,39 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
             />
           </div>
         );
-        case "jenkins-result":
-          return (
-            <div>
-              <JenkinsResultFilterInput
-                type={"kpi_filter"}
-                fieldName={"value"}
-                setDataObject={setKpiJenkinsResultFilter}
-                dataObject={kpiJenkinsResultFilter}/>
-            </div>
-          );
-        case "jenkins-job-url":
-          return (
-            <div>
-              <TextInputBase
-                type={"kpi_filter"}
-                fieldName={"value"}
-                setDataObject={setKpiJenkinsJobUrlFilter}
-                dataObject={kpiJenkinsJobUrlFilter}/>
-            </div>
-          );
-        case "jenkins-build-number":
-          return (
-            <div>
-              <MultiTextInputBase
-                type={"kpi_filter"}
-                fieldName={"value"}
-                setDataObject={setKpiJenkinsBuildNumberFilter}
-                dataObject={kpiJenkinsBuildNumberFilter}/>
-            </div>
-          );
+      case "jenkins-result":
+        return (
+          <div>
+            <JenkinsResultFilterInput
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiJenkinsResultFilter}
+              dataObject={kpiJenkinsResultFilter}
+            />
+          </div>
+        );
+      case "jenkins-job-url":
+        return (
+          <div>
+            <TextInputBase
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiJenkinsJobUrlFilter}
+              dataObject={kpiJenkinsJobUrlFilter}
+            />
+          </div>
+        );
+      case "jenkins-build-number":
+        return (
+          <div>
+            <MultiTextInputBase
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiJenkinsBuildNumberFilter}
+              dataObject={kpiJenkinsBuildNumberFilter}
+            />
+          </div>
+        );
     }
   };
 
@@ -152,16 +179,34 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "tags")
       ].value = kpiTagsFilter.getData("value");
     }
-    if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-result")]) {
-      newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-result")].value = kpiJenkinsResultFilter.getData("value");
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-result")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-result")
+      ].value = kpiJenkinsResultFilter.getData("value");
     }
-    if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-job-url")]) {
-      newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-job-url")].value = kpiJenkinsJobUrlFilter.getData("value");
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-job-url")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-job-url")
+      ].value = kpiJenkinsJobUrlFilter.getData("value");
     }
-    if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-build-number")]) {
-      newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-build-number")].value = kpiJenkinsBuildNumberFilter.getData("value");
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-build-number")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-build-number")
+      ].value = kpiJenkinsBuildNumberFilter.getData("value");
     }
-    setKpiSettings({...newKpiSettings});
+    setKpiSettings({ ...newKpiSettings });
     dashboardData.getData("configuration")[index] = kpiSettings.data;
     setKpiConfiguration(kpiSettings.data);
     loadChart(dashboardData);
