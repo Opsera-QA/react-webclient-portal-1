@@ -41,12 +41,6 @@ function PipelineActionControls({
   const [statusMessage, setStatusMessage] = useState(false);
   const [statusMessageBody, setStatusMessageBody] = useState("");
   const [showApprovalModal, setShowApprovalModal] = useState(false);
-  const [wizardModal, setWizardModal] = useState({
-    show: false,
-    pipelineType: "",
-    pipelineId: "",
-    pipelineOrientation: "",
-  });
   const [freetrialWizardModal, setFreetrialWizardModal] = useState({
     show: false,
     pipelineId: "",
@@ -217,17 +211,23 @@ function PipelineActionControls({
     console.log("pipelineOrientation ", pipelineOrientation);
     console.log("pipelineType ", pipelineType);
     console.log("pipelineId ", pipelineId);
-    setWizardModal({
-      show: true,
-      pipelineType: pipelineType,
-      pipelineId: pipelineId,
-      pipelineOrientation: pipelineOrientation,
-    });
+
+    toastContext.showOverlayPanel(
+      <PipelineStartWizard
+        pipelineType={pipelineType}
+        pipelineOrientation={pipelineOrientation}
+        pipelineId={pipelineId}
+        pipeline={pipeline}
+        handleClose={handlePipelineStartWizardClose}
+        handlePipelineWizardRequest={handlePipelineWizardRequest}
+        refreshPipelineActivityData={fetchActivityLogs}
+      />
+    );
   };
 
   const handlePipelineStartWizardClose = () => {
     console.log("closing wizard");
-    setWizardModal({ show: false, pipelineType: "", pipelineId: "", pipelineOrientation: "" });
+    toastContext.clearOverlayPanel();
   };
 
   const launchFreeTrialPipelineStartWizard = (pipelineId, pipelineOrientation, handleCloseFreeTrialDeploy) => {
@@ -251,7 +251,7 @@ function PipelineActionControls({
   };
 
   const handlePipelineWizardRequest = async (pipelineId, restartBln) => {
-    setWizardModal({ ...wizardModal, show: false });
+    handlePipelineStartWizardClose();
     if (restartBln) {
       console.log("clearing pipeline activity and then starting over");
       await resetPipelineState(pipelineId);
@@ -440,16 +440,6 @@ function PipelineActionControls({
              message={infoModal.message}
              button={infoModal.button}
              handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}/>}
-
-
-      {wizardModal.show &&
-      <PipelineStartWizard pipelineType={wizardModal.pipelineType}
-                           pipelineOrientation={wizardModal.pipelineOrientation}
-                           pipelineId={wizardModal.pipelineId}
-                           pipeline={pipeline}
-                           handleClose={handlePipelineStartWizardClose}
-                           handlePipelineWizardRequest={handlePipelineWizardRequest}
-                           refreshPipelineActivityData={fetchActivityLogs}/>}
 
       {freetrialWizardModal.show &&
       <FreeTrialPipelineWizard pipelineId={freetrialWizardModal.pipelineId}
