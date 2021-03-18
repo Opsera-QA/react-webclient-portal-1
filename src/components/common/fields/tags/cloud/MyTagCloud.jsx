@@ -154,9 +154,9 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
     }
   };
 
-  /*<div className={"mt-2 btn btn-sm btn-outline-secondary"} onClick={() => {showTagSubscriptionManager()}}>Manage Tag Subscriptions</div>*/
   return (
     <div className={className}>
+      <h5>My Tag Cloud</h5>
       <div className="mb-1 item-field">
         {getBody()}
         {!isLoading && <Button variant="outline-secondary" size="sm" onClick={() => {showTagSubscriptionManager()}}>
