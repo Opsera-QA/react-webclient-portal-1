@@ -68,6 +68,7 @@ export const assignSeverityColors = data => {
 };
 
 export const getColor = data => data.color;
+export const getColorByData = data => data.data.color;
 export const getColorById = data => data.id === "Successful" ? mainColor : failColor;
 
 const formats = {
