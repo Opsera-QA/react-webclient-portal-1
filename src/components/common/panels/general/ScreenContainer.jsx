@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import AccessDeniedContainer from "components/common/panels/detail_view_container/AccessDeniedContainer";
 import {getBreadcrumb} from "components/common/navigation/trails";
@@ -6,11 +6,14 @@ import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import TitleBar from "components/common/fields/TitleBar";
 import RoleRequirementField from "components/common/fields/access/RoleRequirementField";
 import {meetsRequirements} from "components/common/helpers/role-helpers";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function ScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading, accessDenied, showBreadcrumbTrail, navigationTabContainer, accessRoleData, roleRequirement, hasTabContainer, titleActionBar }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
+    toastContext.removeInlineMessage();
     if (breadcrumb.name !== breadcrumbDestination) {
       setBreadcrumb(getBreadcrumb(breadcrumbDestination));
     }
@@ -60,6 +63,7 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
     if (hasTabContainer === true) {
       return (
         <div className="detail-container-body">
+          {toastContext.getInlineBanner()}
           {getPageDescription()}
           <div className="shaded-container">
             <div className="mt-2">
@@ -72,6 +76,7 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
 
     return (
       <div className="screen-container-body shaded-container">
+        {toastContext.getInlineBanner()}
         {getPageDescription()}
         <div className="mt-2">
           {getScreenBody()}
