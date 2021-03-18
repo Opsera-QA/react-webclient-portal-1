@@ -24,6 +24,9 @@ function OverviewLanding() {
   } = contextType;
   let userAccess = {};
 
+  let d = new Date();
+  d.setDate(d.getDate()-12);
+
   useEffect(() => {
     getRoles();
   }, []);
@@ -78,6 +81,12 @@ function OverviewLanding() {
     }
   };
 
+  const loadDashboardById = (id) => {
+    if (id) {
+      history.push(`/insights/dashboards/${id}/viewer`);
+    }
+  };
+
   const loadAnalytics = () => {
     // eslint-disable-next-line react/prop-types
     history.push("/analytics");
@@ -126,26 +135,13 @@ function OverviewLanding() {
           <div className="h4 text-color mb-3">Welcome
             back {userInfo && userInfo.firstName ? userInfo.firstName : null}!
           </div>
-          <Row className={"mb-3 mx-0 mt-2 d-flex"}>
-            <Col lg={"3"}><TopFiveDashboards /></Col>
-            <Col><MyTagCloud/></Col>
-          </Row>
+
+          <MyTagCloud/>
 
           <hr/>
 
           <div className="row mx-n2 mt-3">
-            <div className="col-md px-2 landing-content-module">
-              <img
-                alt="Toolchain Automation"
-                src="/img/platform.png"
-                width="195"
-                height="225"
-                className="d-inline-block align-top pointer"
-                onClick={() => {
-                  loadPlatforms();
-                }}
-              />
-            </div>
+
             <div className="col-md px-2 landing-content-module">
               <img
                 alt="Declarative Pipelines"
@@ -158,6 +154,7 @@ function OverviewLanding() {
                 }}
               />
             </div>
+
             <div className="col-md px-2 landing-content-module">
               <img
                 alt="Insights"
@@ -170,15 +167,21 @@ function OverviewLanding() {
                 }}
               />
             </div>
+
+            <div className="col-md px-2 landing-content-module">
+              <img
+                alt="Toolchain Automation"
+                src="/img/platform.png"
+                width="195"
+                height="225"
+                className="d-inline-block align-top pointer"
+                onClick={() => {
+                  loadPlatforms();
+                }}
+              />
+            </div>
           </div>
           <div className="row mx-n2 mt-4">
-            <div className="col-md px-2 landing-content-module">
-              <div className="h5 text-color">Toolchain Automation</div>
-              <div className="text-muted pr-2">
-                You choose your tools, we take care of the rest. Put together the perfect CI/CD stack that fits your
-                organization’s goals with zero vendor lock-in.
-              </div>
-            </div>
             <div className="col-md px-2 landing-content-module">
               <div className="h5 text-color">
                 Declarative Pipelines
@@ -199,28 +202,60 @@ function OverviewLanding() {
                     <div key={key} className={"my-1"}>
                       <Button
                         variant="outline-secondary" size="sm"
-                        style={{ minWidth: "175px" }}
+                        className="w-100"
                         onClick={() => {
                           loadPipelines(item._id);
                         }}
                       >
                         {item.name.substring(0, 20)}
+                        <Badge variant="warning" className="ml-1" size="sm">
+                          Pending Approval
+                        </Badge>
                       </Button>
-                      <Badge variant="warning" className="ml-1" size="sm">
-                        Approval
-                      </Badge>
+                    </div>
+                  ))}
+                  {statsData.recentPipelines.map((item, key) => (
+                    <div key={key} className={"my-1"}>
+                      <Button
+                        variant="outline-secondary" size="sm"
+                        className="w-100"
+                        onClick={() => {
+                          loadPipelines(item._id);
+                        }}
+                      >
+                        {item.name.substring(0, 20)}
+                        {new Date(item.createdAt) > d &&
+                        <Badge variant="secondary" className="ml-1" size="sm">
+                          New
+                        </Badge>
+                        }
+                      </Button>
                     </div>
                   ))}
                 </div>
               )}
             </div>
+
             <div className="col-md px-2 landing-content-module">
               <div className="h5 text-color">Insights</div>
               <div className="text-muted pr-2">
                 Comprehensive software delivery analytics across your CI/CD process in a unified view — including Lead
                 Time, Change Failure Rate, Deployment Frequency, and Time to Restore.
               </div>
+              <div className="mt-2">
+                <TopFiveDashboards loadDashboardById={loadDashboardById}/>
+              </div>
+
             </div>
+
+            <div className="col-md px-2 landing-content-module">
+              <div className="h5 text-color">Toolchain Automation</div>
+              <div className="text-muted pr-2">
+                You choose your tools, we take care of the rest. Put together the perfect CI/CD stack that fits your
+                organization’s goals with zero vendor lock-in.
+              </div>
+            </div>
+
           </div>
 
         </div>

@@ -1,15 +1,19 @@
-import React, {useEffect, useState, useContext, useRef} from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
-import TopFiveDashboardsBadgeView from "components/insights/dashboards/top_five/TopFiveDashboardsBadgeView";
-import LoadingIcon from "components/common/icons/LoadingIcon";
+/*import TopFiveDashboardsBadgeView from "components/insights/dashboards/top_five/TopFiveDashboardsBadgeView";
+import LoadingIcon from "components/common/icons/LoadingIcon";*/
+import { Badge, Button } from "react-bootstrap";
+import PropTypes from "prop-types";
+
+/*import dashboardsButtonView from "./TopFiveDashboardsBadgeView";
 import TagsCloudBase from "components/common/fields/tags/cloud/TagsCloudBase";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
+import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";*/
 
-function TopFiveDashboards() {
+function TopFiveDashboards({ loadDashboardById }) {
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
   const [dashboardsList, setDashboardsList] = useState(undefined);
@@ -35,7 +39,7 @@ function TopFiveDashboards() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -65,13 +69,35 @@ function TopFiveDashboards() {
 
   const getBody = () => {
     if (isLoading) {
-      return (<div><LoadingIcon isLoading={isLoading} className={"mr-2 my-auto"}/>Loading favorite dashboards</div>);
+      return (<div></div>);  //<LoadingIcon isLoading={isLoading} className={"mr-2 my-auto"}/>Loading favorite dashboards
     }
 
+    let d = new Date();
+    d.setDate(d.getDate()-12);
+
     return (
-      <TopFiveDashboardsBadgeView
-        dashboards={dashboardsList}
-      />
+
+      <div className="mt-2">
+        {dashboardsList.map((item, key) => (
+          <div key={key} className={"my-1"}>
+            <Button
+              className="w-100"
+              variant="outline-secondary" size="sm"
+              onClick={() => {
+                loadDashboardById(item._id);
+              }}
+            >
+              {item.name.substring(0, 30)}
+              {new Date(item.createdAt) > d &&
+              <Badge variant="secondary" className="ml-1" size="sm">
+                New
+              </Badge>
+              }
+            </Button>
+          </div>
+        ))}
+      </div>
+
     );
   };
 
@@ -82,6 +108,10 @@ function TopFiveDashboards() {
   );
 
 }
+
+TopFiveDashboards.propTypes = {
+  loadDashboardById: PropTypes.func,
+};
 
 
 export default TopFiveDashboards;
