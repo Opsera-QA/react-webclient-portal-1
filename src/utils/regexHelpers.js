@@ -13,7 +13,7 @@ regexHelpers.regexTypes = {
   nameField: /^[A-Za-z0-9\-_., ]*$/,
 
   // spaces, upper and lower case letters, numbers, underscore, dash, period, comma, parentheses, plus symbol, asterisk, ampersand and exclamation mark
-  expandedTextAndSymbolsWithSpaces: /^[A-Za-z0-9'\-._&+*()! ]*$/,
+  expandedTextAndSymbolsWithSpaces: /^[A-Za-z0-9'\-,._&+*()! ]*$/,
 
   // Letters, numbers, spaces, dashes, underscores, and periods allowed
   limitedTextWithSpaces: /^[A-Za-z0-9-_. ]*$/,
