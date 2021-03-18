@@ -1,6 +1,6 @@
 export default (getColor) => ({
   keys: ["MergeRequestTimeTaken"],
-  indexBy: "AssigneeName",
+  indexBy: "AuthorName",
   colorBy: "id",
   layout: "horizontal",
   colors: getColor

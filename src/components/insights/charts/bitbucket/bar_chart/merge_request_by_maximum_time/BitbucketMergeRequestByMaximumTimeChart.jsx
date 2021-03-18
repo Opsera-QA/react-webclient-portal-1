@@ -7,7 +7,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-
+import { defaultConfig, getColorByData, assignStandardColors } from '../../../charts-views';
 function BitbucketMergeRequestByMaximumTimeChart({
   kpiConfiguration,
   setKpiConfiguration,
@@ -50,6 +50,7 @@ function BitbucketMergeRequestByMaximumTimeChart({
         kpiConfiguration
       );
       let dataObject = response?.data?.data[0]?.bitbucketMergeReqWithMaximumTime?.data;
+      assignStandardColors(dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -74,38 +75,10 @@ function BitbucketMergeRequestByMaximumTimeChart({
       <div className="new-chart mb-3" style={{ height: "300px" }}>
         <ResponsiveBar
           data={metrics}
+          {...defaultConfig("Time (Hours)", "Project", 
+                      true, true, "values", "cutoffString")}
+          {...config(getColorByData)}
           onClick={() => setShowModal(true)}
-          keys={config.keys}
-          indexBy="_id"
-          margin={config.margin}
-          padding={0.3}
-          layout={"vertical"}
-          colors={{ scheme: "category10" }}
-          borderColor={{ theme: "background" }}
-          colorBy="id"
-          defs={config.defs}
-          fill={config.fill}
-          axisTop={null}
-          axisRight={null}
-          axisBottom={config.axisBottom}
-          axisLeft={config.axisLeft}
-          labelSkipWidth={12}
-          labelSkipHeight={12}
-          enableLabel={false}
-          borderRadius={5}
-          labelTextColor="inherit:darker(2)"
-          animate={true}
-          motionStiffness={90}
-          borderWidth={2}
-          motionDamping={15}
-          legends={config.legends}
-          theme={{
-            tooltip: {
-              container: {
-                fontSize: "16px",
-              },
-            },
-          }}
         />
       </div>
     );

@@ -76,8 +76,8 @@ function BitbucketTimeTakenToCompleteMergeRequestReview({
       <div className="new-chart mb-3" style={{ height: "300px" }}>
         <ResponsiveBar
           data={metrics}
-          {...defaultConfig("Time (Hours)", "Reviewer", 
-                      false, true, "subString", "values")}
+          {...defaultConfig("Reviewer", "Time (Hours)", 
+                      true, true, "subString", "values")}
           {...config(getColorByData)}
           onClick={() => setShowModal(true)}
           tooltip={({ indexValue, color, value }) => <ChartTooltip 
