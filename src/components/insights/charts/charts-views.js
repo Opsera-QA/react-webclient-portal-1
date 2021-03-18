@@ -1,10 +1,11 @@
-const greyHues = ["#3D3B36", "#63625E", "#8A8986", "##B1B0AE"];
-// const greyHues = ["#5B5851", "#7A756C", "#B1AeA7", "#E6E5E3"];
+// const greyHues = ["#3D3B36", "#63625E", "#8A8986", "##B1B0AE"];
+const greyHues = ["#5B5851", "#7A756C", "#B1AeA7", "#E6E5E3"];
 const purpleHues = ["#494173", "#7368AA", "#ABA4CC", "#E3E1EE"];
 const goldHues = ["#F1AD0F", "#F5C453", "#F9DC98", "#FDF3DD"];
 const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
 
-const standardColors = [...greyHues.map((_, i) => [greyHues[i], goldHues[i], purpleHues[i], darkHues[i]])];
+const standardColors = [];
+greyHues.forEach((_, i) => standardColors.push(greyHues[i], goldHues[i], purpleHues[i], darkHues[i]));
 
 const failColor = "#E57373";
 const mainColor = greyHues[0];
@@ -40,12 +41,12 @@ export const assignTaskColors = data => {
 
 export const assignHealthColors = data => {
   data.forEach(data => {
-    data["To Do_color"] = mainColor;
-    data["In Development_color"] = greyHues[3];
-    data["In Progress_color"] = greyHues[2];
-    data["Peer Review_color"] = greyHues[1];
-    data["Testing_color"] = greyHues[0];
-    data["Done_color"] = goldHues[0];
+    data["To Do_color"] = standardColors[0];
+    data["In Development_color"] = purpleHues[1];
+    data["In Progress_color"] = standardColors[3];
+    data["Peer Review_color"] = goldHues[4];
+    data["Testing_color"] = standardColors[5];
+    data["Done_color"] = standardColors[6];
   });
   
   return data;
