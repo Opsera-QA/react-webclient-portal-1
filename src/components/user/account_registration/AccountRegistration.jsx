@@ -1,16 +1,16 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Form, Row, Col, Card } from "react-bootstrap";
-import {useHistory, useParams} from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import "components/user/user.css";
 import userActions from "components/user/user-actions";
-import {DialogToastContext} from "contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import RegisterButton from "components/common/buttons/saving/RegisterButton";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 import accountRegistrationMetadata from "components/user/account_registration/account-registration-metadata";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import TempTextInput from "components/common/inputs/text/TempTextInput";
 
 function AccountRegistration() {
@@ -23,6 +23,8 @@ function AccountRegistration() {
   const [accountNotFound, setAccountNotFound] = useState(false);
   const [registrationDataDto, setRegistrationDataDto] = useState(undefined);
   const [companyName, setCompanyName] = useState("Opsera");
+  const [invalidHost, setInvalidHost] = useState(false);
+
 
   useEffect(() => {
     loadData();
@@ -31,13 +33,19 @@ function AccountRegistration() {
   const loadData = async () => {
     try {
       setIsLoading(true);
-      const token = await generateJwtServiceTokenWithValue({id: "orgRegistrationForm"});
+      setInvalidHost(false);
+      const token = await generateJwtServiceTokenWithValue({ id: "orgRegistrationForm" });
       setServiceToken(token);
 
       const accountResponse = await userActions.getAccountInformation(domain, token);
       let newAccountDto = (new Model(accountRegistrationMetadata.newObjectFields, accountRegistrationMetadata, true));
 
       if (accountResponse?.data) {
+        if (accountResponse.data.idpBaseUrl && window.location.hostname.toLowerCase() !== accountResponse.data.idpBaseUrl.toLowerCase()) {
+          setInvalidHost(true);
+          toastContext.showSystemErrorBanner("Warning!  You are attempting to create an account on the wrong Opsera Portal tenant.  Please check with your account owner or contact Opsera to get the proper URL register accounts.");
+        }
+
         setCompanyName(accountResponse.data?.orgName);
         newAccountDto.setData("company", accountResponse.data?.orgName);
         newAccountDto.setData("ldapOrgAccount", accountResponse.data?.name);
@@ -47,19 +55,16 @@ function AccountRegistration() {
       }
 
       setRegistrationDataDto(newAccountDto);
-    }
-    catch (error) {
+    } catch (error) {
       if (!error?.error?.message?.includes(404) && !error?.error?.message?.includes(400)) {
         toastContext.showLoadingErrorDialog(error);
-      }
-      else {
+      } else {
         setAccountNotFound(true);
         let newAccountDto = (new Model(accountRegistrationMetadata.newObjectFields, accountRegistrationMetadata, true));
         newAccountDto.setData("company", "Opsera");
         setRegistrationDataDto(newAccountDto);
       }
-    }
-    finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -90,10 +95,10 @@ function AccountRegistration() {
 
   const getTitle = () => {
     if (companyName !== "Opsera") {
-      return <span>{companyName} Account Registration for Opsera Portal</span>
+      return <span>{companyName} Account Registration for Opsera Portal</span>;
     }
 
-    return (<span>Opsera Account Registration</span>)
+    return (<span>Opsera Account Registration</span>);
   };
 
   const getAccountNotFoundMessage = () => {
@@ -104,7 +109,7 @@ function AccountRegistration() {
         </div>
       );
     }
-  }
+  };
 
   if (accountNotFound) {
     return (
@@ -115,7 +120,7 @@ function AccountRegistration() {
   }
 
   if (isLoading || registrationDataDto == null) {
-    return <LoadingDialog />
+    return <LoadingDialog />;
   }
 
   return (
@@ -127,24 +132,29 @@ function AccountRegistration() {
             {getAccountNotFoundMessage()}
             <Row>
               <Col md={12}>
-                <TextInputBase disabled={true} fieldName={"company"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase disabled={true} fieldName={"company"} dataObject={registrationDataDto}
+                               setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={12}>
-                <TextInputBase fieldName={"firstName"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"firstName"} dataObject={registrationDataDto}
+                               setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={12}>
-                <TextInputBase fieldName={"lastName"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TextInputBase fieldName={"lastName"} dataObject={registrationDataDto}
+                               setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={12}>
-                <TempTextInput fieldName={"email"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TempTextInput fieldName={"email"} dataObject={registrationDataDto}
+                               setDataObject={setRegistrationDataDto} />
               </Col>
               <Col md={12}>
-                <TempTextInput fieldName={"confirmEmail"} dataObject={registrationDataDto} setDataObject={setRegistrationDataDto} />
+                <TempTextInput fieldName={"confirmEmail"} dataObject={registrationDataDto}
+                               setDataObject={setRegistrationDataDto} />
               </Col>
             </Row>
             <Row>
               <div className="ml-auto m-3 px-3">
-                <RegisterButton createAccount={createAccount} recordDto={registrationDataDto} />
+                <RegisterButton createAccount={createAccount} recordDto={registrationDataDto} disable={invalidHost} />
               </div>
             </Row>
           </Card.Body>
