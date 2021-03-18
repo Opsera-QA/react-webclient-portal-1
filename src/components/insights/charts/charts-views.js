@@ -9,6 +9,8 @@ greyHues.forEach((_, i) => standardColors.push(greyHues[i], goldHues[i], purpleH
 
 const failColor = "#E57373";
 const mainColor = greyHues[0];
+export const mainGold = goldHues[0];
+export const mainPurple = purpleHues[0];
 
 export const assignStandardColors = (data, uniColor = false) => {
   if (data) {
