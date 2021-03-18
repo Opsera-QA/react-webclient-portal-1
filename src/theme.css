@@ -1458,6 +1458,11 @@ a.nav-link {
     margin: 10px auto auto;
 }
 
+/* TODO: Remove and change to w-100 if no custom styling is needed*/
+.full-width-center-overlay {
+    width: 100%;
+}
+
 .center-overlay-shadow-background {
     width: 100%;
     background-color: rgba(0,0,0,0.7);
