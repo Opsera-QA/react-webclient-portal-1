@@ -30,4 +30,4 @@ ModelLinkButton.propTypes = {
   size: PropTypes.string
 };
 
-export default ModelLinkButton;
+export default React.memo(ModelLinkButton);

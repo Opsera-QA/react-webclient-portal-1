@@ -43,4 +43,4 @@ LinkButtonBase.defaultProps = {
   size: "sm"
 };
 
-export default LinkButtonBase;
+export default React.memo(LinkButtonBase);
