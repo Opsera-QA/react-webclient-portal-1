@@ -47,7 +47,6 @@ function OpseraBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, da
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineDuration", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.opseraPipelineDuration?.data : [];
       assignStandardColors(dataObject, true);
-      console.log('!!!!', dataObject)
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -77,11 +76,8 @@ function OpseraBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, da
           data={metrics}
           {...defaultConfig("Duration (Minutes)", "Pipeline Run", 
                       false, true, "wholeNumbers", "cutoffString")}
-          keys={config.keys}
-          indexBy="pipelineId"
+          {...config(getColorByData)}
           onClick={() => setShowModal(true)}
-          colorBy="id"
-          colors={getColorByData}
           tooltip={({ data, value, color }) => <ChartTooltip 
                                         titles = {["Pipeline ID", "Duration"]}
                                         values = {[data.pipelineId, `${value} minutes`]}

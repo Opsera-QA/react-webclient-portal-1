@@ -1,5 +1,4 @@
-// const greyHues = ["#3D3B36", "#63625E", "#8A8986", "##B1B0AE"];
-const greyHues = ["#5B5851", "#7A756C", "#B1AeA7", "#E6E5E3"];
+export const greyHues = ["#5B5851", "#7A756C", "#B1AeA7", "#E6E5E3"];
 const purpleHues = ["#494173", "#7368AA", "#ABA4CC", "#E3E1EE"];
 const goldHues = ["#F1AD0F", "#F5C453", "#F9DC98", "#FDF3DD"];
 const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
@@ -76,7 +75,8 @@ const formats = {
   monthDate: "%b %d",
   yearMonthDate: d => d.split("T")[0],
   cutoffString: d => d.slice(0, 8) + (d.length > 8 ? "..." : ""),
-  values: d => /(?:(?!-).)*/.exec(d)[0]
+  values: d => /(?:(?!-).)*/.exec(d)[0],
+  subString: d => (typeof d === "string" ? d.substring(0, 6) : "")
 };
 
 export const defaultConfig = (leftAxisTitle, bottomAxisTitle,
@@ -117,7 +117,7 @@ export const defaultConfig = (leftAxisTitle, bottomAxisTitle,
         "tickRotation": largeBottomSpaceRequired ? 0 : -45,
         "legend": bottomAxisTitle,
         "legendOffset": largeBottomSpaceRequired ? 40 : 60,
-        "legendPosition": "middle"
+        "legendPosition": "middle",
       },
       legends: [
         {
