@@ -129,7 +129,10 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       kpiConfig?.kpi_identifier === "bitbucket-time-taken-to-complete-merge-request-review" ||
       kpiConfig?.kpi_identifier === "bitbucket-most-active-contributors" ||
       kpiConfig?.kpi_identifier === "bitbucket-pending-merge-requests" ||
-      kpiConfig?.kpi_identifier === "bitbucket-recent-merge-requests"
+      kpiConfig?.kpi_identifier === "bitbucket-recent-merge-requests" ||
+      kpiConfig?.kpi_identifier === "bitbucket-commits-by-author" ||
+      kpiConfig?.kpi_identifier === "bitbucket-merge-requests-pushes-and-comments" ||
+      kpiConfig?.kpi_identifier === "bitbucket-total-commits-by-project"
     ) {
       return getChart();
     }
@@ -737,25 +740,31 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "bitbucket-commits-by-author":
         return (
           <BitbucketCommitsByAuthor
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "bitbucket-merge-requests-pushes-and-comments":
         return (
           <BitbucketMergeRequestsPushesAndComments
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "bitbucket-total-commits-by-project":
         return (
           <BitbucketTotalCommitsByProjectChart
-            persona={"developer"}
-            date={getDateObject(kpiConfig)}
-            tags={getTagsFromKpiConfiguration(kpiConfig)}
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
           />
         );
       case "bitbucket-recent-merge-requests":

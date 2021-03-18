@@ -57,9 +57,7 @@ function BitbucketMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, d
   };
 
   const getChartBody = () => {
-    if (!Array.isArray(metrics) || metrics.length === 0) {
-      return null;
-    }
+    if (!Array.isArray(metrics) || metrics.length === 0) return null;
 
     return (
       <div className="new-chart mb-3" style={{ height: "300px" }}>
