@@ -58,6 +58,23 @@ dashboardsActions.getAllDashboardsV2 = async(getAccessToken, cancelTokenSource, 
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+dashboardsActions.getTopFiveDashboardsV2 = async(getAccessToken, cancelTokenSource) => {
+  const apiUrl = "/analytics/dashboard";
+
+  let urlParams = {
+    params: {
+      sort: "lastupdated",
+      page: 1,
+      size: 5,
+      active: true,
+      favorites: true,
+    }
+  }
+
+  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+
 dashboardsActions.getAllDashboardsLovV2 = async(getAccessToken, cancelTokenSource) => {
   const apiUrl = "/analytics/dashboard";
 

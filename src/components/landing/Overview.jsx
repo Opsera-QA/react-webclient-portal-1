@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import FreeTrialLandingView from "../free_trial/landing_page/Landing";
 import LoadingView from "../common/status_notifications/loading";
 import MyTagCloud from "components/common/fields/tags/cloud/MyTagCloud";
+import TopFiveDashboards from "components/insights/dashboards/top_five/TopFiveDashboards";
 
 function OverviewLanding() {
   const contextType = useContext(AuthContext);
@@ -125,9 +126,10 @@ function OverviewLanding() {
           <div className="h4 text-color mb-3">Welcome
             back {userInfo && userInfo.firstName ? userInfo.firstName : null}!
           </div>
-          <div className={"mb-3 mx-1"}>
-            {!featureFlagHideItemInProd() && !featureFlagHideItemInTest() && <MyTagCloud/>}
-          </div>
+          <Row className={"mb-3 mx-0 mt-2 d-flex"}>
+            <Col lg={"2"}>{!featureFlagHideItemInProd() && !featureFlagHideItemInTest() && <TopFiveDashboards/>}</Col>
+            <Col>{!featureFlagHideItemInProd() && !featureFlagHideItemInTest() && <MyTagCloud/>}</Col>
+          </Row>
 
           <hr/>
 

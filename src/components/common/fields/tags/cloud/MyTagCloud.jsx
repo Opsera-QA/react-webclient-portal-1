@@ -154,7 +154,6 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
     }
   };
 
-  /*<div className={"mt-2 btn btn-sm btn-outline-secondary"} onClick={() => {showTagSubscriptionManager()}}>Manage Tag Subscriptions</div>*/
   return (
     <div className={className}>
       <div className="mb-1 item-field">
