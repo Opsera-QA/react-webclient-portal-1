@@ -126,7 +126,7 @@ function OverviewLanding() {
           <div className="h4 text-color mb-3">Welcome
             back {userInfo && userInfo.firstName ? userInfo.firstName : null}!
           </div>
-          <Row className={"mb-3 mx-0 d-flex"}>
+          <Row className={"mb-3 mx-0 mt-2 d-flex"}>
             <Col lg={"2"}>{!featureFlagHideItemInProd() && !featureFlagHideItemInTest() && <TopFiveDashboards/>}</Col>
             <Col>{!featureFlagHideItemInProd() && !featureFlagHideItemInTest() && <MyTagCloud/>}</Col>
           </Row>

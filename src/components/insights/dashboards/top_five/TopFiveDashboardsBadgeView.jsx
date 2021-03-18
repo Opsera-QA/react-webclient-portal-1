@@ -3,10 +3,9 @@ import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import {faChartNetwork} from "@fortawesome/pro-light-svg-icons";
-import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
-import CustomModelLinkBadge from "components/common/badges/CustomModelLinkBadge";
+import ModelLinkButton from "components/common/buttons/link/ModelLinkButton";
 
-function dashboardsBadgeView({ dashboards }) {
+function dashboardsButtonView({ dashboards }) {
   const getDashboardBadgeText = (dashboard) => {
     return dashboard?.name;
   };
@@ -18,25 +17,22 @@ function dashboardsBadgeView({ dashboards }) {
 
     return (
       dashboards.map((dashboardData, index) => (
-        <CustomModelLinkBadge
+        <ModelLinkButton
+          className={"mb-2"}
           key={index}
           dataModel={new Model({...dashboardData}, dashboardMetadata, false)}
           icon={faChartNetwork}
-          badgeText={getDashboardBadgeText(dashboardData)}
+          text={getDashboardBadgeText(dashboardData)}
         />
       ))
     );
   }
 
-  return (
-    <CustomBadgeContainer>
-      {getBadges()}
-    </CustomBadgeContainer>
-  );
+  return (getBadges());
 }
 
-dashboardsBadgeView.propTypes = {
+dashboardsButtonView.propTypes = {
   dashboards: PropTypes.array,
 };
 
-export default dashboardsBadgeView;
+export default dashboardsButtonView;

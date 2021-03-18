@@ -77,7 +77,6 @@ function TopFiveDashboards() {
 
   return (
     <div>
-      <h5>My Top Five Dashboards</h5>
       {getBody()}
     </div>
   );
