@@ -75,7 +75,8 @@ const formats = {
   monthDate: "%b %d",
   yearMonthDate: d => d.split("T")[0],
   cutoffString: d => d.slice(0, 8) + (d.length > 8 ? "..." : ""),
-  values: d => /(?:(?!-).)*/.exec(d)[0]
+  values: d => /(?:(?!-).)*/.exec(d)[0],
+  subString: d => (typeof d === "string" ? d.substring(0, 6) : "")
 };
 
 export const defaultConfig = (leftAxisTitle, bottomAxisTitle,
