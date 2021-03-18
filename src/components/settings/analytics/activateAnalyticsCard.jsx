@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Card, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { faChartNetwork } from "@fortawesome/pro-light-svg-icons";
 import TitleBar from "components/common/fields/TitleBar";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 function AnalyticsProfileSettings() {
   const history = useHistory();
+  const toastContext = useContext(DialogToastContext);
 
   const goToAnalytics = () => {
     history.push(`/settings/analytics-profile`);
@@ -17,6 +19,7 @@ function AnalyticsProfileSettings() {
         <div className="pl-2 content-block-header title-text-header-2">
           <TitleBar titleIcon={faChartNetwork} title={"Activate Opsera Analytics"} />
         </div>
+        {toastContext.getInlineBanner()}
         <div className="p-3 shaded-container">
           <Card.Text>
             Please activate Opsera Analytics by visiting our analytics profile settings page using the link below:
