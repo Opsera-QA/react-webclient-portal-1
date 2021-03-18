@@ -8,6 +8,9 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { line } from "d3-shape";
+import { defaultConfig, getColor, assignStandardColors,
+         mainGold, mainPurple } from '../../../charts-views';
+import ChartTooltip from '../../../ChartTooltip';
 
 function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -44,6 +47,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
       setIsLoading(true);
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "jiraLeadTime", kpiConfiguration);
       const dataObject = response?.data && response?.data?.data[0]?.jiraLeadTime.status === 200 ? response?.data?.data[0]?.jiraLeadTime?.data : [];
+      assignStandardColors(dataObject && dataObject[0]?.data, true);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -72,7 +76,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
         .x(d => xScale(d.data.x))
         .y(d => yScale(d.data.mean));
       return (
-        <path d={lineGenerator(nodes)} fill="none" stroke="rgba(200, 30, 15, 1)" strokeWidth="3" />
+        <path d={lineGenerator(nodes)} fill="none" stroke={mainPurple} strokeWidth="3" />
       );
     };
 
@@ -81,7 +85,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
         .x(d => xScale(d.data.x))
         .y(d => yScale(d.data.rolling_mean));
       return (
-        <path d={lineGenerator(nodes)} fill="none" stroke="rgba(30, 15, 200, 1)" strokeWidth="2" />
+        <path d={lineGenerator(nodes)} fill="none" stroke={mainGold} strokeWidth="2" />
       );
     };
 
@@ -89,50 +93,15 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
       <div className="new-chart mb-3" style={{height: "300px"}}>
         <ResponsiveScatterPlot
           data={metrics}
+          {...defaultConfig("Lead Time", "Date", 
+                      false, true, "wholeNumbers", "monthDate")}
+          {...config(getColor, MeanLineLayer, RollingMeanLineLayer)}
           onClick={() => setShowModal(true)}
-          indexBy="date"
-          margin={{top: 50, right: 110, bottom: 80, left: 120}}
-          xScale={{
-            type: "time",
-            format: "%Y-%m-%d",
-            precision: "day",
-          }}
-          xFormat="time:%Y-%m-%d"
-          yScale={{ type: "linear", min: 0, max: "auto", stacked: false }}
-          axisTop={null}
-          axisRight={null}
-          axisBottom={config.axisBottom}
-          axisLeft={config.axisLeft}
-          pointSize={10}
-          pointBorderWidth={8}
-          pointLabel="y"
-          pointLabelYOffset={-12}
-          useMesh={true}
-          lineWidth={3.5}
-          layers={["grid", "axes", MeanLineLayer, RollingMeanLineLayer, "nodes", "markers", "mesh", "legends"]}       
-          // legends={config.legends}
-          tooltip={({node, color}) => (
-            <div
-              style={{
-                background: "white",
-                padding: "9px 12px",
-                border: "1px solid #ccc",
-              }}
-            >
-              <strong style={{color}}> Issue: </strong> {String(node.data._id)}
-              <br />
-              <strong style={{color}}> Date Completed: </strong> {String(node.data.date_finished)}
-              <br />
-              <strong style={{color}}> Lead Time: </strong> {node.data.y}
-            </div>
-          )}
-          theme={{
-            tooltip: {
-              container: {
-                fontSize: "16px",
-              },
-            },
-          }}
+          tooltip={({node, color}) => <ChartTooltip 
+                                        titles = {["Issue", "Date Completed", "Lead Time"]}
+                                        values = {[String(node.data._id), String(node.data.date_finished), 
+                                                  `${node.data.y} ${node.data.y > 1 ? "days" : "day"}`]}
+                                        color = {color} />}
         />
       </div>
     );
