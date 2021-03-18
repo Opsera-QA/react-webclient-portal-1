@@ -49,9 +49,12 @@ function BitbucketMergeRequestByMaximumTimeChart({
         "bitbucketMergeReqWithMaximumTime",
         kpiConfiguration
       );
-      let dataObject = response?.data ? response?.data?.data[0]?.bitbucketMergeReqWithMaximumTime?.data : [];
+      let dataObject = response?.data?.data[0]?.bitbucketMergeReqWithMaximumTime?.data;
 
-      if (isMounted?.current === true && dataObject) setMetrics(dataObject);
+      if (isMounted?.current === true && dataObject) {
+        setMetrics(dataObject);
+      }
+
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);

@@ -49,11 +49,13 @@ function BitbucketMergeRequestsPushesAndComments({
         "bitbucketTotalCountOfMergeReqAndPushPerDay",
         kpiConfiguration
       );
-      let dataObject = response?.data
-        ? response?.data?.data[0]?.bitbucketTotalCountOfMergeReqAndPushPerDay?.data[0]?.data
-        : [];
 
-      if (isMounted?.current === true && dataObject) setMetrics(dataObject);
+      let dataObject = response?.data?.data[0]?.bitbucketTotalCountOfMergeReqAndPushPerDay?.data[0]?.data;
+
+      if (isMounted?.current === true && dataObject) {
+        setMetrics(dataObject);
+      }
+
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -65,7 +67,9 @@ function BitbucketMergeRequestsPushesAndComments({
   };
 
   const getChartBody = () => {
-    if (!Array.isArray(metrics) || metrics.length === 0) return null;
+    if (!Array.isArray(metrics) || metrics.length === 0) {
+      return null;
+    }
 
     return (
       <div className="new-chart mb-3" style={{ height: "300px" }}>

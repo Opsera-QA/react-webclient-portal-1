@@ -43,9 +43,13 @@ function BitbucketTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfigura
         "bitbucketTotalCommitsChart",
         kpiConfiguration
       );
-      let dataObject = response?.data ? response?.data?.data[0]?.bitbucketTotalCommitsChart?.data : [];
 
-      if (isMounted?.current === true && dataObject) setMetrics(dataObject);
+      let dataObject = response?.data?.data[0]?.bitbucketTotalCommitsChart?.data;
+
+      if (isMounted?.current === true && dataObject) {
+        setMetrics(dataObject);
+      }
+
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);

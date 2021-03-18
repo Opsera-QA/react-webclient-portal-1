@@ -44,12 +44,18 @@ function BitbucketCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashb
         "bitbucketTotalCommitsByUserAndDate",
         kpiConfiguration
       );
-      let dataObject = response?.data ? response?.data?.data[0]?.bitbucketTotalCommitsByUserAndDate?.data : [];
-      var usersList = dataObject && dataObject.length > 0 ? Object.keys(dataObject[0]) : [];
-      usersList = usersList.filter((value) => value != "date");
-      setUsers(usersList);
+      let dataObject = response?.data?.data[0]?.bitbucketTotalCommitsByUserAndDate?.data;
 
-      if (isMounted?.current === true && dataObject) setMetrics(dataObject);
+      if (isMounted?.current === true && dataObject) {
+        setMetrics(dataObject);
+        let usersList = dataObject && dataObject.length > 0 ? Object.keys(dataObject[0]) : [];
+
+        if (usersList) {
+          usersList = usersList.filter((value) => value !== "date");
+          setUsers(usersList);
+        }
+      }
+
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);

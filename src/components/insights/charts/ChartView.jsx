@@ -106,6 +106,7 @@ import {
   getTagsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 
+// TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
   const [kpiConfig, setKpiConfig] = useState(kpiConfiguration);
   // TODO: This is only being used until each chart is updated to use ChartContainer inside.

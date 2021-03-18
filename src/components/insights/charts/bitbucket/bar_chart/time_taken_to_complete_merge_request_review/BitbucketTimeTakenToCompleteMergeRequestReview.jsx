@@ -49,11 +49,12 @@ function BitbucketTimeTakenToCompleteMergeRequestReview({
         "bitbucketTimeTakenToCompleteMergeRequestReviewChart",
         kpiConfiguration
       );
-      let dataObject = response?.data
-        ? response?.data?.data[0]?.bitbucketTimeTakenToCompleteMergeRequestReviewChart?.data
-        : [];
+      let dataObject = response?.data?.data[0]?.bitbucketTimeTakenToCompleteMergeRequestReviewChart?.data;
 
-      if (isMounted?.current === true && dataObject) setMetrics(dataObject);
+      if (isMounted?.current === true && dataObject) {
+        setMetrics(dataObject);
+      }
+
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -101,7 +102,7 @@ function BitbucketTimeTakenToCompleteMergeRequestReview({
           tooltip={({ indexValue, color, value, id }) => (
             <div>
               <strong style={{ color }}>Reviewer: </strong> {indexValue}
-              <br></br>
+              <br />
               <strong style={{ color }}> {"Merge Request Time Taken"}: </strong> {value}
             </div>
           )}

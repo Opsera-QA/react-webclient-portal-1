@@ -43,9 +43,13 @@ function BitbucketMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, d
         "bitbucketMergeRequestsByUser",
         kpiConfiguration
       );
-      let dataObject = response?.data ? response?.data?.data[0]?.bitbucketMergeRequestsByUser?.data : [];
 
-      if (isMounted?.current === true && dataObject) setMetrics(dataObject);
+      let dataObject = response?.data?.data[0]?.bitbucketMergeRequestsByUser?.data;
+
+      if (isMounted?.current === true && dataObject) {
+        setMetrics(dataObject);
+      }
+
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
