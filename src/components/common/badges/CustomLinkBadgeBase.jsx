@@ -21,7 +21,7 @@ function CustomLinkBadgeBase({openInNewWindow, icon, badgeText, link, className,
   }
 
   return (
-    <TooltipWrapper innerText={tooltipText} placement={"left"}>
+    <TooltipWrapper innerText={tooltipText}>
       <div className={"pointer"} onClick={() => handleRoute()}>
         <CustomBadge className={className} icon={icon} badgeText={badgeText} />
       </div>

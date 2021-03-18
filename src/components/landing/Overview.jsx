@@ -127,8 +127,8 @@ function OverviewLanding() {
             back {userInfo && userInfo.firstName ? userInfo.firstName : null}!
           </div>
           <Row className={"mb-3 mx-0 d-flex"}>
-            <Col lg={9}>{!featureFlagHideItemInProd() && !featureFlagHideItemInTest() && <MyTagCloud/>}</Col>
-            <Col lg={3}>{!featureFlagHideItemInProd() && !featureFlagHideItemInTest() && <TopFiveDashboards/>}</Col>
+            <Col lg={"2"}>{!featureFlagHideItemInProd() && !featureFlagHideItemInTest() && <TopFiveDashboards/>}</Col>
+            <Col>{!featureFlagHideItemInProd() && !featureFlagHideItemInTest() && <MyTagCloud/>}</Col>
           </Row>
 
           <hr/>
