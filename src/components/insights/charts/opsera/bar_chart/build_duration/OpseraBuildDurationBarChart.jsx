@@ -7,6 +7,8 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import { defaultConfig, getColorByData, assignStandardColors } from '../../../charts-views';
+import ChartTooltip from '../../../ChartTooltip';
 
 function OpseraBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -44,6 +46,8 @@ function OpseraBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, da
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineDuration", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.opseraPipelineDuration?.data : [];
+      assignStandardColors(dataObject, true);
+      console.log('!!!!', dataObject)
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -71,43 +75,18 @@ function OpseraBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, da
       <div className="new-chart mb-3" style={{height: "300px"}}>
         <ResponsiveBar
           data={metrics}
+          {...defaultConfig("Duration (Minutes", "Pipeline Run", 
+                      false, true, "wholeNumbers", "cutoffString")}
           keys={config.keys}
-          layout="vertical"
           indexBy="pipelineId"
           onClick={() => setShowModal(true)}
-          margin={config.margin}
-          padding={0.3}
-          colors={{ scheme: "category10" }}
-          borderColor={{ theme: "background" }}
           colorBy="id"
-          defs={config.defs}
-          fill={config.fill}
-          axisTop={null}
-          axisRight={null}
-          axisBottom={config.axisBottom}
-          axisLeft={config.axisLeft}
-          enableLabel={false}
-          borderRadius={5}
-          labelSkipWidth={12}
-          labelSkipHeight={12}
-          labelTextColor="inherit:darker(2)"
-          animate={true}
-          motionStiffness={90}
-          motionDamping={15}
-          legends={config.legends}
-          tooltip={({ data, value, color }) => (
-            <div>
-              <strong style={{ color }}> Pipeline ID: </strong> {data.pipelineId} <br />
-              <strong style={{ color }}> Duration: </strong> {value} minutes <br />
-            </div>
-          )}
-          theme={{
-            tooltip: {
-              container: {
-                fontSize: "16px",
-              },
-            },
-          }}
+          colors={getColorByData}
+          tooltip={({ data, value, color }) => <ChartTooltip 
+                                        titles = {["Pipeline ID", "Duration"]}
+                                        values = {[data.pipelineId, `${value} minutes`]}
+                                        style = {false}
+                                        color = {color} />}
         />
       </div>
     );
