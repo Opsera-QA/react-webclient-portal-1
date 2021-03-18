@@ -8,8 +8,10 @@ import OpseraBuildDurationBarChart from "./opsera/bar_chart/build_duration/Opser
 import OpseraBuildsByUserBarChart from "./opsera/bar_chart/builds_by_user/OpseraBuildsByUserBarChart";
 import OpseraDeploymentFrequencyLineChart from "./opsera/line_chart/deployment_frequency/OpseraDeploymentFrequencyLineChart";
 import OpseraRecentPipelineStatus from "components/insights/charts/opsera/table/recent_pipeline_status/OpseraRecentPipelineStatus";
-import OpseraMeanTimeToRestoreBarChart from "components/insights/charts/opsera/bar_chart/mean_time_to_restore/OpseraMeanTimeToRestoreBarChart";
-import OpseraRecentCDStatusTable from "components/insights/charts/opsera/table/recent_cd_status/OpseraRecentCDStatusTable";
+import OpseraRecentCDStatusTable
+  from "components/insights/charts/opsera/table/recent_cd_status/OpseraRecentCDStatusTable";
+import OpseraPipelineDeploymentFrequencyStats from "./opsera/OpseraPipelineDeploymentFrequencyStats";
+import OpseraBuildDurationByStageBarChart from "./opsera/bar_chart/duration_by_stage/OpseraBuildDurationByStageBarChart";
 
 // Jenkins KPIs
 import JenkinsBuildsByUserBarChart from "./jenkins/bar_chart/builds_by_user/JenkinsBuildsByUserBarChart";
@@ -120,8 +122,9 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-cpu-usage" &&
       kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-memory-usage" &&
       kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-in-network-usage" &&
-      kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-out-network-usage"
-    ) {
+      kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-out-network-usage" &&
+      kpiConfig?.kpi_identifier !== "opsera-mean-time-to-restore"
+  ) {
       return getChart();
     }
 
@@ -207,9 +210,19 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             index={index}
           />
         );
-      case "opsera-mean-time-to-restore":
+      case "opsera-duration-by-stage":
         return (
-          <OpseraMeanTimeToRestoreBarChart
+          <OpseraBuildDurationByStageBarChart
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
+      case "opsera-deployment-frequency-stats":
+        return (
+          <OpseraPipelineDeploymentFrequencyStats
             kpiConfiguration={kpiConfig}
             setKpiConfiguration={setKpiConfig}
             dashboardData={dashboardData}
