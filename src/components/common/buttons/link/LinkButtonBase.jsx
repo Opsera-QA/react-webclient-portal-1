@@ -31,7 +31,7 @@ function LinkButtonBase({icon, text, size, openInNewWindow, className, variant, 
 
 LinkButtonBase.propTypes = {
   icon: PropTypes.object,
-  text: PropTypes.object,
+  text: PropTypes.any,
   className: PropTypes.string,
   variant: PropTypes.string,
   openInNewWindow: PropTypes.bool,
