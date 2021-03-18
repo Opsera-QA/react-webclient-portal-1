@@ -8,7 +8,8 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-
+import { defaultConfig, getColorByData, assignStandardColors } from '../../../charts-views';
+import ChartTooltip from '../../../ChartTooltip';
 function OpseraBuildsByUserBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -37,14 +38,14 @@ function OpseraBuildsByUserBarChart({ kpiConfiguration, setKpiConfiguration, das
       source.cancel();
       isMounted.current = false;
     }
-  }, [JSON.stringify(dashboardData)]);
+  }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelinesByUser", kpiConfiguration, dashboardTags);
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelinesByUser", kpiConfiguration);
       let dataObject = response?.data?.data[0]?.opseraPipelinesByUser?.data;
+      assignStandardColors(dataObject, true);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -72,45 +73,15 @@ function OpseraBuildsByUserBarChart({ kpiConfiguration, setKpiConfiguration, das
       <div className="new-chart mb-3" style={{height: "300px"}}>
         <ResponsiveBar
           data={metrics}
-          keys={config.keys}
-          indexBy="_id"
+          {...defaultConfig("Users", "Number of Builds", 
+                      true, true, "cutoffString", "wholeNumbers")}
+          {...config(getColorByData)}
           onClick={() => setShowModal(true)}
-          margin={config.margin}
-          padding={0.3}
-          layout={"horizontal"}
-          colors={{ scheme: "dark2" }}
-          borderColor={{ theme: "background" }}
-          colorBy="id"
-          defs={config.defs}
-          fill={config.fill}
-          axisTop={null}
-          axisRight={null}
-          axisBottom={config.axisBottom}
-          axisLeft={config.axisLeft}
-          labelSkipWidth={12}
-          labelSkipHeight={12}
-          enableLabel={false}
-          borderRadius={5}
-          labelTextColor="inherit:darker(2)"
-          animate={true}
-          motionStiffness={90}
-          borderWidth={2}
-          motionDamping={15}
-          legends={config.legends}
-          tooltip={({ indexValue, value, color }) => (
-            <div>
-              <strong style={{ color }}>User: </strong> {indexValue}
-              <br />
-              <strong style={{ color }}> No. of Builds: </strong> {value} Builds
-            </div>
-          )}
-          theme={{
-            tooltip: {
-              container: {
-                fontSize: "16px",
-              },
-            },
-          }}
+          tooltip={({ indexValue, value, color }) => <ChartTooltip 
+                                        titles = {["User", "Number of Builds"]}
+                                        values = {[indexValue, `${value} builds`]}
+                                        style = {false}
+                                        color = {color} />}
         />
       </div>
     );

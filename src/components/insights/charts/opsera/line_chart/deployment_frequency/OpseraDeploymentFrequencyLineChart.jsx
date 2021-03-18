@@ -7,6 +7,8 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import { defaultConfig, getColor, assignBooleanColors } from '../../../charts-views';
+import ChartTooltip from '../../../ChartTooltip';
 
 function OpseraDeploymentFrequencyLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -36,14 +38,14 @@ function OpseraDeploymentFrequencyLineChart({ kpiConfiguration, setKpiConfigurat
       source.cancel();
       isMounted.current = false;
     }
-  }, [JSON.stringify(dashboardData)]);
+  }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineDeploymentFrequency", kpiConfiguration, dashboardTags);
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineDeploymentFrequency", kpiConfiguration);
       const dataObject = response?.data && response?.data?.data[0]?.opseraPipelineDeploymentFrequency.status === 200 ? response?.data?.data[0]?.opseraPipelineDeploymentFrequency?.data : [];
+      assignBooleanColors(dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -71,50 +73,14 @@ function OpseraDeploymentFrequencyLineChart({ kpiConfiguration, setKpiConfigurat
       <div className="new-chart mb-3" style={{height: "300px"}}>
         <ResponsiveLine
           data={metrics}
+          {...defaultConfig("Number of Deployments", "Date", 
+                      false, true, "wholeNumbers", "monthDate")}
+          {...config(getColor)}
           onClick={() => setShowModal(true)}
-          indexBy="date"
-          margin={{top: 50, right: 110, bottom: 80, left: 120}}
-          xScale={{
-            type: "time",
-            format: "%Y-%m-%d",
-          }}
-          xFormat="time:%Y-%m-%d"
-          yScale={{
-            type: "linear",
-            stacked: false,
-          }}
-          axisTop={null}
-          axisRight={null}
-          axisBottom={config.axisBottom}
-          axisLeft={config.axisLeft}
-          pointSize={10}
-          pointBorderWidth={8}
-          pointLabel="y"
-          pointLabelYOffset={-12}
-          useMesh={true}
-          lineWidth={3.5}
-          legends={config.legends}
-          colors={(d) => d.color}
-          tooltip={({point, color}) => (
-            <div
-              style={{
-                background: "white",
-                padding: "9px 12px",
-                border: "1px solid #ccc",
-              }}
-            >
-              <strong style={{color}}> Date: </strong> {String(point.data.xFormatted)}
-              <br />
-              <strong style={{color}}> Number of Deployments: </strong> {point.data.y}
-            </div>
-          )}
-          theme={{
-            tooltip: {
-              container: {
-                fontSize: "16px",
-              },
-            },
-          }}
+          tooltip={({point, color}) => <ChartTooltip 
+                                        titles = {["Date", "Number of Deployments"]}
+                                        values = {[String(point.data.xFormatted), point.data.y]}
+                                        color = {color} />}
         />
       </div>
     );

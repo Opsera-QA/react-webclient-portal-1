@@ -7,6 +7,8 @@ import {AuthContext} from "contexts/AuthContext";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import axios from "axios";
+import { defaultConfig, getColorById, assignBooleanColors } from '../../../charts-views';
+import ChartTooltip from '../../../ChartTooltip';
 
 function OpseraPipelineByStatusBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -36,15 +38,14 @@ function OpseraPipelineByStatusBarChart({ kpiConfiguration, setKpiConfiguration,
       source.cancel();
       isMounted.current = false;
     }
-  }, [JSON.stringify(dashboardData)]);
+  }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineByStatus", kpiConfiguration, dashboardTags);
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineByStatus", kpiConfiguration);
       let dataObject = response?.data?.data[0]?.opseraPipelineByStatus?.data;
-
+      assignBooleanColors(dataObject);
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
       }
@@ -71,44 +72,15 @@ function OpseraPipelineByStatusBarChart({ kpiConfiguration, setKpiConfiguration,
       <div className="new-chart mb-3" style={{height: "300px"}}>
         <ResponsiveBar
           data={metrics}
-          keys={config.keys}
-          indexBy="_id"
+          {...defaultConfig("Pipeline Name", "Number of Pipelines", 
+                      true, true, "cutoffString", "wholeNumbers")}
+          {...config(getColorById)}
           onClick={() => setShowModal(true)}
-          margin={config.margin}
-          padding={0.3}
-          layout={"horizontal"}
-          colors={(bar) => bar.id === "Successful" ? "green" : "red"}
-          borderColor={{theme: "background"}}
-          colorBy="id"
-          defs={config.defs}
-          fill={config.fill}
-          axisTop={null}
-          axisRight={null}
-          axisBottom={config.axisBottom}
-          axisLeft={config.axisLeft}
-          enableLabel={false}
-          borderRadius={0}
-          labelSkipWidth={12}
-          labelSkipHeight={12}
-          labelTextColor="inherit:darker(2)"
-          animate={true}
-          motionStiffness={90}
-          borderWidth={2}
-          motionDamping={15}
-          legends={config.legends}
-          tooltip={({indexValue, color, value, id}) => (
-            <div>
-              <div><strong style={{color}}>Pipeline: </strong> {indexValue}</div>
-              <div><strong style={{color}}> {id} Builds: </strong> {value}</div>
-            </div>
-          )}
-          theme={{
-            tooltip: {
-              container: {
-                fontSize: "16px",
-              },
-            },
-          }}
+          tooltip={({indexValue, color, value, id}) => <ChartTooltip 
+                                        titles = {["Pipeline", `${id} Builds`]}
+                                        values = {[indexValue, value]}
+                                        style = {false}
+                                        color = {color} />}
         />
       </div>
     );
