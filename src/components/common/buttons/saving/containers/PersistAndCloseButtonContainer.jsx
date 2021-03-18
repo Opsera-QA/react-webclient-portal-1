@@ -4,7 +4,7 @@ import SaveButtonContainer from "./SaveButtonContainer";
 import StrictSaveButton from "../StrictSaveButton";
 import CreateButton from "../CreateButton";
 import LenientSaveButton from "components/common/buttons/saving/LenientSaveButton";
-import CloseButton from "components/common/buttons/CloseButton";
+import CloseEditorButton from "components/common/buttons/cancel/CloseEditorButton";
 
 // TODO: If it makes sense, merge this with PersistButtonContainer
 function PersistAndCloseButtonContainer({ recordDto, setRecordDto, updateRecord, createRecord, handleClose, addAnotherOption, disable, lenient, extraButtons }) {
@@ -32,7 +32,13 @@ function PersistAndCloseButtonContainer({ recordDto, setRecordDto, updateRecord,
   // Don't show close button when using create modal. At least for now
   const getCloseButton = () => {
     if (handleClose) {
-      return (<CloseButton closeEditorCallback={handleClose} className={recordDto.isNew() ? "mt-auto mx-1" : undefined}/>);
+      return (
+        <CloseEditorButton
+          closeEditorCallback={handleClose}
+          className={recordDto.isNew() ? "mt-auto mx-1" : undefined}
+          dataModel={recordDto}
+        />
+      );
     }
   };
 

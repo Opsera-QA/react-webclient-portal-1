@@ -13,16 +13,12 @@ export class Model {
     this.metaData = {...metaData};
     this.data = {...this.getNewObjectFields(), ...data};
     this.newModel = newModel;
-    this.dataState = DataState.LOADED;
+    this.dataState = newModel ? DataState.NEW : DataState.LOADED;
     this.changeMap = new Map();
     this.loadData();
   }
 
   loadData = () => {
-    if (this.newModel) {
-      this.dataState = DataState.NEW;
-    }
-
     if (this.metaData != null && this.data && this.data instanceof Object) {
       // console.log("This.metadata: " + JSON.stringify(Object.keys(this.metaData.fields)));
       // this.id = this.metaData.idProperty;
@@ -229,6 +225,13 @@ export class Model {
     }
 
     return this.dataState !== DataState.LOADED;
+  };
+
+  resetData = () => {
+    this.changeMap.forEach((value, key) => {
+      let originalValue = this.changeMap.get(key);
+      this.setData(key, originalValue);
+    });
   };
 
   getOriginalValue = (fieldName) => {
