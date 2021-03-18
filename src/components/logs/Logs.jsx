@@ -46,21 +46,19 @@ function Logs() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       await loadSettings(cancelSource);
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
-        toastContext.showLoadingErrorDialog(error);
+        toastContext.showInlineErrorMessage(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true ) {
         setIsLoading(false);
       }
@@ -81,6 +79,7 @@ function Logs() {
         if (listOfTools.includes("jenkins")) {
           listOfTools.push("blueprint");
         }
+
         listOfTools.sort();
         setTools(listOfTools);
       }
@@ -94,7 +93,7 @@ function Logs() {
         );
       }
     }
-  }
+  };
 
   const getBody = () => {
     if (isLoading) {

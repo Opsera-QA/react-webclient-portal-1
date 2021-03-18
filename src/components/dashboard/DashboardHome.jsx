@@ -25,6 +25,7 @@ import { faCalendar } from "@fortawesome/free-solid-svg-icons";
 import ConfigurationsForm from "../analytics/configurationsForm";
 import LoadingView from "../common/status_notifications/loading";
 import AnalyticsProfileSettings from "../settings/analytics/activateAnalyticsCard";
+import { DialogToastContext } from "../../contexts/DialogToastContext";
 
 const INDICES = [
   "jenkins",
@@ -39,7 +40,7 @@ const INDICES = [
   "gitlab",
   "cypress",
   "metricbeat",
-  "anchore"
+  "anchore",
 ];
 const PERSONAS = [
   { value: "developer", label: "Developer" },
@@ -104,6 +105,7 @@ function DashboardHome() {
   const [label, setLabel] = useState("Last 3 Months");
   const { getUserRecord, setAccessRoles } = contextType;
   const [personaDisabled, setPersonaDisabled] = useState(false);
+  const toastContext = useContext(DialogToastContext);
   let userAccess = {};
 
   const getRoles = async () => {
@@ -171,7 +173,8 @@ function DashboardHome() {
       setProfile(profile[0]);
       setLoading(false);
     } catch (err) {
-      setErrors(err);
+      // setErrors(err);
+      toastContext.showInlineErrorMessage(err);
       setLoading(false);
     }
   }
@@ -281,7 +284,7 @@ function DashboardHome() {
           </p>
         </div>
 
-        {!hasError && profile && profile.enabledToolsOn &&  (
+        {!hasError && profile && profile.enabledToolsOn && (
           <>
             <Row>
               <Col sm={8}>
