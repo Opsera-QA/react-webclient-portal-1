@@ -34,14 +34,14 @@
     border-radius: .1rem;
 }
 
-.btn-link {
+.btn.btn-link {
     font-weight: 400;
     color: #3D3B36;
     text-decoration: none;
 }
-.btn-link:focus,
-.btn-link.focus,
-.btn-link:hover {
+.btn.btn-link:focus,
+.btn.btn-link.focus,
+.btn.btn-link:hover {
     font-weight: 400;
     color: #3D3B36;
     opacity: .8;
@@ -73,8 +73,8 @@
     box-shadow: none;
 }
 
-.btn-primary.disabled,
-.btn-primary:disabled {
+.btn.btn-primary.disabled,
+.btn.btn-primary:disabled {
     color: #FFF;
     background-color: #352F54;
     border-color: #352F54;
@@ -82,7 +82,7 @@
     cursor: default;
 }
 
-.btn-outline-primary {
+.btn.btn-outline-primary {
     color: #352F54;
     background-color: transparent;
     border-color: #46415C;
@@ -104,8 +104,8 @@
     border-color: #46415C;
 }
 
-.btn-outline-primary.disabled,
-.btn-outline-primary:disabled {
+.btn.btn-outline-primary.disabled,
+.btn.btn-outline-primary:disabled {
     color: #46415C;
     background-color: transparent;
     border-color: #46415C;
@@ -143,8 +143,8 @@
     color: #019171;
 }
 
-.btn-success.disabled,
-.btn-success:disabled {
+.btn.btn-success.disabled,
+.btn.btn-success:disabled {
     color: #fff;
     background-color: #019171;
     border-color: #019171;
@@ -152,7 +152,7 @@
     cursor: default;
 }
 
-.btn-outline-success {
+.btn.btn-outline-success {
     color: #019171;
     background-color: transparent;
     border-color: #00AA84;
@@ -209,8 +209,8 @@
     box-shadow: none;
 }
 
-.btn-warning.disabled,
-.btn-warning:disabled {
+.btn.btn-warning.disabled,
+.btn.btn-warning:disabled {
     color: #fff;
     background-color: #CF940C;
     border-color: #CF940C;
@@ -218,7 +218,7 @@
     cursor: default;
 }
 
-.btn-outline-warning {
+.btn.btn-outline-warning {
     color: #CF940C;
     background-color: transparent;
     border-color: #CF940C;
@@ -240,8 +240,8 @@
     border-color: #CF940C;
 }
 
-.btn-outline-warning.disabled,
-.btn-outline-warning:disabled {
+.btn.btn-outline-warning.disabled,
+.btn.btn-outline-warning:disabled {
     color: #CF940C;
     background-color: transparent;
     border-color: #CF940C;
@@ -309,8 +309,8 @@ button.bg-primary:focus {
 
 
 /* active*/
-.nav-pills .nav-item .active {
-    background-color: #46415C;
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: #46415C !important;
     color: white;
     text-decoration: none;
 }
@@ -439,7 +439,7 @@ a.text-primary:hover, a.text-primary:focus {
 .custom-table .table-row {
     margin-bottom: 2em;
     line-height: 2em;
-    border-bottom: 1px solid #E6E5E3;
+    /* border-bottom: 1px solid #E6E5E3; */
     color: #3D3B36;
     background-color: #fff;
 }
@@ -480,6 +480,20 @@ a.text-primary:hover, a.text-primary:focus {
 .custom-table .wrap-cell-content{
     max-width: 40vw;
     word-wrap: break-word;
+}
+
+.custom-table .status-icon {
+  display: flex;
+  justify-content: center;
+  width: 1rem;
+}
+
+.custom-table > thead > tr > th {
+  background: rgba(230, 229, 227, .5);
+}
+
+.custom-table > tbody > tr:nth-child(even) {
+  background: rgba(230, 229, 227, .5); /* Same color as #E6E5E3, only slightly more transparent */
 }
 
 /* End Table Styling */
@@ -870,6 +884,7 @@ a.nav-link {
 .table-content-block {
     border: 1px solid #E6E5E3;
     border-collapse: collapse;
+    border-radius: 0.25rem;
 }
 
 .content-container {

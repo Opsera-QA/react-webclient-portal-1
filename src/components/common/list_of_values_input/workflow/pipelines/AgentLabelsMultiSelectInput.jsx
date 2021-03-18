@@ -1,26 +1,17 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import axios from "axios";
 
 // TODO:  Check with mahantha to get the actual agent label values and update it here
 // TODO : un-comment when this feature is pushed - dependency ticket -KI-150 
 export const jenkinsAgentArray = [
   {
-    "name": "Opsera Agent",
+    "name": "Ubuntu Agent",
     "env" : "linux",
-    "agentLabel": "opsera",
-  },
-  {
-    "name": "Node Agent",
-    "env" : "linux",
-    "agentLabel": "nodejs",
-  },
-  {
-    "name": "Maven Agent",
-    "env" : "linux",
-    "agentLabel": "maven",
+    "value": "generic-linux",
   }
 ];
 
@@ -29,15 +20,34 @@ function AgentLabelsMultiSelectInput({ fieldName, dataObject, setDataObject, set
   const { getAccessToken } = useContext(AuthContext);
   const [disabledItems, setDisabledItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true)
-      // await loadJenkinsAgents();
+      // await loadJenkinsAgents(cancelSource);
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -55,7 +65,7 @@ function AgentLabelsMultiSelectInput({ fieldName, dataObject, setDataObject, set
       selectOptions={jenkinsAgentArray}
       setDataFunction={setDataFunction}
       groupBy="env"
-      valueField="agentLabel"
+      valueField="value"
       textField="name"
       disabled={disabled}
     />
@@ -68,6 +78,7 @@ AgentLabelsMultiSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   setDataFunction: PropTypes.func,
+  disabled: PropTypes.bool
 };
 
 export default AgentLabelsMultiSelectInput;

@@ -18,45 +18,27 @@ import dashboardsActions from "components/insights/dashboards/dashboards-actions
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TagManager from "components/common/inputs/tags/TagManager";
 import JenkinsResultFilterInput from "components/common/list_of_values_input/insights/charts/jenkins/JenkinsResultFilterInput";
+import modelHelpers from "components/common/model/modelHelpers";
 
 function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [kpiSettings, setKpiSettings] = useState(new Model(kpiConfiguration, kpiConfigurationMetadata, false));
   const [kpiDateFilter, setKpiDateFilter] = useState(
-    new Model(
-      kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "date")],
-      kpiDateFilterMetadata,
-      false
-    )
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "date", kpiDateFilterMetadata)
   );
   const [kpiTagsFilter, setKpiTagsFilter] = useState(
-    new Model(
-      kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "tags")],
-      kpiTagsFilterMetadata,
-      false
-    )
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "tags", kpiTagsFilterMetadata)
   );
   const [kpiJenkinsResultFilter, setKpiJenkinsResultFilter] = useState(
-    new Model(
-      kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-result")],
-      kpiJenkinsResultFilterMetadata,
-      false
-    )
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "jenkins-result", kpiJenkinsResultFilterMetadata)
   );
   const [kpiJenkinsJobUrlFilter, setKpiJenkinsJobUrlFilter] = useState(
-    new Model(
-      kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-job-url")],
-      kpiJenkinsJobUrlFilterMetadata,
-      false
-    )
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "jenkins-job-url", kpiJenkinsJobUrlFilterMetadata)
   );
   const [kpiJenkinsBuildNumberFilter, setKpiJenkinsBuildNumberFilter] = useState(
-    new Model(
-      kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jenkins-build-number")],
-      kpiJenkinsBuildNumberFilterMetadata,
-      false
-    )
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "jenkins-build-number", kpiJenkinsBuildNumberFilterMetadata)
   );
+
   const tagFilterEnabled = [
     "opsera-pipeline-duration",
     "opsera-pipelines-by-user",
@@ -126,6 +108,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "bitbucket-recent-merge-requests",
     "bitbucket-most-active-contributors",
     "bitbucket-pending-merge-requests",
+    "opsera-mean-time-to-restore",
   ];
 
   const getKpiFilters = (filter) => {

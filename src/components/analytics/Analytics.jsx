@@ -17,7 +17,7 @@ import DeploymentFrequencyLineChart from "./charts/deploymentFrequencyLineChart.
 import JiraIssuesCreatedByDateLineChart from "./charts/jiraIssuesCreatedByDateLineChart.jsx";
 import DeploymentsStackedBarChart from "./charts/DeploymentsStackedBarChart";
 import CircleChart from "./charts/CircleChart";
-import JiraHealthBySprintBarChart from "./charts/jiraHealthBySprintBarChart";
+import JiraHealthBySprintBarChart from "./charts/JiraHealthBySprintBarChart";
 import SonarSecurityLineChart from "./charts/sonarSecurityLineChart";
 import JMeterHitsLineChart from "./charts/jmeterHitsLineChart";
 import JMeterErrorsLineChart from "./charts/jmeterErrorsLineChart";

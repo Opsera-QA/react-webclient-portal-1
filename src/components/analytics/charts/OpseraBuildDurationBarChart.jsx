@@ -37,8 +37,8 @@ function OpseraBuildDurationBarChart({ persona, date }) {
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].opseraPipelineDuration : [];
-      assignStandardColors(dataObject.data, true);
+      let dataObject = res?.data?.data[0] ? res.data.data[0].opseraPipelineDuration : [];
+      assignStandardColors(dataObject?.data, true);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -99,10 +99,11 @@ function OpseraBuildDurationBarChart({ persona, date }) {
             onClick={() => setShowModal(true)}
             colorBy="id"
             colors={d => getColor(d.data)}
-            tooltip={({ value, color }) => <ChartTooltip title1 = 'Duration'
-                                             value1 = {`${value} minutes`}
-                                             style = {false}
-                                             color = {color} />}
+            tooltip={({ value, color }) => <ChartTooltip 
+                                            titles = {["Duration"]}
+                                            values = {[`${value} minutes`]}
+                                            style = {false}
+                                            color = {color} />}
           />
         )}
       </div>

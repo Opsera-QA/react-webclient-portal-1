@@ -1,29 +1,75 @@
-const standardColors = ['#4D4283', '#7F74B9', '#BFB9DC', '#F3B931', '#F7D076', '#FBE8BA'];
+const greyHues = ["#3D3B36", "#63625E", "#8A8986", "##B1B0AE"];
+// const greyHues = ["#5B5851", "#7A756C", "#B1AeA7", "#E6E5E3"];
+const purpleHues = ["#494173", "#7368AA", "#ABA4CC", "#E3E1EE"];
+const goldHues = ["#F1AD0F", "#F5C453", "#F9DC98", "#FDF3DD"];
+const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
+
+const standardColors = [...greyHues.map((_, i) => [greyHues[i], goldHues[i], purpleHues[i], darkHues[i]])];
+
+const failColor = "#E57373";
+const mainColor = greyHues[0];
 
 export const assignStandardColors = (data, uniColor = false) => {
-  data.forEach((data, i) => {
-    data.color = uniColor ? "#6153A5" : standardColors[i];
-  });
+  if (data) {
+    data.forEach((data, i) => {
+      data.color = uniColor ? mainColor : standardColors[i];
+    });
+  }
 };
 
 export const assignBooleanColors = data => {
-  if (!('Successful' in data[0])) {
+  if (data && data[0] && !('Successful' in data[0])) {
     data.sort((a, b) => a.id > b.id ? 1 : -1); // to display success before fail in legend
   }
   data.forEach(data => {
-    data.color = (data.id === "Success" || data.Successful) ? "#1B9E77" : "#E57373";
+    data.color = (data.id === "Success" || data.Successful) ? mainColor : failColor;
   });
   return data.color;
 };
 
+export const assignTaskColors = data => {
+  data.forEach(data => {
+    data.Story_color = mainColor;
+    data.Task_color = greyHues[2];
+    data.Subtask_color = greyHues[1];
+    data.Bug_color = goldHues[0];
+  });
+  
+  return data;
+};
+
+export const assignHealthColors = data => {
+  data.forEach(data => {
+    data["To Do_color"] = mainColor;
+    data["In Development_color"] = greyHues[3];
+    data["In Progress_color"] = greyHues[2];
+    data["Peer Review_color"] = greyHues[1];
+    data["Testing_color"] = greyHues[0];
+    data["Done_color"] = goldHues[0];
+  });
+  
+  return data;
+};
+
+export const assignSeverityColors = data => {
+  data.forEach(data => {
+    data["Critical_color"] = goldHues[0];
+    data["Low_color"] = greyHues[2];
+    data["Medium_color"] = greyHues[1];
+    data["High_color"] = greyHues[0];
+    data["Negligible_color"] = mainColor;
+  });
+  
+  return data;
+};
+
 export const getColor = data => data.color;
+export const getColorById = data => data.id === "Successful" ? mainColor : failColor;
 
 const formats = {
-  // a: d => /(?:(?!-).)*/.exec(d)[0].substring(0, 12),
   wholeNumbers: d => Math.floor(d) === d && d,
   monthDate: "%b %d",
-  // d: d => d,
-  // e: d => /(?:(?!-).)*/.exec(d)[0].substring(0, 12)
+  yearMonthDate: d => d.split("T")[0],
   cutoffString: d => d.slice(0, 8) + (d.length > 8 ? "..." : ""),
   values: d => /(?:(?!-).)*/.exec(d)[0]
 };
@@ -31,19 +77,12 @@ const formats = {
 export const defaultConfig = (leftAxisTitle, bottomAxisTitle,
                               largeLeftSpaceRequired, largeBottomSpaceRequired,
                               leftLabelFormat, bottomLabelFormat) => {
-
+    
     return ({
       margin: { top: 30, right: 20, bottom: largeBottomSpaceRequired ? 60 : 80, 
                 left: largeLeftSpaceRequired ? 100 : 60},
       padding: .25,
       lineWidth: 3.5,
-      // xScale: { type: "point" },
-      // yScale: { 
-      //   type: "linear", 
-      //   min: "auto", 
-      //   max: "auto", 
-      //   reverse: false
-      // },
       pointSize: 8,
       pointBorderWidth: 8,
       pointLabel: "y",
@@ -80,11 +119,10 @@ export const defaultConfig = (leftAxisTitle, bottomAxisTitle,
           "anchor": "top-right",
           "direction": "row",
           "justify": false,
-          // "translateX": 0,
-          "translateX": 30,
+          "translateX": 0,
           "translateY": -35,
-          "itemsSpacing": 5,
-          "itemDirection": "left-to-right",
+          "itemsSpacing": 20,
+          "itemDirection": "right-to-left",
           "itemWidth": 80,
           "itemHeight": 20,
           "itemOpacity": 1,
@@ -100,11 +138,6 @@ export const defaultConfig = (leftAxisTitle, bottomAxisTitle,
               fontSize: "10px"
             },
           },
-          // legend: {
-          //   text: {
-              // fill: "#aaaaaa"
-            // }
-          // }
         }
       },
     })

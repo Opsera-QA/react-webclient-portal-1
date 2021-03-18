@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 
@@ -8,6 +8,7 @@ import OpseraBuildDurationBarChart from "./opsera/bar_chart/build_duration/Opser
 import OpseraBuildsByUserBarChart from "./opsera/bar_chart/builds_by_user/OpseraBuildsByUserBarChart";
 import OpseraDeploymentFrequencyLineChart from "./opsera/line_chart/deployment_frequency/OpseraDeploymentFrequencyLineChart";
 import OpseraRecentPipelineStatus from "components/insights/charts/opsera/table/recent_pipeline_status/OpseraRecentPipelineStatus";
+import OpseraMeanTimeToRestoreBarChart from "components/insights/charts/opsera/bar_chart/mean_time_to_restore/OpseraMeanTimeToRestoreBarChart";
 import OpseraRecentCDStatusTable from "components/insights/charts/opsera/table/recent_cd_status/OpseraRecentCDStatusTable";
 
 // Jenkins KPIs
@@ -132,7 +133,8 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       kpiConfig?.kpi_identifier === "bitbucket-recent-merge-requests" ||
       kpiConfig?.kpi_identifier === "bitbucket-commits-by-author" ||
       kpiConfig?.kpi_identifier === "bitbucket-merge-requests-pushes-and-comments" ||
-      kpiConfig?.kpi_identifier === "bitbucket-total-commits-by-project"
+      kpiConfig?.kpi_identifier === "bitbucket-total-commits-by-project" ||
+      kpiConfig?.kpi_identifier === "opsera-mean-time-to-restore"
     ) {
       return getChart();
     }
@@ -212,6 +214,16 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "opsera-recent-cd-status":
         return (
           <OpseraRecentCDStatusTable
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
+      case "opsera-mean-time-to-restore":
+        return (
+          <OpseraMeanTimeToRestoreBarChart
             kpiConfiguration={kpiConfig}
             setKpiConfiguration={setKpiConfig}
             dashboardData={dashboardData}

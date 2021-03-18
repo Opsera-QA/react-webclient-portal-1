@@ -78,6 +78,11 @@ pipelineActions.getAllPipelines = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
+pipelineActions.getAllPipelinesV2 = async (getAccessToken, cancelTokenSource) => {
+  let apiUrl = `/pipelines`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 // TODO: Remove when all references are updated
 pipelineActions.delete = async (pipelineId, getAccessToken) => {
   const apiUrl = `/pipelines/${pipelineId}/delete`;

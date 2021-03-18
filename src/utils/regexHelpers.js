@@ -41,6 +41,15 @@ regexHelpers.regexTypes = {
 
   //Mongo ID
   mongoId: /^[0-9a-fA-F]{24}$/,
+  
+  // upper and lower case letters, numbers, dashes, comma
+  generalTextWithoutSpacesPeriod: /^[A-Za-z0-9\-_,]*$/,
+
+  // only lower case letters
+  loweCaseLetters: /^[a-z]*$/,
+
+  // only letters and numbers
+  generalTextWithoutSpecialChars: /^[A-Za-z0-9]*$/,
 };
 
 export default regexHelpers;

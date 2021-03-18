@@ -1,22 +1,55 @@
-import React, { useState, useEffect, useContext } from "react";
+// Ticket Number - AN 43 Deployment Frequency
+// Worked on By - Shrey Malhotra
+// Sprint - Analytics Mt. Rainier
+
 import PropTypes from "prop-types";
-import { ResponsiveBar } from "@nivo/bar";
+import { ResponsiveLine } from "@nivo/line";
+import ErrorDialog from "../../common/status_notifications/error";
+// import config from "./opseraDeploymentFrequencyLineChartConfigs";
+import "./charts.css";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
-import InfoDialog from "../../common/status_notifications/info";
-// import config from "./opseraBuildsByUserBarChartConfigs";
-import "./charts.css";
-import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
-import ErrorDialog from "../../common/status_notifications/error";
-import { defaultConfig, getColor, assignStandardColors } from '../../insights/charts/charts-views';
+import InfoDialog from "../../common/status_notifications/info";
+import ModalLogs from "../../common/modal/modalLogs";
+import { defaultConfig, getColor, assignBooleanColors } from '../../insights/charts/charts-views';
 import ChartTooltip from '../../insights/charts/ChartTooltip';
-function OpseraBuildsByUserBarChart({ persona, date }) {
+
+function OpseraDeploymentFrequencyLineChart({ persona, date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    const { getAccessToken } = contextType;
+    const accessToken = await getAccessToken();
+    const apiUrl = "/analytics/data";
+    const postBody = {
+      data: [
+        {
+          request: "opseraSuccessfulDeploymentFrequency",
+          metric: "stacked",
+        },
+      ],
+      startDate: date.start,
+      endDate: date.end,
+    };
+
+    try {
+      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
+      let dataObject = res?.data?.data[0] ? res.data.data[0].opseraSuccessfulDeploymentFrequency : [];
+      assignBooleanColors(dataObject?.data);
+      setData(dataObject);
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      setErrors(err.message);
+    }
+  }, [contextType]);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -34,35 +67,7 @@ function OpseraBuildsByUserBarChart({ persona, date }) {
     return () => {
       controller.abort();
     };
-  }, []);
-
-  const fetchData = async () => {
-    setLoading(true);
-    const { getAccessToken } = contextType;
-    const accessToken = await getAccessToken();
-    const apiUrl = "/analytics/data";
-    const postBody = {
-      data: [
-        {
-          request: "opseraPipelinesByUser",
-          metric: "bar",
-        },
-      ],
-      startDate: date.start,
-      endDate: date.end,
-    };
-
-    try {
-      const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].opseraPipelinesByUser : [];
-      assignStandardColors(dataObject.data, true);
-      setData(dataObject);
-      setLoading(false);
-    } catch (err) {
-      setLoading(false);
-      setErrors(err.message);
-    }
-  };
+  }, [fetchData, date]);
 
   if (loading) return <LoadingDialog size="sm" />;
   else if (error) return <ErrorDialog error={error} />;
@@ -72,16 +77,16 @@ function OpseraBuildsByUserBarChart({ persona, date }) {
     return (
       <>
         <ModalLogs
-          header="Builds By User"
+          header="Deployments Graph"
           size="lg"
-          jsonMessage={data ? data.data : []}
+          jsonMessage={data.data}
           dataType="bar"
           show={showModal}
           setParentVisibility={setShowModal}
         />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
-          <div className="chart-label-text">Opsera: Builds by User</div>
+          <div className="chart-label-text">Opsera: Deployment Frequency</div>
           {typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200 ? (
             <div
               className="max-content-width p-5 mt-5"
@@ -90,23 +95,24 @@ function OpseraBuildsByUserBarChart({ persona, date }) {
               <InfoDialog message="No Data is available for this chart at this time." />
             </div>
           ) : (
-            <ResponsiveBar
-              {...defaultConfig('Users', 'Number of Builds', 
-                    true, true, 'cutoffString', 'wholeNumbers')}
+            <ResponsiveLine
+              {...defaultConfig('Number of Deployments', 'Date', false, true, 'wholeNumbers', 'monthDate')}
               data={data ? data.data : []}
-              keys={["value"]}
-              indexBy="key"
               onClick={() => setShowModal(true)}
-              padding={0.3}
-              layout={"horizontal"}
-              colorBy="id"
-              colors={d => getColor(d.data)}
-              tooltip={({ indexValue, value, color }) => <ChartTooltip title1 = "User"
-                                             title2 = "Number of Builds"
-                                             value1 = {indexValue}
-                                             value2 = {value}
-                                             color = {color}
-                                             style = {false} />}
+              indexBy="date"
+              colors={getColor}
+              xScale={{
+                type: "time",
+                format: "%Y-%m-%d",
+              }}
+              xFormat="time:%Y-%m-%d"
+              yScale={{
+                type: "linear",
+                stacked: false,
+              }}
+              tooltip={({point}) => <ChartTooltip 
+                                            titles = {["Date", "Number of Deployments"]}
+                                            values = {[String(point.data.xFormatted), point.data.y]} />}
             />
           )}
         </div>
@@ -114,9 +120,8 @@ function OpseraBuildsByUserBarChart({ persona, date }) {
     );
 }
 
-OpseraBuildsByUserBarChart.propTypes = {
-  data: PropTypes.object,
+OpseraDeploymentFrequencyLineChart.propTypes = {
   persona: PropTypes.string,
 };
 
-export default OpseraBuildsByUserBarChart;
+export default OpseraDeploymentFrequencyLineChart;

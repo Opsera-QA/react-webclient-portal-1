@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function ChartTooltip({title1, title2, value1, value2, color, style=true}) {
+function ChartTooltip({titles, values, color, style=true}) {
   return (
     <div
       style={{
@@ -10,22 +10,19 @@ function ChartTooltip({title1, title2, value1, value2, color, style=true}) {
         border: style && "1px solid #ccc"
       }}
     >
-      <strong style={{ color }}> {title1}: </strong> {value1}
-      {title2 && (
+      {titles.map((title, i) => (
         <>
-          <br></br>
-          <strong style={{ color }}> {title2}: </strong> {value2}
+          {i !== 0 && <br></br>}
+          <strong style={{ color }}> {title}: </strong> {values[i]}
         </>
-      )}
+      ))}
     </div>
   );
 }
 
 ChartTooltip.propTypes = {
-  title1: PropTypes.string,
-  title2: PropTypes.string,
-  value1: PropTypes.string,
-  value2: PropTypes.string,
+  titles: PropTypes.array,
+  values: PropTypes.array,
   color: PropTypes.string,
   style: PropTypes.bool,
 };

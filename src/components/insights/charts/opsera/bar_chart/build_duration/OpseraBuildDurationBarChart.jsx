@@ -36,12 +36,13 @@ function OpseraBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, da
       source.cancel();
       isMounted.current = false;
     }
-  }, []);
+  }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineDuration", kpiConfiguration);
+      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineDuration", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.opseraPipelineDuration?.data : [];
 
       if (isMounted?.current === true && dataObject) {

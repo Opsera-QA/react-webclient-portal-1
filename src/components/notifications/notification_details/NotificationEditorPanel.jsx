@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
@@ -14,19 +14,42 @@ import NotificationMethodConfigurationPanel
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import TagManager from "components/common/inputs/tags/TagManager";
+import axios from "axios"
 
-function NotificationEditorPanel({ notificationData, setNotificationData, handleClose }) {
+function NotificationEditorPanel({ notificationData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [notificationDataDto, setNotificationDataDto] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [notificationConfigurationDataDto, setNotificationConfigurationDataDto] = useState(undefined);
   const [notificationMethodDataDto, setNotificationMethodDataDto] = useState(undefined);
   
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
   const loadData = async () => {
+    setIsLoading(true);
     setNotificationDataDto(notificationData);
+    setIsLoading(false);
   };
 
   const createNotification = async () => {
@@ -34,7 +57,7 @@ function NotificationEditorPanel({ notificationData, setNotificationData, handle
     notificationDataDto.setData("configuration", configuration);
     const notificationMethod = notificationMethodDataDto ? notificationMethodDataDto.getPersistData() : {};
     notificationDataDto.setData("notification", notificationMethod);
-    return await notificationsActions.createNotification(notificationDataDto, getAccessToken);
+    return await notificationsActions.createNotificationV2(getAccessToken, cancelTokenSource, notificationDataDto);
   };
 
   const updateNotification = async () => {
@@ -42,7 +65,7 @@ function NotificationEditorPanel({ notificationData, setNotificationData, handle
     notificationDataDto.setData("configuration", configuration);
     const notificationMethod = notificationMethodDataDto ? notificationMethodDataDto.getPersistData() : {};
     notificationDataDto.setData("notification", notificationMethod);
-    return await notificationsActions.updateNotification(notificationDataDto, getAccessToken);
+    return await notificationsActions.updateNotificationV2(getAccessToken, cancelTokenSource, notificationDataDto);
   };
   
   if (notificationDataDto == null) {
@@ -51,6 +74,7 @@ function NotificationEditorPanel({ notificationData, setNotificationData, handle
 
   return (
     <EditorPanelContainer
+      isLoading={isLoading}
       handleClose={handleClose}
       recordDto={notificationDataDto}
       createRecord={createNotification}
