@@ -30,23 +30,24 @@ export const assignBooleanColors = data => {
 
 export const assignTaskColors = data => {
   data.forEach(data => {
-    data.Story_color = mainColor;
-    data.Task_color = greyHues[2];
-    data.Subtask_color = greyHues[1];
-    data.Bug_color = goldHues[0];
+    data.Story_color = standardColors[0];
+    data.Task_color = standardColors[1];
+    data.Subtask_color = standardColors[2];
+    data.Bug_color = failColor;
   });
   
   return data;
 };
 
 export const assignHealthColors = data => {
+
   data.forEach(data => {
     data["To Do_color"] = standardColors[0];
-    data["In Development_color"] = purpleHues[1];
-    data["In Progress_color"] = standardColors[3];
-    data["Peer Review_color"] = goldHues[4];
-    data["Testing_color"] = standardColors[5];
-    data["Done_color"] = standardColors[6];
+    data["In Development_color"] = standardColors[1];
+    data["In Progress_color"] = standardColors[2];
+    data["Peer Review_color"] = standardColors[3];
+    data["Testing_color"] = standardColors[4];
+    data["Done_color"] = standardColors[5];
   });
   
   return data;
@@ -54,11 +55,11 @@ export const assignHealthColors = data => {
 
 export const assignSeverityColors = data => {
   data.forEach(data => {
-    data["Critical_color"] = goldHues[0];
-    data["Low_color"] = greyHues[2];
-    data["Medium_color"] = greyHues[1];
-    data["High_color"] = greyHues[0];
-    data["Negligible_color"] = mainColor;
+    data["Critical_color"] = standardColors[0];
+    data["Low_color"] = standardColors[1];
+    data["Medium_color"] = standardColors[2];
+    data["High_color"] = standardColors[3];
+    data["Negligible_color"] = standardColors[4];
   });
   
   return data;
