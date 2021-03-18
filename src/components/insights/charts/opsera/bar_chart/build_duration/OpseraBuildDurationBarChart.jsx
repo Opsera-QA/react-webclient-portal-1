@@ -75,7 +75,7 @@ function OpseraBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, da
       <div className="new-chart mb-3" style={{height: "300px"}}>
         <ResponsiveBar
           data={metrics}
-          {...defaultConfig("Duration (Minutes", "Pipeline Run", 
+          {...defaultConfig("Duration (Minutes)", "Pipeline Run", 
                       false, true, "wholeNumbers", "cutoffString")}
           keys={config.keys}
           indexBy="pipelineId"
