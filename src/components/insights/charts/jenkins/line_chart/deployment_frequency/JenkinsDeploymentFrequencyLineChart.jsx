@@ -42,7 +42,7 @@ function JenkinsDeploymentFrequencyLineChart({ persona, date }) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].successfulDeploymentFrequency : [];
-      assignBooleanColors(dataObject.data);
+      assignBooleanColors(dataObject?.data);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
