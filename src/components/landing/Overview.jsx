@@ -57,7 +57,7 @@ function OverviewLanding() {
         let approvalPipelineIds = data.pendingPipelines.map(a => a._id);
         let i = data.recentPipelines.length;
         while (i--) {
-          if (data.recentPipelines[i]._id in approvalPipelineIds) {
+          if (approvalPipelineIds.includes(data.recentPipelines[i]._id)) {
             data.recentPipelines.splice(i, 1);
           }
         }
