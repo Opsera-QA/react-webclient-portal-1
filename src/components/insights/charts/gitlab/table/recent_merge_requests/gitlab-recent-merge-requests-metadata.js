@@ -7,11 +7,11 @@ const gitlabRecentMergeRequestsMetadata = {
         id: "AuthorName",
       },
       {
-        label: "Assigned",
+        label: "Reviewer",
         id: "AssigneeName",
       },
       {
-        label: "Merge Request",
+        label: "Merge Request Title",
         id: "MergeRequestTitle",
       },
       {
