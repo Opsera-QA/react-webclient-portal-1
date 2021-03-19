@@ -43,11 +43,12 @@ export default {
       }
     ],
     axisBottom: {
+      "format": d => { var date = new Date(d).toDateString() ; date = date.split(" "); return date[1]+" "+date[2]; },
       orient: "bottom",
       tickSize: 5,
       tickPadding: 5,
-      tickRotation: -65,
-      legendOffset: 46,
+      tickRotation: 0,
+      legendOffset: 32,
       legendPosition: "middle",
     },
     axisLeft: {
