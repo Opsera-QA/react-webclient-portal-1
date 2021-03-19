@@ -1,11 +1,12 @@
 export const greyHues = ["#5B5851", "#7A756C", "#B1AeA7", "#E6E5E3", "##F0EFEE", "#F9F9F8"];
 export const goldHues = ["#F1AD0F", "#F5C453", "#F9DC98", "#FDF3DD"];
-export const purpleHues = ["#494173", "#7368AA", "#ABA4CC", "#E3E1EE"];
+export const purpleHues = ["#7368AA", "#ABA4CC", "#E3E1EE"];
+// export const purpleHues = ["#494173", "#7368AA", "#ABA4CC", "#E3E1EE"];
 
 const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
 
 export const standardColors = [];
-goldHues.forEach((_, i) => standardColors.push(greyHues[i], goldHues[i], purpleHues[i], darkHues[i]));
+goldHues.forEach((_, i) => standardColors.push(greyHues[i], purpleHues[i], darkHues[i]));
 
 const failColor = "#E57373";
 const mainColor = "#5B5851";
