@@ -86,7 +86,7 @@ function MetricbeatMemoryUsageByTimeLineChart({ persona, date, tags}) {
       <ModalLogs
         header="Memory Usage"
         size="lg"
-        jsonMessage={data.data}
+        jsonMessage={data?.data}
         dataType="bar"
         show={showModal}
         setParentVisibility={setShowModal}

@@ -109,7 +109,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
           legends={config.legends}
           tooltip={({ indexValue, value, data, color }) => (
             <div>
-              <strong style={{ color }}>Date: </strong> {indexValue}
+              <strong style={{ color }}>Date: </strong> {new Date(indexValue).toDateString()}
               <br />
               <strong style={{ color }}> No. of Deployments: </strong> {value} deployments
               <br />

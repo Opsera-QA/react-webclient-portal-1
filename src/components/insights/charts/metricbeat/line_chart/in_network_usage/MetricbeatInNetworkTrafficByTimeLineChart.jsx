@@ -79,7 +79,7 @@ function MetricbeatInNetworkTrafficByTimeLineChart({ persona, date ,tags }) {
       <ModalLogs
         header="In Network Usage"
         size="lg"
-        jsonMessage={data.data}
+        jsonMessage={data?.data}
         dataType="bar"
         show={showModal}
         setParentVisibility={setShowModal}
