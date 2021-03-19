@@ -136,7 +136,6 @@ const SFDCUnitTestView = ({
   return (
     <div className="ml-5">
       <div className="flex-container">
-        <div className="flex-container-top"></div>
         <div className="flex-container-content">
           <div className="h5">SalesForce Test Classes</div>
           <div className="text-muted">Apex Classes with @isTest annotation will be part of selection for Selective Unit Testing.</div>
