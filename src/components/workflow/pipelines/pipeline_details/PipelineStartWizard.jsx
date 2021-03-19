@@ -24,7 +24,7 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, p
       return (
       <div>
         {pipelineOrientation === "middle"
-        && <div className="info-text mt-3 pl-4">Warning!  This pipeline is in the middle of running.  If you proceed, this will cancel the running job and start the pipeline over.</div>}
+        && <div className="info-text pl-4">Warning!  This pipeline is in the middle of running.  If you proceed, this will cancel the running job and start the pipeline over.</div>}
         <SfdcPipelineWizard pipelineId={pipelineId} pipeline={pipeline} handlePipelineWizardRequest={handlePipelineWizardRequest} handleClose={handleClose} refreshPipelineActivityData={refreshPipelineActivityData} />
       </div>
       );
@@ -61,7 +61,6 @@ const ConfirmResumePipeline = ({ pipelineId, handlePipelineWizardRequest }) => {
 
   return (    
     <div className="flex-container">
-      <div className="flex-container-top"></div>
       <div className="flex-container-content">
         <div className="p-5">
           <div className="mb-4">The requested pipeline stopped before it reached the end of its run.  This 
