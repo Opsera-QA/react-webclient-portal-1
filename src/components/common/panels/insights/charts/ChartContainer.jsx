@@ -12,7 +12,6 @@ import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer"
 
 function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, index, chart, isLoading, error, loadChart, setKpis }) {
   const [view, setView] = useState("chart");
-  console.log(kpiConfiguration);
   // const changeView = () => {
   //   setView(view === "chart" ? "settings" : "chart");
   // }
