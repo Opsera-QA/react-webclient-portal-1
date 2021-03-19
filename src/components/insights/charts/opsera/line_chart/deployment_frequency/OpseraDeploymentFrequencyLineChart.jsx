@@ -38,12 +38,13 @@ function OpseraDeploymentFrequencyLineChart({ kpiConfiguration, setKpiConfigurat
       source.cancel();
       isMounted.current = false;
     }
-  }, []);
+  }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineDeploymentFrequency", kpiConfiguration);
+      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineDeploymentFrequency", kpiConfiguration, dashboardTags);
       const dataObject = response?.data && response?.data?.data[0]?.opseraPipelineDeploymentFrequency.status === 200 ? response?.data?.data[0]?.opseraPipelineDeploymentFrequency?.data : [];
       assignBooleanColors(dataObject);
 
