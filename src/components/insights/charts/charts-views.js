@@ -71,6 +71,8 @@ export const getColor = data => data.color;
 export const getColorByData = data => data.data.color;
 export const getColorById = data => data.id === "Successful" ? mainColor : failColor;
 
+export const shortenLegend = datas => datas.forEach(data => data.id.length > 10 ? data.id = data.id.slice(0, 10) + "..." : data.id);
+
 const formats = {
   numbers: d => /\d+\.?\d*$/.exec(d),
   wholeNumbers: d => Math.floor(d) === d && d,

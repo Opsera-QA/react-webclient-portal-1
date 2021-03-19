@@ -49,6 +49,8 @@ function SonarLinesToCoverBarChart({ kpiConfiguration, setKpiConfiguration, dash
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "sonarCodeCoverage", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.sonarCodeCoverage?.data : [];
       assignStandardColors(dataObject, true);
+      // to capitalize the legend and display "Uncovered Lines" instead of "uncovered_lines"
+      dataObject.forEach(data => data["Uncovered Lines"] = data.uncovered_lines);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
