@@ -38,16 +38,18 @@ function BitbucketMergeRequestsPushesAndComments({
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "bitbucketTotalCountOfMergeReqAndPushPerDay",
-        kpiConfiguration
+        kpiConfiguration,
+        dashboardTags
       );
 
       let dataObject = response?.data?.data[0]?.bitbucketTotalCountOfMergeReqAndPushPerDay?.data[0]?.data;
