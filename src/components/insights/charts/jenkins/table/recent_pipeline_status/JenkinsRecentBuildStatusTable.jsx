@@ -27,7 +27,7 @@ function JenkinsRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, da
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "data_projectName"), "cell-center no-wrap-inline"),
+      getTableTextColumn(getField(fields, "data_projectName"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "data_buildNum")),
       getTableDateTimeColumn(getField(fields, "timestamp")),
       getTableTextColumn(getField(fields, "duration")),
