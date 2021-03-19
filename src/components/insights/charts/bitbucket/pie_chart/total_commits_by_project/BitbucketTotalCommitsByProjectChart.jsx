@@ -45,7 +45,7 @@ function BitbucketTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfigura
       );
 
       let dataObject = response?.data?.data[0]?.bitbucketTotalCommitsChart?.data;
-      assignStandardColors(dataObject.reverse());
+      assignStandardColors(dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);

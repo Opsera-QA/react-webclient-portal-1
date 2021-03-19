@@ -1,13 +1,13 @@
-export const greyHues = ["#5B5851", "#7A756C", "#B1AeA7", "#E6E5E3"];
-const purpleHues = ["#494173", "#7368AA", "#ABA4CC", "#E3E1EE"];
-const goldHues = ["#F1AD0F", "#F5C453", "#F9DC98", "#FDF3DD"];
+export const greyHues = ["#5B5851", "#7A756C", "#B1AeA7", "#E6E5E3", "##F0EFEE", "#F9F9F8"];
+export const goldHues = ["#F1AD0F", "#F5C453", "#F9DC98", "#FDF3DD"];
+export const purpleHues = ["#494173", "#7368AA", "#ABA4CC", "#E3E1EE"];
 const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
 
-const standardColors = [];
-greyHues.forEach((_, i) => standardColors.push(greyHues[i], goldHues[i], purpleHues[i], darkHues[i]));
+export const standardColors = [];
+goldHues.forEach((_, i) => standardColors.push(greyHues[i], goldHues[i], purpleHues[i], darkHues[i]));
 
 const failColor = "#E57373";
-const mainColor = greyHues[0];
+const mainColor = "#5B5851";
 export const mainGold = goldHues[0];
 export const mainPurple = purpleHues[0];
 
@@ -81,7 +81,7 @@ const formats = {
 
 export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
                               largeLeftSpaceRequired=false, largeBottomSpaceRequired=false,
-                              leftLabelFormat="", bottomLabelFormat="") => ({
+                              leftLabelFormat="", bottomLabelFormat="", isLegendHidden=false) => ({
   margin: { top: 30, right: 20, bottom: largeBottomSpaceRequired ? 60 : 80, 
             left: largeLeftSpaceRequired ? 100 : 60},
   padding: .25,
@@ -128,7 +128,7 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
       "itemDirection": "right-to-left",
       "itemWidth": 80,
       "itemHeight": 20,
-      "itemOpacity": 1,
+      "itemOpacity": isLegendHidden ? 0 : 1,
       "symbolSize": 10,
       "symbolShape": "square",
       "symbolBorderColor": "rgba(0, 0, 0, .5)"
