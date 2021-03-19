@@ -86,7 +86,7 @@ function JenkinsRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, da
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage}/>}
+        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage} noFooter={true}/>}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
