@@ -25,7 +25,7 @@ function OverviewLanding() {
   let userAccess = {};
 
   let d = new Date();
-  d.setDate(d.getDate()-12);
+  d.setDate(d.getDate() - 12);
 
   useEffect(() => {
     getRoles();
@@ -50,12 +50,25 @@ function OverviewLanding() {
       const accessToken = await getAccessToken();
       let apiUrl = "/landing/stats";
       const response = await axiosApiService(accessToken).get(apiUrl, {});
-      setStatsData(response.data);
+
+      let data = response.data;
+
+      if (data?.pendingPipelines && data?.recentPipelines && data.pendingPipelines.length > 0 && data.recentPipelines.length > 0) {
+        let approvalPipelineIds = data.pendingPipelines.map(a => a._id);
+        let i = data.recentPipelines.length;
+        while (i--) {
+          if (approvalPipelineIds.includes(data.recentPipelines[i]._id)) {
+            data.recentPipelines.splice(i, 1);
+          }
+        }
+      }
+
+      setStatsData(data);
 
       setSummaryStats([
-        { name: "Platforms", value: response.data.applications, footer: null, status: null },
-        { name: "My Pipelines", value: response.data.pipelines, footer: null, status: null },
-        { name: "Registered Tools", value: response.data.tools, footer: null, status: null },
+        { name: "Platforms", value: data.applications, footer: null, status: null },
+        { name: "My Pipelines", value: data.pipelines, footer: null, status: null },
+        { name: "Registered Tools", value: data.tools, footer: null, status: null },
       ]);
     } catch (err) {
       console.log(err.message);
@@ -104,11 +117,11 @@ function OverviewLanding() {
   };
 
   if (!accessRoleData) {
-    return (<LoadingView size="sm" message={"Loading user data"}/>);
+    return (<LoadingView size="sm" message={"Loading user data"} />);
   }
 
   if (process.env.REACT_APP_STACK === "free-trial") {
-    return (<FreeTrialLandingView/>);
+    return (<FreeTrialLandingView />);
   }
 
   return (
@@ -136,9 +149,9 @@ function OverviewLanding() {
             back {userInfo && userInfo.firstName ? userInfo.firstName : null}!
           </div>
 
-          <MyTagCloud/>
+          <MyTagCloud />
 
-          <hr/>
+          <hr />
 
           <div className="row mx-n2 mt-3">
 
@@ -196,8 +209,9 @@ function OverviewLanding() {
                 accomplished — including: software builds, security scans, unit testing, and deployments.
               </div>
 
-              {statsData.pendingPipelines && statsData.pendingPipelines.length > 0 && (
-                <div className="mt-2">
+              <div className="mt-2">
+                {(statsData.pendingPipelines && statsData.pendingPipelines.length > 0) &&
+                <div>
                   {statsData.pendingPipelines.map((item, key) => (
                     <div key={key} className={"my-1"}>
                       <Button
@@ -214,6 +228,11 @@ function OverviewLanding() {
                       </Button>
                     </div>
                   ))}
+                </div>
+                }
+
+                {(statsData.recentPipelines && statsData.recentPipelines.length > 0) &&
+                <div>
                   {statsData.recentPipelines.map((item, key) => (
                     <div key={key} className={"my-1"}>
                       <Button
@@ -233,7 +252,8 @@ function OverviewLanding() {
                     </div>
                   ))}
                 </div>
-              )}
+                }
+              </div>
             </div>
 
             <div className="col-md px-2 landing-content-module">
@@ -243,7 +263,7 @@ function OverviewLanding() {
                 Time, Change Failure Rate, Deployment Frequency, and Time to Restore.
               </div>
               <div className="mt-2">
-                <TopFiveDashboards loadDashboardById={loadDashboardById}/>
+                <TopFiveDashboards loadDashboardById={loadDashboardById} />
               </div>
 
             </div>
@@ -259,7 +279,7 @@ function OverviewLanding() {
           </div>
 
         </div>
-        <hr/>
+        <hr />
 
         <div className="h5 text-color">Need help?</div>
         <div className="h6 mt-1 mb-5">Send an email to support@opsera.io</div>

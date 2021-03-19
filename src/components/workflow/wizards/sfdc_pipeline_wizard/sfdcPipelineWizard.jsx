@@ -34,6 +34,7 @@ const SfdcPipelineWizard = ({
   const [modifiedFiles, setModifiedFiles] = useState([]);
   const [stepId, setStepId] = useState("");
   const [stepToolConfigId, setStepToolConfigId] = useState("");
+  const [sfdcToolId, setSFDCToolId] = useState("");
   const [isOrgToOrg, setIsOrgToOrg] = useState(false);
   const [isProfiles, setIsProfiles] = useState(false);
   const [stepToolConfig, setStepToolConfig] = useState("");
@@ -81,6 +82,7 @@ const SfdcPipelineWizard = ({
       setGitTaskId(gitTaskData.getData("_id"));
       setStepToolConfig(gitTaskData.getData("configuration"))
       setStepToolConfigId(gitTaskData.getData("configuration").toolConfigId)
+      setSFDCToolId(gitTaskData.getData("configuration").sfdcToolId)
       return;
     }
     loadSfdcInitStep(pipeline.workflow.plan);
@@ -101,6 +103,7 @@ const SfdcPipelineWizard = ({
       // console.log("uniTest indexes: ", getCustomUnitTestSteps(steps));
       setUnitTestSteps(getCustomUnitTestSteps(steps));
       setStepId(steps[stepArrayIndex]._id);
+      setSFDCToolId(steps[stepArrayIndex].tool.configuration.sfdcToolId);
       setStepToolConfig(steps[stepArrayIndex].tool.configuration);
       setIsOrgToOrg(steps[stepArrayIndex].tool.configuration.isOrgToOrg);
       setIsProfiles(steps[stepArrayIndex].tool.job_type === "sfdc-ant-profile" ? true : false);
@@ -183,6 +186,7 @@ const SfdcPipelineWizard = ({
             isOrgToOrg={isOrgToOrg}
             isProfiles={isProfiles}
             stepToolConfig={stepToolConfig}
+            sfdcToolId={sfdcToolId}
             handleClose={handleClose}
             setView={setView}
             nameSpacePrefix={nameSpacePrefix}
@@ -334,7 +338,7 @@ const SfdcPipelineWizard = ({
     );
   } else {
     return (
-      <div className="modal-l">
+      <div className={"m-2"}>
         {getBody()}
       </div>
     );

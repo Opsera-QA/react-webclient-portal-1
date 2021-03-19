@@ -477,11 +477,6 @@ a.text-primary:hover, a.text-primary:focus {
     background-color: #E6E5E3;
 }
 
-.custom-table .wrap-cell-content{
-    max-width: 40vw;
-    word-wrap: break-word;
-}
-
 .custom-table .status-icon {
   display: flex;
   justify-content: center;

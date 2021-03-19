@@ -41,6 +41,7 @@ const SfdcPipelineComponents = ({
   stepId,
   setView,  
   stepToolConfig,
+  sfdcToolId,
   nameSpacePrefix,
   setNameSpacePrefix,
   isProfiles,
@@ -75,7 +76,6 @@ const SfdcPipelineComponents = ({
   const [configurationError, setConfigurationError] = useState(false);
   const [save, setSave] = useState(false);
   const [warning, setWarning] = useState(false);
-  const [dateRangeDto, setDateRangeDto] = useState(undefined);
   
   const [componentTypes, setComponentTypes] = useState([]);
   // const [selectedComponentTypes, setSelectedComponentTypes] = useState([]);
@@ -101,8 +101,14 @@ const SfdcPipelineComponents = ({
   
       try {
         // const accessToken = await getAccessToken();
-        const response = await sfdcPipelineActions.getComponentTypes({isProfiles}, getAccessToken);
-        if (!ignore) setComponentTypes(response.data);
+        if(sfdcToolId) {
+          let postBody = {
+            "sfdcToolId": sfdcToolId,
+            "isProfiles": isProfiles
+          };
+          const response = await sfdcPipelineActions.getComponentTypes(postBody, getAccessToken);
+          if (!ignore) setComponentTypes(response.data);
+        }
       } catch (error) {
         console.error("Error getting API Data: ", error);
         setError(error);
@@ -112,19 +118,8 @@ const SfdcPipelineComponents = ({
   
     loadData();
     return () => { ignore = true; }
-  }, [isProfiles]);
-
-  const dateAsOf = (
-    <DateTimePicker
-      time={true}
-      min={new Date().setFullYear(new Date().getFullYear() - 1)}
-      max={new Date()}
-      defaultValue={selectedDate}
-      onChange={(value) => handleAsOfDateChange({ value })}
-      initialValue={new Date(new Date().setHours(0,0,0,0))}
-    />
-  );
-
+  }, [isProfiles, sfdcToolId]);
+  
   const dateFrom = (
     <DateTimePicker
       time={true}
@@ -147,13 +142,6 @@ const SfdcPipelineComponents = ({
     />
   );
 
-
-  const handleAsOfDateChange = (value) => {
-    checkDateLimit(value.value);
-    const date = Moment(value.value).toISOString();
-    setSelectedDate(value.value);
-    setAsOfDate(date);
-  };
 
   const handleFromDateChange = (value) => {
     checkFromToDateLimit(value.value, selectedToDate)
@@ -203,7 +191,7 @@ const SfdcPipelineComponents = ({
   }
 
   const handleCheckAllClickComponentTypes = () => {
-    setSelectedComponentTypes(componentTypes.map(({ name }) => name));
+    setSelectedComponentTypes(componentTypes.filter((obj)=>{return obj.enabled}).map(({ name }) => name));
   };
 
   const handleUnCheckAllClickComponentTypes = () => {
@@ -211,12 +199,12 @@ const SfdcPipelineComponents = ({
   };
 
   const handleCheckOrUncheckAllClickComponentTypes = () => {
-    if (isEqual(selectedComponentTypes,componentTypes.map(({ name }) => name))) {handleUnCheckAllClickComponentTypes();}
+    if (isEqual(selectedComponentTypes,componentTypes.filter((obj)=>{return obj.enabled}).map(({ name }) => name))) {handleUnCheckAllClickComponentTypes();}
     else {handleCheckAllClickComponentTypes();}
   }
 
   const renderTooltip = (message, props) => (
-    <Tooltip id="button-tooltip" {...props}>
+    <Tooltip id="button-tooltip" style={{"zIndex": 1500}} {...props}>
       {message.length > 0 ? message : "No file extension found."}
     </Tooltip>
   );
@@ -251,8 +239,6 @@ const SfdcPipelineComponents = ({
     postBody.stepId = gitTaskData ? "N/A" : stepId;
     postBody.gitTaskId = gitTaskData ? gitTaskId : false;
     postBody.gitTaskSFDCToolId = gitTaskData ? stepToolConfig.sfdcToolId : false;
-    // TODO: comment lastCommitTimeStamp once done testing 
-    // postBody.lastCommitTimeStamp = isProfiles ? "1900-01-01T00:00:00.000Z" : asOfDate;
     postBody.lastCommitTimeFromStamp = isProfiles ? "1900-01-01T00:00:00.000Z" : fromDate;
     postBody.lastCommitTimeToStamp = toDate;
     postBody.componentTypes = isProfiles ? ["Profile"] : selectedComponentTypes;
@@ -316,9 +302,8 @@ const SfdcPipelineComponents = ({
   };
 
   return (
-    <div className="ml-5">
+    <div>
       <div className="flex-container">
-        <div className="flex-container-top"></div>
         <div className="flex-container-content">
           <div className="h5">SalesForce Pipeline Run</div>
           <div className="text-muted">Select component types to include in this pipeline run.</div>
@@ -425,7 +410,7 @@ const SfdcPipelineComponents = ({
 
                   <div className="px-2">
                   <OverlayTrigger
-                  placement="right"
+                  placement="left"
                   delay={{ show: 250, hide: 400 }}
                   overlay={renderTooltip("Select whether managed, custom, or all components will be included")}
                   ><FontAwesomeIcon
@@ -495,7 +480,7 @@ const SfdcPipelineComponents = ({
                               label={"Check All"}
                               name={"Check All"}
                               id={"Check All"}
-                              checked={isEqual(selectedComponentTypes,componentTypes.map(({ name }) => name))}
+                              checked={isEqual(selectedComponentTypes,componentTypes.filter((obj)=>{ return obj.enabled}).map(({ name }) => name))}
                               onChange={handleCheckOrUncheckAllClickComponentTypes}
                             />
                     {/* <Button variant="secondary" size="sm" className="mr-2" onClick={handleCheckAllClickComponentTypes}>
@@ -517,7 +502,7 @@ const SfdcPipelineComponents = ({
 
               <div className="mx-2">
                 <div className="text-muted">Select Components:</div>
-                <div className={gitTaskData ? "" : "scroller"}>
+                <div>
                 <div className="d-flex flex-wrap">
                   {loading ? (
                     <LoadingDialog size="sm" />
@@ -528,18 +513,21 @@ const SfdcPipelineComponents = ({
                           <div key={idx} className="p-2 w-25">
                             <OverlayTrigger
                               placement="right"
-                              delay={{ show: 250, hide: 400 }}
+                              // delay={{ show: 250, hide: 400 }}
                               overlay={renderTooltip(item.value)}
                               >
-                            <Form.Check
-                              inline
-                              type={"checkbox"}
-                              label={item.name}
-                              name={item.name}
-                              id={item.name}
-                              checked={selectedComponentTypes.includes(item.name)}
-                              onChange={handleComponentCheck}
-                            />
+                              <span>
+                                <Form.Check
+                                  inline
+                                  disabled={!item.enabled}
+                                  type={"checkbox"}
+                                  label={item.name}
+                                  name={item.name}
+                                  id={item.name}
+                                  checked={selectedComponentTypes.includes(item.name)}
+                                  onChange={handleComponentCheck}
+                                />
+                              </span>
                             </OverlayTrigger>
                           </div>
                           
@@ -603,6 +591,7 @@ SfdcPipelineComponents.propTypes = {
   setSelectedComponentTypes: PropTypes.func,
   selectedComponentTypes: PropTypes.array,
   stepToolConfig: PropTypes.object,
+  sfdcToolId: PropTypes.string,
   setModifiedFiles: PropTypes.func,
   handleClose: PropTypes.func,
   setSfdcComponentFilterObject: PropTypes.func,
