@@ -53,7 +53,7 @@ function BitbucketMergeRequestByMaximumTimeChart({
         dashboardTags
       );
       let dataObject = response?.data?.data[0]?.bitbucketMergeReqWithMaximumTime?.data;
-      assignStandardColors(dataObject);
+      assignStandardColors(dataObject, true);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
