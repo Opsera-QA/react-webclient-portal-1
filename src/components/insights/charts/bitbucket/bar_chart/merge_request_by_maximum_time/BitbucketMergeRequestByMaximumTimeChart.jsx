@@ -8,6 +8,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColorByData, assignStandardColors } from '../../../charts-views';
+
 function BitbucketMergeRequestByMaximumTimeChart({
   kpiConfiguration,
   setKpiConfiguration,
@@ -50,7 +51,7 @@ function BitbucketMergeRequestByMaximumTimeChart({
         kpiConfiguration
       );
       let dataObject = response?.data?.data[0]?.bitbucketMergeReqWithMaximumTime?.data;
-      assignStandardColors(dataObject);
+      assignStandardColors(dataObject, true);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);

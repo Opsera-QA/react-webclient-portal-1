@@ -46,7 +46,7 @@ function BitbucketMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, d
       );
 
       let dataObject = response?.data?.data[0]?.bitbucketMergeRequestsByUser?.data;
-      assignStandardColors(dataObject);
+      assignStandardColors(dataObject, true);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);

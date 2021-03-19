@@ -51,7 +51,7 @@ function BitbucketTimeTakenToCompleteMergeRequestReview({
         kpiConfiguration
       );
       let dataObject = response?.data?.data[0]?.bitbucketTimeTakenToCompleteMergeRequestReviewChart?.data;
-      assignStandardColors(dataObject);
+      assignStandardColors(dataObject, true);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
