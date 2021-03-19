@@ -22,7 +22,9 @@ function DashboardFilterTagInput({ dataObject, setDataObject, dashboardData, loa
       setDataObject={setDataObject}
       setDataFunction={validateAndSetData}
     />
+    <div className={"mx-2"} >
     <LenientSaveButton size={"sm"} recordDto={dashboardData} updateRecord={saveData}/>
+    </div>
     </div>
   );
 }

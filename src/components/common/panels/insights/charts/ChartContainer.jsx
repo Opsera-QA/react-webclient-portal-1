@@ -10,7 +10,7 @@ import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIc
 
 function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, index, chart, isLoading, error, loadChart, setKpis }) {
   const [view, setView] = useState("chart");
-
+  console.log(kpiConfiguration);
   // const changeView = () => {
   //   setView(view === "chart" ? "settings" : "chart");
   // }
@@ -84,8 +84,9 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
       <div className="new-chart m-2 shaded-panel">
         {getChartBody()}
       </div>
-      {/* <span className="item-field">
-            {kpiConfiguration.data.filters[kpiConfiguration.data.filters.findIndex((obj) => obj.type === "tags")].value.map((item, idx) => {
+      <span className="item-field">
+            {kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "tags")]?.value &&
+            kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "tags")]?.value.map((item, idx) => {
               if (typeof item !== "string")
                 return (
                   <span key={idx} className="mx-1 mb-1 badge badge-light tag-badge">
@@ -94,7 +95,7 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
             </span>
                 );
             })}
-          </span> */}
+          </span>
     </div>
   );
 }
