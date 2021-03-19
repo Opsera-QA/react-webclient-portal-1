@@ -75,10 +75,11 @@ const formats = {
   numbers: d => /\d+\.?\d*$/.exec(d),
   wholeNumbers: d => Math.floor(d) === d && d,
   monthDate: "%b %d",
+  monthDate2: d => { var date = new Date(d).toDateString(); date = date.split(" "); return date[1]+" "+date[2]; },
   yearMonthDate: d => d.split("T")[0],
   cutoffString: d => d.slice(0, 8) + (d.length > 8 ? "..." : ""),
   values: d => /(?:(?!-).)*/.exec(d)[0],
-  subString: d => (typeof d === "string" ? d.substring(0, 6) : "")
+  subString: d => (typeof d === "string" ? d.substring(0, 6) : ""),
 };
 
 export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",

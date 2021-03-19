@@ -9,6 +9,8 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { format } from "date-fns";
+import { defaultConfig, getColorByData, assignStandardColors } from '../../../charts-views';
+import ChartTooltip from '../../../ChartTooltip';
 
 function SonarLinesToCoverBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -46,6 +48,7 @@ function SonarLinesToCoverBarChart({ kpiConfiguration, setKpiConfiguration, dash
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "sonarCodeCoverage", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.sonarCodeCoverage?.data : [];
+      assignStandardColors(dataObject, true);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -74,52 +77,15 @@ function SonarLinesToCoverBarChart({ kpiConfiguration, setKpiConfiguration, dash
           <div className="new-chart mb-3" style={{height: "300px"}}>
           <ResponsiveBar
             data={metrics}
+            {...defaultConfig("Value", "Code Coverage Metric", 
+                      false, true, "", "monthDate2")}
+            {...config(getColorByData)}
             onClick={() => setShowModal(true)}
-            keys={[
-              "uncovered_lines",
-              "line_coverage"
-            ]}
-            groupMode="stacked"
-            layout="vertical"
-            indexBy="analysedAt"
-            margin={config.margin}
-            padding={0.1}
-            colors={{ scheme: "set1" }}
-            borderColor={{ theme: "background" }}
-            colorBy="id"
-            defs={config.defs}
-            fill={config.fill}
-            axisTop={null}
-            axisRight={null}
-            axisBottom={config.axisBottom}
-            axisLeft={config.axisLeft}
-            enableLabel={false}
-            borderRadius={0}
-            labelSkipWidth={12}
-            labelSkipHeight={12}
-            labelTextColor="inherit:darker(2)"
-            animate={true}
-            motionStiffness={90}
-            motionDamping={15}
-            //   legends={config.legends}
-            tooltip={({ indexValue, value, color, data }) => (
-              <div>
-                <strong style={{ color }}>
-              Timestamp: </strong> {format(new Date(indexValue), "yyyy-MM-dd', 'hh:mm a")}<br></br>
-                <strong style={{ color }}>  Uncovered Lines: </strong> {value} <br></br>
-                <strong style={{ color }}> Project Key: </strong> {data.key}
-              </div>
-            )}
-            theme={{
-              axis: {
-                fontSize: "8px"
-              },
-              tooltip: {
-                container: {
-                  fontSize: "16px",
-                },
-              },
-            }}
+            tooltip={({ indexValue, value, color, data }) => <ChartTooltip 
+                    titles = {["Timestamp", "Uncovered Lines", "Project Key"]}
+                    values = {[format(new Date(indexValue), "yyyy-MM-dd', 'hh:mm a"), value, data.key]}
+                    style = {false}
+                    color = {color} />}
           />
       </div>
     </>
