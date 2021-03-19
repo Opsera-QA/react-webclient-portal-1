@@ -6,7 +6,7 @@ import {faSave, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import {persistUpdatedRecord} from "./saving-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function SaveButtonBase({recordDto, updateRecord, disable, size, showSuccessToasts, lenient, className}) {
+function SaveButtonBase({recordDto, updateRecord, disable, size, showSuccessToasts, lenient, className, saveButtonText}) {
   let toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
   const isMounted = useRef(false);
@@ -34,7 +34,7 @@ function SaveButtonBase({recordDto, updateRecord, disable, size, showSuccessToas
       return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Saving</span>);
     }
 
-    return (<span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-1"/>Save</span>);
+    return (<span><FontAwesomeIcon icon={faSave} fixedWidth className="mr-1"/>{saveButtonText}</span>);
   };
 
   return (
@@ -53,13 +53,15 @@ SaveButtonBase.propTypes = {
   showSuccessToasts: PropTypes.bool,
   size: PropTypes.string,
   lenient: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  saveButtonText: PropTypes.string
 };
 
 SaveButtonBase.defaultProps = {
   disable: false,
   size: "md",
-  showSuccessToasts: true
+  showSuccessToasts: true,
+  saveButtonText: "Save"
 }
 
 export default SaveButtonBase;

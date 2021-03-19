@@ -362,7 +362,7 @@ function ToastContextProvider ({ children, navBar }) {
   };
 
   const getInlineErrorBanner = (error, id, prependMessage = "") => {
-    return <InlineError error={error} prependMessage={prependMessage} id={id} removeBanner={removeInlineMessage} />
+    return <InlineError error={error} prependMessage={prependMessage} id={id} removeInlineMessage={removeInlineMessage} />
   };
 
   const getErrorToast = (error, id, prependMessage = "", autoCloseLengthInSeconds) => {

@@ -39,6 +39,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import SfdcModifiedFilesTabView from "./tab_views/SfdcModifiedFilesTabView";
 import GitModifiedFilesTabView from "./tab_views/GitModifiedFilesTabView";
 import SfdcDestModifiedFilesTabView from "./tab_views/SfdcDestModifiedFilesTabView";
+import SfdcProfileSelectionView from "./tab_views/SfdcProfileSelectionView";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -49,6 +50,8 @@ const INITIAL_DATA = {
   gitComponentType: "",
   gitCommittedFile: "",
 };
+
+let timerIds = [];
 
 const SfdcPipelineModifiedFiles = ({
   pipelineId,
@@ -126,8 +129,11 @@ const SfdcPipelineModifiedFiles = ({
       }
       setLoading(true);
       loadSfdcData();
-      loadGitData();
-      loadDestSfdcData();
+      if(!isOrgToOrg){
+        loadGitData();
+      }else{
+        loadDestSfdcData();
+      }
       let componentTypesArr = [];
       let uniqueComponentTypes =  isProfiles ? [...new Set(selectedComp.map(item => item))] : [...new Set(selectedComponentTypes.map(item => item))];
       uniqueComponentTypes.map(item => componentTypesArr.push({ "text": item, "value": item }));
@@ -137,23 +143,104 @@ const SfdcPipelineModifiedFiles = ({
     }
 
     loadInitialData();
+
+    return function cleanup() {      
+      timerIds.forEach(timerId => clearTimeout(timerId))
+    };
+
   }, []);
 
-
-  const loadSfdcData = async () => {    
-    setSfdcLoading(true);    
+  const sfdcPolling = async (count = 1) => {
     try {
-      const sfdcResponse = await sfdcPipelineActions.getListFromPipelineStorage({
+      let sfdcResponse = await sfdcPipelineActions.getListFromPipelineStorage({
         "pipelineId": gitTaskData ? "N/A" : pipelineId,
         "stepId": gitTaskData ? "N/A" : stepId,
         "dataType": gitTaskData ? "sync-sfdc-repo" : "sfdc-packageXml",
         "gitTaskId": gitTaskData ? gitTaskId : false,
         "fetchAttribute": "sfdcCommitList",
       }, sfdcFilterDto, getAccessToken);
+        
+      if(sfdcResponse.data.data.sfdcCommitList.length === 0 && count < 5 && 
+          !sfdcResponse.data.data.sfdcErrorMessage){        
+        await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));        
+        count++;
+        return await sfdcPolling(count);
+      }else{        
+        return sfdcResponse
+      }
+    } catch (error) {      
+      toastContext.showInlineErrorMessage(error);
+    }     
+  }
+
+  const gitPolling = async (count = 1) => {
+    try {
+      let gitResponse = await sfdcPipelineActions.getListFromPipelineStorage({
+        "pipelineId": pipelineId,
+        "stepId": stepId,
+        "dataType": "sfdc-packageXml",
+        "fetchAttribute": "gitCommitList",
+      }, gitFilterDto, getAccessToken);
+        
+      if(gitResponse.data.data.gitCommitList.length === 0 && count < 5
+          && !gitResponse.data.data.gitErrorMessage){        
+        await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
+        count++;
+        return await gitPolling(count);
+      }else{        
+        return gitResponse
+      }
+    } catch (error) {      
+      toastContext.showInlineErrorMessage(error);
+    }     
+  }
+
+  const destSfdcPolling = async (count = 1) => {
+    try {
+      const destSfdcResponse = await sfdcPipelineActions.getListFromPipelineStorage({
+        "pipelineId": pipelineId,
+        "stepId": stepId,
+        "dataType": "sfdc-packageXml",
+        "fetchAttribute": "destSfdcCommitList",
+      }, destSfdcFilterDto, getAccessToken);
+
+      if(destSfdcResponse.data.data.destSfdcCommitList.length === 0 && count < 5
+        && !destSfdcResponse.data.data.sfdcErrorMessage){        
+        await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
+        count++;
+        return await destSfdcPolling(count);
+      }else{        
+        return destSfdcResponse
+      }
+
+    } catch (error) {
+      toastContext.showInlineErrorMessage(error);
+    }
+  }
+
+  
+
+  const loadSfdcData = async () => {    
+    setSfdcLoading(true);    
+    try {
+      // const sfdcResponse = await sfdcPipelineActions.getListFromPipelineStorage({
+      //   "pipelineId": gitTaskData ? "N/A" : pipelineId,
+      //   "stepId": gitTaskData ? "N/A" : stepId,
+      //   "dataType": gitTaskData ? "sync-sfdc-repo" : "sfdc-packageXml",
+      //   "gitTaskId": gitTaskData ? gitTaskId : false,
+      //   "fetchAttribute": "sfdcCommitList",
+      // }, sfdcFilterDto, getAccessToken);
+
+      const sfdcResponse = await sfdcPolling();
 
       if (!sfdcResponse.data.data || !sfdcResponse.data.paginatedData) {
-        toastContext.showLoadingErrorDialog("something went wrong! not a valid object");
+        toastContext.showInlineErrorMessage("something went wrong! not a valid object");
       }
+
+      if(sfdcResponse.data.data.sfdcErrorMessage){
+        toastContext.showInlineErrorMessage(sfdcResponse.data.data.sfdcErrorMessage);
+      }
+
       let newSfdcFilterDto = sfdcFilterDto;
       newSfdcFilterDto.setData("totalCount", sfdcResponse.data.paginatedData.sfdcCommitList.count);
       newSfdcFilterDto.setData("activeFilters", newSfdcFilterDto.getActiveFilters());
@@ -166,7 +253,7 @@ const SfdcPipelineModifiedFiles = ({
       setRecordId(sfdcResponse.data._id);
       
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      toastContext.showInlineErrorMessage(error);
     }
     setSfdcLoading(false);
   };
@@ -175,16 +262,23 @@ const SfdcPipelineModifiedFiles = ({
 
     setGitLoading(true);
     try {
-      const gitResponse = await sfdcPipelineActions.getListFromPipelineStorage({
-        "pipelineId": pipelineId,
-        "stepId": stepId,
-        "dataType": "sfdc-packageXml",
-        "fetchAttribute": "gitCommitList",
-      }, gitFilterDto, getAccessToken);
+      // const gitResponse = await sfdcPipelineActions.getListFromPipelineStorage({
+      //   "pipelineId": pipelineId,
+      //   "stepId": stepId,
+      //   "dataType": "sfdc-packageXml",
+      //   "fetchAttribute": "gitCommitList",
+      // }, gitFilterDto, getAccessToken);
+
+      const gitResponse = await gitPolling();
 
       if (!gitResponse.data.data || !gitResponse.data.paginatedData) {
-        toastContext.showLoadingErrorDialog("something went wrong! not a valid object");
+        toastContext.showInlineErrorMessage("something went wrong! not a valid object");
       }
+
+      if(gitResponse.data.data.gitErrorMessage){
+        toastContext.showInlineErrorMessage(gitResponse.data.data.gitErrorMessage);
+      }
+
       let newGitFilterDto = gitFilterDto;
       newGitFilterDto.setData("totalCount", gitResponse.data.paginatedData.gitCommitList.count);
       newGitFilterDto.setData("activeFilters", newGitFilterDto.getActiveFilters());
@@ -198,7 +292,7 @@ const SfdcPipelineModifiedFiles = ({
       setRecordId(gitResponse.data._id);
 
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      toastContext.showInlineErrorMessage(error);
     }
     setGitLoading(false);
   };
@@ -206,15 +300,17 @@ const SfdcPipelineModifiedFiles = ({
   const loadDestSfdcData = async () => {
     setDestSfdcLoading(true);
     try {
-      const destSfdcResponse = await sfdcPipelineActions.getListFromPipelineStorage({
-        "pipelineId": pipelineId,
-        "stepId": stepId,
-        "dataType": "sfdc-packageXml",
-        "fetchAttribute": "destSfdcCommitList",
-      }, destSfdcFilterDto, getAccessToken);
+      // const destSfdcResponse = await sfdcPipelineActions.getListFromPipelineStorage({
+      //   "pipelineId": pipelineId,
+      //   "stepId": stepId,
+      //   "dataType": "sfdc-packageXml",
+      //   "fetchAttribute": "destSfdcCommitList",
+      // }, destSfdcFilterDto, getAccessToken);
+
+      const destSfdcResponse = await destSfdcPolling();
 
       if (!destSfdcResponse.data.data || !destSfdcResponse.data.paginatedData) {
-        toastContext.showLoadingErrorDialog("something went wrong! not a valid object");
+        toastContext.showInlineErrorMessage("something went wrong! not a valid object");
       }
       let newDestSfdcFilterDto = destSfdcFilterDto;
       newDestSfdcFilterDto.setData("totalCount", destSfdcResponse.data.paginatedData.destSfdcCommitList.count);
@@ -225,7 +321,7 @@ const SfdcPipelineModifiedFiles = ({
       setAllDestSfdcComponentType(destSfdcResponse.data.data.destSfdcCommitList);
 
     } catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      toastContext.showInlineErrorMessage(error);
     }
     setDestSfdcLoading(false);
   };
@@ -467,6 +563,8 @@ const SfdcPipelineModifiedFiles = ({
   }
 
   const checkDisabled = () => {
+    if(((fromSFDC || fromDestinationSFDC) && sfdcModifiedFilesTable.length === 0) || 
+      (fromGit && gitModifiedFilesTable.length === 0)) return true;
     if (fromGit || fromSFDC || fromDestinationSFDC) return false;
     return true;
   };
@@ -548,7 +646,7 @@ const SfdcPipelineModifiedFiles = ({
       }
     } catch (err) {
       console.error("Error saving selected data: ", error);
-      toastContext.showLoadingErrorDialog(error);
+      toastContext.showInlineErrorMessage(error);
     }
   };
 
@@ -566,7 +664,7 @@ const SfdcPipelineModifiedFiles = ({
       getProfileComponentList();
     } catch (err) {
       console.error("Error saving selected data: ", error);
-      toastContext.showLoadingErrorDialog(error);
+      toastContext.showInlineErrorMessage(error);
     }
   };
   const getProfileComponentList = async () => {
@@ -586,13 +684,13 @@ const SfdcPipelineModifiedFiles = ({
         console.error("Error getting API Data: ", getProfileComponentListRes.data.message);
         setSave(false);
         // setError(result.data.message);
-        toastContext.showLoadingErrorDialog(error);
+        toastContext.showInlineErrorMessage(error);
       } else {      
         setView(3);
       }
     } catch (err) {
       console.error("Error saving selected data: ", error);
-      toastContext.showLoadingErrorDialog(error);
+      toastContext.showInlineErrorMessage(error);
     }
   };
 
@@ -615,7 +713,7 @@ const SfdcPipelineModifiedFiles = ({
         console.error("Error getting API Data: ", result.data.message);
         setSave(false);
         // setError(result.data.message);
-        toastContext.showLoadingErrorDialog(error);
+        toastContext.showInlineErrorMessage(error);
       } else {
         // setXML(result.data.message); // not saving anything from response here
         // setView(4); //move to next view
@@ -628,7 +726,7 @@ const SfdcPipelineModifiedFiles = ({
       }
     } catch (err) {
       console.error(err.message);
-      toastContext.showLoadingErrorDialog(error);
+      toastContext.showInlineErrorMessage(error);
       setSave(false);
     }
   };
@@ -1105,27 +1203,24 @@ const SfdcPipelineModifiedFiles = ({
   }
 
   return (
-    <div className="mx-4">
+    <div>
       <div className="flex-container">
-        <div className="flex-container-top"></div>
         <div className="flex-container-content">
           <div className="h5">SalesForce Pipeline Run: File Comparison</div>
           <div className="text-muted mb-4">
             Listed below are the files with changes impacted in this pipeline run. Please confirm that you want to
             proceed with this operation.
-          </div>
-          <CustomTabContainer>
-            <CustomTab activeTab={activeTab} tabText={"SFDC Files"} handleTabClick={handleTabClick} tabName={"sfdc"}
+          </div>          
+          <CustomTabContainer>            
+            <CustomTab activeTab={activeTab} tabText={"SFDC Files"} handleTabClick={handleTabClick} tabName={"sfdc"} disabled={gitTaskData ? true : false}
                       toolTipText={"SFDC Files"} icon={faSalesforce} />
-            { isOrgToOrg ? (
-              <CustomTab activeTab={activeTab} tabText={"Destination SFDC Files"} handleTabClick={handleTabClick} tabName={"destsfdc"} disabled={gitTaskData ? true : false}
-                      toolTipText={"Destination SFDC Files"} icon={faCode} />
-            ) : (
+            { !isOrgToOrg ? (
               <CustomTab activeTab={activeTab} tabText={"Git Files"} handleTabClick={handleTabClick} tabName={"git"} disabled={gitTaskData ? true : false}
-                      toolTipText={"Git Files"} icon={faCode} />
-            ) }                        
+              toolTipText={"Git Files"} icon={faCode} />
+            ) : null
+            }
           </CustomTabContainer>
-          {activeTab === "sfdc" ? (            
+          {activeTab === "sfdc" && !isOrgToOrg ? (            
             <SfdcModifiedFilesTabView 
               loadData={loadSfdcData}
               filterDto={sfdcFilterDto}
@@ -1170,24 +1265,22 @@ const SfdcPipelineModifiedFiles = ({
               // allGitComponentType={allGitComponentType}
               // allDestSfdcComponentType={allDestSfdcComponentType}   
             />
-          ) : activeTab === "destsfdc" ? (            
-            <SfdcDestModifiedFilesTabView 
-              loadData={loadDestSfdcData}
-              filterDto={destSfdcFilterDto}
-              setFilterDto={setDestSfdcFilterDto}
-              loading={destSfdcLoading}
+          ) : activeTab === "sfdc" && isOrgToOrg ? (            
+            <SfdcProfileSelectionView 
+              destLoadData={loadDestSfdcData}
+              destFilterDto={destSfdcFilterDto}
+              setDestFilterDto={setDestSfdcFilterDto}
+              destLoading={destSfdcLoading}
+              destComponentType={componentType}
+              destData={destSfdcModified}
+              loadData={loadSfdcData}
+              filterDto={sfdcFilterDto}
+              setFilterDto={setSfdcFilterDto}
+              loading={sfdcLoading}
               componentType={componentType}
-              data={destSfdcModified}
-              // fileUploadFlag={false}
-              // recordId={recordId}
-              // updateAttribute= {isProfiles ? "profilesList" : "selectedFileList"}
-              // callbackFunc={isProfiles ? getProfileComponentList : generateXML}
-              // fromGit={fromGit}
-              // fromSFDC={fromSFDC}
-              // fromDestinationSFDC={fromDestinationSFDC}  
-              // allSFDCComponentType={allSFDCComponentType}
-              // allGitComponentType={allGitComponentType}
-              // allDestSfdcComponentType={allDestSfdcComponentType}        
+              data={sfdcModifiedFilesTable}
+              handleComponentCheck={handleSFDCComponentCheckNew}
+              handleCheckAllClickComponentTypes={handleCheckAllClickComponentTypesSfdc}                      
             />
           ) : null }            
         </div>

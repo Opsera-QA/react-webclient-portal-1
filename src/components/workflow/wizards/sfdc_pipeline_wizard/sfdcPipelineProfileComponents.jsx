@@ -85,7 +85,7 @@ const SfdcPipelineProfileComponents = ({
       await loadData();
       let componentTypesArr = [];
       let uniqueComponentTypes = [...new Set(selectedComponentTypes.map(item => item))];
-      uniqueComponentTypes.map(item => componentTypesArr.push({ "componentType": item, "value": item }));
+      uniqueComponentTypes.map(item => componentTypesArr.push({ "text": item, "value": item }));
       setComponentType(componentTypesArr);
     }
 
@@ -120,7 +120,7 @@ const SfdcPipelineProfileComponents = ({
       }, filterDto, getAccessToken);
 
       if (!response.data.data || !response.data.paginatedData) {
-        toastContext.showLoadingErrorDialog("something went wrong! not a valid object");
+        toastContext.showInlineErrorMessage("something went wrong! not a valid object");
       }
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.paginatedData.profileComponentList.count);
@@ -137,7 +137,7 @@ const SfdcPipelineProfileComponents = ({
 
     } catch (error) {
       console.error("Error getting API Data: ", error);
-      toastContext.showLoadingErrorDialog(error);
+      toastContext.showInlineErrorMessage(error);
     }
     setComponentsLoading(false);
     setLoading(false);
@@ -177,6 +177,7 @@ const SfdcPipelineProfileComponents = ({
   );
 
   const checkDisabled = () => {
+    if(modifiedFilesTable.length === 0) return true;
     if (fromProfiles) return false;
     return true;
   };
@@ -228,7 +229,7 @@ const SfdcPipelineProfileComponents = ({
       console.error("Error getting API Data: ", triggerResponse.data.message);
       setSave(false);
       // setError(result.data.message);
-      toastContext.showLoadingErrorDialog(error);
+      toastContext.showInlineErrorMessage(error);
     } else {      
       await generateXML();
     }
@@ -236,7 +237,7 @@ const SfdcPipelineProfileComponents = ({
     } catch (err) {
       console.error("Error saving selected data: ", error);
       setSave(false);
-      toastContext.showLoadingErrorDialog(error);
+      toastContext.showInlineErrorMessage(error);
     }
     
   };
@@ -256,14 +257,14 @@ const SfdcPipelineProfileComponents = ({
       if (result.data.status != 200) {
         console.error("Error getting API Data: ", result.data.message);
         setSave(false);
-        toastContext.showLoadingErrorDialog(error);
+        toastContext.showInlineErrorMessage(error);
       } else {
         // setXML(result.data.message); // not saving anything from response here
         setView(4); //move to next view
       }
     } catch (err) {
       console.error(err.message);
-      toastContext.showLoadingErrorDialog(error);
+      toastContext.showInlineErrorMessage(error);
       setSave(false);
     }
   };
@@ -512,8 +513,7 @@ const SfdcPipelineProfileComponents = ({
 
   return (
     <div className="mx-5">
-      <div className="flex-container">
-        <div className="flex-container-top"></div>
+      <div className="flex-container">        
         <div className="flex-container-content">
           <div className="h5">SalesForce Pipeline Run: Component Selection</div>
           <div className="text-muted mb-4">
@@ -572,7 +572,22 @@ const SfdcPipelineProfileComponents = ({
             <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>
             Back
           </Button>
-
+          <Button
+            variant="success"
+            size="sm"
+            className="mr-2"
+            onClick={() => {
+              handleSelectAll();
+            }}
+            disabled={checkDisabled()}
+          >
+            {save ? (
+              <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
+            ) : (
+              <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
+            )}
+            Use All SFDC Files
+          </Button>
           <Button
             variant="success"
             size="sm"
@@ -586,7 +601,7 @@ const SfdcPipelineProfileComponents = ({
             ) : (
               <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
             )}
-            Next
+            Proceed with Selected SFDC Files
           </Button>
 
           <Button
