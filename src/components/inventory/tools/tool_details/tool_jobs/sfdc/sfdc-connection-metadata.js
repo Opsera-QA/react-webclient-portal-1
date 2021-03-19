@@ -1,3 +1,5 @@
+import regexHelpers from "utils/regexHelpers";
+
 const sfdcConnectionMetadata = {
   type: "SFDC Tool Configuration",
   idProperty: "_id",
@@ -37,6 +39,12 @@ const sfdcConnectionMetadata = {
       isRequired: true,
       maxLength: 256
     },
+    {
+      label: "Build Type",
+      id: "buildType",
+      regexValidator: regexHelpers.regexTypes.generalTextWithoutSpacesPeriod,
+      maxLength: 10
+    },
   ],
   newObjectFields:
     {
@@ -46,6 +54,7 @@ const sfdcConnectionMetadata = {
       sfdc_client_secret: "",
       sfdc_token: "",
       sfdc_password: "",
+      buildType: "ant"
     }
 };
 
