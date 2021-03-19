@@ -26,7 +26,7 @@ function CypressTestResultsTable({ kpiConfiguration, setKpiConfiguration, dashbo
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "pipelineId"), "cell-center no-wrap-inline"),
+      getTableTextColumn(getField(fields, "pipelineId"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "runCount")),
       getTableDateTimeColumn(getField(fields, "timestamp")),
       getTableTextColumn(getField(fields, "testsRun")),
@@ -86,7 +86,7 @@ function CypressTestResultsTable({ kpiConfiguration, setKpiConfiguration, dashbo
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage}/>}
+        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage} noFooter={true}/>}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
