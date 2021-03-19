@@ -39,16 +39,18 @@ function BitbucketMergeRequestByMaximumTimeChart({
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
+      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       setIsLoading(true);
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "bitbucketMergeReqWithMaximumTime",
-        kpiConfiguration
+        kpiConfiguration,
+        dashboardTags
       );
       let dataObject = response?.data?.data[0]?.bitbucketMergeReqWithMaximumTime?.data;
       assignStandardColors(dataObject, true);

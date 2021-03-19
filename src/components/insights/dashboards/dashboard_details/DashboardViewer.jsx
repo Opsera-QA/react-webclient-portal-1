@@ -88,14 +88,14 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
           />
         </CustomBadgeContainer>       
         <div className="d-flex">
-          {/* <DashboardFilterTagInput
+          <DashboardFilterTagInput
             dataObject={dashboardFilterTagsModel}
             setDataObject={setDashboardFilterTagsModel}
             loadData={loadData}
             saveData={validateAndSaveData}
             className={"mx-2"}
             dashboardData={dashboardDataDto}
-          /> */}
+          />
           <NewRecordButton addRecordFunction={gotoMarketplace} disabled={kpis.length >= 10} type={"Kpi"} />
         </div>
       </ActionBarContainer>
