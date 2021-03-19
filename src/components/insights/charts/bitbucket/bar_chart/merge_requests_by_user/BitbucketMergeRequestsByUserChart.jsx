@@ -33,20 +33,22 @@ function BitbucketMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, d
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
         "bitbucketMergeRequestsByUser",
-        kpiConfiguration
+        kpiConfiguration,
+        dashboardTags
       );
 
       let dataObject = response?.data?.data[0]?.bitbucketMergeRequestsByUser?.data;
-      assignStandardColors(dataObject);
+      assignStandardColors(dataObject, true);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);

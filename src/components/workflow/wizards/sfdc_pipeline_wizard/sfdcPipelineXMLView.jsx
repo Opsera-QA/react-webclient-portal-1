@@ -43,13 +43,13 @@ const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestr
         const response = await sfdcPipelineActions.getListFromPipelineStorage(postBody, "", getAccessToken);
         
         if(!response.data.data || !response.data.data.packageXml) {
-          toastContext.showLoadingErrorDialog("something went wrong! not a valid object");
+          toastContext.showInlineErrorMessage("something went wrong! not a valid object");
         }
         setXML(response.data.data.packageXml);
         setDestructiveXml(response.data.data.destructiveXml ? response.data.data.destructiveXml : "");
       } catch (error) {
         console.error("Error getting API Data: ", error);
-        toastContext.showLoadingErrorDialog(error);
+        toastContext.showInlineErrorMessage(error);
       }
       setLoading(false);
     }
@@ -65,9 +65,8 @@ const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestr
   };
 
   return (
-    <div className="ml-5">
+    <div>
       <div className="flex-container">
-        <div className="flex-container-top"></div>
         <div className="flex-container-content">
           <div className="h5">SalesForce Pipeline Run: XML Viewer</div>
           <div className="text-muted mb-4">Please confirm that you want to proceed with this operation.</div>

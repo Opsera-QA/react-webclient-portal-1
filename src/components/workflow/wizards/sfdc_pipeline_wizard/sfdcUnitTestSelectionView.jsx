@@ -68,7 +68,7 @@ const SfdcUnitTestSelectionView = ({
       const response = await sfdcPipelineActions.getListFromPipelineStorage({"sfdcToolId": selectedStep.tool.configuration.sfdcToolId, "pipelineId": pipelineId, "stepId": selectedStep._id, "dataType": "sfdc-unitTesting" }, filterDto , getAccessToken);
       
       if(!response.data.data || !response.data.paginatedData) {
-        toastContext.showLoadingErrorDialog("something went wrong! not a valid object");
+        toastContext.showInlineErrorMessage("something went wrong! not a valid object");
       }
       // save the mongo record id so that we can update it when saving selected data
       setUnitTestRecordId(response.data._id);
@@ -89,7 +89,7 @@ const SfdcUnitTestSelectionView = ({
       setUnitTestClassesList(arrOfObj);
     } catch (error) {
       console.error("Error getting API Data: ", error);
-      toastContext.showLoadingErrorDialog(error);
+      toastContext.showInlineErrorMessage(error);
     } finally {
       setUnitTestListLoading(false);
     }
@@ -120,13 +120,13 @@ const SfdcUnitTestSelectionView = ({
       if (res.data.status != 200 ) {
         console.error("Error getting API Data: ", res.data.message);
         // TODO: Add a toast here
-        toastContext.showLoadingErrorDialog(res.data.message);
+        toastContext.showInlineErrorMessage(res.data.message);
         return;
       }
       setSelectedStep(unitStep);
     } catch (error) {
       console.error("Error getting API Data: ", error);
-      toastContext.showLoadingErrorDialog(error);
+      toastContext.showInlineErrorMessage(error);
     } finally {
       setLoading(false);
     }
@@ -140,14 +140,14 @@ const SfdcUnitTestSelectionView = ({
   const saveSelectedClasses = async() => {
     setSave(true);
     if(!selectedStep || !selectedStep._id) {
-      toastContext.showLoadingErrorDialog("please select a unit test step");
+      toastContext.showInlineErrorMessage("please select a unit test step");
     }
     // let selectedList = selectedUnitTestClassesList.map(obj => obj.value)
     try {
         // convert csv to array and compare with our list
         let inputItems = CSVtoArray(enteredUnitTestClassesList);
         if(inputItems === null){
-          toastContext.showLoadingErrorDialog("Please enter a valid input");
+          toastContext.showInlineErrorMessage("Please enter a valid input");
           return;
         }
         let inputCommonItems = commonItems(inputItems,unitTestClassesList);
@@ -174,7 +174,7 @@ const SfdcUnitTestSelectionView = ({
 
     } catch (error) {
       console.error("Error getting API Data: ", error);
-      toastContext.showLoadingErrorDialog(error);
+      toastContext.showInlineErrorMessage(error);
       setSave(false);
     } finally {
       setSave(false);
@@ -182,9 +182,8 @@ const SfdcUnitTestSelectionView = ({
   }
 
   return (
-    <div className="ml-5 mr-5">
+    <div>
       <div className="flex-container">
-        <div className="flex-container-top"></div>
         <div className="flex-container-content">
           <div className="h5">SalesForce Pipeline Run: Unit Test Selection View</div>
           <div className="text-muted mb-4">Apex Classes with @isTest annotation will be part of selection for Selective Unit Testing.</div>

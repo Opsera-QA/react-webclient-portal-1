@@ -7,10 +7,11 @@ import KpiSettingsForm from "components/insights/marketplace/charts/KpiSettingsF
 import {getChartIconFromKpiConfiguration} from "components/insights/charts/charts-helpers";
 import InfoDialog from "components/common/status_notifications/info";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon.jsx";
+import CustomBadge from "components/common/badges/CustomBadge";
+import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 
 function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, index, chart, isLoading, error, loadChart, setKpis }) {
   const [view, setView] = useState("chart");
-
   // const changeView = () => {
   //   setView(view === "chart" ? "settings" : "chart");
   // }
@@ -76,6 +77,23 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
     );
   };
 
+  const getTagBadges = () => {
+    const tags = kpiConfiguration?.filters[kpiConfiguration?.filters?.findIndex((obj) => obj.type === "tags")]?.value;
+
+    if (Array.isArray(tags) && tags.length > 0) {
+      return (
+        <CustomBadgeContainer>
+          {tags.map((item, index) => {
+            if (typeof item !== "string")
+              return (
+                <CustomBadge key={index} className={"mx-1 mb-1"} icon={faTag} badgeText={`${item.type}: ${item.value}`}/>
+              );
+          })}
+        </CustomBadgeContainer>
+      );
+    }
+  };
+
   return (
     <div className="content-container content-card-1">
       <div className="px-2 content-block-header-inverse title-text-header-2">
@@ -84,17 +102,7 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
       <div className="new-chart m-2 shaded-panel">
         {getChartBody()}
       </div>
-      {/* <span className="item-field">
-            {kpiConfiguration.data.filters[kpiConfiguration.data.filters.findIndex((obj) => obj.type === "tags")].value.map((item, idx) => {
-              if (typeof item !== "string")
-                return (
-                  <span key={idx} className="mx-1 mb-1 badge badge-light tag-badge">
-            <FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/><span
-                    className="mr-1">{item.type}:</span>{item.value}
-            </span>
-                );
-            })}
-          </span> */}
+      {getTagBadges()}
     </div>
   );
 }
