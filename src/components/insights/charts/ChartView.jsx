@@ -902,6 +902,8 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             index={index}
           />
         );
+      default:
+        return null;
     }
   };
 
