@@ -65,7 +65,7 @@ dashboardsActions.getTopFiveDashboardsV2 = async(getAccessToken, cancelTokenSour
     params: {
       sort: "lastupdated",
       page: 1,
-      size: 5,
+      size: 7,
       active: true,
       favorites: true,
     }

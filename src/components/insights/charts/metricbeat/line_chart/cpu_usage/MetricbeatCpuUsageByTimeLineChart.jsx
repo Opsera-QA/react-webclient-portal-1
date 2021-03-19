@@ -84,7 +84,7 @@ function MetricbeatCpuUsageByTimeLineChart({ persona, date , tags}) {
       <ModalLogs
         header="CPU Usage"
         size="lg"
-        jsonMessage={data.data}
+        jsonMessage={data?.data}
         dataType="bar"
         show={showModal}
         setParentVisibility={setShowModal}

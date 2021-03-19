@@ -1,16 +1,14 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
-import config from "./opseraMeanTimeToRestoreConfigs.js";
-import "components/analytics/charts/charts.css";
+import config from "./opseraBuildDurationByStageBarChartConfigs";
 import ModalLogs from "components/common/modal/modalLogs";
+import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { line } from "d3-shape";
 
-function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
+function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -43,8 +41,8 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraMeanTimeToRestore", kpiConfiguration);
-      let dataObject = response?.data?.data[0]?.opseraMeanTimeToRestore?.data;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraDurationBySteps", kpiConfiguration);
+      let dataObject = response?.data ? response?.data?.data[0]?.opseraDurationBySteps?.data : [];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -67,27 +65,18 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
-    const MeanLineLayer = ({ bars, xScale, yScale }) => {
-        console.log(bars);
-        const lineGenerator = line()
-          .x(d => xScale(d.data.data._id))
-          .y(d => yScale(d.data.data.mttr));
-        return (
-          <path d={lineGenerator(bars)} fill="none" stroke="rgba(200, 30, 15, 1)" strokeWidth="3" />
-        );
-      };
 
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
         <ResponsiveBar
           data={metrics}
           keys={config.keys}
-          indexBy="_id"
+          layout="vertical"
+          indexBy="pipelineId"
           onClick={() => setShowModal(true)}
           margin={config.margin}
           padding={0.3}
-          layout={"vertical"}
-          colors={{ scheme: "dark2" }}
+          colors={{ scheme: "category10" }}
           borderColor={{ theme: "background" }}
           colorBy="id"
           defs={config.defs}
@@ -96,24 +85,20 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
           axisRight={null}
           axisBottom={config.axisBottom}
           axisLeft={config.axisLeft}
+          enableLabel={false}
+          borderRadius={0}
           labelSkipWidth={12}
           labelSkipHeight={12}
-          enableLabel={false}
-          borderRadius={5}
           labelTextColor="inherit:darker(2)"
           animate={true}
           motionStiffness={90}
-          layers={["grid", MeanLineLayer, "axes", "bars", "markers", "mesh", "legends"]}       
-          borderWidth={2}
           motionDamping={15}
           legends={config.legends}
-          tooltip={({ indexValue, value, data, color }) => (
+          tooltip={({ data, value, color , id}) => (
             <div>
-              <strong style={{ color }}>Date: </strong> {new Date(indexValue).toDateString()}
-              <br />
-              <strong style={{ color }}> No. of Deployments: </strong> {value} deployments
-              <br />
-              <strong style={{ color }}> Mean Time to Restore: </strong> {data.mttr} minutes
+              <strong style={{ color }}> Pipeline: </strong> {data.pipelineId} <br />
+              <strong style={{ color }}> Stage: </strong> {id} <br />
+              <strong style={{ color }}> Duration: </strong> {value} minutes <br />
             </div>
           )}
           theme={{
@@ -128,32 +113,33 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
     );
   }
 
-    return (
-      <>
-        <ChartContainer
-          kpiConfiguration={kpiConfiguration}
-          setKpiConfiguration={setKpiConfiguration}
-          chart={getChartBody()}
-          loadChart={loadData}
-          dashboardData={dashboardData}
-          index={index}
-          error={error}
-          setKpis={setKpis}
-          isLoading={isLoading}
-        />
-        <ModalLogs
-          header="Mean Time to Restore"
-          size="lg"
-          jsonMessage={metrics}
-          dataType="bar"
-          show={showModal}
-          setParentVisibility={setShowModal}
-        />
-      </>
-    );
+  return (
+    <div>
+      <ChartContainer
+        title={kpiConfiguration?.kpi_name}
+        kpiConfiguration={kpiConfiguration}
+        setKpiConfiguration={setKpiConfiguration}
+        chart={getChartBody()}
+        loadChart={loadData}
+        dashboardData={dashboardData}
+        index={index}
+        error={error}
+        setKpis={setKpis}
+        isLoading={isLoading}
+      />
+      <ModalLogs
+        header="Build Duration By Stage"
+        size="lg"
+        jsonMessage={metrics}
+        dataType="bar"
+        show={showModal}
+        setParentVisibility={setShowModal}
+      />
+    </div>
+  );
 }
 
-OpseraMeanTimeToRestoreBarChart.propTypes = {
+OpseraBuildDurationByStageBarChart.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -161,4 +147,4 @@ OpseraMeanTimeToRestoreBarChart.propTypes = {
   setKpis: PropTypes.func
 };
 
-export default OpseraMeanTimeToRestoreBarChart;
+export default OpseraBuildDurationByStageBarChart;

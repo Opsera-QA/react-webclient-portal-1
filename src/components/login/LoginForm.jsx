@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Button, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { axiosApiService } from "../../api/apiService";
 import { useHistory } from "react-router-dom";
 import ErrorDialog from "../common/status_notifications/error";
@@ -184,20 +184,28 @@ const LoginForm = ({ authClient }) => {
   const handleDomainLookupSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const apiUrl = "/users/check-email";
-    const params = { "email": lookupAccountEmail, "checkAccountLoginStatus": true, "hostname": window.location.hostname };
+    const apiUrl = "/users/active-account";
+    const params = { "email": lookupAccountEmail, "hostname": window.location.hostname };
     try {
       const response = await axiosApiService().post(apiUrl, params); //this lookup is currently FF in Node
       setMessage(false);
       setErrorMessage(false);
 
-      if (response.data?.loginAllowed) { //valid account so allow it to continue login
+      const {loginAllowed, validHost} = response.data;
+
+      //valid account so allow it to continue login
+      if (loginAllowed && validHost) {
         setUsername(lookupAccountEmail);
         setViewType("login");
         return;
       }
 
-      //account isn't ready for login (check customer DB settings)
+      if (!validHost) {
+        setErrorMessage("Warning!  You are attempting to log into the wrong Opsera Portal tenant.  Please check with your account owner or contact Opsera to get the proper URL to access your platform.");
+        return;
+      }
+
+      //loginAllowed === false: account isn't ready for login (check customer DB settings)
       setMessage("Congratulations, your account set up is in progress and it should be available shortly. Please check back soon or contact us for assistance!");
     } catch (err) {
       console.log(err);
@@ -353,6 +361,18 @@ const LoginForm = ({ authClient }) => {
         <Col>
           <div className="d-flex align-items-center justify-content-center">
             <div className="auth-box-w">
+
+              {message &&
+              <div className="info-block mt-2 mx-2 p-2">
+                <div className="float-right mx-1">
+                  <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
+                    setMessage(false);
+                  }} />
+                </div>
+                {message}
+              </div>
+              }
+
               <div className="logo-w">
                 <img alt="Opsera"
                      src="/img/logos/opsera_bird_infinity_171_126.png"
@@ -365,8 +385,6 @@ const LoginForm = ({ authClient }) => {
               </h4>
 
               {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage} />}
-
-              {message && <InformationDialog message={message} alignment="top" setMessage={setMessage} />}
 
               <form onSubmit={handleDomainLookupSubmit}>
                 <div className="form-group">

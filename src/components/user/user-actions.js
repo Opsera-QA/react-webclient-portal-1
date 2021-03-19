@@ -1,5 +1,5 @@
 import {ApiService, axiosApiService} from "../../api/apiService";
-import toolsActions from "../inventory/tools/tools-actions";
+//import toolsActions from "../inventory/tools/tools-actions";
 import baseActions from "../../utils/actionsBase";
 
 // TODO: Rename with whatever name makes sense
@@ -18,17 +18,18 @@ userActions.getAnalyticsSettings = async (getAccessToken) => {
 //Check if the email is already registered in the system
 userActions.isEmailAvailable = async (emailAddress) => {
   console.log("checking if email exists: " + emailAddress);
-  const apiCall = new ApiService("/users/check-email", {}, null, { email: emailAddress });
+  const apiCall = new ApiService("/users/check-email", {}, null, { "email": emailAddress, "hostname": window.location.hostname });
   return await apiCall
     .post()
     .then(function (response) {
-      if (response.data?.loginAllowed === true) {
+      if (response.data?.emailExists === true) {
         return false; //cannot create new account beacuse this account is already enabled
       } else {
         return true;
       }
     })
     .catch(function (error) {
+      console.error(error)
       return true;
     });
 };
