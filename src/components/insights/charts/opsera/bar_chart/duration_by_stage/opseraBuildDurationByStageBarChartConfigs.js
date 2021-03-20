@@ -1,6 +1,7 @@
 export default {
   keys: [
     "Build",
+    "Script",
     "Code Scan",
     "Container Scan",
     "Unit Testing",
