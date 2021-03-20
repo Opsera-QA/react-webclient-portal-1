@@ -241,6 +241,9 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
 
   const handleAccountChange = (selectedOption) => {
     //on change, always clear error state
+
+    console.log(selectedOption);
+
     setFormData({
       ...formData,
       accountId: selectedOption.id ? selectedOption.id : "",
@@ -354,12 +357,12 @@ function SourceRepositoryConfiguration({ data, parentCallback, handleCloseClick 
       return true;
     }
 
-    if (repository.length === 0 || branch.length === 0 || accountId.length === 0 || username.length === 0 || password.length === 0) {
+    if (repository.length === 0 || branch.length === 0 || accountId.length === 0 || username.length === 0 ) {
       toastContext.showWarningDialog("WARNING! An incomplete configuration is being saved.  This step must be fully configured in order to use this feature.");
       return true;
     }
 
-    if (repository.length === 0 || branch.length === 0 || accountId.length === 0 || username.length === 0 || password.length === 0) {
+    if (repository.length === 0 || branch.length === 0 || accountId.length === 0 || username.length === 0 ) {
       toastContext.showWarningDialog("WARNING! An incomplete configuration is being saved.  This step must be fully configured in order to use this feature.");
       return true;
     }
