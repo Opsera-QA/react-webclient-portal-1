@@ -52,6 +52,7 @@ export default {
       legendPosition: "middle",
     },
     axisLeft: {
+      "format": (d) => Math.floor(d) === d && d,
       "tickSize": 5,
       "tickPadding": 5,
       "tickRotation": 0,
@@ -59,28 +60,30 @@ export default {
       "legendPosition": "middle",
       "legendOffset": -65
     },
+    axisRight: {
+      "format": (d) => Math.floor(d) === d && d,
+      "tickSize": 5,
+      "tickPadding": 5,
+      "tickRotation": 0,
+      "legend": "Time (minutes)",
+      "legendPosition": "middle",
+      "legendOffset": 65
+    },
     legends: [
       {
-        "dataFrom": "keys",
-        "anchor": "bottom-right",
-        "direction": "column",
+        "anchor": "top-right",
+        "direction": "row",
         "justify": false,
-        "translateX": 120,
-        "translateY": 0,
-        "itemsSpacing": 2,
-        "itemWidth": 100,
+        "translateX": 0,
+        "translateY": -35,
+        "itemsSpacing": 20,
+        "itemDirection": "right-to-left",
+        "itemWidth": 80,
         "itemHeight": 20,
-        "itemDirection": "left-to-right",
-        "itemOpacity": 0.85,
-        "symbolSize": 20,
-        "effects": [
-          {
-            "on": "hover",
-            "style": {
-              "itemOpacity": 1
-            }
-          }
-        ]
+        "itemOpacity": 1,
+        "symbolSize": 10,
+        "symbolShape": "square",
+        "symbolBorderColor": "rgba(0, 0, 0, .5)"
       }
     ]
   };

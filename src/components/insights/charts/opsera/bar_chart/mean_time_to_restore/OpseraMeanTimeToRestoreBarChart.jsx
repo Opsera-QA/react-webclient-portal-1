@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, {useState, useEffect, useContext, useRef, Fragment} from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import config from "./opseraMeanTimeToRestoreConfigs.js";
@@ -68,13 +68,39 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
+    const getMaxValue = (data) => {
+      let countsMax = Math.max.apply(Math,data.map(function(o){return o.count;}));
+      let mttrMax = Math.max.apply(Math,data.map(function(o){return o.mttr;}));
+      let max = Math.ceil(Math.max(countsMax, mttrMax));
+      return max;
+    }
     const MeanLineLayer = ({ bars, xScale, yScale }) => {
-        console.log(bars);
+        const lineColor = "rgba(0, 128, 0, 1)";
         const lineGenerator = line()
           .x(d => xScale(d.data.data._id))
           .y(d => yScale(d.data.data.mttr));
         return (
-          <path d={lineGenerator(bars)} fill="none" stroke="rgba(200, 30, 15, 1)" strokeWidth="3" />
+          <Fragment>
+          <path
+            d={lineGenerator(bars)}
+            fill="none"
+            stroke={lineColor}
+            strokeWidth="3"
+            style={{ pointerEvents: "none" }}
+          />
+          {bars.map(bar => {
+            return <circle
+              key={bar.key}
+              cx={xScale(bar.data.data._id)}
+              cy={yScale(bar.data.data.mttr)}
+              r={4}
+              fill={lineColor}
+              stroke={lineColor}
+              style={{ pointerEvents: "none" }}
+            />
+          }
+          )}
+        </Fragment>        
         );
       };
 
@@ -87,14 +113,16 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
           onClick={() => setShowModal(true)}
           margin={config.margin}
           padding={0.3}
+          minValue={0}
+          maxValue={getMaxValue(metrics)}
           layout={"vertical"}
-          colors={{ scheme: "dark2" }}
+          colors={"rgba(200, 200, 200, 1)"}
           borderColor={{ theme: "background" }}
           colorBy="id"
           defs={config.defs}
           fill={config.fill}
           axisTop={null}
-          axisRight={null}
+          axisRight={config.axisRight}
           axisBottom={config.axisBottom}
           axisLeft={config.axisLeft}
           labelSkipWidth={12}
@@ -104,17 +132,17 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
           labelTextColor="inherit:darker(2)"
           animate={true}
           motionStiffness={90}
-          layers={["grid", MeanLineLayer, "axes", "bars", "markers", "mesh", "legends"]}       
+          layers={["grid", "axes", "bars", MeanLineLayer, "markers", "mesh", "legends"]}       
           borderWidth={2}
           motionDamping={15}
           legends={config.legends}
           tooltip={({ indexValue, value, data, color }) => (
             <div>
-              <strong style={{ color }}>Date: </strong> {new Date(indexValue).toDateString()}
+              <strong>Date: </strong> {new Date(indexValue).toDateString()}
               <br />
-              <strong style={{ color }}> No. of Deployments: </strong> {value} deployments
+              <strong> No. of Deployments: </strong> {value}
               <br />
-              <strong style={{ color }}> Mean Time to Restore: </strong> {data.mttr} minutes
+              <strong className="green"> Mean Time to Restore: </strong> {data.mttr} minutes
             </div>
           )}
           theme={{
