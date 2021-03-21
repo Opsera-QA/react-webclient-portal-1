@@ -14,7 +14,7 @@ export default {
     "top": 50,
     "right": 110,
     "bottom": 50,
-    "left": 120
+    "left": 100
   },
   defs: [
     {
@@ -69,19 +69,28 @@ export default {
   },
   legends: [
     {
-      "anchor": "top-right",
-      "direction": "row",
+      "anchor": "bottom-right",
+      "direction": "column",
       "justify": false,
-      "translateX": 0,
-      "translateY": -35,
-      "itemsSpacing": 20,
-      "itemDirection": "right-to-left",
-      "itemWidth": 80,
+      "translateX": 100,
+      "translateY": 50,
+      "itemsSpacing": 0,
+      "itemWidth": 100,
+      "itemDirection": "left-to-right",
       "itemHeight": 20,
-      "itemOpacity": 1,
+      "itemOpacity": 0.75,
       "symbolSize": 10,
-      "symbolShape": "square",
-      "symbolBorderColor": "rgba(0, 0, 0, .5)"
+      "symbolShape": "circle",
+      "symbolBorderColor": "rgba(0, 0, 0, .5)",
+      "effects": [
+        {
+          "on": "hover",
+          "style": {
+            "itemBackground": "rgba(0, 0, 0, .03)",
+            "itemOpacity": 1
+          }
+        }
+      ]
     }
   ]
 };
