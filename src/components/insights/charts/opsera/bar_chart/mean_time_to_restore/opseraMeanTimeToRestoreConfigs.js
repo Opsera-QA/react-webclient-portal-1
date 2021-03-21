@@ -52,6 +52,7 @@ export default {
       legendPosition: "middle",
     },
     axisLeft: {
+      "format": (d) => Math.floor(d) === d && d,
       "tickSize": 5,
       "tickPadding": 5,
       "tickRotation": 0,

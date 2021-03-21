@@ -108,7 +108,7 @@ function SonarMetricByProjectLineChart({ kpiConfiguration, setKpiConfiguration, 
               }}
               axisBottom={{
                 format: "%b %d",
-                tickValues: metrics.maxLength && metrics.maxLength > 10 ? 10 : 'every 1 days',
+                tickValues: metrics.maxLength && metrics.maxLength > 10 ? 10 : 'every 2 days',
                 tickRotation: -25,
                 legendOffset: -12,
               }}              
