@@ -41,6 +41,7 @@ export default {
     },
   ],
   axisBottom: {
+    format: (d) => Math.floor(d) === d && d,
     tickSize: 8,
     tickPadding: 5,
     tickRotation: 0,
