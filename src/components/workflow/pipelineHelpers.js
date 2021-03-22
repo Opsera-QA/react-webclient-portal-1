@@ -69,7 +69,7 @@ pipelineHelpers.getStepIndex = (pipeline, stepId) => {
 
 pipelineHelpers.getStepIndexFromPlan = (plan, stepId) => {
   if (stepId && plan) {
-    return plan.findIndex(x => x._id === stepId);
+    return plan.findIndex(step => step._id === stepId);
   }
 
   return -1;
