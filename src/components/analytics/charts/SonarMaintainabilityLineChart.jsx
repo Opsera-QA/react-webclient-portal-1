@@ -6,6 +6,7 @@ import ModalLogs from "../../common/modal/modalLogs";
 import InfoDialog from "../../common/status_notifications/info";
 import { defaultConfig, getColor, assignStandardColors } from '../../insights/charts/charts-views';
 import ChartTooltip from '../../insights/charts/ChartTooltip';
+
 function MaintainabilityLineChart({ data, persona }) {
   const { sonarMaintainability } = data;
   const [showModal, setShowModal] = useState(false);

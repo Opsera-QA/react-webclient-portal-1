@@ -9,6 +9,9 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import { defaultConfig, getColor, assignStandardColors, shortenLegend } from '../../../charts-views';
+import ChartTooltip from '../../../ChartTooltip';
 
 /**
  *
@@ -59,6 +62,8 @@ function SonarMetricByProjectLineChart({ kpiConfiguration, setKpiConfiguration, 
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "sonarMeasures-" + sonarMeasure, kpiConfiguration, dashboardTags);
       const dataObject = response?.data && response?.data?.data[0]?.["sonarMeasures-" + sonarMeasure].status === 200 ? response?.data?.data[0]?.["sonarMeasures-" + sonarMeasure]?.data : [];
+      assignStandardColors(dataObject);
+      shortenLegend(dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -94,55 +99,16 @@ function SonarMetricByProjectLineChart({ kpiConfiguration, setKpiConfiguration, 
       <div className="new-chart mb-3" style={{height: "300px"}}>
             <ResponsiveLine
               data={metrics}
+              {...defaultConfig("Vulnerabilities", "Date", 
+                    false, true, "wholeNumbers", "monthDate")}
+              {...config(getColor)}
               onClick={() => setShowModal(true)}
-
-              margin={{ top: 40, right: 110, bottom: 70, left: 40 }}
-              xScale={{
-                type: "time",
-                format: "%Y-%m-%d",
-              }}
-              xFormat="time:%Y-%m-%d"
-              yScale={{
-                type: "linear",
-                stacked: false,
-              }}
-              axisBottom={{
-                format: "%b %d",
-                tickValues: metrics.maxLength && metrics.maxLength > 10 ? 10 : 'every 2 days',
-                tickRotation: -25,
-                legendOffset: -12,
-              }}              
-              pointSize={10}
-              pointBorderWidth={8}
-              pointLabel="y"
-              pointLabelYOffset={-12}
-              useMesh={true}
-              lineWidth={3.5}
-              legends={config.legends}
-              tooltip={(node) => (
-                <div style={{
-                  background: "white",
-                  padding: "9px 12px",
-                  border: "1px solid #ccc",
-                }}>
-                  <div>
-                    <strong> Quality Gate: </strong> {node.point.data.status} <br />
-                    <strong> Qualifier: </strong>  {node.point.data.gate} <br />
-                    <strong> Date: </strong> {node.point.data.xFormatted} <br></br>
-                    <strong> {node.point.data.metric}: {node.point.data.yFormatted}  </strong>
-                  </div>
-
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
+              tooltip={(node) => <ChartTooltip 
+                    titles={["Quality Gate", "Qualifier", "Date", capitalizeFirstLetter(node.point.data.metric)]}
+                    values={[node.point.data.status, node.point.data.gate, 
+                             node.point.data.xFormatted, node.point.data.yFormatted]} />}
             />        
-        </div>
+      </div>
     );
   }
   return (

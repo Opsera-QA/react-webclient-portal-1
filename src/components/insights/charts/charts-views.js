@@ -1,12 +1,10 @@
-export const greyHues = ["#5B5851", "#7A756C", "#B1AeA7", "#E6E5E3", "##F0EFEE", "#F9F9F8"];
+export const greyHues = ["#1E1D1B", "#5B5851", "#7A756C", "#B1AeA7", "#E6E5E3", "##F0EFEE", "#F9F9F8"];
 export const goldHues = ["#F1AD0F", "#F5C453", "#F9DC98", "#FDF3DD"];
-export const purpleHues = ["#7368AA", "#ABA4CC", "#E3E1EE"];
-// export const purpleHues = ["#494173", "#7368AA", "#ABA4CC", "#E3E1EE"];
-
-const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
+export const purpleHues = ["#494173", "#7368AA", "#ABA4CC", "#E3E1EE"];
+// const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
 
 export const standardColors = [];
-goldHues.forEach((_, i) => standardColors.push(greyHues[i], purpleHues[i], darkHues[i]));
+goldHues.forEach((_, i) => standardColors.push(greyHues[i], purpleHues[i]));
 
 const failColor = "#E57373";
 const mainColor = "#5B5851";
@@ -17,6 +15,14 @@ export const assignStandardColors = (data, uniColor = false) => {
   if (data) {
     data.forEach((data, i) => {
       data.color = uniColor ? mainColor : standardColors[i];
+    });
+  }
+};
+
+export const assignMonochromaticColors = (data) => {
+  if (data) {
+    data.forEach((data, i) => {
+      data.color = greyHues[i];
     });
   }
 };
@@ -72,14 +78,17 @@ export const getColor = data => data.color;
 export const getColorByData = data => data.data.color;
 export const getColorById = data => data.id === "Successful" ? mainColor : failColor;
 
+export const shortenLegend = datas => datas.forEach(data => data.id.length > 10 ? data.id = data.id.slice(0, 10) + "..." : data.id);
+
 const formats = {
   numbers: d => /\d+\.?\d*$/.exec(d),
   wholeNumbers: d => Math.floor(d) === d && d,
   monthDate: "%b %d",
+  monthDate2: d => { var date = new Date(d).toDateString(); date = date.split(" "); return date[1]+" "+date[2]; },
   yearMonthDate: d => d.split("T")[0],
   cutoffString: d => d.slice(0, 8) + (d.length > 8 ? "..." : ""),
   values: d => /(?:(?!-).)*/.exec(d)[0],
-  subString: d => (typeof d === "string" ? d.substring(0, 6) : "")
+  subString: d => (typeof d === "string" ? d.substring(0, 6) : ""),
 };
 
 export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",

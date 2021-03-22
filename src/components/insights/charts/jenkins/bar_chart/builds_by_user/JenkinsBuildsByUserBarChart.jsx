@@ -75,7 +75,7 @@ function JenkinsBuildsByUserBarChart({ kpiConfiguration, setKpiConfiguration, da
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Users", "Number of Builds", 
-                      true, true, "subString", "wholeNumbers")}
+                      true, true, "subString", "")}
           {...config(getColorByData)}   
           onClick={() => setShowModal(true)}
           tooltip={({ indexValue, value, color }) => <ChartTooltip 

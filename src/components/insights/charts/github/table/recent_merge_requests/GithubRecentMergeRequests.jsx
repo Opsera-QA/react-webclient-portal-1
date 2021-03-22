@@ -27,7 +27,7 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "AuthorName"), "cell-center no-wrap-inline"),
+      getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "AssigneeName")),
       getTableTextColumn(getField(fields, "MergeRequestTitle")),
       getTableTextColumn(getField(fields, "ProjectName")),
@@ -87,7 +87,7 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage}/>}
+        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage} noFooter={true}/>}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}

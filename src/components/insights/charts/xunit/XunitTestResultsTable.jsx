@@ -26,7 +26,7 @@ function XunitTestResultsTable({ kpiConfiguration, setKpiConfiguration, dashboar
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "jobId"), "cell-center no-wrap-inline"),
+      getTableTextColumn(getField(fields, "jobId"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "runCount")),
       getTableDateTimeColumn(getField(fields, "timestamp")),
       getTableTextColumn(getField(fields, "testsRun")),
@@ -87,7 +87,7 @@ function XunitTestResultsTable({ kpiConfiguration, setKpiConfiguration, dashboar
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage}/>}
+        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage} noFooter={true}/>}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
