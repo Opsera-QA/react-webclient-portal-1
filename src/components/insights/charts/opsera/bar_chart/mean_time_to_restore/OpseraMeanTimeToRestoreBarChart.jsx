@@ -9,7 +9,8 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { line } from "d3-shape";
-
+import { defaultConfig, getColorByData, assignStandardColors } from '../../../charts-views';
+import ChartTooltip from '../../../ChartTooltip';
 function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -46,6 +47,8 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraMeanTimeToRestore", kpiConfiguration, dashboardTags);
       let dataObject = response?.data?.data[0]?.opseraMeanTimeToRestore?.data;
+      assignStandardColors(dataObject, true);
+      dataObject.forEach(data => data.Count = data.count);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -108,50 +111,15 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
       <div className="new-chart mb-3" style={{height: "300px"}}>
         <ResponsiveBar
           data={metrics}
-          keys={config.keys}
-          indexBy="_id"
+          {...defaultConfig("Number of Deployments", "Date", 
+                    false, true, "wholeNumbers", "monthDate2")}
+          {...config(getColorByData, getMaxValue(metrics))}
           onClick={() => setShowModal(true)}
-          margin={config.margin}
-          padding={0.3}
-          minValue={0}
-          maxValue={getMaxValue(metrics)}
-          layout={"vertical"}
-          colors={"rgba(200, 200, 200, 1)"}
-          borderColor={{ theme: "background" }}
-          colorBy="id"
-          defs={config.defs}
-          fill={config.fill}
-          axisTop={null}
-          axisRight={config.axisRight}
-          axisBottom={config.axisBottom}
-          axisLeft={config.axisLeft}
-          labelSkipWidth={12}
-          labelSkipHeight={12}
-          enableLabel={false}
-          borderRadius={5}
-          labelTextColor="inherit:darker(2)"
-          animate={true}
-          motionStiffness={90}
-          layers={["grid", "axes", "bars", MeanLineLayer, "markers", "mesh", "legends"]}       
-          borderWidth={2}
-          motionDamping={15}
-          legends={config.legends}
-          tooltip={({ indexValue, value, data, color }) => (
-            <div>
-              <strong>Date: </strong> {new Date(indexValue).toDateString()}
-              <br />
-              <strong> No. of Deployments: </strong> {value}
-              <br />
-              <strong className="green"> Mean Time to Restore: </strong> {data.mttr} minutes
-            </div>
-          )}
-          theme={{
-            tooltip: {
-              container: {
-                fontSize: "16px",
-              },
-            },
-          }}
+          tooltip={({ indexValue, value, data, color }) => <ChartTooltip 
+                    titles={["Date", "Number of Deployments", "Mean Time To Restore"]}
+                    values={[new Date(indexValue).toDateString(), value, `${data.mttr} minutes`]}
+                    style={false}
+                    color={color} />}
         />
       </div>
     );

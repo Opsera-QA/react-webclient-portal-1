@@ -47,7 +47,6 @@ function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfigurat
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraDurationBySteps", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.opseraDurationBySteps?.data : [];
       assignStageColors(dataObject);
-      console.log('!!!!', dataObject)
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
