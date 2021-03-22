@@ -75,7 +75,7 @@ function SonarMaintainabilityRatingLineChart({ kpiConfiguration, setKpiConfigura
       <div className="new-chart mb-3" style={{height: "300px"}}>
           <ResponsiveLine
             data={metrics}
-            {...defaultConfig("Code Smells", "Date", 
+            {...defaultConfig("Average Quality Gate Value", "Date", 
                       false, false, "wholeNumbers", "yearMonthDate")}
             {...config(getColor)}
             onClick={() => setShowModal(true)}
