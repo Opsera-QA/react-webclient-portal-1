@@ -11,6 +11,7 @@ export const failColor = "#E57373";
 export const warningColor = "#F1AD0F";
 
 export const standardColors = ["#5B5851", "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173"];
+export const gradationalColors = ["#B1AeA7", "#7A756C", mainColor, "#1E1D1B"];
 // purpleHues.forEach((_, i) => standardColors.push(greyHues[greyHues.length - i - 2], purpleHues[i + 1]));
 
 export const assignStandardColors = (data, uniColor = false) => {
@@ -21,13 +22,13 @@ export const assignStandardColors = (data, uniColor = false) => {
   }
 };
 
-export const assignMonochromaticColors = (data) => {
-  if (data) {
-    data.forEach((data, i) => {
-      data.color = greyHues[i];
-    });
-  }
-};
+// export const assignGradationalColors = (data) => {
+//   if (data) {
+//     data.forEach((data, i) => {
+//       data.color = gradationalColors[i];
+//     });
+//   }
+// };
 
 export const assignBooleanColors = data => {
   if (data && data[0] && !('Successful' in data[0])) {
