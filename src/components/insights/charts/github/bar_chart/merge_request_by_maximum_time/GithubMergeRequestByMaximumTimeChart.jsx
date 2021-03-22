@@ -8,7 +8,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColorByData, assignStandardColors,
-         capitalizeMergeRequestTimeTakenLegend } from '../../../charts-views';
+         spaceOutMergeRequestTimeTakenLegend } from '../../../charts-views';
 
 function GithubMergeRequestByMaximumTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -47,7 +47,7 @@ function GithubMergeRequestByMaximumTimeChart({ kpiConfiguration, setKpiConfigur
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "githubMergeReqWithMaximumTime", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.githubMergeReqWithMaximumTime?.data : [];
       assignStandardColors(dataObject, true);
-      capitalizeMergeRequestTimeTakenLegend(dataObject);
+      spaceOutMergeRequestTimeTakenLegend(dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);

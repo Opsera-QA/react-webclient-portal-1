@@ -75,7 +75,7 @@ function JiraIssuesCreatedVsResolvedLineChart({ kpiConfiguration, setKpiConfigur
           <ResponsiveLine
             data={metrics}
             {...defaultConfig("Number of Issues", "Date", 
-                      true, true, "wholeNumbers", "monthDate2")}
+                      false, true, "wholeNumbers", "monthDate2")}
             {...config(getColor)}
             onClick={() => setShowModal(true)}
             tooltip={(node) => <ChartTooltip 

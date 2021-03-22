@@ -8,7 +8,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColorByData, assignStandardColors,
-         capitalizeValueLegend } from '../../../charts-views';
+         capitalizeLegend } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 
 function JenkinsBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -48,7 +48,7 @@ function JenkinsBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, d
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "jenkinsBuildDuration", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.jenkinsBuildDuration?.data : [];
       assignStandardColors(dataObject, true);
-      capitalizeValueLegend(dataObject);
+      capitalizeLegend(dataObject, ["value"]);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
