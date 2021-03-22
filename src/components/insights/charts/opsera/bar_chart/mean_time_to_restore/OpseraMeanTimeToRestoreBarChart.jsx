@@ -9,7 +9,8 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { line } from "d3-shape";
-import { defaultConfig, getColorByData, assignStandardColors } from '../../../charts-views';
+import { defaultConfig, getColorByData, assignStandardColors, 
+         accentColor } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -78,7 +79,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
       return max;
     }
     const MeanLineLayer = ({ bars, xScale, yScale }) => {
-        const lineColor = "rgba(0, 128, 0, 1)";
+        const lineColor = accentColor;
         const lineGenerator = line()
           .x(d => xScale(d.data.data._id))
           .y(d => yScale(d.data.data.mttr));
@@ -113,7 +114,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
           data={metrics}
           {...defaultConfig("Number of Deployments", "Date", 
                     false, true, "wholeNumbers", "monthDate2")}
-          {...config(getColorByData, getMaxValue(metrics))}
+          {...config(getColorByData, getMaxValue(metrics), MeanLineLayer)}
           onClick={() => setShowModal(true)}
           tooltip={({ indexValue, value, data, color }) => <ChartTooltip 
                     titles={["Date", "Number of Deployments", "Mean Time To Restore"]}
