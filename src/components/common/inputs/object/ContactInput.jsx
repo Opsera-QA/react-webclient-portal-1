@@ -56,15 +56,18 @@ function ContactInput({dataObject, setDataObject, fieldName, disabledFields, typ
 
   const addProperty = () => {
     let newPropertyList = properties;
-    let lastObject = newPropertyList[newPropertyList.length - 1];
 
-    // Do not add another row if last row is not fully configured is not configured
-    if ((lastObject?.name === "" || lastObject?.email === "") && !allowIncompleteItems) {
-      return;
+    if (newPropertyList.length > 0) {
+      let lastObject = newPropertyList[newPropertyList.length - 1];
+
+      // Do not add another row if last row is not fully configured is not configured
+      if ((lastObject?.name === "" || lastObject?.email === "") && !allowIncompleteItems) {
+        return;
+      }
     }
 
     newPropertyList.push({name: "", email: "", user_id: ""});
-    setProperties(newPropertyList);
+    setProperties([...newPropertyList]);
   };
 
   const deleteProperty = (index) => {

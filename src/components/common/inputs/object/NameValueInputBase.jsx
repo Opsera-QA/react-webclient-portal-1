@@ -56,15 +56,18 @@ function NameValueInputBase({dataObject, setDataObject, fieldName, disabledField
 
   const addProperty = () => {
     let newPropertyList = properties;
-    let lastObject = newPropertyList[newPropertyList.length - 1];
 
-    // Do not add another row if last row is not fully configured is not configured
-    if ((lastObject?.name === "" || lastObject?.value === "") && !allowIncompleteItems) {
-      return;
+    if (newPropertyList.length > 0) {
+      let lastObject = newPropertyList[newPropertyList.length - 1];
+
+      // Do not add another row if last row is not fully configured is not configured
+      if ((lastObject?.name === "" || lastObject?.value === "") && !allowIncompleteItems) {
+        return;
+      }
     }
 
     newPropertyList.push({name: "", value: ""});
-    setProperties(newPropertyList);
+    setProperties([...newPropertyList]);
   };
 
   const deleteProperty = (index) => {
