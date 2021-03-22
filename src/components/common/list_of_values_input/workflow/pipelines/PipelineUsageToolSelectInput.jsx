@@ -1,13 +1,13 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationCircle} from "@fortawesome/free-solid-svg-icons";
+import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import PipelineUsageToolMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineUsageToolMultiSelectInput";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
 function PipelineUsageToolSelectInput({ placeholderText, fieldName, dataObject, setDataObject, setDataFunction, disabled, textField, valueField}) {
   const toastContext = useContext(DialogToastContext);
@@ -77,6 +77,7 @@ function PipelineUsageToolSelectInput({ placeholderText, fieldName, dataObject, 
       selectOptions={pipelineUsageTools}
       setDataFunction={setDataFunction}
       busy={isLoading}
+      groupBy={(tool) => capitalizeFirstLetter(tool?.tool_type_name, " ", "Undefined Type")}
       valueField={valueField}
       textField={textField}
       placeholderText={placeholderText}
@@ -97,7 +98,7 @@ PipelineUsageToolSelectInput.propTypes = {
   visible: PropTypes.bool
 };
 
-PipelineUsageToolMultiSelectInput.defaultProps = {
+PipelineUsageToolSelectInput.defaultProps = {
   textField: "name",
   valueField: "identifier"
 };

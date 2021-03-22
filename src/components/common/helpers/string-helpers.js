@@ -1,4 +1,4 @@
-export function capitalizeFirstLetter(string, wordDelimiter, noDataString) {
+export function capitalizeFirstLetter(string, wordDelimiter = " ", noDataString) {
 
   if (string && string.length > 0) {
     let capitalizedString = "";
