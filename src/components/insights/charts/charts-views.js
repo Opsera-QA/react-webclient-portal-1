@@ -4,10 +4,11 @@ export const purpleHues = ["#494173", "#7368AA", "#ABA4CC", "#E3E1EE"];
 // const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
 
 export const accentColor = "#A8D0DB";
-const failColor = "#E57373";
-const mainColor = "#5B5851";
+export const failColor = "#E57373";
+export const mainColor = "#5B5851";
 export const mainGold = goldHues[0];
 export const mainPurple = purpleHues[0];
+export const warningColor = "#F1AD0F";
 
 export const standardColors = ["#5B5851", "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173"];
 // purpleHues.forEach((_, i) => standardColors.push(greyHues[greyHues.length - i - 2], purpleHues[i + 1]));
