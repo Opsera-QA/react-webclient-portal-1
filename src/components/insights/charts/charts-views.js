@@ -3,11 +3,11 @@ export const goldHues = ["#F1AD0F", "#F5C453", "#F9DC98", "#FDF3DD"];
 export const purpleHues = ["#494173", "#7368AA", "#ABA4CC", "#E3E1EE"];
 // const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
 
-export const accentColor = "#A8D0DB";
-export const failColor = "#E57373";
 export const mainColor = "#5B5851";
 export const mainGold = goldHues[0];
 export const mainPurple = purpleHues[0];
+export const accentColor = "#A8D0DB";
+export const failColor = "#E57373";
 export const warningColor = "#F1AD0F";
 
 export const standardColors = ["#5B5851", "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173"];
@@ -93,6 +93,7 @@ export const getColorById = data => data.id === "Successful" ? mainColor : failC
 export const getTaskColor = ({ id, data }) => data[`${id}_color`];
 
 export const shortenLegend = datas => datas.forEach(data => data.id.length > 10 ? data.id = data.id.slice(0, 10) + "..." : data.id);
+export const capitalizeValueLegend = data => data.forEach(d => d.Value = d.value);
 
 const formats = {
   numbers: d => /\d+\.?\d*$/.exec(d),

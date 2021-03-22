@@ -1,5 +1,5 @@
 export default (getColor) => ({
-  keys: ["value"],
+  keys: ["Value"],
   indexBy: "key",
   colorBy: "id",
   colors: getColor
