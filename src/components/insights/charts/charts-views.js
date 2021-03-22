@@ -88,6 +88,7 @@ export const getTaskColor = ({ id, data }) => data[`${id}_color`];
 export const shortenLegend = datas => datas.forEach(data => data.id.length > 10 ? data.id = data.id.slice(0, 10) + "..." : data.id);
 export const capitalizeValueLegend = data => data.forEach(d => d.Value = d.value);
 export const capitalizeMergeRequestTimeTakenLegend = data => data.forEach(d => d["Merge Request Time Taken"] = d["MergeRequestTimeTaken"]);
+export const capitalizeCountLegend = data => data.forEach(d => d["Value"] = d["value"]);
 
 const formats = {
   numbers: d => /\d+\.?\d*$/.exec(d),
