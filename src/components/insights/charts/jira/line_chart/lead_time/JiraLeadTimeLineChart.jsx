@@ -8,7 +8,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { line } from "d3-shape";
-import { defaultConfig, getColor, assignStandardColors, purpleHues } from '../../../charts-views';
+import { defaultConfig, getColor, assignStandardColors, mainPurple, accentColor } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 
 function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -76,7 +76,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
         .x(d => xScale(d.data.x))
         .y(d => yScale(d.data.mean));
       return (
-        <path d={lineGenerator(nodes)} fill="none" stroke={purpleHues[0]} strokeWidth="3" />
+        <path d={lineGenerator(nodes)} fill="none" stroke={mainPurple} strokeWidth="3" />
       );
     };
 
@@ -85,7 +85,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
         .x(d => xScale(d.data.x))
         .y(d => yScale(d.data.rolling_mean));
       return (
-        <path d={lineGenerator(nodes)} fill="none" stroke={purpleHues[2]} strokeWidth="2" />
+        <path d={lineGenerator(nodes)} fill="none" stroke={accentColor} strokeWidth="2" />
       );
     };
 

@@ -3,13 +3,14 @@ export const goldHues = ["#F1AD0F", "#F5C453", "#F9DC98", "#FDF3DD"];
 export const purpleHues = ["#494173", "#7368AA", "#ABA4CC", "#E3E1EE"];
 // const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
 
-export const standardColors = ["#5B5851", "#7A756C", "#ABA4CC", "#B1AeA7", "#7368AA", "#A8D0DB", "#494173"];
-// purpleHues.forEach((_, i) => standardColors.push(greyHues[greyHues.length - i - 2], purpleHues[i + 1]));
-
+export const accentColor = "#A8D0DB";
 const failColor = "#E57373";
 const mainColor = "#5B5851";
 export const mainGold = goldHues[0];
 export const mainPurple = purpleHues[0];
+
+export const standardColors = ["#5B5851", "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173"];
+// purpleHues.forEach((_, i) => standardColors.push(greyHues[greyHues.length - i - 2], purpleHues[i + 1]));
 
 export const assignStandardColors = (data, uniColor = false) => {
   if (data) {
