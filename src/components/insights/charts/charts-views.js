@@ -34,9 +34,9 @@ export const assignBooleanColors = data => {
 
 export const assignTaskColors = data => {
   data.forEach(data => {
-    data.Story_color = standardColors[3];
-    data.Task_color = "#ABA4CC";
-    data.Subtask_color = standardColors[1];
+    data.Story_color = accentColor;
+    data.Task_color = "#7368AA";
+    data.Subtask_color = mainColor;
     data.Bug_color = failColor;
   });
   
@@ -45,7 +45,7 @@ export const assignTaskColors = data => {
 
 export const assignHealthColors = data => {
   data.forEach(data => {
-    data["To Do_color"] = standardColors[0];
+    data["To Do_color"] = mainColor;
     data["In Development_color"] = standardColors[1];
     data["In Progress_color"] = standardColors[2];
     data["Peer Review_color"] = standardColors[3];
