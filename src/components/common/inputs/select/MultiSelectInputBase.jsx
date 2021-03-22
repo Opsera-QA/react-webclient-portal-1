@@ -99,7 +99,10 @@ MultiSelectInputBase.propTypes = {
   selectOptions: PropTypes.array,
   setDataObject: PropTypes.func,
   fieldName: PropTypes.string,
-  groupBy: PropTypes.string,
+  groupBy: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func
+  ]),
   dataObject: PropTypes.object,
   valueField: PropTypes.string,
   textField: PropTypes.string,
