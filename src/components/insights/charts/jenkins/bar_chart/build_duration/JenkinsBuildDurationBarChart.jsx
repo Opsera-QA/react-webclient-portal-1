@@ -7,6 +7,8 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import { defaultConfig, getColorByData, assignStandardColors } from '../../../charts-views';
+import ChartTooltip from '../../../ChartTooltip';
 
 function JenkinsBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -44,6 +46,7 @@ function JenkinsBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, d
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "jenkinsBuildDuration", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.jenkinsBuildDuration?.data : [];
+      assignStandardColors(dataObject, true);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -71,44 +74,15 @@ function JenkinsBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, d
       <div className="new-chart mb-3" style={{height: "300px"}}>
             <ResponsiveBar
               data={metrics}
-              keys={config.keys}
-              layout="vertical"
-              indexBy="key"
+              {...defaultConfig("Build Duration (Minutes)", "Build Number", 
+                      false, true, "wholeNumbers", "numbers")}
+              {...config(getColorByData)}
               onClick={() => setShowModal(true)}
-              margin={config.margin}
-              padding={0.3}
-              colors={{ scheme: "category10" }}
-              borderColor={{ theme: "background" }}
-              colorBy="id"
-              defs={config.defs}
-              fill={config.fill}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              enableLabel={false}
-              borderRadius={5}
-              labelSkipWidth={12}
-              labelSkipHeight={12}
-              labelTextColor="inherit:darker(2)"
-              animate={true}
-              motionStiffness={90}
-              motionDamping={15}
-              legends={config.legends}
-              tooltip={({ data, value, color }) => (
-                <div>
-                  <strong style={{ color }}> Duration: </strong> {value} minutes <br></br>
-                  <strong style={{ color }}> Build Number: </strong> {data.buildNum} <br></br>
-                  <strong style={{ color }}> Job Name: </strong> {data.jobName} <br></br>
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
+              tooltip={({ data, value, color }) => <ChartTooltip 
+                              titles = {["Duration", "Build Number", "Job Name"]}
+                              values = {[`${value} minutes`, data.buildNum, data.jobName]}
+                              style = {false}
+                              color = {color} />}
             />
         </div>
     );

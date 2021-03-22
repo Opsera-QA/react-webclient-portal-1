@@ -73,6 +73,7 @@ export const getColorByData = data => data.data.color;
 export const getColorById = data => data.id === "Successful" ? mainColor : failColor;
 
 const formats = {
+  numbers: d => /\d+\.?\d*$/.exec(d),
   wholeNumbers: d => Math.floor(d) === d && d,
   monthDate: "%b %d",
   yearMonthDate: d => d.split("T")[0],
