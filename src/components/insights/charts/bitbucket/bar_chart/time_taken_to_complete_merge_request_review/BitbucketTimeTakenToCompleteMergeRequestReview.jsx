@@ -9,6 +9,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColorByData, assignStandardColors } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
+
 function BitbucketTimeTakenToCompleteMergeRequestReview({
   kpiConfiguration,
   setKpiConfiguration,

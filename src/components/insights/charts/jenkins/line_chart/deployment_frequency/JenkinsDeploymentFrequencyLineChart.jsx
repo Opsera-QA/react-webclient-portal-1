@@ -13,6 +13,8 @@ import { axiosApiService } from "../../../../../../api/apiService";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ModalLogs from "components/common/modal/modalLogs";
+import { defaultConfig, getColor, assignBooleanColors } from '../../../charts-views';
+import ChartTooltip from '../../../ChartTooltip';
 
 function JenkinsDeploymentFrequencyLineChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -40,6 +42,7 @@ function JenkinsDeploymentFrequencyLineChart({ persona, date }) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].successfulDeploymentFrequency : [];
+      assignBooleanColors(dataObject?.data);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -97,45 +100,14 @@ function JenkinsDeploymentFrequencyLineChart({ persona, date }) {
           ) : (
             <ResponsiveLine
               data={data ? data.data : []}
+              {...defaultConfig("Number of Deployments", "Date", 
+                                false, true, "wholeNumbers", "monthDate")}
+              {...config(getColor)}
               onClick={() => setShowModal(true)}
-              indexBy="date"
-              margin={{ top: 50, right: 110, bottom: 80, left: 120 }}
-              xScale={{
-                type: "time",
-                format: "%Y-%m-%d",
-                precision: "day",
-              }}
-              yScale={{ type: "linear", min: 0, max: "auto", stacked: false }}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              pointSize={10}
-              pointBorderWidth={8}
-              pointLabel="y"
-              pointLabelYOffset={-12}
-              useMesh={true}
-              lineWidth={3.5}
-              legends={config.legends}
-              colors={(d) => d.color}
-              tooltip={({ point, color }) => (
-                <div
-                  style={{
-                    background: "white",
-                    padding: "9px 12px",
-                    border: "1px solid #ccc",
-                  }}
-                >
-                  <strong style={{ color }}> Number of Deployments: </strong> {point.data.y}
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
+              tooltip={({ point, color }) => <ChartTooltip 
+                              titles = {["Number of Deployments"]}
+                              values = {[point.data.y]}
+                              color = {color} />}
             />
           )}
         </div>

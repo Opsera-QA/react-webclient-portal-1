@@ -27,7 +27,7 @@ function JenkinsRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, da
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "data_projectName"), "cell-center no-wrap-inline"),
+      getTableTextColumn(getField(fields, "data_projectName"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "data_buildNum")),
       getTableDateTimeColumn(getField(fields, "timestamp")),
       getTableTextColumn(getField(fields, "duration")),
@@ -86,7 +86,7 @@ function JenkinsRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, da
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage}/>}
+        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage} noFooter={true}/>}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
