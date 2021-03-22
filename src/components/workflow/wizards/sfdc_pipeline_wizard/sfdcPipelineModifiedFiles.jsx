@@ -160,8 +160,9 @@ const SfdcPipelineModifiedFiles = ({
         "fetchAttribute": "sfdcCommitList",
       }, sfdcFilterDto, getAccessToken);
         
-      if(sfdcResponse.data.data.sfdcCommitList.length === 0 && count < 5 && 
-          !sfdcResponse.data.data.sfdcErrorMessage){        
+      if(!sfdcResponse.data.data.sfdcErrorMessage && 
+          sfdcResponse.data.data.sfdcCommitList?.length === 0 && 
+          count < 5 ) {        
         await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));        
         count++;
         return await sfdcPolling(count);
@@ -182,8 +183,9 @@ const SfdcPipelineModifiedFiles = ({
         "fetchAttribute": "gitCommitList",
       }, gitFilterDto, getAccessToken);
         
-      if(gitResponse.data.data.gitCommitList.length === 0 && count < 5
-          && !gitResponse.data.data.gitErrorMessage){        
+      if(!gitResponse.data.data.gitErrorMessage && 
+          gitResponse.data.data.gitCommitList?.length === 0 
+          && count < 5) {        
         await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
         count++;
         return await gitPolling(count);
@@ -204,8 +206,9 @@ const SfdcPipelineModifiedFiles = ({
         "fetchAttribute": "destSfdcCommitList",
       }, destSfdcFilterDto, getAccessToken);
 
-      if(destSfdcResponse.data.data.destSfdcCommitList.length === 0 && count < 5
-        && !destSfdcResponse.data.data.sfdcErrorMessage){        
+      if(!destSfdcResponse.data.data.destSfdcErrorMessage && 
+          destSfdcResponse.data.data.destSfdcCommitList?.length === 0 && 
+          count < 5) {        
         await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
         count++;
         return await destSfdcPolling(count);
@@ -233,12 +236,12 @@ const SfdcPipelineModifiedFiles = ({
 
       const sfdcResponse = await sfdcPolling();
 
-      if (!sfdcResponse.data.data || !sfdcResponse.data.paginatedData) {
-        toastContext.showInlineErrorMessage("something went wrong! not a valid object");
-      }
-
       if(sfdcResponse.data.data.sfdcErrorMessage){
         toastContext.showInlineErrorMessage(sfdcResponse.data.data.sfdcErrorMessage);
+      }
+
+      if (!sfdcResponse.data.data || !sfdcResponse.data.paginatedData) {
+        toastContext.showInlineErrorMessage("something went wrong! not a valid object");
       }
 
       let newSfdcFilterDto = sfdcFilterDto;
@@ -271,12 +274,12 @@ const SfdcPipelineModifiedFiles = ({
 
       const gitResponse = await gitPolling();
 
-      if (!gitResponse.data.data || !gitResponse.data.paginatedData) {
-        toastContext.showInlineErrorMessage("something went wrong! not a valid object");
-      }
-
       if(gitResponse.data.data.gitErrorMessage){
         toastContext.showInlineErrorMessage(gitResponse.data.data.gitErrorMessage);
+      }
+
+      if (!gitResponse.data.data || !gitResponse.data.paginatedData) {
+        toastContext.showInlineErrorMessage("something went wrong! not a valid object");
       }
 
       let newGitFilterDto = gitFilterDto;
@@ -308,6 +311,10 @@ const SfdcPipelineModifiedFiles = ({
       // }, destSfdcFilterDto, getAccessToken);
 
       const destSfdcResponse = await destSfdcPolling();
+
+      if(destSfdcResponse.data.data.destSfdcErrorMessage){
+        toastContext.showInlineErrorMessage(destSfdcResponse.data.data.destSfdcErrorMessage);
+      }
 
       if (!destSfdcResponse.data.data || !destSfdcResponse.data.paginatedData) {
         toastContext.showInlineErrorMessage("something went wrong! not a valid object");
