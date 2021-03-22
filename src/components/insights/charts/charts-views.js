@@ -1,13 +1,15 @@
-export const greyHues = ["#5B5851", "#7A756C", "#B1AeA7", "#E6E5E3"];
-const purpleHues = ["#494173", "#7368AA", "#ABA4CC", "#E3E1EE"];
-const goldHues = ["#F1AD0F", "#F5C453", "#F9DC98", "#FDF3DD"];
+export const greyHues = ["#5B5851", "#7A756C", "#B1AeA7", "#E6E5E3", "##F0EFEE", "#F9F9F8"];
+export const goldHues = ["#F1AD0F", "#F5C453", "#F9DC98", "#FDF3DD"];
+export const purpleHues = ["#7368AA", "#ABA4CC", "#E3E1EE"];
+// export const purpleHues = ["#494173", "#7368AA", "#ABA4CC", "#E3E1EE"];
+
 const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
 
-const standardColors = [];
-greyHues.forEach((_, i) => standardColors.push(greyHues[i], goldHues[i], purpleHues[i], darkHues[i]));
+export const standardColors = [];
+goldHues.forEach((_, i) => standardColors.push(greyHues[i], purpleHues[i], darkHues[i]));
 
 const failColor = "#E57373";
-const mainColor = greyHues[0];
+const mainColor = "#5B5851";
 export const mainGold = goldHues[0];
 export const mainPurple = purpleHues[0];
 
@@ -79,71 +81,68 @@ const formats = {
   subString: d => (typeof d === "string" ? d.substring(0, 6) : "")
 };
 
-export const defaultConfig = (leftAxisTitle, bottomAxisTitle,
-                              largeLeftSpaceRequired, largeBottomSpaceRequired,
-                              leftLabelFormat, bottomLabelFormat) => {
-    
-    return ({
-      margin: { top: 30, right: 20, bottom: largeBottomSpaceRequired ? 60 : 80, 
-                left: largeLeftSpaceRequired ? 100 : 60},
-      padding: .25,
-      lineWidth: 3.5,
-      pointSize: 8,
-      pointBorderWidth: 8,
-      pointLabel: "y",
-      pointLabelYOffset: -12,
-      useMesh: true,
-      enableLabel: false,
-      animate: true,
-      motionStiffness: 90,
-      motionDamping: 15,
-      axisTop: null,
-      axisRight: null,
-      axisLeft: {
-        "format": formats[leftLabelFormat],
-        "orient": "left",
-        "tickSize": 5,
-        "tickPadding": 5,
-        "tickRotation": 0,
-        "legend": leftAxisTitle,
-        "legendOffset": largeLeftSpaceRequired ? -80 : -40,
-        "legendPosition": "middle"
+export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
+                              largeLeftSpaceRequired=false, largeBottomSpaceRequired=false,
+                              leftLabelFormat="", bottomLabelFormat="", isLegendHidden=false) => ({
+  margin: { top: 30, right: 20, bottom: largeBottomSpaceRequired ? 60 : 80, 
+            left: largeLeftSpaceRequired ? 100 : 60},
+  padding: .25,
+  lineWidth: 3.5,
+  pointSize: 8,
+  pointBorderWidth: 8,
+  pointLabel: "y",
+  pointLabelYOffset: -12,
+  useMesh: true,
+  enableLabel: false,
+  animate: true,
+  motionStiffness: 90,
+  motionDamping: 15,
+  axisTop: null,
+  axisRight: null,
+  axisLeft: {
+    "format": formats[leftLabelFormat],
+    "orient": "left",
+    "tickSize": 5,
+    "tickPadding": 5,
+    "tickRotation": 0,
+    "legend": leftAxisTitle,
+    "legendOffset": largeLeftSpaceRequired ? -80 : -40,
+    "legendPosition": "middle"
+  },
+  axisBottom: {
+    "format": formats[bottomLabelFormat],
+    "orient": "bottom",
+    "tickSize": 5,
+    "tickPadding": 5,
+    "tickRotation": largeBottomSpaceRequired ? 0 : -45,
+    "legend": bottomAxisTitle,
+    "legendOffset": largeBottomSpaceRequired ? 40 : 60,
+    "legendPosition": "middle",
+  },
+  legends: [
+    {
+      "anchor": "top-right",
+      "direction": "row",
+      "justify": false,
+      "translateX": 0,
+      "translateY": -35,
+      "itemsSpacing": 20,
+      "itemDirection": "right-to-left",
+      "itemWidth": 80,
+      "itemHeight": 20,
+      "itemOpacity": isLegendHidden ? 0 : 1,
+      "symbolSize": 10,
+      "symbolShape": "square",
+      "symbolBorderColor": "rgba(0, 0, 0, .5)"
+    }
+  ],
+  theme: {
+    axis: {
+      ticks: {
+        text: {
+          fontSize: "10px"
+        },
       },
-      axisBottom: {
-        "format": formats[bottomLabelFormat],
-        "orient": "bottom",
-        "tickSize": 5,
-        "tickPadding": 5,
-        "tickRotation": largeBottomSpaceRequired ? 0 : -45,
-        "legend": bottomAxisTitle,
-        "legendOffset": largeBottomSpaceRequired ? 40 : 60,
-        "legendPosition": "middle",
-      },
-      legends: [
-        {
-          "anchor": "top-right",
-          "direction": "row",
-          "justify": false,
-          "translateX": 0,
-          "translateY": -35,
-          "itemsSpacing": 20,
-          "itemDirection": "right-to-left",
-          "itemWidth": 80,
-          "itemHeight": 20,
-          "itemOpacity": 1,
-          "symbolSize": 10,
-          "symbolShape": "square",
-          "symbolBorderColor": "rgba(0, 0, 0, .5)"
-        }
-      ],
-      theme: {
-        axis: {
-          ticks: {
-            text: {
-              fontSize: "10px"
-            },
-          },
-        }
-      },
-    })
-};
+    }
+  },
+});

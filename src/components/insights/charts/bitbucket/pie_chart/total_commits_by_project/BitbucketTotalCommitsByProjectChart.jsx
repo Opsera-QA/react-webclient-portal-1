@@ -7,7 +7,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-
+import { defaultConfig, getColor, assignStandardColors } from '../../../charts-views';
 function BitbucketTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -47,6 +47,7 @@ function BitbucketTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfigura
       );
 
       let dataObject = response?.data?.data[0]?.bitbucketTotalCommitsChart?.data;
+      assignStandardColors(dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -69,37 +70,9 @@ function BitbucketTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfigura
       <div className="new-chart mb-3" style={{ height: "300px" }}>
         <ResponsivePie
           data={metrics}
-          margin={{ top: 40, right: 80, bottom: 80, left: 60 }}
+          {...defaultConfig()}
+          {...config(getColor)}
           onClick={() => setShowModal(true)}
-          innerRadius={0.5}
-          padAngle={0.7}
-          cornerRadius={3}
-          colors={{ scheme: "nivo" }}
-          borderWidth={1}
-          borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
-          radialLabelsSkipAngle={10}
-          radialLabelsTextXOffset={6}
-          radialLabelsTextColor="#333333"
-          radialLabelsLinkOffset={0}
-          radialLabelsLinkDiagonalLength={16}
-          radialLabelsLinkHorizontalLength={24}
-          radialLabelsLinkStrokeWidth={1}
-          radialLabelsLinkColor={{ from: "color" }}
-          slicesLabelsSkipAngle={10}
-          slicesLabelsTextColor="#333333"
-          animate={true}
-          motionStiffness={90}
-          motionDamping={15}
-          sortByValue={true}
-          // innerRadius={0.6}
-          // padAngle={0.5}
-          // cornerRadius={5}
-          // radialLabelsLinkColor="inherit"
-          // radialLabelsLinkStrokeWidth={3}
-          // radialLabelsTextColor="inherit:darker(1.2)"
-          defs={config.defs}
-          fill={config.fill}
-          legends={config.legends}
         />
       </div>
     );
