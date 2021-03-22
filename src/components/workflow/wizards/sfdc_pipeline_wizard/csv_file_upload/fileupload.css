@@ -42,7 +42,7 @@
 .drop-message {
   text-align: center;
   color: #352f54;
-  font-family: Arial;
+    font-family: Arial, sans-serif;
   font-size: 20px;
 }
 
@@ -108,10 +108,8 @@
 .file-size {
   display: inline-block;
   vertical-align: top;
-  color: #30693d;
   margin-left: 10px;
   margin-right: 5px;
-  margin-left: 10px;
   color: #444242;
   font-weight: 700;
   font-size: 14px;
