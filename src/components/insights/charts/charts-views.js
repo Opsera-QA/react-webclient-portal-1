@@ -23,12 +23,21 @@ export const assignStandardColors = (data, uniColor = false) => {
 };
 
 export const assignBooleanColors = data => {
-  if (data && data[0] && !('Successful' in data[0])) {
+  if (data && data[0] && !("Successful" in data[0])) {
     data.sort((a, b) => a.id > b.id ? 1 : -1); // to display success before fail in legend
   }
   data.forEach(data => {
     data.color = (data.id === "Success" || data.Successful) ? mainColor : failColor;
   });
+  return data.color;
+};
+
+export const assignIssueColors = data => {
+  if (data) {
+    data.forEach(data => {
+      data.color = (data.id === "Issues Created") ? warningColor : mainColor;
+    });
+  }
   return data.color;
 };
 

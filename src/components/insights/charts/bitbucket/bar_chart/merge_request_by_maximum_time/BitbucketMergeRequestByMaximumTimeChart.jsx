@@ -8,7 +8,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColorByData, assignStandardColors,
-  capitalizeMergeRequestTimeTakenLegend } from '../../../charts-views';
+  capitalizeMergeRequestTimeTakenLegend } from "../../../charts-views";
 function BitbucketMergeRequestByMaximumTimeChart({
   kpiConfiguration,
   setKpiConfiguration,
