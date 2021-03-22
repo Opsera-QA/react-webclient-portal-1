@@ -1,5 +1,5 @@
 export default (getColor) => ({
-  keys: ["MergeRequestTimeTaken"],
+  keys: ["Merge Request Time Taken"],
   indexBy: "_id",
   colorBy: "id",
   colors: getColor
