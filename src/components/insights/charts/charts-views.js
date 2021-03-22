@@ -39,9 +39,9 @@ export const assignBooleanColors = data => {
 
 export const assignTaskColors = data => {
   data.forEach(data => {
-    data.Story_color = standardColors[0];
-    data.Task_color = standardColors[1];
-    data.Subtask_color = standardColors[2];
+    data.Story_color = standardColors[3];
+    data.Task_color = "#825D08";
+    data.Subtask_color = standardColors[1];
     data.Bug_color = failColor;
   });
   

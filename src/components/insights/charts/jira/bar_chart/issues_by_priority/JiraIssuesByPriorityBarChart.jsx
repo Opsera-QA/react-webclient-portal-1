@@ -77,11 +77,10 @@ function JiraIssuesByPriorityBarChart({ kpiConfiguration, setKpiConfiguration, d
             <ResponsiveBar
               data={metrics}
               {...defaultConfig("Project", "Number of Issues", 
-                                true, false, "cutoffString", "")}
+                                true, true, "cutoffString", "wholeNumbers")}
               {...config(getTaskColor)}
               onClick={() => setShowModal(true)}
-              // colors={({ id, data }) => data[`${id}_color`]}
-              tooltip={({ indexValue, value, id, data }) => <ChartTooltip 
+              tooltip={({ indexValue, id, data }) => <ChartTooltip 
                   titles={["Project", "Issue Type", "Number of Lowest Priority Issues",
                             "Number. of Low Priority Issues", "Number of Medium Priority Issues",
                             "Number of High Priority Issues", "Number of Highest Priority Issues",
