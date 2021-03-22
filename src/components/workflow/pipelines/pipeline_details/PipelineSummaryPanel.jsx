@@ -560,7 +560,7 @@ function PipelineSummaryPanel({
 
 
                 {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" ?
-                  getEditIcon("schedule", true) : null}
+                  getEditIcon("schedule") : null}
               </Col>
               }
             </>

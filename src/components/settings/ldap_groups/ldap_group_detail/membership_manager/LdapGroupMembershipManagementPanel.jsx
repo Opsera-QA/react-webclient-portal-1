@@ -52,7 +52,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, ldapUsers, orgDomain
 
     if (Array.isArray(unpackedMembers) && unpackedMembers.length > 0) {
       if (organizationUsers.length > 0) {
-        organizationUsers.map((user, index) => {
+        organizationUsers.forEach((user, index) => {
           let member = unpackedMembers.find((member) => member.emailAddress === user.emailAddress);
 
           if (member == null) {
