@@ -361,7 +361,7 @@ function CypressStepConfiguration({
         pipelineId: pipelineId,
         stepId: stepId,
         buildParams: {
-          stepId: formData.stepIdXML && formData.stepIdXML,
+          stepId: formData?.stepIdXML,
         },
       };
 

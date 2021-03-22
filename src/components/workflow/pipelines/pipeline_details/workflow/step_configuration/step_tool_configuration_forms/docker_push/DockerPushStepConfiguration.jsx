@@ -395,7 +395,7 @@ function DockerPushStepConfiguration({
         pipelineId: pipelineId,
         stepId: stepId,
         buildParams: {
-          stepId: formData.stepIdXML && formData.stepIdXML,
+          stepId: formData?.stepIdXML,
         },
       };
       console.log("createJobPostBody: ", createJobPostBody);
