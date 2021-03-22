@@ -97,7 +97,7 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData, handleClose }) {
   const updateFormWithData = () => {
     setJobName(jobData.name);
     setJobDescription(jobData.description);
-    Object.keys(jenkinsFormList).map((item, i) => {
+    Object.keys(jenkinsFormList).forEach((item, i) => {
       let validateInput = {
         disabled: viewForm ? true : false,
         value: jobData.configuration && jobData.configuration[item] || "",
@@ -117,7 +117,7 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData, handleClose }) {
     setJobName("");
     toggleViewForm(false);
     setJobDescription("");
-    Object.keys(jenkinsFormList).map((item, i) => {
+    Object.keys(jenkinsFormList).forEach((item, i) => {
       let validateInput = {
         value: "",
       };
@@ -243,7 +243,7 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData, handleClose }) {
 
   const editJob = () => {
     toggleViewForm(false);
-    Object.keys(jenkinsFormList).map((item, i) => {
+    Object.keys(jenkinsFormList).forEach((item, i) => {
       let validateInput = {
         disabled: false,
       };

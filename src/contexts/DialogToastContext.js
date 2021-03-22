@@ -241,7 +241,7 @@ function ToastContextProvider ({ children, navBar }) {
   // TODO: Phase this out on many screens. Instead of showing loading error, find way to make it look better (like the data not found container) where relevant
   const showLoadingErrorDialog = (error) => {
     let id = generateUUID();
-    let errorBanner = getErrorBanner(error, id,`WARNING! An error has occurred loading:`, id);
+    let errorBanner = getErrorBanner(error, id,`WARNING! An error has occurred loading:`);
     addBannerMessage(errorBanner, id, notificationTypes.SYSTEM);
   }
 

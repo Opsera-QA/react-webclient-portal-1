@@ -194,7 +194,7 @@ function SpinnakerStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
     return <LoadingDialog size="sm" />;
   }
 
-  if (spinnakerList == null || spinnakerList.length === 0 || spinnakerStepConfigurationDto === undefined) {
+  if (spinnakerList == null || spinnakerList.length === 0) {
     return (
       <div className="form-text text-muted p-2">
         <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />

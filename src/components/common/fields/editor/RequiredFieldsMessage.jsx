@@ -1,6 +1,6 @@
 import React from "react";
 
-function RequiredFieldsMessage({ }) {
+function RequiredFieldsMessage() {
   return (
     <div>
       <small className="form-text text-muted text-right mt-3"><span className="danger-red">*</span> Required Fields</small>
@@ -8,4 +8,4 @@ function RequiredFieldsMessage({ }) {
   );
 }
 
-export default RequiredFieldsMessage;
+export default React.memo(RequiredFieldsMessage);

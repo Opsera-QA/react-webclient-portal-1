@@ -19,7 +19,7 @@ function DtoPropertiesInput({dataObject, setDataObject, fieldName}) {
 
   const prePopulateData = () => {
     let newRows = [];
-    Object.keys(dataObject.getData(fieldName)).map((item) => {
+    Object.keys(dataObject.getData(fieldName)).forEach((item) => {
       let newRow = {};
       newRow["name"] = item;
       newRow["value"] = dataObject.getData(fieldName)[item] === true;

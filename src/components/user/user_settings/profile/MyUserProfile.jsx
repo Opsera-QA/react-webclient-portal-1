@@ -34,7 +34,7 @@ function MyUserProfile() {
     setCancelTokenSource(source);
 
     isMounted.current = true;
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }

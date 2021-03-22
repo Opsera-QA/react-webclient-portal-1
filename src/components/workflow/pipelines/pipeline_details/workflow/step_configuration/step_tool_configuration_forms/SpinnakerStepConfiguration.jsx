@@ -144,7 +144,7 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      if( res.data && res.data ) {
+      if( res?.data ) {
         let arrOfObj = res.data.spinnakerApplications;
         if(arrOfObj) {
           let result = arrOfObj.map(function(el) {
@@ -179,7 +179,7 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      if( res.data && res.data) {
+      if( res?.data ) {
         let arrOfObj = res.data.spinnakerPipelines;
         if(arrOfObj) {
           var result = arrOfObj.map(function(el) {
@@ -206,7 +206,7 @@ function SpinnakerStepConfiguration( { stepTool, pipelineId, plan, stepId, paren
       setShowToast(false);
       async function fetchApplications(id, url){
         // Set results state
-        let results = await searchApplications(id, url);
+        let results = await searchApplications(id);
         if(results) {
           setApplicationList(formatOptions(results));
           setIsAppSearching(false);

@@ -60,7 +60,7 @@ function PipelineActivityLogTable({ data, loadData, isLoading, pipeline, pipelin
   );
 
   const onRowSelect = (rowData, type) => {
-    selectRow(rowData.original, rowData.original, rowData.original["index"]);
+    selectRow(rowData.original);
   };
 
   const getPipelineActivityTable = () => {

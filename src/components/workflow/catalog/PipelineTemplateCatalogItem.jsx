@@ -103,7 +103,7 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
         </TooltipWrapper>
 
         {accessRoleData.OpseraAdministrator &&
-        <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={() => showPipelineDetails(template)}>
+        <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={() => showPipelineDetails()}>
           <FontAwesomeIcon icon={faSearch} className="mr-1"/>Details</Button>
         }
       </Col>

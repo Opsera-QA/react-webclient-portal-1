@@ -17,7 +17,7 @@ function DtoPropertiesField({dataObject, fieldName, fields}) {
   //We are computing the number of rows required based on the data from API
   const prePopulateData = () => {
     let newRows = [];
-    Object.keys(dataObject.getData(fieldName)).map((item) => {
+    Object.keys(dataObject.getData(fieldName)).forEach((item) => {
       let newRow = {};
       //For each field set the default data
       fields.map((field, key) => {

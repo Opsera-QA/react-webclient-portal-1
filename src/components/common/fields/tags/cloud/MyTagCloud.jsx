@@ -47,10 +47,10 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
     }
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true)
-      await loadSubscribedTags();
+      await loadSubscribedTags(cancelSource);
     }
     catch (error) {
       if (isMounted.current === true) {
@@ -64,8 +64,8 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
     }
   };
 
-  const loadSubscribedTags = async () => {
-    const response = await adminTagsActions.getSubscribedTags(getAccessToken, cancelTokenSource);
+  const loadSubscribedTags = async (cancelSource = cancelTokenSource) => {
+    const response = await adminTagsActions.getSubscribedTags(getAccessToken, cancelSource);
     let tags = response?.data?.data;
 
     if (isMounted?.current === true && tags != null) {

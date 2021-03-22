@@ -372,7 +372,7 @@ function JenkinsStepConfiguration({
         pipelineId: pipelineId,
         stepId: stepId,
         buildParams: {
-          stepId: formData.stepIdXML && formData.stepIdXML,
+          stepId: formData?.stepIdXML,
         },
       };
       console.log("createJobPostBody: ", createJobPostBody);
@@ -413,7 +413,7 @@ function JenkinsStepConfiguration({
   const validateRequiredFields = () => {
     const regex = RegExp("^[ a-z0-9_.-]*$");
     let { toolConfigId, toolJobId, jenkinsUrl, jUserId, jobName, buildType, dockerName, dockerTagName, sfdcUnitTestType } = formData;
-    if(!toolJobId && toolJobId.length < 0 ) {
+    if(!toolJobId || toolJobId.length === 0 ) {
       let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
       setShowToast(true);
@@ -707,7 +707,7 @@ function JenkinsStepConfiguration({
       pipelineId: pipelineId,
       stepId: stepId,
       buildParams: {
-        stepId: formData.stepIdXML && formData.stepIdXML,
+        stepId: formData?.stepIdXML,
       },
     };
     console.log("createJobPostBody: ", createJobPostBody);
