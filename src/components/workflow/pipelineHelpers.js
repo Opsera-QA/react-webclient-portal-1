@@ -1,8 +1,8 @@
-import { axiosApiService } from "api/apiService";
-import { Popover } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import {axiosApiService} from "api/apiService";
+import {Popover} from "react-bootstrap";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTimes} from "@fortawesome/free-solid-svg-icons";
+import {Link} from "react-router-dom";
 import React from "react";
 
 const pipelineHelpers = {};
@@ -67,6 +67,13 @@ pipelineHelpers.getStepIndex = (pipeline, stepId) => {
   }
 };
 
+pipelineHelpers.getStepIndexFromPlan = (plan, stepId) => {
+  if (stepId && plan) {
+    return plan.findIndex(x => x._id === stepId);
+  }
+
+  return -1;
+};
 
 pipelineHelpers.getPipelineStatus = (pipeline) => {
   if (pipeline) {

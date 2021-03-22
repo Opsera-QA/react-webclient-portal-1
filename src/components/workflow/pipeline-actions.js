@@ -307,6 +307,12 @@ pipelineActions.getPipelineUsageToolList = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl, params);
 };
 
+pipelineActions.getPipelineUsageToolListV2 = async (getAccessToken, cancelTokenSource) => {
+  const params = { status: "active", usage: "pipeline"};
+  const apiUrl = `/registry/tools`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl, params);
+};
+
 // TODO: We should be handling not getting data inside the places that call this route instead
 //  We can always have a function in a helper that does the parsing of data automatically and call that instead
 pipelineActions.searchWorkSpaces = async (service, gitAccountId, getAccessToken) => {
