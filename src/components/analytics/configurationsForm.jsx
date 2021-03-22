@@ -282,7 +282,7 @@ function ConfigurationsForm({ settings, token }) {
                         saveProfileChanges(profileSettings);
                       }}><FontAwesomeIcon icon={faSave} fixedWidth/> Save Settings</Button>
                       <Button variant="outline-danger" onClick={() => {
-                        confirmDeactivation(profileSettings);
+                        confirmDeactivation();
                       }}>Deactivate Analytics</Button>
                     </div>
 

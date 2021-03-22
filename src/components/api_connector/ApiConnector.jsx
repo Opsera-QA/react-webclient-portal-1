@@ -13,15 +13,13 @@ import JMeter from "./testing/jMeter";
 import Selenium from "./testing/selenium";
 import Twistlock from "./container_scan/twistlock";
 import JenkinsForm from "./automation_server/jenkinsForm";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome } from "@fortawesome/free-solid-svg-icons";import {
+import { faHome } from "@fortawesome/pro-solid-svg-icons";
+import {
   faGithub,
   faGitlab,
   faBitbucket,
   faJira,
   faSlack,
-  faJenkins,
   faMicrosoft
 } from "@fortawesome/free-brands-svg-icons";
 import CustomTabContainer from "../common/tabs/CustomTabContainer";
