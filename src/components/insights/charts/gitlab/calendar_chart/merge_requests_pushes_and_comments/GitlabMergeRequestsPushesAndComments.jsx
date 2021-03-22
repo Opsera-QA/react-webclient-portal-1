@@ -7,6 +7,8 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import { defaultConfig, gradationalColors } from '../../../charts-views';
+import ChartTooltip from '../../../ChartTooltip';
 function GitlabMergeRequestsPushesAndComments({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -72,24 +74,14 @@ function GitlabMergeRequestsPushesAndComments({ kpiConfiguration, setKpiConfigur
     <div className="new-chart mb-3" style={{height: "300px"}}>
           <ResponsiveCalendar
             data={metrics}
+            {...defaultConfig("", "", false, false, "", "", true)}
+            {...config(gradationalColors, new Date())}
             onClick={() => setShowModal(true)}
-            from="2020-05-01"
-            to={new Date()}
-            emptyColor="#ededed"
-            colors={["#acd5f2", "#7fa8ca", "#537aa2", "#254e77"]}
-            margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
-            yearSpacing={40}
-            monthBorderColor="#ffffff"
-            dayBorderWidth={2}
-            dayBorderColor="#ffffff"
-            legends={config.legends}
-            tooltip={({ day, value, color }) => (
-              <div style={{}}>
-                <strong>
-                  {day}: {value} Contribution(s)
-                </strong>
-              </div>
-            )}
+            tooltip={({ day, value, color }) => <ChartTooltip 
+                                          titles = {[day]}
+                                          values = {[`${value} ${value > 1 ? "contributions" : "contribution}(s)"}`]}
+                                          style = {false}
+                                          color = {color} />}
           />
       </div>
   );

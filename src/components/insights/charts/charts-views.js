@@ -22,14 +22,6 @@ export const assignStandardColors = (data, uniColor = false) => {
   }
 };
 
-// export const assignGradationalColors = (data) => {
-//   if (data) {
-//     data.forEach((data, i) => {
-//       data.color = gradationalColors[i];
-//     });
-//   }
-// };
-
 export const assignBooleanColors = data => {
   if (data && data[0] && !('Successful' in data[0])) {
     data.sort((a, b) => a.id > b.id ? 1 : -1); // to display success before fail in legend
@@ -43,7 +35,7 @@ export const assignBooleanColors = data => {
 export const assignTaskColors = data => {
   data.forEach(data => {
     data.Story_color = standardColors[3];
-    data.Task_color = "#ABA4CC"; // or #A8D0DB
+    data.Task_color = "#ABA4CC";
     data.Subtask_color = standardColors[1];
     data.Bug_color = failColor;
   });

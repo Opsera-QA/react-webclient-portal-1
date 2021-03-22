@@ -7,4 +7,10 @@ export default (colors, today) => ({
   dayBorderWidth: 2,
   dayBorderColor: "white",
   monthBorderColor: "white",
+  margin: {
+    top: 30,
+    right: 40,
+    bottom: 30,
+    left: 40
+  },
 });
