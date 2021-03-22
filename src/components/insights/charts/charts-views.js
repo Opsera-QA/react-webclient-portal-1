@@ -1,4 +1,5 @@
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import BreadcrumbPageLink from "components/common/links/BreadcrumbPageLink";
 
 export const mainColor = "#5B5851";
 export const mainGold = "#F1AD0F";
@@ -138,7 +139,7 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
                               leftLabelFormat="", bottomLabelFormat="", isLegendHidden=false) => ({
   margin: { top: 30, right: 20, bottom: largeBottomSpaceRequired ? 60 : 80, 
             left: largeLeftSpaceRequired ? 100 : 60},
-  padding: .25,
+  // padding: morePaddingRequired ? .6 : .25,
   lineWidth: 3.5,
   pointSize: 8,
   pointBorderWidth: 8,
@@ -198,3 +199,27 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
     }
   },
 });
+
+export const adjustBarWidth = (data, isVertical=true) => {
+  let padding;
+
+  if (isVertical) {
+    switch (data.length) {
+      case 1: padding = .7;
+              break;
+      case 3: padding = .3;
+              break;
+      default: padding = .25;
+    }
+  } else {
+    switch (data.length) {
+      case 1: padding = .4;
+              break;
+      case 3: padding = .3;
+              break;
+      default: padding = .25;
+    }
+  }
+
+  return { padding }
+};
