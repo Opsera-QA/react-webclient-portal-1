@@ -4,7 +4,7 @@ export const purpleHues = ["#494173", "#7368AA", "#ABA4CC", "#E3E1EE"];
 // const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
 
 export const standardColors = [];
-goldHues.forEach((_, i) => standardColors.push(greyHues[i], purpleHues[i]));
+purpleHues.forEach((_, i) => standardColors.push(greyHues[greyHues.length - i - 2], purpleHues[i + 1]));
 
 const failColor = "#E57373";
 const mainColor = "#5B5851";
@@ -49,7 +49,6 @@ export const assignTaskColors = data => {
 };
 
 export const assignHealthColors = data => {
-
   data.forEach(data => {
     data["To Do_color"] = standardColors[0];
     data["In Development_color"] = standardColors[1];
@@ -69,6 +68,18 @@ export const assignSeverityColors = data => {
     data["Medium_color"] = standardColors[2];
     data["High_color"] = standardColors[3];
     data["Negligible_color"] = standardColors[4];
+  });
+  
+  return data;
+};
+
+export const assignStageColors = data => {
+  data.forEach(data => {
+    data["Repository Upload_color"] = standardColors[0];
+    data["Approval_color"] = standardColors[1];
+    data["Unit Testing_color"] = standardColors[2];
+    data["Script_color"] = standardColors[3];
+    data["Build_color"] = standardColors[4];
   });
   
   return data;
