@@ -1,6 +1,7 @@
 FROM node:lts-alpine3.9 as build
 ARG build_env=production
 RUN echo ${build_env}
+RUN apk add curl
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
