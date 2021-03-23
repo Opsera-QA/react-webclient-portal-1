@@ -13,7 +13,7 @@ function SystemStatusCard({ systemStatus }) {
       default:
         return <SystemStatusIcon type={"Warning"}/>;
     }
-  }
+  };
 
   return (
     <div className="statusCard">

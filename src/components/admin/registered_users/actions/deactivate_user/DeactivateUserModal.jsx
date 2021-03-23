@@ -26,7 +26,7 @@ function DeactivateUserModal({ closeModal, currentUserId, showModal }) {
       console.error(error);
       toastContext.showErrorDialog(error);
     }
-  }
+  };
 
   const getDeactivationMessage = () => {
     if (deactivatingUser) {
@@ -36,7 +36,7 @@ function DeactivateUserModal({ closeModal, currentUserId, showModal }) {
         </Row>
       );
     }
-  }
+  };
 
   return (
     <Modal size="md" show={showModal} onHide={closeModal} backdrop="static" centered>

@@ -41,7 +41,7 @@ function ToolCategoryDetailView() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -84,7 +84,7 @@ function ToolCategoryDetailView() {
 
   const deleteToolCategory = async () => {
     return await toolManagementActions.deleteToolTypeV2(getAccessToken, cancelTokenSource, toolCategoryData);
-  }
+  };
 
   const getActionBar = () => {
     return (

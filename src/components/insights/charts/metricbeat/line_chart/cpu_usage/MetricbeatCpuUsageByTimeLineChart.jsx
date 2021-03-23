@@ -44,7 +44,7 @@ function MetricbeatCpuUsageByTimeLineChart({ persona, date , tags}) {
       endDate: date.end,
       // podName: "prometheus-alertmanager-d47577c4b-7lhhj",
       // podName: "ip-192-168-253-154.us-west-2.compute.internal",
-      }
+      };
     }
 
     try {

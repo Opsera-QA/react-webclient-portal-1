@@ -38,7 +38,7 @@ function AnchoreVulnerabilitiesByDateLineChart({ kpiConfiguration, setKpiConfigu
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -144,7 +144,7 @@ function AnchoreVulnerabilitiesByDateLineChart({ kpiConfiguration, setKpiConfigu
             />
         </div>
     );
-  }
+  };
   return (
     <div>
       <ChartContainer

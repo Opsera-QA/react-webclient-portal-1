@@ -35,12 +35,12 @@ function PipelineUsageToolSelectInput({ placeholderText, fieldName, dataObject, 
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTools(cancelSource);
     }
     catch (error) {
@@ -66,7 +66,7 @@ function PipelineUsageToolSelectInput({ placeholderText, fieldName, dataObject, 
         <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
         No tool identifiers are active and registered for Pipeline use.
       </div>
-    )
+    );
   }
 
   return (

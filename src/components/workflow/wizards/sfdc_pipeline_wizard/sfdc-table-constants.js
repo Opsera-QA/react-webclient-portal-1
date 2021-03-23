@@ -30,7 +30,7 @@ sfdcTableConstants.fields = [
         label: "SFDC Component Id", 
         id: "committedFileId"
     }
-]
+];
 
 sfdcTableConstants.noDataMessage = "Modified Files Data not available for selected Criteria";
 

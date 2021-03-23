@@ -22,7 +22,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
       setDataFunction(field.id, data);
     }
     else {
-      validateAndSetData(field.id, data[valueField])
+      validateAndSetData(field.id, data[valueField]);
     }
   };
 
@@ -92,6 +92,6 @@ SelectInputBase.propTypes = {
 
 SelectInputBase.defaultProps = {
   showClearValueButton: true
-}
+};
 
 export default SelectInputBase;

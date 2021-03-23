@@ -21,7 +21,7 @@ function JiraParentTicketInput({jiraToolId, fieldName, jiraSprintId, dataObject,
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadParentTickets();
     }
     catch (error) {

@@ -36,7 +36,7 @@ function JiraIssuesCreatedVsResolvedLineChart({ kpiConfiguration, setKpiConfigur
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -118,7 +118,7 @@ function JiraIssuesCreatedVsResolvedLineChart({ kpiConfiguration, setKpiConfigur
           />
       </div>
   );
-  }
+  };
   return (
     <div>
       <ChartContainer

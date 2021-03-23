@@ -38,7 +38,7 @@ function TagArrayUsedInPipelinesField({ tags }) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [tags]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -56,7 +56,7 @@ function TagArrayUsedInPipelinesField({ tags }) {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const loadPipelines = async (cancelSource = cancelTokenSource) => {
     if (Array.isArray(tags) && tags.length > 0) {
@@ -102,7 +102,7 @@ function TagArrayUsedInPipelinesField({ tags }) {
           This tag combination is not currently used in any pipeline</span>
         </div>
       </div>
-    )
+    );
   }
 
   return (

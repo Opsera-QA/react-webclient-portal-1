@@ -35,7 +35,7 @@ function JenkinsStatusByJobNameBarChart({ kpiConfiguration, setKpiConfiguration,
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -81,7 +81,7 @@ function JenkinsStatusByJobNameBarChart({ kpiConfiguration, setKpiConfiguration,
             switch (bar.id) {
               case "Successful": return "green";
               case "Failed": return "red";
-              default: return "gold"
+              default: return "gold";
             }
           }}
           borderColor={{ theme: "background" }}
@@ -119,7 +119,7 @@ function JenkinsStatusByJobNameBarChart({ kpiConfiguration, setKpiConfiguration,
         />
     </div>
     );
-}
+};
 
   return (
     <div>

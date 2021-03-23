@@ -22,7 +22,7 @@ function JiraBoardInput({visible, jiraToolId, dataObject, setDataObject, disable
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadProjects();
     }
     catch (error) {
@@ -92,6 +92,6 @@ JiraBoardInput.propTypes = {
 
 JiraBoardInput.defaultProps = {
   visible: true
-}
+};
 
 export default JiraBoardInput;

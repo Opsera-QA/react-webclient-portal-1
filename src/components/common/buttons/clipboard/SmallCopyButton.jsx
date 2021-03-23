@@ -24,7 +24,7 @@ function SmallCopyButton({ copyString, size, className }) {
         className={className}
         size={size}
         variant={copiedToClipboard ? "success" : "outline-secondary"}
-        onClick={() => {copyToClipboard()}}
+        onClick={() => {copyToClipboard();}}
         disabled={copyString == null}>
         <FontAwesomeIcon icon={copiedToClipboard ? faClipboardCheck : faClipboardList} fixedWidth />
       </Button>

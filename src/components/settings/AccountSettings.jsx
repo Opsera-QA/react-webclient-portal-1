@@ -25,7 +25,7 @@ function AccountSettings() {
 
     return () => {
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async () => {

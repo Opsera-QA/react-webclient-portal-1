@@ -37,7 +37,7 @@ function MyUserRecord() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -56,7 +56,7 @@ function MyUserRecord() {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const getLdapUser = async (userEmail, cancelSource = cancelTokenSource) => {
     const response = await accountsActions.getUserByEmailV2(getAccessToken, cancelTokenSource, userEmail);

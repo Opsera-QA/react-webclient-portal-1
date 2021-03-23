@@ -8,7 +8,7 @@ import JfrogJenkinsToolInput from "./inputs/JFrogJenkinsToolSelectInput";
 import JFrogJenkinsJobInput from "./inputs/JfrogJenkinsJobInput";
 import JFrogBuildStepSelectInput from "./inputs/JFrogBuildStepSelectInput";
 import JfrogRepoSelectInput from "./inputs/JfrogRepoSelectInput";
-import jfrogStepFormMetadata from "./jfrog-stepForm-metadata"
+import jfrogStepFormMetadata from "./jfrog-stepForm-metadata";
 
 function JFrogDockerStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan }) {
   const [isLoading, setIsLoading] = useState(false);

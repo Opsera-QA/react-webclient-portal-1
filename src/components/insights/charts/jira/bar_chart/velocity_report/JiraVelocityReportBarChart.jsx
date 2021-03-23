@@ -40,7 +40,7 @@ function JiraVelocityBarChart({ kpiConfiguration, setKpiConfiguration, dashboard
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -123,7 +123,7 @@ function JiraVelocityBarChart({ kpiConfiguration, setKpiConfiguration, dashboard
             />
         </div>
     );
-  }
+  };
 
   return (
     <div>

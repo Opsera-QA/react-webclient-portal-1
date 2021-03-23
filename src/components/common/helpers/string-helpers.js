@@ -52,7 +52,7 @@ export function csvStringToObj  (csvString) {
   let headers = [];
   headersRaw.map(header => {
     headers.push(camalize(header));
-  })
+  });
   // console.log(headers);
   const list = [];
   for (let i = 1; i < dataStringLines.length; i++) {

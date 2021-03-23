@@ -30,7 +30,7 @@ function BlueprintSearchResult({ searchResults }) {
 
   const tableViewer = (param) => {
     setShowTable(true);
-    setTableData(param)
+    setTableData(param);
     setColumns([
       {
         Header: "Vulnerability",
@@ -51,7 +51,7 @@ function BlueprintSearchResult({ searchResults }) {
         Cell: (props) => {
           return props ? 
           <div className="console-text-invert-modal">{props.value}</div> : 
-          "N/A"
+          "N/A";
         }
       },
       {
@@ -60,7 +60,7 @@ function BlueprintSearchResult({ searchResults }) {
         Cell: (props) => {
           return props ? 
           <div className="console-text-invert-modal">{props.value}</div> : 
-          "N/A"
+          "N/A";
         }
       },
       {
@@ -69,7 +69,7 @@ function BlueprintSearchResult({ searchResults }) {
         Cell: (props) => {
           return props ? 
           <div className="console-text-invert-modal">{props.value}</div> : 
-          "N/A"
+          "N/A";
         }
       },
       {
@@ -78,11 +78,11 @@ function BlueprintSearchResult({ searchResults }) {
         Cell: (props) => {
           return props ? 
           <a href={props.value} target="_blank" className="text-muted console-text-invert-modal">{props.value}</a> : 
-          "N/A"
+          "N/A";
         },
       }
-    ])
-  }
+    ]);
+  };
 
   let completeInput = [];
 

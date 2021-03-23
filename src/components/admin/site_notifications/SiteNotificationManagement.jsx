@@ -7,7 +7,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
-import axios from "axios"
+import axios from "axios";
 
 function SiteNotificationManagement() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -36,7 +36,7 @@ function SiteNotificationManagement() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {

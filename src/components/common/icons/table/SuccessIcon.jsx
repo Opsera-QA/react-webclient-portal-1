@@ -8,7 +8,7 @@ function SuccessIcon() {
     <div className="status-icon">
       <FontAwesomeIcon icon={faCheck} className="cell-icon green fa-md" />
     </div>
-  )
+  );
 }
 
 export default SuccessIcon;

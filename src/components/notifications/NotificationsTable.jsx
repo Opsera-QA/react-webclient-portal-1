@@ -21,11 +21,11 @@ function NotificationsTable({ data, notificationFilterDto, setNotificationFilter
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "name"})),
+      getTableTextColumn(fields.find(field => { return field.id === "name";})),
       getLimitedTableTextColumn(getField(fields, "description"), 100),
-      getTableTextColumn(fields.find(field => { return field.id === "type"})),
-      getTableDateColumn(fields.find(field => { return field.id === "createdAt"})),
-      getTableBooleanIconColumn(fields.find(field => { return field.id === "active"})),
+      getTableTextColumn(fields.find(field => { return field.id === "type";})),
+      getTableDateColumn(fields.find(field => { return field.id === "createdAt";})),
+      getTableBooleanIconColumn(fields.find(field => { return field.id === "active";})),
     ],
     []
   );

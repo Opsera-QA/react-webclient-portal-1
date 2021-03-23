@@ -9,7 +9,7 @@ export const pipelineConditions = [
 ];
 
 export const getConditionLabel = (type) => {
-  let pipelineCondition = pipelineConditions.find((condition) => {return condition.valueField.type === type });
+  let pipelineCondition = pipelineConditions.find((condition) => {return condition.valueField.type === type; });
   return pipelineCondition !== undefined ? pipelineCondition.label : "Could Not Pull Label";
 };
 
@@ -40,6 +40,6 @@ PipelineConditionMultiSelectInput.propTypes = {
 
 PipelineConditionMultiSelectInput.defaultProps = {
   fieldName: "conditions"
-}
+};
 
 export default PipelineConditionMultiSelectInput;

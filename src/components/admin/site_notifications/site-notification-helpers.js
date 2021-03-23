@@ -5,7 +5,7 @@ const siteNotificationHelpers = {};
 
 siteNotificationHelpers.parseSiteNotification = (siteNotificationsResponse, view) => {
   if (siteNotificationsResponse.length > 0) {
-    let existingSiteNotification = siteNotificationsResponse.find((notification) => { return notification.view === view});
+    let existingSiteNotification = siteNotificationsResponse.find((notification) => { return notification.view === view;});
 
     if (existingSiteNotification) {
       return new Model(existingSiteNotification, siteNotificationMetadata, false);
@@ -19,7 +19,7 @@ siteNotificationHelpers.parseSiteNotification = (siteNotificationsResponse, view
 
 siteNotificationHelpers.getExistingSiteNotification = (siteNotificationsResponse, view) => {
   if (siteNotificationsResponse.length > 0) {
-    let existingSiteNotification = siteNotificationsResponse.find((notification) => { return notification.view === view});
+    let existingSiteNotification = siteNotificationsResponse.find((notification) => { return notification.view === view;});
 
     if (existingSiteNotification) {
       return new Model(existingSiteNotification, siteNotificationMetadata, false);

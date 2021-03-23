@@ -98,7 +98,7 @@ function ToolLogsPanel({ toolData, accessToken }) {
   }, [currentPage, pageSize]);
 
   const getToolLog = async () => {
-    isLoading(true)
+    isLoading(true);
     try {
       const accessToken = await getAccessToken();
       const apiUrl = `/registry/log/${toolData.getData("_id")}?page=${currentPage}&size=${pageSize}`;
@@ -108,7 +108,7 @@ function ToolLogsPanel({ toolData, accessToken }) {
     } catch (err) {
       console.log(err.message);
     }
-    isLoading(false)
+    isLoading(false);
   };
 
   const getRowInfo = (row) => {

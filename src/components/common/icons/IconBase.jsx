@@ -10,7 +10,7 @@ function IconBase({ isLoading, icon, className }) {
     }
 
     return <FontAwesomeIcon icon={icon} fixedWidth />;
-  }
+  };
 
   if (icon == null) {
     return null;

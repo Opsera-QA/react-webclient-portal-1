@@ -39,7 +39,7 @@ function TestConnectionButton({ toolDataDto, disable }) {
       setIsTesting(false);
     }
 
-  }
+  };
 
   const getVariant = () => {
     if (successfulConnection) {
@@ -86,6 +86,6 @@ TestConnectionButton.propTypes = {
 
 TestConnectionButton.defaultProps = {
   disable: false,
-}
+};
 
 export default TestConnectionButton;

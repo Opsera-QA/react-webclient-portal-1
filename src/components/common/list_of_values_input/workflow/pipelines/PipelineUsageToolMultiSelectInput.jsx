@@ -19,7 +19,7 @@ function PipelineUsageToolMultiSelectInput({ placeholderText, valueField, textFi
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTools();
     }
     catch (error) {
@@ -44,7 +44,7 @@ function PipelineUsageToolMultiSelectInput({ placeholderText, valueField, textFi
         <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
         No tool identifiers are active and registered for Pipeline use.
       </div>
-    )
+    );
   }
 
   return (

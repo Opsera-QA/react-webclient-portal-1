@@ -37,7 +37,7 @@ function LdapOrganizationManagement() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (source = cancelTokenSource) => {
@@ -56,7 +56,7 @@ function LdapOrganizationManagement() {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const loadOrganizations = async (source = cancelTokenSource) => {
     try {

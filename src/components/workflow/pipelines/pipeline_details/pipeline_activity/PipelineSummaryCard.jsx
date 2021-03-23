@@ -37,6 +37,6 @@ PipelineSummaryCard.propTypes = {
 
 PipelineSummaryCard.defaultProps = {
   loadPipelineInNewWindow: true
-}
+};
 
 export default PipelineSummaryCard;

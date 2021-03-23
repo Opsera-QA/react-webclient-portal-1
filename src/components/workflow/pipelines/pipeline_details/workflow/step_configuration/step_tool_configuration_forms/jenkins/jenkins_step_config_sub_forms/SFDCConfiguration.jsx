@@ -130,7 +130,7 @@ function SFDCConfiguration({
       ...formData,
       sfdcUnitTestType: selectedOption.value,
     });
-  }
+  };
 
   const handleClose = () => { 
     setSave(false);

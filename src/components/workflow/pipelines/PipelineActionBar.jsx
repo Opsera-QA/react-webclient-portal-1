@@ -62,7 +62,7 @@ function OverlayTriggerWrapper({message, children}) {
       overlay={renderTooltip(message)} >
       {children}
     </OverlayTrigger>
-  )
+  );
 }
 
 OverlayTriggerWrapper.propTypes = {

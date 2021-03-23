@@ -37,7 +37,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -73,7 +73,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
       let mttrMax = Math.max.apply(Math,data.map(function(o){return o.mttr;}));
       let max = Math.ceil(Math.max(countsMax, mttrMax));
       return max;
-    }
+    };
 
     // TODO: Do these need to be passed as object props?
     const MeanLineLayer = ({ bars, xScale, yScale }) => {
@@ -99,7 +99,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
               fill={lineColor}
               stroke={lineColor}
               style={{ pointerEvents: "none" }}
-            />
+            />;
           }
           )}
         </Fragment>        
@@ -157,7 +157,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
         />
       </div>
     );
-  }
+  };
 
     return (
       <>

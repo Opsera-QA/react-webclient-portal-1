@@ -23,6 +23,6 @@ function JiraNotificationMethodSummaryCard({ notificationData, notificationMetho
 JiraNotificationMethodSummaryCard.propTypes = {
   notificationData: PropTypes.object,
   notificationMethodData: PropTypes.object,
-}
+};
 
 export default JiraNotificationMethodSummaryCard;

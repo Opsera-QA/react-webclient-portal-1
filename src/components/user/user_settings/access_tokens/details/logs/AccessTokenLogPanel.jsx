@@ -36,7 +36,7 @@ function AccessTokenLogPanel({ accessToken }) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (filterModel = accessTokenLogFilterModel, cancelSource = cancelTokenSource) => {
@@ -91,6 +91,6 @@ function AccessTokenLogPanel({ accessToken }) {
 
 AccessTokenLogPanel.propTypes = {
   accessToken: PropTypes.object,
-}
+};
 
 export default AccessTokenLogPanel;

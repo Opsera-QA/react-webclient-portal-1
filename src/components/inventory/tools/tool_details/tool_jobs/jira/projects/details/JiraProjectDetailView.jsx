@@ -54,7 +54,7 @@ function JiraProjectDetailView( {toolData, setToolData, jiraProjectData, setJira
       actionBar={getActionBar()}
       detailPanel={<JiraProjectsDetailPanel jiraProjectData={jiraProjectData} setJiraProjectData={setJiraProjectData} toolData={toolData} setToolData={setToolData} loadData={loadTool}/>}
     />
-  )
+  );
 }
 
 JiraProjectDetailView.propTypes = {

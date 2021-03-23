@@ -44,11 +44,11 @@ function NotificationActivityLogsTable({ notificationData, allLogs }) {
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "name"})),
-      getTableTextColumn(fields.find(field => { return field.id === "type"})),
-      getTableTextColumn(fields.find(field => { return field.id === "message"})),
-      getTableBooleanIconColumn(fields.find(field => { return field.id === "status"})),
-      getTableDateTimeColumn(fields.find(field => { return field.id === "createdAt"})),
+      getTableTextColumn(fields.find(field => { return field.id === "name";})),
+      getTableTextColumn(fields.find(field => { return field.id === "type";})),
+      getTableTextColumn(fields.find(field => { return field.id === "message";})),
+      getTableBooleanIconColumn(fields.find(field => { return field.id === "status";})),
+      getTableDateTimeColumn(fields.find(field => { return field.id === "createdAt";})),
       getTableInfoIconColumn(showActivityLog),
     ],
     [],
@@ -58,7 +58,7 @@ function NotificationActivityLogsTable({ notificationData, allLogs }) {
     try {
       let notificationLogResponse;
 
-      setIsLoading(true)
+      setIsLoading(true);
 
       if(allLogs) {
         notificationLogResponse = await notificationsActions.getAllNotificationActivityLogs(filterDto, getAccessToken);
@@ -71,14 +71,14 @@ function NotificationActivityLogsTable({ notificationData, allLogs }) {
 
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", notificationLogResponse.data.count);
-        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
+        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
         setNotificationActivityFilterDto({...newFilterDto});
       }
     } catch (error) {
       console.log(error.message);
     }
     finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 

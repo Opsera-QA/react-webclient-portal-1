@@ -17,9 +17,9 @@ function ToolTaggingPanel({ toolData }) {
       case "bitbucket":
         return <div className="text-center p-5 text-muted mt-5">Tagging is not currently available for this tool.</div>;
       default:
-        return <div className="text-center p-5 text-muted mt-5">Tagging is not currently available for this tool.</div>
+        return <div className="text-center p-5 text-muted mt-5">Tagging is not currently available for this tool.</div>;
     }
-  }
+  };
 
   return (
     <DetailPanelContainer showRequiredFieldsMessage={false}>

@@ -15,7 +15,7 @@ function RegisterButton({recordDto, createAccount, disable, lenient}) {
     // TODO: Wire up inline banner on signup forms
     await persistNewRecord(recordDto, toastContext, false, createAccount, lenient, false);
     setIsSaving(false);
-  }
+  };
 
   const getLabel = () => {
     if (isSaving) {
@@ -45,6 +45,6 @@ RegisterButton.propTypes = {
 RegisterButton.defaultProps = {
   disable: false,
   showSuccessToasts: true
-}
+};
 
 export default RegisterButton;

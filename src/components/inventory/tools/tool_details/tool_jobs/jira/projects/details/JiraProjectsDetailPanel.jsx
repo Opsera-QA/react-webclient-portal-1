@@ -28,7 +28,7 @@ function JiraProjectsDetailPanel({ toolData, setToolData, jiraProjectData, setJi
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <JiraProjectSummaryPanel jiraProjectData={jiraProjectData} jiraConfigurationData={getJiraConfigurationData()} setActiveTab={handleTabClick} />
+        return <JiraProjectSummaryPanel jiraProjectData={jiraProjectData} jiraConfigurationData={getJiraConfigurationData()} setActiveTab={handleTabClick} />;
       case "settings":
         return <JiraProjectEditorPanel toolData={toolData} activeTab={activeTab} setJiraProjectData={setJiraProjectData} jiraProjectData={jiraProjectData} />;
       default:

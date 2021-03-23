@@ -4,7 +4,7 @@ import PaginationContainer from "components/common/pagination/PaginationContaine
 
 function CardView({ cards, isLoading, paginationDto, setPaginationDto, loadData, noDataMessage, className }) {
   if (!isLoading && cards == null) {
-    return <div className="info-text text-center p-5">{noDataMessage}</div>
+    return <div className="info-text text-center p-5">{noDataMessage}</div>;
   }
 
   return (

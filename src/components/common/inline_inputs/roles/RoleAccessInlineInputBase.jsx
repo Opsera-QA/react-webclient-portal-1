@@ -57,6 +57,6 @@ RoleAccessInlineInputBase.propTypes = {
 
 RoleAccessInlineInputBase.defaultProps = {
   visible: true
-}
+};
 
 export default RoleAccessInlineInputBase;

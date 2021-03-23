@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useMemo }  from 'react'
+import React, { useContext, useState, useEffect, useMemo }  from 'react';
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
@@ -22,9 +22,9 @@ const SfdcDestModifiedFilesTabView = ({
 
   const columnsWithOutCheckBoxCell = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "componentType"})),
-      getTableTextColumn(fields.find(field => { return field.id === "committedFile"})),
-      getTableDateTimeColumn(fields.find(field => { return field.id === "committedTime"})),
+      getTableTextColumn(fields.find(field => { return field.id === "componentType";})),
+      getTableTextColumn(fields.find(field => { return field.id === "committedFile";})),
+      getTableDateTimeColumn(fields.find(field => { return field.id === "committedTime";})),
     ],
     [],
   );
@@ -53,7 +53,7 @@ const SfdcDestModifiedFilesTabView = ({
         </div>
       </div>
     );
-  }
+  };
 
   return (
     <FilterContainer
@@ -67,9 +67,9 @@ const SfdcDestModifiedFilesTabView = ({
       supportSearch={true}
       inlineFilters={getSfdcDestInlineFilters()}
     />
-  )
+  );
 
-}
+};
 
 SfdcDestModifiedFilesTabView.propTypes = {
   loading: PropTypes.bool,

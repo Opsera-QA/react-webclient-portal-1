@@ -31,7 +31,7 @@ function WideScreenContainer({ breadcrumbDestination, pageDescription, children,
   if (accessDenied) {
     return (
       <AccessDeniedContainer />
-    )
+    );
   }
 
   return (

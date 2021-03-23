@@ -11,8 +11,8 @@ const StepConfigJenkinsJobInput = ({dataObject, setDataObject, disabled, typeFil
         newDataObject.setData("toolJobType", selectedOption.type);
         if(selectedOption.configuration){
             Object.keys(selectedOption.configuration).forEach(key => {
-                newDataObject.setData(key, selectedOption.configuration[key])
-            })
+                newDataObject.setData(key, selectedOption.configuration[key]);
+            });
         }
         newDataObject.setData("buildToolVersion", "6.3");
         newDataObject.setData("projectKey", "");
@@ -47,7 +47,7 @@ const StepConfigJenkinsJobInput = ({dataObject, setDataObject, disabled, typeFil
             disabled={disabled}
         />
     );
-}
+};
 
 StepConfigJenkinsJobInput.propTypes = {
     dataObject: PropTypes.object,

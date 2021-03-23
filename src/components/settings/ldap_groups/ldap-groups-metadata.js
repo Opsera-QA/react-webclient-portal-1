@@ -50,4 +50,4 @@ export const ldapGroupMetaData = {
     externalSyncGroup: undefined,
     isSync: false,
   }
-}
+};

@@ -11,7 +11,7 @@ function JenkinsJobsTable({ toolData, loadData, selectedRow, isLoading }) {
 
   const createJenkinsJob = () => {
     setShowCreateJobModal(true);
-  }
+  };
 
   const columns = useMemo(
     () => [

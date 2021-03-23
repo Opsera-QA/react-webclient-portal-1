@@ -48,13 +48,13 @@ function PipelineActivityLogTable({ data, loadData, isLoading, pipeline, pipelin
 
   const columns = useMemo(
     () => [
-      {...getTableTextColumn(fields.find(field => { return field.id === "run_count"})), class: "cell-center no-wrap-inline"},
-      getTableTextColumn(fields.find(field => { return field.id === "action"})),
-      getTableTextColumn(fields.find(field => { return field.id === "step_name"})),
-      getTableTextColumn(fields.find(field => { return field.id === "tool_identifier"})),
-      getTableTextColumn(fields.find(field => { return field.id === "message"})),
-      getPipelineActivityStatusColumn(fields.find(field => { return field.id === "status"})),
-      getTableDateColumn(fields.find(field => { return field.id === "createdAt"}))
+      {...getTableTextColumn(fields.find(field => { return field.id === "run_count";})), class: "cell-center no-wrap-inline"},
+      getTableTextColumn(fields.find(field => { return field.id === "action";})),
+      getTableTextColumn(fields.find(field => { return field.id === "step_name";})),
+      getTableTextColumn(fields.find(field => { return field.id === "tool_identifier";})),
+      getTableTextColumn(fields.find(field => { return field.id === "message";})),
+      getPipelineActivityStatusColumn(fields.find(field => { return field.id === "status";})),
+      getTableDateColumn(fields.find(field => { return field.id === "createdAt";}))
     ],
     [],
   );

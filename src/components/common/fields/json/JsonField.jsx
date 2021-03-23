@@ -14,7 +14,7 @@ function JsonField({dataObject, fieldName, className}) {
     }
 
     return {};
-  }
+  };
 
   return (
     <FieldContainer className={className}>

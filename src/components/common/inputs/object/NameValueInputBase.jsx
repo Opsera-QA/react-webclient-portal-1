@@ -52,7 +52,7 @@ function NameValueInputBase({dataObject, setDataObject, fieldName, disabledField
 
     newDataObject.setData(fieldName, newArray);
     setDataObject({...newDataObject});
-  }
+  };
 
   const addProperty = () => {
     let newPropertyList = properties;
@@ -71,13 +71,13 @@ function NameValueInputBase({dataObject, setDataObject, fieldName, disabledField
   };
 
   const deleteProperty = (index) => {
-    let newPropertyList = properties
+    let newPropertyList = properties;
     newPropertyList.splice(index, 1);
     validateAndSetData(newPropertyList);
   };
 
   const updateProperty = (row, innerField, newValue) => {
-    let newPropertyList = properties
+    let newPropertyList = properties;
     let index = newPropertyList.indexOf(row);
     let format = regexHelpers.regexTypes["generalTextWithSpaces"];
     let meetsRegex = format.test(newValue);
@@ -178,7 +178,7 @@ function NameValueInputBase({dataObject, setDataObject, fieldName, disabledField
       <Button variant="link" onClick={() => deleteProperty(index)}>
         <span><FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/></span>
       </Button>
-    )
+    );
   };
 
   const getHeaderBar = () => {
@@ -201,7 +201,7 @@ function NameValueInputBase({dataObject, setDataObject, fieldName, disabledField
           <FontAwesomeIcon className="text-warning mr-1" icon={faExclamationTriangle} fixedWidth />
           <span className="mt-1">{`Incomplete ${field?.label} Will Be Removed Upon Saving`}</span>
         </div>
-      )
+      );
     }
   };
 
@@ -249,6 +249,6 @@ NameValueInputBase.defaultProps = {
   allowIncompleteItems: false,
   nameMaxLength: 50,
   valueMaxLength: 50
-}
+};
 
 export default NameValueInputBase;

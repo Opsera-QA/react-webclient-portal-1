@@ -211,7 +211,7 @@ function SshUploadDeployStepConfiguration({ data, pipelineId, stepId, parentCall
       // accessKey.length === 0 || 
       // secretKey.length === 0 || 
       Object.keys(sshKey).length === 0) {
-        console.log(Object.keys(sshKey).length)
+        console.log(Object.keys(sshKey).length);
       let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
       setShowToast(true);

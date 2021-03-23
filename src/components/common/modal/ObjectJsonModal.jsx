@@ -12,7 +12,7 @@ function ObjectJsonModal({ header, size, jsonData, show, setParentVisibility }) 
 
   const getBody = () =>{
     if (jsonData == null) {
-      return <LoadingDialog message={"Loading Data"} size={"sm"} />
+      return <LoadingDialog message={"Loading Data"} size={"sm"} />;
     }
 
     return (<ReactJson src={jsonData} displayDataTypes={false}/>);

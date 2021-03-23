@@ -42,7 +42,7 @@ function LdapDepartmentManagement() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [orgDomain]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -53,7 +53,7 @@ function LdapDepartmentManagement() {
     catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
-        console.error(error)
+        console.error(error);
       }
     }
     finally {
@@ -61,7 +61,7 @@ function LdapDepartmentManagement() {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const getDepartments = async (cancelSource = cancelTokenSource) => {
       let response = await departmentActions.getDepartmentsByDomainV2(getAccessToken, cancelSource, orgDomain);

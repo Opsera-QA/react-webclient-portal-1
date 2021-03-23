@@ -63,7 +63,7 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
         </div>
       </div>
     );
-  }
+  };
 
   const getTableTitleLoader = () => {
     if (isLoading && tableTitle && data != null && data.length !== 0) {
@@ -198,7 +198,7 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
     return (
        <DtoBottomPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading} loadData={loadData} />
     );
-  }
+  };
 
   return (
     <div>

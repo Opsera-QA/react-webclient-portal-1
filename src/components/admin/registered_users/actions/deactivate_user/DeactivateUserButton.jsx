@@ -8,7 +8,7 @@ function DeactivateUserButton({ userId, loadData }) {
 
   const showDeactivationConfirmation = async () => {
     setShowDeactivateUserModal(true);
-  }
+  };
 
   const closeModal = async () => {
     await loadData();

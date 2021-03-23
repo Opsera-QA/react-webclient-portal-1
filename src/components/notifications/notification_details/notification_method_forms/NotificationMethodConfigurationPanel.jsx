@@ -44,9 +44,9 @@ function NotificationMethodConfigurationPanel({ notificationDataDto, setNotifica
         );
       case "":
       default:
-        return <div className="text-center text-muted p-5">You must select a notification method before configuring notification method details.</div>
+        return <div className="text-center text-muted p-5">You must select a notification method before configuring notification method details.</div>;
     }
-  }
+  };
 
   // TODO: This should be in a new select component made with NotificationTypeSelectInput
   const handleMethodChange = (fieldName, value) => {

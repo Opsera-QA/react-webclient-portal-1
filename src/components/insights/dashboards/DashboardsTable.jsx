@@ -54,7 +54,7 @@ function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadD
   const getInlineFilters = () => {
     return (
       <InlineDashboardTypeFilter filterModel={dashboardFilterDto} setFilterModel={setDashboardFilterDto} loadData={loadData} className="mr-2" />
-    )
+    );
   };
 
   const getDashboardsTable = () => {

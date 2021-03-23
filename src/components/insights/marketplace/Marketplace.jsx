@@ -39,7 +39,7 @@ function Marketplace () {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const handleNavTabClick = (tabSelection) => async e => {
@@ -71,7 +71,7 @@ function Marketplace () {
         <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={"marketplace"} tabText={"Analytics"} />
       </NavigationTabContainer>
     );
-  }
+  };
 
   const getTabContainer = () => {
     return (
@@ -120,7 +120,7 @@ function Marketplace () {
         <TabPanelContainer currentView={getCurrentView()} tabContainer={getTabContainer()} />
       </div>
     </ScreenContainer>
-  )
+  );
 }
 
 export default Marketplace;

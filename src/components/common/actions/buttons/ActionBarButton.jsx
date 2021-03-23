@@ -11,7 +11,7 @@ function ActionBarButton({action, iconClasses, popoverText, text, icon, classNam
         {message}
       </Tooltip>
     );
-  }
+  };
 
   return (
     <div className={className}>

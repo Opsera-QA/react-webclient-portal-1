@@ -36,7 +36,7 @@ function JiraIssuesByPriorityBarChart({ kpiConfiguration, setKpiConfiguration, d
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -127,7 +127,7 @@ function JiraIssuesByPriorityBarChart({ kpiConfiguration, setKpiConfiguration, d
             />
         </div>
     );
-  }
+  };
 
   return (
     <div>

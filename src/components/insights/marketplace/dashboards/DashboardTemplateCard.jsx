@@ -32,7 +32,7 @@ export default function DashboardTemplateCard({ dashboardTemplate, catalog, load
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const getRoles = async () => {
@@ -124,7 +124,7 @@ export default function DashboardTemplateCard({ dashboardTemplate, catalog, load
         </div>
       </Card.Body>
     </Card>
-  )
+  );
 }
 
 DashboardTemplateCard.propTypes = {

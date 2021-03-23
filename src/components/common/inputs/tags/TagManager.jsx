@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import { Multiselect } from 'react-widgets'
+import { Multiselect } from 'react-widgets';
 import tagEditorMetadata from "components/settings/tags/tags-metadata";
 import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
@@ -40,7 +40,7 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -88,7 +88,7 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
     if (isMounted?.current === true) {
       setDataObject({...newDataObject});
     }
-  }
+  };
 
   const saveNewTag = async (newTagDto) => {
     try {
@@ -110,7 +110,7 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
     if (isMounted?.current === true) {
       setTagOptions(currentOptions);
     }
-  }
+  };
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
@@ -208,6 +208,6 @@ TagManager.defaultProps = {
   allowCreate: "onFilter",
   fieldName: "tags",
   inline: false
-}
+};
 
 export default TagManager;

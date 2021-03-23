@@ -38,7 +38,7 @@ function TagArrayUsedInDashboardsField({ tags }) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [tags]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -56,7 +56,7 @@ function TagArrayUsedInDashboardsField({ tags }) {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const loadDashboards = async (cancelSource = cancelTokenSource) => {
     if (Array.isArray(tags) && tags.length > 0) {
@@ -102,7 +102,7 @@ function TagArrayUsedInDashboardsField({ tags }) {
           This tag combination is not currently applied on any dashboard</span>
         </div>
       </div>
-    )
+    );
   }
 
   return (

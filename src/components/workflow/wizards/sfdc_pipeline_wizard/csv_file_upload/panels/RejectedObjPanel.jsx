@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import PropTypes from 'prop-types'
+import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 import ClientSideBottomPaginator from "components/common/pagination/client_side/ClientSideBottomPaginator";
 
 function RejectedObjPanel({ rejectedItems }) {
@@ -18,7 +18,7 @@ function RejectedObjPanel({ rejectedItems }) {
           </div>
         </li>
       </div>
-    )
+    );
   };
   
   const formatItems = () => {
@@ -45,12 +45,12 @@ function RejectedObjPanel({ rejectedItems }) {
           <ClientSideBottomPaginator items={rejectedItems} setShownItems={setShownRejectedItems} paginationStyle={"stacked"} pageSize={10} />
         </div>
       </div>
-  )
+  );
 }
 
 RejectedObjPanel.propTypes = {
   rejectedItems: PropTypes.array,
-}
+};
 
-export default RejectedObjPanel
+export default RejectedObjPanel;
 

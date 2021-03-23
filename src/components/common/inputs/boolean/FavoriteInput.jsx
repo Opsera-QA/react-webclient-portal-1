@@ -22,7 +22,7 @@ function FavoriteInput({fieldName, dataObject, setDataObject, disabled}) {
             size="lg"
             className={"opsera-yellow pointer"}
             icon={dataObject.getData(field.id) ? faStarSolid : faStar}
-            onClick={() => {validateAndSetData(!dataObject.getData(field.id))}}
+            onClick={() => {validateAndSetData(!dataObject.getData(field.id));}}
           />
         </span>
       <InfoText field={field} errorMessage={null} />

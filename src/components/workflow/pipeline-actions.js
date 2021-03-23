@@ -72,7 +72,7 @@ pipelineActions.getAllPipelines = async (getAccessToken) => {
       sort: "name",
       order: 1
     },
-  }
+  };
 
   let apiUrl = `/pipelines`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
@@ -259,7 +259,7 @@ pipelineActions.deny = async (templateId, postBody, getAccessToken) => {
 };
 
 pipelineActions.createFreeTrialPipeline = async (postBody, getAccessToken) => {
-  console.log("inside pipeline acitons")
+  console.log("inside pipeline acitons");
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/freetrial/postcommit`;
   const response = await axiosApiService(accessToken).post(apiUrl, postBody)

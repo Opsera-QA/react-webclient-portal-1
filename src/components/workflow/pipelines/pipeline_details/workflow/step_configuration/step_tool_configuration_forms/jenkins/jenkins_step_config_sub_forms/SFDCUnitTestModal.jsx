@@ -40,7 +40,7 @@ function SFDCUnitTestModal({
       {/* <Button variant="primary" onClick={handleSave}>save</Button> */}
     </Modal.Footer>
   </Modal>
-  )
+  );
 }
 
 

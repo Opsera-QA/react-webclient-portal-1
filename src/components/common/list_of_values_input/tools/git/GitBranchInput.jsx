@@ -21,7 +21,7 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await getRepositories();
     }
     catch (error) {
@@ -50,7 +50,7 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
     if (!isLoading && (branches == null || branches.length === 0) && service !== "" && gitToolId !== "" && repoId !== "") {
       return ("No Branches Found!");
     }
-  }
+  };
 
   return (
     <div>

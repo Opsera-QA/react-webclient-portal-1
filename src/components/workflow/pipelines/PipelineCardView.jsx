@@ -22,7 +22,7 @@ function PipelineCardView({ data, pipelineFilterDto, setPipelineFilterDto, loadD
         ))}
       </Row>
     );
-  }
+  };
 
   return (
     <CardView

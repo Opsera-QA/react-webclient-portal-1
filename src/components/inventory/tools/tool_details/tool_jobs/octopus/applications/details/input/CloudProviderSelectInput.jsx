@@ -11,7 +11,7 @@ function CloudProviderSelectInput({ fieldName, dataObject, setDataObject, disabl
   const { getAccessToken } = useContext(AuthContext);
   const [cloudProviders, setCloudProviders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a Cloud Provider (AWS or Azure)")
+  const [placeholder, setPlaceholder] = useState("Select a Cloud Provider (AWS or Azure)");
 
   useEffect(() => {
     if (!disabled) {
@@ -21,7 +21,7 @@ function CloudProviderSelectInput({ fieldName, dataObject, setDataObject, disabl
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTypes();
     }
     catch (error) {
@@ -34,14 +34,14 @@ function CloudProviderSelectInput({ fieldName, dataObject, setDataObject, disabl
 
   const loadTypes = async () => {
     try {
-      const res = await OctopusStepActions.getCloudOptions(dataObject.getData("toolId"), dataObject.getData("spaceId"), getAccessToken)
+      const res = await OctopusStepActions.getCloudOptions(dataObject.getData("toolId"), dataObject.getData("spaceId"), getAccessToken);
       if (res && res.status === 200) {
-        setCloudProviders(res.data)
-        return
+        setCloudProviders(res.data);
+        return;
       }
       setCloudProviders([]);
     } catch (error) {
-      setPlaceholder("No configured cloud providers found")
+      setPlaceholder("No configured cloud providers found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }
@@ -54,7 +54,7 @@ function CloudProviderSelectInput({ fieldName, dataObject, setDataObject, disabl
       setDataObject({ ...newDataObject });
       return;
     }
-  }
+  };
 
   return (
     <div>

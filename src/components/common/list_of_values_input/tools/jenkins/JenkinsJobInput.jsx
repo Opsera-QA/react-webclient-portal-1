@@ -43,8 +43,8 @@ function JenkinsJobInput({ jenkinsId, visible, typeFilter, fieldName, dataObject
 
     if (response && Array.isArray(response)) {
       if (configurationRequired) {
-        const filteredTools = response?.filter((tool) => {return tool.configuration != null && Object.entries(tool.configuration).length > 0 });
-        setJenkinsTools(filteredTools)
+        const filteredTools = response?.filter((tool) => {return tool.configuration != null && Object.entries(tool.configuration).length > 0; });
+        setJenkinsTools(filteredTools);
       }
       else {
         setJenkinsTools(response);
@@ -58,7 +58,7 @@ function JenkinsJobInput({ jenkinsId, visible, typeFilter, fieldName, dataObject
     const jobs = index && jenkinsTools[index]?.jobs ? jenkinsTools[index].jobs : [];
 
     if (jobs.length > 0 && typeFilter) {
-      let filteredJobs = jobs.filter((job) => {return job.type[0] === typeFilter});
+      let filteredJobs = jobs.filter((job) => {return job.type[0] === typeFilter;});
       setJenkinsJobs(filteredJobs);
     }
     else {
@@ -75,7 +75,7 @@ function JenkinsJobInput({ jenkinsId, visible, typeFilter, fieldName, dataObject
           <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
           No configured {`${typeFilter} `}Jenkins Jobs have been registered for this <span className="upper-case-first">Jenkins</span> tool.
         </div>
-      )
+      );
     }
   };
 
@@ -117,6 +117,6 @@ JenkinsJobInput.propTypes = {
 
 JenkinsJobInput.defaultProps = {
   visible: true,
-}
+};
 
 export default JenkinsJobInput;

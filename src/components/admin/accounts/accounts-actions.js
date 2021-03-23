@@ -220,7 +220,7 @@ accountsActions.updateUser = async (orgDomain, ldapUserDataDto, getAccessToken) 
     user: {
       ...ldapUserDataDto.getPersistData()
     }
-  }
+  };
   const apiUrl = "/users/account/user/update";
   return await baseActions.apiPutCall(getAccessToken, apiUrl, postBody);
 };
@@ -228,7 +228,7 @@ accountsActions.updateUser = async (orgDomain, ldapUserDataDto, getAccessToken) 
 accountsActions.createUser = async (orgDomain, ldapUserDataDto, getAccessToken) => {
   let postData = {
       ...ldapUserDataDto.getPersistData()
-  }
+  };
   const apiUrl = `/users/account/user/create?domain=${orgDomain}`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
@@ -398,7 +398,7 @@ accountsActions.updateOrganizationAccount = async (ldapOrganizationAccountDataDt
 accountsActions.createOrganization = async (ldapOrganizationDataDto, getAccessToken) => {
   const postBody = {
       ...ldapOrganizationDataDto.getPersistData(),
-  }
+  };
   const apiUrl = "/users/account/organization/create";
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };

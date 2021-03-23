@@ -93,7 +93,7 @@ function ApiConnectionDemo() {
         </div>}
       </>
     );
-  }
+  };
 
   const getToolDetails = () => {
     if (registeredUserToolsDto != null) {
@@ -110,7 +110,7 @@ function ApiConnectionDemo() {
             </Col>
           </Row>
         </div>
-      )
+      );
     }
   };
 

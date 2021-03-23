@@ -302,7 +302,7 @@ function Analytics() {
         <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Analytics"} />
       </NavigationTabContainer>
     );
-  }
+  };
 
   const getBody = () => {
     return (
@@ -390,7 +390,7 @@ function Analytics() {
   </>
     );
 
-  }
+  };
 
   return (
     <ScreenContainer

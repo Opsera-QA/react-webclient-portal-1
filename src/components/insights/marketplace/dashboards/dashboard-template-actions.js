@@ -15,7 +15,7 @@ dashboardTemplatesActions.getDashboardTemplatesV2 = async(getAccessToken, cancel
       search: dashboardCatalogFilterModel.getFilterValue("search"),
       type: dashboardCatalogFilterModel.getFilterValue("type")
     }
-  }
+  };
 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };

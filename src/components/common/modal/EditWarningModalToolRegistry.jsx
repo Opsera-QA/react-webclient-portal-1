@@ -17,11 +17,11 @@ function EditWarningModalToolRegistry({ dataObject, showModal, setShowModal, han
     try {
       setEditing(true);
       if (dataObject != null) {
-        await handleEdit()
+        await handleEdit();
       }
       toastContext.showUpdateSuccessResultDialog(dataObject.getType());
-      handleModalClose()
-      handleClose()
+      handleModalClose();
+      handleClose();
       }
     catch (error) {
       toastContext.showUpdateFailureResultDialog(dataObject.getType(), error);
@@ -29,13 +29,13 @@ function EditWarningModalToolRegistry({ dataObject, showModal, setShowModal, han
     finally {
       setEditing(false);
     }
-  }
+  };
   const getLabel = () => {
     if (editing) {
       return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Editing {dataObject.getType()}</span>);
     }
 
-    return (<span>Edit {dataObject.getType()}</span>)
+    return (<span>Edit {dataObject.getType()}</span>);
   };
 
   return (

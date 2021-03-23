@@ -73,6 +73,6 @@ const dashboardFilterMetadata = {
       {text: "Type", option: "type"},
       {text: "Last Updated", option: "lastupdated"}
     ]
-}
+};
 
 export default dashboardFilterMetadata;

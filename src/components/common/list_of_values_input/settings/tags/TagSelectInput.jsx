@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import { Multiselect } from 'react-widgets'
+import { Multiselect } from 'react-widgets';
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
@@ -36,7 +36,7 @@ function TagSelectInput({ fieldName, dataObject, setDataObject, disabled, setDat
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -83,7 +83,7 @@ function TagSelectInput({ fieldName, dataObject, setDataObject, disabled, setDat
     if (isMounted?.current === true) {
       setDataObject({...newDataObject});
     }
-  }
+  };
 
   const loadTagOptions = (tags) => {
     let currentOptions = [];
@@ -96,7 +96,7 @@ function TagSelectInput({ fieldName, dataObject, setDataObject, disabled, setDat
     if (isMounted?.current === true) {
       setTagOptions(currentOptions);
     }
-  }
+  };
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
@@ -112,7 +112,7 @@ function TagSelectInput({ fieldName, dataObject, setDataObject, disabled, setDat
       return errorMessage;
     }
 
-    return "Select Tag"
+    return "Select Tag";
   };
 
   if (field == null) {

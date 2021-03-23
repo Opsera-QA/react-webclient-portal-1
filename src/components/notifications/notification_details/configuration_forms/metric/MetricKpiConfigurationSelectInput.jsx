@@ -24,10 +24,10 @@ function MetricKpiConfigurationSelectInput({ fieldName, dataObject, setDataObjec
     const newDataObject = {...dataObject};
     newDataObject.setData(fieldName, value["identifier"]);
     newDataObject.setData("conditionIf", value["yAxis"]);
-    setDataPoints(value["dataPoints"])
+    setDataPoints(value["dataPoints"]);
     setCurrentKpi(value);
     setDataObject({...newDataObject});
-  }
+  };
 
   const setDataPoint = (fieldName, value) => {
     // console.log(value)
@@ -37,7 +37,7 @@ function MetricKpiConfigurationSelectInput({ fieldName, dataObject, setDataObjec
     newDataObject.setData("dataPoint", value["dataPoint"]);
     newDataObject.setData("conditionIf", value["type"]);
     setDataObject({...newDataObject});
-  }
+  };
 
   const getImage = () => {
     if (currentKpi != null) {

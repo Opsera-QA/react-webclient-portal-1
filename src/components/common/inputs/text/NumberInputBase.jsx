@@ -8,7 +8,7 @@ import simpleNumberLocalizer from "react-widgets-simple-number";
 
 export const formatTypes = {
   percent: '%'
-}
+};
 
 function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, placeholderText, formatType }) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));

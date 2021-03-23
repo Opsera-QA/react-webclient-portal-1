@@ -31,6 +31,6 @@ CreateAndUpdateDateFieldBase.propTypes = {
 
 CreateAndUpdateDateFieldBase.defaultProps = {
   dateFormat: "yyyy-MM-dd"
-}
+};
 
 export default CreateAndUpdateDateFieldBase;

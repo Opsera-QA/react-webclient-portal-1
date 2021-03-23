@@ -40,12 +40,12 @@ function ToolUsedInPipelinesField({ dataObject }) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [dataObject]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadPipelines(cancelSource);
     }
     catch (error) {
@@ -105,7 +105,7 @@ function ToolUsedInPipelinesField({ dataObject }) {
           This tool is not currently used in any pipelines</span>
         </div>
       </div>
-    )
+    );
   }
 
   return (

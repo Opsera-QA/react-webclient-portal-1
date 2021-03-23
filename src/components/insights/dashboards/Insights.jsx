@@ -46,7 +46,7 @@ function Insights() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (filterDto = dashboardFilterDto, cancelSource = cancelTokenSource) => {
@@ -75,7 +75,7 @@ function Insights() {
         await getDashboards(filterDto, cancelSource);
       }
     }
-  }
+  };
 
   const getDashboards = async (filterDto = dashboardFilterDto, cancelSource = cancelTokenSource) => {
     const response = await dashboardsActions.getAllDashboardsV2(getAccessToken, cancelSource, filterDto);
@@ -154,7 +154,7 @@ function Insights() {
         <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Analytics"} />
       </NavigationTabContainer>
     );
-  }
+  };
 
   if (!accessRoleData) {
     return (<LoadingDialog size="sm" message="Loading Insights"/>);

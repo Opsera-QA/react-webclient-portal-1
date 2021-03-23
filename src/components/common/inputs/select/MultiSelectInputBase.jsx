@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import { Multiselect } from 'react-widgets'
+import { Multiselect } from 'react-widgets';
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
@@ -72,7 +72,7 @@ function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, d
   };
 
   if (field == null) {
-    return <></>
+    return <></>;
   }
 
   return (
@@ -121,6 +121,6 @@ MultiSelectInputBase.propTypes = {
 
 MultiSelectInputBase.defaultProps = {
   showClearValueButton: true
-}
+};
 
 export default MultiSelectInputBase;

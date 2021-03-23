@@ -61,6 +61,6 @@ ToolSummaryPanel.propTypes = {
   setToolData: PropTypes.func,
   setActiveTab: PropTypes.func,
   customerAccessRules: PropTypes.object,
-}
+};
 
 export default ToolSummaryPanel;

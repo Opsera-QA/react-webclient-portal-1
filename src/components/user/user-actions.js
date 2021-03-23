@@ -29,7 +29,7 @@ userActions.isEmailAvailable = async (emailAddress) => {
       }
     })
     .catch(function (error) {
-      console.error(error)
+      console.error(error);
       return true;
     });
 };
@@ -45,7 +45,7 @@ userActions.isDomainAvailable = async (domain) => {
 
   const apiCall = new ApiService(`/users/check-domain/${domain}`, {}, null);
 
-  console.log(`Api call domain: /users/check-domain/${domain}`)
+  console.log(`Api call domain: /users/check-domain/${domain}`);
   return await apiCall
     .get()
     .then(function (response) {
@@ -103,7 +103,7 @@ userActions.createOpseraAccount = async (registrationDataDto) => {
 
 
 userActions.logout = async (getAccessToken) => {
-  const postBody = {}
+  const postBody = {};
   const accessToken = await getAccessToken();
   const apiUrl = "/users/logout";
   const response = await axiosApiService(accessToken).post(apiUrl, postBody)
@@ -122,7 +122,7 @@ userActions.syncUser = async (getAccessToken, cancelTokenSource) => {
     params: {
       sync: true
     }
-  }
+  };
   const apiUrl = `/users`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };

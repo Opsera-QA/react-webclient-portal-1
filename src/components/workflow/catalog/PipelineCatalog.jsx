@@ -41,7 +41,7 @@ function PipelineCatalog({source, activeTemplates}) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [source]);
 
   const loadData = async (filterModel = catalogFilterModel, cancelSource = cancelTokenSource) => {
@@ -108,7 +108,7 @@ function PipelineCatalog({source, activeTemplates}) {
     return (
       <InlinePipelineTypeFilter isLoading={isLoading} loadData={loadData} filterModel={catalogFilterModel} setFilterModel={setCatalogFilterModel} className={"mr-2"} />
     );
-  }
+  };
 
   return (
     <FilterContainer

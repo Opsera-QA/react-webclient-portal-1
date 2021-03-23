@@ -33,7 +33,7 @@ function SiteNotificationDisplayer() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource) => {
@@ -50,7 +50,7 @@ function SiteNotificationDisplayer() {
         console.error("Could not pull site notifications: " + error);
       }
     }
-  }
+  };
 
   const unpackNotifications = (response) => {
     if (isMounted?.current === true) {

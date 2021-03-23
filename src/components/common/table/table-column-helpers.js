@@ -204,7 +204,7 @@ export const getPipelineActivityStatusColumn = (field, className) => {
       );
     },
     class: className ? className : undefined
-  }
+  };
 };
 
 export const getPipelineStatusIcon = (row) => {
@@ -250,7 +250,7 @@ export const getAssociatedPipelineStatusIcon = (pipelineStatus) => {
     default:
       return (<FontAwesomeIcon icon={faCheckCircle} className="green" fixedWidth/>);
   }
-}
+};
 
 export const getPipelineTypeColumn = (field, className) => {
   return {
@@ -359,7 +359,7 @@ export const getTableFavoriteColumn = (field, className) => {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     Cell: (row) => {
-      return <DashboardFavoritesIcon key={row.row.original._id} dashboard={row.row.original} dashboardsActions={dashboardsActions} />
+      return <DashboardFavoritesIcon key={row.row.original._id} dashboard={row.row.original} dashboardsActions={dashboardsActions} />;
     },
     class: className ? className :  "no-wrap-inline"
   };
@@ -369,7 +369,7 @@ export const getTableDeleteColumn = (headerText, deleteFunction, className) => {
   return {
     Header: headerText,
     Cell: (row) => {
-      return <FontAwesomeIcon icon={faTrash} className="pointer danger-red" onClick={() => {deleteFunction(row?.data[row?.row?.index]); }}/>
+      return <FontAwesomeIcon icon={faTrash} className="pointer danger-red" onClick={() => {deleteFunction(row?.data[row?.row?.index]); }}/>;
     },
     class: className ? className :  "no-wrap-inline"
   };
@@ -380,7 +380,7 @@ export const getTableButtonColumn = (accessor = "row", headerText, variant, butt
     Header: headerText,
     accessor: accessor,
     Cell: (row) => {
-      return <Button size={"sm"} variant={variant} className={buttonClassName} onClick={() => {buttonFunction(row?.data[row?.row?.index])}}>{buttonText}</Button>
+      return <Button size={"sm"} variant={variant} className={buttonClassName} onClick={() => {buttonFunction(row?.data[row?.row?.index]);}}>{buttonText}</Button>;
     },
     class: className ? className :  "no-wrap-inline py-1"
   };
@@ -391,9 +391,9 @@ export const getGitTaskTableRunButtonColumn = (accessor = "row", headerText, var
     Header: headerText,
     accessor: accessor,
     Cell: (row) => {
-      return <Button size={"sm"} variant={variant} disabled={row?.data[row?.row?.index].status === "running"} onClick={() => {buttonFunction(row?.data[row?.row?.index])}} >
+      return <Button size={"sm"} variant={variant} disabled={row?.data[row?.row?.index].status === "running"} onClick={() => {buttonFunction(row?.data[row?.row?.index]);}} >
         {row?.data[row?.row?.index].status === "running" ? (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Running </span>) : (<span><FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/> {buttonText} </span> ) }
-        </Button>
+        </Button>;
     },
     class: className ? className :  "no-wrap-inline py-1"
   };
@@ -456,7 +456,7 @@ export const getValueColumn = (field, valueFormat) => {
     default:
       return getTableTextColumn(field);
   }
-}
+};
 
 export const getCheckBoxColumn = (handleChange) => {
   return {
@@ -479,4 +479,4 @@ export const getCheckBoxColumn = (handleChange) => {
       />;
     },
   };
-}
+};

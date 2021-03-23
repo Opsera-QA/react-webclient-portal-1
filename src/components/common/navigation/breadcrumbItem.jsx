@@ -7,4 +7,4 @@ export const breadcrumbItem = (breadcrumb) => {
         <Link to={"/" + breadcrumb.path}>{breadcrumb.label}</Link>
       </li>
   );
-}
+};

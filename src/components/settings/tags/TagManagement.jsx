@@ -37,7 +37,7 @@ function TagManagement() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (filterDto = tagFilterDto, cancelSource = cancelTokenSource) => {

@@ -21,7 +21,7 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await getWorkspaces();
     }
     catch (error) {
@@ -36,7 +36,7 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
   const getWorkspaces = async () => {
     const response  = await pipelineActions.searchWorkSpaces("bitbucket", gitToolId, getAccessToken);
 
-    console.log("workspaces: " + JSON.stringify(response))
+    console.log("workspaces: " + JSON.stringify(response));
 
     if (Array.isArray(response)) {
       setWorkspaces(response);
@@ -51,7 +51,7 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
     if (!isLoading && (workspaces == null || workspaces.length === 0) && gitToolId !== "") {
       return ("Workspace information is missing or unavailable!");
     }
-  }
+  };
 
   return (
     <div>
@@ -86,6 +86,6 @@ BitbucketWorkspaceInput.propTypes = {
 
 BitbucketWorkspaceInput.defaultProps = {
   visible: true,
-}
+};
 
 export default BitbucketWorkspaceInput;
