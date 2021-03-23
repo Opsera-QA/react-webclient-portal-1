@@ -7,7 +7,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors,
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
          capitalizeLegend } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 
@@ -78,7 +78,8 @@ function JenkinsBuildsByUserBarChart({ kpiConfiguration, setKpiConfiguration, da
           data={metrics}
           {...defaultConfig("Users", "Number of Builds", 
                       true, true, "subString", "")}
-          {...config(getColorByData)}   
+          {...config(getColorByData)}
+          {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}
           tooltip={({ indexValue, value, color }) => <ChartTooltip 
                               titles = {["User", "Number of Builds"]}

@@ -1,5 +1,4 @@
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
-import BreadcrumbPageLink from "components/common/links/BreadcrumbPageLink";
 
 export const mainColor = "#5B5851";
 export const mainGold = "#F1AD0F";
@@ -30,7 +29,12 @@ export const assignBooleanColors = data => {
     data.sort((a, b) => a.id > b.id ? 1 : -1); // to display success before fail in legend
   }
   data.forEach(data => {
-    data.color = (data.id === "Success" || data.Successful) ? mainColor : failColor;
+    if (data.id) {
+      data.color = (data.id === "Success" || data.Successful) ? mainColor : failColor;
+    } else {
+      data.Success_color = mainColor;
+      data.Failed_color = failColor;
+    }
   });
   return data.color;
 };
