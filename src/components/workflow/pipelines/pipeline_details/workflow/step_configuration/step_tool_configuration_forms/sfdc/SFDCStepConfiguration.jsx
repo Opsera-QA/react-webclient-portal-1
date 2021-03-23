@@ -536,7 +536,9 @@ SFDCStepConfiguration.propTypes = {
   parentCallback: PropTypes.func,
   callbackSaveToVault: PropTypes.func,
   setToast: PropTypes.func,
-  setShowToast: PropTypes.func
+  setShowToast: PropTypes.func,
+  stepTool: PropTypes.object,
+  plan: PropTypes.object
 };
 
 export default SFDCStepConfiguration;

@@ -108,6 +108,7 @@ PipelineToolInput.propTypes = {
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   configurationRequired: PropTypes.bool,
+  clearDataFunction: PropTypes.func
 };
 
 PipelineToolInput.defaultProps = {

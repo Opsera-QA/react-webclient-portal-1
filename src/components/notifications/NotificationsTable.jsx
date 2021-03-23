@@ -11,7 +11,7 @@ import notificationsMetadata from "./notifications-metadata";
 import {useHistory} from "react-router-dom";
 import { getField } from "components/common/metadata/metadata-helpers";
 
-function NotificationsTable({ data, notificationFilterDto, setNotificationFilterDto, loadData, isLoading, isMounted }) {
+function NotificationsTable({ data, notificationFilterDto, setNotificationFilterDto, loadData, isLoading }) {
   let history = useHistory();
   const fields = notificationsMetadata.fields;
 

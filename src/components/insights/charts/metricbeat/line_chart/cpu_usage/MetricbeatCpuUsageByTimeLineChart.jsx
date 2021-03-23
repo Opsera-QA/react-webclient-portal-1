@@ -149,6 +149,8 @@ function MetricbeatCpuUsageByTimeLineChart({ persona, date , tags}) {
 }
 MetricbeatCpuUsageByTimeLineChart.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object,
+  tags: PropTypes.array
 };
 
 export default MetricbeatCpuUsageByTimeLineChart;

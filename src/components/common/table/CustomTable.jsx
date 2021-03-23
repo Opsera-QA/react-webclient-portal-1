@@ -247,7 +247,8 @@ CustomTable.propTypes = {
   paginationDto: PropTypes.object,
   setPaginationDto: PropTypes.func,
   loadData: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
+  noFooter: PropTypes.bool
 };
 
 CustomTable.defaultProps = {

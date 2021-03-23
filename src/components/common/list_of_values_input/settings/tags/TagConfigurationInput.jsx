@@ -224,7 +224,8 @@ TagConfigurationInput.propTypes = {
   setDataObject: PropTypes.func,
   dataObject: PropTypes.object,
   fields: PropTypes.array,
-  fieldName: PropTypes.string
+  fieldName: PropTypes.string,
+  disabled: PropTypes.bool
 };
 
 TagConfigurationInput.defaultProps = {

@@ -111,7 +111,8 @@ JenkinsJobInput.propTypes = {
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   typeFilter: PropTypes.string,
-  configurationRequired: PropTypes.bool
+  configurationRequired: PropTypes.bool,
+  clearDataFunction: PropTypes.func
 };
 
 JenkinsJobInput.defaultProps = {

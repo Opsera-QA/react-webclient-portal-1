@@ -55,7 +55,8 @@ PipelinesTable.propTypes = {
   data: PropTypes.array,
   isLoading: PropTypes.bool,
   setPaginationModel: PropTypes.func,
-  paginationModel: PropTypes.object
+  paginationModel: PropTypes.object,
+  loadData: PropTypes.func
 };
 
 export default PipelinesTable;

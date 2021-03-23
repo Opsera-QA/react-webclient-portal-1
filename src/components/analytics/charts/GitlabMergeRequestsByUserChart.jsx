@@ -128,6 +128,7 @@ function GitlabMergeRequestsByUser({ persona, date }) {
 
 GitlabMergeRequestsByUser.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object
 };
 
 export default GitlabMergeRequestsByUser;

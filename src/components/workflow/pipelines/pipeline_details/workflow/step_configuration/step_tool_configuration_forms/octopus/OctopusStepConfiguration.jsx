@@ -271,7 +271,8 @@ OctopusStepConfiguration.propTypes = {
   parentCallback: PropTypes.func,
   callbackSaveToVault: PropTypes.func,
   getToolsList: PropTypes.func,
-  closeEditorPanel: PropTypes.func
+  closeEditorPanel: PropTypes.func,
+  pipelineId: PropTypes.string
 };
 
 export default OctopusStepConfiguration;

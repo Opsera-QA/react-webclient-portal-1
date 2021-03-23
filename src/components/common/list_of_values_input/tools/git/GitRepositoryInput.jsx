@@ -85,10 +85,11 @@ GitRepositoryInput.propTypes = {
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
+  clearDataFunction: PropTypes.func
 };
 
 GitRepositoryInput.defaultProps = {
   visible: true,
-}
+};
 
 export default GitRepositoryInput;

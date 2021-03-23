@@ -65,6 +65,11 @@ function OverlayTriggerWrapper({message, children}) {
   )
 }
 
+OverlayTriggerWrapper.propTypes = {
+  children: PropTypes.any,
+  message: PropTypes.any
+};
+
 // TODO: Move to helper
 function renderTooltip(message) {
   return (

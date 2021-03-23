@@ -23,7 +23,9 @@ function SecOpsDashboard( { persona, date, index } ) {
 
 
 SecOpsDashboard.propTypes = {
-  persona: PropTypes.string
+  persona: PropTypes.string,
+  index: PropTypes.any,
+  date: PropTypes.object
 };
 
 export default SecOpsDashboard;

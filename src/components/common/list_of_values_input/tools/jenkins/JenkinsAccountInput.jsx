@@ -146,11 +146,12 @@ JenkinsAccountInput.propTypes = {
   visible: PropTypes.bool,
   typeFilter: PropTypes.string,
   configurationRequired: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  clearDataFunction: PropTypes.func
 };
 
 JenkinsAccountInput.defaultProps = {
   visible: true,
-}
+};
 
 export default JenkinsAccountInput;

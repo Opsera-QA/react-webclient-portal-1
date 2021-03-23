@@ -33,6 +33,7 @@ SFDCBuildTypeSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   setDataFunction: PropTypes.func,
+  disabled: PropTypes.bool
 };
 
 export default SFDCBuildTypeSelectInput;

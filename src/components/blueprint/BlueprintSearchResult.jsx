@@ -362,6 +362,7 @@ function BlueprintSearchResult({ searchResults }) {
 
 BlueprintSearchResult.propTypes = {
   searchResults: PropTypes.object,
+  value: PropTypes.any
 };
 
 export default BlueprintSearchResult;

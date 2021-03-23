@@ -78,7 +78,8 @@ JiraStepNotificationProjectUserInput.propTypes = {
   jiraToolId: PropTypes.string,
   jiraProject: PropTypes.string,
   disabled: PropTypes.bool,
-  visible: PropTypes.bool
+  visible: PropTypes.bool,
+  fieldName: PropTypes.string
 };
 
 JiraStepNotificationProjectUserInput.defaultProps = {

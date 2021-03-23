@@ -98,11 +98,12 @@ function Confirmation(props) {
       }
     </>
   );
-} 
+}
 
 Confirmation.propTypes = {
   tools: PropTypes.array,
-  handleSaveTools: PropTypes.func.isRequired
+  handleSaveTools: PropTypes.func.isRequired,
+  handleCancel: PropTypes.func
 };
 
 export default Confirmation;

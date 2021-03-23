@@ -53,6 +53,7 @@ StepConfigJenkinsJobInput.propTypes = {
     dataObject: PropTypes.object,
     setDataObject: PropTypes.func,
     disabled: PropTypes.bool,
+  typeFilter: PropTypes.any
 };
 
 export default StepConfigJenkinsJobInput;

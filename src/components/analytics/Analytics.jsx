@@ -632,11 +632,12 @@ function ChartView({ selection, persona, date, index }) {
   }
 }
 
-ChartView.propTypes = {
+Analytics.propTypes = {
   selection: PropTypes.string,
   persona: PropTypes.string,
   date: PropTypes.object,
   index: PropTypes.array,
+  item: PropTypes.object
 };
 
 export default Analytics;

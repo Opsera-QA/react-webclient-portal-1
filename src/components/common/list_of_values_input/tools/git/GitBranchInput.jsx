@@ -82,10 +82,11 @@ GitBranchInput.propTypes = {
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
+  clearDataFunction: PropTypes.func
 };
 
 GitBranchInput.defaultProps = {
   visible: true,
-}
+};
 
 export default GitBranchInput;

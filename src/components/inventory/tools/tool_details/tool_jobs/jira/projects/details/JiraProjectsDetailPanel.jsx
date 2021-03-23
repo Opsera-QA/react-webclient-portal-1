@@ -50,6 +50,7 @@ function JiraProjectsDetailPanel({ toolData, setToolData, jiraProjectData, setJi
 
 JiraProjectsDetailPanel.propTypes = {
   toolData: PropTypes.object,
+  setToolData: PropTypes.func,
   jiraProjectData: PropTypes.object,
   setJiraProjectData: PropTypes.func,
 };

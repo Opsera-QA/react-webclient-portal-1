@@ -149,8 +149,11 @@ function MetricbeatMemoryUsageByTimeLineChart({ persona, date, tags}) {
     </>
   );
 }
+
 MetricbeatMemoryUsageByTimeLineChart.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object,
+  tags: PropTypes.array
 };
 
 export default MetricbeatMemoryUsageByTimeLineChart;

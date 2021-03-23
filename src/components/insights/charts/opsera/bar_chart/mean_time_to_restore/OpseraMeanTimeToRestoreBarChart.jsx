@@ -74,6 +74,8 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
       let max = Math.ceil(Math.max(countsMax, mttrMax));
       return max;
     }
+
+    // TODO: Do these need to be passed as object props?
     const MeanLineLayer = ({ bars, xScale, yScale }) => {
         const lineColor = "rgba(0, 128, 0, 1)";
         const lineGenerator = line()
@@ -187,7 +189,10 @@ OpseraMeanTimeToRestoreBarChart.propTypes = {
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func
+  setKpis: PropTypes.func,
+  bars: PropTypes.any,
+  xScale: PropTypes.any,
+  yScale: PropTypes.any
 };
 
 export default OpseraMeanTimeToRestoreBarChart;

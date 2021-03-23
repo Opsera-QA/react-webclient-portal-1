@@ -14,6 +14,7 @@ import InlineBooleanFilter from "components/common/filters/boolean/InlineBoolean
 import "../../workflowWizard.css";
 
 
+// TODO: This should further be broken down into two components. I will do it soon, hopefully - Noah
 const SfdcProfileSelectionView = ({
   destLoadData,
   destFilterDto,
@@ -137,7 +138,13 @@ SfdcProfileSelectionView.propTypes = {
   filterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
   handleComponentCheck: PropTypes.func,
-  handleCheckAllClickComponentTypes: PropTypes.func  
+  handleCheckAllClickComponentTypes: PropTypes.func  ,
+  destLoadData: PropTypes.func,
+  destFilterDto: PropTypes.object,
+  setDestFilterDto: PropTypes.func,
+  destLoading: PropTypes.bool,
+  destComponentType: PropTypes.any,
+  destData: PropTypes.object
 };
 
 export default SfdcProfileSelectionView;
