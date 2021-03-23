@@ -365,7 +365,7 @@ accountsActions.getOrganizationsV2 = async (getAccessToken, cancelTokenSource) =
 accountsActions.createIdpAccount = async (ldapIdpAccountDataDto, getAccessToken) => {
   const postData = {
     ...ldapIdpAccountDataDto.getPersistData()
-  }
+  };
   const apiUrl = "/users/account/idp/create";
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
@@ -374,7 +374,7 @@ accountsActions.updateIdpAccount = async (ldapIdpAccountDataDto,ldapOrganization
   const postData = {
     ...ldapIdpAccountDataDto.getPersistData(),
     // domain: ldapOrganizationAccountData.getData("orgDomain")
-  }
+  };
   const apiUrl = "/users/account/idp/update";
   return await baseActions.apiPutCall(getAccessToken, apiUrl, postData);
 };
@@ -382,7 +382,7 @@ accountsActions.updateIdpAccount = async (ldapIdpAccountDataDto,ldapOrganization
 accountsActions.createOrganizationAccount = async (ldapOrganizationAccountDataDto, getAccessToken) => {
   const postData = {
     ...ldapOrganizationAccountDataDto.getPersistData()
-  }
+  };
   const apiUrl = "/users/account/create";
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
@@ -390,7 +390,7 @@ accountsActions.createOrganizationAccount = async (ldapOrganizationAccountDataDt
 accountsActions.updateOrganizationAccount = async (ldapOrganizationAccountDataDto, getAccessToken) => {
   const postBody = {
     ...ldapOrganizationAccountDataDto.getPersistData()
-  }
+  };
   const apiUrl = "/users/account/update";
   return await baseActions.apiPutCall(getAccessToken, apiUrl, postBody);
 };
@@ -406,7 +406,7 @@ accountsActions.createOrganization = async (ldapOrganizationDataDto, getAccessTo
 accountsActions.updateOrganization = async (ldapOrganizationDataDto, getAccessToken) => {
   const postBody = {
     ...ldapOrganizationDataDto.getPersistData()
-  }
+  };
   const apiUrl = "/users/account/organization/update";
   return await baseActions.apiPutCall(getAccessToken, apiUrl, postBody);
 };
@@ -424,7 +424,7 @@ accountsActions.getOrganizationOwnerEmailWithName = async (organizationName, get
 accountsActions.getOrganizationAccountByName = async (organizationAccountName, getAccessToken) => {
   const postBody = {
     name: organizationAccountName
-  }
+  };
 
   const apiUrl = `/users/account/`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
@@ -439,15 +439,16 @@ accountsActions.getOrganizationAccountMembers = async (organizationAccountName, 
 accountsActions.getOrganizationAccountByDomain = async (domain, getAccessToken) => {
   const postBody = {
     domain: domain
-  }
+  };
   const apiUrl = "/users/account";
+
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 accountsActions.getOrganizationAccountByDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
   const postBody = {
     domain: domain
-  }
+  };
   const apiUrl = "/users/account";
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
@@ -456,7 +457,7 @@ accountsActions.getOrganizationAccountByEmail = async (email, getAccessToken) =>
   const apiUrl = "/users/account";
   const postBody = {
     email: email
-  }
+  };
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
@@ -466,7 +467,7 @@ accountsActions.create = async (accountData, getAccessToken) => {
 };
 
 accountsActions.getGroupV2 = async (getAccessToken, cancelTokenSource, orgDomain, groupName) => {
-  let postData = {
+  const postData = {
     domain: orgDomain,
     groupName: groupName,
   };
@@ -476,24 +477,24 @@ accountsActions.getGroupV2 = async (getAccessToken, cancelTokenSource, orgDomain
 
 
 accountsActions.updateGroup = async (orgDomain, ldapGroupDataDto, getAccessToken) => {
-  let putData = {
+  const putData = {
     "domain": orgDomain,
     "group": {
       ...ldapGroupDataDto.getPersistData()
     }
-  }
+  };
   const apiUrl = "/users/account/group/update";
   return await baseActions.apiPutCall(getAccessToken, apiUrl, putData);
 };
 
 accountsActions.createGroup = async (orgDomain, ldapGroupDataDto, currentUserEmail, getAccessToken) => {
-  let postData = {
+  const postData = {
     "domain": orgDomain,
     "group": {
       ...ldapGroupDataDto.getPersistData(),
       ownerEmail: currentUserEmail,
     }
-  }
+  };
   const apiUrl = "/users/account/group/create";
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
@@ -505,7 +506,7 @@ accountsActions.deleteGroup = async (orgDomain, ldapGroupDataDto, getAccessToken
 };
 
 accountsActions.syncMembership = async (orgDomain, groupName, emailList, getAccessToken) => {
-  let postData = {
+  const postData = {
     domain: orgDomain,
     groupName: groupName,
     emails: emailList,
