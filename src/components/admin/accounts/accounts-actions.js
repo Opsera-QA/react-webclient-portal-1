@@ -2,23 +2,25 @@ import baseActions from "utils/actionsBase";
 
 const accountsActions = {};
 
+// TODO: We should remove the way I handled permissions to align with the new standards.
 accountsActions.isOrganizationAccountOwner = (user) => {
-  let {ldap} = user;
+  const {ldap} = user;
   return ldap["orgAccountOwnerEmail"] === user["email"];
 };
 
 accountsActions.isOrganizationOwner = async (organizationName, getUserRecord, getAccessToken) => {
-    let response = await accountsActions.getOrganizationOwnerEmailWithName(organizationName, getAccessToken);
-    let organizationOwnerEmail = response.data["orgOwnerEmail"];
-    let user = await getUserRecord();
+  const response = await accountsActions.getOrganizationOwnerEmailWithName(organizationName, getAccessToken);
+  const organizationOwnerEmail = response.data["orgOwnerEmail"];
+  const user = await getUserRecord();
 
-    return organizationOwnerEmail === user["email"];
+  return organizationOwnerEmail === user["email"];
 };
 
 accountsActions.getAllowedOrganizationActions = async (customerAccessRules, organizationName, getUserRecord, getAccessToken) => {
   const user = await getUserRecord();
   const {ldap} = user;
   const userOrganization = ldap["organization"];
+
   if (customerAccessRules.OpseraAdministrator) {
     return ["get_organizations", "get_organization_details", "create_organization", "update_organization"];
   }
@@ -27,7 +29,7 @@ accountsActions.getAllowedOrganizationActions = async (customerAccessRules, orga
     return [];
   }
 
-  let orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
+  const orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
 
   if (orgOwner) {
     return ["get_organization_details", "update_organization"];
@@ -37,10 +39,7 @@ accountsActions.getAllowedOrganizationActions = async (customerAccessRules, orga
   }
 };
 
-accountsActions.getAllowedOrganizationAccountActions = async (customerAccessRules, organizationName, getUserRecord, getAccessToken) => {
-  const user = await getUserRecord();
-  const {ldap} = user;
-  const userOrganization = ldap["organization"];
+accountsActions.getAllowedOrganizationAccountActions = async (customerAccessRules) => {
 
   if (customerAccessRules.OpseraAdministrator) {
     return ["get_organization_accounts", "get_organization_account_details", "create_organization_account", "update_organization_account"];
@@ -192,6 +191,7 @@ accountsActions.getAllowedRoleGroupActions = async (customerAccessRules, organiz
   const user = await getUserRecord();
   const {ldap} = user;
   const userOrganization = ldap["organization"];
+
   if (customerAccessRules.OpseraAdministrator) {
     return ["get_groups", "get_group_details", "create_group", "update_group", "update_group_membership"];
   }
@@ -200,8 +200,8 @@ accountsActions.getAllowedRoleGroupActions = async (customerAccessRules, organiz
     return [];
   }
 
-  let orgAccountOwner = await accountsActions.isOrganizationAccountOwner(user);
-  let orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
+  const orgAccountOwner = await accountsActions.isOrganizationAccountOwner(user);
+  const orgOwner = await accountsActions.isOrganizationOwner(organizationName, getUserRecord, getAccessToken);
 
   if (orgOwner) {
     return ["get_groups", "get_group_details", "update_group_membership"];
@@ -319,7 +319,7 @@ accountsActions.getLdapGroupsWithDomainV2 = async (getAccessToken, cancelTokenSo
 
 // TODO: Remove when V2 is wired up everywhere
 accountsActions.getUserByEmail = async (email, getAccessToken) => {
-  let postBody = {
+  const postBody = {
     email: email
   };
   const apiUrl = "/users/account/user";
@@ -327,7 +327,7 @@ accountsActions.getUserByEmail = async (email, getAccessToken) => {
 };
 
 accountsActions.getUserByEmailV2 = async (getAccessToken, cancelTokenSource, email) => {
-  let postBody = {
+  const postBody = {
     email: email
   };
   const apiUrl = "/users/account/user";
@@ -340,7 +340,7 @@ accountsActions.getUser = async (userId, getAccessToken) => {
 };
 
 accountsActions.isEmailAvailable = async (email, getAccessToken) => {
-  let postBody = {
+  const postBody = {
     email: email
   };
   const apiUrl = "/users/account/is-email-available";
@@ -363,7 +363,7 @@ accountsActions.getOrganizationsV2 = async (getAccessToken, cancelTokenSource) =
 };
 
 accountsActions.createIdpAccount = async (ldapIdpAccountDataDto, getAccessToken) => {
-  let postData = {
+  const postData = {
     ...ldapIdpAccountDataDto.getPersistData()
   }
   const apiUrl = "/users/account/idp/create";
@@ -371,7 +371,7 @@ accountsActions.createIdpAccount = async (ldapIdpAccountDataDto, getAccessToken)
 };
 
 accountsActions.updateIdpAccount = async (ldapIdpAccountDataDto,ldapOrganizationAccountData, getAccessToken) => {
-  let postData = {
+  const postData = {
     ...ldapIdpAccountDataDto.getPersistData(),
     // domain: ldapOrganizationAccountData.getData("orgDomain")
   }
@@ -380,7 +380,7 @@ accountsActions.updateIdpAccount = async (ldapIdpAccountDataDto,ldapOrganization
 };
 
 accountsActions.createOrganizationAccount = async (ldapOrganizationAccountDataDto, getAccessToken) => {
-  let postData = {
+  const postData = {
     ...ldapOrganizationAccountDataDto.getPersistData()
   }
   const apiUrl = "/users/account/create";
@@ -388,7 +388,7 @@ accountsActions.createOrganizationAccount = async (ldapOrganizationAccountDataDt
 };
 
 accountsActions.updateOrganizationAccount = async (ldapOrganizationAccountDataDto, getAccessToken) => {
-  let postBody = {
+  const postBody = {
     ...ldapOrganizationAccountDataDto.getPersistData()
   }
   const apiUrl = "/users/account/update";
@@ -396,7 +396,7 @@ accountsActions.updateOrganizationAccount = async (ldapOrganizationAccountDataDt
 };
 
 accountsActions.createOrganization = async (ldapOrganizationDataDto, getAccessToken) => {
-  let postBody = {
+  const postBody = {
       ...ldapOrganizationDataDto.getPersistData(),
   }
   const apiUrl = "/users/account/organization/create";
@@ -404,7 +404,7 @@ accountsActions.createOrganization = async (ldapOrganizationDataDto, getAccessTo
 };
 
 accountsActions.updateOrganization = async (ldapOrganizationDataDto, getAccessToken) => {
-  let postBody = {
+  const postBody = {
     ...ldapOrganizationDataDto.getPersistData()
   }
   const apiUrl = "/users/account/organization/update";
@@ -422,7 +422,7 @@ accountsActions.getOrganizationOwnerEmailWithName = async (organizationName, get
 };
 
 accountsActions.getOrganizationAccountByName = async (organizationAccountName, getAccessToken) => {
-  let postBody = {
+  const postBody = {
     name: organizationAccountName
   }
 
