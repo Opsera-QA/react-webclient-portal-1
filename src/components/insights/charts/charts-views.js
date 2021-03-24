@@ -205,25 +205,30 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
 
 export const adjustBarWidth = (data, isVertical=true) => {
   let padding;
+  const x = data.length;
 
   if (isVertical) {
-    switch (data.length) {
-      case 1: padding = .85;
-              break;
-      case 2: padding = .75;
-              break;
-      case 3: padding = .65;
-              break;
+    switch (true) {
+      case 1:         padding = .85;
+                      break;
+      case 2:         padding = .75;
+                      break;
+      case 3:         padding = .65;
+                      break;
+      case (x <= 8):  padding = .45;
+                      break;
+      case (x <= 10): padding = .35;
+                       break;
       default: padding = .25;
     }
   } else {
-    switch (data.length) {
-      case 1: padding = .5;
-              break;
-      case 2: padding = .35;
-              break;
-      case 3: padding = .3;
-              break;
+    switch (true) {
+      case 1:         padding = .5;
+                      break;
+      case 2:         padding = .35;
+                      break;
+      case 3:         padding = .3;
+                      break;
       default: padding = .25;
     }
   }
