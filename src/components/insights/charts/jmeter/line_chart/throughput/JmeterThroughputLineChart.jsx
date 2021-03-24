@@ -79,7 +79,7 @@ function JMeterThroughputLineChart({ kpiConfiguration, setKpiConfiguration, dash
             <ResponsiveLine
               data={metrics}
               {...defaultConfig("Throughput", "Build Number", 
-                      false, true, "wholeNumbers", "wholeNumbers")}
+                  true, true, "wholeNumbers", "wholeNumbers")}
               {...config(getColor)}
               onClick={() => setShowModal(true)}
               tooltip={({ point, color }) => <ChartTooltip 

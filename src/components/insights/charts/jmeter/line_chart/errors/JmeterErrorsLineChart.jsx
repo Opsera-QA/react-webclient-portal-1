@@ -80,7 +80,7 @@ function JMeterErrorsLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
             <ResponsiveLine
               data={metrics}
               {...defaultConfig("Errors", "Build Number", 
-                      false, true, "wholeNumbers", "wholeNumbers")}
+                  true, true, "wholeNumbers", "wholeNumbers")}
               {...config(getColor)}
               onClick={() => setShowModal(true)}
               tooltip={({ point, color }) => <ChartTooltip 

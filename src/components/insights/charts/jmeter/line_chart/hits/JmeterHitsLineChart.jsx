@@ -80,7 +80,7 @@ function JMeterHitsLineChart({ kpiConfiguration, setKpiConfiguration, dashboardD
               data={metrics}
               onClick={() => setShowModal(true)}
               {...defaultConfig("Hits", "Build Number", 
-                      false, true, "wholeNumbers", "wholeNumbers")}
+                  true, true, "wholeNumbers", "wholeNumbers")}
               {...config(getColor)}
               tooltip={({ point, color }) => <ChartTooltip 
                               titles = {["Build ID", "Hits"]}
