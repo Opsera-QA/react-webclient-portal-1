@@ -25,7 +25,7 @@ function JiraIssuesAssignedToMe({ kpiConfiguration, setKpiConfiguration, dashboa
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "issueKey"), "cell-center no-wrap-inline"),
+      getTableTextColumn(getField(fields, "issueKey"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "type")),
       getTableTextColumn(getField(fields, "priority")),
       getTableTextColumn(getField(fields, "summary")),
@@ -83,7 +83,7 @@ function JiraIssuesAssignedToMe({ kpiConfiguration, setKpiConfiguration, dashboa
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage}/>}
+        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage} noFooter={true}/>}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
