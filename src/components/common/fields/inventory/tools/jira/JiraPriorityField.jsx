@@ -22,7 +22,7 @@ function JiraPriorityField({ dataObject, jiraToolId, fieldName }) {
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadPriorityName();
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);

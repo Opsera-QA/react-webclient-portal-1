@@ -177,8 +177,8 @@ function OPBlueprint(props) {
             setNoResults(false);
             setLogData(searchResults);
             if (xmlFile) setXMLData(xmlFile);
-            if (anchoreResponse) setAnchoreResponse(anchoreResponse)
-            if (anchoreStats) setAnchoreStats(anchoreStats)
+            if (anchoreResponse) setAnchoreResponse(anchoreResponse);
+            if (anchoreStats) setAnchoreStats(anchoreStats);
           }
           setLoading(false);
         })

@@ -1,5 +1,5 @@
-import React, {useContext} from 'react'
-import PropTypes from 'prop-types'
+import React, {useContext} from 'react';
+import PropTypes from 'prop-types';
 import MarketplaceChartInfoPanel from "components/insights/marketplace/charts/MarketplaceChartInfoPanel";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";

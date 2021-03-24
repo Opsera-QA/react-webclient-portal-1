@@ -3,6 +3,7 @@ import { Button, Form, Col, Card, Alert } from "react-bootstrap";
 import { apiServerUrl } from "../../../config";
 import { AuthContext } from "../../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../../api/apiService";
+import PropTypes from "prop-types";
 
 class ServiceNow extends Component {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
@@ -137,5 +138,9 @@ class ServiceNow extends Component {
     );
   }
 }
+
+ServiceNow.propTypes = {
+  history: PropTypes.any
+};
 
 export default ServiceNow;

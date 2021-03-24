@@ -17,7 +17,7 @@ function StepConfigGitBranchInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("defaultBranch", "");
     newDataObject.setData("gitBranch", "");
     setDataObject({...newDataObject});
-  }
+  };
 
   return (
      <GitBranchInput

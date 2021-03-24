@@ -52,29 +52,32 @@ function ContactInput({dataObject, setDataObject, fieldName, disabledFields, typ
 
     newDataObject.setData(fieldName, newArray);
     setDataObject({...newDataObject});
-  }
+  };
 
   const addProperty = () => {
     let newPropertyList = properties;
-    let lastObject = newPropertyList[newPropertyList.length - 1];
 
-    // Do not add another row if last row is not fully configured is not configured
-    if ((lastObject?.name === "" || lastObject?.email === "") && !allowIncompleteItems) {
-      return;
+    if (newPropertyList.length > 0) {
+      let lastObject = newPropertyList[newPropertyList.length - 1];
+
+      // Do not add another row if last row is not fully configured is not configured
+      if ((lastObject?.name === "" || lastObject?.email === "") && !allowIncompleteItems) {
+        return;
+      }
     }
 
     newPropertyList.push({name: "", email: "", user_id: ""});
-    setProperties(newPropertyList);
+    setProperties([...newPropertyList]);
   };
 
   const deleteProperty = (index) => {
-    let newPropertyList = properties
+    let newPropertyList = properties;
     newPropertyList.splice(index, 1);
     validateAndSetData(newPropertyList);
   };
 
   const updateName = (row, newValue) => {
-    let newPropertyList = properties
+    let newPropertyList = properties;
     let index = newPropertyList.indexOf(row);
     let format = regexHelpers.regexTypes["generalTextWithSpaces"];
     let meetsRegex = format.test(newValue);
@@ -91,7 +94,7 @@ function ContactInput({dataObject, setDataObject, fieldName, disabledFields, typ
   };
 
   const updateEmail = (row, newValue) => {
-    let newPropertyList = properties
+    let newPropertyList = properties;
     let index = newPropertyList.indexOf(row);
     let format = regexHelpers.regexTypes["email"];
     let meetsRegex = format.test(newValue);
@@ -202,7 +205,7 @@ function ContactInput({dataObject, setDataObject, fieldName, disabledFields, typ
       <Button variant="link" onClick={() => deleteProperty(index)}>
         <span><FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/></span>
       </Button>
-    )
+    );
   };
 
   const getHeaderBar = () => {
@@ -228,7 +231,7 @@ function ContactInput({dataObject, setDataObject, fieldName, disabledFields, typ
           <FontAwesomeIcon className="text-warning mr-1" icon={faExclamationTriangle} fixedWidth />
           <span className="mt-1">{`Incomplete ${field?.label} Will Be Removed Upon Saving`}</span>
         </div>
-      )
+      );
     }
   };
 
@@ -276,6 +279,6 @@ ContactInput.defaultProps = {
   allowIncompleteItems: false,
   nameMaxLength: 50,
   emailMaxLength: 50
-}
+};
 
 export default ContactInput;

@@ -69,7 +69,7 @@ export async function persistNewRecord(recordDto, toastContext, showSuccessToast
       toastContext.showInlineCreateFailureResultDialog(recordDto.getType(), error);
     }
     else {
-      toastContext.showCreateFailureResultDialog(recordDto.getType(), error)
+      toastContext.showCreateFailureResultDialog(recordDto.getType(), error);
     }
 
     return false;

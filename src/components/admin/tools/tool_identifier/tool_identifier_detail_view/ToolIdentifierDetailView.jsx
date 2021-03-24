@@ -41,7 +41,7 @@ function ToolIdentifierDetailView() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -60,7 +60,7 @@ function ToolIdentifierDetailView() {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();

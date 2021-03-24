@@ -148,7 +148,7 @@ function TableBase(
     }
 
     return (rows.map((row, i) => {return getTableRow(row, i);}));
-  }
+  };
 
   const getTableBody = () => {
     if (isLoading && (data == null || data.length === 0)) {

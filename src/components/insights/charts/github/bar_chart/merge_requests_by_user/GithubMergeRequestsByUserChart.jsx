@@ -35,7 +35,7 @@ function GithubMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, dash
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -79,7 +79,7 @@ function GithubMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, dash
           />
       </div>
   );
-  }
+  };
 
   return (
     <div>

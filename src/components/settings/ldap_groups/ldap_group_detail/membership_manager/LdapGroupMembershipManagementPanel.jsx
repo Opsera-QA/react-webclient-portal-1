@@ -43,7 +43,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, ldapUsers, orgDomain
     finally {
       setIsLoading(false);
     }
-  }
+  };
 
   const loadMemberStatus = async () => {
     const organizationUsers = Array.isArray(ldapUsers) ? ldapUsers : [];
@@ -94,7 +94,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, ldapUsers, orgDomain
 
   const goToSummaryPanel = () => {
     setActiveTab("summary");
-  }
+  };
 
   const getSaveAndCancelButtonContainer = () => {
     return (
@@ -123,7 +123,7 @@ function LdapGroupMembershipManagementPanel({ldapGroupData, ldapUsers, orgDomain
           onChange={event => updateSearchText(event.target.value)}
         />
       </div>
-    )
+    );
   };
 
   const getFilteredMembers = () => {

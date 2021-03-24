@@ -58,9 +58,9 @@ const _getSupportedLanguageType = (tags, languageTypes) => {
     if (tags.some(e => e.type === "pipeline" && e.value === lang)) {
       foundLanguageTag = lang;
     }
-  })
+  });
   return foundLanguageTag;
-}
+};
 /*
 const _checkTagLanguageType = (tags,expectedLang) => {
   if (tags.some(e => e.type === "pipeline" && e.value === expectedLang)) {

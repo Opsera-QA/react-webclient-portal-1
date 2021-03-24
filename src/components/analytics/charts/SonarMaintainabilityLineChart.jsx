@@ -10,7 +10,7 @@ import ChartTooltip from '../../insights/charts/ChartTooltip';
 function MaintainabilityLineChart({ data, persona }) {
   const { sonarMaintainability } = data;
   const [showModal, setShowModal] = useState(false);
-  assignStandardColors(sonarMaintainability?.data, true)
+  assignStandardColors(sonarMaintainability?.data, true);
 
   return (
     <>

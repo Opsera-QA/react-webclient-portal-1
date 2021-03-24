@@ -6,7 +6,7 @@ import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
 function ActionBarEditorToggleButton({ setActiveTab, settingsTab }) {
   const toggleEditorPanel = () => {
     setActiveTab(settingsTab);
-  }
+  };
 
   return (
     <ActionBarButton

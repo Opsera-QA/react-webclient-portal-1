@@ -6,6 +6,8 @@ import ErrorDialog from "../../common/status_notifications/error";
 import LoadingDialog from "../../common/status_notifications/loading";
 import Tools from "./Tools";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+
 class DeleteTools extends PureComponent {
   static contextType = AuthContext;
   constructor(props, context) {
@@ -120,5 +122,9 @@ class DeleteTools extends PureComponent {
     );
   }
 }
+
+DeleteTools.propTypes = {
+  history: PropTypes.any
+};
 
 export default DeleteTools;

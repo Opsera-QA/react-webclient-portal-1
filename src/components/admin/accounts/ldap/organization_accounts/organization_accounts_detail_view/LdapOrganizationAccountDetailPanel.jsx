@@ -111,7 +111,7 @@ function LdapOrganizationAccountDetailPanel(
         {/*<CustomTab icon={faCubes} tabName={"idpAccounts"} handleTabClick={handleTabClick} activeTab={activeTab}*/}
         {/*           tabText={"IDP Account"}/>*/}
       </CustomTabContainer>
-    )
+    );
   };
 
   return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);

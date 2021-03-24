@@ -52,7 +52,7 @@ function NotificationsView({isMounted}) {
 
   const loadNotifications = async (filterDto = notificationFilterDto) => {
     await getNotificationsList(filterDto);
-  }
+  };
 
   const getRoles = async () => {
     const user = await getUserRecord();
@@ -64,7 +64,7 @@ function NotificationsView({isMounted}) {
       setNotificationsList(response.data.data);
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.count);
-      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
       setNotificationFilterDto({...newFilterDto});
   };
 
@@ -127,5 +127,5 @@ function NotificationsView({isMounted}) {
 
 NotificationsView.propTypes ={
 isMounted: PropTypes.object,
-}
+};
 export default NotificationsView;

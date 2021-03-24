@@ -112,4 +112,4 @@ const cypressPipelineStepConfigurationMetadata = {
   }
 };
 
-export default cypressPipelineStepConfigurationMetadata
+export default cypressPipelineStepConfigurationMetadata;

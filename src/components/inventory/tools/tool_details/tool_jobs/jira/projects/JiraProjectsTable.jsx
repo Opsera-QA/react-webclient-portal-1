@@ -14,7 +14,7 @@ function JiraProjectsTable({ toolData, loadData, isLoading }) {
 
   const createJiraProject = () => {
     setShowCreateProjectModal(true);
-  }
+  };
 
   const columns = useMemo(
     () => [

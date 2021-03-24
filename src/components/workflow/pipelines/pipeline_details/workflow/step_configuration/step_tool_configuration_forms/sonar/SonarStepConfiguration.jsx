@@ -938,9 +938,9 @@ function SonarStepConfiguration({
                                         onChange={e => 
                                           {
                                             if(e.target.value.match("^\\S*$") != null){
-                                              setFormData({ ...formData, projectKey: e.target.value })
+                                              setFormData({ ...formData, projectKey: e.target.value });
                                           } else {
-                                            setErrors("ProjectKey is invalid, No Space allowed")
+                                            setErrors("ProjectKey is invalid, No Space allowed");
                                             }
                                           }
                                         
@@ -1269,6 +1269,6 @@ SonarStepConfiguration.propTypes = {
   createJob: PropTypes.func,
   setToast: PropTypes.func,
   setShowToast: PropTypes.func
-}
+};
 
 export default SonarStepConfiguration;

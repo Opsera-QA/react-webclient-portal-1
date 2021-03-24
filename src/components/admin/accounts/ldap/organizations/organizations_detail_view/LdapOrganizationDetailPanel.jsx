@@ -31,7 +31,7 @@ function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationDat
       case "summary":
         return <LdapOrganizationSummaryPanel ldapOrganizationData={ldapOrganizationData} setActiveTab={setActiveTab} />;
       case "accounts":
-        return <div className="p-3"><LdapOrganizationAccountsTable ldapOrganizationAccounts={organizationAccounts} authorizedActions={authorizedOrganizationAccountActions} ldapOrganizationData={ldapOrganizationData} loadData={loadData} /></div>
+        return <div className="p-3"><LdapOrganizationAccountsTable ldapOrganizationAccounts={organizationAccounts} authorizedActions={authorizedOrganizationAccountActions} ldapOrganizationData={ldapOrganizationData} loadData={loadData} /></div>;
       case "settings":
         return <LdapOrganizationEditorPanel handleClose={toggleSummaryPanel} setLdapOrganizationData={setLdapOrganizationData} ldapOrganizationData={ldapOrganizationData} authorizedActions={authorizedActions} />;
       default:
@@ -45,7 +45,7 @@ function LdapOrganizationDetailPanel({ organizationAccounts, ldapOrganizationDat
         <SummaryToggleTab activeTab={activeTab} handleTabClick={handleTabClick} />
         <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"}/>
       </CustomTabContainer>
-    )
+    );
   };
 
   return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);

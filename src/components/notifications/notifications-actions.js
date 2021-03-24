@@ -10,7 +10,7 @@ notificationsActions.deleteNotification = async (dataObject, getAccessToken) => 
 notificationsActions.updateNotification = async (notificationDataDto, getAccessToken) => {
   const postBody = {
     ...notificationDataDto.getPersistData()
-  }
+  };
   const apiUrl = `/notifications/${notificationDataDto.getData("_id")}/update`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
@@ -18,7 +18,7 @@ notificationsActions.updateNotification = async (notificationDataDto, getAccessT
 notificationsActions.updateNotificationV2 = async (getAccessToken, cancelTokenSource,notificationDataDto) => {
   const postBody = {
     ...notificationDataDto.getPersistData()
-  }
+  };
   const apiUrl = `/notifications/${notificationDataDto.getData("_id")}/update`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
@@ -26,7 +26,7 @@ notificationsActions.updateNotificationV2 = async (getAccessToken, cancelTokenSo
 notificationsActions.createNotification = async (notificationDataDto, getAccessToken) => {
   const postBody = {
     ...notificationDataDto.getPersistData()
-  }
+  };
   const apiUrl = "/notifications/create";
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
@@ -34,7 +34,7 @@ notificationsActions.createNotification = async (notificationDataDto, getAccessT
 notificationsActions.createNotificationV2 = async (getAccessToken, cancelTokenSource, notificationDataDto) => {
   const postBody = {
     ...notificationDataDto.getPersistData()
-  }
+  };
   const apiUrl = "/notifications/create";
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
@@ -53,7 +53,7 @@ notificationsActions.getNotificationsList = async (notificationDataDto, getAcces
       tool: notificationDataDto.getFilterValue("toolIdentifier"),
       search: notificationDataDto.getFilterValue("search")
     }
-  }
+  };
 
   const apiUrl = `/notifications`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
@@ -81,7 +81,7 @@ notificationsActions.getNotificationActivityLogs = async (notificationDataDto, n
       status: notificationActivityFilterDto.getFilterValue("status"),
       search: notificationActivityFilterDto.getFilterValue("search"),
     }
-  }
+  };
 
   const apiUrl = `/notifications/logs/${notificationDataDto.getData("_id")}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
@@ -99,7 +99,7 @@ notificationsActions.getAllNotificationActivityLogs = async ( notificationActivi
       status: notificationActivityFilterDto.getFilterValue("status"),
       search: notificationActivityFilterDto.getFilterValue("search"),
     }
-  }
+  };
 
   const apiUrl = `/notifications/logs/`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);

@@ -25,7 +25,7 @@ import filterMetadata from "./filter-metadata";
 import Model from "../../../../core/data_model/model";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import PageSize from "components/common/pagination/page_options/PageSize";
-import { isEquals } from "components/common/helpers/array-helpers"
+import { isEquals } from "components/common/helpers/array-helpers";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
@@ -197,7 +197,7 @@ const SfdcPipelineProfileComponents = ({
       setProfileCompCheckAll(true);
       setSelectedProfileComponent(allProfileComponentType);
       handleApproveChanges(true);
-  }
+  };
 
   const handleApproveChanges = async (checkall) => {
     
@@ -440,8 +440,8 @@ const SfdcPipelineProfileComponents = ({
           {getPaginator(filterDto, setFilterDto, loading, loadData)}
         </div>
       </div>
-    )
-  }
+    );
+  };
 
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
@@ -458,9 +458,9 @@ const SfdcPipelineProfileComponents = ({
       committedFile: data.committedFile,
       committedTime: data.committedTime,
       commitAction: data.commitAction
-    }
+    };
     setSelectedProfileComponent((selectedProfileComponent) => [...selectedProfileComponent, newObj]);
-  }
+  };
 
   const getSfdcInlineFilters = () => {    
     return (
@@ -487,7 +487,7 @@ const SfdcPipelineProfileComponents = ({
     }else{
       setSelectedProfileComponent([]);
     }
-  }
+  };
 
   const getProfileComponentTableData = (data, allProfile) => {
     setModifiedFilesTable(data.map(d => {
@@ -497,9 +497,9 @@ const SfdcPipelineProfileComponents = ({
           isChecked: selectedProfileComponent.some(selected => selected.componentType === d.componentType && selected.committedFile === d.committedFile && selected.commitAction === d.commitAction && selected.committedTime === d.committedTime)          
         },
         d
-      )
-    }))
-  }
+      );
+    }));
+  };
 
   if (error) {
     return (<div className="mt-3">

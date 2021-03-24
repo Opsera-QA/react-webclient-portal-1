@@ -13,7 +13,7 @@ function NavigationTab({activeTab, tabName, tabText, handleTabClick, icon, visib
           {getIcon()}<span className="ml-2 d-none d-lg-inline">{tabText}</span>
         </a>
       </li>
-    )
+    );
   };
 
   const getIcon = () => {

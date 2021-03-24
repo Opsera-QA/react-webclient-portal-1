@@ -22,7 +22,7 @@ function WarningBanner({warningMessage, removeBanner, id}) {
             clearWarning();
           }}/>
         </div>
-      )
+      );
     }
   };
 

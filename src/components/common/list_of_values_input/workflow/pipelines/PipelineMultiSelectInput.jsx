@@ -38,12 +38,12 @@ function PipelineMultiSelectInput({ currentPipelineId, visible, fieldName, dataO
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadPipelines(cancelSource);
     }
     catch (error) {
@@ -88,7 +88,7 @@ function PipelineMultiSelectInput({ currentPipelineId, visible, fieldName, dataO
     if (foundPipeline != null) {
       let pipelineDataObject = new Model({...foundPipeline.pipeline}, pipelineMetadata, false);
       let run = foundPipeline.workflow?.lastRun?.run;
-      return (<PipelineSummaryCard pipelineData={pipelineDataObject} run={run != null ? `${run}` : `0`} /> )
+      return (<PipelineSummaryCard pipelineData={pipelineDataObject} run={run != null ? `${run}` : `0`} /> );
     }
 
     return ('Could not get pipeline details. Pipeline may have been deleted');
@@ -107,7 +107,7 @@ function PipelineMultiSelectInput({ currentPipelineId, visible, fieldName, dataO
       );
     }
 
-    return <span>Select a pipeline to get started.</span>
+    return <span>Select a pipeline to get started.</span>;
   };
 
   if (visible === false) {
@@ -121,7 +121,7 @@ function PipelineMultiSelectInput({ currentPipelineId, visible, fieldName, dataO
         No other pipelines have been registered. Please go to <Link to="/workflow">Pipelines</Link> and add another pipeline in order to
         configure a child pipeline step.
       </div>
-    )
+    );
   }
 
   return (

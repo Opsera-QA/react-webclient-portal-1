@@ -39,7 +39,7 @@ const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestr
             "dataType": gitTaskData ? "sync-sfdc-repo" : "sfdc-packageXml", 
             "gitTaskId": gitTaskData ? gitTaskId : false,
             "fetchAttribute": "packageXml"
-           }
+           };
         const response = await sfdcPipelineActions.getListFromPipelineStorage(postBody, "", getAccessToken);
         
         if(!response.data.data || !response.data.data.packageXml) {

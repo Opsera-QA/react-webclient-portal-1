@@ -9,7 +9,7 @@ function PipelineTaskStateField({ fieldName, dataObject, className }) {
 
   const getPipelineStateField = (pipelineState) => {
     console.log("pipeline state: " + JSON.stringify(pipelineState));
-    return <span>{getAssociatedPipelineStatusIcon(pipelineState)}<span className="ml-1 mt-1">{pipelineState}</span></span>
+    return <span>{getAssociatedPipelineStatusIcon(pipelineState)}<span className="ml-1 mt-1">{pipelineState}</span></span>;
   };
 
   if (dataObject.getData(fieldName) == null) {
@@ -17,7 +17,7 @@ function PipelineTaskStateField({ fieldName, dataObject, className }) {
       <FieldContainer>
         <span>No Pipeline State Associated With This Task</span>
       </FieldContainer>
-    )
+    );
   }
 
   return (

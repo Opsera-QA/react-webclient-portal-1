@@ -11,8 +11,8 @@ function ToolCountTable({ data, isLoading, loadData }) {
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "_id"})),
-      getTableTextColumn(fields.find(field => { return field.id === "count"})),
+      getTableTextColumn(fields.find(field => { return field.id === "_id";})),
+      getTableTextColumn(fields.find(field => { return field.id === "count";})),
     ],
     []
   );

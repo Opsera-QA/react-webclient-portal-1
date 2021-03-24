@@ -46,4 +46,4 @@ export const accessTokenMetadata = {
     expiration: "1mo",
     scope: "api",
   }
-}
+};

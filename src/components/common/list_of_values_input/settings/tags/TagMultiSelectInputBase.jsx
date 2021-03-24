@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import { Multiselect } from 'react-widgets'
+import { Multiselect } from 'react-widgets';
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
@@ -33,7 +33,7 @@ function TagMultiSelectInputBase({ fieldName, dataObject, setDataObject, disable
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -80,7 +80,7 @@ function TagMultiSelectInputBase({ fieldName, dataObject, setDataObject, disable
     if (isMounted?.current === true) {
       setDataObject({...newDataObject});
     }
-  }
+  };
 
   const loadTagOptions = (tags) => {
     let currentOptions = [];
@@ -93,7 +93,7 @@ function TagMultiSelectInputBase({ fieldName, dataObject, setDataObject, disable
     if (isMounted?.current === true) {
       setTagOptions(currentOptions);
     }
-  }
+  };
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
@@ -109,7 +109,7 @@ function TagMultiSelectInputBase({ fieldName, dataObject, setDataObject, disable
       return errorMessage;
     }
 
-    return "Select Tags"
+    return "Select Tags";
   };
 
   if (field == null) {
@@ -143,6 +143,6 @@ TagMultiSelectInputBase.propTypes = {
 
 TagMultiSelectInputBase.defaultProps = {
   fieldName: "tags"
-}
+};
 
 export default TagMultiSelectInputBase;

@@ -180,6 +180,7 @@ OpseraPipelineStatusFailed.propTypes = {
   persona: PropTypes.string,
   searchQuery: PropTypes.string,
   filterType: PropTypes.string,
+  date: PropTypes.object
 };
 
 export default OpseraPipelineStatusFailed;

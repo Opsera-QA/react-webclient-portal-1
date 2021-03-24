@@ -35,7 +35,7 @@ function ToolCategoryEditorPanel({ toolCategoryData, setToolCategoryData, handle
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async () => {

@@ -22,7 +22,7 @@ function UserMappingProjectSelectInput({ fieldName, dataObject, setDataObject, d
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadProjects();
     }
     catch (error) {

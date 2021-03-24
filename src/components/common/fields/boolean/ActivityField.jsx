@@ -17,6 +17,7 @@ function ActivityField({dataObject, fieldName, className}) {
 ActivityField.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
+  className: PropTypes.string
 };
 
 export default ActivityField;

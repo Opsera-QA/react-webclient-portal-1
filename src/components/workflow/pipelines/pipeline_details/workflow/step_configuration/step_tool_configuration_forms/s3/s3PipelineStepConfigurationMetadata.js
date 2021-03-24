@@ -36,4 +36,4 @@ const s3PipelineStepConfigurationMetadata = {
   }
 };
 
-export default s3PipelineStepConfigurationMetadata
+export default s3PipelineStepConfigurationMetadata;

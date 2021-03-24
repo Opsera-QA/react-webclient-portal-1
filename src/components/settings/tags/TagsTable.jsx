@@ -21,7 +21,6 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, i
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   let fields = tagEditorMetadata.fields;
-  const [showTagModal, setShowTagModal] = useState(false);
 
   const columns = useMemo(
     () => [
@@ -102,6 +101,7 @@ TagsTable.propTypes = {
   tagFilterDto: PropTypes.object,
   activeTagFilterDto: PropTypes.object,
   setTagFilterDto: PropTypes.func,
+  isMounted: PropTypes.object
 };
 
 export default TagsTable;

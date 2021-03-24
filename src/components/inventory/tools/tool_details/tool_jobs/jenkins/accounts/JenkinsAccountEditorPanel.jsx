@@ -34,7 +34,7 @@ function JenkinsAccountEditorPanel({ toolData, jenkinsAccountData, setJenkinsAcc
 
   const updateApplicationCaller= async () => {
     setShowEditModal(true);
-  }
+  };
 
   const updateJenkinsAccount = async () => {
     return await jenkinsAccountActions.createJenkinsAccount(jenkinsAccountData, toolData, getAccessToken);

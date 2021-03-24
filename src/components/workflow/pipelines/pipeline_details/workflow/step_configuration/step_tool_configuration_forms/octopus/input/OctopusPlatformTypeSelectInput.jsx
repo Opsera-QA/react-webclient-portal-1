@@ -11,7 +11,7 @@ function OctopusPlatformTypeSelectInput({ fieldName, dataObject, setDataObject, 
   const { getAccessToken } = useContext(AuthContext);
   const [platformType, setOctopusPlatformTypes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a Platform Type")
+  const [placeholder, setPlaceholder] = useState("Select a Platform Type");
 
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function OctopusPlatformTypeSelectInput({ fieldName, dataObject, setDataObject, 
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTypes();
     }
     catch (error) {
@@ -35,14 +35,14 @@ function OctopusPlatformTypeSelectInput({ fieldName, dataObject, setDataObject, 
 
   const loadTypes = async () => {
     try {
-      const res = await OctopusStepActions.getPlatformTypes(dataObject.getData("octopusToolId"),dataObject.getData("spaceId"), getAccessToken)
+      const res = await OctopusStepActions.getPlatformTypes(dataObject.getData("octopusToolId"),dataObject.getData("spaceId"), getAccessToken);
       if (res && res.status === 200) {
-        setOctopusPlatformTypes(res.data)
-        return
+        setOctopusPlatformTypes(res.data);
+        return;
       }
       setOctopusPlatformTypes([]);
     } catch (error) {
-      setPlaceholder("No Platform Type Found")
+      setPlaceholder("No Platform Type Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }
@@ -60,7 +60,7 @@ function OctopusPlatformTypeSelectInput({ fieldName, dataObject, setDataObject, 
       setDataObject({ ...newDataObject });
       return;
     }
-  }
+  };
 
   return (
     <div>

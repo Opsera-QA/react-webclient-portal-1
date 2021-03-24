@@ -1,6 +1,6 @@
 export function parseError(error) {
   if (!error || error.length === 0) {
-    return "Unknown error reported. Please check console log."
+    return "Unknown error reported. Please check console log.";
   }
   console.error(error); //log all errors to console
 

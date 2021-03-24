@@ -1,4 +1,4 @@
-import React, { useMemo }  from 'react'
+import React, { useMemo }  from 'react';
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
@@ -14,6 +14,7 @@ import InlineBooleanFilter from "components/common/filters/boolean/InlineBoolean
 import "../../workflowWizard.css";
 
 
+// TODO: This should further be broken down into two components. I will do it soon, hopefully - Noah
 const SfdcProfileSelectionView = ({
   destLoadData,
   destFilterDto,
@@ -34,7 +35,7 @@ const SfdcProfileSelectionView = ({
 
   const columnsWithOutCheckBoxCell = useMemo(
     () => [      
-      {...getTableTextColumn(fields.find(field => { return field.id === "committedFile"})), class: "wrap-cell-content"},
+      {...getTableTextColumn(fields.find(field => { return field.id === "committedFile";})), class: "wrap-cell-content"},
       // getTableDateTimeColumn(fields.find(field => { return field.id === "committedTime"})),
     ],
     [],
@@ -42,7 +43,7 @@ const SfdcProfileSelectionView = ({
 
   const sfdcColumnsWithCheckBoxCell = useMemo(
     () => [
-      {...getTableTextColumn(fields.find(field => { return field.id === "committedFile"})), class: "wrap-cell-content"},
+      {...getTableTextColumn(fields.find(field => { return field.id === "committedFile";})), class: "wrap-cell-content"},
       // getTableDateTimeColumn(fields.find(field => { return field.id === "committedTime"})),
       getCheckBoxColumn(handleComponentCheck)  
     ],
@@ -125,9 +126,9 @@ const SfdcProfileSelectionView = ({
             />
         </div>
     </div>
-  )
+  );
 
-}
+};
 
 SfdcProfileSelectionView.propTypes = {
   loading: PropTypes.bool,
@@ -137,7 +138,13 @@ SfdcProfileSelectionView.propTypes = {
   filterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
   handleComponentCheck: PropTypes.func,
-  handleCheckAllClickComponentTypes: PropTypes.func  
+  handleCheckAllClickComponentTypes: PropTypes.func  ,
+  destLoadData: PropTypes.func,
+  destFilterDto: PropTypes.object,
+  setDestFilterDto: PropTypes.func,
+  destLoading: PropTypes.bool,
+  destComponentType: PropTypes.any,
+  destData: PropTypes.object
 };
 
 export default SfdcProfileSelectionView;

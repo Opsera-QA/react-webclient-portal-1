@@ -471,7 +471,7 @@ function JUnitStepConfiguration({
   };
 
   const handleJobChange = (selectedOption) => {
-    console.log(selectedOption)
+    console.log(selectedOption);
     if (selectedOption.type[0] === "UNIT TESTING" ) {      
         setFormData({
           ...formData,
@@ -1116,6 +1116,6 @@ JUnitStepConfiguration.propTypes = {
   createJob: PropTypes.func,
   setToast: PropTypes.func,
   setShowToast: PropTypes.func
-}
+};
 
 export default JUnitStepConfiguration;

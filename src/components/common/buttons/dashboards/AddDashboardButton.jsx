@@ -27,7 +27,7 @@ function AddDashboardTemplateButton({ disable, dashboardTemplate, catalog, class
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const addTemplateToDashboards = async (cancelSource = cancelTokenSource) => {

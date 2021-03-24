@@ -32,7 +32,7 @@ function StepConfigBitbucketWorkspaceInput({dataObject, setDataObject, disabled}
     newDataObject.setData("defaultBranch", "");
     newDataObject.setData("gitBranch", "");
     setDataObject({...newDataObject});
-  }
+  };
 
   if (dataObject.getData("service") !== "bitbucket") {
     return <></>;

@@ -11,7 +11,7 @@ import {
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
-import NewToolIdentifierOverlay from './NewToolIdentifierOverlay'
+import NewToolIdentifierOverlay from './NewToolIdentifierOverlay';
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTools} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";

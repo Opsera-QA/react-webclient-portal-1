@@ -14,7 +14,7 @@ function InfoText({ field, errorMessage }) {
     <small className="text-muted form-text">
       <div>{field.formText}</div>
     </small>
-  )
+  );
 }
 
 InfoText.propTypes = {

@@ -85,7 +85,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
             <CustomTab icon={faBrowser} tabName={"applications"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Applications"} disabled={!authorizedAction("edit_tool_application_tabs", toolData?.data)}/>
             <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Logs"}/>
           </>
-        )
+        );
       case "gitlab":
       case "github":
       case "bitbucket":
@@ -139,7 +139,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case "tagging":
         return <ToolTaggingPanel toolData={toolData} />;
       case "projects":
-        return <ToolProjectsPanel toolData={toolData} isLoading={isLoading} loadData={loadData} />
+        return <ToolProjectsPanel toolData={toolData} isLoading={isLoading} loadData={loadData} />;
       case "pipelines":
         return <ToolPipelinesPanel toolData={toolData} />;
       default:

@@ -22,7 +22,7 @@ function ProjectMappingProjectSelectInput({ fieldName, dataObject, setDataObject
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadProjects();
     }
     catch (error) {

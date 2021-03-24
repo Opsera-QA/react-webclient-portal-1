@@ -10,7 +10,7 @@ import ActionBarBackButton from "components/common/actions/buttons/ActionBarBack
 import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
-import axios from "axios"
+import axios from "axios";
 import { meetsRequirements } from "components/common/helpers/role-helpers";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 
@@ -43,7 +43,7 @@ function NotificationDetailView() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -110,7 +110,7 @@ function NotificationDetailView() {
       actionBar={getActionBar()}
       detailPanel={<NotificationDetailPanel notificationData={notificationData} isLoading={isLoading} setNotificationData={setNotificationData} loadData={getNotificationData}/>}
     />
-  )
+  );
 }
 
 export default NotificationDetailView;

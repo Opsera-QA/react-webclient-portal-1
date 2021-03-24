@@ -15,7 +15,7 @@ function ProjectRepositorySelectInput({ fieldName, dataObject, setDataObject, di
     setRepositories([]);
     if (tool_prop != null && dataObject.getData("tool_identifier") && dataObject.getData("tool_id")) {
       if (dataObject.getData("tool_identifier") === "bitbucket" && !dataObject.getData("tool_prop")) {
-        return
+        return;
       }
       loadData();
     }
@@ -23,7 +23,7 @@ function ProjectRepositorySelectInput({ fieldName, dataObject, setDataObject, di
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadWorkspaces();
     }
     catch (error) {
@@ -38,7 +38,7 @@ function ProjectRepositorySelectInput({ fieldName, dataObject, setDataObject, di
     let results = await pipelineActions.searchRepositories(dataObject.getData("tool_identifier"), dataObject.getData("tool_id"), dataObject.getData("tool_prop"), getAccessToken);
     if (typeof results != "object") {
       toastContext.showLoadingErrorDialog(`There has been an error in fetching ${dataObject.getData("tool_identifier")} repositories`);
-      return
+      return;
     }
     setRepositories(results);
   };

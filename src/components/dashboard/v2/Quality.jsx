@@ -21,9 +21,10 @@ function QualityDashboard( { persona, date, index } ) {
   }  
 }
 
-
 QualityDashboard.propTypes = {
-  persona: PropTypes.string
+  persona: PropTypes.string,
+  index: PropTypes.any,
+  date: PropTypes.object
 };
 
 export default QualityDashboard;

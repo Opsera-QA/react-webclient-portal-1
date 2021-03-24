@@ -17,7 +17,7 @@ function LdapOrganizationAccountSelectInput({ fieldName, dataObject, setDataObje
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await getLdapOrganizationAccounts();
     }
     catch (error) {

@@ -13,7 +13,7 @@ function AccountSelectInput({ fieldName, dataObject, setDataObject, disabled, te
   const { getAccessToken } = useContext(AuthContext);
   const [accounts, setAccounts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select an octopus configured account")
+  const [placeholder, setPlaceholder] = useState("Select an octopus configured account");
 
   useEffect(() => {
     if (!disabled) {
@@ -27,7 +27,7 @@ function AccountSelectInput({ fieldName, dataObject, setDataObject, disabled, te
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTypes();
     }
     catch (error) {
@@ -40,14 +40,14 @@ function AccountSelectInput({ fieldName, dataObject, setDataObject, disabled, te
 
   const loadTypes = async () => {
     try {
-      const res = await OctopusStepActions.getAccounts(dataObject.getData("toolId"),dataObject.getData("spaceId"), getAccessToken)
+      const res = await OctopusStepActions.getAccounts(dataObject.getData("toolId"),dataObject.getData("spaceId"), getAccessToken);
       if (res && res.status === 200) {
-        setAccounts(res.data)
-        return
+        setAccounts(res.data);
+        return;
       }
       setAccounts([]);
     } catch (error) {
-      setPlaceholder("No Accounts Found")
+      setPlaceholder("No Accounts Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }

@@ -26,7 +26,7 @@ function CopyToClipboardButton({ copyString, size }) {
   };
 
   return (
-    <Button size={size} variant={copiedToClipboard ? "success" : "outline-secondary"} onClick={() => {copyToClipboard()}} disabled={copyString == null}>
+    <Button size={size} variant={copiedToClipboard ? "success" : "outline-secondary"} onClick={() => {copyToClipboard();}} disabled={copyString == null}>
       {getLabel()}
     </Button>
   );
@@ -39,6 +39,6 @@ CopyToClipboardButton.propTypes = {
 
 CopyToClipboardButton.defaultProps = {
   size: "sm"
-}
+};
 
 export default CopyToClipboardButton;

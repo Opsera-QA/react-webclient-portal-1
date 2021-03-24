@@ -13,7 +13,7 @@ function PipelineStatus({ icon, innerText, statusText, tableColumn }) {
         </TooltipWrapper>
         <div className="text-muted">{statusText}</div>
       </div>
-    )
+    );
   }
 
   return (

@@ -38,7 +38,7 @@ function LdapUserManagement() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [orgDomain]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -57,7 +57,7 @@ function LdapUserManagement() {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const getUsersByDomain = async (ldapDomain, cancelSource = cancelTokenSource) => {
     try {

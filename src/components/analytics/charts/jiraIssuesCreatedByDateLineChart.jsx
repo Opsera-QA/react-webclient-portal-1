@@ -143,6 +143,7 @@ function JiraIssuesCreatedByDateLineChart({ persona, date }) {
 }
 JiraIssuesCreatedByDateLineChart.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object
 };
 
 export default JiraIssuesCreatedByDateLineChart;

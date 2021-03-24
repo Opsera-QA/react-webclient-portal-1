@@ -36,7 +36,7 @@ function ToolInventory({ customerAccessRules }) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const getCookie = async (cancelSource = cancelTokenSource) => {

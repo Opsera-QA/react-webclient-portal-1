@@ -44,7 +44,7 @@ function TeamCityStepConfiguration( { configurationData, parentCallback }) {
   };
 
   if (teamCityDataDto == null) {
-    return <LoadingDialog size="sm" />
+    return <LoadingDialog size="sm" />;
   }
   
   return (

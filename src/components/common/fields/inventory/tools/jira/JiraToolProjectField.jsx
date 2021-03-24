@@ -29,7 +29,7 @@ function JiraToolProjectField({ dataObject, jiraToolId, jiraToolProjectId, field
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadJiraTool();
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -45,7 +45,7 @@ function JiraToolProjectField({ dataObject, jiraToolId, jiraToolProjectId, field
 
       if (toolDataResponse != null) {
         const toolDataDto = new Model(toolDataResponse, toolMetadata, false);
-        unpackJiraToolProject(toolDataDto)
+        unpackJiraToolProject(toolDataDto);
       }
     }
   };

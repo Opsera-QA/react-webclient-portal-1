@@ -23,7 +23,7 @@ function PersistAndCloseButtonContainer({ recordDto, setRecordDto, updateRecord,
     }
 
     if (lenient) {
-      return (<LenientSaveButton recordDto={recordDto} updateRecord={updateRecord} disable={disable} />)
+      return (<LenientSaveButton recordDto={recordDto} updateRecord={updateRecord} disable={disable} />);
     }
 
     return (<StrictSaveButton recordDto={recordDto} updateRecord={updateRecord} disable={disable} />);

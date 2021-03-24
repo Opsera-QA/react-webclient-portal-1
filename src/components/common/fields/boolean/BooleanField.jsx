@@ -17,6 +17,7 @@ function BooleanField({dataObject, fieldName, className}) {
 BooleanField.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
+  className: PropTypes.string
 };
 
 export default BooleanField;

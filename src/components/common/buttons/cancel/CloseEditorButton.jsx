@@ -9,7 +9,7 @@ function CloseEditorButton({ dataModel, isLoading, closeEditorCallback, size, cl
     }
 
     closeEditorCallback();
-  }
+  };
 
 
   if (closeEditorCallback == null) {

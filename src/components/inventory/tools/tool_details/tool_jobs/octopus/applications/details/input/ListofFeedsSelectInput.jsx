@@ -11,7 +11,7 @@ function ListOfFeedsSelectInput({ fieldName, dataObject, setDataObject, disabled
   const { getAccessToken } = useContext(AuthContext);
   const [listOfFeeds, setListOfFeedss] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a Feed")
+  const [placeholder, setPlaceholder] = useState("Select a Feed");
 
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function ListOfFeedsSelectInput({ fieldName, dataObject, setDataObject, disabled
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTypes();
     }
     catch (error) {
@@ -35,14 +35,14 @@ function ListOfFeedsSelectInput({ fieldName, dataObject, setDataObject, disabled
 
   const loadTypes = async () => {
     try {
-      const res = await OctopusStepActions.getFeedList(dataObject.getData("toolId"), dataObject.getData("spaceId"), getAccessToken)
+      const res = await OctopusStepActions.getFeedList(dataObject.getData("toolId"), dataObject.getData("spaceId"), getAccessToken);
       if (res && res.status === 200) {
-        setListOfFeedss(res.data)
-        return
+        setListOfFeedss(res.data);
+        return;
       }
       setListOfFeedss([]);
     } catch (error) {
-      setPlaceholder("No Feeds Found")
+      setPlaceholder("No Feeds Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }
@@ -55,7 +55,7 @@ function ListOfFeedsSelectInput({ fieldName, dataObject, setDataObject, disabled
       setDataObject({ ...newDataObject });
       return;
     }
-  }
+  };
 
   return (
     <div>

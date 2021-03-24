@@ -35,7 +35,7 @@ function Notifications() {
       default:
         return null;
     }
-  }
+  };
 
   return (
     <ScreenContainer

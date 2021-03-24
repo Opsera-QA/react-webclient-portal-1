@@ -16,7 +16,7 @@ import RegistryToolApplicationsInput from "components/inventory/tools/tool_detai
 import RegistryToolOrganizationInput from "components/inventory/tools/tool_details/input/RegistryToolOrganizationInput";
 import RegistryToolContactInput from "components/inventory/tools/tool_details/input/RegistryToolContactInput";
 import TagManager from "components/common/inputs/tags/TagManager";
-import axios from "axios"
+import axios from "axios";
 
 function ToolEditorPanel({ toolData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -43,7 +43,7 @@ function ToolEditorPanel({ toolData, handleClose }) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async () => {
