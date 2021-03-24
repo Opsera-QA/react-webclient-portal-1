@@ -9,7 +9,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { line } from "d3-shape";
-import { defaultConfig, getColorByData, assignStandardColors, 
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
          accentColor } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
@@ -115,6 +115,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
           {...defaultConfig("Number of Deployments", "Date", 
                     false, true, "wholeNumbers", "monthDate2")}
           {...config(getColorByData, getMaxValue(metrics), MeanLineLayer)}
+          {...adjustBarWidth(metrics)}
           onClick={() => setShowModal(true)}
           tooltip={({ indexValue, value, data, color }) => <ChartTooltip 
                     titles={["Date", "Number of Deployments", "Mean Time To Restore"]}

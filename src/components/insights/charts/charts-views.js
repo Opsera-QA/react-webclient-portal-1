@@ -214,7 +214,7 @@ export const adjustBarWidth = (data, isVertical=true) => {
     }
   } else {
     switch (data.length) {
-      case 1: padding = .4;
+      case 1: padding = .5;
               break;
       case 2: padding = .35;
               break;
