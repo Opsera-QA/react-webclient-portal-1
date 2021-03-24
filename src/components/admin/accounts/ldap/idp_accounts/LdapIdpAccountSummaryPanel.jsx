@@ -15,7 +15,7 @@ function LdapIdpAccountSummaryPanel({ldapIdpAccountData, setShowIdpEditPanel, au
   }
 
   return (
-    <SummaryPanelContainer editingAllowed={authorizedActions?.includes("update_idp_account")} setActiveTab={() => {setShowIdpEditPanel(true)}}>
+    <SummaryPanelContainer editingAllowed={authorizedActions?.includes("update_idp_account")} setActiveTab={() => {setShowIdpEditPanel(true);}}>
       <Row>
         <Col lg={6}>
           <TextFieldBase dataObject={ldapIdpAccountData} fieldName={"name"} />

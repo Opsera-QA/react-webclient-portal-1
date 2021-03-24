@@ -22,7 +22,7 @@ function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visibl
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTools();
     }
     catch (error) {
@@ -38,8 +38,8 @@ function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visibl
 
     if (response && Array.isArray(response)) {
       if (configurationRequired) {
-        const filteredTools = response?.filter((tool) => {return tool.configuration != null && Object.entries(tool.configuration).length > 0 });
-        setTools(filteredTools)
+        const filteredTools = response?.filter((tool) => {return tool.configuration != null && Object.entries(tool.configuration).length > 0; });
+        setTools(filteredTools);
       }
       else {
         setTools(response);
@@ -56,7 +56,7 @@ function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visibl
       );
     }
 
-    return <span>Select a tool to get started.</span>
+    return <span>Select a tool to get started.</span>;
   };
 
   if (!visible) {
@@ -72,7 +72,7 @@ function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visibl
         <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to
         proceed.
       </div>
-    )
+    );
   }
 
   return (
@@ -108,10 +108,11 @@ PipelineToolInput.propTypes = {
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   configurationRequired: PropTypes.bool,
+  clearDataFunction: PropTypes.func
 };
 
 PipelineToolInput.defaultProps = {
   visible: true,
-}
+};
 
 export default PipelineToolInput;

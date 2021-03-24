@@ -11,7 +11,7 @@ function CommandLineDependencyTypeInput({dataObject, setDataObject, disabled}) {
     let dependenciesObj = {};
     selectedOption.map((item) => {
       dependenciesObj[item.dependencyType] = item.version;
-    })
+    });
     // console.log(dependenciesObj);
     newDataObject.setData("dependencyType", selectedOption);
     newDataObject.setData("dependencies", dependenciesObj);

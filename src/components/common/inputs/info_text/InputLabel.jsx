@@ -16,7 +16,7 @@ function InputLabel({ field, inputPopover, className, showLabel }) {
        <div>{getFormattedLabel()}</div>
        <div>{inputPopover}</div>
      </div>
-    )
+    );
   }
 
   return (

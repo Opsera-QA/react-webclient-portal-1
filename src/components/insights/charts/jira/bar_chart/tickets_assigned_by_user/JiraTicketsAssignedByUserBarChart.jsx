@@ -8,7 +8,8 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors } from '../../../charts-views';
+import { defaultConfig, getColorByData, assignStandardColors,
+         adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 
 function JiraTicketsAssignedByUserBarChart( { kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis } ) {
@@ -38,7 +39,7 @@ function JiraTicketsAssignedByUserBarChart( { kpiConfiguration, setKpiConfigurat
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -78,6 +79,7 @@ function JiraTicketsAssignedByUserBarChart( { kpiConfiguration, setKpiConfigurat
               {...defaultConfig("Users", "Number of Tickets Assigned", 
                       true, true, "subString", "wholeNumbers")}
               {...config(getColorByData)}
+              {...adjustBarWidth(metrics)}
               onClick={() => setShowModal(true)}
               tooltip={({ indexValue, value, color }) => <ChartTooltip 
                               titles = {["User", "Number of Tickets"]}
@@ -87,7 +89,7 @@ function JiraTicketsAssignedByUserBarChart( { kpiConfiguration, setKpiConfigurat
             />
         </div>
     );
-  }
+  };
 
   return (
     <div>

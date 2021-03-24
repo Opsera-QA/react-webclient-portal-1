@@ -9,7 +9,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { line } from "d3-shape";
-import { defaultConfig, getColorByData, assignStandardColors, 
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
          accentColor } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
@@ -39,7 +39,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -77,7 +77,9 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
       let mttrMax = Math.max.apply(Math,data.map(function(o){return o.mttr;}));
       let max = Math.ceil(Math.max(countsMax, mttrMax));
       return max;
-    }
+    };
+
+    // TODO: Do these need to be passed as object props?
     const MeanLineLayer = ({ bars, xScale, yScale }) => {
         const lineColor = accentColor;
         const lineGenerator = line()
@@ -101,7 +103,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
               fill={lineColor}
               stroke={lineColor}
               style={{ pointerEvents: "none" }}
-            />
+            />;
           }
           )}
         </Fragment>        
@@ -115,6 +117,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
           {...defaultConfig("Number of Deployments", "Date", 
                     false, true, "wholeNumbers", "monthDate2")}
           {...config(getColorByData, getMaxValue(metrics), MeanLineLayer)}
+          {...adjustBarWidth(metrics)}
           onClick={() => setShowModal(true)}
           tooltip={({ indexValue, value, data, color }) => <ChartTooltip 
                     titles={["Date", "Number of Deployments", "Mean Time To Restore"]}
@@ -124,7 +127,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
         />
       </div>
     );
-  }
+  };
 
     return (
       <>
@@ -156,7 +159,10 @@ OpseraMeanTimeToRestoreBarChart.propTypes = {
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func
+  setKpis: PropTypes.func,
+  bars: PropTypes.any,
+  xScale: PropTypes.any,
+  yScale: PropTypes.any
 };
 
 export default OpseraMeanTimeToRestoreBarChart;

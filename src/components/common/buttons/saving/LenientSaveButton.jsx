@@ -29,6 +29,6 @@ LenientSaveButton.defaultProps = {
   disable: false,
   size: "md",
   showSuccessToasts: true
-}
+};
 
 export default LenientSaveButton;

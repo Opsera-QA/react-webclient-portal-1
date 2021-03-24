@@ -14,7 +14,7 @@ function EditIcon({ editFunction, className, tooltipBody, disabled }) {
     <div className={className}>
       <ButtonTooltip innerText={tooltipBody}>
         <FontAwesomeIcon
-          onClick={() => {editFunction()}}
+          onClick={() => {editFunction();}}
           icon={faPencilAlt}
           fixedWidth
           className={"pointer"}

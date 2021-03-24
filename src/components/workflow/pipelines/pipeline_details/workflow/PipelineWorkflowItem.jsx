@@ -119,13 +119,13 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
 
   const handleSummaryViewClick = () => {
     setShowSummaryModal(true);
-  }
+  };
 
   const handleViewStepActivityLogClick = async (pipelineId, toolIdentifier, itemId) => {
     setIsLoading(true);
     await parentHandleViewSourceActivityLog(pipelineId, toolIdentifier, itemId);
     setIsLoading(false);
-  }
+  };
 
   const handleEditClick = async (type, tool, itemId) => {
     if (type === "notification") {

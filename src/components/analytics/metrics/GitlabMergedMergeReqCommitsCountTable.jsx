@@ -6,6 +6,7 @@ import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
 import { format } from "date-fns";
 import CustomTable from "../../common/table/CustomTable";
+import PropTypes from "prop-types";
 
 function GitlabMergedMergeReqCommitsCountTable({ date }) {
   const contextType = useContext(AuthContext);
@@ -253,5 +254,10 @@ function GitlabMergedMergeReqCommitsCountTable({ date }) {
     </>
   );
 }
+
+GitlabMergedMergeReqCommitsCountTable.propTypes = {
+  value: PropTypes.any,
+  date: PropTypes.object
+};
 
 export default GitlabMergedMergeReqCommitsCountTable;

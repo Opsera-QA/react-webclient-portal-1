@@ -41,7 +41,7 @@ function LdapOrganizationAccountManagement() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [organizationName]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -60,7 +60,7 @@ function LdapOrganizationAccountManagement() {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const loadOrganizationByName = async (name, cancelSource = cancelTokenSource) => {
     try {

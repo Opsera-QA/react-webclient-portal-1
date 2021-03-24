@@ -43,6 +43,6 @@ NotificationLevelInput.propTypes = {
 
 NotificationLevelInput.defaultProps = {
   visible: true
-}
+};
 
 export default NotificationLevelInput;

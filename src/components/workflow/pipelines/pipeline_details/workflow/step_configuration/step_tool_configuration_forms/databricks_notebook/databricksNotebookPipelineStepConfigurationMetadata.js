@@ -25,4 +25,4 @@ const databricksNotebookPipelineStepConfigurationMetadata = {
   }
 };
 
-export default databricksNotebookPipelineStepConfigurationMetadata
+export default databricksNotebookPipelineStepConfigurationMetadata;

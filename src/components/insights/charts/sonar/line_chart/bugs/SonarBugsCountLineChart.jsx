@@ -43,7 +43,7 @@ function BugsCountLineChart({ kpiConfiguration, setKpiConfiguration, dashboardDa
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -92,7 +92,7 @@ function BugsCountLineChart({ kpiConfiguration, setKpiConfiguration, dashboardDa
         />
       </div>
     );
-  }
+  };
   return (
     <div>
       <ChartContainer

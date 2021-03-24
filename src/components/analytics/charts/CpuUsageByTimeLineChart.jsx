@@ -138,6 +138,7 @@ function CpuUsageByTimeLineChart({ persona, date }) {
 }
 CpuUsageByTimeLineChart.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object
 };
 
 export default CpuUsageByTimeLineChart;

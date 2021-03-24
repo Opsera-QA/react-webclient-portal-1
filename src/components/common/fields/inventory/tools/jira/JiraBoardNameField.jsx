@@ -22,7 +22,7 @@ function JiraBoardNameField({ dataObject, jiraToolId, fieldName }) {
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadBoardName();
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);

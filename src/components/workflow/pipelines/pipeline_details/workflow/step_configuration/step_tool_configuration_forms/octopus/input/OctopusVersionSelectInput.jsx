@@ -11,7 +11,7 @@ function OctopusVersionSelectInput({ fieldName, dataObject, setDataObject, disab
   const { getAccessToken } = useContext(AuthContext);
   const [versions, setOctopusVersions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a Version")
+  const [placeholder, setPlaceholder] = useState("Select a Version");
 
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function OctopusVersionSelectInput({ fieldName, dataObject, setDataObject, disab
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTypes();
     }
     catch (error) {
@@ -35,15 +35,15 @@ function OctopusVersionSelectInput({ fieldName, dataObject, setDataObject, disab
 
   const loadTypes = async () => {
     try {
-      const res = await OctopusStepActions.getVersions(dataObject.getData("octopusToolId"),dataObject.getData("spaceId"),dataObject.getData("octopusFeedId"),dataObject.getData("ecrPushStepId"),pipelineId, getAccessToken)
+      const res = await OctopusStepActions.getVersions(dataObject.getData("octopusToolId"),dataObject.getData("spaceId"),dataObject.getData("octopusFeedId"),dataObject.getData("ecrPushStepId"),pipelineId, getAccessToken);
       if (res && res.status === 200) {
-        setOctopusVersions(res.data)
-        return
+        setOctopusVersions(res.data);
+        return;
       }
-      setPlaceholder("No Versions Found")
+      setPlaceholder("No Versions Found");
       setOctopusVersions([]);
     } catch (error) {
-      setPlaceholder("No Versions Found")
+      setPlaceholder("No Versions Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }

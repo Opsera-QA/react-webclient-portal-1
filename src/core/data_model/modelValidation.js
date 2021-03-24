@@ -15,11 +15,11 @@ export const validateData = (data) => {
     return true;
   }
   return errors;
-}
+};
 
 export const validateField = (data, field) => {
   return fieldValidation(data.getData(field.id), data, field);
-}
+};
 
 export const fieldValidation = (value, data, field) => {
   let errorMessages = [];

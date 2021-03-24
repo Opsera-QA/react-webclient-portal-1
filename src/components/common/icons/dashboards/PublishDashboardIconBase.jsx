@@ -25,7 +25,7 @@ function PublishDashboardIconBase({dashboardData, catalog, popoverText, classNam
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const addDashboardToPrivateCatalog = async (cancelSource = cancelTokenSource) => {
@@ -44,7 +44,7 @@ function PublishDashboardIconBase({dashboardData, catalog, popoverText, classNam
     <div className={className}>
       <TooltipWrapper innerText={popoverText}>
         <FontAwesomeIcon
-          onClick={() => {addDashboardToPrivateCatalog()}}
+          onClick={() => {addDashboardToPrivateCatalog();}}
           icon={icon}
           fixedWidth
           className={"pointer"}

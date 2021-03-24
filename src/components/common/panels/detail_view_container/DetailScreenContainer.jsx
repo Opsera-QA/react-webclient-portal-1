@@ -65,19 +65,19 @@ function DetailScreenContainer({ breadcrumbDestination, actionBar, dataObject, d
   if (!isLoading && accessDenied) {
     return (
       <AccessDeniedContainer />
-    )
+    );
   }
 
   if (!isLoading && accessRoleData && roleRequirement && !meetsRequirements(roleRequirement, accessRoleData)) {
     return (
       <AccessDeniedContainer />
-    )
+    );
   }
 
   if (!isLoading && dataObject == null) {
     return (
       <DataNotFoundContainer type={metadata?.type} breadcrumbDestination={breadcrumbDestination} />
-    )
+    );
   }
 
   return (

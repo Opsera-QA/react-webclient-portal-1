@@ -33,7 +33,7 @@ function TagFilter({ filterDto, setFilterDto, className }) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -52,7 +52,7 @@ function TagFilter({ filterDto, setFilterDto, className }) {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const getTags = async (cancelSource = cancelTokenSource) => {
     const response = await adminTagsActions.getAllTagsV2(getAccessToken, cancelSource, "active");

@@ -7,7 +7,8 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColor, assignStageColors } from '../../../charts-views';
+import { defaultConfig, getColor, assignStageColors,
+         adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 
 function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -37,7 +38,7 @@ function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfigurat
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -77,6 +78,7 @@ function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfigurat
           {...defaultConfig("Duration (Minutes)", "Pipeline Run", 
                     false, true, "wholeNumbers", "cutoffString")}
           {...config(getColor)}
+          {...adjustBarWidth(metrics)}
           onClick={() => setShowModal(true)}
           tooltip={({ data, value, color , id}) => <ChartTooltip 
                     titles={["Pipeline", "Stage", "Duration"]}
@@ -86,7 +88,7 @@ function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfigurat
         />
       </div>
     );
-  }
+  };
 
   return (
     <div>

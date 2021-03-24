@@ -36,6 +36,6 @@ TeamsStepNotificationToolInput.propTypes = {
 
 TeamsStepNotificationToolInput.defaultProps = {
   visible: true
-}
+};
 
 export default TeamsStepNotificationToolInput;

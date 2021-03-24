@@ -40,7 +40,7 @@ function DtoPropertiesInput({dataObject, setDataObject, fieldName}) {
 
   const deleteRow = (event, row) => {
     event.stopPropagation();
-    let newRowList = rowList
+    let newRowList = rowList;
     let index = newRowList.indexOf(row);
     newRowList.splice(index, 1);
     setRowList([...newRowList]);
@@ -53,11 +53,11 @@ function DtoPropertiesInput({dataObject, setDataObject, fieldName}) {
     let newData = newRowList.reduce((obj, item) => Object.assign(obj, {[item.name]: item.value}), {});
     newDataObject.setData(fieldName, newData);
     setDataObject({...newDataObject});
-  }
+  };
 
   const updateCellData = (event, row, field) => {
     event.stopPropagation();
-    let newRowList = rowList
+    let newRowList = rowList;
     let index = newRowList.indexOf(row);
     newRowList[index][field] = event.target.value;
     updateData(newRowList);
@@ -65,7 +65,7 @@ function DtoPropertiesInput({dataObject, setDataObject, fieldName}) {
 
   const updateCheckedCell = (event, row, field) => {
     event.stopPropagation();
-    let newRowList = rowList
+    let newRowList = rowList;
     let index = newRowList.indexOf(row);
     newRowList[index][field] = !newRowList[index][field];
     updateData(newRowList);
@@ -86,7 +86,7 @@ function DtoPropertiesInput({dataObject, setDataObject, fieldName}) {
                 <Form.Control defaultValue={row.name} disabled={key === 0 || !dataObject.isNew()} type="text" size="sm" placeholder={"New Property Name"} onChange={e => updateCellData(e, row, "name")} />
               </Col>
               <Col lg={1} className="px-2">
-                <Form.Check custom id={row.name + "-value-" + key} type="switch" className="m-auto" label="" checked={row.value} onChange={event => {updateCheckedCell(event, row, "value")}} />
+                <Form.Check custom id={row.name + "-value-" + key} type="switch" className="m-auto" label="" checked={row.value} onChange={event => {updateCheckedCell(event, row, "value");}} />
               </Col>
               <Col lg={1} className="px-2">
                 {dataObject.isNew() && <Button className="button button-add py-0" variant="link" size="sm" onClick={addRow}><FontAwesomeIcon icon={faPlus}/></Button>}

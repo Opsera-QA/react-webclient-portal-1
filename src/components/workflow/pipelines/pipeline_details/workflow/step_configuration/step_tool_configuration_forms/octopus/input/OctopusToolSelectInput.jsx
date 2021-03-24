@@ -18,7 +18,7 @@ function OctopusToolSelectInput({ fieldName, dataObject, setDataObject, disabled
   const [octopusList, setOctopusList] = useState([]);
   const [isOctopusSearching, setIsOctopusSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select an Octopus account configured in the Opsera Tool Registry")
+  const [placeholder, setPlaceholder] = useState("Select an Octopus account configured in the Opsera Tool Registry");
 
   useEffect(() => {
       loadData();
@@ -27,7 +27,7 @@ function OctopusToolSelectInput({ fieldName, dataObject, setDataObject, disabled
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await fetchOctopusDetails();
     }
     catch (error) {
@@ -46,8 +46,8 @@ function OctopusToolSelectInput({ fieldName, dataObject, setDataObject, disabled
         </Link>
       );
     }
-    return <span>Select a tool to get started.</span>
-  }
+    return <span>Select a tool to get started.</span>;
+  };
 
 
   const fetchOctopusDetails = async () => {
@@ -60,7 +60,7 @@ function OctopusToolSelectInput({ fieldName, dataObject, setDataObject, disabled
         setOctopusList(filteredList);
       }
     } catch(error) {
-      setPlaceholder("No Octopus Tools Found")
+      setPlaceholder("No Octopus Tools Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     } finally {
@@ -77,7 +77,7 @@ function OctopusToolSelectInput({ fieldName, dataObject, setDataObject, disabled
       setDataObject({ ...newDataObject });
       return;
     }
-  }
+  };
 
 
   return (

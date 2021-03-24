@@ -39,7 +39,7 @@ function ErrorDialog({ error, align, setError, prependMessage }) {
 
   const processError = (e) => {
     if (!e || e.length === 0) {
-      return "Unknown error reported.  Please check console log."
+      return "Unknown error reported.  Please check console log.";
     }
     console.error(e); //log all errors to console
 

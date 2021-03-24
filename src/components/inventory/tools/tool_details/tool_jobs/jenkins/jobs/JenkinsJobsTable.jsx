@@ -11,7 +11,7 @@ function JenkinsJobsTable({ toolData, loadData, selectedRow, isLoading }) {
 
   const createJenkinsJob = () => {
     setShowCreateJobModal(true);
-  }
+  };
 
   const columns = useMemo(
     () => [
@@ -26,15 +26,15 @@ function JenkinsJobsTable({ toolData, loadData, selectedRow, isLoading }) {
       {
         Header: "Type",
         accessor: "type",
-        Cell: (props) => {
-          return props.value[0];
+        Cell: (row) => {
+          return row.value[0];
         },
       },     
       {
         Header: "Active",
         accessor: "active",
-        Cell: (props) => {
-          return props.value ?  <FontAwesomeIcon icon={faCheckCircle} className="green ml-3" /> :  <FontAwesomeIcon icon={faTimesCircle} className="red ml-3" />;
+        Cell: (row) => {
+          return row.value ?  <FontAwesomeIcon icon={faCheckCircle} className="green ml-3" /> :  <FontAwesomeIcon icon={faTimesCircle} className="red ml-3" />;
         },
       },   
     ],

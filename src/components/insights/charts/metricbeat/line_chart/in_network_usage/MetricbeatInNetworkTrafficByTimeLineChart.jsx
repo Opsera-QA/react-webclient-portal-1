@@ -145,6 +145,8 @@ function MetricbeatInNetworkTrafficByTimeLineChart({ persona, date ,tags }) {
 
 MetricbeatInNetworkTrafficByTimeLineChart.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object,
+  tags: PropTypes.array
 };
 
 export default MetricbeatInNetworkTrafficByTimeLineChart;

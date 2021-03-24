@@ -8,13 +8,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 import ReactJson from "react-json-view";
 import "components/inventory/tools/tools.css";
-import {DropdownList} from "react-widgets";
 import { AuthContext } from "contexts/AuthContext";
 
 
-function ToolLogsPanel(props) {
+function ToolLogsPanel({ toolData, accessToken }) {
   const { getAccessToken } = useContext(AuthContext);
-  const { toolData, accessToken } = props;
   const [logCount, setLogCount] = useState(0);
   const [logData, setLogData] = useState([]);
   const [showModal, setShowModal] = useState(false);
@@ -47,19 +45,19 @@ function ToolLogsPanel(props) {
       {
         Header: "Status",
         accessor: "status",
-        Cell: (props) => {
-          return props.value ?
-            (props.value !== "success")
+        Cell: (row) => {
+          return row.value ?
+            (row.value !== "success")
               ? <>
                 <div style={{ display: "flex", flexWrap: "nowrap" }}>
                   <div><FontAwesomeIcon icon={faTimesCircle} className="cell-icon red"/></div>
-                  <div className="ml-1">{props.value}</div>
+                  <div className="ml-1">{row.value}</div>
                 </div>
               </>
               : <>
                 <div style={{ display: "flex", flexWrap: "nowrap" }}>
                   <div><FontAwesomeIcon icon={faCheckCircle} className="cell-icon green"/></div>
-                  <div className="ml-1">{props.value}</div>
+                  <div className="ml-1">{row.value}</div>
                 </div>
               </>
             : "unknown";
@@ -73,20 +71,20 @@ function ToolLogsPanel(props) {
       {
         Header: "Created",
         accessor: "createdAt",
-        Cell: (props) => {
-          return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
+        Cell: (row) => {
+          return format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a");
         },
         class: "no-wrap-inline",
       },
       {
         Header: "Info",
         accessor: "row",
-        Cell: (props) => {
-          return props["row"]["values"].action !== "automation task" ?
+        Cell: (row) => {
+          return row["row"]["values"].action !== "automation task" ?
             <FontAwesomeIcon icon={faSearchPlus}
                              style={{ cursor: "pointer" }}
                              onClick={() => {
-                               selectRow(props, props.row, props.row["index"]);
+                               selectRow(row, row.row, row.row["index"]);
                              }}/> : null;
         },
       },
@@ -100,7 +98,7 @@ function ToolLogsPanel(props) {
   }, [currentPage, pageSize]);
 
   const getToolLog = async () => {
-    isLoading(true)
+    isLoading(true);
     try {
       const accessToken = await getAccessToken();
       const apiUrl = `/registry/log/${toolData.getData("_id")}?page=${currentPage}&size=${pageSize}`;
@@ -110,7 +108,7 @@ function ToolLogsPanel(props) {
     } catch (err) {
       console.log(err.message);
     }
-    isLoading(false)
+    isLoading(false);
   };
 
   const getRowInfo = (row) => {

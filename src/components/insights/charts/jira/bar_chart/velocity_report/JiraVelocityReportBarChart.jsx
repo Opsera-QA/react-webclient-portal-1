@@ -12,7 +12,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColor, assignVelocityColors,
+import { defaultConfig, getColor, assignVelocityColors, adjustBarWidth,
         capitalizeLegend } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 
@@ -43,7 +43,7 @@ function JiraVelocityBarChart({ kpiConfiguration, setKpiConfiguration, dashboard
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -84,6 +84,7 @@ function JiraVelocityBarChart({ kpiConfiguration, setKpiConfiguration, dashboard
               {...defaultConfig("Number of Issues", "Sprint Name", 
                       false, true, "wholeNumbers", "cutoffString")}
               {...config(getColor)}
+              {...adjustBarWidth(metrics)}
               onClick={() => setShowModal(true)}
               tooltip={({ indexValue, value, id, data }) => <ChartTooltip 
                                   titles = {["Sprint Name", "Issue State", "Number of Issues", "Percent Completed"]}
@@ -92,7 +93,7 @@ function JiraVelocityBarChart({ kpiConfiguration, setKpiConfiguration, dashboard
             />
         </div>
     );
-  }
+  };
 
   return (
     <div>
@@ -119,8 +120,14 @@ function JiraVelocityBarChart({ kpiConfiguration, setKpiConfiguration, dashboard
     </div>
   );
 }
+
 JiraVelocityBarChart.propTypes = {
   persona: PropTypes.string,
+  kpiConfiguration: PropTypes.object,
+  setKpiConfiguration: PropTypes.func,
+  dashboardData: PropTypes.object,
+  index: PropTypes.any,
+  setKpis: PropTypes.func
 };
 
 export default JiraVelocityBarChart;

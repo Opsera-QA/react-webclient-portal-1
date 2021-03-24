@@ -1,5 +1,5 @@
-import React, {useContext, useEffect, useRef, useState} from 'react'
-import PropTypes from 'prop-types'
+import React, {useContext, useEffect, useRef, useState} from 'react';
+import PropTypes from 'prop-types';
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
@@ -28,7 +28,7 @@ function SFDCViewOverlay({ gitTasksData, refreshData }) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const closePanel = () => {

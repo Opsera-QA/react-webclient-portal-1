@@ -41,7 +41,7 @@ function GitTaskDetailView() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -97,7 +97,7 @@ function GitTaskDetailView() {
       actionBar={getActionBar()}
       detailPanel={<GitTaskDetailPanel gitTasksData={gitTasksData} isLoading={isLoading} setGitTasksData={setGitTasksData} loadData={getGitTaskData} runTask={location?.state?.runTask} />}
     />
-  )
+  );
 }
 
 export default GitTaskDetailView;

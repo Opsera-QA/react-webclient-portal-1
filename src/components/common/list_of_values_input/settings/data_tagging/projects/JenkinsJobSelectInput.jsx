@@ -20,7 +20,7 @@ function JenkinsJobSelectInput({ fieldName, dataObject, setDataObject, disabled,
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadJenkinsJobs();
     }
     catch (error) {
@@ -35,11 +35,11 @@ function JenkinsJobSelectInput({ fieldName, dataObject, setDataObject, disabled,
     let results = await dataMappingActions.getJenkinsJobs(dataObject, getAccessToken);
     if (typeof results != "object") {
       toastContext.showLoadingErrorDialog(`There has been an error in fetching ${dataObject.getData("tool_identifier")} jobs`);
-      return
+      return;
     }
     if (results && results.status === 200) {
-      setJobs(results.data)
-      return
+      setJobs(results.data);
+      return;
     }
     setJobs([]);
   };
@@ -51,7 +51,7 @@ function JenkinsJobSelectInput({ fieldName, dataObject, setDataObject, disabled,
       setDataObject({ ...newDataObject });
       return;
     }
-  }
+  };
 
   return (
     <SelectInputBase

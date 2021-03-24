@@ -17,7 +17,7 @@ function ToolIdentifierSelectInput({ fieldName, dataObject, setDataFunction, set
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTools();
     }
     catch (error) {

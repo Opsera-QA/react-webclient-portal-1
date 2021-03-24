@@ -87,7 +87,7 @@ function Signup() {
   };
 
   if (isLoading || registrationDataDto == null) {
-    return <LoadingDialog />
+    return <LoadingDialog />;
   }
 
   return (

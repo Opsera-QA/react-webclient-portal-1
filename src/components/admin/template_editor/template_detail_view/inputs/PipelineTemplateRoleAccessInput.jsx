@@ -19,7 +19,7 @@ function PipelineTemplateRoleAccessInput({fieldName, dataObject, setDataObject, 
     return (
       <span>No Role Access Configurations Applied. All users can see or edit this {dataObject?.getType()}.</span>
     );
-  }
+  };
 
   return (
     <RoleAccessInlineInputBase

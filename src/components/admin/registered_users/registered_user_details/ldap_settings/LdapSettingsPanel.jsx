@@ -20,7 +20,7 @@ function LdapSettingsPanel({ userData, loadData, showSyncButton }) {
 
   const initialize = async () => {
     setIsLoading(true);
-    setUserLdapDto(new Model(userData.getData("ldap"), ldapSettingsMetadata, false))
+    setUserLdapDto(new Model(userData.getData("ldap"), ldapSettingsMetadata, false));
     setIsLoading(false);
   };
 

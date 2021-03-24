@@ -77,6 +77,6 @@ WarningDialog.propTypes = {
 
 WarningDialog.defaultProps = {
   autoCloseDialog: true
-}
+};
 
 export default WarningDialog;

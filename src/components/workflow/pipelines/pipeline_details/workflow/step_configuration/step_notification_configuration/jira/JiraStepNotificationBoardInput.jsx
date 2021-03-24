@@ -20,7 +20,7 @@ function JiraStepNotificationBoardInput({visible, jiraToolId, dataObject, setDat
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadProjects();
     }
     catch (error) {
@@ -90,6 +90,6 @@ JiraStepNotificationBoardInput.propTypes = {
 
 JiraStepNotificationBoardInput.defaultProps = {
   visible: true
-}
+};
 
 export default JiraStepNotificationBoardInput;

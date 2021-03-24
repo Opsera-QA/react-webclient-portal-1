@@ -143,7 +143,6 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
                               leftLabelFormat="", bottomLabelFormat="", isLegendHidden=false) => ({
   margin: { top: 30, right: 20, bottom: largeBottomSpaceRequired ? 60 : 80, 
             left: largeLeftSpaceRequired ? 100 : 60},
-  // padding: morePaddingRequired ? .6 : .25,
   lineWidth: 3.5,
   pointSize: 8,
   pointBorderWidth: 8,
@@ -209,7 +208,7 @@ export const adjustBarWidth = (data, isVertical=true) => {
 
   if (isVertical) {
     switch (data.length) {
-      case 1: padding = .8;
+      case 1: padding = .85;
               break;
       case 2: padding = .75;
               break;
@@ -219,7 +218,7 @@ export const adjustBarWidth = (data, isVertical=true) => {
     }
   } else {
     switch (data.length) {
-      case 1: padding = .4;
+      case 1: padding = .5;
               break;
       case 2: padding = .35;
               break;

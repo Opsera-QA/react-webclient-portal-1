@@ -15,9 +15,9 @@ function FreeTrialLanding() {
 
   useEffect(() => {
     if (id && id.length > 0) {
-      setTabSelection(id)
+      setTabSelection(id);
     } else {
-      setTabSelection("welcome")
+      setTabSelection("welcome");
     }
   }, [id]);
 

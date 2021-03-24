@@ -54,7 +54,7 @@ function ErrorToast({ error, prependMessage, removeToast, autoCloseLength, id })
         <span className="ml-1">
           <a style={{textDecoration: "underline"}} href="#" onClick={() => { reloadSession(); }}>Click here to renew session.</a>
         </span>
-      )
+      );
     }
   };
 

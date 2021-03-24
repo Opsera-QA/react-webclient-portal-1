@@ -21,7 +21,7 @@ function JiraStepNotificationSprintInput({dataObject, setDataObject, disabled, j
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadProjects();
     }
     catch (error) {

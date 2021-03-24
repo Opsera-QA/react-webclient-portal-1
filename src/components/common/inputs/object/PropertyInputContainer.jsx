@@ -27,7 +27,7 @@ function PropertyInputContainer({ children, titleIcon, titleText, field, errorMe
         </div>
       </Row>
     );
-  }
+  };
 
   return (
     <div className="object-properties-input">

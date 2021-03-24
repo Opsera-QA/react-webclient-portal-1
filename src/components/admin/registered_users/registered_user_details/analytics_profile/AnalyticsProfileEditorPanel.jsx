@@ -40,7 +40,7 @@ function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfile
       unpackedData.setData("Pipeline", analyticsProfileData.getData("workflowType")["Pipeline"]);
       setAnalyticsProfileDataDto(unpackedData);
     }
-  }
+  };
 
   const updateProfile = async () => {
     if(analyticsProfileDataDto.isModelValid2()) {
@@ -64,10 +64,10 @@ function AnalyticsProfileEditorPanel({ analyticsProfileData, setAnalyticsProfile
   const getToolList = async () => {
     const response = await toolsActions.getTools(getAccessToken);
     setToolList(response["data"]);
-  }
+  };
 
   if (isLoading) {
-    return <LoadingDialog size={"sm"} />
+    return <LoadingDialog size={"sm"} />;
   }
 
   if (analyticsProfileDataDto == null) {

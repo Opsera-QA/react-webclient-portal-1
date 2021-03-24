@@ -41,12 +41,12 @@ function AgentLabelsMultiSelectInput({ fieldName, dataObject, setDataObject, set
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       // await loadJenkinsAgents(cancelSource);
     }
     catch (error) {

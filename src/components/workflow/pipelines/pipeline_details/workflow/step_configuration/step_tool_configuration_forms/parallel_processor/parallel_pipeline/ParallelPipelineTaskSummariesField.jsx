@@ -87,13 +87,13 @@ function ParallelPipelineTaskSummariesField({ fieldName, dataObject }) {
       return null;
     }
 
-    let response = runResponse.find((item) => {return item.pipelineId === pipelineId});
+    let response = runResponse.find((item) => {return item.pipelineId === pipelineId;});
     return response ? response[runResponseField] : null;
   };
 
   const getBody = () => {
     if (isLoading) {
-      return <PipelineSummaryCard isLoading={isLoading} />
+      return <PipelineSummaryCard isLoading={isLoading} />;
     }
 
     if (pipelines.length === 0) {

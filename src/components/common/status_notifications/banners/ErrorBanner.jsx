@@ -29,7 +29,7 @@ function ErrorBanner({ error, id, removeBanner, prependMessage }) {
         <span className="ml-1">
           <a style={{textDecoration: "underline"}} href="#" onClick={() => { reloadSession(); }}>Click here to renew session.</a>
         </span>
-      )
+      );
     }
   };
 
@@ -39,7 +39,7 @@ function ErrorBanner({ error, id, removeBanner, prependMessage }) {
         <div className="float-right mr-1">
           <FontAwesomeIcon icon={faTimes} className="pointer" onClick={() => {clearError();}}/>
         </div>
-      )
+      );
     }
 
     return null;

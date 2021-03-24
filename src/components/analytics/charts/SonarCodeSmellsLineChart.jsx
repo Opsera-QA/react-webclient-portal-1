@@ -11,7 +11,7 @@ import ChartTooltip from '../../insights/charts/ChartTooltip';
 function CodeSmellLineChart({ data, persona }) {
   const { sonarCodeSmells } = data;
   const [showModal, setShowModal] = useState(false);
-  assignStandardColors(sonarCodeSmells?.data, true)
+  assignStandardColors(sonarCodeSmells?.data, true);
 
   return (
     <>

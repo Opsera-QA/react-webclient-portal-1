@@ -41,7 +41,7 @@ function NUnitStepConfiguration({ pipelineId, stepTool, stepId, createJob, close
     let nunitConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, nunitStepFormMetadata);
 
     setNUnitStepConfigurationDataDto(nunitConfigurationData);
-    console.log(job_type)
+    console.log(job_type);
     if (job_type) {
       setJobType(job_type);
     }

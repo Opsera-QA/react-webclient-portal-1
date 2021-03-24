@@ -23,7 +23,8 @@ function OperationsDashboard( { persona, index } ) {
 
 
 OperationsDashboard.propTypes = {
-  persona: PropTypes.string
+  persona: PropTypes.string,
+  index: PropTypes.any
 };
 
 export default OperationsDashboard;

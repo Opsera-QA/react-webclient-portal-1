@@ -11,7 +11,7 @@ function OctopusTargetRolesSelectInput({ fieldName, dataObject, setDataObject, d
   const { getAccessToken } = useContext(AuthContext);
   const [targetRoles, setOctopusTargetRoless] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select Target Roles")
+  const [placeholder, setPlaceholder] = useState("Select Target Roles");
 
 
   useEffect(() => {
@@ -26,7 +26,7 @@ function OctopusTargetRolesSelectInput({ fieldName, dataObject, setDataObject, d
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTypes();
     }
     catch (error) {
@@ -39,14 +39,14 @@ function OctopusTargetRolesSelectInput({ fieldName, dataObject, setDataObject, d
 
   const loadTypes = async () => {
     try {
-      const res = await OctopusStepActions.getTargetRoles(dataObject.getData("octopusToolId"),dataObject.getData("spaceId"), getAccessToken)
+      const res = await OctopusStepActions.getTargetRoles(dataObject.getData("octopusToolId"),dataObject.getData("spaceId"), getAccessToken);
       if (res && res.status === 200) {
-        setOctopusTargetRoless(res.data)
-        return
+        setOctopusTargetRoless(res.data);
+        return;
       }
       setOctopusTargetRoless([]);
     } catch (error) {
-      setPlaceholder("No Target Roles Found")
+      setPlaceholder("No Target Roles Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }

@@ -14,7 +14,7 @@ import LdapOrganizationAccountSelectInput
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import JsonInput from "components/common/inputs/object/JsonInput";
 import TagManager from "components/common/inputs/tags/TagManager";
-import axios from "axios"
+import axios from "axios";
 
 function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -41,7 +41,7 @@ function TemplateEditorPanel({ templateData, setTemplateData, handleClose }) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async () => {

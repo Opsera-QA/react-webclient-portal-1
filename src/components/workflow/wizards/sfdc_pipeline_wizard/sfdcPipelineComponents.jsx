@@ -21,7 +21,7 @@ import "../../workflows.css";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import sfdcPipelineActions from "./sfdc-pipeline-actions";
-import {isEqual} from "components/common/helpers/array-helpers"
+import {isEqual} from "components/common/helpers/array-helpers";
 import DateTimeRangeInputBase from "components/common/inputs/date/DateTimeRangeInputBase";
 
 const INITIAL_COMPONENT_TYPES_FORM = {
@@ -117,7 +117,7 @@ const SfdcPipelineComponents = ({
     }
   
     loadData();
-    return () => { ignore = true; }
+    return () => { ignore = true; };
   }, [isProfiles, sfdcToolId]);
   
   const dateFrom = (
@@ -144,22 +144,22 @@ const SfdcPipelineComponents = ({
 
 
   const handleFromDateChange = (value) => {
-    checkFromToDateLimit(value.value, selectedToDate)
+    checkFromToDateLimit(value.value, selectedToDate);
     const date = Moment(value.value).toISOString();
     setSelectedFromDate(value.value);
     setFromDate(date);
-  }
+  };
 
   const handleToDateChange = (value) => {
-    checkFromToDateLimit(selectedFromDate, value.value)
+    checkFromToDateLimit(selectedFromDate, value.value);
     const date = Moment(value.value).toISOString();
     setSelectedToDate(value.value);
     setToDate(date);
-  }
+  };
 
   const checkFromToDateLimit = (from, to) => {
-    const fd = new Date(from)
-    const td = new Date(to)
+    const fd = new Date(from);
+    const td = new Date(to);
 
     const diff = td.getMonth() < fd.getMonth() ? td.getMonth() - fd.getMonth() + 12 : td.getMonth() - fd.getMonth();
 
@@ -169,7 +169,7 @@ const SfdcPipelineComponents = ({
     }
     setWarning(false);
     return;
-  }
+  };
 
   function checkDateLimit(date) {
     var selectedDate = new Date(date);
@@ -180,7 +180,7 @@ const SfdcPipelineComponents = ({
     // If the new month number isn't month - 6, set to last day of previous month
     // Allow for cases where month < 6
     var diff = (month + 12 - limitDate.getMonth()) % 12;
-    if (diff < 6) limitDate.setDate(0)    
+    if (diff < 6) limitDate.setDate(0);    
 
     if(selectedDate < limitDate) {
       setWarning(true);
@@ -191,7 +191,7 @@ const SfdcPipelineComponents = ({
   }
 
   const handleCheckAllClickComponentTypes = () => {
-    setSelectedComponentTypes(componentTypes.filter((obj)=>{return obj.enabled}).map(({ name }) => name));
+    setSelectedComponentTypes(componentTypes.filter((obj)=>{return obj.enabled;}).map(({ name }) => name));
   };
 
   const handleUnCheckAllClickComponentTypes = () => {
@@ -199,9 +199,9 @@ const SfdcPipelineComponents = ({
   };
 
   const handleCheckOrUncheckAllClickComponentTypes = () => {
-    if (isEqual(selectedComponentTypes,componentTypes.filter((obj)=>{return obj.enabled}).map(({ name }) => name))) {handleUnCheckAllClickComponentTypes();}
+    if (isEqual(selectedComponentTypes,componentTypes.filter((obj)=>{return obj.enabled;}).map(({ name }) => name))) {handleUnCheckAllClickComponentTypes();}
     else {handleCheckAllClickComponentTypes();}
-  }
+  };
 
   const renderTooltip = (message, props) => (
     <Tooltip id="button-tooltip" style={{"zIndex": 1500}} {...props}>
@@ -216,7 +216,7 @@ const SfdcPipelineComponents = ({
     } else {
       setSelectedComp(selectedComp.filter((item) => item !== newValue));
     }
-  }
+  };
 
   const handleComponentCheck = (e) => {
     const newValue = e.target.name;
@@ -251,7 +251,7 @@ const SfdcPipelineComponents = ({
   };
 
   const storeSelectedComponents = async (data) => {
-    console.log(stepToolConfig)
+    console.log(stepToolConfig);
     // TODO: Make a call to store the selected components to pipeline storage selectedComponents
     const postBody = {
       "dataType" : gitTaskData ? "sync-sfdc-repo" : "sfdc-packageXml",
@@ -278,7 +278,7 @@ const SfdcPipelineComponents = ({
       setError("Error setting selected Data: ", error);
       setSave(false);
     }
-  }
+  };
 
   const postComponentTypes = async (data) => {
     setSfdcComponentFilterObject(data);
@@ -480,7 +480,7 @@ const SfdcPipelineComponents = ({
                               label={"Check All"}
                               name={"Check All"}
                               id={"Check All"}
-                              checked={isEqual(selectedComponentTypes,componentTypes.filter((obj)=>{ return obj.enabled}).map(({ name }) => name))}
+                              checked={isEqual(selectedComponentTypes,componentTypes.filter((obj)=>{ return obj.enabled;}).map(({ name }) => name))}
                               onChange={handleCheckOrUncheckAllClickComponentTypes}
                             />
                     {/* <Button variant="secondary" size="sm" className="mr-2" onClick={handleCheckAllClickComponentTypes}>

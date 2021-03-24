@@ -128,9 +128,9 @@ export function getVendorTitle (toolIdentifier) {
     case "xunit":
       return "xUnit";
     case "teamcity":
-      return "TeamCity"
+      return "TeamCity";
     case "twistlock":
-      return "Twistlock"
+      return "Twistlock";
     default:
       return "";
   }

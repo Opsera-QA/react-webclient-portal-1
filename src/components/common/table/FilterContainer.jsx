@@ -61,7 +61,7 @@ function FilterContainer(
           <FilterButtons isLoading={isLoading} loadData={loadData} dropdownFilters={dropdownFilters} filterDto={filterDto} />
         </div>
       </div>
-    )
+    );
   };
 
   return (

@@ -15,7 +15,7 @@ function DeleteButton({deleteRecord, dataObject, disabled, size, icon, className
 
     return () => {
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const persistRecord = async () => {
@@ -25,7 +25,7 @@ function DeleteButton({deleteRecord, dataObject, disabled, size, icon, className
     if (isMounted?.current === true) {
       setIsDeleting(false);
     }
-  }
+  };
 
   const getLabel = () => {
     if (isDeleting) {

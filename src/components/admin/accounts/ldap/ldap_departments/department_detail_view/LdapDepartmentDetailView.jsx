@@ -46,7 +46,7 @@ function LdapDepartmentDetailView() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -65,7 +65,7 @@ function LdapDepartmentDetailView() {
         setIsLoading(false);
       }
     }
-  }
+  };
   const getLdapDepartment = async (cancelSource = cancelTokenSource) => {
     const response = await departmentActions.getDepartmentV2(getAccessToken, cancelSource, orgDomain, departmentName);
 
@@ -75,7 +75,7 @@ function LdapDepartmentDetailView() {
       const groupResponse = await accountsActions.getGroupV2(getAccessToken, cancelSource, orgDomain, newLdapDepartmentData.getData("departmentGroupName"));
 
       if (isMounted.current === true && groupResponse?.data != null) {
-        setLdapDepartmentGroupData(new Model({...groupResponse.data}, ldapGroupMetaData, false))
+        setLdapDepartmentGroupData(new Model({...groupResponse.data}, ldapGroupMetaData, false));
       }
     }
   };

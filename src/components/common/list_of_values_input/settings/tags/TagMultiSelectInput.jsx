@@ -39,6 +39,6 @@ TagMultiSelectInput.propTypes = {
 
 TagMultiSelectInput.defaultProps = {
   fieldName: "tags"
-}
+};
 
 export default TagMultiSelectInput;

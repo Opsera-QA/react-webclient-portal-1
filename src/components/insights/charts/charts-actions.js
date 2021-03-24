@@ -23,7 +23,7 @@ chartsActions.getChart = async (request, metric, date, getAccessToken) => {
     endDate: date.end
   };
 
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody)
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 chartsActions.getChartData = async (getAccessToken, cancelTokenSource, request, metric, kpiConfiguration) => {
@@ -41,7 +41,7 @@ chartsActions.getChartData = async (getAccessToken, cancelTokenSource, request, 
     endDate: date.end
   };
 
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody)
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 
@@ -55,7 +55,7 @@ chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessTok
     tags: tags
   };
 
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody)
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
 chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, cancelTokenSource, request, kpiConfiguration, dashboardTags) => {
@@ -76,7 +76,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, canc
     jenkinsBuildNumber: jenkinsBuildNumber
   };
 
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody)
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 export default chartsActions;

@@ -13,7 +13,7 @@ function ClusterSelectInput({ fieldName, dataObject, setDataObject, disabled, te
   const { getAccessToken } = useContext(AuthContext);
   const [clusters, setClusters] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a Cluster")
+  const [placeholder, setPlaceholder] = useState("Select a Cluster");
 
   useEffect(() => {
     if (!disabled) {
@@ -27,7 +27,7 @@ function ClusterSelectInput({ fieldName, dataObject, setDataObject, disabled, te
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTypes();
     }
     catch (error) {
@@ -40,14 +40,14 @@ function ClusterSelectInput({ fieldName, dataObject, setDataObject, disabled, te
 
   const loadTypes = async () => {
     try {
-      const res = await OctopusStepActions.getClusters(dataObject.getData("toolId"),dataObject.getData("awsToolConfigId"), getAccessToken)
+      const res = await OctopusStepActions.getClusters(dataObject.getData("toolId"),dataObject.getData("awsToolConfigId"), getAccessToken);
       if (res && res.status === 200) {
-        setClusters(res.data)
-        return
+        setClusters(res.data);
+        return;
       }
       setClusters([]);
     } catch (error) {
-      setPlaceholder("No Clusters Found")
+      setPlaceholder("No Clusters Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }
@@ -60,7 +60,7 @@ function ClusterSelectInput({ fieldName, dataObject, setDataObject, disabled, te
       setDataObject({ ...newDataObject });
       return;
     }
-  }
+  };
 
   return (
     <div>

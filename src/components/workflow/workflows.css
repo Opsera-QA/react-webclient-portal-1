@@ -171,8 +171,12 @@
 }
 
 .step-settings-container {
-  min-height: 75vh;
+  min-height: calc(100% - 65px);
   overflow: auto;
+}
+
+.step-settings-body {
+  min-height: 55vh;
 }
 
 .scroller {

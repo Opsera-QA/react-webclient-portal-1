@@ -415,9 +415,9 @@ function SeleniumStepConfiguration({
         let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
         setToast(toast);
         setShowToast(true);
-      return false
+      return false;
       } else {
-        return true
+        return true;
       }
     }
     else  {
@@ -478,7 +478,7 @@ function SeleniumStepConfiguration({
   };
 
   const handleJobChange = (selectedOption) => {
-    console.log(selectedOption)
+    console.log(selectedOption);
     if (selectedOption.type[0] === "FUNCTIONAL TESTING" ) {      
         setFormData({
           ...formData,
@@ -1108,6 +1108,6 @@ SeleniumStepConfiguration.propTypes = {
   createJob: PropTypes.func,
   setToast: PropTypes.func,
   setShowToast: PropTypes.func
-}
+};
 
 export default SeleniumStepConfiguration;

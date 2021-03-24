@@ -15,15 +15,15 @@ function LdapUsersTable({ userData, orgDomain, isLoading, authorizedActions, loa
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "name"})),
-      getTableTextColumn(fields.find(field => { return field.id === "preferredName"})),
-      getTableTextColumn(fields.find(field => { return field.id === "firstName"})),
-      getTableTextColumn(fields.find(field => { return field.id === "lastName"})),
-      getTableTextColumn(fields.find(field => { return field.id === "emailAddress"})),
-      getTableTextColumn(fields.find(field => { return field.id === "title"})),
-      getTableTextColumn(fields.find(field => { return field.id === "departmentName"})),
-      getTableTextColumn(fields.find(field => { return field.id === "division"})),
-      getTableTextColumn(fields.find(field => { return field.id === "region"})),
+      getTableTextColumn(fields.find(field => { return field.id === "name";})),
+      getTableTextColumn(fields.find(field => { return field.id === "preferredName";})),
+      getTableTextColumn(fields.find(field => { return field.id === "firstName";})),
+      getTableTextColumn(fields.find(field => { return field.id === "lastName";})),
+      getTableTextColumn(fields.find(field => { return field.id === "emailAddress";})),
+      getTableTextColumn(fields.find(field => { return field.id === "title";})),
+      getTableTextColumn(fields.find(field => { return field.id === "departmentName";})),
+      getTableTextColumn(fields.find(field => { return field.id === "division";})),
+      getTableTextColumn(fields.find(field => { return field.id === "region";})),
     ],
     [fields]
   );

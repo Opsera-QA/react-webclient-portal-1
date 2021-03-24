@@ -25,7 +25,7 @@ function GitRepositoryInput({ service, gitToolId, workspace, visible, fieldName,
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await getRepositories();
     }
     catch (error) {
@@ -54,7 +54,7 @@ function GitRepositoryInput({ service, gitToolId, workspace, visible, fieldName,
     if (!isLoading && (repositories == null || repositories.length === 0) && service !== "" && gitToolId !== "") {
       return ("No Repositories Found!");
     }
-  }
+  };
 
   return (
     <div>
@@ -85,10 +85,11 @@ GitRepositoryInput.propTypes = {
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
+  clearDataFunction: PropTypes.func
 };
 
 GitRepositoryInput.defaultProps = {
   visible: true,
-}
+};
 
 export default GitRepositoryInput;

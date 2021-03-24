@@ -14,7 +14,7 @@ function LoadingDialog({ size, message }) {
     if (message) {
       return message;
     }
-  }
+  };
   
   if (type === "sm") {
     return (

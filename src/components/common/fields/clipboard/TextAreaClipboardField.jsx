@@ -12,7 +12,7 @@ function TextAreaClipboardField({textAreaValue, description, className, rows, al
         </div>
       );
     }
-  }
+  };
 
   return (
     <FieldContainer className={className}>

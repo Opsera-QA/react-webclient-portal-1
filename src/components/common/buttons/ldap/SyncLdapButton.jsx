@@ -21,7 +21,7 @@ function SyncLdapButton({ disable, userData, loadData }) {
   const pullUserAccessRole = async () => {
     setIsLoading(true);
     const userRoleAccess = await setAccessRoles(userData.getPersistData());
-    setAccessRoleData(userRoleAccess)
+    setAccessRoleData(userRoleAccess);
     setIsLoading(false);
   };
 
@@ -49,7 +49,7 @@ function SyncLdapButton({ disable, userData, loadData }) {
       isSyncing(false);
     }
 
-  }
+  };
 
   const getVariant = () => {
     if (successfulConnection) {

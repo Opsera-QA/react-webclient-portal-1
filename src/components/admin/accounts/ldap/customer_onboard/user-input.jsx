@@ -37,7 +37,7 @@ function UserInput({field, setData, formData}) {
       addUser(ldapUserData);
     }
     setShowCreateUserModal(false);
-  }
+  };
 
   // TODO: Create its own className and styling
   return (

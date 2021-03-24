@@ -16,7 +16,7 @@ function SaveButtonBase({recordDto, updateRecord, disable, size, showSuccessToas
 
     return () => {
       isMounted.current = false;
-    }
+    };
   }, []);
 
 
@@ -27,7 +27,7 @@ function SaveButtonBase({recordDto, updateRecord, disable, size, showSuccessToas
     if (isMounted.current === true) {
       setIsSaving(false);
     }
-  }
+  };
 
   const getLabel = () => {
     if (isSaving) {
@@ -62,6 +62,6 @@ SaveButtonBase.defaultProps = {
   size: "md",
   showSuccessToasts: true,
   saveButtonText: "Save"
-}
+};
 
 export default SaveButtonBase;

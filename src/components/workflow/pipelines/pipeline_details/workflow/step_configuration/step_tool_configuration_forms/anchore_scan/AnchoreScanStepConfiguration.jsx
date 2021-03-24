@@ -323,6 +323,9 @@ AnchoreScanStepConfiguration.propTypes = {
   stepId: PropTypes.string,
   parentCallback: PropTypes.func,
   callbackSaveToVault: PropTypes.func,
+  stepTool: PropTypes.any,
+  setToast: PropTypes.func,
+  setShowToast: PropTypes.func
 };
 
 export default AnchoreScanStepConfiguration;
