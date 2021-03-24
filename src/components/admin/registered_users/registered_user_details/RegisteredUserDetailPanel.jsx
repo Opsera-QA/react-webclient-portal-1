@@ -39,7 +39,7 @@ function RegisteredUserDetailPanel({ userData, setUserData, analyticsProfileData
       case "summary":
         return <RegisteredUserSummary userData={userData} setActiveTab={setActiveTab} showDbConnectionString={true} />;
       case "tools":
-        return <RegisteredUserToolsPanel userData={userData} setIsDeployingElk={setIsDeployingElk} isDeployingElk={isDeployingElk} />
+        return <RegisteredUserToolsPanel userData={userData} setIsDeployingElk={setIsDeployingElk} isDeployingElk={isDeployingElk} />;
       case "customerDB":
         return <CustomerDatabaseEditorPanel userId={userData["_id"]} customerDatabaseData={analyticsProfileData} setCustomerDatabaseData={setAnalyticsProfileData} />;
       case "analyticsSettings":

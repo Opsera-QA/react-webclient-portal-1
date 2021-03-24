@@ -11,6 +11,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { format } from "date-fns";
 import CustomModalDialog from "../modal/modal";
 import { DropdownList } from "react-widgets";
+import PropTypes from "prop-types";
+import SFDCBuildTypeSelectInput
+  from "components/common/list_of_values_input/workflow/pipelines/SFDCBuildTypeSelectInput";
 
 /*
   This table implementation is an example of creating a table component for a screen.
@@ -239,5 +242,9 @@ function TableImplementationDemo() {
       </CustomTable>
     </>);
 }
+
+TableImplementationDemo.propTypes = {
+  value: PropTypes.any
+};
 
 export default TableImplementationDemo; 

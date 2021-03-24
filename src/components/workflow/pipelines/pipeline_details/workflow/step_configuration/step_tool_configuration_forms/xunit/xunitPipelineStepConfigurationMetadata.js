@@ -101,4 +101,4 @@ const xunitPipelineStepConfigurationMetadata = {
   }
 };
 
-export default xunitPipelineStepConfigurationMetadata
+export default xunitPipelineStepConfigurationMetadata;

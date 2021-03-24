@@ -40,7 +40,7 @@ function JMeterResponseTimeLineChart({ kpiConfiguration, setKpiConfiguration, da
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -114,7 +114,7 @@ function JMeterResponseTimeLineChart({ kpiConfiguration, setKpiConfiguration, da
             />
         </div>
     );
-  }
+  };
     return (
       <div>
         <ChartContainer

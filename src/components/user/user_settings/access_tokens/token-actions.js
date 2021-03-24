@@ -9,7 +9,7 @@ tokenActions.createToken = async (getAccessToken, cancelTokenSource, tokenModel)
     ...tokenModel.getPersistData()
   };
 
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody)
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 tokenActions.getTokens = async (getAccessToken, cancelTokenSource, tokenFilterModel) => {
@@ -23,20 +23,20 @@ tokenActions.getTokens = async (getAccessToken, cancelTokenSource, tokenFilterMo
       size: tokenFilterModel.getData("pageSize"),
       search: tokenFilterModel.getFilterValue("search"),
     }
-  }
+  };
 
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams)
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 tokenActions.getTokenById = async (getAccessToken, cancelTokenSource, tokenId) => {
   const apiUrl = `/users/tokens/${tokenId}`;
 
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl)
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 tokenActions.expireToken = async (getAccessToken, cancelTokenSource, tokenId) => {
   const apiUrl = `/users/token/expire/${tokenId}`;
-  return await baseActions.apiPatchCallV2(getAccessToken, cancelTokenSource, apiUrl)
+  return await baseActions.apiPatchCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 tokenActions.getTokenActivity = async (getAccessToken, cancelTokenSource, tokenFilterModel, tokenId = "") => {
@@ -50,9 +50,9 @@ tokenActions.getTokenActivity = async (getAccessToken, cancelTokenSource, tokenF
       size: tokenFilterModel.getData("pageSize"),
       search: tokenFilterModel.getFilterValue("search"),
     }
-  }
+  };
 
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams)
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 export default tokenActions;

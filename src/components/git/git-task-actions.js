@@ -12,7 +12,7 @@ gitTasksActions.deleteGitTaskV2 = async (getAccessToken, cancelTokenSource, data
 gitTasksActions.updateGitTaskV2 = async (getAccessToken, cancelTokenSource, gitTasksDataDto) => {
   const postBody = {
     ...gitTasksDataDto.getPersistData()
-  }
+  };
   const apiUrl = `/tools/git/${gitTasksDataDto.getData("_id")}/update`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
@@ -20,7 +20,7 @@ gitTasksActions.updateGitTaskV2 = async (getAccessToken, cancelTokenSource, gitT
 gitTasksActions.createGitTaskV2 = async (getAccessToken, cancelTokenSource, gitTasksDataDto) => {
   const postBody = {
     ...gitTasksDataDto.getPersistData()
-  }
+  };
   const apiUrl = "/tools/git/create";
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
@@ -39,7 +39,7 @@ gitTasksActions.getGitTasksListV2 = async (getAccessToken, cancelTokenSource, gi
       tool: gitTasksDataDto.getFilterValue("toolIdentifier"),
       search: gitTasksDataDto.getFilterValue("search")
     }
-  }
+  };
 
   const apiUrl = `/tools/git/`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
@@ -62,7 +62,7 @@ gitTasksActions.getGitTaskActivityLogs = async (gitTasksDataDto, gitTasksActivit
       status: gitTasksActivityFilterDto.getFilterValue("status"),
       search: gitTasksActivityFilterDto.getFilterValue("search"),
     }
-  }
+  };
 
   const apiUrl = `/tools/git/logs/${gitTasksDataDto.getData("_id")}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
@@ -80,7 +80,7 @@ gitTasksActions.getAllGitTasksActivityLogs = async ( gitTasksActivityFilterDto, 
       status: gitTasksActivityFilterDto.getFilterValue("status"),
       search: gitTasksActivityFilterDto.getFilterValue("search"),
     }
-  }
+  };
 
   const apiUrl = `/tools/git/logs/`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);

@@ -28,7 +28,7 @@ import filterMetadata from "./filter-metadata";
 import Model from "../../../../core/data_model/model";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import PageSize from "components/common/pagination/page_options/PageSize";
-import { isEquals } from "components/common/helpers/array-helpers"
+import { isEquals } from "components/common/helpers/array-helpers";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import { format } from "date-fns";
@@ -145,7 +145,7 @@ const SfdcPipelineModifiedFiles = ({
     loadInitialData();
 
     return function cleanup() {      
-      timerIds.forEach(timerId => clearTimeout(timerId))
+      timerIds.forEach(timerId => clearTimeout(timerId));
     };
 
   }, []);
@@ -167,12 +167,12 @@ const SfdcPipelineModifiedFiles = ({
         count++;
         return await sfdcPolling(count);
       }else{        
-        return sfdcResponse
+        return sfdcResponse;
       }
     } catch (error) {      
       toastContext.showInlineErrorMessage(error);
     }     
-  }
+  };
 
   const gitPolling = async (count = 1) => {
     try {
@@ -190,12 +190,12 @@ const SfdcPipelineModifiedFiles = ({
         count++;
         return await gitPolling(count);
       }else{        
-        return gitResponse
+        return gitResponse;
       }
     } catch (error) {      
       toastContext.showInlineErrorMessage(error);
     }     
-  }
+  };
 
   const destSfdcPolling = async (count = 1) => {
     try {
@@ -213,13 +213,13 @@ const SfdcPipelineModifiedFiles = ({
         count++;
         return await destSfdcPolling(count);
       }else{        
-        return destSfdcResponse
+        return destSfdcResponse;
       }
 
     } catch (error) {
       toastContext.showInlineErrorMessage(error);
     }
-  }
+  };
 
   
 
@@ -412,9 +412,9 @@ const SfdcPipelineModifiedFiles = ({
       committedTime: data.committedTime,
       committedBy: data.committedBy,
       committedFileId: data.committedFileId
-    }
+    };
     setSFDCSelectedComponent((sfdcSelectedComponent) => [...sfdcSelectedComponent, newObj]);
-  }
+  };
   const handleGitComponentCheckNew = (data) => {    
     if (!data.isChecked) {
       setGitSelectedComponent((gitSelectedComponent) => gitSelectedComponent.filter((item) => item.committedFile !== data.committedFile));
@@ -427,7 +427,7 @@ const SfdcPipelineModifiedFiles = ({
       committedTime: data.committedTime,      
       commitAction: data.commitAction,
       committedBy: data.committedBy
-    }
+    };
 
     setGitSelectedComponent((gitSelectedComponent) => [...gitSelectedComponent, newObj]);
   };
@@ -488,7 +488,7 @@ const SfdcPipelineModifiedFiles = ({
     }else{
       handleUnCheckAllClickComponentTypes("sfdc");
     }
-  }
+  };
 
   const handleCheckAllClickComponentTypesGit = () => {    
     if(gitFilterDto.getData("checkAll")){
@@ -496,7 +496,7 @@ const SfdcPipelineModifiedFiles = ({
     }else{
       handleUnCheckAllClickComponentTypes("git");
     }
-  }
+  };
 
   const handleCheckAllClickComponentTypes = (type) => {
     // for advanced obj selection we have to select items which are visible on this page itself not all
@@ -567,7 +567,7 @@ const SfdcPipelineModifiedFiles = ({
         break;
       }
 
-  }
+  };
 
   const checkDisabled = () => {
     if(((fromSFDC || fromDestinationSFDC) && sfdcModifiedFilesTable.length === 0) || 
@@ -798,9 +798,9 @@ const SfdcPipelineModifiedFiles = ({
           isChecked: sfdcSelectedComponent.some(selected => selected.componentType === d.componentType && selected.committedFile === d.committedFile && selected.commitAction === d.commitAction && selected.committedTime === d.committedTime)
         },
         d
-      )
-    }))
-  }
+      );
+    }));
+  };
 
   const getGitTableData = (gitData, allGit) => {        
     setGitModifiedFilesTable(gitData.map(d => {
@@ -810,9 +810,9 @@ const SfdcPipelineModifiedFiles = ({
           isChecked: gitSelectedComponent.some(selected => selected.componentType === d.componentType && selected.committedFile === d.committedFile && selected.commitAction === d.commitAction && selected.committedTime === d.committedTime)
         },
         d
-      )
-    }))
-  }
+      );
+    }));
+  };
 
   const getSfdcFilesView = () => {
     return (
@@ -967,8 +967,8 @@ const SfdcPipelineModifiedFiles = ({
         {/*pagination component goes here */}
         {getPaginator(sfdcFilterDto, setSfdcFilterDto, sfdcLoading, loadSfdcData)}
       </div>
-    )
-  }
+    );
+  };
 
   const getGitFilesView = () => {
     return (
@@ -1196,8 +1196,8 @@ const SfdcPipelineModifiedFiles = ({
           </>
         )}
         </div>
-    )
-  }
+    );
+  };
 
   if (error) {
     return (<div className="mt-3">

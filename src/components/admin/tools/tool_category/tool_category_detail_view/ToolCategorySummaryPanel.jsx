@@ -10,7 +10,7 @@ import TagField from "components/common/fields/multiple_items/TagField";
 
 function ToolCategorySummaryPanel({ toolCategoryData, setActiveTab }) {
   if (toolCategoryData == null) {
-    return <LoadingDialog size="sm" />
+    return <LoadingDialog size="sm" />;
   }
 
   return (

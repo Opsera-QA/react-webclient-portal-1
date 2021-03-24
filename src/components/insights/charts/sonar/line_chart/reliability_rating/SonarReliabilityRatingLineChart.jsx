@@ -42,7 +42,7 @@ function ReliabilityRatingLineChart({ kpiConfiguration, setKpiConfiguration, das
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -96,7 +96,7 @@ function ReliabilityRatingLineChart({ kpiConfiguration, setKpiConfiguration, das
             />
         </div>
     );
-  }
+  };
   return (
     <div>
       <ChartContainer

@@ -151,6 +151,7 @@ PipelineWorkflowEditor.propTypes = {
   pipeline: PropTypes.object,
   parentCallback: PropTypes.func,
   fetchPlan: PropTypes.func,
+  closeEditorPanel: PropTypes.func
 };
 
 export default PipelineWorkflowEditor;

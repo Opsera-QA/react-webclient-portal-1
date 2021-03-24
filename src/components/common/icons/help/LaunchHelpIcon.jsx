@@ -16,7 +16,7 @@ function LaunchHelpIcon({ helpComponent, helpText, className }) {
 
   const getHelpText = () => {
     if (helpText) {
-      return <span className="ml-1">{helpText}</span>
+      return <span className="ml-1">{helpText}</span>;
     }
   };
 
@@ -29,7 +29,7 @@ function LaunchHelpIcon({ helpComponent, helpText, className }) {
       <ButtonTooltip innerText={"Launch Help"}>
         <span>
           <FontAwesomeIcon
-            onClick={() => {launchHelp()}}
+            onClick={() => {launchHelp();}}
             icon={faQuestionCircle}
             fixedWidth
             className={"pointer"}

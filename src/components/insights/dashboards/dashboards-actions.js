@@ -6,12 +6,12 @@ dashboardsActions.create = async(dashboardDataDto, getAccessToken) => {
     const apiUrl = "/analytics/dashboard/create";
     let postData = {
       ...dashboardDataDto.getPersistData()
-    }
+    };
     return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
 dashboardsActions.getDashboardByIdV2 = async(getAccessToken, cancelTokenSource, id) => {
-  const apiUrl = `/analytics/dashboard/${id}`
+  const apiUrl = `/analytics/dashboard/${id}`;
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
@@ -32,7 +32,7 @@ dashboardsActions.getAll = async(dashboardFilterDto, getAccessToken) => {
       favorites: dashboardFilterDto.getFilterValue("isFavorite"),
       type: dashboardFilterDto.getFilterValue("type")
     }
-  }
+  };
 
   return baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
@@ -53,7 +53,7 @@ dashboardsActions.getAllDashboardsV2 = async(getAccessToken, cancelTokenSource, 
       favorites: dashboardFilterDto.getFilterValue("isFavorite"),
       type: dashboardFilterDto.getFilterValue("type")
     }
-  }
+  };
 
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
@@ -69,7 +69,7 @@ dashboardsActions.getTopFiveDashboardsV2 = async(getAccessToken, cancelTokenSour
       active: true,
       favorites: true,
     }
-  }
+  };
 
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
@@ -82,37 +82,37 @@ dashboardsActions.getAllDashboardsLovV2 = async(getAccessToken, cancelTokenSourc
     params: {
       size: 10000,
     }
-  }
+  };
 
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 dashboardsActions.update = async(dashboardDataDto, getAccessToken) => {
-    const apiUrl = `/analytics/dashboard/${dashboardDataDto.getData('_id')}/update`
+    const apiUrl = `/analytics/dashboard/${dashboardDataDto.getData('_id')}/update`;
     let postData = {
       ...dashboardDataDto.getPersistData()
-    }
+    };
     return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
-}
+};
 
 dashboardsActions.updateDashboardV2 = async(getAccessToken, cancelTokenSource, dashboardData) => {
-  const apiUrl = `/analytics/dashboard/${dashboardData.getData('_id')}/update`
+  const apiUrl = `/analytics/dashboard/${dashboardData.getData('_id')}/update`;
   let postData = {
     ...dashboardData.getPersistData()
-  }
+  };
   return baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
-}
+};
 
 dashboardsActions.updateFavorite = async(rowData, getAccessToken) => {
-  const apiUrl = `/analytics/dashboard/${rowData._id}/update`
+  const apiUrl = `/analytics/dashboard/${rowData._id}/update`;
   let postData = {
     ...rowData
-  }
+  };
   return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
-}
+};
 
 dashboardsActions.delete = async(dashboardDataDto, getAccessToken) => {
-    const apiUrl = `/analytics/dashboard/${dashboardDataDto.getData('_id')}`
+    const apiUrl = `/analytics/dashboard/${dashboardDataDto.getData('_id')}`;
     return baseActions.apiDeleteCall(getAccessToken, apiUrl);
 };
 

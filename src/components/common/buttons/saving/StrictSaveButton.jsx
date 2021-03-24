@@ -26,6 +26,6 @@ StrictSaveButton.propTypes = {
 StrictSaveButton.defaultProps = {
   disable: false,
   showSuccessToasts: true
-}
+};
 
 export default StrictSaveButton;

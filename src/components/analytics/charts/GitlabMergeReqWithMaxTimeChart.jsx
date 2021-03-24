@@ -127,6 +127,7 @@ function GitlabMergeReqWithMaxTimeChart({ persona, date }) {
 
 GitlabMergeReqWithMaxTimeChart.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object
 };
 
 export default GitlabMergeReqWithMaxTimeChart;

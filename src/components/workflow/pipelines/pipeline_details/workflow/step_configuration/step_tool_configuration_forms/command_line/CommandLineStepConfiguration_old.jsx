@@ -521,7 +521,7 @@ function CommandLineStepConfiguration({
   };
 
   const handleJobChange = (selectedOption) => {
-    console.log(selectedOption)
+    console.log(selectedOption);
     if (selectedOption.type[0] === "SHELL SCRIPT" ) {      
         setFormData({
           ...formData,
@@ -1190,6 +1190,6 @@ CommandLineStepConfiguration.propTypes = {
   createJob: PropTypes.func,
   setToast: PropTypes.func,
   setShowToast: PropTypes.func
-}
+};
 
 export default CommandLineStepConfiguration;

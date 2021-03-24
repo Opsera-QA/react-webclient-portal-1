@@ -15,26 +15,26 @@ toolsActions.deleteTool = async (dataObject, getAccessToken) => {
 
 toolsActions.deleteVaultRecordsForToolId = async (toolDataDto,getAccessToken) => {
   const apiUrl = `/vault/delete`;
-  let id = toolDataDto.getData("_id")
+  let id = toolDataDto.getData("_id");
   let postBody = {
     id : id
-  }
+  };
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-}
+};
 
 toolsActions.deleteOwnerVaultRecordsForToolId = async (toolDataDto,getAccessToken) => {
   const apiUrl = `/vault/tool/delete`;
-  let id = toolDataDto.getData("_id")
+  let id = toolDataDto.getData("_id");
   let postBody = {
     id : id
-  }
+  };
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-}
+};
 
 toolsActions.updateTool = async (toolDataDto, getAccessToken) => {
   const postBody = {
     ...toolDataDto.getPersistData()
-  }
+  };
   let id = toolDataDto.getData("_id");
   const apiUrl = `/registry/${id}/update`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
@@ -43,7 +43,7 @@ toolsActions.updateTool = async (toolDataDto, getAccessToken) => {
 toolsActions.updateToolV2 = async (getAccessToken, cancelTokenSource, toolDataDto) => {
   const postBody = {
     ...toolDataDto.getPersistData()
-  }
+  };
   let id = toolDataDto.getData("_id");
   const apiUrl = `/registry/${id}/update`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
@@ -52,7 +52,7 @@ toolsActions.updateToolV2 = async (getAccessToken, cancelTokenSource, toolDataDt
 toolsActions.createTool = async (toolDataDto, getAccessToken) => {
   const postBody = {
     ...toolDataDto.getPersistData()
-  }
+  };
   const apiUrl = "/registry/create";
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
@@ -60,7 +60,7 @@ toolsActions.createTool = async (toolDataDto, getAccessToken) => {
 toolsActions.createToolV2 = async (getAccessToken, cancelTokenSource, toolDataDto) => {
   const postBody = {
     ...toolDataDto.getPersistData()
-  }
+  };
   const apiUrl = "/registry/create";
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
@@ -85,7 +85,7 @@ toolsActions.getRoleLimitedToolRegistryListV2 = async (getAccessToken, cancelTok
       search: toolFilterDto.getFilterValue("search"),
       owner: toolFilterDto.getFilterValue("owner")
     }
-  }
+  };
 
   const apiUrl = `/registry/configs`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
@@ -97,7 +97,7 @@ toolsActions.getFullRoleLimitedToolRegistryList = async (getAccessToken) => {
       sort: "name",
       size: 10000,
     }
-  }
+  };
 
 
   const apiUrl = `/registry/configs`;
@@ -110,7 +110,7 @@ toolsActions.getFullToolRegistryList = async (getAccessToken) => {
       sort: "name",
       size: 10000,
     }
-  }
+  };
 
   const apiUrl = `/registry`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
@@ -156,7 +156,7 @@ toolsActions.getRelevantPipelinesV2 = async (getAccessToken, cancelTokenSource, 
 toolsActions.updateToolConfiguration = async (toolData, getAccessToken) => {
   const apiUrl = `/registry/${toolData._id}/update`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, toolData);
-}
+};
 
 toolsActions.installJiraApp = async (toolId, getAccessToken) => {
   const apiUrl = `/connectors/jira/${toolId}/app/install`;

@@ -101,4 +101,4 @@ const seleniumPipelineStepConfigurationMetadata = {
   }
 };
 
-export default seleniumPipelineStepConfigurationMetadata
+export default seleniumPipelineStepConfigurationMetadata;

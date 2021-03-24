@@ -39,7 +39,7 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [template, activeTemplates]);
 
   const showPipelineDetails = () => {
@@ -69,7 +69,7 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
         setLoading(false);
       }
     }
-  }
+  };
 
   const getDisabledBody = () => {
     if (template?.readOnly) {
@@ -115,7 +115,7 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
       return getDisabledBody();
     }
 
-    return getEnabledBody()
+    return getEnabledBody();
   };
 
   const handleClose = async () => {
@@ -136,7 +136,7 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
         />
       );
     }
-  }
+  };
 
   const openFreeTrialWizard = (pipelineId, templateType) => {
     if (!pipelineId) {

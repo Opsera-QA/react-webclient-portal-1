@@ -40,6 +40,6 @@ NotificationSummaryPanelBase.propTypes = {
   setActiveTab: PropTypes.func,
   notificationTypeSummaryCard: PropTypes.object,
   notificationMethodSummaryCard: PropTypes.object
-}
+};
 
 export default NotificationSummaryPanelBase;

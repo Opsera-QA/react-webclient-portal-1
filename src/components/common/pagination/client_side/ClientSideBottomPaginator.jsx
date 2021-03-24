@@ -62,7 +62,7 @@ function ClientSideBottomPaginator({ items, pageSize, paginationStyle, setShownI
           <Pagination.Item disabled={onLastPage || paginationDisabled} onClick={() => setPage(currentPage + 1)}>Next</Pagination.Item>
           <Pagination.Item disabled={onLastPage || paginationDisabled} onClick={() => setPage(getTotalPages())}>Last</Pagination.Item>
         </Pagination>
-    )
+    );
   };
 
   const getPageSummary = () => {
@@ -84,7 +84,7 @@ function ClientSideBottomPaginator({ items, pageSize, paginationStyle, setShownI
           {getPaginator()}
         </Col>
       </Row>
-    )
+    );
   }
 
   return (

@@ -40,13 +40,13 @@ function GitTasksActivityLogsTable({ gitTasksData, allLogs }) {
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "name"})),
-      getTableTextColumn(fields.find(field => { return field.id === "type"})),
+      getTableTextColumn(fields.find(field => { return field.id === "name";})),
+      getTableTextColumn(fields.find(field => { return field.id === "type";})),
       // getTableTextColumn(fields.find(field => { return field.id === "message"})),
-      {...getTableTextColumn(fields.find(field => { return field.id === "message"})), class: "wrap-cell-content"},
-      getTableTextColumn(fields.find(field => { return field.id === "log_type"})),
-      getTableBooleanIconColumn(fields.find(field => { return field.id === "status"})),
-      getTableDateTimeColumn(fields.find(field => { return field.id === "createdAt"})),
+      {...getTableTextColumn(fields.find(field => { return field.id === "message";})), class: "wrap-cell-content"},
+      getTableTextColumn(fields.find(field => { return field.id === "log_type";})),
+      getTableBooleanIconColumn(fields.find(field => { return field.id === "status";})),
+      getTableDateTimeColumn(fields.find(field => { return field.id === "createdAt";})),
       getTableInfoIconColumn(showActivityLog),
     ],
     [],
@@ -55,13 +55,13 @@ function GitTasksActivityLogsTable({ gitTasksData, allLogs }) {
   const onRowSelect = (rowData) => {
     setModalData(rowData.original);
     setShowModal(true);
-  }
+  };
 
   const loadData = async (filterDto = gitTasksActivityFilterDto) => {
     try {
       let gitTasksLogResponse;
 
-      setIsLoading(true)
+      setIsLoading(true);
 
       if(allLogs) {
         gitTasksLogResponse = await gitTaskActions.getAllGitTasksActivityLogs(filterDto, getAccessToken);
@@ -74,14 +74,14 @@ function GitTasksActivityLogsTable({ gitTasksData, allLogs }) {
 
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", gitTasksLogResponse.data.count);
-        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
+        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
         setGitTasksActivityFilterDto({...newFilterDto});
       }
     } catch (error) {
       console.log(error.message);
     }
     finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
   };
 

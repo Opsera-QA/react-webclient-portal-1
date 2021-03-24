@@ -39,7 +39,7 @@ function ReliabilityRemediationEffortLineChart({ kpiConfiguration, setKpiConfigu
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -116,7 +116,7 @@ function ReliabilityRemediationEffortLineChart({ kpiConfiguration, setKpiConfigu
             />
         </div>
     );
-  }
+  };
 
   return (
     <div>

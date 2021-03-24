@@ -26,7 +26,7 @@ function RegisteredUserSummaryCard({ registeredUsersData, loadData }) {
 
   const initializeDto = async () => {
     setRegisteredUserDto(new Model({...registeredUsersData}, registeredUsersMetadata, false));
-  }
+  };
 
   const getTitleBar = () => {
     return (
@@ -35,7 +35,7 @@ function RegisteredUserSummaryCard({ registeredUsersData, loadData }) {
         <div><ShowUserDetailsButton registeredUserDto={registeredUserDto} /></div>
       </div>
     );
-  }
+  };
 
   const getTools = () => {
     let tools = registeredUserDto.getData("tools");
@@ -57,11 +57,11 @@ function RegisteredUserSummaryCard({ registeredUsersData, loadData }) {
         <UserToolsTable data={tools} />
       </div>
     );
-  }
+  };
 
   const gotoProfile = () => {
     history.push(`/admin/registered-users/${registeredUserDto.getData("_id")}`);
-  }
+  };
 
   if (registeredUserDto == null) {
     return <></>;

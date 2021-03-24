@@ -11,7 +11,7 @@ function NexusToolSelectInput({ fieldName, dataObject, setDataObject, disabled, 
   const [nexusList, setNexusList] = useState([]);
   const [isNexusSearching, setIsNexusSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select an Nexus account configured in the Opsera Tool Registry")
+  const [placeholder, setPlaceholder] = useState("Select an Nexus account configured in the Opsera Tool Registry");
 
   useEffect(() => {
     if (!disabled) {
@@ -25,7 +25,7 @@ function NexusToolSelectInput({ fieldName, dataObject, setDataObject, disabled, 
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await fetchAWSDetails();
     }
     catch (error) {
@@ -46,7 +46,7 @@ function NexusToolSelectInput({ fieldName, dataObject, setDataObject, disabled, 
         setNexusList(filteredList);
       }
     } catch(error) {
-      setPlaceholder("No Accounts Found")
+      setPlaceholder("No Accounts Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     } finally {

@@ -22,7 +22,7 @@ function StandaloneSaveButton({saveFunction, disable, type}) {
     finally {
       setIsSaving(false);
     }
-  }
+  };
 
   const getLabel = () => {
     if (isSaving) {
@@ -47,6 +47,6 @@ StandaloneSaveButton.propTypes = {
 
 StandaloneSaveButton.defaultProps = {
   disable: false,
-}
+};
 
 export default StandaloneSaveButton;

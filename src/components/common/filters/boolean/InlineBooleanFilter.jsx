@@ -22,10 +22,10 @@ function InlineBooleanFilter({ fieldName, loadData, filterDto, setFilterDto, inl
         <div className="my-auto">{field.label}</div>
       </div>
     );
-  }
+  };
 
   if (field == null) {
-    return <WarningDialog warningMessage={"No field was found for this filter"}/>
+    return <WarningDialog warningMessage={"No field was found for this filter"}/>;
   }
 
   if (toolTipText) {

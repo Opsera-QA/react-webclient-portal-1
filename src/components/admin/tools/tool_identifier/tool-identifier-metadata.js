@@ -75,7 +75,7 @@ const toolIdentifierMetadata = {
     enabledInRegistry: true,
     active: true,
   }
-}
+};
 
 
 export default toolIdentifierMetadata;

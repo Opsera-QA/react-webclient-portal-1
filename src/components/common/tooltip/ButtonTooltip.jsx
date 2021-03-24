@@ -9,7 +9,7 @@ function ButtonTooltip({ innerText, placement, children, trigger }) {
         {message}
       </Tooltip>
     );
-  }
+  };
 
   if (innerText == null) {
     return children;

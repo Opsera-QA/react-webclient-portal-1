@@ -11,7 +11,7 @@ function SpaceNameSelectInput({ fieldName, dataObject, setDataObject, disabled, 
   const { getAccessToken } = useContext(AuthContext);
   const [spaceName, setSpaceNames] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a Space")
+  const [placeholder, setPlaceholder] = useState("Select a Space");
 
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function SpaceNameSelectInput({ fieldName, dataObject, setDataObject, disabled, 
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTypes();
     }
     catch (error) {
@@ -35,14 +35,14 @@ function SpaceNameSelectInput({ fieldName, dataObject, setDataObject, disabled, 
 
   const loadTypes = async () => {
     try {
-      const res = await OctopusStepActions.getSpaces(dataObject.getData("toolId"), getAccessToken)
+      const res = await OctopusStepActions.getSpaces(dataObject.getData("toolId"), getAccessToken);
       if (res && res.status === 200) {
-        setSpaceNames(res.data)
-        return
+        setSpaceNames(res.data);
+        return;
       }
       setSpaceNames([]);
     } catch (error) {
-      setPlaceholder("No Spaces Found")
+      setPlaceholder("No Spaces Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }
@@ -56,7 +56,7 @@ function SpaceNameSelectInput({ fieldName, dataObject, setDataObject, disabled, 
       setDataObject({ ...newDataObject });
       return;
     }
-  }
+  };
 
   return (
     <div>

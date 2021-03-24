@@ -35,7 +35,7 @@ function RegistryToolCard({ toolData, isLoading, loadToolInNewWindow }) {
       <DescriptionField dataObject={toolData} fieldName={"description"} />
     </div>
     );
-  }
+  };
 
 
 

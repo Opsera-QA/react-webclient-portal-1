@@ -34,12 +34,12 @@ function ToolMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, 
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTools(cancelSource);
     }
     catch (error) {
@@ -84,7 +84,7 @@ function ToolMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, 
         <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to
         proceed.
       </div>
-    )
+    );
   }
 
   return (

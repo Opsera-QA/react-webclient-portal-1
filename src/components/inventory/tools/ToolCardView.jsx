@@ -22,7 +22,7 @@ function ToolCardView({ data, toolFilterDto, setToolFilterDto, loadData, isLoadi
         ))}
       </Row>
     );
-  }
+  };
 
   return (
     <CardView

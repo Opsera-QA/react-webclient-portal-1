@@ -23,9 +23,9 @@ function DataNotFoundContainer({ breadcrumbDestination, type, children }) {
           managementViewTitle={parentBreadcrumb["label"]}
           managementViewLink={`/${parentBreadcrumb["path"]}`}
         />
-      )
+      );
     }
-  }
+  };
 
   return (
     <div className="max-content-width mb-2 ml-2">

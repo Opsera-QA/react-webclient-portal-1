@@ -58,8 +58,8 @@ export const getLimitedTableTextColumn = (field, maxLength, className) => {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     class: className ? className : undefined,
-    Cell: (props) => {
-      return props.value ? truncateString(props.value, maxLength) : "";
+    Cell: (row) => {
+      return row.value ? truncateString(row.value, maxLength) : "";
     },
   };
 };
@@ -68,8 +68,8 @@ export const getStringifiedArrayColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (props) => {
-      const array = props?.value;
+    Cell: (row) => {
+      const array = row?.value;
 
       if (Array.isArray(array) && array.length > 0) {
         return JSON.stringify(array);
@@ -85,8 +85,8 @@ export const getNameValueArrayColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (props) => {
-      const array = props?.value;
+    Cell: (row) => {
+      const array = row?.value;
 
       if (Array.isArray(array) && array.length > 0) {
         return array.map((item, index) => {
@@ -104,8 +104,8 @@ export const getRoleArrayColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (props) => {
-      const array = props?.value;
+    Cell: (row) => {
+      const array = row?.value;
 
       if (Array.isArray(array) && array.length > 0) {
         return array.map((item, index) => {
@@ -123,8 +123,8 @@ export const getContactArrayColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (props) => {
-      const array = props?.value;
+    Cell: (row) => {
+      const array = row?.value;
 
       if (Array.isArray(array) && array.length > 0) {
         return array.map((item, index) => {
@@ -142,8 +142,8 @@ export const getTagArrayColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (props) => {
-      const array = props?.value;
+    Cell: (row) => {
+      const array = row?.value;
 
       if (Array.isArray(array) && array.length > 0) {
         return array.map((tag, index) => {
@@ -161,8 +161,8 @@ export const getTableDateColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (props) => {
-      return props.value ? format(new Date(props.value), "yyyy-MM-dd") : "";
+    Cell: (row) => {
+      return row.value ? format(new Date(row.value), "yyyy-MM-dd") : "";
     },
     class: className ? className : "no-wrap-inline"
   };
@@ -172,8 +172,8 @@ export const getTableDateTimeColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (props) => {
-      return props.value ? format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a") : "";
+    Cell: (row) => {
+      return row.value ? format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a") : "";
     },
     class: className ? className : "no-wrap-inline"
   };
@@ -183,9 +183,9 @@ export const getTableDateAndTimeUntilValueColumn = (header, id, fakeColumn = "fa
   return {
     Header: header,
     accessor: fakeColumn,
-    Cell: (props) => {
-      const row = props.row.original;
-      return row[id] ? convertFutureDateToDhmsFromNowString(new Date(row[id])) : "";
+    Cell: (row) => {
+      const originalRow = row.row.original;
+      return originalRow[id] ? convertFutureDateToDhmsFromNowString(new Date(originalRow[id])) : "";
     },
     class: className ? className : "no-wrap-inline"
   };
@@ -195,20 +195,20 @@ export const getPipelineActivityStatusColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (props) => {
+    Cell: (row) => {
       return (
         <div className="d-flex flex-nowrap">
-          <div>{getPipelineStatusIcon(props)}</div>
-          <div className="ml-1">{props.value}</div>
+          <div>{getPipelineStatusIcon(row)}</div>
+          <div className="ml-1">{row.value}</div>
         </div>
       );
     },
     class: className ? className : undefined
-  }
+  };
 };
 
-export const getPipelineStatusIcon = (props) => {
-  switch (props.value) {
+export const getPipelineStatusIcon = (row) => {
+  switch (row.value) {
     case "failure":
     case "failed":
       return (<FontAwesomeIcon icon={faTimesCircle} className="cell-icon red vertical-align-item" fixedWidth />);
@@ -250,7 +250,7 @@ export const getAssociatedPipelineStatusIcon = (pipelineStatus) => {
     default:
       return (<FontAwesomeIcon icon={faCheckCircle} className="green" fixedWidth/>);
   }
-}
+};
 
 export const getPipelineTypeColumn = (field, className) => {
   return {
@@ -315,25 +315,25 @@ export const getChartPipelineStatusColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (props) => {
-      return props.value ? (
-        props.value === "FAILURE" || props.value === "failed" || props.value === "failure" ? (
+    Cell: (row) => {
+      return row.value ? (
+        row.value === "FAILURE" || row.value === "failed" || row.value === "failure" ? (
           <>
             <div style={{ display: "flex", flexWrap: "nowrap" }}>
               <div>
                 <FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" />
               </div>
-              <div className="ml-1">{props.value}</div>
+              <div className="ml-1">{row.value}</div>
             </div>
           </>
         ) : (
-          props.value === "UNSTABLE" || props.value === "unstable" ? (
+          row.value === "UNSTABLE" || row.value === "unstable" ? (
             <>
               <div style={{ display: "flex", flexWrap: "nowrap" }}>
                 <div>
                   <FontAwesomeIcon icon={faCircle} className="cell-icon yellow" />
                 </div>
-                <div className="ml-1">{props.value}</div>
+                <div className="ml-1">{row.value}</div>
               </div>
             </>
           ) : (
@@ -342,7 +342,7 @@ export const getChartPipelineStatusColumn = (field, className) => {
               <div>
                 <FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" />
               </div>
-              <div className="ml-1">{props.value}</div>
+              <div className="ml-1">{row.value}</div>
             </div>
           </>
           )
@@ -358,8 +358,8 @@ export const getTableFavoriteColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (props) => {
-      return <DashboardFavoritesIcon key={props.row.original._id} dashboard={props.row.original} dashboardsActions={dashboardsActions} />
+    Cell: (row) => {
+      return <DashboardFavoritesIcon key={row.row.original._id} dashboard={row.row.original} dashboardsActions={dashboardsActions} />;
     },
     class: className ? className :  "no-wrap-inline"
   };
@@ -368,8 +368,8 @@ export const getTableFavoriteColumn = (field, className) => {
 export const getTableDeleteColumn = (headerText, deleteFunction, className) => {
   return {
     Header: headerText,
-    Cell: (props) => {
-      return <FontAwesomeIcon icon={faTrash} className="pointer danger-red" onClick={() => {deleteFunction(props?.data[props?.row?.index]); }}/>
+    Cell: (row) => {
+      return <FontAwesomeIcon icon={faTrash} className="pointer danger-red" onClick={() => {deleteFunction(row?.data[row?.row?.index]); }}/>;
     },
     class: className ? className :  "no-wrap-inline"
   };
@@ -379,8 +379,8 @@ export const getTableButtonColumn = (accessor = "row", headerText, variant, butt
   return {
     Header: headerText,
     accessor: accessor,
-    Cell: (props) => {
-      return <Button size={"sm"} variant={variant} className={buttonClassName} onClick={() => {buttonFunction(props?.data[props?.row?.index])}}>{buttonText}</Button>
+    Cell: (row) => {
+      return <Button size={"sm"} variant={variant} className={buttonClassName} onClick={() => {buttonFunction(row?.data[row?.row?.index]);}}>{buttonText}</Button>;
     },
     class: className ? className :  "no-wrap-inline py-1"
   };
@@ -390,10 +390,10 @@ export const getGitTaskTableRunButtonColumn = (accessor = "row", headerText, var
   return {
     Header: headerText,
     accessor: accessor,
-    Cell: (props) => {
-      return <Button size={"sm"} variant={variant} disabled={props?.data[props?.row?.index].status === "running"} onClick={() => {buttonFunction(props?.data[props?.row?.index])}} >
-        {props?.data[props?.row?.index].status === "running" ? (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Running </span>) : (<span><FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/> {buttonText} </span> ) }
-        </Button>
+    Cell: (row) => {
+      return <Button size={"sm"} variant={variant} disabled={row?.data[row?.row?.index].status === "running"} onClick={() => {buttonFunction(row?.data[row?.row?.index]);}} >
+        {row?.data[row?.row?.index].status === "running" ? (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Running </span>) : (<span><FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/> {buttonText} </span> ) }
+        </Button>;
     },
     class: className ? className :  "no-wrap-inline py-1"
   };
@@ -403,8 +403,8 @@ export const getTableBooleanIconColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (props) => {
-      return props.value ? <div><FontAwesomeIcon icon={faCheckCircle} className="green ml-2" /></div> :  <div><FontAwesomeIcon icon={faTimesCircle} className="red ml-2" /></div>;
+    Cell: (row) => {
+      return row.value ? <div><FontAwesomeIcon icon={faCheckCircle} className="green ml-2" /></div> :  <div><FontAwesomeIcon icon={faTimesCircle} className="red ml-2" /></div>;
     },
     class: className ? className : "text-left"
   };
@@ -414,8 +414,8 @@ export const getTableInfoIconColumn = (showInformationFunction, accessor = "row"
   return {
     Header: "Info",
     accessor: accessor,
-    Cell: (props) => {
-      return <FontAwesomeIcon icon={faSearchPlus} className="pointer" onClick={() => {showInformationFunction(props?.data[props?.row?.index]); }}/>;
+    Cell: (row) => {
+      return <FontAwesomeIcon icon={faSearchPlus} className="pointer" onClick={() => {showInformationFunction(row?.data[row?.row?.index]); }}/>;
     },
     class: className ? className : undefined
   };
@@ -426,8 +426,8 @@ export const getTableArrayCountColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (props) => {
-      return props.value.length;
+    Cell: (row) => {
+      return row.value.length;
     },
     class: className ? className :  "no-wrap-inline"
   };
@@ -437,8 +437,8 @@ export const getCountColumnWithoutField = (header, accessor, className) => {
   return {
     Header: header,
     accessor: accessor,
-    Cell: (props) => {
-      return props.value.length;
+    Cell: (row) => {
+      return row.value.length;
     },
     class: className ? className :  "no-wrap-inline"
   };
@@ -456,15 +456,15 @@ export const getValueColumn = (field, valueFormat) => {
     default:
       return getTableTextColumn(field);
   }
-}
+};
 
 export const getCheckBoxColumn = (handleChange) => {
   return {
     Header: "",
     accessor: "row",
-    Cell: (props) => {      
-      const idx = props.row["index"];      
-      const item = props["data"][idx];
+    Cell: (row) => {
+      const idx = row.row["index"];
+      const item = row["data"][idx];
       return <Form.Check
         inline
         type={"checkbox"}
@@ -479,4 +479,4 @@ export const getCheckBoxColumn = (handleChange) => {
       />;
     },
   };
-}
+};

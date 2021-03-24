@@ -49,7 +49,7 @@ function LdapGroupManagement() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [orgDomain]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -60,7 +60,7 @@ function LdapGroupManagement() {
     catch (error) {
       if (isMounted?.current === true) {
         toastContext.showLoadingErrorDialog(error);
-        console.error(error)
+        console.error(error);
       }
     }
     finally {
@@ -68,7 +68,7 @@ function LdapGroupManagement() {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const getGroupsByDomain = async (ldapDomain, cancelSource = cancelTokenSource) => {
     if (ldapDomain != null) {
@@ -77,7 +77,7 @@ function LdapGroupManagement() {
 
         if (response?.data) {
           let existingGroups = response?.data;
-          const existingGroupNames = existingGroups.map((group) => {return group.name.toLowerCase()});
+          const existingGroupNames = existingGroups.map((group) => {return group.name.toLowerCase();});
           setExistingGroupNames(existingGroupNames);
           setGroupList(existingGroups);
         }
@@ -111,11 +111,11 @@ function LdapGroupManagement() {
   };
 
   const parseUsersGroups = () => {
-    return Array.isArray(groupList) && groupList.filter((group) => {return group.groupType === "user"});
+    return Array.isArray(groupList) && groupList.filter((group) => {return group.groupType === "user";});
   };
 
   const parseAdminGroups = () => {
-    return Array.isArray(groupList) && groupList.filter((group) => {return group.groupType !== "user"});
+    return Array.isArray(groupList) && groupList.filter((group) => {return group.groupType !== "user";});
   };
 
   const getCurrentView = () => {
@@ -145,7 +145,7 @@ function LdapGroupManagement() {
       default:
         return null;
     }
-  }
+  };
 
   const getNavigationTabContainer = () => {
     return (
@@ -160,7 +160,7 @@ function LdapGroupManagement() {
           tabText={"Site Roles & Departments"} />
       </NavigationTabContainer>
     );
-  }
+  };
 
   return (
     <ScreenContainer

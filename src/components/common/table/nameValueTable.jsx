@@ -12,7 +12,7 @@ const fields = {
     label: "Value",
     id: "value"
   }
-}
+};
 
 // Note: I only made this because we have a lot of areas where we need to use the name/value tables so might as well reuse this.
 function NameValueTable({ tableStyleName, data, noDataMessage, label, valueFormat, showHeaderText }) {
@@ -69,6 +69,6 @@ NameValueTable.defaultProps = {
   tableStyleName: "custom-table",
   valueFormat: "text",
   showHeaderText: false,
-}
+};
 
 export default NameValueTable;

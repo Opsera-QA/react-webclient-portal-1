@@ -43,7 +43,7 @@ function TagDetailView() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -85,8 +85,8 @@ function TagDetailView() {
   };
 
   const deleteTag = async () => {
-    return await adminTagsActions.deleteTagV2(getAccessToken, cancelTokenSource, tagData?.getData("_id"))
-  }
+    return await adminTagsActions.deleteTagV2(getAccessToken, cancelTokenSource, tagData?.getData("_id"));
+  };
 
   const getActionBar = () => {
     if (tagData != null) {

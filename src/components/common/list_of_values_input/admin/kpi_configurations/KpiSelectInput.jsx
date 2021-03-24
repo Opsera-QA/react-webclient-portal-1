@@ -17,7 +17,7 @@ function KpiSelectInput({ fieldName, dataObject, setDataObject, setCurrentKpi, s
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadKpis();
     }
     catch (error) {
@@ -38,7 +38,7 @@ function KpiSelectInput({ fieldName, dataObject, setDataObject, setCurrentKpi, s
 
     if (kpis != null) {
       if (setCurrentKpi && dataObject.getData(fieldName) !== "") {
-        const selectedKpi = kpis.find((kpi) => kpi.identifier === dataObject.getData(fieldName))
+        const selectedKpi = kpis.find((kpi) => kpi.identifier === dataObject.getData(fieldName));
         setCurrentKpi(selectedKpi);
         setDataPoints(selectedKpi["dataPoints"]);
       }

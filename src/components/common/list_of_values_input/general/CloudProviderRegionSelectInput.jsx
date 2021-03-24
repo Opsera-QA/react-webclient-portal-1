@@ -15,7 +15,7 @@ function CloudProviderRegionSelectInput({ fieldName, dataObject, setDataObject, 
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadAwsRegions();
     }
     catch (error) {
@@ -41,7 +41,7 @@ function CloudProviderRegionSelectInput({ fieldName, dataObject, setDataObject, 
       <div className="form-text text-muted p-2">
         AWS Regions information is missing or unavailable!
       </div>
-    )
+    );
   }
 
   return (

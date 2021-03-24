@@ -45,28 +45,28 @@ function NotificationSummaryPanel({ notificationData, setActiveTab }) {
             notificationMethodData={wrapNotificationMethod(emailNotificationMetadata)}
             notificationData={notificationData}
           />
-        )
+        );
       case "slack":
         return (
           <SlackNotificationMethodSummaryCard
             notificationMethodData={wrapNotificationMethod(slackNotificationMetadata)}
             notificationData={notificationData}
           />
-        )
+        );
       case "teams":
         return (
           <TeamsNotificationMethodSummaryCard
             notificationMethodData={wrapNotificationMethod(teamsNotificationMetadata)}
             notificationData={notificationData}
           />
-        )
+        );
       case "jira":
         return (
           <JiraNotificationMethodSummaryCard
             notificationMethodData={wrapNotificationMethod(jiraNotificationMetadata)}
             notificationData={notificationData}
           />
-        )
+        );
       default:
         return (<div>No notification method associated with this Notification</div>);
     }

@@ -37,7 +37,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
     setApprovalPipeline({});
     setFormData(INITIAL_FORM);
     setChildPipelineMessage("");
-    setIsChildProcess(false)
+    setIsChildProcess(false);
 
     loadFormData(pipelineId)
       .then(res => {
@@ -96,7 +96,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
     setPriorToApprovalStep(priorStep);
     setNextToApprovalStep(nextStep);
     buildMessage(approvalStep);
-  }
+  };
 
 
   const checkChildPipelines = async (parentPipeline) => {
@@ -139,7 +139,7 @@ function StepApprovalModal({ pipelineId, visible, setVisible, handleApprovalActi
     }
 
     setChildPipelineMessage(`Child Pipeline Approval Required: ${childPipeline.name}`);
-    return {childPipeline, childApprovalStep}
+    return {childPipeline, childApprovalStep};
   };
 
 

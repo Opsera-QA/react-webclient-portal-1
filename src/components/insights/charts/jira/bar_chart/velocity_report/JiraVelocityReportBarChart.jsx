@@ -12,6 +12,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+
 function JiraVelocityBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -39,7 +40,7 @@ function JiraVelocityBarChart({ kpiConfiguration, setKpiConfiguration, dashboard
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -122,7 +123,7 @@ function JiraVelocityBarChart({ kpiConfiguration, setKpiConfiguration, dashboard
             />
         </div>
     );
-  }
+  };
 
   return (
     <div>
@@ -149,8 +150,14 @@ function JiraVelocityBarChart({ kpiConfiguration, setKpiConfiguration, dashboard
     </div>
   );
 }
+
 JiraVelocityBarChart.propTypes = {
   persona: PropTypes.string,
+  kpiConfiguration: PropTypes.object,
+  setKpiConfiguration: PropTypes.func,
+  dashboardData: PropTypes.object,
+  index: PropTypes.any,
+  setKpis: PropTypes.func
 };
 
 export default JiraVelocityBarChart;

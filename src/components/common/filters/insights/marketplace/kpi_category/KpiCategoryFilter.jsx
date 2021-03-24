@@ -33,6 +33,6 @@ KpiCategoryFilter.propTypes = {
 
 KpiCategoryFilter.defaultProps = {
   fieldName: "category"
-}
+};
 
 export default KpiCategoryFilter;

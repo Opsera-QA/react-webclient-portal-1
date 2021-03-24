@@ -18,7 +18,7 @@ function BooleanPropertiesField({dataObject, fieldName, className}) {
 
     return (
       propertyKeys.map((key, i) => {
-        const property = `${key}: ${properties[key]}`
+        const property = `${key}: ${properties[key]}`;
         return (
           <div key={i} className="mx-1 mb-1 badge badge-light generic-badge">
             <span><FontAwesomeIcon icon={faBracketsCurly} className="mr-2" fixedWidth />{property}</span>

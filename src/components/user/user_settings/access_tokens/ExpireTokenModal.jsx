@@ -18,7 +18,7 @@ function ExpireTokenModal({ token, expireToken, showModal, setShowModal }) {
 
   const handleClose = () => {
     setShowModal(false);
-  }
+  };
 
   return (
     <Modal show={showModal} size={"sm"} onHide={() => handleClose()}>

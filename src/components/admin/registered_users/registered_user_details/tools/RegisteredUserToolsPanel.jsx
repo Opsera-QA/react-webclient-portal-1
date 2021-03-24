@@ -63,7 +63,7 @@ function RegisteredUserToolsPanel({ userData, isDeployingElk, setIsDeployingElk 
       toastContext.showErrorDialog(error.message);
       setIsDeployingElk(false);
     }
-  }
+  };
 
   const getDeployElkButton = () => {
     let showElkButton = true;
@@ -82,14 +82,14 @@ function RegisteredUserToolsPanel({ userData, isDeployingElk, setIsDeployingElk 
         <div>
           <div className="mb-2">No tools are associated with this user account!</div>
           <Button variant="secondary" disabled={isDeployingElk} size="sm" onClick={() => {
-            deployElkStack()
+            deployElkStack();
           }}>Deploy ELK Stack Now</Button>
           {isDeployingElk &&
           <span className="ml-2"><FontAwesomeIcon icon={faSpinner} spin className="mr-2 mt-1"/>Currently deploying ELK stack. Check back later for tools.</span>}
         </div>
       );
     }
-  }
+  };
 
   const getJsonDisplayers = () => {
     if (registeredUserToolsDto != null) {
@@ -112,7 +112,7 @@ function RegisteredUserToolsPanel({ userData, isDeployingElk, setIsDeployingElk 
     else {
       return (<ErrorDialog error={"Could not pull Customer Tools information"} />);
     }
-  }
+  };
 
   if (isLoading) {
     return <DetailPanelLoadingDialog type={"Registered User Tools"} />;

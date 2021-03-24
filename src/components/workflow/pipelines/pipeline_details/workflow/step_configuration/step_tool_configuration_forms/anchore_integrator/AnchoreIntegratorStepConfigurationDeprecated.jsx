@@ -185,7 +185,7 @@ function AnchoreIntegratorStepConfigurationDeprecated({ stepTool, pipelineId, pl
   };
 
   const handleAnchoreChange = (selectedOption) => {
-    console.log(selectedOption)
+    console.log(selectedOption);
     setFormData({
       ...formData,
       anchoreToolConfigId: selectedOption.id ? selectedOption.id : "",
@@ -258,7 +258,7 @@ function AnchoreIntegratorStepConfigurationDeprecated({ stepTool, pipelineId, pl
       );
     }
   };
-console.log(formData)
+console.log(formData);
   return (
     <>
       <Form>

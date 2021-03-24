@@ -28,6 +28,6 @@ DateFieldBase.propTypes = {
 
 DateFieldBase.defaultProps = {
   dateFormat: "yyyy-MM-dd"
-}
+};
 
 export default DateFieldBase;

@@ -12,7 +12,7 @@ import {
 import gitTasksMetadata from "./git-tasks-metadata";
 import Model from "core/data_model/model";
 import {useHistory} from "react-router-dom";
-import CustomModalDialog from "components/common/modal/modal.jsx"
+import CustomModalDialog from "components/common/modal/modal.jsx";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SFDCViewOverlay from "components/git/git_task_details/configuration_forms/sfdc/SFDCViewOverlay";
 
@@ -29,16 +29,16 @@ function GitTasksTable({ data, gitTasksFilterDto, setGitTasksFilterDto, loadData
 
   const handleConfirmation = (rowData) => {
     console.log(rowData);
-    setSelectedRowData(new Model(rowData, gitTasksMetadata, false))
+    setSelectedRowData(new Model(rowData, gitTasksMetadata, false));
     // history.push({pathname: `/git/details/${rowData._id}`, state: { runTask : true }});
     // TODO: Create a new modal for confirmation and then direclty proceed with sfdc component selection
     setShowModal(true);
-  }
+  };
 
   const handleCancelModal = () => {
     setSelectedRowData({});
     setShowModal(false);
-  }
+  };
 
   const handleRunGitTask = () => {   
     setShowModal(false);
@@ -47,7 +47,7 @@ function GitTasksTable({ data, gitTasksFilterDto, setGitTasksFilterDto, loadData
     }
     // open sfdc wizard views
     toastContext.showOverlayPanel(<SFDCViewOverlay gitTasksData={selectedRowData} refreshData={loadData}/>);
-  }
+  };
 
   const viewDetails = (rowData) => {
     history.push({pathname: `/git/details/${rowData._id}`, state: { runTask : false }});
@@ -55,12 +55,12 @@ function GitTasksTable({ data, gitTasksFilterDto, setGitTasksFilterDto, loadData
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "name"})),
-      getTableTextColumn(fields.find(field => { return field.id === "description"})),
-      getTableTextColumn(fields.find(field => { return field.id === "type"})),
-      getTableDateColumn(fields.find(field => { return field.id === "createdAt"})),
-      getTableBooleanIconColumn(fields.find(field => { return field.id === "active"})),
-      getPipelineActivityStatusColumn(fields.find(field => { return field.id === "status"})),
+      getTableTextColumn(fields.find(field => { return field.id === "name";})),
+      getTableTextColumn(fields.find(field => { return field.id === "description";})),
+      getTableTextColumn(fields.find(field => { return field.id === "type";})),
+      getTableDateColumn(fields.find(field => { return field.id === "createdAt";})),
+      getTableBooleanIconColumn(fields.find(field => { return field.id === "active";})),
+      getPipelineActivityStatusColumn(fields.find(field => { return field.id === "status";})),
       getTableButtonColumn("_id", "", "outline-primary", "View Details", viewDetails),
       getGitTaskTableRunButtonColumn("row", "", "primary", "Run Task", handleConfirmation),
     ],

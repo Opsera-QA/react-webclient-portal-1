@@ -6,7 +6,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 function ToggleSettingsIcon({ activeTab, setActiveTab, className }) {
   const toggleSettings = () => {
-    setActiveTab("settings")
+    setActiveTab("settings");
   };
 
   if (!setActiveTab || activeTab === "settings") {
@@ -17,7 +17,7 @@ function ToggleSettingsIcon({ activeTab, setActiveTab, className }) {
     <div className={className}>
       <TooltipWrapper innerText={"Toggle Settings"}>
         <FontAwesomeIcon
-          onClick={() => {toggleSettings()}}
+          onClick={() => {toggleSettings();}}
           icon={faCogs}
           fixedWidth
           className={"pointer"}

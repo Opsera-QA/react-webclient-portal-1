@@ -21,7 +21,7 @@ function ProjectMappingWorkspaceSelectInput({ fieldName, dataObject, setDataObje
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadWorkspaces();
     }
     catch (error) {
@@ -36,7 +36,7 @@ function ProjectMappingWorkspaceSelectInput({ fieldName, dataObject, setDataObje
     let results = await pipelineActions.searchWorkSpaces(dataObject.getData("tool_identifier"), dataObject.getData("tool_id"), getAccessToken);
     if (typeof results != "object") {
       toastContext.showLoadingErrorDialog(`There has been an error in fetching ${dataObject.getData("tool_identifier")} workspaces`);
-      return
+      return;
     }
     setWorkspaces(results);
   };
@@ -49,7 +49,7 @@ function ProjectMappingWorkspaceSelectInput({ fieldName, dataObject, setDataObje
       setDataObject({ ...newDataObject });
       return;
     }
-  }
+  };
 
   return (
     <SelectInputBase

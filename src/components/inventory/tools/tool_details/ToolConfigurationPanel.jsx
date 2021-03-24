@@ -68,11 +68,11 @@ function ToolConfigurationPanel({ toolData }) {
         return <AzureToolConfiguration toolData={toolData} />;
       case "jfrog_artifactory_maven":
       case "jfrog_artifactory_docker":
-        return <JFrogToolConfiguration toolData={toolData} />
+        return <JFrogToolConfiguration toolData={toolData} />;
       default:
-        return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>
+        return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>;
     }
-  }
+  };
   
   return (
     <div className="p-3">

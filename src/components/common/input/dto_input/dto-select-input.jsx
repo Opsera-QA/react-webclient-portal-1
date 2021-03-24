@@ -21,7 +21,7 @@ function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectO
     currentOptions.push(newValue);
     setSelectOptions(currentOptions);
     validateAndSetData(fieldName, newValue);
-  }
+  };
 
   if (field == null) {
     return null;
@@ -74,6 +74,6 @@ DtoSelectInput.defaultProps = {
   textField: "text",
   filter: "contains",
   placeholderText: "Select One"
-}
+};
 
 export default DtoSelectInput;

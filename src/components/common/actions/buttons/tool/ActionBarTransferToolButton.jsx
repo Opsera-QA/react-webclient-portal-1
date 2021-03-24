@@ -42,7 +42,7 @@ function ActionBarTransferToolButton({ toolData, loadTool, className }) {
     finally {
       setIsLoading(false);
     }
-  }
+  };
 
   const changeToolOwner = async () => {
     try {
@@ -58,7 +58,7 @@ function ActionBarTransferToolButton({ toolData, loadTool, className }) {
     finally {
       setTransferringOwner(false);
     }
-  }
+  };
 
   const popoverContent = (
       <div>

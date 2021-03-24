@@ -23,7 +23,7 @@ function PublishDashboardToPublicMarketplaceIcon({dashboardData, className}) {
 
     return () => {
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const getRoles = async () => {

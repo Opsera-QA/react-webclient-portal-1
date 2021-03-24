@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 function RadioButtonOption({ fieldName, dataObject, setDataObject, value, setDataFunction, className, label, disabled}) {
   const validateAndSetData = (fieldName, value) => {
     if (setDataFunction) {
-      setDataFunction(fieldName, value)
+      setDataFunction(fieldName, value);
     }
     else {
       let newDataObject = dataObject;

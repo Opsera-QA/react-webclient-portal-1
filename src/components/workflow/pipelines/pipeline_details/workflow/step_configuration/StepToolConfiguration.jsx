@@ -639,9 +639,9 @@ function StepToolConfiguration({
             setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
             />
-        )
+        );
     }
-  }
+  };
 
   return (
     <div>

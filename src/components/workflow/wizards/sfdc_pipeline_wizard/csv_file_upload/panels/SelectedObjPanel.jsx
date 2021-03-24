@@ -1,5 +1,5 @@
-import React, {useState} from 'react'
-import PropTypes from 'prop-types'
+import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 import ClientSideBottomPaginator from "components/common/pagination/client_side/ClientSideBottomPaginator";
 
 function SelectedObjPanel({ selectedItems }) {
@@ -18,7 +18,7 @@ function SelectedObjPanel({ selectedItems }) {
           </div>
         </li>
       </div>
-    )
+    );
   };
   
   const formatItems = () => {
@@ -45,12 +45,12 @@ function SelectedObjPanel({ selectedItems }) {
           <ClientSideBottomPaginator items={selectedItems} setShownItems={setShownSelectedItems} paginationStyle={"stacked"} pageSize={10} />
         </div>
       </div>
-  )
+  );
 }
 
 SelectedObjPanel.propTypes = {
   selectedItems: PropTypes.array,
-}
+};
 
-export default SelectedObjPanel
+export default SelectedObjPanel;
 

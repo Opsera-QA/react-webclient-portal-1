@@ -1,29 +1,50 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "../../../../../contexts/DialogToastContext";
-import pipelineActions from "../../../../workflow/pipeline-actions";
-import {AuthContext} from "../../../../../contexts/AuthContext";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationCircle} from "@fortawesome/free-solid-svg-icons";
+import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import PipelineUsageToolMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineUsageToolMultiSelectInput";
+import axios from "axios";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {AuthContext} from "contexts/AuthContext";
+import pipelineActions from "components/workflow/pipeline-actions";
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
 function PipelineUsageToolSelectInput({ placeholderText, fieldName, dataObject, setDataObject, setDataFunction, disabled, textField, valueField}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [toolIdentifiers, setToolIdentifiers] = useState([]);
+  const [pipelineUsageTools, setPipelineUsageTools] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      setIsLoading(true)
-      await loadTools();
+      setIsLoading(true);
+      await loadTools(cancelSource);
     }
     catch (error) {
+      console.error(error);
       toastContext.showLoadingErrorDialog(error);
     }
     finally {
@@ -31,21 +52,21 @@ function PipelineUsageToolSelectInput({ placeholderText, fieldName, dataObject, 
     }
   };
 
-  const loadTools = async () => {
-    const response = await pipelineActions.getPipelineUsageToolList(getAccessToken);
+  const loadTools = async (cancelSource = cancelTokenSource) => {
+    const response = await pipelineActions.getPipelineUsageToolListV2(getAccessToken, cancelSource);
 
-    if (response.data != null) {
-      setToolIdentifiers(response);
+    if (response?.data != null) {
+      setPipelineUsageTools(response?.data);
     }
   };
 
-  if (!isLoading && (toolIdentifiers == null || toolIdentifiers.length === 0)) {
+  if (!isLoading && (pipelineUsageTools == null || pipelineUsageTools.length === 0)) {
     return (
       <div className="form-text text-muted p-2">
         <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
         No tool identifiers are active and registered for Pipeline use.
       </div>
-    )
+    );
   }
 
   return (
@@ -53,9 +74,10 @@ function PipelineUsageToolSelectInput({ placeholderText, fieldName, dataObject, 
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      selectOptions={toolIdentifiers}
+      selectOptions={pipelineUsageTools}
       setDataFunction={setDataFunction}
       busy={isLoading}
+      groupBy={(tool) => capitalizeFirstLetter(tool?.tool_type_name, " ", "Undefined Type")}
       valueField={valueField}
       textField={textField}
       placeholderText={placeholderText}
@@ -76,7 +98,7 @@ PipelineUsageToolSelectInput.propTypes = {
   visible: PropTypes.bool
 };
 
-PipelineUsageToolMultiSelectInput.defaultProps = {
+PipelineUsageToolSelectInput.defaultProps = {
   textField: "name",
   valueField: "identifier"
 };

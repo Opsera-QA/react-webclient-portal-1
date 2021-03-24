@@ -17,7 +17,7 @@ function ToolIdentifierMultiSelectInput({ fieldName, dataObject, setDataFunction
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTools();
     }
     catch (error) {

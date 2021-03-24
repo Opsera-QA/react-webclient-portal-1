@@ -139,7 +139,7 @@ function PipelineStepConfigurationSummary({
   pipelineData,
 }) {
   const getModelWrappedObject = (metaData) => {
-    return (new Model({...pipelineData?.tool?.configuration}, metaData, false))
+    return (new Model({...pipelineData?.tool?.configuration}, metaData, false));
   };
 
   // TODO: Pass in already wrapped data object?
@@ -389,7 +389,7 @@ function PipelineStepConfigurationSummary({
             pipelineData={pipelineData}
             jFrogPipelineDataObject={getModelWrappedObject(jfrogStepFormMetadata)}
           />
-        )
+        );
       default:
         return (
           <SummaryPanelContainer>
@@ -397,7 +397,7 @@ function PipelineStepConfigurationSummary({
           </SummaryPanelContainer>
         );
     }
-  }
+  };
 
   return (
     <div>

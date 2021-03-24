@@ -21,7 +21,7 @@ function JiraProjectInput({jiraToolId, visible, dataObject, setDataObject, disab
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadProjects();
     }
     catch (error) {
@@ -89,6 +89,6 @@ JiraProjectInput.propTypes = {
 
 JiraProjectInput.defaultProps = {
   visible: true
-}
+};
 
 export default JiraProjectInput;

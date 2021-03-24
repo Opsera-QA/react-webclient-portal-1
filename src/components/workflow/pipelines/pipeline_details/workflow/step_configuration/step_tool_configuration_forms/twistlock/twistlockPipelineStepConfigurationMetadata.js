@@ -98,4 +98,4 @@ const twistlockPipelineStepConfigurationMetadata = {
   }
 };
 
-export default twistlockPipelineStepConfigurationMetadata
+export default twistlockPipelineStepConfigurationMetadata;

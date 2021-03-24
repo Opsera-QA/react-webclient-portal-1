@@ -19,7 +19,7 @@ function JiraPrimaryUserField({ dataObject, fieldName, jiraUsers, isLoading }) {
     }
 
     if (jiraUsers != null && jiraUsers.length > 0) {
-      const jiraUser = jiraUsers.find((user) => user.accountId === accountId)
+      const jiraUser = jiraUsers.find((user) => user.accountId === accountId);
 
       if (jiraUser != null) {
        return jiraUser.displayName ;

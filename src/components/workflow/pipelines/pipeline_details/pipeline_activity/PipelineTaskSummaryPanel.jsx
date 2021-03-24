@@ -58,7 +58,7 @@ function PipelineTaskSummaryPanel({ pipelineTaskData }) {
   };
 
   if (isLoading) {
-    return <LoadingDialog message={"Loading Pipeline"} size={'sm'} />
+    return <LoadingDialog message={"Loading Pipeline"} size={'sm'} />;
   }
 
   return (getSummaryPanel());

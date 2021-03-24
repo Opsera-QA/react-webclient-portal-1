@@ -45,7 +45,7 @@ DashboardFilterTagInput.propTypes = {
 
 DashboardFilterTagInput.defaultProps = {
   fieldName: "value"
-}
+};
 
 export default DashboardFilterTagInput;
 

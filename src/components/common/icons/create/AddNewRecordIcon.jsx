@@ -11,7 +11,7 @@ function AddNewRecordIcon({ addRecordFunction, className, type }) {
   return (
     <div className={className}>
       <div className={"pointer"}>
-        <FontAwesomeIcon onClick={() => {addRecordFunction()}} icon={faPlus} fixedWidth className={"mr-2"} />
+        <FontAwesomeIcon onClick={() => {addRecordFunction();}} icon={faPlus} fixedWidth className={"mr-2"} />
         <span>Add New {type}</span>
       </div>
     </div>

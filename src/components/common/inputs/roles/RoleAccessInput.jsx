@@ -54,7 +54,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
 
   const getGroupsByDomain = async (ldapDomain) => {
     try {
-      setLoadingGroups(true)
+      setLoadingGroups(true);
       let response = await accountsActions.getLdapGroupsWithDomain(ldapDomain, getAccessToken);
 
       const groupResponse = response?.data;
@@ -154,7 +154,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
 
     newDataObject.setData(fieldName, [...newArray]);
     setDataObject({...newDataObject});
-  }
+  };
 
   const isRoleComplete = (role) => {
     return !(role?.role === "" || (role?.user === "" && role?.group === ""));
@@ -182,13 +182,13 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
   };
 
   const deleteRole = (index) => {
-    let newRoleList = roles
+    let newRoleList = roles;
     newRoleList.splice(index, 1);
     validateAndSetData(newRoleList);
   };
 
   const updateProperty = (row, innerField, newValue) => {
-    let newPropertyList = roles
+    let newPropertyList = roles;
     let index = newPropertyList.indexOf(row);
 
     if (newPropertyList[index][innerField] !== newValue) {
@@ -307,7 +307,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
       <Button variant="link" onClick={() => deleteRole(index)}>
         <span><FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/></span>
       </Button>
-    )
+    );
   };
 
   const getPropertyRow = (role, index) => {
@@ -375,7 +375,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
           <FontAwesomeIcon className="text-warning mr-1" icon={faExclamationTriangle} fixedWidth />
           <span className="mt-1">Incomplete Roles Will Be Removed Upon Saving</span>
         </div>
-      )
+      );
     }
   };
 

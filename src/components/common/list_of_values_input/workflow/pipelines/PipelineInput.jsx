@@ -25,7 +25,7 @@ function PipelineInput({ currentPipelineId, visible, fieldName, dataObject, setD
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadPipelines();
     }
     catch (error) {
@@ -70,7 +70,7 @@ function PipelineInput({ currentPipelineId, visible, fieldName, dataObject, setD
     if (foundPipeline != null) {
       let pipelineDataObject = new Model({...foundPipeline.pipeline}, pipelineMetadata, false);
       let run = foundPipeline.workflow?.lastRun?.run;
-      return (<PipelineSummaryCard pipelineData={pipelineDataObject} run={run != null ? `${run}` : `0`} /> )
+      return (<PipelineSummaryCard pipelineData={pipelineDataObject} run={run != null ? `${run}` : `0`} /> );
     }
 
     return ('Could not get pipeline details. Pipeline may have been deleted');
@@ -85,7 +85,7 @@ function PipelineInput({ currentPipelineId, visible, fieldName, dataObject, setD
       );
     }
 
-    return <small className="text-muted"><span>Select a pipeline to get started.</span></small>
+    return <small className="text-muted"><span>Select a pipeline to get started.</span></small>;
   };
 
   if (visible === false) {
@@ -99,7 +99,7 @@ function PipelineInput({ currentPipelineId, visible, fieldName, dataObject, setD
         No other pipelines have been registered. Please go to <Link to="/workflow">Pipelines</Link> and add another pipeline in order to
         configure a child pipeline step.
       </div>
-    )
+    );
   }
 
   return (

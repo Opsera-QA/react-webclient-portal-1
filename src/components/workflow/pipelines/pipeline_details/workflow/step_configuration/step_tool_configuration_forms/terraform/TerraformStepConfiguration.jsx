@@ -75,7 +75,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
     let { configuration, threshold } = step;
     if (typeof configuration !== "undefined") {
       setTerraformStepConfigurationDataDto(new Model(configuration, TerraformStepFormMetadata, false));
-      await fetchAWSDetails()
+      await fetchAWSDetails();
       await fetchSCMDetails(configuration);
       await searchRepositories(configuration.type, configuration.gitToolId, configuration.bitbucketWorkspace);
       await searchBranches(configuration.type, configuration.gitToolId, configuration.gitRepositoryID, configuration.bitbucketWorkspace);
@@ -84,7 +84,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
         setThresholdValue(threshold.value);
       }
     } else {
-      await fetchAWSDetails()
+      await fetchAWSDetails();
       setTerraformStepConfigurationDataDto(
         new Model({ ...TerraformStepFormMetadata.newModelBase }, TerraformStepFormMetadata, false)
       );
@@ -218,14 +218,14 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       }
       setWorkspacesList(results);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
       let errorMessage = "Workspace information is missing or unavailable!";
       toastContext.showErrorDialog(errorMessage);
     } finally {
       setIsWorkspacesSearching(false);
     }
-  }
+  };
 
   const callbackFunction = async () => {
     const item = {
@@ -258,14 +258,14 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       setTerraformStepConfigurationDataDto({ ...newDataObject });
       if (terraformStepConfigurationDto.getData("type") !== "bitbucket") {
         await searchRepositories(terraformStepConfigurationDto.getData("type"), terraformStepConfigurationDto.getData("gitToolId"));
-        return
+        return;
       }
-      await getWorkspaces("bitbucket", terraformStepConfigurationDto.getData("gitToolId"), getAccessToken)
+      await getWorkspaces("bitbucket", terraformStepConfigurationDto.getData("gitToolId"), getAccessToken);
       return;
     }
     if (fieldName === "gitRepository") {
       let newDataObject = terraformStepConfigurationDto;
-      let repoName = value.name
+      let repoName = value.name;
       if (terraformStepConfigurationDto.getData("type") === "gitlab") {
         let re = /\.com:([^\/]+)/;
         let matches = re.exec(value.sshUrl);
@@ -311,7 +311,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
 
   const handleJsonInputUpdate = (e) => {
     if (e.error) {
-      setJsonEditorInvalid(e.error)
+      setJsonEditorInvalid(e.error);
       return;
     }
     if (e.jsObject && Object.keys(e.jsObject).length > 0) {
@@ -319,7 +319,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       let newDataObject = terraformStepConfigurationDto;
       newDataObject.setData("keyValueMap", e.jsObject);
       setTerraformStepConfigurationDataDto({ ...newDataObject });
-      return
+      return;
     }
   };
 

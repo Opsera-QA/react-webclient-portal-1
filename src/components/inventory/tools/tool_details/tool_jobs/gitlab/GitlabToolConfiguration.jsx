@@ -21,7 +21,7 @@ function GitlabToolConfiguration({ toolData }) {
   }, []);
 
   const loadData = async () => {
-    let gitlabConfigurationData = modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), gitlabConnectionMetadata)
+    let gitlabConfigurationData = modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), gitlabConnectionMetadata);
 
     if (gitlabConfigurationData.getData("twoFactorAuthentication") === true) {
       gitlabConfigurationData.setMetaDataFields(gitlabConnectionMetadata.fieldsAlt);

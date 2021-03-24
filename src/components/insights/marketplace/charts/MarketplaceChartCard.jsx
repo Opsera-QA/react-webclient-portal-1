@@ -18,7 +18,7 @@ export default function MarketplaceChartCard({ kpi, dashboardId }) {
         <Card.Img variant="top" className="pt-2 px-2" src={kpi.thumbnailPath} />
       );
     }
-  }
+  };
 
   const getToolsField = () => {
     if (kpi.tools?.length > 0) {
@@ -73,7 +73,7 @@ export default function MarketplaceChartCard({ kpi, dashboardId }) {
         </div>
       </Card.Body>
     </Card>
-  )
+  );
 }
 
 MarketplaceChartCard.propTypes = {

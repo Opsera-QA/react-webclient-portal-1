@@ -2,7 +2,7 @@ import React, {useState, useContext, useEffect, useRef} from "react";
 import { Image } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import { formatDistanceToNowStrict } from "date-fns";
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
 import { Row, Col } from "react-bootstrap";
 import axios from "axios";
@@ -42,7 +42,7 @@ function MarketplaceChartInfoPanel({kpiData, dashboardId, closePanel}) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {

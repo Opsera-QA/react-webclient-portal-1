@@ -7,7 +7,7 @@ import GitTaskSummaryPanelBase from "components/git/git_task_details/GitTaskSumm
 import sfdcGitTaskConfigurationMetadata
   from "components/git/git_task_details/configuration_forms/sfdc/sfdc-git-task-configuration-metadata";
 import SFDCGitTaskTypeSummaryCard
-  from "components/git/git_task_details/configuration_forms/sfdc/SFDCGitTaskTypeSummaryCard"
+  from "components/git/git_task_details/configuration_forms/sfdc/SFDCGitTaskTypeSummaryCard";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -57,7 +57,7 @@ const handleCancelRunTask = async () => {
   toastContext.showInformationToast("Task has been stopped", 10);
   setIsLoading(false);
   history.push(`/git`);
-}
+};
   // TODO: Make these panels more similar to the pipeline summary cards
   const getTaskTypeSummaryPanel = () => {
     switch (gitTasksData.getData("type")) {

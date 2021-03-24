@@ -10,7 +10,7 @@ import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import CloseButton from "../../../../../../../common/buttons/CloseButton"
+import CloseButton from "../../../../../../../common/buttons/CloseButton";
 import JSONInput from "react-json-editor-ajrm";
 import locale    from "react-json-editor-ajrm/locale/en";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
@@ -35,7 +35,7 @@ const ACCESS_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
   { value: "private", label: "Private" },
   { value: "public", label: "Public" },
-]
+];
 
 function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, callbackSaveToVault, pipelineId, closeEditorPanel }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -157,7 +157,7 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
 
   const handlePathUpdate = (e) => {
     if (e.error) {
-      setJsonEditorInvalid(e.error)
+      setJsonEditorInvalid(e.error);
       return;
     }
     if (e.jsObject && Object.keys(e.jsObject).length > 0) {
@@ -165,13 +165,13 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
       let newDataObject = ebsStepConfigurationDto;
       newDataObject.setData("dockerVolumePath", e.jsObject);
       setEBSStepConfigurationDataDto({ ...newDataObject });
-      return
+      return;
     }
   };
 
   const handleEnvUpdate = (e) => {
     if (e.error) {
-      setJsonEditorInvalid(e.error)
+      setJsonEditorInvalid(e.error);
       return;
     }
     if (e.jsObject && Object.keys(e.jsObject).length > 0) {
@@ -179,7 +179,7 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
       let newDataObject = ebsStepConfigurationDto;
       newDataObject.setData("environments", e.jsObject);
       setEBSStepConfigurationDataDto({ ...newDataObject });
-      return
+      return;
     }
   };
 

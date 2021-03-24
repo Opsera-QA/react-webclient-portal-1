@@ -11,7 +11,7 @@ function CommunicationStyleSelectInput({ fieldName, dataObject, setDataObject, d
   const { getAccessToken } = useContext(AuthContext);
   const [communicationStyles, setCommunicationStyles] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a Communication Style")
+  const [placeholder, setPlaceholder] = useState("Select a Communication Style");
 
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function CommunicationStyleSelectInput({ fieldName, dataObject, setDataObject, d
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTypes();
     }
     catch (error) {
@@ -35,14 +35,14 @@ function CommunicationStyleSelectInput({ fieldName, dataObject, setDataObject, d
 
   const loadTypes = async () => {
     try {
-      const res = await OctopusStepActions.getCommunicationStyles(dataObject.getData("toolId"), dataObject.getData("spaceId"), getAccessToken)
+      const res = await OctopusStepActions.getCommunicationStyles(dataObject.getData("toolId"), dataObject.getData("spaceId"), getAccessToken);
       if (res && res.status === 200) {
-        setCommunicationStyles(res.data)
-        return
+        setCommunicationStyles(res.data);
+        return;
       }
       setCommunicationStyles([]);
     } catch (error) {
-      setPlaceholder("No Communication Styles Found")
+      setPlaceholder("No Communication Styles Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }
@@ -55,7 +55,7 @@ function CommunicationStyleSelectInput({ fieldName, dataObject, setDataObject, d
       setDataObject({ ...newDataObject });
       return;
     }
-  }
+  };
 
   return (
     <div>

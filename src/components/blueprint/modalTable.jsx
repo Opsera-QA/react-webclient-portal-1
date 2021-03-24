@@ -156,6 +156,9 @@ ModalTable.propTypes = {
   jsonMessage: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   show: PropTypes.bool,
   setParentVisibility: PropTypes.func,
+  column_data: PropTypes.any,
+  jsonData: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  stats: PropTypes.object
 };
 
 export default ModalTable;

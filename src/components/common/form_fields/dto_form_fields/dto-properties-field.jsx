@@ -51,6 +51,6 @@ DtoPropertiesField.propTypes = {
 
 DtoPropertiesField.defaultProps = {
   fields: ["name", "value"]
-}
+};
 
 export default DtoPropertiesField;
