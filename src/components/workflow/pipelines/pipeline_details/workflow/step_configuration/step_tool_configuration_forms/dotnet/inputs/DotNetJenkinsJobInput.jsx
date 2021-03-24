@@ -4,7 +4,7 @@ import JenkinsJobInput from "components/common/list_of_values_input/tools/jenkin
 
 function DotNetJenkinsJobInput({dataObject, setDataObject, disabled}) {
   const setJenkinsJob = (fieldName, selectedOption) => {
-    console.log(selectedOption)
+    console.log(selectedOption);
     let newDataObject = {...dataObject};
     newDataObject.setData("toolJobName", selectedOption.name);
     newDataObject.setData("toolJobId", selectedOption._id);

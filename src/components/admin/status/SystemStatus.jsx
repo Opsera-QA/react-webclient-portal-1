@@ -50,7 +50,7 @@ function SystemStatus() {
     const response = await systemStatusActions.getSystemStatuses(getAccessToken);
     let data = response?.data?.message ? response.data.message : [];
     setSystemStatusData(data);
-  }
+  };
 
   const getSystemStatusCards = () => {
     if (Array.isArray(systemStatusData) && systemStatusData.length > 0) {

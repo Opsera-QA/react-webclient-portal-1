@@ -93,13 +93,13 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
     parentCallback(item);
     await octopusActions.createOctopusProject({pipelineId: pipelineId, stepId: stepId}, getAccessToken)
       .then(function (response) {
-        return
+        return;
       })
       .catch(function (error) {
-        console.log(error)
-        let errorMesage = (error && error.error && error.error.response && error.error.response.data) ? error.error.response.data : ""
-        toastContext.showErrorDialog( `Error in octopus Project Creation:  ${errorMesage}`)
-        return
+        console.log(error);
+        let errorMesage = (error && error.error && error.error.response && error.error.response.data) ? error.error.response.data : "";
+        toastContext.showErrorDialog( `Error in octopus Project Creation:  ${errorMesage}`);
+        return;
   });
   };
 
@@ -271,7 +271,8 @@ OctopusStepConfiguration.propTypes = {
   parentCallback: PropTypes.func,
   callbackSaveToVault: PropTypes.func,
   getToolsList: PropTypes.func,
-  closeEditorPanel: PropTypes.func
+  closeEditorPanel: PropTypes.func,
+  pipelineId: PropTypes.string
 };
 
 export default OctopusStepConfiguration;

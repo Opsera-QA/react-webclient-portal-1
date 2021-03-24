@@ -42,6 +42,6 @@ SlackStepNotificationToolInput.propTypes = {
 
 SlackStepNotificationToolInput.defaultProps = {
   visible: true
-}
+};
 
 export default SlackStepNotificationToolInput;

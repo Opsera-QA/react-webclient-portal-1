@@ -6,7 +6,7 @@ const templateActions = {};
 templateActions.createTemplate = async (templateDataDto, getAccessToken) => {
   let postData = {
     ...templateDataDto.getPersistData()
-  }
+  };
   const accessToken = await getAccessToken();
   const apiUrl = "/pipelines/workflows/create";
   const response = await axiosApiService(accessToken).post(apiUrl, postData)
@@ -30,7 +30,7 @@ templateActions.createTemplateV2 = async (getAccessToken, cancelTokenSource, tem
 templateActions.updateTemplate = async (templateDataDto, getAccessToken) => {
   const postBody = {
     ...templateDataDto.getPersistData()
-  }
+  };
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/workflows/${templateDataDto.getData("_id")}/update`;
   const response = await axiosApiService(accessToken).post(apiUrl, postBody)
@@ -63,7 +63,7 @@ templateActions.getTemplatesV2 = async (getAccessToken, cancelTokenSource) => {
 
 templateActions.getTemplateByIdV2 = async (getAccessToken, cancelTokenSource, templateId) => {
   const apiUrl = `/pipelines/workflows/${templateId}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl)
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 export default templateActions;

@@ -13,7 +13,7 @@ function OpseraPasswordInput({fieldName, dataObject, setDataObject, disabled}) {
         <div><span>At Least <strong>1</strong> Number: (0-9)</span></div>
         <div><span>At Least <strong>1</strong> Symbol: (!@#$%^&*)</span></div>
       </div>
-    )
+    );
   };
 
   const getInputPopover = () => {

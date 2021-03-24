@@ -147,6 +147,8 @@ function MetricbeatOutNetworkTrafficByTimeLineChart({ persona, date , tags}) {
 
 MetricbeatOutNetworkTrafficByTimeLineChart.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object,
+  tags: PropTypes.array
 };
 
 export default MetricbeatOutNetworkTrafficByTimeLineChart;

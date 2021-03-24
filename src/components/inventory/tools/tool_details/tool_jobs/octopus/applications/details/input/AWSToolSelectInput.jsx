@@ -15,7 +15,7 @@ function AWSToolSelectInput({ fieldName, dataObject, setDataObject, disabled, te
   const [awsList, setAwsList] = useState([]);
   const [isAwsSearching, setIsAwsSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select an AWS account configured in the Opsera Tool Registry")
+  const [placeholder, setPlaceholder] = useState("Select an AWS account configured in the Opsera Tool Registry");
 
   useEffect(() => {
     if (!disabled) {
@@ -29,7 +29,7 @@ function AWSToolSelectInput({ fieldName, dataObject, setDataObject, disabled, te
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await fetchAWSDetails();
     }
     catch (error) {
@@ -50,7 +50,7 @@ function AWSToolSelectInput({ fieldName, dataObject, setDataObject, disabled, te
         setAwsList(filteredList);
       }
     } catch(error) {
-      setPlaceholder("No Accounts Found")
+      setPlaceholder("No Accounts Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     } finally {

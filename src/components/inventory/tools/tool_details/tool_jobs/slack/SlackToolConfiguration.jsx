@@ -35,7 +35,7 @@ function SlackToolConfiguration({ toolData }) {
     finally {
       setIsLoading(false);
     }
-  }
+  };
 
   // TODO: Pull token from toolData's configuration once this is wired up, instead of doing the API call.
   const getSlackToken = async () => {
@@ -71,13 +71,13 @@ function SlackToolConfiguration({ toolData }) {
     if (slackUrl) {
       window.open(`${slackUrl}&redirect_uri=${redirectURI}`);
     }
-  }
+  };
 
   const getSlackButton = () => {
     if (slackUrl == null) {
       return (
         <ErrorDialog error={"Could not get Slack URL required to connect account."} />
-      )
+      );
     }
 
     return (

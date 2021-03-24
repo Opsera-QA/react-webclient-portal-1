@@ -74,7 +74,7 @@ dataMappingActions.getJenkinsJobs = async (data, getAccessToken) => {
   const apiUrl = `/mappings/projects/jobs/jenkins/${data.getData("tool_id")}`;
   let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
   if (response && response.status === 200) {
-    return response.data
+    return response.data;
   }
   return [];
 };
@@ -83,7 +83,7 @@ dataMappingActions.getSonarProjects = async (data, getAccessToken) => {
   const apiUrl = `/mappings/projects/jobs/sonar/${data.getData("tool_id")}`;
   let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
   if (response && response.status === 200) {
-    return response.data
+    return response.data;
   }
   return [];
 };

@@ -11,7 +11,7 @@ function TempTextInput({ fieldName, dataObject, setDataObject, disabled, type, i
 
   useEffect(() => {
     if (dataObject.getData(fieldName) !== "") {
-      setErrorMessage(dataObject.getFieldError(fieldName))
+      setErrorMessage(dataObject.getFieldError(fieldName));
     }
   }, [dataObject]);
 

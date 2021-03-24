@@ -168,6 +168,7 @@ AuthContextProvider.propTypes = {
   userData: PropTypes.object,
   refreshToken: PropTypes.func,
   authClient: PropTypes.object,
+  children: PropTypes.any
 };
 
 export const AuthContext = createContext();

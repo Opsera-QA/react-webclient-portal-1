@@ -35,7 +35,7 @@ function GitLanding() {
       default:
         return null;
     }
-  }
+  };
 
   return (
     <ScreenContainer

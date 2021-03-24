@@ -24,6 +24,6 @@ function TeamsNotificationMethodSummaryCard({ notificationData, notificationMeth
 TeamsNotificationMethodSummaryCard.propTypes = {
   notificationData: PropTypes.object,
   notificationMethodData: PropTypes.object
-}
+};
 
 export default TeamsNotificationMethodSummaryCard;

@@ -34,7 +34,7 @@ function LdapUserDetailView() {
     finally {
       setIsLoading(false);
     }
-  }
+  };
 
   const getLdapUser = async (userEmail) => {
     const response = await accountsActions.getUserByEmail(userEmail, getAccessToken);

@@ -11,7 +11,7 @@ function ToolProjectsPanel({ toolData, loadData, isLoading }) {
     case "jira":
       return <JiraProjectsPanel isLoading={isLoading} toolData={toolData} loadData={loadData}/>;
     default:
-      return <LoadingDialog message={"Loading Tool Projects"} size={"sm"} />
+      return <LoadingDialog message={"Loading Tool Projects"} size={"sm"} />;
     }
   };
 

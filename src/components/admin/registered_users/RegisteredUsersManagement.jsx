@@ -39,7 +39,7 @@ function RegisteredUsersManagement() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (filterDto = registeredUsersFilterDto, cancelSource = cancelTokenSource) => {
@@ -95,7 +95,7 @@ function RegisteredUsersManagement() {
         loadData={loadData}
       />
     );
-  }
+  };
 
   return (
     <ScreenContainer

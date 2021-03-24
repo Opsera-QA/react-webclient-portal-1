@@ -20,18 +20,18 @@ function PipelinesTable({ data, isLoading, paginationModel, setPaginationModel, 
 
   const initialState = {
     pageIndex: 0,
-  }
+  };
 
   const columns = useMemo(
     () => [
-      getPipelineTypeColumn(fields.find(field => { return field.id === "type"})),
-      getTableTextColumn(fields.find(field => { return field.id === "_id"})),
-      getTableTextColumn(fields.find(field => { return field.id === "name"})),
-      getTableTextColumn(fields.find(field => { return field.id === "owner_name"})),
-      getTablePipelineStatusColumn(fields.find(field => { return field.id === "workflow"})),
-      getTableTextColumn(fields.find(field => { return field.id === "workflow.run_count"})),
-      getTableDateColumn(fields.find(field => { return field.id === "createdAt"})),
-      getTableDateColumn(fields.find(field => { return field.id === "updatedAt"})),
+      getPipelineTypeColumn(fields.find(field => { return field.id === "type";})),
+      getTableTextColumn(fields.find(field => { return field.id === "_id";})),
+      getTableTextColumn(fields.find(field => { return field.id === "name";})),
+      getTableTextColumn(fields.find(field => { return field.id === "owner_name";})),
+      getTablePipelineStatusColumn(fields.find(field => { return field.id === "workflow";})),
+      getTableTextColumn(fields.find(field => { return field.id === "workflow.run_count";})),
+      getTableDateColumn(fields.find(field => { return field.id === "createdAt";})),
+      getTableDateColumn(fields.find(field => { return field.id === "updatedAt";})),
     ],
     [],
   );
@@ -55,7 +55,8 @@ PipelinesTable.propTypes = {
   data: PropTypes.array,
   isLoading: PropTypes.bool,
   setPaginationModel: PropTypes.func,
-  paginationModel: PropTypes.object
+  paginationModel: PropTypes.object,
+  loadData: PropTypes.func
 };
 
 export default PipelinesTable;

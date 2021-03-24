@@ -10,7 +10,7 @@ import StandaloneClipboardTextField from "components/common/fields/text/standalo
 
 function LdapOrganizationAccountSummaryPanel({ ldapOrganizationAccountData, setActiveTab }) {
   const getUrlString = () => {
-    const urlString = "" + process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL +"/account/registration/"+ ldapOrganizationAccountData.orgDomain
+    const urlString = "" + process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL +"/account/registration/"+ ldapOrganizationAccountData.orgDomain;
     return (
       <StandaloneClipboardTextField label={"New User Registration URL"} text={urlString} />
     );

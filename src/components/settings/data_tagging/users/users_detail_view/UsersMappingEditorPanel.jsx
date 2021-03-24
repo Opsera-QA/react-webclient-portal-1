@@ -75,7 +75,7 @@ function UsersMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
         </Col>
       );
     }
-  }
+  };
 
   if (usersMappingDto == null) {
     return <LoadingDialog size="sm" />;

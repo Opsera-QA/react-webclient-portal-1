@@ -20,7 +20,7 @@ function SonarProjectSelectInput({ fieldName, dataObject, setDataObject, disable
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadSonarProjects();
     }
     catch (error) {
@@ -35,11 +35,11 @@ function SonarProjectSelectInput({ fieldName, dataObject, setDataObject, disable
     let results = await dataMappingActions.getSonarProjects(dataObject, getAccessToken);
     if (typeof results != "object") {
       toastContext.showLoadingErrorDialog(`There has been an error in fetching ${dataObject.getData("tool_identifier")} projects`);
-      return
+      return;
     }
     if (results && results.status === 200) {
-      setProjects(results.data)
-      return
+      setProjects(results.data);
+      return;
     }
     setProjects([]);
   };
@@ -51,7 +51,7 @@ function SonarProjectSelectInput({ fieldName, dataObject, setDataObject, disable
       setDataObject({ ...newDataObject });
       return;
     }
-  }
+  };
 
   return (
     <SelectInputBase

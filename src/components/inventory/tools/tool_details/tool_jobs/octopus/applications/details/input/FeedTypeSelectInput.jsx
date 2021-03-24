@@ -11,7 +11,7 @@ function FeedTypesSelectInput({ fieldName, dataObject, setDataObject, disabled, 
   const { getAccessToken } = useContext(AuthContext);
   const [feedTypes, setFeedTypess] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a Feed Type")
+  const [placeholder, setPlaceholder] = useState("Select a Feed Type");
 
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function FeedTypesSelectInput({ fieldName, dataObject, setDataObject, disabled, 
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTypes();
     }
     catch (error) {
@@ -35,14 +35,14 @@ function FeedTypesSelectInput({ fieldName, dataObject, setDataObject, disabled, 
 
   const loadTypes = async () => {
     try {
-      const res = await OctopusStepActions.getFeedTypes(dataObject.getData("toolId"), dataObject.getData("spaceId"), getAccessToken)
+      const res = await OctopusStepActions.getFeedTypes(dataObject.getData("toolId"), dataObject.getData("spaceId"), getAccessToken);
       if (res && res.status === 200) {
-        setFeedTypess(res.data)
-        return
+        setFeedTypess(res.data);
+        return;
       }
       setFeedTypess([]);
     } catch (error) {
-      setPlaceholder("No Feed Types Found")
+      setPlaceholder("No Feed Types Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }
@@ -55,7 +55,7 @@ function FeedTypesSelectInput({ fieldName, dataObject, setDataObject, disabled, 
       setDataObject({ ...newDataObject });
       return;
     }
-  }
+  };
 
   return (
     <div>

@@ -7,7 +7,7 @@ function BreadcrumbTrail({destination}) {
 
   const getParentTrail = (trail) => {
     return trail.map((breadcrumb) => breadcrumbItem(breadcrumb));
-  }
+  };
 
   const getBreadcrumbTrail = (destination) => {
     let breadcrumbTrail = getTrail(destination);
@@ -25,7 +25,7 @@ function BreadcrumbTrail({destination}) {
         </ol>
       </nav>
     );
-  }
+  };
 
   return (<>{getBreadcrumbTrail(destination)}</>);
 }

@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import { Multiselect } from 'react-widgets'
+import { Multiselect } from 'react-widgets';
 import {AuthContext} from "../../../contexts/AuthContext";
 import tagEditorMetadata from "components/settings/tags/tags-metadata";
 import adminTagsActions from "../../settings/tags/admin-tags-actions";
@@ -22,7 +22,7 @@ function TempTagManagerInput({ label, type, data, setData, disabled, filter, pla
     await getTags();
     removeOldTags();
     setComponentLoading(false);
-  }
+  };
 
   const removeOldTags = () => {
     let newTags = [];
@@ -34,7 +34,7 @@ function TempTagManagerInput({ label, type, data, setData, disabled, filter, pla
       }
     });
     setData(newTags);
-  }
+  };
 
   const getTags = async () => {
     const response = await adminTagsActions.getAllTags(getAccessToken);
@@ -61,7 +61,7 @@ function TempTagManagerInput({ label, type, data, setData, disabled, filter, pla
     });
 
     setTagOptions(currentOptions);
-  }
+  };
 
   const getExistingTag = (newTag) => {
     return tagOptions.find(tag => tag.type === type && tag.value === newTag);
@@ -104,7 +104,7 @@ function TempTagManagerInput({ label, type, data, setData, disabled, filter, pla
   };
 
   if (componentLoading) {
-    return <LoadingDialog size="sm"/>
+    return <LoadingDialog size="sm"/>;
   }
 
   if (type == null)
@@ -156,6 +156,6 @@ TempTagManagerInput.defaultProps = {
   allowCreate: "onFilter",
   disabled: false,
   groupBy: "type"
-}
+};
 
 export default TempTagManagerInput;

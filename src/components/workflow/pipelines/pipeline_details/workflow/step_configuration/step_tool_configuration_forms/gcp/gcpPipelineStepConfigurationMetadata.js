@@ -13,4 +13,4 @@ const gcpPipelineStepConfigurationMetadata = {
   }
 };
 
-export default gcpPipelineStepConfigurationMetadata
+export default gcpPipelineStepConfigurationMetadata;

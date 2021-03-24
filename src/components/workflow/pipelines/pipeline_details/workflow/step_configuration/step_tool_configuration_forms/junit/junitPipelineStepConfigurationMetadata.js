@@ -101,4 +101,4 @@ const junitPipelineStepConfigurationMetadata = {
   }
 };
 
-export default junitPipelineStepConfigurationMetadata
+export default junitPipelineStepConfigurationMetadata;

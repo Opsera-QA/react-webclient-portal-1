@@ -34,7 +34,7 @@ function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, in
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -125,7 +125,7 @@ function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, in
     </div>
 
     );
-  }
+  };
 
   return (
     <div>

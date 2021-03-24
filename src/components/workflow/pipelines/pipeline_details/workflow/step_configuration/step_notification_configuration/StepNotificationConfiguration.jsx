@@ -31,7 +31,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 function StepNotificationConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
   const toastContext = useContext(DialogToastContext);
   const { plan } = data.workflow;
-  const [step, setStep] = useState(undefined)
+  const [step, setStep] = useState(undefined);
   const [stepName, setStepName] = useState(undefined);
   const [stepTool, setStepTool] = useState({});
   const [jiraDto, setJiraDto] = useState(undefined);
@@ -268,8 +268,8 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
         <TextInputBase disabled={true} dataObject={emailDto} setDataObject={setEmailDto} fieldName={"address"} />
         <NotificationLevelInput disabled={true} dataObject={emailDto} setDataObject={setEmailDto} fieldName={"event"} />
       </div>
-    )
-  }
+    );
+  };
 
   if (isLoading) {
     return <LoadingDialog message={"Loading Notification Configuration"} size={"sm"} />;

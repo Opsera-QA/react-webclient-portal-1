@@ -395,10 +395,10 @@ function XUnitStepConfiguration({
     if(jobType === "job") {
       if(jobName.length === 0) {
       setFormMessage("Required Fields Missing!");
-      return false
+      return false;
       } else {
         setFormMessage("");
-        return true
+        return true;
       }
     }
     else  {
@@ -457,7 +457,7 @@ function XUnitStepConfiguration({
   };
 
   const handleJobChange = (selectedOption) => {
-    console.log(selectedOption)
+    console.log(selectedOption);
     if (selectedOption.type[0] === "UNIT TESTING" ) {      
         setFormData({
           ...formData,
@@ -1106,6 +1106,6 @@ XUnitStepConfiguration.propTypes = {
   createJob: PropTypes.func,
   setToast: PropTypes.func,
   setShowToast: PropTypes.func
-}
+};
 
 export default XUnitStepConfiguration;

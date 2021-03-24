@@ -22,7 +22,7 @@ function DestructiveDeleteModal({ deleteTopic, deleteDetails, showModal, setShow
     finally {
       setIsDeleting(false);
     }
-  }
+  };
 
   const getDeleteButtonText = () => {
     if (isDeleting) {

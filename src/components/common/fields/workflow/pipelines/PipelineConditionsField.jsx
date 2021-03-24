@@ -10,7 +10,7 @@ function PipelineConditionsField({ dataObject, fieldName }) {
   const getConditions = () => {
     let conditions = dataObject?.getData(fieldName);
     if (conditions == null || conditions.length === 0) {
-      return "No conditions assigned."
+      return "No conditions assigned.";
     }
 
     return (
@@ -21,7 +21,7 @@ function PipelineConditionsField({ dataObject, fieldName }) {
               <label className="mx-2 mt-1"><span>{getConditionLabel(condition.type)}:</span></label>
               <span>{`${condition.value}`}</span>
             </div>
-          )
+          );
         })}
         </ul>
     );

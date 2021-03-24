@@ -38,7 +38,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -71,6 +71,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
       return null;
     }
 
+    //TODO: Do these need to be passed in via object props?
     const MeanLineLayer = ({ nodes, xScale, yScale }) => {
       const lineGenerator = line()
         .x(d => xScale(d.data.x))
@@ -80,6 +81,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
       );
     };
 
+    //TODO: Do these need to be passed in via object props?
     const RollingMeanLineLayer = ({ nodes, xScale, yScale }) => {
       const lineGenerator = line()
         .x(d => xScale(d.data.x))
@@ -129,7 +131,10 @@ JiraLeadTimeLineChart.propTypes = {
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func
+  setKpis: PropTypes.func,
+  nodes: PropTypes.any,
+  xScale: PropTypes.any,
+  yScale: PropTypes.any
 };
 
 export default JiraLeadTimeLineChart;

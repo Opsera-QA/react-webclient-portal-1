@@ -115,13 +115,13 @@ export const CSVtoArray = (CSVstring) => {
 // getting common values from both arrays
 export const commonItems = (arr1, arr2) => {
   return arr1.filter(x => arr2.includes(x));
-}
+};
 // getting diff values from both arrays
 export const differentItems = (arr1, arr2) => {
   return arr1.filter(x => !arr2.includes(x));
-}
+};
 // getting symmetric difference values from both arrays
 export const symmetricDiff = (arr1, arr2) => {
   return arr1.filter(x => !arr2.includes(x))
              .concat(arr2.filter(x => !arr1.includes(x)));
-}
+};

@@ -88,13 +88,13 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
   if (!isLoading && accessDenied) {
     return (
       <AccessDeniedContainer />
-    )
+    );
   }
 
   if (!isLoading && accessRoleData && roleRequirement && !meetsRequirements(roleRequirement, accessRoleData)) {
     return (
       <AccessDeniedContainer />
-    )
+    );
   }
 
   return (

@@ -30,7 +30,7 @@ function TagsCloudBase({ tagsWithUsage, onTagClick, className, getTooltip, subsc
 
           return (
             <TooltipWrapper innerText={getTooltip(tagWithUsage)} key={tag?._id}>
-              <span className={classNames} style={getDynamicBadgeStyle(tagWithUsage)} onClick={() => {handleClick(tag)}}>
+              <span className={classNames} style={getDynamicBadgeStyle(tagWithUsage)} onClick={() => {handleClick(tag);}}>
                 <span><IconBase icon={faTag} isLoading={subscribingToTag === tag?._id} className={"mr-1"} />{`${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`}</span>
                 <span className="ml-3"><FontAwesomeIcon icon={faDiceD20} fixedWidth className="mr-1"/>{tagWithUsage?.pipeline_usage_count}</span>
                 <span className="ml-2"><FontAwesomeIcon icon={faWrench} fixedWidth className="mr-1"/>{tagWithUsage?.tool_usage_count}</span>
@@ -70,7 +70,7 @@ function TagsCloudBase({ tagsWithUsage, onTagClick, className, getTooltip, subsc
           No Tags Found</span>
         </div>
       </div>
-    )
+    );
   }
 
   return (

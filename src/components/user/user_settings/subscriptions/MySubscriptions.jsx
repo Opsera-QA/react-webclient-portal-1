@@ -29,7 +29,7 @@ function MySubscriptions() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const getTabContainer = () => {

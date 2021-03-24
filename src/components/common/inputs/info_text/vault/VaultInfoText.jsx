@@ -22,7 +22,7 @@ function VaultInfoText({ storedInVault, errorMessage }) {
     <small className="text-muted form-text">
       <span>This credential will be securely stored in the vault.</span>
     </small>
-  )
+  );
 }
 
 VaultInfoText.propTypes = {

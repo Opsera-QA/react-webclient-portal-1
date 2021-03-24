@@ -35,12 +35,12 @@ function AllTagsCloud() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTags(cancelSource);
       await loadSubscribedTagIds(cancelSource);
     }
@@ -72,7 +72,7 @@ function AllTagsCloud() {
     let subscribedIds = response?.data?.data;
 
     if (isMounted?.current === true && subscribedIds != null) {
-      setSubscribedTagIds(subscribedIds.map((id) => {return id.object_id}));
+      setSubscribedTagIds(subscribedIds.map((id) => {return id.object_id;}));
     }
   };
 
@@ -83,7 +83,7 @@ function AllTagsCloud() {
 
     if (isSubscribed === true) {
       await adminTagsActions.unsubscribeFromTag(getAccessToken, cancelTokenSource, tag?._id);
-      let newSubscriptions = subscribedTagIds.filter((id) => {return id !== tag?._id});
+      let newSubscriptions = subscribedTagIds.filter((id) => {return id !== tag?._id;});
       setSubscribedTagIds([...newSubscriptions]);
     }
     else {
@@ -131,7 +131,7 @@ function AllTagsCloud() {
           No Tags Found</span>
         </div>
       </div>
-    )
+    );
   }
 
   return (

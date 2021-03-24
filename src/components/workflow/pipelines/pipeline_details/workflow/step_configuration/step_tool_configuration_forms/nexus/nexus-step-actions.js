@@ -9,7 +9,7 @@ nexusStepActions.getNexusRepositoriesList = async (toolID, getAccessToken) => {
       tool: "nexus",
       toolId: toolID,
     }
-  }
+  };
   const accessToken = await getAccessToken();
   const apiUrl = `/tools/nexus/repositories`;
   const response = await axiosApiService(accessToken).get(apiUrl, postBody)

@@ -7,7 +7,7 @@ import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 
 function PowershellPipelineStepConfigurationSummaryPanel({ powershellPipelineDataObject, pipelineData, setActiveTab }) {
-  console.log(powershellPipelineDataObject)
+  console.log(powershellPipelineDataObject);
   if (powershellPipelineDataObject == null) {
     return <LoadingDialog size="sm" />;
   }

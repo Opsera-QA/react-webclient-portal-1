@@ -90,4 +90,4 @@ const sfdcPipelineStepConfigurationMetadata = {
   }
 };
 
-export default sfdcPipelineStepConfigurationMetadata
+export default sfdcPipelineStepConfigurationMetadata;

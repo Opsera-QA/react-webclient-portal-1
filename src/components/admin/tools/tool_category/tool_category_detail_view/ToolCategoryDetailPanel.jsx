@@ -36,7 +36,7 @@ function ToolCategoryDetailPanel({ toolCategoryData, setToolCategoryData }) {
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
       </CustomTabContainer>
-    )
+    );
   };
 
   return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);

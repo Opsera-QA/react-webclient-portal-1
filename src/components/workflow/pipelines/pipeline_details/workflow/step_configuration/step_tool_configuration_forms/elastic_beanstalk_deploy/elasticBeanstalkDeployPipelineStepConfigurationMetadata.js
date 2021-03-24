@@ -71,4 +71,4 @@ const elasticBeanstalkDeployPipelineStepConfigurationMetadata = {
   }
 };
 
-export default elasticBeanstalkDeployPipelineStepConfigurationMetadata
+export default elasticBeanstalkDeployPipelineStepConfigurationMetadata;

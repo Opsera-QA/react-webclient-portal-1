@@ -21,7 +21,7 @@ function KpiDetailPanel({ kpiData, setKpiData }) {
   };
 
   if (kpiData == null) {
-    return <LoadingDialog size="sm" />
+    return <LoadingDialog size="sm" />;
   }
 
   const getTabContainer = () => {

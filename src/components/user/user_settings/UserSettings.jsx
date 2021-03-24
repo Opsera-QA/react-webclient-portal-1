@@ -31,7 +31,7 @@ function UserSettings() {
     if (activeTab !== tab) {
       setActiveTab(tab);
     }
-  }, [tab])
+  }, [tab]);
 
   const loadData = async () => {
     try {
@@ -44,7 +44,7 @@ function UserSettings() {
     finally {
       setIsLoading(false);
     }
-  }
+  };
 
   const getRoles = async () => {
     const user = await getUserRecord();
@@ -84,7 +84,7 @@ function UserSettings() {
       default:
         return "userProfile";
     }
-  }
+  };
 
   const getDescription = () => {
     switch (activeTab) {
@@ -99,7 +99,7 @@ function UserSettings() {
           Please note, profile details are stored in your identify provider so some changes may not be possible from this portal at this time.`
         );
     }
-  }
+  };
 
   const getCurrentView = () => {
     switch (activeTab) {
@@ -114,7 +114,7 @@ function UserSettings() {
       default:
         return null;
     }
-  }
+  };
 
   const getNavigationTabContainer = () => {
     return (
@@ -125,7 +125,7 @@ function UserSettings() {
         <NavigationTab icon={faEye} tabName={"subscriptions"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Subscriptions"} />
       </NavigationTabContainer>
     );
-  }
+  };
 
   return (
     <ScreenContainer

@@ -20,7 +20,7 @@ function JiraStepNotificationProjectUserInput({jiraToolId, jiraProject, fieldNam
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadUsers();
     }
     catch (error) {
@@ -78,12 +78,13 @@ JiraStepNotificationProjectUserInput.propTypes = {
   jiraToolId: PropTypes.string,
   jiraProject: PropTypes.string,
   disabled: PropTypes.bool,
-  visible: PropTypes.bool
+  visible: PropTypes.bool,
+  fieldName: PropTypes.string
 };
 
 JiraStepNotificationProjectUserInput.defaultProps = {
   visible: true,
   fieldName: "jiraPrimaryAssignee"
-}
+};
 
 export default JiraStepNotificationProjectUserInput;

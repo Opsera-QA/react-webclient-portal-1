@@ -102,6 +102,12 @@ function TimeToRestoreBarChart( { token, persona } ) {
     );
   };
 
+  Line.propTypes = {
+    bars: PropTypes.object,
+    xScale: PropTypes.func,
+    yScale: PropTypes.func
+  };
+
   //This needs to be more intelligent than just checking for precense of data.  Node can return a status 400 error from ES, and that would fail this.
   if(loading) {
     return (<LoadingDialog size="sm" />);
@@ -169,6 +175,7 @@ function TimeToRestoreBarChart( { token, persona } ) {
     );
   }
 }
+
 TimeToRestoreBarChart.propTypes = {
   data: PropTypes.object,
   persona: PropTypes.string

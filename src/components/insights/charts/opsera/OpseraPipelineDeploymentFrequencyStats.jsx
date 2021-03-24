@@ -36,7 +36,7 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -139,7 +139,7 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
       </div>
 
     );
-  }
+  };
 
   return (
     <div>

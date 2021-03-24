@@ -11,7 +11,7 @@ function ViewChartDetailsButton({ disable, marketplaceChart, dashboardId, classN
 
   const showChartDetails = () => {
     toastContext.showOverlayPanel(<AddChartOverlay kpiData={marketplaceChart} dashboardId={dashboardId} />);
-  }
+  };
 
   return (
     <div className={className}>

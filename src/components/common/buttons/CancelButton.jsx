@@ -22,6 +22,6 @@ CancelButton.propTypes = {
 
 CancelButton.defaultProps = {
   size: "sm"
-}
+};
 
 export default CancelButton;

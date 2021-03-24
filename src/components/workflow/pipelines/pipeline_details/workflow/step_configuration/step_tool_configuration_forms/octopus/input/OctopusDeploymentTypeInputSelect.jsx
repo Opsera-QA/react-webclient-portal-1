@@ -11,7 +11,7 @@ function OctopusDeploymentTypeSelectInput({ fieldName, dataObject, setDataObject
   const { getAccessToken } = useContext(AuthContext);
   const [deploymentType, setOctopusDeploymentTypes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a Deployment Type")
+  const [placeholder, setPlaceholder] = useState("Select a Deployment Type");
 
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function OctopusDeploymentTypeSelectInput({ fieldName, dataObject, setDataObject
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTypes();
     }
     catch (error) {
@@ -35,14 +35,14 @@ function OctopusDeploymentTypeSelectInput({ fieldName, dataObject, setDataObject
 
   const loadTypes = async () => {
     try {
-      const res = await OctopusStepActions.getDeploymentTypes(dataObject.getData("octopusToolId"),dataObject.getData("spaceId"),dataObject.getData("octopusPlatformType"), getAccessToken)
+      const res = await OctopusStepActions.getDeploymentTypes(dataObject.getData("octopusToolId"),dataObject.getData("spaceId"),dataObject.getData("octopusPlatformType"), getAccessToken);
       if (res && res.status === 200) {
-        setOctopusDeploymentTypes(res.data)
-        return
+        setOctopusDeploymentTypes(res.data);
+        return;
       }
       setOctopusDeploymentTypes([]);
     } catch (error) {
-      setPlaceholder("No Deployment Type Found")
+      setPlaceholder("No Deployment Type Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }

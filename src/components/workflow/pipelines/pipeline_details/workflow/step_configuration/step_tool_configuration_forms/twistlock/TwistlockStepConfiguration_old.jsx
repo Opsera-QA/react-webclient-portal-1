@@ -403,18 +403,18 @@ function TwistlockStepConfiguration ({
       buildType,
       dockerName,
       dockerTagName,
-    })
+    });
 
-    console.log(jobType)
+    console.log(jobType);
     
     if(jobType === "job") {
       if(jobName.length === 0) {
         let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
         setToast(toast);
         setShowToast(true);
-      return false
+      return false;
       } else {
-        return true
+        return true;
       }
     }
     else  {
@@ -475,7 +475,7 @@ function TwistlockStepConfiguration ({
   };
 
   const handleJobChange = (selectedOption) => {
-    console.log(selectedOption)
+    console.log(selectedOption);
     // no security gate stuff in job creation
     // if (selectedOption.type[0] === "" ) {      
         setFormData({
@@ -1103,6 +1103,6 @@ TwistlockStepConfiguration.propTypes = {
   createJob: PropTypes.func,
   setToast: PropTypes.func,
   setShowToast: PropTypes.func
-}
+};
 
 export default TwistlockStepConfiguration;

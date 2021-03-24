@@ -59,4 +59,4 @@ const sshUploadDeployPipelineStepConfigurationMetadata = {
   }
 };
 
-export default sshUploadDeployPipelineStepConfigurationMetadata
+export default sshUploadDeployPipelineStepConfigurationMetadata;

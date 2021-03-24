@@ -22,7 +22,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
       setDataFunction(field.id, data);
     }
     else {
-      validateAndSetData(field.id, data[valueField])
+      validateAndSetData(field.id, data[valueField]);
     }
   };
 
@@ -71,7 +71,10 @@ SelectInputBase.propTypes = {
   selectOptions: PropTypes.array.isRequired,
   setDataObject: PropTypes.func,
   fieldName: PropTypes.string,
-  groupBy: PropTypes.string,
+  groupBy: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func
+  ]),
   dataObject: PropTypes.object,
   valueField: PropTypes.string,
   textField: PropTypes.string,
@@ -89,6 +92,6 @@ SelectInputBase.propTypes = {
 
 SelectInputBase.defaultProps = {
   showClearValueButton: true
-}
+};
 
 export default SelectInputBase;

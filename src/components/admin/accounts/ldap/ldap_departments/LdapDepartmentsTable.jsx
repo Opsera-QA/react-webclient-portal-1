@@ -29,7 +29,7 @@ function LdapDepartmentsTable({ departmentData, departmentFilterDto, authorizedA
 
   const createNewDepartment = () => {
     setShowCreateDepartmentModal(true);
-  }
+  };
 
   const getDepartmentsTable = () => {
     return (

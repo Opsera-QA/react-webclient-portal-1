@@ -135,6 +135,7 @@ function GitlabTimeTakenToCompleteMergeRequestReview({ persona, date }) {
 
 GitlabTimeTakenToCompleteMergeRequestReview.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object
 };
 
 export default GitlabTimeTakenToCompleteMergeRequestReview;

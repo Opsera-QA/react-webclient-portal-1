@@ -43,7 +43,7 @@ function JiraVelocityBarChart({ kpiConfiguration, setKpiConfiguration, dashboard
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -92,7 +92,7 @@ function JiraVelocityBarChart({ kpiConfiguration, setKpiConfiguration, dashboard
             />
         </div>
     );
-  }
+  };
 
   return (
     <div>
@@ -119,8 +119,14 @@ function JiraVelocityBarChart({ kpiConfiguration, setKpiConfiguration, dashboard
     </div>
   );
 }
+
 JiraVelocityBarChart.propTypes = {
   persona: PropTypes.string,
+  kpiConfiguration: PropTypes.object,
+  setKpiConfiguration: PropTypes.func,
+  dashboardData: PropTypes.object,
+  index: PropTypes.any,
+  setKpis: PropTypes.func
 };
 
 export default JiraVelocityBarChart;

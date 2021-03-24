@@ -43,8 +43,8 @@ function Tagging() {
       await getToolRegistryList();
       await getProjectTags();
     } else {
-      setOpseraProjectTags([{value : "Skipping onload of project Tags"}])
-      setToolRegistryList([{value : "Skipping onload of tool registry info"}])
+      setOpseraProjectTags([{value : "Skipping onload of project Tags"}]);
+      setToolRegistryList([{value : "Skipping onload of tool registry info"}]);
     }
     setIsLoading(false);
   };
@@ -53,9 +53,9 @@ function Tagging() {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
     if (!userRoleAccess) {
-      setIsLoading(false)
+      setIsLoading(false);
       toastContext.showLoadingErrorDialog("Unable to fetch access privileges");
-      return
+      return;
     }
     setAccessRoleData(userRoleAccess);
     await fetchProjectTags();

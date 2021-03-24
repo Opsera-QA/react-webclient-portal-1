@@ -15,7 +15,7 @@ function PipelineSummaryField({pipelineData, className}) {
         );
     }
     else {
-      return `This pipeline has not yet been run.`
+      return `This pipeline has not yet been run.`;
     }
   };
 

@@ -14,7 +14,7 @@ function ModalSaveButtonBase({recordDto, updateRecord, disable, showSuccessToast
     setIsSaving(true);
     await modalPersistUpdatedRecord(recordDto, toastContext, showSuccessToasts, updateRecord, lenient, handleClose);
     setIsSaving(false);
-  }
+  };
 
   const getLabel = () => {
     if (isSaving) {
@@ -45,6 +45,6 @@ ModalSaveButtonBase.propTypes = {
 ModalSaveButtonBase.defaultProps = {
   disable: false,
   showSuccessToasts: true
-}
+};
 
 export default ModalSaveButtonBase;

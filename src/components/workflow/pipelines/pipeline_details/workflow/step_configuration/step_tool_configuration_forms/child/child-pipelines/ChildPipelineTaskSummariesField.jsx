@@ -81,7 +81,7 @@ function ChildPipelineTaskSummariesField({ fieldName, dataObject }) {
 
   const getBody = () => {
     if (isLoading) {
-      return <PipelineSummaryCard isLoading={isLoading} />
+      return <PipelineSummaryCard isLoading={isLoading} />;
     }
 
     if (pipelines.length === 0) {

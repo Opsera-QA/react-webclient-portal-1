@@ -13,4 +13,4 @@ const awsDeployPipelineStepConfigurationMetadata = {
   }
 };
 
-export default awsDeployPipelineStepConfigurationMetadata
+export default awsDeployPipelineStepConfigurationMetadata;

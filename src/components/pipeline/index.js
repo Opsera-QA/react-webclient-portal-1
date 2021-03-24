@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { RMProvider } from "./RMContext";
 import Pipeline from './Pipeline';
 
@@ -7,5 +7,5 @@ export default function index() {
         <RMProvider>
             <Pipeline />
         </RMProvider>
-    )
+    );
 }

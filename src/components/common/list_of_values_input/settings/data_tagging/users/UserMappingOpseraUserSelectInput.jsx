@@ -13,7 +13,7 @@ function UserMappingOpseraUserSelectInput({ fieldName, dataObject, setDataObject
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    loadData()
+    loadData();
   }, []);
 
   const loadData = async () => {
