@@ -7,7 +7,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors,
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
   spaceOutMergeRequestTimeTakenLegend } from "../../../charts-views";
 function BitbucketMergeRequestByMaximumTimeChart({
   kpiConfiguration,
@@ -82,6 +82,7 @@ function BitbucketMergeRequestByMaximumTimeChart({
           {...defaultConfig("Time (Hours)", "Project", 
                       true, true, "values", "cutoffString")}
           {...config(getColorByData)}
+          {...adjustBarWidth(metrics)}
           onClick={() => setShowModal(true)}
         />
       </div>

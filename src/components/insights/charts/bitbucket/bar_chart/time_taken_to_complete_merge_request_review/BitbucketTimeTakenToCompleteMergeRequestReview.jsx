@@ -82,7 +82,7 @@ function BitbucketTimeTakenToCompleteMergeRequestReview({
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Reviewer", "Time (Hours)", 
-                      false, true, "subString", "values")}
+                      true, true, "subString", "values")}
           {...config(getColorByData)}
           {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}
