@@ -12,7 +12,8 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignHealthColors } from "../../../charts-views";
+import { defaultConfig, getColorByData, assignHealthColors,
+         adjustBarWidth } from "../../../charts-views";
 import ChartTooltip from "../../../ChartTooltip";
 
 function JiraHealthBySprintBarChart( { kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis } ) {
@@ -77,18 +78,19 @@ function JiraHealthBySprintBarChart( { kpiConfiguration, setKpiConfiguration, da
 
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
-            <ResponsiveBar
-              data={metrics}
-              {...defaultConfig("Project", "Number of Issues", 
-                      false, true, "cutoffString", "wholeNumbers")}
-              {...config(getColorByData)}
-              onClick={() => setShowModal(true)}
-              tooltip={({ indexValue, value, id }) => <ChartTooltip 
-                                        titles = {["Project", "Issue Stage", "Number of Issues"]}
-                                        values = {[indexValue, id, value]} 
-                                        style={false} />}
-            />
-        </div>
+        <ResponsiveBar
+          data={metrics}
+          {...defaultConfig("Project", "Number of Issues", 
+                  false, true, "cutoffString", "wholeNumbers")}
+          {...config(getColorByData)}
+          {...adjustBarWidth(metrics)}
+          onClick={() => setShowModal(true)}
+          tooltip={({ indexValue, value, id }) => <ChartTooltip 
+                                    titles = {["Project", "Issue Stage", "Number of Issues"]}
+                                    values = {[indexValue, id, value]} 
+                                    style={false} />}
+        />
+      </div>
     );
   }
 
