@@ -7,7 +7,8 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors } from '../../../charts-views';
+import { defaultConfig, getColorByData, assignStandardColors, 
+         adjustBarWidth } from '../../../charts-views';
 
 function BitbucketMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -74,6 +75,7 @@ function BitbucketMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, d
           {...defaultConfig("Author", "Merge Requests", 
                       true, true, "cutoffString", "wholeNumbers")}
           {...config(getColorByData)}
+          {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}
         />
       </div>

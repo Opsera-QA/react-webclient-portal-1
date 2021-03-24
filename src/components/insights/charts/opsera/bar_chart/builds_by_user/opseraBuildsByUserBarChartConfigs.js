@@ -1,5 +1,5 @@
 export default (getColor) => ({
-  keys: ["value"],
+  keys: ["Value"],
   indexBy: "_id",
   colorBy: "id",
   layout: "horizontal",
