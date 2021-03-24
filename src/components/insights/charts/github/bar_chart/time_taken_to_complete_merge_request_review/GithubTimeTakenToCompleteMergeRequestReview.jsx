@@ -7,8 +7,8 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors,
-         capitalizeMergeRequestTimeTakenLegend } from '../../../charts-views';
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
+         spaceOutMergeRequestTimeTakenLegend } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 function GithubTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -47,7 +47,7 @@ function GithubTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiC
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "githubTimeTakenToCompleteMergeRequestReviewChart", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.githubTimeTakenToCompleteMergeRequestReviewChart?.data : [];
       assignStandardColors(dataObject, true);
-      capitalizeMergeRequestTimeTakenLegend(dataObject);
+      spaceOutMergeRequestTimeTakenLegend(dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -78,6 +78,7 @@ function GithubTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiC
           {...defaultConfig("Reviewer", "Time (Hours)", 
                       true, true, "subString", "values")}
           {...config(getColorByData)}
+          {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}
           tooltip={({ indexValue, color, value }) => <ChartTooltip 
                                         titles = {["Reviewer", "Merge Request Time Taken"]}

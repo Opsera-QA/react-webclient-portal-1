@@ -19,7 +19,6 @@ function JiraTicketsAssignedByUserBarChart( { persona, date } ) {
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-
   useEffect(() => {    
     const controller = new AbortController();
     const runEffect = async () => {

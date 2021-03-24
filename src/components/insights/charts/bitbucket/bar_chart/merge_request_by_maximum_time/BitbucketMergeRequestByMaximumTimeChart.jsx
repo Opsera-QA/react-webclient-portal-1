@@ -7,8 +7,8 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors,
-  capitalizeMergeRequestTimeTakenLegend } from '../../../charts-views';
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
+  spaceOutMergeRequestTimeTakenLegend } from "../../../charts-views";
 function BitbucketMergeRequestByMaximumTimeChart({
   kpiConfiguration,
   setKpiConfiguration,
@@ -54,7 +54,7 @@ function BitbucketMergeRequestByMaximumTimeChart({
       );
       let dataObject = response?.data?.data[0]?.bitbucketMergeReqWithMaximumTime?.data;
       assignStandardColors(dataObject, true);
-      capitalizeMergeRequestTimeTakenLegend(dataObject);
+      spaceOutMergeRequestTimeTakenLegend(dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -82,6 +82,7 @@ function BitbucketMergeRequestByMaximumTimeChart({
           {...defaultConfig("Time (Hours)", "Project", 
                       true, true, "values", "cutoffString")}
           {...config(getColorByData)}
+          {...adjustBarWidth(metrics)}
           onClick={() => setShowModal(true)}
         />
       </div>
