@@ -18,6 +18,6 @@ function ToolPipelinesPanel({ toolData }) {
 
 ToolPipelinesPanel.propTypes = {
   toolData: PropTypes.object,
-}
+};
 
 export default ToolPipelinesPanel;

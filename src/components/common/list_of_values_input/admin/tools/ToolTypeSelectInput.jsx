@@ -17,7 +17,7 @@ function ToolTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, t
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTools();
     }
     catch (error) {

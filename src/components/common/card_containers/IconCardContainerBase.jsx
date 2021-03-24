@@ -25,7 +25,7 @@ function IconCardContainerBase({ children, isLoading, titleBar, footerBar, class
     if (!isLoading) {
       return children;
     }
-  }
+  };
 
   return (
     <Card className={`mb-2 h-100 ${className}`}>

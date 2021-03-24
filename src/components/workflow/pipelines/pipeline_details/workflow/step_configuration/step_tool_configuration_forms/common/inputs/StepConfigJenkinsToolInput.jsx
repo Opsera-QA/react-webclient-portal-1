@@ -95,7 +95,7 @@ function StepConfigJenkinsToolInput({dataObject, setDataObject, disabled}) {
             clearDataFunction={clearJenkinsTool}
             disabled={disabled}
         />
-    )
+    );
 }
 
 StepConfigJenkinsToolInput.propTypes = {

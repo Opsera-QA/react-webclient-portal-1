@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 import { AuthContext } from "contexts/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -9,7 +9,7 @@ import {
 
 import sfdcPipelineActions from ".././sfdc-pipeline-actions";
 import ErrorDialog from "components/common/status_notifications/error";
-import { csvStringToObj } from "components/common/helpers/string-helpers"
+import { csvStringToObj } from "components/common/helpers/string-helpers";
 import './fileupload.css';
 import { Container, Button, Row, Col } from 'react-bootstrap';
 import SelectedObjPanel from './panels/SelectedObjPanel';
@@ -59,19 +59,19 @@ function CSVFileUploadComponent({
   const preventDefault = (e) => {
       e.preventDefault();
       // e.stopPropagation();
-  }
+  };
 
   const dragOver = (e) => {
       preventDefault(e);
-  }
+  };
 
   const dragEnter = (e) => {
       preventDefault(e);
-  }
+  };
 
   const dragLeave = (e) => {
       preventDefault(e);
-  }
+  };
 
   const fileDrop = (e) => {
       preventDefault(e);
@@ -79,22 +79,22 @@ function CSVFileUploadComponent({
       if (files.length) {
           handleFiles(files);
       }
-  }
+  };
 
   const filesSelected = () => {
       if (fileInputRef.current.files.length) {
           handleFiles(fileInputRef.current.files);
       }
-  }
+  };
 
   const fileInputClicked = () => {
       fileInputRef.current.click();
-  }
+  };
 
   const handleFiles = (files) => {
       setError(false);
       setSelectedFiles([]);
-      setFiles([])
+      setFiles([]);
       setMatchedItems([]);
       setRejectedItems([]);
       setErrorMessage('');
@@ -114,7 +114,7 @@ function CSVFileUploadComponent({
               setUnsupportedFiles([files[i]]);
           }
       }
-  }
+  };
 
   const validateFile = (file) => {
       // const validTypes = ['csv'];
@@ -127,7 +127,7 @@ function CSVFileUploadComponent({
       // }
 
       return true;
-  }
+  };
 
   const fileSize = (size) => {
       if (size === 0) {
@@ -137,11 +137,11 @@ function CSVFileUploadComponent({
       const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
       const i = Math.floor(Math.log(size) / Math.log(k));
       return parseFloat((size / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-  }
+  };
 
   const fileType = (fileName) => {
       return fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length) || fileName;
-  }
+  };
 
   const removeFile = (name) => {
       setError(false);      
@@ -164,7 +164,7 @@ function CSVFileUploadComponent({
           unsupportedFiles.splice(index3, 1);
           setUnsupportedFiles([...unsupportedFiles]);
       }      
-  }
+  };
 
   const validateObj = (obj) => {
     setSave(true);
@@ -172,7 +172,7 @@ function CSVFileUploadComponent({
     let csvKeys = obj.length > 0 ? Object.keys(obj[0]) : []; 
     let validationKeys = ["componentType","committedFile"];
 
-    let validKeys = validationKeys.every((val) => csvKeys.includes(val))
+    let validKeys = validationKeys.every((val) => csvKeys.includes(val));
 
     if(!validKeys) {
       // setError("Invalid CSV Provided!");
@@ -203,10 +203,10 @@ function CSVFileUploadComponent({
     // TODO: create logic to get unmatched files and display it
     let skipped = obj.filter(o => !matched.some(({componentType,committedFile}) => o.componentType === componentType && o.committedFile === committedFile));
     // console.log(skipped);
-    setRejectedItems(skipped)
+    setRejectedItems(skipped);
     setSave(false);
 
-  }
+  };
 
   const validateFiles = async () => {   
       // read the csv file and send string to node  
@@ -223,7 +223,7 @@ function CSVFileUploadComponent({
         
       };
       reader.readAsBinaryString(file);
-  }
+  };
 
   // this needs to be called once confirmation is done
   const saveData = async() => {
@@ -261,7 +261,7 @@ function CSVFileUploadComponent({
       setErrorMessage("Error setting selected Data: ", err);
       setSave(false);
     }
-  }
+  };
 
   return (
       <>
@@ -370,7 +370,7 @@ CSVFileUploadComponent.propTypes = {
   allProfileComponentType: PropTypes.array,
   setFiles: PropTypes.func,
   gitTaskData: PropTypes.object
-}
+};
 
-export default CSVFileUploadComponent
+export default CSVFileUploadComponent;
 

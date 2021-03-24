@@ -1,5 +1,6 @@
 import React from "react";
 import { Table, Button, Row, Col } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 
 function UserInfo({ user }) {
@@ -24,4 +25,9 @@ function UserInfo({ user }) {
     </Table>
   );
 }
+
+UserInfo.propTypes = {
+  user: PropTypes.object,
+};
+
 export default UserInfo;

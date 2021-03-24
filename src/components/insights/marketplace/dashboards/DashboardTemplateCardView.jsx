@@ -43,7 +43,7 @@ function DashboardTemplateCardView({ dashboardTemplates, dashboardTemplateFilter
         })}
       </CardColumns>
     );
-  }
+  };
 
   return (
     <CardView

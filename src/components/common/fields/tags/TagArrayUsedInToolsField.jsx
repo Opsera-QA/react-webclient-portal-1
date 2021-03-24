@@ -37,7 +37,7 @@ function TagArrayUsedInToolsField({ tags }) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [tags]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -55,7 +55,7 @@ function TagArrayUsedInToolsField({ tags }) {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const loadTools = async (cancelSource = cancelTokenSource) => {
     if (Array.isArray(tags) && tags.length > 0) {
@@ -101,7 +101,7 @@ function TagArrayUsedInToolsField({ tags }) {
           This tag combination is not currently used in any tool</span>
         </div>
       </div>
-    )
+    );
   }
 
   return (

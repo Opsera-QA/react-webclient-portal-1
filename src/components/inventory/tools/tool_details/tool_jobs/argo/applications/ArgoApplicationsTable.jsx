@@ -6,7 +6,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "react-bootstrap";
 import { getTableBooleanIconColumn, getTableTextColumn } from "../../../../../../common/table/table-column-helpers";
 import argoApplicationsMetadata from "../argo-application-metadata";
-import ExistingArgoApplicationModal from "./ArgoApplicationModal"
+import ExistingArgoApplicationModal from "./ArgoApplicationModal";
 
 function ArgoApplicationsTable({ toolData, loadData, selectedRow, isLoading }) {
   let fields = argoApplicationsMetadata.fields;

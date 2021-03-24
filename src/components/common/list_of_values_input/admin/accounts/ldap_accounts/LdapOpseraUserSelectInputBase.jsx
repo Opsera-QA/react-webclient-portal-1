@@ -35,12 +35,12 @@ function LdapOpseraUserSelectInputBase({ dataObject, setDataObject, setDataFunct
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadOpseraUsers(cancelSource);
     }
     catch (error) {

@@ -16,9 +16,9 @@ function GitTasksConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTa
         );
       case "":
       default:
-        return <div className="text-center text-muted p-5">You must select a notification type before configuring notification type details.</div>
+        return <div className="text-center text-muted p-5">You must select a notification type before configuring notification type details.</div>;
     }
-  }
+  };
 
   const handleGitTaskTypeChange = (fieldName, value) => {
     let newDataObject = gitTasksDataDto;

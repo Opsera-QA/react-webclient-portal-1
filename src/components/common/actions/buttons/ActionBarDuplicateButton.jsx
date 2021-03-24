@@ -7,7 +7,7 @@ function ActionBarDuplicateButton({handleDuplicateClick, itemName, itemId}) {
 
   const duplicateConfiguration = () => {
     handleDuplicateClick(itemId);
-  }
+  };
 
   return (
     <ActionBarButton action={duplicateConfiguration} icon={faCopy} popoverText={`Duplicate this ${itemName} configuration`} />

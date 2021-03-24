@@ -41,7 +41,7 @@ function PowershellStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
     let powershellConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, powershellStepFormMetadata);
 
     setPowershellStepConfigurationDataDto(powershellConfigurationData);
-    console.log(job_type)
+    console.log(job_type);
     if (job_type) {
       setJobType(job_type);
     }

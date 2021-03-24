@@ -40,7 +40,7 @@ function JMeterHitsLineChart({ kpiConfiguration, setKpiConfiguration, dashboardD
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -115,7 +115,7 @@ function JMeterHitsLineChart({ kpiConfiguration, setKpiConfiguration, dashboardD
             />
         </div>
     );
-  }
+  };
   return (
     <div>
       <ChartContainer

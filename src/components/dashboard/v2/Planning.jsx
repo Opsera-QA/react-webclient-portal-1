@@ -4,7 +4,7 @@ import PlanningView_Developer from "../../analytics/views/planning/planningView_
 import PlanningView_Manager from "../../analytics/views/planning/planningView_manager";
 import PlanningView_Executive from "../../analytics/views/planning/planningView_executive";
 
-function PlanningDashboard( { persona,  date, index } ) {
+function PlanningDashboard({persona, date, index}) {
   
   switch (persona) {
   case "developer":
@@ -24,7 +24,8 @@ function PlanningDashboard( { persona,  date, index } ) {
 
 PlanningDashboard.propTypes = {
   persona: PropTypes.string,
-  date: PropTypes.object
+  date: PropTypes.object,
+  index: PropTypes.any
 };
 
 export default PlanningDashboard;

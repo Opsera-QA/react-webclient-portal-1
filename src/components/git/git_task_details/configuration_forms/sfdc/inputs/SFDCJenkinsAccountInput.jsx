@@ -9,7 +9,7 @@ function SFDCJenkinsAccountInput({dataObject, setDataObject, disabled, gitTasksD
     newDataObject.setData("gitToolId", selectedOption.toolId);
     newDataObject.setData("service", selectedOption.service);
     // save the tool identifier to the parent obj
-    gitTasksDataDto.setData("tool_identifier", selectedOption.service)
+    gitTasksDataDto.setData("tool_identifier", selectedOption.service);
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");
     newDataObject.setData("repository", "");

@@ -13,7 +13,7 @@ import {
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
-import DtoBottomPagination from "components/common/pagination/DtoBottomPagination"
+import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import filterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/filter-metadata";
 import Model from "../../../../../../../../../core/data_model/model";
 import { RenderWorkflowItem } from "components/workflow/approvalModal";
@@ -84,7 +84,7 @@ const SFDCUnitTestView = ({
       toastContext.showLoadingErrorDialog(error);
     }
     setLoading(false);
-  }
+  };
 
   const handleCheckAllClickUnitTestClasses = () => {
     // setSelectedUnitTestClasses(testClasses);
@@ -118,12 +118,12 @@ const SFDCUnitTestView = ({
       toastContext.showLoadingErrorDialog(error);
       setSave(false);
     }
-  }
+  };
   const getPaginator = () => {
     return (
         <div>{toolFilterDto && toolFilterDto.getData("totalCount") != null && <DtoBottomPagination paginationStyle={"stacked"} paginationDto={toolFilterDto} setPaginationDto={setToolFilterDto} isLoading={loading} loadData={loadData} />}</div>
     );
-  }
+  };
   const handleSearch = async() => {
     let newFilterDto = toolFilterDto;
     newFilterDto.setData("pageSize", 50);
@@ -132,7 +132,7 @@ const SFDCUnitTestView = ({
     setToolFilterDto({...newFilterDto});
     
     await loadData();
-  }
+  };
   return (
     <div className="ml-5">
       <div className="flex-container">

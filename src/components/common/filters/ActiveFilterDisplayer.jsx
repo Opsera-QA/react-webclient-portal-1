@@ -31,7 +31,7 @@ function ActiveFilterDisplayer({filterDto, setFilterDto, loadData}) {
         <div className="active-filter-bar item-field py-2 px-1">
           {activeFilters.map((filter, key) =>  getFilterActiveButton(filter, key))}
         </div>
-      )
+      );
     }
 
     return null;

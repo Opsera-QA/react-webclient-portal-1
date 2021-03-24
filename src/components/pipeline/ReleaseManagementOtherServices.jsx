@@ -68,6 +68,10 @@ class ConfigurationManagement extends React.PureComponent {
   }
 }
 
+ConfigurationManagement.propTypes = {
+  tools: PropTypes.array
+};
+
 class ContinousIntegration extends React.PureComponent {
   static contextType = RMContext
   render() {
@@ -102,6 +106,10 @@ class ContinousIntegration extends React.PureComponent {
   }
 }
 
+ContinousIntegration.propTypes = {
+  tools: PropTypes.array,
+};
+
 class LogManagement extends React.PureComponent {
   static contextType = RMContext
   render() {
@@ -133,6 +141,11 @@ class LogManagement extends React.PureComponent {
     );
   }
 }
+
+LogManagement.propTypes = {
+  tools: PropTypes.array,
+};
+
 class RepositoryManagement extends React.PureComponent {
   static contextType = RMContext
   render() {
@@ -197,6 +210,10 @@ class SASST extends React.PureComponent {
   }
 }
 
+SASST.propTypes = {
+  tools: PropTypes.array,
+};
+
 class Monitoring extends React.PureComponent {
   static contextType = RMContext
   render() {
@@ -227,6 +244,10 @@ class Monitoring extends React.PureComponent {
     );
   }
 }
+
+Monitoring.propTypes = {
+  tools: PropTypes.array,
+};
 
 export class Confirmation extends React.PureComponent {
   static contextType = RMContext
@@ -305,5 +326,16 @@ export class Confirmation extends React.PureComponent {
     );
   }
 }
+
+Confirmation.propTypes = {
+  tools: PropTypes.array,
+  handleCreateTools: PropTypes.func,
+};
+
+ReleaseManagementOtherServices.propTypes = {
+  app: PropTypes.any,
+  tools: PropTypes.array,
+  handleCreateTools: PropTypes.func,
+};
 
 export default ReleaseManagementOtherServices;

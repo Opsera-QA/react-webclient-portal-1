@@ -29,7 +29,7 @@ function LdapOrganizationSelectInput({ currentOrganizationDomain, location}) {
     finally {
       setIsLoading(false);
     }
-  }
+  };
 
   const getRoles = async () => {
     const user = await getUserRecord();

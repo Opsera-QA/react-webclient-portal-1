@@ -116,6 +116,7 @@ function GitlabTotalCountOfMergeReqAndPushPerDay({ persona, date }) {
 
 GitlabTotalCountOfMergeReqAndPushPerDay.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object
 };
 
 export default GitlabTotalCountOfMergeReqAndPushPerDay;

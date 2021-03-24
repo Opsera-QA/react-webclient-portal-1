@@ -32,7 +32,7 @@ function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunct
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -51,7 +51,7 @@ function ToolIdentifierFilter({ filterDto, setFilterDto, fieldName, setDataFunct
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const getToolList = async (cancelSource = cancelTokenSource) => {
     const toolResponse = await toolManagementActions.getToolIdentifiersV2(getAccessToken, cancelSource, "active", true);

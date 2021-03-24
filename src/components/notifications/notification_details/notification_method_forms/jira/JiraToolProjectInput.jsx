@@ -27,7 +27,7 @@ function JiraToolProjectInput({jiraToolId, fieldName, dataObject, setDataObject,
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadProjects();
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -44,10 +44,10 @@ function JiraToolProjectInput({jiraToolId, fieldName, dataObject, setDataObject,
       let projectId = dataObject.getData(fieldName);
       if (projectId !== "") {
         let toolProject = toolProjects.find((project) => {
-          return project.id === projectId
+          return project.id === projectId;
         });
         if (toolProject) {
-          setSelectedJiraProject(toolProject)
+          setSelectedJiraProject(toolProject);
         }
       }
       setProjects(toolProjects);
@@ -91,7 +91,7 @@ function JiraToolProjectInput({jiraToolId, fieldName, dataObject, setDataObject,
       );
     }
 
-    return <span>Select a tool project to get started.</span>
+    return <span>Select a tool project to get started.</span>;
   };
 
   const getJiraProject = () => {
@@ -132,6 +132,6 @@ JiraToolProjectInput.propTypes = {
 
 JiraToolProjectInput.defaultProps = {
   fieldName: "toolProjectId"
-}
+};
 
 export default JiraToolProjectInput;

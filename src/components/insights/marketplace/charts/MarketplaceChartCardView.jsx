@@ -19,11 +19,11 @@ function MarketplaceChartCardView({ marketplaceCharts, marketplaceChartFilterMod
     return (
       <CardColumns>
         {marketplaceCharts.map((kpi, index) => {
-          return (<MarketplaceChartCard key={index} kpi={kpi} dashboardId={dashboardId}/>)
+          return (<MarketplaceChartCard key={index} kpi={kpi} dashboardId={dashboardId}/>);
         })}
       </CardColumns>
     );
-  }
+  };
 
   return (
     <CardView

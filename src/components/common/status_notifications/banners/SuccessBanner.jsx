@@ -22,9 +22,9 @@ function SuccessBanner({successMessage, removeBanner, id}) {
             clearSuccess();
           }}/>
         </div>
-      )
+      );
     }
-  }
+  };
 
   return (
     <div className="w-100 success-block top-dialog-block">

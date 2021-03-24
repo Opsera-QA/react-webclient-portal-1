@@ -20,10 +20,10 @@ function UserToolsTable({ data }) {
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "_id"})),
-      getTableTextColumn(fields.find(field => { return field.id === "name"})),
-      getTableTextColumn(fields.find(field => { return field.id === "toolStatus"})),
-      getTableTextColumn(fields.find(field => { return field.id === "dnsName"})),
+      getTableTextColumn(fields.find(field => { return field.id === "_id";})),
+      getTableTextColumn(fields.find(field => { return field.id === "name";})),
+      getTableTextColumn(fields.find(field => { return field.id === "toolStatus";})),
+      getTableTextColumn(fields.find(field => { return field.id === "dnsName";})),
     ],
     []
   );

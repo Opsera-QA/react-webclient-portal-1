@@ -22,7 +22,7 @@ function JenkinsToolConfiguration({ toolData }) {
   }, [toolData]);
 
   const loadData = async () => {
-    let jenkinsConfigurationData = modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), jenkinsConnectionMetadata)
+    let jenkinsConfigurationData = modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), jenkinsConnectionMetadata);
 
     if (jenkinsConfigurationData.getData("proxyEnable") === true) {
       jenkinsConfigurationData.setMetaDataFields(jenkinsConnectionMetadata.fieldsAlt);

@@ -9,7 +9,7 @@ function SubscriptionIconBase({ handleSubscription, isSubscribed, showText, clas
 
   const getHelpText = () => {
     if (showText) {
-      return <span className="ml-1">{isSubscribed ? "Subscribed" : "Not Subscribed"}</span>
+      return <span className="ml-1">{isSubscribed ? "Subscribed" : "Not Subscribed"}</span>;
     }
   };
 
@@ -29,7 +29,7 @@ function SubscriptionIconBase({ handleSubscription, isSubscribed, showText, clas
 
   return (
     <div className={className}>
-      <div className={getClassNames()} onClick={() => {handleSubscription()}}>
+      <div className={getClassNames()} onClick={() => {handleSubscription();}}>
         <ButtonTooltip innerText={isSubscribed ? "Click to Unsubscribe" : "Click to Subscribe"}>
           <span>
             <IconBase isLoading={isLoading} className={"mr-2 my-auto"} icon={faEye} />

@@ -21,7 +21,7 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
       return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Chart</span>);
     }
     else if (error) {
-      return (<span><FontAwesomeIcon icon={faExclamationCircle} spin fixedWidth className="mr-1"/>Error Loading Chart!</span>)
+      return (<span><FontAwesomeIcon icon={faExclamationCircle} spin fixedWidth className="mr-1"/>Error Loading Chart!</span>);
     }
     else {
       return (

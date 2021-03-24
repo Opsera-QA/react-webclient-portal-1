@@ -30,7 +30,7 @@ function DashboardSelectInput({ fieldName, dataObject, setDataObject, setDataFun
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {

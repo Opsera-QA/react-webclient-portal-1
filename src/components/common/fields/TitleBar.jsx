@@ -11,7 +11,7 @@ function TitleBar({ title, titleIcon, parentBreadcrumb, isLoading, inactive, tit
 
   const handleBackButton = () => {
     history.push(`/${parentBreadcrumb.path}`);
-  }
+  };
 
   const getBackButton = () => {
     if (parentBreadcrumb) {
@@ -36,7 +36,7 @@ function TitleBar({ title, titleIcon, parentBreadcrumb, isLoading, inactive, tit
         {getInactiveText()}
         {titleActionBar}
       </div>
-    )
+    );
   };
 
   if (isLoading) {

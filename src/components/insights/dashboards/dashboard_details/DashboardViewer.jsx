@@ -31,15 +31,15 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
   const loadData = async (newDashboardData) => {
     setDashboardDataDto({...newDashboardData});
     setKpis(newDashboardData?.data?.configuration);
-  }
+  };
 
   const gotoMarketplace = () => {
     history.push({ pathname:`/insights/marketplace/${dashboardDataDto.getData("_id")}`});
-  }
+  };
 
   const validateAndSaveData = async () => {
     return await dashboardsActions.update(dashboardData, getAccessToken);
-  }
+  };
 
   const getKpiView = () => {
     if (kpis == null || kpis.length === 0) {
@@ -58,11 +58,11 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
               <Col xl={6} md={12} className="p-2" key={kpiConfiguration._id}>
                 <ChartView kpiConfiguration={kpiConfiguration} dashboardData={dashboardDataDto} index={index} loadChart={loadData} setKpis={setKpis}/>
               </Col>
-            )
+            );
           })}
         </Row>
       </div>
-    )
+    );
   };
 
   if (dashboardDataDto == null) {
@@ -74,7 +74,7 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
           managementViewLink={managementViewLink}
         />
       </DataNotFoundContainer>
-    )
+    );
   }
 
   return (

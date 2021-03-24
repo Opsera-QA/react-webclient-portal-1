@@ -6,7 +6,7 @@ import {faUsersCog} from "@fortawesome/pro-light-svg-icons";
 function ActionBarEditAccessRolesButton({handleEditAccessRolesClick, itemName}) {
   const duplicateConfiguration = () => {
     handleEditAccessRolesClick();
-  }
+  };
 
   return (
     <ActionBarButton action={duplicateConfiguration} icon={faUsersCog} popoverText={`Edit this ${itemName}'s role access configuration`} />

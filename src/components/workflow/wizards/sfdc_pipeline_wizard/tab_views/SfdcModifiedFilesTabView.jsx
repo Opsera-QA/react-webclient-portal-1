@@ -1,4 +1,4 @@
-import React, { useState, useMemo }  from 'react'
+import React, { useState, useMemo }  from 'react';
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
@@ -43,12 +43,12 @@ const SfdcModifiedFilesTabView = ({
 
   const sfdcColumnsWithCheckBoxCell = useMemo(
     () => [      
-      getTableTextColumn(fields.find(field => { return field.id === "committedFileId"})),
-      getTableTextColumn(fields.find(field => { return field.id === "componentType"})),
+      getTableTextColumn(fields.find(field => { return field.id === "committedFileId";})),
+      getTableTextColumn(fields.find(field => { return field.id === "componentType";})),
       // getTableTextColumn(fields.find(field => { return field.id === "committedFile"})),
-      {...getTableTextColumn(fields.find(field => { return field.id === "committedFile"})), class: "wrap-cell-content"},
-      getTableDateTimeColumn(fields.find(field => { return field.id === "committedTime"})),
-      getTableTextColumn(fields.find(field => { return field.id === "committedBy"})),
+      {...getTableTextColumn(fields.find(field => { return field.id === "committedFile";})), class: "wrap-cell-content"},
+      getTableDateTimeColumn(fields.find(field => { return field.id === "committedTime";})),
+      getTableTextColumn(fields.find(field => { return field.id === "committedBy";})),
       getCheckBoxColumn(handleComponentCheck)  
     ],
     [],
@@ -123,8 +123,8 @@ const SfdcModifiedFilesTabView = ({
       supportSearch={true}
       inlineFilters={getSfdcInlineFilters()}
     />
-  )
-}
+  );
+};
 
 SfdcModifiedFilesTabView.propTypes = {
   loading: PropTypes.bool,

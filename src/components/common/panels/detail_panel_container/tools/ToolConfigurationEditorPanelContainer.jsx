@@ -12,7 +12,7 @@ function ToolConfigurationEditorPanelContainer({children, isLoading, persistReco
     if (toolConnectionCheckName != null && toolData != null) {
      return (
         <TestToolConnectionButton toolDataDto={toolData} toolName={toolConnectionCheckName} disable={recordDto.isNew() || recordDto.isChanged()}/>
-     )
+     );
     }
   };
 
@@ -51,6 +51,6 @@ ToolConfigurationEditorPanelContainer.propTypes = {
 
 ToolConfigurationEditorPanelContainer.defaultProps = {
   showRequiredFieldsMessage: true
-}
+};
 
 export default ToolConfigurationEditorPanelContainer;

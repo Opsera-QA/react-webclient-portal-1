@@ -125,6 +125,7 @@ function GitlabTotalCommitsByUserAndDate({ persona, date }) {
 
 GitlabTotalCommitsByUserAndDate.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object
 };
 
 export default GitlabTotalCommitsByUserAndDate;

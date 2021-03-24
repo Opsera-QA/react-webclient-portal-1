@@ -14,7 +14,7 @@ import NotificationMethodConfigurationPanel
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import TagManager from "components/common/inputs/tags/TagManager";
-import axios from "axios"
+import axios from "axios";
 
 function NotificationEditorPanel({ notificationData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);

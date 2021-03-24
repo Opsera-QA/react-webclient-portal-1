@@ -50,7 +50,7 @@ function CustomerSystemStatus() {
     const response = await customerSystemStatusActions.getSystemStatuses(getAccessToken);
     let data = response?.data ? response.data : [];
     setCustomerSystemStatusData(data);
-  }
+  };
 
   const getBody = () => {
     // TODO: When wiring up getBody, style

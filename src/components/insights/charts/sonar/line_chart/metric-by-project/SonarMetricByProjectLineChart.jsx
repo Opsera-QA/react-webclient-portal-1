@@ -53,7 +53,7 @@ function SonarMetricByProjectLineChart({ kpiConfiguration, setKpiConfiguration, 
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -110,7 +110,7 @@ function SonarMetricByProjectLineChart({ kpiConfiguration, setKpiConfiguration, 
             />        
       </div>
     );
-  }
+  };
   return (
     <div>
       <ChartContainer

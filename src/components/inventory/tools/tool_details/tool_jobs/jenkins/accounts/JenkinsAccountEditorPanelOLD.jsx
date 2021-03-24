@@ -20,7 +20,7 @@ function JenkinsAccountEditorPanelOLD({ toolData, jenkinsAccountData }) {
   const [ accountList, setAccountList ] = useState([]);
   const [ account, setAccount ] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  console.log(jenkinsAccountData)
+  console.log(jenkinsAccountData);
 
   useEffect(() => {
     loadData();
@@ -33,13 +33,13 @@ function JenkinsAccountEditorPanelOLD({ toolData, jenkinsAccountData }) {
   };
 
   const updatePlatform = (platform) => {
-    setPlatformType(platform["value"])
+    setPlatformType(platform["value"]);
     getPlatformData(platform["value"]);
-  }
+  };
 
   const updateAccount = (data) => {
     setAccount(data);
-  }
+  };
 
   const getPlatformData = async (data) => {
     try {

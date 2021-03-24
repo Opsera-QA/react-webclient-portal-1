@@ -11,7 +11,7 @@ function WebAppNameSelectInput({ fieldName, dataObject, setDataObject, disabled,
   const { getAccessToken } = useContext(AuthContext);
   const [webAppNames, setWebAppNames] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a Web App")
+  const [placeholder, setPlaceholder] = useState("Select a Web App");
 
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function WebAppNameSelectInput({ fieldName, dataObject, setDataObject, disabled,
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTypes();
     }
     catch (error) {
@@ -35,14 +35,14 @@ function WebAppNameSelectInput({ fieldName, dataObject, setDataObject, disabled,
 
   const loadTypes = async () => {
     try {
-      const res = await OctopusStepActions.getWebAppNames(dataObject.getData("toolId"), dataObject.getData("spaceId"), dataObject.getData("accountId"), getAccessToken)
+      const res = await OctopusStepActions.getWebAppNames(dataObject.getData("toolId"), dataObject.getData("spaceId"), dataObject.getData("accountId"), getAccessToken);
       if (res && res.status === 200) {
-        setWebAppNames(res.data)
-        return
+        setWebAppNames(res.data);
+        return;
       }
       setWebAppNames([]);
     } catch (error) {
-      setPlaceholder("No Web Apps Found")
+      setPlaceholder("No Web Apps Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }
@@ -56,7 +56,7 @@ function WebAppNameSelectInput({ fieldName, dataObject, setDataObject, disabled,
       setDataObject({ ...newDataObject });
       return;
     }
-  }
+  };
 
   return (
     <div>

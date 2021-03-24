@@ -20,7 +20,7 @@ function GithubToolConfiguration({ toolData }) {
   }, []);
 
   const loadData = async () => {
-    let githubConfigurationData = modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), githubConnectionMetadata)
+    let githubConfigurationData = modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), githubConnectionMetadata);
 
     if (githubConfigurationData.getData("twoFactorAuthentication") === true) {
       githubConfigurationData.setMetaDataFields(githubConnectionMetadata.fieldsAlt);
@@ -31,7 +31,7 @@ function GithubToolConfiguration({ toolData }) {
 
   const saveGithubToolConfiguration = async () => {
     let newConfiguration = githubConfigurationDto.getPersistData();
-    const simpleVaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`
+    const simpleVaultKey = `${toolData.getData("_id")}-${toolData.getData("tool_identifier")}`;
     newConfiguration.accountPassword = await toolsActions.saveKeyPasswordToVault(githubConfigurationDto, "accountPassword", newConfiguration.accountPassword, simpleVaultKey, getAccessToken, toolData.getData("_id"));
     newConfiguration.secretPrivateKey = await toolsActions.savePasswordToVault(toolData, githubConfigurationDto, "secretPrivateKey", newConfiguration.secretPrivateKey, getAccessToken, toolData.getData("_id"));
     newConfiguration.secretAccessTokenKey = await toolsActions.savePasswordToVault(toolData, githubConfigurationDto, "secretAccessTokenKey", newConfiguration.secretAccessTokenKey, getAccessToken, toolData.getData("_id"));

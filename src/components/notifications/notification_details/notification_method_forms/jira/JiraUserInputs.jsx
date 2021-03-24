@@ -22,7 +22,7 @@ function JiraUserInputs({jiraToolId, jiraProject, dataObject, setDataObject, dis
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadUsers();
     }
     catch (error) {

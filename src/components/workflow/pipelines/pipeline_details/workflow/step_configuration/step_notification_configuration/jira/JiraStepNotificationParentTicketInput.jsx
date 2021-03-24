@@ -20,7 +20,7 @@ function JiraStepNotificationParentTicketInput({jiraToolId, jiraSprintId, visibl
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadParentTickets();
     }
     catch (error) {
@@ -92,6 +92,6 @@ JiraStepNotificationParentTicketInput.propTypes = {
 
 JiraStepNotificationParentTicketInput.defaultProps = {
   visible: true
-}
+};
 
 export default JiraStepNotificationParentTicketInput;

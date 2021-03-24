@@ -15,7 +15,7 @@ function PipelineStepEditorPanelContainer({ children, isLoading, showRequiredFie
         </div>
       );
     }
-  }
+  };
 
   if (isLoading) {
     return (<LoadingDialog size="sm"/>);
@@ -48,6 +48,6 @@ PipelineStepEditorPanelContainer.propTypes = {
 
 PipelineStepEditorPanelContainer.defaultProps = {
   showRequiredFieldsMessage: true
-}
+};
 
 export default PipelineStepEditorPanelContainer;

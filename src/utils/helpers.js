@@ -81,8 +81,8 @@ export function defineUserRole(userRole) {
   case "power_user":
     return "Power User";
   case "user":
-    return "Standard User"
+    return "Standard User";
   default:
-    return "Read Only User"
+    return "Read Only User";
   }
 }

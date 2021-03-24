@@ -41,6 +41,6 @@ ProjectMappingToolSelectInput.propTypes = {
 ProjectMappingToolSelectInput.defaultProps = {
   visible: true,
   fieldName: "tool_id"
-}
+};
 
 export default ProjectMappingToolSelectInput;

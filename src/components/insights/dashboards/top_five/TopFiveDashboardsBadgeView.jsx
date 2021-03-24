@@ -26,7 +26,7 @@ function dashboardsButtonView({ dashboards }) {
         />
       ))
     );
-  }
+  };
 
   return (getBadges());
 }

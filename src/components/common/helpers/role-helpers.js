@@ -70,7 +70,7 @@ export const getAccessRolePermissionMessage = (accessRole) => {
     case "readonly":
       return "Read Only Role: Your account does not have any privileges associated with the Opsera platform and can only view some data.";
   }
-}
+};
 
 export const getAccessRoleRequirementMessage = (requirement) => {
   switch (requirement) {
@@ -87,7 +87,7 @@ export const getAccessRoleRequirementMessage = (requirement) => {
     case ROLE_LEVELS.USERS_AND_SASS:
       return "Any level User can access this.";
   }
-}
+};
 
 export const isAnLdapUser = (user, accessRole) => {
   return accessRole?.Type !== "sass-user" && user?.ldap?.domain != null;

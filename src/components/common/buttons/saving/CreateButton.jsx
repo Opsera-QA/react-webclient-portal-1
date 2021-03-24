@@ -24,7 +24,7 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
 
     return () => {
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const persistRecord = async () => {
@@ -46,7 +46,7 @@ function CreateButton({recordDto, createRecord, disable, showSuccessToasts, leni
     if (isMounted?.current === true) {
       setIsSaving(false);
     }
-  }
+  };
 
   const getLabel = () => {
     if (isSaving) {
@@ -97,6 +97,6 @@ CreateButton.defaultProps = {
   addAnotherOption: true,
   size: "md",
   icon: faSave
-}
+};
 
 export default CreateButton;

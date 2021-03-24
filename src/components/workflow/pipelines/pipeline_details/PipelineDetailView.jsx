@@ -305,7 +305,7 @@ function PipelineDetailView() {
     if (loading) {
       //return (<span><FontAwesomeIcon icon={faSpinner} className="mr-2" spin/>Loading Pipeline</span>)
       //return (<div><FontAwesomeIcon icon={faSpinner} className="mr-2" spin/></div>);
-      return (<></>)
+      return (<></>);
     }
 
     return (

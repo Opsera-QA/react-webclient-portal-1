@@ -37,7 +37,7 @@ function TagEditorPanel({ tagData, setTagData, handleClose }) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async () => {

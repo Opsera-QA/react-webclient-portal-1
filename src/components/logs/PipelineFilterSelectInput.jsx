@@ -33,12 +33,12 @@ function PipelineFilterSelectInput({ pipelineFilter, opseraPipelineSelectChange,
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await getOpseraPipelineFilterData(cancelSource);
     }
     catch (error) {

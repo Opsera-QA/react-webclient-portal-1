@@ -21,6 +21,6 @@ function EmailNotificationMethodSummaryCard({ notificationData, notificationMeth
 EmailNotificationMethodSummaryCard.propTypes = {
   notificationData: PropTypes.object,
   notificationMethodData: PropTypes.object,
-}
+};
 
 export default EmailNotificationMethodSummaryCard;

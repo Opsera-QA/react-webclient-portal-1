@@ -55,12 +55,12 @@ function DashboardDetailView() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      await getRoles(cancelSource)
+      await getRoles(cancelSource);
     } catch (error) {
       if (isMounted.current === true && !error?.error?.message?.includes(404)) {
         console.error(error);
@@ -71,7 +71,7 @@ function DashboardDetailView() {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
@@ -92,11 +92,11 @@ function DashboardDetailView() {
 
   const handleDelete = async () => {
     return await dashboardsActions.delete(dashboardData, getAccessToken);
-  }
+  };
 
   const handleClose = async () => {
     setActiveTab("viewer");
-  }
+  };
 
   const getActionBar = () => {
     return (
@@ -123,7 +123,7 @@ function DashboardDetailView() {
         <ToggleSettingsIcon activeTab={activeTab} setActiveTab={setActiveTab}/>
       </TitleActionBarContainer>
     );
-  }
+  };
 
   const handleNavTabClick = (tabSelection) => async e => {
     e.preventDefault();
@@ -154,7 +154,7 @@ function DashboardDetailView() {
         <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={"dashboards"} tabText={"Analytics"} />
       </NavigationTabContainer>
     );
-  }
+  };
 
   if (activeTab === "settings") {
     return (
@@ -186,7 +186,7 @@ function DashboardDetailView() {
         type={"Dashboard"}
       />}
       />
-  )
+  );
 }
 
 export default DashboardDetailView;

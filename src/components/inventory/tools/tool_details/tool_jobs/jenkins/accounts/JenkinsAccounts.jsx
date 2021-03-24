@@ -18,9 +18,9 @@ function JenkinsAccounts({ toolData, loadData, isLoading }) {
 
   const createJenkinsAccount = () => {
     setJenkinsAccountData(new Model(jenkinsCreateAccountMetadata.newModelBase, jenkinsCreateAccountMetadata, true));
-    setApplicationID(undefined)
+    setApplicationID(undefined);
     setShowCreateAccountModal(true);
-  }
+  };
 
   const selectedJobRow = (rowData) => {
     let newDataObject = toolData.getData("accounts")[rowData.index];

@@ -7,7 +7,7 @@ function ActionBarPublishPipelineButton({handlePublishClick, itemId}) {
 
   const publish = () => {
     handlePublishClick(itemId);
-  }
+  };
 
   return (
     <ActionBarButton action={publish} icon={faShareAll} popoverText={`Publish this Pipeline to the shared Catalog`} />

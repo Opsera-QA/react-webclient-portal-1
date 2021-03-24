@@ -45,7 +45,7 @@ function LdapOrganizationDetailView() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [organizationName]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -64,7 +64,7 @@ function LdapOrganizationDetailView() {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();

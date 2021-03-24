@@ -176,7 +176,7 @@ function S3StepConfiguration({
         //console.log(respObj);
         return respObj;
       } else {
-        let errorMessage = "Tool information is missing or unavailable!  Please ensure the required creds are registered and up to date in Tool Registry."
+        let errorMessage = "Tool information is missing or unavailable!  Please ensure the required creds are registered and up to date in Tool Registry.";
         let toast = getErrorDialog(errorMessage, setShowToast, "detailPanelTop");
         setToast(toast);
         setShowToast(true);
@@ -193,10 +193,10 @@ function S3StepConfiguration({
   };
 
   const handleBucketAccessChange = (selectedOption) => {
-    setFormData({...formData, bucketAccess: selectedOption.value})
-  }
+    setFormData({...formData, bucketAccess: selectedOption.value});
+  };
 
-  console.log(formData)
+  console.log(formData);
 
   const validateRequiredFields = () => {
     let {
@@ -498,6 +498,6 @@ S3StepConfiguration.propTypes = {
   createJob: PropTypes.func,
   setToast: PropTypes.func,
   setShowToast: PropTypes.func
-}
+};
 
 export default S3StepConfiguration;

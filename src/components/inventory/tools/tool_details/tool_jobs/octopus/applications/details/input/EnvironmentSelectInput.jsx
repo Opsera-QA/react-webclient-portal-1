@@ -12,7 +12,7 @@ function EnvironmentNameSelectInput({ fieldName, dataObject, setDataObject, disa
   const { getAccessToken } = useContext(AuthContext);
   const [environmentNames, setEnvironmentNames] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select an Environment")
+  const [placeholder, setPlaceholder] = useState("Select an Environment");
 
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function EnvironmentNameSelectInput({ fieldName, dataObject, setDataObject, disa
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTypes();
     }
     catch (error) {
@@ -40,14 +40,14 @@ function EnvironmentNameSelectInput({ fieldName, dataObject, setDataObject, disa
 
   const loadTypes = async () => {
     try {
-      const res = await OctopusStepActions.getEnvironments(dataObject.getData("toolId"),dataObject.getData("spaceId"), getAccessToken)
+      const res = await OctopusStepActions.getEnvironments(dataObject.getData("toolId"),dataObject.getData("spaceId"), getAccessToken);
       if (res && res.status === 200) {
-        setEnvironmentNames(res.data)
-        return
+        setEnvironmentNames(res.data);
+        return;
       }
       setEnvironmentNames([]);
     } catch (error) {
-      setPlaceholder("No Environments Found")
+      setPlaceholder("No Environments Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }

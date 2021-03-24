@@ -38,7 +38,7 @@ function ToolIdentifierDetailPanel({ toolIdentifierData, setToolIdentifierData }
         <SummaryTab activeTab={activeTab} handleTabClick={handleTabClick} />
         <SettingsTab activeTab={activeTab} handleTabClick={handleTabClick} />
       </CustomTabContainer>
-    )
+    );
   };
 
   return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
