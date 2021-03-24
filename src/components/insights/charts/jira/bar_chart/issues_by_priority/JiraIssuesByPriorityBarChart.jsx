@@ -8,7 +8,8 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getTaskColor, assignTaskColors } from '../../../charts-views';
+import { defaultConfig, getTaskColor, assignTaskColors,
+         adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 
 
@@ -79,6 +80,7 @@ function JiraIssuesByPriorityBarChart({ kpiConfiguration, setKpiConfiguration, d
               {...defaultConfig("Project", "Number of Issues", 
                                 true, true, "cutoffString", "wholeNumbers")}
               {...config(getTaskColor)}
+              {...adjustBarWidth(metrics)}
               onClick={() => setShowModal(true)}
               tooltip={({ indexValue, id, data }) => <ChartTooltip 
                   titles={["Project", "Issue Type", "Number of Lowest Priority Issues",
