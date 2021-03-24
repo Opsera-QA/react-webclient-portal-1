@@ -8,7 +8,7 @@ function RoleAccessEditorHelpOverlay({ isLoading}) {
 
   const closePanel = () => {
     toastContext.clearOverlayPanel();
-  }
+  };
 
   return (
     <HelpOverlayBase handleClose={closePanel} showPanel={true} isLoading={isLoading} closePanel={closePanel}>

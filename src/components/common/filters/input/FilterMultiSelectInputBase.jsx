@@ -19,10 +19,10 @@ function FilterMultiSelectInputBase({ fieldName, dataObject, setDataObject, grou
         <InputLabel field={field} className={inline ? "mt-1 mr-2" : undefined}/>
       );
     }
-  }
+  };
 
   if (field == null) {
-    return <WarningDialog warningMessage={"No field was found for this filter"} />
+    return <WarningDialog warningMessage={"No field was found for this filter"} />;
   }
 
   return (
@@ -68,6 +68,6 @@ FilterMultiSelectInputBase.defaultProps = {
   filter: "contains",
   placeholderText: "Select One",
   className: "my-auto"
-}
+};
 
 export default FilterMultiSelectInputBase;

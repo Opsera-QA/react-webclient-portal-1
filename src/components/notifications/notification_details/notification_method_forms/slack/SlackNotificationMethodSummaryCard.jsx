@@ -24,6 +24,6 @@ function SlackNotificationMethodSummaryCard({ notificationData, notificationMeth
 SlackNotificationMethodSummaryCard.propTypes = {
   notificationData: PropTypes.object,
   notificationMethodData: PropTypes.object,
-}
+};
 
 export default SlackNotificationMethodSummaryCard;

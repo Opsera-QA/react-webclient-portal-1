@@ -25,7 +25,7 @@ function DataNotFoundDialog ({ type, managementViewTitle, managementViewLink, ma
       </div>
 
     );
-  }
+  };
 
   return (
     <div className="p-3 shaded-panel">

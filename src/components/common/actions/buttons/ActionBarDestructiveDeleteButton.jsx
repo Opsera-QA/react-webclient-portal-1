@@ -53,11 +53,11 @@ function ActionBarDestructiveDeleteButton({handleDelete, relocationPath, dataObj
     catch (error) {
       toastContext.showDeleteFailureResultDialog(dataObject.getType());
     }
-  }
+  };
 
   const toggleDeleteModal = () => {
     setShowDeleteModal(true);
-  }
+  };
 
   if (isLoading || (!isOpseraAdmin && mustBeOpseraAdmin)) {
     return <></>;

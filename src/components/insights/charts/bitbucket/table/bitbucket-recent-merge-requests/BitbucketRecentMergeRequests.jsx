@@ -81,8 +81,8 @@ function BitbucketRecentMergeRequestsTable({ kpiConfiguration, setKpiConfigurati
       {
         Header: "Time",
         accessor: "mrCompletionTimeTimeStamp",
-        Cell: (props) => {
-          return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
+        Cell: (row) => {
+          return format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a");
         },
       },
     ],

@@ -42,7 +42,7 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
       let items = [];
 
       Object.keys(currentData).map((key) => {
-        items.push({name: key, value: currentData[key]})
+        items.push({name: key, value: currentData[key]});
       });
 
       if (items.length === 0) {
@@ -74,7 +74,7 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
 
     newDataObject.setData(fieldName, {...newObject});
     setDataObject({...newDataObject});
-  }
+  };
 
   const addProperty = () => {
     let newPropertyList = properties;
@@ -91,13 +91,13 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
   };
 
   const deleteProperty = (index) => {
-    let newPropertyList = properties
+    let newPropertyList = properties;
     newPropertyList.splice(index, 1);
     validateAndSetData(newPropertyList);
   };
 
   const updateProperty = (row, innerField, newValue) => {
-    let newPropertyList = properties
+    let newPropertyList = properties;
     let index = newPropertyList.indexOf(row);
     let format = regexHelpers.regexTypes["generalText"];
     let meetsRegex = format.test(newValue);
@@ -117,7 +117,7 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
       <Button variant="link" onClick={() => deleteProperty(index)}>
         <FontAwesomeIcon className="danger-red" icon={faTimes} fixedWidth/>
       </Button>
-    )
+    );
   };
 
   const getPropertyRow = (property, index) => {
@@ -194,7 +194,7 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
           <FontAwesomeIcon className="text-warning mr-1" icon={faExclamationTriangle} fixedWidth />
           <span className="mt-1">{`Incomplete ${field?.label} Will Be Removed From Saved Tag`}</span>
         </div>
-      )
+      );
     }
   };
 
@@ -224,7 +224,8 @@ TagConfigurationInput.propTypes = {
   setDataObject: PropTypes.func,
   dataObject: PropTypes.object,
   fields: PropTypes.array,
-  fieldName: PropTypes.string
+  fieldName: PropTypes.string,
+  disabled: PropTypes.bool
 };
 
 TagConfigurationInput.defaultProps = {

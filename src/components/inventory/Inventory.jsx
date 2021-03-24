@@ -39,7 +39,7 @@ function Inventory() {
       default:
         return null;
     }
-  }
+  };
 
   const getNavigationTabContainer = () => {
     return (
@@ -48,7 +48,7 @@ function Inventory() {
         <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Platform"} />
       </NavigationTabContainer>
     );
-  }
+  };
 
   return (
     <ScreenContainer

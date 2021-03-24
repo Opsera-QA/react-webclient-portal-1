@@ -375,7 +375,7 @@ function SearchLogs(props) {
         <InfoDialog message="No logs found for this account" />
     </Row>
   </div>
-    )
+    );
   }
 
   return (

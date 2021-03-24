@@ -3,6 +3,7 @@ import { Button, Form, Card, Alert } from "react-bootstrap";
 import { AuthContext } from "../../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../../api/apiService";
 import { apiServerUrl } from "../../../config";
+import PropTypes from "prop-types";
 
 class Tableau extends Component {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
@@ -134,5 +135,9 @@ class Tableau extends Component {
     );
   }
 }
+
+Tableau.propTypes = {
+  history: PropTypes.any
+};
 
 export default Tableau;

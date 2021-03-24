@@ -5,7 +5,7 @@ import toolIdentifierMetadata from "components/admin/tools/tool_identifier/tool-
 import ToolIdentifierEditorPanel
   from "components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierEditorPanel";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
-import {DialogToastContext} from "contexts/DialogToastContext"
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 
 function NewToolIdentifierOverlay({ loadData, isMounted } ) {

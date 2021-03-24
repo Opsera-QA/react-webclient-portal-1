@@ -114,4 +114,4 @@ const jmeterPipelineStepConfigurationMetadata = {
   }
 };
 
-export default jmeterPipelineStepConfigurationMetadata
+export default jmeterPipelineStepConfigurationMetadata;

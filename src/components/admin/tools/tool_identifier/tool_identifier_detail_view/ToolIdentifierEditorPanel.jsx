@@ -12,7 +12,7 @@ import DtoPropertiesInput from "components/common/input/dto_input/dto-properties
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TagManager from "components/common/inputs/tags/TagManager";
-import axios from "axios"
+import axios from "axios";
 
 function ToolIdentifierEditorPanel( {toolIdentifierData, handleClose} ) {
   const {getAccessToken} = useContext(AuthContext);
@@ -39,7 +39,7 @@ function ToolIdentifierEditorPanel( {toolIdentifierData, handleClose} ) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async () => {

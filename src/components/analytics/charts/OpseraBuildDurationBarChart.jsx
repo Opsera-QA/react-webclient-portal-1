@@ -112,8 +112,8 @@ function OpseraBuildDurationBarChart({ persona, date }) {
 }
 
 OpseraBuildDurationBarChart.propTypes = {
-  data: PropTypes.object,
-  persona: PropTypes.string,
+  date: PropTypes.object,
+  persona: PropTypes.string
 };
 
 export default OpseraBuildDurationBarChart;

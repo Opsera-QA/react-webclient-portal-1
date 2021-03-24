@@ -29,13 +29,13 @@ function FilterButton({ dropdownFilters, filterDto, loadData, className }) {
       if (Array.isArray(dropdownFilters)) {
         return (dropdownFilters.map((child, index) => {
           return (<div key={index} className="mb-2">{child}</div>);
-        }))
+        }));
       }
       else {
         return <div className="mb-2">{dropdownFilters}</div>;
       }
     }
-  }
+  };
 
   const getPopover = () => {
     return (

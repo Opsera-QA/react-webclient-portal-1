@@ -8,7 +8,7 @@ function FailIcon() {
     <div className="status-icon">
       <FontAwesomeIcon icon={faTimes} className="cell-icon red fa-md" />
     </div>
-  )
+  );
 }
 
 export default FailIcon;

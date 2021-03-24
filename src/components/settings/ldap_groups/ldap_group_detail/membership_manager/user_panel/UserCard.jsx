@@ -16,7 +16,7 @@ function UserCard({user, selectedUsers, setSelectedUsers}) {
     } else {
       if (selectedUsers.includes(user)) {
         let removeEmail = user.emailAddress;
-        let newSelectedUsers = selectedUsers.filter(user => user.emailAddress !== removeEmail)
+        let newSelectedUsers = selectedUsers.filter(user => user.emailAddress !== removeEmail);
         setSelectedUsers([...newSelectedUsers]);
       }
     }

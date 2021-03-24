@@ -22,7 +22,7 @@ function JiraSprintNameField({ dataObject, jiraToolId, jiraBoard, fieldName }) {
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadSprintName();
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);

@@ -40,7 +40,7 @@ function PipelineSubscriptionsPanel({className}) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -79,7 +79,7 @@ function PipelineSubscriptionsPanel({className}) {
   };
 
   if (isLoading) {
-    return <div className={"m-3"}><LoadingIcon isLoading={isLoading} className={"mr-2 my-auto"} />Loading Pipeline Subscriptions</div>
+    return <div className={"m-3"}><LoadingIcon isLoading={isLoading} className={"mr-2 my-auto"} />Loading Pipeline Subscriptions</div>;
   }
 
   if (!isLoading && (pipelines == null || pipelines.length === 0)) {
@@ -90,7 +90,7 @@ function PipelineSubscriptionsPanel({className}) {
           You are not currently subscribed to any Pipelines</span>
         </div>
       </div>
-    )
+    );
   }
 
   return (

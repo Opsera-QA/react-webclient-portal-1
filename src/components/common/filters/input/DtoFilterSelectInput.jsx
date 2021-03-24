@@ -14,7 +14,7 @@ function DtoFilterSelectInput({ fieldName, dataObject, setDataObject, groupBy, s
   };
 
   if (field == null) {
-    return <WarningDialog warningMessage={"No field was found for this filter"} />
+    return <WarningDialog warningMessage={"No field was found for this filter"} />;
   }
 
   return (
@@ -54,6 +54,6 @@ DtoFilterSelectInput.defaultProps = {
   textField: "text",
   filter: "contains",
   placeholderText: "Select One"
-}
+};
 
 export default DtoFilterSelectInput;

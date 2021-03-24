@@ -45,7 +45,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [currentTab]);
 
 
@@ -109,7 +109,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
-        console.log(error.error)
+        console.log(error.error);
         toastContext.showLoadingErrorDialog(error);
       }
     } finally {
@@ -178,7 +178,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
           <div className="px-2 max-content-width mx-auto" style={{ minWidth: "505px" }}>
             <div className="my-5"><InfoDialog message="No pipelines meeting the filter requirements were found."/></div>
           </div>
-        )
+        );
       }
 
       return (

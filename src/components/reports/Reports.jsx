@@ -56,23 +56,23 @@ function Reports() {
       toastContext.showLoadingErrorDialog(error);
     }
     finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const getCurrentView = () => {
     switch (activeTab) {
       case "tools":
-        return <ToolReports />
+        return <ToolReports />;
       case "pipelines":
-        return <PipelineReports />
+        return <PipelineReports />;
       case "tags":
         return <TagReports />;
       case "all":
       default:
         return getAllReports();
     }
-  }
+  };
 
   const getRoles = async () => {
     const user = await getUserRecord();
@@ -119,7 +119,7 @@ function Reports() {
       default:
         return "reports";
     }
-  }
+  };
 
   return (
     <ScreenContainer

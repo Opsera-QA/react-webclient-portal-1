@@ -302,7 +302,7 @@ function Analytics() {
         <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Analytics"} />
       </NavigationTabContainer>
     );
-  }
+  };
 
   const getBody = () => {
     return (
@@ -390,7 +390,7 @@ function Analytics() {
   </>
     );
 
-  }
+  };
 
   return (
     <ScreenContainer
@@ -632,11 +632,12 @@ function ChartView({ selection, persona, date, index }) {
   }
 }
 
-ChartView.propTypes = {
+Analytics.propTypes = {
   selection: PropTypes.string,
   persona: PropTypes.string,
   date: PropTypes.object,
   index: PropTypes.array,
+  item: PropTypes.object
 };
 
 export default Analytics;

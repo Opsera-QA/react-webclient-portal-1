@@ -20,7 +20,7 @@ function JiraStepNotificationPriorityInput({visible, jiraToolId, dataObject, set
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadPriorities();
     }
     catch (error) {
@@ -82,6 +82,6 @@ JiraStepNotificationPriorityInput.propTypes = {
 
 JiraStepNotificationPriorityInput.defaultProps = {
   visible: true
-}
+};
 
 export default JiraStepNotificationPriorityInput;

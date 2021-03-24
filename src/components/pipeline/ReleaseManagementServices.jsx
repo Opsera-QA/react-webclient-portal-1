@@ -4,6 +4,7 @@ import ReleaseManagementOtherServices, {
   Confirmation,
 } from "./ReleaseManagementOtherServices";
 import { Form, Card } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 const githubci = {
   category: "Release Management",
@@ -193,5 +194,11 @@ class ReleaseManagementServices extends React.PureComponent {
     );
   }
 }
+
+ReleaseManagementServices.propTypes = {
+  app: PropTypes.any,
+  tools: PropTypes.array,
+  handleCreateTools: PropTypes.func,
+};
 
 export default ReleaseManagementServices;

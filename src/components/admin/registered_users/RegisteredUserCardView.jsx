@@ -24,7 +24,7 @@ function RegisteredUserCardView({ data, registeredUsersFilterDto, setRegisteredU
         })}
       </Row>
     );
-  }
+  };
 
   return (
     <CardView

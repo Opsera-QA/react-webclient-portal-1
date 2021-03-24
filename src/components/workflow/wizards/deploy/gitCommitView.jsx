@@ -35,10 +35,10 @@ const GitCommitView = ({ pipelineId, templateId, autoRun, handleClose, setView }
         message,
         autoRun
       };
-      const result = await PipelineActions.createFreeTrialPipeline(postBody, getAccessToken)
+      const result = await PipelineActions.createFreeTrialPipeline(postBody, getAccessToken);
       
       let responseMessage = result.data !== undefined ? result.data.message === "success" : false;
-      console.log(result)
+      console.log(result);
       if(!responseMessage) {
         toastContext.showErrorDialog(result.data.message);
         setSave(false);
@@ -62,7 +62,7 @@ const GitCommitView = ({ pipelineId, templateId, autoRun, handleClose, setView }
       setSave(false);
       setLoading(false);
     }
-  }
+  };
 
   const handleMessageEntry = (e) => {
     let value = e.target.value;
@@ -79,7 +79,7 @@ const GitCommitView = ({ pipelineId, templateId, autoRun, handleClose, setView }
     }
 
     setMessage(e.target.value);
-  }
+  };
 
   return (
     <div className="ml-5">

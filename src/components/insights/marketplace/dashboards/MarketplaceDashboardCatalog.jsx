@@ -40,7 +40,7 @@ function MarketplaceDashboardCatalog () {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (filterModel = dashboardTemplateFilterModel, cancelSource = cancelTokenSource) => {
@@ -69,7 +69,7 @@ function MarketplaceDashboardCatalog () {
       setDashboardTemplates(dashboardTemplates);
       let newFilterDto = filterModel;
       newFilterDto.setData("totalCount", response?.data?.count);
-      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
       setDashboardTemplateFilterModel({...newFilterDto});
     }
   };
@@ -93,7 +93,7 @@ function MarketplaceDashboardCatalog () {
         {/*<InlineDashboardPersonaFilter filterModel={dashboardTemplateFilterModel} setFilterModel={setDashboardTemplateFilterModel} loadData={loadData} className={"mr-2"} />*/}
         <InlineDashboardTypeFilter loadData={loadData} setFilterModel={setDashboardTemplateFilterModel} filterModel={dashboardTemplateFilterModel} className={"mr-2"} />
       </div>
-    )
+    );
   };
 
   return (
@@ -109,7 +109,7 @@ function MarketplaceDashboardCatalog () {
       title={"Dashboard Templates"}
       className={"pb-2"}
     />
-  )
+  );
 }
 
 MarketplaceDashboardCatalog.propTypes = {};

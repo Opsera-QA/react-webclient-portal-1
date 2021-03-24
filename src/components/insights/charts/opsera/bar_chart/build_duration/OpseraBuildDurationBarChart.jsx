@@ -37,7 +37,7 @@ function OpseraBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, da
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -86,7 +86,7 @@ function OpseraBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, da
         />
       </div>
     );
-  }
+  };
 
   return (
     <div>

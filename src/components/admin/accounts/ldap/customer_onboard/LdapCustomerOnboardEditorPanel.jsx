@@ -342,7 +342,7 @@ function LdapCustomerOnboardEditorPanel({ldapUserData}) {
           <div className="content-block-footer"/>
         </div>
       </div>
-    )
+    );
   };
 
   const getUsersInput = () => {
@@ -413,7 +413,7 @@ function LdapCustomerOnboardEditorPanel({ldapUserData}) {
   };
 
   if (isLoading) {
-    return <LoadingDialog size={"sm"} message={"Loading Customer Onboard Editor"} />
+    return <LoadingDialog size={"sm"} message={"Loading Customer Onboard Editor"} />;
   }
 
   return (

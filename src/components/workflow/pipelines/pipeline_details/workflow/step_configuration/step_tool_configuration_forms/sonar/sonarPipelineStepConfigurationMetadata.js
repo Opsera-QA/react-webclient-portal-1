@@ -89,4 +89,4 @@ const sonarPipelineStepConfigurationMetadata = {
   }
 };
 
-export default sonarPipelineStepConfigurationMetadata
+export default sonarPipelineStepConfigurationMetadata;

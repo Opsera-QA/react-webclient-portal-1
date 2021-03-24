@@ -22,7 +22,7 @@ function JiraSecondaryUsersField({ dataObject, fieldName, jiraUsers, isLoading }
     if (jiraUsers != null && jiraUsers.length > 0) {
       return (
         accountIds.map((jiraUserId, i) => {
-          const jiraUser = jiraUsers.find((user) => user.accountId === jiraUserId)
+          const jiraUser = jiraUsers.find((user) => user.accountId === jiraUserId);
           let jiraName = jiraUser ? jiraUser.displayName :  `No User Found for ID: [${jiraUserId}]`;
 
           return (
@@ -42,7 +42,7 @@ function JiraSecondaryUsersField({ dataObject, fieldName, jiraUsers, isLoading }
             <span key={i} className="mx-1 mb-1 badge badge-secondary">
               {jiraUserId}
             </span>
-          )
+          );
         })}
       </div>
     );

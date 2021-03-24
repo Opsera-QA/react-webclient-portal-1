@@ -64,7 +64,7 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
     if (typeof configuration !== "undefined") {
       setGitYAMLStepConfigurationDataDto(new Model(configuration, gitYAMLStepFormMetadata, false));
       await fetchSCMDetails(configuration);
-      if (configuration.type === "bitbucket") await getWorkspaces("bitbucket", configuration.gitToolId , getAccessToken)
+      if (configuration.type === "bitbucket") await getWorkspaces("bitbucket", configuration.gitToolId , getAccessToken);
       await searchRepositories(configuration.type, configuration.gitToolId, configuration.bitbucketWorkspace);
       await searchBranches(
         configuration.type,
@@ -227,14 +227,14 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
       }
       setWorkspacesList(results);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setWorkspacesList([{ value: "", name: "Select One", isDisabled: "yes" }]);
       let errorMessage = "Workspace information is missing or unavailable!";
       toastContext.showErrorDialog(errorMessage);
     } finally {
       setIsWorkspacesSearching(false);
     }
-  }
+  };
 
   const handleDTOChange = async (fieldName, value) => {
     if (fieldName === "type") {
@@ -255,7 +255,7 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
       newDataObject.setData("gitToolId", value.id);
       setGitYAMLStepConfigurationDataDto({ ...newDataObject });
       if (gitYAMLStepConfigurationDto.getData("type") === "bitbucket") {
-        await getWorkspaces("bitbucket", value.id, getAccessToken)
+        await getWorkspaces("bitbucket", value.id, getAccessToken);
       } else {
         await searchRepositories(
           gitYAMLStepConfigurationDto.getData("type"),

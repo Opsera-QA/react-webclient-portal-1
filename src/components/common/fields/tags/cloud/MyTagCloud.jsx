@@ -44,12 +44,12 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadSubscribedTags(cancelSource);
     }
     catch (error) {
@@ -158,7 +158,7 @@ function MyTagCloud({className, showNoSubscriptionsMessage}) {
     <div className={className}>
       <div className="mb-1 item-field">
         {getBody()}
-        {!isLoading && <Button variant="outline-secondary" size="sm" onClick={() => {showTagSubscriptionManager()}}>
+        {!isLoading && <Button variant="outline-secondary" size="sm" onClick={() => {showTagSubscriptionManager();}}>
           <FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/> Tag Subscriptions</Button> }
       </div>
     </div>

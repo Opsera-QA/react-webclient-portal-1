@@ -35,7 +35,7 @@ function ActionBarTransferPipelineButton({ pipeline, loadPipeline }) {
     finally {
       setIsLoading(false);
     }
-  }
+  };
 
   const getUsers = async () => {
     let response = await accountsActions.getOrganizationAccountMembers(pipeline.account, getAccessToken);
@@ -60,7 +60,7 @@ function ActionBarTransferPipelineButton({ pipeline, loadPipeline }) {
     finally {
       setTransferringPipeline(false);
     }
-  }
+  };
 
   const popoverContent = (
       <div>

@@ -66,11 +66,11 @@ function AccessTokenTable({accessTokenData, loadData, isMounted, isLoading, canc
         return false;
       }
     }
-  }
+  };
 
   const rowStyling = (row) => {
     const daysUntilDate = getDaysUntilDate(new Date(row["values"]?.expiration));
-    console.log("days until date: " + JSON.stringify(daysUntilDate))
+    console.log("days until date: " + JSON.stringify(daysUntilDate));
 
 
     if (daysUntilDate == null || daysUntilDate >= 7) {

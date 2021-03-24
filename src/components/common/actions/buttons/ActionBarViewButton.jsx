@@ -6,8 +6,8 @@ import {faFileAlt} from "@fortawesome/pro-light-svg-icons";
 function ActionBarViewButton({handleViewClick, itemName, data}) {
 
   const viewDetails = () => {
-    handleViewClick(data)
-  }
+    handleViewClick(data);
+  };
 
   return (
     <ActionBarButton action={viewDetails} icon={faFileAlt} popoverText={`View ${itemName} Configurations`} />

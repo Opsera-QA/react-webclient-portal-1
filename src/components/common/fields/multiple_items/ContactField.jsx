@@ -12,7 +12,7 @@ function ContactField({dataObject, fieldName, className}) {
     const contacts = dataObject.getData(fieldName);
 
     if (!Array.isArray(contacts) || contacts.length === 0) {
-      return <span>No contacts have been registered.</span>
+      return <span>No contacts have been registered.</span>;
     }
 
     return (

@@ -21,7 +21,7 @@ function ToolNameField({ dataObject, fieldName, className }) {
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadToolName();
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);

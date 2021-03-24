@@ -27,10 +27,10 @@ function JiraProjectEditorPanel({ toolData, jiraProjectData, setJiraProjectData,
     const newConfigurationData = jiraConfigurationDto.getPersistData();
     newProject["id"] = generateUUID();
     newProject["configuration"] = newConfigurationData;
-    jiraProjects.push(newProject)
+    jiraProjects.push(newProject);
     newToolData.setData("projects", jiraProjects);
     return await toolsActions.updateTool(newToolData, getAccessToken);
-  }
+  };
 
   const updateJiraProject = async () => {
     let newToolData = {...toolData};
@@ -59,7 +59,7 @@ function JiraProjectEditorPanel({ toolData, jiraProjectData, setJiraProjectData,
 
     newToolData.setData("projects", jiraProjects);
     return await toolsActions.updateTool(newToolData, getAccessToken);
-  }
+  };
 
   return (
     <EditorPanelContainer

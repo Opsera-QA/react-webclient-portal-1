@@ -50,7 +50,7 @@ function DtoBottomPagination({ paginationDto, setPaginationDto, paginationStyle,
           <Pagination.Item disabled={onLastPage || paginationDisabled} onClick={() => setPage(paginationDto?.getData("currentPage") + 1)}>Next</Pagination.Item>
           <Pagination.Item disabled={onLastPage || paginationDisabled} onClick={() => setPage(getTotalPages())}>Last</Pagination.Item>
         </Pagination>
-    )
+    );
   };
 
   if (!paginationDto || paginationDto?.getData("totalCount") == null) {
@@ -67,7 +67,7 @@ function DtoBottomPagination({ paginationDto, setPaginationDto, paginationStyle,
           </Col>
         </Row>
       </div>
-    )
+    );
   }
 
   return (

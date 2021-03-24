@@ -29,7 +29,7 @@ function AddToDashboardButton({ disable, selectedDashboardData, kpiData, closePa
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const addChartToDashboard = async () => {

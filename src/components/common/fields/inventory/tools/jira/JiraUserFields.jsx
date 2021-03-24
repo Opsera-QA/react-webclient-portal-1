@@ -19,7 +19,7 @@ function JiraUserFields({ dataObject, jiraToolId, jiraProjectKey, primaryUserFie
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadJiraUsers();
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);

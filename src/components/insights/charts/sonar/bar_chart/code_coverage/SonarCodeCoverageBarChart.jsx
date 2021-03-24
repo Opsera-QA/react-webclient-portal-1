@@ -38,7 +38,7 @@ function SonarCodeCoverageBarChart( { kpiConfiguration, setKpiConfiguration, das
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -119,7 +119,7 @@ function SonarCodeCoverageBarChart( { kpiConfiguration, setKpiConfiguration, das
           />
       </div>
   );
-  }
+  };
 
   return (
     <div>

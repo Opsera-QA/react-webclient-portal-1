@@ -38,6 +38,6 @@ function PipelineWelcomeView ({ setActiveTab }) {
 
 PipelineWelcomeView.propTypes = {
   setActiveTab: PropTypes.func
-}
+};
 
 export default PipelineWelcomeView;

@@ -20,7 +20,7 @@ function JiraStepNotificationWorkflowStepInput({jiraToolId, jiraProject, fieldNa
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadWorkflowSteps();
     }
     catch (error) {
@@ -83,6 +83,6 @@ JiraStepNotificationWorkflowStepInput.propTypes = {
 
 JiraStepNotificationWorkflowStepInput.defaultProps = {
   visible: true
-}
+};
 
 export default JiraStepNotificationWorkflowStepInput;

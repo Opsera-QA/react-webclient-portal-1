@@ -38,7 +38,7 @@ function SingleTagUsedInToolsField({ tag, closePanel, className }) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [tag]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -56,7 +56,7 @@ function SingleTagUsedInToolsField({ tag, closePanel, className }) {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const loadTools = async (cancelSource = cancelTokenSource) => {
     if (tag != null) {
@@ -103,7 +103,7 @@ function SingleTagUsedInToolsField({ tag, closePanel, className }) {
           This tag is not currently applied on any tool</span>
         </div>
       </div>
-    )
+    );
   }
 
   return (

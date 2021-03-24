@@ -9,7 +9,7 @@ function ActionBarBackButton({path}) {
 
   const handleBackButton = () => {
     history.push(path);
-  }
+  };
 
   return (
     <ActionBarButton action={handleBackButton} icon={faArrowLeft} float={"left"} popoverText={"Go back"} />

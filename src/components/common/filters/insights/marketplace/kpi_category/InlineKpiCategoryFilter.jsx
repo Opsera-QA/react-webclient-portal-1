@@ -31,6 +31,6 @@ InlineKpiCategoryFilter.propTypes = {
 
 InlineKpiCategoryFilter.defaultProps = {
   fieldName: "category"
-}
+};
 
 export default InlineKpiCategoryFilter;

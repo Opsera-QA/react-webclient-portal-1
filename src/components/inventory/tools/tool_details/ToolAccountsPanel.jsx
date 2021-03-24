@@ -9,9 +9,9 @@ function ToolAccountsPanel({ toolData, loadData }) {
       case "jenkins":
         return <JenkinsAccounts toolData={toolData} loadData={loadData}/>;
       default:
-        return <div className="text-center p-5 text-muted mt-5">Opsera account management is not currently available for this tool.</div>
+        return <div className="text-center p-5 text-muted mt-5">Opsera account management is not currently available for this tool.</div>;
     }
-  }
+  };
 
   return (
     <>

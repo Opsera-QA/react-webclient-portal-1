@@ -72,7 +72,7 @@ pipelineActions.getAllPipelines = async (getAccessToken) => {
       sort: "name",
       order: 1
     },
-  }
+  };
 
   let apiUrl = `/pipelines`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
@@ -259,7 +259,7 @@ pipelineActions.deny = async (templateId, postBody, getAccessToken) => {
 };
 
 pipelineActions.createFreeTrialPipeline = async (postBody, getAccessToken) => {
-  console.log("inside pipeline acitons")
+  console.log("inside pipeline acitons");
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/freetrial/postcommit`;
   const response = await axiosApiService(accessToken).post(apiUrl, postBody)
@@ -302,6 +302,12 @@ pipelineActions.getToolsListV2 = async (getAccessToken, cancelTokenSource, servi
 };
 
 pipelineActions.getPipelineUsageToolList = async (getAccessToken) => {
+  const params = { status: "active", usage: "pipeline"};
+  const apiUrl = `/registry/tools`;
+  return await baseActions.apiGetCall(getAccessToken, apiUrl, params);
+};
+
+pipelineActions.getPipelineUsageToolListV2 = async (getAccessToken, cancelTokenSource) => {
   const params = { status: "active", usage: "pipeline"};
   const apiUrl = `/registry/tools`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl, params);

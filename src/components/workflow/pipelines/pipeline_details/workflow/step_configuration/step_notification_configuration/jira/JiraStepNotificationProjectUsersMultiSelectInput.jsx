@@ -20,7 +20,7 @@ function JiraStepNotificationProjectUsersMultiSelectInput({fieldName, jiraToolId
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadUsers();
     }
     catch (error) {
@@ -85,6 +85,6 @@ JiraStepNotificationProjectUsersMultiSelectInput.propTypes = {
 JiraStepNotificationProjectUsersMultiSelectInput.defaultProps = {
   fieldName: "jiraSecondaryAssignees",
   visible: true
-}
+};
 
 export default JiraStepNotificationProjectUsersMultiSelectInput;

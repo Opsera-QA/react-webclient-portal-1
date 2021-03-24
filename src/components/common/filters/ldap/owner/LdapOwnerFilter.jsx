@@ -34,7 +34,7 @@ function LdapOwnerFilter({ filterDto, setFilterDto, className }) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -46,7 +46,7 @@ function LdapOwnerFilter({ filterDto, setFilterDto, className }) {
       const userRoleAccess = await setAccessRoles(user);
 
       if (isMounted.current === true && userRoleAccess) {
-        setAccessRoleData(userRoleAccess)
+        setAccessRoleData(userRoleAccess);
 
         if (userRoleAccess?.Type !== "sass-user" && ldap?.domain != null) {
           await getUsers(cancelSource);
@@ -64,7 +64,7 @@ function LdapOwnerFilter({ filterDto, setFilterDto, className }) {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const getUsers = async (cancelSource = cancelTokenSource) => {
     let response = await accountsActions.getAccountUsersV2(getAccessToken, cancelSource);

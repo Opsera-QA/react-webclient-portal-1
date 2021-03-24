@@ -45,7 +45,7 @@ function CustomerDatabaseEditorPanel({ customerDatabaseData, userId, setCustomer
   };
 
   if (isLoading) {
-    return <DetailPanelLoadingDialog type={"Customer DB"} />
+    return <DetailPanelLoadingDialog type={"Customer DB"} />;
   }
 
   const getJsonDisplayers = () => {
@@ -68,7 +68,7 @@ function CustomerDatabaseEditorPanel({ customerDatabaseData, userId, setCustomer
     else {
       return (<ErrorDialog error={"Could not pull Customer DB information"} />);
     }
-  }
+  };
 
 
   // TODO: Create metadata and implement editor panel when necessary

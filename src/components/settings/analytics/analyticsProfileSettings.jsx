@@ -105,7 +105,7 @@ function AnalyticsProfileSettings() {
     } catch (error) {
       console.log(error);
       toastContext.showServiceUnavailableDialog();
-      return false
+      return false;
     }
   };
 

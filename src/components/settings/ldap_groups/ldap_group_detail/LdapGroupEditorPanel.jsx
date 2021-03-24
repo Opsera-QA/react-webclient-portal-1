@@ -25,7 +25,7 @@ function LdapGroupEditorPanel({ldapGroupData, currentUserEmail, orgDomain, setLd
   const loadData = async () => {
     setIsLoading(true);
     setLdapGroupDataDto(ldapGroupData);
-    setIsLoading(false)
+    setIsLoading(false);
   };
 
   const createGroup = async () => {

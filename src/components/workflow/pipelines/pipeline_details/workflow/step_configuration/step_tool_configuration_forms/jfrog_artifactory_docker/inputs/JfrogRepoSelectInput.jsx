@@ -13,7 +13,7 @@ function JfrogRepoSelect({ fieldName, dataObject, setDataObject, disabled, textF
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a Repository")
+  const [placeholder, setPlaceholder] = useState("Select a Repository");
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -35,7 +35,7 @@ function JfrogRepoSelect({ fieldName, dataObject, setDataObject, disabled, textF
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [tool_prop]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -59,14 +59,14 @@ function JfrogRepoSelect({ fieldName, dataObject, setDataObject, disabled, textF
 
   const loadRepos = async (cancelSource = cancelTokenSource) => {
     try {
-      const res = await JFrogStepActions.getRepos(dataObject.getData("jfrogToolConfigId"),"Docker", getAccessToken, cancelSource)
+      const res = await JFrogStepActions.getRepos(dataObject.getData("jfrogToolConfigId"),"Docker", getAccessToken, cancelSource);
       if (res && res.status === 200) {
-        setRepos(res.data)
-        return
+        setRepos(res.data);
+        return;
       }
       setRepos([]);
     } catch (error) {
-      setPlaceholder("No JFrog Repositories Found")
+      setPlaceholder("No JFrog Repositories Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }

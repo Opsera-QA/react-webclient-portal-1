@@ -40,7 +40,7 @@ function MarketplaceCharts ({ dashboardId }) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (filterModel = marketplaceFilterDto, cancelSource = cancelTokenSource) => {
@@ -69,7 +69,7 @@ function MarketplaceCharts ({ dashboardId }) {
       setKpis(kpis);
       let newFilterDto = filterModel;
       newFilterDto.setData("totalCount", kpiResponse?.data?.count);
-      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
+      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
       setMarketplaceFilterDto({...newFilterDto});
     }
   };
@@ -93,7 +93,7 @@ function MarketplaceCharts ({ dashboardId }) {
         <InlineKpiCategoryFilter filterModel={marketplaceFilterDto} setFilterModal={setMarketplaceFilterDto} loadData={loadData} className={"mr-2"} />
         <InlineToolIdentifierFilter loadData={loadData} setFilterModel={setMarketplaceFilterDto} filterModel={marketplaceFilterDto} fieldName={"tool"} className={"mr-2"} />
       </div>
-    )
+    );
   };
 
   return (
@@ -109,7 +109,7 @@ function MarketplaceCharts ({ dashboardId }) {
       title={"KPIs"}
       className={"pb-2"}
     />
-  )
+  );
 }
 
 MarketplaceCharts.propTypes = {

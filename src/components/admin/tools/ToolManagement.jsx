@@ -43,7 +43,7 @@ function ToolManagement() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const handleTabClick = (tabSelection) => e => {
@@ -116,7 +116,7 @@ function ToolManagement() {
       default:
         return null;
     }
-  }
+  };
 
   const getNavigationTabContainer = () => {
     return (
@@ -127,7 +127,7 @@ function ToolManagement() {
                    tabText={"Tools"}/>
       </NavigationTabContainer>
     );
-  }
+  };
 
   return (
     <ScreenContainer

@@ -75,10 +75,10 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
   const createApplication = async () => {
     try {
       await OctopusActions.createOctopusApplication(octopusApplicationDataDto, type, getAccessToken);
-      toastContext.showCreateSuccessResultDialog(type ? type.charAt(0).toUpperCase() + type.slice(1) : "")
-      handleClose()
+      toastContext.showCreateSuccessResultDialog(type ? type.charAt(0).toUpperCase() + type.slice(1) : "");
+      handleClose();
     } catch (error) {
-      toastContext.showCreateFailureResultDialog(type ? type.charAt(0).toUpperCase() + type.slice(1) : "", error)
+      toastContext.showCreateFailureResultDialog(type ? type.charAt(0).toUpperCase() + type.slice(1) : "", error);
     }
   };
 
@@ -89,16 +89,16 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
   const deleteApplication = async () => {
     try {
       await OctopusActions.deleteOctopusApplication(toolData._id, type, getAccessToken, appID, octopusApplicationDataDto);
-      toastContext.showDeleteSuccessResultDialog(type && type.length > 2 ? type.charAt(0).toUpperCase() + type.slice(1) : "")
+      toastContext.showDeleteSuccessResultDialog(type && type.length > 2 ? type.charAt(0).toUpperCase() + type.slice(1) : "");
       handleClose();
     } catch (error) {
-      toastContext.showDeleteFailureResultDialog(type && type.length > 2 ? type.charAt(0).toUpperCase() + type.slice(1) : "", error)
+      toastContext.showDeleteFailureResultDialog(type && type.length > 2 ? type.charAt(0).toUpperCase() + type.slice(1) : "", error);
     }
   };
 
   const updateApplicationCaller= async () => {
     setShowEditModal(true);
-  }
+  };
 
   if (isLoading || octopusApplicationDataDto === null || octopusApplicationDataDto === undefined) {
     return <Loading size="sm" />;

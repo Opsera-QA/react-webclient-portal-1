@@ -42,7 +42,7 @@ PipelineRunFilter.propTypes = {
 
 PipelineRunFilter.defaultProps = {
   maximumRunCount: 0
-}
+};
 
 export default PipelineRunFilter;
 

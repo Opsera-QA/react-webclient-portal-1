@@ -23,7 +23,7 @@ function PipelineCatalogCardView({ data, catalogFilterModel, setCatalogFilterMod
           </Col>))}
       </Row>
     );
-  }
+  };
 
   return (
     <CardView

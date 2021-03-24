@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import DateTimePicker from 'react-widgets/lib/DateTimePicker'
+import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import Moment from "moment";
 import momentLocalizer from "react-widgets-moment";
 import InputContainer from "components/common/inputs/InputContainer";
@@ -15,7 +15,7 @@ function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFuncti
 
   useEffect(() => {
     if (dataObject.getData(fieldName) !== "") {
-      setErrorMessage(dataObject.getFieldError(fieldName))
+      setErrorMessage(dataObject.getFieldError(fieldName));
     }
   }, [dataObject]);
 

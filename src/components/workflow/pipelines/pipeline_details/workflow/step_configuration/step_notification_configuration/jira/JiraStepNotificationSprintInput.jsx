@@ -20,7 +20,7 @@ function JiraStepNotificationSprintInput({visible, dataObject, setDataObject, di
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadProjects();
     }
     catch (error) {
@@ -89,6 +89,6 @@ JiraStepNotificationSprintInput.propTypes = {
 
 JiraStepNotificationSprintInput.defaultProps = {
   visible: true
-}
+};
 
 export default JiraStepNotificationSprintInput;

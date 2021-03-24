@@ -43,7 +43,7 @@ function JenkinsAccountInput({ jenkinsId, visible, fieldName, dataObject, setDat
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -81,7 +81,7 @@ function JenkinsAccountInput({ jenkinsId, visible, fieldName, dataObject, setDat
 
       if (tools) {
         if (configurationRequired) {
-          const filteredTools = tools?.filter((tool) => {return tool.configuration != null && Object.entries(tool.configuration).length > 0 });
+          const filteredTools = tools?.filter((tool) => {return tool.configuration != null && Object.entries(tool.configuration).length > 0; });
           setJenkinsTools(filteredTools);
         }
         else {
@@ -109,7 +109,7 @@ function JenkinsAccountInput({ jenkinsId, visible, fieldName, dataObject, setDat
           <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
           No configured Jenkins Accounts have been registered for this <span className="upper-case-first">Jenkins</span> tool.
         </div>
-      )
+      );
     }
   };
 
@@ -146,11 +146,12 @@ JenkinsAccountInput.propTypes = {
   visible: PropTypes.bool,
   typeFilter: PropTypes.string,
   configurationRequired: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  clearDataFunction: PropTypes.func
 };
 
 JenkinsAccountInput.defaultProps = {
   visible: true,
-}
+};
 
 export default JenkinsAccountInput;

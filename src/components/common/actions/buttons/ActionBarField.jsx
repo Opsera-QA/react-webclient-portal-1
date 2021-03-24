@@ -11,7 +11,7 @@ function ActionBarField({iconClasses, popoverText, text, icon}) {
         {message}
       </Tooltip>
     );
-  }
+  };
 
   return (
     <OverlayTrigger

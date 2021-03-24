@@ -134,6 +134,7 @@ function InNetworkTrafficByTimeLineChart({ persona, date }) {
 
 InNetworkTrafficByTimeLineChart.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object
 };
 
 export default InNetworkTrafficByTimeLineChart;

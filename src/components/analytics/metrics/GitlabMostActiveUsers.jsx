@@ -7,6 +7,7 @@ import ErrorDialog from "../../common/status_notifications/error";
 import CustomTable from "../../common/table/CustomTable";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import PropTypes from "prop-types";
 
 function GitlabMostActiveUsers({ date }) {
   const contextType = useContext(AuthContext);
@@ -151,5 +152,10 @@ function GitlabMostActiveUsers({ date }) {
     </>
   );
 }
+
+GitlabMostActiveUsers.propTypes = {
+  value: PropTypes.any,
+  date: PropTypes.object
+};
 
 export default GitlabMostActiveUsers;

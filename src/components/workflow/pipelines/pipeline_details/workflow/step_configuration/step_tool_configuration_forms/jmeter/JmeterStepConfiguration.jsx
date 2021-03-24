@@ -166,6 +166,6 @@ JmeterStepConfiguration.propTypes = {
   callbackSaveToVault: PropTypes.func,
   setToast: PropTypes.func,
   setShowToast: PropTypes.func
-}
+};
 
 export default JmeterStepConfiguration;

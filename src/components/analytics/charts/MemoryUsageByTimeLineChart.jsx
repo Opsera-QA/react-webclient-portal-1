@@ -138,6 +138,7 @@ function MemoryUsageByTimeLineChart({ persona, date }) {
 }
 MemoryUsageByTimeLineChart.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object
 };
 
 export default MemoryUsageByTimeLineChart;

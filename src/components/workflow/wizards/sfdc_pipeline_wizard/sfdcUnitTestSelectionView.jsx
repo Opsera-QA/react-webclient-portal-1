@@ -13,7 +13,7 @@ import "../../workflows.css";
 import {
   getErrorDialog
 } from "components/common/toasts/toasts";
-import { Multiselect } from 'react-widgets'
+import { Multiselect } from 'react-widgets';
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import ErrorDialog from "components/common/status_notifications/error";
@@ -51,7 +51,7 @@ const SfdcUnitTestSelectionView = ({
  
   useEffect(() => {
     if(Object.keys(selectedStep).length > 0){
-      setSelectedUnitTestClassesList({})
+      setSelectedUnitTestClassesList({});
       getUnitTestList();
     }
   }, [selectedStep]);
@@ -93,7 +93,7 @@ const SfdcUnitTestSelectionView = ({
     } finally {
       setUnitTestListLoading(false);
     }
-  }
+  };
   
   // console.log(selectedUnitTestClassesList);
   // console.log(unitTestRecordId);
@@ -102,7 +102,7 @@ const SfdcUnitTestSelectionView = ({
     // console.log("clicked step id ", step._id);
     let isSfdc = fromSFDC || fromDestinationSFDC ? true : false;
     await getTestClasses(step, isSfdc);
-  }
+  };
 
   const getTestClasses = async(unitStep, isSfdc) => {
     
@@ -130,12 +130,12 @@ const SfdcUnitTestSelectionView = ({
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   const handleMultiSelect = (newValue) => {
     console.log(newValue);
     setSelectedUnitTestClassesList(newValue);
-  }
+  };
 
   const saveSelectedClasses = async() => {
     setSave(true);
@@ -179,7 +179,7 @@ const SfdcUnitTestSelectionView = ({
     } finally {
       setSave(false);
     }
-  }
+  };
 
   return (
     <div>
@@ -203,7 +203,7 @@ const SfdcUnitTestSelectionView = ({
                       <RenderWorkflowItem item={step} isSelected={selectedStep._id === step._id} stateColorClass="" />
                     </div>
                   </Col>
-                )
+                );
               })} 
             </Row>         
           </div>

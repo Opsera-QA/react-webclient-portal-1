@@ -32,13 +32,13 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
     }
 
     return  <FontAwesomeIcon icon={faSearch} fixedWidth />;
-  }
+  };
 
   const handleKeyPress = async (event) => {
     if (event.key === 'Enter') {
       await handleSearch();
     }
-  }
+  };
 
   if (supportSearch !== true) {
     return null;

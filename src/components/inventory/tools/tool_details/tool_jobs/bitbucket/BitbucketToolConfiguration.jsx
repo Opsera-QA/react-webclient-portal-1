@@ -22,7 +22,7 @@ const bitBucketApiTypeArray = [
     "name": "Bitbucket Server",
     "value": "server"
   }
-]
+];
 function BitbucketToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [bitbucketConfigurationDto, setBitbucketConfigurationDto] = useState(undefined);
