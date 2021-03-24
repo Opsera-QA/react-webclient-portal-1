@@ -77,48 +77,11 @@ function JenkinsStatusByJobNameBarChart({ kpiConfiguration, setKpiConfiguration,
                       true, true, "cutoffString", "wholeNumbers")}
           {...config(mainColor, failColor, warningColor)}
           onClick={() => setShowModal(true)}
-          margin={config.margin}
-          padding={0.3}
-          layout={"horizontal"}
-          colors={(bar) => {
-            switch (bar.id) {
-              case "Successful": return "green";
-              case "Failed": return "red";
-              default: return "gold";
-            }
-          }}
-          borderColor={{ theme: "background" }}
-          colorBy="id"
-          defs={config.defs}
-          fill={config.fill}
-          axisTop={null}
-          axisRight={null}
-          axisBottom={config.axisBottom}
-          axisLeft={config.axisLeft}
-          enableLabel={false}
-          borderRadius={0}
-          labelSkipWidth={12}
-          labelSkipHeight={12}
-          labelTextColor="inherit:darker(2)"
-          animate={true}
-          motionStiffness={90}
-          borderWidth={2}
-          motionDamping={15}
-          legends={config.legends}
-          tooltip={({ indexValue, color, value, id }) => (
-            <div>
-              <strong style={{ color }}>Build Tag: </strong> {indexValue}
-              <br></br>
-              <strong style={{ color }}> {id} Builds: </strong> {value}
-            </div>
-          )}
-          theme={{
-            tooltip: {
-              container: {
-                fontSize: "16px",
-              },
-            },
-          }}
+          tooltip={({ indexValue, color, value, id }) => <ChartTooltip 
+                              titles = {["Build Tag", `${id} Builds`]}
+                              values = {[indexValue, value]}
+                              style = {false}
+                              color = {color} />}
         />
     </div>
     );
