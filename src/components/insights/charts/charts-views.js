@@ -212,7 +212,7 @@ export const adjustBarWidth = (data, isVertical=true) => {
               break;
       case 2: padding = .75;
               break;
-      case 3: padding = .3;
+      case 3: padding = .65;
               break;
       default: padding = .25;
     }
