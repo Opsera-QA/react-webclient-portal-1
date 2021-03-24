@@ -15,7 +15,7 @@ function AzureToolSelectInput({ fieldName, dataObject, setDataObject, disabled, 
   const [azureList, setAzureList] = useState([]);
   const [isAzureSearching, setIsAzureSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select an Azure account configured in the Opsera Tool Registry")
+  const [placeholder, setPlaceholder] = useState("Select an Azure account configured in the Opsera Tool Registry");
 
   useEffect(() => {
     if (!disabled) {
@@ -29,7 +29,7 @@ function AzureToolSelectInput({ fieldName, dataObject, setDataObject, disabled, 
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await fetchAWSDetails();
     }
     catch (error) {
@@ -50,7 +50,7 @@ function AzureToolSelectInput({ fieldName, dataObject, setDataObject, disabled, 
         setAzureList(filteredList);
       }
     } catch(error) {
-      setPlaceholder("No Accounts Found")
+      setPlaceholder("No Accounts Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     } finally {

@@ -119,4 +119,4 @@ const jenkinsPipelineStepConfigurationMetadata = {
   }
 };
 
-export default jenkinsPipelineStepConfigurationMetadata
+export default jenkinsPipelineStepConfigurationMetadata;

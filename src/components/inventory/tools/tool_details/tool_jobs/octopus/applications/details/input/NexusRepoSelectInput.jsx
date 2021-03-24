@@ -11,7 +11,7 @@ function NexusRepoSelectInput({ fieldName, dataObject, setDataObject, disabled, 
   const { getAccessToken } = useContext(AuthContext);
   const [nexusRepos, setNexusRepos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a Nexus Repository")
+  const [placeholder, setPlaceholder] = useState("Select a Nexus Repository");
 
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function NexusRepoSelectInput({ fieldName, dataObject, setDataObject, disabled, 
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTypes();
     }
     catch (error) {
@@ -35,10 +35,10 @@ function NexusRepoSelectInput({ fieldName, dataObject, setDataObject, disabled, 
 
   const loadTypes = async () => {
     try {
-      const res = await OctopusStepActions.getNexusRepos(dataObject.getData("nexusToolId"), getAccessToken)
+      const res = await OctopusStepActions.getNexusRepos(dataObject.getData("nexusToolId"), getAccessToken);
       if (res && res.status === 200) {
-        setNexusRepos(res.data)
-        return
+        setNexusRepos(res.data);
+        return;
       }
       setNexusRepos([]);
     } catch (error) {
@@ -46,7 +46,7 @@ function NexusRepoSelectInput({ fieldName, dataObject, setDataObject, disabled, 
       let newDataObject = dataObject;
       newDataObject.setData("nexusRepository", "");
       setDataObject({ ...newDataObject });
-      setPlaceholder("No Nexus Repositories Found")
+      setPlaceholder("No Nexus Repositories Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }
@@ -59,7 +59,7 @@ function NexusRepoSelectInput({ fieldName, dataObject, setDataObject, disabled, 
       setDataObject({ ...newDataObject });
       return;
     }
-  }
+  };
 
   return (
     <div>

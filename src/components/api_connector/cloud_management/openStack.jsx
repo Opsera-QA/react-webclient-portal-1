@@ -3,6 +3,7 @@ import { Button, Form, Card, Alert } from "react-bootstrap";
 import { AuthContext } from "../../../contexts/AuthContext";  //REact Context API Code for User Authentication
 import { ApiService } from "../../../api/apiService";
 import { apiServerUrl } from "../../../config";
+import PropTypes from "prop-types";
 
 class OpenStack extends Component {
   static contextType = AuthContext;  //Registers the User Authentication context data in the component
@@ -136,5 +137,9 @@ class OpenStack extends Component {
     );
   }
 }
+
+OpenStack.propTypes = {
+  history: PropTypes.any
+};
 
 export default OpenStack;

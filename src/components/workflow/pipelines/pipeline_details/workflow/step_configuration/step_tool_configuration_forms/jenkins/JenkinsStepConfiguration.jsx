@@ -594,7 +594,7 @@ function JenkinsStepConfiguration({
       ...formData,
       upstreamBranch: selectedOption.value,
     });
-  }
+  };
 
   const handleCreateNewBranchFlag = (e) => {
     if(!e.target.checked) {
@@ -602,7 +602,7 @@ function JenkinsStepConfiguration({
       return;
     }
     setFormData({ ...formData, isNewBranch: e.target.checked });
-  }
+  };
 
   const handleJobTypeChange = (selectedOption) => {
     setShowToast(false);
@@ -665,8 +665,8 @@ function JenkinsStepConfiguration({
       return;
     }
     if (e.jsObject && Object.keys(e.jsObject).length > 0) {
-      setFormData({ ...formData, buildArgs: e.jsObject })
-      return
+      setFormData({ ...formData, buildArgs: e.jsObject });
+      return;
     }
   };
 
@@ -724,7 +724,7 @@ function JenkinsStepConfiguration({
 
     await createJob( formData.toolConfigId, toolConfiguration, stepId, createJobPostBody);
   
-  }
+  };
 
   const RegistryPopover = (data) => {
     if (data) {
@@ -1269,12 +1269,12 @@ function JenkinsStepConfiguration({
                       onChange={(e) =>{
                         const regex = RegExp("^[ a-z0-9_.-]*$");
                         if (!regex.test(e.target.value)) {
-                          setFormData({ ...formData, dockerName: e.target.value })
+                          setFormData({ ...formData, dockerName: e.target.value });
                           setDockerNameErr(true);
                           return;
                         }
                         setDockerNameErr(false);
-                        setFormData({ ...formData, dockerName: e.target.value })
+                        setFormData({ ...formData, dockerName: e.target.value });
                       }}
                     />
                      {dockerNameErr ? 
@@ -1296,12 +1296,12 @@ function JenkinsStepConfiguration({
                       onChange={(e) =>{
                         const regex = RegExp("^[ a-z0-9_.-]*$");
                         if (!regex.test(e.target.value)) {
-                          setFormData({ ...formData, dockerTagName: e.target.value })
+                          setFormData({ ...formData, dockerTagName: e.target.value });
                           setDockerTagErr(true);
                           return;
                         }
                         setDockerTagErr(false);
-                        setFormData({ ...formData, dockerTagName: e.target.value })
+                        setFormData({ ...formData, dockerTagName: e.target.value });
                       }}
                     />
                     {dockerTagErr ? 
@@ -1384,7 +1384,7 @@ function JenkinsStepConfiguration({
                         placeholder=""
                         value={formData.inputFilePath || ""}
                         onChange={(e) =>{
-                          setFormData({ ...formData, inputFilePath: e.target.value })
+                          setFormData({ ...formData, inputFilePath: e.target.value });
                         }}
                       />
                       
@@ -1397,7 +1397,7 @@ function JenkinsStepConfiguration({
                         placeholder=""
                         value={formData.inputFileName || ""}
                         onChange={(e) =>{
-                          setFormData({ ...formData, inputFileName: e.target.value })
+                          setFormData({ ...formData, inputFileName: e.target.value });
                         }}
                       />
                       <Form.Text>File name with extension is expected.</Form.Text>
@@ -1411,7 +1411,7 @@ function JenkinsStepConfiguration({
                         placeholder=""
                         value={formData.outputPath || ""}
                         onChange={(e) =>{
-                          setFormData({ ...formData, outputPath: e.target.value })
+                          setFormData({ ...formData, outputPath: e.target.value });
                         }}
                       />
                       
@@ -1424,7 +1424,7 @@ function JenkinsStepConfiguration({
                         placeholder=""
                         value={formData.outputFileName || ""}
                         onChange={(e) =>{
-                          setFormData({ ...formData, outputFileName: e.target.value })
+                          setFormData({ ...formData, outputFileName: e.target.value });
                         }}
                       />
                       <Form.Text>File name with extension is expected.</Form.Text>

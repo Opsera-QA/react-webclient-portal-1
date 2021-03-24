@@ -24,7 +24,7 @@ function LdapUserSelectInput({ dataObject, setDataObject, fieldName, valueField,
       const {ldap} = user;
       setUser(user);
       const userRoleAccess = await setAccessRoles(user);
-      setAccessRoleData(userRoleAccess)
+      setAccessRoleData(userRoleAccess);
 
       if (userRoleAccess && userRoleAccess?.Type !== "sass-user" && ldap.domain != null)
       {
@@ -37,7 +37,7 @@ function LdapUserSelectInput({ dataObject, setDataObject, fieldName, valueField,
     finally {
       setIsLoading(false);
     }
-  }
+  };
 
   const getUsers = async () => {
     let response = await accountsActions.getAccountUsers(getAccessToken);

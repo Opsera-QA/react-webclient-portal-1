@@ -27,7 +27,7 @@ import CustomTab from "../common/tabs/CustomTab";
 import MicrosoftTeamsApiConnector from "./microsoft_teams/MicrosoftTeamsApiConnector";
 import SlackToolConfiguration from "../inventory/tools/tool_details/tool_jobs/slack/SlackToolConfiguration";
 
-function ApiConnector({}) {
+function ApiConnector() {
   const [activeTab, setTabSelection] = useState("home");
 
   const handleTabClick = (activeTab) => e => {

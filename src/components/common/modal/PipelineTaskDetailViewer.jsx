@@ -10,7 +10,7 @@ function PipelineTaskDetailViewer({ pipelineTaskData, pipelineData, showModal, s
   };
 
   const getPipelineTaskTitle = () => {
-    return <span>[{pipelineData.name}] Pipeline Task Details</span>
+    return <span>[{pipelineData.name}] Pipeline Task Details</span>;
   };
 
   return (

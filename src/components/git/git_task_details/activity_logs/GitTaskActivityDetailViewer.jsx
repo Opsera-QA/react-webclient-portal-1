@@ -10,7 +10,7 @@ function GitTaskActivityDetailViewer({ gitTaskActivityData, showModal, setShowMo
   };
 
   const getPipelineTaskTitle = () => {
-    return <span>Git Tasks Activity Log</span>
+    return <span>Git Tasks Activity Log</span>;
   };
 
   return (

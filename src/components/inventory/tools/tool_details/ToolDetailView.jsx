@@ -64,7 +64,7 @@ function ToolDetailView() {
       actionBar={getActionBar()}
       detailPanel={<ToolDetailPanel toolData={toolData} isLoading={isLoading} tab={tab} setToolData={setToolData} loadData={getTool}/>}
     />
-  )
+  );
 }
 
 export default ToolDetailView;

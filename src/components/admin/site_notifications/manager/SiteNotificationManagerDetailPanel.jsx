@@ -35,7 +35,7 @@ function SiteNotificationManagerDetailPanel({ siteWideNotificationData, setSiteW
   };
 
   if (siteWideNotificationData == null) {
-    return <LoadingDialog size="sm" />
+    return <LoadingDialog size="sm" />;
   }
 
   return (

@@ -1,6 +1,8 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthContext";  //REact Context API Code for User Authentication
+import { AuthContext } from "../../contexts/AuthContext";
+import PropTypes from "prop-types";
+import ReleaseManagementOtherServices from "components/pipeline/ReleaseManagementOtherServices";  //REact Context API Code for User Authentication
 
 const Ctx = React.createContext();
 
@@ -141,6 +143,11 @@ class NewAppProvider extends React.Component {
     );
   }
 }
+
+NewAppProvider.propTypes = {
+  history: PropTypes.any,
+  children: PropTypes.any
+};
 
 export const NewAppContext = Ctx;
 export default withRouter(NewAppProvider);

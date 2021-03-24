@@ -43,7 +43,7 @@ function MyUserProfile() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async () => {
@@ -97,7 +97,7 @@ function MyUserProfile() {
           <RegisteredUserSummary userData={userModel} userAccess={accessRole} />
         </td>
       </tr>
-    )
+    );
   };
 
   const getLdapUserInfo = () => {

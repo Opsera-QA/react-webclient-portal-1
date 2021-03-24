@@ -136,6 +136,7 @@ function OutNetworkTrafficByTimeLineChart({ persona, date }) {
 
 OutNetworkTrafficByTimeLineChart.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object
 };
 
 export default OutNetworkTrafficByTimeLineChart;

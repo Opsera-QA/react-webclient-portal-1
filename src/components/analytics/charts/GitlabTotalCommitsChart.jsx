@@ -128,6 +128,7 @@ function GitlabTotalCommitsChart({ persona, date }) {
 
 GitlabTotalCommitsChart.propTypes = {
   persona: PropTypes.string,
+  date: PropTypes.object
 };
 
 export default GitlabTotalCommitsChart;

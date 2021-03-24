@@ -41,7 +41,7 @@ function PipelineCatalogLibrary() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {

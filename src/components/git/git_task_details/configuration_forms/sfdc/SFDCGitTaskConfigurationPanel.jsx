@@ -34,7 +34,7 @@ function SFDCGitTaskEditorPanel({ gitTasksDataDto, gitTasksConfigurationData, se
         </Col>
       );
     }
-  }
+  };
 
   return (
     <Row>

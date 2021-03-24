@@ -12,7 +12,7 @@ import SiteNotificationDetailPanel
   from "components/admin/site_notifications/site_notification_detail_view/SiteNotificationDetailPanel";
 import { meetsRequirements, ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import Model from "core/data_model/model";
-import axios from "axios"
+import axios from "axios";
 
 function SiteNotificationDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -102,7 +102,7 @@ function SiteNotificationDetailView() {
 
   const handleDelete = async () => {
     return await siteNotificationActions.deleteSiteNotification(siteNotificationData, getAccessToken);
-  }
+  };
 
   return (
     <DetailScreenContainer

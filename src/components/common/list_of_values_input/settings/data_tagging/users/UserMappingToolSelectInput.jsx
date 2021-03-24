@@ -45,6 +45,6 @@ UserMappingToolSelectInput.propTypes = {
 UserMappingToolSelectInput.defaultProps = {
   visible: true,
   fieldName: "tool_id"
-}
+};
 
 export default UserMappingToolSelectInput;

@@ -34,7 +34,7 @@ function GitlabMergeRequestByMaximumTimeChart({ kpiConfiguration, setKpiConfigur
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -105,7 +105,7 @@ function GitlabMergeRequestByMaximumTimeChart({ kpiConfiguration, setKpiConfigur
           />
       </div>
   );
-  }
+  };
 
   return (
     <div>

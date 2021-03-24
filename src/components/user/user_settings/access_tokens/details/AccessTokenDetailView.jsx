@@ -48,7 +48,7 @@ function AccessTokenDetailView() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -111,7 +111,7 @@ function AccessTokenDetailView() {
         <NavigationTab icon={faKey} tabName={"accessTokens"} handleTabClick={handleTabClick} activeTab={"accessTokens"} tabText={"Access Tokens"} />
       </NavigationTabContainer>
     );
-  }
+  };
 
   return (
     <DetailScreenContainer

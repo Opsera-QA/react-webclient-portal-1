@@ -423,7 +423,7 @@ function LogSearch({tools, sideBySide}) {
   const getNewTabButton = () => {
     if (!sideBySide && logTabData.length > 0 && logTabData.length < 4) {
       return (
-        <Button variant="primary" className="ml-1" type="submit" onClick={() => {searchLogs(true)}}>
+        <Button variant="primary" className="ml-1" type="submit" onClick={() => {searchLogs(true);}}>
           Open In New Tab
         </Button>
       );
@@ -438,7 +438,7 @@ function LogSearch({tools, sideBySide}) {
             <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />
             {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
           </Button>
-          <Button variant="primary" className="ml-1" onClick={() => {searchLogs()}}>
+          <Button variant="primary" className="ml-1" onClick={() => {searchLogs();}}>
             Search
           </Button>
           {getNewTabButton()}

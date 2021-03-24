@@ -21,7 +21,7 @@ function JiraParentTicketInput({jiraToolId, fieldName, jiraSprintId, dataObject,
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadParentTickets();
     }
     catch (error) {
@@ -84,7 +84,8 @@ JiraParentTicketInput.propTypes = {
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   jiraToolId: PropTypes.string,
-  jiraSprintId: PropTypes.string
+  jiraSprintId: PropTypes.string,
+  fieldName: PropTypes.string
 };
 
 JiraParentTicketInput.defaultProps = {

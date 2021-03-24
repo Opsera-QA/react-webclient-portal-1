@@ -32,7 +32,7 @@ function InstallJiraAppButton({ toolData, disable }) {
     finally {
       setIsTesting(false);
     }
-  }
+  };
 
   const getVariant = () => {
     if (successfulConnection) {
@@ -78,6 +78,6 @@ InstallJiraAppButton.propTypes = {
 
 InstallJiraAppButton.defaultProps = {
   disable: false,
-}
+};
 
 export default InstallJiraAppButton;

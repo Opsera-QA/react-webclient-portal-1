@@ -19,7 +19,7 @@ function RegistryToolRoleAccessInput({fieldName, dataObject, setDataObject, disa
     return (
       <span>No Access Rules are currently applied. All users can see or edit this {dataObject?.getType()}.</span>
     );
-  }
+  };
 
   return (
     <RoleAccessInlineInputBase

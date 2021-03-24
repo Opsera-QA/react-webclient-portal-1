@@ -49,7 +49,7 @@ function LdapGroupDetailView() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -68,7 +68,7 @@ function LdapGroupDetailView() {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const getGroup = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();

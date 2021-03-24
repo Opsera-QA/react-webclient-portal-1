@@ -11,7 +11,7 @@ function EditorPanelContainer({ children, isLoading, showRequiredFieldsMessage, 
     if (showRequiredFieldsMessage) {
       return (<RequiredFieldsMessage />);
     }
-  }
+  };
 
   const getPersistButtonContainer = () => {
     if (recordDto) {
@@ -65,6 +65,6 @@ EditorPanelContainer.propTypes = {
 EditorPanelContainer.defaultProps = {
   showRequiredFieldsMessage: true,
   addAnotherOption: true
-}
+};
 
 export default EditorPanelContainer;

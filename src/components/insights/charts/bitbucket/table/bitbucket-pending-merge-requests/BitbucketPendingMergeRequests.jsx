@@ -80,8 +80,8 @@ function BitbucketPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, 
       {
         Header: "Time",
         accessor: "mrCompletionTimeTimeStamp",
-        Cell: (props) => {
-          return format(new Date(props.value), "yyyy-MM-dd', 'hh:mm a");
+        Cell: (row) => {
+          return format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a");
         },
       },
     ],
@@ -110,7 +110,7 @@ BitbucketPendingMergeRequests.propTypes = {
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func,
+  setKpis: PropTypes.func
 };
 
 export default BitbucketPendingMergeRequests;

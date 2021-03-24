@@ -11,7 +11,7 @@ function OctopusEnvironmentNameSelectInput({ fieldName, dataObject, setDataObjec
   const { getAccessToken } = useContext(AuthContext);
   const [environmentNames, setOctopusEnvironmentNames] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select an Environment")
+  const [placeholder, setPlaceholder] = useState("Select an Environment");
 
 
   useEffect(() => {
@@ -26,7 +26,7 @@ function OctopusEnvironmentNameSelectInput({ fieldName, dataObject, setDataObjec
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadTypes();
     }
     catch (error) {
@@ -39,14 +39,14 @@ function OctopusEnvironmentNameSelectInput({ fieldName, dataObject, setDataObjec
 
   const loadTypes = async () => {
     try {
-      const res = await OctopusStepActions.getEnvironments(dataObject.getData("octopusToolId"),dataObject.getData("spaceId"), getAccessToken)
+      const res = await OctopusStepActions.getEnvironments(dataObject.getData("octopusToolId"),dataObject.getData("spaceId"), getAccessToken);
       if (res && res.status === 200) {
-        setOctopusEnvironmentNames(res.data)
-        return
+        setOctopusEnvironmentNames(res.data);
+        return;
       }
       setOctopusEnvironmentNames([]);
     } catch (error) {
-      setPlaceholder("No Environments Found")
+      setPlaceholder("No Environments Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }
@@ -62,7 +62,7 @@ function OctopusEnvironmentNameSelectInput({ fieldName, dataObject, setDataObjec
       setDataObject({ ...newDataObject });
       return;
     }
-  }
+  };
 
   return (
     <div>

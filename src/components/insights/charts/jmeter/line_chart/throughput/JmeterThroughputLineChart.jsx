@@ -40,7 +40,7 @@ function JMeterThroughputLineChart({ kpiConfiguration, setKpiConfiguration, dash
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -115,7 +115,7 @@ function JMeterThroughputLineChart({ kpiConfiguration, setKpiConfiguration, dash
             />
         </div>
     );
-  }
+  };
   return (
     <div>
       <ChartContainer

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef, useState} from 'react'
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import { AuthContext } from "contexts/AuthContext";
 import GitTasksTable from "./GitTasksTable";
 import gitTasksActions from "./git-task-actions";
@@ -42,7 +42,7 @@ function GitTasksView() {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async (newFilterDto = gitTasksFilterDto, cancelSource = cancelTokenSource) => {
@@ -82,7 +82,7 @@ function GitTasksView() {
         setNotificationsList(notificationsList);
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", response?.data?.count);
-        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters())
+        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
         setGitTasksFilterDto({...newFilterDto});
       }
   };
@@ -135,8 +135,8 @@ function GitTasksView() {
       title={"Git Tasks"}
       className={"px-2 pb-2"}
     />
-  )
+  );
 }
 
-export default GitTasksView
+export default GitTasksView;
 

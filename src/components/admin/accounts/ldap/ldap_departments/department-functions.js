@@ -39,7 +39,7 @@ departmentActions.updateDepartment = async (orgDomain, departmentDto, getAccessT
     domain: orgDomain,
     name: departmentDto.getData("name"),
     ownerEmail: departmentDto.getData("ownerEmail"),
-  }
+  };
   const accessToken = await getAccessToken();
   const apiUrl = "/users/account/department/update";
   const response = await axiosApiService(accessToken).put(apiUrl, postData)

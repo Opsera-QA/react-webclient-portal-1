@@ -47,9 +47,9 @@ paths.kpiManagement = paths.admin + "/kpis";
 paths.kpiDetailView = paths.kpiManagement;
 
 // Pipelines Paths
-paths.pipelines = "workflow"
-paths.catalog = paths.pipelines + "/catalog"
-paths.pipelineDetailView = paths.pipelines + "/details"
+paths.pipelines = "workflow";
+paths.catalog = paths.pipelines + "/catalog";
+paths.pipelineDetailView = paths.pipelines + "/details";
 
 // Insights Paths
 paths.insights = "insights/dashboards";
@@ -67,9 +67,9 @@ paths.tagManagement = paths.accountSettings + "/tags";
 paths.tagDetailView = paths.tagManagement + "/details/";
 paths.customerSystemStatus = paths.accountSettings + "/customer-system-status";
 paths.analyticsProfile = paths.accountSettings + "/analytics-profile";
-paths.mapping = paths.accountSettings + "/data_mapping"
-paths.projectTaggingDetailView = paths.mapping + "/projects/details/"
-paths.userTaggingDetailView = paths.mapping + "/users/details/"
+paths.mapping = paths.accountSettings + "/data_mapping";
+paths.projectTaggingDetailView = paths.mapping + "/projects/details/";
+paths.userTaggingDetailView = paths.mapping + "/users/details/";
 
 //Reports
 paths.reports = "reports";

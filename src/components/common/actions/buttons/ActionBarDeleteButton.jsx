@@ -7,7 +7,7 @@ function ActionBarDeleteButton({handleDeleteClick, itemName, itemId}) {
 
   const deleteObject = () => {
     handleDeleteClick(itemId);
-  }
+  };
 
   return (
     <ActionBarButton action={deleteObject} icon={faTrash} iconClasses={"danger-red"} popoverText={`Delete this ${itemName}`} />

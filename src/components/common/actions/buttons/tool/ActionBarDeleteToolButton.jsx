@@ -54,11 +54,11 @@ function ActionBarDeleteToolButton({ toolDataObject }) {
 
   const deleteObject = async () => {
     try {
-      let vaultDeleteResponse = await toolsActions.deleteOwnerVaultRecordsForToolId(toolDataObject, getAccessToken)
+      let vaultDeleteResponse = await toolsActions.deleteOwnerVaultRecordsForToolId(toolDataObject, getAccessToken);
       if (vaultDeleteResponse.status !== 200) {
         const errorMsg = `Error reported by services while deleting tool information from Vault. Please try again`;
         toastContext.showErrorDialog(errorMsg);
-        return
+        return;
       }
       let result = await toolsActions.deleteTool(toolDataObject, getAccessToken);
       toastContext.showDeleteSuccessResultDialog("Tool");
@@ -67,12 +67,12 @@ function ActionBarDeleteToolButton({ toolDataObject }) {
     } catch (error) {
       toastContext.showDeleteFailureResultDialog("Tool");
     }
-  }
+  };
 
   const toggleDeleteModal = async () => {
     setShowDeleteModal(true);
     await loadRelevantPipelines();
-  }
+  };
 
   const getDeleteDetails = () => {
     return (

@@ -29,9 +29,9 @@ function DetailedToolReport() {
       toastContext.showLoadingErrorDialog(error);
     }
     finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   const getRoles = async () => {
     const user = await getUserRecord();

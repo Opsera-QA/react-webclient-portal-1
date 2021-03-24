@@ -16,7 +16,7 @@ function TagField({dataObject, fieldName, className, showLabel}) {
     let tags = dataObject?.getData(fieldName);
 
     if (Array.isArray(tags) && tags.length > 0) {
-      return tags.filter((tag) => {return typeof tag === "object" && tag.type != null && tag.value != null});
+      return tags.filter((tag) => {return typeof tag === "object" && tag.type != null && tag.value != null;});
     }
 
     return [];

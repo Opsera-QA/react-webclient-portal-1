@@ -5,7 +5,7 @@ export const DataState = {
   CHANGED: 1,
   NEW: 2,
   DELETED: 3
-}
+};
 
 export class Model {
 
@@ -41,7 +41,7 @@ export class Model {
         }
       },
       // configurable: true
-    })
+    });
   };
 
   /**
@@ -278,7 +278,7 @@ export class Model {
   getLabel = (fieldName) => {
     let fields = this.metaData.fields;
     // TODO: Replace with metadata helper call once finished
-    let field = fields.find(field => { return field.id === fieldName});
+    let field = fields.find(field => { return field.id === fieldName;});
     return field ? field.label : "No label found in metadata";
   };
 
@@ -327,7 +327,7 @@ export class Model {
   }
 
   getFieldById = (id) => {
-    return this.metaData?.fields.find(field => {return field.id === id });
+    return this.metaData?.fields.find(field => {return field.id === id; });
   };
 
   getDefaultValue = (fieldName) => {

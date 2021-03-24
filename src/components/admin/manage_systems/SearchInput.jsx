@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 function SearchInput({ org, loading, orgSearch, handleChange }) {
   return (
@@ -24,5 +25,12 @@ function SearchInput({ org, loading, orgSearch, handleChange }) {
     </>
   );
 }
+
+SearchInput.propTypes = {
+  org: PropTypes.string,
+  loading: PropTypes.bool,
+  orgSearch: PropTypes.func,
+  handleChange: PropTypes.func
+};
 
 export default SearchInput;

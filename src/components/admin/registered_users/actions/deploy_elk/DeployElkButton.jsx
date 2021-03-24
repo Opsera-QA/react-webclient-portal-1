@@ -28,7 +28,7 @@ function DeployElkButton({ userId }) {
       toastContext.showErrorDialog(error.message);
       setDeployingElk(false);
     }
-  }
+  };
 
   return (
     <div>

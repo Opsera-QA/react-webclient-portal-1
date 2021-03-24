@@ -34,11 +34,11 @@ function ActionBarDeleteButton2({handleDelete, relocationPath, visible, dataObje
     catch (error) {
       toastContext.showDeleteFailureResultDialog(dataObject.getType());
     }
-  }
+  };
 
   const toggleDeleteModal = () => {
     setShowDeleteModal(true);
-  }
+  };
 
   if (!visible) {
     return null;

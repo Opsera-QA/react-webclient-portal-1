@@ -12,7 +12,7 @@ import SiteNotificationViewInput
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import siteNotificationActions from "components/admin/site_notifications/site-notification-actions";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
-import axios from "axios"
+import axios from "axios";
 
 function SiteNotificationEditorPanel({ siteNotificationData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -39,7 +39,7 @@ function SiteNotificationEditorPanel({ siteNotificationData, handleClose }) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, []);
 
   const loadData = async () => {

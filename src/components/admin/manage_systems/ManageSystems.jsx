@@ -7,6 +7,7 @@ import SearchInput from "./SearchInput";
 import ErrorDialog from "../../common/status_notifications/error";
 import Tools from "../delete_tools/Tools";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const initState = {
   loading: false,
@@ -201,3 +202,7 @@ export default class ManageSystems extends PureComponent {
     );
   }
 }
+
+ManageSystems.propTypes = {
+  history: PropTypes.any
+};

@@ -36,7 +36,7 @@ function GithubTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -80,7 +80,7 @@ function GithubTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
           />
       </div>
   );
-  }
+  };
 
   return (
     <div>

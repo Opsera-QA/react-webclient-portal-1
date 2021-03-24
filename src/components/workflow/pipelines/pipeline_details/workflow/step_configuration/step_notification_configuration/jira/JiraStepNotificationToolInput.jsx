@@ -49,6 +49,6 @@ JiraStepNotificationToolInput.propTypes = {
 
 JiraStepNotificationToolInput.defaultProps = {
   visible: true
-}
+};
 
 export default JiraStepNotificationToolInput;

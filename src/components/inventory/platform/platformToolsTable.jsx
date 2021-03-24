@@ -9,13 +9,13 @@ function PlatformToolsTable({ data, isLoading }) {
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(fields.find(field => { return field.id === "name"})),
-      getTableTextColumn(fields.find(field => { return field.id === "port"})),
-      getTableTextColumn(fields.find(field => { return field.id === "toolStatus"})),
-      getTableTextColumn(fields.find(field => { return field.id === "versionNumber"})),
-      getTableDateColumn(fields.find(field => { return field.id === "installationDate"})),
-      getTableTextColumn(fields.find(field => { return field.id === "toolURL"})),
-      getTableTextColumn(fields.find(field => { return field.id === "dnsName"})),
+      getTableTextColumn(fields.find(field => { return field.id === "name";})),
+      getTableTextColumn(fields.find(field => { return field.id === "port";})),
+      getTableTextColumn(fields.find(field => { return field.id === "toolStatus";})),
+      getTableTextColumn(fields.find(field => { return field.id === "versionNumber";})),
+      getTableDateColumn(fields.find(field => { return field.id === "installationDate";})),
+      getTableTextColumn(fields.find(field => { return field.id === "toolURL";})),
+      getTableTextColumn(fields.find(field => { return field.id === "dnsName";})),
     ],
     []
   );

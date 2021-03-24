@@ -33,7 +33,7 @@ function FreeTrialSignup() {
   const createAccount = async () => {
     const isDomainAvailable = await userActions.isDomainAvailable(registrationDataDto.getData("domain"));
 
-    console.log("isDomainAvailable: " + JSON.stringify(isDomainAvailable))
+    console.log("isDomainAvailable: " + JSON.stringify(isDomainAvailable));
 
     if (!isDomainAvailable) {
       toastContext.showDomainAlreadyRegisteredErrorDialog();

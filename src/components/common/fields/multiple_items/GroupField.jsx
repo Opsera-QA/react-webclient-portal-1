@@ -12,7 +12,7 @@ function GroupField({dataObject, fieldName, className}) {
     const groups = dataObject.getData(fieldName);
 
     if (!groups || !Array.isArray(groups) || groups.length === 0) {
-      return <span>User is not a member of any groups.</span>
+      return <span>User is not a member of any groups.</span>;
     }
 
     return (

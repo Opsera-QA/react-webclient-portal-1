@@ -80,9 +80,9 @@ const SfdcPipelineWizard = ({
   useEffect(() => {
     if(gitTaskData) {
       setGitTaskId(gitTaskData.getData("_id"));
-      setStepToolConfig(gitTaskData.getData("configuration"))
-      setStepToolConfigId(gitTaskData.getData("configuration").toolConfigId)
-      setSFDCToolId(gitTaskData.getData("configuration").sfdcToolId)
+      setStepToolConfig(gitTaskData.getData("configuration"));
+      setStepToolConfigId(gitTaskData.getData("configuration").toolConfigId);
+      setSFDCToolId(gitTaskData.getData("configuration").sfdcToolId);
       return;
     }
     loadSfdcInitStep(pipeline.workflow.plan);
@@ -114,7 +114,7 @@ const SfdcPipelineWizard = ({
 
   const getCustomUnitTestSteps = (steps) => {
     return steps.map((step, idx) => (step.tool.configuration.jobType === "SFDC VALIDATE PACKAGE XML" || step.tool.configuration.jobType === "SFDC UNIT TESTING" || step.tool.configuration.jobType === "SFDC DEPLOY") && step.tool.configuration.sfdcUnitTestType === "RunSpecifiedTests" && step.active ? step : '').filter(String);
-  }
+  };
 
   const createJenkinsJob = async () => {
     let createJobResponse;

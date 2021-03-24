@@ -285,7 +285,7 @@ function DependencyMultiSelectInput({ fieldName, dataObject, setDataObject, setD
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       // await loadDependencies();
       isDependencyItemDisabled();
     }
@@ -316,7 +316,7 @@ function DependencyMultiSelectInput({ fieldName, dataObject, setDataObject, setD
 
   const getSelectedDependencyTypes = () => {
     return dataObject.getData(fieldName).map((dependency) => dependency.dependencyType);
-  }
+  };
 
   return (
     <MultiSelectInputBase

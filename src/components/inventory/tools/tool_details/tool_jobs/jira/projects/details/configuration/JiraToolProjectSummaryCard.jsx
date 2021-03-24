@@ -52,6 +52,6 @@ JiraToolProjectSummaryCard.propTypes = {
   children: PropTypes.any,
   isLoading: PropTypes.bool,
   title: PropTypes.string
-}
+};
 
 export default JiraToolProjectSummaryCard;

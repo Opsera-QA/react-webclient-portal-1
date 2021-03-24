@@ -123,4 +123,4 @@ const dockerPushPipelineStepConfigurationMetadata = {
   }
 };
 
-export default dockerPushPipelineStepConfigurationMetadata
+export default dockerPushPipelineStepConfigurationMetadata;

@@ -11,7 +11,7 @@ function ActionBarPopoverButton({iconClasses, popoverText, text, icon}) {
         {message}
       </Tooltip>
     );
-  }
+  };
 
   return (
     <OverlayTrigger

@@ -33,7 +33,7 @@ function AccessTokenDetailPanel({ accessToken, setAccessToken, loadData }) {
         <SummaryTab activeTab={activeTab} handleTabClick={handleTabClick} />
         <CustomTab activeTab={activeTab} tabText={"Token Activity Log"} handleTabClick={handleTabClick} tabName={"logs"} icon={faTable} />
       </CustomTabContainer>
-    )
+    );
   };
 
   return (<DetailTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);

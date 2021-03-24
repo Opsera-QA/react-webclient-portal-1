@@ -39,7 +39,7 @@ function SingleTagUsedInPipelinesField({ tag, closePanel, className }) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [tag]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
@@ -57,7 +57,7 @@ function SingleTagUsedInPipelinesField({ tag, closePanel, className }) {
         setIsLoading(false);
       }
     }
-  }
+  };
 
   const loadPipelines = async (cancelSource = cancelTokenSource) => {
     if (tag != null) {
@@ -105,7 +105,7 @@ function SingleTagUsedInPipelinesField({ tag, closePanel, className }) {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (

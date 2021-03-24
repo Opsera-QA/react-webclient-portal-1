@@ -5,7 +5,7 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 export const dashboardAccess = [
   {value: "private", text: "Private"},
   {value: "public", text: "My Organization"}
-]
+];
 
 function DashboardAccessSelectInput({ fieldName, dataObject, setDataObject, disabled }) {
   return (

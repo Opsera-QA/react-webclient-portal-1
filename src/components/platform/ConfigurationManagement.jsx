@@ -20,7 +20,7 @@ function ConfigurationManagement(props) {
   });
 
   useEffect(() => {
-    console.log("tools use effect")
+    console.log("tools use effect");
     setCheckbox({ 
       Ansible: false,
       Chef: false,

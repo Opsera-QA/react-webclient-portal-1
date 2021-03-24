@@ -13,7 +13,7 @@ function JiraStepNotificationProjectInput({jiraToolId, visible, dataObject, setD
 
   useEffect(() => {
     setProjects([]);
-    console.log("tool Id: " + JSON.stringify(jiraToolId))
+    console.log("tool Id: " + JSON.stringify(jiraToolId));
     if (jiraToolId && jiraToolId !== "") {
       loadData();
     }
@@ -21,7 +21,7 @@ function JiraStepNotificationProjectInput({jiraToolId, visible, dataObject, setD
 
   const loadData = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await loadProjects();
     }
     catch (error) {
@@ -92,6 +92,6 @@ JiraStepNotificationProjectInput.propTypes = {
 
 JiraStepNotificationProjectInput.defaultProps = {
   visible: true
-}
+};
 
 export default JiraStepNotificationProjectInput;

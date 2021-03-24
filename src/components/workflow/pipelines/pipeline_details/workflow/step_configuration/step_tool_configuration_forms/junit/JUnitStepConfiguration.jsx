@@ -139,7 +139,9 @@ JUnitStepConfiguration.propTypes = {
     stepId: PropTypes.string,
     createJob: PropTypes.func,
     stepTool: PropTypes.object,
-    closeEditorPanel: PropTypes.func
+    closeEditorPanel: PropTypes.func,
+  setToast: PropTypes.func,
+  setShowToast: PropTypes.func
 };
     
 export default JUnitStepConfiguration;
