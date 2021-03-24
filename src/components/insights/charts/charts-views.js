@@ -139,7 +139,6 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
                               leftLabelFormat="", bottomLabelFormat="", isLegendHidden=false) => ({
   margin: { top: 30, right: 20, bottom: largeBottomSpaceRequired ? 60 : 80, 
             left: largeLeftSpaceRequired ? 100 : 60},
-  // padding: morePaddingRequired ? .6 : .25,
   lineWidth: 3.5,
   pointSize: 8,
   pointBorderWidth: 8,
