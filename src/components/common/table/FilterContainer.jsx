@@ -107,7 +107,8 @@ FilterContainer.propTypes = {
   saveCookies: PropTypes.func,
   type: PropTypes.string,
   className: PropTypes.string,
-  stackFilters: PropTypes.bool
+  stackFilters: PropTypes.bool,
+  metadata: PropTypes.object
 };
 
 export default FilterContainer;

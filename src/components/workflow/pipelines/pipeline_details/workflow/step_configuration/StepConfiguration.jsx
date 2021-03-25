@@ -41,7 +41,7 @@ function StepConfiguration({ plan, stepId, parentCallback, closeEditorPanel }) {
     return () => {
       source.cancel();
       isMounted.current = false;
-    }
+    };
   }, [stepId, plan]);
 
   const loadData = async () => {

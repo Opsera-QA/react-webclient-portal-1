@@ -75,6 +75,7 @@ UsersTagTable.propTypes = {
   data: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
+  isMounted: PropTypes.object
 };
 
 export default UsersTagTable;
