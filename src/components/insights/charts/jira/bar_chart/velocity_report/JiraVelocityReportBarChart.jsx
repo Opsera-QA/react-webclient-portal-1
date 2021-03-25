@@ -12,6 +12,9 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import { defaultConfig, getColor, assignVelocityColors, adjustBarWidth,
+        capitalizeLegend } from "../../../charts-views";
+import ChartTooltip from "../../../ChartTooltip";
 
 function JiraVelocityBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -49,6 +52,8 @@ function JiraVelocityBarChart({ kpiConfiguration, setKpiConfiguration, dashboard
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "jiraVelocityReport", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.jiraVelocityReport?.data : [];
+      assignVelocityColors(dataObject);
+      capitalizeLegend(dataObject, ["committed", "completed"]);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -76,50 +81,15 @@ function JiraVelocityBarChart({ kpiConfiguration, setKpiConfiguration, dashboard
       <div className="new-chart mb-3" style={{height: "300px"}}>
             <ResponsiveBar
               data={metrics}
+              {...defaultConfig("Number of Issues", "Sprint Name", 
+                      false, true, "wholeNumbers", "cutoffString")}
+              {...config(getColor)}
+              {...adjustBarWidth(metrics)}
               onClick={() => setShowModal(true)}
-              keys={config.keys}
-              indexBy="_id"
-              margin={config.margin}
-              padding={0.3}
-              layout={"vertical"}
-              groupMode={"grouped"}
-              // colors={({ id, data }) => data[`${id}_color`]}
-              borderColor={{ theme: "background" }}
-              colorBy="id"
-              defs={config.defs}
-              fill={config.fill}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              labelSkipWidth={12}
-              labelSkipHeight={12}
-              enableLabel={false}
-              borderRadius={0}
-              labelTextColor="inherit:darker(2)"
-              animate={true}
-              legends={config.legends}
-              motionStiffness={90}
-              borderWidth={2}
-              motionDamping={15}
-              tooltip={({ indexValue, value, id, data }) => (
-                <div>
-                  <strong> Sprint Name: </strong> {indexValue}
-                  <br></br>
-                  <strong> Issue State: </strong> {id}
-                  <br></br>
-                  <strong> No. of Issues: </strong> {value}
-                  <br></br>
-                  <strong> Percent Completed: </strong> {data.percentage}%<br></br>
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
+              tooltip={({ indexValue, value, id, data }) => <ChartTooltip 
+                                  titles = {["Sprint Name", "Issue State", "Number of Issues", "Percent Completed"]}
+                                  values = {[indexValue, id, value, `${data.percentage}%`]}
+                                  style={false} />}
             />
         </div>
     );

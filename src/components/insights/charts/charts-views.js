@@ -1,16 +1,19 @@
-export const greyHues = ["#1E1D1B", "#5B5851", "#7A756C", "#B1AeA7", "#E6E5E3", "#F0EFEE", "#F9F9F8"];
-export const goldHues = ["#F1AD0F", "#F5C453", "#F9DC98", "#FDF3DD"];
-export const purpleHues = ["#494173", "#7368AA", "#ABA4CC", "#E3E1EE"];
-// const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import BreadcrumbPageLink from "components/common/links/BreadcrumbPageLink";
 
 export const mainColor = "#5B5851";
-export const mainGold = goldHues[0];
-export const mainPurple = purpleHues[0];
+export const mainGold = "#F1AD0F";
+export const mainPurple = "#494173";
 export const accentColor = "#A8D0DB";
 export const failColor = "#E57373";
 export const warningColor = "#F1AD0F";
 
-export const standardColors = ["#5B5851", "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173"];
+export const greyHues = ["#1E1D1B", "#5B5851", "#7A756C", "#B1AeA7", "#E6E5E3", "#F0EFEE", "#F9F9F8"];
+export const goldHues = [mainGold, "#F5C453", "#F9DC98", "#FDF3DD"];
+export const purpleHues = [mainPurple, "#7368AA", "#ABA4CC", "#E3E1EE"];
+// const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
+
+export const standardColors = [mainColor, "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173"];
 export const gradationalColors = ["#B1AeA7", "#7A756C", mainColor, "#1E1D1B"];
 // purpleHues.forEach((_, i) => standardColors.push(greyHues[greyHues.length - i - 2], purpleHues[i + 1]));
 
@@ -23,7 +26,7 @@ export const assignStandardColors = (data, uniColor = false) => {
 };
 
 export const assignBooleanColors = data => {
-  if (data && data[0] && !('Successful' in data[0])) {
+  if (data && data[0] && !("Successful" in data[0])) {
     data.sort((a, b) => a.id > b.id ? 1 : -1); // to display success before fail in legend
   }
   data.forEach(data => {
@@ -32,50 +35,78 @@ export const assignBooleanColors = data => {
   return data.color;
 };
 
+export const assignIssueColors = data => {
+  if (data) {
+    data.forEach(data => {
+      data.color = (data.id === "Issues Created") ? warningColor : mainColor;
+    });
+  }
+  return data.color;
+};
+
 export const assignTaskColors = data => {
-  data.forEach(data => {
-    data.Story_color = standardColors[3];
-    data.Task_color = "#ABA4CC";
-    data.Subtask_color = standardColors[1];
-    data.Bug_color = failColor;
-  });
-  
+  if (data) {
+    data.forEach(data => {
+      data.Story_color = accentColor;
+      data.Task_color = "#7368AA";
+      data.Subtask_color = mainColor;
+      data.Bug_color = failColor;
+    });
+  }
+
   return data;
 };
 
 export const assignHealthColors = data => {
-  data.forEach(data => {
-    data["To Do_color"] = standardColors[0];
-    data["In Development_color"] = standardColors[1];
-    data["In Progress_color"] = standardColors[2];
-    data["Peer Review_color"] = standardColors[3];
-    data["Testing_color"] = standardColors[4];
-    data["Done_color"] = standardColors[5];
-  });
+  if (data) {
+    data.forEach(data => {
+      data["To Do_color"] = mainColor;
+      data["In Development_color"] = standardColors[1];
+      data["In Progress_color"] = standardColors[2];
+      data["Peer Review_color"] = standardColors[3];
+      data["Testing_color"] = standardColors[4];
+      data["Done_color"] = standardColors[5];
+    });
+  }
   
   return data;
 };
 
 export const assignSeverityColors = data => {
-  data.forEach(data => {
-    data["Critical_color"] = standardColors[0];
-    data["Low_color"] = standardColors[1];
-    data["Medium_color"] = standardColors[2];
-    data["High_color"] = standardColors[3];
-    data["Negligible_color"] = standardColors[4];
-  });
+  if (data) {
+    data.forEach(data => {
+      data["Critical_color"] = standardColors[0];
+      data["Low_color"] = standardColors[1];
+      data["Medium_color"] = standardColors[2];
+      data["High_color"] = standardColors[3];
+      data["Negligible_color"] = standardColors[4];
+    });
+  }
   
   return data;
 };
 
 export const assignStageColors = data => {
-  data.forEach(data => {
-    data["Repository Upload_color"] = standardColors[0];
-    data["Approval_color"] = standardColors[1];
-    data["Unit Testing_color"] = standardColors[2];
-    data["Script_color"] = standardColors[3];
-    data["Build_color"] = standardColors[4];
-  });
+  if (data) {
+    data.forEach(data => {
+      data["Repository Upload_color"] = standardColors[0];
+      data["Approval_color"] = standardColors[1];
+      data["Unit Testing_color"] = standardColors[2];
+      data["Script_color"] = standardColors[3];
+      data["Build_color"] = standardColors[4];
+    });
+  }
+  
+  return data;
+};
+
+export const assignVelocityColors = data => {
+  if (data) {
+    data.forEach(data => {
+      data["Committed_color"] = mainColor;
+      data["Completed_color"] = gradationalColors[0];
+    });
+  }
   
   return data;
 };
@@ -86,7 +117,11 @@ export const getColorById = data => data.id === "Successful" ? mainColor : failC
 export const getTaskColor = ({ id, data }) => data[`${id}_color`];
 
 export const shortenLegend = datas => datas.forEach(data => data.id.length > 10 ? data.id = data.id.slice(0, 10) + "..." : data.id);
-export const capitalizeValueLegend = data => data.forEach(d => d.Value = d.value);
+export const capitalizeLegend = (data, keys) => data.forEach(d => {
+  keys.forEach(key => d[capitalizeFirstLetter(key)] = d[key]);
+});
+
+export const spaceOutMergeRequestTimeTakenLegend = data => data.forEach(d => d["Merge Request Time Taken"] = d["MergeRequestTimeTaken"]);
 
 const formats = {
   numbers: d => /\d+\.?\d*$/.exec(d),
@@ -104,7 +139,6 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
                               leftLabelFormat="", bottomLabelFormat="", isLegendHidden=false) => ({
   margin: { top: 30, right: 20, bottom: largeBottomSpaceRequired ? 60 : 80, 
             left: largeLeftSpaceRequired ? 100 : 60},
-  padding: .25,
   lineWidth: 3.5,
   pointSize: 8,
   pointBorderWidth: 8,
@@ -164,3 +198,31 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
     }
   },
 });
+
+export const adjustBarWidth = (data, isVertical=true) => {
+  let padding;
+
+  if (isVertical) {
+    switch (data.length) {
+      case 1: padding = .85;
+              break;
+      case 2: padding = .75;
+              break;
+      case 3: padding = .3;
+              break;
+      default: padding = .25;
+    }
+  } else {
+    switch (data.length) {
+      case 1: padding = .5;
+              break;
+      case 2: padding = .35;
+              break;
+      case 3: padding = .3;
+              break;
+      default: padding = .25;
+    }
+  }
+
+  return { padding }
+};

@@ -9,7 +9,8 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { format } from "date-fns";
-import { defaultConfig, getColorByData, assignStandardColors } from '../../../charts-views';
+import { defaultConfig, getColorByData, assignStandardColors,
+         adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 
 function SonarLinesToCoverBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -82,6 +83,7 @@ function SonarLinesToCoverBarChart({ kpiConfiguration, setKpiConfiguration, dash
             {...defaultConfig("Value", "Code Coverage Metric", 
                       false, true, "", "monthDate2")}
             {...config(getColorByData)}
+            {...adjustBarWidth(metrics)}
             onClick={() => setShowModal(true)}
             tooltip={({ indexValue, value, color, data }) => <ChartTooltip 
                     titles = {["Timestamp", "Uncovered Lines", "Project Key"]}
