@@ -87,6 +87,7 @@ function TagsTable({ data, loadData, isLoading, tagFilterDto, setTagFilterDto, i
       body={getTagsTable()}
       inlineFilters={getInlineFilters()}
       dropdownFilters={getDropdownFilters()}
+      metadata={tagEditorMetadata}
       titleIcon={faTags}
       title={"Tags"}
       className={"px-2 pb-2"}

@@ -5,7 +5,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import regexHelpers from "utils/regexHelpers";
 import Model from "core/data_model/model";
-import toolMetadata from "components/inventory/tools/tool-metadata";
 import {useHistory} from "react-router-dom";
 
 function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, fieldName, supportSearch, className, isLoading, metadata}) {
@@ -24,7 +23,7 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
       const searchString = newFilterDto.getData(fieldName);
 
       if (metadata?.detailView != null && searchString.match(regexHelpers.regexTypes.mongoId)) {
-        const model = new Model({_id: searchString}, toolMetadata, true);
+        const model = new Model({_id: searchString}, metadata, true);
         const link = model.getDetailViewLink();
 
         if (link !== null) {
