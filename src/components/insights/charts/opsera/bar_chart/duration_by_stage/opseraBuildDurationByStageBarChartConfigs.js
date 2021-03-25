@@ -1,14 +1,14 @@
 export default () => ({
   keys: [
-        "Build",
-        "Script",
-        "Code Scan",
-        "Container Scan",
-        "Unit Testing",
-        "Functional Testing",
-        "Approval",
-        "Repository Upload",
-        "Deploy"
+    "Build",
+    "Script",
+    "Code Scan",
+    "Container Scan",
+    "Unit Testing",
+    "Functional Testing",
+    "Approval",
+    "Repository Upload",
+    "Deploy"
   ],
   indexBy: "pipelineId",
   colorBy: "id",
