@@ -24,6 +24,7 @@ function FilterContainer(
     supportViewToggle,
     saveCookies,
     className,
+    metadata,
 
     // TODO: Remove after filters are used everywhere
     type
@@ -47,6 +48,7 @@ function FilterContainer(
             setFilterDto={setFilterDto}
             loadData={loadData}
             className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
+            metadata={metadata}
           />
           <ViewToggle
             supportViewToggle={supportViewToggle}

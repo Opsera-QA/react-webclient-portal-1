@@ -13,6 +13,7 @@ import LdapOwnerFilter from "components/common/filters/ldap/owner/LdapOwnerFilte
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import InlineToolIdentifierFilter from "components/common/filters/tools/tool_identifier/InlineToolIdentifierFilter";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import toolMetadata from "components/inventory/tools/tool-metadata";
 
 function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, saveCookies, customerAccessRules, isMounted}) {
   const toastContext = useContext(DialogToastContext);
@@ -94,6 +95,7 @@ function ToolViews({toolFilterDto, setToolFilterDto, isLoading, loadData, data, 
         saveCookies={saveCookies}
         supportViewToggle={true}
         isLoading={isLoading}
+        metadata={toolMetadata}
         body={getTableCardView()}
         dropdownFilters={getDropdownFilters()}
         inlineFilters={getInlineFilters()}
