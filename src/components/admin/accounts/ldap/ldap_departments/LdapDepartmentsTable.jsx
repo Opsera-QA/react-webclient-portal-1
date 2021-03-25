@@ -9,7 +9,7 @@ import NewLdapDepartmentModal from "components/admin/accounts/ldap/ldap_departme
 import FilterContainer from "components/common/table/FilterContainer";
 import {faBuilding} from "@fortawesome/pro-light-svg-icons";
 
-function LdapDepartmentsTable({ departmentData, departmentFilterDto, authorizedActions, setDepartmentFilterDto, domain, loadData, isLoading }) {
+function LdapDepartmentsTable({ departmentData, authorizedActions, domain, loadData, isLoading }) {
   const [showCreateDepartmentModal, setShowCreateDepartmentModal] = useState(false);
   const fields = ldapDepartmentMetaData.fields;
   const history = useHistory();
@@ -23,7 +23,7 @@ function LdapDepartmentsTable({ departmentData, departmentFilterDto, authorizedA
     [fields]
   );
 
-  const onRowSelect = (rowData, type) => {
+  const onRowSelect = (rowData) => {
     history.push(`/admin/${domain}/departments/details/${rowData.original.name}`);
   };
 
@@ -68,8 +68,6 @@ function LdapDepartmentsTable({ departmentData, departmentFilterDto, authorizedA
 LdapDepartmentsTable.propTypes = {
   departmentData: PropTypes.array,
   authorizedActions: PropTypes.array,
-  departmentFilterDto: PropTypes.object,
-  setDepartmentFilterDto: PropTypes.func,
   domain: PropTypes.string,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool

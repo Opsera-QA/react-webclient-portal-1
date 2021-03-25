@@ -2,7 +2,6 @@ import React, { useMemo }  from 'react';
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
-  getTableDateTimeColumn,
   getTableTextColumn,
   getCheckBoxColumn
 } from "components/common/table/table-column-helpers";
@@ -20,13 +19,11 @@ const SfdcProfileSelectionView = ({
   destFilterDto,
   setDestFilterDto,
   destLoading,
-  destComponentType,
   destData,
   loadData,
   filterDto,
   setFilterDto,
   loading,
-  componentType,
   data,
   handleComponentCheck,
   handleCheckAllClickComponentTypes,
@@ -134,7 +131,6 @@ SfdcProfileSelectionView.propTypes = {
   loading: PropTypes.bool,
   data: PropTypes.arrayOf(PropTypes.object),
   loadData: PropTypes.func,
-  componentType: PropTypes.arrayOf(PropTypes.object),
   filterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
   handleComponentCheck: PropTypes.func,
@@ -143,7 +139,6 @@ SfdcProfileSelectionView.propTypes = {
   destFilterDto: PropTypes.object,
   setDestFilterDto: PropTypes.func,
   destLoading: PropTypes.bool,
-  destComponentType: PropTypes.any,
   destData: PropTypes.object
 };
 

@@ -1,8 +1,8 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useState} from "react";
 
 import PropTypes from "prop-types";
 import LdapOrganizationAccountEditorPanel from "./LdapOrganizationAccountEditorPanel";
-import {faUsers, faUsersClass, faBuilding, faCubes} from "@fortawesome/pro-light-svg-icons";
+import {faUsers, faUsersClass, faBuilding} from "@fortawesome/pro-light-svg-icons";
 import LdapOrganizationAccountSummaryPanel
   from "components/admin/accounts/ldap/organization_accounts/organization_accounts_detail_view/LdapOrganizationAccountSummaryPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
