@@ -3,13 +3,13 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import LoadingIcon from "components/common/icons/LoadingIcon";
 
-function IconBase({ isLoading, icon, className }) {
+function IconBase({ isLoading, icon, className, iconSize }) {
   const getIcon = () => {
     if (isLoading) {
-      return <LoadingIcon isLoading={isLoading} />;
+      return <LoadingIcon isLoading={isLoading} iconSize={iconSize} />;
     }
 
-    return <FontAwesomeIcon icon={icon} fixedWidth />;
+    return <FontAwesomeIcon icon={icon} size={iconSize} fixedWidth />;
   };
 
   if (icon == null) {
@@ -26,7 +26,8 @@ function IconBase({ isLoading, icon, className }) {
 IconBase.propTypes = {
   isLoading: PropTypes.bool,
   icon: PropTypes.object,
-  className: PropTypes.string
+  className: PropTypes.string,
+  iconSize: PropTypes.string
 };
 
 export default React.memo(IconBase);
