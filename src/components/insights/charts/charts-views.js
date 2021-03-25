@@ -1,15 +1,17 @@
-export const greyHues = ["#1E1D1B", "#5B5851", "#7A756C", "#B1AeA7", "#E6E5E3", "##F0EFEE", "#F9F9F8"];
+export const greyHues = ["#1E1D1B", "#5B5851", "#7A756C", "#B1AeA7", "#E6E5E3", "#F0EFEE", "#F9F9F8"];
 export const goldHues = ["#F1AD0F", "#F5C453", "#F9DC98", "#FDF3DD"];
 export const purpleHues = ["#494173", "#7368AA", "#ABA4CC", "#E3E1EE"];
 // const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
 
-export const standardColors = [];
-goldHues.forEach((_, i) => standardColors.push(greyHues[i], purpleHues[i]));
-
-const failColor = "#E57373";
-const mainColor = "#5B5851";
+export const mainColor = "#5B5851";
 export const mainGold = goldHues[0];
 export const mainPurple = purpleHues[0];
+export const accentColor = "#A8D0DB";
+export const failColor = "#E57373";
+export const warningColor = "#F1AD0F";
+
+export const standardColors = ["#5B5851", "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173"];
+// purpleHues.forEach((_, i) => standardColors.push(greyHues[greyHues.length - i - 2], purpleHues[i + 1]));
 
 export const assignStandardColors = (data, uniColor = false) => {
   if (data) {
@@ -39,9 +41,9 @@ export const assignBooleanColors = data => {
 
 export const assignTaskColors = data => {
   data.forEach(data => {
-    data.Story_color = standardColors[0];
-    data.Task_color = standardColors[1];
-    data.Subtask_color = standardColors[2];
+    data.Story_color = standardColors[3];
+    data.Task_color = "#ABA4CC"; // or #A8D0DB
+    data.Subtask_color = standardColors[1];
     data.Bug_color = failColor;
   });
   
@@ -49,7 +51,6 @@ export const assignTaskColors = data => {
 };
 
 export const assignHealthColors = data => {
-
   data.forEach(data => {
     data["To Do_color"] = standardColors[0];
     data["In Development_color"] = standardColors[1];
@@ -74,11 +75,25 @@ export const assignSeverityColors = data => {
   return data;
 };
 
+export const assignStageColors = data => {
+  data.forEach(data => {
+    data["Repository Upload_color"] = standardColors[0];
+    data["Approval_color"] = standardColors[1];
+    data["Unit Testing_color"] = standardColors[2];
+    data["Script_color"] = standardColors[3];
+    data["Build_color"] = standardColors[4];
+  });
+  
+  return data;
+};
+
 export const getColor = data => data.color;
 export const getColorByData = data => data.data.color;
 export const getColorById = data => data.id === "Successful" ? mainColor : failColor;
+export const getTaskColor = ({ id, data }) => data[`${id}_color`];
 
 export const shortenLegend = datas => datas.forEach(data => data.id.length > 10 ? data.id = data.id.slice(0, 10) + "..." : data.id);
+export const capitalizeValueLegend = data => data.forEach(d => d.Value = d.value);
 
 const formats = {
   numbers: d => /\d+\.?\d*$/.exec(d),
