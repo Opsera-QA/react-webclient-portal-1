@@ -45,7 +45,7 @@
     "no-unused-vars": "warn",
     "react/prop-types": "error",
     "react/no-unescaped-entities": "error",
-    "react/display-name": "warn",
+    "react/display-name": "error",
     "react/jsx-no-target-blank": "error",
     "no-prototype-builtins": "warn",
     "no-useless-escape": "warn",

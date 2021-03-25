@@ -32,7 +32,7 @@ function GithubMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
         Header: "Author Name",
         accessor: "AuthorName",
         // class: "cell-center no-wrap-inline",
-        Cell: (row) => {
+        Cell: function formatCell(row) {
           return (
             <div style={{ display: "flex", flexWrap: "nowrap" }}>
               <div>

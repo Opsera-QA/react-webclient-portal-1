@@ -26,14 +26,14 @@ function JenkinsJobsTable({ toolData, loadData, selectedRow, isLoading }) {
       {
         Header: "Type",
         accessor: "type",
-        Cell: (row) => {
+        Cell: function formatCell(row) {
           return row.value[0];
         },
       },     
       {
         Header: "Active",
         accessor: "active",
-        Cell: (row) => {
+        Cell: function formatCell(row) {
           return row.value ?  <FontAwesomeIcon icon={faCheckCircle} className="green ml-3" /> :  <FontAwesomeIcon icon={faTimesCircle} className="red ml-3" />;
         },
       },   

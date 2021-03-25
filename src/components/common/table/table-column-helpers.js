@@ -58,7 +58,7 @@ export const getLimitedTableTextColumn = (field, maxLength, className) => {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     class: className ? className : undefined,
-    Cell: (row) => {
+    Cell: function parseText(row) {
       return row.value ? truncateString(row.value, maxLength) : "";
     },
   };
@@ -68,7 +68,7 @@ export const getStringifiedArrayColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (row) => {
+    Cell: function stringifyArray(row) {
       const array = row?.value;
 
       if (Array.isArray(array) && array.length > 0) {
@@ -85,7 +85,7 @@ export const getNameValueArrayColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (row) => {
+    Cell: function stringifyArray(row) {
       const array = row?.value;
 
       if (Array.isArray(array) && array.length > 0) {
@@ -104,7 +104,7 @@ export const getRoleArrayColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (row) => {
+    Cell: function stringifyArray(row) {
       const array = row?.value;
 
       if (Array.isArray(array) && array.length > 0) {
@@ -123,7 +123,7 @@ export const getContactArrayColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (row) => {
+    Cell: function stringifyArray(row) {
       const array = row?.value;
 
       if (Array.isArray(array) && array.length > 0) {
@@ -142,7 +142,7 @@ export const getTagArrayColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (row) => {
+    Cell: function stringifyArray(row) {
       const array = row?.value;
 
       if (Array.isArray(array) && array.length > 0) {
@@ -161,7 +161,7 @@ export const getTableDateColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (row) => {
+    Cell: function parseDate(row) {
       return row.value ? format(new Date(row.value), "yyyy-MM-dd") : "";
     },
     class: className ? className : "no-wrap-inline"
@@ -172,7 +172,7 @@ export const getTableDateTimeColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (row) => {
+    Cell: function parseDateTime(row) {
       return row.value ? format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a") : "";
     },
     class: className ? className : "no-wrap-inline"
@@ -183,7 +183,7 @@ export const getTableDateAndTimeUntilValueColumn = (header, id, fakeColumn = "fa
   return {
     Header: header,
     accessor: fakeColumn,
-    Cell: (row) => {
+    Cell: function parseDate(row) {
       const originalRow = row.row.original;
       return originalRow[id] ? convertFutureDateToDhmsFromNowString(new Date(originalRow[id])) : "";
     },
@@ -195,7 +195,7 @@ export const getPipelineActivityStatusColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (row) => {
+    Cell: function parseStatus(row) {
       return (
         <div className="d-flex flex-nowrap">
           <div>{getPipelineStatusIcon(row)}</div>
@@ -256,7 +256,7 @@ export const getPipelineTypeColumn = (field, className) => {
   return {
     Header: "",
     accessor: getTableAccessor(field),
-    Cell: (workflow) => {
+    Cell: function parseType(workflow) {
       return <PipelineTypesField fieldName={field.id} dataObject={new Model(workflow.row.original, pipelineMetadata, false)} />;
     },
     class: className ? className : "cell-center"
@@ -267,7 +267,7 @@ export const getTablePipelineStatusColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (workflow) => {
+    Cell: function parseStatus(workflow) {
       let pipelineStatus = pipelineHelpers.getPipelineStatus(workflow.row.original);
 
       switch (pipelineStatus) {
@@ -315,7 +315,7 @@ export const getChartPipelineStatusColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (row) => {
+    Cell: function parseStatus(row) {
       return row.value ? (
         row.value === "FAILURE" || row.value === "failed" || row.value === "failure" ? (
           <>
@@ -358,7 +358,7 @@ export const getTableFavoriteColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (row) => {
+    Cell: function getFavoritesIcon(row) {
       return <DashboardFavoritesIcon key={row.row.original._id} dashboard={row.row.original} dashboardsActions={dashboardsActions} />;
     },
     class: className ? className :  "no-wrap-inline"
@@ -368,7 +368,7 @@ export const getTableFavoriteColumn = (field, className) => {
 export const getTableDeleteColumn = (headerText, deleteFunction, className) => {
   return {
     Header: headerText,
-    Cell: (row) => {
+    Cell: function getDeleteIcon(row) {
       return <FontAwesomeIcon icon={faTrash} className="pointer danger-red" onClick={() => {deleteFunction(row?.data[row?.row?.index]); }}/>;
     },
     class: className ? className :  "no-wrap-inline"
@@ -379,7 +379,7 @@ export const getTableButtonColumn = (accessor = "row", headerText, variant, butt
   return {
     Header: headerText,
     accessor: accessor,
-    Cell: (row) => {
+    Cell: function getTableButton(row) {
       return <Button size={"sm"} variant={variant} className={buttonClassName} onClick={() => {buttonFunction(row?.data[row?.row?.index]);}}>{buttonText}</Button>;
     },
     class: className ? className :  "no-wrap-inline py-1"
@@ -390,7 +390,7 @@ export const getGitTaskTableRunButtonColumn = (accessor = "row", headerText, var
   return {
     Header: headerText,
     accessor: accessor,
-    Cell: (row) => {
+    Cell: function getRunButton(row) {
       return <Button size={"sm"} variant={variant} disabled={row?.data[row?.row?.index].status === "running"} onClick={() => {buttonFunction(row?.data[row?.row?.index]);}} >
         {row?.data[row?.row?.index].status === "running" ? (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> Running </span>) : (<span><FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/> {buttonText} </span> ) }
         </Button>;
@@ -403,7 +403,7 @@ export const getTableBooleanIconColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (row) => {
+    Cell: function getStatusIcon(row) {
       return row.value ? <div><FontAwesomeIcon icon={faCheckCircle} className="green ml-2" /></div> :  <div><FontAwesomeIcon icon={faTimesCircle} className="red ml-2" /></div>;
     },
     class: className ? className : "text-left"
@@ -414,7 +414,7 @@ export const getTableInfoIconColumn = (showInformationFunction, accessor = "row"
   return {
     Header: "Info",
     accessor: accessor,
-    Cell: (row) => {
+    Cell: function getInfoIcon(row) {
       return <FontAwesomeIcon icon={faSearchPlus} className="pointer" onClick={() => {showInformationFunction(row?.data[row?.row?.index]); }}/>;
     },
     class: className ? className : undefined
@@ -426,7 +426,7 @@ export const getTableArrayCountColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
-    Cell: (row) => {
+    Cell: function getCount(row) {
       return row.value.length;
     },
     class: className ? className :  "no-wrap-inline"
@@ -437,7 +437,7 @@ export const getCountColumnWithoutField = (header, accessor, className) => {
   return {
     Header: header,
     accessor: accessor,
-    Cell: (row) => {
+    Cell: function getCount(row) {
       return row.value.length;
     },
     class: className ? className :  "no-wrap-inline"
@@ -462,7 +462,7 @@ export const getCheckBoxColumn = (handleChange) => {
   return {
     Header: "",
     accessor: "row",
-    Cell: (row) => {
+    Cell: function getCheckboxForRow(row) {
       const idx = row.row["index"];
       const item = row["data"][idx];
       return <Form.Check
