@@ -98,6 +98,7 @@ function PipelineFilterSelectInput({ pipelineFilter, opseraPipelineSelectChange,
 
   return (
     <>
+      <label><span>Pipeline</span></label>
       <Col>
         <DropdownList
           data={pipelineFilters}
@@ -111,6 +112,7 @@ function PipelineFilterSelectInput({ pipelineFilter, opseraPipelineSelectChange,
           onChange={opseraPipelineSelectChange}
         />
       </Col>
+      <label><span>Step</span></label>
       <Col>
         <DropdownList
           data={pipelineFilter.steps}

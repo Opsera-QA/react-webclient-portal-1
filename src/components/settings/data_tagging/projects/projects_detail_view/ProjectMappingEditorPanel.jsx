@@ -27,6 +27,7 @@ import TagManager from "components/common/inputs/tags/TagManager";
 function ProjectMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [projectMappingDto, setProjectMappingDto] = useState(undefined);
+  console.log(projectMappingDto);
 
   useEffect(() => {
     loadData();

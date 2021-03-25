@@ -22,6 +22,12 @@ import CustomTab from "components/common/tabs/CustomTab";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import PipelineFilterSelectInput from "components/logs/PipelineFilterSelectInput";
 
+import projectTagsMetadata from "components/settings/data_tagging/projects/tagging-project-metadata";
+import Model from "core/data_model/model";
+import JenkinsJobSelectInput from "components/common/list_of_values_input/settings/data_tagging/projects/JenkinsJobSelectInput";
+import ProjectMappingToolSelectInput
+  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolSelectInput";
+
 // TODO: This entire form needs to be completely refactored
 function LogSearch({tools, sideBySide}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -37,6 +43,8 @@ function LogSearch({tools, sideBySide}) {
   const [submittedSearchTerm, setSubmittedSearchTerm] = useState(null);
   const [logTabData, setLogTabData] = useState([]);
   const [currentLogTab, setCurrentLogTab] = useState(0);
+  const [jenkinsProjectDto, setJenkinsProjectDto] = useState(new Model({ ...projectTagsMetadata.newObjectFields }, projectTagsMetadata, true));
+  // const [jenkinsJobs, setJenkinsJobs] = useState([]);
 
   const [date, setDate] = useState([
     {
@@ -136,6 +144,8 @@ function LogSearch({tools, sideBySide}) {
 
   // Executed every time page number or page size changes
   useEffect(() => {
+    jenkinsProjectDto.setData("tool_identifier", "jenkins");
+    console.log(jenkinsProjectDto);
     if (searchTerm) {
       getSearchResults();
     }
@@ -190,7 +200,10 @@ function LogSearch({tools, sideBySide}) {
     if (filterType === "blueprint") {
       route = "/analytics/blueprint";
     }
+
     const urlParams = {
+      toolId: jenkinsProjectDto?.getData("tool_id"),
+      jobName: jenkinsProjectDto?.getData("key"),
       search: searchTerm,
       date: startDate !== 0 && endDate === 0 ? startDate : undefined,
       start: startDate !== 0 && endDate !== 0 ? startDate : undefined,
@@ -372,6 +385,22 @@ function LogSearch({tools, sideBySide}) {
           <PipelineFilterSelectInput opseraPipelineSelectChange={opseraPipelineSelectChange} pipelineFilter={pipelineFilter} setStepFilter={setStepFilter} stepFilter={stepFilter} />
       );
     }
+    if (filterType === "blueprint") {
+      return (
+        <>
+        <Col>
+          <ProjectMappingToolSelectInput dataObject={jenkinsProjectDto} setDataObject={setJenkinsProjectDto} disabled={false}/>
+        </Col>
+        <Col>
+        <JenkinsJobSelectInput
+            dataObject={jenkinsProjectDto}
+            setDataObject={setJenkinsProjectDto}
+            tool_prop={jenkinsProjectDto.getData("tool_id")}
+          />
+        </Col>
+        </>
+      );
+    }
 
     // if (filterType === "blueprint") {
     //   return (
@@ -398,6 +427,7 @@ function LogSearch({tools, sideBySide}) {
     return (
       <Row className={"mx-0 py-2"}>
         <Col>
+          <label><span>Search Index</span></label>
           <DropdownList
             data={Array.isArray(tools) ? tools : []}
             defaultValue={Array.isArray(tools) ? tools[0] : []}
@@ -410,7 +440,8 @@ function LogSearch({tools, sideBySide}) {
         </Col>
         {getDynamicFields()}
         <Col>
-          <Form.Control
+        <label><span>Search Input</span></label>
+        <Form.Control
             placeholder={filterType === "blueprint" ? "Enter Build Number" : "Search logs"}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
