@@ -77,7 +77,7 @@ function BlueprintSearchResult({ searchResults }) {
         accessor: "url",
         Cell: (props) => {
           return props ? 
-          <a href={props.value} target="_blank" className="text-muted console-text-invert-modal">{props.value}</a> : 
+          <a href={props.value} target="_blank" rel="noreferrer" className="text-muted console-text-invert-modal">{props.value}</a> :
           "N/A";
         },
       }
