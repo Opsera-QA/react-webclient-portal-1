@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useContext} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import usersTagsMetadata from "./tagging-users-metadata";
@@ -8,10 +8,11 @@ import {
   getTableTextColumn,
 } from "../../../common/table/table-column-helpers";
 import { useHistory } from "react-router-dom";
-import NewUsersMappingModal from "./NewUsersMappingModal";
+import NewUsersMappingOverlay from "./NewUsersMappingOverlay";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
-function UsersTagTable({ data, loadData, isLoading }) {
-  const [showCreateToolTypeModal, setShowCreateToolTypeModal] = useState(false);
+function UsersTagTable({ data, loadData, isLoading, isMounted }) {
+  const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   let fields = usersTagsMetadata.fields;
 
@@ -52,11 +53,10 @@ function UsersTagTable({ data, loadData, isLoading }) {
   const noDataMessage = "No User Mappings have been configured";
 
   const createToolType = () => {
-    setShowCreateToolTypeModal(true);
+    toastContext.showOverlayPanel(<NewUsersMappingOverlay loadData={loadData} isMounted={isMounted} />);
   };
 
   return (
-    <>
       <CustomTable
         columns={columns}
         data={data}
@@ -68,14 +68,6 @@ function UsersTagTable({ data, loadData, isLoading }) {
         type={"User Mapping"}
         createNewRecord={createToolType}
       />
-      {showCreateToolTypeModal && (
-        <NewUsersMappingModal
-          setShowModal={setShowCreateToolTypeModal}
-          showModal={showCreateToolTypeModal}
-          loadData={loadData}
-        />
-      )}
-    </>
   );
 }
 

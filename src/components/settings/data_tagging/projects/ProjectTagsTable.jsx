@@ -1,13 +1,14 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useContext } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import projectTagsMetadata from "./tagging-project-metadata";
 import { useHistory } from "react-router-dom";
-import NewProjectMappingModal from "./NewProjectMappingModal";
+import NewProjectMappingOverlay from "./NewProjectMappingOverlay";
 import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
-function ProjectsTagTable({ data, loadData, isLoading }) {
-  const [showCreateProjectTagModal, setShowCreateProjectTagModal] = useState(false);
+function ProjectsTagTable({ data, loadData, isLoading, isMounted }) {
+  const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   let fields = projectTagsMetadata.fields;
 
@@ -31,11 +32,10 @@ function ProjectsTagTable({ data, loadData, isLoading }) {
   const noDataMessage = "No Project Mappings have been configured";
 
   const createProjectTag = () => {
-    setShowCreateProjectTagModal(true);
+    toastContext.showOverlayPanel(<NewProjectMappingOverlay loadData={loadData} isMounted={isMounted} />);
   };
 
   return (
-    <>
       <CustomTable
         columns={columns}
         data={data}
@@ -47,12 +47,6 @@ function ProjectsTagTable({ data, loadData, isLoading }) {
         type={"Project Mapping"}
         createNewRecord={createProjectTag}
       />
-      <NewProjectMappingModal
-        setShowModal={setShowCreateProjectTagModal}
-        showModal={showCreateProjectTagModal}
-        loadData={loadData}
-      />
-    </>
   );
 }
 
