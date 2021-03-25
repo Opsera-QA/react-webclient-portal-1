@@ -1,5 +1,4 @@
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
-import BreadcrumbPageLink from "components/common/links/BreadcrumbPageLink";
 
 export const mainColor = "#5B5851";
 export const mainGold = "#F1AD0F";
@@ -30,7 +29,12 @@ export const assignBooleanColors = data => {
     data.sort((a, b) => a.id > b.id ? 1 : -1); // to display success before fail in legend
   }
   data.forEach(data => {
-    data.color = (data.id === "Success" || data.Successful) ? mainColor : failColor;
+    if (data.id) {
+      data.color = (data.id === "Success" || data.Successful) ? mainColor : failColor;
+    } else {
+      data.Success_color = mainColor;
+      data.Failed_color = failColor;
+    }
   });
   return data.color;
 };
@@ -201,25 +205,30 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
 
 export const adjustBarWidth = (data, isVertical=true) => {
   let padding;
+  const x = data.length;
 
   if (isVertical) {
-    switch (data.length) {
-      case 1: padding = .85;
-              break;
-      case 2: padding = .75;
-              break;
-      case 3: padding = .3;
-              break;
+    switch (true) {
+      case 1:         padding = .85;
+                      break;
+      case 2:         padding = .75;
+                      break;
+      case 3:         padding = .65;
+                      break;
+      case (x <= 8):  padding = .45;
+                      break;
+      case (x <= 10): padding = .35;
+                       break;
       default: padding = .25;
     }
   } else {
-    switch (data.length) {
-      case 1: padding = .5;
-              break;
-      case 2: padding = .35;
-              break;
-      case 3: padding = .3;
-              break;
+    switch (true) {
+      case 1:         padding = .5;
+                      break;
+      case 2:         padding = .35;
+                      break;
+      case 3:         padding = .3;
+                      break;
       default: padding = .25;
     }
   }
