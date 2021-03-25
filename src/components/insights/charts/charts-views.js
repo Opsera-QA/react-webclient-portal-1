@@ -11,20 +11,13 @@ export const failColor = "#E57373";
 export const warningColor = "#F1AD0F";
 
 export const standardColors = ["#5B5851", "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173"];
+export const gradationalColors = ["#B1AeA7", "#7A756C", mainColor, "#1E1D1B"];
 // purpleHues.forEach((_, i) => standardColors.push(greyHues[greyHues.length - i - 2], purpleHues[i + 1]));
 
 export const assignStandardColors = (data, uniColor = false) => {
   if (data) {
     data.forEach((data, i) => {
       data.color = uniColor ? mainColor : standardColors[i];
-    });
-  }
-};
-
-export const assignMonochromaticColors = (data) => {
-  if (data) {
-    data.forEach((data, i) => {
-      data.color = greyHues[i];
     });
   }
 };
@@ -42,7 +35,7 @@ export const assignBooleanColors = data => {
 export const assignTaskColors = data => {
   data.forEach(data => {
     data.Story_color = standardColors[3];
-    data.Task_color = "#ABA4CC"; // or #A8D0DB
+    data.Task_color = "#ABA4CC";
     data.Subtask_color = standardColors[1];
     data.Bug_color = failColor;
   });
