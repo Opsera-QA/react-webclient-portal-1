@@ -77,7 +77,7 @@ function OpseraRecentCDTable({ date }) {
       {
         Header: "Run",
         accessor: "run_count",
-        class: "no-wrap-inline",
+        class: "cell-center no-wrap-inline",
       },
       {
         Header: "Pipeline Name",

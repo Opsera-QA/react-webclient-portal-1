@@ -3,12 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 import "../../../../theme.css";
 
-function SuccessIcon() {
+function FailIcon() {
   return (
     <div className="status-icon">
-      <FontAwesomeIcon icon={faCircleNotch} className="cell-icon green fa-md" />
+      <FontAwesomeIcon icon={faCircleNotch} className="cell-icon yellow fa-md" />
     </div>
   );
 }
 
-export default SuccessIcon;
+export default FailIcon;
