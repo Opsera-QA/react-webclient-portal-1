@@ -287,7 +287,7 @@ function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCall
         });
         return respObj;
       } else {
-        let errorMessage = "Jenkins information is missing or unavailable!  Please ensure the required Jenkins creds are registered and up to date in Tool Registry.";
+        let errorMessage = "Jenkins information is missing or unavailable!  Please ensure the required Jenkins credentials are registered and up to date in Tool Registry.";
         let toast = getErrorDialog(errorMessage, setShowToast, "detailPanelTop");
         setToast(toast);
         setShowToast(true);
@@ -494,7 +494,7 @@ function SFDCStepConfiguration( { stepTool, pipelineId, plan, stepId, parentCall
           { formData.repository.length > 0 &&
           <>
             <Form.Control maxLength="75" type="text" placeholder="" value={formData.branch || ""} onChange={e => setFormData({ ...formData, branch: e.target.value })} /> 
-            <small className="form-text text-muted mt-2 text-center">Branch within repository to watch: "master" or "feature X"</small>
+            <small className="form-text text-muted mt-2 text-center">Branch within repository to watch: &ldquo;master&rdquo; or &ldquo;feature X&rdquo;</small>
           </>
           }
         </Form.Group> }

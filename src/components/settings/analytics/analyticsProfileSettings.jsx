@@ -147,7 +147,7 @@ function AnalyticsProfileSettings() {
             <div className={"p-4"}>
               <Card.Text>
                 Welcome to the OpsERA Analytics Portal! Here you can enable analytics for our supported tools and
-                dashboards and metrics around your system's activities. Simply click the Activate Analytics button below
+                dashboards and metrics around your system&apos;s activities. Simply click the Activate Analytics button below
                 and then begin configuring your dashboards!
               </Card.Text>
               <div className="mt-4">

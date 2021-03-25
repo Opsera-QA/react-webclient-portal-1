@@ -251,7 +251,7 @@ const SfdcUnitTestSelectionView = ({
                   </small>
                         {typeof unusedTestClassesList === "object" && unusedTestClassesList.length > 0 &&
                           <>
-                            <div className="text-muted">Note: These items are skipped as they don't match the Unit test list.</div>
+                            <div className="text-muted">Note: These items are skipped as they don&apos;t match the Unit test list.</div>
                             <div className="invalid-feedback" style={{fontSize: "100%"}}>
                               <div className="scroller">
                                 <div className="d-flex flex-wrap">
