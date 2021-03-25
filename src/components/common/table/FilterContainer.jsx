@@ -24,7 +24,6 @@ function FilterContainer(
     supportViewToggle,
     saveCookies,
     className,
-    stackFilters,
 
     // TODO: Remove after filters are used everywhere
     type
@@ -77,7 +76,6 @@ function FilterContainer(
               titleIcon={titleIcon}
               inlineFilters={getInlineFilters()}
               addRecordFunction={addRecordFunction}
-              stackFilters={stackFilters}
             />
           </div>
           <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} />
