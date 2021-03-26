@@ -20,7 +20,7 @@ function OrganizationsTable({ organizations, isLoading, loadData, isMounted }) {
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
-      getTableTextColumn(getField(fields, "owner")),
+      getTableTextColumn(getField(fields, "owner_name")),
       getTableTextColumn(getField(fields, "leader"))
     ],
     []

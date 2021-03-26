@@ -2,12 +2,11 @@ import React, {useState} from "react";
 
 import PropTypes from "prop-types";
 import OrganizationEditorPanel from "components/settings/organizations/organization_detail_view/OrganizationEditorPanel";
-import {faIdCard} from "@fortawesome/pro-light-svg-icons";
 import OrganizationSummaryPanel from "components/settings/organizations/organization_detail_view/OrganizationSummaryPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
-import CustomTab from "components/common/tabs/CustomTab";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
-import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
+import SettingsTab from "components/common/tabs/detail_view/SettingsTab";
+import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
 
 function OrganizationDetailPanel({organizationData }) {
   const [activeTab, setActiveTab] = useState("summary");
@@ -26,8 +25,8 @@ function OrganizationDetailPanel({organizationData }) {
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        <CustomTab icon={faIdCard} tabName={"manage"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Manage Members"} />
+        <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        <SettingsTab handleTabClick={handleTabClick} activeTab={activeTab} />
       </CustomTabContainer>
     );
   };

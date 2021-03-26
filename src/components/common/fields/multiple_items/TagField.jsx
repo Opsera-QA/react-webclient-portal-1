@@ -55,4 +55,8 @@ TagField.propTypes = {
   showLabel: PropTypes.bool
 };
 
+TagField.defaultProps = {
+  fieldName: "tags"
+};
+
 export default TagField;

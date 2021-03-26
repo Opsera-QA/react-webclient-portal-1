@@ -12,6 +12,10 @@ export const organizationMetadata = {
   },
   fields: [
     {
+      label: "ID",
+      id: "_id",
+    },
+    {
       label: "Name",
       id: "name",
       isRequired: true,
@@ -26,6 +30,10 @@ export const organizationMetadata = {
     {
       label: "Owner",
       id: "owner",
+    },
+    {
+      label: "Owner Name",
+      id: "owner_name",
     },
     {
       label: "Tags",

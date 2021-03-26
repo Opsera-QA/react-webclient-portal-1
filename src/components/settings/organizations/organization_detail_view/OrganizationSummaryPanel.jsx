@@ -17,10 +17,13 @@ function OrganizationSummaryPanel({ organizationData, setActiveTab }) {
           <TextFieldBase dataObject={organizationData} fieldName={"name"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={organizationData} fieldName={"owner"}/>
+          <TextFieldBase dataObject={organizationData} fieldName={"_id"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={organizationData} fieldName={"leader"}/>
+          <TextFieldBase dataObject={organizationData} fieldName={"owner_name"}/>
+        </Col>
+        <Col lg={6}>
+          {/*<TextFieldBase dataObject={organizationData} fieldName={"leader"}/>*/}
         </Col>
         <Col lg={12}>
           <TagField dataObject={organizationData} />
