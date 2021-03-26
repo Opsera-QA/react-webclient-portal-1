@@ -25,6 +25,7 @@ function FilterContainer(
     saveCookies,
     className,
     metadata,
+    exportButton,
 
     // TODO: Remove after filters are used everywhere
     type
@@ -60,6 +61,7 @@ function FilterContainer(
           />
           <RefreshButton isLoading={isLoading} loadData={loadData} className={dropdownFilters != null ? "mr-2" : null} />
           <FilterButtons isLoading={isLoading} loadData={loadData} dropdownFilters={dropdownFilters} filterDto={filterDto} />
+          {exportButton}
         </div>
       </div>
     );
@@ -108,7 +110,8 @@ FilterContainer.propTypes = {
   type: PropTypes.string,
   className: PropTypes.string,
   stackFilters: PropTypes.bool,
-  metadata: PropTypes.object
+  metadata: PropTypes.object,
+  exportButton: PropTypes.object
 };
 
 export default FilterContainer;
