@@ -97,6 +97,8 @@ import GitComponent from "components/git/Git";
 import DetailedToolReport from "./components/reports/tools/detailedReport/DetailedToolReport";
 import GitTaskDetailView from "components/git/git_task_details/GitTaskDetailView";
 import TagsUsedInDashboardsReport from "components/reports/tags/dashboards/TagsUsedInDashboardReport";
+import OrganizationManagement from "components/settings/organizations/OrganizationManagement";
+import OrganizationDetailView from "components/settings/organizations/organization_detail_view/OrganizationDetailView";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -362,6 +364,8 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/settings/:orgDomain?/groups/" exact component={LdapGroupManagement}/>
                   <SecureRoute path="/settings/:orgDomain/groups/details/:groupName" exact
                                component={LdapGroupDetailView}/>
+                  <SecureRoute path="/settings/organizations/" exact component={OrganizationManagement}/>
+                  <SecureRoute path="/settings/organizations/details/:id" exact component={OrganizationDetailView}/>
                   <SecureRoute path="/settings/:orgDomain?/users/" exact component={LdapUserManagement}/>
                   <SecureRoute path="/settings/:orgDomain/users/details/:userEmail" exact
                                component={LdapUserDetailView}/>
