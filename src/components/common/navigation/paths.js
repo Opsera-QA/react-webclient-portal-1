@@ -1,5 +1,6 @@
 const paths = {};
 
+// TODO: Rwrite these to be
 paths.userProfile = "user/profile";
 paths.userRecord = "user/myUserRecord";
 paths.accessTokens = "user/accessTokens";
@@ -65,6 +66,8 @@ paths.ldapGroupManagement = paths.accountSettings + "/groups";
 paths.ldapGroupDetailView = paths.ldapUserManagement;
 paths.tagManagement = paths.accountSettings + "/tags";
 paths.tagDetailView = paths.tagManagement + "/details/";
+paths.organizationManagement = paths.accountSettings + "/tags";
+paths.organizationDetailView = paths.organizationManagement + "/details/";
 paths.customerSystemStatus = paths.accountSettings + "/customer-system-status";
 paths.analyticsProfile = paths.accountSettings + "/analytics-profile";
 paths.mapping = paths.accountSettings + "/data_mapping";
