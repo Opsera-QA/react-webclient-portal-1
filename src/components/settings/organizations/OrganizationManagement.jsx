@@ -1,11 +1,13 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import OrganizationsTable from "components/settings/organizations/OrganizationsTable";
-import accountsActions from "components/admin/accounts/accounts-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import axios from "axios";
+import organizationActions from "components/settings/organizations/organization-actions";
+import Model from "core/data_model/model";
+import organizationFilterMetadata from "components/settings/organizations/organization-filter-metadata";
 
 function OrganizationManagement() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -15,6 +17,7 @@ function OrganizationManagement() {
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [organizationFilterModel, setOrganizationFilterModel] = useState(new Model({...organizationFilterMetadata.newObjectFields}, organizationFilterMetadata, false));
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -25,7 +28,7 @@ function OrganizationManagement() {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
+    loadData(organizationFilterModel, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -37,10 +40,10 @@ function OrganizationManagement() {
     };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (filterModel = organizationFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles(cancelSource);
+      await getRoles(filterModel, cancelSource);
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -55,10 +58,16 @@ function OrganizationManagement() {
     }
   };
 
-  const getOrganizations = async (cancelSource = cancelTokenSource) => {
-    let response = await accountsActions.getLdapGroupsWithDomainV2(getAccessToken, cancelSource);
-    if (response?.data) {
-      setOrganizations(response?.data);
+  const getOrganizations = async (filterModel = organizationFilterModel, cancelSource = cancelTokenSource) => {
+    let response = await organizationActions.getOrganizationsV2(getAccessToken, cancelSource, filterModel);
+    const organizationList = response?.data?.data;
+
+    if (isMounted?.current === true && organizationList) {
+      setOrganizations(organizationList);
+      let newFilterModel = filterModel;
+      newFilterModel.setData("totalCount", response?.data?.count);
+      newFilterModel.setData("activeFilters", newFilterModel.getActiveFilters());
+      setOrganizationFilterModel({...newFilterModel});
     }
   };
 

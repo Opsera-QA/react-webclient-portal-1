@@ -10,6 +10,8 @@ import axios from "axios";
 import {organizationMetadata} from "components/settings/organizations/organization-metadata";
 import OrganizationDetailPanel
   from "components/settings/organizations/organization_detail_view/OrganizationDetailPanel";
+import organizationActions from "components/settings/organizations/organization-actions";
+import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
 function OrganizationDetailView() {
   const {id} = useParams();
@@ -62,7 +64,8 @@ function OrganizationDetailView() {
   };
 
   const getOrganization = async (cancelSource = cancelTokenSource) => {
-    const response = await accountsActions.getGroupV2(getAccessToken, cancelSource, id);
+    const response = await organizationActions.getOrganizationV2(getAccessToken, cancelSource, id);
+
 
     if (isMounted.current === true && response?.data) {
       setOrganizationModel(new Model(response.data, organizationMetadata, false));
@@ -112,7 +115,8 @@ function OrganizationDetailView() {
       dataObject={organizationData}
       isLoading={isLoading}
       actionBar={getActionBar()}
-      accessDenied={!isLoading}
+      accessRoleData={accessRoleData}
+      roleRequirement={ROLE_LEVELS.POWER_USERS}
       detailPanel={
         <OrganizationDetailPanel
           organizationData={organizationData}

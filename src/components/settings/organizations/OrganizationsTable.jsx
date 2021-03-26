@@ -32,7 +32,7 @@ function OrganizationsTable({ organizations, isLoading, loadData, isMounted }) {
   };
   
   const onRowSelect = (rowData) => {
-    history.push(`/settings/organizations/details/${rowData.original.name}`);
+    history.push(`/settings/organizations/details/${rowData.original._id}`);
   };
 
   const getGroupsTable = () => {

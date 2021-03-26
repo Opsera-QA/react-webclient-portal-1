@@ -1,9 +1,11 @@
 // TODO: Move to server, pull with data
+import regexHelpers from "utils/regexHelpers";
+
 export const organizationMetadata = {
   idProperty: "name",
   type: "Organization",
   detailView: function (record) {
-    return `/settings/organizations/details/${record.getData("name")}`;
+    return `/settings/organizations/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
     return `Organization Details [${record.getData("name")}]`;
@@ -13,10 +15,9 @@ export const organizationMetadata = {
       label: "Name",
       id: "name",
       isRequired: true,
-      lowercase: true,
-      maxLength: 25,
-      inputMaskRegex: /^[A-Za-z][A-Za-z0-9-_]*$/,
-      formText: "Organization name must be unique and must begin with a letter."
+      maxLength: 50,
+      regexValidator: regexHelpers.regexTypes["generalTextWithSpaces"],
+      formText: "Names can be up to 50 characters and can consist of letters, apostrophes, numbers, spaces, dashes, colons, underscores, and periods"
     },
     {
       label: "Leader",
@@ -33,6 +34,7 @@ export const organizationMetadata = {
   ],
   newObjectFields: {
     name: "",
+    owner: "",
     leader: {},
     tags: []
   }
