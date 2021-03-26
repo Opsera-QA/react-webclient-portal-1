@@ -1,6 +1,6 @@
 const paths = {};
 
-// TODO: Rwrite these to be
+// TODO: Rewrite these to be functions
 paths.userProfile = "user/profile";
 paths.userRecord = "user/myUserRecord";
 paths.accessTokens = "user/accessTokens";
