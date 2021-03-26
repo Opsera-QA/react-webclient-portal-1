@@ -42,14 +42,14 @@
       "error",
       "always"
     ],
-    "no-unused-vars": "error",
+    "no-unused-vars": "warn",
     "react/prop-types": "error",
     "react/no-unescaped-entities": "error",
     "react/display-name": "error",
     "react/jsx-no-target-blank": "error",
-    "no-prototype-builtins": "error",
-    "no-useless-escape": "error",
+    "no-prototype-builtins": "warn",
+    "no-useless-escape": "warn",
     "no-empty-pattern": "error",
-    "no-fallthrough": "error"
+    "no-fallthrough": "warn"
   }
 }

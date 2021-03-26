@@ -8,7 +8,7 @@ import {AuthContext} from "contexts/AuthContext";
 import argoActions from "../../../argo-actions";
 import axios from "axios";
 
-function ArgoProjectsSelectInput({ argoToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, configurationRequired, className}) {
+function ArgoProjectsSelectInput({ argoToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, className}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);    
   const [projects, setProjects] = useState([]);

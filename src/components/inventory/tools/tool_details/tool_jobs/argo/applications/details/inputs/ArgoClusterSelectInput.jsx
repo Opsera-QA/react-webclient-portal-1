@@ -8,7 +8,7 @@ import {AuthContext} from "contexts/AuthContext";
 import argoActions from "../../../argo-actions";
 import axios from "axios";
 
-function ArgoClusterSelectInput({ argoToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, configurationRequired, className}) {
+function ArgoClusterSelectInput({ argoToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, className}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);  
   const [clusters, setClusters] = useState([]);
