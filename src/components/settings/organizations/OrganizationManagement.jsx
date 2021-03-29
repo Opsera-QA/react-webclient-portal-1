@@ -3,7 +3,7 @@ import {AuthContext} from "contexts/AuthContext";
 import OrganizationsTable from "components/settings/organizations/OrganizationsTable";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import axios from "axios";
 import organizationActions from "components/settings/organizations/organization-actions";
 import Model from "core/data_model/model";
@@ -78,7 +78,7 @@ function OrganizationManagement() {
     if (isMounted?.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      if (userRoleAccess?.OpseraAdministrator) {
+      if (meetsRequirements(ROLE_LEVELS.POWER_USERS, userRoleAccess)) {
         await getOrganizations(cancelSource);
       }
     }

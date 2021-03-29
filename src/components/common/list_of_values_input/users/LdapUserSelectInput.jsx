@@ -5,7 +5,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function LdapUserSelectInput({ dataObject, setDataObject, fieldName, valueField, textField, showClearValueButton }) {
+function LdapUserSelectInput({ dataObject, setDataObject, fieldName, valueField, textField, showClearValueButton, setDataFunction }) {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -45,12 +45,24 @@ function LdapUserSelectInput({ dataObject, setDataObject, fieldName, valueField,
     const parsedUsers = response?.data;
 
     if (Array.isArray(parsedUsers) && parsedUsers.length > 0) {
-      parsedUsers.map((user, index) => {
-        userOptions.push({text: `${user.firstName} ${user.lastName} (${user.email})`, value:`${user._id}`});
+      parsedUsers.map((user) => {
+        userOptions.push({text: `${user.firstName} ${user.lastName} (${user.email})`, value:`${user._id}`, user: user});
       });
     }
 
     setUsers(userOptions);
+  };
+
+  const getCurrentValue = () => {
+    const currentValue = dataObject?.getData(fieldName);
+
+    if (typeof currentValue === 'object' && currentValue !== null) {
+      if (currentValue._id) {
+        return currentValue._id;
+      }
+    }
+
+    return currentValue;
   };
 
   if (user == null || user.ldap?.domain == null || accessRoleData == null || accessRoleData?.Type === "sass-user") {
@@ -66,6 +78,8 @@ function LdapUserSelectInput({ dataObject, setDataObject, fieldName, valueField,
       textField={textField}
       showClearValueButton={showClearValueButton}
       setDataObject={setDataObject}
+      setDataFunction={setDataFunction}
+      getCurrentValue={getCurrentValue}
       dataObject={dataObject}
       selectOptions={users}
     />
@@ -78,7 +92,8 @@ LdapUserSelectInput.propTypes = {
   fieldName: PropTypes.string,
   valueField: PropTypes.string,
   showClearValueButton: PropTypes.bool,
-  textField: PropTypes.string
+  textField: PropTypes.string,
+  setDataFunction: PropTypes.func
 };
 
 LdapUserSelectInput.defaultProps = {

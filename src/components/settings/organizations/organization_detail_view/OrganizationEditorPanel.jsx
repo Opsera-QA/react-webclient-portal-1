@@ -9,6 +9,8 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
 import organizationActions from "components/settings/organizations/organization-actions";
 import axios from "axios";
+import OrganizationLeaderLdapUserSelectInput
+  from "components/common/list_of_values_input/settings/organizations/OrganizationLeaderLdapUserSelectInput";
 
 function OrganizationEditorPanel({organizationData, handleClose }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -70,7 +72,7 @@ function OrganizationEditorPanel({organizationData, handleClose }) {
           <TextInputBase disabled={!organizationModel.isNew()} fieldName={"name"} dataObject={organizationModel} setDataObject={setOrganizationModel}/>
         </Col>
         <Col lg={12}>
-          {/*<LdapOpseraUserSelectInputBase fieldName={"leader"} dataObject={organizationModel} setDataObject={setOrganizationModel} disabled={true} />*/}
+          <OrganizationLeaderLdapUserSelectInput dataObject={organizationModel} setDataObject={setOrganizationModel} />
         </Col>
         <Col lg={12}>
           <TagMultiSelectInput dataObject={organizationModel} setDataObject={setOrganizationModel} />
@@ -81,14 +83,8 @@ function OrganizationEditorPanel({organizationData, handleClose }) {
 }
 
 OrganizationEditorPanel.propTypes = {
-  currentUserEmail: PropTypes.string,
-  orgDomain: PropTypes.string,
-  setorganizationData: PropTypes.func,
   organizationData: PropTypes.object,
-  ldapOrganizationData: PropTypes.object,
   handleClose: PropTypes.func,
-  authorizedActions: PropTypes.array,
-  existingGroupNames: PropTypes.array
 };
 
 export default OrganizationEditorPanel;

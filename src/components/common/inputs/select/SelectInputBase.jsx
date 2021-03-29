@@ -8,7 +8,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 
-function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, disabled, clearDataFunction, showClearValueButton, errorMessage}) {
+function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, disabled, clearDataFunction, showClearValueButton, errorMessage, getCurrentValue}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
@@ -47,6 +47,14 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
     }
   };
 
+  const findCurrentValue = () => {
+    if (getCurrentValue) {
+      return getCurrentValue();
+    }
+
+    return dataObject.getData(field.id);
+  };
+
   return (
     <InputContainer className="custom-select-input">
       <InputLabel field={field} inputPopover={getClearDataIcon()} />
@@ -55,7 +63,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
         valueField={valueField}
         textField={textField}
         groupBy={groupBy}
-        value={dataObject.getData(field.id)}
+        value={findCurrentValue()}
         filter={"contains"}
         busy={busy}
         placeholder={placeholderText}
@@ -87,7 +95,8 @@ SelectInputBase.propTypes = {
     PropTypes.array
   ]),
   showClearValueButton: PropTypes.bool,
-  errorMessage: PropTypes.string
+  errorMessage: PropTypes.string,
+  getCurrentValue: PropTypes.func
 };
 
 SelectInputBase.defaultProps = {

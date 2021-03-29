@@ -43,7 +43,7 @@ export const organizationMetadata = {
   newObjectFields: {
     name: "",
     owner: "",
-    leader: {},
+    leader: null,
     tags: []
   }
 };
