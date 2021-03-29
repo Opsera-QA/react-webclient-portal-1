@@ -519,17 +519,16 @@ const breadcrumbs = {
     linkText: "Analytics Profile",
     icon: faChartNetwork
   },
-  // TODO: Rename to be more descriptive
-  mapping: {
+  dataMappingManagement: {
     parent: "accountSettings",
-    name: "mapping",
-    path: paths.mapping,
-    title: "Data Mapping Management",
-    linkText: "Data Mapping Management",
+    name: "dataMappingManagement",
+    path: paths.dataMappingManagement,
+    title: "Data Mappings",
+    linkText: "Data Mappings",
     icon: faProjectDiagram
   },
   projectTaggingDetailView: {
-    parent : "mapping",
+    parent : "dataMappingManagement",
     name: "projectTaggingDetailView",
     path: paths.projectTaggingDetailView,
     title: "Project Mapping Details",
@@ -537,7 +536,7 @@ const breadcrumbs = {
     icon: faProjectDiagram
   },
   userTaggingDetailView: {
-    parent : "mapping",
+    parent : "dataMappingManagement",
     name: "userTaggingDetailView",
     path: paths.userTaggingDetailView,
     title: "User Mapping Details",

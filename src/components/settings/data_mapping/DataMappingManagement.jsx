@@ -15,7 +15,7 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
 
-function Tagging() {
+function DataMappingManagement() {
   const { tabKey } = useParams();
   const toastContext = useContext(DialogToastContext);
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -248,7 +248,7 @@ function Tagging() {
   if (!accessRoleData) {
     return (
       <ScreenContainer
-        breadcrumbDestination={"mapping"}
+        breadcrumbDestination={"dataMappingManagement"}
         pageDescription={"Manage data mapping for the Opsera Analytics Engine."}
         isLoading={true}
       />
@@ -257,7 +257,7 @@ function Tagging() {
 
   return (
     <ScreenContainer
-      breadcrumbDestination={"mapping"}
+      breadcrumbDestination={"dataMappingManagement"}
       accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
       pageDescription={"Manage data mapping for the Opsera Analytics Engine."}
     >
@@ -282,4 +282,4 @@ function TagsTabView({ activeTab, loadData, isLoading, projectTags, usersTags })
   }
 }
 
-export default Tagging;
+export default DataMappingManagement;

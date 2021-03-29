@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import dataMappingActions from "../../../../../settings/data_tagging/data-mapping-actions";
+import dataMappingActions from "../../../../../settings/data_mapping/data-mapping-actions";
 
 function SonarProjectSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool_prop}) {
   const toastContext = useContext(DialogToastContext);

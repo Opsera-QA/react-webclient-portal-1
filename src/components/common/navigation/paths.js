@@ -70,9 +70,9 @@ paths.organizationManagement = paths.accountSettings + "/organizations";
 paths.organizationDetailView = paths.organizationManagement + "/details/";
 paths.customerSystemStatus = paths.accountSettings + "/customer-system-status";
 paths.analyticsProfile = paths.accountSettings + "/analytics-profile";
-paths.mapping = paths.accountSettings + "/data_mapping";
-paths.projectTaggingDetailView = paths.mapping + "/projects/details/";
-paths.userTaggingDetailView = paths.mapping + "/users/details/";
+paths.dataMappingManagement = paths.accountSettings + "/data_mapping";
+paths.projectTaggingDetailView = paths.dataMappingManagement + "/projects/details/";
+paths.userTaggingDetailView = paths.dataMappingManagement + "/users/details/";
 
 //Reports
 paths.reports = "reports";
