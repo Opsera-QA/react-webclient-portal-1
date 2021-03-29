@@ -250,7 +250,7 @@ function OverviewLanding() {
                           loadPipelines(item._id);
                         }}
                       >
-                        {item.name.substring(0, 20)}
+                        {item.name.substring(0, 50)}
                         {new Date(item.createdAt) > d &&
                         <Badge variant="secondary" className="ml-1" size="sm">
                           New

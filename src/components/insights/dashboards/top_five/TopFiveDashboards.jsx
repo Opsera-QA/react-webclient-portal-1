@@ -86,7 +86,7 @@ function TopFiveDashboards({ loadDashboardById }) {
                 loadDashboardById(item._id);
               }}
             >
-              {item.name.substring(0, 30)}
+              {item.name.substring(0, 50)}
               {new Date(item.createdAt) > d &&
               <Badge variant="secondary" className="ml-1" size="sm">
                 New
