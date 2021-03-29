@@ -16,7 +16,7 @@ function BreadcrumbTrail({destination}) {
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
           {breadcrumbTrail.trail && getParentTrail(breadcrumbTrail.trail)}
-          <li className="breadcrumb-item">{breadcrumbTrail.breadcrumb.label}</li>
+          <li className="breadcrumb-item">{breadcrumbTrail.breadcrumb.title}</li>
         </ol>
       </nav>
     );

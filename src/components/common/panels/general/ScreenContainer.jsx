@@ -102,7 +102,7 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
       {getTopNavigation()}
       <div className="content-container content-card-1 ">
         <div className="pl-2 content-block-header title-text-header-1">
-          <TitleBar titleIcon={breadcrumb.icon} title={breadcrumb.label} isLoading={isLoading} titleActionBar={titleActionBar}/>
+          <TitleBar titleIcon={breadcrumb.icon} title={breadcrumb.title} isLoading={isLoading} titleActionBar={titleActionBar}/>
         </div>
         {getBody()}
         <div className="content-block-footer-text-container pt-2">

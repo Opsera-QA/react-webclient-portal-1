@@ -4,14 +4,14 @@ import PageLink from "./PageLink";
 import {getBreadcrumb} from "../navigation/trails";
 
 function BreadcrumbPageLink({ breadcrumbDestination, visible }) {
-  const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
+  const [breadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
 
   if (!breadcrumb) {
     console.error(`Could not find breadcrumb for destination [${breadcrumbDestination}]`);
     return null;
   }
 
-  return (<PageLink linkText={breadcrumb?.label} icon={breadcrumb?.icon} link={"/" + breadcrumb?.path} visible={visible} />);
+  return (<PageLink linkText={breadcrumb?.linkText} icon={breadcrumb?.icon} link={"/" + breadcrumb?.path} visible={visible} />);
 }
 
 BreadcrumbPageLink.propTypes = {

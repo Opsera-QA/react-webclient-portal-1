@@ -9,8 +9,8 @@ import RoleRequirementField from "components/common/fields/access/RoleRequiremen
 import {meetsRequirements} from "components/common/helpers/role-helpers";
 
 function DetailScreenContainer({ breadcrumbDestination, actionBar, dataObject, detailPanel, isLoading, accessDenied, metadata, showBreadcrumbTrail, navigationTabContainer, accessRoleData, roleRequirement, titleActionBar }) {
-  const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
-  const [parentBreadcrumb, setParentBreadcrumb] = useState(getParentBreadcrumb(breadcrumbDestination));
+  const [breadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
+  const [parentBreadcrumb] = useState(getParentBreadcrumb(breadcrumbDestination));
 
   const getTopNavigation = () => {
     if (showBreadcrumbTrail) {

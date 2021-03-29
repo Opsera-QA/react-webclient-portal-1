@@ -17,7 +17,7 @@ function TitleBar({ title, titleIcon, parentBreadcrumb, isLoading, inactive, tit
     if (parentBreadcrumb) {
       return (
         <div className="mr-2 pointer" onClick={() => handleBackButton()}>
-          <ActionBarButton action={handleBackButton} icon={faArrowLeft} popoverText={`Go back to ${parentBreadcrumb.label}`} />
+          <ActionBarButton action={handleBackButton} icon={faArrowLeft} popoverText={`Go back to ${parentBreadcrumb.title}`} />
         </div>
       );
     }
