@@ -7,7 +7,7 @@ import PropTypes from "prop-types";
 function PipelineWelcomeView ({ setActiveTab }) {
   return (
     <div className="pb-3">
-      <div className="h5 mb-3 mt-4">Welcome to Opsera's Declarative Pipelines!</div>
+      <div className="h5 mb-3 mt-4">Welcome to Opsera&apos;s Declarative Pipelines!</div>
 
       <div className="row mx-n2 mt-1 pl-2">
         <div className="col-md-1 px-2 landing-content-module">
@@ -18,7 +18,7 @@ function PipelineWelcomeView ({ setActiveTab }) {
           />
         </div>
         <div className="col-md-6 px-2 text-muted pt-5">
-          Opsera's Advanced Orchestration Technology combined with our robust tools experience will enable you to build and manage various continuous integration
+          Opsera&apos;s Advanced Orchestration Technology combined with our robust tools experience will enable you to build and manage various continuous integration
           and delivery as well as unique policy based pipelines saving you time and resources!
         </div>
         <div className="col-md px-2 text-muted" />

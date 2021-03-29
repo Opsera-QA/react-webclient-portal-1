@@ -57,13 +57,15 @@ function AccountSettings() {
     if (accessRoleData.Administrator || accessRoleData.OpseraAdministrator) {
       return (
         <>
-          <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"ldapUserManagement"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"mapping"}/>
           <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"} visible={!envIsProd}/>
+          <BreadcrumbPageLink breadcrumbDestination={"dataMappingManagement"}/>
+          <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>
+          {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"} />}
+          {/*<BreadcrumbPageLink breadcrumbDestination={"organizationManagement"}/>*/}
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
+          <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
+          <BreadcrumbPageLink breadcrumbDestination={"ldapUserManagement"}/>
         </>
       );
     }
@@ -72,12 +74,14 @@ function AccountSettings() {
     if (accessRoleData.PowerUser || accessRoleData.SassPowerUser) {
       return (
         <>
-          {accessRoleData.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>}
-          <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"mapping"}/>
           <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"} visible={!envIsProd}/>
+          <BreadcrumbPageLink breadcrumbDestination={"dataMappingManagement"}/>
+          {accessRoleData.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>}
+          {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"} />}
+          {/*<BreadcrumbPageLink breadcrumbDestination={"organizationManagement"}/>*/}
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
+          <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
         </>
       );
     }
@@ -95,8 +99,6 @@ function AccountSettings() {
       isLoading={isLoading}
     >
       <Row className="ml-3">
-        {/*TODO: Make User Details Link Component*/}
-        {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"} />}
         {getRolePageLinks()}
       </Row>
     </ScreenContainer>

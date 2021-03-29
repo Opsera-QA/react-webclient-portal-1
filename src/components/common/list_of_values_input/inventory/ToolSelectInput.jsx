@@ -68,7 +68,7 @@ function ToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textF
       return (
         <small className="text-muted">
           <Link to={`/inventory/tools/details/${dataObject.getData(fieldName)}`}>
-            <span><FontAwesomeIcon icon={faTools} className="pr-1" />View Or Edit this Tool's Registry settings</span>
+            <span><FontAwesomeIcon icon={faTools} className="pr-1" />View Or Edit this Tool&apos;s Registry settings</span>
           </Link>
         </small>
       );

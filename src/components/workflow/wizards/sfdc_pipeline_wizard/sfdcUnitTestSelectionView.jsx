@@ -1,6 +1,6 @@
-import React, { useContext, useState, useEffect, useMemo } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Button, Form, OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
+import { Button, Form, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
@@ -10,17 +10,11 @@ import {
   faStepForward,
 } from "@fortawesome/free-solid-svg-icons";
 import "../../workflows.css";
-import {
-  getErrorDialog
-} from "components/common/toasts/toasts";
 import { Multiselect } from 'react-widgets';
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import ErrorDialog from "components/common/status_notifications/error";
-import LoadingDialog from "components/common/status_notifications/loading";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import { RenderWorkflowItem } from "components/workflow/approvalModal";
-import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
 import Model from "../../../../core/data_model/model";
 import filterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/filter-metadata";
 import { CSVtoArray, commonItems, differentItems } from "components/common/helpers/array-helpers";
@@ -31,8 +25,7 @@ const SfdcUnitTestSelectionView = ({
   fromSFDC, 
   fromDestinationSFDC, 
   handleClose, 
-  isProfiles, 
-  setView, 
+  setView,
   unitTestSteps 
   }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -158,7 +151,7 @@ const SfdcUnitTestSelectionView = ({
         if(diffItems && diffItems.length > 0 )
         setUnusedTestClassesList(diffItems);
   
-      const saveResponse = await sfdcPipelineActions.setListToPipelineStorage(
+      await sfdcPipelineActions.setListToPipelineStorage(
         { 
           "recordId": unitTestRecordId, 
           "sfdcToolId": selectedStep.tool.configuration.sfdcToolId, 
@@ -251,7 +244,7 @@ const SfdcUnitTestSelectionView = ({
                   </small>
                         {typeof unusedTestClassesList === "object" && unusedTestClassesList.length > 0 &&
                           <>
-                            <div className="text-muted">Note: These items are skipped as they don't match the Unit test list.</div>
+                            <div className="text-muted">Note: These items are skipped as they don&apos;t match the Unit test list.</div>
                             <div className="invalid-feedback" style={{fontSize: "100%"}}>
                               <div className="scroller">
                                 <div className="d-flex flex-wrap">
@@ -335,7 +328,6 @@ SfdcUnitTestSelectionView.propTypes = {
   pipelineId: PropTypes.string,
   stepId: PropTypes.string,
   setView: PropTypes.func,
-  isProfiles: PropTypes.bool,
   fromSFDC: PropTypes.bool,
   fromDestinationSFDC: PropTypes.bool,
   handleClose: PropTypes.func,

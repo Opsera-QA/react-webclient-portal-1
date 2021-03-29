@@ -48,36 +48,36 @@ function BlueprintSearchResult({ searchResults }) {
       {
         Header: "CVSS Base",
         accessor: "cvss_base",
-        Cell: (props) => {
-          return props ? 
-          <div className="console-text-invert-modal">{props.value}</div> : 
+        Cell: function getValue(row)  {
+          return row ?
+          <div className="console-text-invert-modal">{row.value}</div> :
           "N/A";
         }
       },
       {
         Header: "CVSS Exploitability",
         accessor: "cvss_exploitability_score",
-        Cell: (props) => {
-          return props ? 
-          <div className="console-text-invert-modal">{props.value}</div> : 
+        Cell: function getValue(row)  {
+          return row ?
+          <div className="console-text-invert-modal">{row.value}</div> :
           "N/A";
         }
       },
       {
         Header: "CVSS Impact",
         accessor: "cvss_impact_score",
-        Cell: (props) => {
-          return props ? 
-          <div className="console-text-invert-modal">{props.value}</div> : 
+        Cell: function getValue(row) {
+          return row ?
+          <div className="console-text-invert-modal">{row.value}</div> :
           "N/A";
         }
       },
       {
         Header: "Vulnerability URL",
         accessor: "url",
-        Cell: (props) => {
-          return props ? 
-          <a href={props.value} target="_blank" className="text-muted console-text-invert-modal">{props.value}</a> : 
+        Cell: function getValue(row) {
+          return row ?
+          <a href={row.value} target="_blank" rel="noreferrer" className="text-muted console-text-invert-modal">{row.value}</a> :
           "N/A";
         },
       }

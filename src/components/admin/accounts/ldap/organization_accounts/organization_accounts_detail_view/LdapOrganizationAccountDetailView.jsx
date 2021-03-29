@@ -1,5 +1,5 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
-import {useHistory, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import Model from "core/data_model/model";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -14,14 +14,12 @@ import axios from "axios";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 
 function LdapOrganizationAccountDetailView() {
-  const history = useHistory();
   const { organizationDomain } = useParams();
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false); //this is how we toggle showing/hiding stuff when API calls or other functions are loading
   const [ldapOrganizationAccountData, setLdapOrganizationAccountData] = useState(undefined);
-  const [organizationName, setOrganizationName] = useState(undefined);
   const [authorizedActions, setAuthorizedActions] = useState([]);
   const [currentUser, setCurrentUser] = useState(undefined);
   const isMounted = useRef(false);
@@ -91,7 +89,6 @@ function LdapOrganizationAccountDetailView() {
 
       if (response?.data != null) {
         setLdapOrganizationAccountData(new Model(response.data, ldapOrganizationAccountMetaData, false));
-        setOrganizationName(response.data.org?.name);
       }
   };
 

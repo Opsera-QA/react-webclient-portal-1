@@ -16,7 +16,7 @@ function TagMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, s
       <InputContainer className="custom-multiselect-input">
         <InputLabel field={field} showLabel={showLabel}/>
         <TagMultiSelectInputBase
-          fieldName={"filters.tags"}
+          fieldName={fieldName}
           dataObject={dataObject}
           setDataObject={setDataObject}
           setDataFunction={setDataFunction}

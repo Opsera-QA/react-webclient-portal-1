@@ -100,7 +100,7 @@ function SlackToolConfiguration({ toolData }) {
       <div className="m-3">
         <div className="h5">Slack Credentials</div>
         <div>You can connect to Slack using credentials stored on a per-tool basis in the <Link to="/inventory/tools">Tool Registry</Link>.</div>
-        <div>To get started, create a Slack tool and connect to Slack using the Add to Slack button on the Slack tool's connection panel.</div>
+        <div>To get started, create a Slack tool and connect to Slack using the Add to Slack button on the Slack tool&apos;s connection panel.</div>
       </div>
     );
   }

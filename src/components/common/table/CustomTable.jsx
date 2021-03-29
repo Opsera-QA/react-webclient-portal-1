@@ -16,7 +16,7 @@ export const defaultInitialState = {
   pageIndex: 0
 };
 
-function CustomTable({ className, tableStyleName, type, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, paginationOptions, showHeaderText, isLoading, tableTitle, createNewRecord, tableFilterBar, paginationDto, setPaginationDto, loadData, noFooter=false }) {
+function CustomTable({ className, tableStyleName, type, columns, data, noDataMessage, onRowSelect, rowStyling, initialState, paginationOptions, showHeaderText, isLoading, tableTitle, createNewRecord, tableFilterBar, paginationDto, setPaginationDto, loadData, noFooter, scrollOnLoad }) {
   const {
     getTableProps,
     getTableBodyProps,
@@ -196,7 +196,7 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
 
   const getNewPaginator = () => {
     return (
-       <DtoBottomPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading} loadData={loadData} />
+       <DtoBottomPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading} loadData={loadData} scrollOnLoad={scrollOnLoad} />
     );
   };
 
@@ -248,7 +248,8 @@ CustomTable.propTypes = {
   setPaginationDto: PropTypes.func,
   loadData: PropTypes.func,
   className: PropTypes.string,
-  noFooter: PropTypes.bool
+  noFooter: PropTypes.bool,
+  scrollOnLoad: PropTypes.bool
 };
 
 CustomTable.defaultProps = {
@@ -259,7 +260,9 @@ CustomTable.defaultProps = {
   data: [],
   isLoading: false,
   tableTitle: "",
-  className: "table-content-block"
+  className: "table-content-block",
+  noFooter: false,
+  scrollOnLoad: true
 };
 
 export default CustomTable;

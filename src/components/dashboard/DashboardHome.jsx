@@ -267,7 +267,7 @@ function DashboardHome() {
   function renderTooltip(props) {
     return (
       <Tooltip id="button-tooltip" {...props}>
-        Select timeframe or manually enter in a "Last XX Days/Months/Years" format
+        Select timeframe or manually enter in a &ldquo;Last XX Days/Months/Years&rdquo; format
       </Tooltip>
     );
   }

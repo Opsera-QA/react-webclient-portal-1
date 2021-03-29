@@ -12,16 +12,11 @@ function BreadcrumbTrail({destination}) {
   const getBreadcrumbTrail = (destination) => {
     let breadcrumbTrail = getTrail(destination);
 
-    // TODO: Do we want to show trail when the only path is current screen?
-    // if (breadcrumbTrail.trail.length === 0) {
-    //   return (<></>);
-    // }
-
     return (
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
           {breadcrumbTrail.trail && getParentTrail(breadcrumbTrail.trail)}
-          <li className="breadcrumb-item">{breadcrumbTrail.breadcrumb.label}</li>
+          <li className="breadcrumb-item">{breadcrumbTrail.breadcrumb.title}</li>
         </ol>
       </nav>
     );

@@ -1,24 +1,23 @@
 import React, { useState, useEffect, useContext } from "react";
-import { useHistory, useParams } from "react-router-dom";
-import UsersMappingDetailPanel from "./UsersMappingDetailPanel";
+import { useParams } from "react-router-dom";
+import ProjectMappingDetailPanel from "./ProjectMappingDetailPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import dataMappingActions from "components/settings/data_tagging/data-mapping-actions";
-import usersTagsMetadata from "components/settings/data_tagging/users/tagging-users-metadata";
+import dataMappingActions from "components/settings/data_mapping/data-mapping-actions";
 import Model from "core/data_model/model";
-import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
-import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
+import projectTagsMetadata from "components/settings/data_mapping/projects/tagging-project-metadata";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
+import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
+import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 
-function UsersMappingDetailView() {
-  const { usersMappingId } = useParams();
+function ProjectMappingDetailView() {
+  const { projectMappingId } = useParams();
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState({});
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
-  const [usersMappingData, setUsersMappingData] = useState(undefined);
+  const [projectMappingData, setProjectMappingData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const history = useHistory();
 
   useEffect(() => {
     loadData();
@@ -37,11 +36,11 @@ function UsersMappingDetailView() {
     }
   };
 
-  const getUsersMapping = async (usersMappingId) => {
+  const getProjectMapping = async (projectMappingId) => {
     try {
-      const response = await dataMappingActions.getUserMappingById(usersMappingId, getAccessToken);
+      const response = await dataMappingActions.getProjectMappingById(projectMappingId, getAccessToken);
       if (response?.data?.length > 0) {
-        setUsersMappingData(new Model(response?.data[0], usersTagsMetadata, false));
+        setProjectMappingData(new Model(response.data[0], projectTagsMetadata, false));
       }
     } catch (error) {
       if (!error?.error?.message?.includes(404)) {
@@ -56,40 +55,34 @@ function UsersMappingDetailView() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      await getUsersMapping(usersMappingId);
+      await getProjectMapping(projectMappingId);
     }
   };
 
   const deleteMapping = async () => {
-    let response = await dataMappingActions.deleteUserMapping(usersMappingData, getAccessToken);
-    if (response?.status === 200) {
-      toastContext.showDeleteSuccessResultDialog("User Mapping");
-      history.push("/settings/data_mapping");
-    } else {
-      toastContext.showDeleteFailureResultDialog("User Mapping", response);
-    }
+    return await dataMappingActions.deleteProjectMapping(projectMappingData, getAccessToken);
   };
 
   const getActionBar = () => {
     return (
       <ActionBarContainer>
         <div><ActionBarBackButton path={"/settings/data_mapping"} /></div>
-        <div><ActionBarDeleteButton2 relocationPath={"/settings/data_mapping"} handleDelete={deleteMapping} dataObject={usersMappingData} /></div>
+        <div><ActionBarDeleteButton2 dataObject={projectMappingData} handleDelete={deleteMapping} relocationPath={"/settings/data_mapping"} /></div>
       </ActionBarContainer>
     );
   };
 
   return (
     <DetailScreenContainer
-      breadcrumbDestination={"userTaggingDetailView"}
-      metadata={usersTagsMetadata}
+      breadcrumbDestination={"projectTaggingDetailView"}
       accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
-      dataObject={usersMappingData}
+      metadata={projectTagsMetadata}
+      dataObject={projectMappingData}
       isLoading={isLoading}
       actionBar={getActionBar()}
-      detailPanel={<UsersMappingDetailPanel usersMappingData={usersMappingData} setUsersMappingData={setUsersMappingData}/>}
+      detailPanel={<ProjectMappingDetailPanel projectMappingData={projectMappingData} setProjectMappingData={setProjectMappingData} />}
     />
   );
 }
 
-export default UsersMappingDetailView;
+export default ProjectMappingDetailView;

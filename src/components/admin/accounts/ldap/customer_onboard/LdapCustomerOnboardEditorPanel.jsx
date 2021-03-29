@@ -11,7 +11,6 @@ import {
 } from "components/admin/accounts/ldap/organization_accounts/ldap-organization-account-metadata";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
@@ -21,26 +20,29 @@ import accountsActions from "components/admin/accounts/accounts-actions";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import {AuthContext} from "contexts/AuthContext";
 
-function LdapCustomerOnboardEditorPanel({ldapUserData}) {
+function LdapCustomerOnboardEditorPanel() {
   const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [ldapOrganizationDataDto, setLdapOrganizationDataDto] = useState(undefined);
   const [ldapOrganizationAccountDataDto, setLdapOrganizationAccountDataDto] = useState(undefined);
   const [ldapIdpAccountDataDto, setLdapIdpAccountDataDto] = useState({});
 
   const [error, setErrors] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [usersFormData, setUsersFormData] = useState({users: []});
+  // eslint-disable-next-line no-unused-vars
   const [opseraUserList, setOpseraUsersList] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [currentOpseraUser, setCurrentOpseraUser] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
+  // eslint-disable-next-line no-unused-vars
   const [isSaving, setIsSaving] = useState(false);
   const [hasSaved, setHasSaved] = useState(false);
 
   useEffect(() => {
-    loadData(ldapUserData);
+    loadData();
   }, []);
 
-  const loadData = async (ldapUserData) => {
+  const loadData = async () => {
     setIsLoading(true);
     setLdapOrganizationDataDto(new Model({...ldapOrganizationMetaData.newObjectFields}, ldapOrganizationMetaData, true));
     setLdapOrganizationAccountDataDto(new Model({...ldapOrganizationAccountMetaData.newObjectFields}, ldapOrganizationAccountMetaData, true));
@@ -51,6 +53,7 @@ function LdapCustomerOnboardEditorPanel({ldapUserData}) {
   };
 
   // TODO: Implement if we use this for updates
+  // eslint-disable-next-line no-unused-vars
   const unpackLdapUserData = async (ldapUserData) => {
     console.log("ldapUserData in unpackLdapUserData: " + JSON.stringify(ldapUserData));
     // if (ldapUserData != null) {
@@ -76,6 +79,7 @@ function LdapCustomerOnboardEditorPanel({ldapUserData}) {
   //   setOpseraUsersList(parsedUserNames);
   // };
 
+  // eslint-disable-next-line no-unused-vars
   const addAdmin = (user) => {
     // let currentUsers = formData["users"];
     //
@@ -130,6 +134,7 @@ function LdapCustomerOnboardEditorPanel({ldapUserData}) {
   };
 
   // TODO: Implement if needed
+  // eslint-disable-next-line no-unused-vars
   const updateLdapAccount = async (newLdapUserData) => {
     //   if(isFormValid) {
     //     try {
@@ -164,6 +169,7 @@ function LdapCustomerOnboardEditorPanel({ldapUserData}) {
   // };
 
   // TODO: Wire up toasts
+  // eslint-disable-next-line no-unused-vars
   const getError = () => {
     if (error && error.length > 0) {
       return (<div className="pb-2 error-text">WARNING! An error has occurred saving your configuration: {error}</div>);

@@ -51,7 +51,7 @@ import LdapGroupDetailView from "./components/settings/ldap_groups/ldap_group_de
 import ToolDetailView from "./components/inventory/tools/tool_details/ToolDetailView";
 import TemplateDetailView from "./components/admin/template_editor/template_detail_view/TemplateDetailView";
 import ToolManagement from "./components/admin/tools/ToolManagement";
-import Mapping from "./components/settings/data_tagging/DataTagsManager";
+import DataMappingManagement from "components/settings/data_mapping/DataMappingManagement";
 import ToolCategoryDetailView from "components/admin/tools/tool_category/tool_category_detail_view/ToolCategoryDetailView";
 import ToolIdentifierDetailView
   from "./components/admin/tools/tool_identifier/tool_identifier_detail_view/ToolIdentifierDetailView";
@@ -78,8 +78,8 @@ import ToolsUsedInPipelineReport from "./components/reports/tools/pipelines/Tool
 import Insights from "./components/insights/dashboards/Insights";
 import DashboardDetailView from "./components/insights/dashboards/dashboard_details/DashboardDetailView";
 import ProjectMappingDetailView
-  from "./components/settings/data_tagging/projects/projects_detail_view/ProjectMappingDetailView";
-import UsersMappingDetailView from "./components/settings/data_tagging/users/users_detail_view/UsersMappingDetailView";
+  from "./components/settings/data_mapping/projects/projects_detail_view/ProjectMappingDetailView";
+import UsersMappingDetailView from "./components/settings/data_mapping/users/users_detail_view/UsersMappingDetailView";
 
 import { OktaAuth } from "@okta/okta-auth-js";
 import { Security, SecureRoute, LoginCallback } from "@okta/okta-react";
@@ -97,6 +97,8 @@ import GitComponent from "components/git/Git";
 import DetailedToolReport from "./components/reports/tools/detailedReport/DetailedToolReport";
 import GitTaskDetailView from "components/git/git_task_details/GitTaskDetailView";
 import TagsUsedInDashboardsReport from "components/reports/tags/dashboards/TagsUsedInDashboardReport";
+import OrganizationManagement from "components/settings/organizations/OrganizationManagement";
+import OrganizationDetailView from "components/settings/organizations/organization_detail_view/OrganizationDetailView";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -362,6 +364,8 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/settings/:orgDomain?/groups/" exact component={LdapGroupManagement}/>
                   <SecureRoute path="/settings/:orgDomain/groups/details/:groupName" exact
                                component={LdapGroupDetailView}/>
+                  <SecureRoute path="/settings/organizations/" exact component={OrganizationManagement}/>
+                  <SecureRoute path="/settings/organizations/details/:id" exact component={OrganizationDetailView}/>
                   <SecureRoute path="/settings/:orgDomain?/users/" exact component={LdapUserManagement}/>
                   <SecureRoute path="/settings/:orgDomain/users/details/:userEmail" exact
                                component={LdapUserDetailView}/>
@@ -369,7 +373,7 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/settings/tags/:id" exact component={TagDetailView}/>
                   <SecureRoute path="/settings/customer-system-status" exact component={CustomerSystemStatus}/>
                   <SecureRoute path="/settings/analytics-profile" exact component={AnalyticsProfileSettings}/>
-                  <SecureRoute path="/settings/data_mapping" exact component={Mapping}/>
+                  <SecureRoute path="/settings/data_mapping" exact component={DataMappingManagement}/>
                   <SecureRoute path="/settings/data_mapping/projects/details/:projectMappingId" exact
                                component={ProjectMappingDetailView}/>
                   <SecureRoute path="/settings/data_mapping/user_mapping/details/:usersMappingId" exact

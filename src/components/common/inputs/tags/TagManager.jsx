@@ -176,10 +176,10 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
       {!inline && <InputLabel field={field} className={inline ? "mt-1 mr-2" : undefined}/>}
       <Multiselect
         data={[...tagOptions]}
-        textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + data["value"]}
+        textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + capitalizeFirstLetter(data["value"])}
         filter={"contains"}
         allowCreate={allowCreate}
-        groupBy={"type"}
+        groupBy={(tag) => capitalizeFirstLetter(tag?.type, " ", "Undefined Type")}
         className={inline ? `inline-filter-input inline-select-filter` : undefined}
         busy={isLoading}
         onCreate={(value) => handleCreate(value)}

@@ -1,5 +1,6 @@
 const paths = {};
 
+// TODO: Rewrite these to be functions
 paths.userProfile = "user/profile";
 paths.userRecord = "user/myUserRecord";
 paths.accessTokens = "user/accessTokens";
@@ -65,11 +66,13 @@ paths.ldapGroupManagement = paths.accountSettings + "/groups";
 paths.ldapGroupDetailView = paths.ldapUserManagement;
 paths.tagManagement = paths.accountSettings + "/tags";
 paths.tagDetailView = paths.tagManagement + "/details/";
+paths.organizationManagement = paths.accountSettings + "/organizations";
+paths.organizationDetailView = paths.organizationManagement + "/details/";
 paths.customerSystemStatus = paths.accountSettings + "/customer-system-status";
 paths.analyticsProfile = paths.accountSettings + "/analytics-profile";
-paths.mapping = paths.accountSettings + "/data_mapping";
-paths.projectTaggingDetailView = paths.mapping + "/projects/details/";
-paths.userTaggingDetailView = paths.mapping + "/users/details/";
+paths.dataMappingManagement = paths.accountSettings + "/data_mapping";
+paths.projectTaggingDetailView = paths.dataMappingManagement + "/projects/details/";
+paths.userTaggingDetailView = paths.dataMappingManagement + "/users/details/";
 
 //Reports
 paths.reports = "reports";

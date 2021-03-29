@@ -11,9 +11,22 @@ dataMappingActions.createProjectMapping = async (data, getAccessToken) => {
   return baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
+dataMappingActions.createProjectMappingV2 = async (data, getAccessToken, cancelTokenSource) => {
+  let postData = {
+    ...data.getPersistData(),
+  };
+  const apiUrl = "/mappings/create/project";
+  return baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
+};
+
 dataMappingActions.getProjectMappings = async (getAccessToken) => {
   const apiUrl = `/mappings/projects`;
   return baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+dataMappingActions.getProjectMappingsV2 = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/mappings/projects`;
+  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 dataMappingActions.getProjectMappingById = async (id, getAccessToken) => {
@@ -29,6 +42,14 @@ dataMappingActions.updateProject = async (data, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
+dataMappingActions.updateProjectV2 = async (data, getAccessToken, cancelTokenSource) => {
+  let postData = {
+    ...data.getPersistData(),
+  };
+  const apiUrl = `/mappings/update/project/${data.getData("_id")}`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
+};
+
 dataMappingActions.deleteProjectMapping = async (data, getAccessToken) => {
   const apiUrl = `/mappings/project/${data.getData("_id")}`;
   return await baseActions.apiDeleteCall(getAccessToken, apiUrl);
@@ -42,9 +63,22 @@ dataMappingActions.createUserMapping = async (data, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
 };
 
+dataMappingActions.createUserMappingV2 = async (data, getAccessToken, cancelTokenSource) => {
+  let postData = {
+    ...data.getPersistData(),
+  };
+  const apiUrl = "/mappings/create/users";
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
+};
+
 dataMappingActions.getUserMappings = async (getAccessToken) => {
   const apiUrl = `/mappings/users`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+dataMappingActions.getUserMappingsV2 = async (getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/mappings/users`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 dataMappingActions.getUserMappingById = async (id, getAccessToken) => {
@@ -58,6 +92,14 @@ dataMappingActions.updateUserMapping = async (data, getAccessToken) => {
   };
   const apiUrl = `/mappings/update/users/${data.getData("_id")}`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postData);
+};
+
+dataMappingActions.updateUserMappingV2 = async (data, getAccessToken, cancelTokenSource) => {
+  let postData = {
+    ...data.getPersistData(),
+  };
+  const apiUrl = `/mappings/update/users/${data.getData("_id")}`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postData);
 };
 
 dataMappingActions.deleteUserMapping = async (data, getAccessToken) => {

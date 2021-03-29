@@ -1,9 +1,9 @@
 // TODO: Refine when all necessary fields are known
 const pipelineSummaryMetadata = {
   idProperty: "_id",
-  // detailView: function(record) {
-  //   return `/inventory/tools/details/${record.getData("_id")}`;
-  // },
+  detailView: function(record) {
+    return `/workflow/details/${record.getData("_id")}/summary`;
+  },
   fields: [
     {
       label: "ID",

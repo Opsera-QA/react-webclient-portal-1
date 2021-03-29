@@ -45,7 +45,7 @@ function ToolLogsPanel({ toolData, accessToken }) {
       {
         Header: "Status",
         accessor: "status",
-        Cell: (row) => {
+        Cell: function formatCell(row) {
           return row.value ?
             (row.value !== "success")
               ? <>
@@ -71,7 +71,7 @@ function ToolLogsPanel({ toolData, accessToken }) {
       {
         Header: "Created",
         accessor: "createdAt",
-        Cell: (row) => {
+        Cell: function formatCell(row) {
           return format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a");
         },
         class: "no-wrap-inline",
@@ -79,7 +79,7 @@ function ToolLogsPanel({ toolData, accessToken }) {
       {
         Header: "Info",
         accessor: "row",
-        Cell: (row) => {
+        Cell: function formatCell(row) {
           return row["row"]["values"].action !== "automation task" ?
             <FontAwesomeIcon icon={faSearchPlus}
                              style={{ cursor: "pointer" }}

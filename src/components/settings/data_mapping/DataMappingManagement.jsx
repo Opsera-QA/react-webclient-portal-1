@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { AuthContext } from "contexts/AuthContext";
 import ProjectsTagTable from "./projects/ProjectTagsTable";
 import UsersTagsTable from "./users/UsersTagsTable";
@@ -13,8 +13,9 @@ import CustomTab from "components/common/tabs/CustomTab";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import toolsActions from "components/inventory/tools/tools-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
+import axios from "axios";
 
-function Tagging() {
+function DataMappingManagement() {
   const { tabKey } = useParams();
   const toastContext = useContext(DialogToastContext);
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -26,9 +27,28 @@ function Tagging() {
   const [opseraProjectTags, setOpseraProjectTags] = useState(undefined);
   const [toolRegistryList, setToolRegistryList] = useState(undefined);
   const history = useHistory();
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
   const handleTabClick = (tabSelection) => (e) => {
@@ -36,20 +56,35 @@ function Tagging() {
     setActiveTab(tabSelection);
   };
 
-  const loadData = async () => {
-    setIsLoading(true);
-    await getRoles();
-    if ((projectTags && projectTags.length === 0) || (`usersTags && usersTags.length === 0`) ) {
-      await getToolRegistryList();
-      await getProjectTags();
-    } else {
-      setOpseraProjectTags([{value : "Skipping onload of project Tags"}]);
-      setToolRegistryList([{value : "Skipping onload of tool registry info"}]);
+  const loadData = async (cancelSource = cancelTokenSource) => {
+
+    try {
+      setIsLoading(true);
+      await getRoles(cancelSource);
+
+      if ((projectTags && projectTags.length === 0) || (`usersTags && usersTags.length === 0`) ) {
+        await getToolRegistryList();
+        await getProjectTags();
+      } else {
+        setOpseraProjectTags([{value : "Skipping onload of project Tags"}]);
+        setToolRegistryList([{value : "Skipping onload of tool registry info"}]);
+      }
+
     }
-    setIsLoading(false);
+    catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
+      }
+    }
+    finally {
+      if (isMounted?.current === true ) {
+        setIsLoading(false);
+      }
+    }
   };
 
-  const getRoles = async () => {
+  const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
     if (!userRoleAccess) {
@@ -58,8 +93,8 @@ function Tagging() {
       return;
     }
     setAccessRoleData(userRoleAccess);
-    await fetchProjectTags();
-    await fetchUserTags();
+    await fetchProjectTags(cancelSource);
+    await fetchUserTags(cancelSource);
   };
 
   const getProjectTags = async () => {
@@ -84,18 +119,18 @@ function Tagging() {
     }
   };
 
-  const fetchProjectTags = async () => {
+  const fetchProjectTags = async (cancelSource = cancelTokenSource) => {
     try {
-      const projectMappings = await dataMappingActions.getProjectMappings(getAccessToken);
+      const projectMappings = await dataMappingActions.getProjectMappingsV2(getAccessToken, cancelSource);
       setProjectTags(projectMappings?.data);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     }
   };
 
-  const fetchUserTags = async () => {
+  const fetchUserTags = async (cancelSource = cancelTokenSource) => {
     try {
-      const userMappings = await dataMappingActions.getUserMappings(getAccessToken);
+      const userMappings = await dataMappingActions.getUserMappingsV2(getAccessToken, cancelSource);
       setUsersTags(userMappings.data);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -213,7 +248,7 @@ function Tagging() {
   if (!accessRoleData) {
     return (
       <ScreenContainer
-        breadcrumbDestination={"mapping"}
+        breadcrumbDestination={"dataMappingManagement"}
         pageDescription={"Manage data mapping for the Opsera Analytics Engine."}
         isLoading={true}
       />
@@ -222,7 +257,7 @@ function Tagging() {
 
   return (
     <ScreenContainer
-      breadcrumbDestination={"mapping"}
+      breadcrumbDestination={"dataMappingManagement"}
       accessDenied={!accessRoleData?.PowerUser && !accessRoleData?.Administrator && !accessRoleData?.OpseraAdministrator &&  !accessRoleData?.SassPowerUser}
       pageDescription={"Manage data mapping for the Opsera Analytics Engine."}
     >
@@ -247,4 +282,4 @@ function TagsTabView({ activeTab, loadData, isLoading, projectTags, usersTags })
   }
 }
 
-export default Tagging;
+export default DataMappingManagement;

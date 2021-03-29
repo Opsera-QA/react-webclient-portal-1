@@ -756,7 +756,7 @@ function SonarStepConfiguration({
             <Form.Label className="mt-2 pl-1">
               <Link to={"/inventory/tools/details/" + formData.toolConfigId}>
                 <FontAwesomeIcon icon={faTools} className="pr-1"/> View/edit
-                this tool's Registry settings
+                this tool&apos;s Registry settings
               </Link>
             </Form.Label>
           )}

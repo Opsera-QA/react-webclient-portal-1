@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Card, Col, Row } from "react-bootstrap";
-import usersTagsMetadata from "components/settings/data_tagging/users/tagging-users-metadata";
+import usersTagsMetadata from "components/settings/data_mapping/users/tagging-users-metadata";
 import Model from "core/data_model/model";
-import dataMappingActions from "components/settings/data_tagging/data-mapping-actions";
+import dataMappingActions from "components/settings/data_mapping/data-mapping-actions";
 import LoadingDialog from "components/common/status_notifications/loading";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
@@ -20,29 +20,54 @@ import UserMappingOpseraUserSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingOpseraUserSelectInput";
 import UserMappingSourceControlUserSelectInput
   from "components/common/list_of_values_input/settings/data_tagging/users/UserMappingSourceControlUserSelectInput";
+  import axios from "axios";
 
 function UsersMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [usersMappingDto, setUsersMappingDto] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
   const loadData = async () => {
-    let modelData = typeof toolTypeData !== "undefined" ? toolTypeData.getPersistData() : usersTagsMetadata.newModelBase;
-    setUsersMappingDto(new Model(modelData, usersTagsMetadata, false));
+    if (isMounted?.current === true) {
+      setIsLoading(true);
+      let modelData = typeof toolTypeData !== "undefined" ? toolTypeData.getPersistData() : usersTagsMetadata.newModelBase;
+      setUsersMappingDto(new Model(modelData, usersTagsMetadata, false));
+      setIsLoading(false);
+    }
   };
 
-  const createMapping = async () => {
-    let response = await dataMappingActions.createUserMapping(usersMappingDto, getAccessToken);
+  const createMapping = async (cancelSource = cancelTokenSource) => {
+    let response = await dataMappingActions.createUserMappingV2(usersMappingDto, getAccessToken, cancelSource);
     if (response?.status === 200) {
       handleClose();
     }
   };
 
-  const updateMapping = async () => {
-    return await dataMappingActions.updateUserMapping(usersMappingDto, getAccessToken);
+  const updateMapping = async (cancelSource = cancelTokenSource) => {
+    return await dataMappingActions.updateUserMappingV2(usersMappingDto, getAccessToken, cancelSource);
   };
 
   const getDynamicFields = () => {
@@ -83,6 +108,7 @@ function UsersMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
 
   return (
     <EditorPanelContainer
+      isLoading={isLoading}
       recordDto={usersMappingDto}
       setRecordDto={setUsersMappingDto}
       createRecord={createMapping}

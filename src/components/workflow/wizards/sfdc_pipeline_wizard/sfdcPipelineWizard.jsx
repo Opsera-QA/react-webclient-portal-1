@@ -6,7 +6,6 @@ import SfdcPipelineComponents from "./sfdcPipelineComponents";
 import SfdcPipelineModifiedFiles from "./sfdcPipelineModifiedFiles";
 import ErrorDialog from "components/common/status_notifications/error";
 import SfdcPipelineXMLView from "./sfdcPipelineXMLView";
-import { faGalacticSenate } from "@fortawesome/free-brands-svg-icons";
 import sfdcPipelineActions from "./sfdc-pipeline-actions";
 import SfdcPipelineProfileComponents from "./sfdcPipelineProfileComponents";
 import SfdcUnitTestSelectionView from "./sfdcUnitTestSelectionView";

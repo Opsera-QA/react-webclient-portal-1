@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { Card, Col, Row } from "react-bootstrap";
-import projectTagsMetadata from "components/settings/data_tagging/projects/tagging-project-metadata";
+import projectTagsMetadata from "components/settings/data_mapping/projects/tagging-project-metadata";
 import Model from "core/data_model/model";
-import dataMappingActions from "components/settings/data_tagging/data-mapping-actions";
+import dataMappingActions from "components/settings/data_mapping/data-mapping-actions";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
@@ -23,29 +23,54 @@ import JenkinsJobSelectInput
 import SonarProjectSelectInput
   from "../../../../common/list_of_values_input/settings/data_tagging/projects/SonarProjectSelectInput";
 import TagManager from "components/common/inputs/tags/TagManager";
+import axios from "axios";
 
 function ProjectMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [projectMappingDto, setProjectMappingDto] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
   const loadData = async () => {
-    let modelData = typeof toolTypeData !== "undefined" ? toolTypeData.getPersistData() : projectTagsMetadata.newModelBase;
-    setProjectMappingDto(new Model(modelData, projectTagsMetadata, false));
+    if (isMounted?.current === true) {
+      setIsLoading(true);
+      let modelData = typeof toolTypeData !== "undefined" ? toolTypeData.getPersistData() : projectTagsMetadata.newModelBase;
+      setProjectMappingDto(new Model(modelData, projectTagsMetadata, false));
+      setIsLoading(false);
+    }
   };
 
-  const createMapping = async () => {
-    let response = await dataMappingActions.createProjectMapping(projectMappingDto, getAccessToken);
+  const createMapping = async (cancelSource = cancelTokenSource) => {
+    let response = await dataMappingActions.createProjectMappingV2(projectMappingDto, getAccessToken, cancelSource);
     if (response?.status === 200) {
       handleClose();
     }
   };
 
-  const updateMapping = async () => {
-    return await dataMappingActions.updateProject(projectMappingDto, getAccessToken);
+  const updateMapping = async (cancelSource = cancelTokenSource) => {
+    return await dataMappingActions.updateProjectV2(projectMappingDto, getAccessToken, cancelSource);
   };
 
   const getDynamicFields = () => {
@@ -122,6 +147,7 @@ function ProjectMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
 
   return (
     <EditorPanelContainer
+      isLoading={isLoading}
       recordDto={projectMappingDto}
       setRecordDto={setProjectMappingDto}
       createRecord={createMapping}

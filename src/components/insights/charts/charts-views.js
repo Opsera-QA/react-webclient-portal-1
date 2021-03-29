@@ -234,5 +234,5 @@ export const adjustBarWidth = (data, isVertical=true) => {
     }
   }
 
-  return { padding }
+  return { padding };
 };
