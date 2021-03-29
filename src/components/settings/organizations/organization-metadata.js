@@ -18,10 +18,10 @@ export const organizationMetadata = {
     {
       label: "Name",
       id: "name",
+      minLength: 3,
       isRequired: true,
       maxLength: 50,
-      regexValidator: regexHelpers.regexTypes["generalTextWithSpaces"],
-      formText: "Names can be up to 50 characters and can consist of letters, apostrophes, numbers, spaces, dashes, colons, underscores, and periods"
+      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces,
     },
     {
       label: "Leader",
