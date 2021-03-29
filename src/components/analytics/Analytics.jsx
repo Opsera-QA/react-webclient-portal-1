@@ -13,7 +13,7 @@ import CodeCoverageMetricsView from "./views/sonarCodeCoverageView";
 import InfoDialog from "../common/status_notifications/info";
 import "./analytics.css";
 import "./charts/charts.css";
-import DeploymentFrequencyLineChart from "./charts/deploymentFrequencyLineChart.jsx";
+import DeploymentFrequencyLineChart from "./charts/DeploymentFrequencyLineChart.jsx";
 import JiraIssuesCreatedByDateLineChart from "./charts/jiraIssuesCreatedByDateLineChart.jsx";
 import DeploymentsStackedBarChart from "./charts/DeploymentsStackedBarChart";
 import CircleChart from "./charts/CircleChart";

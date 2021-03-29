@@ -11,7 +11,7 @@ import SummaryCountBlocksView from "../summaryCountBlocksView";
 import JenkinsBuildDurationBarChart from "../../charts/JenkinsBuildDurationBarChart";
 import JenkinsBuildsByUserBarChart from "../../charts/JenkinsBuildsByUserBarChart";
 import JenkinsStatusByJobNameBarChart from "../../charts/JenkinsStatusByJobNameBarChart";
-import DeploymentFrequencyLineChart from "../../charts/deploymentFrequencyLineChart.jsx";
+import DeploymentFrequencyLineChart from "../../charts/DeploymentFrequencyLineChart.jsx";
 import RecentBuildsTable from "../../metrics/RecentBuildsTable.jsx";
 import OpseraPipelineByStatusBarChart from "../../charts/OpseraPipelineByStatusBarChart";
 import OpseraBuildDurationBarChart from "../../charts/OpseraBuildDurationBarChart";

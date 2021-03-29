@@ -10,6 +10,7 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
 import { defaultConfig, mainColor, failColor, mainPurple, warningColor,
          adjustBarWidth } from "../../insights/charts/charts-views";
+import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function JenkinsStatusByJobNameBarChar({ persona, date }) {
   const contextType = useContext(AuthContext);
