@@ -10,7 +10,7 @@ import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
 import { defaultConfig, getColor, assignStandardColors,
-         adjustBarWidth } from '../../insights/charts/charts-views';
+         adjustBarWidth, capitalizeLegend } from '../../insights/charts/charts-views';
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 function OpseraBuildsByUserBarChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -57,6 +57,7 @@ function OpseraBuildsByUserBarChart({ persona, date }) {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res?.data?.data[0] ? res.data.data[0].opseraPipelinesByUser : [];
       assignStandardColors(dataObject?.data, true);
+      capitalizeLegend(dataObject?.data, ["value"]);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -96,7 +97,7 @@ function OpseraBuildsByUserBarChart({ persona, date }) {
                     true, true, 'cutoffString', 'wholeNumbers')}
               {...adjustBarWidth(data ? data.data : [], false)}
               data={data ? data.data : []}
-              keys={["value"]}
+              keys={["Value"]}
               indexBy="key"
               onClick={() => setShowModal(true)}
               padding={0.3}
