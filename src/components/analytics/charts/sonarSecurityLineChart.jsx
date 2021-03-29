@@ -134,7 +134,7 @@ function SonarSecurityLineChart({ persona, sonarMeasure, date }) {
                 tickRotation: -45,
                 legend: "Date",
                 legendOffset: 40,
-                tickValues: data.maxLength && data.maxLength > 10 ? 10 : 'every 1 days',
+                tickValues: data.maxLength && data.maxLength > 10 ? 10 : "every 1 days",
               }} 
               colors={getColor}           
               tooltip={({ point, color }) => <ChartTooltip 

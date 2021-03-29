@@ -100,7 +100,6 @@ function BugsCountLineChart({ persona, date }) {
             <ResponsiveLine
               {...defaultConfig("Number of Bugs", "Date", 
                       false, true, "wholeNumbers", "monthDate2")}
-              // {...config(getColor)}
               data={data ? data.data : []}
               xScale={{ type: "point" }}
               yScale={{ 
