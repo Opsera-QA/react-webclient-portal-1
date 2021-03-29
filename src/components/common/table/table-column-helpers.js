@@ -157,6 +157,17 @@ export const getTagArrayColumn = (field, className) => {
   };
 };
 
+export const getTableLeaderColumn = (field, className) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: function parseLeader(row) {
+      return row.value ? `${row.value.name} (${row.value.email})` : "";
+    },
+    class: className ? className : "no-wrap-inline"
+  };
+};
+
 export const getTableDateColumn = (field, className) => {
   return {
     Header: getTableHeader(field),

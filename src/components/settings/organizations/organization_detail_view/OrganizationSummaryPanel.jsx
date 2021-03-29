@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import TagField from "components/common/fields/multiple_items/TagField";
+import LeaderField from "components/common/fields/object/settings/organizations/LeaderField";
 
 function OrganizationSummaryPanel({ organizationData, setActiveTab }) {
   if (organizationData == null) {
@@ -23,7 +24,7 @@ function OrganizationSummaryPanel({ organizationData, setActiveTab }) {
           <TextFieldBase dataObject={organizationData} fieldName={"owner_name"}/>
         </Col>
         <Col lg={6}>
-          {/*<TextFieldBase dataObject={organizationData} fieldName={"leader"}/>*/}
+          <LeaderField dataObject={organizationData} fieldName={"leader"}/>
         </Col>
         <Col lg={12}>
           <TagField dataObject={organizationData} />

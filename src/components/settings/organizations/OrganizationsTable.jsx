@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import {
+  getTableLeaderColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -21,7 +22,7 @@ function OrganizationsTable({ organizations, isLoading, loadData, isMounted }) {
     () => [
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "owner_name")),
-      getTableTextColumn(getField(fields, "leader"))
+      getTableLeaderColumn(getField(fields, "leader"))
     ],
     []
   );
