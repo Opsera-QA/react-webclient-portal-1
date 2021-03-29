@@ -4,11 +4,13 @@ import { ResponsiveBar } from "@nivo/bar";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import InfoDialog from "../../common/status_notifications/info";
-import config from "./jenkinsBuildDurationBarChartConfigs";
 import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
+         capitalizeLegend } from "../../insights/charts/charts-views";
+import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function JenkinsBuildDurationBarChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -37,6 +39,8 @@ function JenkinsBuildDurationBarChart({ persona, date }) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].jenkinsBuildDuration : [];
+      assignStandardColors(dataObject?.data, true);
+      capitalizeLegend(dataObject?.data, ["value"]);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -91,44 +95,19 @@ function JenkinsBuildDurationBarChart({ persona, date }) {
           ) : (
             <ResponsiveBar
               data={data ? data.data : []}
-              keys={config.keys}
-              layout="vertical"
-              indexBy="key"
               onClick={() => setShowModal(true)}
-              margin={config.margin}
-              padding={0.3}
-              colors={{ scheme: "category10" }}
-              borderColor={{ theme: "background" }}
+              {...defaultConfig("Build Duration (Minutes)", "Build Number", 
+                      false, true, "wholeNumbers", "numbers")}
+              keys={["Value"]}
+              indexBy="key"
               colorBy="id"
-              defs={config.defs}
-              fill={config.fill}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              enableLabel={false}
-              borderRadius={5}
-              labelSkipWidth={12}
-              labelSkipHeight={12}
-              labelTextColor="inherit:darker(2)"
-              animate={true}
-              motionStiffness={90}
-              motionDamping={15}
-              legends={config.legends}
-              tooltip={({ data, value, color }) => (
-                <div>
-                  <strong style={{ color }}> Duration: </strong> {value} minutes <br></br>
-                  <strong style={{ color }}> Build Number: </strong> {data.buildNum} <br></br>
-                  <strong style={{ color }}> Job Name: </strong> {data.jobName} <br></br>
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
+              colors={getColorByData}
+              {...adjustBarWidth(data ? data.data : [])}
+              tooltip={({ data, value, color }) => <ChartTooltip 
+                              titles = {["Duration", "Build Number", "Job Name"]}
+                              values = {[`${value} minutes`, data.buildNum, data.jobName]}
+                              style = {false}
+                              color = {color} />}
             />
           )}
         </div>

@@ -8,7 +8,7 @@ import LoadingDialog from "../../../common/status_notifications/loading";
 import ErrorDialog from "../../../common/status_notifications/error";
 import InfoDialog from "../../../common/status_notifications/info";
 import SummaryCountBlocksView from "../summaryCountBlocksView";
-import JenkinsBuildDurationBarChart from "../../charts/jenkinsBuildDurationBarChart";
+import JenkinsBuildDurationBarChart from "../../charts/JenkinsBuildDurationBarChart";
 import JenkinsBuildsByUserBarChart from "../../charts/jenkinsBuildsByUserBarChart";
 import JenkinsStatusByJobNameBarChart from "../../charts/jenkinsStatusByJobNameBarChart";
 import DeploymentFrequencyLineChart from "../../charts/deploymentFrequencyLineChart.jsx";
