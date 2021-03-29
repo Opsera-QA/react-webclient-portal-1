@@ -7,7 +7,7 @@ import ErrorDialog from "../common/status_notifications/error";
 import InfoDialog from "../common/status_notifications/info";
 import BuildCounts from "../analytics/metrics/buildCounts";
 import JenkinsBuildDurationBarChart from "../analytics/charts/JenkinsBuildDurationBarChart";
-import JenkinsBuildsByUserBarChart from "../analytics/charts/jenkinsBuildsByUserBarChart";
+import JenkinsBuildsByUserBarChart from "../analytics/charts/JenkinsBuildsByUserBarChart";
 import JenkinsStatusByJobNameBarChart from "../analytics/charts/jenkinsStatusByJobNameBarChart";
 
 function PipelineDashboard( { persona } ) {

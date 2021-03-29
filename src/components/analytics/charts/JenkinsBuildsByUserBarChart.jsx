@@ -4,11 +4,13 @@ import { ResponsiveBar } from "@nivo/bar";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import InfoDialog from "../../common/status_notifications/info";
-import config from "./jenkinsBuildsByUserBarChartConfigs";
 import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
+         capitalizeLegend } from "../../insights/charts/charts-views";
+import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function JenkinsBuildsByUserBarChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -54,6 +56,8 @@ function JenkinsBuildsByUserBarChart({ persona, date }) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].jenkinsBuildsByUser : [];
+      assignStandardColors(dataObject?.data, true);
+      capitalizeLegend(dataObject?.data, ["value"]);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -90,45 +94,22 @@ function JenkinsBuildsByUserBarChart({ persona, date }) {
           ) : (
             <ResponsiveBar
               data={data ? data.data : []}
-              keys={config.keys}
+              {...defaultConfig("Users", "Number of Builds", 
+                      true, true, "subString", "")}
+              {...adjustBarWidth(data ? data.data : [], false)}
+              // keys={config.keys}
+              // indexBy="key"
+              keys={["Value"]}
               indexBy="key"
-              onClick={() => setShowModal(true)}
-              margin={config.margin}
-              padding={0.3}
-              layout={"horizontal"}
-              colors={{ scheme: "dark2" }}
-              borderColor={{ theme: "background" }}
               colorBy="id"
-              defs={config.defs}
-              fill={config.fill}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              labelSkipWidth={12}
-              labelSkipHeight={12}
-              enableLabel={false}
-              borderRadius={5}
-              labelTextColor="inherit:darker(2)"
-              animate={true}
-              motionStiffness={90}
-              borderWidth={2}
-              motionDamping={15}
-              legends={config.legends}
-              tooltip={({ indexValue, value, color }) => (
-                <div>
-                  <strong style={{ color }}>User: </strong> {indexValue}
-                  <br></br>
-                  <strong style={{ color }}> No. of Builds: </strong> {value} Builds
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
+              layout="horizontal"
+              colors={getColorByData}
+              onClick={() => setShowModal(true)}
+              tooltip={({ indexValue, value, color }) => <ChartTooltip 
+                              titles = {["User", "Number of Builds"]}
+                              values = {[indexValue, `${value} builds`]}
+                              style = {false}
+                              color = {color} />}
             />
           )}
         </div>
