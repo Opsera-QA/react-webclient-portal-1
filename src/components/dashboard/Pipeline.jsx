@@ -8,7 +8,7 @@ import InfoDialog from "../common/status_notifications/info";
 import BuildCounts from "../analytics/metrics/buildCounts";
 import JenkinsBuildDurationBarChart from "../analytics/charts/JenkinsBuildDurationBarChart";
 import JenkinsBuildsByUserBarChart from "../analytics/charts/JenkinsBuildsByUserBarChart";
-import JenkinsStatusByJobNameBarChart from "../analytics/charts/jenkinsStatusByJobNameBarChart";
+import JenkinsStatusByJobNameBarChart from "../analytics/charts/JenkinsStatusByJobNameBarChart";
 
 function PipelineDashboard( { persona } ) {
   const contextType = useContext(AuthContext);

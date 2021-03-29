@@ -107,6 +107,11 @@ function JenkinsStatusByJobNameBarChar({ persona, date }) {
                 }
               }}
               onClick={() => setShowModal(true)}
+              tooltip={({ indexValue, color, value, id }) => <ChartTooltip 
+                              titles = {["Build Tag", `${id} Builds`]}
+                              values = {[indexValue, value]}
+                              style = {false}
+                              color = {color} />}
             />
           )}
         </div>
