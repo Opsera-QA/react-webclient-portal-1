@@ -12,7 +12,7 @@ export const goldHues = [mainGold, "#F5C453", "#F9DC98", "#FDF3DD"];
 export const purpleHues = [mainPurple, "#7368AA", "#ABA4CC", "#E3E1EE"];
 // const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
 
-export const standardColors = [mainColor, "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173"];
+export const standardColors = [mainColor, "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173", "#E6E5E3"];
 export const gradationalColors = ["#B1AeA7", "#7A756C", mainColor, "#1E1D1B"];
 // purpleHues.forEach((_, i) => standardColors.push(greyHues[greyHues.length - i - 2], purpleHues[i + 1]));
 
@@ -28,6 +28,7 @@ export const assignBooleanColors = data => {
   if (data && data[0] && !("Successful" in data[0])) {
     data.sort((a, b) => a.id > b.id ? 1 : -1); // to display success before fail in legend
   }
+
   data.forEach(data => {
     if (data.id) {
       data.color = (data.id === "Success" || data.Successful) ? mainColor : failColor;

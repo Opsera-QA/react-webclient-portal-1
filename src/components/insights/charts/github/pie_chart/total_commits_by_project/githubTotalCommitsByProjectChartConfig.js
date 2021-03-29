@@ -4,5 +4,6 @@ export default (getColor) => ({
   innerRadius: .5,
   sliceLabelsSkipAngle: 10,
   sliceLabelsTextColor: "#ffffff",
-  colors: getColor
+  colors: getColor,
+  labelTextColor: "#ffffff"
 });

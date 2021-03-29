@@ -30,7 +30,7 @@ function OpseraRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, das
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "run_count"), "cell-center no-wrap-inline"),
+      getTableTextColumn(getField(fields, "run_count"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "pipeline_name")),
       getTableDateTimeColumn(getField(fields, "timestamp")),
       getTableTextColumn(getField(fields, "duration")),
@@ -106,6 +106,7 @@ function OpseraRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, das
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
+        // chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage} noFooter={true}/>}
         chart={getChartTable()}
         loadChart={loadData}
         dashboardData={dashboardData}

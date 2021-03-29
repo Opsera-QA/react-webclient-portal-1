@@ -10,6 +10,9 @@ import {
   faStopCircle,
   faTimesCircle, faTrash, faPlay
 } from "@fortawesome/pro-light-svg-icons";
+import SuccessIcon from "../../common/icons/table/SuccessIcon";
+import WarningIcon from "../../common/icons/table/WarningIcon";
+import FailIcon from "../../common/icons/table/FailIcon";
 import React from "react";
 import Model from "core/data_model/model";
 import PipelineTypesField from "components/common/form_fields/pipelines/PipelineTypesField";
@@ -21,6 +24,7 @@ import {Button} from "react-bootstrap";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date-helpers";
 import {truncateString} from "components/common/helpers/string-helpers";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 const getTableHeader = (field) => {
   return field["label"];
@@ -329,33 +333,24 @@ export const getChartPipelineStatusColumn = (field, className) => {
     Cell: function parseStatus(row) {
       return row.value ? (
         row.value === "FAILURE" || row.value === "failed" || row.value === "failure" ? (
-          <>
-            <div style={{ display: "flex", flexWrap: "nowrap" }}>
-              <div>
-                <FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" />
-              </div>
-              <div className="ml-1">{row.value}</div>
+          <TooltipWrapper innerText={"Failure"}>
+            <div>
+              <FailIcon />
             </div>
-          </>
+          </TooltipWrapper>
         ) : (
           row.value === "UNSTABLE" || row.value === "unstable" ? (
-            <>
-              <div style={{ display: "flex", flexWrap: "nowrap" }}>
-                <div>
-                  <FontAwesomeIcon icon={faCircle} className="cell-icon yellow" />
-                </div>
-                <div className="ml-1">{row.value}</div>
-              </div>
-            </>
-          ) : (
-          <>
-            <div style={{ display: "flex", flexWrap: "nowrap" }}>
+            <TooltipWrapper innerText={"Unstable"}>
               <div>
-                <FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" />
+                <WarningIcon />
               </div>
-              <div className="ml-1">{row.value}</div>
-            </div>
-          </>
+            </TooltipWrapper>
+          ) : (
+            <TooltipWrapper innerText={"Success"}>
+              <div>
+                <SuccessIcon />
+              </div>
+            </TooltipWrapper>
           )
       )) : (
         "unknown"

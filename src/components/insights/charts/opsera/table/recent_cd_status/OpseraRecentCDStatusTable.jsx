@@ -68,7 +68,7 @@ function OpseraRecentCDStatusTable({ kpiConfiguration, setKpiConfiguration, dash
   const noDataMessage = "No Data is available for this chart at this time";
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "run_count"), "cell-center no-wrap-inline"),
+      getTableTextColumn(getField(fields, "run_count"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "pipeline_name")),
       getTableTextColumn(getField(fields, "step_name")),
       getTableTextColumn(getField(fields, "tool")),
@@ -83,7 +83,7 @@ function OpseraRecentCDStatusTable({ kpiConfiguration, setKpiConfiguration, dash
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage} />}
+        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage} noFooter={true} />}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
