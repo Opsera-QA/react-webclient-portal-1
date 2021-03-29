@@ -62,7 +62,7 @@ function NewBugsCountLineChart({ persona, date }) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].newBugs : [];
-      assignStandardColors(dataObject?.data);
+      assignStandardColors(dataObject?.data, true);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
