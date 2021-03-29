@@ -17,6 +17,10 @@ function CopyToClipboardIcon({ copyString, className }) {
     setCopiedToClipboard(true);
   };
 
+  if (copyString == null || copyString === "") {
+    return null;
+  }
+
   return (
     <ButtonTooltip trigger={["hover", "focus"]} innerText={copiedToClipboard ? "Copied to Clipboard!" : "Copy to clipboard"}>
       <FontAwesomeIcon
