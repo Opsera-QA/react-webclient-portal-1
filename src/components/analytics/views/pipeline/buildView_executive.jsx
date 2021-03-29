@@ -10,7 +10,7 @@ import InfoDialog from "../../../common/status_notifications/info";
 import SummaryCountBlocksView from "../summaryCountBlocksView";
 import JenkinsBuildDurationBarChart from "../../charts/JenkinsBuildDurationBarChart";
 import JenkinsBuildsByUserBarChart from "../../charts/JenkinsBuildsByUserBarChart";
-import JenkinsStatusByJobNameBarChart from "../../charts/JenkinsStatusByJobNameBarChart";
+import JenkinsStatusByJobNameBarChart from "../../charts/jenkinsStatusByJobNameBarChart";
 import DeploymentFrequencyLineChart from "../../charts/DeploymentFrequencyLineChart.jsx";
 import RecentBuildsTable from "../../metrics/RecentBuildsTable.jsx";
 import OpseraPipelineByStatusBarChart from "../../charts/OpseraPipelineByStatusBarChart";
