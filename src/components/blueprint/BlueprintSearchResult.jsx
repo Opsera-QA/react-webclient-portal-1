@@ -14,9 +14,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import Tab from "react-bootstrap/Tab";
 import ReactJson from "react-json-view";
+import ExportBlueprintLogButton from "components/common/buttons/export/blueprints/ExportBlueprintLogButton";
 
 
-function BlueprintSearchResult({ searchResults }) {
+function BlueprintSearchResult({ searchResults, blueprintName, numberOfSteps }) {
   const [showModal, setShowModal] = useState(false);
   const [showTable, setShowTable] = useState(false);
   const [modalMessage, setModalMessage] = useState({});
@@ -228,7 +229,7 @@ function BlueprintSearchResult({ searchResults }) {
               tableViewer(searchResults.anchore);
             }}
           >
-            <FontAwesomeIcon icon={faFileCode} fixedWidth />
+            <FontAwesomeIcon icon={faFileCode} fixedWidth className={"mr-1"}  />
             Security Report
           </Button>
         )}
@@ -241,7 +242,7 @@ function BlueprintSearchResult({ searchResults }) {
               handleClick(searchResults.xmlData);
             }}
           >
-            <FontAwesomeIcon icon={faFileCode} fixedWidth />
+            <FontAwesomeIcon icon={faFileCode} fixedWidth className={"mr-1"} />
             Package XML
           </Button>
         )}
@@ -264,7 +265,7 @@ function BlueprintSearchResult({ searchResults }) {
                     handleClick(searchResults.xmlData);
                   }}
                 >
-                  <FontAwesomeIcon icon={faFileCode} fixedWidth />
+                  <FontAwesomeIcon icon={faFileCode} fixedWidth className={"mr-1"} />
                   Package XML
                 </Button>
               </span>
@@ -272,6 +273,16 @@ function BlueprintSearchResult({ searchResults }) {
           )}
         {searchResults.data.length > 0 && (
           <Tab.Container id="left-tabs-example" defaultActiveKey={0}>
+            {completeInput && 
+            <ExportBlueprintLogButton 
+            className="mr-1" 
+            blueprintLog={completeInput} 
+            pipelineId={searchResults?.data[0]?.pipeline_id ? searchResults.data[0].pipeline_id : "N/A" } 
+            runCount={searchResults?.data[0]?.run_count ? searchResults.data[0].run_count : "N/A"}
+            blueprintName={blueprintName ? blueprintName : "N/A"}
+            numberOfSteps={numberOfSteps ? numberOfSteps : "N/A"}
+            logData={searchResults.data}
+            />}
             <Row>
               <Col sm={2}>
                 <div className="blueprint-title pl-3 mb-1">Steps</div>
@@ -304,7 +315,8 @@ function BlueprintSearchResult({ searchResults }) {
                   )}
                 </Nav>
               </Col>
-              <Col sm={9}>
+              <Col sm={9} >
+              
                 <Row>
                   <div className="blueprint-title pl-3 mb-1 ml-2">Blueprint</div>
                 </Row>
@@ -339,6 +351,7 @@ function BlueprintSearchResult({ searchResults }) {
           </Tab.Container>
         )}
       </div>
+      
       <ModalXML
         header={modalMessage._index}
         size="lg"
@@ -362,7 +375,9 @@ function BlueprintSearchResult({ searchResults }) {
 
 BlueprintSearchResult.propTypes = {
   searchResults: PropTypes.object,
-  value: PropTypes.any
+  value: PropTypes.any,
+  blueprintName: PropTypes.any,
+  numberOfSteps: PropTypes.number
 };
 
 export default BlueprintSearchResult;

@@ -21,6 +21,8 @@ import TabPanelContainer from "components/common/panels/general/TabPanelContaine
 import CustomTab from "components/common/tabs/CustomTab";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import PipelineFilterSelectInput from "components/logs/PipelineFilterSelectInput";
+import ExportLogSearchButton from "components/common/buttons/export/log_search/ExportLogSearchButton";
+import {getAllResultsForExport} from "components/common/buttons/export/exportHelpers";
 
 // TODO: This entire form needs to be completely refactored
 function LogSearch({tools, sideBySide}) {
@@ -37,6 +39,8 @@ function LogSearch({tools, sideBySide}) {
   const [submittedSearchTerm, setSubmittedSearchTerm] = useState(null);
   const [logTabData, setLogTabData] = useState([]);
   const [currentLogTab, setCurrentLogTab] = useState(0);
+  const [exportData, setExportData] = useState("");
+  const [exportDisabled, setExportDisabled] = useState(true);
 
   const [date, setDate] = useState([
     {
@@ -55,6 +59,7 @@ function LogSearch({tools, sideBySide}) {
   const node = useRef();
 
   const searchLogs = async (newTab) => {
+    setExportDisabled(true);
     setCurrentPage(1);
     submitClicked(true);
     setSubmittedSearchTerm(searchTerm);
@@ -74,6 +79,7 @@ function LogSearch({tools, sideBySide}) {
     }
 
     await getSearchResults(startDate, endDate, newTab);
+    await getAllResultsForExport(sDate, eDate, setIsLoading, getAccessToken(), searchTerm, filterType, getFormattedCustomFilters(), currentPage, setExportData, setExportDisabled);
   };
 
   const cancelSearchClicked = () => {
@@ -211,6 +217,7 @@ function LogSearch({tools, sideBySide}) {
           searchResults =
             result.data.hasOwnProperty("hits") && result.data.hits.hasOwnProperty("hits") ? result.data.hits : [];
         }
+
         newLogTabData[newLogTab] = searchResults;
         setLogTabData(newLogTabData);
         setIsLoading(false);
@@ -445,6 +452,7 @@ function LogSearch({tools, sideBySide}) {
           <Button variant="outline-secondary" className="ml-1" type="button" onClick={cancelSearchClicked}>
             Clear
           </Button>
+          <ExportLogSearchButton exportDisabled={exportDisabled} isLoading={isLoading} variant="primary" className="ml-1" searchResults={exportData}/>
           {getDateRangeButton()}
         </Col>
       </Row>

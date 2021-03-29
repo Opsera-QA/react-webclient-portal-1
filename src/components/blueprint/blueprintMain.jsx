@@ -546,12 +546,15 @@ function OPBlueprint(props) {
                 </Col>
               </Row>
             </div>
-            <BlueprintSearchResult searchResults={{
-              data: logData,
-              xmlData: xmlData,
-              anchore : anchoreResponse,
-              stats: anchoreStats
-            }}/>
+            <BlueprintSearchResult 
+              searchResults={{
+                data: logData,
+                xmlData: xmlData,
+                anchore : anchoreResponse,
+                stats: anchoreStats
+              }}
+              blueprintName={multiFilter?.value ? multiFilter.value : "N/A"} 
+              numberOfSteps={logData ? logData.length : "N/A"}/>
           </>
         ) : (
           ""
