@@ -10,6 +10,8 @@ import { getTableTextColumn } from "components/common/table/table-column-helpers
 import bitbucketRecentMergeRequestsMetadata from "components/insights/charts/bitbucket/table/bitbucket-recent-merge-requests/bitbucket-recent-merge-requests-metadata";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { format } from "date-fns";
+import Model from "core/data_model/model";
+import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
 function BitbucketRecentMergeRequestsTable({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = bitbucketRecentMergeRequestsMetadata.fields;
@@ -19,6 +21,7 @@ function BitbucketRecentMergeRequestsTable({ kpiConfiguration, setKpiConfigurati
   const [metrics, setMetrics] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [tableFilterDto, setTableFilterDto] = useState(new Model({...genericChartFilterMetadata.newObjectFields}, genericChartFilterMetadata, false));
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -41,7 +44,7 @@ function BitbucketRecentMergeRequestsTable({ kpiConfiguration, setKpiConfigurati
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
@@ -54,8 +57,12 @@ function BitbucketRecentMergeRequestsTable({ kpiConfiguration, setKpiConfigurati
       );
       let dataObject = response?.data?.data[0]?.bitbucketTimeTakenToCompleteMergeRequestReviewAndPushTime?.data;
 
+
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+        let newFilterDto = filterDto;
+        newFilterDto.setData("totalCount", response?.data?.data[0]?.bitbucketTimeTakenToCompleteMergeRequestReviewAndPushTime?.count);
+        setTableFilterDto({...newFilterDto});
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -89,12 +96,27 @@ function BitbucketRecentMergeRequestsTable({ kpiConfiguration, setKpiConfigurati
     []
   );
 
+  const getChartTable = () => {
+    return (
+      <CustomTable
+        columns={columns}
+        data={metrics}
+        noDataMessage={noDataMessage}
+        paginationDto={tableFilterDto}
+        setPaginationDto={setTableFilterDto}
+        loadData={loadData}
+        scrollOnLoad={false}
+      />
+    );
+  };
+
+
   return (
     <div>
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage} noFooter={true}/>}
+        chart={getChartTable()}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
