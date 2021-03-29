@@ -1,4 +1,4 @@
-export default (defaultColor, failColor, warningColor) => ({
+export default (defaultColor, failColor, accentColor, warningColor) => ({
   keys: ["Successful", "Failed", "Aborted", "Unstable"],
   indexBy: "_id",
   colorBy: "id",
@@ -7,6 +7,7 @@ export default (defaultColor, failColor, warningColor) => ({
     switch (bar.id) {
       case "Successful": return defaultColor;
       case "Failed": return failColor;
+      case "Aborted": return accentColor;
       default: return warningColor;
     }
   }

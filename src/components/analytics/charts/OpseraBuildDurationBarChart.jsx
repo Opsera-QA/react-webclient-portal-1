@@ -9,7 +9,8 @@ import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-import { defaultConfig, getColor, assignStandardColors } from '../../insights/charts/charts-views';
+import { defaultConfig, getColor, assignStandardColors, 
+         adjustBarWidth } from '../../insights/charts/charts-views';
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 function OpseraBuildDurationBarChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -92,6 +93,7 @@ function OpseraBuildDurationBarChart({ persona, date }) {
           <ResponsiveBar
             {...defaultConfig('Duration (Minutes)', 'Pipeline Run', 
                       false, true, 'wholeNumbers', 'values')}
+            {...adjustBarWidth(data ? data.data : [])}
             data={data ? data.data : []}
             keys={["value"]}
             layout="vertical"

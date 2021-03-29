@@ -1,41 +1,25 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import InfoDialog from "../../common/status_notifications/info";
-import config from "./jenkinsBuildsByUserBarChartConfigs";
 import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
+         capitalizeLegend } from "../../insights/charts/charts-views";
+import ChartTooltip from "../../insights/charts/ChartTooltip";
 
-function JenkinsBuildsByUserBarChart({ persona, date }) {
+function JenkinsBuildDurationBarChart({ persona, date }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const runEffect = async () => {
-      try {
-        await fetchData();
-      } catch (err) {
-        if (err.name === "AbortError")
-          // console.log("Request was canceled via controller.abort");
-          return;
-      }
-    };
-    runEffect();
-
-    return () => {
-      controller.abort();
-    };
-  }, []);
-
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     const { getAccessToken } = contextType;
     const accessToken = await getAccessToken();
@@ -43,8 +27,9 @@ function JenkinsBuildsByUserBarChart({ persona, date }) {
     const postBody = {
       data: [
         {
-          request: "jenkinsBuildsByUser",
+          request: "jenkinsBuildDuration",
           metric: "bar",
+          index: "jenkins-pipeline*",
         },
       ],
       startDate: date.start,
@@ -53,14 +38,34 @@ function JenkinsBuildsByUserBarChart({ persona, date }) {
 
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
-      let dataObject = res && res.data ? res.data.data[0].jenkinsBuildsByUser : [];
+      let dataObject = res && res.data ? res.data.data[0].jenkinsBuildDuration : [];
+      assignStandardColors(dataObject?.data, true);
+      capitalizeLegend(dataObject?.data, ["value"]);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
       setLoading(false);
       setErrors(err.message);
     }
-  };
+  }, [contextType]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const runEffect = async () => {
+      try {
+        await fetchData();
+      } catch (err) {
+        if (err.name === "AbortError")
+          //console.log("Request was canceled via controller.abort");
+          return;
+      }
+    };
+    runEffect();
+
+    return () => {
+      controller.abort();
+    };
+  }, [fetchData]);
 
   if (loading) return <LoadingDialog size="sm" />;
   else if (error) return <ErrorDialog error={error} />;
@@ -70,7 +75,7 @@ function JenkinsBuildsByUserBarChart({ persona, date }) {
     return (
       <>
         <ModalLogs
-          header="Builds By User"
+          header="Build Duration"
           size="lg"
           jsonMessage={data ? data.data : []}
           dataType="bar"
@@ -79,7 +84,7 @@ function JenkinsBuildsByUserBarChart({ persona, date }) {
         />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
-          <div className="chart-label-text">Jenkins: Builds by User</div>
+          <div className="chart-label-text">Jenkins: Build Duration</div>
           {typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200 ? (
             <div
               className="max-content-width p-5 mt-5"
@@ -89,55 +94,30 @@ function JenkinsBuildsByUserBarChart({ persona, date }) {
             </div>
           ) : (
             <ResponsiveBar
+              {...defaultConfig("Build Duration (Minutes)", "Build Number", 
+                      false, true, "wholeNumbers", "numbers")}
+              {...adjustBarWidth(data ? data.data : [])}
               data={data ? data.data : []}
-              keys={config.keys}
+              keys={["Value"]}
               indexBy="key"
-              onClick={() => setShowModal(true)}
-              margin={config.margin}
-              padding={0.3}
-              layout={"horizontal"}
-              colors={{ scheme: "dark2" }}
-              borderColor={{ theme: "background" }}
               colorBy="id"
-              defs={config.defs}
-              fill={config.fill}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              labelSkipWidth={12}
-              labelSkipHeight={12}
-              enableLabel={false}
-              borderRadius={5}
-              labelTextColor="inherit:darker(2)"
-              animate={true}
-              motionStiffness={90}
-              borderWidth={2}
-              motionDamping={15}
-              legends={config.legends}
-              tooltip={({ indexValue, value, color }) => (
-                <div>
-                  <strong style={{ color }}>User: </strong> {indexValue}
-                  <br></br>
-                  <strong style={{ color }}> No. of Builds: </strong> {value} Builds
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
+              colors={getColorByData}
+              onClick={() => setShowModal(true)}
+              tooltip={({ data, value, color }) => <ChartTooltip 
+                              titles = {["Duration", "Build Number", "Job Name"]}
+                              values = {[`${value} minutes`, data.buildNum, data.jobName]}
+                              style = {false}
+                              color = {color} />}
             />
           )}
         </div>
       </>
     );
 }
-JenkinsBuildsByUserBarChart.propTypes = {
+
+JenkinsBuildDurationBarChart.propTypes = {
   data: PropTypes.object,
   persona: PropTypes.string,
 };
 
-export default JenkinsBuildsByUserBarChart;
+export default JenkinsBuildDurationBarChart;
