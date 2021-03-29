@@ -96,6 +96,8 @@ function OrganizationManagement() {
         loadData={loadData}
         organizations={organizations}
         isMounted={isMounted}
+        organizationFilterModel={organizationFilterModel}
+        setOrganizationFilterModel={setOrganizationFilterModel}
       />
     </ScreenContainer>
   );

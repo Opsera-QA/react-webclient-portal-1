@@ -13,7 +13,7 @@ import {organizationMetadata} from "components/settings/organizations/organizati
 import NewOrganizationOverlay from "components/settings/organizations/NewOrganizationOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function OrganizationsTable({ organizations, isLoading, loadData, isMounted }) {
+function OrganizationsTable({ organizations, isLoading, loadData, isMounted, organizationFilterModel, setOrganizationFilterModel }) {
   const toastContext = useContext(DialogToastContext);
   let fields = organizationMetadata.fields;
   const history = useHistory();
@@ -52,9 +52,12 @@ function OrganizationsTable({ organizations, isLoading, loadData, isMounted }) {
     <FilterContainer
       loadData={loadData}
       addRecordFunction={createOrganization}
+      supportSearch={true}
       isLoading={isLoading}
       body={getGroupsTable()}
       titleIcon={faSitemap}
+      filterDto={organizationFilterModel}
+      setFilterDto={setOrganizationFilterModel}
       title={"Organizations"}
       type={"Organization"}
       className={"px-2 pb-2"}
@@ -66,7 +69,9 @@ OrganizationsTable.propTypes = {
   organizations: PropTypes.array,
   isLoading: PropTypes.bool,
   loadData: PropTypes.func,
-  isMounted: PropTypes.object
+  isMounted: PropTypes.object,
+  organizationFilterModel: PropTypes.object,
+  setOrganizationFilterModel: PropTypes.func
 };
 
 export default OrganizationsTable;
