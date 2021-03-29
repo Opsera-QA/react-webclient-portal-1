@@ -10,6 +10,8 @@ import { getTableTextColumn } from "components/common/table/table-column-helpers
 import bitbucketPendingMergeRequestsMetadata from "components/insights/charts/bitbucket/table/bitbucket-pending-merge-requests/bitbucket-pending-merge-requests-metadata";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { format } from "date-fns";
+import Model from "core/data_model/model";
+import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
 function BitbucketPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = bitbucketPendingMergeRequestsMetadata.fields;
@@ -19,6 +21,7 @@ function BitbucketPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, 
   const [metrics, setMetrics] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [tableFilterDto, setTableFilterDto] = useState(new Model({...genericChartFilterMetadata.newObjectFields}, genericChartFilterMetadata, false));
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -41,7 +44,7 @@ function BitbucketPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, 
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
@@ -56,6 +59,9 @@ function BitbucketPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, 
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+        let newFilterDto = filterDto;
+        newFilterDto.setData("totalCount", response?.data?.data[0]?.bitbucketPendingMergeRequests?.count);
+        setTableFilterDto({...newFilterDto});
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -88,12 +94,27 @@ function BitbucketPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, 
     []
   );
 
+
+  const getChartTable = () => {
+    return (
+      <CustomTable
+        columns={columns}
+        data={metrics}
+        noDataMessage={noDataMessage}
+        paginationDto={tableFilterDto}
+        setPaginationDto={setTableFilterDto}
+        loadData={loadData}
+        scrollOnLoad={false}
+      />
+    );
+  };
+
   return (
     <div>
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage} noFooter={true}/>}
+        chart={getChartTable()}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
