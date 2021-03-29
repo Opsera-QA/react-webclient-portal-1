@@ -26,7 +26,7 @@ function NonMembersPanel({selectedNonMembers, setSelectedNonMembers, nonMembers,
     setShowUnsavedChangesMessage(true);
     let newMembers = members;
     newMembers.push(...shownNonMembers);
-    let newNonMembers = nonMembers.filter(user => !newMembers.includes(user))
+    let newNonMembers = nonMembers.filter(user => !newMembers.includes(user));
     setNonMembers([...newNonMembers]);
     setMembers([...newMembers]);
     setSelectedNonMembers([]);
@@ -36,7 +36,7 @@ function NonMembersPanel({selectedNonMembers, setSelectedNonMembers, nonMembers,
     setShowUnsavedChangesMessage(true);
     let newMembers = members;
     newMembers.push(...selectedNonMembers);
-    let newNonMembers = nonMembers.filter(user => !newMembers.includes(user))
+    let newNonMembers = nonMembers.filter(user => !newMembers.includes(user));
     setNonMembers([...newNonMembers]);
     setMembers([...newMembers]);
     setSelectedNonMembers([]);
@@ -47,7 +47,7 @@ function NonMembersPanel({selectedNonMembers, setSelectedNonMembers, nonMembers,
       <div key={user} className={index % 2 === 0 ? "even-row" : "odd-row"}>
         <UserCard selectedUsers={selectedNonMembers} setSelectedUsers={setSelectedNonMembers} user={user}/>
       </div>
-    )
+    );
   };
 
   const formatUsers = () => {

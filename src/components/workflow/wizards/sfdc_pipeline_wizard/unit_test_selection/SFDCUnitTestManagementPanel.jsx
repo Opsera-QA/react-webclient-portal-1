@@ -1,13 +1,11 @@
 import React, {useState, useEffect, useContext} from "react";
-import {Row, Col, InputGroup, Button} from "react-bootstrap";
+import {Row, Col } from "react-bootstrap";
 import {AuthContext} from "contexts/AuthContext";
-import accountsActions from "components/admin/accounts/accounts-actions.js";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CancelButton from "components/common/buttons/CancelButton";
 import StandaloneSaveButton from "components/common/buttons/saving/StandaloneSaveButton";
 import LoadingDialog from "components/common/status_notifications/loading";
-import WarningDialog from "components/common/status_notifications/WarningDialog";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import MessageField from "components/common/form_fields/MessageField";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
@@ -41,7 +39,7 @@ function SFDCUnitTestManagementPanel({
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    console.log('in SFDCUnitTestManagementPanel useEffect')
+    console.log('in SFDCUnitTestManagementPanel useEffect');
     setIsLoading(true);
     let arrOfObj = totalMembers.filter(item => !members.includes(item));
     setNonMembers(arrOfObj);
@@ -63,7 +61,7 @@ function SFDCUnitTestManagementPanel({
     finally {
       setIsLoading(false);
     }
-  }
+  };
 
   const loadMemberStatus = async () => {
      console.log(selectedStep._id);
@@ -143,7 +141,7 @@ function SFDCUnitTestManagementPanel({
           onChange={event => updateSearchText(event.target.value)}
         />
       </div>
-    )
+    );
   };
 
   const getFilteredMembers = () => {
@@ -229,7 +227,12 @@ SFDCUnitTestManagementPanel.propTypes = {
   unitTestRecordId: PropTypes.string,
   pipelineId: PropTypes.string,
   filterDto: PropTypes.func,
-  setUnitTestRecordId: PropTypes.func
+  setUnitTestRecordId: PropTypes.func,
+  reload: PropTypes.func,
+  members: PropTypes.array,
+  setMembers: PropTypes.array,
+  totalMembers: PropTypes.any,
+  setTotalMembers: PropTypes.array
 };
 
 export default SFDCUnitTestManagementPanel;

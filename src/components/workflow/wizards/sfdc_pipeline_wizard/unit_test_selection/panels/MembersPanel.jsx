@@ -47,7 +47,7 @@ function MembersPanel({selectedMembers, setSelectedMembers, nonMembers, setNonMe
       <div key={user} className={index % 2 === 0 ? "even-row" : "odd-row"}>
         <UserCard selectedUsers={selectedMembers} setSelectedUsers={setSelectedMembers} user={user}/>
       </div>
-    )
+    );
   };
 
   const formatUsers = () => {
