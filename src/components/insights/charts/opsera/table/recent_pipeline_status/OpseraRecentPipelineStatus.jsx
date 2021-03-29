@@ -106,7 +106,6 @@ function OpseraRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, das
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        // chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage} noFooter={true}/>}
         chart={getChartTable()}
         loadChart={loadData}
         dashboardData={dashboardData}

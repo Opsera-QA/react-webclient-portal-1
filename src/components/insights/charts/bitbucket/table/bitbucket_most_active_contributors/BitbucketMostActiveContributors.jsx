@@ -100,12 +100,26 @@ function BitbucketMostActiveContributors({ kpiConfiguration, setKpiConfiguration
     []
   );
 
+  const getChartTable = () => {
+    return (
+      <CustomTable
+        columns={columns}
+        data={metrics}
+        noDataMessage={noDataMessage}
+        paginationDto={tableFilterDto}
+        setPaginationDto={setTableFilterDto}
+        loadData={loadData}
+        scrollOnLoad={false}
+      />
+    );
+  };
+
   return (
     <div>
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage} noFooter={true}/>}
+        chart={getChartTable()}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
