@@ -8,8 +8,9 @@ import LoadingDialog from "components/common/status_notifications/loading";
 
 function AccountSettings() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const { getUserRecord, setAccessRoles, featureFlagHideItemInProd } = useContext(AuthContext);
+  const { getUserRecord, setAccessRoles, featureFlagHideItemInProd, featureFlagHideItemInTest } = useContext(AuthContext);
   const envIsProd = featureFlagHideItemInProd();
+  const envIsTest = featureFlagHideItemInTest();
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
@@ -62,7 +63,7 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"dataMappingManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>
           {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"} />}
-          {/*<BreadcrumbPageLink breadcrumbDestination={"organizationManagement"}/>*/}
+          {!envIsTest && !envIsProd && <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"}/>}
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"ldapUserManagement"}/>
@@ -78,8 +79,8 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"} visible={!envIsProd}/>
           <BreadcrumbPageLink breadcrumbDestination={"dataMappingManagement"}/>
           {accessRoleData.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>}
-          {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"} />}
-          {/*<BreadcrumbPageLink breadcrumbDestination={"organizationManagement"}/>*/}
+          {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"}/>}
+          {!envIsTest && !envIsProd && <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"}/>}
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
         </>
