@@ -157,6 +157,19 @@ function OverviewLanding() {
 
             <div className="col-md px-2 landing-content-module">
               <img
+                alt="Toolchain Automation"
+                src="/img/platform.png"
+                width="195"
+                height="225"
+                className="d-inline-block align-top pointer"
+                onClick={() => {
+                  loadPlatforms();
+                }}
+              />
+            </div>
+
+            <div className="col-md px-2 landing-content-module">
+              <img
                 alt="Declarative Pipelines"
                 src="/img/pipeline.png"
                 width="195"
@@ -181,20 +194,17 @@ function OverviewLanding() {
               />
             </div>
 
-            <div className="col-md px-2 landing-content-module">
-              <img
-                alt="Toolchain Automation"
-                src="/img/platform.png"
-                width="195"
-                height="225"
-                className="d-inline-block align-top pointer"
-                onClick={() => {
-                  loadPlatforms();
-                }}
-              />
-            </div>
+
           </div>
           <div className="row mx-n2 mt-4">
+            <div className="col-md px-2 landing-content-module">
+              <div className="h5 text-color">Toolchain Automation</div>
+              <div className="text-muted pr-2">
+                You choose your tools, we take care of the rest. Put together the perfect CI/CD stack that fits your
+                organization’s goals with zero vendor lock-in.
+              </div>
+            </div>
+
             <div className="col-md px-2 landing-content-module">
               <div className="h5 text-color">
                 Declarative Pipelines
@@ -215,8 +225,7 @@ function OverviewLanding() {
                   {statsData.pendingPipelines.map((item, key) => (
                     <div key={key} className={"my-1"}>
                       <Button
-                        variant="outline-secondary" size="sm"
-                        className="w-100"
+                        variant="link"
                         onClick={() => {
                           loadPipelines(item._id);
                         }}
@@ -236,13 +245,12 @@ function OverviewLanding() {
                   {statsData.recentPipelines.map((item, key) => (
                     <div key={key} className={"my-1"}>
                       <Button
-                        variant="outline-secondary" size="sm"
-                        className="w-100"
+                        variant="link"
                         onClick={() => {
                           loadPipelines(item._id);
                         }}
                       >
-                        {item.name.substring(0, 20)}
+                        {item.name.substring(0, 50)}
                         {new Date(item.createdAt) > d &&
                         <Badge variant="secondary" className="ml-1" size="sm">
                           New
@@ -268,13 +276,7 @@ function OverviewLanding() {
 
             </div>
 
-            <div className="col-md px-2 landing-content-module">
-              <div className="h5 text-color">Toolchain Automation</div>
-              <div className="text-muted pr-2">
-                You choose your tools, we take care of the rest. Put together the perfect CI/CD stack that fits your
-                organization’s goals with zero vendor lock-in.
-              </div>
-            </div>
+
 
           </div>
 

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Form } from "react-bootstrap";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 function ActivityToggleInput({ fieldName, dataObject, setDataObject, disabled }) {
     const [field] = useState(dataObject.getFieldById(fieldName));
@@ -15,21 +16,22 @@ function ActivityToggleInput({ fieldName, dataObject, setDataObject, disabled })
 
   return (
     <InputContainer>
-      <label><span> </span></label>
       <div className={"d-flex toggle-alignment"}>
         <div>Show in Application</div>
-        <div className={"ml-3"}>
-          <Form.Check
-            type="switch"
-            id={field.id}
-            checked={!!dataObject.getData(fieldName)}
-            disabled={disabled}
-            label={<span className="mt-auto"> </span>}
-            onChange={() => {
-              validateAndSetData(!dataObject.getData(fieldName));
-            }}
-          />
-        </div>
+        <TooltipWrapper innerText={`Toggle this record as ${dataObject?.getData(fieldName) === true ? "inactive" : "active"}`}>
+          <div className={"ml-3"}>
+            <Form.Check
+              type="switch"
+              id={field.id}
+              checked={!!dataObject.getData(fieldName)}
+              disabled={disabled}
+              label={<span className="mt-auto"> </span>}
+              onChange={() => {
+                validateAndSetData(!dataObject.getData(fieldName));
+              }}
+            />
+          </div>
+        </TooltipWrapper>
       </div>
       <InfoText field={field} errorMessage={null}/>
     </InputContainer>
