@@ -137,4 +137,8 @@ ExportDataButton.propTypes = {
   showButtonText: PropTypes.bool
 };
 
+ExportDataButton.defaultProps = {
+  showButtonText: true
+};
+
 export default ExportDataButton;
