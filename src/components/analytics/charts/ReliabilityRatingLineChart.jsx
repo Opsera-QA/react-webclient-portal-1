@@ -103,7 +103,6 @@ function ReliabilityRatingLineChart({ persona, date }) {
                         false, true, "", "monthDate2")}
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
-              margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
               xScale={{ type: "point" }}
               yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}
               colors={getColor}

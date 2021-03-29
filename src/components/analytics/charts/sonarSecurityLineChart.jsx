@@ -2,14 +2,17 @@
 
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import PropTypes from "prop-types";
+import { format } from "date-fns";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { ResponsiveLine } from "@nivo/line";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-import config from "./sonarSecurityLineChartConfigs";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
+import { defaultConfig, getColor, assignStandardColors,
+         shortenLegend } from "../../insights/charts/charts-views";
+import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 import "./charts.css";
 
@@ -52,6 +55,8 @@ function SonarSecurityLineChart({ persona, sonarMeasure, date }) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0]["sonarMeasures-" + sonarMeasure] : [];
+      assignStandardColors(dataObject?.data);
+      shortenLegend(dataObject?.data);
       setData(dataObject);
       setLoading(false);
     }
@@ -108,10 +113,10 @@ function SonarSecurityLineChart({ persona, sonarMeasure, date }) {
             </div>
             :
             <ResponsiveLine
+              {...defaultConfig("Average Quality Gate Value", "Date", 
+                                  false, true, "wholeNumbers", "monthDate")}
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
-
-              margin={{ top: 40, right: 110, bottom: 70, left: 40 }}
               xScale={{
                 type: "time",
                 format: "%Y-%m-%d",
@@ -123,39 +128,21 @@ function SonarSecurityLineChart({ persona, sonarMeasure, date }) {
               }}
               axisBottom={{
                 format: "%b %d",
+                orient: "bottom",
+                tickSize: 5,
+                tickPadding: 5,
+                tickRotation: -45,
+                legend: "Date",
+                legendOffset: 40,
                 tickValues: data.maxLength && data.maxLength > 10 ? 10 : 'every 1 days',
-                tickRotation: -25,
-                legendOffset: -12,
-              }}              
-              pointSize={10}
-              pointBorderWidth={8}
-              pointLabel="y"
-              pointLabelYOffset={-12}
-              useMesh={true}
-              lineWidth={3.5}
-              legends={config.legends}
-              tooltip={(node) => (
-                <div style={{
-                  background: "white",
-                  padding: "9px 12px",
-                  border: "1px solid #ccc",
-                }}>
-                  <div>
-                    <strong> Quality Gate: </strong> {node.point.data.info._source.qualityGate.status} <br />
-                    <strong> Qualifier: </strong>  {node.point.data.info._source.sonarqube_measures.component.qualifier} <br />
-                    <strong> Date: </strong> {node.point.data.xFormatted} <br></br>
-                    <strong>  {node.point.serieId}: {node.point.data.yFormatted}  </strong>
-                  </div>
-
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
+              }} 
+              colors={getColor}           
+              tooltip={({ point, color }) => <ChartTooltip 
+                titles = {["Quality Gate", "Qualifier", "Date", point.serieId]}
+                values = {[point.data.info._source.qualityGate.status,
+                           point.data.info._source.sonarqube_measures.component.qualifier,
+                           point.data.xFormatted, point.data.yFormatted]}
+                color = {color} />}
             />
           }
         </div>
