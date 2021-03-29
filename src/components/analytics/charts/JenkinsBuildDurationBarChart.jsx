@@ -94,15 +94,15 @@ function JenkinsBuildDurationBarChart({ persona, date }) {
             </div>
           ) : (
             <ResponsiveBar
-              data={data ? data.data : []}
-              onClick={() => setShowModal(true)}
               {...defaultConfig("Build Duration (Minutes)", "Build Number", 
                       false, true, "wholeNumbers", "numbers")}
+              {...adjustBarWidth(data ? data.data : [])}
+              data={data ? data.data : []}
               keys={["Value"]}
               indexBy="key"
               colorBy="id"
               colors={getColorByData}
-              {...adjustBarWidth(data ? data.data : [])}
+              onClick={() => setShowModal(true)}
               tooltip={({ data, value, color }) => <ChartTooltip 
                               titles = {["Duration", "Build Number", "Job Name"]}
                               values = {[`${value} minutes`, data.buildNum, data.jobName]}

@@ -9,7 +9,8 @@ import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-import { defaultConfig, getColor, assignStandardColors } from '../../insights/charts/charts-views';
+import { defaultConfig, getColor, assignStandardColors,
+         adjustBarWidth } from '../../insights/charts/charts-views';
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 function OpseraBuildsByUserBarChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -93,6 +94,7 @@ function OpseraBuildsByUserBarChart({ persona, date }) {
             <ResponsiveBar
               {...defaultConfig('Users', 'Number of Builds', 
                     true, true, 'cutoffString', 'wholeNumbers')}
+              {...adjustBarWidth(data ? data.data : [], false)}
               data={data ? data.data : []}
               keys={["value"]}
               indexBy="key"

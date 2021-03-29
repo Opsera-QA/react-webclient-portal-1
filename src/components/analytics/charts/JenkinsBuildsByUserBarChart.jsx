@@ -93,12 +93,10 @@ function JenkinsBuildsByUserBarChart({ persona, date }) {
             </div>
           ) : (
             <ResponsiveBar
-              data={data ? data.data : []}
               {...defaultConfig("Users", "Number of Builds", 
                       true, true, "subString", "")}
               {...adjustBarWidth(data ? data.data : [], false)}
-              // keys={config.keys}
-              // indexBy="key"
+              data={data ? data.data : []}
               keys={["Value"]}
               indexBy="key"
               colorBy="id"

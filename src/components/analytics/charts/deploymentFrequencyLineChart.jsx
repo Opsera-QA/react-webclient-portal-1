@@ -99,9 +99,9 @@ function MaintainabilityLineChart({ persona, date }) {
             </div>
           ) : (
             <ResponsiveLine
-              data={data ? data.data : []}
               {...defaultConfig("Number of Deployments", "Date", 
                                 false, true, "wholeNumbers", "monthDate")}
+              data={data ? data.data : []}
               indexBy="date"
               xScale={{
                         type: "time",

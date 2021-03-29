@@ -91,10 +91,10 @@ function JenkinsStatusByJobNameBarChar({ persona, date }) {
             </div>
           ) : (
             <ResponsiveBar
-              data={data ? data.data : []}
               {...defaultConfig("Build Tag", "Number of Builds", 
                       true, true, "cutoffString", "wholeNumbers")}
               {...adjustBarWidth(data ? data.data : [], false)}
+              data={data ? data.data : []}
               keys={["Successful", "Failed", "Aborted", "Unstable"]}
               indexBy="key"
               colorBy="id"
