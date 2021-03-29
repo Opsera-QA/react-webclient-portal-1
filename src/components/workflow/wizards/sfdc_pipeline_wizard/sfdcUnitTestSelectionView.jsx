@@ -1,6 +1,6 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
-import { Button, Form, Row, Col } from "react-bootstrap";
+import { Button, Form, OverlayTrigger, Tooltip, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
@@ -10,14 +10,21 @@ import {
   faStepForward,
 } from "@fortawesome/free-solid-svg-icons";
 import "../../workflows.css";
-import { Multiselect } from 'react-widgets';
+import {
+  getErrorDialog
+} from "components/common/toasts/toasts";
+import { Multiselect } from 'react-widgets'
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import ErrorDialog from "components/common/status_notifications/error";
+import LoadingDialog from "components/common/status_notifications/loading";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import { RenderWorkflowItem } from "components/workflow/approvalModal";
+import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
 import Model from "../../../../core/data_model/model";
 import filterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/filter-metadata";
 import { CSVtoArray, commonItems, differentItems } from "components/common/helpers/array-helpers";
+import SFDCUnitTestManagementPanel from "./unit_test_selection/SFDCUnitTestManagementPanel";
 
 const SfdcUnitTestSelectionView = ({ 
   pipelineId, 
@@ -25,7 +32,8 @@ const SfdcUnitTestSelectionView = ({
   fromSFDC, 
   fromDestinationSFDC, 
   handleClose, 
-  setView,
+  isProfiles, 
+  setView, 
   unitTestSteps 
   }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -44,15 +52,13 @@ const SfdcUnitTestSelectionView = ({
  
   useEffect(() => {
     if(Object.keys(selectedStep).length > 0){
-      setSelectedUnitTestClassesList({});
+      setSelectedUnitTestClassesList({})
       getUnitTestList();
     }
   }, [selectedStep]);
 
   const getUnitTestList = async (filterDto = toolFilterDto) => {
     setUnitTestListLoading(true);
-    setSelectedUnitTestClassesList([]);
-    setEnteredUnitTestClassesList("");
     try {
        let newFilterDto = filterDto;
        newFilterDto.setData("pageSize", 500);
@@ -61,7 +67,7 @@ const SfdcUnitTestSelectionView = ({
       const response = await sfdcPipelineActions.getListFromPipelineStorage({"sfdcToolId": selectedStep.tool.configuration.sfdcToolId, "pipelineId": pipelineId, "stepId": selectedStep._id, "dataType": "sfdc-unitTesting" }, filterDto , getAccessToken);
       
       if(!response.data.data || !response.data.paginatedData) {
-        toastContext.showInlineErrorMessage("something went wrong! not a valid object");
+        toastContext.showLoadingErrorDialog("something went wrong! not a valid object");
       }
       // save the mongo record id so that we can update it when saving selected data
       setUnitTestRecordId(response.data._id);
@@ -82,11 +88,11 @@ const SfdcUnitTestSelectionView = ({
       setUnitTestClassesList(arrOfObj);
     } catch (error) {
       console.error("Error getting API Data: ", error);
-      toastContext.showInlineErrorMessage(error);
+      toastContext.showLoadingErrorDialog(error);
     } finally {
       setUnitTestListLoading(false);
     }
-  };
+  }
   
   // console.log(selectedUnitTestClassesList);
   // console.log(unitTestRecordId);
@@ -95,7 +101,7 @@ const SfdcUnitTestSelectionView = ({
     // console.log("clicked step id ", step._id);
     let isSfdc = fromSFDC || fromDestinationSFDC ? true : false;
     await getTestClasses(step, isSfdc);
-  };
+  }
 
   const getTestClasses = async(unitStep, isSfdc) => {
     
@@ -113,34 +119,34 @@ const SfdcUnitTestSelectionView = ({
       if (res.data.status != 200 ) {
         console.error("Error getting API Data: ", res.data.message);
         // TODO: Add a toast here
-        toastContext.showInlineErrorMessage(res.data.message);
+        toastContext.showLoadingErrorDialog(res.data.message);
         return;
       }
       setSelectedStep(unitStep);
     } catch (error) {
       console.error("Error getting API Data: ", error);
-      toastContext.showInlineErrorMessage(error);
+      toastContext.showLoadingErrorDialog(error);
     } finally {
       setLoading(false);
     }
-  };
+  }
 
   const handleMultiSelect = (newValue) => {
     console.log(newValue);
     setSelectedUnitTestClassesList(newValue);
-  };
+  }
 
   const saveSelectedClasses = async() => {
     setSave(true);
     if(!selectedStep || !selectedStep._id) {
-      toastContext.showInlineErrorMessage("please select a unit test step");
+      toastContext.showLoadingErrorDialog("please select a unit test step");
     }
     // let selectedList = selectedUnitTestClassesList.map(obj => obj.value)
     try {
         // convert csv to array and compare with our list
         let inputItems = CSVtoArray(enteredUnitTestClassesList);
         if(inputItems === null){
-          toastContext.showInlineErrorMessage("Please enter a valid input");
+          toastContext.showLoadingErrorDialog("Please enter a valid input");
           return;
         }
         let inputCommonItems = commonItems(inputItems,unitTestClassesList);
@@ -151,7 +157,7 @@ const SfdcUnitTestSelectionView = ({
         if(diffItems && diffItems.length > 0 )
         setUnusedTestClassesList(diffItems);
   
-      await sfdcPipelineActions.setListToPipelineStorage(
+      const saveResponse = await sfdcPipelineActions.setListToPipelineStorage(
         { 
           "recordId": unitTestRecordId, 
           "sfdcToolId": selectedStep.tool.configuration.sfdcToolId, 
@@ -167,16 +173,17 @@ const SfdcUnitTestSelectionView = ({
 
     } catch (error) {
       console.error("Error getting API Data: ", error);
-      toastContext.showInlineErrorMessage(error);
+      toastContext.showLoadingErrorDialog(error);
       setSave(false);
     } finally {
       setSave(false);
     }
-  };
+  }
 
   return (
-    <div>
+    <div className="ml-5 mr-5">
       <div className="flex-container">
+        <div className="flex-container-top"></div>
         <div className="flex-container-content">
           <div className="h5">SalesForce Pipeline Run: Unit Test Selection View</div>
           <div className="text-muted mb-4">Apex Classes with @isTest annotation will be part of selection for Selective Unit Testing.</div>
@@ -196,7 +203,7 @@ const SfdcUnitTestSelectionView = ({
                       <RenderWorkflowItem item={step} isSelected={selectedStep._id === step._id} stateColorClass="" />
                     </div>
                   </Col>
-                );
+                )
               })} 
             </Row>         
           </div>
@@ -204,9 +211,10 @@ const SfdcUnitTestSelectionView = ({
 
           {/* unit test dropdown selection goes here */}
           {selectedStep && Object.keys(selectedStep).length > 0 && 
+          <>
             <Row>
               <Col sm={10}>
-                <div className="custom-multiselect-input m-2">
+                {/* <div className="custom-multiselect-input m-2">
                   <Multiselect
                     data={unitTestClassesList}
                     // valueField="value"
@@ -217,7 +225,7 @@ const SfdcUnitTestSelectionView = ({
                     placeholder="Select Test Classes"
                     onChange={newValue => handleMultiSelect(newValue)}
                   />
-                </div>
+                </div> */}
                 <Form.Check
                   className="ml-2"
                   type="switch"
@@ -244,7 +252,7 @@ const SfdcUnitTestSelectionView = ({
                   </small>
                         {typeof unusedTestClassesList === "object" && unusedTestClassesList.length > 0 &&
                           <>
-                            <div className="text-muted">Note: These items are skipped as they don&apos;t match the Unit test list.</div>
+                            <div className="text-muted">Note: These items are skipped as they don't match the Unit test list.</div>
                             <div className="invalid-feedback" style={{fontSize: "100%"}}>
                               <div className="scroller">
                                 <div className="d-flex flex-wrap">
@@ -262,7 +270,8 @@ const SfdcUnitTestSelectionView = ({
                   }
               </Col>
               <Col sm={2}>
-                <div className="m-2">
+                {inputFLag ? (
+                  <div className="m-2">
                   <Button
                     variant="success"
                     size="sm"
@@ -277,8 +286,28 @@ const SfdcUnitTestSelectionView = ({
                     Save Test Classes
                   </Button>
                 </div>
+                ) : null }                
               </Col>
             </Row>
+            <Row>
+              {/* sfdc management panel goes here */}
+              { unitTestClassesList.length > 0 ? (
+                <SFDCUnitTestManagementPanel
+                  unitTestRecordId={unitTestRecordId}
+                  selectedStep={selectedStep}
+                  pipelineId={pipelineId}
+                  filterDto={toolFilterDto}
+                  setUnitTestRecordId={setUnitTestRecordId}
+                  reload={getUnitTestList}
+                  members={selectedUnitTestClassesList}
+                  setMembers={setSelectedUnitTestClassesList}
+                  totalMembers={unitTestClassesList}
+                  setTotalMembers={setUnitTestClassesList}
+                />
+              ) : null                
+              }
+            </Row>
+          </>
           }
           
           </div>
@@ -328,6 +357,7 @@ SfdcUnitTestSelectionView.propTypes = {
   pipelineId: PropTypes.string,
   stepId: PropTypes.string,
   setView: PropTypes.func,
+  isProfiles: PropTypes.bool,
   fromSFDC: PropTypes.bool,
   fromDestinationSFDC: PropTypes.bool,
   handleClose: PropTypes.func,
