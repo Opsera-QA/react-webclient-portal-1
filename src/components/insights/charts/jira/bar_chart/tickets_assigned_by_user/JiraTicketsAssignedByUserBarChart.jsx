@@ -8,7 +8,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors,
+import { defaultConfig, getColorByData, assignStandardColors, capitalizeLegend,
          adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 
@@ -49,6 +49,7 @@ function JiraTicketsAssignedByUserBarChart( { kpiConfiguration, setKpiConfigurat
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "jiraTicketsAssignedByUser", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.jiraTicketsAssignedByUser?.data : [];
       assignStandardColors(dataObject, true);
+      capitalizeLegend(dataObject, ["count"]);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);

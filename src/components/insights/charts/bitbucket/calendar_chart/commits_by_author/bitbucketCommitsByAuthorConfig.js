@@ -13,5 +13,5 @@ export default (keys, colors) => ({
     bottom: 60,
     left: 40
   },
-  labelTextColor: "#fdeded"
+  labelTextColor: "#ffffff"
 });

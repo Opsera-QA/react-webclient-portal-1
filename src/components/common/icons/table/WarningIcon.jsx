@@ -1,12 +1,12 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import "../../../../theme.css";
 
 function FailIcon() {
   return (
     <div className="status-icon">
-      <FontAwesomeIcon icon={faCircleNotch} className="cell-icon yellow fa-md" />
+      <FontAwesomeIcon icon={faCircle} className="cell-icon yellow fa-md" />
     </div>
   );
 }
