@@ -63,7 +63,7 @@ function TopFiveDashboards({ loadDashboardById }) {
     const dashboards = response?.data?.data;
 
     if (isMounted.current === true && dashboards) {
-      setDashboardsList(dashboards);
+      setDashboardsList(dashboards.slice(0,6));
     }
   };
 
@@ -81,8 +81,7 @@ function TopFiveDashboards({ loadDashboardById }) {
         {dashboardsList.map((item, key) => (
           <div key={key} className={"my-1"}>
             <Button
-              className="w-100"
-              variant="outline-secondary" size="sm"
+              variant="link"
               onClick={() => {
                 loadDashboardById(item._id);
               }}
