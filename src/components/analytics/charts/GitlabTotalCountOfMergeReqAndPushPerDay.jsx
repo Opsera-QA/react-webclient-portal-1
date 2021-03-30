@@ -5,12 +5,10 @@ import { ResponsiveCalendar } from "@nivo/calendar";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-import config from "./GitlabTotalCountOfMergeReqAndPushPerDayConfig";
 import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
-import { defaultConfig, getColor, assignStandardColors,
-         gradationalColors } from "../../insights/charts/charts-views";
+import { defaultConfig, gradationalColors } from "../../insights/charts/charts-views";
 import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function GitlabTotalCountOfMergeReqAndPushPerDay({ persona, date }) {
