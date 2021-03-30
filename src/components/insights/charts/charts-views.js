@@ -13,7 +13,7 @@ export const goldHues = [mainGold, "#F5C453", "#F9DC98", "#FDF3DD"];
 export const purpleHues = [mainPurple, "#7368AA", "#ABA4CC", "#E3E1EE"];
 // const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
 
-export const standardColors = [mainColor, "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173", "#E6E5E3"];
+export const standardColors = [mainColor, "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173", "#E6E5E3", mainPurple];
 export const gradationalColors = ["#B1AeA7", "#7A756C", mainColor, "#1E1D1B"];
 // purpleHues.forEach((_, i) => standardColors.push(greyHues[greyHues.length - i - 2], purpleHues[i + 1]));
 
@@ -124,7 +124,17 @@ export const getColorByData = data => data.data.color;
 export const getColorById = data => data.id === "Successful" ? mainColor : failColor;
 export const getTaskColor = ({ id, data }) => data[`${id}_color`];
 
-export const shortenLegend = datas => datas.forEach(data => data.id.length > 10 ? data.label = data.id.slice(0, 10) + "..." : data.id);
+export const shortenPieChartLegend = datas => datas.forEach(data => data.id.length > 10 ? data.label = data.id.slice(0, 10) + "..." : data.id);
+export const shortenLegend = (datas, originalIdHolder={}) => {
+
+  datas.forEach(data => {
+    const slicedId = data.id.slice(0, 10) + "...";
+    originalIdHolder[slicedId] = data.id;
+    return data.id.length > 10 ? data.id = slicedId : data.id;
+  });
+  return originalIdHolder;
+};
+
 export const shortenHealthChartLegend = datas => datas.forEach(data => {
   if (data["Production Deployment"]) {
     data["Production Deploy"] = data["Production Deployment"];

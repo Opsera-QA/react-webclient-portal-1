@@ -8,7 +8,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { defaultConfig, getColorByData, assignStandardColors,
-  shortenLegend } from '../../../charts-views';
+         shortenPieChartLegend } from '../../../charts-views';
 function GithubTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -46,7 +46,7 @@ function GithubTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "githubTotalCommitsChart", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.githubTotalCommitsChart?.data : [];
       assignStandardColors(dataObject);
-      shortenLegend(dataObject);
+      shortenPieChartLegend(dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);

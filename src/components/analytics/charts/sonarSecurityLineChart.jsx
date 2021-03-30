@@ -35,6 +35,7 @@ function SonarSecurityLineChart({ persona, sonarMeasure, date }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [originalIdHolder, setOriginalIdHolder] = useState({});
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -56,7 +57,7 @@ function SonarSecurityLineChart({ persona, sonarMeasure, date }) {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0]["sonarMeasures-" + sonarMeasure] : [];
       assignStandardColors(dataObject?.data);
-      shortenLegend(dataObject?.data);
+      setOriginalIdHolder(shortenLegend(dataObject?.data));
       setData(dataObject);
       setLoading(false);
     }
@@ -134,15 +135,16 @@ function SonarSecurityLineChart({ persona, sonarMeasure, date }) {
                 tickRotation: -45,
                 legend: "Date",
                 legendOffset: 40,
-                tickValues: data.maxLength && data.maxLength > 10 ? 10 : "every 1 days",
+                tickValues: data.maxLength && data.maxLength > 10 ? 10 : "every 5 days",
               }} 
               colors={getColor}           
               tooltip={({ point, color }) => <ChartTooltip 
-                titles = {["Quality Gate", "Qualifier", "Date", point.serieId]}
+                titles = {["Quality Gate", "Qualifier", "Date", originalIdHolder[point.serieId]]}
                 values = {[point.data.info._source.qualityGate.status,
                            point.data.info._source.sonarqube_measures.component.qualifier,
                            point.data.xFormatted, point.data.yFormatted]}
-                color = {color} />}
+                color = {color} />
+              }
             />
           }
         </div>
