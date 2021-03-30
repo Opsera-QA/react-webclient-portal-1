@@ -97,7 +97,7 @@ function JMeterHitsLineChart({ persona, date }) {
             </div>
           ) : (
             <ResponsiveLine
-              {...defaultConfig("Hits", "Build Number", false, false, "wholeNumbers", "wholeNumbers")}
+              {...defaultConfig("Hits", "Build Number", false, false, "wholeNumbers", "")}
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
               colors={getColor}

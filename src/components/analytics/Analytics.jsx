@@ -21,7 +21,7 @@ import JiraHealthBySprintBarChart from "./charts/JiraHealthBySprintBarChart";
 import SonarSecurityLineChart from "./charts/sonarSecurityLineChart";
 import JMeterHitsLineChart from "./charts/JmeterHitsLineChart";
 import JMeterErrorsLineChart from "./charts/JmeterErrorsLineChart";
-import JMeterThroughputLineChart from "./charts/jmeterThroughputLineChart";
+import JMeterThroughputLineChart from "./charts/JmeterThroughputLineChart";
 import JMeterResponseTimeLineChart from "./charts/jmeterResponseTimeLineChart";
 import JMeterResultsTable from "./metrics/jmeterResultsTable";
 // import GitlabPlanCodeView from "./views/GitlabPlanCodeView";

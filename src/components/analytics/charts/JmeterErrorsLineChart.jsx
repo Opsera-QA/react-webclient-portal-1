@@ -101,7 +101,7 @@ function JMeterErrorsLineChart({ persona, date }) {
           ) : (
             <ResponsiveLine
               {...defaultConfig("Errors", "Build Number", 
-                      false, false, "wholeNumbers", "wholeNumbers")}
+                      false, false, "wholeNumbers", "")}
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
               colors={getColor}
