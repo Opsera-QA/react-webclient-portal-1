@@ -7,7 +7,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColor, assignStandardColors,
+import { defaultConfig, getColorByData, assignStandardColors,
          shortenLegend } from '../../../charts-views';
 function GitlabTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -75,7 +75,7 @@ function GitlabTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
           <ResponsivePie
             data={metrics}
             {...defaultConfig()}
-            {...config(getColor)}
+            {...config(getColorByData)}
             onClick={() => setShowModal(true)}
           />
       </div>
