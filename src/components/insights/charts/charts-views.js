@@ -130,7 +130,7 @@ export const shortenLegend = (datas, originalIdHolder={}) => {
   datas.forEach(data => {
     const slicedId = data.id.slice(0, 10) + "...";
     originalIdHolder[slicedId] = data.id;
-    return data.id.length > 10 ? data.id = slicedId : data.id;
+    data.id.length > 10 ? data.id = slicedId : data.id;
   });
   return originalIdHolder;
 };

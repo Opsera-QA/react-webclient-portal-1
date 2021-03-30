@@ -6,7 +6,6 @@
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import ErrorDialog from "../../common/status_notifications/error";
-import config from "./DeploymentsStackedBarChartConfigs";
 import "./charts.css";
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
