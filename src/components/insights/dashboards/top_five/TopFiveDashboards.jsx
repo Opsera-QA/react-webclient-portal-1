@@ -68,8 +68,8 @@ function TopFiveDashboards({ loadDashboardById }) {
   };
 
   const getBody = () => {
-    if (isLoading) {
-      return (<div></div>);  //<LoadingIcon isLoading={isLoading} className={"mr-2 my-auto"}/>Loading favorite dashboards
+    if (isLoading || !Array.isArray(dashboardsList) || dashboardsList.length === 0) {
+      return null;
     }
 
     let d = new Date();
