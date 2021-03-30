@@ -11,6 +11,8 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import SFDCBuildTypeSelectInput  from  "components/common/list_of_values_input/workflow/pipelines/SFDCBuildTypeSelectInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import PipelineToolInput from "components/common/list_of_values_input/workflow/pipelines/PipelineToolInput";
 
 function SfdcToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -23,6 +25,27 @@ function SfdcToolConfiguration({ toolData }) {
   const loadData = async () => {
     setSfdcConfigurationDto(modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), sfdcConnectionMetadata));
   };
+
+  const getDynamicFields = () => {
+    if (sfdcConfigurationDto.getData("checkConnection") === true) {
+      return (
+        <>
+          <PipelineToolInput
+            toolType={"jenkins"}
+            toolFriendlyName={"Jenkins"}
+            fieldName={"jenkinsToolId"}
+            configurationRequired={true}
+            dataObject={sfdcConfigurationDto}
+            setDataObject={setSfdcConfigurationDto}
+          />
+        </>
+      );
+    }
+  };
+
+  if (sfdcConfigurationDto == null) {
+    return <></>;
+  }
 
   const saveSfdcToolConfiguration = async () => {
     let newConfiguration = sfdcConfigurationDto.getPersistData();
@@ -54,6 +77,8 @@ function SfdcToolConfiguration({ toolData }) {
           <VaultTextInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"sfdc_token"} />
           <VaultTextInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"sfdc_password"} />
           <SFDCBuildTypeSelectInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"buildType"} />
+          <BooleanToggleInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"checkConnection"} />
+          {getDynamicFields()}
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>
