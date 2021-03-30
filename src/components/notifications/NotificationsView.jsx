@@ -8,7 +8,6 @@ import notificationsActions from "./notifications-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
-import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faFlag} from "@fortawesome/pro-light-svg-icons";
 import NewNotificationOverlay from "components/notifications/NewNotificationOverlay";
@@ -37,10 +36,7 @@ function NotificationsView({isMounted}) {
 
       if (userRoleAccess) {
         setAccessRoleData(userRoleAccess);
-
-        if(userRoleAccess?.PowerUser || userRoleAccess?.Administrator || userRoleAccess?.OpseraAdministrator) {
-          await loadNotifications(newFilterDto);
-        }
+        await loadNotifications(newFilterDto);
       }
     } catch (error) {
       console.error(error);
@@ -102,26 +98,21 @@ function NotificationsView({isMounted}) {
     return <LoadingDialog size="sm" />;
   }
 
-  if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
-    return <AccessDeniedDialog roleData={accessRoleData} />;
-  }
-
   return (
-  
-      <FilterContainer
-        className="px-2 pb-2"
-        loadData={loadData}
-        filterDto={notificationFilterDto}
-        setFilterDto={setNotificationFilterDto}
-        addRecordFunction={createNewNotification}
-        inlineFilters={getInlineFilters()}
-        supportSearch={true}
-        isLoading={isLoading}
-        body={getNotificationTable()}
-        dropdownFilters={getDropdownFilters()}
-        titleIcon={faFlag}
-        title={"Notification Policies"}
-      />
+    <FilterContainer
+      className="px-2 pb-2"
+      loadData={loadData}
+      filterDto={notificationFilterDto}
+      setFilterDto={setNotificationFilterDto}
+      addRecordFunction={createNewNotification}
+      inlineFilters={getInlineFilters()}
+      supportSearch={true}
+      isLoading={isLoading}
+      body={getNotificationTable()}
+      dropdownFilters={getDropdownFilters()}
+      titleIcon={faFlag}
+      title={"Notification Policies"}
+    />
   );
 }
 

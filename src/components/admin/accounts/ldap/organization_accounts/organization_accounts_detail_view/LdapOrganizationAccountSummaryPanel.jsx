@@ -10,9 +10,9 @@ import StandaloneLinkField from "components/common/fields/link/standalone/Standa
 
 function LdapOrganizationAccountSummaryPanel({ ldapOrganizationAccountData, setActiveTab }) {
   const getUrlString = () => {
-    const urlString = "" + process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL +"/account/registration/"+ ldapOrganizationAccountData.orgDomain;
+    const urlString = "" + process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL + "/account/registration/" + ldapOrganizationAccountData?.orgDomain;
     return (
-      <StandaloneLinkField label={"New User Registration URL"} link={urlString} openInNewWindow={true} />
+      <StandaloneLinkField label={"New User Registration URL"} link={urlString} openInNewWindow={true} showClipboardButton={true} />
     );
   };
 
