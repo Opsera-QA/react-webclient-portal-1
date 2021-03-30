@@ -63,7 +63,7 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"dataMappingManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>
           {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"} />}
-          {!envIsTest && !envIsProd && <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"}/>}
+          {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"}/>}
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
           <BreadcrumbPageLink breadcrumbDestination={"ldapUserManagement"}/>
@@ -80,7 +80,7 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"dataMappingManagement"}/>
           {accessRoleData.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>}
           {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"}/>}
-          {!envIsTest && !envIsProd && <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"}/>}
+          {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"}/>}
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
         </>
