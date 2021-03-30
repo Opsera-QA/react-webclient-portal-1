@@ -232,14 +232,14 @@ function DataMappingManagement() {
           tabName={"projects"}
           handleTabClick={handleTabClick}
           activeTab={activeTab}
-          tabText={"Projects"}
+          tabText={"Project Tags"}
         />
         <CustomTab
           icon={faUser}
           tabName={"users"}
           handleTabClick={handleTabClick}
           activeTab={activeTab}
-          tabText={"Users"}
+          tabText={"User Tags"}
         />
       </CustomTabContainer>
     );

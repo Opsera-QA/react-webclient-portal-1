@@ -67,10 +67,7 @@ function GitTasksView() {
 
     if (isMounted?.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-
-      if (userRoleAccess?.PowerUser || userRoleAccess?.Administrator || userRoleAccess?.OpseraAdministrator) {
-        await getGitTasksList(newFilterDto, cancelSource);
-      }
+      await getGitTasksList(newFilterDto, cancelSource);
     }
   };
 
@@ -112,13 +109,8 @@ function GitTasksView() {
     toastContext.showOverlayPanel(<NewGitTaskOverlay loadData={loadData} isMounted={isMounted} />);
   };
 
-  // TODO: Check for role in Git.jsx and attach the role requirement to screen container
   if (!accessRoleData) {
     return <LoadingDialog size="sm" />;
-  }
-
-  if (!accessRoleData.PowerUser && !accessRoleData.Administrator && !accessRoleData.OpseraAdministrator) {
-    return <AccessDeniedDialog roleData={accessRoleData} />;
   }
 
   return (

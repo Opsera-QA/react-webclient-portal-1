@@ -2,45 +2,27 @@ import React, { useMemo, useContext} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import usersTagsMetadata from "./tagging-users-metadata";
-import {
-  getTableBooleanIconColumn,
-  getTableDateColumn,
-  getTableTextColumn,
-} from "../../../common/table/table-column-helpers";
+import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
 import { useHistory } from "react-router-dom";
 import NewUsersMappingOverlay from "./NewUsersMappingOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faTags} from "@fortawesome/pro-light-svg-icons";
+import {getField} from "components/common/metadata/metadata-helpers";
 
 function UsersTagTable({ data, loadData, isLoading, isMounted }) {
   const toastContext = useContext(DialogToastContext);
   const history = useHistory();
   let fields = usersTagsMetadata.fields;
 
-  const columns = useMemo(
-    () => [
-      getTableTextColumn(
-        fields.find((field) => {
-          return field.id === "tool_identifier";
-        })
-      ),
-      getTableTextColumn(
-        fields.find((field) => {
-          return field.id === "opsera_user_email";
-        })
-      ),
-      getTableTextColumn(
-        fields.find((field) => {
-          return field.id === "tool_user_prop";
-        })
-      ),
-      getTableBooleanIconColumn(
-        fields.find((field) => {
-          return field.id === "active";
-        })
-      ),
-    ],
-    []
-  );
+  const columns = useMemo(() => [
+    getTableTextColumn(getField(fields,"tool_identifier")),
+    getTableTextColumn(getField(fields,"opsera_user_email")),
+    getTableTextColumn(getField(fields,"tool_user_prop")),
+    getTableBooleanIconColumn(getField(fields,"active")),
+  ],
+  []
+);
 
   const rowStyling = (row) => {
     return !row["values"].active ? " inactive-row" : "";
@@ -56,7 +38,8 @@ function UsersTagTable({ data, loadData, isLoading, isMounted }) {
     toastContext.showOverlayPanel(<NewUsersMappingOverlay loadData={loadData} isMounted={isMounted} />);
   };
 
-  return (
+  const getUsersTagsTable = () => {
+    return (
       <CustomTable
         columns={columns}
         data={data}
@@ -64,10 +47,22 @@ function UsersTagTable({ data, loadData, isLoading, isMounted }) {
         noDataMessage={noDataMessage}
         onRowSelect={selectedRow}
         isLoading={isLoading}
-        tableTitle={"User Mapping"}
-        type={"User Mapping"}
-        createNewRecord={createToolType}
       />
+    );
+  };
+
+  return (
+    <FilterContainer
+      loadData={loadData}
+      addRecordFunction={createToolType}
+      supportSearch={false}
+      isLoading={isLoading}
+      body={getUsersTagsTable()}
+      metadata={usersTagsMetadata}
+      titleIcon={faTags}
+      title={"User Tags"}
+      className={"px-2 pb-2"}
+    />
   );
 }
 

@@ -8,8 +8,7 @@ import OpseraBuildDurationBarChart from "./opsera/bar_chart/build_duration/Opser
 import OpseraBuildsByUserBarChart from "./opsera/bar_chart/builds_by_user/OpseraBuildsByUserBarChart";
 import OpseraDeploymentFrequencyLineChart from "./opsera/line_chart/deployment_frequency/OpseraDeploymentFrequencyLineChart";
 import OpseraRecentPipelineStatus from "components/insights/charts/opsera/table/recent_pipeline_status/OpseraRecentPipelineStatus";
-import OpseraRecentCDStatusTable
-  from "components/insights/charts/opsera/table/recent_cd_status/OpseraRecentCDStatusTable";
+import OpseraRecentCDStatusTable from "components/insights/charts/opsera/table/recent_cd_status/OpseraRecentCDStatusTable";
 import OpseraPipelineDeploymentFrequencyStats from "./opsera/OpseraPipelineDeploymentFrequencyStats";
 import OpseraBuildDurationByStageBarChart from "./opsera/bar_chart/duration_by_stage/OpseraBuildDurationByStageBarChart";
 import OpseraMeanTimeToRestoreBarChart from "./opsera/bar_chart/mean_time_to_restore/OpseraMeanTimeToRestoreBarChart";
@@ -88,6 +87,7 @@ import BitbucketMergeRequestsPushesAndComments from "./bitbucket/calendar_chart/
 import BitbucketTotalCommitsByProjectChart from "./bitbucket/pie_chart/total_commits_by_project/BitbucketTotalCommitsByProjectChart";
 import BitbucketRecentMergeRequests from "./bitbucket/table/bitbucket-recent-merge-requests/BitbucketRecentMergeRequests";
 import BitbucketPendingMergeRequests from "./bitbucket/table/bitbucket-pending-merge-requests/BitbucketPendingMergeRequests.jsx";
+import BitbucketRejectedMergeRequests from "./bitbucket/table/bitbucket-rejected-merge-requests/BitbucketRejectedMergeRequests.jsx";
 
 // Cypress KPIs
 import CypressTestResultsTable from "./cypress/CypressTestResultsTable";
@@ -123,8 +123,8 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-cpu-usage" &&
       kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-memory-usage" &&
       kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-in-network-usage" &&
-      kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-out-network-usage" 
-  ) {
+      kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-out-network-usage"
+    ) {
       return getChart();
     }
 
@@ -895,6 +895,16 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "bitbucket-pending-merge-requests":
         return (
           <BitbucketPendingMergeRequests
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
+      case "bitbucket-rejected-merge-requests":
+        return (
+          <BitbucketRejectedMergeRequests
             kpiConfiguration={kpiConfig}
             setKpiConfiguration={setKpiConfig}
             dashboardData={dashboardData}

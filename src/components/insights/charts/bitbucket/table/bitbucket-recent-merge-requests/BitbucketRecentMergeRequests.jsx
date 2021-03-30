@@ -53,7 +53,8 @@ function BitbucketRecentMergeRequestsTable({ kpiConfiguration, setKpiConfigurati
         cancelSource,
         "bitbucketTimeTakenToCompleteMergeRequestReviewAndPushTime",
         kpiConfiguration,
-        dashboardTags
+        dashboardTags,
+        filterDto
       );
       let dataObject = response?.data?.data[0]?.bitbucketTimeTakenToCompleteMergeRequestReviewAndPushTime?.data;
 
@@ -110,7 +111,6 @@ function BitbucketRecentMergeRequestsTable({ kpiConfiguration, setKpiConfigurati
       />
     );
   };
-
 
   return (
     <div>

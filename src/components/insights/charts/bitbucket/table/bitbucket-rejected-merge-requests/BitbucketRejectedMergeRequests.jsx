@@ -1,42 +1,28 @@
-import React, {useEffect, useContext, useState, useMemo, useRef} from "react";
+import React, { useEffect, useContext, useState, useMemo, useRef } from "react";
+import { AuthContext } from "contexts/AuthContext";
 import CustomTable from "components/common/table/CustomTable";
-import {AuthContext} from "contexts/AuthContext";
-import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import PropTypes from "prop-types";
+import "components/analytics/charts/charts.css";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import {
-  getTableDateTimeColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers";
-import githubPendingMergeRequestsMetadata
-  from "components/insights/charts/github/table/pending_merge_requests/github-pending-merge-requests-metadata.js";
-import {getField} from "components/common/metadata/metadata-helpers";
+import PropTypes from "prop-types";
+import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import { getTableTextColumn } from "components/common/table/table-column-helpers";
+import bitbucketRejectedMergeRequestsMetadata from "components/insights/charts/bitbucket/table/bitbucket-rejected-merge-requests/bitbucket-rejected-merge-requests-metadata";
+import { getField } from "components/common/metadata/metadata-helpers";
+import { format } from "date-fns";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
-  const fields = githubPendingMergeRequestsMetadata.fields;
-  const {getAccessToken} = useContext(AuthContext);
+function BitbucketRejectedMergeRequestsTable({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+  const fields = bitbucketRejectedMergeRequestsMetadata.fields;
+  const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [metrics, setMetrics] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [tableFilterDto, setTableFilterDto] = useState(new Model({...genericChartFilterMetadata.newObjectFields}, genericChartFilterMetadata, false));
-
-  const noDataMessage = "No Data is available for this chart at this time";
-
-  const columns = useMemo(
-    () => [
-      getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
-      getTableTextColumn(getField(fields, "AssigneeName")),
-      getTableTextColumn(getField(fields, "MergeRequestTitle")),
-      getTableTextColumn(getField(fields, "ProjectName")),
-      getTableTextColumn(getField(fields, "BranchName")),
-      getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
-    ],
-    []
+  const [tableFilterDto, setTableFilterDto] = useState(
+    new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
   );
 
   useEffect(() => {
@@ -63,37 +49,55 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
   const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "githubPendingMergeRequests",
+        "bitbucketRejectedPullRequests",
         kpiConfiguration,
         dashboardTags,
-        filterDto
+        tableFilterDto
       );
-      let dataObject = response?.data?.data[0]?.githubPendingMergeRequests?.data;
-
+      let dataObject = response?.data?.data[0]?.bitbucketRejectedPullRequests?.data;
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", response?.data?.data[0]?.githubPendingMergeRequests?.count);
-        setTableFilterDto({...newFilterDto});
+        newFilterDto.setData("totalCount", response?.data?.data[0]?.bitbucketRejectedPullRequests?.count);
+        setTableFilterDto({ ...newFilterDto });
       }
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         setError(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
     }
   };
+
+  const noDataMessage = "No Data is available for this chart at this time";
+  const columns = useMemo(
+    () => [
+      getTableTextColumn(getField(fields, "AuthorName")),
+      getTableTextColumn(getField(fields, "AssigneeName")),
+      getTableTextColumn(getField(fields, "MergeRequestTitle")),
+      getTableTextColumn(getField(fields, "BranchName")),
+      getTableTextColumn(getField(fields, "ProjectName")),
+      getTableTextColumn(getField(fields, "RejectedReason")),
+      {
+        Header: "Time",
+        accessor: "mrCompletionTimeTimeStamp",
+        Cell: (row) => {
+          return format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a");
+        },
+      },
+    ],
+    []
+  );
 
   const getChartTable = () => {
     return (
@@ -105,7 +109,6 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
-        noFooter={true}
       />
     );
   };
@@ -127,12 +130,12 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
   );
 }
 
-GithubPendingMergeRequests.propTypes = {
+BitbucketRejectedMergeRequestsTable.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func
+  setKpis: PropTypes.func,
 };
 
-export default GithubPendingMergeRequests;
+export default BitbucketRejectedMergeRequestsTable;
