@@ -87,7 +87,7 @@ function JMeterResponseTimeLineChart({ persona, date }) {
         />
 
         <div className="chart mb-3" style={{ height: "300px" }}>
-          <div className="chart-label-text">JMeter: ResponseTime</div>
+          <div className="chart-label-text">JMeter: Response Time</div>
           {typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200 ? (
             <div
               className="max-content-width p-5 mt-5"
