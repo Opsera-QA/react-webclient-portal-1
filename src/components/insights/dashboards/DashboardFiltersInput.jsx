@@ -16,14 +16,15 @@ function DashboardFiltersInput({ dataObject, setDataObject, dashboardData, loadD
           fieldName={"value"}
           loadData={loadData}
         />
-        <DashboardFilterOrganizationInput
-          dataObject={dataObject}
-          setDataObject={setDataObject}
-          dashboardData={dashboardData}
-          fieldName={"value"}
-          loadData={loadData}
-          saveData={saveData}
-        />
+        {/*<DashboardFilterOrganizationInput*/}
+        {/*  className={"mx-2"}*/}
+        {/*  dataObject={dataObject}*/}
+        {/*  setDataObject={setDataObject}*/}
+        {/*  dashboardData={dashboardData}*/}
+        {/*  fieldName={"organizations"}*/}
+        {/*  loadData={loadData}*/}
+        {/*  saveData={saveData}*/}
+        {/*/>*/}
         <TooltipWrapper innerText={"Saves dashboard view with current settings applied"}>
           <div className={"mx-2"}>
             <LenientSaveButton saveButtonText={"Save View"} size={"sm"} recordDto={dashboardData} updateRecord={saveData}/>

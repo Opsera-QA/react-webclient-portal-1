@@ -2,7 +2,7 @@ import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
 const organizationFilterMetadata = {
   idProperty: "_id",
-  type: "Organization Filters",
+  type: "Organization",
   fields: [
     {
       label: "Status",

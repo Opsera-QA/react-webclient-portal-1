@@ -105,10 +105,15 @@ export const dashboardFiltersMetadata = {
     {
       label: "Tags",
       id: "value"
+    },
+    {
+      label: "Organizations",
+      id: "organizations"
     }
   ],
   newObjectFields: {
-    value: []
+    value: [],
+    organizations: []
   },
 };
 
