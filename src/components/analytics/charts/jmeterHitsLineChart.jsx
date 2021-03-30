@@ -14,6 +14,8 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
+import { defaultConfig, getColor, assignStandardColors } from "../../insights/charts/charts-views";
+import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function JMeterHitsLineChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -60,6 +62,7 @@ function JMeterHitsLineChart({ persona, date }) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].jmeterHits : [];
+      assignStandardColors(dataObject?.data, true);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -95,44 +98,15 @@ function JMeterHitsLineChart({ persona, date }) {
             </div>
           ) : (
             <ResponsiveLine
+              {...defaultConfig("Hits", "Build Number", 
+                    false, false, "wholeNumbers", "wholeNumbers")}
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
-              margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
-              xScale={{ type: "point" }}
-              yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              pointSize={10}
-              pointBorderWidth={8}
-              pointLabel="y"
-              pointLabelYOffset={-12}
-              useMesh={true}
-              lineWidth={3.5}
-              colors={{ scheme: "category10" }}
-              legends={config.legends}
-              tooltip={({ point, color }) => (
-                <div
-                  style={{
-                    background: "white",
-                    padding: "9px 12px",
-                    border: "1px solid #ccc",
-                  }}
-                >
-                  <strong style={{ color }}>Build ID: </strong> {point.data.x}
-                  <br></br>
-                  <strong style={{ color }}> Hits: </strong> {point.data.y}
-                  <br></br>
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
+              colors={getColor}
+              tooltip={({ point, color }) => <ChartTooltip 
+                titles = {["Build ID", "Hits"]}
+                values = {[point.data.x, point.data.y]}
+                color = {color} />}
             />
           )}
         </div>

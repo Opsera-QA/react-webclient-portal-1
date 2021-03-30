@@ -19,7 +19,7 @@ import DeploymentsStackedBarChart from "./charts/DeploymentsStackedBarChart";
 import CircleChart from "./charts/CircleChart";
 import JiraHealthBySprintBarChart from "./charts/JiraHealthBySprintBarChart";
 import SonarSecurityLineChart from "./charts/sonarSecurityLineChart";
-import JMeterHitsLineChart from "./charts/jmeterHitsLineChart";
+import JMeterHitsLineChart from "./charts/JmeterHitsLineChart";
 import JMeterErrorsLineChart from "./charts/jmeterErrorsLineChart";
 import JMeterThroughputLineChart from "./charts/jmeterThroughputLineChart";
 import JMeterResponseTimeLineChart from "./charts/jmeterResponseTimeLineChart";
