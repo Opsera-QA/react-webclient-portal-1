@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Form, OverlayTrigger, Popover, Row } from "react-bootstrap";
+import { Button, Form, OverlayTrigger, Popover, Row, Col } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExclamationCircle,
@@ -26,6 +26,10 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import JSONInput from "react-json-editor-ajrm";
 import locale    from "react-json-editor-ajrm/locale/en";
 import CloseButton from "../../../../../../../common/buttons/CloseButton";
+
+import DockerSecretsInput from "./DockerSecretsInput";
+import Model from "core/data_model/model";
+import _ from "lodash";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -83,6 +87,8 @@ const INITIAL_DATA = {
   inputFilePath: "",
   agentLabels : "",
   autoScaleEnable: "",
+  dockerBuildPathJson: {},
+  dockerSecretKeys: []
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -94,6 +100,8 @@ function JenkinsStepConfiguration({
   stepId,
   parentCallback,
   callbackSaveToVault,
+  callbackGetFromVault,
+  callbackDeleteFromVault,
   createJob,
   setToast,
   setShowToast,
@@ -128,6 +136,9 @@ function JenkinsStepConfiguration({
   const [workspacesList, setWorkspacesList] = useState([]);
   const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
 
+  const [deleteDockerSecrets, setDeleteDockerSecrets] = useState(false);
+  const [dataObject, setDataObject] = useState(undefined);
+
   let step = {};
 
   let stepArrayIndex = plan.findIndex(x => x._id === stepId);
@@ -153,7 +164,7 @@ function JenkinsStepConfiguration({
   useEffect(() => {
     const controller = new AbortController();
     const runEffect = async () => {
-      try {
+      try {        
         await loadFormData(stepTool);
         setRenderForm(true);
       } catch (err) {
@@ -193,6 +204,16 @@ function JenkinsStepConfiguration({
       }
     }
     fetchJenkinsDetails("jenkins");
+
+    setDataObject(new Model({dockerSecrets: []}, {
+      fields: [
+        {
+          label: "Docker Secrets",
+          id: "dockerSecrets"
+        }
+      ]
+    }, true));
+
   }, []);
 
   useEffect(() => {
@@ -339,6 +360,15 @@ function JenkinsStepConfiguration({
     }
   }, [formData.toolJobType]);
 
+  // Populating docker secret keys
+  useEffect(() => {
+    if(dataObject){
+      let tmp = dataObject;
+      tmp.setData("dockerSecrets", formData.dockerSecretKeys);      
+      setDataObject(tmp);
+    }    
+  }, [formData.dockerSecretKeys]);
+
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
     if (typeof configuration !== "undefined") {
@@ -359,6 +389,7 @@ function JenkinsStepConfiguration({
 
   const handleCreateAndSave = async (pipelineId, stepId, toolId) => {
     console.log("saving and creating job for toolID: ", toolId);
+
     if (validateRequiredFields() && toolId) {
       setLoading(true);
 
@@ -366,6 +397,20 @@ function JenkinsStepConfiguration({
       //   await getTestClasses(pipelineId, stepId, toolId);
       //   return;
       // }
+
+      if(dataObject.data.dockerSecrets?.length !== 0){        
+        let dockerSecretKey = await saveToVault(pipelineId, stepId, "secretKey", "Vault Secured Key", dataObject.data.dockerSecrets);
+        let keys = dataObject.data.dockerSecrets.map(secret => ({
+          name: secret.name,
+          value: dockerSecretKey
+        }));
+        setFormData(Object.assign(formData, {
+          dockerBuildPathJson: dockerSecretKey,
+          dockerSecretKeys: keys
+        }));
+      } else if (deleteDockerSecrets){        
+        await deleteSecrets();
+      }
 
       const createJobPostBody = {
         jobId: "",
@@ -410,10 +455,49 @@ function JenkinsStepConfiguration({
     }
   };
 
+  // const getSecrets = async () => {
+  //   const response = await callbackGetFromVault(formData.dockerBuildPathJson.vaultKey);
+  //   console.log({response})
+  // }
+
+  const deleteSecrets = async () => {
+    try {
+      const response = await callbackDeleteFromVault(formData.dockerBuildPathJson.vaultKey);      
+      setFormData(Object.assign(formData, {
+        dockerBuildPathJson: {},
+        dockerSecretKeys: []
+      }));      
+    }catch (err) {
+      console.error(err);
+    }
+  };
+
+  const saveToVault = async (pipelineId, stepId, key, name, value) => {
+    const keyName = `${pipelineId}-${stepId}-${key}`;
+    const body = {
+      "key": keyName,
+      "value": JSON.stringify(value)
+    };
+    const response = await callbackSaveToVault(body);    
+    if (response.status === 200 ) {
+      return { name: name, vaultKey: keyName };
+    } else {
+      setFormData(formData => {
+        return { ...formData, dockerBuildPathJson: {} };
+      });
+      setLoading(false);
+      let errorMessage = "ERROR: Something has gone wrong saving secure data to your vault.  Please try again or report the issue to OpsERA.";
+      let toast = getErrorDialog(errorMessage, setShowToast, "detailPanelTop");
+      setToast(toast);
+      setShowToast(true);
+      return "";
+    }
+  };
+
   const validateRequiredFields = () => {
     const regex = RegExp("^[ a-z0-9_.-]*$");
     let { toolConfigId, toolJobId, jenkinsUrl, jUserId, jobName, buildType, dockerName, dockerTagName, sfdcUnitTestType } = formData;
-    if(!toolJobId || toolJobId.length === 0 ) {
+    if(jobType === "opsera-job" && (!toolJobId || toolJobId.length === 0 )) {
       let toast = getMissingRequiredFieldsErrorDialog(setShowToast, "stepConfigurationTop");
       setToast(toast);
       setShowToast(true);
@@ -1368,8 +1452,65 @@ function JenkinsStepConfiguration({
                   </div>
                   <small className="form-text text-muted form-group m-2 text-left">
                     Enter runtime build arguments as a JSON Object
-                  </small>
-                 
+                  </small>                  
+                  <DockerSecretsInput 
+                    setDataObject={setDataObject} 
+                    dataObject={dataObject}
+                    deleteDockerSecrets={deleteDockerSecrets}
+                    setDeleteDockerSecrets={setDeleteDockerSecrets}
+                    addSecret={deleteDockerSecrets || _.isEmpty(formData.dockerBuildPathJson)}
+                  />
+                  {/* { deleteDockerSecrets || _.isEmpty(formData.dockerBuildPathJson) ? (                    
+                    <DockerSecretsInput 
+                      setDataObject={setDataObject} 
+                      dataObject={dataObject}
+                      deleteDockerSecrets={deleteDockerSecrets}
+                      setDeleteDockerSecrets={setDeleteDockerSecrets}
+                    />
+                  ) : (
+                    <div className="form-group m-2">
+                      <label>Secrets</label>
+                      { formData.dockerSecretKeys.length > 0 && 
+                        formData.dockerSecretKeys.map((secret, index) => {
+                          return (
+                            <div className="d-flex my-2 justify-content-between" key={index}>
+                              <Col sm={12}>
+                                <Row>
+                                  <Col sm={6} className={"pl-1 pr-0"}>
+                                    <input
+                                      className="form-control"
+                                      type={"text"}                              
+                                      placeholder={"Name"}                              
+                                      maxLength={30}
+                                      disabled={true}
+                                      value={secret.name}                                    
+                                    />
+                                  </Col>
+                                  <Col sm={6} className={"pl-1 pr-0"}>
+                                    <textarea
+                                      style={{WebkitTextSecurity: 'disc'}}
+                                      rows={3}
+                                      disabled={true}
+                                      value={secret.value}                                      
+                                      className="form-control"
+                                      placeholder={"Value"}
+                                    />                                    
+                                  </Col>
+                                </Row>
+                              </Col>                            
+                            </div>
+                          );                          
+                        })
+                      }                      
+                      <small className="form-text text-muted form-group m-2 text-left">
+                        Please delete the existing secrets to add new secrets
+                      </small>                      
+                      <div className="bottom-zoom-btns">
+                        <Button size="sm" variant="light" onClick={() => { setDeleteDockerSecrets(true);
+                          }}>Delete Secrets</Button>
+                      </div>                      
+                    </div>
+                  )}                   */}
                   </>
                 )}
 
@@ -1503,7 +1644,9 @@ JenkinsStepConfiguration.propTypes = {
   createJob: PropTypes.func,
   setToast: PropTypes.func,
   setShowToast: PropTypes.func,
-  closeEditorPanel: PropTypes.func
+  closeEditorPanel: PropTypes.func,
+  callbackGetFromVault: PropTypes.func,
+  callbackDeleteFromVault: PropTypes.func
 };
 
 export default JenkinsStepConfiguration;

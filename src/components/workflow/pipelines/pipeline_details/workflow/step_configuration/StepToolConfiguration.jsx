@@ -98,6 +98,22 @@ function StepToolConfiguration({
     return response;
   };
 
+  const getFromVault = async (vaultId) => {
+    const response = await PipelineActions.getFromVault(
+      vaultId,
+      getAccessToken
+    );
+    return response;
+  };
+
+  const deleteFromVaultUsingVaultKey = async (vaultId) => {
+    const response = await PipelineActions.deleteFromVaultUsingVaultKey(
+      vaultId,
+      getAccessToken
+    );
+    return response;
+  };
+
   const createJob = async (
     toolId,
     toolConfiguration,
@@ -187,6 +203,8 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
+            callbackGetFromVault={getFromVault}
+            callbackDeleteFromVault={deleteFromVaultUsingVaultKey}
             createJob={createJob}
             setToast={setToast}
             setShowToast={setShowToast}
