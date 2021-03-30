@@ -1,5 +1,5 @@
 // Analytics Software Testing, Persona Manager/Developer/Executive, Node Ticket AN-147
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { format } from "date-fns";
@@ -11,18 +11,13 @@ import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import InfoDialog from "../../common/status_notifications/info";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
-import { defaultConfig, getColorByData, assignLineColors,
-         adjustBarWidth } from "../../insights/charts/charts-views";
+import { defaultConfig, assignLineColors, capitalizeLegend, adjustBarWidth } from "../../insights/charts/charts-views";
          import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function SonarLinesToCoverBarChart({ data, persona }) {
   const [showModal, setShowModal] = useState(false);
-  // assignStandardColors(data?.data);
-
-  useEffect(() => {
-    assignLineColors(data?.data);
-    console.log('DATA', data);
-  }, [data]);
+  capitalizeLegend(data?.data || [], ["uncovered_lines", "line_coverage"]);
+  assignLineColors(data?.data);
 
   // if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
   //   return <ErrorDialog error="No Data Present in the ES!" />;
@@ -51,7 +46,6 @@ function SonarLinesToCoverBarChart({ data, persona }) {
             groupMode="stacked"
             indexBy="analysedAt"
             colorBy="id"
-            // colors={getColorByData}
             colors={({ id, data }) => data[`${id}_color`]}
             tooltip={({ indexValue, value, id, color, data }) => <ChartTooltip 
                 titles = {["Timestamp", capitalizeFirstLetter(id) , "Project Key"]}

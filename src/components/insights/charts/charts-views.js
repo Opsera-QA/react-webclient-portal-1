@@ -137,7 +137,6 @@ export const getTaskColor = ({ id, data }) => data[`${id}_color`];
 
 export const shortenPieChartLegend = datas => datas.forEach(data => data.id.length > 10 ? data.label = data.id.slice(0, 10) + "..." : data.id);
 export const shortenLegend = (datas, originalIdHolder={}) => {
-
   datas.forEach(data => {
     const slicedId = data.id.slice(0, 10) + "...";
     originalIdHolder[slicedId] = data.id;
@@ -155,7 +154,7 @@ export const shortenHealthChartLegend = datas => datas.forEach(data => {
   }
 });
 export const capitalizeLegend = (data, keys) => data.forEach(d => {
-  keys.forEach(key => d[capitalizeFirstLetter(key)] = d[key]);
+  keys.forEach(key => d[capitalizeFirstLetter(key.split("_").join(" "))] = d[key]);
 });
 
 export const spaceOutMergeRequestTimeTakenLegend = data => data.forEach(d => d["Merge Request Time Taken"] = d["MergeRequestTimeTaken"]);
