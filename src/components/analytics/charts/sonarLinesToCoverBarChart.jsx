@@ -16,7 +16,6 @@ import { defaultConfig, assignLineColors, capitalizeLegend, adjustBarWidth } fro
 
 function SonarLinesToCoverBarChart({ data, persona }) {
   const [showModal, setShowModal] = useState(false);
-  capitalizeLegend(data?.data || [], ["uncovered_lines", "line_coverage"]);
   assignLineColors(data?.data);
 
   // if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
