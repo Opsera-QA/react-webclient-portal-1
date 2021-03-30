@@ -104,7 +104,7 @@ function GitlabTotalCommitsByUserAndDate({ persona, date }) {
             }}
             cellOpacity={1}
             cellBorderColor={{ from: "color", modifiers: [["darker", 0.4]] }}
-            labelTextColor="#fdeded"
+            labelTextColor="white"
             colors={gradationalColors}
             cellShape={"circle"}
             enableLabels={true}
