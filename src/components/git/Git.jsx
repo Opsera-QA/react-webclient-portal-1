@@ -7,7 +7,6 @@ import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import GitTasksView from "./GitTasksView";
 import GitTasksActivityLogsTable from "./git_task_details/activity_logs/GitTasksActivityLogsTable";
 
-/* TODO: This will get replaced with the full framework..*/
 function GitLanding() {
   const { tab } = useParams();
   const [activeTab, setActiveTab] = useState(tab ? tab : "gitTasks");
