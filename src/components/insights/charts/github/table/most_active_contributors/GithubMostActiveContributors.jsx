@@ -6,8 +6,6 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {
-  getChartPipelineStatusColumn,
-  getTableDateTimeColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import githubMostActiveContributorsMetadata
@@ -15,6 +13,9 @@ import githubMostActiveContributorsMetadata
 import {getField} from "components/common/metadata/metadata-helpers";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Model from "core/data_model/model";
+import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+
 function GithubMostActiveContributors({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
   const fields = githubMostActiveContributorsMetadata.fields;
   const {getAccessToken} = useContext(AuthContext);
@@ -23,6 +24,7 @@ function GithubMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
   const [metrics, setMetrics] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [tableFilterDto, setTableFilterDto] = useState(new Model({...genericChartFilterMetadata.newObjectFields}, genericChartFilterMetadata, false));
 
   const noDataMessage = "No Data is available for this chart at this time";
 
@@ -69,7 +71,7 @@ function GithubMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
@@ -78,6 +80,9 @@ function GithubMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+        let newFilterDto = filterDto;
+        newFilterDto.setData("totalCount", response?.data?.data[0]?.githubMostActiveUsers?.count);
+        setTableFilterDto({...newFilterDto});
       }
     }
     catch (error) {
@@ -93,12 +98,28 @@ function GithubMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
     }
   };
 
+  const getChartTable = () => {
+    return (
+      <CustomTable
+        columns={columns}
+        data={metrics}
+        noDataMessage={noDataMessage}
+        paginationDto={tableFilterDto}
+        setPaginationDto={setTableFilterDto}
+        loadData={loadData}
+        scrollOnLoad={false}
+        noFooter={true}
+      />
+    );
+  };
+
+
   return (
     <div>
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage} noFooter={true}/>}
+        chart={getChartTable()}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
