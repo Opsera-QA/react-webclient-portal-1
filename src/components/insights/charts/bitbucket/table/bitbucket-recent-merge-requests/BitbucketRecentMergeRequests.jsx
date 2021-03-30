@@ -112,7 +112,6 @@ function BitbucketRecentMergeRequestsTable({ kpiConfiguration, setKpiConfigurati
     );
   };
 
-
   return (
     <div>
       <ChartContainer

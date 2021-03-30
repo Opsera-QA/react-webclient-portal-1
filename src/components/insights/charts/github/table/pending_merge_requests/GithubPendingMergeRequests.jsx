@@ -12,6 +12,8 @@ import {
 import githubPendingMergeRequestsMetadata
   from "components/insights/charts/github/table/pending_merge_requests/github-pending-merge-requests-metadata.js";
 import {getField} from "components/common/metadata/metadata-helpers";
+import Model from "core/data_model/model";
+import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
 function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
   const fields = githubPendingMergeRequestsMetadata.fields;
@@ -21,6 +23,7 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
   const [metrics, setMetrics] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [tableFilterDto, setTableFilterDto] = useState(new Model({...genericChartFilterMetadata.newObjectFields}, genericChartFilterMetadata, false));
 
   const noDataMessage = "No Data is available for this chart at this time";
 
@@ -57,15 +60,26 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "githubPendingMergeRequests", kpiConfiguration, dashboardTags);
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "githubPendingMergeRequests",
+        kpiConfiguration,
+        dashboardTags,
+        tableFilterDto
+      );
       let dataObject = response?.data?.data[0]?.githubPendingMergeRequests?.data;
+
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+        let newFilterDto = filterDto;
+        newFilterDto.setData("totalCount", response?.data?.data[0]?.githubPendingMergeRequests?.count);
+        setTableFilterDto({...newFilterDto});
       }
     }
     catch (error) {
@@ -81,12 +95,27 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
     }
   };
 
+  const getChartTable = () => {
+    return (
+      <CustomTable
+        columns={columns}
+        data={metrics}
+        noDataMessage={noDataMessage}
+        paginationDto={tableFilterDto}
+        setPaginationDto={setTableFilterDto}
+        loadData={loadData}
+        scrollOnLoad={false}
+        noFooter={true}
+      />
+    );
+  };
+
   return (
     <div>
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage} noFooter={true}/>}
+        chart={getChartTable()}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}
