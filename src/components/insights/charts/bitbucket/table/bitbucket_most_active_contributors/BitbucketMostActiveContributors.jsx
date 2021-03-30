@@ -110,7 +110,6 @@ function BitbucketMostActiveContributors({ kpiConfiguration, setKpiConfiguration
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
-        noFooter={true}
       />
     );
   };

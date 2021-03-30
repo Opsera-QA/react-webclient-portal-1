@@ -97,7 +97,6 @@ function OpseraRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, das
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
-        noFooter={true}
       />
     );
   };
