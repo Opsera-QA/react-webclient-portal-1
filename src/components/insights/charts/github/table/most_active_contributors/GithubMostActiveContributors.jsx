@@ -81,7 +81,7 @@ function GithubMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
         "githubMostActiveUsers",
         kpiConfiguration,
         dashboardTags,
-        tableFilterDto
+        filterDto
       );
       let dataObject = response?.data?.data[0]?.githubMostActiveUsers?.data;
 

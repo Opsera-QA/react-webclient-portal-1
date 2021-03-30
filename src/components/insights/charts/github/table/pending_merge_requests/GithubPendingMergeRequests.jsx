@@ -70,7 +70,7 @@ function GithubPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
         "githubPendingMergeRequests",
         kpiConfiguration,
         dashboardTags,
-        tableFilterDto
+        filterDto
       );
       let dataObject = response?.data?.data[0]?.githubPendingMergeRequests?.data;
 

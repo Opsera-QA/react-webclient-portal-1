@@ -54,7 +54,7 @@ function BitbucketRecentMergeRequestsTable({ kpiConfiguration, setKpiConfigurati
         "bitbucketTimeTakenToCompleteMergeRequestReviewAndPushTime",
         kpiConfiguration,
         dashboardTags,
-        tableFilterDto
+        filterDto
       );
       let dataObject = response?.data?.data[0]?.bitbucketTimeTakenToCompleteMergeRequestReviewAndPushTime?.data;
 

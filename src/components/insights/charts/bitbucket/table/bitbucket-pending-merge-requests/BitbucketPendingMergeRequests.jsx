@@ -54,7 +54,7 @@ function BitbucketPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, 
         "bitbucketPendingMergeRequests",
         kpiConfiguration,
         dashboardTags,
-        tableFilterDto
+        filterDto
       );
       let dataObject = response?.data?.data[0]?.bitbucketPendingMergeRequests?.data;
 
