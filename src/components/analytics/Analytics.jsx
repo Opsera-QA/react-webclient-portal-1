@@ -22,7 +22,7 @@ import SonarSecurityLineChart from "./charts/sonarSecurityLineChart";
 import JMeterHitsLineChart from "./charts/JmeterHitsLineChart";
 import JMeterErrorsLineChart from "./charts/JmeterErrorsLineChart";
 import JMeterThroughputLineChart from "./charts/JmeterThroughputLineChart";
-import JMeterResponseTimeLineChart from "./charts/jmeterResponseTimeLineChart";
+import JMeterResponseTimeLineChart from "./charts/JmeterResponseTimeLineChart";
 import JMeterResultsTable from "./metrics/jmeterResultsTable";
 // import GitlabPlanCodeView from "./views/GitlabPlanCodeView";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
