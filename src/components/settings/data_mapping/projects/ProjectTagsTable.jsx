@@ -6,6 +6,9 @@ import { useHistory } from "react-router-dom";
 import NewProjectMappingOverlay from "./NewProjectMappingOverlay";
 import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faTags} from "@fortawesome/pro-light-svg-icons";
+import {getField} from "components/common/metadata/metadata-helpers";
 
 function ProjectsTagTable({ data, loadData, isLoading, isMounted }) {
   const toastContext = useContext(DialogToastContext);
@@ -13,10 +16,9 @@ function ProjectsTagTable({ data, loadData, isLoading, isMounted }) {
   let fields = projectTagsMetadata.fields;
 
   const columns = useMemo(() => [
-      getTableTextColumn(fields.find((field) => {return field.id === "tool_identifier";})),
-      getTableTextColumn(fields.find((field) => {return field.id === "key";})),
-      // getTableTextColumn(fields.find(field => { return field.id === "tool_id"})),
-      getTableBooleanIconColumn(fields.find((field) => {return field.id === "active";})),
+      getTableTextColumn(getField(fields,"tool_identifier")),
+      getTableTextColumn(getField(fields,"key")),
+      getTableBooleanIconColumn(getField(fields,"active")),
     ],
     []
   );
@@ -35,7 +37,8 @@ function ProjectsTagTable({ data, loadData, isLoading, isMounted }) {
     toastContext.showOverlayPanel(<NewProjectMappingOverlay loadData={loadData} isMounted={isMounted} />);
   };
 
-  return (
+  const getProjectTagsTable = () => {
+    return (
       <CustomTable
         columns={columns}
         data={data}
@@ -45,8 +48,22 @@ function ProjectsTagTable({ data, loadData, isLoading, isMounted }) {
         isLoading={isLoading}
         tableTitle={"Project Mapping"}
         type={"Project Mapping"}
-        createNewRecord={createProjectTag}
       />
+    );
+  };
+
+  return (
+    <FilterContainer
+      loadData={loadData}
+      addRecordFunction={createProjectTag}
+      supportSearch={false}
+      isLoading={isLoading}
+      body={getProjectTagsTable()}
+      metadata={projectTagsMetadata}
+      titleIcon={faTags}
+      title={"Project Tags"}
+      className={"px-2 pb-2"}
+    />
   );
 }
 
