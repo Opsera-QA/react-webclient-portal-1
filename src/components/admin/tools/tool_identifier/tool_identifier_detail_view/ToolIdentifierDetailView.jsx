@@ -12,6 +12,10 @@ import DetailScreenContainer from "components/common/panels/detail_view_containe
 import toolIdentifierMetadata from "components/admin/tools/tool_identifier/tool-identifier-metadata";
 import axios from "axios";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import ActionBarTransferToolButton from "components/common/actions/buttons/tool/ActionBarTransferToolButton";
+import ActionBarDeleteToolButton from "components/common/actions/buttons/tool/ActionBarDeleteToolButton";
+import ActionBarOpseraAdminDeleteButton from "components/common/actions/buttons/ActionBarOpseraAdminDeleteButton";
+import toolsActions from "components/inventory/tools/tools-actions";
 
 function ToolIdentifierDetailView() {
   const {toolIdentifierId} = useParams();
@@ -76,10 +80,14 @@ function ToolIdentifierDetailView() {
 
   const getToolIdentifier = async (cancelSource = cancelTokenSource) => {
     const response = await toolManagementActions.getToolIdentifierByIdV2(getAccessToken, cancelSource, toolIdentifierId);
-    // // TODO: remove grabbing first when it only sends object instead of array
+
     if (isMounted?.current === true && response?.data?.length > 0) {
       setToolIdentifierData(new Model(response?.data[0], toolIdentifierMetadata, false));
     }
+  };
+
+  const deleteToolIdentifier = async () => {
+    return await toolManagementActions.deleteToolIdentifierV2(getAccessToken, cancelTokenSource, toolIdentifierData);
   };
 
   const getActionBar = () => {
@@ -87,6 +95,9 @@ function ToolIdentifierDetailView() {
       <ActionBarContainer>
         <div>
           <ActionBarBackButton path={"/admin/tools/identifiers"} />
+        </div>
+        <div>
+          <ActionBarOpseraAdminDeleteButton relocationPath={"/admin/tools/identifiers"} handleDelete={deleteToolIdentifier} dataObject={toolIdentifierData} />
         </div>
       </ActionBarContainer>
     );

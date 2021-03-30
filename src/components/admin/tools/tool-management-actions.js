@@ -92,9 +92,9 @@ toolManagementActions.updateToolIdentifierV2 = async (getAccessToken, cancelToke
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-toolManagementActions.deleteToolIdentifier = async (toolIdentifierDataDto, getAccessToken) => {
-  const apiUrl = `/registry/type/${toolIdentifierDataDto.getData("_id")}`;
-  return await baseActions.apiDeleteCall(getAccessToken, apiUrl);
+toolManagementActions.deleteToolIdentifierV2 = async (getAccessToken, cancelTokenSource, toolIdentifierDataDto) => {
+  const apiUrl = `/registry/tool/${toolIdentifierDataDto.getData("_id")}`;
+  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 export default toolManagementActions;
