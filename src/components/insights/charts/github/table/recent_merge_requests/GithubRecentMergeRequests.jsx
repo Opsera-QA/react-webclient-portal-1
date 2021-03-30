@@ -104,7 +104,6 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
-        noFooter={true}
       />
     );
   };

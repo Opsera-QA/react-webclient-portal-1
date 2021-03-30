@@ -101,7 +101,6 @@ function OpseraRecentCDStatusTable({ kpiConfiguration, setKpiConfiguration, dash
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
-        noFooter={true}
       />
     );
   };

@@ -101,7 +101,6 @@ function JiraIssuesAssignedToMe({ kpiConfiguration, setKpiConfiguration, dashboa
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
-        noFooter={true}
       />
     );
   };
