@@ -106,6 +106,7 @@ function BitbucketRecentMergeRequestsTable({ kpiConfiguration, setKpiConfigurati
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
+        noFooter={true}
       />
     );
   };
