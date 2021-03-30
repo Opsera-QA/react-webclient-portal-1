@@ -1,4 +1,5 @@
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import { da } from "date-fns/locale";
 
 export const mainColor = "#5B5851";
 export const mainGold = "#F1AD0F";
@@ -71,6 +72,8 @@ export const assignHealthColors = data => {
       data["Peer Review_color"] = standardColors[3];
       data["Testing_color"] = standardColors[4];
       data["Done_color"] = standardColors[5];
+      data["For Development_color"] = standardColors[6];
+      data["Production Deploy_color"] = standardColors[7];
     });
   }
   
@@ -122,6 +125,14 @@ export const getColorById = data => data.id === "Successful" ? mainColor : failC
 export const getTaskColor = ({ id, data }) => data[`${id}_color`];
 
 export const shortenLegend = datas => datas.forEach(data => data.id.length > 10 ? data.label = data.id.slice(0, 10) + "..." : data.id);
+export const shortenHealthChartLegend = datas => datas.forEach(data => {
+  if (data["Production Deployment"]) {
+    data["Production Deploy"] = data["Production Deployment"];
+  }
+  if (data["Selected for Development"]) {
+    data["For Development"] = data["Selected for Development"];
+  }
+});
 export const capitalizeLegend = (data, keys) => data.forEach(d => {
   keys.forEach(key => d[capitalizeFirstLetter(key)] = d[key]);
 });
@@ -141,7 +152,8 @@ const formats = {
 
 export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
                               largeLeftSpaceRequired=false, largeBottomSpaceRequired=false,
-                              leftLabelFormat="", bottomLabelFormat="", isLegendHidden=false) => ({
+                              leftLabelFormat="", bottomLabelFormat="", isLegendHidden=false,
+                              moreLegendSpace=false) => ({
   margin: { top: 30, right: 20, bottom: largeBottomSpaceRequired ? 60 : 80, 
             left: largeLeftSpaceRequired ? 100 : 60},
   lineWidth: 3.5,
@@ -183,7 +195,7 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
       "justify": false,
       "translateX": 0,
       "translateY": -25,
-      "itemsSpacing": 20,
+      "itemsSpacing": moreLegendSpace ? 17 : 20,
       "itemDirection": "right-to-left",
       "itemWidth": 80,
       "itemHeight": 20,
@@ -200,6 +212,11 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
           fontSize: "10px"
         },
       },
+    },
+    legends: {
+      text: {
+        fontSize: moreLegendSpace ?"9px" : "10px"
+      }
     }
   },
 });
