@@ -6,7 +6,6 @@
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
 import ErrorDialog from "../../common/status_notifications/error";
-import config from "./jmeterHitsLineChartConfigs";
 import "./charts.css";
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -98,8 +97,7 @@ function JMeterHitsLineChart({ persona, date }) {
             </div>
           ) : (
             <ResponsiveLine
-              {...defaultConfig("Hits", "Build Number", 
-                    false, false, "wholeNumbers", "wholeNumbers")}
+              {...defaultConfig("Hits", "Build Number", false, false, "wholeNumbers", "wholeNumbers")}
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
               colors={getColor}

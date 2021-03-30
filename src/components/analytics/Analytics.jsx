@@ -20,7 +20,7 @@ import CircleChart from "./charts/CircleChart";
 import JiraHealthBySprintBarChart from "./charts/JiraHealthBySprintBarChart";
 import SonarSecurityLineChart from "./charts/sonarSecurityLineChart";
 import JMeterHitsLineChart from "./charts/JmeterHitsLineChart";
-import JMeterErrorsLineChart from "./charts/jmeterErrorsLineChart";
+import JMeterErrorsLineChart from "./charts/JmeterErrorsLineChart";
 import JMeterThroughputLineChart from "./charts/jmeterThroughputLineChart";
 import JMeterResponseTimeLineChart from "./charts/jmeterResponseTimeLineChart";
 import JMeterResultsTable from "./metrics/jmeterResultsTable";
