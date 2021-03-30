@@ -119,6 +119,17 @@ export const assignVelocityColors = data => {
   return data;
 };
 
+export const assignLineColors = data => {
+  if (data) {
+    data.forEach(data => {
+      data["line_coverage_color"] = mainColor;
+      data["uncovered_lines_color"] = gradationalColors[0];
+    });
+  }
+  
+  return data;
+};
+
 export const getColor = data => data.color;
 export const getColorByData = data => data.data.color;
 export const getColorById = data => data.id === "Successful" ? mainColor : failColor;
