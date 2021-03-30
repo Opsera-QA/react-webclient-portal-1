@@ -105,7 +105,6 @@ function XunitTestResultsTable({ kpiConfiguration, setKpiConfiguration, dashboar
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
-        noFooter={true}
       />
     );
   };

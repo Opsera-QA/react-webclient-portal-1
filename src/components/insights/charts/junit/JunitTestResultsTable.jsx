@@ -106,7 +106,6 @@ function JunitTestResultsTable({ kpiConfiguration, setKpiConfiguration, dashboar
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
-        noFooter={true}
       />
     );
   };

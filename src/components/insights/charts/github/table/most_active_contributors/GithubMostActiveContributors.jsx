@@ -115,7 +115,6 @@ function GithubMostActiveContributors({ kpiConfiguration, setKpiConfiguration, d
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
-        noFooter={true}
       />
     );
   };

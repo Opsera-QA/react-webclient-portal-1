@@ -104,7 +104,6 @@ function CypressTestResultsTable({ kpiConfiguration, setKpiConfiguration, dashbo
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
-        noFooter={true}
       />
     );
   };
