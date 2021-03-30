@@ -3,20 +3,14 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
-/*import TopFiveDashboardsBadgeView from "components/insights/dashboards/top_five/TopFiveDashboardsBadgeView";
-import LoadingIcon from "components/common/icons/LoadingIcon";*/
 import { Badge, Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 
-/*import dashboardsButtonView from "./TopFiveDashboardsBadgeView";
-import TagsCloudBase from "components/common/fields/tags/cloud/TagsCloudBase";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";*/
 
 function TopFiveDashboards({ loadDashboardById }) {
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [dashboardsList, setDashboardsList] = useState(undefined);
+  const [dashboardsList, setDashboardsList] = useState([]);
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -62,7 +56,7 @@ function TopFiveDashboards({ loadDashboardById }) {
     const response = await dashboardsActions.getTopFiveDashboardsV2(getAccessToken, cancelSource);
     const dashboards = response?.data?.data;
 
-    if (isMounted.current === true && dashboards) {
+    if (isMounted.current === true && Array.isArray(dashboardsList) && dashboardsList.length === 0) {
       setDashboardsList(dashboards.slice(0,6));
     }
   };
@@ -86,8 +80,8 @@ function TopFiveDashboards({ loadDashboardById }) {
                 loadDashboardById(item._id);
               }}
             >
-              {item.name.substring(0, 50)}
-              {new Date(item.createdAt) > d &&
+              {item?.name?.substring(0, 50)}
+              {new Date(item?.createdAt) > d &&
               <Badge variant="secondary" className="ml-1" size="sm">
                 New
               </Badge>
