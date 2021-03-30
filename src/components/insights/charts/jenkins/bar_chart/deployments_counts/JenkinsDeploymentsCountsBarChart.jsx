@@ -111,7 +111,7 @@ function JenkinsDeploymentsStackedBarChart({ persona, date }) {
               onClick={() => setShowModal(true)}
               tooltip={({ indexValue, color, value, id, data }) => <ChartTooltip 
                               titles = {["Build Time", `${capitalizeFirstLetter(id)} Builds`, "Failure Rate"]}
-                              values = {[indexValue, value, data.failureRate.toFixed(2) + "%"]}
+                              values = {[indexValue, value, data?.failureRate?.toFixed(2) + "%"]}
                               style = {false}
                               color = {color} />}
             />
