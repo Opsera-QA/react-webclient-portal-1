@@ -45,6 +45,16 @@ const sfdcConnectionMetadata = {
       regexValidator: regexHelpers.regexTypes.generalTextWithoutSpacesPeriod,
       maxLength: 10
     },
+    {
+      label: "Check Connection for SFDX",
+      id: "checkConnection"
+    },
+    {
+      label: "Jenkins Tool",
+      id: "jenkinsToolId",
+      maxLength: 24,
+      regexValidator: regexHelpers.regexTypes.mongoId
+    },
   ],
   newObjectFields:
     {
@@ -54,7 +64,9 @@ const sfdcConnectionMetadata = {
       sfdc_client_secret: "",
       sfdc_token: "",
       sfdc_password: "",
-      buildType: "ant"
+      buildType: "ant",
+      checkConnection: false,
+      jenkinsToolId: ""
     }
 };
 
