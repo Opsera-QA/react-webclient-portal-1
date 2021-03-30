@@ -12,8 +12,8 @@ import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import InfoDialog from "../../common/status_notifications/info";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
-import { defaultConfig, assignLineColors, capitalizeLegend, adjustBarWidth } from "../../insights/charts/charts-views";
-         import ChartTooltip from "../../insights/charts/ChartTooltip";
+import { defaultConfig, assignLineColors } from "../../insights/charts/charts-views";
+import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function SonarCodeCoverageBarChart( { data, persona } ) {
   const [showModal, setShowModal] = useState(false);
