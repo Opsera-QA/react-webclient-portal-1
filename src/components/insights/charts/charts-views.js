@@ -225,7 +225,7 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
     },
     legends: {
       text: {
-        fontSize: moreLegendSpace ?"9px" : "10px"
+        fontSize: moreLegendSpace ? "9px" : "10px"
       }
     }
   },
