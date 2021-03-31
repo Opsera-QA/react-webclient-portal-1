@@ -14,7 +14,7 @@ import InfoDialog from "../common/status_notifications/info";
 import "./analytics.css";
 import "./charts/charts.css";
 import DeploymentFrequencyLineChart from "./charts/DeploymentFrequencyLineChart.jsx";
-import JiraIssuesCreatedByDateLineChart from "./charts/jiraIssuesCreatedByDateLineChart.jsx";
+import JiraIssuesCreatedByDateLineChart from "./charts/JiraIssuesCreatedByDateLineChart.jsx";
 import DeploymentsStackedBarChart from "./charts/DeploymentsStackedBarChart";
 import CircleChart from "./charts/CircleChart";
 import JiraHealthBySprintBarChart from "./charts/JiraHealthBySprintBarChart";

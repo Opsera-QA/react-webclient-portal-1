@@ -119,6 +119,18 @@ export const assignVelocityColors = data => {
   return data;
 };
 
+export const assignLineColors = data => {
+  if (data) {
+    data.forEach(data => {
+      data["line_coverage_color"] = standardColors[0];
+      data["uncovered_lines_color"] = standardColors[1];
+      data["coverage_color"] = standardColors[2];
+    });
+  }
+  
+  return data;
+};
+
 export const getColor = data => data.color;
 export const getColorByData = data => data.data.color;
 export const getColorById = data => data.id === "Successful" ? mainColor : failColor;
@@ -126,11 +138,10 @@ export const getTaskColor = ({ id, data }) => data[`${id}_color`];
 
 export const shortenPieChartLegend = datas => datas.forEach(data => data.id.length > 10 ? data.label = data.id.slice(0, 10) + "..." : data.id);
 export const shortenLegend = (datas, originalIdHolder={}) => {
-
   datas.forEach(data => {
     const slicedId = data.id.slice(0, 10) + "...";
     originalIdHolder[slicedId] = data.id;
-    return data.id.length > 10 ? data.id = slicedId : data.id;
+    data.id.length > 10 ? data.id = slicedId : data.id;
   });
   return originalIdHolder;
 };
@@ -144,7 +155,7 @@ export const shortenHealthChartLegend = datas => datas.forEach(data => {
   }
 });
 export const capitalizeLegend = (data, keys) => data.forEach(d => {
-  keys.forEach(key => d[capitalizeFirstLetter(key)] = d[key]);
+  keys.forEach(key => d[capitalizeFirstLetter(key.split("_").join(" "))] = d[key]);
 });
 
 export const spaceOutMergeRequestTimeTakenLegend = data => data.forEach(d => d["Merge Request Time Taken"] = d["MergeRequestTimeTaken"]);
