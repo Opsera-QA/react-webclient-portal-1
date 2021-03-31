@@ -5,7 +5,6 @@ import { ResponsiveBar } from "@nivo/bar";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-import config from "./GitlabTimeTakenToCompleteMergeRequestReviewConfig";
 import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
@@ -92,7 +91,7 @@ function GitlabTimeTakenToCompleteMergeRequestReview({ persona, date }) {
             {...defaultConfig("Reviewer", "Time (Hours)", true, false, "cutoffString", "wholeNumbers")}
             data={data ? data.data : []}
             onClick={() => setShowModal(true)}
-            keys={config.keys}
+            keys={["MergeRequestTimeTaken"]}
             indexBy="AssigneeName"
             layout={"horizontal"}
             colorBy="id"
