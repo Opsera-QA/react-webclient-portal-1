@@ -93,7 +93,7 @@ function CpuUsageByTimeLineChart({ persona, date }) {
           </div>
         ) : (
           <ResponsiveLine
-            {...defaultConfig("CPU Usage (%)", "Date", true, true, "", "dateTime")}
+            {...defaultConfig("CPU Usage (%)", "Time", true, true, "", "dateTime")}
             data={data ? data.data : []}
             onClick={() => setShowModal(true)}
             colors={getColor}
@@ -101,8 +101,6 @@ function CpuUsageByTimeLineChart({ persona, date }) {
             margin={{ top: 50, right: 110, bottom: 80, left: 120 }}
             xScale={{ type: "point" }}
             yScale={{ type: "linear", min: "auto", max: "auto", stacked: false, reverse: false }}
-            // axisBottom={config.axisBottom}
-            // axisLeft={config.axisLeft}
             legends={[{
               "anchor": "top-right",
               "direction": "row",
