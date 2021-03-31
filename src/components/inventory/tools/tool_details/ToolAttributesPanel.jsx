@@ -7,7 +7,7 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import NameValueFieldBase from "components/common/fields/multiple_items/NameValueFieldBase";
-import {faBrowser, faBuilding, faClipboardCheck, faIdCard, faSitemap} from "@fortawesome/pro-light-svg-icons";
+import {faBrowser, faBuilding, faClipboardCheck, faIdCard} from "@fortawesome/pro-light-svg-icons";
 import ContactField from "components/common/fields/multiple_items/ContactField";
 import OrganizationsField from "components/common/fields/multiple_items/OrganizationsField";
 
