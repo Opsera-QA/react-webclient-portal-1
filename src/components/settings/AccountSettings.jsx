@@ -66,7 +66,6 @@ function AccountSettings() {
           {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"}/>}
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
           <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"ldapUserManagement"}/>
         </>
       );
     }
