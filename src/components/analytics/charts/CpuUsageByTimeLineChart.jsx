@@ -94,8 +94,7 @@ function CpuUsageByTimeLineChart({ persona, date }) {
           </div>
         ) : (
           <ResponsiveLine
-            {...defaultConfig("CPU Usage (%)", "Date", 
-                          false, true, "", "")}
+            {...defaultConfig("CPU Usage (%)", "Date", false, false)}
             data={data ? data.data : []}
             onClick={() => setShowModal(true)}
             colors={getColor}
