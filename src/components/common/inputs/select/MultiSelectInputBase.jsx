@@ -76,20 +76,22 @@ function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, d
   }
 
   return (
-    <InputContainer className={className ? className : "custom-multiselect-input my-2"}>
+    <InputContainer className={className ? className : undefined}>
       <InputLabel field={field} inputPopover={getClearDataIcon()} showLabel={showLabel} />
-      <Multiselect
-        data={selectOptions}
-        valueField={valueField}
-        textField={textField}
-        busy={busy}
-        filter="contains"
-        groupBy={groupBy}
-        value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : [] }
-        placeholder={placeholderText}
-        disabled={disabled}
-        onChange={newValue => setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)}
-      />
+      <div className={"custom-multiselect-input"}>
+        <Multiselect
+          data={selectOptions}
+          valueField={valueField}
+          textField={textField}
+          busy={busy}
+          filter="contains"
+          groupBy={groupBy}
+          value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : [] }
+          placeholder={placeholderText}
+          disabled={disabled}
+          onChange={newValue => setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)}
+        />
+      </div>
       <InfoText errorMessage={errorMessage} field={field} />
     </InputContainer>
   );
