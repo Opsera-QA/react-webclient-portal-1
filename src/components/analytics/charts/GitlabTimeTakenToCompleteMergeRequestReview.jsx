@@ -9,6 +9,8 @@ import config from "./GitlabTimeTakenToCompleteMergeRequestReviewConfig";
 import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
+import { defaultConfig, getColorByData, assignStandardColors } from "../../insights/charts/charts-views";
+import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function GitlabTimeTakenToCompleteMergeRequestReview({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -52,6 +54,7 @@ function GitlabTimeTakenToCompleteMergeRequestReview({ persona, date }) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].gitlabTimeTakenToCompleteMergeRequestReviewChart : [];
+      assignStandardColors(dataObject?.data, true);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -86,46 +89,19 @@ function GitlabTimeTakenToCompleteMergeRequestReview({ persona, date }) {
           </div>
         ) : (
           <ResponsiveBar
+            {...defaultConfig("Reviewer", "Time (Hours)", true, false, "cutoffString", "wholeNumbers")}
             data={data ? data.data : []}
             onClick={() => setShowModal(true)}
             keys={config.keys}
             indexBy="AssigneeName"
-            margin={config.margin}
-            padding={0.3}
             layout={"horizontal"}
-            colors={{ scheme: "dark2" }}
-            borderColor={{ theme: "background" }}
             colorBy="id"
-            defs={config.defs}
-            fill={config.fill}
-            axisTop={null}
-            axisRight={null}
-            axisBottom={config.axisBottom}
-            axisLeft={config.axisLeft}
-            labelSkipWidth={12}
-            labelSkipHeight={12}
-            enableLabel={false}
-            borderRadius={5}
-            labelTextColor="inherit:darker(2)"
-            animate={true}
-            motionStiffness={90}
-            borderWidth={2}
-            motionDamping={15}
-            legends={config.legends}
-            tooltip={({ indexValue, color, value, id }) => (
-              <div>
-                <strong style={{ color }}>Reviewer: </strong> {indexValue}
-                <br></br>
-                <strong style={{ color }}> {"Merge Request Time Taken"}: </strong> {value}
-              </div>
-            )}
-            theme={{
-              tooltip: {
-                container: {
-                  fontSize: "16px",
-                },
-              },
-            }}
+            colors={getColorByData}
+            tooltip={({ indexValue, color, value, id }) => <ChartTooltip 
+                    titles={["Reviewer", "Merge Request Time Taken"]}
+                    values={[indexValue, value]}
+                    style={false}
+                    color={color} />}
           />
         )}
       </div>
