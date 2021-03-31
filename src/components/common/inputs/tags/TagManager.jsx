@@ -12,7 +12,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
-function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setDataFunction, allowCreate, inline}) {
+function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setDataFunction, allowCreate, inline, allowedTypes, getDisabledTags}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -102,9 +102,17 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
   const loadTagOptions = (tags) => {
     let currentOptions = [];
 
-    tags.map((tag, index) => {
+    tags.map((tag) => {
       let tagOption = {type: tag["type"], value: tag["value"]};
-      currentOptions.push(tagOption);
+
+      if (Array.isArray(allowedTypes) && allowedTypes.length > 0) {
+        if (allowedTypes.includes(tagOption.type)) {
+          currentOptions.push(tagOption);
+        }
+      }
+      else {
+        currentOptions.push(tagOption);
+      }
     });
 
     if (isMounted?.current === true) {
@@ -171,6 +179,7 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
   if (field == null) {
     return null;
   }
+
   return (
     <InputContainer>
       {!inline && <InputLabel field={field} className={inline ? "mt-1 mr-2" : undefined}/>}
@@ -186,7 +195,7 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
           onCreate={(value) => handleCreate(value)}
           value={[...dataObject?.getArrayData(fieldName)]}
           placeholder={errorMessage}
-          disabled={disabled || isLoading}
+          disabled={disabled || isLoading || (getDisabledTags && getDisabledTags(tagOptions))}
           onChange={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
         />
       </div>
@@ -203,7 +212,9 @@ TagManager.propTypes = {
   setDataFunction: PropTypes.func,
   allowCreate: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   disabled: PropTypes.bool,
-  inline: PropTypes.bool
+  inline: PropTypes.bool,
+  allowedTypes: PropTypes.array,
+  getDisabledTags: PropTypes.func
 };
 
 TagManager.defaultProps = {
