@@ -107,7 +107,7 @@ function OutNetworkTrafficByTimeLineChart({ persona, date }) {
               "translateY": -25,
               "itemsSpacing": 60,
               "itemDirection": "right-to-left",
-              "itemWidth": 80,
+              "itemWidth": 60,
               "itemHeight": 20,
               "symbolSize": 10,
               "symbolShape": "square",
