@@ -44,6 +44,7 @@ export const organizationMetadata = {
     name: "",
     owner: "",
     leader: null,
+    active: true,
     tags: []
   }
 };
