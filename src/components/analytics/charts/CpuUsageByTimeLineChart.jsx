@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
-import config from "./CpuUsageByTimeLineChartConfigs";
 import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import React, { useState, useEffect, useContext, useCallback } from "react";
@@ -94,7 +93,7 @@ function CpuUsageByTimeLineChart({ persona, date }) {
           </div>
         ) : (
           <ResponsiveLine
-            {...defaultConfig("CPU Usage (%)", "Date", false, false)}
+            {...defaultConfig("CPU Usage (%)", "Date", true, true, "", "dateTime")}
             data={data ? data.data : []}
             onClick={() => setShowModal(true)}
             colors={getColor}
@@ -102,10 +101,9 @@ function CpuUsageByTimeLineChart({ persona, date }) {
             margin={{ top: 50, right: 110, bottom: 80, left: 120 }}
             xScale={{ type: "point" }}
             yScale={{ type: "linear", min: "auto", max: "auto", stacked: false, reverse: false }}
-            axisBottom={config.axisBottom}
-            axisLeft={config.axisLeft}
-            legends={[
-            {
+            // axisBottom={config.axisBottom}
+            // axisLeft={config.axisLeft}
+            legends={[{
               "anchor": "top-right",
               "direction": "row",
               "justify": false,
@@ -118,8 +116,7 @@ function CpuUsageByTimeLineChart({ persona, date }) {
               "symbolSize": 10,
               "symbolShape": "square",
               "symbolBorderColor": "rgba(0, 0, 0, .5)"
-            }
-          ]}
+            }]}
             tooltip={({ point, color }) => <ChartTooltip 
                                   titles = {["Date & Time", "Node name", "CPU usage"]}
                                   values = {[String(point.data.xFormatted), point.serieId, point.data.y + "%"]}

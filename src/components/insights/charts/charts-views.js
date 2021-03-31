@@ -164,10 +164,11 @@ export const spaceOutMergeRequestTimeTakenLegend = data => data.forEach(d => d["
 const formats = {
   numbers: d => /\d+\.?\d*$/.exec(d),
   wholeNumbers: d => Math.floor(d) === d && d,
+  dateTime: d => (typeof d === "string" ? d.substring(0, 11) : ""),
   monthDate: "%b %d",
   monthDate2: d => { var date = new Date(d).toDateString(); date = date.split(" "); return date[1]+" "+date[2]; },
   yearMonthDate: d => d.split("T")[0],
-  cutoffString: (d) => (typeof d === "string" && d.length > 0 ? d.slice(0, 8) + (d.length > 8 ? "..." : "") : ""),
+  cutoffString: d => (typeof d === "string" && d.length > 0 ? d.slice(0, 8) + (d.length > 8 ? "..." : "") : ""),
   values: d => /(?:(?!-).)*/.exec(d)[0],
   subString: d => (typeof d === "string" ? d.substring(0, 6) : ""),
 };

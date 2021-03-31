@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
-import config from "./MemoryUsageByTimeLineChartConfigs";
 import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import React, { useState, useEffect, useContext, useCallback } from "react";
@@ -94,7 +93,7 @@ function MemoryUsageByTimeLineChart({ persona, date }) {
           </div>
         ) : (
           <ResponsiveLine
-            {...defaultConfig("Memory Usage (%)", "Date", false, false)}
+            {...defaultConfig("Memory Usage (%)", "Time", true, true, "", "dateTime")}
             data={data ? data.data : []}
             onClick={() => setShowModal(true)}
             colors={getColor}
@@ -102,8 +101,7 @@ function MemoryUsageByTimeLineChart({ persona, date }) {
             margin={{ top: 50, right: 110, bottom: 80, left: 120 }}
             xScale={{ type: "point" }}
             yScale={{ type: "linear", min: "auto", max: "auto", stacked: false, reverse: false }}
-            legends={[
-            {
+            legends={[{
               "anchor": "top-right",
               "direction": "row",
               "justify": false,
@@ -116,8 +114,7 @@ function MemoryUsageByTimeLineChart({ persona, date }) {
               "symbolSize": 10,
               "symbolShape": "square",
               "symbolBorderColor": "rgba(0, 0, 0, .5)"
-            }
-          ]}
+            }]}
             tooltip={({ point, color }) => <ChartTooltip 
                                   titles = {["Date & Time", "Node name", "Memory usage"]}
                                   values = {[String(point.data.xFormatted), point.serieId, point.data.y + "%"]}
