@@ -11,11 +11,11 @@ import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import LoadingDialog from "components/common/status_notifications/loading";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import _ from "lodash";
-import nexusStepActions from "./nexus-step-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import NexusRepoSelectInput from "./inputs/NexusRepoSelectInput";
 
 const NEXUS_STEP_TYPES = [
   {
@@ -29,16 +29,12 @@ const NEXUS_STEP_TYPES = [
 ];
 
 function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList }) {
-  const {getAccessToken} = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
 
   const [nexusList, setNexusList] = useState([]);
   const [isNexusSearching, setIsNexusSearching] = useState(false);
-  const [nexusRepositoriesList, setNexusRepositoriesList] = useState([]);
   const [nexusStepConfigurationDto, setNexusStepConfigurationDataDto] = useState(undefined);
-  const [isRepoSearching, setIsRepoSearching] = useState(false);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
 
@@ -94,7 +90,6 @@ function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToo
     let { configuration, threshold } = step;
     if (typeof configuration !== "undefined") {
       setNexusStepConfigurationDataDto(new Model(configuration, nexusStepFormMetadata, false));
-      await getNexusRepositoriesList(configuration.nexusToolConfigId);
       if (typeof threshold !== "undefined") {
         setThresholdType(threshold.type);
         setThresholdValue(threshold.value);
@@ -121,52 +116,11 @@ function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToo
     parentCallback(item);
   };
 
-  const getNexusRepositoriesList = async (toolID) => {
-    setNexusRepositoriesList([]);
-    setIsRepoSearching(true);
-    try {
-      const response = await nexusStepActions.getNexusRepositoriesList(toolID, getAccessToken);
-      if (response.data && response.data.data) {
-        let nexusRepositories = [];
-        if (response.data.data.length === 0) {
-          nexusRepositories.push({
-            name: "Configure nexus repositories to activate this step",
-            format: "N/A",
-            isDisabled: "yes",
-          });
-        }
-        else {
-          response.data.data.map((item) => {
-            nexusRepositories.push({
-              name: item.name,
-              format: item.format,
-              type: item.type,
-              url: item.url,
-              attributes: item.attributes,
-            });
-          });
-        }
-        setNexusRepositoriesList(nexusRepositories);
-      } else {
-        let errorMessage =
-          "Error fetching nexus repositories!  Please validate nexus credentials and configured repositories.";
-        toastContext.showErrorDialog(errorMessage);
-      }
-    } catch (error) {
-      const errorMsg = `Service Unavailable. Error reported by services while fetching repositories for toolId: ${toolID}.  Please see browser logs for details.`;
-      console.error(error);
-      toastContext.showErrorDialog(errorMsg);
-    }
-    finally {
-      setIsRepoSearching(false);
-    }
-  };
-
   const handleNexusToolConfigurationIdChange = async (fieldName, value) => {
     setIsLoading(true);
     let newDataObject = nexusStepConfigurationDto;
     newDataObject.setData("nexusToolConfigId", value.id);
-    await getNexusRepositoriesList(newDataObject.nexusToolConfigId);
+    newDataObject.setData("repositoryName", "");
     setNexusStepConfigurationDataDto({...newDataObject});
     setIsLoading(false);
   };
@@ -258,16 +212,11 @@ function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToo
             selectOptions={NEXUS_STEP_TYPES ? NEXUS_STEP_TYPES : []}
             fieldName={"type"}
           />
-          <DtoSelectInput
-            setDataFunction={handleRepositoryChange}
+          <NexusRepoSelectInput
+            nexusToolConfigId={nexusStepConfigurationDto.getData("nexusToolConfigId")}
             setDataObject={setNexusStepConfigurationDataDto}
-            textField={"name"}
-            valueField={"name"}
-            busy={isRepoSearching}
+            setDataFunction={handleRepositoryChange}
             dataObject={nexusStepConfigurationDto}
-            filter={"contains"}
-            selectOptions={nexusRepositoriesList ? nexusRepositoriesList : []}
-            fieldName={"repositoryName"}
           />
           {nexusStepConfigurationDto.getData("type") !== "" &&
             <>

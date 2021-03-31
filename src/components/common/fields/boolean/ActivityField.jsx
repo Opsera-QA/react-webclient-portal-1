@@ -4,7 +4,7 @@ import FieldLabel from "components/common/fields/FieldLabel";
 import FieldContainer from "components/common/fields/FieldContainer";
 
 function ActivityField({dataObject, fieldName, className}) {
-  const [field, setField] = useState(dataObject.getFieldById(fieldName));
+  const [field] = useState(dataObject.getFieldById(fieldName));
 
   return (
     <FieldContainer className={className}>

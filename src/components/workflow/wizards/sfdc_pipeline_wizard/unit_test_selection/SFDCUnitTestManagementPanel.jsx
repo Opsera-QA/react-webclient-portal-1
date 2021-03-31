@@ -26,7 +26,8 @@ function SFDCUnitTestManagementPanel({
   members,
   setMembers,
   totalMembers,
-  setTotalMembers
+  setTotalMembers,
+  setEnteredMembers
 }) {
   const toastContext = useContext(DialogToastContext);
   const {getAccessToken} = useContext(AuthContext);
@@ -93,9 +94,10 @@ function SFDCUnitTestManagementPanel({
           "data": members
         }, getAccessToken);
       // TODO: add a success toast here
-      toastContext.showUpdateSuccessResultDialog("Test Classes");
-
-      await reload();
+      // toastContext.showUpdateSuccessResultDialog("Test Classes");
+      setEnteredMembers(members);
+      setShowUnsavedChangesMessage(false);
+      // await reload();
 
     } catch (error) {
       console.error("Error getting API Data: ", error);
@@ -232,7 +234,8 @@ SFDCUnitTestManagementPanel.propTypes = {
   members: PropTypes.array,
   setMembers: PropTypes.array,
   totalMembers: PropTypes.any,
-  setTotalMembers: PropTypes.array
+  setTotalMembers: PropTypes.array,
+  setEnteredMembers: PropTypes.func
 };
 
 export default SFDCUnitTestManagementPanel;

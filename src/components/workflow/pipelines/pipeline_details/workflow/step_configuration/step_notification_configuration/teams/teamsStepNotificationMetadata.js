@@ -5,6 +5,11 @@ const teamsStepNotificationMetadata = {
     {
       label: "Type",
       id: "type",
+    },    
+    {
+      label: "Notification Level",
+      id: "event",
+      isRequired: true
     },
     {
       label: "Teams Tool",
