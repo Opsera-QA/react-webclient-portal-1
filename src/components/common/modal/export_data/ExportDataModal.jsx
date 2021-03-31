@@ -102,6 +102,10 @@ ExportDataModal.propTypes = {
   logData: PropTypes.any
 };
 
+ExportButton.defaultProps = {
+  showButtonText: true
+};
+
 export default ExportDataModal;
 
 
