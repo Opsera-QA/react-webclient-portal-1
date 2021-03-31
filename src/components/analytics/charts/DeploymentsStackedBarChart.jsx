@@ -103,7 +103,7 @@ function DeploymentsStackedBarChart({ persona, date }) {
           ) : (
             <ResponsiveBar
               {...defaultConfig("Deployment Count", "Date", 
-                        false, false, "values", "yearMonthDate")}
+                        false, true, "values", "yearMonthDate")}
               {...adjustBarWidth(data?.data)}
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
