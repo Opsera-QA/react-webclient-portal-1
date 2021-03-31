@@ -13,7 +13,8 @@ import ErrorDialog from "../../common/status_notifications/error";
 import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
-import { defaultConfig, assignHealthColors, shortenHealthChartLegend } from '../../insights/charts/charts-views';
+import { defaultConfig, assignHealthColors, shortenHealthChartLegend,
+         adjustBarWidth } from '../../insights/charts/charts-views';
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 
 function JiraHealthBySprintBarChart( { persona, date } ) {
@@ -96,6 +97,7 @@ function JiraHealthBySprintBarChart( { persona, date } ) {
               data={data ? data.data : []}
               {...defaultConfig("Project", "Number of Issues", 
                                 false, true, "cutoffString", "wholeNumbers", false, true)}
+              {...adjustBarWidth(data ? data.data : [])}
               onClick={() => setShowModal(true)}
               keys={["To Do", "In Development", "In Progress", "Peer Review", "Testing", "Done", "For Development", "Production Deploy"]}
               indexBy="key"
