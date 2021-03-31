@@ -94,7 +94,7 @@ function JenkinsBuildsByUserBarChart({ persona, date }) {
           ) : (
             <ResponsiveBar
               {...defaultConfig("Users", "Number of Builds", 
-                      true, true, "subString", "")}
+                      true, false, "subString", "")}
               {...adjustBarWidth(data ? data.data : [], false)}
               data={data ? data.data : []}
               keys={["Value"]}

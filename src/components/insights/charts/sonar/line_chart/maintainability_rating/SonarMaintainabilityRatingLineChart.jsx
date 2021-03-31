@@ -76,7 +76,7 @@ function SonarMaintainabilityRatingLineChart({ kpiConfiguration, setKpiConfigura
           <ResponsiveLine
             data={metrics}
             {...defaultConfig("Average Quality Gate Value", "Date", 
-                      false, false, "wholeNumbers", "yearMonthDate")}
+                      false, true, "wholeNumbers", "yearMonthDate")}
             {...config(getColor)}
             onClick={() => setShowModal(true)}
             tooltip={({ point, color }) => <ChartTooltip 

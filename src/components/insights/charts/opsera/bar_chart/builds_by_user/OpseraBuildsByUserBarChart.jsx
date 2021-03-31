@@ -77,7 +77,7 @@ function OpseraBuildsByUserBarChart({ kpiConfiguration, setKpiConfiguration, das
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Users", "Number of Builds", 
-                      true, true, "cutoffString", "wholeNumbers")}
+                      true, false, "cutoffString", "wholeNumbers")}
           {...config(getColorByData)}
           {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}

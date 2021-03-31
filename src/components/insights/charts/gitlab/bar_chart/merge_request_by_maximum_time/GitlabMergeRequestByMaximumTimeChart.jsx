@@ -75,7 +75,7 @@ function GitlabMergeRequestByMaximumTimeChart({ kpiConfiguration, setKpiConfigur
           <ResponsiveBar
             data={metrics}
             {...defaultConfig("Time (Hours)", "Project", 
-                        false, true, "values", "cutoffString")}
+                        false, false, "values", "cutoffString")}
             {...config(getColorByData)}
             {...adjustBarWidth(metrics)}
             onClick={() => setShowModal(true)}

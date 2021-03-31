@@ -77,7 +77,7 @@ function JenkinsBuildsByUserBarChart({ kpiConfiguration, setKpiConfiguration, da
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Users", "Number of Builds", 
-                      true, true, "subString", "")}
+                      true, false, "subString", "")}
           {...config(getColorByData)}
           {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}

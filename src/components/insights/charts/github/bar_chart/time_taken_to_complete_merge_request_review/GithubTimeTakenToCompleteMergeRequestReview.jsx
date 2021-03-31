@@ -76,7 +76,7 @@ function GithubTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiC
           <ResponsiveBar
                       data={metrics}
           {...defaultConfig("Reviewer", "Time (Hours)", 
-                      true, true, "subString", "values")}
+                      true, false, "subString", "values")}
           {...config(getColorByData)}
           {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}

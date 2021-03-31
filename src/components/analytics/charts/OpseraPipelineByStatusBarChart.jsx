@@ -90,7 +90,7 @@ function OpseraPipelineByStatusBarChart( { persona, date  } ) {
             <ResponsiveBar
               data={data ? data.data : []}
               {...defaultConfig('Pipeline Name', 'Number of Pipelines', 
-                                true, true, 'cutoffString', 'wholeNumbers')}
+                                true, false, 'cutoffString', 'wholeNumbers')}
               {...adjustBarWidth(data ? data.data : [], false)}
               keys={["Successful", "Failed"]}
               indexBy="pipeline_id"

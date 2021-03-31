@@ -115,7 +115,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Number of Deployments", "Date", 
-                    false, true, "wholeNumbers", "monthDate2")}
+                    false, false, "wholeNumbers", "monthDate2")}
           {...config(getColorByData, getMaxValue(metrics), MeanLineLayer)}
           {...adjustBarWidth(metrics)}
           onClick={() => setShowModal(true)}
