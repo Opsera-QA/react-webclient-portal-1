@@ -9,6 +9,7 @@ import workflowAuthorizedActions
 import NameValueFieldBase from "components/common/fields/multiple_items/NameValueFieldBase";
 import {faBrowser, faBuilding, faClipboardCheck, faIdCard, faSitemap} from "@fortawesome/pro-light-svg-icons";
 import ContactField from "components/common/fields/multiple_items/ContactField";
+import OrganizationsField from "components/common/fields/multiple_items/OrganizationsField";
 
 function ToolAttributesPanel({ toolData, setActiveTab, customerAccessRules }) {
   useEffect(() => {
@@ -46,7 +47,7 @@ function ToolAttributesPanel({ toolData, setActiveTab, customerAccessRules }) {
           <NameValueFieldBase dataObject={toolData} fieldName={"applications"} icon={faBrowser} />
         </Col>
         <Col sm={12} lg={6}>
-          <NameValueFieldBase dataObject={toolData} fieldName={"organization"} icon={faSitemap} />
+          <OrganizationsField dataObject={toolData} fieldName={"organization"} />
         </Col>
         <Col sm={12} lg={6}>
           <ContactField dataObject={toolData} fieldName={"contacts"} />
