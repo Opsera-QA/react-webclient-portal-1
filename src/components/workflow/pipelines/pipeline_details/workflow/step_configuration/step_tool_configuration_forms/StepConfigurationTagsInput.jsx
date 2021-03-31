@@ -4,7 +4,7 @@ import StepConfigurationEnvironmentTagInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/StepConfigurationEnvironmentTagInput";
 import TagManager from "components/common/inputs/tags/TagManager";
 
-function StepConfigurationsTagsInput({ fieldName, stepConfigurationModel, setStepConfigurationModel }) {
+function StepConfigurationTagsInput({ fieldName, stepConfigurationModel, setStepConfigurationModel }) {
   const getDisabledTags = (tagOptions) => {
     const currentTags = stepConfigurationModel?.getArrayData(fieldName);
     const environmentTag = currentTags.find((tag) => tag.type === "environment");
@@ -42,14 +42,14 @@ function StepConfigurationsTagsInput({ fieldName, stepConfigurationModel, setSte
   );
 }
 
-StepConfigurationsTagsInput.propTypes = {
+StepConfigurationTagsInput.propTypes = {
   setStepConfigurationModel: PropTypes.func,
   fieldName: PropTypes.string,
   stepConfigurationModel: PropTypes.object,
 };
 
-StepConfigurationsTagsInput.defaultProps = {
+StepConfigurationTagsInput.defaultProps = {
   fieldName: "tags"
 };
 
-export default StepConfigurationsTagsInput;
+export default StepConfigurationTagsInput;

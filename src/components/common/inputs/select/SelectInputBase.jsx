@@ -85,7 +85,10 @@ SelectInputBase.propTypes = {
   ]),
   dataObject: PropTypes.object,
   valueField: PropTypes.string,
-  textField: PropTypes.string,
+  textField: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func
+  ]),
   placeholderText: PropTypes.string,
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
