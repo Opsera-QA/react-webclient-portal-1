@@ -18,6 +18,7 @@ import Model from "../../../../core/data_model/model";
 import filterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/filter-metadata";
 import { CSVtoArray, commonItems, differentItems } from "components/common/helpers/array-helpers";
 import SFDCUnitTestManagementPanel from "./unit_test_selection/SFDCUnitTestManagementPanel";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 const SfdcUnitTestSelectionView = ({ 
   pipelineId, 
@@ -45,7 +46,8 @@ const SfdcUnitTestSelectionView = ({
  
   useEffect(() => {
     if(Object.keys(selectedStep).length > 0){
-      setSelectedUnitTestClassesList({});
+      setSelectedUnitTestClassesList([]);
+      setUnitTestClassesList([]);
       getUnitTestList();
     }
   }, [selectedStep]);
@@ -284,20 +286,24 @@ const SfdcUnitTestSelectionView = ({
             </Row>
             <Row>
               {/* sfdc management panel goes here */}
-              { unitTestClassesList.length > 0 ? (
-                <SFDCUnitTestManagementPanel
-                  unitTestRecordId={unitTestRecordId}
-                  selectedStep={selectedStep}
-                  pipelineId={pipelineId}
-                  filterDto={toolFilterDto}
-                  setUnitTestRecordId={setUnitTestRecordId}
-                  reload={getUnitTestList}
-                  members={selectedUnitTestClassesList}
-                  setMembers={setSelectedUnitTestClassesList}
-                  totalMembers={unitTestClassesList}
-                  setTotalMembers={setUnitTestClassesList}
-                />
-              ) : null                
+              {/* { unitTestClassesList.length > 0 ? ( */}
+              { loading || unitTestListLoading ? (
+                <LoadingDialog/>
+                ) : (
+                  <SFDCUnitTestManagementPanel
+                    unitTestRecordId={unitTestRecordId}
+                    selectedStep={selectedStep}
+                    pipelineId={pipelineId}
+                    filterDto={toolFilterDto}
+                    setUnitTestRecordId={setUnitTestRecordId}
+                    reload={getUnitTestList}
+                    members={selectedUnitTestClassesList}
+                    setMembers={setSelectedUnitTestClassesList}
+                    totalMembers={unitTestClassesList}
+                    setTotalMembers={setUnitTestClassesList}
+                    setEnteredMembers={setEnteredUnitTestClassesList}
+                  />
+                )
               }
             </Row>
           </>
