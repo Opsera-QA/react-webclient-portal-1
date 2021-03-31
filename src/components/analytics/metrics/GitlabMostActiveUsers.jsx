@@ -146,6 +146,7 @@ function GitlabMostActiveUsers({ date }) {
             rowStyling={""}
             noDataMessage={noDataMessage}
             initialState={initialState}
+            noFooter={true}
           ></CustomTable>
         </>
       )}
