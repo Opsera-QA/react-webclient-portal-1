@@ -78,7 +78,7 @@ function OrganizationMultiSelectInput({ fieldName, dataObject, setDataObject, di
     <MultiSelectInputBase
       className={className}
       fieldName={fieldName}
-      disabled={disabled}
+      disabled={disabled || isLoading}
       setDataFunction={setDataFunction}
       setDataObject={setDataObject}
       clearDataFunction={clearDataFunction}
