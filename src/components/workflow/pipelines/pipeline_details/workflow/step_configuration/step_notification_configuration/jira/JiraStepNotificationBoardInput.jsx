@@ -1,27 +1,43 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import pipelineStepNotificationActions from "../pipeline-step-notification-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import axios from "axios";
 
-function JiraStepNotificationBoardInput({visible, jiraToolId, dataObject, setDataObject, disabled}) {
+function JiraStepNotificationBoardInput({visible, jiraToolId, dataObject, setDataObject, disabled, jiraProjectKey}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [boards, setBoards] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    setBoards([]);
-    if (jiraToolId !== "") {
-      loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
     }
-  }, [jiraToolId]);
 
-  const loadData = async () => {
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    setBoards([]);
+    if (jiraToolId != null && jiraToolId !== "" && jiraProjectKey != null && jiraProjectKey !== "") {
+      loadData(source);
+    }
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [jiraToolId, jiraProjectKey]);
+
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadProjects();
+      await loadProjects(cancelSource);
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -31,14 +47,13 @@ function JiraStepNotificationBoardInput({visible, jiraToolId, dataObject, setDat
     }
   };
 
-  const loadProjects = async () => {
-    const response = await pipelineStepNotificationActions.getJiraBoards(dataObject, getAccessToken);
+  const loadProjects = async (cancelSource = cancelTokenSource) => {
+    const response = await pipelineStepNotificationActions.getJiraBoardsWithIdV2(getAccessToken, cancelSource, jiraToolId, jiraProjectKey);
 
-    if (response.data != null && response.data.message != null && Array.isArray(response.data.message)) {
+    if (Array.isArray(response?.data?.message)) {
       setBoards(response.data.message);
     }
   };
-
 
   const setJiraBoard = (selectedOption) => {
     let newDataObject = {...selectedOption};
@@ -53,11 +68,11 @@ function JiraStepNotificationBoardInput({visible, jiraToolId, dataObject, setDat
     }
 
     if (jiraToolId === "") {
-      return "A Jira Tool must be selected before selecting Jira Board";
+      return "A Jira Project must be selected before selecting Jira Board";
     }
 
     if (!isLoading && jiraToolId !== "" && boards.length === 0) {
-      return "No Jira Boards found for selected Jira tool.";
+      return "No Jira Boards found for selected Jira project.";
     }
   };
 
@@ -85,7 +100,8 @@ JiraStepNotificationBoardInput.propTypes = {
   setDataObject: PropTypes.func,
   jiraToolId: PropTypes.string,
   disabled: PropTypes.bool,
-  visible: PropTypes.bool
+  visible: PropTypes.bool,
+  jiraProjectKey: PropTypes.string
 };
 
 JiraStepNotificationBoardInput.defaultProps = {
