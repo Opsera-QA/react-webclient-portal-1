@@ -333,24 +333,12 @@ export const getChartPipelineStatusColumn = (field, className) => {
     Cell: function parseStatus(row) {
       return row.value ? (
         row.value === "FAILURE" || row.value === "failed" || row.value === "failure" ? (
-          <TooltipWrapper innerText={"Failure"}>
-            <div>
-              <FailIcon />
-            </div>
-          </TooltipWrapper>
+          <FailIcon />
         ) : (
           row.value === "UNSTABLE" || row.value === "unstable" ? (
-            <TooltipWrapper innerText={"Unstable"}>
-              <div>
-                <WarningIcon />
-              </div>
-            </TooltipWrapper>
+            <WarningIcon />
           ) : (
-            <TooltipWrapper innerText={"Success"}>
-              <div>
-                <SuccessIcon />
-              </div>
-            </TooltipWrapper>
+            <SuccessIcon />
           )
       )) : (
         "unknown"
