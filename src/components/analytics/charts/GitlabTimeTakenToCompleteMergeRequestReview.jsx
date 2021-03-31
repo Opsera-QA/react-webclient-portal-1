@@ -8,7 +8,8 @@ import ErrorDialog from "../../common/status_notifications/error";
 import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
-import { defaultConfig, getColorByData, assignStandardColors } from "../../insights/charts/charts-views";
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
+         spaceOutMergeRequestTimeTakenLegend } from "../../insights/charts/charts-views";
 import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function GitlabTimeTakenToCompleteMergeRequestReview({ persona, date }) {
@@ -54,6 +55,7 @@ function GitlabTimeTakenToCompleteMergeRequestReview({ persona, date }) {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].gitlabTimeTakenToCompleteMergeRequestReviewChart : [];
       assignStandardColors(dataObject?.data, true);
+      spaceOutMergeRequestTimeTakenLegend(dataObject?.data);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -89,9 +91,10 @@ function GitlabTimeTakenToCompleteMergeRequestReview({ persona, date }) {
         ) : (
           <ResponsiveBar
             {...defaultConfig("Reviewer", "Time (Hours)", true, false, "cutoffString", "wholeNumbers")}
+            {...adjustBarWidth(data ? data.data : [], false)}
             data={data ? data.data : []}
             onClick={() => setShowModal(true)}
-            keys={["MergeRequestTimeTaken"]}
+            keys={["Merge Request Time Taken"]}
             indexBy="AssigneeName"
             layout={"horizontal"}
             colorBy="id"

@@ -158,6 +158,7 @@ export const capitalizeLegend = (data, keys) => data.forEach(d => {
   keys.forEach(key => d[capitalizeFirstLetter(key.split("_").join(" "))] = d[key]);
 });
 
+export const spaceOutTimeTakenLegend = data => data.forEach(d => d["Time Taken"] = d["TimeTaken"]);
 export const spaceOutMergeRequestTimeTakenLegend = data => data.forEach(d => d["Merge Request Time Taken"] = d["MergeRequestTimeTaken"]);
 
 const formats = {
