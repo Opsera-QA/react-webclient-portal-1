@@ -72,15 +72,17 @@ function ExportDataButton({isLoading, variant, size, className, dataToExport, fi
     }
 
     if(exportFrom === "log_search" && !(dataToExport instanceof Blob)){
+      const searchResults = dataToExport;
       const pdfExporter = new jsPDF();
-      dataToExport = dataToExport[0].hits;
+      const resultsToExport = searchResults[0].hits;
+      
       pdfExporter.autoTable({
         startY: 2,
         headStyles:{fillColor: [54, 46, 84]},
         showHead: "firstPage",
         margin: { left: 2, right: 2 },
         head:[["Logs Search Results"]],
-        body: dataToExport.map(item => [JSON.stringify(item, null, 2)])
+        body: resultsToExport.map(item => [JSON.stringify(item, null, 2)])
       });
 
       pdfExporter.save(fileName);
@@ -135,10 +137,6 @@ ExportDataButton.propTypes = {
   summaryData: PropTypes.any,
   logData: PropTypes.any,
   showButtonText: PropTypes.bool
-};
-
-ExportDataButton.defaultProps = {
-  showButtonText: true
 };
 
 export default ExportDataButton;
