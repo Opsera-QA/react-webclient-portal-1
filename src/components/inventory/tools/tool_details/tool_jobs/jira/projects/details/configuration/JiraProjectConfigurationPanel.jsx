@@ -42,7 +42,7 @@ function JiraProjectConfigurationPanel({ toolData, jiraProjectData, jiraConfigur
     <div>
       {getJiraMessage()}
       <JiraProjectInput jiraToolId={toolData.getData("_id")} setDataObject={setJiraConfigurationDto} dataObject={jiraConfigurationDto} />
-      <JiraBoardInput jiraToolId={toolData.getData("_id")} setDataObject={setJiraConfigurationDto} dataObject={jiraConfigurationDto} />
+      <JiraBoardInput jiraToolId={toolData.getData("_id")} jiraProjectKey={toolData.getData("jiraProject")} setDataObject={setJiraConfigurationDto} dataObject={jiraConfigurationDto} />
       <JiraSprintInput jiraToolId={toolData.getData("_id")} jiraBoard={jiraConfigurationDto.getData("jiraBoard")} setDataObject={setJiraConfigurationDto} dataObject={jiraConfigurationDto} />
       <JiraParentTicketInput jiraToolId={toolData.getData("_id")} jiraSprintId={jiraConfigurationDto.getData("jiraSprint")} setDataObject={setJiraConfigurationDto} dataObject={jiraConfigurationDto} />
     </div>

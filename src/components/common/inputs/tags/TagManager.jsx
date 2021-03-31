@@ -172,22 +172,24 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
     return null;
   }
   return (
-    <InputContainer className="custom-multiselect-input">
+    <InputContainer>
       {!inline && <InputLabel field={field} className={inline ? "mt-1 mr-2" : undefined}/>}
-      <Multiselect
-        data={[...tagOptions]}
-        textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + capitalizeFirstLetter(data["value"])}
-        filter={"contains"}
-        allowCreate={allowCreate}
-        groupBy={(tag) => capitalizeFirstLetter(tag?.type, " ", "Undefined Type")}
-        className={inline ? `inline-filter-input inline-select-filter` : undefined}
-        busy={isLoading}
-        onCreate={(value) => handleCreate(value)}
-        value={[...dataObject?.getArrayData(fieldName)]}
-        placeholder={errorMessage}
-        disabled={disabled || isLoading}
-        onChange={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
-      />
+      <div className={"custom-multiselect-input"}>
+        <Multiselect
+          data={[...tagOptions]}
+          textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + capitalizeFirstLetter(data["value"])}
+          filter={"contains"}
+          allowCreate={allowCreate}
+          groupBy={(tag) => capitalizeFirstLetter(tag?.type, " ", "Undefined Type")}
+          className={inline ? `inline-filter-input inline-select-filter` : undefined}
+          busy={isLoading}
+          onCreate={(value) => handleCreate(value)}
+          value={[...dataObject?.getArrayData(fieldName)]}
+          placeholder={errorMessage}
+          disabled={disabled || isLoading}
+          onChange={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
+        />
+      </div>
       <InfoText field={field} errorMessage={errorMessage}/>
     </InputContainer>
   );

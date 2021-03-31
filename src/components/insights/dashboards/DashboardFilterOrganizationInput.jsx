@@ -1,19 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-import TagMultiSelectInputBase from "components/common/list_of_values_input/settings/tags/TagMultiSelectInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
+import OrganizationMultiSelectInput
+  from "components/common/list_of_values_input/settings/organizations/OrganizationMultiSelectInput";
 
-function DashboardFilterTagInput({ dataObject, setDataObject, dashboardData, loadData, className, fieldName}) {
+function DashboardFilterOrganizationInput({ dataObject, setDataObject, dashboardData, loadData, className, fieldName}) {
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
     newDataObject.setData(fieldName, value);
     setDataObject({...newDataObject});
-    let newDataModel = modelHelpers.setDashboardFilterModelField(dashboardData, "tags", value);
+    let newDataModel = modelHelpers.setDashboardFilterModelField(dashboardData, "organizations", value);
     loadData(newDataModel);
   };
 
   return (
-    <TagMultiSelectInputBase
+    <OrganizationMultiSelectInput
       className={className}
       showLabel={false}
       fieldName={fieldName}
@@ -24,20 +25,19 @@ function DashboardFilterTagInput({ dataObject, setDataObject, dashboardData, loa
   );
 }
 
-DashboardFilterTagInput.propTypes = {
+DashboardFilterOrganizationInput.propTypes = {
   className: PropTypes.string,
   dataObject: PropTypes.object,
   dashboardData: PropTypes.object,
   setDataObject: PropTypes.func,
   loadData: PropTypes.func,
-  saveData: PropTypes.func,
   fieldName: PropTypes.string
 };
 
-DashboardFilterTagInput.defaultProps = {
-  fieldName: "value"
+DashboardFilterOrganizationInput.defaultProps = {
+  fieldName: "organizations"
 };
 
-export default DashboardFilterTagInput;
+export default DashboardFilterOrganizationInput;
 
 

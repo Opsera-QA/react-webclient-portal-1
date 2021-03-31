@@ -56,7 +56,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
   };
 
   return (
-    <InputContainer className="custom-select-input">
+    <InputContainer className="custom-select-input my-2">
       <InputLabel field={field} inputPopover={getClearDataIcon()} />
       <DropdownList
         data={selectOptions}

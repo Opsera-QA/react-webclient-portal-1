@@ -36,7 +36,7 @@ function OrganizationsTable({ organizations, isLoading, loadData, isMounted, org
     history.push(`/settings/organizations/details/${rowData.original._id}`);
   };
 
-  const getGroupsTable = () => {
+  const getOrganizationsTable = () => {
     return (
       <CustomTable
         className={"no-table-border"}
@@ -54,7 +54,8 @@ function OrganizationsTable({ organizations, isLoading, loadData, isMounted, org
       addRecordFunction={createOrganization}
       supportSearch={true}
       isLoading={isLoading}
-      body={getGroupsTable()}
+      body={getOrganizationsTable()}
+      metadata={organizationMetadata}
       titleIcon={faSitemap}
       filterDto={organizationFilterModel}
       setFilterDto={setOrganizationFilterModel}
