@@ -5,27 +5,19 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import Model from "core/data_model/model";
 import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import dashboardFilterMetadata from "components/insights/dashboards/dashboard-filter-metadata";
-import analyticsActions from "components/settings/analytics/analytics-settings-actions";
-import dashboardsActions from "components/insights/dashboards/dashboards-actions";
-import DashboardsTable from "components/insights/dashboards/DashboardsTable";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import AnalyticsProfileSettings from "components/settings/analytics/activateAnalyticsCard";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {faAnalytics, faChartNetwork, faChartArea} from "@fortawesome/pro-light-svg-icons";
 
-function Insights() {
-  const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
+function InsightsSummary() {
+  const {getUserRecord, setAccessRoles} = useContext(AuthContext);
   const history = useHistory();
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [dashboardsList, setDashboardsList] = useState(undefined);
-  const [dashboardFilterDto, setDashboardFilterDto] = useState(new Model({...dashboardFilterMetadata.newObjectFields}, dashboardFilterMetadata, false));
   const toastContext = useContext(DialogToastContext);
-  const [profile, setProfile] = useState(undefined);
   const isMounted = useRef(false);
-  const [activeTab, setActiveTab] = useState("dashboards");
+  const [activeTab, setActiveTab] = useState("summary");
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
@@ -37,7 +29,7 @@ function Insights() {
     setCancelTokenSource(source);
 
     isMounted.current = true;
-    loadData(dashboardFilterDto, source).catch((error) => {
+    loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -49,10 +41,10 @@ function Insights() {
     };
   }, []);
 
-  const loadData = async (filterDto = dashboardFilterDto, cancelSource = cancelTokenSource) => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRoles(filterDto, cancelSource);
+      await getRoles(cancelSource);
     } catch (error) {
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -65,64 +57,20 @@ function Insights() {
     }
   };
 
-  const getProfile = async(filterDto = dashboardFilterDto, cancelSource = cancelTokenSource) => {
-    let settings = await analyticsActions.fetchProfileV2(getAccessToken, cancelSource);
-
-    if (isMounted.current === true) {
-      setProfile(settings?.data);
-
-      if (settings?.data?.enabledToolsOn) {
-        await getDashboards(filterDto, cancelSource);
-      }
-    }
-  };
-
-  const getDashboards = async (filterDto = dashboardFilterDto, cancelSource = cancelTokenSource) => {
-    const response = await dashboardsActions.getAllDashboardsV2(getAccessToken, cancelSource, filterDto);
-    const dashboards = response?.data?.data;
-
-    if (isMounted.current === true && dashboards) {
-      setDashboardsList(dashboards);
-      let newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", response?.data?.count);
-      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-      setDashboardFilterDto({...newFilterDto});
-    }
-  };
-
-  const getRoles = async (filterDto = dashboardFilterDto, cancelSource = cancelTokenSource) => {
+  const getRoles = async () => {
     const user = await getUserRecord();
     const userRoleAccess = await setAccessRoles(user);
 
     if (isMounted.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      await getProfile(filterDto, cancelSource);
     }
   };
 
-  const getInsightsView = () => {
-    if (!profile) {
-      return (<LoadingDialog size="sm" message="Loading Insights"/>);
-    }
-
-    if (profile?.enabledToolsOn) {
+  const getInsightsSummaryView = () => {
       return (
-        <DashboardsTable
-          data={dashboardsList}
-          loadData={loadData}
-          isLoading={isLoading}
-          dashboardFilterDto={dashboardFilterDto}
-          setDashboardFilterDto={setDashboardFilterDto}
-          dashboardsActions={dashboardsActions}
-        />
+        <p>Hello World</p>
+        // Add main components here-Environment/Org filters and Project/Pipeline tables
       );
-    }
-
-    return (
-      <div className="mt-1 max-content-width mb-1">
-        <AnalyticsProfileSettings />
-      </div>
-    );
   };
 
   const handleNavTabClick = (tabSelection) => async e => {
@@ -174,13 +122,13 @@ function Insights() {
         logging, reports and configurations around the Opsera Analytics Platform or search your currently
         configured logs repositories below.
       `}
-      breadcrumbDestination={"insights"}
+      breadcrumbDestination={"insightsSummary"}
     >
-      {getInsightsView()}
+      {getInsightsSummaryView()}
     </ScreenContainer>
   );
 
 }
 
 
-export default Insights;
+export default InsightsSummary;

@@ -291,6 +291,11 @@ function Analytics() {
       return;
     }
 
+    if (tabSelection === "summary") {
+      history.push(`/insights/summary`);
+      return;
+    }
+
     setActiveTab(tabSelection);
   };
 
@@ -300,6 +305,7 @@ function Analytics() {
         <NavigationTab icon={faChartNetwork} tabName={"dashboards"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Dashboards"} />
         <NavigationTab icon={faChartArea} tabName={"marketplace"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Marketplace"} />
         <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Analytics"} />
+        <NavigationTab icon={faAnalytics} tabName={"summary"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Summary"} />
       </NavigationTabContainer>
     );
   };

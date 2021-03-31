@@ -424,6 +424,14 @@ const breadcrumbs = {
     linkText: "Marketplace",
     icon: faChartArea
   },
+  insightsSummary: {
+    parent: "insights",
+    name: "summary",
+    path: paths.marketplace,
+    title: "Summary",
+    linkText: "Summary",
+    icon: faChartArea
+  },
 
   //Reports
   reports: {

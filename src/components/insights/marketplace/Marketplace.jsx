@@ -60,6 +60,11 @@ function Marketplace () {
       return;
     }
 
+    if (tabSelection === "summary") {
+      history.push(`/insights/summary`);
+      return;
+    }
+
     setActiveTab(tabSelection);
   };
 
@@ -69,6 +74,7 @@ function Marketplace () {
         <NavigationTab icon={faChartNetwork} tabName={"dashboards"} handleTabClick={handleNavTabClick} activeTab={"marketplace"} tabText={"Dashboards"} />
         <NavigationTab icon={faChartArea} tabName={"marketplace"} handleTabClick={handleNavTabClick} activeTab={"marketplace"} tabText={"Marketplace"} />
         <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={"marketplace"} tabText={"Analytics"} />
+        <NavigationTab icon={faAnalytics} tabName={"summary"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Summary"} />
       </NavigationTabContainer>
     );
   };
