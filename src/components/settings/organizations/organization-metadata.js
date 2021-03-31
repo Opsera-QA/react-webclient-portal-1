@@ -36,6 +36,10 @@ export const organizationMetadata = {
       id: "owner_name",
     },
     {
+      label: "Status",
+      id: "active",
+    },
+    {
       label: "Tags",
       id: "tags",
     },
