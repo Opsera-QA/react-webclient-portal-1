@@ -11,11 +11,9 @@ export const warningColor = "#F1AD0F";
 export const greyHues = ["#1E1D1B", "#5B5851", "#7A756C", "#B1AeA7", "#E6E5E3", "#F0EFEE", "#F9F9F8"];
 export const goldHues = [mainGold, "#F5C453", "#F9DC98", "#FDF3DD"];
 export const purpleHues = [mainPurple, "#7368AA", "#ABA4CC", "#E3E1EE"];
-// const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
 
 export const standardColors = [mainColor, "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173", "#E6E5E3", mainPurple, "#1E1D1B"];
 export const gradationalColors = ["#B1AeA7", "#7A756C", mainColor, "#1E1D1B"];
-// purpleHues.forEach((_, i) => standardColors.push(greyHues[greyHues.length - i - 2], purpleHues[i + 1]));
 
 export const assignStandardColors = (data, uniColor = false) => {
   if (data) {
@@ -142,6 +140,14 @@ export const shortenLegend = (datas, originalIdHolder={}) => {
     const slicedId = data.id.slice(0, 10) + "...";
     originalIdHolder[slicedId] = data.id;
     data.id.length > 10 ? data.id = slicedId : data.id;
+  });
+  return originalIdHolder;
+};
+export const shortenLargeChartLegend = (datas, originalIdHolder={}) => {
+  datas.forEach(data => {
+    const slicedId = data.id.slice(0, 15) + "...";
+    originalIdHolder[slicedId] = data.id;
+    data.id.length > 15 ? data.id = slicedId : data.id;
   });
   return originalIdHolder;
 };

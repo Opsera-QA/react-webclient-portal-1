@@ -9,7 +9,7 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
 import { defaultConfig, getColor, assignStandardColors,
-         shortenLegend } from "../../insights/charts/charts-views";
+         shortenLargeChartLegend } from "../../insights/charts/charts-views";
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 
 function MemoryUsageByTimeLineChart({ persona, date }) {
@@ -41,7 +41,7 @@ function MemoryUsageByTimeLineChart({ persona, date }) {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].memoryUsageByTime : [];
       assignStandardColors(dataObject?.data);
-      shortenLegend(dataObject?.data);
+      shortenLargeChartLegend(dataObject?.data);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
