@@ -95,4 +95,9 @@ pipelineStepNotificationActions.getJiraParentTickets2 = async (toolId, sprintId,
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+pipelineStepNotificationActions.getServiceNowUsers = async (toolId, getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/connectors/servicenow/${toolId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 export default pipelineStepNotificationActions;
