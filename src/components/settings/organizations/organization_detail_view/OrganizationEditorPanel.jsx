@@ -11,6 +11,7 @@ import organizationActions from "components/settings/organizations/organization-
 import axios from "axios";
 import OrganizationLeaderLdapUserSelectInput
   from "components/common/list_of_values_input/settings/organizations/OrganizationLeaderLdapUserSelectInput";
+import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 
 function OrganizationEditorPanel({organizationData, handleClose }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -68,14 +69,17 @@ function OrganizationEditorPanel({organizationData, handleClose }) {
       handleClose={handleClose}
     >
       <Row>
-        <Col lg={12}>
+        <Col lg={6}>
           <TextInputBase fieldName={"name"} dataObject={organizationModel} setDataObject={setOrganizationModel}/>
         </Col>
-        <Col lg={12}>
+        <Col lg={6}>
           <OrganizationLeaderLdapUserSelectInput dataObject={organizationModel} setDataObject={setOrganizationModel} />
         </Col>
-        <Col lg={12}>
+        <Col lg={6}>
           <TagMultiSelectInput dataObject={organizationModel} setDataObject={setOrganizationModel} />
+        </Col>
+        <Col lg={6}>
+          <ActivityToggleInput dataObject={organizationModel} setDataObject={setOrganizationModel} fieldName={"active"} />
         </Col>
       </Row>
     </EditorPanelContainer>

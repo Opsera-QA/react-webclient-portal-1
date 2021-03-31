@@ -79,7 +79,7 @@ function LogSearch({tools, sideBySide}) {
     }
 
     await getSearchResults(startDate, endDate, newTab);
-    await getAllResultsForExport(sDate, eDate, setIsLoading, getAccessToken(), searchTerm, filterType, getFormattedCustomFilters(), currentPage, setExportData, setExportDisabled);
+    await getAllResultsForExport(startDate, endDate, setIsLoading, getAccessToken(), searchTerm, filterType, getFormattedCustomFilters(), currentPage, setExportData, setExportDisabled);
   };
 
   const cancelSearchClicked = () => {

@@ -398,7 +398,7 @@ function JenkinsStepConfiguration({
       //   return;
       // }
 
-      if(dataObject.data.dockerSecrets?.length !== 0){        
+      if((deleteDockerSecrets || _.isEmpty(formData.dockerBuildPathJson)) && dataObject.data.dockerSecrets?.length !== 0){
         let dockerSecretKey = await saveToVault(pipelineId, stepId, "secretKey", "Vault Secured Key", dataObject.data.dockerSecrets);
         let keys = dataObject.data.dockerSecrets.map(secret => ({
           name: secret.name,

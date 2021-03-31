@@ -5,6 +5,7 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import TagField from "components/common/fields/multiple_items/TagField";
 import LeaderField from "components/common/fields/object/settings/organizations/LeaderField";
+import ActivityField from "components/common/fields/boolean/ActivityField";
 
 function OrganizationSummaryPanel({ organizationData, setActiveTab }) {
   if (organizationData == null) {
@@ -26,8 +27,11 @@ function OrganizationSummaryPanel({ organizationData, setActiveTab }) {
         <Col lg={6}>
           <LeaderField dataObject={organizationData} fieldName={"leader"}/>
         </Col>
-        <Col lg={12}>
+        <Col lg={6}>
           <TagField dataObject={organizationData} />
+        </Col>
+        <Col lg={6}>
+          <ActivityField dataObject={organizationData} fieldName={"active"} />
         </Col>
       </Row>
     </SummaryPanelContainer>
