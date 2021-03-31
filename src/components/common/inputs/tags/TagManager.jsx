@@ -172,7 +172,7 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
     return null;
   }
   return (
-    <InputContainer className="custom-multiselect-input">
+    <InputContainer className="custom-multiselect-input my-2">
       {!inline && <InputLabel field={field} className={inline ? "mt-1 mr-2" : undefined}/>}
       <Multiselect
         data={[...tagOptions]}

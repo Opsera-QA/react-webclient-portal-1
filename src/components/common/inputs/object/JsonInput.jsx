@@ -29,7 +29,7 @@ function JsonInput({fieldName, dataObject, setDataObject, disabled}) {
 
   if (disabled) {
     return (
-      <InputContainer className="custom-text-input">
+      <InputContainer className="custom-text-input my-2">
         <InputLabel field={field}/>
         <ReactJson
           theme="light_mitsuketa_tribute"
@@ -45,7 +45,7 @@ function JsonInput({fieldName, dataObject, setDataObject, disabled}) {
   }
 
   return (
-    <InputContainer className="custom-text-input">
+    <InputContainer className="custom-text-input my-2">
       <InputLabel field={field}/>
         <JSONInput
           placeholder={dataObject.getData(fieldName)}

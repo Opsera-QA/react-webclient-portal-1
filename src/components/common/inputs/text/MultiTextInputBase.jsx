@@ -65,7 +65,7 @@ function MultiTextInputBase({ fieldName, dataObject, setDataObject, groupBy, dis
   }
 
   return (
-    <InputContainer className={className ? className : "custom-multiselect-input"}>
+    <InputContainer className={className ? className : "custom-multiselect-input my-2"}>
       <InputLabel field={field} inputPopover={getClearDataIcon()} />
       <Multiselect
         data={selectOptions}

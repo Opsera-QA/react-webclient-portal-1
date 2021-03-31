@@ -27,7 +27,6 @@ organizationActions.getAllOrganizationsV2 = async (getAccessToken, cancelTokenSo
 
 organizationActions.getOrganizationsV2 = async (getAccessToken, cancelTokenSource, organizationFilterDto) => {
   let sortOption = organizationFilterDto?.getData("sortOption");
-  let status = organizationFilterDto?.getData("status");
 
   const apiUrl = "/organization";
   const urlParams = {

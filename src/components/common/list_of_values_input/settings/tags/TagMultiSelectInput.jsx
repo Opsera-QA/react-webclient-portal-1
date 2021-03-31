@@ -13,7 +13,7 @@ function TagMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, s
 
   return (
     <div className={className}>
-      <InputContainer className="custom-multiselect-input">
+      <InputContainer className="custom-multiselect-input my-2">
         <InputLabel field={field} showLabel={showLabel}/>
         <TagMultiSelectInputBase
           fieldName={fieldName}
