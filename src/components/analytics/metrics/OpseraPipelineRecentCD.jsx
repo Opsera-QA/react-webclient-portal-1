@@ -7,8 +7,6 @@ import ErrorDialog from "../../common/status_notifications/error";
 import { Table } from "react-bootstrap";
 import { format } from "date-fns";
 import CustomTable from "components/common/table/CustomTable";
-import { faTimesCircle, faCheckCircle, faSearchPlus, faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
 import FailIcon from "../../common/icons/table/FailIcon";
 
