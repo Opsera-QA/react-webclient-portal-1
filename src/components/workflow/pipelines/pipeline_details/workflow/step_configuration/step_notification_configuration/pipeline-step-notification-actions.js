@@ -9,9 +9,9 @@ pipelineStepNotificationActions.getJiraBoards = async (jiraStepNotificationDto, 
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-pipelineStepNotificationActions.getJiraBoardsWithId = async (toolId, getAccessToken) => {
-  const apiUrl = `/connectors/jira/${toolId}/boards`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+pipelineStepNotificationActions.getJiraBoardsWithIdV2 = async (getAccessToken, cancelTokenSource, toolId, projectKey) => {
+  const apiUrl = `/connectors/jira/${toolId}/${projectKey}/boards/`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 pipelineStepNotificationActions.getJiraSprints = async (jiraStepNotificationDto, getAccessToken) => {

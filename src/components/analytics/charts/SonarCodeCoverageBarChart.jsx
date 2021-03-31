@@ -2,18 +2,22 @@
 import React, { useState } from "react";
 // { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
+import { format } from "date-fns";
 // import { AuthContext } from "../../../contexts/AuthContext";
 // import { axiosApiService } from "../../../api/apiService";
 // import LoadingDialog from "../../common/loading";
 import { ResponsiveBar } from "@nivo/bar";
 // import ErrorDialog from "../../common/error";
-import config from "./sonarCodeCoverageBarChartConfigs";
 import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import InfoDialog from "../../common/status_notifications/info";
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import { defaultConfig, assignLineColors } from "../../insights/charts/charts-views";
+import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function SonarCodeCoverageBarChart( { data, persona } ) {
   const [showModal, setShowModal] = useState(false);
+  assignLineColors(data?.data);
   // if (typeof data !== "object" || Object.keys(data).length === 0 || data.status !== 200) {
   //   return (<ErrorDialog  error="No Data Present in the ES!" />);
   // } else {
@@ -29,6 +33,8 @@ function SonarCodeCoverageBarChart( { data, persona } ) {
           </div>
           : 
           <ResponsiveBar
+            {...defaultConfig("Value", "Code Coverage Metric", 
+                    false, true, "", "monthDate2")}
             data={data ? data.data : []}
             onClick={() => setShowModal(true)}
             keys={[
@@ -38,41 +44,13 @@ function SonarCodeCoverageBarChart( { data, persona } ) {
             groupMode="stacked"
             layout="vertical"
             indexBy="analysedAt"
-            margin={config.margin}
-            padding={0.1}
-            colors={{ scheme: "set1" }}
-            borderColor={{ theme: "background" }}
             colorBy="id"
-            defs={config.defs}
-            fill={config.fill}
-            axisTop={null}
-            axisRight={null}
-            axisBottom={config.axisBottom}
-            axisLeft={config.axisLeft}
-            enableLabel={false}
-            borderRadius={0}
-            labelSkipWidth={12}
-            labelSkipHeight={12}
-            labelTextColor="inherit:darker(2)"
-            animate={true}
-            motionStiffness={90}
-            motionDamping={15}
-            legends={config.legends}
-            tooltip={({ indexValue, value, id, color, data }) => (
-              <div>
-                <strong style={{ color }}>
-              Timestamp: </strong> {indexValue}<br></br>
-                <strong style={{ color }}>  {id}: </strong> {value} <br></br>
-                <strong style={{ color }}> Project Key: </strong> {data.key}
-              </div>
-            )}
-            theme={{
-              tooltip: {
-                container: {
-                  fontSize: "16px",
-                },
-              },
-            }}
+            colors={({ id, data }) => data[`${id}_color`]}
+            tooltip={({ indexValue, value, id, color, data }) => <ChartTooltip 
+                titles = {["Timestamp", capitalizeFirstLetter(id) , "Project Key"]}
+                values = {[format(new Date(indexValue), "yyyy-MM-dd', 'hh:mm a"), value, data.key]}
+                style = {false}
+                color = {color} />}
           />
         }
       </div>

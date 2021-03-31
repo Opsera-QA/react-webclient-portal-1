@@ -9,7 +9,8 @@ import ErrorDialog from "../../common/status_notifications/error";
 import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
-import { defaultConfig, getColor, assignStandardColors } from '../../insights/charts/charts-views';
+import { defaultConfig, getColor, assignStandardColors,
+         capitalizeLegend } from '../../insights/charts/charts-views';
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 
 function JiraTicketsAssignedByUserBarChart( { persona, date } ) {
@@ -59,6 +60,7 @@ function JiraTicketsAssignedByUserBarChart( { persona, date } ) {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res?.data?.data[0] ? res.data.data[0].jiraTicketsAssignedByUser : [];
       assignStandardColors(dataObject?.data, true);
+      capitalizeLegend(dataObject?.data, ["count"]);
       setData(dataObject);
       setLoading(false);
     }
@@ -94,7 +96,7 @@ function JiraTicketsAssignedByUserBarChart( { persona, date } ) {
               {...defaultConfig("Users", "Number of Tickets Assigned", 
                                 true, true, "cutoffString", "wholeNumbers")}
               onClick={() => setShowModal(true)}
-              keys={["count"]}
+              keys={["Count"]}
               indexBy="user"
               layout={"horizontal"}
               colors={d => getColor(d.data)}

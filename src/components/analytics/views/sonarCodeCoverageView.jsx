@@ -4,8 +4,8 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-import SonarLinesToCoverBarChart from "../charts/sonarLinesToCoverBarChart";
-import SonarCodeCoverageBarChart from "../charts/sonarCodeCoverageBarChart";
+import SonarLinesToCoverBarChart from "../charts/SonarLinesToCoverBarChart";
+import SonarCodeCoverageBarChart from "../charts/SonarCodeCoverageBarChart";
 
 function CodeCoverageMetricsView({ persona, date }) {
   const contextType = useContext(AuthContext);

@@ -5,7 +5,7 @@ import axios from "axios";
 import organizationActions from "components/settings/organizations/organization-actions";
 import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
 
-function OrganizationMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction, className, clearDataFunction}) {
+function OrganizationMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction, className, clearDataFunction, showLabel}) {
   const { getAccessToken } = useContext(AuthContext);
   const [field] = useState(dataObject.getFieldById(fieldName));
   const [organizations, setOrganizations] = useState([]);
@@ -78,7 +78,7 @@ function OrganizationMultiSelectInput({ fieldName, dataObject, setDataObject, di
     <MultiSelectInputBase
       className={className}
       fieldName={fieldName}
-      disabled={disabled}
+      disabled={disabled || isLoading}
       setDataFunction={setDataFunction}
       setDataObject={setDataObject}
       clearDataFunction={clearDataFunction}
@@ -86,6 +86,7 @@ function OrganizationMultiSelectInput({ fieldName, dataObject, setDataObject, di
       valueField={"_id"}
       busy={isLoading}
       dataObject={dataObject}
+      showLabel={showLabel}
       placeholderText={getPlaceholderText()}
       selectOptions={organizations}
     />
@@ -99,7 +100,8 @@ OrganizationMultiSelectInput.propTypes = {
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  showLabel: PropTypes.bool
 };
 
 export default OrganizationMultiSelectInput;

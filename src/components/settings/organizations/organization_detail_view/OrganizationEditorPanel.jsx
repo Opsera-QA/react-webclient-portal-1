@@ -69,7 +69,7 @@ function OrganizationEditorPanel({organizationData, handleClose }) {
     >
       <Row>
         <Col lg={12}>
-          <TextInputBase disabled={!organizationModel.isNew()} fieldName={"name"} dataObject={organizationModel} setDataObject={setOrganizationModel}/>
+          <TextInputBase fieldName={"name"} dataObject={organizationModel} setDataObject={setOrganizationModel}/>
         </Col>
         <Col lg={12}>
           <OrganizationLeaderLdapUserSelectInput dataObject={organizationModel} setDataObject={setOrganizationModel} />

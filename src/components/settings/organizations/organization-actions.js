@@ -15,30 +15,26 @@ organizationActions.updateOrganizationV2 = async (getAccessToken, cancelTokenSou
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-organizationActions.getAllOrganizationsV2 = async (getAccessToken, cancelTokenSource, status = "active", usage = false) => {
+organizationActions.getAllOrganizationsV2 = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = "/organization";
   const urlParams = {
     params: {
       size: 10000,
-      status: status,
-      usage: usage
     },
   };
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 organizationActions.getOrganizationsV2 = async (getAccessToken, cancelTokenSource, organizationFilterDto) => {
-  let sortOption = organizationFilterDto.getData("sortOption");
-  let status = organizationFilterDto.getData("status");
+  let sortOption = organizationFilterDto?.getData("sortOption");
 
   const apiUrl = "/organization";
   const urlParams = {
     params: {
       sort: sortOption ? sortOption.value : undefined,
-      size: organizationFilterDto.getData("pageSize"),
-      page: organizationFilterDto.getData("currentPage"),
-      status: status ? status.value : undefined,
-      search: organizationFilterDto.getData("search")
+      size: organizationFilterDto?.getData("pageSize"),
+      page: organizationFilterDto?.getData("currentPage"),
+      search: organizationFilterDto?.getData("search")
     },
   };
 

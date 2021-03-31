@@ -6,10 +6,11 @@ import { ResponsiveLine } from "@nivo/line";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-import config from "./jiraIssuesCreatedByDateLineChartConfigs";
 import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
+import { defaultConfig, getColor, assignIssueColors } from "../../insights/charts/charts-views";
+import ChartTooltip from '../../insights/charts/ChartTooltip';
 
 function JiraIssuesCreatedByDateLineChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -37,6 +38,7 @@ function JiraIssuesCreatedByDateLineChart({ persona, date }) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].jiraIssuesCreatedByDate : [];
+      assignIssueColors(dataObject?.data);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -91,9 +93,10 @@ function JiraIssuesCreatedByDateLineChart({ persona, date }) {
           </div>
         ) : (
           <ResponsiveLine
+            {...defaultConfig("Number of Issues", "Date", 
+                        false, true, "wholeNumbers", "monthDate2")}
             data={data ? data.data : []}
             onClick={() => setShowModal(true)}
-            margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
             xScale={{
               type: "time",
               format: "%Y-%m-%d",
@@ -103,38 +106,10 @@ function JiraIssuesCreatedByDateLineChart({ persona, date }) {
               type: "linear",
               stacked: false,
             }}
-            axisLeft={config.axisLeft}
-            axisBottom={config.axisBottom}
-            pointSize={10}
-            pointBorderWidth={8}
-            pointLabel="y"
-            pointLabelYOffset={-12}
-            useMesh={true}
-            lineWidth={3.5}
-            legends={config.legends}
-            colors={(d) => d.color}
-            // onClick={function(node){console.log(node.id);}}
-            tooltip={(node) => (
-              <div
-                style={{
-                  background: "white",
-                  padding: "9px 12px",
-                  border: "1px solid #ccc",
-                }}
-              >
-                <strong> Date: </strong> {node.point.data.xFormatted} <br></br>
-                <strong>
-                  {node.point.serieId}: {node.point.data.yFormatted}
-                </strong>
-              </div>
-            )}
-            theme={{
-              tooltip: {
-                container: {
-                  fontSize: "16px",
-                },
-              },
-            }}
+            colors={getColor}
+            tooltip={(node) => <ChartTooltip 
+                                  titles = {["Date", node.point.serieId]}
+                                  values = {[node.point.data.xFormatted, node.point.data.yFormatted]} />}
           />
         )}
       </div>

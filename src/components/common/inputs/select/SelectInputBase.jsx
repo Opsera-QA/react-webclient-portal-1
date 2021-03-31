@@ -56,7 +56,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
   };
 
   return (
-    <InputContainer className="custom-select-input">
+    <InputContainer className="custom-select-input my-2">
       <InputLabel field={field} inputPopover={getClearDataIcon()} />
       <DropdownList
         data={selectOptions}
@@ -85,7 +85,10 @@ SelectInputBase.propTypes = {
   ]),
   dataObject: PropTypes.object,
   valueField: PropTypes.string,
-  textField: PropTypes.string,
+  textField: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.func
+  ]),
   placeholderText: PropTypes.string,
   setDataFunction: PropTypes.func,
   clearDataFunction: PropTypes.func,

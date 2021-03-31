@@ -1,4 +1,5 @@
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import { da } from "date-fns/locale";
 
 export const mainColor = "#5B5851";
 export const mainGold = "#F1AD0F";
@@ -12,7 +13,7 @@ export const goldHues = [mainGold, "#F5C453", "#F9DC98", "#FDF3DD"];
 export const purpleHues = [mainPurple, "#7368AA", "#ABA4CC", "#E3E1EE"];
 // const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
 
-export const standardColors = [mainColor, "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173", "#E6E5E3"];
+export const standardColors = [mainColor, "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173", "#E6E5E3", mainPurple];
 export const gradationalColors = ["#B1AeA7", "#7A756C", mainColor, "#1E1D1B"];
 // purpleHues.forEach((_, i) => standardColors.push(greyHues[greyHues.length - i - 2], purpleHues[i + 1]));
 
@@ -71,6 +72,8 @@ export const assignHealthColors = data => {
       data["Peer Review_color"] = standardColors[3];
       data["Testing_color"] = standardColors[4];
       data["Done_color"] = standardColors[5];
+      data["For Development_color"] = standardColors[6];
+      data["Production Deploy_color"] = standardColors[7];
     });
   }
   
@@ -116,14 +119,43 @@ export const assignVelocityColors = data => {
   return data;
 };
 
+export const assignLineColors = data => {
+  if (data) {
+    data.forEach(data => {
+      data["line_coverage_color"] = standardColors[0];
+      data["uncovered_lines_color"] = standardColors[1];
+      data["coverage_color"] = standardColors[2];
+    });
+  }
+  
+  return data;
+};
+
 export const getColor = data => data.color;
 export const getColorByData = data => data.data.color;
 export const getColorById = data => data.id === "Successful" ? mainColor : failColor;
 export const getTaskColor = ({ id, data }) => data[`${id}_color`];
 
-export const shortenLegend = datas => datas.forEach(data => data.id.length > 10 ? data.id = data.id.slice(0, 10) + "..." : data.id);
+export const shortenPieChartLegend = datas => datas.forEach(data => data.id.length > 10 ? data.label = data.id.slice(0, 10) + "..." : data.id);
+export const shortenLegend = (datas, originalIdHolder={}) => {
+  datas.forEach(data => {
+    const slicedId = data.id.slice(0, 10) + "...";
+    originalIdHolder[slicedId] = data.id;
+    data.id.length > 10 ? data.id = slicedId : data.id;
+  });
+  return originalIdHolder;
+};
+
+export const shortenHealthChartLegend = datas => datas.forEach(data => {
+  if (data["Production Deployment"]) {
+    data["Production Deploy"] = data["Production Deployment"];
+  }
+  if (data["Selected for Development"]) {
+    data["For Development"] = data["Selected for Development"];
+  }
+});
 export const capitalizeLegend = (data, keys) => data.forEach(d => {
-  keys.forEach(key => d[capitalizeFirstLetter(key)] = d[key]);
+  keys.forEach(key => d[capitalizeFirstLetter(key.split("_").join(" "))] = d[key]);
 });
 
 export const spaceOutMergeRequestTimeTakenLegend = data => data.forEach(d => d["Merge Request Time Taken"] = d["MergeRequestTimeTaken"]);
@@ -134,15 +166,16 @@ const formats = {
   monthDate: "%b %d",
   monthDate2: d => { var date = new Date(d).toDateString(); date = date.split(" "); return date[1]+" "+date[2]; },
   yearMonthDate: d => d.split("T")[0],
-  cutoffString: d => d.slice(0, 8) + (d.length > 8 ? "..." : ""),
+  cutoffString: (d) => (typeof d === "string" && d.length > 0 ? d.slice(0, 8) + (d.length > 8 ? "..." : "") : ""),
   values: d => /(?:(?!-).)*/.exec(d)[0],
   subString: d => (typeof d === "string" ? d.substring(0, 6) : ""),
 };
 
 export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
                               largeLeftSpaceRequired=false, largeBottomSpaceRequired=false,
-                              leftLabelFormat="", bottomLabelFormat="", isLegendHidden=false) => ({
-  margin: { top: 30, right: 20, bottom: largeBottomSpaceRequired ? 60 : 80, 
+                              leftLabelFormat="", bottomLabelFormat="", isLegendHidden=false,
+                              moreLegendSpace=false) => ({
+  margin: { top: 30, right: 20, bottom: largeBottomSpaceRequired ? 80 : 60, 
             left: largeLeftSpaceRequired ? 100 : 60},
   lineWidth: 3.5,
   pointSize: 8,
@@ -171,9 +204,9 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
     "orient": "bottom",
     "tickSize": 5,
     "tickPadding": 5,
-    "tickRotation": largeBottomSpaceRequired ? 0 : -45,
+    "tickRotation": largeBottomSpaceRequired ? -45 : 0,
     "legend": bottomAxisTitle,
-    "legendOffset": largeBottomSpaceRequired ? 40 : 60,
+    "legendOffset": largeBottomSpaceRequired ? 60 : 40,
     "legendPosition": "middle",
   },
   legends: [
@@ -183,7 +216,7 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
       "justify": false,
       "translateX": 0,
       "translateY": -25,
-      "itemsSpacing": 20,
+      "itemsSpacing": moreLegendSpace ? 17 : 20,
       "itemDirection": "right-to-left",
       "itemWidth": 80,
       "itemHeight": 20,
@@ -200,6 +233,11 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
           fontSize: "10px"
         },
       },
+    },
+    legends: {
+      text: {
+        fontSize: moreLegendSpace ? "9px" : "10px"
+      }
     }
   },
 });
