@@ -1,5 +1,4 @@
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
-import { da } from "date-fns/locale";
 
 export const mainColor = "#5B5851";
 export const mainGold = "#F1AD0F";
@@ -143,23 +142,7 @@ export const shortenLegend = (datas, originalIdHolder={}) => {
   });
   return originalIdHolder;
 };
-export const shortenLargeChartLegend = (datas, originalIdHolder={}) => {
-  datas.forEach(data => {
-    const slicedId = data.id.slice(0, 15) + "...";
-    originalIdHolder[slicedId] = data.id;
-    data.id.length > 15 ? data.id = slicedId : data.id;
-  });
-  return originalIdHolder;
-};
 
-// export const shortenHealthChartLegend = datas => datas.forEach(data => {
-//   if (data["Production Deployment"]) {
-//     data["Production Deploy"] = data["Production Deployment"];
-//   }
-//   if (data["Selected for Development"]) {
-//     data["For Development"] = data["Selected for Development"];
-//   }
-// });
 export const capitalizeLegend = (data, keys) => data.forEach(d => {
   keys.forEach(key => d[capitalizeFirstLetter(key.split("_").join(" "))] = d[key]);
 });
@@ -181,8 +164,7 @@ const formats = {
 
 export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
                               largeLeftSpaceRequired=false, largeBottomSpaceRequired=false,
-                              leftLabelFormat="", bottomLabelFormat="", isLegendHidden=false,
-                              moreLegendSpace=false) => ({
+                              leftLabelFormat="", bottomLabelFormat="", isLegendHidden=false) => ({
   margin: { top: 40, right: 20, bottom: largeBottomSpaceRequired ? 80 : 60, 
             left: largeLeftSpaceRequired ? 100 : 60},
   lineWidth: 3.5,
@@ -224,7 +206,7 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
       "justify": false,
       "translateX": 0,
       "translateY": -40,
-      "itemsSpacing": moreLegendSpace ? 17 : 0,
+      "itemsSpacing": 0,
       // "itemsSpacing": moreLegendSpace ? 17 : 20,
       "itemDirection": "right-to-left",
       "itemWidth": 75,
@@ -259,7 +241,7 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
     },
     legends: {
       text: {
-        fontSize: moreLegendSpace ? "9px" : "10px",
+        fontSize: "10px",
         fill: "#5B5851"
       }
     }
@@ -276,7 +258,7 @@ export const adjustBarWidth = (data, isVertical=true) => {
                       break;
       case (x === 2): padding = .75;
                       break;
-      case (x === 3): padding = .65;
+      case (x === 3): padding = .7;
                       break;
       case (x <= 8):  padding = .45;
                       break;
