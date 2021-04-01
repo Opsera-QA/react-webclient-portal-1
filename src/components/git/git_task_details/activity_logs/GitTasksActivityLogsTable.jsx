@@ -40,7 +40,7 @@ function GitTasksActivityLogsTable({ gitTasksData, allLogs }) {
       getTableTextColumn(fields.find(field => { return field.id === "name";})),
       getTableTextColumn(fields.find(field => { return field.id === "type";})),
       // getTableTextColumn(fields.find(field => { return field.id === "message"})),
-      {...getTableTextColumn(fields.find(field => { return field.id === "message";})), class: "wrap-cell-content"},
+      {...getTableTextColumn(fields.find(field => { return field.id === "message";})), class: "force-text-wrap"},
       getTableTextColumn(fields.find(field => { return field.id === "log_type";})),
       getTableBooleanIconColumn(fields.find(field => { return field.id === "status";})),
       getTableDateTimeColumn(fields.find(field => { return field.id === "createdAt";})),

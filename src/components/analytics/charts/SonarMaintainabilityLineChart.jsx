@@ -36,7 +36,7 @@ function MaintainabilityLineChart({ data, persona }) {
           <ResponsiveLine
             data={sonarMaintainability ? sonarMaintainability.data : []}
             {...defaultConfig("Average Quality Gate Value", "Date", 
-                                false, false, "wholeNumbers", "yearMonthDate")}
+                                false, true, "wholeNumbers", "yearMonthDate")}
             onClick={() => setShowModal(true)}
             colors={getColor}
             keys={["Maintainability Rating", ""]}

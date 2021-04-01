@@ -83,7 +83,7 @@ function RepositoryManagement(props) {
               checked={isChecked.ArtiFactory && data["ArtiFactory"]}
               className="newApp__checkbox"
             />
-            <img src={require("./imgs/artifactory.png")} alt="artifactory" />
+            <img src={"/img/tools/artifactory.png"} alt="artifactory" />
             <span className="newApp__service-title">ArtiFactory</span>
           </div>
           </OverlayTrigger>
@@ -97,7 +97,7 @@ function RepositoryManagement(props) {
               className="newApp__checkbox"
               onClick={() => selectCard("Nexus")}
             />
-            <img src={require("./imgs/nexus.png")} alt="nexus"/>
+            <img src={"/img/tools/nexus.png"} alt="nexus"/>
             <span className="newApp__service-title">Nexus</span>
           </div>
         </div>

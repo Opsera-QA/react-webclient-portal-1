@@ -94,7 +94,7 @@ function JiraTicketsAssignedByUserBarChart( { persona, date } ) {
             <ResponsiveBar
               data={data ? data.data : []}
               {...defaultConfig("Users", "Number of Tickets Assigned", 
-                                true, true, "cutoffString", "wholeNumbers")}
+                                true, false, "cutoffString", "wholeNumbers")}
               onClick={() => setShowModal(true)}
               keys={["Count"]}
               indexBy="user"

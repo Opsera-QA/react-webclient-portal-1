@@ -76,7 +76,7 @@ function GitlabTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiC
           <ResponsiveBar
             data={metrics}
             {...defaultConfig("Reviewer", "Time (Hours)", 
-                  true, true, "cutoffString", "wholeNumbers")}
+                  true, false, "cutoffString", "wholeNumbers")}
             {...config(getColorByData)}
             {...adjustBarWidth(metrics, false)}
             onClick={() => setShowModal(true)}

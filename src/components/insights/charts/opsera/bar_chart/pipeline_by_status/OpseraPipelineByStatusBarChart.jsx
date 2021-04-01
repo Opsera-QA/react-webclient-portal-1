@@ -75,7 +75,7 @@ function OpseraPipelineByStatusBarChart({ kpiConfiguration, setKpiConfiguration,
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Pipeline Name", "Number of Pipelines", 
-                      true, true, "cutoffString", "wholeNumbers")}
+                      true, false, "cutoffString", "wholeNumbers")}
           {...config(getColorById)}
           {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}

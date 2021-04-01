@@ -76,7 +76,7 @@ function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfigurat
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Duration (Minutes)", "Pipeline Run", 
-                    false, true, "wholeNumbers", "cutoffString")}
+                    false, false, "wholeNumbers", "cutoffString")}
           {...config(getColor)}
           {...adjustBarWidth(metrics)}
           onClick={() => setShowModal(true)}

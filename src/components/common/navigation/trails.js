@@ -4,7 +4,7 @@ import {
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
   faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey,
-  faHexagon, faListAlt, faEye, faCodeBranch,
+  faHexagon, faListAlt, faEye, faCodeBranch, faUserChart,
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
@@ -221,6 +221,24 @@ const breadcrumbs = {
     title: "Customer System Status",
     linkText: "Customer System Status",
     icon: faHeartbeat
+  },
+
+  // Analytics Data Entry Management>
+  analyticsDataEntryManagement: {
+    parent: "accountSettings",
+    name: "analyticsDataEntryManagement",
+    path: paths.analyticsDataEntryManagement,
+    title: "Analytics Data Entry Management",
+    linkText: "Analytics Data Entry",
+    icon: faUserChart
+  },
+  analyticsDataEntryDetailView: {
+    parent: "analyticsDataEntryManagement",
+    name: "analyticsDataEntryDetailView",
+    path: paths.analyticsDataEntryDetailView,
+    title: "Analytics Data Entry Details",
+    linkText: "Analytics Data Entry Details",
+    icon: faUserChart
   },
 
   // LDAP Users Administration

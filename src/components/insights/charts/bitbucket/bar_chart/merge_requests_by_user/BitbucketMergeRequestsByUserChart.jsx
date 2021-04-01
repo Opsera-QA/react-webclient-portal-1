@@ -73,7 +73,7 @@ function BitbucketMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, d
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Author", "Merge Requests", 
-                      true, true, "cutoffString", "wholeNumbers")}
+                      true, false, "cutoffString", "wholeNumbers")}
           {...config(getColorByData)}
           {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}

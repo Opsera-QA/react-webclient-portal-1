@@ -45,7 +45,7 @@ const SfdcModifiedFilesTabView = ({
       getTableTextColumn(fields.find(field => { return field.id === "committedFileId";})),
       getTableTextColumn(fields.find(field => { return field.id === "componentType";})),
       // getTableTextColumn(fields.find(field => { return field.id === "committedFile"})),
-      {...getTableTextColumn(fields.find(field => { return field.id === "committedFile";})), class: "wrap-cell-content"},
+      {...getTableTextColumn(fields.find(field => { return field.id === "committedFile";})), class: "force-text-wrap"},
       getTableDateTimeColumn(fields.find(field => { return field.id === "committedTime";})),
       getTableTextColumn(fields.find(field => { return field.id === "committedBy";})),
       getCheckBoxColumn(handleComponentCheck)  

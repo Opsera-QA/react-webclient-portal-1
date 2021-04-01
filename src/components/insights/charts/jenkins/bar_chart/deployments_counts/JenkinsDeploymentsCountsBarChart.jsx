@@ -105,7 +105,7 @@ function JenkinsDeploymentsStackedBarChart({ persona, date }) {
             <ResponsiveBar
               data={data ? data.data : []}
               {...defaultConfig("Deployment Count", "Date", 
-                      false, false, "values", "yearMonthDate")}
+                      false, true, "values", "yearMonthDate")}
               {...config(getColorByData)}
               {...adjustBarWidth(data?.data)}
               onClick={() => setShowModal(true)}

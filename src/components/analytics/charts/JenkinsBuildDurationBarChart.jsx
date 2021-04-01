@@ -95,7 +95,7 @@ function JenkinsBuildDurationBarChart({ persona, date }) {
           ) : (
             <ResponsiveBar
               {...defaultConfig("Build Duration (Minutes)", "Build Number", 
-                      false, true, "wholeNumbers", "numbers")}
+                      false, false, "wholeNumbers", "numbers")}
               {...adjustBarWidth(data ? data.data : [])}
               data={data ? data.data : []}
               keys={["Value"]}

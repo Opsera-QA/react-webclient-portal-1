@@ -148,6 +148,7 @@ function CypressResultsTable({ date }) {
               rowStyling={""}
               noDataMessage={noDataMessage}
               initialState={initialState}
+              noFooter={true}
             >
             </CustomTable>
           </>

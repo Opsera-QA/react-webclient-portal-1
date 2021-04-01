@@ -11,7 +11,7 @@ import SummaryCountBlocksView from "../summaryCountBlocksView";
 import XUnitMaxMinPercBarChart from "../../charts/xunitMaxMinPercBarChart";
 import XUnitTestDurationBarChart from "../../charts/xunitTestDurationBarChart";
 import XunitTestResultsTable from "../../metrics/xunitTestResultsTable";
-import CypressTestResultsTable from "../../metrics/cypressTestResultsTable";
+import CypressTestResultsTable from "../../metrics/CypressTestResultsTable";
 import JunitTestResultsTable from "../../metrics/junitTestResultsTable";
 import {  Row } from "react-bootstrap";
 
