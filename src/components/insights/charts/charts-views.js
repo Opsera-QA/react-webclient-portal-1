@@ -70,8 +70,8 @@ export const assignHealthColors = data => {
       data["Peer Review_color"] = standardColors[3];
       data["Testing_color"] = standardColors[4];
       data["Done_color"] = standardColors[5];
-      data["For Development_color"] = standardColors[6];
-      data["Production Deploy_color"] = standardColors[7];
+      data["Selected for Development_color"] = standardColors[6];
+      data["Production Deployment_color"] = standardColors[7];
     });
   }
   
@@ -137,9 +137,9 @@ export const getTaskColor = ({ id, data }) => data[`${id}_color`];
 export const shortenPieChartLegend = datas => datas.forEach(data => data.id.length > 10 ? data.label = data.id.slice(0, 10) + "..." : data.id);
 export const shortenLegend = (datas, originalIdHolder={}) => {
   datas.forEach(data => {
-    const slicedId = data.id.slice(0, 10) + "...";
+    const slicedId = data.id.slice(0, 18) + "...";
     originalIdHolder[slicedId] = data.id;
-    data.id.length > 10 ? data.id = slicedId : data.id;
+    data.id.length > 18 ? data.id = slicedId : data.id;
   });
   return originalIdHolder;
 };
@@ -152,14 +152,14 @@ export const shortenLargeChartLegend = (datas, originalIdHolder={}) => {
   return originalIdHolder;
 };
 
-export const shortenHealthChartLegend = datas => datas.forEach(data => {
-  if (data["Production Deployment"]) {
-    data["Production Deploy"] = data["Production Deployment"];
-  }
-  if (data["Selected for Development"]) {
-    data["For Development"] = data["Selected for Development"];
-  }
-});
+// export const shortenHealthChartLegend = datas => datas.forEach(data => {
+//   if (data["Production Deployment"]) {
+//     data["Production Deploy"] = data["Production Deployment"];
+//   }
+//   if (data["Selected for Development"]) {
+//     data["For Development"] = data["Selected for Development"];
+//   }
+// });
 export const capitalizeLegend = (data, keys) => data.forEach(d => {
   keys.forEach(key => d[capitalizeFirstLetter(key.split("_").join(" "))] = d[key]);
 });
@@ -183,7 +183,7 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
                               largeLeftSpaceRequired=false, largeBottomSpaceRequired=false,
                               leftLabelFormat="", bottomLabelFormat="", isLegendHidden=false,
                               moreLegendSpace=false) => ({
-  margin: { top: 30, right: 20, bottom: largeBottomSpaceRequired ? 80 : 60, 
+  margin: { top: 40, right: 20, bottom: largeBottomSpaceRequired ? 80 : 60, 
             left: largeLeftSpaceRequired ? 100 : 60},
   lineWidth: 3.5,
   pointSize: 8,
@@ -220,19 +220,33 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
   legends: [
     {
       "anchor": "top-right",
-      "direction": "row",
+      "direction": "column",
       "justify": false,
       "translateX": 0,
-      "translateY": -25,
+      "translateY": -40,
       "itemsSpacing": moreLegendSpace ? 17 : 0,
       // "itemsSpacing": moreLegendSpace ? 17 : 20,
       "itemDirection": "right-to-left",
-      "itemWidth": 80,
-      "itemHeight": 20,
+      "itemWidth": 75,
+      "itemHeight": 10,
       "itemOpacity": isLegendHidden ? 0 : 1,
       "symbolSize": 10,
       "symbolShape": "square",
       "symbolBorderColor": "rgba(0, 0, 0, .5)"
+      // "anchor": "top-right",
+      // "direction": "row",
+      // "justify": false,
+      // "translateX": 0,
+      // "translateY": -25,
+      // "itemsSpacing": moreLegendSpace ? 17 : -10,
+      // // "itemsSpacing": moreLegendSpace ? 17 : 20,
+      // "itemDirection": "right-to-left",
+      // "itemWidth": 75,
+      // "itemHeight": 20,
+      // "itemOpacity": isLegendHidden ? 0 : 1,
+      // "symbolSize": 10,
+      // "symbolShape": "square",
+      // "symbolBorderColor": "rgba(0, 0, 0, .5)"
     }
   ],
   theme: {
@@ -246,6 +260,7 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
     legends: {
       text: {
         fontSize: moreLegendSpace ? "9px" : "10px",
+        fill: "#5B5851"
       }
     }
   },
