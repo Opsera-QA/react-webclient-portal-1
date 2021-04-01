@@ -31,56 +31,7 @@
   padding-top: 20px;
 }
 
-/* .new-chart svg > g > g:last-child > g:nth-child(3) {
-  transform: translate(-8rem);
-}
-
-.new-chart svg > g > g:last-child > g:nth-child(4) {
-  transform: translate(-8rem, 10px);
-}
-
-.new-chart svg > g > g:last-child > g:nth-child(5) {
-  transform: translate(-16rem);
-}
-.new-chart svg > g > g:last-child > g:nth-child(6) {
-  transform: translate(-16rem, 10px);
-}
-
-.new-chart svg > g > g:last-child > g:nth-child(7) {
-  transform: translate(-24rem);
-}
-
-.new-chart svg > g > g:last-child > g:nth-child(8) {
-  transform: translate(-24rem, 10px);
-}
-
-.new-chart svg > g > g:last-child > g:nth-child(9) {
-  transform: translate(-32rem);
-}
-
-.new-chart svg > g > g:last-child > g:nth-child(10) {
-  transform: translate(-32rem, 10px);
-} */
-
-
-/* .new-chart svg > g > g:last-child > g:nth-child(6) {
-  transform: translate(-8rem);
-}
-
-.new-chart svg > g > g:last-child > g:nth-child(7) {
-  transform: translate(-8rem, 10px);
-}
-
-.new-chart svg > g > g:last-child > g:nth-child(8) {
-  transform: translate(-8rem, 20px);
-}
-
-.new-chart svg > g > g:last-child > g:nth-child(9) {
-  transform: translate(-8rem, 30px);
-}
-.new-chart svg > g > g:last-child > g:nth-child(10) {
-  transform: translate(-8rem, 40px);
-} */
+/* -- For Nivo chart legend -- */
 
 .chart svg > g > g:last-child > g:nth-child(2),
 .new-chart svg > g > g:last-child > g:nth-child(4) {
@@ -127,35 +78,6 @@
   transform: translate(-24rem);
 } 
 
-/* 
-.new-chart svg > g > g:last-child > g:nth-child(6) {
-  transform: translate(-8rem);
-}
-
-.new-chart svg > g > g:last-child > g:nth-child(7) {
-  transform: translate(-8rem, 10px);
-}
-
-.new-chart svg > g > g:last-child > g:nth-child(8) {
-  transform: translate(-8rem, 20px);
-}
-
-.new-chart svg > g > g:last-child > g:nth-child(9) {
-  transform: translate(-8rem, 30px);
-}
-.new-chart svg > g > g:last-child > g:nth-child(10) {
-  transform: translate(-8rem, 40px);
-}
-/***************/
-
-/* -- For Nivo chart legend -- */
-/* .new-chart svg > g > g:last-child > g > rect:last-of-type {
-  transform: translate(-10px, -12px);
-}
-
-.new-chart svg > g > g:last-child > g > text {
-  text-anchor: middle;
-} */
 /* -------------------------- */
 
 .chart:hover {

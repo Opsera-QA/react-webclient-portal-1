@@ -1,20 +1,20 @@
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
 export const mainColor = "#5B5851";
-export const mainGold = "#F1AD0F";
+export let mainGold, warningColor = "#F1AD0F";
 export const mainPurple = "#494173";
 export const accentColor = "#A8D0DB";
 export const failColor = "#E57373";
-export const warningColor = "#F1AD0F";
 
-export const greyHues = ["#1E1D1B", "#5B5851", "#7A756C", "#B1AeA7", "#E6E5E3", "#F0EFEE", "#F9F9F8"];
-export const goldHues = [mainGold, "#F5C453", "#F9DC98", "#FDF3DD"];
-export const purpleHues = [mainPurple, "#7368AA", "#ABA4CC", "#E3E1EE"];
-
+// Color schema for Nivo charts
 export const standardColors = [mainColor, "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173", "#E6E5E3", mainPurple, "#1E1D1B"];
 export const gradationalColors = ["#B1AeA7", "#7A756C", mainColor, "#1E1D1B"];
 
+// ----- Start of color-assigning functions for Nivo charts -----
+
+// For most charts
 export const assignStandardColors = (data, uniColor = false) => {
+  // Set uniColor to true if the chart expects only one legend regardless of the number of data
   if (data) {
     data.forEach((data, i) => {
       data.color = uniColor ? mainColor : standardColors[i];
@@ -22,9 +22,11 @@ export const assignStandardColors = (data, uniColor = false) => {
   }
 };
 
+// For Fail/Success charts
 export const assignBooleanColors = data => {
   if (data && data[0] && !("Successful" in data[0])) {
-    data.sort((a, b) => a.id > b.id ? 1 : -1); // to display success before fail in legend
+    // To display success before fail in legend
+    data.sort((a, b) => a.id > b.id ? 1 : -1);
   }
 
   data.forEach(data => {
@@ -38,6 +40,8 @@ export const assignBooleanColors = data => {
   return data.color;
 };
 
+// The rest would depend on the structure of data for the chart
+
 export const assignIssueColors = data => {
   if (data) {
     data.forEach(data => {
@@ -50,10 +54,10 @@ export const assignIssueColors = data => {
 export const assignTaskColors = data => {
   if (data) {
     data.forEach(data => {
-      data.Story_color = accentColor;
-      data.Task_color = "#7368AA";
-      data.Subtask_color = mainColor;
-      data.Bug_color = failColor;
+      data["Story_color"] = accentColor;
+      data["Task_color"] = "#7368AA";
+      data["Subtask_color"] = mainColor;
+      data["Bug_color"] = failColor;
     });
   }
 
@@ -128,10 +132,19 @@ export const assignLineColors = data => {
   return data;
 };
 
+// ----- End of color-assigning functions for Nivo charts -----
+
+// ----- Start of functions that that render colors assigned from above functions -----
+// Ex: colors={getColor} (on Nivo chart config)
+
 export const getColor = data => data.color;
 export const getColorByData = data => data.data.color;
 export const getColorById = data => data.id === "Successful" ? mainColor : failColor;
 export const getTaskColor = ({ id, data }) => data[`${id}_color`];
+
+// ----- End of functions that that render colors assigned from above functions -----
+
+// ----- Start of helper functions for legend -----
 
 export const shortenPieChartLegend = datas => datas.forEach(data => data.id.length > 10 ? data.label = data.id.slice(0, 10) + "..." : data.id);
 export const shortenLegend = (datas, originalIdHolder={}) => {
@@ -150,6 +163,9 @@ export const capitalizeLegend = (data, keys) => data.forEach(d => {
 export const spaceOutTimeTakenLegend = data => data.forEach(d => d["Time Taken"] = d["TimeTaken"]);
 export const spaceOutMergeRequestTimeTakenLegend = data => data.forEach(d => d["Merge Request Time Taken"] = d["MergeRequestTimeTaken"]);
 
+// ----- End of helper functions for legend -----
+
+// X-axis and y-axis tick label format
 const formats = {
   numbers: d => /\d+\.?\d*$/.exec(d),
   wholeNumbers: d => Math.floor(d) === d && d,
@@ -162,6 +178,8 @@ const formats = {
   subString: d => (typeof d === "string" ? d.substring(0, 6) : ""),
 };
 
+// Default configs for Nivo charts
+// For properties such as xScale, yScale, colors, colorBy, indexBy, set them individually on charts
 export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
                               largeLeftSpaceRequired=false, largeBottomSpaceRequired=false,
                               leftLabelFormat="", bottomLabelFormat="", isLegendHidden=false) => ({
@@ -207,7 +225,6 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
       "translateX": 0,
       "translateY": -40,
       "itemsSpacing": 0,
-      // "itemsSpacing": moreLegendSpace ? 17 : 20,
       "itemDirection": "right-to-left",
       "itemWidth": 75,
       "itemHeight": 10,
@@ -215,20 +232,6 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
       "symbolSize": 10,
       "symbolShape": "square",
       "symbolBorderColor": "rgba(0, 0, 0, .5)"
-      // "anchor": "top-right",
-      // "direction": "row",
-      // "justify": false,
-      // "translateX": 0,
-      // "translateY": -25,
-      // "itemsSpacing": moreLegendSpace ? 17 : -10,
-      // // "itemsSpacing": moreLegendSpace ? 17 : 20,
-      // "itemDirection": "right-to-left",
-      // "itemWidth": 75,
-      // "itemHeight": 20,
-      // "itemOpacity": isLegendHidden ? 0 : 1,
-      // "symbolSize": 10,
-      // "symbolShape": "square",
-      // "symbolBorderColor": "rgba(0, 0, 0, .5)"
     }
   ],
   theme: {
@@ -242,12 +245,13 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
     legends: {
       text: {
         fontSize: "10px",
-        fill: "#5B5851"
+        fill: mainColor
       }
     }
   },
 });
 
+// Function to set bar width on bar charts
 export const adjustBarWidth = (data, isVertical=true) => {
   let padding;
   const x = data.length;
