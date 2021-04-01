@@ -69,7 +69,7 @@ function SAST(props) {
               className="newApp__checkbox"
               onClick={() => selectCard("SonarQube")}
             />
-            <img src={require("./imgs/sonar.png")} />
+            <img src={"/img/tools/sonar.png"} />
             <span className="newApp__service-title">SonarQube</span>
           </div>
         </div>
