@@ -34,12 +34,12 @@
 /* -- For Nivo chart legend -- */
 
 .chart svg > g > g:last-child > g:nth-child(2),
-.new-chart svg > g > g:last-child > g:nth-child(4) {
+.new-chart svg > g > g:last-child > g:nth-child(2) {
   transform: translate(0, 10px);
 }
 
 .chart svg > g > g:last-child > g:nth-child(3),
-.new-chart svg > g > g:last-child > g:nth-child(4) {
+.new-chart svg > g > g:last-child > g:nth-child(3) {
   transform: translate(0, 20px);
 }
 
