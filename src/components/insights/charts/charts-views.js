@@ -224,7 +224,8 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
       "justify": false,
       "translateX": 0,
       "translateY": -25,
-      "itemsSpacing": moreLegendSpace ? 17 : 20,
+      "itemsSpacing": moreLegendSpace ? 17 : 0,
+      // "itemsSpacing": moreLegendSpace ? 17 : 20,
       "itemDirection": "right-to-left",
       "itemWidth": 80,
       "itemHeight": 20,
@@ -244,7 +245,7 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
     },
     legends: {
       text: {
-        fontSize: moreLegendSpace ? "9px" : "10px"
+        fontSize: moreLegendSpace ? "9px" : "10px",
       }
     }
   },
