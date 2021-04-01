@@ -81,7 +81,7 @@ function JiraHealthBySprintBarChart( { kpiConfiguration, setKpiConfiguration, da
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Project", "Number of Issues", 
-                  false, true, "cutoffString", "wholeNumbers")}
+                  false, false, "cutoffString", "wholeNumbers")}
           {...config(getColorByData)}
           {...adjustBarWidth(metrics)}
           onClick={() => setShowModal(true)}

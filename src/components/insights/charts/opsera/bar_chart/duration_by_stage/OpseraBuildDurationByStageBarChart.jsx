@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
+import "../../../charts.css";
 import config from "./opseraBuildDurationByStageBarChartConfigs";
 import ModalLogs from "components/common/modal/modalLogs";
 import {AuthContext} from "contexts/AuthContext";
@@ -76,7 +77,7 @@ function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfigurat
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Duration (Minutes)", "Pipeline Run", 
-                    false, false, "wholeNumbers", "cutoffString")}
+                    false, true, "wholeNumbers", "cutoffString")}
           {...config(getColor)}
           {...adjustBarWidth(metrics)}
           onClick={() => setShowModal(true)}

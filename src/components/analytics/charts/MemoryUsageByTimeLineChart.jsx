@@ -9,7 +9,7 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
 import { defaultConfig, getColor, assignStandardColors,
-         shortenLargeChartLegend } from "../../insights/charts/charts-views";
+         shortenLegend } from "../../insights/charts/charts-views";
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 
 function MemoryUsageByTimeLineChart({ persona, date }) {
@@ -41,7 +41,7 @@ function MemoryUsageByTimeLineChart({ persona, date }) {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].memoryUsageByTime : [];
       assignStandardColors(dataObject?.data);
-      shortenLargeChartLegend(dataObject?.data);
+      shortenLegend(dataObject?.data);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -101,20 +101,6 @@ function MemoryUsageByTimeLineChart({ persona, date }) {
             margin={{ top: 50, right: 110, bottom: 80, left: 120 }}
             xScale={{ type: "point" }}
             yScale={{ type: "linear", min: "auto", max: "auto", stacked: false, reverse: false }}
-            legends={[{
-              "anchor": "top-right",
-              "direction": "row",
-              "justify": false,
-              "translateX": 0,
-              "translateY": -25,
-              "itemsSpacing": 60,
-              "itemDirection": "right-to-left",
-              "itemWidth": 60,
-              "itemHeight": 20,
-              "symbolSize": 10,
-              "symbolShape": "square",
-              "symbolBorderColor": "rgba(0, 0, 0, .5)"
-            }]}
             tooltip={({ point, color }) => <ChartTooltip 
                                   titles = {["Date & Time", "Node name", "Memory usage"]}
                                   values = {[String(point.data.xFormatted), point.serieId, point.data.y + "%"]}
