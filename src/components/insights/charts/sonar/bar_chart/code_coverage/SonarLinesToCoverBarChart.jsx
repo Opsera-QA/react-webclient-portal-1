@@ -81,7 +81,7 @@ function SonarLinesToCoverBarChart({ kpiConfiguration, setKpiConfiguration, dash
       <ResponsiveBar
         data={metrics}
         {...defaultConfig("Value", "Code Coverage Metric", 
-                  false, true, "", "monthDate2")}
+                  false, false, "", "monthDate2")}
         {...config(getColorByData)}
         {...adjustBarWidth(metrics)}
         onClick={() => setShowModal(true)}

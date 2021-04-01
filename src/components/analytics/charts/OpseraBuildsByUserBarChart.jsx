@@ -94,7 +94,7 @@ function OpseraBuildsByUserBarChart({ persona, date }) {
           ) : (
             <ResponsiveBar
               {...defaultConfig('Users', 'Number of Builds', 
-                    true, true, 'cutoffString', 'wholeNumbers')}
+                    true, false, 'cutoffString', 'wholeNumbers')}
               {...adjustBarWidth(data ? data.data : [], false)}
               data={data ? data.data : []}
               keys={["Value"]}

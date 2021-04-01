@@ -92,7 +92,7 @@ function JenkinsStatusByJobNameBarChar({ persona, date }) {
           ) : (
             <ResponsiveBar
               {...defaultConfig("Build Tag", "Number of Builds", 
-                      true, true, "cutoffString", "wholeNumbers")}
+                      true, false, "cutoffString", "wholeNumbers")}
               {...adjustBarWidth(data ? data.data : [], false)}
               data={data ? data.data : []}
               keys={["Successful", "Failed", "Aborted", "Unstable"]}

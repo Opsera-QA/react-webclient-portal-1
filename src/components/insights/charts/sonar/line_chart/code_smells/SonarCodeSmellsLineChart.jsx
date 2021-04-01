@@ -76,7 +76,7 @@ function SonarCodeSmellsLineChart({ kpiConfiguration, setKpiConfiguration, dashb
           <ResponsiveLine
             data={metrics}
             {...defaultConfig("Code Smells", "Date", 
-                      false, false, "wholeNumbers", "yearMonthDate")}
+                      false, true, "wholeNumbers", "yearMonthDate")}
             {...config(getColor)}
             onClick={() => setShowModal(true)}
             tooltip={({ point, color }) => <ChartTooltip 

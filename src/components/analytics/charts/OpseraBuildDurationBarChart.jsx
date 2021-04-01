@@ -93,7 +93,7 @@ function OpseraBuildDurationBarChart({ persona, date }) {
         ) : (
           <ResponsiveBar
             {...defaultConfig('Duration (Minutes)', 'Pipeline Run', 
-                      false, true, 'wholeNumbers', 'values')}
+                      false, false, 'wholeNumbers', 'values')}
             {...adjustBarWidth(data ? data.data : [])}
             data={data ? data.data : []}
             keys={["Value"]}

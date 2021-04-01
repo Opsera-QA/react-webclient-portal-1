@@ -79,7 +79,7 @@ function JMeterResponseTimeLineChart({ kpiConfiguration, setKpiConfiguration, da
             <ResponsiveLine
               data={metrics}
               {...defaultConfig("Response Time (ms)", "Build Number", 
-                      true, true, "wholeNumbers", "wholeNumbers")}
+                      true, false, "wholeNumbers", "wholeNumbers")}
               {...config(getColor)}
               onClick={() => setShowModal(true)}
               tooltip={({ point, color }) => <ChartTooltip 
