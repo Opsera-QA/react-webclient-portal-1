@@ -9,6 +9,10 @@ function InlineKpiIdentifierFilter({ fieldName, filterModel, setFilterModal, loa
     loadData(newDataObject);
   };
 
+  if (loadData == null) {
+    return null;
+  }
+
   return (
     <KpiIdentifierFilter
       inline={true}
@@ -35,7 +39,7 @@ InlineKpiIdentifierFilter.propTypes = {
   textField: PropTypes.string,
   valueField: PropTypes.string,
   status: PropTypes.string,
-  policySupport: PropTypes.bool,
+  policySupport: PropTypes.string,
   manualDataEntry: PropTypes.bool
 };
 

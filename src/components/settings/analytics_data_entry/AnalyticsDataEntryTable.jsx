@@ -12,9 +12,7 @@ import {faUserChart} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {analyticsDataMetadata} from "components/settings/analytics_data_entry/analytics-data-metadata";
 import NewAnalyticsDataEntryOverlay from "components/settings/analytics_data_entry/NewAnalyticsDataEntryOverlay";
-import TagTypeFilter from "components/common/filters/tags/tag_type/TagTypeFilter";
 import StatusFilter from "components/common/filters/status/StatusFilter";
-import KpiCategoryFilter from "components/common/filters/insights/marketplace/kpi_category/KpiCategoryFilter";
 import KpiIdentifierFilter from "components/common/filters/admin/kpis/kpi_identifier/KpiIdentifierFilter";
 import InlineKpiIdentifierFilter from "components/common/filters/admin/kpis/kpi_identifier/InlineKpiIdentifierFilter";
 
@@ -58,6 +56,7 @@ function AnalyticsDataEntryTable({ analyticsDataEntries, isLoading, loadData, is
           filterModel={analyticsDataEntryFilterModel}
           setFilterModel={setAnalyticsDataEntryFilterModel}
           manualDataEntry={true}
+          loadData={loadData}
           className={"mr-2"}
         />
     );
