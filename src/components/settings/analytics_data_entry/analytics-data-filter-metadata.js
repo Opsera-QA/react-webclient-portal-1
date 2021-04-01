@@ -25,6 +25,10 @@ const analyticsDataFilterMetadata = {
       id: "search",
     },
     {
+      label: "KPI",
+      id: "identifier",
+    },
+    {
       label: "Active Filters",
       id: "activeFilters",
     },
@@ -40,19 +44,23 @@ const analyticsDataFilterMetadata = {
       activeFilters.push({filterId: "search", text: `Keywords: ${filterDto.getData("search")}`});
     }
 
+    if (filterDto.getData("identifier") != null && filterDto.getData("identifier") !== "") {
+      activeFilters.push({filterId: "identifier", text: `KPI: ${filterDto.getData("identifier")}`});
+    }
+
     return activeFilters;
   },
   newObjectFields: {
     pageSize: 50,
     currentPage: 1,
-    sortOption: {text: "Sort: Name", value: "name"},
+    sortOption: {text: "Sort: KPI", value: "kpi_identifier"},
     search: "",
     activeFilters: []
   },
   sortOptions: [
     {text: "Oldest", option: "oldest"},
     {text: "Newest", option: "newest"},
-    {text: "Name", option: "name"},
+    {text: "KPI", option: "kpi_identifier"},
     {text: "Last Updated", option: "lastupdated"}
   ]
 };

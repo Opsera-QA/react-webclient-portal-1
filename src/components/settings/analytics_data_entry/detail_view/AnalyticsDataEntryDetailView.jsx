@@ -108,14 +108,14 @@ function AnalyticsDataEntryDetailView() {
 
   return (
     <DetailScreenContainer
-      breadcrumbDestination={"organizationDetailView"}
+      breadcrumbDestination={"analyticsDataEntryDetailView"}
       metadata={analyticsDataMetadata}
       dataObject={analyticsDataEntry}
       isLoading={isLoading}
       actionBar={getActionBar()}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.POWER_USERS}
-      detailPanel={<AnalyticsDataEntryDetailPanel organizationData={analyticsDataEntry} />}
+      detailPanel={<AnalyticsDataEntryDetailPanel analyticsDataEntry={analyticsDataEntry} />}
     />
   );
 }

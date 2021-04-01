@@ -10,7 +10,7 @@ import analyticsDataActions from "components/settings/analytics_data_entry/analy
 import KpiSelectInput from "components/common/list_of_values_input/admin/kpi_configurations/KpiSelectInput";
 import TagMultiSelectInput from "components/common/list_of_values_input/settings/tags/TagMultiSelectInput";
 
-function AnalyticsDataEntryEditorPanel({analyticsData, handleClose }) {
+function AnalyticsDataEntryEditorPanel({analyticsDataEntry, handleClose }) {
   const {getAccessToken} = useContext(AuthContext);
   const [analyticsDataEntryModel, setAnalyticsDataEntryModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
@@ -41,7 +41,7 @@ function AnalyticsDataEntryEditorPanel({analyticsData, handleClose }) {
 
   const loadData = async () => {
     setIsLoading(true);
-    setAnalyticsDataEntryModel(analyticsData);
+    setAnalyticsDataEntryModel(analyticsDataEntry);
     setIsLoading(false);
   };
 
@@ -78,7 +78,7 @@ function AnalyticsDataEntryEditorPanel({analyticsData, handleClose }) {
 }
 
 AnalyticsDataEntryEditorPanel.propTypes = {
-  analyticsData: PropTypes.object,
+  analyticsDataEntry: PropTypes.object,
   handleClose: PropTypes.func,
 };
 

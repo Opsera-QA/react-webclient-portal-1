@@ -34,6 +34,7 @@ analyticsDataActions.getAnalyticsDataEntriesV2 = async (getAccessToken, cancelTo
       sort: sortOption ? sortOption.value : undefined,
       size: analyticsDataEntryFilterDto?.getData("pageSize"),
       page: analyticsDataEntryFilterDto?.getData("currentPage"),
+      kpi_identifier: analyticsDataEntryFilterDto?.getData("identifier"),
       search: analyticsDataEntryFilterDto?.getData("search")
     },
   };

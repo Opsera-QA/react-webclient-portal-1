@@ -8,7 +8,7 @@ import AnalyticsDataEntryEditorPanel from "components/settings/analytics_data_en
 
 function NewAnalyticsDataEntryOverlay({ isMounted, loadData }) {
   const toastContext = useContext(DialogToastContext);
-  const [analyticsDataEntry, setAnalyticsDataEntry] = useState(new Model({...analyticsDataMetadata.newObjectFields}, analyticsDataMetadata, true));
+  const [analyticsDataEntry] = useState(new Model({...analyticsDataMetadata.newObjectFields}, analyticsDataMetadata, true));
 
   const closePanel = () => {
     if (isMounted?.current === true) {
@@ -21,7 +21,7 @@ function NewAnalyticsDataEntryOverlay({ isMounted, loadData }) {
 
   return (
     <CreateCenterPanel closePanel={closePanel} objectType={analyticsDataMetadata.type} loadData={loadData}>
-      <AnalyticsDataEntryEditorPanel handleClose={closePanel} analyticsData={analyticsDataEntry}/>
+      <AnalyticsDataEntryEditorPanel handleClose={closePanel} analyticsDataEntry={analyticsDataEntry}/>
     </CreateCenterPanel>
   );
 }

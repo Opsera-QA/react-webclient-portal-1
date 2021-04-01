@@ -4,7 +4,6 @@ import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import {
   getTableBooleanIconColumn,
-  getTableLeaderColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
@@ -13,6 +12,11 @@ import {faUserChart} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {analyticsDataMetadata} from "components/settings/analytics_data_entry/analytics-data-metadata";
 import NewAnalyticsDataEntryOverlay from "components/settings/analytics_data_entry/NewAnalyticsDataEntryOverlay";
+import TagTypeFilter from "components/common/filters/tags/tag_type/TagTypeFilter";
+import StatusFilter from "components/common/filters/status/StatusFilter";
+import KpiCategoryFilter from "components/common/filters/insights/marketplace/kpi_category/KpiCategoryFilter";
+import KpiIdentifierFilter from "components/common/filters/admin/kpis/kpi_identifier/KpiIdentifierFilter";
+import InlineKpiIdentifierFilter from "components/common/filters/admin/kpis/kpi_identifier/InlineKpiIdentifierFilter";
 
 function AnalyticsDataEntryTable({ analyticsDataEntries, isLoading, loadData, isMounted, analyticsDataEntryFilterModel, setAnalyticsDataEntryFilterModel }) {
   const toastContext = useContext(DialogToastContext);
@@ -21,8 +25,8 @@ function AnalyticsDataEntryTable({ analyticsDataEntries, isLoading, loadData, is
 
   const columns = useMemo(
     () => [
+      getTableTextColumn(getField(fields, "kpi_identifier")),
       getTableTextColumn(getField(fields, "owner_name")),
-      getTableLeaderColumn(getField(fields, "kpi_identifier")),
       getTableBooleanIconColumn(getField(fields, "active"))
     ],
     []
@@ -48,6 +52,34 @@ function AnalyticsDataEntryTable({ analyticsDataEntries, isLoading, loadData, is
     );
   };
 
+  const getInlineFilters = () => {
+    return (
+        <InlineKpiIdentifierFilter
+          filterModel={analyticsDataEntryFilterModel}
+          setFilterModel={setAnalyticsDataEntryFilterModel}
+          manualDataEntry={true}
+          className={"mr-2"}
+        />
+    );
+  };
+
+  const getDropdownFilters = () => {
+    return (
+      <>
+        <KpiIdentifierFilter
+          filterModel={analyticsDataEntryFilterModel}
+          setFilterModel={setAnalyticsDataEntryFilterModel}
+          manualDataEntry={true}
+          className={"mb-2"}
+        />
+        <StatusFilter
+          filterDto={analyticsDataEntryFilterModel}
+          setFilterDto={setAnalyticsDataEntryFilterModel}
+        />
+      </>
+    );
+  };
+
   return (
     <FilterContainer
       loadData={loadData}
@@ -58,6 +90,8 @@ function AnalyticsDataEntryTable({ analyticsDataEntries, isLoading, loadData, is
       metadata={analyticsDataMetadata}
       titleIcon={faUserChart}
       filterDto={analyticsDataEntryFilterModel}
+      dropdownFilters={getDropdownFilters()}
+      inlineFilters={getInlineFilters()}
       setFilterDto={setAnalyticsDataEntryFilterModel}
       title={"Analytics Data Entries"}
       type={"Analytics Data Entry"}
