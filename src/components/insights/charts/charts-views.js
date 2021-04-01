@@ -28,15 +28,17 @@ export const assignBooleanColors = data => {
     data.sort((a, b) => a.id > b.id ? 1 : -1); // to display success before fail in legend
   }
 
-  data.forEach(data => {
-    if (data.id) {
-      data.color = (data.id === "Success" || data.Successful) ? mainColor : failColor;
-    } else {
-      data.Success_color = mainColor;
-      data.Failed_color = failColor;
-    }
-  });
-  return data.color;
+  if (data) {
+    data.forEach(data => {
+      if (data.id) {
+        data.color = (data.id === "Success" || data.Successful) ? mainColor : failColor;
+      } else {
+        data.Success_color = mainColor;
+        data.Failed_color = failColor;
+      }
+    });
+    return data.color;
+  }
 };
 
 export const assignIssueColors = data => {
@@ -134,25 +136,25 @@ export const getColorByData = data => data.data.color;
 export const getColorById = data => data.id === "Successful" ? mainColor : failColor;
 export const getTaskColor = ({ id, data }) => data[`${id}_color`];
 
-export const shortenPieChartLegend = datas => datas.forEach(data => data.id.length > 10 ? data.label = data.id.slice(0, 10) + "..." : data.id);
+export const shortenPieChartLegend = datas => datas?.forEach(data => data.id.length > 10 ? data.label = data.id.slice(0, 10) + "..." : data.id);
 export const shortenLegend = (datas, originalIdHolder={}) => {
-  datas.forEach(data => {
-    const slicedId = data.id.slice(0, 10) + "...";
-    originalIdHolder[slicedId] = data.id;
-    data.id.length > 10 ? data.id = slicedId : data.id;
-  });
+    datas?.forEach(data => {
+      const slicedId = data.id.slice(0, 10) + "...";
+      originalIdHolder[slicedId] = data.id;
+      data.id.length > 10 ? data.id = slicedId : data.id;
+    });
   return originalIdHolder;
 };
 export const shortenLargeChartLegend = (datas, originalIdHolder={}) => {
-  datas.forEach(data => {
-    const slicedId = data.id.slice(0, 15) + "...";
-    originalIdHolder[slicedId] = data.id;
-    data.id.length > 15 ? data.id = slicedId : data.id;
-  });
+    datas?.forEach(data => {
+      const slicedId = data.id.slice(0, 15) + "...";
+      originalIdHolder[slicedId] = data.id;
+      data.id.length > 15 ? data.id = slicedId : data.id;
+    });
   return originalIdHolder;
 };
 
-export const shortenHealthChartLegend = datas => datas.forEach(data => {
+export const shortenHealthChartLegend = datas => datas?.forEach(data => {
   if (data["Production Deployment"]) {
     data["Production Deploy"] = data["Production Deployment"];
   }
@@ -160,12 +162,12 @@ export const shortenHealthChartLegend = datas => datas.forEach(data => {
     data["For Development"] = data["Selected for Development"];
   }
 });
-export const capitalizeLegend = (data, keys) => data.forEach(d => {
-  keys.forEach(key => d[capitalizeFirstLetter(key.split("_").join(" "))] = d[key]);
+export const capitalizeLegend = (data, keys) => data?.forEach(d => {
+  keys?.forEach(key => d[capitalizeFirstLetter(key.split("_").join(" "))] = d[key]);
 });
 
-export const spaceOutTimeTakenLegend = data => data.forEach(d => d["Time Taken"] = d["TimeTaken"]);
-export const spaceOutMergeRequestTimeTakenLegend = data => data.forEach(d => d["Merge Request Time Taken"] = d["MergeRequestTimeTaken"]);
+export const spaceOutTimeTakenLegend = data => data?.forEach(d => d["Time Taken"] = d["TimeTaken"]);
+export const spaceOutMergeRequestTimeTakenLegend = data => data?.forEach(d => d["Merge Request Time Taken"] = d["MergeRequestTimeTaken"]);
 
 const formats = {
   numbers: d => /\d+\.?\d*$/.exec(d),
