@@ -11,7 +11,7 @@ import ToolConfigurationEditorPanelContainer
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
-function ServiceNowConfiguration({ toolData }) {
+function ServiceNowToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
   const [serviceNowConfigurationDto, setServiceNowConfigurationDto] = useState(undefined);
 
@@ -58,8 +58,8 @@ function ServiceNowConfiguration({ toolData }) {
   );
 }
 
-ServiceNowConfiguration.propTypes = {
+ServiceNowToolConfiguration.propTypes = {
   toolData: PropTypes.object,
 };
 
-export default ServiceNowConfiguration;
+export default ServiceNowToolConfiguration;
