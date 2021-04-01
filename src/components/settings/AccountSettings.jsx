@@ -58,6 +58,7 @@ function AccountSettings() {
     if (accessRoleData.Administrator || accessRoleData.OpseraAdministrator) {
       return (
         <>
+          {/*{!envIsTest && !envIsProd && accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"analyticsDataEntryManagement"} />}*/}
           <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
           <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"} visible={!envIsProd}/>
           <BreadcrumbPageLink breadcrumbDestination={"dataMappingManagement"}/>
@@ -74,6 +75,7 @@ function AccountSettings() {
     if (accessRoleData.PowerUser || accessRoleData.SassPowerUser) {
       return (
         <>
+          {/*{!envIsTest && !envIsProd && accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"analyticsDataEntryManagement"} />}*/}
           <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
           <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"} visible={!envIsProd}/>
           <BreadcrumbPageLink breadcrumbDestination={"dataMappingManagement"}/>

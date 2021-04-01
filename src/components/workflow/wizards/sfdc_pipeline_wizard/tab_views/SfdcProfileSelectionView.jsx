@@ -32,7 +32,7 @@ const SfdcProfileSelectionView = ({
 
   const columnsWithOutCheckBoxCell = useMemo(
     () => [      
-      {...getTableTextColumn(fields.find(field => { return field.id === "committedFile";})), class: "wrap-cell-content"},
+      {...getTableTextColumn(fields.find(field => { return field.id === "committedFile";})), class: "force-text-wrap"},
       // getTableDateTimeColumn(fields.find(field => { return field.id === "committedTime"})),
     ],
     [],
@@ -40,7 +40,7 @@ const SfdcProfileSelectionView = ({
 
   const sfdcColumnsWithCheckBoxCell = useMemo(
     () => [
-      {...getTableTextColumn(fields.find(field => { return field.id === "committedFile";})), class: "wrap-cell-content"},
+      {...getTableTextColumn(fields.find(field => { return field.id === "committedFile";})), class: "force-text-wrap"},
       // getTableDateTimeColumn(fields.find(field => { return field.id === "committedTime"})),
       getCheckBoxColumn(handleComponentCheck)  
     ],

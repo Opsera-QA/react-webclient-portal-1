@@ -200,6 +200,24 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
     );
   };
 
+  const getFooter = () => {
+    if (noFooter !== true || paginationDto) {
+      return (
+        <tfoot>
+          <tr>
+            <td colSpan="100%">
+              <div className="table-footer">
+                {getOldPaginator()}
+                {getNewPaginator()}
+              </div>
+            </td>
+          </tr>
+        </tfoot>
+      );
+    }
+  };
+
+
   return (
     <div>
       {tableTitle && getTableTitleBar()}
@@ -211,18 +229,7 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
           <tbody {...getTableBodyProps()}>
               {getTableBody()}
           </tbody>
-          {!noFooter && (
-            <tfoot>
-              <tr>
-                <td colSpan="100%">
-                  <div className="table-footer">
-                    {getOldPaginator()}
-                    {getNewPaginator()}
-                  </div>
-                </td>
-              </tr>
-            </tfoot>
-          )}
+          {getFooter()}
         </table>
       </div>
     </div>

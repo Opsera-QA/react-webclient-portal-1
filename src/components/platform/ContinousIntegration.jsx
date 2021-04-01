@@ -83,7 +83,7 @@ function ContinousIntegration(props) {
                 className="newApp__checkbox"
                 onClick={() => selectCard("Jenkins")}
               />
-              <img src={require("./imgs/jenkins.png")} alt="Jenkins" />
+              <img src={"/img/tools/jenkins.png"} alt="Jenkins" />
               <span className="newApp__service-title">Jenkins</span>
             </div>
 
@@ -97,7 +97,7 @@ function ContinousIntegration(props) {
                   checked={isChecked.TeamCity && data["TeamCity"]}
                   className="newApp__checkbox"
                 /> 
-                <img src={require("./imgs/team-city.png")} alt="Team City"/>
+                <img src={"/img/tools/team-city.png"} alt="Team City"/>
                 <span className="newApp__service-title">Team City</span>
               </div>
 
@@ -112,7 +112,7 @@ function ContinousIntegration(props) {
                 className="newApp__checkbox"
                 onClick={() => selectCard("Argocd")}
               />
-              <img src={require("./imgs/argocd.png")} />
+              <img src={"/img/tools/argocd.png"} />
               <span className="newApp__service-title">Argocd</span>
             </div>
 
@@ -127,7 +127,7 @@ function ContinousIntegration(props) {
                 className="newApp__checkbox"
                 onClick={() => selectCard("Spinnaker")}
               />
-              <img src={require("./imgs/spinnaker.png")} />
+              <img src={"/img/tools/spinnaker.png"} />
               <span className="newApp__service-title">Spinnaker</span>
             </div>
 
@@ -152,7 +152,7 @@ function ContinousIntegration(props) {
                 className="newApp__checkbox"
                 // onClick={() => selectCard("FluxCD")}
               />
-              <img src={require("./imgs/flux.png")} />
+              <img src={"/img/tools/flux.png"} />
               <span className="newApp__service-title">FluxCD</span>
             </div> 
             </OverlayTrigger>

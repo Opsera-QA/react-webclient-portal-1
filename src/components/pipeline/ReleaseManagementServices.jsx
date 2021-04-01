@@ -151,7 +151,7 @@ class ReleaseManagementServices extends React.PureComponent {
                   serviceClick(jenkinsPipelineNode);
               }}
             >
-              <img src={require("../platform/imgs/jenkins.png")} alt="Jenkins Pipeline"/>
+              <img src={"/img/tools/jenkins.png"} alt="Jenkins Pipeline"/>
               <span className="newApp__service-title">Jenkins Pipeline</span>
             </div>
 
@@ -162,7 +162,7 @@ class ReleaseManagementServices extends React.PureComponent {
                   serviceClick(githubci);
               }}
             >
-              <img src={require("../api_connector/imgs/gitlab.png")} alt="Gitlab CI"/>
+              <img src={"/img/tools/gitlab.png"} alt="Gitlab CI"/>
               <span className="newApp__service-title">Gitlab CI</span>
             </div>
 

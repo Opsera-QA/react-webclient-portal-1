@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import KpiActions from "components/admin/kpi_editor/kpi-editor-actions";
+import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import KpiActions from "components/admin/kpi_editor/kpi-editor-actions";
 import axios from "axios";
 
-function KpiSelectInput({ fieldName, dataObject, setDataObject, setCurrentKpi, setDataPoints, setDataFunction, disabled, textField, valueField, status, policySupport, manualDataEntry }) {
+function KpiIdentifierFilter({ fieldName, filterModel, setFilterModel, setDataFunction, inline, className, textField, valueField, status, policySupport, manualDataEntry}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [kpis, setKpis] = useState([]);
@@ -55,39 +55,37 @@ function KpiSelectInput({ fieldName, dataObject, setDataObject, setCurrentKpi, s
 
     if (isMounted?.current === true && kpis) {
       setKpis(kpis);
-
-      if (setCurrentKpi && dataObject.getData(fieldName) !== "") {
-        const selectedKpi = kpis.find((kpi) => kpi.identifier === dataObject.getData(fieldName));
-        setCurrentKpi(selectedKpi);
-        setDataPoints(selectedKpi["dataPoints"]);
-      }
     }
   };
 
+  if (filterModel == null) {
+    return null;
+  }
+
   return (
-    <SelectInputBase
+    <FilterSelectInputBase
+      inline={inline}
       fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
-      setDataFunction={setDataFunction}
-      selectOptions={kpis}
+      className={className}
+      placeholderText={"Filter By KPI"}
+      setDataObject={setFilterModel}
+      dataObject={filterModel}
       busy={isLoading}
-      valueField={valueField}
       textField={textField}
-      // placeholderText={placeholderText}
-      disabled={disabled || isLoading}
+      valueField={valueField}
+      selectOptions={kpis}
+      setDataFunction={setDataFunction}
     />
   );
 }
 
-KpiSelectInput.propTypes = {
+KpiIdentifierFilter.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  filterModel: PropTypes.object,
+  setFilterModel: PropTypes.func,
   setDataFunction: PropTypes.func,
-  setCurrentKpi: PropTypes.func,
-  setDataPoints: PropTypes.func,
-  disabled: PropTypes.bool,
+  inline: PropTypes.bool,
+  className: PropTypes.string,
   textField: PropTypes.string,
   valueField: PropTypes.string,
   status: PropTypes.string,
@@ -95,10 +93,11 @@ KpiSelectInput.propTypes = {
   manualDataEntry: PropTypes.bool
 };
 
-KpiSelectInput.defaultProps = {
-  valueField: "identifier",
+KpiIdentifierFilter.defaultProps = {
+  fieldName: "identifier",
   textField: "name",
+  valueField: "identifier",
   status: "active"
 };
 
-export default KpiSelectInput;
+export default KpiIdentifierFilter;

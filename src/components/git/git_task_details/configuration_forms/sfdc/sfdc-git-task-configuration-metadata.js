@@ -14,7 +14,7 @@ const sfdcGitTaskConfigurationMetadata = {
       label: "Jenkins Tool Name",
       id: "toolName",
       isRequired: true,
-      maxLength: 25,
+      maxLength: 100,
       regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
     },  
     {
