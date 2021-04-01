@@ -8,6 +8,8 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
+import PipelineDetails from "components/insights/summary/PipelineDetails";
+import ProjectDetails from "components/insights/summary/ProjectDetails";
 import {faAnalytics, faChartNetwork, faChartArea} from "@fortawesome/pro-light-svg-icons";
 
 function InsightsSummary() {
@@ -68,8 +70,10 @@ function InsightsSummary() {
 
   const getInsightsSummaryView = () => {
       return (
-        <p>Hello World</p>
-        // Add main components here-Environment/Org filters and Project/Pipeline tables
+        <div>
+        <PipelineDetails />
+        <ProjectDetails />
+        </div>
       );
   };
 
