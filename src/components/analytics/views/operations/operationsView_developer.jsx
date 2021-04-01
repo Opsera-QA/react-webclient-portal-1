@@ -12,7 +12,7 @@ import PipelineSuccessLogs from "../../logs/pipelineSuccessLogs";
 import PipelineFailureLogs from "../../logs/pipelineFailureLogs";
 import OpseraPipelineStatusFailed from "../../logs/opseraPipelineStatusFailed";
 import OpseraPipelineStatusSuccess from "../../logs/opseraPipelineStatusSuccess";
-import OpseraRecentCDTable from "../../metrics/opseraPipelineRecentCD";
+import OpseraRecentCDTable from "../../metrics/OpseraPipelineRecentCD";
 import InfoDialog from "../../../common/status_notifications/info";
 import { Row, Col } from "react-bootstrap";
 

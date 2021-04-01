@@ -7,8 +7,8 @@ import ErrorDialog from "../../common/status_notifications/error";
 import { Table } from "react-bootstrap";
 import { format } from "date-fns";
 import CustomTable from "components/common/table/CustomTable";
-import { faTimesCircle, faCheckCircle, faSearchPlus, faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SuccessIcon from "../../common/icons/table/SuccessIcon";
+import FailIcon from "../../common/icons/table/FailIcon";
 
 function OpseraRecentCDTable({ date }) {
   const contextType = useContext(AuthContext);
@@ -77,7 +77,7 @@ function OpseraRecentCDTable({ date }) {
       {
         Header: "Run",
         accessor: "run_count",
-        class: "cell-center no-wrap-inline",
+        class: "no-wrap-inline",
       },
       {
         Header: "Pipeline Name",
@@ -101,23 +101,9 @@ function OpseraRecentCDTable({ date }) {
         Cell: (props) => {
           return props.value ? (
             props.value === "failure" || props.value === "failed" ? (
-              <>
-                <div style={{ display: "flex", flexWrap: "nowrap" }}>
-                  <div>
-                    <FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" />
-                  </div>
-                  <div className="ml-1">{props.value}</div>
-                </div>
-              </>
+              <FailIcon />
             ) : (
-              <>
-                <div style={{ display: "flex", flexWrap: "nowrap" }}>
-                  <div>
-                    <FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" />
-                  </div>
-                  <div className="ml-1">{props.value}</div>
-                </div>
-              </>
+              <SuccessIcon />
             )
           ) : (
             "unknown"
@@ -155,6 +141,7 @@ function OpseraRecentCDTable({ date }) {
               data={data.data}
               rowStyling={""}
               noDataMessage={noDataMessage}
+              noFooter={true}
             ></CustomTable>
           </>
         )}
