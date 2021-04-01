@@ -72,13 +72,13 @@ function GitlabTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguratio
 
   return (
     <div className="new-chart mb-3" style={{height: "300px"}}>
-          <ResponsivePie
-            data={metrics}
-            {...defaultConfig()}
-            {...config(getColorByData)}
-            onClick={() => setShowModal(true)}
-          />
-      </div>
+      <ResponsivePie
+        data={metrics}
+        {...defaultConfig()}
+        {...config(getColorByData)}
+        onClick={() => setShowModal(true)}
+      />
+    </div>
   );
   };
 

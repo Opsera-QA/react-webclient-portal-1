@@ -11,11 +11,9 @@ export const warningColor = "#F1AD0F";
 export const greyHues = ["#1E1D1B", "#5B5851", "#7A756C", "#B1AeA7", "#E6E5E3", "#F0EFEE", "#F9F9F8"];
 export const goldHues = [mainGold, "#F5C453", "#F9DC98", "#FDF3DD"];
 export const purpleHues = [mainPurple, "#7368AA", "#ABA4CC", "#E3E1EE"];
-// const darkHues = ["#342503", "#4E3805", "#684A06", "#825D08"];
 
-export const standardColors = [mainColor, "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173", "#E6E5E3", mainPurple];
+export const standardColors = [mainColor, "#7A756C", "#ABA4CC", accentColor, "#7368AA", "#B1AeA7", "#494173", "#E6E5E3", mainPurple, "#1E1D1B"];
 export const gradationalColors = ["#B1AeA7", "#7A756C", mainColor, "#1E1D1B"];
-// purpleHues.forEach((_, i) => standardColors.push(greyHues[greyHues.length - i - 2], purpleHues[i + 1]));
 
 export const assignStandardColors = (data, uniColor = false) => {
   if (data) {
@@ -145,6 +143,14 @@ export const shortenLegend = (datas, originalIdHolder={}) => {
   });
   return originalIdHolder;
 };
+export const shortenLargeChartLegend = (datas, originalIdHolder={}) => {
+  datas.forEach(data => {
+    const slicedId = data.id.slice(0, 15) + "...";
+    originalIdHolder[slicedId] = data.id;
+    data.id.length > 15 ? data.id = slicedId : data.id;
+  });
+  return originalIdHolder;
+};
 
 export const shortenHealthChartLegend = datas => datas.forEach(data => {
   if (data["Production Deployment"]) {
@@ -158,15 +164,17 @@ export const capitalizeLegend = (data, keys) => data.forEach(d => {
   keys.forEach(key => d[capitalizeFirstLetter(key.split("_").join(" "))] = d[key]);
 });
 
+export const spaceOutTimeTakenLegend = data => data.forEach(d => d["Time Taken"] = d["TimeTaken"]);
 export const spaceOutMergeRequestTimeTakenLegend = data => data.forEach(d => d["Merge Request Time Taken"] = d["MergeRequestTimeTaken"]);
 
 const formats = {
   numbers: d => /\d+\.?\d*$/.exec(d),
   wholeNumbers: d => Math.floor(d) === d && d,
+  dateTime: d => (typeof d === "string" ? d.substring(0, 11) : ""),
   monthDate: "%b %d",
   monthDate2: d => { var date = new Date(d).toDateString(); date = date.split(" "); return date[1]+" "+date[2]; },
   yearMonthDate: d => d.split("T")[0],
-  cutoffString: (d) => (typeof d === "string" && d.length > 0 ? d.slice(0, 8) + (d.length > 8 ? "..." : "") : ""),
+  cutoffString: d => (typeof d === "string" && d.length > 0 ? d.slice(0, 8) + (d.length > 8 ? "..." : "") : ""),
   values: d => /(?:(?!-).)*/.exec(d)[0],
   subString: d => (typeof d === "string" ? d.substring(0, 6) : ""),
 };
