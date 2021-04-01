@@ -45,7 +45,8 @@ const analyticsDataFilterMetadata = {
     }
 
     if (filterDto.getData("identifier") != null && filterDto.getData("identifier") !== "") {
-      activeFilters.push({filterId: "identifier", text: `KPI: ${filterDto.getData("identifier")}`});
+      const identifer = filterDto.getData("identifier");
+      activeFilters.push({filterId: "identifier", text: `KPI: ${identifer?.name}`});
     }
 
     return activeFilters;

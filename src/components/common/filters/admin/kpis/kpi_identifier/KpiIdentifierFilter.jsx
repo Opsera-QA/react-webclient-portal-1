@@ -89,7 +89,7 @@ KpiIdentifierFilter.propTypes = {
   textField: PropTypes.string,
   valueField: PropTypes.string,
   status: PropTypes.string,
-  policySupport: PropTypes.bool,
+  policySupport: PropTypes.string,
   manualDataEntry: PropTypes.bool
 };
 

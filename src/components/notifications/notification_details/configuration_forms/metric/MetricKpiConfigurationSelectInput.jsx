@@ -59,6 +59,8 @@ function MetricKpiConfigurationSelectInput({ fieldName, dataObject, setDataObjec
                   setDataFunction={validateAndSetData}
                   setCurrentKpi={setCurrentKpi}
                   setDataPoints={setDataPoints}
+                  status={"active"}
+                  policySupport={"active"}
                 />
               </Col>
             </Row>

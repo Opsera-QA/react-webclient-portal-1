@@ -67,7 +67,7 @@ function AnalyticsDataEntryEditorPanel({analyticsDataEntry, handleClose }) {
     >
       <Row>
         <Col lg={12}>
-          <KpiSelectInput fieldName={"kpi_identifier"} dataObject={analyticsDataEntryModel} setDataObject={setAnalyticsDataEntryModel}/>
+          <KpiSelectInput fieldName={"kpi_identifier"} policySupport={"active"} dataObject={analyticsDataEntryModel} setDataObject={setAnalyticsDataEntryModel}/>
         </Col>
         <Col lg={12}>
           <TagMultiSelectInput dataObject={analyticsDataEntryModel} setDataObject={setAnalyticsDataEntryModel} />

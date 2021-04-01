@@ -26,7 +26,8 @@ analyticsDataActions.getAllAnalyticsDataEntriesV2 = async (getAccessToken, cance
 };
 
 analyticsDataActions.getAnalyticsDataEntriesV2 = async (getAccessToken, cancelTokenSource, analyticsDataEntryFilterDto) => {
-  let sortOption = analyticsDataEntryFilterDto?.getData("sortOption");
+  const sortOption = analyticsDataEntryFilterDto?.getData("sortOption");
+  const identifier = analyticsDataEntryFilterDto?.getData("identifier");
 
   const apiUrl = "/analytics/data-entry";
   const urlParams = {
@@ -34,7 +35,7 @@ analyticsDataActions.getAnalyticsDataEntriesV2 = async (getAccessToken, cancelTo
       sort: sortOption ? sortOption.value : undefined,
       size: analyticsDataEntryFilterDto?.getData("pageSize"),
       page: analyticsDataEntryFilterDto?.getData("currentPage"),
-      kpi_identifier: analyticsDataEntryFilterDto?.getData("identifier"),
+      kpi_identifier: identifier ? identifier?.identifier : undefined,
       search: analyticsDataEntryFilterDto?.getData("search")
     },
   };
