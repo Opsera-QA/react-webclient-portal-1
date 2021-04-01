@@ -10,7 +10,7 @@ import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
 import { defaultConfig, getColor, assignStandardColors,
-         shortenLargeChartLegend } from "../../insights/charts/charts-views";
+         shortenLegend } from "../../insights/charts/charts-views";
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 
 function InNetworkTrafficByTimeLineChart({ persona, date }) {
@@ -40,7 +40,7 @@ function InNetworkTrafficByTimeLineChart({ persona, date }) {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].InNetworkTrafficByTime : [];
       assignStandardColors(dataObject?.data);
-      shortenLargeChartLegend(dataObject?.data);
+      shortenLegend(dataObject?.data);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -98,20 +98,6 @@ function InNetworkTrafficByTimeLineChart({ persona, date }) {
             xScale={{ type: "point" }}
             yScale={{ type: "linear", min: "auto", max: "auto", stacked: false, reverse: false }}
             pointLabel="y"
-            legends={[{
-              "anchor": "top-right",
-              "direction": "row",
-              "justify": false,
-              "translateX": 0,
-              "translateY": -25,
-              "itemsSpacing": 60,
-              "itemDirection": "right-to-left",
-              "itemWidth": 60,
-              "itemHeight": 20,
-              "symbolSize": 10,
-              "symbolShape": "square",
-              "symbolBorderColor": "rgba(0, 0, 0, .5)"
-            }]}
             tooltip={({ point, color }) => <ChartTooltip 
                                   titles = {["Date & Time", "Node name", "In network usage"]}
                                   values = {[String(point.data.xFormatted), point.serieId, point.data.y + "MB"]}

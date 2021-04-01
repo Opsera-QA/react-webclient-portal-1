@@ -78,7 +78,7 @@ function JiraIssuesByPriorityBarChart({ kpiConfiguration, setKpiConfiguration, d
             <ResponsiveBar
               data={metrics}
               {...defaultConfig("Project", "Number of Issues", 
-                                true, true, "cutoffString", "wholeNumbers")}
+                                true, false, "cutoffString", "wholeNumbers")}
               {...config(getTaskColor)}
               {...adjustBarWidth(metrics)}
               onClick={() => setShowModal(true)}

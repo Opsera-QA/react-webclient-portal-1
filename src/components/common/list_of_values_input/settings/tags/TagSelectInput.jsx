@@ -119,12 +119,11 @@ function TagSelectInput({ fieldName, dataObject, setDataObject, disabled, setDat
       showLabel={showLabel}
       className={className}
       selectOptions={[...tagOptions]}
-      textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + capitalizeFirstLetter(data["value"])}
+      textField={(data) => data?.type != null ? capitalizeFirstLetter(data?.type) + ": " + capitalizeFirstLetter(data?.value) : null}
       filter={"contains"}
       groupBy={"type"}
       busy={isLoading}
       getCurrentValue={getCurrentValue}
-      value={[...dataObject?.getArrayData(fieldName)]}
       placeholder={getPlaceholderText()}
       disabled={disabled || isLoading}
     />

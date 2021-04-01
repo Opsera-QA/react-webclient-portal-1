@@ -13,8 +13,7 @@ import ErrorDialog from "../../common/status_notifications/error";
 import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
-import { defaultConfig, assignHealthColors, shortenHealthChartLegend,
-         adjustBarWidth } from '../../insights/charts/charts-views';
+import { defaultConfig, assignHealthColors, adjustBarWidth } from '../../insights/charts/charts-views';
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 
 function JiraHealthBySprintBarChart( { persona, date } ) {
@@ -64,7 +63,6 @@ function JiraHealthBySprintBarChart( { persona, date } ) {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res?.data?.data[0] ? res.data.data[0].jiraSprintHealthq1 : [];
       assignHealthColors(dataObject?.data);
-      shortenHealthChartLegend(dataObject?.data);
       setData(dataObject);
       setLoading(false);
     }
@@ -96,10 +94,10 @@ function JiraHealthBySprintBarChart( { persona, date } ) {
             <ResponsiveBar
               data={data ? data.data : []}
               {...defaultConfig("Project", "Number of Issues", 
-                                false, false, "cutoffString", "wholeNumbers", false, true)}
+                                false, false, "cutoffString", "wholeNumbers", false)}
               {...adjustBarWidth(data ? data.data : [])}
               onClick={() => setShowModal(true)}
-              keys={["To Do", "In Development", "In Progress", "Peer Review", "Testing", "Done", "For Development", "Production Deploy"]}
+              keys={["To Do", "In Development", "In Progress", "Peer Review", "Testing", "Done", "Selected for Development", "Production Deployment"]}
               indexBy="key"
               layout={"horizontal"}
               colors={({ id, data }) => data[`${id}_color`]}
