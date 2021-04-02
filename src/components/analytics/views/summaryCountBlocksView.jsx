@@ -19,10 +19,17 @@ function SummaryCountBlocksView({ data, view }) {
     // console.log("Rendering Blocks for data", data);
   }, [data]);
 
+  // const setStatusLevel = (status) => {
+  //   if (status === "danger") return "red";
+  //   if (status === "warning") return "yellow";
+  //   if (status === "success") return "green";
+
+  //   return null;
+  // };
   const setStatusLevel = (status) => {
-    if (status === "danger") return "red";
-    if (status === "warning") return "yellow";
-    if (status === "success") return "green";
+    if (status === "danger") return "#ef5350";
+    if (status === "warning") return "#F1AD0F";
+    if (status === "success") return "#00897b";
 
     return null;
   };
@@ -44,20 +51,26 @@ function SummaryCountBlocksView({ data, view }) {
   return (
     <>
       {data !== undefined && data.length > 0 ? (
-            <CardGroup className="w-100 d-flex justify-content-center">
-              {data.map(function (item, index) {
-                return (
-                  <Card key={index} style={view !== "small" ? { width: "100%", height: "100px" } : { width: "100%" }}>
-                    {/* <Card.Header style={{minHeight: "3rem", fontSize: "14px", display: "flex", justifyContent: "center", alignItems: "center"}}>{item.name}</Card.Header> */}
-                    <Card.Body style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
-                      <Card.Title style={{fontSize: "2rem"}}>{item.value}</Card.Title>
-                      <Card.Subtitle style={{fontSize: "12px", textAlign: "center"}} className={setStatusLevel(item.status)}>{item.name}</Card.Subtitle>
-                    </Card.Body>
-                  </Card>
-          
-                );
-              })}
-            </CardGroup>
+        <CardGroup className="w-100 d-flex justify-content-center">
+          {data.map(function (item, index) {
+            return (
+              <Card key={index} style={view !== "small" ? 
+                    { width: "100%", height: "100px" } : { width: "100%" }}>
+                {/* <Card.Header style={{minHeight: "3rem", fontSize: "14px", display: "flex", justifyContent: "center", alignItems: "center"}}>{item.name}</Card.Header> */}
+                <Card.Body className="summary-count-blocks-card-body">
+                  <Card.Title className="summary-count-blocks-card-title" style={{color: setStatusLevel(item.status)}}>
+                    {item.value}
+                  </Card.Title>
+                  <Card.Subtitle className="summary-count-blocks-card-subtitle"
+                                //  style={{color: setStatusLevel(item.status)}}
+                                >
+                    {item.name}
+                  </Card.Subtitle>
+                </Card.Body>
+              </Card>
+            );
+          })}
+        </CardGroup>
       ) : null}
     </>
   );

@@ -1037,6 +1037,35 @@ a.nav-link {
 
 /* End Content Block Styling */
 
+/* Summary Count Blocks Card Styling */
+div.summary-count-blocks-card-body {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+div.summary-count-blocks-card-title {
+  font-size: 28px;
+}
+
+div.summary-count-blocks-card-subtitle {
+  font-size: 14px;
+  text-align: center;
+  color: rgba(61, 59, 54, .75);
+}
+
+@media only screen and (max-width: 1400px) {
+  div.summary-count-blocks-card-subtitle {
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    white-space: nowrap;
+    max-width: 80px;
+  }
+}
+/* End Number Card Styling */
+
 /* Icon Styles */
 .delete-icon:hover {
     color: #bb0000;
