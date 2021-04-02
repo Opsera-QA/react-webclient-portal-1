@@ -1040,7 +1040,6 @@ a.nav-link {
 /* Summary Count Blocks Card Styling */
 
 div.summary-count-blocks-card-body {
-  /* padding: .5rem; */
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -1060,12 +1059,6 @@ div.summary-count-blocks-status {
 
 div.summary-count-blocks-card-title {
   font-size: 2rem;
-  /* background: rgba(230, 229, 227, .5);
-  border-radius: 2px;
-  min-width: max-content;
-  padding: .5rem;
-  height: max-content;
-  text-align: center;*/
   margin-bottom: 0; 
 }
 
@@ -1082,9 +1075,6 @@ div.summary-count-blocks-card-subtitle > div {
   align-items: center;
   justify-content: center;
   width: 100%;
-  /* text-align: center; */
-  /* padding: 50% 0;
-  transform: translateY(-10%); */
 }
 
 div.summary-count-blocks-card-title,
@@ -1107,6 +1097,7 @@ div.summary-count-blocks-card-subtitle {
     padding: .75rem;
   }
 }
+
 /* End Summary Count Blocks Card Styling */
 
 /* Icon Styles */

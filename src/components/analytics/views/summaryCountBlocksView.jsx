@@ -56,21 +56,28 @@ function SummaryCountBlocksView({ data, view }) {
             return (
               <Card key={index} style={view !== "small" ? 
                     { width: "100%", height: "100px" } : { width: "100%" }}>
-                {/* <Card.Header style={{minHeight: "3rem", fontSize: "14px", display: "flex", justifyContent: "center", alignItems: "center"}}>{item.name}</Card.Header> */}
                 <Card.Body className="summary-count-blocks-card-body">
                   <div className="summary-count-blocks-status"
                        style={{backgroundColor: setStatusLevel(item.status)}}></div>
-                  <Card.Title className="summary-count-blocks-card-title" 
-                  // style={{color: setStatusLevel(item.status)}}
-                  >
+                  <Card.Title className="summary-count-blocks-card-title">
                     {item.value}
                   </Card.Title>
-                  <Card.Subtitle className="summary-count-blocks-card-subtitle"
-                                //  style={{color: setStatusLevel(item.status)}}
-                                >
+                  <Card.Subtitle className="summary-count-blocks-card-subtitle">
                     <div> {item.name} </div>
                   </Card.Subtitle>
+                    {item.info && (
+                      <Card.Text style={{ position: "absolute", right: "10px", bottom: "15px" }}>
+                        <OverlayTrigger trigger="click" rootClose placement="top" overlay={infoPopover(item)}>
+                          <FontAwesomeIcon
+                            icon={faEllipsisH}
+                            className="fa-pull-right pointer pr-1"
+                            onClick={() => document.body.click()}
+                          />
+                        </OverlayTrigger>
+                      </Card.Text>
+                    )}
                 </Card.Body>
+                {item.footer && <Card.Text className="w-100 text-muted mb-1">{item.footer}</Card.Text>}
               </Card>
             );
           })}
@@ -86,26 +93,3 @@ SummaryCountBlocksView.propTypes = {
 };
 
 export default SummaryCountBlocksView;
-
-  {/* <Card style={view !== "small" ? { width: "100%", height: "135px" } : { width: "100%" }}>
-                      <Card.Body>
-                        <Card.Title className="count-block-primary-text" style={{ fontSize: "25px" }}>
-                          {item.value}
-                        </Card.Title>
-                        <Card.Text className={"count-block-subtext mt-2 " + setStatusLevel(item.status)}>
-                          {item.name}
-                        </Card.Text>
-                        <Card.Text style={{ position: "absolute", right: "10px", bottom: "15px" }}>
-                          {item.info && (
-                            <OverlayTrigger trigger="click" rootClose placement="top" overlay={infoPopover(item)}>
-                              <FontAwesomeIcon
-                                icon={faEllipsisH}
-                                className="fa-pull-right pointer pr-1"
-                                onClick={() => document.body.click()}
-                              />
-                            </OverlayTrigger>
-                          )}
-                        </Card.Text>
-                      </Card.Body>
-                      {item.footer && <Card.Text className="w-100 text-muted mb-1">{item.footer}</Card.Text>}
-                    </Card> */}
