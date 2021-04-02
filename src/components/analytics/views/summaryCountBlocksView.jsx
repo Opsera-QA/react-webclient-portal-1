@@ -51,7 +51,7 @@ function SummaryCountBlocksView({ data, view }) {
                     {/* <Card.Header style={{minHeight: "3rem", fontSize: "14px", display: "flex", justifyContent: "center", alignItems: "center"}}>{item.name}</Card.Header> */}
                     <Card.Body style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
                       <Card.Title style={{fontSize: "2rem"}}>{item.value}</Card.Title>
-                      <Card.Subtitle style={{fontSize: "10px", display: "flex", justifyContent: "center", alignItems: "center", textAlign: "center"}}>{item.name}</Card.Subtitle>
+                      <Card.Subtitle style={{fontSize: "12px", textAlign: "center"}} className={setStatusLevel(item.status)}>{item.name}</Card.Subtitle>
                     </Card.Body>
                   </Card>
           
