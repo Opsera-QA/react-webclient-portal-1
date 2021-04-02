@@ -205,4 +205,15 @@ toolsActions.getToolCounts = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
+toolsActions.checkSFDXToolConnection = async (getAccessToken, toolDataDto) => {
+  console.log(toolDataDto);
+  const postBody = {
+    "jenkinsToolId": toolDataDto.getData("configuration").jenkinsToolId,
+    "sfdcToolId": toolDataDto.getData("_id"),
+    "tool": "sfdc"
+  };
+  const apiUrl = `/tools/sfdc/check-connectivity/`;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
 export default toolsActions;

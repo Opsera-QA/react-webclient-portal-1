@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import {Row} from "react-bootstrap";
 import modelHelpers from "components/common/model/modelHelpers";
+import { Button } from "react-bootstrap";
 import sfdcConnectionMetadata from "./sfdc-connection-metadata";
 import ToolConfigurationEditorPanelContainer
   from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
@@ -13,6 +14,8 @@ import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import SFDCBuildTypeSelectInput  from  "components/common/list_of_values_input/workflow/pipelines/SFDCBuildTypeSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import PipelineToolInput from "components/common/list_of_values_input/workflow/pipelines/PipelineToolInput";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner, faPlug } from "@fortawesome/pro-light-svg-icons";
 
 function SfdcToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -24,6 +27,21 @@ function SfdcToolConfiguration({ toolData }) {
 
   const loadData = async () => {
     setSfdcConfigurationDto(modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), sfdcConnectionMetadata));
+  };
+
+  const testConnection = async() =>{
+    let response;
+    
+    if (sfdcConfigurationDto != null) {
+      response = await toolsActions.checkSFDXToolConnection(getAccessToken, toolData);
+    }
+
+    if (response && response.data != null && response.data.status === 200) {
+      console.log("open modal", response);
+    }
+    else {
+      console.log("ERR"); 
+    }
   };
 
   const getDynamicFields = () => {
@@ -38,6 +56,11 @@ function SfdcToolConfiguration({ toolData }) {
             dataObject={sfdcConfigurationDto}
             setDataObject={setSfdcConfigurationDto}
           />
+          <div className="p-2">
+            <Button size="sm" variant={"secondary"} disabled={!toolData.getData("_id") || sfdcConfigurationDto.getData("jenkinsToolId").length < 1} onClick={() => testConnection()}>
+            <FontAwesomeIcon icon={faPlug} className="mr-2" fixedWidth /> Check SFDX Connection
+            </Button>
+          </div>
         </>
       );
     }
@@ -46,6 +69,8 @@ function SfdcToolConfiguration({ toolData }) {
   if (sfdcConfigurationDto == null) {
     return <></>;
   }
+
+  console.log(sfdcConfigurationDto);
 
   const saveSfdcToolConfiguration = async () => {
     let newConfiguration = sfdcConfigurationDto.getPersistData();
