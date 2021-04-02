@@ -327,7 +327,7 @@ function SFDCConfiguration({
               </Form.Group>
             )}
 
-            {formData.jobType === "SFDC BACK UP" && 
+            {/* {formData.jobType === "SFDC BACK UP" && 
                <Form.Group controlId="formBasicCheckboxIsFullBackup" className="mt-4 ml-1">
                <Form.Check
                  type="checkbox"
@@ -341,7 +341,7 @@ function SFDCConfiguration({
                  }
                />
              </Form.Group>
-            }
+            } */}
             
             {formData.jobType === "SFDC UNIT TESTING" && formData.sfdcToolId.length > 0 && 
             <>
