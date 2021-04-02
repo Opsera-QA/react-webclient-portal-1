@@ -29,15 +29,17 @@ export const assignBooleanColors = data => {
     data.sort((a, b) => a.id > b.id ? 1 : -1);
   }
 
-  data.forEach(data => {
-    if (data.id) {
-      data.color = (data.id === "Success" || data.Successful) ? mainColor : failColor;
-    } else {
-      data.Success_color = mainColor;
-      data.Failed_color = failColor;
-    }
-  });
-  return data.color;
+  if (data) {
+    data.forEach(data => {
+      if (data.id) {
+        data.color = (data.id === "Success" || data.Successful) ? mainColor : failColor;
+      } else {
+        data.Success_color = mainColor;
+        data.Failed_color = failColor;
+      }
+    });
+    return data.color;
+  }
 };
 
 // The rest would depend on the structure of data for the chart
@@ -146,9 +148,9 @@ export const getTaskColor = ({ id, data }) => data[`${id}_color`];
 
 // ----- Start of helper functions for legend -----
 
-export const shortenPieChartLegend = datas => datas.forEach(data => data.id.length > 10 ? data.label = data.id.slice(0, 10) + "..." : data.id);
+export const shortenPieChartLegend = datas => datas?.forEach(data => data.id.length > 10 ? data.label = data.id.slice(0, 10) + "..." : data.id);
 export const shortenLegend = (datas, originalIdHolder={}) => {
-  datas.forEach(data => {
+  datas?.forEach(data => {
     const slicedId = data.id.slice(0, 18) + "...";
     originalIdHolder[slicedId] = data.id;
     data.id.length > 18 ? data.id = slicedId : data.id;
@@ -156,12 +158,12 @@ export const shortenLegend = (datas, originalIdHolder={}) => {
   return originalIdHolder;
 };
 
-export const capitalizeLegend = (data, keys) => data.forEach(d => {
+export const capitalizeLegend = (data, keys) => data?.forEach(d => {
   keys.forEach(key => d[capitalizeFirstLetter(key.split("_").join(" "))] = d[key]);
 });
 
-export const spaceOutTimeTakenLegend = data => data.forEach(d => d["Time Taken"] = d["TimeTaken"]);
-export const spaceOutMergeRequestTimeTakenLegend = data => data.forEach(d => d["Merge Request Time Taken"] = d["MergeRequestTimeTaken"]);
+export const spaceOutTimeTakenLegend = data => data?.forEach(d => d["Time Taken"] = d["TimeTaken"]);
+export const spaceOutMergeRequestTimeTakenLegend = data => data?.forEach(d => d["Merge Request Time Taken"] = d["MergeRequestTimeTaken"]);
 
 // ----- End of helper functions for legend -----
 
@@ -223,11 +225,11 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
       "direction": "column",
       "justify": false,
       "translateX": 0,
-      "translateY": -40,
+      "translateY": -50,
       "itemsSpacing": 0,
       "itemDirection": "right-to-left",
       "itemWidth": 80,
-      "itemHeight": 10,
+      "itemHeight": 50,
       "itemOpacity": isLegendHidden ? 0 : 1,
       "symbolSize": 10,
       "symbolShape": "square",

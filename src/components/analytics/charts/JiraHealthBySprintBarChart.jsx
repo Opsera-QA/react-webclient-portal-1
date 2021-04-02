@@ -94,7 +94,7 @@ function JiraHealthBySprintBarChart( { persona, date } ) {
             <ResponsiveBar
               data={data ? data.data : []}
               {...defaultConfig("Project", "Number of Issues", 
-                                false, false, "cutoffString", "wholeNumbers", false, true)}
+                                false, false, "cutoffString", "wholeNumbers", false)}
               {...adjustBarWidth(data ? data.data : [])}
               onClick={() => setShowModal(true)}
               keys={["To Do", "In Development", "In Progress", "Peer Review", "Testing", "Done", "Selected for Development", "Production Deployment"]}

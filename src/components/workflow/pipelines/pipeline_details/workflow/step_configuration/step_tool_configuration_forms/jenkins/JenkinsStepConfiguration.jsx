@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Form, OverlayTrigger, Popover, Row, Col } from "react-bootstrap";
+import { Button, Form, OverlayTrigger, Popover, Row, Col, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faExclamationCircle,
@@ -88,7 +88,8 @@ const INITIAL_DATA = {
   agentLabels : "",
   autoScaleEnable: "",
   dockerBuildPathJson: {},
-  dockerSecretKeys: []
+  dockerSecretKeys: [],
+  isManualRollBackBranch: false
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -145,6 +146,12 @@ function JenkinsStepConfiguration({
   if (stepArrayIndex > 0) {
     step = plan[stepArrayIndex];
   }
+  
+  const renderTooltip = (message, props) => (
+    <Tooltip id="button-tooltip" style={{"zIndex": 1500}} {...props}>
+      {message.length > 0 ? message : "No message found."}
+    </Tooltip>
+  );
 
   useEffect(() => {
     if (plan && stepId) {
@@ -1190,17 +1197,39 @@ function JenkinsStepConfiguration({
 
               
               {formData.jobType === "SFDC BACK UP" && (
-                  <Form.Group controlId="branchName">
-                    <Form.Label>Rollback Branch Name*</Form.Label>
-                    <Form.Control
-                      maxLength="50"
-                      type="text"
-                      placeholder=""
-                      value={formData.rollbackBranchName || ""}
-                      onChange={(e) => setFormData({ ...formData, rollbackBranchName: e.target.value })}
-                    />
-                    <Form.Text className="text-muted">An Orphan branch will be created with only the back up specific files.</Form.Text>
-                  </Form.Group>
+                <>
+                  <OverlayTrigger
+                    placement="left"
+                    overlay={renderTooltip("Check this option if back up should be pushed to a branch name of your choice.")}
+                    >
+                    <Form.Group controlId="formBasicCheckboxIsManualRollBackBranch" className="mt-4 ml-1">
+                        <Form.Check
+                          type="checkbox"
+                          label="Configure Branch Name"
+                          checked={formData.isManualRollBackBranch ? formData.isManualRollBackBranch : false}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              isManualRollBackBranch: e.target.checked,
+                            })
+                          }
+                        /> 
+                    </Form.Group>
+                  </OverlayTrigger>
+                  {formData.isManualRollBackBranch &&
+                    <Form.Group controlId="branchName">
+                      <Form.Label>Rollback Branch Name*</Form.Label>
+                      <Form.Control
+                        maxLength="50"
+                        type="text"
+                        placeholder=""
+                        value={formData.rollbackBranchName || ""}
+                        onChange={(e) => setFormData({ ...formData, rollbackBranchName: e.target.value })}
+                      />
+                      <Form.Text className="text-muted">An Orphan branch will be created with only the back up specific files.</Form.Text>
+                    </Form.Group>
+                  }
+                </>
                 )}
                 
               {formData.jobType === "SFDC PUSH ARTIFACTS" && (

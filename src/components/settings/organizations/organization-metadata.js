@@ -36,7 +36,7 @@ export const organizationMetadata = {
       id: "owner_name",
     },
     {
-      label: "Status",
+      label: "Show in Application",
       id: "active",
     },
     {

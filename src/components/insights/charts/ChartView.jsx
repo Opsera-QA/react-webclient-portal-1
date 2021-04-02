@@ -12,6 +12,7 @@ import OpseraRecentCDStatusTable from "components/insights/charts/opsera/table/r
 import OpseraPipelineDeploymentFrequencyStats from "./opsera/OpseraPipelineDeploymentFrequencyStats";
 import OpseraBuildDurationByStageBarChart from "./opsera/bar_chart/duration_by_stage/OpseraBuildDurationByStageBarChart";
 import OpseraMeanTimeToRestoreBarChart from "./opsera/bar_chart/mean_time_to_restore/OpseraMeanTimeToRestoreBarChart";
+import OpseraNexusPipelineStepInfo from "components/insights/charts/opsera/table/nexus_pipeline_step_info/OpseraNexusPipelineStepInfo";
 
 // Jenkins KPIs
 import JenkinsBuildsByUserBarChart from "./jenkins/bar_chart/builds_by_user/JenkinsBuildsByUserBarChart";
@@ -233,6 +234,16 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "opsera-mean-time-to-restore":
         return (
           <OpseraMeanTimeToRestoreBarChart
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
+      case "opsera-nexus-pipeline-step-info":
+        return (
+          <OpseraNexusPipelineStepInfo
             kpiConfiguration={kpiConfig}
             setKpiConfiguration={setKpiConfig}
             dashboardData={dashboardData}
