@@ -44,17 +44,33 @@ function SummaryCountBlocksView({ data, view }) {
   return (
     <>
       {data !== undefined && data.length > 0 ? (
-        <div className="w-100">
-          <div className="d-none d-sm-block justify-content-center">
             <CardGroup className="w-100 d-flex justify-content-center">
               {data.map(function (item, index) {
                 return (
-                  <div
-                    key={index}
-                    className="count-block-card-view ml-1 mr-1 w-50 text-center align-self-center"
-                    style={view !== "small" ? { maxWidth: "150px", height: "150px" } : { maxWidth: "150px" }}
-                  >
-                    <Card style={view !== "small" ? { width: "100%", height: "135px" } : { width: "100%" }}>
+                  <Card key={index} style={view !== "small" ? { width: "100%", height: "100px" } : { width: "100%" }}>
+                    {/* <Card.Header style={{minHeight: "3rem", fontSize: "14px", display: "flex", justifyContent: "center", alignItems: "center"}}>{item.name}</Card.Header> */}
+                    <Card.Body style={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+                      <Card.Title style={{fontSize: "2rem"}}>{item.value}</Card.Title>
+                      <Card.Subtitle style={{fontSize: "10px", display: "flex", justifyContent: "center", alignItems: "center", textAlign: "center"}}>{item.name}</Card.Subtitle>
+                    </Card.Body>
+                  </Card>
+          
+                );
+              })}
+            </CardGroup>
+      ) : null}
+    </>
+  );
+}
+
+SummaryCountBlocksView.propTypes = {
+  data: PropTypes.array,
+  view: PropTypes.string,
+};
+
+export default SummaryCountBlocksView;
+
+  {/* <Card style={view !== "small" ? { width: "100%", height: "135px" } : { width: "100%" }}>
                       <Card.Body>
                         <Card.Title className="count-block-primary-text" style={{ fontSize: "25px" }}>
                           {item.value}
@@ -75,21 +91,4 @@ function SummaryCountBlocksView({ data, view }) {
                         </Card.Text>
                       </Card.Body>
                       {item.footer && <Card.Text className="w-100 text-muted mb-1">{item.footer}</Card.Text>}
-                    </Card>
-                  </div>
-                );
-              })}
-            </CardGroup>
-          </div>
-        </div>
-      ) : null}
-    </>
-  );
-}
-
-SummaryCountBlocksView.propTypes = {
-  data: PropTypes.array,
-  view: PropTypes.string,
-};
-
-export default SummaryCountBlocksView;
+                    </Card> */}
