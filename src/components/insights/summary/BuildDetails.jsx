@@ -1,21 +1,22 @@
 import React, {useState, useEffect, useContext, useMemo, useRef} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import BuildDetailsTableModal from "components/common/modal/BuildDetailsTableModal";
+import ModalLogs from "components/common/modal/modalLogs";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import { getLimitedTableTextColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
+import { getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
-import ProjectDetailsMetadata from "./project-details-metadata";
+import {format} from "date-fns";
+import BuildDetailsMetadata from "./build-details-metadata";
 
-function ProjectDetails() {
-  const fields = ProjectDetailsMetadata.fields;
+function BuildDetails(data) {
+  const fields = BuildDetailsMetadata.fields;
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -52,12 +53,13 @@ function ProjectDetails() {
   const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "summaryProjectDetails", null, null, filterDto);
-      let dataObject = response?.data ? response?.data?.data[0] : [];
-      if (isMounted?.current === true && dataObject) {
+      if (isMounted?.current === true && data) {
+        let project = [{"type": "project", "value": data?.data?.project}];
+        const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "summaryBuildDetails", null, project, filterDto);
+        let dataObject = response?.data ? response?.data?.data[0] : [];
         setMetrics(dataObject[0]?.data);
         let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", dataObject[0]?.count[0]?.count);
+        newFilterDto.setData("totalCount", data?.data?.executed);
         setTableFilterDto({ ...newFilterDto });
       }
     }
@@ -77,10 +79,10 @@ function ProjectDetails() {
   const noDataMessage = "No Data is available for this chart at this time";
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "project")),
-      getTableTextColumn(getField(fields, "executed")),
-      getTableTextColumn(getField(fields, "passed")),
-      getTableTextColumn(getField(fields, "failed")),
+      getTableTextColumn(getField(fields, "pipeline_name")),
+      getTableTextColumn(getField(fields, "run_count")),
+      getTableTextColumn(getField(fields, "status")),
+      getTableDateTimeColumn(getField(fields, "timestamp")),
     ],
     []
   );
@@ -103,10 +105,11 @@ function ProjectDetails() {
         scrollOnLoad={false}
         onRowSelect={onRowSelect}
       />
-      <BuildDetailsTableModal
-        header="Build Details"
+      <ModalLogs
+        header="Project Details"
         size="lg"
-        tableMessage={modalData}
+        jsonMessage={modalData}
+        dataType="bar"
         show={showModal}
         setParentVisibility={setShowModal}
       />
@@ -123,7 +126,7 @@ function ProjectDetails() {
   );
 }
 
-ProjectDetails.propTypes = {
+BuildDetails.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -131,4 +134,4 @@ ProjectDetails.propTypes = {
   setKpis: PropTypes.func
 };
 
-export default ProjectDetails;
+export default BuildDetails;

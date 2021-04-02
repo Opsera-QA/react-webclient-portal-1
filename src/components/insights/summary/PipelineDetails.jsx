@@ -1,22 +1,30 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, {useState, useEffect, useContext, useMemo, useRef} from "react";
 import PropTypes from "prop-types";
-import { Container, Row, Col, Popover, OverlayTrigger } from "react-bootstrap";
-import ModalLogs from "components/common/modal/modalLogs";
+import { Container, Row, Col } from "react-bootstrap";
+import PipelineDetailsTableModal from "components/common/modal/PipelineDetailsTableModal";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
-
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSpinner} from "@fortawesome/pro-light-svg-icons";
+import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
+import { getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
+import { getField } from "components/common/metadata/metadata-helpers";
+import Model from "core/data_model/model";
+import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 function PipelineDetails() {
+  const fields = BuildDetailsMetadata.fields;
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [tableFilterDto, setTableFilterDto] = useState(
+    new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
+  );
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -39,10 +47,10 @@ function PipelineDetails() {
     };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "summaryPipelineDetails");
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "summaryPipelineDetails", null, null, filterDto);
       let dataObject = response?.data ? response?.data?.data[0] : [];
 
       if (isMounted?.current === true && dataObject) {
@@ -62,54 +70,61 @@ function PipelineDetails() {
     }
   };
 
-  const getChartBody = () => {
-    // if (!Array.isArray(metrics) || metrics.length === 0) {
-    //   return null;
-    // }
+  const noDataMessage = "No Data is available for this chart at this time";
+  const columns = useMemo(
+    () => [
+      getTableTextColumn(getField(fields, "pipeline_name")),
+      getTableTextColumn(getField(fields, "run_count")),
+      getTableTextColumn(getField(fields, "status")),
+      getTableDateTimeColumn(getField(fields, "timestamp")),
+    ],
+    []
+  );
 
-    // const infoPopover = (item) => {
-    //   return (
-    //     <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
-    //       <Popover.Content>
-    //         <div className="text-primary mb-2">{item._id}</div>
-    //       </Popover.Content>
-    //     </Popover>
-    //   );
-    // };
+  const onSelect = (data, filterDto = tableFilterDto) => {
+    let newFilterDto = filterDto;
+    newFilterDto.setData("totalCount", data?.count[0]?.count);
+    setTableFilterDto({ ...newFilterDto });
+    setModalData(data);
+    setShowModal(true);
+  };
+
+  const getChartBody = () => {
     return (
+    <div>
       <div className="new-chart mb-3" style={{height: "300px"}}>
         <Container>
           <Row className="p-3">
             <Col><div className="metric-box p-3 text-center">
-              <div className="box-metric">
+              <div className="box-metric" onClick={() => {onSelect(metrics[0]?.totalPipelines[0]);}}>
                 <div>{metrics[0]?.totalPipelines[0]?.count[0]?.count}</div>
               </div>
               <div className="w-100 text-muted mb-1">Total Number of Pipelines Executed</div>
             </div></Col>
 
             <Col><div className="metric-box p-3 text-center">
-              <div className="box-metric">
+              <div className="box-metric" onClick={() => {onSelect(metrics[0]?.pipelinesPassedWithQualitySecurity[0]);}}>
                 <div className="green">{metrics[0]?.pipelinesPassedWithQualitySecurity[0]?.count[0]?.count}</div>
               </div>
               <div className="w-100 text-muted mb-1">Successful Pipelines (Security and Quality)</div>
             </div></Col>
 
             <Col><div className="metric-box p-3 text-center">
-              <div className="box-metric">
+              <div className="box-metric" onClick={() => {onSelect(metrics[0]?.pipelinesFailedSecurity[0]);}}>
                 <div className="red">{metrics[0]?.pipelinesFailedSecurity[0]?.count[0]?.count}</div>
               </div>
               <div className="w-100 text-muted mb-1">Pipelines Failing Security Step</div>
             </div></Col>
 
             <Col><div className="metric-box p-3 text-center">
-              <div className="box-metric">
+              <div className="box-metric" onClick={() => {onSelect(metrics[0]?.pipelinesFailedQuality[0]);}}>
                 <div className="red">{metrics[0]?.pipelinesFailedQuality[0]?.count[0]?.count}</div>
               </div>
               <div className="w-100 text-muted mb-1">Pipelines Failing Quality Step</div>
             </div></Col>
 
             <Col><div className="metric-box p-3 text-center">
-              <div className="box-metric">
+              <div className="box-metric" onClick={() => {onSelect(metrics[0]?.pipelinesFailedDeployment[0]);}}>
                 <div className="red">{metrics[0]?.pipelinesFailedDeployment[0]?.count[0]?.count}</div>
               </div>
               <div className="w-100 text-muted mb-1">Pipelines Failing Deployment Step</div>
@@ -118,9 +133,25 @@ function PipelineDetails() {
           </Row>
         </Container>
       </div>
-
+      <PipelineDetailsTableModal
+        header="Pipeline Details"
+        size="lg"
+        tableMessage={modalData}
+        show={showModal}
+        setParentVisibility={setShowModal}
+        loadData={loadData}
+        columns={columns}
+        tableFilterDto={tableFilterDto}
+        setTableFilterDto={setTableFilterDto}
+        noDataMessage={noDataMessage}
+      />
+      </div>
     );
   };
+
+//   if (isLoading) {
+//     return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading</span>);
+//   }
 
   return (
     getChartBody()
