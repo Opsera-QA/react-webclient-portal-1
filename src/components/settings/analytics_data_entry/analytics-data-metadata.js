@@ -5,7 +5,7 @@ export const analyticsDataMetadata = {
     return `/settings/analytics-data-entries/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `Analytics Data Entry [${record.getData("name")}]`;
+    return `Analytics Data Entry [${record.getData("kpi_identifier")}]`;
   },
   fields: [
     {
