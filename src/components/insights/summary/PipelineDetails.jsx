@@ -83,7 +83,7 @@ function PipelineDetails() {
 
   const onSelect = (data, filterDto = tableFilterDto) => {
     let newFilterDto = filterDto;
-    newFilterDto.setData("totalCount", data?.count[0]?.count);
+    newFilterDto.setData("totalCount", data[0]?.count[0]?.count);
     setTableFilterDto({ ...newFilterDto });
     setModalData(data);
     setShowModal(true);
@@ -96,35 +96,35 @@ function PipelineDetails() {
         <Container>
           <Row className="p-3">
             <Col><div className="metric-box p-3 text-center">
-              <div className="box-metric" onClick={() => {onSelect(metrics[0]?.totalPipelines[0]);}}>
+              <div className="box-metric">
                 <div>{metrics[0]?.totalPipelines[0]?.count[0]?.count}</div>
               </div>
               <div className="w-100 text-muted mb-1">Total Number of Pipelines Executed</div>
             </div></Col>
 
             <Col><div className="metric-box p-3 text-center">
-              <div className="box-metric" onClick={() => {onSelect(metrics[0]?.pipelinesPassedWithQualitySecurity[0]);}}>
+              <div className="box-metric">
                 <div className="green">{metrics[0]?.pipelinesPassedWithQualitySecurity[0]?.count[0]?.count}</div>
               </div>
               <div className="w-100 text-muted mb-1">Successful Pipelines (Security and Quality)</div>
             </div></Col>
 
             <Col><div className="metric-box p-3 text-center">
-              <div className="box-metric" onClick={() => {onSelect(metrics[0]?.pipelinesFailedSecurity[0]);}}>
+              <div className="box-metric">
                 <div className="red">{metrics[0]?.pipelinesFailedSecurity[0]?.count[0]?.count}</div>
               </div>
               <div className="w-100 text-muted mb-1">Pipelines Failing Security Step</div>
             </div></Col>
 
             <Col><div className="metric-box p-3 text-center">
-              <div className="box-metric" onClick={() => {onSelect(metrics[0]?.pipelinesFailedQuality[0]);}}>
+              <div className="box-metric">
                 <div className="red">{metrics[0]?.pipelinesFailedQuality[0]?.count[0]?.count}</div>
               </div>
               <div className="w-100 text-muted mb-1">Pipelines Failing Quality Step</div>
             </div></Col>
 
             <Col><div className="metric-box p-3 text-center">
-              <div className="box-metric" onClick={() => {onSelect(metrics[0]?.pipelinesFailedDeployment[0]);}}>
+              <div className="box-metric">
                 <div className="red">{metrics[0]?.pipelinesFailedDeployment[0]?.count[0]?.count}</div>
               </div>
               <div className="w-100 text-muted mb-1">Pipelines Failing Deployment Step</div>

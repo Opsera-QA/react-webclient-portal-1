@@ -298,7 +298,7 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/insights/dashboards" exact component={Insights}/>
                   <SecureRoute path="/insights/dashboards/:id/:tab?" exact component={DashboardDetailView}/>
                   <SecureRoute path="/logs" exact component={Logs}/>
-                  <SecureRoute path="/blueprint" exact component={OPBlueprintMain}/>
+                  <SecureRoute path="/blueprint/:id?/:run?" exact component={OPBlueprintMain}/>
                   <SecureRoute path="/update" component={Update}/>
 
                   {/* Reports */}

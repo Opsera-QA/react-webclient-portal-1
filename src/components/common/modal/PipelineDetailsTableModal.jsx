@@ -16,7 +16,7 @@ function BuildDetailsTableModal({ header, size, tableMessage, show, setParentVis
     setShowModal(false);
     setParentVisibility(false);
   };
-
+  console.log(tableMessage);
   return (
     <>
       <Modal show={showModal} size={size} onHide={() => handleClose()}>

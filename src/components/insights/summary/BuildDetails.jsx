@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useContext, useMemo, useRef} from "react";
+import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import ModalLogs from "components/common/modal/modalLogs";
@@ -16,18 +17,17 @@ import {format} from "date-fns";
 import BuildDetailsMetadata from "./build-details-metadata";
 
 function BuildDetails(data) {
+  const history = useHistory();
   const fields = BuildDetailsMetadata.fields;
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
     new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
   );
-  const [modalData, setModalData] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -88,8 +88,7 @@ function BuildDetails(data) {
   );
 
   const onRowSelect = (rowData) => {
-    setModalData(rowData.original);
-    setShowModal(true);
+    history.push(`/blueprint/${rowData.original._id.id}/${rowData.original.run_count}`);
   };
 
   const getChartBody = () => {
@@ -104,14 +103,6 @@ function BuildDetails(data) {
         loadData={loadData}
         scrollOnLoad={false}
         onRowSelect={onRowSelect}
-      />
-      <ModalLogs
-        header="Project Details"
-        size="lg"
-        jsonMessage={modalData}
-        dataType="bar"
-        show={showModal}
-        setParentVisibility={setShowModal}
       />
       </div>
     );
