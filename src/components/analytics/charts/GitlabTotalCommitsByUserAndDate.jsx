@@ -89,8 +89,7 @@ function GitlabTotalCommitsByUserAndDate({ persona, date }) {
           </div>
         ) : (
           <ResponsiveHeatMap
-            {...defaultConfig("Date", "", 
-                        true, true, "yearMonthDate", "cutoffString")}
+            {...defaultConfig("Date", "", true, true, "yearMonthDate", "cutoffString")}
             data={data ? data.data : []}
             keys={users}
             indexBy="date"

@@ -21,7 +21,7 @@ function StepConfigurationEnvironmentTagInput({ dataObject, setDataObject, class
       }
     }
 
-    return "";
+    return null;
   };
 
   return (
