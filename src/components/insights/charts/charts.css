@@ -35,12 +35,13 @@
 
 .chart svg > g > g:last-child > g:nth-child(2),
 .new-chart svg > g > g:last-child > g:nth-child(2) {
-  transform: translate(0, 10px);
+  transform: translate(0, 12px);
+  /* transform: translate(0, 10px); */
 }
 
 .chart svg > g > g:last-child > g:nth-child(3),
 .new-chart svg > g > g:last-child > g:nth-child(3) {
-  transform: translate(0, 20px);
+  transform: translate(0, 24px);
 }
 
 .chart svg > g > g:last-child > g:nth-child(4),
@@ -50,12 +51,12 @@
 
 .chart svg > g > g:last-child > g:nth-child(5),
 .new-chart svg > g > g:last-child > g:nth-child(5) {
-  transform: translate(-8rem, 10px);
+  transform: translate(-8rem, 12px);
 }
 
 .chart svg > g > g:last-child > g:nth-child(6),
 .new-chart svg > g > g:last-child > g:nth-child(6) {
-  transform: translate(-8rem, 20px);
+  transform: translate(-8rem, 24px);
 }
 
 .chart svg > g > g:last-child > g:nth-child(7),
@@ -65,12 +66,12 @@
 
 .chart svg > g > g:last-child > g:nth-child(8),
 .new-chart svg > g > g:last-child > g:nth-child(8) {
-  transform: translate(-16rem, 10px);
+  transform: translate(-16rem, 12px);
 }
 
 .chart svg > g > g:last-child > g:nth-child(9),
 .new-chart svg > g > g:last-child > g:nth-child(9) {
-  transform: translate(-16rem, 20px);
+  transform: translate(-16rem, 24px);
 }
 
 .chart svg > g > g:last-child > g:nth-child(10),
