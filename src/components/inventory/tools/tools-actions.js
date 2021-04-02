@@ -205,19 +205,14 @@ toolsActions.getToolCounts = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-toolsActions.getToolConnectionLog = async (getAccessToken, toolDataDto) => {
-  const apiUrl = `/registry/log/${toolDataDto.getData("_id")}?page=1&size=10`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
-};
-
-toolsActions.checkSFDXToolConnection = async (getAccessToken, toolDataDto, selectedJenkinsId) => {
-  // console.log(toolDataDto);
+toolsActions.checkSFDXToolConnection = async (getAccessToken, toolDataDto) => {
+  console.log(toolDataDto);
   const postBody = {
-    "jenkinsToolId": selectedJenkinsId,
+    "jenkinsToolId": toolDataDto.getData("configuration").jenkinsToolId,
     "sfdcToolId": toolDataDto.getData("_id"),
     "tool": "sfdc"
   };
-  const apiUrl = `/tools/sfdc/check-connectivity`;
+  const apiUrl = `/tools/sfdc/check-connectivity/`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
