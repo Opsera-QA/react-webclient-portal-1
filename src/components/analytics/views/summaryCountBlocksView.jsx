@@ -27,7 +27,7 @@ function SummaryCountBlocksView({ data, view }) {
   //   return null;
   // };
   const setStatusLevel = (status) => {
-    if (status === "danger") return "#ef5350";
+    if (status === "danger") return "#E57373";
     if (status === "warning") return "#F1AD0F";
     if (status === "success") return "#00897b";
 
@@ -58,7 +58,11 @@ function SummaryCountBlocksView({ data, view }) {
                     { width: "100%", height: "100px" } : { width: "100%" }}>
                 {/* <Card.Header style={{minHeight: "3rem", fontSize: "14px", display: "flex", justifyContent: "center", alignItems: "center"}}>{item.name}</Card.Header> */}
                 <Card.Body className="summary-count-blocks-card-body">
-                  <Card.Title className="summary-count-blocks-card-title" style={{color: setStatusLevel(item.status)}}>
+                  <div className="summary-count-blocks-status"
+                       style={{backgroundColor: setStatusLevel(item.status)}}></div>
+                  <Card.Title className="summary-count-blocks-card-title" 
+                  // style={{color: setStatusLevel(item.status)}}
+                  >
                     {item.value}
                   </Card.Title>
                   <Card.Subtitle className="summary-count-blocks-card-subtitle"
