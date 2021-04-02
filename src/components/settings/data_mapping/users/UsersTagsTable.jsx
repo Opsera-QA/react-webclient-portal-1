@@ -61,6 +61,7 @@ function UsersTagTable({ data, loadData, isLoading, isMounted }) {
       metadata={usersTagsMetadata}
       titleIcon={faTags}
       title={"User Tags"}
+      type={"User Tag"}
       className={"px-2 pb-2"}
     />
   );

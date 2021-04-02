@@ -62,6 +62,7 @@ function ProjectsTagTable({ data, loadData, isLoading, isMounted }) {
       metadata={projectTagsMetadata}
       titleIcon={faTags}
       title={"Project Tags"}
+      type={"Project Tag"}
       className={"px-2 pb-2"}
     />
   );
