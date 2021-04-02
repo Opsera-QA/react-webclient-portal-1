@@ -6,7 +6,7 @@ import ModalLogs from "components/common/modal/modalLogs";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import { getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
+import { getTableDateTimeColumn, getTableTextColumn, getChartPipelineStatusColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
@@ -81,7 +81,10 @@ function BuildDetails(data) {
     () => [
       getTableTextColumn(getField(fields, "pipeline_name")),
       getTableTextColumn(getField(fields, "run_count")),
-      getTableTextColumn(getField(fields, "status")),
+      getTableTextColumn(getField(fields, "owner")),
+      getChartPipelineStatusColumn(getField(fields, "status")),
+      getChartPipelineStatusColumn(getField(fields, "security_status")),
+      getChartPipelineStatusColumn(getField(fields, "deployment_status")),
       getTableDateTimeColumn(getField(fields, "timestamp")),
     ],
     []

@@ -11,8 +11,20 @@ const BuildDetailsMetadata = {
         id: "run_count",
       },
       {
+        label: "Started By",
+        id: "owner",
+      },
+      {
         label: "Status",
         id: "status",
+      },
+      {
+        label: "Security Status",
+        id: "security_status",
+      },
+      {
+        label: "Deployment Status",
+        id: "deployment_status",
       },
       {
         label: "Timestamp",
