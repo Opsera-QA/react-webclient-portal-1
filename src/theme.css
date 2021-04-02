@@ -1038,6 +1038,7 @@ a.nav-link {
 /* End Content Block Styling */
 
 /* Summary Count Blocks Card Styling */
+
 div.summary-count-blocks-card-body {
   /* padding: .5rem; */
   padding: 0;
@@ -1075,8 +1076,15 @@ div.summary-count-blocks-card-subtitle {
   background: rgba(230, 229, 227, .5);
 }
 
-div.summary-count-blocks-card-subtitle > p {
+div.summary-count-blocks-card-subtitle > div {
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  /* text-align: center; */
+  /* padding: 50% 0;
+  transform: translateY(-10%); */
 }
 
 div.summary-count-blocks-card-title,
@@ -1090,10 +1098,13 @@ div.summary-count-blocks-card-subtitle {
 }
 
 @media only screen and (max-width: 1200px) {
-  div.summary-count-blocks-card-subtitle {
+  div.summary-count-blocks-card-subtitle > div {
+    width: 95%;
     overflow: hidden; 
     text-overflow: ellipsis; 
     white-space: nowrap;
+    display: block;
+    padding: .75rem;
   }
 }
 /* End Summary Count Blocks Card Styling */

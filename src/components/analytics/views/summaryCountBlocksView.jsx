@@ -51,7 +51,7 @@ function SummaryCountBlocksView({ data, view }) {
   return (
     <>
       {data !== undefined && data.length > 0 ? (
-        <CardGroup className="w-100 d-flex justify-content-center">
+        <CardGroup className="w-100 p-2 d-flex justify-content-center">
           {data.map(function (item, index) {
             return (
               <Card key={index} style={view !== "small" ? 
@@ -68,7 +68,7 @@ function SummaryCountBlocksView({ data, view }) {
                   <Card.Subtitle className="summary-count-blocks-card-subtitle"
                                 //  style={{color: setStatusLevel(item.status)}}
                                 >
-                    {item.name}
+                    <div> {item.name} </div>
                   </Card.Subtitle>
                 </Card.Body>
               </Card>
