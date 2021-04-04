@@ -111,6 +111,7 @@ function ProjectDetails({dashboardData, setDashboardData}) {
         show={showModal}
         setParentVisibility={setShowModal}
         dashboardData={dashboardData}
+        isLoading={isLoading}
       />
       </div>
     );

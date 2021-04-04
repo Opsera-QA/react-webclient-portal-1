@@ -93,12 +93,11 @@ function TotalPipelinesExecuted({dashboardData}) {
   };
 
   const getChartBody = () => {
-    if (isLoading) {return (<div className="m-3" />);}
     return (
     <div>
             <div className="metric-box p-1 text-center">
-              <div className="box-metric" onClick={() => {onSelect(metrics[0]?.data);}}>
-              <div>{metrics[0]?.count[0]?.count ? metrics[0]?.count[0]?.count : 0}</div>
+              <div className="box-metric pointer" onClick={() => {onSelect(metrics[0]?.data);}}>
+              <div>{!isLoading ? metrics[0]?.count[0]?.count ? metrics[0]?.count[0]?.count : 0 : null}</div>
               </div>
               <div className="w-100 text-muted mb-1">Total Number of Pipelines Executed</div>
               </div>
