@@ -8,15 +8,11 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
-import { getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
+import { getTableDateTimeColumn, getTableTextColumn, getChartPipelineStatusColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
-import TotalPipelinesExecuted from "components/insights/summary/TotalPipelinesExecuted";
-import PipelinesPassedWithQualityAndSecurity from "components/insights/summary/PipelinesPassedWithQualityAndSecurity";
-import PipelinesFailedSecurity from "components/insights/summary/PipelinesFailedSecurity";
-import PipelinesFailedQuality from "components/insights/summary/PipelinesFailedQuality";
-import PipelinesFailedDeployment from "components/insights/summary/PipelinesFailedDeployment";
+
 function PipelineDetails() {
   const fields = BuildDetailsMetadata.fields;
   const {getAccessToken} = useContext(AuthContext);
@@ -40,6 +36,11 @@ function PipelineDetails() {
     setCancelTokenSource(source);
 
     isMounted.current = true;
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
 
     return () => {
       source.cancel();
@@ -47,22 +48,68 @@ function PipelineDetails() {
     };
   }, []);
 
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
+    try {
+      setIsLoading(true);
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "summaryPipelinesPassedWithQualityAndSecurity", null, null, filterDto);
+      let dataObject = response?.data ? response?.data?.data[0] : [];
+      let newFilterDto = filterDto;
+      newFilterDto.setData("totalCount", dataObject[0]?.count[0]?.count);
+      setTableFilterDto({ ...newFilterDto });
+
+      if (isMounted?.current === true && dataObject) {
+        setMetrics(dataObject);
+        setModalData(dataObject[0]?.data);
+      }
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        setError(error);
+      }
+    }
+    finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const noDataMessage = "No Data is available for this chart at this time";
+  const columns = useMemo(
+    () => [
+      getTableTextColumn(getField(fields, "pipeline_name")),
+      getTableTextColumn(getField(fields, "run_count")),
+      getChartPipelineStatusColumn(getField(fields, "status")),
+      getTableDateTimeColumn(getField(fields, "timestamp")),
+    ],
+    []
+  );
+
+  const onSelect = (data) => {
+    setModalData(data);
+    setShowModal(true);
+  };
+
   const getChartBody = () => {
     return (
     <div>
-      <div className="new-chart mb-3" style={{height: "300px"}}>
-        <Container>
-          <Row className="p-3">
-            <Col><TotalPipelinesExecuted/></Col>
-            <Col><PipelinesPassedWithQualityAndSecurity/></Col>
-            <Col><PipelinesFailedSecurity/></Col>
-            <Col><PipelinesFailedQuality/></Col>
-            <Col><PipelinesFailedDeployment/></Col>
-            
-
-          </Row>
-        </Container>
-      </div>
+              <div className="box-metric" onClick={() => {onSelect(metrics[0]?.data);}}>
+                <div>{metrics[0]?.count[0]?.count}</div>
+              </div>
+              <div className="w-100 text-muted mb-1">Successful Pipelines (Security and Quality)</div>
+      <PipelineDetailsTableModal
+        header="Pipeline Details"
+        size="lg"
+        tableMessage={modalData}
+        show={showModal}
+        setParentVisibility={setShowModal}
+        loadData={loadData}
+        columns={columns}
+        tableFilterDto={tableFilterDto}
+        setTableFilterDto={setTableFilterDto}
+        noDataMessage={noDataMessage}
+      />
       </div>
     );
   };

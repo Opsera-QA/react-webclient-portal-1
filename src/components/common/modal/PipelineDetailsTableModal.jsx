@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { Button, Modal } from "react-bootstrap";
 
-function BuildDetailsTableModal({ header, size, tableMessage, show, setParentVisibility, loadData, columns, noDataMessage, tableFilterDto, setTableFilterDto }) {
+function PipelineDetailsTableModal({ header, size, tableMessage, show, setParentVisibility, loadData, columns, noDataMessage, tableFilterDto, setTableFilterDto }) {
   const [showModal, setShowModal] = useState(false);
   useEffect(() => {
     // console.log("show: ", show);
@@ -26,7 +26,7 @@ function BuildDetailsTableModal({ header, size, tableMessage, show, setParentVis
         <Modal.Body>
         <CustomTable
         columns={columns}
-        data={tableMessage?.data}
+        data={tableMessage}
         noDataMessage={noDataMessage}
         paginationDto={tableFilterDto}
         setPaginationDto={setTableFilterDto}
@@ -44,7 +44,7 @@ function BuildDetailsTableModal({ header, size, tableMessage, show, setParentVis
   );
 }
 
-BuildDetailsTableModal.propTypes = {
+PipelineDetailsTableModal.propTypes = {
   header: PropTypes.string,
   size: PropTypes.string,
   tableMessage: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
@@ -58,4 +58,4 @@ BuildDetailsTableModal.propTypes = {
   setTableFilterDto: PropTypes.func
 };
 
-export default BuildDetailsTableModal;
+export default PipelineDetailsTableModal;
