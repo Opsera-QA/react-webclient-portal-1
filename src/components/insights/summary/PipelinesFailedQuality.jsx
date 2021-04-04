@@ -13,7 +13,7 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function PipelineFailedQuality() {
+function PipelineFailedQuality({dashboardData}) {
   const fields = BuildDetailsMetadata.fields;
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -46,12 +46,13 @@ function PipelineFailedQuality() {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "summaryPipelinesFailedQuality", null, null, filterDto);
+      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "summaryPipelinesFailedQuality", null, dashboardTags, filterDto);
       let dataObject = response?.data ? response?.data?.data[0] : [];
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataObject[0]?.count[0]?.count);
@@ -92,12 +93,15 @@ function PipelineFailedQuality() {
   };
 
   const getChartBody = () => {
+    if (isLoading) {return (<div className="m-3" />);}
     return (
     <div>
+            <div className="metric-box p-1 text-center">
               <div className="box-metric" onClick={() => {onSelect(metrics[0]?.data);}}>
-                <div>{metrics[0]?.count[0]?.count}</div>
+              <div>{metrics[0]?.count[0]?.count ? metrics[0]?.count[0]?.count : 0}</div>
               </div>
               <div className="w-100 text-muted mb-1">Pipelines Failing Quality Step</div>
+              </div> 
       <PipelineDetailsTableModal
         header="Pipeline Details"
         size="lg"

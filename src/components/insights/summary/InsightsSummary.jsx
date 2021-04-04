@@ -8,8 +8,13 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
+import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import PipelineDetails from "components/insights/summary/PipelineDetails";
 import ProjectDetails from "components/insights/summary/ProjectDetails";
+import DashboardFiltersInput from "components/insights/dashboards/DashboardFiltersInput";
+import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
+import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata";
+import modelHelpers from "components/common/model/modelHelpers";
 import {faAnalytics, faChartNetwork, faChartArea} from "@fortawesome/pro-light-svg-icons";
 
 function InsightsSummary() {
@@ -21,6 +26,8 @@ function InsightsSummary() {
   const isMounted = useRef(false);
   const [activeTab, setActiveTab] = useState("summary");
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [dashboardData, setDashboardData] = useState(undefined);
+  const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(modelHelpers.getDashboardFilterModel(dashboardData, "tags", dashboardFiltersMetadata));
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -47,6 +54,7 @@ function InsightsSummary() {
     try {
       setIsLoading(true);
       await getRoles(cancelSource);
+      setDashboardData(new Model({...dashboardMetadata.newObjectFields}, dashboardMetadata, true));
     } catch (error) {
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
@@ -71,8 +79,19 @@ function InsightsSummary() {
   const getInsightsSummaryView = () => {
       return (
         <div>
-        <PipelineDetails />
-        <ProjectDetails />
+        <ActionBarContainer>      
+        <div className="d-flex">
+          <DashboardFiltersInput
+            dataObject={dashboardFilterTagsModel}
+            setDataObject={setDashboardFilterTagsModel}
+            loadData={loadData}
+            className={"mx-2"}
+            dashboardData={dashboardData}
+          />
+        </div>
+      </ActionBarContainer>
+        <PipelineDetails dashboardData={dashboardData} setDashboardData={setDashboardData}/>
+        <ProjectDetails dashboardData={dashboardData} setDashboardData={setDashboardData}/>
         </div>
       );
   };

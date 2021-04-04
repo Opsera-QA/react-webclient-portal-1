@@ -14,7 +14,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import ProjectDetailsMetadata from "./project-details-metadata";
 
-function ProjectDetails() {
+function ProjectDetails({dashboardData, setDashboardData}) {
   const fields = ProjectDetailsMetadata.fields;
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -27,7 +27,7 @@ function ProjectDetails() {
     new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
   );
   const [modalData, setModalData] = useState(undefined);
-
+  
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -35,7 +35,6 @@ function ProjectDetails() {
 
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-
     isMounted.current = true;
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
@@ -47,12 +46,13 @@ function ProjectDetails() {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [JSON.stringify(dashboardData)]);
 
   const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "summaryProjectDetails", null, null, filterDto);
+      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "summaryProjectDetails", null, dashboardTags, filterDto);
       let dataObject = response?.data ? response?.data?.data[0] : [];
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject[0]?.data);
@@ -91,6 +91,7 @@ function ProjectDetails() {
   };
 
   const getChartBody = () => {
+
     return (
         <div>
         <CustomTable
@@ -109,6 +110,7 @@ function ProjectDetails() {
         tableMessage={modalData}
         show={showModal}
         setParentVisibility={setShowModal}
+        dashboardData={dashboardData}
       />
       </div>
     );

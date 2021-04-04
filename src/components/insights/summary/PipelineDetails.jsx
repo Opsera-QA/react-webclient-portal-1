@@ -17,7 +17,7 @@ import PipelinesPassedWithQualityAndSecurity from "components/insights/summary/P
 import PipelinesFailedSecurity from "components/insights/summary/PipelinesFailedSecurity";
 import PipelinesFailedQuality from "components/insights/summary/PipelinesFailedQuality";
 import PipelinesFailedDeployment from "components/insights/summary/PipelinesFailedDeployment";
-function PipelineDetails() {
+function PipelineDetails({dashboardData}) {
   const fields = BuildDetailsMetadata.fields;
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -50,19 +50,15 @@ function PipelineDetails() {
   const getChartBody = () => {
     return (
     <div>
-      <div className="new-chart mb-3" style={{height: "300px"}}>
         <Container>
           <Row className="p-3">
-            <Col><TotalPipelinesExecuted/></Col>
-            <Col><PipelinesPassedWithQualityAndSecurity/></Col>
-            <Col><PipelinesFailedSecurity/></Col>
-            <Col><PipelinesFailedQuality/></Col>
-            <Col><PipelinesFailedDeployment/></Col>
-            
-
+            <Col><TotalPipelinesExecuted dashboardData={dashboardData}/></Col>
+            <Col><PipelinesPassedWithQualityAndSecurity dashboardData={dashboardData}/></Col>
+            <Col><PipelinesFailedSecurity dashboardData={dashboardData}/></Col>
+            <Col><PipelinesFailedQuality dashboardData={dashboardData}/></Col>
+            <Col><PipelinesFailedDeployment dashboardData={dashboardData}/></Col>
           </Row>
         </Container>
-      </div>
       </div>
     );
   };

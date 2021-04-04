@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import BuildDetails from "components/insights/summary/BuildDetails";
 import { Button, Modal } from "react-bootstrap";
 
-function BuildDetailsTableModal({ header, size, tableMessage, show, setParentVisibility }) {
+function BuildDetailsTableModal({ header, size, tableMessage, show, setParentVisibility, dashboardData, setDashboardData }) {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ function BuildDetailsTableModal({ header, size, tableMessage, show, setParentVis
           <Modal.Title>{header}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <BuildDetails data={tableMessage}/>
+          <BuildDetails data={tableMessage} dashboardData={dashboardData}/>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => handleClose()}>
@@ -44,6 +44,8 @@ BuildDetailsTableModal.propTypes = {
   dataType: PropTypes.string,
   show: PropTypes.bool,
   setParentVisibility: PropTypes.func,
+  dashboardData: PropTypes.object,
+  setDashboardData: PropTypes.func
 };
 
 export default BuildDetailsTableModal;

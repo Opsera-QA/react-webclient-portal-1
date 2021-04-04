@@ -82,7 +82,8 @@ const dashboardMetadata = {
     active: true,
     tags: [],
     configuration: [],
-    attributes: {}
+    attributes: {},
+    filters: []
   }
 };
 

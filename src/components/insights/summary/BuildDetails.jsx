@@ -15,8 +15,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import {format} from "date-fns";
 import BuildDetailsMetadata from "./build-details-metadata";
+import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 
-function BuildDetails(data) {
+function BuildDetails({data, dashboardData, setDashboardData}) {
   const history = useHistory();
   const fields = BuildDetailsMetadata.fields;
   const {getAccessToken} = useContext(AuthContext);
@@ -54,12 +55,13 @@ function BuildDetails(data) {
     try {
       setIsLoading(true);
       if (isMounted?.current === true && data) {
-        let project = [{"type": "project", "value": data?.data?.project}];
-        const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "summaryBuildDetails", null, project, filterDto);
+        let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+        let projectTags =  [{"type": "project", "value": data?.project}];
+        const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "summaryBuildDetails", null, dashboardTags, filterDto, projectTags);
         let dataObject = response?.data ? response?.data?.data[0] : [];
         setMetrics(dataObject[0]?.data);
         let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", data?.data?.executed);
+        newFilterDto.setData("totalCount", data?.executed);
         setTableFilterDto({ ...newFilterDto });
       }
     }
