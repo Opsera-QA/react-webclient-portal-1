@@ -15,7 +15,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import {format} from "date-fns";
 import BuildDetailsMetadata from "./build-details-metadata";
-import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 
 function BuildDetails({data, dashboardData, setDashboardData}) {
   const history = useHistory();

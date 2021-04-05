@@ -27,19 +27,20 @@ function InsightsSummary() {
   const isMounted = useRef(false);
   const [activeTab, setActiveTab] = useState("summary");
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [dashboardData, setDashboardData] = useState(new Model({...dashboardMetadata.newObjectFields}, dashboardMetadata, true));
+  const [dashboardData, setDashboardData] = useState(undefined);
   const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(modelHelpers.getDashboardFilterModel(dashboardData, "tags", dashboardFiltersMetadata));
 
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
-
+    let newDataObject = new Model({...dashboardMetadata.newObjectFields}, dashboardMetadata, true);
+    newDataObject.setData("filters", []); 
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
 
     isMounted.current = true;
-    loadData(source).catch((error) => {
+    loadData(newDataObject, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -51,11 +52,11 @@ function InsightsSummary() {
     };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (newDataObject, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       await getRoles(cancelSource);
-      setDashboardData(new Model({...dashboardMetadata.newObjectFields}, dashboardMetadata, true));
+      setDashboardData({...newDataObject});
     } catch (error) {
       if (isMounted.current === true) {
         toastContext.showLoadingErrorDialog(error);
