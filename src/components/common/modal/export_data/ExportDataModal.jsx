@@ -13,7 +13,6 @@ import RadioButtonOption from "components/common/inputs/radio/RadioButtonOption"
 function ExportDataModal({ children, showModal, handleCancelModal, formattedData, rawData, isLoading, exportFrom, summaryData, logData, csvEnabled}) {
   const [exportDataModel, setExportDataModel] = useState(new Model({...exportDataMetadata.newObjectFields}, exportDataMetadata, true));
   const toastContext = useContext(DialogToastContext);
-  const [isCsv, setIsCsv] =(false);
 
   useEffect(() => {
     toastContext.removeInlineMessage();
@@ -101,9 +100,8 @@ function ExportDataModal({ children, showModal, handleCancelModal, formattedData
         return formattedData;
       case "raw":
         return new Blob([rawData], {type : 'text/plain'});
-      case "CSV":
-        setIsCsv(true);
-        return formattedData;
+      case "csv":
+        return {csv: true, formattedData: formattedData};
       default:
         return new Blob([rawData], {type : 'text/plain'});
     }
@@ -125,7 +123,7 @@ function ExportDataModal({ children, showModal, handleCancelModal, formattedData
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <ExportButton logData={logData} summaryData={summaryData} dataToExport={getDataToExport()} className={"mr-2"} fileName={exportDataModel.getData("fileName")} isLoading={isLoading} exportFrom={exportFrom} isCsv={isCsv}/>
+        <ExportButton logData={logData} summaryData={summaryData} dataToExport={getDataToExport()} className={"mr-2"} fileName={exportDataModel.getData("fileName")} isLoading={isLoading} exportFrom={exportFrom} />
         <CloseButton closeEditorCallback={handleClose} />
       </Modal.Footer>
     </Modal>

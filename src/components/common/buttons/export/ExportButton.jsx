@@ -12,7 +12,7 @@ function capitalize(str){
 }
 
 // TODO: If this will include both the csv and pdf exports, add an option for .csv and trigger based on prop. OR make two separate buttons.
-function ExportDataButton({isLoading, variant, size, className, dataToExport, fileName, exportFrom, showButtonText, summaryData, logData, isCsv}) {
+function ExportDataButton({isLoading, variant, size, className, dataToExport, fileName, exportFrom, showButtonText, summaryData, logData}) {
   const exportDataToPdf = () => {
 
     if(dataToExport instanceof Blob){
@@ -104,7 +104,7 @@ function ExportDataButton({isLoading, variant, size, className, dataToExport, fi
       pdfExporter.save(fileName);
     }
 
-    if(exportFrom === "tags_in_pipeline" && !(dataToExport instanceof Blob) && !isCsv){
+    if(exportFrom === "tags_in_pipeline" && !(dataToExport instanceof Blob) && !dataToExport.csv){
       console.log("here", dataToExport);
       const pdfExporter = new jsPDF({orientation: "landscape"});
       pdfExporter.autoTable({
@@ -120,8 +120,8 @@ function ExportDataButton({isLoading, variant, size, className, dataToExport, fi
       pdfExporter.save(fileName);
     }
 
-    if(exportFrom === "tags_in_pipeline" && !(dataToExport instanceof Blob) && isCsv){
-      console.log("here", dataToExport);
+    if(exportFrom === "tags_in_pipeline" && dataToExport.csv){
+      let tagData = dataToExport.formattedData;
       const pdfExporter = new jsPDF({orientation: "landscape"});
       pdfExporter.autoTable({
         startY: 2,
@@ -130,7 +130,7 @@ function ExportDataButton({isLoading, variant, size, className, dataToExport, fi
         headStyles:{fontSize: 8, minCellWidth: 19, fillColor: [54, 46, 84]},
         margin: { left: 2, right: 2 },
         head:[["Name","ID","Description","Created","Updated","Status"]],
-        body: dataToExport.map(item => [item.name, item._id, item.description, item.createdAt, item.updatedAt, item.active ? "active" : "inactive"])
+        body: tagData.map(item => [item.name, item._id, item.description, item.createdAt, item.updatedAt, item.active ? "active" : "inactive"])
       });
 
       pdfExporter.save(fileName);
@@ -168,8 +168,7 @@ ExportDataButton.propTypes = {
   exportFrom: PropTypes.any,
   summaryData: PropTypes.any,
   logData: PropTypes.any,
-  showButtonText: PropTypes.bool,
-  isCsv: PropTypes.bool
+  showButtonText: PropTypes.bool
 };
 
 export default ExportDataButton;
