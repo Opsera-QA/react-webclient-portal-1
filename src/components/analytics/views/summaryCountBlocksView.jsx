@@ -11,21 +11,14 @@ import { OverlayTrigger, Popover } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH, faTimes } from "@fortawesome/free-solid-svg-icons";
 import Card from "react-bootstrap/Card";
-// import CardDeck from "react-bootstrap/CardDeck";
 import CardGroup from "react-bootstrap/CardGroup";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 function SummaryCountBlocksView({ data, view }) {
   useEffect(() => {
     // console.log("Rendering Blocks for data", data);
   }, [data]);
 
-  // const setStatusLevel = (status) => {
-  //   if (status === "danger") return "red";
-  //   if (status === "warning") return "yellow";
-  //   if (status === "success") return "green";
-
-  //   return null;
-  // };
   const setStatusLevel = (status) => {
     if (status === "danger") return "#E57373";
     if (status === "warning") return "#F1AD0F";
@@ -54,31 +47,33 @@ function SummaryCountBlocksView({ data, view }) {
         <CardGroup className="w-100 p-2 d-flex justify-content-center">
           {data.map(function (item, index) {
             return (
-              <Card key={index} style={view !== "small" ? 
-                    { width: "100%", height: "100px" } : { width: "100%" }}>
-                <Card.Body className="summary-count-blocks-card-body">
-                  <div className="summary-count-blocks-status"
-                       style={{backgroundColor: setStatusLevel(item.status)}}></div>
-                  <Card.Title className="summary-count-blocks-card-title">
-                    {item.value}
-                  </Card.Title>
-                  <Card.Subtitle className="summary-count-blocks-card-subtitle">
-                    <div> {item.name} </div>
-                  </Card.Subtitle>
-                    {item.info && (
-                      <Card.Text style={{ position: "absolute", right: "10px", bottom: "15px" }}>
-                        <OverlayTrigger trigger="click" rootClose placement="top" overlay={infoPopover(item)}>
-                          <FontAwesomeIcon
-                            icon={faEllipsisH}
-                            className="fa-pull-right pointer pr-1"
-                            onClick={() => document.body.click()}
-                          />
-                        </OverlayTrigger>
-                      </Card.Text>
-                    )}
-                </Card.Body>
-                {item.footer && <Card.Text className="w-100 text-muted mb-1">{item.footer}</Card.Text>}
-              </Card>
+              <TooltipWrapper key={index} innerText={item.name}>
+                <Card style={view !== "small" ? 
+                      { width: "100%", height: "100px" } : { width: "100%" }}>
+                  <Card.Body className="summary-count-blocks-card-body">
+                    <div className="summary-count-blocks-status"
+                        style={{backgroundColor: setStatusLevel(item.status)}}></div>
+                    <Card.Title className="summary-count-blocks-card-title">
+                      {item.value}
+                    </Card.Title>
+                    <Card.Subtitle className="summary-count-blocks-card-subtitle">
+                      <div> {item.name} </div>
+                    </Card.Subtitle>
+                      {item.info && (
+                        <Card.Text style={{ position: "absolute", right: "10px", bottom: "15px" }}>
+                          <OverlayTrigger trigger="click" rootClose placement="top" overlay={infoPopover(item)}>
+                            <FontAwesomeIcon
+                              icon={faEllipsisH}
+                              className="fa-pull-right pointer pr-1"
+                              onClick={() => document.body.click()}
+                            />
+                          </OverlayTrigger>
+                        </Card.Text>
+                      )}
+                  </Card.Body>
+                  {item.footer && <Card.Text className="w-100 text-muted mb-1">{item.footer}</Card.Text>}
+                </Card>
+              </TooltipWrapper>
             );
           })}
         </CardGroup>
