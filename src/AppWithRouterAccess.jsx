@@ -318,7 +318,7 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace}/>
 
                   {/*insights summary */}
-                  <SecureRoute path="/insights/summary" component={InsightsSummary}/>
+                  <SecureRoute path="/insights/synopsis" component={InsightsSummary}/>
 
                   {/* git tasks */}
                   <SecureRoute path="/git" exact component={GitComponent}/>

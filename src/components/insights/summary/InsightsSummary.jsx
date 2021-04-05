@@ -16,7 +16,7 @@ import DashboardFilterOrganizationInput from "components/insights/dashboards/Das
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
-import {faAnalytics, faChartNetwork, faChartArea} from "@fortawesome/pro-light-svg-icons";
+import {faAnalytics, faChartNetwork, faChartArea, faRadar} from "@fortawesome/pro-light-svg-icons";
 
 function InsightsSummary() {
   const {getUserRecord, setAccessRoles} = useContext(AuthContext);
@@ -25,7 +25,7 @@ function InsightsSummary() {
   const [isLoading, setIsLoading] = useState(true);
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
-  const [activeTab, setActiveTab] = useState("summary");
+  const [activeTab, setActiveTab] = useState("synopsis");
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [dashboardData, setDashboardData] = useState(undefined);
   const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(modelHelpers.getDashboardFilterModel(dashboardData, "tags", dashboardFiltersMetadata));
@@ -124,8 +124,8 @@ function InsightsSummary() {
       return;
     }
 
-    if (tabSelection === "summary") {
-      history.push(`/insights/summary`);
+    if (tabSelection === "synopsis") {
+      history.push(`/insights/synopsis`);
       return;
     }
 
@@ -138,7 +138,7 @@ function InsightsSummary() {
         <NavigationTab icon={faChartNetwork} tabName={"dashboards"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Dashboards"} />
         <NavigationTab icon={faChartArea} tabName={"marketplace"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Marketplace"} />
         <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Analytics"} />
-        <NavigationTab icon={faAnalytics} tabName={"summary"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Summary"} />
+        <NavigationTab icon={faRadar} tabName={"synopsis"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Synopsis"} />
       </NavigationTabContainer>
     );
   };
