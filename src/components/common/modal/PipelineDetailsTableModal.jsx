@@ -29,13 +29,10 @@ function PipelineDetailsTableModal({ header, size, tableMessage, show, setParent
     <>
       <Modal show={showModal} size={size} onHide={() => handleClose()}>
         <Modal.Header closeButton>
-          <Modal.Title>{header}</Modal.Title>
+          <Modal.Title>{isLoading && <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>} {header}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         <div className="content-container content-card-1">
-        <div className="px-2 content-block-header-inverse title-text-header-2">
-        Build Details {isLoading && <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>}
-        </div>
         <div className="new-chart m-2 shaded-panel">
         <CustomTable
         columns={columns}

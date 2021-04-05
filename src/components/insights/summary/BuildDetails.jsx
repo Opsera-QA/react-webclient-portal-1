@@ -100,7 +100,7 @@ function BuildDetails({data, dashboardData, setDashboardData}) {
     return (
       <div className="content-container content-card-1">
       <div className="px-2 content-block-header-inverse title-text-header-2">
-        Build Details {isLoading && <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>}
+      {isLoading && <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>} {"Project: " + data?.project}
       </div>
       <div className="new-chart m-2 shaded-panel">
         <CustomTable

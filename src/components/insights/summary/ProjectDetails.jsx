@@ -11,8 +11,9 @@ import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {faSpinner, faProjectDiagram} from "@fortawesome/pro-light-svg-icons";
 import ProjectDetailsMetadata from "./project-details-metadata";
+import FilterContainer from "components/common/table/FilterContainer";
 
 function ProjectDetails({dashboardData, setDashboardData}) {
   const fields = ProjectDetailsMetadata.fields;
@@ -91,11 +92,9 @@ function ProjectDetails({dashboardData, setDashboardData}) {
     setShowModal(true);
   };
 
-  const getChartBody = () => {
-
+  const getProjectsTable = () => {
     return (
-        <div>
-        <CustomTable
+      <CustomTable
         columns={columns}
         data={metrics}
         noDataMessage={noDataMessage}
@@ -104,6 +103,22 @@ function ProjectDetails({dashboardData, setDashboardData}) {
         loadData={loadData}
         scrollOnLoad={false}
         onRowSelect={onRowSelect}
+      />
+    );
+  };
+
+  const getChartBody = () => {
+
+    return (
+        <div>
+      <FilterContainer
+        loadData={loadData}
+        isLoading={isLoading}
+        body={getProjectsTable()}
+        titleIcon={faProjectDiagram}
+        supportSearch={false}
+        metaData={ProjectDetailsMetadata}
+        title={"Pipelines By Project"}
       />
       <BuildDetailsTableModal
         header="Build Details"
@@ -116,10 +131,6 @@ function ProjectDetails({dashboardData, setDashboardData}) {
       </div>
     );
   };
-
-//   if (isLoading) {
-//     return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading</span>);
-//   }
 
   return (
     getChartBody()

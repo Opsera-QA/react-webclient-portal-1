@@ -18,7 +18,7 @@ function PipelineFailedDeployment({dashboardData}) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState(undefined);
   const isMounted = useRef(false);
@@ -98,12 +98,12 @@ function PipelineFailedDeployment({dashboardData}) {
     <div>
              <div className="metric-box p-1 text-center">
               <div className="box-metric pointer" onClick={() => {onSelect(metrics[0]?.data);}}>
-              <div className="red">{!isLoading ? metrics[0]?.count[0]?.count ? metrics[0]?.count[0]?.count : 0 : null}</div>
+              <div className="red">{!isLoading && metrics[0]?.count[0] ? metrics[0]?.count[0]?.count : <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>}</div>
               </div>
               <div className="w-100 text-muted mb-1">Pipelines Failing Deployment Step</div>
               </div>
       <PipelineDetailsTableModal
-        header="Pipeline Details"
+        header="Pipelines Failing Deployment Step"
         size="lg"
         tableMessage={modalData}
         show={showModal}
