@@ -5,11 +5,16 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import PropTypes from "prop-types";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import { getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
+import {
+  getLimitedTableTextColumn,
+  getTableDateTimeColumn,
+  getTableTextColumn,
+} from "components/common/table/table-column-helpers";
 import githubRecentMergeRequestsMetadata from "components/insights/charts/github/table/recent_merge_requests/github-recent-merge-requests-metadata.js";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import ModalLogs from "components/common/modal/modalLogs";
 
 function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = githubRecentMergeRequestsMetadata.fields;
@@ -22,6 +27,8 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
   const [tableFilterDto, setTableFilterDto] = useState(
     new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
   );
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState(undefined);
 
   const noDataMessage = "No Data is available for this chart at this time";
 
@@ -29,7 +36,7 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
     () => [
       getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "AssigneeName")),
-      getTableTextColumn(getField(fields, "MergeRequestTitle")),
+      getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 20),
       getTableTextColumn(getField(fields, "ProjectName")),
       getTableTextColumn(getField(fields, "BranchName")),
       getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
@@ -93,6 +100,10 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
       }
     }
   };
+  const onRowSelect = (rowData) => {
+    setModalData(rowData.original);
+    setShowModal(true);
+  };
 
   const getChartTable = () => {
     return (
@@ -104,6 +115,7 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
+        onRowSelect={onRowSelect}
       />
     );
   };
@@ -120,6 +132,14 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+      />
+      <ModalLogs
+        header="Bitbucket Pending Pull Requests"
+        size="lg"
+        jsonMessage={modalData}
+        dataType="bar"
+        show={showModal}
+        setParentVisibility={setShowModal}
       />
     </div>
   );

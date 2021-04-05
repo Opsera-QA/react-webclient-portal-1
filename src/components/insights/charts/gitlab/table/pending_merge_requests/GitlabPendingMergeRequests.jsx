@@ -5,11 +5,16 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import PropTypes from "prop-types";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import { getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
+import {
+  getLimitedTableTextColumn,
+  getTableDateTimeColumn,
+  getTableTextColumn,
+} from "components/common/table/table-column-helpers";
 import gitlabPendingMergeRequestsMetadata from "components/insights/charts/gitlab/table/pending_merge_requests/gitlab-pending-merge-requests-metadata.js";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import ModalLogs from "components/common/modal/modalLogs";
 
 function GitlabPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = gitlabPendingMergeRequestsMetadata.fields;
@@ -22,6 +27,8 @@ function GitlabPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
   const [tableFilterDto, setTableFilterDto] = useState(
     new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
   );
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState(undefined);
 
   const noDataMessage = "No Data is available for this chart at this time";
 
@@ -29,7 +36,7 @@ function GitlabPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
     () => [
       getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "AssigneeName")),
-      getTableTextColumn(getField(fields, "MergeRequestTitle")),
+      getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 20),
       getTableTextColumn(getField(fields, "ProjectName")),
       getTableTextColumn(getField(fields, "BranchName")),
       getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
@@ -90,6 +97,10 @@ function GitlabPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
       }
     }
   };
+  const onRowSelect = (rowData) => {
+    setModalData(rowData.original);
+    setShowModal(true);
+  };
 
   const getChartTable = () => {
     return (
@@ -101,6 +112,7 @@ function GitlabPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
+        onRowSelect={onRowSelect}
       />
     );
   };
@@ -117,6 +129,14 @@ function GitlabPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, das
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+      />
+      <ModalLogs
+        header="Gitlab Pending Merge Requests"
+        size="lg"
+        jsonMessage={modalData}
+        dataType="bar"
+        show={showModal}
+        setParentVisibility={setShowModal}
       />
     </div>
   );
