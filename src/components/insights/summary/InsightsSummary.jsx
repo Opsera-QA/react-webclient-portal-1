@@ -19,7 +19,6 @@ import modelHelpers from "components/common/model/modelHelpers";
 import {faAnalytics, faChartNetwork, faChartArea} from "@fortawesome/pro-light-svg-icons";
 
 function InsightsSummary() {
-  console.log(dashboardMetadata);
   const {getUserRecord, setAccessRoles} = useContext(AuthContext);
   const history = useHistory();
   const [accessRoleData, setAccessRoleData] = useState(undefined);
