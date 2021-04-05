@@ -57,7 +57,8 @@ function BuildDetails({data, dashboardData, setDashboardData}) {
       if (isMounted?.current === true && data) {
         let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
         let projectTags =  [{"type": "project", "value": data?.project}];
-        const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "summaryBuildDetails", null, dashboardTags, filterDto, projectTags);
+        let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
+        const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "summaryBuildDetails", null, dashboardTags, filterDto, projectTags, dashboardOrgs);
         let dataObject = response?.data ? response?.data?.data[0] : [];
         setMetrics(dataObject[0]?.data);
         let newFilterDto = filterDto;
@@ -98,7 +99,11 @@ function BuildDetails({data, dashboardData, setDashboardData}) {
 
   const getChartBody = () => {
     return (
-        <div>
+      <div className="content-container content-card-1">
+      <div className="px-2 content-block-header-inverse title-text-header-2">
+        Build Details {isLoading && <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>}
+      </div>
+      <div className="new-chart m-2 shaded-panel">
         <CustomTable
         columns={columns}
         data={metrics}
@@ -109,6 +114,7 @@ function BuildDetails({data, dashboardData, setDashboardData}) {
         scrollOnLoad={false}
         onRowSelect={onRowSelect}
       />
+      </div>
       </div>
     );
   };

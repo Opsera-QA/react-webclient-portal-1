@@ -1,7 +1,6 @@
 import React, {useState, useEffect, useContext, useMemo, useRef} from "react";
 import PropTypes from "prop-types";
 import { Container, Row, Col } from "react-bootstrap";
-import PipelineDetailsTableModal from "components/common/modal/PipelineDetailsTableModal";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";

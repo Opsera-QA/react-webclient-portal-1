@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useMemo} from "react";
 import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import CustomTable from "components/common/table/CustomTable";
 import { Button, Modal } from "react-bootstrap";
 
-function PipelineDetailsTableModal({ header, size, tableMessage, show, setParentVisibility, loadData, columns, noDataMessage, tableFilterDto, setTableFilterDto }) {
+function PipelineDetailsTableModal({ header, size, tableMessage, show, setParentVisibility, loadData, columns, noDataMessage, tableFilterDto, setTableFilterDto, isLoading }) {
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   useEffect(() => {
@@ -30,6 +32,11 @@ function PipelineDetailsTableModal({ header, size, tableMessage, show, setParent
           <Modal.Title>{header}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+        <div className="content-container content-card-1">
+        <div className="px-2 content-block-header-inverse title-text-header-2">
+        Build Details {isLoading && <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>}
+        </div>
+        <div className="new-chart m-2 shaded-panel">
         <CustomTable
         columns={columns}
         data={tableMessage}
@@ -40,6 +47,8 @@ function PipelineDetailsTableModal({ header, size, tableMessage, show, setParent
         scrollOnLoad={false}
         onRowSelect={onRowSelect}
       />
+        </div>
+        </div>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={() => handleClose()}>
@@ -62,7 +71,8 @@ PipelineDetailsTableModal.propTypes = {
   columns: PropTypes.array,
   noDataMessage: PropTypes.string,
   tableFilterDto: PropTypes.object,
-  setTableFilterDto: PropTypes.func
+  setTableFilterDto: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 
 export default PipelineDetailsTableModal;

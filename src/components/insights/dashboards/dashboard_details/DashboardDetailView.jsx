@@ -143,6 +143,11 @@ function DashboardDetailView() {
       return;
     }
 
+    if (tabSelection === "summary") {
+      history.push(`/insights/summary`);
+      return;
+    }
+
     setActiveTab(tabSelection);
   };
 
@@ -152,6 +157,7 @@ function DashboardDetailView() {
         <NavigationTab icon={faChartNetwork} tabName={"dashboards"} handleTabClick={handleNavTabClick} activeTab={"dashboards"} tabText={"Dashboards"} />
         <NavigationTab icon={faChartArea} tabName={"marketplace"} handleTabClick={handleNavTabClick} activeTab={"dashboards"} tabText={"Marketplace"} />
         <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={"dashboards"} tabText={"Analytics"} />
+        <NavigationTab icon={faAnalytics} tabName={"summary"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Summary"} />
       </NavigationTabContainer>
     );
   };

@@ -52,7 +52,8 @@ function PipelineDetails({dashboardData}) {
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "summaryPipelinesPassedWithQualityAndSecurity", null, dashboardTags, filterDto);
+      let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "summaryPipelinesPassedWithQualityAndSecurity", null, dashboardTags, filterDto, null, dashboardOrgs);
       let dataObject = response?.data ? response?.data?.data[0] : [];
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataObject[0]?.count[0]?.count);
@@ -112,6 +113,7 @@ function PipelineDetails({dashboardData}) {
         tableFilterDto={tableFilterDto}
         setTableFilterDto={setTableFilterDto}
         noDataMessage={noDataMessage}
+        isLoading={isLoading}
       />
       </div>
     );

@@ -12,12 +12,14 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import PipelineDetails from "components/insights/summary/PipelineDetails";
 import ProjectDetails from "components/insights/summary/ProjectDetails";
 import DashboardFiltersInput from "components/insights/dashboards/DashboardFiltersInput";
+import DashboardFilterOrganizationInput from "components/insights/dashboards/DashboardFilterOrganizationInput";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import {faAnalytics, faChartNetwork, faChartArea} from "@fortawesome/pro-light-svg-icons";
 
 function InsightsSummary() {
+  console.log(dashboardMetadata);
   const {getUserRecord, setAccessRoles} = useContext(AuthContext);
   const history = useHistory();
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -26,7 +28,7 @@ function InsightsSummary() {
   const isMounted = useRef(false);
   const [activeTab, setActiveTab] = useState("summary");
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [dashboardData, setDashboardData] = useState(undefined);
+  const [dashboardData, setDashboardData] = useState(new Model({...dashboardMetadata.newObjectFields}, dashboardMetadata, true));
   const [dashboardFilterTagsModel, setDashboardFilterTagsModel] = useState(modelHelpers.getDashboardFilterModel(dashboardData, "tags", dashboardFiltersMetadata));
 
   useEffect(() => {
@@ -88,6 +90,14 @@ function InsightsSummary() {
             className={"mx-2"}
             dashboardData={dashboardData}
           />
+           <DashboardFilterOrganizationInput
+          className={"mx-2"}
+          dataObject={dashboardFilterTagsModel}
+          setDataObject={setDashboardFilterTagsModel}
+          dashboardData={dashboardData}
+          fieldName={"organizations"}
+          loadData={loadData}
+        />
         </div>
       </ActionBarContainer>
         <PipelineDetails dashboardData={dashboardData} setDashboardData={setDashboardData}/>

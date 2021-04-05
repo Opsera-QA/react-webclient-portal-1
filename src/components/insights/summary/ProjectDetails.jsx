@@ -52,7 +52,8 @@ function ProjectDetails({dashboardData, setDashboardData}) {
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "summaryProjectDetails", null, dashboardTags, filterDto);
+      let dashboardOrgs = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "organizations")]?.value;
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "summaryProjectDetails", null, dashboardTags, filterDto, null, dashboardOrgs);
       let dataObject = response?.data ? response?.data?.data[0] : [];
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject[0]?.data);
@@ -111,7 +112,6 @@ function ProjectDetails({dashboardData, setDashboardData}) {
         show={showModal}
         setParentVisibility={setShowModal}
         dashboardData={dashboardData}
-        isLoading={isLoading}
       />
       </div>
     );
