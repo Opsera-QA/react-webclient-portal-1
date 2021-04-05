@@ -15,7 +15,7 @@ export const gradationalColors = ["#B1AeA7", "#7A756C", mainColor, "#1E1D1B"];
 // For most charts
 export const assignStandardColors = (data, uniColor = false) => {
   // Set uniColor to true if the chart expects only one legend regardless of the number of data
-  if (data) {
+  if (Array.isArray(data)) {
     data.forEach((data, i) => {
       data.color = uniColor ? mainColor : standardColors[i];
     });
@@ -24,12 +24,12 @@ export const assignStandardColors = (data, uniColor = false) => {
 
 // For Fail/Success charts
 export const assignBooleanColors = data => {
-  if (data && data[0] && !("Successful" in data[0])) {
+  if (Array.isArray(data) && data[0] && !("Successful" in data[0])) {
     // To display success before fail in legend
     data.sort((a, b) => a.id > b.id ? 1 : -1);
   }
 
-  if (data) {
+  if (Array.isArray(data)) {
     data.forEach(data => {
       if (data.id) {
         data.color = (data.id === "Success" || data.Successful) ? mainColor : failColor;
@@ -45,7 +45,7 @@ export const assignBooleanColors = data => {
 // The rest would depend on the structure of data for the chart
 
 export const assignIssueColors = data => {
-  if (data) {
+  if (Array.isArray(data)) {
     data.forEach(data => {
       data.color = (data.id === "Issues Created") ? warningColor : mainColor;
     });
@@ -54,7 +54,7 @@ export const assignIssueColors = data => {
 };
 
 export const assignTaskColors = data => {
-  if (data) {
+  if (Array.isArray(data)) {
     data.forEach(data => {
       data["Story_color"] = accentColor;
       data["Task_color"] = "#7368AA";
@@ -67,7 +67,7 @@ export const assignTaskColors = data => {
 };
 
 export const assignHealthColors = data => {
-  if (data) {
+  if (Array.isArray(data)) {
     data.forEach(data => {
       data["To Do_color"] = mainColor;
       data["In Development_color"] = standardColors[1];
@@ -84,7 +84,7 @@ export const assignHealthColors = data => {
 };
 
 export const assignSeverityColors = data => {
-  if (data) {
+  if (Array.isArray(data)) {
     data.forEach(data => {
       data["Critical_color"] = standardColors[0];
       data["Low_color"] = standardColors[1];
@@ -98,13 +98,17 @@ export const assignSeverityColors = data => {
 };
 
 export const assignStageColors = data => {
-  if (data) {
+  if (Array.isArray(data)) {
     data.forEach(data => {
       data["Repository Upload_color"] = standardColors[0];
       data["Approval_color"] = standardColors[1];
       data["Unit Testing_color"] = standardColors[2];
       data["Script_color"] = standardColors[3];
       data["Build_color"] = standardColors[4];
+      data["Functional Testing_color"] = standardColors[5];
+      data["Deploy_color"] = standardColors[6];
+      data["Code Scan_color"] = standardColors[7];
+      data["Container Scan_color"] = standardColors[8];
     });
   }
   
@@ -112,7 +116,7 @@ export const assignStageColors = data => {
 };
 
 export const assignVelocityColors = data => {
-  if (data) {
+  if (Array.isArray(data)) {
     data.forEach(data => {
       data["Committed_color"] = mainColor;
       data["Completed_color"] = gradationalColors[0];
@@ -123,7 +127,7 @@ export const assignVelocityColors = data => {
 };
 
 export const assignLineColors = data => {
-  if (data) {
+  if (Array.isArray(data)) {
     data.forEach(data => {
       data["line_coverage_color"] = standardColors[0];
       data["uncovered_lines_color"] = standardColors[1];
@@ -148,36 +152,65 @@ export const getTaskColor = ({ id, data }) => data[`${id}_color`];
 
 // ----- Start of helper functions for legend -----
 
-export const shortenPieChartLegend = datas => datas?.forEach(data => data.id.length > 10 ? data.label = data.id.slice(0, 10) + "..." : data.id);
-export const shortenLegend = (datas, originalIdHolder={}) => {
-  datas?.forEach(data => {
-    const slicedId = data.id.slice(0, 18) + "...";
-    originalIdHolder[slicedId] = data.id;
-    data.id.length > 18 ? data.id = slicedId : data.id;
-  });
+export const shortenPieChartLegend = data => {
+  if (Array.isArray(data)) {
+    data.forEach(d => {
+      if (typeof d.id === "string") {
+        d.id.length > 18 ? d.label = d.id.slice(0, 18) + "..." : d.id;
+      }
+    });
+  }
+};
+
+export const shortenLegend = (data, originalIdHolder={}) => {
+  if (Array.isArray(data)) {
+    data.forEach(d => {
+      if (typeof d.id === "string") {
+        const slicedId = d.id.slice(0, 18) + "..." || null;
+        originalIdHolder[slicedId] = d.id;
+        d.id?.length > 18 ? d.id = slicedId : d.id;
+      }
+    });
+  }
   return originalIdHolder;
 };
 
-export const capitalizeLegend = (data, keys) => data?.forEach(d => {
-  keys.forEach(key => d[capitalizeFirstLetter(key.split("_").join(" "))] = d[key]);
-});
+export const capitalizeLegend = (data, keys) => {
+  if (Array.isArray(data) && Array.isArray(keys)) {
+    data.forEach(d => {
+      keys.forEach(key => {
+        if (typeof key === "string") {
+          d[capitalizeFirstLetter(key.split("_").join(" "))] = d[key];
+        }
+      });
+    });
+  }
+};
 
-export const spaceOutTimeTakenLegend = data => data?.forEach(d => d["Time Taken"] = d["TimeTaken"]);
-export const spaceOutMergeRequestTimeTakenLegend = data => data?.forEach(d => d["Merge Request Time Taken"] = d["MergeRequestTimeTaken"]);
+export const spaceOutTimeTakenLegend = data => {
+  if (Array.isArray(data)) {
+    data.forEach(d => d["Time Taken"] = d["TimeTaken"]);
+  }
+};
+export const spaceOutMergeRequestTimeTakenLegend = data => {
+  if (Array.isArray(data)) {
+    data.forEach(d => d["Merge Request Time Taken"] = d["MergeRequestTimeTaken"]);
+  }
+};
 
 // ----- End of helper functions for legend -----
 
 // X-axis and y-axis tick label format
 const formats = {
   numbers: d => /\d+\.?\d*$/.exec(d),
-  wholeNumbers: d => Math.floor(d) === d && d,
-  dateTime: d => (typeof d === "string" ? d.substring(0, 11) : ""),
+  wholeNumbers: d => (typeof d === "number") && (Math.floor(d) === d && d),
+  dateTime: d => typeof d === "string" ? d.substring(0, 11) : "",
   monthDate: "%b %d",
   monthDate2: d => { var date = new Date(d).toDateString(); date = date.split(" "); return date[1]+" "+date[2]; },
-  yearMonthDate: d => d.split("T")[0],
-  cutoffString: d => (typeof d === "string" && d.length > 0 ? d.slice(0, 8) + (d.length > 8 ? "..." : "") : ""),
+  yearMonthDate: d => (typeof d === "string") && (d.split("T")[0]),
+  cutoffString: d => typeof d === "string" && d.length > 0 ? d.slice(0, 8) + (d.length > 8 ? "..." : "") : "",
   values: d => /(?:(?!-).)*/.exec(d)[0],
-  subString: d => (typeof d === "string" ? d.substring(0, 6) : ""),
+  subString: d => typeof d === "string" ? d.substring(0, 6) : "",
 };
 
 // Default configs for Nivo charts
@@ -225,7 +258,7 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
       "direction": "column",
       "justify": false,
       "translateX": 0,
-      "translateY": -50,
+      "translateY": -60,
       "itemsSpacing": 0,
       "itemDirection": "right-to-left",
       "itemWidth": 80,

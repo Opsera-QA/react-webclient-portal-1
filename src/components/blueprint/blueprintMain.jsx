@@ -516,27 +516,6 @@ function OPBlueprint(props) {
                   <FontAwesomeIcon icon={faDraftingCompass} fixedWidth />
                   View Pipeline
                 </Button>
-
-                            <OverlayTrigger
-            overlay={
-              <Tooltip id="tooltip-disabled">
-                Blueprint Export Coming Soon.
-              </Tooltip>
-            }
-          >
-            <span className="mr-3">
-                  <Button
-                    variant="outline-secondary"
-                    size="sm"
-                    onClick={() => {
-                      goToPipeline();
-                    }}
-                    disabled
-                  >
-                    <FontAwesomeIcon icon={faDownload} fixedWidth />
-                  </Button>
-                  </span>
-                </OverlayTrigger>
               </Row>
               <hr />
               <Row className="mt-1">
