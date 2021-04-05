@@ -1,22 +1,19 @@
-import React, { useState, useEffect, useMemo} from "react";
+import React, { useState, useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {faDiceD20} from "@fortawesome/pro-light-svg-icons";
 import CustomTable from "components/common/table/CustomTable";
 import { Button, Modal } from "react-bootstrap";
+import FilterContainer from "components/common/table/FilterContainer";
 
 function PipelineDetailsTableModal({ header, size, tableMessage, show, setParentVisibility, loadData, columns, noDataMessage, tableFilterDto, setTableFilterDto, isLoading }) {
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   useEffect(() => {
-    // console.log("show: ", show);
-    // console.log("DATA", jsonMessage);
     setShowModal(show);
   }, [tableMessage, show]);
 
   const handleClose = () => {
-    // console.log("CLOSING!");
     setShowModal(false);
     setParentVisibility(false);
   };
@@ -25,16 +22,9 @@ function PipelineDetailsTableModal({ header, size, tableMessage, show, setParent
     history.push(`/blueprint/${rowData.original._id.id}/${rowData.original.run_count}`);
   };
 
-  return (
-    <>
-      <Modal show={showModal} size={size} onHide={() => handleClose()}>
-        <Modal.Header closeButton>
-          <Modal.Title>{isLoading && <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>} {header}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-        <div className="content-container content-card-1">
-        <div className="new-chart m-2 shaded-panel">
-        <CustomTable
+  const getTable = () => {
+    return (
+      <CustomTable
         columns={columns}
         data={tableMessage}
         noDataMessage={noDataMessage}
@@ -44,16 +34,34 @@ function PipelineDetailsTableModal({ header, size, tableMessage, show, setParent
         scrollOnLoad={false}
         onRowSelect={onRowSelect}
       />
+    );
+  };
+
+  // TODO: Utilize ModalBase when merged in
+  return (
+    <Modal show={showModal} size={size} onHide={() => handleClose()}>
+      <Modal.Header closeButton>
+        <Modal.Title>{header}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="content-container content-card-1">
+          <div className="new-chart mx-3 mb-3 shaded-panel">
+            <FilterContainer
+              loadData={loadData}
+              title={header}
+              body={getTable()}
+              isLoading={isLoading}
+              titleIcon={faDiceD20}
+            />
+          </div>
         </div>
-        </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleClose()}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={() => handleClose()}>
+          Close
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 }
 

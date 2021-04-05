@@ -12,9 +12,10 @@ import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {faDiceD20, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import {format} from "date-fns";
 import BuildDetailsMetadata from "./build-details-metadata";
+import FilterContainer from "components/common/table/FilterContainer";
 
 function BuildDetails({data, dashboardData, setDashboardData}) {
   const history = useHistory();
@@ -96,14 +97,9 @@ function BuildDetails({data, dashboardData, setDashboardData}) {
     history.push(`/blueprint/${rowData.original._id.id}/${rowData.original.run_count}`);
   };
 
-  const getChartBody = () => {
+  const getTable = () => {
     return (
-      <div className="content-container content-card-1">
-      <div className="px-2 content-block-header-inverse title-text-header-2">
-      {isLoading && <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>} {"Project: " + data?.project}
-      </div>
-      <div className="new-chart m-2 shaded-panel">
-        <CustomTable
+      <CustomTable
         columns={columns}
         data={metrics}
         noDataMessage={noDataMessage}
@@ -113,7 +109,21 @@ function BuildDetails({data, dashboardData, setDashboardData}) {
         scrollOnLoad={false}
         onRowSelect={onRowSelect}
       />
-      </div>
+    );
+  };
+
+  const getChartBody = () => {
+    return (
+      <div className="content-container content-card-1">
+        <div className="new-chart mx-3 mb-3 shaded-panel">
+          <FilterContainer
+            titleIcon={faDiceD20}
+            body={getTable()}
+            isLoading={isLoading}
+            title={"Project: " + data?.project}
+            loadData={loadData}
+          />
+        </div>
       </div>
     );
   };
