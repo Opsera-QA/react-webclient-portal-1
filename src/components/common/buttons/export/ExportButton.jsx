@@ -4,8 +4,9 @@ import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import {rawDataDownload} from "components/common/buttons/export/exportHelpers";
+import {rawDataDownload, csvDownload} from "components/common/buttons/export/exportHelpers";
 import jsPDF from "jspdf";
+import { CSVLink } from "react-csv";
 
 function capitalize(str){
   return str.charAt(0).toUpperCase() + str.slice(1);
@@ -13,6 +14,8 @@ function capitalize(str){
 
 // TODO: If this will include both the csv and pdf exports, add an option for .csv and trigger based on prop. OR make two separate buttons.
 function ExportDataButton({isLoading, variant, size, className, dataToExport, fileName, exportFrom, showButtonText, summaryData, logData}) {
+  const [csvData, setCsvData] = React.useState([]);
+  const csvLink = React.createRef();
   const exportDataToPdf = () => {
 
     if(dataToExport instanceof Blob){
@@ -121,20 +124,15 @@ function ExportDataButton({isLoading, variant, size, className, dataToExport, fi
     }
 
     if(exportFrom === "tags_in_pipeline" && dataToExport.csv){
-      let tagData = dataToExport.formattedData;
-      const pdfExporter = new jsPDF({orientation: "landscape"});
-      pdfExporter.autoTable({
-        startY: 2,
-        styles: {fontSize: 9, minCellWidth: 19, minCellHeight: 12, valign: 'middle'},
-        showHead: "firstPage",
-        headStyles:{fontSize: 8, minCellWidth: 19, fillColor: [54, 46, 84]},
-        margin: { left: 2, right: 2 },
-        head:[["Name","ID","Description","Created","Updated","Status"]],
-        body: tagData.map(item => [item.name, item._id, item.description, item.createdAt, item.updatedAt, item.active ? "active" : "inactive"])
-      });
-
-      pdfExporter.save(fileName);
+      const exportCsv = async () => {
+        let tagData = dataToExport.formattedData;
+        let csvDownloadData = [["Name","ID","Description","Created","Updated","Status"], ...tagData.map(item => [item.name, item._id, item.description, item.createdAt, item.updatedAt, item.active ? "active" : "inactive"])];
+        setCsvData(csvDownloadData);
+        await csvLink.current.link.click();
+      };
+      exportCsv();
     }
+   
   };
 
   const getButtonText = () => {
@@ -148,13 +146,16 @@ function ExportDataButton({isLoading, variant, size, className, dataToExport, fi
   };
 
   return (
-    <TooltipWrapper innerText={"Export Data"}>
-      <div className={className}>
-        <Button variant={variant} size={size} disabled={isLoading} onClick={() => exportDataToPdf()}>
-          {getButtonText()}
-        </Button>
-      </div>
-    </TooltipWrapper>
+    <div>
+      <TooltipWrapper innerText={"Export Data"}>
+        <div className={className}>
+          <Button variant={variant} size={size} disabled={isLoading} onClick={() => exportDataToPdf()}>
+            {getButtonText()}
+          </Button>
+        </div>
+      </TooltipWrapper>
+      <CSVLink data={csvData} filename={fileName} ref={csvLink}/>
+    </div>
   );
 }
 
