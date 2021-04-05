@@ -331,18 +331,20 @@ export const getChartPipelineStatusColumn = (field, className) => {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     Cell: function parseStatus(row) {
-      return row.value ? (
-        row.value === "FAILURE" || row.value === "failed" || row.value === "failure" ? (
-          <FailIcon />
-        ) : (
-          row.value === "UNSTABLE" || row.value === "unstable" ? (
-            <WarningIcon />
-          ) : (
-            <SuccessIcon />
-          )
-      )) : (
-        "unknown"
-      );
+      let status = typeof row?.value === "string" ? row.value.toLowerCase() : status;
+      switch (status) {
+        case "failure":
+        case "failed":
+          return (<FailIcon />);
+        case "unknown":
+          return (<WarningIcon/>);
+        case "passed":
+        case "success":
+        case "successful":
+          return (<SuccessIcon/>);
+        default:
+          return status;
+      }
     },
     class: className ? className :  undefined
   };

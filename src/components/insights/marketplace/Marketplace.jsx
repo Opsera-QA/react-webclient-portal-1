@@ -4,7 +4,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import axios from "axios";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faAnalytics, faChartNetwork, faChartArea, faUserChart} from "@fortawesome/pro-light-svg-icons";
+import {faAnalytics, faChartNetwork, faChartArea, faUserChart, faRadar} from "@fortawesome/pro-light-svg-icons";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import "./marketplace.css";
@@ -60,6 +60,11 @@ function Marketplace () {
       return;
     }
 
+    if (tabSelection === "synopsis") {
+      history.push(`/insights/synopsis`);
+      return;
+    }
+
     setActiveTab(tabSelection);
   };
 
@@ -69,6 +74,7 @@ function Marketplace () {
         <NavigationTab icon={faChartNetwork} tabName={"dashboards"} handleTabClick={handleNavTabClick} activeTab={"marketplace"} tabText={"Dashboards"} />
         <NavigationTab icon={faChartArea} tabName={"marketplace"} handleTabClick={handleNavTabClick} activeTab={"marketplace"} tabText={"Marketplace"} />
         <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={"marketplace"} tabText={"Analytics"} />
+        <NavigationTab icon={faRadar} tabName={"synopsis"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Synopsis"} />
       </NavigationTabContainer>
     );
   };

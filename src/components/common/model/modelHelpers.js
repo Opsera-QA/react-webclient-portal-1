@@ -29,7 +29,7 @@ modelHelpers.getPipelineStepConfigurationThresholdModel = (pipelineStepConfigura
 
 // TODO: Tejas, you need to write newObjectFields for each passed in metadata
 modelHelpers.getDashboardFilterModel = (kpiConfiguration, type, dashboardFilterMetadata) => {
-  let dashboardFilters = kpiConfiguration.filters;
+  let dashboardFilters = kpiConfiguration?.filters;
   let index = dashboardFilters?.findIndex((filter) => filter.type === type);
 
   if (index == null || index === -1) {

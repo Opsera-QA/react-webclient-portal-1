@@ -1,4 +1,5 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
+import {useParams} from "react-router-dom";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { ApiService } from "api/apiService";
@@ -22,6 +23,8 @@ let runCountFetch = {};
 let idFetch = {};
 
 function OPBlueprint(props) {
+  const {id, run} = useParams();
+  const [runCopy, setRunCopy] = useState(run);
   //const FILTER = [{ value: "pipeline", label: "Pipeline" }, { value: "metricbeat", label: "MetricBeat" }, { value: "twistlock", label: "TwistLock" }, { value: "blueprint", label: "Build Blueprint" }];
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
@@ -47,7 +50,7 @@ function OPBlueprint(props) {
   // const [sDate, setSDate] = useState("");
   // const [eDate, setEDate] = useState("");
   // const node = useRef();
-  const [run_count, setRunCount] = useState(null);
+  const [run_count, setRunCount] = useState(run ? Number(run) : null);
   const [pipeIDerror, setPipeIDError] = useState(false);
   const [runCountError, setRunCountError] = useState(false);
   const history = useHistory();
@@ -204,6 +207,11 @@ function OPBlueprint(props) {
               runCountFetch[`${res.data.response[item].name} (${res.data.response[item]._id})`] = res.data.response[item].workflow.run_count;
               idFetch[`${res.data.response[item].name} (${res.data.response[item]._id})`] = res.data.response[item]._id;
               formattedArray.push({ value: pipelineName, label: pipelineName });
+              if (id && id === res.data.response[item]._id) {
+                setMultiFilter({ value: pipelineName, label: pipelineName }); 
+                run && setRunCount(Number(run));
+                setRunCopy(undefined);
+              }
             }
             let filterDataApiResponse = [
               {
@@ -230,7 +238,7 @@ function OPBlueprint(props) {
   };
 
   useEffect(() => {
-    setRunCount(runCountFetch[multiFilter.value]);
+    !runCopy && setRunCount(runCountFetch[multiFilter.value]);
   }, [multiFilter]);
 
   //Every time we select a new filter, update the list. But only for blueprint and pipeline
@@ -300,6 +308,7 @@ function OPBlueprint(props) {
     setPipeIDError(false);
     setRunCountError(false);
     setMultiFilter(item);
+    setRunCount(runCountFetch[multiFilter.value]);
     submitClicked(false);
   };
 

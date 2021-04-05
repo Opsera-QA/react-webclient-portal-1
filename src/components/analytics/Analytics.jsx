@@ -37,7 +37,7 @@ import OperationsView from "./views/opserations_analytics/operationsViewAnalytic
 import AnalyticsProfileSettings from "../settings/analytics/activateAnalyticsCard";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faAnalytics, faChartNetwork, faChartArea} from "@fortawesome/pro-light-svg-icons";
+import {faAnalytics, faChartNetwork, faChartArea, faRadar} from "@fortawesome/pro-light-svg-icons";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 const INDICES = [
@@ -291,6 +291,11 @@ function Analytics() {
       return;
     }
 
+    if (tabSelection === "synopsis") {
+      history.push(`/insights/synopsis`);
+      return;
+    }
+
     setActiveTab(tabSelection);
   };
 
@@ -300,6 +305,7 @@ function Analytics() {
         <NavigationTab icon={faChartNetwork} tabName={"dashboards"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Dashboards"} />
         <NavigationTab icon={faChartArea} tabName={"marketplace"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Marketplace"} />
         <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Analytics"} />
+        <NavigationTab icon={faRadar} tabName={"synopsis"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Synopsis"} />
       </NavigationTabContainer>
     );
   };

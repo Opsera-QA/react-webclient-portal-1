@@ -68,10 +68,6 @@ const dashboardMetadata = {
     {
       label: "Filters",
       id: "filters"
-    },
-    {
-      label: "Tags Filter",
-      id: "filters.tags"
     }
   ],
   newObjectFields: {
@@ -82,7 +78,8 @@ const dashboardMetadata = {
     active: true,
     tags: [],
     configuration: [],
-    attributes: {}
+    attributes: {},
+    filters: []
   }
 };
 
