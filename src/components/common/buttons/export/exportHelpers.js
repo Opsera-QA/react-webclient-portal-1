@@ -48,9 +48,3 @@ export const getAllResultsForExport = async (startDate, endDate, setIsLoading, g
     element.download = fileName;
     element.click();
   };
-
-  export const csvDownload = (headers, body, fileName) => {
-  return( 
-    <CsvLink headers={headers} data={body} fileName={fileName} download={CsvLink.click()}/>
-  );
-  };
