@@ -105,6 +105,10 @@ export const assignStageColors = data => {
       data["Unit Testing_color"] = standardColors[2];
       data["Script_color"] = standardColors[3];
       data["Build_color"] = standardColors[4];
+      data["Functional Testing_color"] = standardColors[5];
+      data["Deploy_color"] = standardColors[6];
+      data["Code Scan_color"] = standardColors[7];
+      data["Container Scan_color"] = standardColors[8];
     });
   }
   
@@ -254,7 +258,7 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
       "direction": "column",
       "justify": false,
       "translateX": 0,
-      "translateY": -50,
+      "translateY": -60,
       "itemsSpacing": 0,
       "itemDirection": "right-to-left",
       "itemWidth": 80,
