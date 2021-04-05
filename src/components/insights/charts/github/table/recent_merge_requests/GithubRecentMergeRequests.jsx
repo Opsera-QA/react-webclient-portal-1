@@ -134,7 +134,7 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         isLoading={isLoading}
       />
       <ModalLogs
-        header="Bitbucket Pending Pull Requests"
+        header="Github Recent Pull Requests"
         size="lg"
         jsonMessage={modalData}
         dataType="bar"

@@ -134,7 +134,7 @@ function GitlabRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         isLoading={isLoading}
       />
       <ModalLogs
-        header="Gitlab Pending Merge Requests"
+        header="Gitlab Recent Merge Requests"
         size="lg"
         jsonMessage={modalData}
         dataType="bar"
