@@ -21,7 +21,9 @@ function BitbucketPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, 
   const [metrics, setMetrics] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [tableFilterDto, setTableFilterDto] = useState(new Model({...genericChartFilterMetadata.newObjectFields}, genericChartFilterMetadata, false));
+  const [tableFilterDto, setTableFilterDto] = useState(
+    new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
+  );
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -47,7 +49,8 @@ function BitbucketPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, 
   const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -62,7 +65,7 @@ function BitbucketPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, 
         setMetrics(dataObject);
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", response?.data?.data[0]?.bitbucketPendingMergeRequests?.count);
-        setTableFilterDto({...newFilterDto});
+        setTableFilterDto({ ...newFilterDto });
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -94,7 +97,6 @@ function BitbucketPendingMergeRequests({ kpiConfiguration, setKpiConfiguration, 
     ],
     []
   );
-
 
   const getChartTable = () => {
     return (
@@ -132,7 +134,7 @@ BitbucketPendingMergeRequests.propTypes = {
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func
+  setKpis: PropTypes.func,
 };
 
 export default BitbucketPendingMergeRequests;
