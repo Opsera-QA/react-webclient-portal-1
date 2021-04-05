@@ -4,8 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faClipboardCheck, faClipboardList} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 
-// TODO: Replace with CopyToClipboardIconBase after release
-function CopyToClipboardIcon({ copyString, className }) {
+function CopyToClipboardIconBase({ copyString, className, copyText, copiedText, copyIcon, copiedIcon, size }) {
   const [copiedToClipboard, setCopiedToClipboard] = useState(false);
 
   const copyToClipboard = () => {
@@ -23,11 +22,12 @@ function CopyToClipboardIcon({ copyString, className }) {
   }
 
   return (
-    <ButtonTooltip trigger={["hover", "focus"]} innerText={copiedToClipboard ? "Copied to Clipboard!" : "Copy to clipboard"}>
+    <ButtonTooltip trigger={["hover", "focus"]} innerText={copiedToClipboard ? copiedText : copyText}>
       <div className={className}>
         <FontAwesomeIcon
           onClick={() => {copyToClipboard();}}
-          icon={copiedToClipboard ? faClipboardCheck : faClipboardList}
+          icon={copiedToClipboard ? copiedIcon : copyIcon}
+          size={size}
           fixedWidth
           className={"pointer"}
         />
@@ -36,10 +36,21 @@ function CopyToClipboardIcon({ copyString, className }) {
   );
 }
 
-CopyToClipboardIcon.propTypes = {
+CopyToClipboardIconBase.propTypes = {
   copyString: PropTypes.string,
   size: PropTypes.string,
-  className: PropTypes.string
+  className: PropTypes.string,
+  copyText: PropTypes.string,
+  copiedText: PropTypes.string,
+  copyIcon: PropTypes.object,
+  copiedIcon: PropTypes.object,
 };
 
-export default CopyToClipboardIcon;
+CopyToClipboardIconBase.defaultProps = {
+  copyText: "Copied to Clipboard!",
+  copiedText: "Copy to clipboard",
+  copyIcon: faClipboardList,
+  copiedIcon: faClipboardCheck
+};
+
+export default CopyToClipboardIconBase;
