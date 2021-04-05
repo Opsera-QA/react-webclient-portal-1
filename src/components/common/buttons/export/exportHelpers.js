@@ -1,4 +1,6 @@
 import {ApiService} from "api/apiService";
+import React from "react";
+import { CSVLink } from "react-csv";
   
 export const getAllResultsForExport = async (startDate, endDate, setIsLoading, getAccessToken, searchTerm, filterType, getFormattedCustomFilters, currentPage, setExportData, setExportDisabled) => {
     setIsLoading(true);
@@ -45,4 +47,10 @@ export const getAllResultsForExport = async (startDate, endDate, setIsLoading, g
     element.href = URL.createObjectURL(file);
     element.download = fileName;
     element.click();
+  };
+
+  export const csvDownload = (headers, body, fileName) => {
+  return( 
+    <CsvLink headers={headers} data={body} fileName={fileName} download={CsvLink.click()}/>
+  );
   };
