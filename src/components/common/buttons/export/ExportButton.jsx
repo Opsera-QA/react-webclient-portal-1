@@ -4,7 +4,7 @@ import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
-import {rawDataDownload, csvDownload} from "components/common/buttons/export/exportHelpers";
+import {rawDataDownload} from "components/common/buttons/export/exportHelpers";
 import jsPDF from "jspdf";
 import { CSVLink } from "react-csv";
 
@@ -124,12 +124,18 @@ function ExportDataButton({isLoading, variant, size, className, dataToExport, fi
     }
 
     if(exportFrom === "tags_in_pipeline" && dataToExport.csv){
-      const exportCsv = async () => {
+      const setCsvDownload = () => {
         let tagData = dataToExport.formattedData;
         let csvDownloadData = [["Name","ID","Description","Created","Updated","Status"], ...tagData.map(item => [item.name, item._id, item.description, item.createdAt, item.updatedAt, item.active ? "active" : "inactive"])];
         setCsvData(csvDownloadData);
-        await csvLink.current.link.click();
       };
+
+      const exportCsv = async() =>{
+        setCsvDownload();
+        let newLink = await csvLink.current.link;
+        newLink.click();
+      };
+
       exportCsv();
     }
    
