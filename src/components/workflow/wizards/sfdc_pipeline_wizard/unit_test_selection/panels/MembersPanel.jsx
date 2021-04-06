@@ -81,7 +81,7 @@ function MembersPanel({selectedMembers, setSelectedMembers, nonMembers, setNonMe
           <span className="badge badge-secondary">{shownMembers.length}</span>
         </Button>
       </div>
-      <div className="content-card-1 content-container">
+      <div className="content-card-1 content-container scroller">
         <div className="px-2 d-flex content-block-header members-title justify-content-between">
           <div><FontAwesomeIcon icon={faCode} fixedWidth className="mr-2"/>Selected Unit Test Classes</div>
           <div>{members.length} {members.length !== 1 ? "classes" : "class"}</div>
