@@ -4,11 +4,8 @@ import PropTypes from "prop-types";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import { axiosApiService } from "api/apiService";
 import {AuthContext} from "contexts/AuthContext";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRepeat } from "@fortawesome/pro-light-svg-icons";
 
-function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenkinsBuildNumber, setJenkinsBuildNumber, setLoading}) {
+function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData}) {
 
   const { getAccessToken } = useContext(AuthContext);
   const [testResponse, setTestResponse] = useState([]);
@@ -33,8 +30,6 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
   }, [showModal]);
 
   const handleModalClose = () => {
-    setJenkinsBuildNumber("");
-    setLoading(false);
     setShowModal(false);
   };
 
@@ -65,12 +60,12 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
     <>
       <Modal show={showModal} onHide={handleModalClose} backdrop="static">
         <Modal.Header closeButton>
-          <Modal.Title>SFDX Connection Check</Modal.Title>
+          <Modal.Title>Test SFDX Connection</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="content-block m-3 full-height">
             <div className="p-3">
-                {modalLoading ? <DetailPanelLoadingDialog type={"Connection Results"} /> : testResponse.length > 0 ? (                    
+                {modalLoading ? <DetailPanelLoadingDialog type={"Test Connection Results"} /> : testResponse.length > 0 ? (                    
                     <Row>
                       <Col lg={12}>
                         <label className="mb-0 mr-2 text-muted"><span>Job Name:</span></label>
@@ -96,15 +91,14 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
                         <span>We are unable to fetch the status of the test connection. Please try again.</span>
                       </Col>
                       <Col lg={12}>
-                        <Button variant="primary" onClick={() => toolLogPolling(jenkinsBuildNumber)}>
-                          <FontAwesomeIcon icon={faRepeat} className={`mr-2`} fixedWidth /> Try again
+                        <Button variant="secondary" onClick={() => toolLogPolling()}>
+                            Refresh
                         </Button>
                       </Col>                      
                     </Row>
                   </>
                 ) }
             </div>
-            <div className="text-muted small m-2">Note: The connectivity check may take some time to get the results, you can also check results on logs tab.</div>
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -121,9 +115,6 @@ SfdxTestConnectionStatusModal.propTypes = {
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
   toolData: PropTypes.object,
-  jenkinsBuildNumber: PropTypes.string,
-  setJenkinsBuildNumber: PropTypes.func,
-  setLoading: PropTypes.func,
 };
 
 export default SfdxTestConnectionStatusModal;
