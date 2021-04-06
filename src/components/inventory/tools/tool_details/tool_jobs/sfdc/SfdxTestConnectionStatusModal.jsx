@@ -4,30 +4,23 @@ import PropTypes from "prop-types";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import { axiosApiService } from "api/apiService";
 import {AuthContext} from "contexts/AuthContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
-function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData}) {
+function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, runCount}) {
 
   const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [testResponse, setTestResponse] = useState([]);
   const [modalLoading, setModalLoading] = useState(false);
 
   let timerIds = [];
 
   useEffect(() => {
-    console.log('SfdxTestConnectionStatusModal created');
-    return function cleanup() {
-      console.log('SfdxTestConnectionStatusModal destroyed');
-    };
-  });
-
-  useEffect(() => {
-    if(showModal){      
-      toolLogPolling();      
-    }else {
-      console.log(timerIds);
+    toolLogPolling();
+    return function cleanup() {      
       timerIds.forEach(timerId => clearTimeout(timerId));
-    }
-  }, [showModal]);
+    };
+  }, []);
 
   const handleModalClose = () => {
     setShowModal(false);
@@ -37,10 +30,11 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData}) {
     setModalLoading(true);
     try {
       const accessToken = await getAccessToken();
-      const apiUrl = `/registry/log/${toolData.getData("_id")}?page=1&size=50`;
+      const apiUrl = `/registry/log/${toolData.getData("_id")}?page=1&size=5`;
       const tool_logs = await axiosApiService(accessToken).get(apiUrl, {});
 
-      const testRes = tool_logs.data.data.filter(rec => rec.action === 'test_configuration' && rec.run_count == 59);
+      // const testRes = tool_logs.data.data.filter(rec => rec.action === 'test_configuration' && rec.run_count == runCount);
+      const testRes = tool_logs.data.data.filter(rec => rec.action === 'test_configuration' && rec.run_count == 73);
 
       if(testRes.length !== 1 && count < 5 ){
         await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
@@ -52,7 +46,7 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData}) {
       }      
     } catch (err) {
       setModalLoading(false);
-      console.log(err.message);
+      toastContext.showErrorDialog(err.message);
     }    
   };
 
@@ -115,6 +109,7 @@ SfdxTestConnectionStatusModal.propTypes = {
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
   toolData: PropTypes.object,
+  runCount: PropTypes.number,
 };
 
 export default SfdxTestConnectionStatusModal;
