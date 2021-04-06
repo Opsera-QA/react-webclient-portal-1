@@ -5,7 +5,7 @@ import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadi
 import { axiosApiService } from "api/apiService";
 import {AuthContext} from "contexts/AuthContext";
 
-function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData}) {
+function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenkinsBuildNumber, setJenkinsBuildNumber, setLoading}) {
 
   const { getAccessToken } = useContext(AuthContext);
   const [testResponse, setTestResponse] = useState([]);
@@ -30,6 +30,8 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData}) {
   }, [showModal]);
 
   const handleModalClose = () => {
+    setJenkinsBuildNumber("");
+    setLoading(false);
     setShowModal(false);
   };
 
@@ -116,6 +118,9 @@ SfdxTestConnectionStatusModal.propTypes = {
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
   toolData: PropTypes.object,
+  jenkinsBuildNumber: PropTypes.string,
+  setJenkinsBuildNumber: PropTypes.func,
+  setLoading: PropTypes.func,
 };
 
 export default SfdxTestConnectionStatusModal;
