@@ -51,7 +51,7 @@ function PipelineDetails({dashboardData}) {
     return (
       <div className="w-100">
         <div className="d-none d-sm-block justify-content-center">
-          <CardGroup className="w-100 p-4 d-flex justify-content-center">
+          <CardGroup className="w-100 pl-4 pr-4 pb-4 d-flex justify-content-center">
             <TotalPipelinesExecuted dashboardData={dashboardData}/>
             <PipelinesPassedWithQualityAndSecurity dashboardData={dashboardData}/>
             <PipelinesFailedSecurity dashboardData={dashboardData}/>

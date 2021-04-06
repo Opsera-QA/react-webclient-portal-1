@@ -49,8 +49,4 @@ DataBox.propTypes = {
   view: PropTypes.string
 };
 
-DataBox.defaultProps = {
-  view: "large"
-};
-
 export default DataBox;

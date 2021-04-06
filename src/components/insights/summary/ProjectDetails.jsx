@@ -110,24 +110,24 @@ function ProjectDetails({dashboardData, setDashboardData}) {
   const getChartBody = () => {
 
     return (
-        <div>
-      <FilterContainer
-        loadData={loadData}
-        isLoading={isLoading}
-        body={getProjectsTable()}
-        titleIcon={faProjectDiagram}
-        supportSearch={false}
-        metaData={ProjectDetailsMetadata}
-        title={"Pipelines By Project"}
-      />
-      <BuildDetailsTableModal
-        header="Build Details"
-        size="lg"
-        tableMessage={modalData}
-        show={showModal}
-        setParentVisibility={setShowModal}
-        dashboardData={dashboardData}
-      />
+      <div className="w-100 pl-4 pr-4 ">
+        <FilterContainer
+          loadData={loadData}
+          isLoading={isLoading}
+          body={getProjectsTable()}
+          titleIcon={faProjectDiagram}
+          supportSearch={false}
+          metaData={ProjectDetailsMetadata}
+          title={"Pipelines By Project"}
+        />
+        <BuildDetailsTableModal
+          header="Build Details"
+          size="lg"
+          tableMessage={modalData}
+          show={showModal}
+          setParentVisibility={setShowModal}
+          dashboardData={dashboardData}
+        />
       </div>
     );
   };
