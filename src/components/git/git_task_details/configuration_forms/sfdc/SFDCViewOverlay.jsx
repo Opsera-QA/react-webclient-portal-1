@@ -46,6 +46,7 @@ function SFDCViewOverlay({ gitTasksData, refreshData }) {
       titleIcon={faFileInvoice}
       showToasts={true}
       isLoading={isLoading}
+      fullWidth={true}
     >
       <div className={"p-3"}>
         <SfdcPipelineWizard gitTaskData={gitTasksData} closePanel={closePanel} />

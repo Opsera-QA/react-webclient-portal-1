@@ -7,7 +7,7 @@ import ModalTabPanelContainer from "components/common/panels/detail_view/ModalTa
 import ChartSummaryPanelWrapper from "components/insights/charts/detail_overlay/ChartSummaryPanelWrapper";
 import ChartJsonPanel from "components/insights/charts/detail_overlay/ChartJsonPanel";
 
-function ChartDetailsTabPanel({ chartModel }) {
+function ChartDetailsTabPanel({ chartModel, kpiIdentifier }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -15,29 +15,24 @@ function ChartDetailsTabPanel({ chartModel }) {
     setActiveTab(activeTab);
   };
 
-  const getActionSpecificTab = () => {
-    // TODO: Make switch statement if a handful are added
-    // if (chartModel.action === "console output") {
-    //   return (<ConsoleLogTab activeTab={activeTab} handleTabClick={handleTabClick} />);
-    // }
-  };
-
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
         <SummaryTab handleTabClick={handleTabClick} activeTab={activeTab} />
-        {/*{getActionSpecificTab()}*/}
         <JsonTab handleTabClick={handleTabClick} activeTab={activeTab} />
       </CustomTabContainer>
     );
   };
 
+  // TODO: Wire up settings view
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <ChartSummaryPanelWrapper chartModel={chartModel} />;
+        return <ChartSummaryPanelWrapper chartModel={chartModel} kpiIdentifier={kpiIdentifier} />;
       case "json":
-        return <ChartJsonPanel chartModel={chartModel} />;
+        return <ChartJsonPanel chartModel={chartModel.getPersistData()} />;
+      // case "settings":
+      //   return <KpiSettingsForm chartModel={chartModel.getPersistData()} />;
       default:
         return null;
     }
@@ -48,6 +43,7 @@ function ChartDetailsTabPanel({ chartModel }) {
 
 ChartDetailsTabPanel.propTypes = {
   chartModel: PropTypes.object,
+  kpiIdentifier: PropTypes.string
 };
 
 export default ChartDetailsTabPanel;

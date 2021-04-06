@@ -5,7 +5,7 @@ import {faChartBar} from "@fortawesome/pro-light-svg-icons";
 import ChartDetailsTabPanel from "components/insights/charts/detail_overlay/ChartDetailsTabPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function ChartDetailsOverlay({ chartModel }) {
+function ChartDetailsOverlay({ chartModel, kpiIdentifier }) {
   const toastContext = useContext(DialogToastContext);
   const closePanel = () => {
     // if (isMounted?.current === true) {
@@ -20,21 +20,22 @@ function ChartDetailsOverlay({ chartModel }) {
     <CenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`Chart Details ${chartModel.getData("name")}`}
+      titleText={`[${chartModel.getType()}] Chart Details`}
       // TODO: Make component that changes icon depending on chart type
       titleIcon={faChartBar}
       showToasts={true}
       showCloseButton={false}
     >
       <div className="shaded-panel m-3">
-        <ChartDetailsTabPanel chartModel={chartModel}/>
+        <ChartDetailsTabPanel chartModel={chartModel} kpiIdentifier={kpiIdentifier}/>
       </div>
     </CenterOverlayContainer>
   );
 }
 
 ChartDetailsOverlay.propTypes = {
-  chartModel: PropTypes.object
+  chartModel: PropTypes.object,
+  kpiIdentifier: PropTypes.string
 };
 
 export default ChartDetailsOverlay;

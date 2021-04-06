@@ -24,7 +24,7 @@ function StandaloneLinkField({link, label, className, openInNewWindow, showClipb
 
   const getClipboardButton = () => {
     if (showClipboardButton === true) {
-      return (<CopyToClipboardIcon className={"my-auto ml-auto"} copyString={link} />);
+      return (<CopyToClipboardIcon className={"my-auto ml-3"} copyString={link} />);
     }
   };
 

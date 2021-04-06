@@ -1,29 +1,34 @@
-import React, {useEffect, useContext, useState, useMemo, useRef} from "react";
+import React, { useEffect, useContext, useState, useMemo, useRef } from "react";
 import CustomTable from "components/common/table/CustomTable";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import PropTypes from "prop-types";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {
+  getLimitedTableTextColumn,
   getTableDateTimeColumn,
-  getTableTextColumn
+  getTableTextColumn,
 } from "components/common/table/table-column-helpers";
-import gitlabRecentMergeRequestsMetadata
-  from "components/insights/charts/gitlab/table/recent_merge_requests/gitlab-recent-merge-requests-metadata.js";
-import {getField} from "components/common/metadata/metadata-helpers";
+import gitlabRecentMergeRequestsMetadata from "components/insights/charts/gitlab/table/recent_merge_requests/gitlab-recent-merge-requests-metadata.js";
+import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import ModalLogs from "components/common/modal/modalLogs";
 
-function GitlabRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
+function GitlabRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = gitlabRecentMergeRequestsMetadata.fields;
-  const {getAccessToken} = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [metrics, setMetrics] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [tableFilterDto, setTableFilterDto] = useState(new Model({...genericChartFilterMetadata.newObjectFields}, genericChartFilterMetadata, false));
+  const [tableFilterDto, setTableFilterDto] = useState(
+    new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
+  );
+  const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState(undefined);
 
   const noDataMessage = "No Data is available for this chart at this time";
 
@@ -31,7 +36,7 @@ function GitlabRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
     () => [
       getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "AssigneeName")),
-      getTableTextColumn(getField(fields, "MergeRequestTitle")),
+      getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 20),
       getTableTextColumn(getField(fields, "ProjectName")),
       getTableTextColumn(getField(fields, "BranchName")),
       getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
@@ -63,7 +68,8 @@ function GitlabRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
   const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
-      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
+      let dashboardTags =
+        dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
@@ -77,21 +83,26 @@ function GitlabRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", response?.data?.data[0]?.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime?.count);
-        setTableFilterDto({...newFilterDto});
+        newFilterDto.setData(
+          "totalCount",
+          response?.data?.data[0]?.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime?.count
+        );
+        setTableFilterDto({ ...newFilterDto });
       }
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         setError(error);
       }
-    }
-    finally {
+    } finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
     }
+  };
+  const onRowSelect = (rowData) => {
+    setModalData(rowData.original);
+    setShowModal(true);
   };
 
   const getChartTable = () => {
@@ -104,6 +115,7 @@ function GitlabRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
+        onRowSelect={onRowSelect}
       />
     );
   };
@@ -121,6 +133,14 @@ function GitlabRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
         setKpis={setKpis}
         isLoading={isLoading}
       />
+      <ModalLogs
+        header="Gitlab Recent Merge Requests"
+        size="lg"
+        jsonMessage={modalData}
+        dataType="bar"
+        show={showModal}
+        setParentVisibility={setShowModal}
+      />
     </div>
   );
 }
@@ -130,7 +150,7 @@ GitlabRecentMergeRequests.propTypes = {
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func
+  setKpis: PropTypes.func,
 };
 
 export default GitlabRecentMergeRequests;
