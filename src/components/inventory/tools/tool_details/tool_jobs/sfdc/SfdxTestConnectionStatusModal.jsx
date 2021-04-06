@@ -6,7 +6,7 @@ import { axiosApiService } from "api/apiService";
 import {AuthContext} from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 
-function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenkinsBuildNumber, setJenkinsBuildNumber}) {
+function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenkinsBuildNumber, setJenkinsBuildNumber, setLoading}) {
 
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -33,6 +33,7 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
 
   const handleModalClose = () => {
     setJenkinsBuildNumber("");
+    setLoading(false);
     setShowModal(false);
   };
 
@@ -122,6 +123,7 @@ SfdxTestConnectionStatusModal.propTypes = {
   toolData: PropTypes.object,
   jenkinsBuildNumber: PropTypes.string,
   setJenkinsBuildNumber: PropTypes.func,
+  setLoading: PropTypes.func,
 };
 
 export default SfdxTestConnectionStatusModal;
