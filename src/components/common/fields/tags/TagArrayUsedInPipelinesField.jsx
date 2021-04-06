@@ -11,8 +11,9 @@ import pipelineSummaryMetadata
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
+import TagsUsedInPipelineTable from "components/reports/tags/pipelines/TagsUsedInPipelineTable";
 import axios from "axios";
-import TagsUsedInPipelineTable from 'components/reports/tags/pipelines/TagsUsedInPipelineTable';
+
 
 function TagArrayUsedInPipelinesField({ tags, showTable }) {
   const { getAccessToken } = useContext(AuthContext);
