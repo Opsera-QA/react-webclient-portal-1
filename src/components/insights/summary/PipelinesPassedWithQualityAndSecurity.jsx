@@ -99,6 +99,7 @@ function PipelineDetails({dashboardData}) {
       <DataBox 
         title={!isLoading && metrics[0]?.count[0] ? metrics[0]?.count[0]?.count : <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>}
         subTitle="Successful Pipelines (Security and Quality)"
+        toolTip="Successful Pipelines (Security and Quality)"
         clickAction={() => onSelect(metrics[0]?.data)}
         status="success"
         modal={<PipelineDetailsTableModal
