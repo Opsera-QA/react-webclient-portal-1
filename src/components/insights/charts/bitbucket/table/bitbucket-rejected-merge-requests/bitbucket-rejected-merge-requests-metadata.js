@@ -1,6 +1,6 @@
-const BitbucketMostActiveContributorsMetadata = {
+const bitbucketRejectedMergeRequestsMetadata = {
   idProperty: "_id",
-  type: "Bitbucket Pending Merge Requests",
+  type: "Bitbucket Rejected Pull Requests",
   fields: [
     {
       label: "Author",
@@ -30,8 +30,24 @@ const BitbucketMostActiveContributorsMetadata = {
       label: "Time",
       id: "mrCompletionTimeTimeStamp",
     },
+    {
+      label: "Repository URL",
+      id: "repositoryUrl",
+    },
+    {
+      label: "Merge Request URL",
+      id: "mergeRequestUrl",
+    },
   ],
-  newObjectFields: {},
+  newObjectFields: {
+    AuthorName: "",
+    AssigneeName: [],
+    MergeRequestTitle: "",
+    BranchName: "",
+    ProjectName: "",
+    RejectedReason: "",
+    mrCompletionTimeTimeStamp: null
+  },
 };
 
-export default BitbucketMostActiveContributorsMetadata;
+export default bitbucketRejectedMergeRequestsMetadata;
