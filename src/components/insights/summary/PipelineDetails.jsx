@@ -51,7 +51,7 @@ function PipelineDetails({dashboardData}) {
 
   const getChartBody = () => {
     return (
-      <DataBoxWrapper>
+      <DataBoxWrapper padding={4}>
         <TotalPipelinesExecuted dashboardData={dashboardData}/>
         <PipelinesPassedWithQualityAndSecurity dashboardData={dashboardData}/>
         <PipelinesFailedSecurity dashboardData={dashboardData}/>
