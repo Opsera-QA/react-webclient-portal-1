@@ -40,6 +40,7 @@ import SfdcModifiedFilesTabView from "./tab_views/SfdcModifiedFilesTabView";
 import GitModifiedFilesTabView from "./tab_views/GitModifiedFilesTabView";
 import SfdcDestModifiedFilesTabView from "./tab_views/SfdcDestModifiedFilesTabView";
 import SfdcProfileSelectionView from "./tab_views/SfdcProfileSelectionView";
+import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -1225,14 +1226,14 @@ const SfdcPipelineModifiedFiles = ({
       <div className="flex-container">
         <div className="flex-container-content">
           <div className="h5">SalesForce Pipeline Run: File Comparison</div>
-          <div className="text-muted mb-4">
+          <div className="text-muted mb-2">
             Listed below are the files with changes impacted in this pipeline run. Please confirm that you want to
             proceed with this operation.
           </div>
           { activeTab === "git" && gitWarningMessage ? (
-            <div className="warning-block py-1 px-2 mb-2">{ gitWarningMessage }</div>
+            <InlineWarning warningMessage={gitWarningMessage} className="pl-3" />
           ) : activeTab !== "git" && sfdcWarningMessage ? (
-            <div className="warning-block py-1 px-2 mb-2">{ sfdcWarningMessage }</div>
+              <InlineWarning warningMessage={sfdcWarningMessage} className="pl-3" />
           ) : null }
           
           <CustomTabContainer>            

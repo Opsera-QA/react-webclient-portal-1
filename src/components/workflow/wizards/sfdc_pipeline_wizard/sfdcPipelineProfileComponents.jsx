@@ -516,7 +516,7 @@ const SfdcPipelineProfileComponents = ({
       <div className="flex-container">        
         <div className="flex-container-content">
           <div className="h5">SalesForce Pipeline Run: Component Selection</div>
-          <div className="text-muted mb-4">
+          <div className="text-muted mb-2">
             Listed below are the files with changes impacted in this pipeline run. Please confirm that you want to
             proceed with this operation.
           </div>
