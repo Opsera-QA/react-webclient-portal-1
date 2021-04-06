@@ -4,12 +4,10 @@ import PropTypes from "prop-types";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import { axiosApiService } from "api/apiService";
 import {AuthContext} from "contexts/AuthContext";
-import { DialogToastContext } from "contexts/DialogToastContext";
 
-function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenkinsBuildNumber, setJenkinsBuildNumber}) {
+function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData}) {
 
   const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [testResponse, setTestResponse] = useState([]);
   const [modalLoading, setModalLoading] = useState(false);
 
@@ -23,40 +21,38 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
   });
 
   useEffect(() => {
-    if(showModal && jenkinsBuildNumber){      
-      toolLogPolling(jenkinsBuildNumber);      
+    if(showModal){      
+      toolLogPolling();      
     }else {
       console.log(timerIds);
       timerIds.forEach(timerId => clearTimeout(timerId));
     }
-  }, [showModal,jenkinsBuildNumber]);
+  }, [showModal]);
 
   const handleModalClose = () => {
-    setJenkinsBuildNumber("");
     setShowModal(false);
   };
 
-  const toolLogPolling = async (jenkinsBuildNumber, count = 1) => { 
-    // console.log(jenkinsBuildNumber);   
+  const toolLogPolling = async (count = 1) => {    
     setModalLoading(true);
     try {
       const accessToken = await getAccessToken();
       const apiUrl = `/registry/log/${toolData.getData("_id")}?page=1&size=50`;
       const tool_logs = await axiosApiService(accessToken).get(apiUrl, {});
 
-      const testRes = tool_logs.data.data.filter(rec => rec.action === 'test_configuration' && rec.run_count == jenkinsBuildNumber);
+      const testRes = tool_logs.data.data.filter(rec => rec.action === 'test_configuration' && rec.run_count == 59);
 
       if(testRes.length !== 1 && count < 5 ){
         await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
         count++;
-        return await toolLogPolling(jenkinsBuildNumber, count);
+        return await toolLogPolling(count);
       }else{        
         setTestResponse(testRes);
         setModalLoading(false);
       }      
     } catch (err) {
       setModalLoading(false);
-      toastContext.showErrorDialog(err.message);
+      console.log(err.message);
     }    
   };
 
@@ -64,12 +60,12 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
     <>
       <Modal show={showModal} onHide={handleModalClose} backdrop="static">
         <Modal.Header closeButton>
-          <Modal.Title>SFDX Connection Check</Modal.Title>
+          <Modal.Title>Test SFDX Connection</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="content-block m-3 full-height">
             <div className="p-3">
-                {modalLoading ? <DetailPanelLoadingDialog type={"Connection Results"} /> : testResponse.length > 0 ? (                    
+                {modalLoading ? <DetailPanelLoadingDialog type={"Test Connection Results"} /> : testResponse.length > 0 ? (                    
                     <Row>
                       <Col lg={12}>
                         <label className="mb-0 mr-2 text-muted"><span>Job Name:</span></label>
@@ -95,7 +91,7 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
                         <span>We are unable to fetch the status of the test connection. Please try again.</span>
                       </Col>
                       <Col lg={12}>
-                        <Button variant="secondary" onClick={() => toolLogPolling(jenkinsBuildNumber)}>
+                        <Button variant="secondary" onClick={() => toolLogPolling()}>
                             Refresh
                         </Button>
                       </Col>                      
@@ -103,7 +99,6 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
                   </>
                 ) }
             </div>
-            <div className="text-muted small m-2">Note: The connectivity check may take some time to get the results, you can also check results on logs tab.</div>
           </div>
         </Modal.Body>
         <Modal.Footer>
@@ -120,8 +115,6 @@ SfdxTestConnectionStatusModal.propTypes = {
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
   toolData: PropTypes.object,
-  jenkinsBuildNumber: PropTypes.string,
-  setJenkinsBuildNumber: PropTypes.func,
 };
 
 export default SfdxTestConnectionStatusModal;
