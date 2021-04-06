@@ -6,7 +6,7 @@ import { axiosApiService } from "api/apiService";
 import {AuthContext} from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 
-function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, runCount}) {
+function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenkinsBuildNumber, setJenkinsBuildNumber}) {
 
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -16,30 +16,40 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, runCo
   let timerIds = [];
 
   useEffect(() => {
-    toolLogPolling();
-    return function cleanup() {      
-      timerIds.forEach(timerId => clearTimeout(timerId));
+    console.log('SfdxTestConnectionStatusModal created');
+    return function cleanup() {
+      console.log('SfdxTestConnectionStatusModal destroyed');
     };
-  }, []);
+  });
+
+  useEffect(() => {
+    if(showModal && jenkinsBuildNumber){      
+      toolLogPolling(jenkinsBuildNumber);      
+    }else {
+      console.log(timerIds);
+      timerIds.forEach(timerId => clearTimeout(timerId));
+    }
+  }, [showModal,jenkinsBuildNumber]);
 
   const handleModalClose = () => {
+    setJenkinsBuildNumber("");
     setShowModal(false);
   };
 
-  const toolLogPolling = async (count = 1) => {    
+  const toolLogPolling = async (jenkinsBuildNumber, count = 1) => { 
+    // console.log(jenkinsBuildNumber);   
     setModalLoading(true);
     try {
       const accessToken = await getAccessToken();
-      const apiUrl = `/registry/log/${toolData.getData("_id")}?page=1&size=5`;
+      const apiUrl = `/registry/log/${toolData.getData("_id")}?page=1&size=50`;
       const tool_logs = await axiosApiService(accessToken).get(apiUrl, {});
 
-      // const testRes = tool_logs.data.data.filter(rec => rec.action === 'test_configuration' && rec.run_count == runCount);
-      const testRes = tool_logs.data.data.filter(rec => rec.action === 'test_configuration' && rec.run_count == 73);
+      const testRes = tool_logs.data.data.filter(rec => rec.action === 'test_configuration' && rec.run_count == jenkinsBuildNumber);
 
       if(testRes.length !== 1 && count < 5 ){
         await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
         count++;
-        return await toolLogPolling(count);
+        return await toolLogPolling(jenkinsBuildNumber, count);
       }else{        
         setTestResponse(testRes);
         setModalLoading(false);
@@ -85,7 +95,7 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, runCo
                         <span>We are unable to fetch the status of the test connection. Please try again.</span>
                       </Col>
                       <Col lg={12}>
-                        <Button variant="secondary" onClick={() => toolLogPolling()}>
+                        <Button variant="secondary" onClick={() => toolLogPolling(jenkinsBuildNumber)}>
                             Refresh
                         </Button>
                       </Col>                      
@@ -109,7 +119,8 @@ SfdxTestConnectionStatusModal.propTypes = {
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
   toolData: PropTypes.object,
-  runCount: PropTypes.number,
+  jenkinsBuildNumber: PropTypes.string,
+  setJenkinsBuildNumber: PropTypes.func,
 };
 
 export default SfdxTestConnectionStatusModal;
