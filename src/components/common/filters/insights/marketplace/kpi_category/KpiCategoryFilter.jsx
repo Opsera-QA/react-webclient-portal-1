@@ -8,15 +8,6 @@ function KpiCategoryFilter({ fieldName, filterModel, setFilterModel, setDataFunc
     return null;
   }
 
-  console.log('!!!!!!KPI!!!!', {
-    fieldName,
-    filterModel,
-    setFilterModel,
-    setDataFunction,
-    inline,
-    className
-  });
-
   return (
     <FilterSelectInputBase
       inline={inline}

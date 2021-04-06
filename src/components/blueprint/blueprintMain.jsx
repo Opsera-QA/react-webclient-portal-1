@@ -3,6 +3,7 @@ import {useParams} from "react-router-dom";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { ApiService } from "api/apiService";
+import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ErrorDialog from "components/common/status_notifications/error";
@@ -39,6 +40,7 @@ function OPBlueprint(props) {
   const [calenderActivation, setCalenderActivation] = useState(false);
   const [submitted, submitClicked] = useState(false);
   const [dataObject, setDataObject] = useState({});
+
   // const [date, setDate] = useState([
   //   {
   //     startDate: new Date(),
@@ -229,13 +231,7 @@ function OPBlueprint(props) {
               formattedFilterData.push(...filterGroup["options"]);
             });
             setFilters(formattedFilterData);
-            console.log('!!!!FORMATTED FILTERED DATA', formattedFilterData);
-            setDataObject({
-              data: formattedFilterData.map(d => d.value),
-              getData() {
-                return this.data;
-              }
-            });
+            setDataObject(setDataObjectWithMethods({ data: formattedFilterData}));
           }
         } else {
           setDisabledState(true);
@@ -246,9 +242,14 @@ function OPBlueprint(props) {
       });
   };
 
-  useEffect(() => {
-    console.log("!!!!!!", dataObject);
-  }, [dataObject]);
+  const setDataObjectWithMethods = data => {
+    setDataObject({
+      data: data?.data?.map(d => d.value),
+      getData() {
+        return this.data;
+      }
+    });
+  };
 
   useEffect(() => {
     !runCopy && setRunCount(runCountFetch[multiFilter.value]);
@@ -364,25 +365,16 @@ function OPBlueprint(props) {
               <SelectInputBase
                 fieldName="Select Opsera Pipeline"
                 dataObject={dataObject}
-                setDataObject={setDataObject}
+                setDataObject={setDataObjectWithMethods}
                 selectOptions={filterOptions}
-                busy={disabledForm ? false : Object.keys(filterOptions).length == 0 ? true : false} //*
+                busy={disabledForm ? false : Object.keys(filterOptions).length == 0 ? true : false}
                 valueField="value"
                 textField="label"
                 placeholderText={"Select Opsera Pipeline"}
                 disabled={Object.keys(filterOptions).length == 0 ? true : false}
+                getCurrentValue={() => multiFilter.length === 0 ? null : multiFilter}
+                customOnChangeHandler={pipelineSelect}
               />
-                {/* <DropdownList
-                  placeholder={"Select Opsera Pipeline"}
-                  data={filterOptions}
-                  busy={disabledForm ? false : Object.keys(filterOptions).length == 0 ? true : false}
-                  disabled={Object.keys(filterOptions).length == 0 ? true : false}
-                  valueField="value"
-                  textField="label"
-                  filter="contains"
-                  value={multiFilter.length === 0 ? null : multiFilter}
-                  onChange={pipelineSelect}
-                /> */}
               </Col>
               <Col md={4} className="py-1">
                 <NumberPicker

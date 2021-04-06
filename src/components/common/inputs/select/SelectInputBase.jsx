@@ -8,7 +8,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 
-function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, disabled, clearDataFunction, showClearValueButton, errorMessage, getCurrentValue}) {
+function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, disabled, clearDataFunction, showClearValueButton, errorMessage, getCurrentValue, customOnChangeHandler}) {
   const [field] = useState(dataObject?.getFieldById?.(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
@@ -22,7 +22,6 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
       setDataFunction(field?.id, data);
     }
     else {
-      console.log('!!!!!heya!!!!', field, data);
       validateAndSetData(field?.id, data[valueField]);
     }
   };
@@ -68,7 +67,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
         filter={"contains"}
         busy={busy}
         placeholder={placeholderText}
-        onChange={(data) => updateValue(data)}
+        onChange={customOnChangeHandler ? customOnChangeHandler : (data) => updateValue(data)}
         disabled={disabled}
       />
       <InfoText field={field} errorMessage={errorMessage} />
@@ -100,7 +99,8 @@ SelectInputBase.propTypes = {
   ]),
   showClearValueButton: PropTypes.bool,
   errorMessage: PropTypes.string,
-  getCurrentValue: PropTypes.func
+  getCurrentValue: PropTypes.func,
+  customOnChangeHandler: PropTypes.func
 };
 
 SelectInputBase.defaultProps = {
