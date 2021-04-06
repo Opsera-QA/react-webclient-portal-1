@@ -97,29 +97,34 @@ function TotalPipelinesExecuted({dashboardData}) {
 
   const getChartBody = () => {
     return (
-      <Card style={{ width: "100%" }}>
-        <Card.Body>
-          <Card.Title className="count-block-primary-text" style={{ fontSize: "25px" }}>
-            {!isLoading && metrics[0]?.count[0] ? metrics[0]?.count[0]?.count : <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>}
-          </Card.Title>
-          <Card.Text>
-            Total Number of Pipelines Executed
-          </Card.Text>
-        </Card.Body>
-      </Card>
-      
-    // <div>
-    //     <div className="metric-box p-1 text-center">
-    //       <div className="box-metric pointer" onClick={() => {onSelect(metrics[0]?.data);}}>
-    //         <div>
-    //           {!isLoading && metrics[0]?.count[0] ? metrics[0]?.count[0]?.count : <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>}
-    //         </div>
-    //       </div>
-    //       <div className="w-100 text-muted mb-1">
-    //         Total Number of Pipelines Executed
-    //       </div>
-    //     </div>
-    //   </div>
+      <>
+        <Card className="box-metric pointer" onClick={() => onSelect(metrics[0]?.data)}>
+          <Card.Body className="summary-count-blocks-card-body">
+            <div className="summary-count-blocks-status"
+                style={{backgroundColor: "red"}}>      
+            </div>
+            <Card.Title className="summary-count-blocks-card-title">
+              {!isLoading && metrics[0]?.count[0] ? metrics[0]?.count[0]?.count : <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>}
+            </Card.Title>
+            <Card.Subtitle className="summary-count-blocks-card-subtitle">
+              Total Number of Pipelines Executed
+            </Card.Subtitle>
+          </Card.Body>
+        </Card>
+        <PipelineDetailsTableModal
+          header="Pipelines Executed"
+          size="lg"
+          tableMessage={modalData}
+          show={showModal}
+          setParentVisibility={setShowModal}
+          loadData={loadData}
+          columns={columns}
+          tableFilterDto={tableFilterDto}
+          setTableFilterDto={setTableFilterDto}
+          noDataMessage={noDataMessage}
+          isLoading={isLoading}
+        /> 
+      </>
     );
   };
   
@@ -141,16 +146,3 @@ function TotalPipelinesExecuted({dashboardData}) {
     };
     
     export default TotalPipelinesExecuted;
-    {/* <PipelineDetailsTableModal
-      header="Pipelines Executed"
-      size="lg"
-      tableMessage={modalData}
-      show={showModal}
-      setParentVisibility={setShowModal}
-      loadData={loadData}
-      columns={columns}
-      tableFilterDto={tableFilterDto}
-      setTableFilterDto={setTableFilterDto}
-      noDataMessage={noDataMessage}
-      isLoading={isLoading}
-    /> */}
