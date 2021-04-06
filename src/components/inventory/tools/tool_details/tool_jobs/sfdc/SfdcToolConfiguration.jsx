@@ -24,6 +24,7 @@ function SfdcToolConfiguration({ toolData }) {
   const toastContext = useContext(DialogToastContext);
   const [sfdcConfigurationDto, setSfdcConfigurationDto] = useState(undefined);
   const [showModal, setShowModal] = useState(false);
+  const [runCount, setRunCount] = useState(1);
 
   useEffect(() => {
     loadData();
@@ -45,6 +46,7 @@ function SfdcToolConfiguration({ toolData }) {
     }
 
     if (response && response.data != null && response.data.status === 200) {      
+      // setRunCount(response.data.run_count || 1);
       setShowModal(true);
     }
     else {
@@ -57,7 +59,8 @@ function SfdcToolConfiguration({ toolData }) {
       <SfdxTestConnectionStatusModal 
         showModal={showModal}
         setShowModal={setShowModal}
-        toolData={toolData}            
+        toolData={toolData}
+        runCount={runCount}            
       />
     );
   };
