@@ -7,7 +7,7 @@ import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-function ExportReportButton({isLoading, tagData, className}) {
+function ExportTagReportButton({isLoading, tagData, className}) {
   const [showExportModal, setShowExportModal] = useState(false);
 
   const closeModal = () => {
@@ -54,10 +54,10 @@ function ExportReportButton({isLoading, tagData, className}) {
   );
 }
 
-ExportReportButton.propTypes = {
+ExportTagReportButton.propTypes = {
   tagData: PropTypes.array,
   isLoading: PropTypes.bool,
   className: PropTypes.string
 };
 
-export default ExportReportButton;
+export default ExportTagReportButton;
