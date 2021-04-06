@@ -7,8 +7,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
-import Card from "react-bootstrap/Card";
-import CardGroup from "react-bootstrap/CardGroup";
+import DataBox from "components/common/data_boxes/DataBox";
 import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import { getTableDateTimeColumn, getTableTextColumn, getChartPipelineStatusColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -97,21 +96,12 @@ function PipelineDetails({dashboardData}) {
 
   const getChartBody = () => {
     return (
-      <>
-        <Card className="box-metric pointer" onClick={() => onSelect(metrics[0]?.data)}>
-          <Card.Body className="summary-count-blocks-card-body">
-            <div className="summary-count-blocks-status"
-                style={{backgroundColor: "green"}}>      
-            </div>
-            <Card.Title className="summary-count-blocks-card-title">
-              {!isLoading && metrics[0]?.count[0] ? metrics[0]?.count[0]?.count : <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>}
-            </Card.Title>
-            <Card.Subtitle className="summary-count-blocks-card-subtitle">
-              Successful Pipelines (Security and Quality)
-            </Card.Subtitle>
-          </Card.Body>
-        </Card>
-        <PipelineDetailsTableModal
+      <DataBox 
+        title={!isLoading && metrics[0]?.count[0] ? metrics[0]?.count[0]?.count : <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>}
+        subTitle="Successful Pipelines (Security and Quality)"
+        clickAction={() => onSelect(metrics[0]?.data)}
+        status="success"
+        modal={<PipelineDetailsTableModal
           header="Successful Pipelines (Security and Quality)"
           size="lg"
           tableMessage={modalData}
@@ -123,8 +113,8 @@ function PipelineDetails({dashboardData}) {
           setTableFilterDto={setTableFilterDto}
           noDataMessage={noDataMessage}
           isLoading={isLoading}
-        />
-      </>
+        />}
+      />
     );
   };
 

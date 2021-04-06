@@ -7,7 +7,6 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
-import Card from "react-bootstrap/Card";
 import DataBox from "components/common/data_boxes/DataBox";
 import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import { getTableDateTimeColumn, getTableTextColumn, getChartPipelineStatusColumn } from "components/common/table/table-column-helpers";
