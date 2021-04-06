@@ -2,14 +2,18 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import StandaloneLinkField from "components/common/fields/link/standalone/StandaloneLinkField";
 
-function LinkField({dataObject, fieldName, className, showClipboardButton, openInNewWindow }) {
-  const [field] = useState(dataObject.getFieldById(fieldName));
+function LinkField({model, fieldName, className, showClipboardButton, openInNewWindow }) {
+  const [field] = useState(model?.getFieldById(fieldName));
+
+  if (model == null || model.getData(fieldName) == null) {
+    return null;
+  }
 
   return (
     <StandaloneLinkField
       className={className}
       openInNewWindow={openInNewWindow}
-      link={dataObject?.getData(fieldName)}
+      link={model?.getData(fieldName)}
       label={field?.label}
       showClipboardButton={showClipboardButton}
     />
@@ -18,7 +22,7 @@ function LinkField({dataObject, fieldName, className, showClipboardButton, openI
 
 LinkField.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
+  model: PropTypes.object,
   className: PropTypes.string,
   showClipboardButton: PropTypes.bool,
   openInNewWindow: PropTypes.bool
