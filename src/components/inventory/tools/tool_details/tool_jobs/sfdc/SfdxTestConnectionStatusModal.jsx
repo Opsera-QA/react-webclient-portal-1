@@ -60,12 +60,12 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData}) {
     <>
       <Modal show={showModal} onHide={handleModalClose} backdrop="static">
         <Modal.Header closeButton>
-          <Modal.Title>Test SFDX Connection</Modal.Title>
+          <Modal.Title>SFDX Connection Check</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="content-block m-3 full-height">
             <div className="p-3">
-                {modalLoading ? <DetailPanelLoadingDialog type={"Test Connection Results"} /> : testResponse.length > 0 ? (                    
+                {modalLoading ? <DetailPanelLoadingDialog type={"Connection Results"} /> : testResponse.length > 0 ? (                    
                     <Row>
                       <Col lg={12}>
                         <label className="mb-0 mr-2 text-muted"><span>Job Name:</span></label>
@@ -99,6 +99,7 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData}) {
                   </>
                 ) }
             </div>
+            <div className="text-muted small m-2">Note: The connectivity check may take some time to get the results, you can also check results on logs tab.</div>
           </div>
         </Modal.Body>
         <Modal.Footer>
