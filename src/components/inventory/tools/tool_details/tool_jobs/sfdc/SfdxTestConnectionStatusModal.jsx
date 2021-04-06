@@ -4,6 +4,9 @@ import PropTypes from "prop-types";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import { axiosApiService } from "api/apiService";
 import {AuthContext} from "contexts/AuthContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRepeat } from "@fortawesome/pro-light-svg-icons";
 
 function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenkinsBuildNumber, setJenkinsBuildNumber, setLoading}) {
 
@@ -93,8 +96,8 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
                         <span>We are unable to fetch the status of the test connection. Please try again.</span>
                       </Col>
                       <Col lg={12}>
-                        <Button variant="secondary" onClick={() => toolLogPolling()}>
-                            Refresh
+                        <Button variant="primary" onClick={() => toolLogPolling(jenkinsBuildNumber)}>
+                          <FontAwesomeIcon icon={faRepeat} className={`mr-2`} fixedWidth /> Try again
                         </Button>
                       </Col>                      
                     </Row>
