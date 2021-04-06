@@ -16,14 +16,14 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import PipelineToolInput from "components/common/list_of_values_input/workflow/pipelines/PipelineToolInput";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faPlug } from "@fortawesome/pro-light-svg-icons";
+import SfdxTestConnectionStatusModal from './SfdxTestConnectionStatusModal';
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 function SfdcToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [sfdcConfigurationDto, setSfdcConfigurationDto] = useState(undefined);
-  const [jenkinsBuildNumber, setJenkinsBuildNumber] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -37,15 +37,29 @@ function SfdcToolConfiguration({ toolData }) {
     let response;
     
     if (sfdcConfigurationDto != null) {
-      response = await toolsActions.checkSFDXToolConnection(getAccessToken, toolData);
+      try{
+        response = await toolsActions.checkSFDXToolConnection(getAccessToken, toolData);
+      } catch (error) {
+        toastContext.showErrorDialog(error.message);
+      }
     }
 
-    if (response && response.data != null && response.data.status === 200) {
-      console.log("open modal", response);
+    if (response && response.data != null && response.data.status === 200) {      
+      setShowModal(true);
     }
     else {
-      console.log("ERR"); 
+      toastContext.showErrorDialog("Something went wrong during test connection. View browser logs for more details"); 
     }
+  };
+
+  const getSfdxModal = () => {
+    return (
+      <SfdxTestConnectionStatusModal 
+        showModal={showModal}
+        setShowModal={setShowModal}
+        toolData={toolData}            
+      />
+    );
   };
 
   const getDynamicFields = () => {
@@ -64,7 +78,7 @@ function SfdcToolConfiguration({ toolData }) {
             <Button size="sm" variant={"secondary"} disabled={!toolData.getData("_id") || sfdcConfigurationDto.getData("jenkinsToolId").length < 1} onClick={() => testConnection()}>
             <FontAwesomeIcon icon={faPlug} className="mr-2" fixedWidth /> Check SFDX Connection
             </Button>
-          </div>
+          </div>          
         </>
       );
     }
@@ -107,6 +121,7 @@ function SfdcToolConfiguration({ toolData }) {
           <SFDCBuildTypeSelectInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"buildType"} />
           <BooleanToggleInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"checkConnection"} />
           {getDynamicFields()}
+          {showModal ? getSfdxModal() : null}
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>
