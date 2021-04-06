@@ -113,8 +113,8 @@ const SfdcPipelineModifiedFiles = ({
   const [activeTab, setActiveTab] = useState("sfdc");
   const [sfdcModifiedFilesTable, setSfdcModifiedFilesTable] = useState([]);
   const [gitModifiedFilesTable, setGitModifiedFilesTable] = useState([]);
-  const [sfdcWarningMessage, setSfdcWarningMessage] = useState("Sfdc warning message");
-  const [gitWarningMessage, setGitWarningMessage] = useState("Git warning message");
+  const [sfdcWarningMessage, setSfdcWarningMessage] = useState("");
+  const [gitWarningMessage, setGitWarningMessage] = useState("");
   
   useEffect(() => {
     async function loadInitialData() {
