@@ -22,7 +22,7 @@ function CustomBadge({icon, badgeText, className}) {
 
 CustomBadge.propTypes = {
   icon: PropTypes.object,
-  badgeText: PropTypes.string,
+  badgeText: PropTypes.any,
   className: PropTypes.string
 };
 

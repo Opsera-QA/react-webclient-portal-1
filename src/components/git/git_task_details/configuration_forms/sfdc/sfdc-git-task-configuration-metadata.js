@@ -4,7 +4,7 @@ const sfdcGitTaskConfigurationMetadata = {
   type: "SFDC Git Task Configuration",
   fields: [
     {
-      label: "Select Jenkins Tool",
+      label: "Jenkins Tool",
       id: "toolConfigId",
       isRequired: true,
       maxLength: 24,
@@ -34,14 +34,14 @@ const sfdcGitTaskConfigurationMetadata = {
       regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
     },
     {
-      label: "Select SCM Type",
+      label: "SCM Type",
       id: "service",
       isRequired: true,
       maxLength: 10,
       regexValidator: regexHelpers.regexTypes.loweCaseLetters
     },    
     {
-      label: "Select Account",
+      label: "Account",
       id: "gitCredential",
       isRequired: true,
       maxLength: 50,

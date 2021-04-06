@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, {createContext} from "react";
 import PropTypes from "prop-types";
 import moment from "moment";
 
@@ -143,6 +143,10 @@ const AuthContextProvider = (props) => {
       return token;
     };
 
+    const getAccessRoleData = async () => {
+      const user = await getUserRecord();
+      return await setAccessRoles(user);
+    };
 
     return (
       <AuthContext.Provider value={{
@@ -157,6 +161,7 @@ const AuthContextProvider = (props) => {
         setAccessRoles: setAccessRoles,
         getIsAuthenticated: getIsAuthenticated,
         generateJwtServiceTokenWithValue: generateJwtServiceTokenWithValue,
+        getAccessRoleData: getAccessRoleData,
       }}>
         {props.children}
       </AuthContext.Provider>

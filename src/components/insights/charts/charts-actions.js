@@ -58,7 +58,7 @@ chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessTok
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
-chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, cancelTokenSource, request, kpiConfiguration, dashboardTags, tableFilterDto) => {
+chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, cancelTokenSource, request, kpiConfiguration, dashboardTags, tableFilterDto, projectTags, dashboardOrgs) => {
   const apiUrl = "/analytics/metrics";
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const tags = getTagsFromKpiConfiguration(kpiConfiguration);
@@ -76,6 +76,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, canc
     jenkinsBuildNumber: jenkinsBuildNumber,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
+    projectTags: projectTags,
+    dashboardOrgs: dashboardOrgs
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);

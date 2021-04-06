@@ -6,15 +6,21 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import PropTypes from "prop-types";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { getLimitedTableTextColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
+import {
+  getLimitedTableTextColumn,
+  getTableDateTimeColumn,
+  getTableTextColumn
+} from "components/common/table/table-column-helpers";
 import bitbucketRejectedMergeRequestsMetadata from "components/insights/charts/bitbucket/table/bitbucket-rejected-merge-requests/bitbucket-rejected-merge-requests-metadata";
 import { getField } from "components/common/metadata/metadata-helpers";
-import { format } from "date-fns";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
-import ModalLogs from "components/common/modal/modalLogs";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
+import {noChartDataMessage} from "components/common/tooltip/popover-text";
 
 function BitbucketRejectedMergeRequestsTable({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+  const toastContext = useContext(DialogToastContext);
   const fields = bitbucketRejectedMergeRequestsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -25,8 +31,6 @@ function BitbucketRejectedMergeRequestsTable({ kpiConfiguration, setKpiConfigura
   const [tableFilterDto, setTableFilterDto] = useState(
     new Model({ ...genericChartFilterMetadata.newObjectFields }, genericChartFilterMetadata, false)
   );
-  const [showModal, setShowModal] = useState(false);
-  const [modalData, setModalData] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -82,28 +86,21 @@ function BitbucketRejectedMergeRequestsTable({ kpiConfiguration, setKpiConfigura
     }
   };
 
-  const noDataMessage = "No Data is available for this chart at this time";
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "AuthorName")),
       getTableTextColumn(getField(fields, "AssigneeName")),
-      getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 15),
+      getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 25),
       getTableTextColumn(getField(fields, "BranchName")),
       getTableTextColumn(getField(fields, "ProjectName")),
-      getLimitedTableTextColumn(getField(fields, "RejectedReason"), 15),
-      {
-        Header: "Time",
-        accessor: "mrCompletionTimeTimeStamp",
-        Cell: (row) => {
-          return format(new Date(row.value), "yyyy-MM-dd', 'hh:mm a");
-        },
-      },
+      getLimitedTableTextColumn(getField(fields, "RejectedReason"), 25),
+      getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp"))
     ],
     []
   );
   const onRowSelect = (rowData) => {
-    setModalData(rowData.original);
-    setShowModal(true);
+    const chartModel = new Model({...rowData.original}, bitbucketRejectedMergeRequestsMetadata, false);
+    toastContext.showOverlayPanel(<ChartDetailsOverlay chartModel={chartModel} />);
   };
 
   const getChartTable = () => {
@@ -111,7 +108,7 @@ function BitbucketRejectedMergeRequestsTable({ kpiConfiguration, setKpiConfigura
       <CustomTable
         columns={columns}
         data={metrics}
-        noDataMessage={noDataMessage}
+        noDataMessage={noChartDataMessage}
         paginationDto={tableFilterDto}
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
@@ -122,27 +119,18 @@ function BitbucketRejectedMergeRequestsTable({ kpiConfiguration, setKpiConfigura
   };
 
   return (
-    <div>
-      <ChartContainer
-        kpiConfiguration={kpiConfiguration}
-        setKpiConfiguration={setKpiConfiguration}
-        chart={getChartTable()}
-        loadChart={loadData}
-        dashboardData={dashboardData}
-        index={index}
-        error={error}
-        setKpis={setKpis}
-        isLoading={isLoading}
-      />
-      <ModalLogs
-        header="Bitbucket Rejected Pull Requests"
-        size="lg"
-        jsonMessage={modalData}
-        dataType="bar"
-        show={showModal}
-        setParentVisibility={setShowModal}
-      />
-    </div>
+    <ChartContainer
+      tableChart={true}
+      kpiConfiguration={kpiConfiguration}
+      setKpiConfiguration={setKpiConfiguration}
+      chart={getChartTable()}
+      loadChart={loadData}
+      dashboardData={dashboardData}
+      index={index}
+      error={error}
+      setKpis={setKpis}
+      isLoading={isLoading}
+    />
   );
 }
 

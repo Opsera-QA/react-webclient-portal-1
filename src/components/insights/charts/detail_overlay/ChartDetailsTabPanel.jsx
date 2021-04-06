@@ -37,7 +37,7 @@ function ChartDetailsTabPanel({ chartModel }) {
       case "summary":
         return <ChartSummaryPanelWrapper chartModel={chartModel} />;
       case "json":
-        return <ChartJsonPanel chartModel={chartModel} />;
+        return <ChartJsonPanel chartModel={chartModel.getPersistData()} />;
       default:
         return null;
     }

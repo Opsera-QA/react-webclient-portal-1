@@ -6,12 +6,12 @@ import Col from "react-bootstrap/Col";
 import ReactJson from "react-json-view";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 
-function ChartJsonPanel({ pipelineStepData }) {
+function ChartJsonPanel({ chartModel }) {
   return (
     <SummaryPanelContainer>
       <Row>
         <Col md={12}>
-          <ReactJson src={pipelineStepData} enableClipboard={false} displayDataTypes={false} collapsed={false}/>
+          <ReactJson src={chartModel} enableClipboard={false} displayDataTypes={false} collapsed={false}/>
         </Col>
       </Row>
     </SummaryPanelContainer>
@@ -19,8 +19,7 @@ function ChartJsonPanel({ pipelineStepData }) {
 }
 
 ChartJsonPanel.propTypes = {
-  pipelineStepData: PropTypes.object,
+  chartModel: PropTypes.object,
 };
-
 
 export default ChartJsonPanel;

@@ -27,11 +27,11 @@ import {truncateString} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 const getTableHeader = (field) => {
-  return field["label"];
+  return field ? field.label : "";
 };
 
 const getTableAccessor = (field) => {
-  return field["id"];
+  return field ? field.id : "";
 };
 
 export const getTableTextColumnWithoutField = (header, accessor) => {
@@ -63,7 +63,19 @@ export const getLimitedTableTextColumn = (field, maxLength, className) => {
     accessor: getTableAccessor(field),
     class: className ? className : undefined,
     Cell: function parseText(row) {
-      return row.value ? truncateString(row.value, maxLength) : "";
+      const value = row?.value;
+
+      if (value != null) {
+        const truncatedString = truncateString(value, maxLength);
+
+        if (truncatedString !== value) {
+          return (<TooltipWrapper innerText={value}><span>{truncatedString}</span></TooltipWrapper>);
+        }
+
+        return value;
+      }
+
+      return "";
     },
   };
 };
@@ -331,18 +343,20 @@ export const getChartPipelineStatusColumn = (field, className) => {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
     Cell: function parseStatus(row) {
-      return row.value ? (
-        row.value === "FAILURE" || row.value === "failed" || row.value === "failure" ? (
-          <FailIcon />
-        ) : (
-          row.value === "UNSTABLE" || row.value === "unstable" ? (
-            <WarningIcon />
-          ) : (
-            <SuccessIcon />
-          )
-      )) : (
-        "unknown"
-      );
+      let status = typeof row?.value === "string" ? row.value.toLowerCase() : status;
+      switch (status) {
+        case "failure":
+        case "failed":
+          return (<FailIcon />);
+        case "unknown":
+          return (<WarningIcon/>);
+        case "passed":
+        case "success":
+        case "successful":
+          return (<SuccessIcon/>);
+        default:
+          return status;
+      }
     },
     class: className ? className :  undefined
   };

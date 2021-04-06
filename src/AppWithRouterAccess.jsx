@@ -69,6 +69,7 @@ import LdapDepartmentDetailView
 import Reports from "./components/reports/Reports";
 import Reports_Old from "./components/reports/Reports_Old";
 import Marketplace from "components/insights/marketplace/Marketplace";
+import InsightsSummary from "components/insights/summary/InsightsSummary";
 import AnalyticsProfileSettings from "./components/settings/analytics/analyticsProfileSettings";
 import SiteNotificationManagement from "./components/admin/site_notifications/SiteNotificationManagement";
 import SiteNotificationDetailView
@@ -297,7 +298,7 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/insights/dashboards" exact component={Insights}/>
                   <SecureRoute path="/insights/dashboards/:id/:tab?" exact component={DashboardDetailView}/>
                   <SecureRoute path="/logs" exact component={Logs}/>
-                  <SecureRoute path="/blueprint" exact component={OPBlueprintMain}/>
+                  <SecureRoute path="/blueprint/:id?/:run?" exact component={OPBlueprintMain}/>
                   <SecureRoute path="/update" component={Update}/>
 
                   {/* Reports */}
@@ -315,6 +316,9 @@ const AppWithRouterAccess = () => {
 
                   {/* marketplace */}
                   <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace}/>
+
+                  {/*insights summary */}
+                  <SecureRoute path="/insights/synopsis" component={InsightsSummary}/>
 
                   {/* git tasks */}
                   <SecureRoute path="/git" exact component={GitComponent}/>
