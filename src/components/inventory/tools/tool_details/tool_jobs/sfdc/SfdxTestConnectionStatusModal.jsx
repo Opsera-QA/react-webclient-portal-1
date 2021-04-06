@@ -11,6 +11,7 @@ import { faRepeat } from "@fortawesome/pro-light-svg-icons";
 function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenkinsBuildNumber, setJenkinsBuildNumber, setLoading}) {
 
   const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [testResponse, setTestResponse] = useState([]);
   const [modalLoading, setModalLoading] = useState(false);
 
@@ -24,13 +25,13 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
   });
 
   useEffect(() => {
-    if(showModal){      
-      toolLogPolling();      
+    if(showModal && jenkinsBuildNumber){      
+      toolLogPolling(jenkinsBuildNumber);      
     }else {
       console.log(timerIds);
       timerIds.forEach(timerId => clearTimeout(timerId));
     }
-  }, [showModal]);
+  }, [showModal,jenkinsBuildNumber]);
 
   const handleModalClose = () => {
     setJenkinsBuildNumber("");
@@ -38,26 +39,27 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
     setShowModal(false);
   };
 
-  const toolLogPolling = async (count = 1) => {    
+  const toolLogPolling = async (jenkinsBuildNumber, count = 1) => { 
+    // console.log(jenkinsBuildNumber);   
     setModalLoading(true);
     try {
       const accessToken = await getAccessToken();
       const apiUrl = `/registry/log/${toolData.getData("_id")}?page=1&size=50`;
       const tool_logs = await axiosApiService(accessToken).get(apiUrl, {});
 
-      const testRes = tool_logs.data.data.filter(rec => rec.action === 'test_configuration' && rec.run_count == 59);
+      const testRes = tool_logs.data.data.filter(rec => rec.action === 'test_configuration' && rec.run_count === jenkinsBuildNumber);
 
       if(testRes.length !== 1 && count < 5 ){
         await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
         count++;
-        return await toolLogPolling(count);
+        return await toolLogPolling(jenkinsBuildNumber, count);
       }else{        
         setTestResponse(testRes);
         setModalLoading(false);
       }      
     } catch (err) {
       setModalLoading(false);
-      console.log(err.message);
+      toastContext.showErrorDialog(err.message);
     }    
   };
 
