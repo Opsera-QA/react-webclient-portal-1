@@ -18,6 +18,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faPlug } from "@fortawesome/pro-light-svg-icons";
 import SfdxTestConnectionStatusModal from './SfdxTestConnectionStatusModal';
 import { DialogToastContext } from "contexts/DialogToastContext";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 function SfdcToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -46,7 +47,7 @@ function SfdcToolConfiguration({ toolData }) {
     }
 
     if (response && response.data != null && response.data.status === 200 ) {   
-      setJenkinsBuildNumber(response.data.jenkinsBuildNumber); 
+      setJenkinsBuildNumber(response.data.jenkinsBuildNumber || 1); 
       setShowModal(true);
     }
     else {
@@ -79,9 +80,11 @@ function SfdcToolConfiguration({ toolData }) {
             setDataObject={setSfdcConfigurationDto}
           />
           <div className="p-2">
-            <Button size="sm" variant={"secondary"} disabled={!toolData.getData("_id") || sfdcConfigurationDto.getData("jenkinsToolId").length < 1} onClick={() => testConnection()}>
-            <FontAwesomeIcon icon={faPlug} className="mr-2" fixedWidth /> Check SFDX Connection
-            </Button>
+            <TooltipWrapper innerText={"Select Jenkins tool to Test Connection"}>
+              <Button size="sm" variant={"secondary"} disabled={!toolData.getData("_id") || sfdcConfigurationDto.getData("jenkinsToolId").length < 1} onClick={() => testConnection()}>
+                <FontAwesomeIcon icon={faPlug} className="mr-2" fixedWidth /> Check SFDX Connection
+              </Button>
+            </TooltipWrapper>
           </div>          
         </>
       );
@@ -91,7 +94,7 @@ function SfdcToolConfiguration({ toolData }) {
     return <></>;
   }
 
-  console.log(sfdcConfigurationDto);
+  // console.log(sfdcConfigurationDto);
 
   const saveSfdcToolConfiguration = async () => {
     let newConfiguration = sfdcConfigurationDto.getPersistData();
