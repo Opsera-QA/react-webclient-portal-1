@@ -90,7 +90,7 @@ function InsightsSummary() {
             className={"mx-2"}
             dashboardData={dashboardData}
           />
-           <DashboardFilterOrganizationInput
+          <DashboardFilterOrganizationInput
           className={"mx-2"}
           dataObject={dashboardFilterTagsModel}
           setDataObject={setDashboardFilterTagsModel}
@@ -99,7 +99,7 @@ function InsightsSummary() {
           loadData={loadData}
         />
         </div>
-      </ActionBarContainer>
+        </ActionBarContainer>
         <PipelineDetails dashboardData={dashboardData} setDashboardData={setDashboardData}/>
         <ProjectDetails dashboardData={dashboardData} setDashboardData={setDashboardData}/>
         </div>

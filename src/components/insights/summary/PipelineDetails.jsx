@@ -6,6 +6,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
+import CardGroup from "react-bootstrap/CardGroup";
 import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import { getTableDateTimeColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -48,16 +49,16 @@ function PipelineDetails({dashboardData}) {
 
   const getChartBody = () => {
     return (
-    <div>
-        <Container>
-          <Row className="p-3">
-            <Col><TotalPipelinesExecuted dashboardData={dashboardData}/></Col>
-            <Col><PipelinesPassedWithQualityAndSecurity dashboardData={dashboardData}/></Col>
-            <Col><PipelinesFailedSecurity dashboardData={dashboardData}/></Col>
-            <Col><PipelinesFailedQuality dashboardData={dashboardData}/></Col>
-            <Col><PipelinesFailedDeployment dashboardData={dashboardData}/></Col>
-          </Row>
-        </Container>
+      <div className="w-100">
+        <div className="d-none d-sm-block justify-content-center">
+          <CardGroup className="w-100 d-flex justify-content-center">
+            <TotalPipelinesExecuted dashboardData={dashboardData}/>
+            <PipelinesPassedWithQualityAndSecurity dashboardData={dashboardData}/>
+            <PipelinesFailedSecurity dashboardData={dashboardData}/>
+            <PipelinesFailedQuality dashboardData={dashboardData}/>
+            <PipelinesFailedDeployment dashboardData={dashboardData}/>
+          </CardGroup>
+        </div>
       </div>
     );
   };

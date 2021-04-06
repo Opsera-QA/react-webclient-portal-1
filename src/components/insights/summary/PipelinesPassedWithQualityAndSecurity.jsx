@@ -7,6 +7,8 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
+import Card from "react-bootstrap/Card";
+import CardGroup from "react-bootstrap/CardGroup";
 import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import { getTableDateTimeColumn, getTableTextColumn, getChartPipelineStatusColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -95,27 +97,38 @@ function PipelineDetails({dashboardData}) {
 
   const getChartBody = () => {
     return (
-    <div>
-      <div className="metric-box p-1 text-center">
-              <div className="box-metric pointer" onClick={() => {onSelect(metrics[0]?.data);}}>
-              <div className="green">{!isLoading && metrics[0]?.count[0] ? metrics[0]?.count[0]?.count : <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>}</div>
-              </div>
-              <div className="w-100 text-muted mb-1">Successful Pipelines (Security and Quality)</div>
-              </div> 
-      <PipelineDetailsTableModal
-        header="Successful Pipelines (Security and Quality)"
-        size="lg"
-        tableMessage={modalData}
-        show={showModal}
-        setParentVisibility={setShowModal}
-        loadData={loadData}
-        columns={columns}
-        tableFilterDto={tableFilterDto}
-        setTableFilterDto={setTableFilterDto}
-        noDataMessage={noDataMessage}
-        isLoading={isLoading}
-      />
-      </div>
+    <Card style={{ width: "100%" }}>
+      <Card.Body>
+        <Card.Title className="count-block-primary-text" style={{ fontSize: "25px" }}>
+          {!isLoading && metrics[0]?.count[0] ? metrics[0]?.count[0]?.count : <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>}
+        </Card.Title>
+        <Card.Text>
+          Successful Pipelines (Security and Quality)
+        </Card.Text>
+      </Card.Body>
+    </Card>
+
+    // <div>
+    //   <div className="metric-box p-1 text-center">
+    //           <div className="box-metric pointer" onClick={() => {onSelect(metrics[0]?.data);}}>
+    //           <div className="green">{!isLoading && metrics[0]?.count[0] ? metrics[0]?.count[0]?.count : <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>}</div>
+    //           </div>
+    //           <div className="w-100 text-muted mb-1">Successful Pipelines (Security and Quality)</div>
+    //           </div> 
+    //   <PipelineDetailsTableModal
+    //     header="Successful Pipelines (Security and Quality)"
+    //     size="lg"
+    //     tableMessage={modalData}
+    //     show={showModal}
+    //     setParentVisibility={setShowModal}
+    //     loadData={loadData}
+    //     columns={columns}
+    //     tableFilterDto={tableFilterDto}
+    //     setTableFilterDto={setTableFilterDto}
+    //     noDataMessage={noDataMessage}
+    //     isLoading={isLoading}
+    //   />
+    //   </div>
     );
   };
 
