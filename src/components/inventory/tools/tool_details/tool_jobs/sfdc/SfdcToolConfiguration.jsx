@@ -26,6 +26,7 @@ function SfdcToolConfiguration({ toolData }) {
   const [sfdcConfigurationDto, setSfdcConfigurationDto] = useState(undefined);
   const [jenkinsBuildNumber, setJenkinsBuildNumber] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -36,6 +37,7 @@ function SfdcToolConfiguration({ toolData }) {
   };
 
   const testConnection = async() =>{
+    setLoading(true);
     let response;
     
     if (sfdcConfigurationDto != null) {
@@ -52,6 +54,7 @@ function SfdcToolConfiguration({ toolData }) {
     }
     else {
       toastContext.showErrorDialog("Something went wrong during test connection. View browser logs for more details"); 
+      setLoading(false);
     }
   };
 
@@ -62,6 +65,7 @@ function SfdcToolConfiguration({ toolData }) {
         setShowModal={setShowModal}
         jenkinsBuildNumber={jenkinsBuildNumber}
         setJenkinsBuildNumber={setJenkinsBuildNumber}
+        setLoading={setLoading}
         toolData={toolData}            
       />
     );
@@ -80,16 +84,17 @@ function SfdcToolConfiguration({ toolData }) {
             setDataObject={setSfdcConfigurationDto}
           />
           <div className="p-2">
-            <TooltipWrapper innerText={"Select Jenkins tool to Test Connection"}>
-              <Button size="sm" variant={"secondary"} disabled={!toolData.getData("_id") || sfdcConfigurationDto.getData("jenkinsToolId").length < 1} onClick={() => testConnection()}>
-                <FontAwesomeIcon icon={faPlug} className="mr-2" fixedWidth /> Check SFDX Connection
+            {/* <TooltipWrapper innerText={"Select Jenkins tool to Test Connection"}> */}
+              <Button size="sm" variant={"secondary"} disabled={!toolData.getData("_id") || sfdcConfigurationDto.getData("jenkinsToolId").length < 1 || loading} onClick={() => testConnection()}>
+                <FontAwesomeIcon icon={loading ? faSpinner:faPlug} className={`mr-2  ${loading ? ' fa-spin' : ''}`} fixedWidth /> Check SFDX Connection
               </Button>
-            </TooltipWrapper>
+            {/* </TooltipWrapper> */}
           </div>          
         </>
       );
     }
   };
+console.log(loading);
   if (sfdcConfigurationDto == null) {
     return <></>;
   }
