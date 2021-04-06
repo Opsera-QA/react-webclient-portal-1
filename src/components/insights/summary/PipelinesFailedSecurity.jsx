@@ -99,9 +99,9 @@ function PipelineFailedSecurity({dashboardData}) {
       <DataBox 
         title={!isLoading && metrics[0]?.count[0] ? metrics[0]?.count[0]?.count : <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>}
         subTitle="Pipelines Failing Security Step"
-        toolTip="Pipelines Failing Security Step"
+        toolTipText="Pipelines Failing Security Step"
         clickAction={() => onSelect(metrics[0]?.data)}
-        status="fail"
+        statusColor="danger"
         modal={<PipelineDetailsTableModal
           header="Pipelines Failing Security Step"
           size="lg"

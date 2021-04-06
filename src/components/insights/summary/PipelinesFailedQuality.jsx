@@ -99,9 +99,9 @@ function PipelineFailedQuality({dashboardData}) {
       <DataBox 
         title={!isLoading && metrics[0]?.count[0] ? metrics[0]?.count[0]?.count : <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>}
         subTitle="Pipelines Failing Quality Step"
-        toolTip="Pipelines Failing Quality Step"
+        toolTipText="Pipelines Failing Quality Step"
         clickAction={() => onSelect(metrics[0]?.data)}
-        status="fail"
+        statusColor="danger"
         modal={<PipelineDetailsTableModal
           header="Pipelines Failing Quality Step"
           size="lg"
