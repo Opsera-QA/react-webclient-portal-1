@@ -14,6 +14,8 @@ function KpiSelectInput({ fieldName, dataObject, setDataObject, setCurrentKpi, s
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
+  console.log("!!!!!!!!", "???????DSJIU!J@IOJ");
+
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();

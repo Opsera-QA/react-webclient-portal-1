@@ -13,7 +13,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
-    newDataObject.setData(fieldName, value);
+    newDataObject?.setData?.(fieldName, value);
     setDataObject({...newDataObject});
   };
 
@@ -22,6 +22,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
       setDataFunction(field?.id, data);
     }
     else {
+      console.log('!!!!!heya!!!!', field, data);
       validateAndSetData(field?.id, data[valueField]);
     }
   };

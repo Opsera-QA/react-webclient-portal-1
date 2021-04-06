@@ -229,6 +229,7 @@ function OPBlueprint(props) {
               formattedFilterData.push(...filterGroup["options"]);
             });
             setFilters(formattedFilterData);
+            console.log('!!!!FORMATTED FILTERED DATA', formattedFilterData);
             setDataObject({
               data: formattedFilterData.map(d => d.value),
               getData() {
