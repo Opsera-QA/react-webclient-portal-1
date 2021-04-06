@@ -12,7 +12,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy,
                            selectOptions, valueField, textField, placeholderText, 
                            setDataFunction, busy, disabled, clearDataFunction, 
                            showClearValueButton, errorMessage, getCurrentValue, 
-                           customOnChangeHandler, hideLabel}) {
+                           customOnChangeHandler, hideLabel }) {
   const [field] = useState(dataObject?.getFieldById?.(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
