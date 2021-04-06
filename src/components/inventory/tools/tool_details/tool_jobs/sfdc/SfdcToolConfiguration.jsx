@@ -23,8 +23,8 @@ function SfdcToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [sfdcConfigurationDto, setSfdcConfigurationDto] = useState(undefined);
+  const [jenkinsBuildNumber, setJenkinsBuildNumber] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [runCount, setRunCount] = useState(1);
 
   useEffect(() => {
     loadData();
@@ -45,8 +45,8 @@ function SfdcToolConfiguration({ toolData }) {
       }
     }
 
-    if (response && response.data != null && response.data.status === 200) {      
-      // setRunCount(response.data.run_count || 1);
+    if (response && response.data != null && response.data.status === 200 ) {   
+      setJenkinsBuildNumber(response.data.jenkinsBuildNumber); 
       setShowModal(true);
     }
     else {
@@ -59,8 +59,9 @@ function SfdcToolConfiguration({ toolData }) {
       <SfdxTestConnectionStatusModal 
         showModal={showModal}
         setShowModal={setShowModal}
-        toolData={toolData}
-        runCount={runCount}            
+        jenkinsBuildNumber={jenkinsBuildNumber}
+        setJenkinsBuildNumber={setJenkinsBuildNumber}
+        toolData={toolData}            
       />
     );
   };

@@ -115,11 +115,6 @@ SfdxTestConnectionStatusModal.propTypes = {
   showModal: PropTypes.bool,
   setShowModal: PropTypes.func,
   toolData: PropTypes.object,
-<<<<<<< HEAD
-  jenkinsBuildNumber: PropTypes.string,
-  setJenkinsBuildNumber: PropTypes.func,
-=======
->>>>>>> e1f68f88 (sfdx test connection modal and polling changes)
 };
 
 export default SfdxTestConnectionStatusModal;
