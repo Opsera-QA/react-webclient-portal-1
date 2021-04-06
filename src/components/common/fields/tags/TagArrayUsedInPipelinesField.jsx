@@ -14,7 +14,7 @@ import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import axios from "axios";
 import TagsUsedInPipelineTable from 'components/reports/tags/pipelines/TagsUsedInPipelineTable';
 
-function TagArrayUsedInPipelinesField({ tags }) {
+function TagArrayUsedInPipelinesField({ tags, showTable }) {
   const { getAccessToken } = useContext(AuthContext);
   const [pipelines, setPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -111,15 +111,14 @@ function TagArrayUsedInPipelinesField({ tags }) {
       <div className="form-text text-muted mb-2">
         <span>This tag combination is used in {pipelines.length} pipelines</span>
       </div>
-      {getPipelineCards()}
-      <TagsUsedInPipelineTable data={pipelines} loadData={loadData} isLoading={isLoading} isMounted={isMounted}/>
-      {console.log(pipelines)}
+        {showTable ? <TagsUsedInPipelineTable data={pipelines} loadData={loadData} isLoading={isLoading} isMounted={isMounted}/> : getPipelineCards()}
     </div>
   );
 }
 
 TagArrayUsedInPipelinesField.propTypes = {
   tags: PropTypes.array,
+  showTable: PropTypes.bool
 };
 
 export default TagArrayUsedInPipelinesField;
