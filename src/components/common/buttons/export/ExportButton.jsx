@@ -107,8 +107,7 @@ function ExportDataButton({isLoading, variant, size, className, dataToExport, fi
       pdfExporter.save(fileName);
     }
 
-    if(exportFrom === "tags_in_pipeline" && !(dataToExport instanceof Blob) && !dataToExport.csv){
-      console.log("here", dataToExport);
+    if(exportFrom === "reports" && !(dataToExport instanceof Blob) && !dataToExport.csv){
       const pdfExporter = new jsPDF({orientation: "landscape"});
       pdfExporter.autoTable({
         startY: 2,
@@ -123,7 +122,7 @@ function ExportDataButton({isLoading, variant, size, className, dataToExport, fi
       pdfExporter.save(fileName);
     }
 
-    if(exportFrom === "tags_in_pipeline" && dataToExport.csv){
+    if(exportFrom === "reports" && dataToExport.csv){
       const setCsvDownload = () => {
         let tagData = dataToExport.formattedData;
         let csvDownloadData = [["Name","ID","Description","Created","Updated","Status"], ...tagData.map(item => [item.name, item._id, item.description, item.createdAt, item.updatedAt, item.active ? "active" : "inactive"])];

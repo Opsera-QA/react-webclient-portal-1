@@ -7,7 +7,7 @@ import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-function ExportTagsInPipelineButton({isLoading, tagData, className}) {
+function ExportReportButton({isLoading, tagData, className}) {
   const [showExportModal, setShowExportModal] = useState(false);
 
   const closeModal = () => {
@@ -47,17 +47,17 @@ function ExportTagsInPipelineButton({isLoading, tagData, className}) {
         isLoading={isLoading}
         formattedData={formatTagData()}
         rawData={rawDataResults()}
-        exportFrom={"tags_in_pipeline"}
+        exportFrom={"reports"}
         csvEnabled={true}
       />
     </>
   );
 }
 
-ExportTagsInPipelineButton.propTypes = {
+ExportReportButton.propTypes = {
   tagData: PropTypes.array,
   isLoading: PropTypes.bool,
   className: PropTypes.string
 };
 
-export default ExportTagsInPipelineButton;
+export default ExportReportButton;

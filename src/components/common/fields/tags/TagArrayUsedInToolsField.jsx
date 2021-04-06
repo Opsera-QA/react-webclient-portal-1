@@ -104,7 +104,7 @@ function TagArrayUsedInToolsField({ tags, showTable }) {
       </div>
     );
   }
-console.log(tools);
+
   return (
     <div>
       <div className="form-text text-muted mb-2">
