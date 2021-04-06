@@ -9,7 +9,7 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 
 function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, disabled, clearDataFunction, showClearValueButton, errorMessage, getCurrentValue}) {
-  const [field] = useState(dataObject.getFieldById(fieldName));
+  const [field] = useState(dataObject?.getFieldById?.(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
@@ -19,16 +19,16 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
 
   const updateValue = (data) => {
     if (setDataFunction) {
-      setDataFunction(field.id, data);
+      setDataFunction(field?.id, data);
     }
     else {
-      validateAndSetData(field.id, data[valueField]);
+      validateAndSetData(field?.id, data[valueField]);
     }
   };
 
   const clearValue = () => {
     if (!setDataFunction) {
-      validateAndSetData(field.id, "");
+      validateAndSetData(field?.id, "");
     }
     else if (clearDataFunction) {
       clearDataFunction();
@@ -36,7 +36,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
   };
 
   const getClearDataIcon = () => {
-    if (dataObject.getData(field.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
+    if (dataObject?.getData?.(field?.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
       return (
         <TooltipWrapper innerText={"Clear this Value"}>
           <span onClick={() => clearValue()} className="my-auto badge badge-danger clear-value-badge pointer">
@@ -52,7 +52,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
       return getCurrentValue();
     }
 
-    return dataObject.getData(field.id);
+    return dataObject?.getData?.(field?.id);
   };
 
   return (

@@ -6,6 +6,7 @@ import { ApiService } from "api/apiService";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ErrorDialog from "components/common/status_notifications/error";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { Form, Button, Row, Col, Tooltip, OverlayTrigger } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDraftingCompass, faDownload} from "@fortawesome/pro-light-svg-icons";
@@ -37,6 +38,7 @@ function OPBlueprint(props) {
   const [jobFilter, setJobFilter] = useState("");
   const [calenderActivation, setCalenderActivation] = useState(false);
   const [submitted, submitClicked] = useState(false);
+  const [dataObject, setDataObject] = useState({});
   // const [date, setDate] = useState([
   //   {
   //     startDate: new Date(),
@@ -227,6 +229,12 @@ function OPBlueprint(props) {
               formattedFilterData.push(...filterGroup["options"]);
             });
             setFilters(formattedFilterData);
+            setDataObject({
+              data: formattedFilterData.map(d => d.value),
+              getData() {
+                return this.data;
+              }
+            });
           }
         } else {
           setDisabledState(true);
@@ -236,6 +244,10 @@ function OPBlueprint(props) {
         setFilters([]);
       });
   };
+
+  useEffect(() => {
+    console.log("!!!!!!", dataObject);
+  }, [dataObject]);
 
   useEffect(() => {
     !runCopy && setRunCount(runCountFetch[multiFilter.value]);
@@ -348,7 +360,18 @@ function OPBlueprint(props) {
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col md={5} className="py-1">
-                <DropdownList
+              <SelectInputBase
+                fieldName="Select Opsera Pipeline"
+                dataObject={dataObject}
+                setDataObject={setDataObject}
+                selectOptions={filterOptions}
+                busy={disabledForm ? false : Object.keys(filterOptions).length == 0 ? true : false} //*
+                valueField="value"
+                textField="label"
+                placeholderText={"Select Opsera Pipeline"}
+                disabled={Object.keys(filterOptions).length == 0 ? true : false}
+              />
+                {/* <DropdownList
                   placeholder={"Select Opsera Pipeline"}
                   data={filterOptions}
                   busy={disabledForm ? false : Object.keys(filterOptions).length == 0 ? true : false}
@@ -358,7 +381,7 @@ function OPBlueprint(props) {
                   filter="contains"
                   value={multiFilter.length === 0 ? null : multiFilter}
                   onChange={pipelineSelect}
-                />
+                /> */}
               </Col>
               <Col md={4} className="py-1">
                 <NumberPicker
