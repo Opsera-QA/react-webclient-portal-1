@@ -31,7 +31,7 @@ function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData, v
           <EditIcon className={"ml-2 mt-2 text-muted"} editFunction={showEditor} disabled={disabled} tooltipBody={"Edit Access Rules"} />
           <LaunchHelpIcon
             helpComponent={<RoleAccessEditorHelpOverlay />}
-            className={"my-auto ml-2 text-muted"}
+            className={"mt-2 ml-2 text-muted"}
           />
         </div>
       </div>

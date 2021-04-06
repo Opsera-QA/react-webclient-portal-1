@@ -55,9 +55,13 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
         <Row className="px-2">
           {kpis.map(function (kpiConfiguration, index) {
             return (
-              <Col xl={6} md={12} className="p-2" key={kpiConfiguration._id}>
-                <ChartView kpiConfiguration={kpiConfiguration} dashboardData={dashboardDataDto} index={index} loadChart={loadData} setKpis={setKpis}/>
-              </Col>
+              <ChartView
+                key={kpiConfiguration?._id}
+                kpiConfiguration={kpiConfiguration}
+                dashboardData={dashboardDataDto}
+                index={index} loadChart={loadData}
+                setKpis={setKpis}
+              />
             );
           })}
         </Row>

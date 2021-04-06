@@ -26,6 +26,10 @@ const BitbucketMostActiveContributorsMetadata = {
       label: "Rejected Reason",
       id: "RejectedReason",
     },
+    {
+      label: "Time",
+      id: "mrCompletionTimeTimeStamp",
+    },
   ],
   newObjectFields: {},
 };

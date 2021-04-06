@@ -18,8 +18,12 @@ export function capitalizeFirstLetter(string, wordDelimiter = " ", noDataString)
   return noDataString;
 }
 
-export function truncateString (str, maxLength){
-  return str.length <= maxLength ? str : str.slice(0, maxLength - 3) + '...';
+export function truncateString(string, maxLength){
+  if (string == null) {
+    return "";
+  }
+
+  return string.length <= maxLength ? string : string.slice(0, maxLength - 3) + "...";
 }
 
 export function generateUUID() {

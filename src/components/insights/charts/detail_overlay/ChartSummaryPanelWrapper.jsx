@@ -16,7 +16,7 @@ function ChartSummaryPanelWrapper({ chartModel }) {
       default:
         return (
           <SummaryPanelContainer>
-            <ReactJson src={chartModel} enableClipboard={false} displayDataTypes={false} collapsed={false}/>
+            <ReactJson src={chartModel?.getPersistData()} enableClipboard={false} displayDataTypes={false} collapsed={false}/>
           </SummaryPanelContainer>
         );
     }

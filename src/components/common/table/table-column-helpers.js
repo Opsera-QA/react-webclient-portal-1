@@ -27,11 +27,11 @@ import {truncateString} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 const getTableHeader = (field) => {
-  return field["label"];
+  return field ? field.label : "";
 };
 
 const getTableAccessor = (field) => {
-  return field["id"];
+  return field ? field.id : "";
 };
 
 export const getTableTextColumnWithoutField = (header, accessor) => {
@@ -63,7 +63,19 @@ export const getLimitedTableTextColumn = (field, maxLength, className) => {
     accessor: getTableAccessor(field),
     class: className ? className : undefined,
     Cell: function parseText(row) {
-      return row.value ? truncateString(row.value, maxLength) : "";
+      const value = row?.value;
+
+      if (value != null) {
+        const truncatedString = truncateString(value, maxLength);
+
+        if (truncatedString !== value) {
+          return (<TooltipWrapper innerText={value}><span>{truncatedString}</span></TooltipWrapper>);
+        }
+
+        return value;
+      }
+
+      return "";
     },
   };
 };
