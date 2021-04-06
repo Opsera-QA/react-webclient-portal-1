@@ -15,7 +15,7 @@ function DataBox({ title, subTitle, toolTipText, clickAction, statusColor,
     <>
       <TooltipWrapper innerText={toolTipText}>
         <Card className="box-metric pointer"
-              style={view !== "small" && { height: "100px" }}
+              style={{ height: view !== "small" ? "100px" : "auto", maxWidth: "250px"}}
               onClick={clickAction}>
           <Card.Body className="data-blocks-body">
             <div className="data-blocks-status"
