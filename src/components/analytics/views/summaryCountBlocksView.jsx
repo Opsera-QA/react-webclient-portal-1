@@ -18,15 +18,7 @@ function SummaryCountBlocksView({ data, view }) {
   useEffect(() => {
     // console.log("Rendering Blocks for data", data);
   }, [data]);
-
-  const setStatusLevel = (status) => {
-    if (status === "danger") return "#E57373";
-    if (status === "warning") return "#F1AD0F";
-    if (status === "success") return "#00897b";
-
-    return null;
-  };
-
+  
   const infoPopover = (item) => {
     return (
       <Popover id="popover-basic" style={{ maxWidth: "500px" }}>

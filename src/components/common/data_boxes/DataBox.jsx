@@ -6,9 +6,9 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 function DataBox({ title, subTitle, toolTipText, clickAction, statusColor, 
                    additionalContent, footer, modal, view }) {
   const statusColors = {
-    success: "green",
-    danger: "red",
-    warning: "yellow"
+    success: "#00897b",
+    danger: "#E57373",
+    warning: "#F1AD0F"
   };
 
   return (
@@ -17,14 +17,14 @@ function DataBox({ title, subTitle, toolTipText, clickAction, statusColor,
         <Card className="box-metric pointer"
               style={view !== "small" && { height: "100px" }}
               onClick={clickAction}>
-          <Card.Body className="summary-count-blocks-card-body">
-            <div className="summary-count-blocks-status"
+          <Card.Body className="data-blocks-body">
+            <div className="data-blocks-status"
                 style={{backgroundColor: statusColors[statusColor]}}>      
             </div>
-            <Card.Title className="summary-count-blocks-card-title">
+            <Card.Title className="data-blocks-title">
               {title}
             </Card.Title>
-            <Card.Subtitle className="summary-count-blocks-card-subtitle">
+            <Card.Subtitle className="data-blocks-subtitle">
               <div>{subTitle}</div>
             </Card.Subtitle>
             {additionalContent}
