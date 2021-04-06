@@ -2,17 +2,19 @@ import React from "react";
 import PropTypes from "prop-types";
 import ReactJson from "react-json-view";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import BitbucketRejectedMergeRequestsSummaryPanel
+  from "components/insights/charts/bitbucket/table/bitbucket-rejected-merge-requests/BitbucketRejectedMergeRequestsSummaryPanel";
 
-function ChartSummaryPanelWrapper({ chartModel }) {
+function ChartSummaryPanelWrapper({ chartModel, kpiIdentifier, setActiveTab }) {
   const getStepConfigurationSummary = () => {
-    switch (chartModel.getData("kpi_identifier")) {
-      // case "anchore-integrator":
-      //   return (
-      //     // <AnchoreIntegratorStepConfigurationSummaryPanel
-      //     //   pipelineData={pipelineData}
-      //     //   anchoreDataObject={getModelWrappedObject(anchoreIntegratorStepConfigurationMetadata)}
-      //     // />
-      //   );
+    switch (kpiIdentifier) {
+      case "bitbucket-rejected-merge-requests":
+        return (
+          <BitbucketRejectedMergeRequestsSummaryPanel
+            chartModel={chartModel}
+            setActiveTab={setActiveTab}
+          />
+        );
       default:
         return (
           <SummaryPanelContainer>
@@ -31,6 +33,8 @@ function ChartSummaryPanelWrapper({ chartModel }) {
 
 ChartSummaryPanelWrapper.propTypes = {
   chartModel: PropTypes.object,
+  setActiveTab: PropTypes.func,
+  kpiIdentifier: PropTypes.string
 };
 
 export default ChartSummaryPanelWrapper;

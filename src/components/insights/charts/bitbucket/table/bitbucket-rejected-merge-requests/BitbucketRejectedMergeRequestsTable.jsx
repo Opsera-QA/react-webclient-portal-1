@@ -100,7 +100,7 @@ function BitbucketRejectedMergeRequestsTable({ kpiConfiguration, setKpiConfigura
   );
   const onRowSelect = (rowData) => {
     const chartModel = new Model({...rowData.original}, bitbucketRejectedMergeRequestsMetadata, false);
-    toastContext.showOverlayPanel(<ChartDetailsOverlay chartModel={chartModel} />);
+    toastContext.showOverlayPanel(<ChartDetailsOverlay chartModel={chartModel} kpiIdentifier={"bitbucket-rejected-merge-requests"} />);
   };
 
   const getChartTable = () => {

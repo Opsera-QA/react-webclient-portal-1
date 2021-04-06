@@ -88,7 +88,7 @@ import BitbucketMergeRequestsPushesAndComments from "./bitbucket/calendar_chart/
 import BitbucketTotalCommitsByProjectChart from "./bitbucket/pie_chart/total_commits_by_project/BitbucketTotalCommitsByProjectChart";
 import BitbucketRecentMergeRequests from "./bitbucket/table/bitbucket-recent-merge-requests/BitbucketRecentMergeRequests";
 import BitbucketPendingMergeRequests from "./bitbucket/table/bitbucket-pending-merge-requests/BitbucketPendingMergeRequests.jsx";
-import BitbucketRejectedMergeRequests from "components/insights/charts/bitbucket/table/bitbucket-rejected-merge-requests/BitbucketRejectedMergeRequestsTable.jsx";
+import BitbucketRejectedMergeRequestsTable from "components/insights/charts/bitbucket/table/bitbucket-rejected-merge-requests/BitbucketRejectedMergeRequestsTable.jsx";
 
 // Cypress KPIs
 import CypressTestResultsTable from "./cypress/CypressTestResultsTable";
@@ -107,7 +107,6 @@ import MetricbeatOutNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/
 
 import {
   getDateObjectFromKpiConfiguration,
-  getTagsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 import {Col} from "react-bootstrap";
 
@@ -1107,7 +1106,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "bitbucket-rejected-merge-requests":
         return (
           <Col md={12} className="p-2">
-            <BitbucketRejectedMergeRequests
+            <BitbucketRejectedMergeRequestsTable
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
