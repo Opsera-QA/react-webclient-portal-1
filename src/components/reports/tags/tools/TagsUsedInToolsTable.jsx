@@ -13,7 +13,7 @@ import {
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTags} from "@fortawesome/pro-light-svg-icons";
-import ExportTagsInPipelineButton from 'components/common/buttons/export/tags_in_pipeline_report/ExportTagsInPipelineButton';
+import ExportReportButton from 'components/common/buttons/export/reports/ExportReportButton';
 
 function TagsUsedInToolsTable({ data, loadData, isLoading}) {
   const history = useHistory();
@@ -63,7 +63,7 @@ function TagsUsedInToolsTable({ data, loadData, isLoading}) {
       titleIcon={faTags}
       title={"Tags"}
       className={"px-2 pb-2"}
-      exportButton={<ExportTagsInPipelineButton className={"ml-2"} isLoading={isLoading} tagData={data} />}
+      exportButton={<ExportReportButton className={"ml-2"} isLoading={isLoading} tagData={data} />}
     />
   );
 }
