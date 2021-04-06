@@ -3,7 +3,6 @@ import {useParams} from "react-router-dom";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { ApiService } from "api/apiService";
-import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ErrorDialog from "components/common/status_notifications/error";
@@ -14,7 +13,6 @@ import { faDraftingCompass, faDownload} from "@fortawesome/pro-light-svg-icons";
 import "./logs.css";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import DropdownList from "react-widgets/lib/DropdownList";
 import BlueprintSearchResult from "./BlueprintSearchResult";
 import simpleNumberLocalizer from "react-widgets-simple-number";
 import NumberPicker from "react-widgets/lib/NumberPicker";
@@ -370,10 +368,11 @@ function OPBlueprint(props) {
                 busy={disabledForm ? false : Object.keys(filterOptions).length == 0 ? true : false}
                 valueField="value"
                 textField="label"
-                placeholderText={"Select Opsera Pipeline"}
+                placeholderText="Select Opsera Pipeline"
                 disabled={Object.keys(filterOptions).length == 0 ? true : false}
                 getCurrentValue={() => multiFilter.length === 0 ? null : multiFilter}
                 customOnChangeHandler={pipelineSelect}
+                hideLabel={true}
               />
               </Col>
               <Col md={4} className="py-1">

@@ -8,7 +8,11 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 
-function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, disabled, clearDataFunction, showClearValueButton, errorMessage, getCurrentValue, customOnChangeHandler}) {
+function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, 
+                           selectOptions, valueField, textField, placeholderText, 
+                           setDataFunction, busy, disabled, clearDataFunction, 
+                           showClearValueButton, errorMessage, getCurrentValue, 
+                           customOnChangeHandler, hideLabel}) {
   const [field] = useState(dataObject?.getFieldById?.(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
@@ -57,7 +61,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
 
   return (
     <InputContainer className="custom-select-input my-2">
-      <InputLabel field={field} inputPopover={getClearDataIcon()} />
+      {!hideLabel && <InputLabel field={field} inputPopover={getClearDataIcon()} />}
       <DropdownList
         data={selectOptions}
         valueField={valueField}
@@ -100,11 +104,13 @@ SelectInputBase.propTypes = {
   showClearValueButton: PropTypes.bool,
   errorMessage: PropTypes.string,
   getCurrentValue: PropTypes.func,
-  customOnChangeHandler: PropTypes.func
+  customOnChangeHandler: PropTypes.func,
+  hideLabel: PropTypes.bool
 };
 
 SelectInputBase.defaultProps = {
-  showClearValueButton: true
+  showClearValueButton: true,
+  hideLabel: false
 };
 
 export default SelectInputBase;
