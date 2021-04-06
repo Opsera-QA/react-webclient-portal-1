@@ -11,8 +11,8 @@ import { OverlayTrigger, Popover } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH, faTimes } from "@fortawesome/free-solid-svg-icons";
 import Card from "react-bootstrap/CardGroup";
-import CardGroup from "react-bootstrap/CardGroup";
 import DataBox from "components/common/data_boxes/DataBox";
+import DataBoxWrapper from "components/common/data_boxes/DataBoxWrapper";
 
 function SummaryCountBlocksView({ data, view }) {
   useEffect(() => {
@@ -36,7 +36,7 @@ function SummaryCountBlocksView({ data, view }) {
   return (
     <>
       {data !== undefined && data.length > 0 ? (
-        <CardGroup className="w-100 p-2 d-flex justify-content-center">
+        <DataBoxWrapper>
           {data.map(function (item, index) {
             return (
               <DataBox
@@ -60,7 +60,7 @@ function SummaryCountBlocksView({ data, view }) {
               />
             );
           })}
-        </CardGroup>
+        </DataBoxWrapper>
       ) : null}
     </>
   );

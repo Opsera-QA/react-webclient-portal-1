@@ -17,6 +17,8 @@ import PipelinesPassedWithQualityAndSecurity from "components/insights/summary/P
 import PipelinesFailedSecurity from "components/insights/summary/PipelinesFailedSecurity";
 import PipelinesFailedQuality from "components/insights/summary/PipelinesFailedQuality";
 import PipelinesFailedDeployment from "components/insights/summary/PipelinesFailedDeployment";
+import DataBoxWrapper from "components/common/data_boxes/DataBoxWrapper";
+
 function PipelineDetails({dashboardData}) {
   const fields = BuildDetailsMetadata.fields;
   const {getAccessToken} = useContext(AuthContext);
@@ -49,17 +51,13 @@ function PipelineDetails({dashboardData}) {
 
   const getChartBody = () => {
     return (
-      <div className="w-100">
-        <div className="d-none d-sm-block justify-content-center">
-          <CardGroup className="w-100 pl-4 pr-4 pb-4 d-flex justify-content-center">
-            <TotalPipelinesExecuted dashboardData={dashboardData}/>
-            <PipelinesPassedWithQualityAndSecurity dashboardData={dashboardData}/>
-            <PipelinesFailedSecurity dashboardData={dashboardData}/>
-            <PipelinesFailedQuality dashboardData={dashboardData}/>
-            <PipelinesFailedDeployment dashboardData={dashboardData}/>
-          </CardGroup>
-        </div>
-      </div>
+      <DataBoxWrapper>
+        <TotalPipelinesExecuted dashboardData={dashboardData}/>
+        <PipelinesPassedWithQualityAndSecurity dashboardData={dashboardData}/>
+        <PipelinesFailedSecurity dashboardData={dashboardData}/>
+        <PipelinesFailedQuality dashboardData={dashboardData}/>
+        <PipelinesFailedDeployment dashboardData={dashboardData}/>
+      </DataBoxWrapper>
     );
   };
 
