@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import TextFieldBase from "components/common/form_fields/TextFieldBase";
 import GitTasksSummaryCardContainer from "components/git/git_task_details/configuration_forms/GitTasksSummaryCardContainer";
+import {Row, Col} from "react-bootstrap";
 
 function SFDCGitTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
   if (isLoading) {
@@ -11,13 +12,23 @@ function SFDCGitTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, is
 
   return (
     <GitTasksSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
-      <div className="mb-2">
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"toolName"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"service"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitCredential"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"repository"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitBranch"} />
-      </div>
+      <Row className="mx-0 mb-2">
+        <Col xs={12} sm={6} md={4}>
+          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"toolName"} />
+        </Col>
+        <Col xs={12} sm={6} md={4}>
+          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"service"} />
+        </Col>
+        <Col xs={12} sm={6} md={4}>
+          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitCredential"} />
+        </Col>
+        <Col xs={12} sm={6} md={4}>
+          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"repository"} />
+        </Col>
+        <Col xs={12} sm={6} md={4}>
+          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitBranch"} />
+        </Col>
+      </Row>
     </GitTasksSummaryCardContainer>
   );
 }
