@@ -40,7 +40,7 @@ const gitTasksMetadata = {
       regexValidator: regexHelpers.regexTypes.generalText
     },
     {
-      label: "Tool Identifier",
+      label: "Tool",
       id: "tool_identifier",
       maxLength: 10,
       regexValidator: regexHelpers.regexTypes.generalText
@@ -70,6 +70,10 @@ const gitTasksMetadata = {
     {
       label: "Created",
       id: "createdAt",
+    },
+    {
+      label: "Access Rules",
+      id: "roles",
     },
   ],
   newObjectFields: {
