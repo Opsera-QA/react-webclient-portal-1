@@ -56,7 +56,7 @@ function SummaryCountBlocksView({ data, view }) {
                     </OverlayTrigger>
                   </Card.Text>
                 )}
-                footer={item.footer && <Card.Text className="w-100 text-muted mb-1">{item.footer}</Card.Text>}
+                footerText={item.footer}
               />
             );
           })}

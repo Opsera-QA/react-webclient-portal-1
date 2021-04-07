@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 function DataBox({ title, subTitle, toolTipText, clickAction, statusColor, 
-                   additionalContent, footer, modal, view }) {
+                   additionalContent, footerText, modal, view }) {
   const statusColors = {
     success: "#00897b",
     danger: "#E57373",
@@ -26,10 +26,10 @@ function DataBox({ title, subTitle, toolTipText, clickAction, statusColor,
             </Card.Title>
             <Card.Subtitle className="data-blocks-subtitle">
               <div>{subTitle}</div>
+              <div>{footerText}</div>
             </Card.Subtitle>
             {additionalContent}
           </Card.Body>
-          {footer}
         </Card>
       </TooltipWrapper>
       {modal} 
@@ -44,7 +44,7 @@ DataBox.propTypes = {
   clickAction: PropTypes.func,
   statusColor: PropTypes.string,
   additionalContent: PropTypes.node,
-  footer: PropTypes.node,
+  footerText: PropTypes.node,
   modal: PropTypes.node,
   view: PropTypes.string
 };

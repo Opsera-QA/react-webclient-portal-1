@@ -1085,6 +1085,7 @@ div.data-blocks-subtitle {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   padding: .5rem;
 }
 
@@ -1095,11 +1096,11 @@ div.data-blocks-subtitle {
     text-overflow: ellipsis; 
     white-space: nowrap;
     display: block;
-    padding: .75rem;
+    padding: auto;
   }
 }
 
-/* End Summary Count Blocks Card Styling */
+/* End Data Blocks Card Styling */
 
 /* Icon Styles */
 .delete-icon:hover {
