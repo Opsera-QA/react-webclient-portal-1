@@ -48,7 +48,7 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
   const toolLogPolling = async (jenkinsBuildNumber, count = 1) => {
     setModalLoading(true);
     try {
-      const tool_logs = await toolsActions.getaToolConnectionLog(getAccessToken, toolData);
+      const tool_logs = await toolsActions.getToolConnectionLog(getAccessToken, toolData);
       
       const testRes = tool_logs.data.data.filter(rec => rec.action === 'test_configuration' && rec.run_count === jenkinsBuildNumber);
 
