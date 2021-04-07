@@ -1,12 +1,49 @@
-import React from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
-import TagField from "components/common/fields/multiple_items/TagField";
+import SmartIdField from "components/common/fields/text/id/SmartIdField";
+import GitTaskRoleAccessInput from "components/git/git_task_details/GitTaskRoleAccessInput";
+import GitTaskRunButton from "components/common/buttons/git/GitTaskRunButton";
+import TagsInlineInputBase from "components/common/inline_inputs/tags/TagsInlineInputBase";
+import gitTasksActions from "components/git/git-task-actions";
+import axios from "axios";
+import {AuthContext} from "contexts/AuthContext";
 
-function GitTaskSummaryPanelBase({ gitTasksData, setActiveTab, gitTaskTypeSummaryCard }) {
+function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, gitTaskTypeSummaryCard, loadData }) {
+  const { getAccessToken } = useContext(AuthContext);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
+
+  const updateRecord = async (newDataModel) => {
+    const response = await gitTasksActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newDataModel);
+    loadData();
+    return response;
+  };
+
   return (
     <SummaryPanelContainer setActiveTab={setActiveTab}>
       <Row>
@@ -14,23 +51,28 @@ function GitTaskSummaryPanelBase({ gitTasksData, setActiveTab, gitTaskTypeSummar
           <TextFieldBase dataObject={gitTasksData} fieldName={"name"}/>
         </Col>
         <Col md={6}>
-          <TextFieldBase dataObject={gitTasksData} fieldName={"_id"}/>
-        </Col>
-        <Col md={6}>
-          <TextFieldBase dataObject={gitTasksData} fieldName={"type"}/>
+          <SmartIdField model={gitTasksData} fieldName={"_id"}/>
         </Col>
         <Col md={6}>
           <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"}/>
         </Col>
         <Col md={6}>
-          <TextFieldBase dataObject={gitTasksData} fieldName={"tool_identifier"}/>
+          <TextFieldBase className={"upper-case-first my-2"} dataObject={gitTasksData} fieldName={"tool_identifier"}/>
         </Col>
         <Col md={12} className={"pt-1"}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"description"}/>
         </Col>
         <Col md={12} className={"pt-1"}>
-          <TagField dataObject={gitTasksData} fieldName={"tags"}/>
+          <TagsInlineInputBase type={"task"} dataObject={gitTasksData} fieldName={"tags"} saveData={updateRecord}/>
         </Col>
+        <Col lg={12}>
+          <GitTaskRoleAccessInput dataObject={gitTasksData} setDataObject={setGitTasksData} />
+        </Col>
+      </Row>
+      <Row className={"mx-0 w-100 my-2"}>
+        <div className={"mx-auto"}>
+          <div className={"mx-auto"}><GitTaskRunButton gitTasksData={gitTasksData} loadData={loadData} /></div>
+        </div>
       </Row>
       <div className="px-3 mt-3">{gitTaskTypeSummaryCard}</div>
     </SummaryPanelContainer>
@@ -39,8 +81,10 @@ function GitTaskSummaryPanelBase({ gitTasksData, setActiveTab, gitTaskTypeSummar
 
 GitTaskSummaryPanelBase.propTypes = {
   gitTasksData: PropTypes.object,
+  setGitTasksData: PropTypes.func,
   setActiveTab: PropTypes.func,
   gitTaskTypeSummaryCard: PropTypes.object,
+  loadData: PropTypes.func
 };
 
 export default GitTaskSummaryPanelBase;

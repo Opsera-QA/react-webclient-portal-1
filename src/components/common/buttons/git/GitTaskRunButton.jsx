@@ -11,6 +11,7 @@ import gitTaskActions from "components/git/git-task-actions";
 import SFDCViewOverlay from "components/git/git_task_details/configuration_forms/sfdc/SFDCViewOverlay";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
+import GitRunTaskModal from "components/git/git_task_details/GitRunTaskModal";
 
 function GitTaskRunButton({gitTasksData, disable, className, loadData }) {
   const [isCanceling, setIsCanceling] = useState(false);
@@ -51,20 +52,6 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData }) {
     setShowModal(false);
   };
 
-  const showConfirmationModal = () => {
-    setShowModal(true);
-  };
-
-  const handleRunGitTask = () => {
-    setShowModal(false);
-    if (gitTasksData.getData("type") !== "sync-sfdc-repo") {
-      return;
-    }
-
-    // open sfdc wizard views
-    toastContext.showOverlayPanel(<SFDCViewOverlay gitTasksData={gitTasksData} refreshData={loadData}/>);
-  };
-
   const getButton = () => {
     if (gitTasksData?.getData("status") === "running") {
       return (
@@ -83,7 +70,7 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData }) {
       <Button
         variant={"success"}
         disabled={gitTasksData?.getData("status") === "running" || disable}
-        onClick={() => {showConfirmationModal();}}
+        onClick={() => {setShowModal(true);}}
       >
         {gitTasksData?.getData("status") === "running" ?
           (<span><IconBase isLoading={true} className={"mr-1"}/>Running Task</span>)
@@ -96,14 +83,12 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData }) {
     <div className={className}>
       {/*TODO: Make sure button is not clickable until form is valid*/}
       {getButton()}
-      {/*TODO: Make unique modal*/}
-      <ModalBase
+      <GitRunTaskModal
         showModal={showModal}
-        title="Git Task Confirmation"
         handleClose={handleClose}
-      >
-        <div className={"m-3"}>`Do you want to run {gitTasksData.getData("name")} task?</div>
-      </ModalBase>
+        gitTasksData={gitTasksData}
+        loadData={loadData}
+        />
     </div>
   );
 }
