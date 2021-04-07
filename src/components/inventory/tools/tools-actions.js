@@ -205,10 +205,10 @@ toolsActions.getToolCounts = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-toolsActions.checkSFDXToolConnection = async (getAccessToken, toolDataDto) => {
-  console.log(toolDataDto);
+toolsActions.checkSFDXToolConnection = async (getAccessToken, toolDataDto, selectedJenkinsId) => {
+  // console.log(toolDataDto);
   const postBody = {
-    "jenkinsToolId": toolDataDto.getData("configuration").jenkinsToolId,
+    "jenkinsToolId": selectedJenkinsId,
     "sfdcToolId": toolDataDto.getData("_id"),
     "tool": "sfdc"
   };

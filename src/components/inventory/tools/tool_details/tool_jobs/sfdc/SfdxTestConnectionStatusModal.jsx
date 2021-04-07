@@ -6,7 +6,9 @@ import { axiosApiService } from "api/apiService";
 import {AuthContext} from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRepeat } from "@fortawesome/pro-light-svg-icons";
+import { faRepeat, faCircle, faCheckCircle } from "@fortawesome/pro-light-svg-icons";
+import Moment from "moment";
+import momentLocalizer from "react-widgets-moment";
 
 function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenkinsBuildNumber, setJenkinsBuildNumber, setLoading}) {
 
@@ -15,6 +17,9 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
   const [testResponse, setTestResponse] = useState([]);
   const [modalLoading, setModalLoading] = useState(false);
 
+  Moment.locale("en");
+  momentLocalizer();
+  
   let timerIds = [];
 
   useEffect(() => {
@@ -39,8 +44,7 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
     setShowModal(false);
   };
 
-  const toolLogPolling = async (jenkinsBuildNumber, count = 1) => { 
-    // console.log(jenkinsBuildNumber);   
+  const toolLogPolling = async (jenkinsBuildNumber, count = 1) => {
     setModalLoading(true);
     try {
       const accessToken = await getAccessToken();
@@ -65,7 +69,7 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
 
   return (
     <>
-      <Modal show={showModal} onHide={handleModalClose} backdrop="static">
+      <Modal show={showModal} onHide={handleModalClose} size="lg" backdrop="static">
         <Modal.Header closeButton>
           <Modal.Title>SFDX Connection Check</Modal.Title>
         </Modal.Header>
@@ -80,7 +84,7 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
                       </Col>
                       <Col lg={12}>
                         <label className="mb-0 mr-2 text-muted"><span>Created At:</span></label>
-                        <span>{testResponse[0].createdAt}</span>
+                        <span>{Moment(testResponse[0].createdAt).format("MMMM Do YYYY, h:mm:ss a")}</span>
                       </Col>
                       <Col lg={12}>
                         <label className="mb-0 mr-2 text-muted"><span>Message:</span></label>
@@ -88,7 +92,7 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
                       </Col>
                       <Col lg={12}>
                         <label className="mb-0 mr-2 text-muted"><span>Status:</span></label>
-                        <span>{testResponse[0].status}</span>
+                        <span>{testResponse[0].status === "success" ? <FontAwesomeIcon icon={faCheckCircle} className="cell-icon green fa-md" /> : <FontAwesomeIcon icon={faCheckCircle} className="cell-icon red fa-md" /> } {testResponse[0].status}</span>
                       </Col>
                     </Row>
                 ) : (

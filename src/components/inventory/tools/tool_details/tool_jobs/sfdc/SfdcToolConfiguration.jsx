@@ -42,14 +42,14 @@ function SfdcToolConfiguration({ toolData }) {
     
     if (sfdcConfigurationDto != null) {
       try{
-        response = await toolsActions.checkSFDXToolConnection(getAccessToken, toolData);
+        response = await toolsActions.checkSFDXToolConnection(getAccessToken, toolData, sfdcConfigurationDto.getData("jenkinsToolId") );
       } catch (error) {
         toastContext.showErrorDialog(error.message);
       }
     }
 
-    if (response && response.data != null && response.data.status === 200 ) {   
-      setJenkinsBuildNumber(response.data.jenkinsBuildNumber || 1); 
+    if (response && response.data != null && response.data.status === 200 && response?.data?.message?.buildParams?.buildNumber ) {   
+      setJenkinsBuildNumber(response?.data?.message?.buildParams?.buildNumber); 
       setShowModal(true);
     }
     else {
