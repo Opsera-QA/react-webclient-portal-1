@@ -46,15 +46,13 @@ function SummaryCountBlocksView({ data, view }) {
                 toolTipText={item.name}
                 statusColor={item.status}
                 additionalContent={item.info && (
-                  <Card.Text style={{ position: "absolute", right: "10px", bottom: "15px" }}>
-                    <OverlayTrigger trigger="click" rootClose placement="top" overlay={infoPopover(item)}>
-                      <FontAwesomeIcon
-                        icon={faEllipsisH}
-                        className="fa-pull-right pointer pr-1"
-                        onClick={() => document.body.click()}
-                      />
-                    </OverlayTrigger>
-                  </Card.Text>
+                  <OverlayTrigger trigger="click" rootClose placement="top" overlay={infoPopover(item)}>
+                    <FontAwesomeIcon
+                      icon={faEllipsisH}
+                      className="fa-pull-right pointer pr-1"
+                      onClick={() => document.body.click()}
+                    />
+                  </OverlayTrigger>
                 )}
                 footerText={item.footer}
               />

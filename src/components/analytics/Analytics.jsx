@@ -328,39 +328,39 @@ function Analytics() {
           <div className="mt-1">
             <Row>
               <Col sm={8}>
-                <ListGroup horizontal className="nav-pills">
+                <ListGroup horizontal>
                   <ListGroup.Item
-                    className={"list-group-item " + (selection === "pipeline" ? "active" : "")}
+                    className={"pointer list-group-item " + (selection === "pipeline" ? "active" : "")}
                     onClick={handleTabClick("pipeline")}
                   >
                     Pipeline
                   </ListGroup.Item>
                   <ListGroup.Item
-                    className={"list-group-item " + (selection === "security" ? "active" : "")}
+                    className={"pointer list-group-item " + (selection === "security" ? "active" : "")}
                     onClick={handleTabClick("security")}
                   >
                     Security
                   </ListGroup.Item>
                   <ListGroup.Item
-                    className={"list-group-item " + (selection === "software_development" ? "active" : "")}
+                    className={"pointer list-group-item " + (selection === "software_development" ? "active" : "")}
                     onClick={handleTabClick("software_development")}
                   >
                     Software Development
                   </ListGroup.Item>
                   <ListGroup.Item
-                    className={"list-group-item " + (selection === "software_testing" ? "active" : "")}
+                    className={"pointer list-group-item " + (selection === "software_testing" ? "active" : "")}
                     onClick={handleTabClick("software_testing")}
                   >
                     Software Testing
                   </ListGroup.Item>
                   <ListGroup.Item
-                    className={"list-group-item " + (selection === "source_code" ? "active" : "")}
+                    className={"pointer list-group-item " + (selection === "source_code" ? "active" : "")}
                     onClick={handleTabClick("source_code")}
                   >
                     Source Code
                   </ListGroup.Item>
                   <ListGroup.Item
-                    className={"list-group-item " + (selection === "operations" ? "active" : "")}
+                    className={"pointer list-group-item " + (selection === "operations" ? "active" : "")}
                     onClick={handleTabClick("operations")}
                   >
                     Operations

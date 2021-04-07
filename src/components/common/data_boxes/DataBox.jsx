@@ -27,8 +27,8 @@ function DataBox({ title, subTitle, toolTipText, clickAction, statusColor,
             <Card.Subtitle className="data-blocks-subtitle">
               <div>{subTitle}</div>
               <div>{footerText}</div>
+              <div className="data-blocks-additional-content">{additionalContent}</div>
             </Card.Subtitle>
-            {additionalContent}
           </Card.Body>
         </Card>
       </TooltipWrapper>
