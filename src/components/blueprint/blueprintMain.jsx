@@ -361,7 +361,6 @@ function OPBlueprint(props) {
             <Row>
               <Col md={5} className="py-1">
                 <SelectInputBase
-                  fieldName="Select Opsera Pipeline"
                   dataObject={dataObject}
                   setDataObject={setDataObjectWithMethods}
                   selectOptions={filterOptions}
