@@ -67,7 +67,7 @@ const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestr
       <div className="flex-container">
         <div className="flex-container-content">
           <div className="h5">SalesForce Pipeline Run: XML Viewer</div>
-          <div className="text-muted mb-4">Please confirm that you want to proceed with this operation.</div>
+          <div className="text-muted mb-2">Please confirm that you want to proceed with this operation.</div>
           <div className="px-2"></div>
 
           {save && <LoadingDialog />}

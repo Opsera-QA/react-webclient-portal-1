@@ -130,16 +130,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
     }
 
     return (
-      <ChartContainer
-        title={kpiConfig?.kpi_name}
-        chart={getChart()}
-        loadChart={loadChart}
-        kpiConfiguration={kpiConfig}
-        setKpiConfiguration={setKpiConfig}
-        dashboardData={dashboardData}
-        setKpis={setKpis}
-        index={index}
-      />
+      <Col xl={6} md={12} className="p-2">
+        <ChartContainer
+          title={kpiConfig?.kpi_name}
+          chart={getChart()}
+          loadChart={loadChart}
+          kpiConfiguration={kpiConfig}
+          setKpiConfiguration={setKpiConfig}
+          dashboardData={dashboardData}
+          setKpis={setKpis}
+          index={index}
+        />
+      </Col>
     );
   };
 
