@@ -1103,7 +1103,6 @@ div.data-blocks-ellipses {
     text-overflow: ellipsis; 
     white-space: nowrap;
     display: block;
-    padding: auto;
   }
 }
 

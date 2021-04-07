@@ -10,9 +10,8 @@ import PropTypes from "prop-types";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH, faTimes } from "@fortawesome/free-solid-svg-icons";
-import Card from "react-bootstrap/CardGroup";
-import DataBox from "components/common/data_boxes/DataBox";
-import DataBoxWrapper from "components/common/data_boxes/DataBoxWrapper";
+import DataBlock from "components/common/data_boxes/DataBlock";
+import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
 
 function SummaryCountBlocksView({ data, view }) {
   useEffect(() => {
@@ -36,10 +35,10 @@ function SummaryCountBlocksView({ data, view }) {
   return (
     <>
       {data !== undefined && data.length > 0 ? (
-        <DataBoxWrapper>
+        <DataBlockWrapper>
           {data.map(function (item, index) {
             return (
-              <DataBox
+              <DataBlock
                 key={index}
                 title={item.value}
                 subTitle={item.name}
@@ -58,7 +57,7 @@ function SummaryCountBlocksView({ data, view }) {
               />
             );
           })}
-        </DataBoxWrapper>
+        </DataBlockWrapper>
       ) : null}
     </>
   );

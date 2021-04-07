@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Card from "react-bootstrap/Card";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function DataBox({ title, subTitle, toolTipText, clickAction, statusColor, 
+function DataBlock({ title, subTitle, toolTipText, clickAction, statusColor, 
                    ellipsesContent, footerText, modal, view }) {
   const statusColors = {
     success: "#00897b",
@@ -37,7 +37,7 @@ function DataBox({ title, subTitle, toolTipText, clickAction, statusColor,
   );
 }
 
-DataBox.propTypes = {
+DataBlock.propTypes = {
   title: PropTypes.string,
   subTitle: PropTypes.string,
   toolTipText: PropTypes.string,
@@ -49,4 +49,4 @@ DataBox.propTypes = {
   view: PropTypes.string
 };
 
-export default DataBox;
+export default DataBlock;
