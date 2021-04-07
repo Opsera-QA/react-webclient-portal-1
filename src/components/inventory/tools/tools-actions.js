@@ -217,7 +217,7 @@ toolsActions.checkSFDXToolConnection = async (getAccessToken, toolDataDto, selec
     "sfdcToolId": toolDataDto.getData("_id"),
     "tool": "sfdc"
   };
-  const apiUrl = `/tools/sfdc/check-connectivity/`;
+  const apiUrl = `/tools/sfdc/check-connectivity`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
