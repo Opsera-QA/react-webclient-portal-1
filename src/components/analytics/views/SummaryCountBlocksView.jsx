@@ -45,7 +45,7 @@ function SummaryCountBlocksView({ data, view }) {
                 subTitle={item.name}
                 toolTipText={item.name}
                 statusColor={item.status}
-                additionalContent={item.info && (
+                ellipsesContent={item.info && (
                   <OverlayTrigger trigger="click" rootClose placement="top" overlay={infoPopover(item)}>
                     <FontAwesomeIcon
                       icon={faEllipsisH}

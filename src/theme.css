@@ -1071,7 +1071,7 @@ div.data-blocks-subtitle {
   background: rgba(230, 229, 227, .5);
 }
 
-div.data-blocks-subtitle > div:not(.data-blocks-additional-content) {
+div.data-blocks-subtitle > div:not(.data-blocks-ellipses) {
   height: 100%;
   display: flex;
   align-items: center;
@@ -1090,7 +1090,7 @@ div.data-blocks-subtitle {
   padding: .5rem;
 }
 
-div.data-blocks-additional-content {
+div.data-blocks-ellipses {
   position: absolute;
   top: 3px;
   right: 3px;
