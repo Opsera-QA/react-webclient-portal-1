@@ -86,6 +86,16 @@ function TagArrayUsedInPipelinesField({ tags, showTable }) {
     );
   };
 
+  const getDisplay = () => {
+    if (showTable) {
+      return (
+        <TagsUsedInPipelineTable data={pipelines} loadData={loadData} isLoading={isLoading} isMounted={isMounted}/>
+        );
+    }
+
+    return (getPipelineCards());
+  };
+
 
   if (isLoading) {
     return <LoadingDialog message={"Loading Pipelines"} size={"sm"} />;
@@ -111,7 +121,7 @@ function TagArrayUsedInPipelinesField({ tags, showTable }) {
       <div className="form-text text-muted mb-2">
         <span>This tag combination is used in {pipelines.length} pipelines</span>
       </div>
-        {showTable ? <TagsUsedInPipelineTable data={pipelines} loadData={loadData} isLoading={isLoading} isMounted={isMounted}/> : getPipelineCards()}
+      {getDisplay()}
     </div>
   );
 }
