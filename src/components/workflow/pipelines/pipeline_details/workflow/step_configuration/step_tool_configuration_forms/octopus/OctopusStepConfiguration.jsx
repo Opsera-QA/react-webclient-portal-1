@@ -30,6 +30,8 @@ import OctopusFeedSelectInput from "./input/OctopusFeedSelectInput";
 import OctopusVersionSelectInput from "./input/OctopusVersionSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ValidateProjectButton from "./input/ValidateProjectButton";
+import RollbackToggleInput from "./input/RollbackToggleInput";
+import WorkspaceDeleteToggleInput from "../dotnet/inputs/WorkspaceDeleteToggleInput";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -244,6 +246,27 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                       : ""
                   }
                 />
+                <RollbackToggleInput dataObject={octopusStepConfigurationDto} setDataObject={setOctopusStepConfigurationDataDto} fieldName={"isRollback"} />
+                {
+                  octopusStepConfigurationDto &&
+                  octopusStepConfigurationDto.getData("isRollback") &&
+                  <OctopusVersionSelectInput
+                    fieldName={"octopusVersion"}
+                    dataObject={octopusStepConfigurationDto}
+                    setDataObject={setOctopusStepConfigurationDataDto}
+                    pipelineId={pipelineId}
+                    disabled={
+                      octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusFeedId")
+                        ? octopusStepConfigurationDto.getData("octopusFeedId").length === 0
+                        : true
+                    }
+                    tool_prop={
+                      octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusFeedId")
+                        ? octopusStepConfigurationDto.getData("octopusFeedId")
+                        : ""
+                    }
+                  />
+                }
               </>
             )}
             <TextInputBase dataObject={octopusStepConfigurationDto} setDataObject={setOctopusStepConfigurationDataDto} fieldName={"octopusPhysicalPath"} />
