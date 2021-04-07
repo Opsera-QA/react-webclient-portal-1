@@ -40,6 +40,7 @@ import SfdcModifiedFilesTabView from "./tab_views/SfdcModifiedFilesTabView";
 import GitModifiedFilesTabView from "./tab_views/GitModifiedFilesTabView";
 import SfdcDestModifiedFilesTabView from "./tab_views/SfdcDestModifiedFilesTabView";
 import SfdcProfileSelectionView from "./tab_views/SfdcProfileSelectionView";
+import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -113,6 +114,8 @@ const SfdcPipelineModifiedFiles = ({
   const [activeTab, setActiveTab] = useState("sfdc");
   const [sfdcModifiedFilesTable, setSfdcModifiedFilesTable] = useState([]);
   const [gitModifiedFilesTable, setGitModifiedFilesTable] = useState([]);
+  const [sfdcWarningMessage, setSfdcWarningMessage] = useState("");
+  const [gitWarningMessage, setGitWarningMessage] = useState("");
   
   useEffect(() => {
     async function loadInitialData() {
@@ -159,10 +162,15 @@ const SfdcPipelineModifiedFiles = ({
         "gitTaskId": gitTaskData ? gitTaskId : false,
         "fetchAttribute": "sfdcCommitList",
       }, sfdcFilterDto, getAccessToken);
-        
+
+      if(sfdcResponse.data.data.sfdcWarnMessage){
+        setSfdcWarningMessage(sfdcResponse.data.data.sfdcWarnMessage);
+      }
+
       if(!sfdcResponse.data.data.sfdcErrorMessage && 
           sfdcResponse.data.data.sfdcCommitList?.length === 0 && 
-          count < 5 ) {        
+          count < 5 ) {
+        
         await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));        
         count++;
         return await sfdcPolling(count);
@@ -182,10 +190,14 @@ const SfdcPipelineModifiedFiles = ({
         "dataType": "sfdc-packageXml",
         "fetchAttribute": "gitCommitList",
       }, gitFilterDto, getAccessToken);
+
+      if(gitResponse.data.data.gitWarnMessage){
+        setGitWarningMessage(gitResponse.data.data.gitWarnMessage);
+      }
         
       if(!gitResponse.data.data.gitErrorMessage && 
           gitResponse.data.data.gitCommitList?.length === 0 
-          && count < 5) {        
+          && count < 5) {                
         await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
         count++;
         return await gitPolling(count);
@@ -233,7 +245,7 @@ const SfdcPipelineModifiedFiles = ({
       //   "gitTaskId": gitTaskData ? gitTaskId : false,
       //   "fetchAttribute": "sfdcCommitList",
       // }, sfdcFilterDto, getAccessToken);
-
+      setSfdcWarningMessage("");
       const sfdcResponse = await sfdcPolling();
 
       if(sfdcResponse.data.data.sfdcErrorMessage){
@@ -271,7 +283,7 @@ const SfdcPipelineModifiedFiles = ({
       //   "dataType": "sfdc-packageXml",
       //   "fetchAttribute": "gitCommitList",
       // }, gitFilterDto, getAccessToken);
-
+      setGitWarningMessage("");
       const gitResponse = await gitPolling();
 
       if(gitResponse.data.data.gitErrorMessage){
@@ -1214,10 +1226,16 @@ const SfdcPipelineModifiedFiles = ({
       <div className="flex-container">
         <div className="flex-container-content">
           <div className="h5">SalesForce Pipeline Run: File Comparison</div>
-          <div className="text-muted mb-4">
+          <div className="text-muted mb-2">
             Listed below are the files with changes impacted in this pipeline run. Please confirm that you want to
             proceed with this operation.
-          </div>          
+          </div>
+          { activeTab === "git" && gitWarningMessage ? (
+            <InlineWarning warningMessage={gitWarningMessage} className="pl-3" />
+          ) : activeTab !== "git" && sfdcWarningMessage ? (
+              <InlineWarning warningMessage={sfdcWarningMessage} className="pl-3" />
+          ) : null }
+          
           <CustomTabContainer>            
             <CustomTab activeTab={activeTab} tabText={"SFDC Files"} handleTabClick={handleTabClick} tabName={"sfdc"} disabled={gitTaskData ? true : false}
                       toolTipText={"SFDC Files"} icon={faSalesforce} />

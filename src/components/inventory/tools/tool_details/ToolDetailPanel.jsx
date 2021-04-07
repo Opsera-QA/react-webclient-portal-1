@@ -100,6 +100,12 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
             <CustomTab icon={faProjectDiagram} tabName={"projects"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Projects"} disabled={!authorizedAction("edit_tool_projects_tabs", toolData?.data)}/>
           </>
           );
+      case "sfdc-configurator":
+        return (
+          <>
+            <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Logs"}/>
+          </>
+        );
       default: return <></>;
     }
   };
