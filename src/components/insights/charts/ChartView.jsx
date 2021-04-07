@@ -322,8 +322,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "jenkins-change-failure-rate":
         return (
-          <Col xl={6} md={12} className="p-2">
-            <JenkinsChangeFailureRate persona={"developer"} date={getDateObject(kpiConfig)}/>
+          <Col md={12} className="p-2">
+            <JenkinsChangeFailureRate 
+              persona={"developer"} 
+              date={getDateObject(kpiConfig)}
+            />
           </Col>
         );
       case "jenkins-deployments-counts":
