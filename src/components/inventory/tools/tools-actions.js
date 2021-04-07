@@ -205,7 +205,7 @@ toolsActions.getToolCounts = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-toolsActions.getaToolConnectionLog = async (getAccessToken, toolDataDto) => {
+toolsActions.getToolConnectionLog = async (getAccessToken, toolDataDto) => {
   const apiUrl = `/registry/log/${toolDataDto.getData("_id")}?page=1&size=10`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
