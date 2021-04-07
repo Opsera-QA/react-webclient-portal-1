@@ -321,10 +321,11 @@ button.bg-primary:focus {
 }
 
 .list-group-item.active {
-    background-color: #46415C;
+    background-color: #46415C !important;
     color: white;
     text-decoration: none;
     border-color: #010913;
+    border: none;
 }
 
 .list-group-item-primary.list-group-item-action:hover, .list-group-item-primary.list-group-item-action:focus {
