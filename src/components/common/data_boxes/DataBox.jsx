@@ -25,9 +25,9 @@ function DataBox({ title, subTitle, toolTipText, clickAction, statusColor,
               {title}
             </Card.Title>
             <Card.Subtitle className="data-blocks-subtitle">
-              <div>{subTitle}</div>
-              <div>{footerText}</div>
-              <div className="data-blocks-ellipses">{ellipsesContent}</div>
+              {subTitle && <div>{subTitle}</div>}
+              {footerText && <div>{footerText}</div>}
+              {ellipsesContent && <div className="data-blocks-ellipses">{ellipsesContent}</div>}
             </Card.Subtitle>
           </Card.Body>
         </Card>
