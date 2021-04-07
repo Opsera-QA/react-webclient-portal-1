@@ -118,21 +118,21 @@ function TotalPipelinesExecuted({dashboardData}) {
     );
   };
   
-  //   if (isLoading) {
-    //     return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading</span>);
-    //   }
-    console.log(isLoading);
-    return (
-      getChartBody()
-      );
-    }
-    
-    TotalPipelinesExecuted.propTypes = {
-      kpiConfiguration: PropTypes.object,
-      dashboardData: PropTypes.object,
-      index: PropTypes.number,
-      setKpiConfiguration: PropTypes.func,
-      setKpis: PropTypes.func
-    };
-    
-    export default TotalPipelinesExecuted;
+//   if (isLoading) {
+//     return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading</span>);
+//   }
+console.log(isLoading);
+return (
+  getChartBody()
+  );
+}
+
+TotalPipelinesExecuted.propTypes = {
+  kpiConfiguration: PropTypes.object,
+  dashboardData: PropTypes.object,
+  index: PropTypes.number,
+  setKpiConfiguration: PropTypes.func,
+  setKpis: PropTypes.func
+};
+
+export default TotalPipelinesExecuted;
