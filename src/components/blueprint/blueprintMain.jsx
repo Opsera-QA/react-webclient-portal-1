@@ -6,13 +6,13 @@ import { ApiService } from "api/apiService";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ErrorDialog from "components/common/status_notifications/error";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { Form, Button, Row, Col, Tooltip, OverlayTrigger } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDraftingCompass, faDownload} from "@fortawesome/pro-light-svg-icons";
 import "./logs.css";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import DropdownList from "react-widgets/lib/DropdownList";
 import BlueprintSearchResult from "./BlueprintSearchResult";
 import simpleNumberLocalizer from "react-widgets-simple-number";
 import NumberPicker from "react-widgets/lib/NumberPicker";
@@ -37,6 +37,8 @@ function OPBlueprint(props) {
   const [jobFilter, setJobFilter] = useState("");
   const [calenderActivation, setCalenderActivation] = useState(false);
   const [submitted, submitClicked] = useState(false);
+  const [dataObject, setDataObject] = useState({});
+
   // const [date, setDate] = useState([
   //   {
   //     startDate: new Date(),
@@ -227,6 +229,7 @@ function OPBlueprint(props) {
               formattedFilterData.push(...filterGroup["options"]);
             });
             setFilters(formattedFilterData);
+            setDataObject(setDataObjectWithMethods({ data: formattedFilterData}));
           }
         } else {
           setDisabledState(true);
@@ -235,6 +238,15 @@ function OPBlueprint(props) {
       .catch((err) => {
         setFilters([]);
       });
+  };
+
+  const setDataObjectWithMethods = data => {
+    setDataObject({
+      data: data?.data?.map(d => d.value),
+      getData() {
+        return this.data;
+      }
+    });
   };
 
   useEffect(() => {
@@ -348,16 +360,18 @@ function OPBlueprint(props) {
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col md={5} className="py-1">
-                <DropdownList
-                  placeholder={"Select Opsera Pipeline"}
-                  data={filterOptions}
+                <SelectInputBase
+                  dataObject={dataObject}
+                  setDataObject={setDataObjectWithMethods}
+                  selectOptions={filterOptions}
                   busy={disabledForm ? false : Object.keys(filterOptions).length == 0 ? true : false}
-                  disabled={Object.keys(filterOptions).length == 0 ? true : false}
                   valueField="value"
                   textField="label"
-                  filter="contains"
-                  value={multiFilter.length === 0 ? null : multiFilter}
-                  onChange={pipelineSelect}
+                  placeholderText="Select Opsera Pipeline"
+                  disabled={Object.keys(filterOptions).length == 0 ? true : false}
+                  getCurrentValue={() => multiFilter.length === 0 ? null : multiFilter}
+                  customOnChangeHandler={pipelineSelect}
+                  hideLabel={true}
                 />
               </Col>
               <Col md={4} className="py-1">
