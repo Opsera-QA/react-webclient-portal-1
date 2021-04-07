@@ -7,6 +7,7 @@ import {AuthContext} from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRepeat, faCircle, faCheckCircle } from "@fortawesome/pro-light-svg-icons";
+import toolsActions from "components/inventory/tools/tools-actions";
 import Moment from "moment";
 import momentLocalizer from "react-widgets-moment";
 
@@ -47,11 +48,9 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
   const toolLogPolling = async (jenkinsBuildNumber, count = 1) => {
     setModalLoading(true);
     try {
-      const accessToken = await getAccessToken();
-      const apiUrl = `/registry/log/${toolData.getData("_id")}?page=1&size=50`;
-      const tool_logs = await axiosApiService(accessToken).get(apiUrl, {});
-
-      const testRes = tool_logs.data.data.filter(rec => rec.action === 'test_configuration' && rec.run_count == jenkinsBuildNumber);
+      const tool_logs = await toolsActions.getaToolConnectionLog(getAccessToken, toolData);
+      
+      const testRes = tool_logs.data.data.filter(rec => rec.action === 'test_configuration' && rec.run_count === jenkinsBuildNumber);
 
       if(testRes.length !== 1 && count < 5 ){
         await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
