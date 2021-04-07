@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from "react";
 import PropTypes from "prop-types";
 import {Row} from "react-bootstrap";
 import modelHelpers from "components/common/model/modelHelpers";
+import { Button } from "react-bootstrap";
 import sfdcConnectionMetadata from "./sfdc-connection-metadata";
 import ToolConfigurationEditorPanelContainer
   from "components/common/panels/detail_panel_container/tools/ToolConfigurationEditorPanelContainer";
@@ -11,10 +12,21 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import SFDCBuildTypeSelectInput  from  "components/common/list_of_values_input/workflow/pipelines/SFDCBuildTypeSelectInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import PipelineToolInput from "components/common/list_of_values_input/workflow/pipelines/PipelineToolInput";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner, faPlug } from "@fortawesome/pro-light-svg-icons";
+import SfdxTestConnectionStatusModal from './SfdxTestConnectionStatusModal';
+import { DialogToastContext } from "contexts/DialogToastContext";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 function SfdcToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [sfdcConfigurationDto, setSfdcConfigurationDto] = useState(undefined);
+  const [jenkinsBuildNumber, setJenkinsBuildNumber] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -23,6 +35,71 @@ function SfdcToolConfiguration({ toolData }) {
   const loadData = async () => {
     setSfdcConfigurationDto(modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), sfdcConnectionMetadata));
   };
+
+  const testConnection = async() =>{
+    setLoading(true);
+    let response;
+    
+    if (sfdcConfigurationDto != null) {
+      try{
+        response = await toolsActions.checkSFDXToolConnection(getAccessToken, toolData, sfdcConfigurationDto.getData("jenkinsToolId") );
+      } catch (error) {
+        toastContext.showErrorDialog(error.message);
+      }
+    }
+
+    if (response && response.data != null && response.data.status === 200 && response?.data?.message?.buildParams?.buildNumber ) {   
+      setJenkinsBuildNumber(response?.data?.message?.buildParams?.buildNumber); 
+      setShowModal(true);
+    }
+    else {
+      toastContext.showErrorDialog("Something went wrong during test connection. View browser logs for more details"); 
+      setLoading(false);
+    }
+  };
+
+  const getSfdxModal = () => {
+    return (
+      <SfdxTestConnectionStatusModal 
+        showModal={showModal}
+        setShowModal={setShowModal}
+        jenkinsBuildNumber={jenkinsBuildNumber}
+        setJenkinsBuildNumber={setJenkinsBuildNumber}
+        setLoading={setLoading}
+        toolData={toolData}            
+      />
+    );
+  };
+
+  const getDynamicFields = () => {
+    if (sfdcConfigurationDto.getData("checkConnection") === true) {
+      return (
+        <>
+          <PipelineToolInput
+            toolType={"jenkins"}
+            toolFriendlyName={"Jenkins"}
+            fieldName={"jenkinsToolId"}
+            configurationRequired={true}
+            dataObject={sfdcConfigurationDto}
+            setDataObject={setSfdcConfigurationDto}
+          />
+          <div className="p-2">
+            {/* <TooltipWrapper innerText={"Select Jenkins tool to Test Connection"}> */}
+              <Button size="sm" variant={"secondary"} disabled={!toolData.getData("_id") || sfdcConfigurationDto.getData("jenkinsToolId").length < 1 || loading} onClick={() => testConnection()}>
+                <FontAwesomeIcon icon={loading ? faSpinner:faPlug} className={`mr-2  ${loading ? ' fa-spin' : ''}`} fixedWidth /> Check SFDX Connection
+              </Button>
+            {/* </TooltipWrapper> */}
+          </div>          
+        </>
+      );
+    }
+  };
+console.log(loading);
+  if (sfdcConfigurationDto == null) {
+    return <></>;
+  }
+
+  // console.log(sfdcConfigurationDto);
 
   const saveSfdcToolConfiguration = async () => {
     let newConfiguration = sfdcConfigurationDto.getPersistData();
@@ -54,6 +131,9 @@ function SfdcToolConfiguration({ toolData }) {
           <VaultTextInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"sfdc_token"} />
           <VaultTextInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"sfdc_password"} />
           <SFDCBuildTypeSelectInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"buildType"} />
+          <BooleanToggleInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"checkConnection"} />
+          {getDynamicFields()}
+          {showModal ? getSfdxModal() : null}
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>
