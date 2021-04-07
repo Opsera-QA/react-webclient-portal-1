@@ -41,6 +41,8 @@ function GitTaskDetailPanel({ gitTasksData, setGitTasksData, loadData, isLoading
           <GitTaskSummaryPanel
             gitTasksData={gitTasksData}
             setActiveTab={setActiveTab}
+            setGitTasksData={setGitTasksData}
+            loadData={loadData}
           />
         );
       case "settings":
