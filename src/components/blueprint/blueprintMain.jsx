@@ -360,20 +360,20 @@ function OPBlueprint(props) {
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col md={5} className="py-1">
-              <SelectInputBase
-                fieldName="Select Opsera Pipeline"
-                dataObject={dataObject}
-                setDataObject={setDataObjectWithMethods}
-                selectOptions={filterOptions}
-                busy={disabledForm ? false : Object.keys(filterOptions).length == 0 ? true : false}
-                valueField="value"
-                textField="label"
-                placeholderText="Select Opsera Pipeline"
-                disabled={Object.keys(filterOptions).length == 0 ? true : false}
-                getCurrentValue={() => multiFilter.length === 0 ? null : multiFilter}
-                customOnChangeHandler={pipelineSelect}
-                hideLabel={true}
-              />
+                <SelectInputBase
+                  fieldName="Select Opsera Pipeline"
+                  dataObject={dataObject}
+                  setDataObject={setDataObjectWithMethods}
+                  selectOptions={filterOptions}
+                  busy={disabledForm ? false : Object.keys(filterOptions).length == 0 ? true : false}
+                  valueField="value"
+                  textField="label"
+                  placeholderText="Select Opsera Pipeline"
+                  disabled={Object.keys(filterOptions).length == 0 ? true : false}
+                  getCurrentValue={() => multiFilter.length === 0 ? null : multiFilter}
+                  customOnChangeHandler={pipelineSelect}
+                  hideLabel={true}
+                />
               </Col>
               <Col md={4} className="py-1">
                 <NumberPicker
