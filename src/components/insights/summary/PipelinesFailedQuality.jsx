@@ -7,6 +7,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
+import DataBox from "components/common/data_boxes/DataBox";
 import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import { getTableDateTimeColumn, getTableTextColumn, getChartPipelineStatusColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -95,27 +96,26 @@ function PipelineFailedQuality({dashboardData}) {
 
   const getChartBody = () => {
     return (
-    <div>
-            <div className="metric-box p-1 text-center">
-              <div className="box-metric pointer" onClick={() => {onSelect(metrics[0]?.data);}}>
-              <div className="red">{!isLoading && metrics[0]?.count[0] ? metrics[0]?.count[0]?.count : <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>}</div>
-              </div>
-              <div className="w-100 text-muted mb-1">Pipelines Failing Quality Step</div>
-              </div> 
-      <PipelineDetailsTableModal
-        header="Pipelines Failing Quality Step"
-        size="lg"
-        tableMessage={modalData}
-        show={showModal}
-        setParentVisibility={setShowModal}
-        loadData={loadData}
-        columns={columns}
-        tableFilterDto={tableFilterDto}
-        setTableFilterDto={setTableFilterDto}
-        noDataMessage={noDataMessage}
-        isLoading={isLoading}
+      <DataBox 
+        title={!isLoading && metrics[0]?.count[0] ? metrics[0]?.count[0]?.count : <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>}
+        subTitle="Pipelines Failing Quality Step"
+        toolTipText="Pipelines Failing Quality Step"
+        clickAction={() => onSelect(metrics[0]?.data)}
+        statusColor="danger"
+        modal={<PipelineDetailsTableModal
+          header="Pipelines Failing Quality Step"
+          size="lg"
+          tableMessage={modalData}
+          show={showModal}
+          setParentVisibility={setShowModal}
+          loadData={loadData}
+          columns={columns}
+          tableFilterDto={tableFilterDto}
+          setTableFilterDto={setTableFilterDto}
+          noDataMessage={noDataMessage}
+          isLoading={isLoading}
+        />}
       />
-      </div>
     );
   };
 

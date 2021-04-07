@@ -12,7 +12,7 @@ function InfoText({ field, errorMessage }) {
 
   return (
     <small className="text-muted form-text">
-      <div>{field.formText}</div>
+      <div>{field?.formText}</div>
     </small>
   );
 }

@@ -10,23 +10,15 @@ import PropTypes from "prop-types";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH, faTimes } from "@fortawesome/free-solid-svg-icons";
-import Card from "react-bootstrap/Card";
-// import CardDeck from "react-bootstrap/CardDeck";
-import CardGroup from "react-bootstrap/CardGroup";
+import Card from "react-bootstrap/CardGroup";
+import DataBox from "components/common/data_boxes/DataBox";
+import DataBoxWrapper from "components/common/data_boxes/DataBoxWrapper";
 
 function SummaryCountBlocksView({ data, view }) {
   useEffect(() => {
     // console.log("Rendering Blocks for data", data);
   }, [data]);
-
-  const setStatusLevel = (status) => {
-    if (status === "danger") return "red";
-    if (status === "warning") return "yellow";
-    if (status === "success") return "green";
-
-    return null;
-  };
-
+  
   const infoPopover = (item) => {
     return (
       <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
@@ -44,44 +36,31 @@ function SummaryCountBlocksView({ data, view }) {
   return (
     <>
       {data !== undefined && data.length > 0 ? (
-        <div className="w-100">
-          <div className="d-none d-sm-block justify-content-center">
-            <CardGroup className="w-100 d-flex justify-content-center">
-              {data.map(function (item, index) {
-                return (
-                  <div
-                    key={index}
-                    className="count-block-card-view ml-1 mr-1 w-50 text-center align-self-center"
-                    style={view !== "small" ? { maxWidth: "150px", height: "150px" } : { maxWidth: "150px" }}
-                  >
-                    <Card style={view !== "small" ? { width: "100%", height: "135px" } : { width: "100%" }}>
-                      <Card.Body>
-                        <Card.Title className="count-block-primary-text" style={{ fontSize: "25px" }}>
-                          {item.value}
-                        </Card.Title>
-                        <Card.Text className={"count-block-subtext mt-2 " + setStatusLevel(item.status)}>
-                          {item.name}
-                        </Card.Text>
-                        <Card.Text style={{ position: "absolute", right: "10px", bottom: "15px" }}>
-                          {item.info && (
-                            <OverlayTrigger trigger="click" rootClose placement="top" overlay={infoPopover(item)}>
-                              <FontAwesomeIcon
-                                icon={faEllipsisH}
-                                className="fa-pull-right pointer pr-1"
-                                onClick={() => document.body.click()}
-                              />
-                            </OverlayTrigger>
-                          )}
-                        </Card.Text>
-                      </Card.Body>
-                      {item.footer && <Card.Text className="w-100 text-muted mb-1">{item.footer}</Card.Text>}
-                    </Card>
-                  </div>
-                );
-              })}
-            </CardGroup>
-          </div>
-        </div>
+        <DataBoxWrapper>
+          {data.map(function (item, index) {
+            return (
+              <DataBox
+                key={index}
+                title={item.value}
+                subTitle={item.name}
+                toolTipText={item.name}
+                statusColor={item.status}
+                additionalContent={item.info && (
+                  <Card.Text style={{ position: "absolute", right: "10px", bottom: "15px" }}>
+                    <OverlayTrigger trigger="click" rootClose placement="top" overlay={infoPopover(item)}>
+                      <FontAwesomeIcon
+                        icon={faEllipsisH}
+                        className="fa-pull-right pointer pr-1"
+                        onClick={() => document.body.click()}
+                      />
+                    </OverlayTrigger>
+                  </Card.Text>
+                )}
+                footer={item.footer && <Card.Text className="w-100 text-muted mb-1">{item.footer}</Card.Text>}
+              />
+            );
+          })}
+        </DataBoxWrapper>
       ) : null}
     </>
   );
