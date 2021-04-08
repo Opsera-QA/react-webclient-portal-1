@@ -33,7 +33,6 @@ import TagDetailView from "./components/settings/tags/tags_detail_view/TagDetail
 import KpiManagement from "./components/admin/kpi_editor/KpiManagement";
 import KpiDetailView from "./components/admin/kpi_editor/kpi_detail_view/KpiDetailView";
 import TemplateManagement from "./components/admin/template_editor/TemplateManagement";
-import OPBlueprintMain from "./components/blueprint/blueprint";
 import LdapOrganizationsView from "./components/admin/accounts/ldap/organizations/LdapOrganizationManagement";
 import LdapOrganizationDetailView
   from "./components/admin/accounts/ldap/organizations/organizations_detail_view/LdapOrganizationDetailView";
@@ -103,6 +102,7 @@ import OrganizationDetailView from "components/settings/organizations/organizati
 import AnalyticsDataEntryManagement from "components/settings/analytics_data_entry/AnalyticsDataEntryManagement";
 import AnalyticsDataEntryDetailView
   from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryDetailView";
+import Blueprint from "components/blueprint/Blueprint";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -298,7 +298,7 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/insights/dashboards" exact component={Insights}/>
                   <SecureRoute path="/insights/dashboards/:id/:tab?" exact component={DashboardDetailView}/>
                   <SecureRoute path="/logs" exact component={Logs}/>
-                  <SecureRoute path="/blueprint/:id?/:run?" exact component={OPBlueprintMain}/>
+                  <SecureRoute path="/blueprint/:id?/:run?" exact component={Blueprint}/>
                   <SecureRoute path="/update" component={Update}/>
 
                   {/* Reports */}
