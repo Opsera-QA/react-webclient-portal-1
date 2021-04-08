@@ -10,9 +10,8 @@ import PropTypes from "prop-types";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH, faTimes } from "@fortawesome/free-solid-svg-icons";
-import Card from "react-bootstrap/CardGroup";
-import DataBox from "components/common/data_boxes/DataBox";
-import DataBoxWrapper from "components/common/data_boxes/DataBoxWrapper";
+import DataBlock from "components/common/data_boxes/DataBlock";
+import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
 
 function SummaryCountBlocksView({ data, view }) {
   useEffect(() => {
@@ -36,31 +35,29 @@ function SummaryCountBlocksView({ data, view }) {
   return (
     <>
       {data !== undefined && data.length > 0 ? (
-        <DataBoxWrapper>
+        <DataBlockWrapper>
           {data.map(function (item, index) {
             return (
-              <DataBox
+              <DataBlock
                 key={index}
                 title={item.value}
                 subTitle={item.name}
                 toolTipText={item.name}
                 statusColor={item.status}
-                additionalContent={item.info && (
-                  <Card.Text style={{ position: "absolute", right: "10px", bottom: "15px" }}>
-                    <OverlayTrigger trigger="click" rootClose placement="top" overlay={infoPopover(item)}>
-                      <FontAwesomeIcon
-                        icon={faEllipsisH}
-                        className="fa-pull-right pointer pr-1"
-                        onClick={() => document.body.click()}
-                      />
-                    </OverlayTrigger>
-                  </Card.Text>
+                ellipsesContent={item.info && (
+                  <OverlayTrigger trigger="click" rootClose placement="top" overlay={infoPopover(item)}>
+                    <FontAwesomeIcon
+                      icon={faEllipsisH}
+                      className="fa-pull-right pointer pr-1"
+                      onClick={() => document.body.click()}
+                    />
+                  </OverlayTrigger>
                 )}
-                footer={item.footer && <Card.Text className="w-100 text-muted mb-1">{item.footer}</Card.Text>}
+                footerText={item.footer}
               />
             );
           })}
-        </DataBoxWrapper>
+        </DataBlockWrapper>
       ) : null}
     </>
   );

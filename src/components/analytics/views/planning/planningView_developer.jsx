@@ -6,7 +6,7 @@ import { AuthContext } from "../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../api/apiService";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import ErrorDialog from "../../../common/status_notifications/error";
-import SummaryCountBlocksView from "../summaryCountBlocksView";
+import SummaryCountBlocksView from "../SummaryCountBlocksView";
 import JiraTicketsAssignedByUserBarChart from "../../charts/JiraTicketsAssignedByUserBarChart";
 import JiraIssuesByPriorityBarChart from "../../charts/JiraIssuesByPriorityBarChart";
 import JiraHealthBySprintBarChart from "../../charts/JiraHealthBySprintBarChart";
@@ -33,7 +33,6 @@ function PlanningView_Developer ({ persona, date, index }) {
     const runEffect = async () => {
       try {
         await fetchData();
-        
       } catch (err) {
         if (err.name === "AbortError") {
           console.log("Request was canceled via controller.abort");
@@ -112,13 +111,12 @@ function PlanningView_Developer ({ persona, date, index }) {
     return (<ErrorDialog  error={error} />);
   } else if (!index.includes("jira") && !index.includes("gitlab")) {
     return (
-    <div className="mt-3 bordered-content-block p-3 max-content-width" style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}> 
-    <Row>
-      <InfoDialog message="No activity data has been captured for this dashboard. In order to activate planning metrics contact support@opsera.io" />
-    </Row>
-    </div>
-      
-      );
+      <div className="mt-3 bordered-content-block p-3 max-content-width" style={{ display: "flex",  justifyContent:"center", alignItems:"center" }}> 
+        <Row>
+          <InfoDialog message="No activity data has been captured for this dashboard. In order to activate planning metrics contact support@opsera.io" />
+        </Row>
+      </div>
+    );
   } else {
     return (
       <>

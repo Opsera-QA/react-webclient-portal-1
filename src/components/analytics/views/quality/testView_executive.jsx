@@ -7,7 +7,7 @@ import { axiosApiService } from "../../../../api/apiService";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import ErrorDialog from "../../../common/status_notifications/error";
 import InfoDialog from "../../../common/status_notifications/info";
-import SummaryCountBlocksView from "../summaryCountBlocksView";
+import SummaryCountBlocksView from "../SummaryCountBlocksView";
 import XUnitMaxMinPercBarChart from "../../charts/xunitMaxMinPercBarChart";
 import XUnitTestDurationBarChart from "../../charts/xunitTestDurationBarChart";
 import XunitTestResultsTable from "../../metrics/xunitTestResultsTable";

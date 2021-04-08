@@ -7,7 +7,7 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
-import DataBox from "components/common/data_boxes/DataBox";
+import DataBlock from "components/common/data_boxes/DataBlock";
 import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import { getTableDateTimeColumn, getTableTextColumn, getChartPipelineStatusColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -96,7 +96,7 @@ function PipelineFailedDeployment({dashboardData}) {
 
   const getChartBody = () => {
     return (
-      <DataBox 
+      <DataBlock 
         title={!isLoading && metrics[0]?.count[0] ? metrics[0]?.count[0]?.count : <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>}
         subTitle="Pipelines Failing Deployment Step"
         toolTipText="Pipelines Failing Deployment Step"
