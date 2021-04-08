@@ -74,20 +74,20 @@ function TagsUsedInPipelineReport() {
   return (
     <ScreenContainer
       breadcrumbDestination={"tagsUsedInPipelineReport"}
-      pageDescription={"View which pipelines are in use by a specific tool"}
       isLoading={isLoading}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.POWER_USERS}
       navigationTabContainer={getNavigationTabContainer()}
     >
-      <Row className={"mb-3"}>
-        <Col>
-          <TagManager type={"tags"} allowCreate={false} fieldName={"tags"} dataObject={tagsUsedInPipelineDto} setDataObject={setTagsUsedInPipelineDto}/>
+      <div className={"ml-3 mt-3 mb-2"}> View pipelines by tags</div>
+      <Row className={"mb-3 mx-0"}>
+        <Col className={"mx-0"}>
+          <TagManager placeholder={"select a tag to view tagged pipelines"} type={"tags"} allowCreate={false} fieldName={"tags"} dataObject={tagsUsedInPipelineDto} setDataObject={setTagsUsedInPipelineDto}/>
         </Col>
       </Row>
       <Row className={"px-2"}>
         <Col>
-          <TagArrayUsedInPipelinesField tags={tagsUsedInPipelineDto?.getData("tags")}/>
+          <TagArrayUsedInPipelinesField tags={tagsUsedInPipelineDto?.getData("tags")} showTable={true}/>
         </Col>
       </Row>
     </ScreenContainer>
