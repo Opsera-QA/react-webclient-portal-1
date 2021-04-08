@@ -85,6 +85,15 @@ function TagArrayUsedInToolsField({ tags, showTable }) {
     );
   };
 
+  const getDisplay = () => {
+    if (showTable) {
+      return (
+        <TagsUsedInToolsTable data={tools} loadData={loadData} isLoading={isLoading} isMounted={isMounted}/>
+        );
+    }
+
+    return (getToolCards());
+  };
 
   if (isLoading) {
     return <LoadingDialog message={"Loading Tools"} size={"sm"} />;
@@ -107,10 +116,10 @@ function TagArrayUsedInToolsField({ tags, showTable }) {
 
   return (
     <div>
-      <div className="form-text text-muted mb-2">
+      <div className="form-text text-muted mb-2  ml-2">
         <span>This tag combination is used in {tools.length} tools</span>
       </div>
-      {showTable ? <TagsUsedInToolsTable data={tools} loadData={loadData} isLoading={isLoading} isMounted={isMounted}/> : getToolCards()}
+      {getDisplay()}
     </div>
   );
 }
