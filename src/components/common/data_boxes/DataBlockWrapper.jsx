@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import CardGroup from "react-bootstrap/CardGroup";
 
-function DataBoxWrapper({ children, padding }) {
+function DataBlockWrapper({ children, padding }) {
   return (
     <div className="w-100">
       <div className="d-none d-sm-block justify-content-center">
@@ -14,13 +14,13 @@ function DataBoxWrapper({ children, padding }) {
   );
 }
 
-DataBoxWrapper.propTypes = {
+DataBlockWrapper.propTypes = {
   children: PropTypes.node,
   padding: PropTypes.number
 };
 
-DataBoxWrapper.defaultProps = {
+DataBlockWrapper.defaultProps = {
   padding: 2
 };
 
-export default DataBoxWrapper;
+export default DataBlockWrapper;

@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import Card from "react-bootstrap/Card";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function DataBox({ title, subTitle, toolTipText, clickAction, statusColor, 
-                   additionalContent, footer, modal, view }) {
+function DataBlock({ title, subTitle, toolTipText, clickAction, statusColor, 
+                   ellipsesContent, footerText, modal, view }) {
   const statusColors = {
     success: "#00897b",
     danger: "#E57373",
@@ -25,11 +25,11 @@ function DataBox({ title, subTitle, toolTipText, clickAction, statusColor,
               {title}
             </Card.Title>
             <Card.Subtitle className="data-blocks-subtitle">
-              <div>{subTitle}</div>
+              {subTitle && <div>{subTitle}</div>}
+              {footerText && <div>{footerText}</div>}
+              {ellipsesContent && <div className="data-blocks-ellipses">{ellipsesContent}</div>}
             </Card.Subtitle>
-            {additionalContent}
           </Card.Body>
-          {footer}
         </Card>
       </TooltipWrapper>
       {modal} 
@@ -37,16 +37,16 @@ function DataBox({ title, subTitle, toolTipText, clickAction, statusColor,
   );
 }
 
-DataBox.propTypes = {
+DataBlock.propTypes = {
   title: PropTypes.string,
   subTitle: PropTypes.string,
   toolTipText: PropTypes.string,
   clickAction: PropTypes.func,
   statusColor: PropTypes.string,
-  additionalContent: PropTypes.node,
-  footer: PropTypes.node,
+  ellipsesContent: PropTypes.node,
+  footerText: PropTypes.node,
   modal: PropTypes.node,
   view: PropTypes.string
 };
 
-export default DataBox;
+export default DataBlock;

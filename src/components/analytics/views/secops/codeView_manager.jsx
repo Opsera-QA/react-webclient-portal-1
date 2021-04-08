@@ -7,7 +7,7 @@ import { axiosApiService } from "../../../../api/apiService";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import ErrorDialog from "../../../common/status_notifications/error";
 import InfoDialog from "../../../common/status_notifications/info";
-import SummaryCountBlocksView from "../summaryCountBlocksView";
+import SummaryCountBlocksView from "../SummaryCountBlocksView";
 import SonarMaintainabilityLineChart from "../../charts/SonarMaintainabilityLineChart";
 import SonarCodeSmellsLineChart from "../../charts/SonarCodeSmellsLineChart";
 import SonarCodeCategoriesNO_VALUEPieChart from "../../charts/sonarCodeCategoriesNO_VALUEPieChart";

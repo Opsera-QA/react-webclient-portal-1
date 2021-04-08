@@ -17,7 +17,7 @@ import PipelinesPassedWithQualityAndSecurity from "components/insights/summary/P
 import PipelinesFailedSecurity from "components/insights/summary/PipelinesFailedSecurity";
 import PipelinesFailedQuality from "components/insights/summary/PipelinesFailedQuality";
 import PipelinesFailedDeployment from "components/insights/summary/PipelinesFailedDeployment";
-import DataBoxWrapper from "components/common/data_boxes/DataBoxWrapper";
+import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
 
 function PipelineDetails({dashboardData}) {
   const fields = BuildDetailsMetadata.fields;
@@ -51,13 +51,13 @@ function PipelineDetails({dashboardData}) {
 
   const getChartBody = () => {
     return (
-      <DataBoxWrapper padding={4}>
+      <DataBlockWrapper padding={4}>
         <TotalPipelinesExecuted dashboardData={dashboardData}/>
         <PipelinesPassedWithQualityAndSecurity dashboardData={dashboardData}/>
         <PipelinesFailedSecurity dashboardData={dashboardData}/>
         <PipelinesFailedQuality dashboardData={dashboardData}/>
         <PipelinesFailedDeployment dashboardData={dashboardData}/>
-      </DataBoxWrapper>
+      </DataBlockWrapper>
     );
   };
 

@@ -6,7 +6,7 @@ import { AuthContext } from "../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../api/apiService";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import ErrorDialog from "../../../common/status_notifications/error";
-import SummaryCountBlocksView from "../summaryCountBlocksView";
+import SummaryCountBlocksView from "../SummaryCountBlocksView";
 
 
 

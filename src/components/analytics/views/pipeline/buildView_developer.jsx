@@ -7,7 +7,7 @@ import { axiosApiService } from "../../../../api/apiService";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import ErrorDialog from "../../../common/status_notifications/error";
 import InfoDialog from "../../../common/status_notifications/info";
-import SummaryCountBlocksView from "../summaryCountBlocksView";
+import SummaryCountBlocksView from "../SummaryCountBlocksView";
 import JenkinsBuildDurationBarChart from "../../charts/JenkinsBuildDurationBarChart";
 import JenkinsBuildsByUserBarChart from "../../charts/JenkinsBuildsByUserBarChart";
 import JenkinsStatusByJobNameBarChart from "../../charts/jenkinsStatusByJobNameBarChart";
