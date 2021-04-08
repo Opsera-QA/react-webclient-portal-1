@@ -49,16 +49,22 @@ function OctopusVersionSelectInput({ fieldName, dataObject, setDataObject, disab
     }
   };
 
+  const handleDTOChange = async (fieldName, value) => {
+      let newDataObject = dataObject;
+      newDataObject.setData("octopusVersion", value);
+      setDataObject({ ...newDataObject });
+      return;
+  };
+
   return (
     <div>
       <SelectInputBase
         fieldName={fieldName}
+        setDataFunction={handleDTOChange}
         dataObject={dataObject}
         setDataObject={setDataObject}
         selectOptions={versions}
         busy={isLoading}
-        valueField={valueField}
-        textField={textField}
         placeholderText={placeholder}
         disabled={disabled || isLoading || (!isLoading && (versions == null || versions.length === 0))}
       />
