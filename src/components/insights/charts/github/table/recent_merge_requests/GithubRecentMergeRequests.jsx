@@ -37,8 +37,8 @@ function GithubRecentMergeRequests({ kpiConfiguration, setKpiConfiguration, dash
       getTableTextColumn(getField(fields, "AuthorName"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "AssigneeName")),
       getLimitedTableTextColumn(getField(fields, "MergeRequestTitle"), 20),
-      getTableTextColumn(getField(fields, "ProjectName")),
-      getTableTextColumn(getField(fields, "BranchName")),
+      getLimitedTableTextColumn(getField(fields, "ProjectName"), 20),
+      getLimitedTableTextColumn(getField(fields, "BranchName"), 20),
       getTableDateTimeColumn(getField(fields, "mrCompletionTimeTimeStamp")),
     ],
     []
