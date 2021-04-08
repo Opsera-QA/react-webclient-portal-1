@@ -7,30 +7,32 @@ import pipelineSummaryMetadata
 import {
   getTableBooleanIconColumn,
   getTableDateColumn,
-  getTableTextColumn
+  getTableTextColumn,
+  getLimitedTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTags} from "@fortawesome/pro-light-svg-icons";
 import ExportTagReportButton from 'components/common/buttons/export/reports/ExportTagReportButton';
 
-function TagsUsedInPipelineTable({ data, loadData, isLoading}) {
+function TagsUsedInToolsTable({ data, loadData, isLoading}) {
   const history = useHistory();
   let fields = pipelineSummaryMetadata.fields;
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
+      getLimitedTableTextColumn(getField(fields, "description"), 100),
       getTableTextColumn(getField(fields, "_id")),
-      getTableTextColumn(getField(fields, "description")),
       getTableDateColumn(getField(fields, "createdAt")),
+      getTableDateColumn(getField(fields, "updatedAt")),
       getTableBooleanIconColumn(getField(fields, "active")),
     ],
     []
   );
 
   const onRowSelect = (rowData) => {
-    history.push("/workflow/details/" + rowData.original._id);
+    history.push("/inventory/tools/details/" + rowData.original._id);
   };
 
   const rowStyling = (row) => {
@@ -66,7 +68,7 @@ function TagsUsedInPipelineTable({ data, loadData, isLoading}) {
   );
 }
 
-TagsUsedInPipelineTable.propTypes = {
+TagsUsedInToolsTable.propTypes = {
   data: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
@@ -76,4 +78,4 @@ TagsUsedInPipelineTable.propTypes = {
   isMounted: PropTypes.object
 };
 
-export default TagsUsedInPipelineTable;
+export default TagsUsedInToolsTable;
