@@ -119,7 +119,7 @@ function TagArrayUsedInPipelinesField({ tags, showTable }) {
 
   return (
     <div>
-      <div className="form-text text-muted mb-2">
+      <div className="form-text text-muted mb-2  ml-2">
         <span>This tag combination is used in {pipelines.length} pipelines</span>
       </div>
       {getDisplay()}
