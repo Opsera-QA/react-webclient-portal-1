@@ -8,16 +8,19 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 
-function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, 
-                           selectOptions, valueField, textField, placeholderText, 
-                           setDataFunction, busy, disabled, clearDataFunction, 
-                           showClearValueButton, errorMessage, getCurrentValue, 
-                           customOnChangeHandler, hideLabel }) {
-  const [field] = useState(dataObject?.getFieldById?.(fieldName));
+function SelectInputBase(
+  {
+    fieldName, dataObject, setDataObject, groupBy,
+    selectOptions, valueField, textField, placeholderText,
+    setDataFunction, busy, disabled, clearDataFunction,
+    showClearValueButton, errorMessage, getCurrentValue,
+    showLabel
+}) {
+  const [field] = useState(dataObject?.getFieldById(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
-    newDataObject?.setData?.(fieldName, value);
+    newDataObject?.setData(fieldName, value);
     setDataObject({...newDataObject});
   };
 
@@ -40,7 +43,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy,
   };
 
   const getClearDataIcon = () => {
-    if (dataObject?.getData?.(field?.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
+    if (dataObject?.getData(field?.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
       return (
         <TooltipWrapper innerText={"Clear this Value"}>
           <span onClick={() => clearValue()} className="my-auto badge badge-danger clear-value-badge pointer">
@@ -56,12 +59,16 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy,
       return getCurrentValue();
     }
 
-    return dataObject?.getData?.(field?.id);
+    return dataObject?.getData(field.id);
   };
+
+  if (field == null) {
+    return null;
+  }
 
   return (
     <InputContainer className="custom-select-input my-2">
-      {!hideLabel && <InputLabel field={field} inputPopover={getClearDataIcon()} />}
+      <InputLabel showLabel={showLabel} field={field} inputPopover={getClearDataIcon()} />
       <DropdownList
         data={selectOptions}
         valueField={valueField}
@@ -71,7 +78,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy,
         filter={"contains"}
         busy={busy}
         placeholder={placeholderText}
-        onChange={customOnChangeHandler ? customOnChangeHandler : (data) => updateValue(data)}
+        onChange={(data) => updateValue(data)}
         disabled={disabled}
       />
       <InfoText field={field} errorMessage={errorMessage} />
@@ -104,13 +111,11 @@ SelectInputBase.propTypes = {
   showClearValueButton: PropTypes.bool,
   errorMessage: PropTypes.string,
   getCurrentValue: PropTypes.func,
-  customOnChangeHandler: PropTypes.func,
-  hideLabel: PropTypes.bool
+  showLabel: PropTypes.bool
 };
 
 SelectInputBase.defaultProps = {
   showClearValueButton: true,
-  hideLabel: false
 };
 
 export default SelectInputBase;
