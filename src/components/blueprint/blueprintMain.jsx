@@ -6,7 +6,7 @@ import { ApiService } from "api/apiService";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ErrorDialog from "components/common/status_notifications/error";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import DropdownList from "react-widgets/lib/DropdownList";
 import { Form, Button, Row, Col, Tooltip, OverlayTrigger } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDraftingCompass, faDownload} from "@fortawesome/pro-light-svg-icons";
@@ -360,18 +360,16 @@ function OPBlueprint(props) {
           <Form onSubmit={handleFormSubmit}>
             <Row>
               <Col md={5} className="py-1">
-                <SelectInputBase
-                  dataObject={dataObject}
-                  setDataObject={setDataObjectWithMethods}
-                  selectOptions={filterOptions}
+                <DropdownList
+                  placeholder={"Select Opsera Pipeline"}
+                  data={filterOptions}
                   busy={disabledForm ? false : Object.keys(filterOptions).length == 0 ? true : false}
+                  disabled={Object.keys(filterOptions).length == 0 ? true : false}
                   valueField="value"
                   textField="label"
-                  placeholderText="Select Opsera Pipeline"
-                  disabled={Object.keys(filterOptions).length == 0 ? true : false}
-                  getCurrentValue={() => multiFilter.length === 0 ? null : multiFilter}
-                  customOnChangeHandler={pipelineSelect}
-                  hideLabel={true}
+                  filter="contains"
+                  value={multiFilter.length === 0 ? null : multiFilter}
+                  onChange={pipelineSelect}
                 />
               </Col>
               <Col md={4} className="py-1">
