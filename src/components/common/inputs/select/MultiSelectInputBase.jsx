@@ -72,7 +72,7 @@ function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, d
   };
 
   if (field == null) {
-    return <></>;
+    return null;
   }
 
   return (
