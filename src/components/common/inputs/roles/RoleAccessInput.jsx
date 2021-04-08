@@ -14,8 +14,8 @@ import RoleAccessEditorHelpOverlay from "components/common/help/input/role_acces
 
 const roleTypes = [
   {text: "Administrator", value: "administrator"},
-  {text: "Manager", value: "manager"},
-  {text: "SecOps", value: "secops"},
+  {text: "Maintainer", value: "manager"},
+  // {text: "SecOps", value: "secops"},
   {text: "User", value: "user"},
   {text: "Guest", value: "guest"},
 ];
