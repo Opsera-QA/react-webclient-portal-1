@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import PropTypes from "prop-types";
 import ActionBarButton from "./ActionBarButton";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
-import ExportDataModal from "components/common/modal/export_data/ExportDataModal";
+import ExportDataModalBase from "components/common/modal/export_data/ExportDataModalBase";
 
 function ActionBarExportDataButton({exportData, isLoading}) {
   const [showExportModal, setShowExportModal] = useState(false);
@@ -19,10 +19,9 @@ function ActionBarExportDataButton({exportData, isLoading}) {
         icon={faFileDownload}
         popoverText={`Export Data`}
       />
-      <ExportDataModal
+      <ExportDataModalBase
         showModal={showExportModal}
         handleCancelModal={closeModal}
-        setParentVisibility={setShowExportModal}
         isLoading={isLoading}
         dataToExport={exportData}
       />
