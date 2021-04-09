@@ -1,11 +1,13 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
-import ExportDataModal from "components/common/modal/export_data/ExportDataModal";
+import ExportDataModalBase from "components/common/modal/export_data/ExportDataModalBase";
 import Button from "react-bootstrap/Button";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import ExportBlueprintDataModal from "components/common/modal/export_data/ExportBlueprintDataModal";
+import ExportLogDataModal from "components/common/modal/export_data/ExportLogDataModal";
 
 //if date should be parsed from ISO
 // function parseISOString(str) {
@@ -63,14 +65,12 @@ function ExportLogSearchButton({isLoading, searchResults, exportDisabled}) {
           </Button>
         </div>
       </TooltipWrapper>
-      <ExportDataModal
+      <ExportLogDataModal
         showModal={showExportModal}
-        handleCancelModal={closeModal}
-        setParentVisibility={setShowExportModal}
+        closeModal={closeModal}
         isLoading={isLoading}
         formattedData={formatSearchResults()}
         rawData={rawDataResults()}
-        exportFrom={"log_search"}
       />
     </>
   );

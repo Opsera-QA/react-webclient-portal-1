@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function RadioButtonOption({ fieldName, dataObject, setDataObject, value, setDataFunction, className, label, disabled}) {
+function RadioButtonOption({ fieldName, dataObject, setDataObject, value, setDataFunction, className, label, disabled, visible}) {
   const validateAndSetData = (fieldName, value) => {
     if (setDataFunction) {
       setDataFunction(fieldName, value);
@@ -12,6 +12,10 @@ function RadioButtonOption({ fieldName, dataObject, setDataObject, value, setDat
       setDataObject({...newDataObject});
     }
   };
+
+  if (visible === false) {
+    return null;
+  }
 
   return (
     <div className={disabled ? `${className} disabled-radio-option` : className}>
@@ -40,7 +44,8 @@ RadioButtonOption.propTypes = {
   label: PropTypes.any,
   disabled: PropTypes.bool,
   value: PropTypes.string,
-  className: PropTypes.string
+  className: PropTypes.string,
+  visible: PropTypes.bool
 };
 
 RadioButtonOption.defaultProps = {

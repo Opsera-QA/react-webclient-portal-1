@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import CloseButton from "components/common/buttons/CloseButton";
-import ExportButton from "components/common/buttons/export/ExportButton";
+import ExportButton, {ExportTypes} from "components/common/buttons/export/ExportButton";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import Model from "core/data_model/model";
 import exportDataMetadata from "components/common/modal/export_data/export-data.metadata";
@@ -10,12 +10,13 @@ import RadioButtonInputContainer from "components/common/inputs/radio/RadioButto
 import RadioButtonOption from "components/common/inputs/radio/RadioButtonOption";
 import ModalBase from "components/common/modal/ModalBase";
 
-function ExportDataModal({ children, showModal, handleCancelModal, formattedData, rawData, isLoading, exportFrom, summaryData, logData, csvEnabled}) {
+function ExportDataModalBase({ children, showModal, handleCancelModal, isLoading, getRawData, getPdfExporter, getCsvData}) {
   const [exportDataModel, setExportDataModel] = useState(new Model({...exportDataMetadata.newObjectFields}, exportDataMetadata, true));
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     toastContext.removeInlineMessage();
+    setExportDataModel(new Model({...exportDataMetadata.newObjectFields}, exportDataMetadata, true));
   }, []);
 
   const handleClose = () => {
@@ -25,52 +26,15 @@ function ExportDataModal({ children, showModal, handleCancelModal, formattedData
 
   // TODO: I'm going to refactor this after everything is known
   const getExportOptions = (fieldName = "exportOption") => {
-    if (csvEnabled) {
-      return (
-        <RadioButtonInputContainer dataObject={exportDataModel} fieldName={fieldName}>
-          <RadioButtonOption
-            fieldName={fieldName}
-            dataObject={exportDataModel}
-            setDataObject={setExportDataModel}
-            value={"formatted"}
-            label={
-              <span>
-                  <div><strong>Format Data Before Export</strong></div>
-              </span>
-            }
-          />
-          <RadioButtonOption
-            fieldName={fieldName}
-            dataObject={exportDataModel}
-            setDataObject={setExportDataModel}
-            value={"raw"}
-            label={
-              <span>
-                  <div><strong>Raw Data</strong></div>
-              </span>
-            }
-          />
-          <RadioButtonOption
-            fieldName={fieldName}
-            dataObject={exportDataModel}
-            setDataObject={setExportDataModel}
-            value={"csv"}
-            label={
-              <span>
-                  <div><strong>CSV</strong></div>
-              </span>
-            }
-          />
-        </RadioButtonInputContainer>
-      );
-    }
     return (
       <RadioButtonInputContainer dataObject={exportDataModel} fieldName={fieldName}>
         <RadioButtonOption
           fieldName={fieldName}
           dataObject={exportDataModel}
           setDataObject={setExportDataModel}
-          value={"formatted"}
+          value={ExportTypes.PDF}
+          disabled={getPdfExporter == null}
+          visible={getPdfExporter !== null}
           label={
             <span>
               <div><strong>Format Data Before Export</strong></div>
@@ -81,7 +45,9 @@ function ExportDataModal({ children, showModal, handleCancelModal, formattedData
           fieldName={fieldName}
           dataObject={exportDataModel}
           setDataObject={setExportDataModel}
-          value={"raw"}
+          value={ExportTypes.RAW}
+          disabled={getRawData == null}
+          visible={getRawData !== null}
           label={
             <span>
               <div><strong>Raw Data</strong></div>
@@ -92,8 +58,9 @@ function ExportDataModal({ children, showModal, handleCancelModal, formattedData
           fieldName={fieldName}
           dataObject={exportDataModel}
           setDataObject={setExportDataModel}
-          value={"csv"}
-          disabled={csvEnabled !== true}
+          value={ExportTypes.CSV}
+          disabled={getCsvData == null}
+          visible={getCsvData !== null}
           label={
             <span>
               <div><strong>CSV</strong></div>
@@ -104,35 +71,18 @@ function ExportDataModal({ children, showModal, handleCancelModal, formattedData
     );
   };
 
-  const getDataToExport = () => {
-    switch (exportDataModel.getData("exportOption")) {
-      case "formatted":
-        return formattedData;
-      case "raw":
-        return new Blob([rawData], {type : 'text/plain'});
-      case "csv":
-        return {csv: true, formattedData: formattedData};
-      default:
-        return new Blob([rawData], {type : 'text/plain'});
-    }
-  };
-
   const getButtonContainer = () => {
     return (
       <>
         <ExportButton
-          logData={logData}
-          summaryData={summaryData}
-          dataToExport={getDataToExport()}
+          getRawData={getRawData}
+          getPdfExporter={getPdfExporter}
+          getCsvData={getCsvData}
+          exportDataModel={exportDataModel}
           className={"mr-2"}
-          fileName={exportDataModel.getData("fileName")}
           isLoading={isLoading}
-          exportFrom={exportFrom}
         />
-        <CloseButton
-          closeEditorCallback={handleClose}
-          showUnsavedChangesMessage={false}
-        />
+        <CloseButton closeEditorCallback={handleClose} showUnsavedChangesMessage={false} />
       </>
     );
   };
@@ -157,24 +107,21 @@ function ExportDataModal({ children, showModal, handleCancelModal, formattedData
   );
 }
 
-ExportDataModal.propTypes = {
+ExportDataModalBase.propTypes = {
   children: PropTypes.any,
   showModal: PropTypes.bool,
   handleCancelModal: PropTypes.func.isRequired,
-  dataToExport: PropTypes.any,
-  rawData: PropTypes.any,
-  formattedData: PropTypes.any,
   isLoading: PropTypes.bool,
-  exportFrom: PropTypes.any,
-  summaryData: PropTypes.any, 
-  logData: PropTypes.any,
-  csvEnabled: PropTypes.bool
+  csvEnabled: PropTypes.bool,
+  getRawData: PropTypes.func,
+  getCsvData: PropTypes.func,
+  getPdfExporter: PropTypes.func,
 };
 
 ExportButton.defaultProps = {
   showButtonText: true
 };
 
-export default ExportDataModal;
+export default ExportDataModalBase;
 
 
