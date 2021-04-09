@@ -79,21 +79,26 @@ function SfdcToolConfiguration({ toolData }) {
     if (sfdcConfigurationDto.getData("buildType") === "sfdx" && sfdcConfigurationDto.getData("checkConnection") === true) {
       return (
         <>
-          <PipelineToolInput
-            toolType={"jenkins"}
-            toolFriendlyName={"Jenkins"}
-            fieldName={"jenkinsToolId"}
-            configurationRequired={true}
-            dataObject={sfdcConfigurationDto}
-            setDataObject={setSfdcConfigurationDto}
-          />
-          <div className="p-2">
-            {/* <TooltipWrapper innerText={"Select Jenkins tool to Test Connection"}> */}
-              <Button size="sm" variant={"secondary"} disabled={!toolData.getData("_id") || sfdcConfigurationDto.getData("jenkinsToolId").length < 1 || loading} onClick={() => testConnection()}>
-                <FontAwesomeIcon icon={loading ? faSpinner:faPlug} className={`mr-2  ${loading ? ' fa-spin' : ''}`} fixedWidth /> Check SFDX Connection
-              </Button>
-            {/* </TooltipWrapper> */}
-          </div>          
+        <BooleanToggleInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"checkConnection"} />
+        {sfdcConfigurationDto.getData("checkConnection") === true && 
+          <>
+            <PipelineToolInput
+              toolType={"jenkins"}
+              toolFriendlyName={"Jenkins"}
+              fieldName={"jenkinsToolId"}
+              configurationRequired={true}
+              dataObject={sfdcConfigurationDto}
+              setDataObject={setSfdcConfigurationDto}
+            />
+            <div className="p-2">
+              {/* <TooltipWrapper innerText={"Select Jenkins tool to Test Connection"}> */}
+                <Button size="sm" variant={"secondary"} disabled={!toolData.getData("_id") || sfdcConfigurationDto.getData("jenkinsToolId").length < 1 || loading} onClick={() => testConnection()}>
+                  <FontAwesomeIcon icon={loading ? faSpinner:faPlug} className={`mr-2  ${loading ? ' fa-spin' : ''}`} fixedWidth /> Check SFDX Connection
+                </Button>
+              {/* </TooltipWrapper> */}
+            </div> 
+          </>
+        }         
         </>
       );
     }
@@ -134,7 +139,6 @@ function SfdcToolConfiguration({ toolData }) {
           <VaultTextInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"sfdc_token"} />
           <VaultTextInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"sfdc_password"} />
           <SFDCBuildTypeSelectInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"buildType"} />
-          <BooleanToggleInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"checkConnection"} />
           {getDynamicFields()}
           {showModal ? getSfdxModal() : null}
         </Col>
