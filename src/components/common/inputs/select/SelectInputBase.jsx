@@ -8,27 +8,34 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 
-function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, disabled, clearDataFunction, showClearValueButton, errorMessage, getCurrentValue}) {
-  const [field] = useState(dataObject.getFieldById(fieldName));
+function SelectInputBase(
+  {
+    fieldName, dataObject, setDataObject, groupBy,
+    selectOptions, valueField, textField, placeholderText,
+    setDataFunction, busy, disabled, clearDataFunction,
+    showClearValueButton, errorMessage, getCurrentValue,
+    showLabel
+}) {
+  const [field] = useState(dataObject?.getFieldById(fieldName));
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
-    newDataObject.setData(fieldName, value);
+    newDataObject?.setData(fieldName, value);
     setDataObject({...newDataObject});
   };
 
   const updateValue = (data) => {
     if (setDataFunction) {
-      setDataFunction(field.id, data);
+      setDataFunction(field?.id, data);
     }
     else {
-      validateAndSetData(field.id, data[valueField]);
+      validateAndSetData(field?.id, data[valueField]);
     }
   };
 
   const clearValue = () => {
     if (!setDataFunction) {
-      validateAndSetData(field.id, "");
+      validateAndSetData(field?.id, "");
     }
     else if (clearDataFunction) {
       clearDataFunction();
@@ -36,7 +43,7 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
   };
 
   const getClearDataIcon = () => {
-    if (dataObject.getData(field.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
+    if (dataObject?.getData(field?.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
       return (
         <TooltipWrapper innerText={"Clear this Value"}>
           <span onClick={() => clearValue()} className="my-auto badge badge-danger clear-value-badge pointer">
@@ -52,12 +59,16 @@ function SelectInputBase({ fieldName, dataObject, setDataObject, groupBy, select
       return getCurrentValue();
     }
 
-    return dataObject.getData(field.id);
+    return dataObject?.getData(field.id);
   };
+
+  if (field == null) {
+    return null;
+  }
 
   return (
     <InputContainer className="custom-select-input my-2">
-      <InputLabel field={field} inputPopover={getClearDataIcon()} />
+      <InputLabel showLabel={showLabel} field={field} inputPopover={getClearDataIcon()} />
       <DropdownList
         data={selectOptions}
         valueField={valueField}
@@ -99,11 +110,12 @@ SelectInputBase.propTypes = {
   ]),
   showClearValueButton: PropTypes.bool,
   errorMessage: PropTypes.string,
-  getCurrentValue: PropTypes.func
+  getCurrentValue: PropTypes.func,
+  showLabel: PropTypes.bool
 };
 
 SelectInputBase.defaultProps = {
-  showClearValueButton: true
+  showClearValueButton: true,
 };
 
 export default SelectInputBase;

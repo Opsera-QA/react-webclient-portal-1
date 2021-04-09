@@ -12,16 +12,19 @@ import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarD
 import axios from "axios";
 import gitTasksActions from "components/git/git-task-actions";
 import gitTasksMetadata from "components/git/git-tasks-metadata";
+import workflowAuthorizedActions
+  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 
 function GitTaskDetailView() {
   const location = useLocation();
   const { id } = useParams();
-  const { getAccessToken } = useContext(AuthContext);
+  const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [gitTasksData, setGitTasksData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [canDelete, setCanDelete] = useState(false);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -68,6 +71,7 @@ function GitTaskDetailView() {
 
     if (isMounted.current === true && gitTask != null) {
       setGitTasksData(new Model(gitTask, gitTasksMetadata, false));
+      setCanDelete(workflowAuthorizedActions.gitItems(getAccessRoleData(), "delete-task", gitTask.owner, gitTask.roles));
     }
   };
 
@@ -82,7 +86,7 @@ function GitTaskDetailView() {
           <ActionBarBackButton path={"/git"} />
         </div>
         <div>
-          <ActionBarDeleteButton2 relocationPath={"/git/"} handleDelete={deleteGitTask} dataObject={gitTasksData} />
+          {canDelete && <ActionBarDeleteButton2 relocationPath={"/git/"} handleDelete={deleteGitTask} dataObject={gitTasksData} />}
         </div>
       </ActionBarContainer>
     );

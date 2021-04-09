@@ -18,7 +18,7 @@ import NavigationTabContainer from "components/common/tabs/navigation/Navigation
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import TitleActionBarContainer from "components/common/actions/TitleActionBarContainer.jsx";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon.jsx";
-import {faChartNetwork, faChartArea} from "@fortawesome/pro-light-svg-icons";
+import {faChartNetwork, faChartArea, faRadar} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import PublishDashboardToPrivateCatalogIcon
   from "components/common/icons/dashboards/PublishDashboardToPrivateCatalogIcon";
@@ -143,6 +143,11 @@ function DashboardDetailView() {
       return;
     }
 
+    if (tabSelection === "synopsis") {
+      history.push(`/insights/synopsis`);
+      return;
+    }
+
     setActiveTab(tabSelection);
   };
 
@@ -152,6 +157,7 @@ function DashboardDetailView() {
         <NavigationTab icon={faChartNetwork} tabName={"dashboards"} handleTabClick={handleNavTabClick} activeTab={"dashboards"} tabText={"Dashboards"} />
         <NavigationTab icon={faChartArea} tabName={"marketplace"} handleTabClick={handleNavTabClick} activeTab={"dashboards"} tabText={"Marketplace"} />
         <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={"dashboards"} tabText={"Analytics"} />
+        <NavigationTab icon={faRadar} tabName={"synopsis"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Synopsis"} />
       </NavigationTabContainer>
     );
   };

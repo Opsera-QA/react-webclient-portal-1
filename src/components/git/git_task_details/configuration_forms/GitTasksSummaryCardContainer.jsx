@@ -1,22 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {Card} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEnvelope, faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {faGit} from "@fortawesome/free-brands-svg-icons";
+import IconBase from "components/common/icons/IconBase";
 
-function GitTasksSummaryCardContainer({ children, isLoading, gitTasksDataDto }) {
-  const getCardTitle = () => {
-    if (isLoading) {
-      return (<div className="ml-1"><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Git Task Type</div>);
-    }
-
-    return (
-      <div className="w-100 mx-2">
-        <div><span><FontAwesomeIcon icon={faEnvelope} fixedWidth className="mr-1"/>Git Task Type: {gitTasksDataDto.getData("type")}</span></div>
-      </div>
-    );
-  };
-
+function GitTasksSummaryCardContainer({ children, isLoading }) {
   const getCardBody = () => {
     if (isLoading) {
       return (<div className="m-3" />);
@@ -28,8 +16,8 @@ function GitTasksSummaryCardContainer({ children, isLoading, gitTasksDataDto }) 
   return (
     <Card className="mb-2 pipeline-summary-card">
       <Card.Title>
-        <div className="d-flex pipeline-card-title small p-1">
-          {getCardTitle()}
+        <div className="d-flex pipeline-card-title small p-1 w-100">
+          <div className={"mx-2"}><span><IconBase isLoading={isLoading} icon={faGit} fixedWidth className={"mr-1"} />Task Details</span></div>
         </div>
       </Card.Title>
       <Card.Body className="py-0 px-3 h-100 small">
@@ -42,7 +30,6 @@ function GitTasksSummaryCardContainer({ children, isLoading, gitTasksDataDto }) 
 
 GitTasksSummaryCardContainer.propTypes = {
   children: PropTypes.any,
-  gitTasksDataDto: PropTypes.object,
   isLoading: PropTypes.bool
 };
 

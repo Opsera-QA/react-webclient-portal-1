@@ -57,6 +57,7 @@ paths.insights = "insights/dashboards";
 paths.dashboardDetails = paths.insights;
 paths.dashboardDetails = "analytics";
 paths.marketplace = paths.insights + "/marketplace";
+paths.insightsSummary = "insights/summary";
 
 // Settings Paths
 paths.accountSettings = "settings";

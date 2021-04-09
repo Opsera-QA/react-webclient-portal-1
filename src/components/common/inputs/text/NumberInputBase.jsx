@@ -10,8 +10,8 @@ export const formatTypes = {
   percent: '%'
 };
 
-function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, placeholderText, formatType }) {
-  const [field, setField] = useState(dataObject.getFieldById(fieldName));
+function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, placeholderText, formatType, setDataFunction, showLabel }) {
+  const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   simpleNumberLocalizer();
 
@@ -22,16 +22,20 @@ function NumberInputBase({ fieldName, dataObject, setDataObject, disabled, place
     setDataObject({...newDataObject});
   };
 
+  if (field == null) {
+    return null;
+  }
+
   return (
     <InputContainer className="custom-number-input my-2">
-      <InputLabel field={field}/>
+      <InputLabel field={field} showLabel={showLabel} />
       <NumberPicker
         type="number"
         placeholder={placeholderText}
         disabled={disabled}
         value={dataObject.getData(fieldName)}
         className="max-content-width"
-        onChange={(newValue) => validateAndSetData(newValue)}
+        onChange={setDataFunction ? (newValue) => setDataFunction(field?.id, newValue) : (newValue) => validateAndSetData(newValue)}
         min={field?.getMaxNumber}
         max={field?.getMinNumber}
         format={ formatType && formatTypes[formatType] != null ? formatTypes[formatType] : undefined}
@@ -47,7 +51,9 @@ NumberInputBase.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
-  formatType: PropTypes.string
+  formatType: PropTypes.string,
+  setDataFunction: PropTypes.func,
+  showLabel: PropTypes.bool
 };
 
 export default NumberInputBase;

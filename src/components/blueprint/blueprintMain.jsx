@@ -1,17 +1,18 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
+import {useParams} from "react-router-dom";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import { ApiService } from "api/apiService";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ErrorDialog from "components/common/status_notifications/error";
+import DropdownList from "react-widgets/lib/DropdownList";
 import { Form, Button, Row, Col, Tooltip, OverlayTrigger } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDraftingCompass, faDownload} from "@fortawesome/pro-light-svg-icons";
 import "./logs.css";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
-import DropdownList from "react-widgets/lib/DropdownList";
 import BlueprintSearchResult from "./BlueprintSearchResult";
 import simpleNumberLocalizer from "react-widgets-simple-number";
 import NumberPicker from "react-widgets/lib/NumberPicker";
@@ -22,6 +23,8 @@ let runCountFetch = {};
 let idFetch = {};
 
 function OPBlueprint(props) {
+  const {id, run} = useParams();
+  const [runCopy, setRunCopy] = useState(run);
   //const FILTER = [{ value: "pipeline", label: "Pipeline" }, { value: "metricbeat", label: "MetricBeat" }, { value: "twistlock", label: "TwistLock" }, { value: "blueprint", label: "Build Blueprint" }];
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
@@ -34,6 +37,8 @@ function OPBlueprint(props) {
   const [jobFilter, setJobFilter] = useState("");
   const [calenderActivation, setCalenderActivation] = useState(false);
   const [submitted, submitClicked] = useState(false);
+  const [dataObject, setDataObject] = useState({});
+
   // const [date, setDate] = useState([
   //   {
   //     startDate: new Date(),
@@ -47,7 +52,7 @@ function OPBlueprint(props) {
   // const [sDate, setSDate] = useState("");
   // const [eDate, setEDate] = useState("");
   // const node = useRef();
-  const [run_count, setRunCount] = useState(null);
+  const [run_count, setRunCount] = useState(run ? Number(run) : null);
   const [pipeIDerror, setPipeIDError] = useState(false);
   const [runCountError, setRunCountError] = useState(false);
   const history = useHistory();
@@ -204,6 +209,11 @@ function OPBlueprint(props) {
               runCountFetch[`${res.data.response[item].name} (${res.data.response[item]._id})`] = res.data.response[item].workflow.run_count;
               idFetch[`${res.data.response[item].name} (${res.data.response[item]._id})`] = res.data.response[item]._id;
               formattedArray.push({ value: pipelineName, label: pipelineName });
+              if (id && id === res.data.response[item]._id) {
+                setMultiFilter({ value: pipelineName, label: pipelineName }); 
+                run && setRunCount(Number(run));
+                setRunCopy(undefined);
+              }
             }
             let filterDataApiResponse = [
               {
@@ -219,6 +229,7 @@ function OPBlueprint(props) {
               formattedFilterData.push(...filterGroup["options"]);
             });
             setFilters(formattedFilterData);
+            setDataObject(setDataObjectWithMethods({ data: formattedFilterData}));
           }
         } else {
           setDisabledState(true);
@@ -229,8 +240,17 @@ function OPBlueprint(props) {
       });
   };
 
+  const setDataObjectWithMethods = data => {
+    setDataObject({
+      data: data?.data?.map(d => d.value),
+      getData() {
+        return this.data;
+      }
+    });
+  };
+
   useEffect(() => {
-    setRunCount(runCountFetch[multiFilter.value]);
+    !runCopy && setRunCount(runCountFetch[multiFilter.value]);
   }, [multiFilter]);
 
   //Every time we select a new filter, update the list. But only for blueprint and pipeline
@@ -300,6 +320,7 @@ function OPBlueprint(props) {
     setPipeIDError(false);
     setRunCountError(false);
     setMultiFilter(item);
+    setRunCount(runCountFetch[multiFilter.value]);
     submitClicked(false);
   };
 
@@ -507,27 +528,6 @@ function OPBlueprint(props) {
                   <FontAwesomeIcon icon={faDraftingCompass} fixedWidth />
                   View Pipeline
                 </Button>
-
-                            <OverlayTrigger
-            overlay={
-              <Tooltip id="tooltip-disabled">
-                Blueprint Export Coming Soon.
-              </Tooltip>
-            }
-          >
-            <span className="mr-3">
-                  <Button
-                    variant="outline-secondary"
-                    size="sm"
-                    onClick={() => {
-                      goToPipeline();
-                    }}
-                    disabled
-                  >
-                    <FontAwesomeIcon icon={faDownload} fixedWidth />
-                  </Button>
-                  </span>
-                </OverlayTrigger>
               </Row>
               <hr />
               <Row className="mt-1">

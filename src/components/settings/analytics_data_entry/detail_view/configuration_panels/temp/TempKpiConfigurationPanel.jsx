@@ -9,6 +9,7 @@ import tempKpiConfigurationMetadata
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PipelineSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineSelectInput";
 import NumberInputBase from "components/common/inputs/text/NumberInputBase";
+import DateTimeRangeInputBase from "components/common/inputs/date/DateTimeRangeInputBase";
 
 function TempKpiConfigurationPanel({ analyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
   useEffect(() => {loadData();}, []);
@@ -29,6 +30,9 @@ function TempKpiConfigurationPanel({ analyticsDataEntryModel, kpiConfigurationDa
       </Col>
       <Col lg={6}>
         <TextInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"application"} />
+      </Col>
+      <Col lg={12}>
+        <DateTimeRangeInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fromFieldName={"from"} toFieldName={"to"} />
       </Col>
       <Col lg={6}>
         <PipelineSelectInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"pipeline_id"} />
