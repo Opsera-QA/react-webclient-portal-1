@@ -34,7 +34,7 @@ function ExportDataModalBase({ children, showModal, handleCancelModal, isLoading
           setDataObject={setExportDataModel}
           value={ExportTypes.PDF}
           disabled={getPdfExporter == null}
-          visible={getPdfExporter !== null}
+          visible={getPdfExporter != null}
           label={
             <span>
               <div><strong>Format Data Before Export</strong></div>
@@ -47,7 +47,7 @@ function ExportDataModalBase({ children, showModal, handleCancelModal, isLoading
           setDataObject={setExportDataModel}
           value={ExportTypes.RAW}
           disabled={getRawData == null}
-          visible={getRawData !== null}
+          visible={getRawData != null}
           label={
             <span>
               <div><strong>Raw Data</strong></div>
@@ -60,7 +60,7 @@ function ExportDataModalBase({ children, showModal, handleCancelModal, isLoading
           setDataObject={setExportDataModel}
           value={ExportTypes.CSV}
           disabled={getCsvData == null}
-          visible={getCsvData !== null}
+          visible={getCsvData != null}
           label={
             <span>
               <div><strong>CSV</strong></div>
