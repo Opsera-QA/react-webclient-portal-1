@@ -72,20 +72,20 @@ function TagsUsedInDashboardsReport() {
   return (
     <ScreenContainer
       breadcrumbDestination={"tagsUsedInDashboardsReport"}
-      pageDescription={"View which dashboards are in use by a specific tag combination"}
       isLoading={isLoading}
       navigationTabContainer={getNavigationTabContainer()}
       roleRequirement={ROLE_LEVELS.POWER_USERS}
       accessRoleData={accessRoleData}
     >
+      <div className={"ml-3 mt-3 mb-2"}>View dashboards by tags</div>
       <Row className={"mb-3 mx-0"}>
-        <Col>
-          <TagManager type={"tags"} allowCreate={false} fieldName={"tags"} dataObject={tagsUsedInDashboardDto} setDataObject={setTagsUsedInDashboardDto}/>
+        <Col className={"mx-0"}>
+          <TagManager placeholder={"select a tag to view tagged dashboards"} type={"tags"} allowCreate={false} fieldName={"tags"} dataObject={tagsUsedInDashboardDto} setDataObject={setTagsUsedInDashboardDto}/>
         </Col>
       </Row>
       <Row className={"px-2 mx-0"}>
         <Col>
-          <TagArrayUsedInDashboardsField tags={tagsUsedInDashboardDto?.getData("tags")}/>
+          <TagArrayUsedInDashboardsField tags={tagsUsedInDashboardDto?.getData("tags")} showTable={true}/>
         </Col>
       </Row>
     </ScreenContainer>

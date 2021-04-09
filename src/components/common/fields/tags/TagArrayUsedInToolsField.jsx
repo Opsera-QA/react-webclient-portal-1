@@ -5,14 +5,15 @@ import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {AuthContext} from "contexts/AuthContext";
-import LoadingDialog from "components/common/status_notifications/loading";
-import adminTagsActions from "components/settings/tags/admin-tags-actions";
-import Model from "core/data_model/model";
 import RegistryToolSummaryCard from "components/common/fields/inventory/RegistryToolSummaryCard";
 import toolMetadata from "components/inventory/tools/tool-metadata";
+import Model from "core/data_model/model";
+import LoadingDialog from "components/common/status_notifications/loading";
+import adminTagsActions from "components/settings/tags/admin-tags-actions";
+import TagsUsedInToolsTable from "components/reports/tags/tools/TagsUsedInToolsTable";
 import axios from "axios";
 
-function TagArrayUsedInToolsField({ tags }) {
+function TagArrayUsedInToolsField({ tags, showTable }) {
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -84,6 +85,15 @@ function TagArrayUsedInToolsField({ tags }) {
     );
   };
 
+  const getDisplay = () => {
+    if (showTable) {
+      return (
+        <TagsUsedInToolsTable data={tools} loadData={loadData} isLoading={isLoading} isMounted={isMounted}/>
+        );
+    }
+
+    return (getToolCards());
+  };
 
   if (isLoading) {
     return <LoadingDialog message={"Loading Tools"} size={"sm"} />;
@@ -106,16 +116,17 @@ function TagArrayUsedInToolsField({ tags }) {
 
   return (
     <div>
-      <div className="form-text text-muted mb-2">
+      <div className="form-text text-muted mb-2  ml-2">
         <span>This tag combination is used in {tools.length} tools</span>
       </div>
-      {getToolCards()}
+      {getDisplay()}
     </div>
   );
 }
 
 TagArrayUsedInToolsField.propTypes = {
   tags: PropTypes.array,
+  showTable: PropTypes.bool
 };
 
 export default TagArrayUsedInToolsField;
