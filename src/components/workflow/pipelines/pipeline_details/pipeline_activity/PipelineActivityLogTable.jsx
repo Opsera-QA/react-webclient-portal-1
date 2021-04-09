@@ -7,7 +7,7 @@ import pipelineActivityMetadata
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-activity-metadata";
 import {
   getPipelineActivityStatusColumn,
-  getTableDateColumn,
+  getTableDateTimeColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
 import PipelineRunFilter from "components/common/filters/pipelines/activity_logs/pipeline_run/PipelineRunFilter";
@@ -52,10 +52,10 @@ function PipelineActivityLogTable({ data, loadData, isLoading, pipeline, pipelin
       {...getTableTextColumn(fields.find(field => { return field.id === "run_count";})), class: "cell-center no-wrap-inline"},
       getTableTextColumn(fields.find(field => { return field.id === "action";})),
       getTableTextColumn(fields.find(field => { return field.id === "step_name";})),
-      getTableTextColumn(fields.find(field => { return field.id === "tool_identifier";})),
+      // getTableTextColumn(fields.find(field => { return field.id === "tool_identifier";})),
       getTableTextColumn(fields.find(field => { return field.id === "message";})),
       getPipelineActivityStatusColumn(fields.find(field => { return field.id === "status";})),
-      getTableDateColumn(fields.find(field => { return field.id === "createdAt";}))
+      getTableDateTimeColumn(fields.find(field => { return field.id === "createdAt";}))
     ],
     [],
   );
