@@ -109,6 +109,9 @@ import {
   getDateObjectFromKpiConfiguration,
   getTagsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
+//QA Testing
+import ManualQATestPieChart from "./qaMetrics/ManualQATestPieChart";
+
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -916,6 +919,17 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "bitbucket-rejected-merge-requests":
         return (
           <BitbucketRejectedMergeRequests
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        );
+      // QA Testing
+      case "qa-manual-test":
+        return (
+          <ManualQATestPieChart
             kpiConfiguration={kpiConfig}
             setKpiConfiguration={setKpiConfig}
             dashboardData={dashboardData}

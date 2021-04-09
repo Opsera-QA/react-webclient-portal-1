@@ -9,7 +9,7 @@ function AnalyticsDataEntryKpiConfigurationPanel({ analyticsDataEntryModel, setA
   const getConfigurationPanel = () => {
     // TODO: Divyesha, the switch case needs to be changed to match the identifier of your KPI
     switch (analyticsDataEntryModel.getData("kpi_identifier")) {
-      case "temp-kpi-test":
+      case "qa-manual-test":
         return (
           <TempKpiConfigurationPanel
             analyticsDataEntryModel={analyticsDataEntryModel}
