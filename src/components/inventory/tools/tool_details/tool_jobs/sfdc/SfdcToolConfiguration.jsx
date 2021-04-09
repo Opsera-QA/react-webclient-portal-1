@@ -49,7 +49,7 @@ function SfdcToolConfiguration({ toolData }) {
       }
     }
 
-    if (response && response.data != null && response.data.status === 200 && response?.data?.message?.buildParams?.buildNumber ) {   
+    if (response && response.data != null && response.data.status === 200 && response?.data?.message?.buildParams?.buildNumber && response?.data?.message?.buildParams?.jobName ) {   
       setJenkinsBuildNumber(response?.data?.message?.buildParams?.buildNumber); 
       setJenkinsJobName(response?.data?.message?.buildParams?.jobName); 
       setShowModal(true);
