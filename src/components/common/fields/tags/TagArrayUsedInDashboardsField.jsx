@@ -11,8 +11,8 @@ import Model from "core/data_model/model";
 import DashboardSummaryCard from "components/common/fields/dashboards/DashboardSummaryCard";
 import axios from "axios";
 import dashboardMetadata from "../../../insights/dashboards/dashboard-metadata";
-import LoadingIcon from "components/common/icons/LoadingIcon";
 import TagsUsedInDashboardTable from 'components/reports/tags/dashboards/TagsUsedInDashboardTable';
+import {getSingularOrPluralString} from "components/common/helpers/string-helpers";
 
 function TagArrayUsedInDashboardsField({ tags, showTable }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -115,11 +115,11 @@ function TagArrayUsedInDashboardsField({ tags, showTable }) {
       </div>
     );
   }
-console.log(dashboards);
+
   return (
     <div>
       <div className="form-text text-muted mb-2 ml-2">
-        <span>This tag combination is used on {dashboards.length} dashboards</span>
+        <span>This tag combination is used on {dashboards.length} {getSingularOrPluralString(dashboards?.length, "dashboard","dashboards")}</span>
       </div>
       {getDisplay()}
     </div>

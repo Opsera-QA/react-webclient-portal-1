@@ -13,6 +13,7 @@ import pipelineSummaryMetadata
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
+import {getSingularOrPluralString} from "components/common/helpers/string-helpers";
 
 function ToolUsedInPipelinesField({ dataObject }) {
   const toastContext = useContext(DialogToastContext);
@@ -111,7 +112,7 @@ function ToolUsedInPipelinesField({ dataObject }) {
   return (
     <div>
       <div className="form-text text-muted mb-2">
-        <span>This tool is used in {pipelines.length} pipelines</span>
+        <span>This tool is used in {pipelines.length} {getSingularOrPluralString(pipelines?.length, "pipeline","pipelines")}</span>
       </div>
       {getPipelineCards()}
     </div>
