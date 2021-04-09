@@ -1,11 +1,12 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
-import ExportDataModal from "components/common/modal/export_data/ExportDataModal";
+import ExportDataModalBase from "components/common/modal/export_data/ExportDataModalBase";
 import Button from "react-bootstrap/Button";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import ExportPipelineActivityLogDataModal from "components/common/modal/export_data/ExportPipelineActivityLogDataModal";
 
 function ExportPipelineActivityLogButton({isLoading, activityLogData, className}) {
   const [showExportModal, setShowExportModal] = useState(false);
@@ -40,14 +41,12 @@ function ExportPipelineActivityLogButton({isLoading, activityLogData, className}
           </Button>
         </div>
       </TooltipWrapper>
-      <ExportDataModal
+      <ExportPipelineActivityLogDataModal
         showModal={showExportModal}
-        handleCancelModal={closeModal}
-        setParentVisibility={setShowExportModal}
+        closeModal={closeModal}
         isLoading={isLoading}
         formattedData={formatActivityLogData()}
         rawData={rawDataResults()}
-        exportFrom={"activity_log"}
       />
     </>
   );
