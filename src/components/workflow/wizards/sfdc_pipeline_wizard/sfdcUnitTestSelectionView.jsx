@@ -181,7 +181,7 @@ const SfdcUnitTestSelectionView = ({
         <div className="flex-container-top"></div>
         <div className="flex-container-content">
           <div className="h5">SalesForce Pipeline Run: Unit Test Selection View</div>
-          <div className="text-muted mb-4">Apex Classes with @isTest annotation will be part of selection for Selective Unit Testing.</div>
+          <div className="text-muted mb-2">Apex Classes with @isTest annotation will be part of selection for Selective Unit Testing.</div>
           <div className="px-2"></div>
           
           <div className="m-2">
