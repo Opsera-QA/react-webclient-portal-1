@@ -98,7 +98,6 @@ function SfdcToolConfiguration({ toolData }) {
       );
     }
   };
-console.log(loading);
   if (sfdcConfigurationDto == null) {
     return <></>;
   }
