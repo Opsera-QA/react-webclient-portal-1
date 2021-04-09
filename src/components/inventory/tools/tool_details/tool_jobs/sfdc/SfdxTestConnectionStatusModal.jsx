@@ -11,7 +11,7 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import Moment from "moment";
 import momentLocalizer from "react-widgets-moment";
 
-function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenkinsBuildNumber, setJenkinsBuildNumber, setLoading}) {
+function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenkinsBuildNumber, setJenkinsBuildNumber, jenkinsJobName, setJenkinsJobName, setLoading}) {
 
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -50,7 +50,7 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
     try {
       const tool_logs = await toolsActions.getToolConnectionLog(getAccessToken, toolData);
       
-      const testRes = tool_logs.data.data.filter(rec => rec.action === 'test_configuration' && rec.run_count === jenkinsBuildNumber);
+      const testRes = tool_logs.data.data.filter(rec => rec.action === 'test_configuration' && rec.run_count === jenkinsBuildNumber && rec.job_name === jenkinsJobName.toLowerCase());
 
       if(testRes.length !== 1 && count < 5 ){
         await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
@@ -78,16 +78,12 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
                 {modalLoading ? <DetailPanelLoadingDialog type={"Connection Results"} /> : testResponse.length > 0 ? (                    
                     <Row>
                       <Col lg={12}>
-                        <label className="mb-0 mr-2 text-muted"><span>Job Name:</span></label>
-                        <span>{testResponse[0].job_name}</span>
+                        <label className="mb-0 mr-2 text-muted"><span>Message:</span></label>
+                        <span>{testResponse[0].message}</span>
                       </Col>
                       <Col lg={12}>
                         <label className="mb-0 mr-2 text-muted"><span>Created At:</span></label>
                         <span>{Moment(testResponse[0].createdAt).format("MMMM Do YYYY, h:mm:ss a")}</span>
-                      </Col>
-                      <Col lg={12}>
-                        <label className="mb-0 mr-2 text-muted"><span>Message:</span></label>
-                        <span>{testResponse[0].message}</span>
                       </Col>
                       <Col lg={12}>
                         <label className="mb-0 mr-2 text-muted"><span>Status:</span></label>
@@ -128,6 +124,8 @@ SfdxTestConnectionStatusModal.propTypes = {
   toolData: PropTypes.object,
   jenkinsBuildNumber: PropTypes.string,
   setJenkinsBuildNumber: PropTypes.func,
+  jenkinsJobName: PropTypes.string,
+  setJenkinsJobName: PropTypes.func,
   setLoading: PropTypes.func,
 };
 

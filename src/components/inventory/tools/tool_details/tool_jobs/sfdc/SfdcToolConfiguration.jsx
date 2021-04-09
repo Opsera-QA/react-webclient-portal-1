@@ -25,6 +25,7 @@ function SfdcToolConfiguration({ toolData }) {
   const toastContext = useContext(DialogToastContext);
   const [sfdcConfigurationDto, setSfdcConfigurationDto] = useState(undefined);
   const [jenkinsBuildNumber, setJenkinsBuildNumber] = useState("");
+  const [jenkinsJobName, setJenkinsJobName] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -50,6 +51,7 @@ function SfdcToolConfiguration({ toolData }) {
 
     if (response && response.data != null && response.data.status === 200 && response?.data?.message?.buildParams?.buildNumber ) {   
       setJenkinsBuildNumber(response?.data?.message?.buildParams?.buildNumber); 
+      setJenkinsJobName(response?.data?.message?.buildParams?.jobName); 
       setShowModal(true);
     }
     else {
@@ -65,6 +67,8 @@ function SfdcToolConfiguration({ toolData }) {
         setShowModal={setShowModal}
         jenkinsBuildNumber={jenkinsBuildNumber}
         setJenkinsBuildNumber={setJenkinsBuildNumber}
+        jenkinsJobName={jenkinsJobName}
+        setJenkinsJobName={setJenkinsJobName}
         setLoading={setLoading}
         toolData={toolData}            
       />
