@@ -8,6 +8,8 @@ import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { format } from "date-fns";
+import { defaultConfig, getColor, assignStandardColors } from "../../../charts-views";
+import ChartTooltip from "../../../ChartTooltip";
 
 function SonarCodeSmellsLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -45,6 +47,7 @@ function SonarCodeSmellsLineChart({ kpiConfiguration, setKpiConfiguration, dashb
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "sonarCodeSmells", kpiConfiguration, dashboardTags);
       const dataObject = response?.data && response?.data?.data[0]?.sonarCodeSmells.status === 200 ? response?.data?.data[0]?.sonarCodeSmells?.data : [];
+      assignStandardColors(dataObject, true);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -72,50 +75,15 @@ function SonarCodeSmellsLineChart({ kpiConfiguration, setKpiConfiguration, dashb
     <div className="new-chart mb-3" style={{height: "300px"}}>
           <ResponsiveLine
             data={metrics}
+            {...defaultConfig("Code Smells", "Date", 
+                      false, true, "wholeNumbers", "yearMonthDate")}
+            {...config(getColor)}
             onClick={() => setShowModal(true)}
-            margin={{ top: 50, right: 110, bottom: 65, left: 100 }}
-            xScale={{ type: "point" }}
-            yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}
-            axisTop={null}
-            axisRight={null}
-            axisBottom={config.axisBottom}
-            colors={{ scheme: "spectral" }}
-            axisLeft={config.axisLeft}
-            pointSize={10}
-            pointBorderWidth={8}
-            pointLabel="y"
-            pointLabelYOffset={-12}
-            useMesh={true}
-            lineWidth={3.5}
-            legends={config.legends}
-            tooltip={({ point, color }) => (
-              <div
-                style={{
-                  background: "white",
-                  padding: "9px 12px",
-                  border: "1px solid #ccc",
-                }}
-              >
-                <strong style={{ color }}>Timestamp: </strong> {format(new Date(point.data.x), "yyyy-MM-dd', 'hh:mm a")}
-                <br></br>
-                <strong style={{ color }}> Code Smells: </strong> {point.data.y}<br></br>
-                <strong style={{ color }}> Key: </strong> {point.data.key}
-              </div>
-            )}
-            theme={{
-              axis: {
-                ticks: {
-                  text: {
-                    fontSize: "10px",
-                  },
-                },
-              },
-              tooltip: {
-                container: {
-                  fontSize: "16px",
-                },
-              },
-            }}
+            tooltip={({ point, color }) => <ChartTooltip 
+                titles = {["Timestamp", "Code Smells", "Key"]}
+                values = {[format(new Date(point.data.x), "yyyy-MM-dd', 'hh:mm a"),
+                          point.data.y, point.data.key]}
+                color = {color} />}
           />
       </div>
   );

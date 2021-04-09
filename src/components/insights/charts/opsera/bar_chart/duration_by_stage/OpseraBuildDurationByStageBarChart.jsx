@@ -1,12 +1,16 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
+import "../../../charts.css";
 import config from "./opseraBuildDurationByStageBarChartConfigs";
 import ModalLogs from "components/common/modal/modalLogs";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import { defaultConfig, getColor, assignStageColors,
+         adjustBarWidth } from '../../../charts-views';
+import ChartTooltip from '../../../ChartTooltip';
 
 function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -44,6 +48,7 @@ function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfigurat
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraDurationBySteps", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.opseraDurationBySteps?.data : [];
+      assignStageColors(dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -71,44 +76,16 @@ function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfigurat
       <div className="new-chart mb-3" style={{height: "300px"}}>
         <ResponsiveBar
           data={metrics}
-          keys={config.keys}
-          layout="vertical"
-          indexBy="pipelineId"
+          {...defaultConfig("Duration (Minutes)", "Pipeline Run", 
+                    false, true, "wholeNumbers", "cutoffString")}
+          {...config(getColor)}
+          {...adjustBarWidth(metrics)}
           onClick={() => setShowModal(true)}
-          margin={config.margin}
-          padding={0.3}
-          colors={{ scheme: "category10" }}
-          borderColor={{ theme: "background" }}
-          colorBy="id"
-          defs={config.defs}
-          fill={config.fill}
-          axisTop={null}
-          axisRight={null}
-          axisBottom={config.axisBottom}
-          axisLeft={config.axisLeft}
-          enableLabel={false}
-          borderRadius={0}
-          labelSkipWidth={12}
-          labelSkipHeight={12}
-          labelTextColor="inherit:darker(2)"
-          animate={true}
-          motionStiffness={90}
-          motionDamping={15}
-          legends={config.legends}
-          tooltip={({ data, value, color , id}) => (
-            <div>
-              <strong style={{ color }}> Pipeline: </strong> {data.pipelineId} <br />
-              <strong style={{ color }}> Stage: </strong> {id} <br />
-              <strong style={{ color }}> Duration: </strong> {value} minutes <br />
-            </div>
-          )}
-          theme={{
-            tooltip: {
-              container: {
-                fontSize: "16px",
-              },
-            },
-          }}
+          tooltip={({ data, value, color , id}) => <ChartTooltip 
+                    titles={["Pipeline", "Stage", "Duration"]}
+                    values={[data.pipelineId, id, `${value} minutes`]}
+                    style={false}
+                    color={color} />}
         />
       </div>
     );

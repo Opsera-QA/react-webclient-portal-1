@@ -1,6 +1,6 @@
-import React, { useContext, useState, useEffect, useMemo } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Button, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
@@ -11,7 +11,6 @@ import {
 import "../../workflows.css";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import ErrorDialog from "components/common/status_notifications/error";
 import LoadingDialog from "components/common/status_notifications/loading";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 
@@ -19,11 +18,10 @@ import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizar
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import xml from "react-syntax-highlighter/dist/esm/languages/hljs/xml";
 import docco from "react-syntax-highlighter/dist/esm/styles/hljs/docco";
-import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 SyntaxHighlighter.registerLanguage("xml", xml);
 
-const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestructiveXml, isProfiles, setView, modifiedFiles, xml, destructiveXml, createJenkinsJob, recordId, unitTestSteps, gitTaskData, gitTaskId, closePanel }) => {
+const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestructiveXml, isProfiles, setView, xml, destructiveXml, createJenkinsJob, unitTestSteps, gitTaskData, gitTaskId, closePanel }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [save, setSave] = useState(false);
   const toastContext = useContext(DialogToastContext);
@@ -69,7 +67,7 @@ const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestr
       <div className="flex-container">
         <div className="flex-container-content">
           <div className="h5">SalesForce Pipeline Run: XML Viewer</div>
-          <div className="text-muted mb-4">Please confirm that you want to proceed with this operation.</div>
+          <div className="text-muted mb-2">Please confirm that you want to proceed with this operation.</div>
           <div className="px-2"></div>
 
           {save && <LoadingDialog />}
@@ -179,11 +177,9 @@ SfdcPipelineXMLView.propTypes = {
   isProfiles: PropTypes.bool,
   setXML: PropTypes.func,
   setDestructiveXml: PropTypes.func,
-  modifiedFiles: PropTypes.object,
   handleClose: PropTypes.func,
   xml: PropTypes.string,
   destructiveXml: PropTypes.string,
-  recordId: PropTypes.string,
   createJenkinsJob: PropTypes.func,
   unitTestSteps: PropTypes.array,
   gitTaskData: PropTypes.object,

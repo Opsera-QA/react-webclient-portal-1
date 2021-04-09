@@ -3,8 +3,12 @@ import PropTypes from "prop-types";
 import {Button, InputGroup} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch, faSpinner} from "@fortawesome/pro-light-svg-icons";
+import regexHelpers from "utils/regexHelpers";
+import Model from "core/data_model/model";
+import {useHistory} from "react-router-dom";
 
-function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, fieldName, supportSearch, className, isLoading}) {
+function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, fieldName, supportSearch, className, isLoading, metadata}) {
+  let history = useHistory();
   const [isSearching, setIsSearching] = useState(false);
 
   const validateAndSetData = (value) => {
@@ -16,6 +20,18 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
   const handleSearch = async () => {
     try {
       let newFilterDto = {...filterDto};
+      const searchString = newFilterDto.getData(fieldName);
+
+      if (metadata?.detailView != null && searchString.match(regexHelpers.regexTypes.mongoId)) {
+        const model = new Model({_id: searchString}, metadata, true);
+        const link = model.getDetailViewLink();
+
+        if (link !== null) {
+          history.push(link);
+          return;
+        }
+      }
+
       setIsSearching(true);
       newFilterDto.setData("currentPage", 1);
       setFilterDto({...newFilterDto});
@@ -73,7 +89,8 @@ InlineSearchFilter.propTypes = {
   disabled: PropTypes.bool,
   supportSearch: PropTypes.bool,
   isLoading: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  metadata: PropTypes.object
 };
 
 InlineSearchFilter.defaultProps = {

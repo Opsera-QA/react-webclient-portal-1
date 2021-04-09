@@ -14,6 +14,7 @@ import PipelineRunFilter from "components/common/filters/pipelines/activity_logs
 import FilterContainer from "components/common/table/FilterContainer";
 import InlineBooleanFilter from "components/common/filters/boolean/InlineBooleanFilter";
 import PipelineTaskDetailViewer from "components/common/modal/PipelineTaskDetailViewer";
+import ExportPipelineActivityLogButton from "components/common/buttons/export/pipelines/ExportPipelineActivityLogButton";
 
 function PipelineActivityLogTable({ data, loadData, isLoading, pipeline, pipelineActivityFilterDto, setPipelineActivityFilterDto }) {
   const fields = pipelineActivityMetadata.fields;
@@ -112,6 +113,7 @@ function PipelineActivityLogTable({ data, loadData, isLoading, pipeline, pipelin
         dropdownFilters={getDropdownFilters()}
         supportSearch={true}
         inlineFilters={getInlineFilters()}
+        exportButton={<ExportPipelineActivityLogButton className={"ml-2"} isLoading={isLoading} activityLogData={data} />}
       />
       <PipelineTaskDetailViewer
         pipelineData={pipeline}

@@ -1,18 +1,29 @@
-import React from "react";
+import React, {useEffect} from "react";
 import PropTypes from "prop-types";
-import NameValueInputBase from "components/common/inputs/object/NameValueInputBase";
-import {faLocationArrow, faSitemap} from "@fortawesome/pro-light-svg-icons";
+import OrganizationMultiSelectInput
+  from "components/common/list_of_values_input/settings/organizations/OrganizationMultiSelectInput";
 
-function RegistryToolOrganizationInput({ dataObject, setDataObject, disabled, fieldName}) {
+function RegistryToolOrganizationInput({ dataObject, setDataObject, disabled, fieldName, className}) {
+
+  // Remove old organizations values
+  useEffect(() => {
+    const currentOrganizations = dataObject?.getArrayData(fieldName);
+
+    if (Array.isArray(currentOrganizations) && currentOrganizations.length > 0) {
+      const filteredArray = currentOrganizations.filter((organization) => typeof organization === "string");
+      dataObject.setData(fieldName, filteredArray);
+      setDataObject({...dataObject});
+    }
+  }, []);
+
+
   return (
-    <NameValueInputBase
-      titleIcon={faSitemap}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
-      fieldName={fieldName}
-      allowIncompleteItems={true}
-      type={"Organization"}
+    <OrganizationMultiSelectInput
+      className={className}
       disabled={disabled}
+      fieldName={fieldName}
+      setDataObject={setDataObject}
+      dataObject={dataObject}
     />
   );
 }
@@ -22,6 +33,7 @@ RegistryToolOrganizationInput.propTypes = {
   fieldName: PropTypes.string,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
+  className: PropTypes.string
 };
 
 RegistryToolOrganizationInput.defaultProps = {

@@ -8,6 +8,7 @@ function StepConfigurationToolSelectInput({fieldName, dataObject, setDataObject,
     let newDataObject = {...dataObject};
     newDataObject.setData("tool_identifier", selectedOption?.identifier);
     newDataObject.setData("type", selectedOption?.tool_type_identifier);
+    newDataObject.setData("tags", []);
     setDataObject({...newDataObject});
   };
 

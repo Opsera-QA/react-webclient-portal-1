@@ -7,7 +7,8 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors } from '../../../charts-views';
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
+         capitalizeLegend } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 
 function JenkinsBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -47,6 +48,7 @@ function JenkinsBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, d
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "jenkinsBuildDuration", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.jenkinsBuildDuration?.data : [];
       assignStandardColors(dataObject, true);
+      capitalizeLegend(dataObject, ["value"]);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -77,6 +79,7 @@ function JenkinsBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, d
               {...defaultConfig("Build Duration (Minutes)", "Build Number", 
                       false, true, "wholeNumbers", "numbers")}
               {...config(getColorByData)}
+              {...adjustBarWidth(metrics)}
               onClick={() => setShowModal(true)}
               tooltip={({ data, value, color }) => <ChartTooltip 
                               titles = {["Duration", "Build Number", "Job Name"]}

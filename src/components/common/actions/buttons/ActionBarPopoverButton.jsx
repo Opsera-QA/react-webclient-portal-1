@@ -19,7 +19,7 @@ function ActionBarPopoverButton({iconClasses, popoverText, text, icon}) {
       delay={{ show: 250, hide: 400 }}
       overlay={renderTooltip(popoverText)}>
       <span className="action-bar-icon pointer">
-          <span><FontAwesomeIcon icon={icon} className={iconClasses}/><span>{text}</span></span>
+          <span><FontAwesomeIcon size={"lg"} icon={icon} className={iconClasses}/><span>{text}</span></span>
       </span>
     </OverlayTrigger>
   );

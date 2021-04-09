@@ -1,6 +1,6 @@
-export default (getColors) => ({
-  keys: ["value"],
+export default (getColor) => ({
+  keys: ["Value"],
   indexBy: "key",
   colorBy: "id",
-  colors: getColors
+  colors: getColor
 });

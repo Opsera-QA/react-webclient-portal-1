@@ -180,6 +180,24 @@ pipelineActions.saveToVault = async (postBody, getAccessToken) => {
   return response;
 };
 
+pipelineActions.getFromVault = async (vaultId, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/vault/${vaultId}`;   
+  const response = await axiosApiService(accessToken).get(apiUrl)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
+pipelineActions.deleteFromVaultUsingVaultKey = async (vaultId, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/vault/${vaultId}`;
+  const response = await axiosApiService(accessToken).delete(apiUrl)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
 pipelineActions.saveToolRegistryRecordToVault = async (postBody, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/vault/tool/";   

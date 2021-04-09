@@ -7,6 +7,7 @@ export const notificationMethods = [
   {name: "Slack", value: "slack"},
   {name: "Jira", value: "jira"},
   {name: "Teams", value: "teams"},
+  {name: "Service Now", value: "servicenow"},
 ];
 // TODO :  Remove disabled array when implemented
 function NotificationMethodSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction }) {
@@ -21,6 +22,7 @@ function NotificationMethodSelectInput({ fieldName, dataObject, setDataObject, d
       textField="name"
       disabled={[
         {name: "Jira", value: "jira"},
+        {name: "Service Now", value: "servicenow"},
       ]}
     />
   );

@@ -32,7 +32,7 @@ function JiraToolProjectSummaryCard({ jiraConfigurationData, jiraProjectData, ch
           <JiraProjectNameField dataObject={jiraConfigurationData} fieldName={"jiraProject"} jiraToolId={jiraConfigurationData.getData("jiraToolId")} />
         </Col>
         <Col lg={6}>
-          <JiraBoardNameField dataObject={jiraConfigurationData} fieldName={"jiraBoard"} jiraToolId={jiraConfigurationData.getData("jiraToolId")} />
+          <JiraBoardNameField dataObject={jiraConfigurationData} fieldName={"jiraBoard"} jiraToolId={jiraConfigurationData.getData("jiraToolId")} jiraProjectKey={jiraConfigurationData.getData("jiraProject")} />
         </Col>
         <Col lg={6}>
           <JiraSprintNameField dataObject={jiraConfigurationData} fieldName={"jiraSprint"} jiraToolId={jiraConfigurationData.getData("jiraToolId")} jiraBoard={jiraConfigurationData.getData("jiraBoard")} />

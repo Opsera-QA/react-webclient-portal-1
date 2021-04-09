@@ -5,10 +5,10 @@ import { ResponsiveHeatMap } from "@nivo/heatmap";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-import config from "./GitlabTotalCommitsByUserAndDateConfig";
 import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
+import { defaultConfig, gradationalColors } from "../../insights/charts/charts-views";
 
 function GitlabTotalCommitsByUserAndDate({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -89,31 +89,24 @@ function GitlabTotalCommitsByUserAndDate({ persona, date }) {
           </div>
         ) : (
           <ResponsiveHeatMap
+            {...defaultConfig("Date", "", true, true, "yearMonthDate", "cutoffString")}
             data={data ? data.data : []}
             keys={users}
             indexBy="date"
             onClick={() => setShowModal(true)}
-            margin={{ top: 10, right: 40, bottom: 40, left: 40 }}
             forceSquare={true}
-            // axisTop={{ orient: 'top', tickSize: 5, tickPadding: 5, tickRotation: -90, legend: '', legendOffset: 36 }}
-            axisRight={null}
-            // axisBottom={null}
-            axisTop={null}
-            axisBottom={config.axisBottom}
-            axisLeft={config.axisLeft}
-            // sizeVariation={0.4}
-            // padding={1}
+            margin={{
+              top: 10,
+              right: 40,
+              bottom: 60,
+              left: 40
+            }}
             cellOpacity={1}
             cellBorderColor={{ from: "color", modifiers: [["darker", 0.4]] }}
-            labelTextColor="#fdeded"
-            colors={["#9FC8E5", "#7fa8ca", "#537aa2", "#3F6891"]}
+            labelTextColor="white"
+            colors={gradationalColors}
             cellShape={"circle"}
             enableLabels={true}
-            defs={config.defs}
-            fill={config.fill}
-            animate={true}
-            motionStiffness={80}
-            motionDamping={9}
             hoverTarget="cell"
             cellHoverOthersOpacity={0.25}
           />

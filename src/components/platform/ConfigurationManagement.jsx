@@ -91,7 +91,7 @@ function ConfigurationManagement(props) {
                   className="newApp__checkbox"
                   // onClick={() => selectCard("Ansible")}
                 />
-                <img src={require("./imgs/ansible.png")} alt="Ansible" />
+                <img src={"/img/tools/ansible.png"} alt="Ansible" />
                 <span className="newApp__service-title">Ansible</span>
               </div>
             </OverlayTrigger>
@@ -115,7 +115,7 @@ function ConfigurationManagement(props) {
                 checked={isChecked.Chef && data["Chef"]}
                 className="newApp__checkbox"
               />
-              <img src={require("./imgs/chef.png")} alt="Chef" />
+              <img src={"/img/tools/chef.png"} alt="Chef" />
               <span className="newApp__service-title">Chef</span>
             </div>
             </OverlayTrigger>
@@ -139,7 +139,7 @@ function ConfigurationManagement(props) {
                 checked={isChecked.Puppet && data["Puppet"]}
                 className="newApp__checkbox"
               />
-              <img src={require("./imgs/puppet.png")} alt="Puppet"/>
+              <img src={"/img/tools/puppet.png"} alt="Puppet"/>
               <span className="newApp__service-title">Puppet</span>
             </div>
             </OverlayTrigger>

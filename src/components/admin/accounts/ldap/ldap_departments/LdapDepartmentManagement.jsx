@@ -73,7 +73,7 @@ function LdapDepartmentManagement() {
 
   const getRoles = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
-    const {ldap, groups} = user;
+    const {ldap} = user;
     const userRoleAccess = await setAccessRoles(user);
 
     if (isMounted?.current === true && userRoleAccess) {

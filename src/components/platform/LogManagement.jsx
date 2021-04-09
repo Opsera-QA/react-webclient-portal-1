@@ -89,7 +89,7 @@ function LogManagement(props) {
               className="newApp__checkbox"
               // onClick={() => selectCard("ElasticSearch")}
             />
-            <img src={require("./imgs/elastic-search.png")} />
+            <img src={"/img/tools/elastic-search.png"} />
             <span className="newApp__service-title">ElasticSearch</span>
           </div>
           </OverlayTrigger>
@@ -115,7 +115,7 @@ function LogManagement(props) {
               className="newApp__checkbox"
               // onClick={() => selectCard("Kibana")}
             />
-            <img src={require("./imgs/kibana.png")} />
+            <img src={"/img/tools/kibana.png"} />
             <span className="newApp__service-title">Kibana</span>
           </div>
           </OverlayTrigger>
@@ -141,7 +141,7 @@ function LogManagement(props) {
               className="newApp__checkbox"
               // onClick={() => selectCard("LogStash")}
             />
-            <img src={require("./imgs/log-stash.png")} />
+            <img src={"/img/tools/log-stash.png"} />
             <span className="newApp__service-title">LogStash</span>
           </div>
           </OverlayTrigger>

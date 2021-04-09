@@ -8,7 +8,8 @@ import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-import { defaultConfig, getColorById, assignBooleanColors } from '../../insights/charts/charts-views';
+import { defaultConfig, getColorById, assignBooleanColors,
+         adjustBarWidth } from '../../insights/charts/charts-views';
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 
 function OpseraPipelineByStatusBarChart( { persona, date  } ) {
@@ -89,7 +90,8 @@ function OpseraPipelineByStatusBarChart( { persona, date  } ) {
             <ResponsiveBar
               data={data ? data.data : []}
               {...defaultConfig('Pipeline Name', 'Number of Pipelines', 
-                                true, true, 'cutoffString', 'wholeNumbers')}
+                                true, false, 'cutoffString', 'wholeNumbers')}
+              {...adjustBarWidth(data ? data.data : [], false)}
               keys={["Successful", "Failed"]}
               indexBy="pipeline_id"
               onClick={() => setShowModal(true)}

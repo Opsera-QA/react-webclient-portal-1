@@ -248,6 +248,7 @@ function GitlabMergedMergeReqCommitsCountTable({ date }) {
             data={data.gitlabTimeTakenToCompleteMergeRequestReviewAndPushTime.data}
             rowStyling={""}
             noDataMessage={noDataMessage}
+            noFooter={true}
           ></CustomTable>
         </>
       )}

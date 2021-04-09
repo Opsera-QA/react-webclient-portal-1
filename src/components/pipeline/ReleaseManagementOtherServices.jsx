@@ -44,7 +44,7 @@ class ConfigurationManagement extends React.PureComponent {
 
           }
         >
-          <img src={require("../platform/imgs/ansible.png")} alt="Ansible" />
+          <img src={"/img/tools/ansible.png"} alt="Ansible" />
           <span className="newApp__service-title">Ansible</span>
         </div>
 
@@ -52,7 +52,7 @@ class ConfigurationManagement extends React.PureComponent {
           className="newApp__service-logo newApp__service-logo--disabled"
           onClick={() => { }}
         >
-          <img src={require("../platform/imgs/chef.png")} alt="Chef" />
+          <img src={"/img/tools/chef.png"} alt="Chef" />
           <span className="newApp__service-title">Chef</span>
         </div>
 
@@ -60,7 +60,7 @@ class ConfigurationManagement extends React.PureComponent {
           className="newApp__service-logo newApp__service-logo--disabled"
           onClick={() => { }}
         >
-          <img src={require("../platform/imgs/puppet.png")} alt="Puppet" />
+          <img src={"/img/tools/puppet.png"} alt="Puppet" />
           <span className="newApp__service-title">Puppet</span>
         </div>
       </ServicesWrapper>
@@ -90,7 +90,7 @@ class ContinousIntegration extends React.PureComponent {
           }
           }
         >
-          <img src={require("../platform/imgs/jenkins.png")} alt="Jenkins" />
+          <img src={"/img/tools/jenkins.png"} alt="Jenkins" />
           <span className="newApp__service-title">Jenkins</span>
         </div>
 
@@ -98,7 +98,7 @@ class ContinousIntegration extends React.PureComponent {
           className="newApp__service-logo newApp__service-logo--disabled"
           onClick={() => { }}
         >
-          <img src={require("../platform/imgs/team-city.png")} alt="Team City" />
+          <img src={"/img/tools/team-city.png"} alt="Team City" />
           <span className="newApp__service-title">Team City</span>
         </div>
       </ServicesWrapper>
@@ -128,12 +128,12 @@ class LogManagement extends React.PureComponent {
           }
           }
         >
-          <img src={require("../platform/imgs/elastic-search.png")} alt="ElasticSearch" />
+          <img src={"/img/tools/elastic-search.png"} alt="ElasticSearch" />
           <span className="newApp__service-title">ElasticSearch</span>
         </div>
 
         <div className="newApp__service-logo newApp__service-logo--disabled">
-          <img src={require("../platform/imgs/log-stash.png")} alt="LogStash" />
+          <img src={"/img/tools/log-stash.png"} alt="LogStash" />
           <span className="newApp__service-title">LogStash</span>
         </div>
       </ServicesWrapper >
@@ -152,12 +152,12 @@ class RepositoryManagement extends React.PureComponent {
     return (
       <ServicesWrapper label="Repository Management">
         <div className="newApp__service-logo newApp__service-logo--disabled">
-          <img src={require("../platform/imgs/artifactory.png")} alt="Artifactory" />
+          <img src={"/img/tools/artifactory.png"} alt="Artifactory" />
           <span className="newApp__service-title">Artifactory</span>
         </div>
 
         <div className="newApp__service-logo newApp__service-logo--disabled">
-          <img src={require("../platform/imgs/nexus.png")} alt="Nexus" />
+          <img src={"/img/tools/nexus.png"} alt="Nexus" />
           <span className="newApp__service-title">Nexus</span>
         </div>
       </ServicesWrapper>
@@ -202,7 +202,7 @@ class SASST extends React.PureComponent {
           }
           }
         >
-          <img src={require("../platform/imgs/sonar.png")} alt="SonarQube" />
+          <img src={"/img/tools/sonar.png"} alt="SonarQube" />
           <span className="newApp__service-title">SonarQube</span>
         </div>
       </ServicesWrapper>
@@ -232,12 +232,12 @@ class Monitoring extends React.PureComponent {
           }
           }
         >
-          <img src={require("../platform/imgs/nagios.png")} alt="Nagios" />
+          <img src={"/img/tools/nagios.png"} alt="Nagios" />
           <span className="newApp__service-title">Nagios</span>
         </div>
 
         <div className="newApp__service-logo newApp__service-logo--disabled">
-          <img src={require("../platform/imgs/zookeeper.png")} alt="ZooKeeper" />
+          <img src={"/img/tools/zookeeper.png"} alt="ZooKeeper" />
           <span className="newApp__service-title">ZooKeeper</span>
         </div>
       </ServicesWrapper>

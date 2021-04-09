@@ -10,12 +10,12 @@ import DataNotFoundDialog from "components/common/status_notifications/data_not_
 import ChartView from "components/insights/charts/ChartView";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
-import DashboardFilterTagInput from "components/insights/dashboards/DashboardFilterTagInput";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
 import modelHelpers from "components/common/model/modelHelpers";
 import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata";
 import dashboardsActions from "components/insights/dashboards/dashboards-actions";
+import DashboardFiltersInput from "components/insights/dashboards/DashboardFiltersInput";
 
 function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLink, managementTitle, type}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -55,9 +55,13 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
         <Row className="px-2">
           {kpis.map(function (kpiConfiguration, index) {
             return (
-              <Col xl={6} md={12} className="p-2" key={kpiConfiguration._id}>
-                <ChartView kpiConfiguration={kpiConfiguration} dashboardData={dashboardDataDto} index={index} loadChart={loadData} setKpis={setKpis}/>
-              </Col>
+              <ChartView
+                key={kpiConfiguration?._id}
+                kpiConfiguration={kpiConfiguration}
+                dashboardData={dashboardDataDto}
+                index={index} loadChart={loadData}
+                setKpis={setKpis}
+              />
             );
           })}
         </Row>
@@ -88,7 +92,7 @@ function DashboardViewer({dashboardData, breadcrumbDestination, managementViewLi
           />
         </CustomBadgeContainer>       
         <div className="d-flex">
-          <DashboardFilterTagInput
+          <DashboardFiltersInput
             dataObject={dashboardFilterTagsModel}
             setDataObject={setDashboardFilterTagsModel}
             loadData={loadData}

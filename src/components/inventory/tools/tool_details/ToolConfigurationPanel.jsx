@@ -22,6 +22,7 @@ import CypressToolConfiguration from "./tool_jobs/cypress/CypressToolConfigurati
 import GitlabToolConfiguration from "components/inventory/tools/tool_details/tool_jobs/gitlab/GitlabToolConfiguration";
 import AzureToolConfiguration from "./tool_jobs/azure/AzureToolConfiguration";
 import JFrogToolConfiguration from "./tool_jobs/jfrog_artifactory/JFrogToolConfiguration";
+import ServiceNowToolConfiguration from  "./tool_jobs/service_now/ServiceNowToolConfiguration";
 
 function ToolConfigurationPanel({ toolData }) {
   const getConfiguration = () => {
@@ -69,6 +70,8 @@ function ToolConfigurationPanel({ toolData }) {
       case "jfrog_artifactory_maven":
       case "jfrog_artifactory_docker":
         return <JFrogToolConfiguration toolData={toolData} />;
+      case "servicenow":
+        return <ServiceNowToolConfiguration toolData={toolData} /> ;
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>;
     }

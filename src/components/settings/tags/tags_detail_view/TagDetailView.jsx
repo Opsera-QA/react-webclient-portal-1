@@ -12,7 +12,6 @@ import TagDetailPanel from "components/settings/tags/tags_detail_view/TagDetailP
 import axios from "axios";
 import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
-import TitleActionBarContainer from "components/common/actions/TitleActionBarContainer";
 import TagSubscriptionIcon from "components/common/icons/subscription/TagSubscriptionIcon";
 
 function TagDetailView() {

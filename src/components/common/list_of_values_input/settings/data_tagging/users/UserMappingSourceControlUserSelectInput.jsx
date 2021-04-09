@@ -4,7 +4,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import accountsActions from "components/admin/accounts/accounts-actions";
-import dataMappingActions from "components/settings/data_tagging/data-mapping-actions";
+import dataMappingActions from "components/settings/data_mapping/data-mapping-actions";
 
 function UserMappingSourceControlUserSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool_id}) {
   const toastContext = useContext(DialogToastContext);

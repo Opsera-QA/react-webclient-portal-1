@@ -6,7 +6,7 @@ class OnlineHelp extends Component {
     return (
       <div>
         <h4>Opsera HELP</h4>
-        <div>This is a basic content area for some information about getting help, FAQ's documentation and video links etc.</div>
+        <div>This is a basic content area for some information about getting help, FAQ&apos;s documentation and video links etc.</div>
       </div>
     );
   }

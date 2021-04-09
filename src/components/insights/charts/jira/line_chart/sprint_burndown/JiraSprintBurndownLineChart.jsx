@@ -12,6 +12,10 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import { defaultConfig, getColor, assignStandardColors,
+         shortenLegend } from "../../../charts-views";
+import ChartTooltip from "../../../ChartTooltip";
+
 function JiraSprintBurndownLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -48,6 +52,9 @@ function JiraSprintBurndownLineChart({ kpiConfiguration, setKpiConfiguration, da
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "jiraBurndownChart", kpiConfiguration, dashboardTags);
       const dataObject = response?.data && response?.data?.data[0]?.jiraBurndownChart.status === 200 ? response?.data?.data[0]?.jiraBurndownChart?.data : [];
+      dataObject.forEach(data => data?.id[0]?.length > 10 ? data.id = data.id.slice(0, 10) + "..." : data.id);
+      shortenLegend(dataObject);
+      assignStandardColors(dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -75,46 +82,14 @@ function JiraSprintBurndownLineChart({ kpiConfiguration, setKpiConfiguration, da
       <div className="new-chart mb-3" style={{height: "300px"}}>
             <ResponsiveLine
               data={metrics}
+              {...defaultConfig("Number of Pending Issues", "Date", 
+                      false, true, "wholeNumbers", "monthDate2")}
+              {...config(getColor)}   
               onClick={() => setShowModal(true)}
-              indexBy="date"
-              margin={{ top: 50, right: 130, bottom: 80, left: 100 }}
-              xScale={{
-                type: "time",
-                format: "%Y-%m-%d",
-                precision: "day",
-              }}
-              yScale={{ type: "linear", min: 0, max: "auto", stacked: false }}
-              curve="step"
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              pointSize={10}
-              pointBorderWidth={8}
-              pointLabel="y"
-              pointLabelYOffset={-12}
-              useMesh={true}
-              lineWidth={3.5}
-              legends={config.legends}
-              colors={{ scheme: "category10" }}
-              tooltip={({ point, color }) => (
-                <div
-                  style={{
-                    background: "white",
-                    padding: "9px 12px",
-                    border: "1px solid #ccc",
-                  }}
-                >
-                  <strong style={{ color }}> Issues Remaining: </strong> {point.data.y}
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
+              tooltip={({ point, color }) => <ChartTooltip 
+                              titles = {["Issues Remaining"]}
+                              values = {[point.data.y]}
+                              color = {color} />}
             />
         </div>
     );

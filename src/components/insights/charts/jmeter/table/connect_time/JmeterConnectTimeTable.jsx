@@ -27,7 +27,7 @@ function JmeterConnectTimeTable({ kpiConfiguration, setKpiConfiguration, dashboa
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "toolData.jenkinsJobId"), "cell-center no-wrap-inline"),
+      getTableTextColumn(getField(fields, "toolData.jenkinsJobId"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "toolData.uri")),
       getTableTextColumn(getField(fields, "toolData.mean")),
       getTableTextColumn(getField(fields, "toolData.min")),
@@ -88,7 +88,7 @@ function JmeterConnectTimeTable({ kpiConfiguration, setKpiConfiguration, dashboa
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage}/>}
+        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage} noFooter={true}/>}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}

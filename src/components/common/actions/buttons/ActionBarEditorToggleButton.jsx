@@ -11,8 +11,7 @@ function ActionBarEditorToggleButton({ setActiveTab, settingsTab }) {
   return (
     <ActionBarButton
       action={toggleEditorPanel}
-      iconClasses={"mr-2 dark-grey"}
-      text={"Settings"}
+      iconClasses={"dark-grey"}
       icon={faCogs}
       popoverText={`Edit Settings`}
     />

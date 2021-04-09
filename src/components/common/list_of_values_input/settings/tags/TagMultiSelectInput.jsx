@@ -12,18 +12,16 @@ function TagMultiSelectInput({ fieldName, dataObject, setDataObject, disabled, s
   }
 
   return (
-    <div className={className}>
-      <InputContainer className="custom-multiselect-input">
-        <InputLabel field={field} showLabel={showLabel}/>
-        <TagMultiSelectInputBase
-          fieldName={"filters.tags"}
-          dataObject={dataObject}
-          setDataObject={setDataObject}
-          setDataFunction={setDataFunction}
-          disabled={disabled}
-        />
-      </InputContainer>
-    </div>
+    <InputContainer className={className}>
+      <InputLabel field={field} showLabel={showLabel}/>
+      <TagMultiSelectInputBase
+        fieldName={fieldName}
+        dataObject={dataObject}
+        setDataObject={setDataObject}
+        setDataFunction={setDataFunction}
+        disabled={disabled}
+      />
+    </InputContainer>
   );
 }
 

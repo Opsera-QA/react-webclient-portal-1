@@ -117,17 +117,19 @@ function TagMultiSelectInputBase({ fieldName, dataObject, setDataObject, disable
   }
   return (
     <div className={className}>
-      <Multiselect
-        data={[...tagOptions]}
-        textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + data["value"]}
-        filter={"contains"}
-        groupBy={"type"}
-        busy={isLoading}
-        value={[...dataObject?.getArrayData(fieldName)]}
-        placeholder={getPlaceholderText()}
-        disabled={disabled || isLoading}
-        onChange={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
-      />
+      <div className={"custom-multiselect-input"}>
+        <Multiselect
+          data={[...tagOptions]}
+          textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + data["value"]}
+          filter={"contains"}
+          groupBy={"type"}
+          busy={isLoading}
+          value={[...dataObject?.getArrayData(fieldName)]}
+          placeholder={getPlaceholderText()}
+          disabled={disabled || isLoading}
+          onChange={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
+        />
+      </div>
     </div>
   );
 }

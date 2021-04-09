@@ -44,6 +44,9 @@ function AttributeEditorPanel({ toolData, setToolData, handleClose }) {
     >
       <Row>
         <Col lg={6}>
+          <RegistryToolOrganizationInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
+        </Col>
+        <Col lg={6}>
           <RegistryToolLocationInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
         </Col>
         <Col lg={6}>
@@ -51,9 +54,6 @@ function AttributeEditorPanel({ toolData, setToolData, handleClose }) {
         </Col>
         <Col lg={6}>
           <RegistryToolApplicationsInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
-        </Col>
-        <Col lg={6}>
-          <RegistryToolOrganizationInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
         </Col>
       </Row>
     </EditorPanelContainer>

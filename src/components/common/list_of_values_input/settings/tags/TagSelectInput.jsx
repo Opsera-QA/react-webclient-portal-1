@@ -1,17 +1,13 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import { Multiselect } from 'react-widgets';
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
-import InputContainer from "components/common/inputs/InputContainer";
-import InputLabel from "components/common/inputs/info_text/InputLabel";
-import InfoText from "components/common/inputs/info_text/InfoText";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function TagSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction, showLabel, className}) {
+function TagSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction, showLabel, className, allowedTypes, getCurrentValue}) {
   const { getAccessToken } = useContext(AuthContext);
-  const [field] = useState(dataObject.getFieldById(fieldName));
   const [tagOptions, setTagOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
@@ -70,7 +66,7 @@ function TagSelectInput({ fieldName, dataObject, setDataObject, disabled, setDat
   const removeOldTags = async () => {
     let newTags = [];
 
-    dataObject.getArrayData(fieldName).map((tag, index) => {
+    dataObject.getArrayData(fieldName).forEach((tag) => {
       if (tag["type"] != null && tag["type"] !== "" && tag["value"] != null && tag["value"] !== "")
       {
         let tagOption = {type: tag["type"], value: tag["value"]};
@@ -88,22 +84,21 @@ function TagSelectInput({ fieldName, dataObject, setDataObject, disabled, setDat
   const loadTagOptions = (tags) => {
     let currentOptions = [];
 
-    tags.map((tag, index) => {
+    tags.map((tag) => {
       let tagOption = {type: tag["type"], value: tag["value"]};
-      currentOptions.push(tagOption);
+      
+      if (Array.isArray(allowedTypes) && allowedTypes.length > 0) {
+        if (allowedTypes.includes(tagOption.type)) {
+          currentOptions.push(tagOption);
+        }
+      }
+      else {
+        currentOptions.push(tagOption);
+      }
     });
 
     if (isMounted?.current === true) {
       setTagOptions(currentOptions);
-    }
-  };
-
-  const validateAndSetData = (fieldName, value) => {
-    let newDataObject = dataObject;
-    newDataObject.setData(fieldName, value);
-
-    if (isMounted?.current === true) {
-      setDataObject({...newDataObject});
     }
   };
 
@@ -115,26 +110,23 @@ function TagSelectInput({ fieldName, dataObject, setDataObject, disabled, setDat
     return "Select Tag";
   };
 
-  if (field == null) {
-    return null;
-  }
-
   return (
-    <InputContainer>
-      <InputLabel field={field} />
-      <Multiselect
-        data={[...tagOptions]}
-        textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + data["value"]}
-        filter={"contains"}
-        groupBy={"type"}
-        busy={isLoading}
-        value={[...dataObject?.getArrayData(fieldName)]}
-        placeholder={getPlaceholderText()}
-        disabled={disabled || isLoading}
-        onChange={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
-      />
-      <InfoText field={field} errorMessage={errorMessage} />
-    </InputContainer>
+    <SelectInputBase
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      setDataFunction={setDataFunction}
+      fieldName={fieldName}
+      showLabel={showLabel}
+      className={className}
+      selectOptions={[...tagOptions]}
+      textField={(data) => data?.type != null ? capitalizeFirstLetter(data?.type) + ": " + capitalizeFirstLetter(data?.value) : null}
+      filter={"contains"}
+      groupBy={"type"}
+      busy={isLoading}
+      getCurrentValue={getCurrentValue}
+      placeholder={getPlaceholderText()}
+      disabled={disabled || isLoading}
+    />
   );
 }
 
@@ -145,7 +137,9 @@ TagSelectInput.propTypes = {
   setDataFunction: PropTypes.func,
   showLabel: PropTypes.bool,
   disabled: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  allowedTypes: PropTypes.array,
+  getCurrentValue: PropTypes.func
 };
 
 export default TagSelectInput;

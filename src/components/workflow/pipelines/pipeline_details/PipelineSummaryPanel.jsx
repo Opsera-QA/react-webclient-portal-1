@@ -29,6 +29,8 @@ import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
 import EditTagModal from "components/workflow/EditTagModal";
 import pipelineActions from "components/workflow/pipeline-actions";
 import Modal from "components/common/modal/modal";
+import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
+import CustomBadge from "components/common/badges/CustomBadge";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -323,22 +325,24 @@ function PipelineSummaryPanel({
 
   const getTagField = () => {
     return (
-      <Col xs={12} className="py-2"><span className="text-muted mr-1">Tags:</span>
+      <Col xs={12} className="mt-2 mr-2 d-flex"><span className="text-muted mr-1">Tags:</span>
 
         {!editTags && pipeline.tags &&
-        <span className="item-field">
+        <CustomBadgeContainer>
             {pipeline.tags.map((item, idx) => {
               if (typeof item !== "string")
                 return (
-                  <span key={idx} className="mx-1 mb-1 badge badge-light tag-badge">
-            <FontAwesomeIcon icon={faTag} fixedWidth className="mr-1"/><span
-                    className="mr-1">{item.type}:</span>{item.value}
-            </span>
+                  <CustomBadge badgeText={<span><span className="mr-1">{item.type}:</span>{item.value}</span>}
+                    icon={faTag}
+                    key={idx}
+                    />
                 );
             })}
-          </span>
+          </CustomBadgeContainer>
         }
-        {authorizedAction("edit_tags", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
+        <div>
+          {authorizedAction("edit_tags", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
+        </div>
 
         {editTags &&
         <EditTagModal data={pipeline.tags} visible={editTags} onHide={() => {

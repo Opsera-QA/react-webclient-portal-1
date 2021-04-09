@@ -13,8 +13,8 @@ function SelectedObjPanel({ selectedItems }) {
       <div key={item.componentType+"_"+item.committedFile} className={index % 2 === 0 ? "even-row" : "odd-row"}>
         <li key={item.componentType+"_"+item.committedFile} className="p-2 member-list">
           <div className="px-2 justify-content-between d-flex w-100">
-            <div>{item.componentType}</div>
-            <div>{item.committedFile}</div>
+            <div className="force-text-wrap" style={{"width": "200px"}}>{item.componentType}</div>
+            <div className="force-text-wrap" style={{"width": "400px"}}>{item.committedFile}</div>
           </div>
         </li>
       </div>
@@ -34,7 +34,7 @@ function SelectedObjPanel({ selectedItems }) {
   };
 
   return (
-     <div className="content-card-1 content-container">
+     <div className="content-card-1 content-container scroller" style={{"height": "500px"}}>
         <div className="px-2 d-flex content-block-header members-title justify-content-between">
           <div>Selected Items</div>
         </div>

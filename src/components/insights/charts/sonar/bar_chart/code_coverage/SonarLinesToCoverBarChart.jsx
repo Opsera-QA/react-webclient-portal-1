@@ -9,8 +9,9 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { format } from "date-fns";
-import { defaultConfig, getColorByData, assignStandardColors } from '../../../charts-views';
-import ChartTooltip from '../../../ChartTooltip';
+import { defaultConfig, getColorByData, assignStandardColors,
+         adjustBarWidth } from "../../../charts-views";
+import ChartTooltip from "../../../ChartTooltip";
 
 function SonarLinesToCoverBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -76,18 +77,19 @@ function SonarLinesToCoverBarChart({ kpiConfiguration, setKpiConfiguration, dash
 
   return (
     <>
-          <div className="new-chart mb-3" style={{height: "300px"}}>
-          <ResponsiveBar
-            data={metrics}
-            {...defaultConfig("Value", "Code Coverage Metric", 
-                      false, true, "", "monthDate2")}
-            {...config(getColorByData)}
-            onClick={() => setShowModal(true)}
-            tooltip={({ indexValue, value, color, data }) => <ChartTooltip 
-                    titles = {["Timestamp", "Uncovered Lines", "Project Key"]}
-                    values = {[format(new Date(indexValue), "yyyy-MM-dd', 'hh:mm a"), value, data.key]}
-                    style = {false}
-                    color = {color} />}
+      <div className="new-chart mb-3" style={{height: "300px"}}>
+      <ResponsiveBar
+        data={metrics}
+        {...defaultConfig("Value", "Code Coverage Metric", 
+                  false, false, "", "monthDate2")}
+        {...config(getColorByData)}
+        {...adjustBarWidth(metrics)}
+        onClick={() => setShowModal(true)}
+        tooltip={({ indexValue, value, color, data }) => <ChartTooltip 
+                titles = {["Timestamp", "Uncovered Lines", "Project Key"]}
+                values = {[format(new Date(indexValue), "yyyy-MM-dd', 'hh:mm a"), value, data.key]}
+                style = {false}
+                color = {color} />}
           />
       </div>
     </>

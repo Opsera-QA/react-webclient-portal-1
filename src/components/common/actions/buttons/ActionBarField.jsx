@@ -19,7 +19,7 @@ function ActionBarField({iconClasses, popoverText, text, icon}) {
       delay={{ show: 250, hide: 400 }}
       overlay={renderTooltip(popoverText)}>
       <span className="action-bar-icon">
-        <FontAwesomeIcon icon={icon} className={iconClasses}/>
+        <FontAwesomeIcon size={"lg"} icon={icon} className={iconClasses}/>
         <span>{text}</span></span>
     </OverlayTrigger>
   );

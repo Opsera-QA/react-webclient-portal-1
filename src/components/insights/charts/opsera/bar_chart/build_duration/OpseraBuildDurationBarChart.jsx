@@ -7,7 +7,8 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors } from '../../../charts-views';
+import { defaultConfig, getColorByData, assignStandardColors, capitalizeLegend,
+         adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 
 function OpseraBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -47,6 +48,7 @@ function OpseraBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, da
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelineDuration", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.opseraPipelineDuration?.data : [];
       assignStandardColors(dataObject, true);
+      capitalizeLegend(dataObject, ["time"]);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -75,8 +77,9 @@ function OpseraBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, da
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Duration (Minutes)", "Pipeline Run", 
-                      false, true, "wholeNumbers", "cutoffString")}
+                      false, false, "wholeNumbers", "cutoffString")}
           {...config(getColorByData)}
+          {...adjustBarWidth(metrics)}
           onClick={() => setShowModal(true)}
           tooltip={({ data, value, color }) => <ChartTooltip 
                                         titles = {["Pipeline ID", "Duration"]}

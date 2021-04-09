@@ -9,6 +9,8 @@ import config from "./GitlabMergeRequestsByUserChartConfig";
 import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
+import { defaultConfig, getColorByData, assignStandardColors,
+         adjustBarWidth } from "../../insights/charts/charts-views";
 
 function GitlabMergeRequestsByUser({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -52,6 +54,7 @@ function GitlabMergeRequestsByUser({ persona, date }) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].gitlabMergeRequestsByUser : [];
+      assignStandardColors(dataObject?.data, true);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -86,39 +89,15 @@ function GitlabMergeRequestsByUser({ persona, date }) {
           </div>
         ) : (
           <ResponsiveBar
+            {...defaultConfig("Author", "Merge Requests", 
+                    false, true, "wholeNumbers", "cutoffString")}
+            {...adjustBarWidth(data ? data.data : [])}
             data={data ? data.data : []}
             onClick={() => setShowModal(true)}
             keys={config.keys}
             indexBy="user"
-            margin={config.margin}
-            padding={0.3}
-            layout={"horizontal"}
-            colors={{ scheme: "category10" }}
-            borderColor={{ theme: "background" }}
             colorBy="id"
-            defs={config.defs}
-            fill={config.fill}
-            axisTop={null}
-            axisRight={null}
-            axisBottom={config.axisBottom}
-            axisLeft={config.axisLeft}
-            labelSkipWidth={12}
-            labelSkipHeight={12}
-            enableLabel={false}
-            borderRadius={5}
-            labelTextColor="inherit:darker(2)"
-            animate={true}
-            motionStiffness={90}
-            borderWidth={2}
-            motionDamping={15}
-            legends={config.legends}
-            theme={{
-              tooltip: {
-                container: {
-                  fontSize: "16px",
-                },
-              },
-            }}
+            colors={getColorByData}
           />
         )}
       </div>

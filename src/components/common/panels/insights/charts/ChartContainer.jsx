@@ -10,7 +10,7 @@ import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIc
 import CustomBadge from "components/common/badges/CustomBadge";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 
-function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, index, chart, isLoading, error, loadChart, setKpis }) {
+function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, index, chart, isLoading, error, loadChart, setKpis, tableChart }) {
   const [view, setView] = useState("chart");
   // const changeView = () => {
   //   setView(view === "chart" ? "settings" : "chart");
@@ -99,7 +99,7 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
       <div className="px-2 content-block-header-inverse title-text-header-2">
         {getTitleBar()}
       </div>
-      <div className="new-chart m-2 shaded-panel">
+      <div className={tableChart === true ? "shaded-panel" : "new-chart m-2 shaded-panel"}>
         {getChartBody()}
       </div>
       {getTagBadges()}
@@ -117,7 +117,8 @@ ChartContainer.propTypes = {
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
   setKpis: PropTypes.func,
-  loadChart: PropTypes.func
+  loadChart: PropTypes.func,
+  tableChart: PropTypes.bool
 };
 
 export default ChartContainer;

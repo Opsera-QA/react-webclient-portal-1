@@ -5,10 +5,11 @@ import { ResponsiveCalendar } from "@nivo/calendar";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-import config from "./GitlabTotalCountOfMergeReqAndPushPerDayConfig";
 import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
+import { defaultConfig, gradationalColors } from "../../insights/charts/charts-views";
+import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function GitlabTotalCountOfMergeReqAndPushPerDay({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -16,6 +17,7 @@ function GitlabTotalCountOfMergeReqAndPushPerDay({ persona, date }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const today = new Date();
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -88,25 +90,28 @@ function GitlabTotalCountOfMergeReqAndPushPerDay({ persona, date }) {
           </div>
         ) : (
           <ResponsiveCalendar
+            {...defaultConfig("", "", false, false, "", "", true)}
             data={data ? data.data[0].data : []}
             onClick={() => setShowModal(true)}
             from="2020-05-01"
-            to={new Date()}
+            to={today}
             emptyColor="#ededed"
-            colors={["#acd5f2", "#7fa8ca", "#537aa2", "#254e77"]}
-            margin={{ top: 40, right: 40, bottom: 40, left: 40 }}
+            colors={gradationalColors}
             yearSpacing={40}
-            monthBorderColor="#ffffff"
+            monthBorderColor="white"
             dayBorderWidth={2}
-            dayBorderColor="#ffffff"
-            legends={config.legends}
-            tooltip={({ day, value, color }) => (
-              <div style={{}}>
-                <strong>
-                  {day}: {value} Contribution(s)
-                </strong>
-              </div>
-            )}
+            dayBorderColor="white"
+            margin={{
+              top: 30,
+              right: 40,
+              bottom: 30,
+              left: 40
+            }}
+            tooltip={({ day, value, color }) => <ChartTooltip 
+                                          titles = {[day]}
+                                          values = {[`${value || 0} contribution(s)`]}
+                                          style = {false}
+                                          color = {color} />}
           />
         )}
       </div>

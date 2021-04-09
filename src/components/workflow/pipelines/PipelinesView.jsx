@@ -17,6 +17,8 @@ import PipelineCardView from "components/workflow/pipelines/PipelineCardView";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
+import pipelineSummaryMetadata
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 
 function PipelinesView({ currentTab, setActiveTab }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -216,6 +218,7 @@ function PipelinesView({ currentTab, setActiveTab }) {
         saveCookies={saveCookies}
         supportViewToggle={true}
         isLoading={isLoading}
+        metadata={pipelineSummaryMetadata}
         type={"Pipeline"}
         body={getPipelinesBody()}
         dropdownFilters={getDropdownFilters()}

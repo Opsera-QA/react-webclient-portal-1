@@ -31,6 +31,56 @@
   padding-top: 20px;
 }
 
+/* -- For Nivo chart legend -- */
+
+.chart svg > g > g:last-child > g:nth-child(2),
+.new-chart svg > g > g:last-child > g:nth-child(2) {
+  transform: translate(0, 12px);
+  /* transform: translate(0, 10px); */
+}
+
+.chart svg > g > g:last-child > g:nth-child(3),
+.new-chart svg > g > g:last-child > g:nth-child(3) {
+  transform: translate(0, 24px);
+}
+
+.chart svg > g > g:last-child > g:nth-child(4),
+.new-chart svg > g > g:last-child > g:nth-child(4) {
+  transform: translate(-8rem);
+}
+
+.chart svg > g > g:last-child > g:nth-child(5),
+.new-chart svg > g > g:last-child > g:nth-child(5) {
+  transform: translate(-8rem, 12px);
+}
+
+.chart svg > g > g:last-child > g:nth-child(6),
+.new-chart svg > g > g:last-child > g:nth-child(6) {
+  transform: translate(-8rem, 24px);
+}
+
+.chart svg > g > g:last-child > g:nth-child(7),
+.new-chart svg > g > g:last-child > g:nth-child(7) {
+  transform: translate(-16rem);
+}
+
+.chart svg > g > g:last-child > g:nth-child(8),
+.new-chart svg > g > g:last-child > g:nth-child(8) {
+  transform: translate(-16rem, 12px);
+}
+
+.chart svg > g > g:last-child > g:nth-child(9),
+.new-chart svg > g > g:last-child > g:nth-child(9) {
+  transform: translate(-16rem, 24px);
+}
+
+.chart svg > g > g:last-child > g:nth-child(10),
+.new-chart svg > g > g:last-child > g:nth-child(10) {
+  transform: translate(-24rem);
+} 
+
+/* -------------------------- */
+
 .chart:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
   color: #334152;
@@ -59,7 +109,6 @@
 }
 
 .count-block-card-view {
-  background: white;
   transition: 0.3s;
   border-radius: 0.25rem;
   position: relative;

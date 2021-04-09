@@ -12,6 +12,10 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import { defaultConfig, getColorByData, assignHealthColors,
+         adjustBarWidth } from "../../../charts-views";
+import ChartTooltip from "../../../ChartTooltip";
+
 function JiraHealthBySprintBarChart( { kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis } ) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -48,6 +52,7 @@ function JiraHealthBySprintBarChart( { kpiConfiguration, setKpiConfiguration, da
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "jiraSprintHealth", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.jiraSprintHealth?.data : [];
+      assignHealthColors(dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -73,49 +78,19 @@ function JiraHealthBySprintBarChart( { kpiConfiguration, setKpiConfiguration, da
 
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
-            <ResponsiveBar
-              data={metrics}
-              onClick={() => setShowModal(true)}
-              keys={config.keys}
-              indexBy="_id"
-              margin={config.margin}
-              padding={0.3}
-              layout={"horizontal"}
-              // colors={({ id, data }) => data[`${id}_color`]}
-              borderColor={{ theme: "background" }}
-              colorBy="id"
-              defs={config.defs}
-              fill={config.fill}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              labelSkipWidth={12}
-              labelSkipHeight={12}
-              enableLabel={false}
-              borderRadius={0}
-              legends={config.legends}
-              labelTextColor="inherit:darker(2)"
-              animate={true}
-              motionStiffness={90}
-              borderWidth={2}
-              motionDamping={15}
-              tooltip={({ indexValue, value, id }) => (
-                <div>
-                  <strong>  Project: </strong> {indexValue}<br></br>
-                  <strong>  Issue Stage: </strong> {id}<br></br>
-                  <strong>  No. of Issues: </strong> {value}<br></br>
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
-            />
-        </div>
+        <ResponsiveBar
+          data={metrics}
+          {...defaultConfig("Project", "Number of Issues", 
+                  false, false, "cutoffString", "wholeNumbers")}
+          {...config(getColorByData)}
+          {...adjustBarWidth(metrics)}
+          onClick={() => setShowModal(true)}
+          tooltip={({ indexValue, value, id }) => <ChartTooltip 
+                                    titles = {["Project", "Issue Stage", "Number of Issues"]}
+                                    values = {[indexValue, id, value]} 
+                                    style={false} />}
+        />
+      </div>
     );
   };
 

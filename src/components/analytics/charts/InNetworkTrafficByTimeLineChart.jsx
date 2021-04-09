@@ -9,6 +9,9 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ErrorDialog from "../../common/status_notifications/error";
+import { defaultConfig, getColor, assignStandardColors,
+         shortenLegend } from "../../insights/charts/charts-views";
+import ChartTooltip from '../../insights/charts/ChartTooltip';
 
 function InNetworkTrafficByTimeLineChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -36,6 +39,8 @@ function InNetworkTrafficByTimeLineChart({ persona, date }) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].InNetworkTrafficByTime : [];
+      assignStandardColors(dataObject?.data);
+      shortenLegend(dataObject?.data);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -84,47 +89,19 @@ function InNetworkTrafficByTimeLineChart({ persona, date }) {
           </div>
         ) : (
           <ResponsiveLine
+            {...defaultConfig("In Network Usage (MB)", "Time", true, true, "", "dateTime")}
             data={data ? data.data : []}
             onClick={() => setShowModal(true)}
+            colors={getColor}
             indexBy="x"
             margin={{ top: 50, right: 110, bottom: 80, left: 120 }}
             xScale={{ type: "point" }}
             yScale={{ type: "linear", min: "auto", max: "auto", stacked: false, reverse: false }}
-            axisTop={null}
-            axisRight={null}
-            enableArea={false}
-            axisBottom={config.axisBottom}
-            axisLeft={config.axisLeft}
-            pointSize={10}
-            pointBorderWidth={8}
             pointLabel="y"
-            pointLabelYOffset={-12}
-            useMesh={true}
-            lineWidth={3.5}
-            legends={config.legends}
-            colors={{ scheme: "category10" }}
-            tooltip={({ point, color }) => (
-              <div
-                style={{
-                  background: "white",
-                  padding: "9px 12px",
-                  border: "1px solid #ccc",
-                }}
-              >
-                <strong style={{ color }}> Date & Time: </strong> {String(point.data.xFormatted)}
-                <br></br>
-                <strong style={{ color }}> Node Name: </strong> {point.serieId}
-                <br></br>
-                <strong style={{ color }}> In Network usage: </strong> {point.data.y + "MB"}
-              </div>
-            )}
-            theme={{
-              tooltip: {
-                container: {
-                  fontSize: "16px",
-                },
-              },
-            }}
+            tooltip={({ point, color }) => <ChartTooltip 
+                                  titles = {["Date & Time", "Node name", "In network usage"]}
+                                  values = {[String(point.data.xFormatted), point.serieId, point.data.y + "MB"]}
+                                  color={color} />}
           />
         )}
       </div>

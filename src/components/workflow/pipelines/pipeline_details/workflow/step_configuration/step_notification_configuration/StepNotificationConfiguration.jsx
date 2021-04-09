@@ -16,6 +16,7 @@ import JiraStepNotificationPriorityInput from "./jira/JiraStepNotificationPriori
 import TeamsStepNotificationToolInput from "./teams/TeamsStepNotificationToolInput";
 import LoadingDialog from "../../../../../../common/status_notifications/loading";
 import teamsStepNotificationMetadata from "./teams/teamsStepNotificationMetadata";
+import serviceNowStepNotificationMetadata from "./servicenow/serviceNowStepNotificationMetadata";
 import NotificationsToggle from "./NotificationsToggle";
 import NotificationLevelInput from "./NotificationLevelInput";
 import JiraStepNotificationWorkflowStepInput from "./jira/JiraStepNotificationWorkflowStepInput";
@@ -25,8 +26,10 @@ import slackStepNotificationMetadata from "./slack/slackStepNotificationMetadata
 import emailStepNotificationMetadata from "./email/emailStepNotificationMetadata";
 import jiraStepApprovalMetadata from "./jira/jiraStepApprovalMetadata";
 import SlackStepNotificationToolInput from "./slack/SlackStepNotificationToolInput";
+import ServiceNowStepNotificationToolInput from "./servicenow/ServiceNowStepNotificationToolInput";
 import JiraStepNotificationProjectUserInput from "./jira/JiraStepNotificationProjectUserInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import ServiceNowUserSelectInput from "./servicenow/ServiceNowUserSelectInput";
 
 function StepNotificationConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
   const toastContext = useContext(DialogToastContext);
@@ -38,6 +41,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
   const [teamsDto, setTeamsDto] = useState(undefined);
   const [slackDto, setSlackDto] = useState(undefined);
   const [emailDto, setEmailDto] = useState(undefined);
+  const [serviceNowDto, setServiceNowDto] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -73,12 +77,14 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
     setSlackDto(new Model({...slackStepNotificationMetadata.newObjectFields}, slackStepNotificationMetadata, true));
     setJiraDto(new Model({...jiraStepMetadata.newObjectFields}, jiraStepMetadata, true));
     setTeamsDto(new Model({...teamsStepNotificationMetadata.newObjectFields}, teamsStepNotificationMetadata, true));
+    setServiceNowDto(new Model({...serviceNowStepNotificationMetadata.newObjectFields}, serviceNowStepNotificationMetadata, true));
 
     if (step.notification !== undefined) {
       let emailArrayIndex = step.notification.findIndex(x => x.type === "email");
       let slackArrayIndex = step.notification.findIndex(x => x.type === "slack");
       let jiraArrayIndex = step.notification.findIndex(x => x.type === "jira");
       let teamsArrayIndex = step.notification.findIndex(x => x.type === "teams");
+      let serviceNowArrayIndex = step.notification.findIndex(x => x.type === "servicenow");
       if (emailArrayIndex >= 0) {
         let emailFormData = step.notification[emailArrayIndex];
         setEmailDto(new Model(emailFormData, emailStepNotificationMetadata, false));
@@ -95,6 +101,10 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
         let teamsFormData = step.notification[teamsArrayIndex];
         setTeamsDto(new Model(teamsFormData, teamsStepNotificationMetadata, false));
       }
+      if (serviceNowArrayIndex >= 0) {
+        let serviceNowFormData = step.notification[serviceNowArrayIndex];
+        setServiceNowDto(new Model(serviceNowFormData, serviceNowStepNotificationMetadata, false));
+      }
     }
     // TODO: We save step, so this is redundant
     setStepTool(step.tool);
@@ -105,7 +115,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
     if (validateRequiredFields()) {
       setIsSaving(true);
       let stepArrayIndex = getStepIndex(stepId);
-      plan[stepArrayIndex].notification = [emailDto.getPersistData(), slackDto.getPersistData(), jiraDto.getPersistData(), teamsDto.getPersistData()];
+      plan[stepArrayIndex].notification = [emailDto.getPersistData(), slackDto.getPersistData(), jiraDto.getPersistData(), teamsDto.getPersistData(), serviceNowDto.getPersistData()];
       await parentCallback(plan);
       setIsSaving(false);
     }
@@ -133,6 +143,11 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
 
     if (slackDto.getData("enabled") === true && !slackDto.isModelValid2()) {
       toastContext.showErrorDialog("Error: Cannot enable Slack notifications without all required fields filled out.");
+      return false;
+    }
+    
+    if (serviceNowDto.getData("enabled") === true && !serviceNowDto.isModelValid2()) {
+      toastContext.showErrorDialog("Error: Cannot enable ServiceNow notifications without all required fields filled out.");
       return false;
     }
 
@@ -186,6 +201,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
           Please Note: You must connect to Microsoft Teams on the
           <Link to="/inventory/tools"><FontAwesomeIcon icon={faClipboardList} className="mx-1"/>Tool Registry</Link> page in order to use this feature.
         </small>
+        <NotificationLevelInput dataObject={teamsDto} setDataObject={setTeamsDto} fieldName={"event"} />
         <TeamsStepNotificationToolInput setDataObject={setTeamsDto} dataObject={teamsDto} />
       </div>
     );
@@ -218,7 +234,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
           <JiraStepNotificationProjectInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
           <JiraStepNotificationProjectUserInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} />
           <JiraStepNotificationProjectUsersMultiSelectInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} />
-          <JiraStepNotificationBoardInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
+          <JiraStepNotificationBoardInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProjectKey={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} />
           <JiraStepNotificationSprintInput jiraToolId={jiraDto.getData("jiraToolId")} jiraBoard={jiraDto.getData("jiraBoard")} setDataObject={setJiraDto} dataObject={jiraDto} />
           <JiraStepNotificationParentTicketInput jiraToolId={jiraDto.getData("jiraToolId")} jiraSprintId={jiraDto.getData("jiraSprint")} setDataObject={setJiraDto} dataObject={jiraDto} />
           {/*<JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraApprovalStep"} />*/}
@@ -240,11 +256,38 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
         <JiraStepNotificationProjectInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationProjectUserInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationProjectUsersMultiSelectInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} />
-        <JiraStepNotificationBoardInput jiraToolId={jiraDto.getData("jiraToolId")} setDataObject={setJiraDto} dataObject={jiraDto} />
+        <JiraStepNotificationBoardInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProjectKey={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationSprintInput jiraToolId={jiraDto.getData("jiraToolId")} jiraBoard={jiraDto.getData("jiraBoard")} setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationParentTicketInput jiraToolId={jiraDto.getData("jiraToolId")} jiraSprintId={jiraDto.getData("jiraSprint")} setDataObject={setJiraDto} dataObject={jiraDto} />
         <JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraOpenStep"} />
         <JiraStepNotificationWorkflowStepInput jiraToolId={jiraDto.getData("jiraToolId")} jiraProject={jiraDto.getData("jiraProject")} setDataObject={setJiraDto} dataObject={jiraDto} fieldName={"jiraClosureStep"} />
+      </div>
+    );
+  };
+
+  const getServiceNowFormFields = () => {
+    if (isLoading || serviceNowDto == null) {
+      return null;
+    }
+
+    if (serviceNowDto.getData("enabled") === false) {
+      return (
+        <div className="my-4">
+          <NotificationsToggle dataObject={serviceNowDto} setDataObject={setServiceNowDto} fieldName={"enabled"} />
+        </div>
+      );
+    }
+
+    return (
+      <div className="my-4">
+        <NotificationsToggle dataObject={serviceNowDto} setDataObject={setServiceNowDto} fieldName={"enabled"} />
+        <small className="form-text text-muted px-2">
+          Please Note: You must connect to ServiceNow on the
+          <Link to="/inventory/tools"><FontAwesomeIcon icon={faClipboardList} className="mx-1"/>Tool Registry</Link> page in order to use this feature.
+        </small>
+        <NotificationLevelInput dataObject={serviceNowDto} setDataObject={setServiceNowDto} fieldName={"event"} />
+        <ServiceNowStepNotificationToolInput setDataObject={setServiceNowDto} dataObject={serviceNowDto} />
+        <ServiceNowUserSelectInput serviceNowId={serviceNowDto.getData("toolId")} setDataObject={setServiceNowDto} dataObject={serviceNowDto} />
       </div>
     );
   };
@@ -288,6 +331,7 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
       {getSlackFormFields()}
       {getTeamsFormFields()}
       {getJiraFormFields()}
+      {getServiceNowFormFields()}
       {getEmailFormFields()}
 
       <Button variant="primary"

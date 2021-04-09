@@ -8,11 +8,11 @@ import OpseraBuildDurationBarChart from "./opsera/bar_chart/build_duration/Opser
 import OpseraBuildsByUserBarChart from "./opsera/bar_chart/builds_by_user/OpseraBuildsByUserBarChart";
 import OpseraDeploymentFrequencyLineChart from "./opsera/line_chart/deployment_frequency/OpseraDeploymentFrequencyLineChart";
 import OpseraRecentPipelineStatus from "components/insights/charts/opsera/table/recent_pipeline_status/OpseraRecentPipelineStatus";
-import OpseraRecentCDStatusTable
-  from "components/insights/charts/opsera/table/recent_cd_status/OpseraRecentCDStatusTable";
+import OpseraRecentCDStatusTable from "components/insights/charts/opsera/table/recent_cd_status/OpseraRecentCDStatusTable";
 import OpseraPipelineDeploymentFrequencyStats from "./opsera/OpseraPipelineDeploymentFrequencyStats";
 import OpseraBuildDurationByStageBarChart from "./opsera/bar_chart/duration_by_stage/OpseraBuildDurationByStageBarChart";
 import OpseraMeanTimeToRestoreBarChart from "./opsera/bar_chart/mean_time_to_restore/OpseraMeanTimeToRestoreBarChart";
+import OpseraNexusPipelineStepInfo from "components/insights/charts/opsera/table/nexus_pipeline_step_info/OpseraNexusPipelineStepInfo";
 
 // Jenkins KPIs
 import JenkinsBuildsByUserBarChart from "./jenkins/bar_chart/builds_by_user/JenkinsBuildsByUserBarChart";
@@ -88,6 +88,7 @@ import BitbucketMergeRequestsPushesAndComments from "./bitbucket/calendar_chart/
 import BitbucketTotalCommitsByProjectChart from "./bitbucket/pie_chart/total_commits_by_project/BitbucketTotalCommitsByProjectChart";
 import BitbucketRecentMergeRequests from "./bitbucket/table/bitbucket-recent-merge-requests/BitbucketRecentMergeRequests";
 import BitbucketPendingMergeRequests from "./bitbucket/table/bitbucket-pending-merge-requests/BitbucketPendingMergeRequests.jsx";
+import BitbucketRejectedMergeRequestsTable from "components/insights/charts/bitbucket/table/bitbucket-rejected-merge-requests/BitbucketRejectedMergeRequestsTable.jsx";
 
 // Cypress KPIs
 import CypressTestResultsTable from "./cypress/CypressTestResultsTable";
@@ -106,8 +107,8 @@ import MetricbeatOutNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/
 
 import {
   getDateObjectFromKpiConfiguration,
-  getTagsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
+import {Col} from "react-bootstrap";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -123,22 +124,24 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-cpu-usage" &&
       kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-memory-usage" &&
       kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-in-network-usage" &&
-      kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-out-network-usage" 
-  ) {
+      kpiConfig?.kpi_identifier !== "metricbeat-kubernetes-out-network-usage"
+    ) {
       return getChart();
     }
 
     return (
-      <ChartContainer
-        title={kpiConfig?.kpi_name}
-        chart={getChart()}
-        loadChart={loadChart}
-        kpiConfiguration={kpiConfig}
-        setKpiConfiguration={setKpiConfig}
-        dashboardData={dashboardData}
-        setKpis={setKpis}
-        index={index}
-      />
+      <Col xl={6} md={12} className="p-2">
+        <ChartContainer
+          title={kpiConfig?.kpi_name}
+          chart={getChart()}
+          loadChart={loadChart}
+          kpiConfiguration={kpiConfig}
+          setKpiConfiguration={setKpiConfig}
+          dashboardData={dashboardData}
+          setKpis={setKpis}
+          index={index}
+        />
+      </Col>
     );
   };
 
@@ -152,755 +155,970 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Opsera KPIs
       case "opsera-status-by-pipeline":
         return (
-          <OpseraPipelineByStatusBarChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <OpseraPipelineByStatusBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "opsera-pipeline-duration":
         return (
-          <OpseraBuildDurationBarChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <OpseraBuildDurationBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "opsera-pipelines-by-user":
         return (
-          <OpseraBuildsByUserBarChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <OpseraBuildsByUserBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "opsera-deployment-frequency":
         return (
-          <OpseraDeploymentFrequencyLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <OpseraDeploymentFrequencyLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "opsera-recent-pipeline-status":
         return (
-          <OpseraRecentPipelineStatus
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <OpseraRecentPipelineStatus
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "opsera-recent-cd-status":
         return (
-          <OpseraRecentCDStatusTable
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <OpseraRecentCDStatusTable
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "opsera-duration-by-stage":
         return (
-          <OpseraBuildDurationByStageBarChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <OpseraBuildDurationByStageBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "opsera-deployment-frequency-stats":
         return (
-          <OpseraPipelineDeploymentFrequencyStats
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <OpseraPipelineDeploymentFrequencyStats
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "opsera-mean-time-to-restore":
         return (
-          <OpseraMeanTimeToRestoreBarChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <OpseraMeanTimeToRestoreBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "opsera-nexus-pipeline-step-info":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <OpseraNexusPipelineStepInfo
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
 
       // Jenkins KPIs
       case "jenkins-builds-by-user":
         return (
-          <JenkinsBuildsByUserBarChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <JenkinsBuildsByUserBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "jenkins-build-duration":
         return (
-          <JenkinsBuildDurationBarChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <JenkinsBuildDurationBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "jenkins-status-by-job-name":
         return (
-          <JenkinsStatusByJobNameBarChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <JenkinsStatusByJobNameBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "jenkins-deployment-frequency":
-        return <JenkinsDeploymentFrequencyLineChart persona={"developer"} date={getDateObject(kpiConfig)} />;
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <JenkinsDeploymentFrequencyLineChart
+              persona={"developer"}
+              date={getDateObject(kpiConfig)}
+            />
+          </Col>
+        );
       case "jenkins-change-failure-rate":
-        return <JenkinsChangeFailureRate persona={"developer"} date={getDateObject(kpiConfig)} />;
+        return (
+          <Col md={12} className="p-2">
+            <JenkinsChangeFailureRate 
+              persona={"developer"} 
+              date={getDateObject(kpiConfig)}
+            />
+          </Col>
+        );
       case "jenkins-deployments-counts":
-        return <JenkinsDeploymentsCountsBarChart persona={"developer"} date={getDateObject(kpiConfig)} />;
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <JenkinsDeploymentsCountsBarChart
+              persona={"developer"}
+              date={getDateObject(kpiConfig)}
+            />
+          </Col>
+        );
       case "jenkins-recent-build-status":
         return (
-          <JenkinsRecentPipelineStatus
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <JenkinsRecentPipelineStatus
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
 
       // Jira KPIs
       case "jira-tickets-assigned-by-user":
         return (
-          <JiraTicketsAssignedByUserBarChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <JiraTicketsAssignedByUserBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "jira-issues-by-priority":
         return (
-          <JiraIssuesByPriorityBarChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <JiraIssuesByPriorityBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "jira-health-by-sprint":
         return (
-          <JiraHealthBySprintBarChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <JiraHealthBySprintBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "jira-velocity-report":
         return (
-          <JiraVelocityReportBarChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <JiraVelocityReportBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "jira-issues-created-vs-resolved":
         return (
-          <JiraIssuesCreatedVsResolvedLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <JiraIssuesCreatedVsResolvedLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "jira-sprint-burndown":
         return (
-          <JiraSprintBurndownLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <JiraSprintBurndownLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "jira-issues-assigned-to-me":
         return (
-          <JiraIssuesAssignedToMe
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <JiraIssuesAssignedToMe
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "jira-lead-time":
         return (
-          <JiraLeadTimeLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <JiraLeadTimeLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
 
       // Anchore KPIs
       case "anchore-vulnerability-severity-by-package":
         return (
-          <AnchoreVulnerabilitySeverityByPackageBarChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <AnchoreVulnerabilitySeverityByPackageBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "anchore-vulnerabilities-by-date":
         return (
-          <AnchoreVulnerabilitiesByDateLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <AnchoreVulnerabilitiesByDateLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
 
       // Sonar KPIs
       case "sonar-code-smells":
         return (
-          <SonarCodeSmellsLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <SonarCodeSmellsLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "sonar-maintainability-rating":
         return (
-          <SonarMaintainabilityRatingLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <SonarMaintainabilityRatingLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "sonar-bugs":
         return (
-          <SonarBugsCountLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <SonarBugsCountLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "sonar-new-bugs":
         return (
-          <SonarNewBugsCountLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <SonarNewBugsCountLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "sonar-reliability-rating":
         return (
-          <SonarReliabilityRatingLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <SonarReliabilityRatingLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "sonar-reliability-remediation-effort":
         return (
-          <SonarReliabilityRemediationEffortLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <SonarReliabilityRemediationEffortLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "sonar-vulnerabilities-by-project":
         return (
-          <SonarMetricByProjectLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-            sonarMeasure={"vulnerabilities"}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <SonarMetricByProjectLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+              sonarMeasure={"vulnerabilities"}
+            />
+          </Col>
         );
       case "sonar-new-vulnerabilities-by-project":
         return (
-          <SonarMetricByProjectLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-            sonarMeasure={"new_vulnerabilities"}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <SonarMetricByProjectLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+              sonarMeasure={"new_vulnerabilities"}
+            />
+          </Col>
         );
       case "sonar-new-technical-debt-by-project":
         return (
-          <SonarMetricByProjectLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-            sonarMeasure={"new_technical_debt"}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <SonarMetricByProjectLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+              sonarMeasure={"new_technical_debt"}
+            />
+          </Col>
         );
       case "sonar-code-smells-by-project":
         return (
-          <SonarMetricByProjectLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-            sonarMeasure={"code_smells"}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <SonarMetricByProjectLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+              sonarMeasure={"code_smells"}
+            />
+          </Col>
         );
       case "sonar-code-coverage":
         return (
-          <SonarCodeCoverageBarChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <SonarCodeCoverageBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "sonar-lines-to-cover":
         return (
-          <SonarLinesToCoverBarChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <SonarLinesToCoverBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "sonar-ratings":
         return (
-          <SonarRatings
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <SonarRatings
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
 
       // Jmeter KPIs
       case "jmeter-hits":
         return (
-          <JmeterHitsLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <JmeterHitsLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "jmeter-errors":
         return (
-          <JmeterErrorsLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <JmeterErrorsLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "jmeter-throughput":
         return (
-          <JmeterThroughputLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <JmeterThroughputLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "jmeter-response-time":
         return (
-          <JmeterResponseTimeLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <JmeterResponseTimeLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "jmeter-connect-time":
         return (
-          <JmeterConnectTimeTable
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <JmeterConnectTimeTable
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
 
       // Gitlab KPIs
       case "gitlab-most-active-contributors":
         return (
-          <GitlabMostActiveContributors
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <GitlabMostActiveContributors
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "gitlab-merge-request-by-maximum-time":
         return (
-          <GitlabMergeRequestByMaximumTimeChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <GitlabMergeRequestByMaximumTimeChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "gitlab-merge-requests-by-user":
         return (
-          <GitlabMergeRequestsByUserChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <GitlabMergeRequestsByUserChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "gitlab-time-taken-to-complete-merge-request-review":
         return (
-          <GitlabTimeTakenToCompleteMergeRequestReview
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <GitlabTimeTakenToCompleteMergeRequestReview
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "gitlab-commits-by-author":
         return (
-          <GitlabCommitsByAuthor
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <GitlabCommitsByAuthor
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "gitlab-merge-requests-pushes-and-comments":
         return (
-          <GitlabMergeRequestsPushesAndComments
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <GitlabMergeRequestsPushesAndComments
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "gitlab-total-commits-by-project":
         return (
-          <GitlabTotalCommitsByProjectChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <GitlabTotalCommitsByProjectChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "gitlab-recent-merge-requests":
         return (
-          <GitlabRecentMergeRequests
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <GitlabRecentMergeRequests
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "gitlab-pending-merge-requests":
         return (
-          <GitlabPendingMergeRequests
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <GitlabPendingMergeRequests
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
 
       // Cypress KPIs
       case "cypress-test-results":
         return (
-          <CypressTestResultsTable
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <CypressTestResultsTable
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
 
       // Junit KPIs
       case "junit-test-results":
         return (
-          <JunitTestResultsTable
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <JunitTestResultsTable
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
 
       // Xunit KPIs
       case "xunit-test-results":
         return (
-          <XunitTestResultsTable
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <XunitTestResultsTable
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
 
       // Metricbeat KPIs
       case "metricbeat-kubernetes-cpu-usage":
-        return <MetricbeatCpuUsageByTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)} />;
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <MetricbeatCpuUsageByTimeLineChart
+              persona={"developer"}
+              date={getDateObject(kpiConfig)}
+            />
+          </Col>
+        );
       case "metricbeat-kubernetes-memory-usage":
-        return <MetricbeatMemoryUsageByTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)} />;
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <MetricbeatMemoryUsageByTimeLineChart
+              persona={"developer"}
+              date={getDateObject(kpiConfig)}
+            />
+          </Col>
+        );
       case "metricbeat-kubernetes-in-network-usage":
-        return <MetricbeatInNetworkTrafficByTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)} />;
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <MetricbeatInNetworkTrafficByTimeLineChart
+              persona={"developer"}
+              date={getDateObject(kpiConfig)}
+            />
+          </Col>
+        );
       case "metricbeat-kubernetes-out-network-usage":
-        return <MetricbeatOutNetworkTrafficByTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)} />;
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <MetricbeatOutNetworkTrafficByTimeLineChart
+              persona={"developer"}
+              date={getDateObject(kpiConfig)}
+            />
+          </Col>
+        );
 
       // Github KPIs
       case "github-merge-requests-by-user":
         return (
-          <GithubMergeRequestsByUser
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <GithubMergeRequestsByUser
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "github-merge-requests-pushes-and-comments":
         return (
-          <GithubMergeRequestsPushesAndComments
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <GithubMergeRequestsPushesAndComments
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "github-total-commits-by-project":
         return (
-          <GithubTotalCommitsByProjectChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <GithubTotalCommitsByProjectChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "github-most-active-contributors":
         return (
-          <GithubMostActiveContributors
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <GithubMostActiveContributors
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "github-recent-merge-requests":
         return (
-          <GithubRecentMergeRequests
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <GithubRecentMergeRequests
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "github-time-taken-to-complete-merge-request-review":
         return (
-          <GithubTimeTakenToCompleteMergeRequestReview
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <GithubTimeTakenToCompleteMergeRequestReview
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "github-merge-request-by-maximum-time":
         return (
-          <GithubMergeRequestByMaximumTimeChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <GithubMergeRequestByMaximumTimeChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "github-commits-by-author":
         return (
-          <GithubCommitsByAuthor
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <GithubCommitsByAuthor
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "github-pending-merge-requests":
         return (
-          <GithubPendingMergeRequests
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <GithubPendingMergeRequests
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
 
       // Bitbucket KPIs
       case "bitbucket-most-active-contributors":
         return (
-          <BitbucketMostActiveContributors
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <BitbucketMostActiveContributors
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "bitbucket-merge-request-by-maximum-time":
         return (
-          <BitbucketMergeRequestByMaximumTimeChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <BitbucketMergeRequestByMaximumTimeChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "bitbucket-merge-requests-by-user":
         return (
-          <BitbucketMergeRequestsByUserChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <BitbucketMergeRequestsByUserChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "bitbucket-time-taken-to-complete-merge-request-review":
         return (
-          <BitbucketTimeTakenToCompleteMergeRequestReview
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <BitbucketTimeTakenToCompleteMergeRequestReview
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "bitbucket-commits-by-author":
         return (
-          <BitbucketCommitsByAuthor
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <BitbucketCommitsByAuthor
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "bitbucket-merge-requests-pushes-and-comments":
         return (
-          <BitbucketMergeRequestsPushesAndComments
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <BitbucketMergeRequestsPushesAndComments
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "bitbucket-total-commits-by-project":
         return (
-          <BitbucketTotalCommitsByProjectChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <BitbucketTotalCommitsByProjectChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "bitbucket-recent-merge-requests":
         return (
-          <BitbucketRecentMergeRequests
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <BitbucketRecentMergeRequests
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "bitbucket-pending-merge-requests":
         return (
-          <BitbucketPendingMergeRequests
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
+          <Col xl={6} md={12} className="p-2">
+            <BitbucketPendingMergeRequests
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "bitbucket-rejected-merge-requests":
+        return (
+          <Col md={12} className="p-2">
+            <BitbucketRejectedMergeRequestsTable
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       default:
         return null;

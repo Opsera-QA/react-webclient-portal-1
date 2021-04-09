@@ -7,7 +7,8 @@ import {AuthContext} from "contexts/AuthContext";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import axios from "axios";
-import { defaultConfig, getColorById, assignBooleanColors } from '../../../charts-views';
+import { defaultConfig, getColorById, assignBooleanColors,
+         adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 
 function OpseraPipelineByStatusBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
@@ -74,8 +75,9 @@ function OpseraPipelineByStatusBarChart({ kpiConfiguration, setKpiConfiguration,
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Pipeline Name", "Number of Pipelines", 
-                      true, true, "cutoffString", "wholeNumbers")}
+                      true, false, "cutoffString", "wholeNumbers")}
           {...config(getColorById)}
+          {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}
           tooltip={({indexValue, color, value, id}) => <ChartTooltip 
                                         titles = {["Pipeline", `${id} Builds`]}

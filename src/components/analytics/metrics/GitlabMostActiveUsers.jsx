@@ -49,13 +49,13 @@ function GitlabMostActiveUsers({ date }) {
         Header: "Author Name",
         accessor: "AuthorName",
         // class: "cell-center no-wrap-inline",
-        Cell: (props) => {
+        Cell: function cellStyling (row) {
           return (
             <div style={{ display: "flex", flexWrap: "nowrap" }}>
               <div>
                 <FontAwesomeIcon icon={faStar} className="cell-icon green" />
               </div>
-              <div className="ml-1">{props.value}</div>
+              <div className="ml-1">{row.value}</div>
             </div>
           );
         },
@@ -146,6 +146,7 @@ function GitlabMostActiveUsers({ date }) {
             rowStyling={""}
             noDataMessage={noDataMessage}
             initialState={initialState}
+            noFooter={true}
           ></CustomTable>
         </>
       )}

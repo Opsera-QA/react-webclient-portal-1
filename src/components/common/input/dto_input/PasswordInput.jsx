@@ -52,7 +52,7 @@ function PasswordInput({fieldName, dataObject, setDataObject, disabled}) {
   };
 
   return (
-    <InputContainer className="form-group">
+    <InputContainer className="form-group my-2">
       <InputLabel field={field}/>
       <input
         type={"password"}

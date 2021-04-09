@@ -6,7 +6,6 @@
 import PropTypes from "prop-types";
 import { ResponsiveBar } from "@nivo/bar";
 import ErrorDialog from "../../common/status_notifications/error";
-import config from "./DeploymentsStackedBarChartConfigs";
 import "./charts.css";
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -14,6 +13,9 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
+import { defaultConfig, assignBooleanColors, adjustBarWidth,
+         capitalizeLegend } from "../../insights/charts/charts-views";
+import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function DeploymentsStackedBarChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -41,6 +43,8 @@ function DeploymentsStackedBarChart({ persona, date }) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].successfulDeploymentFrequency : [];
+      assignBooleanColors(dataObject?.data);
+      capitalizeLegend(dataObject?.data, ["success", "failed"]);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -98,48 +102,22 @@ function DeploymentsStackedBarChart({ persona, date }) {
             </div>
           ) : (
             <ResponsiveBar
+              {...defaultConfig("Deployment Count", "Date", 
+                        false, true, "values", "yearMonthDate")}
+              {...adjustBarWidth(data?.data)}
               data={data ? data.data : []}
               onClick={() => setShowModal(true)}
-              keys={config.keys}
+              keys={["Success", "Failed"]}
               indexBy="buildTime"
-              margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
               xScale={{ type: "point" }}
               yScale={{ type: "linear", min: "auto", max: "auto", stacked: false, reverse: false }}
-              axisTop={null}
-              axisRight={null}
-              enableLabel={false}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              pointSize={10}
-              pointBorderWidth={8}
-              pointLabel="y"
-              pointLabelYOffset={-12}
-              useMesh={true}
-              lineWidth={3.5}
-              legends={config.legends}
-              padding={0.3}
-              // layout={"horizontal"}
               colors={({ id, data }) => data[`${id}_color`]}
-              borderColor={{ theme: "background" }}
               colorBy="id"
-              defs={config.defs}
-              fill={config.fill}
-              tooltip={({ indexValue, color, value, id, data }) => (
-                <div>
-                  <strong style={{ color }}>Build Time: </strong> {indexValue}
-                  <br></br>
-                  <strong style={{ color }}> {id} Builds: </strong> {value}
-                  <br></br>
-                  <strong> Failure Rate: </strong> {data.failureRate.toFixed(2) + "%"}
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
+              tooltip={({ indexValue, color, value, id, data }) => <ChartTooltip 
+                              titles = {["Build Time", `${id} Builds`, "Failure Rate"]}
+                              values = {[indexValue, value, data?.failureRate?.toFixed(2) + "%"]}
+                              style = {false}
+                              color = {color} />}
             />
           )}
         </div>

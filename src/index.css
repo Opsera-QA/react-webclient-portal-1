@@ -10,7 +10,7 @@
 }
 
 .red {
-    color: red;
+    color: #E57373;
 }
 
 .danger-red {
@@ -22,7 +22,7 @@
 }
 
 .green {
-    color: green;
+    color: #00897b;
 }
 
 /*Official Opsera Color Pallette*/
@@ -94,12 +94,12 @@ body {
     min-height: 100vh;
 }
 
-a {
+a, .link-text {
     color: #383060; /*#1578dc;*/
     text-decoration: none;
 }
 
-a:hover, .active {
+a:hover, .active, .link-text:hover {
     color: #7F74B9; /*#1578dc;*/
     text-decoration: none;
 }

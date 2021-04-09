@@ -7,7 +7,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, greyHues } from '../../../charts-views';
+import { defaultConfig, gradationalColors } from '../../../charts-views';
 
 function BitbucketCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -76,9 +76,8 @@ function BitbucketCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashb
       <div className="new-chart mb-3" style={{ height: "300px" }}>
         <ResponsiveHeatMap
           data={metrics}
-          {...defaultConfig("Date", "", 
-                      true, true, "yearMonthDate", "cutoffString")}
-          {...config(users, [...greyHues].reverse())}
+          {...defaultConfig("Date", "", true, true, "yearMonthDate", "cutoffString")}
+          {...config(users, gradationalColors)}
           onClick={() => setShowModal(true)}
         />
       </div>

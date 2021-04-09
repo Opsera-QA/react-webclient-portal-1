@@ -14,38 +14,29 @@ import Modal from "components/common/modal/modal";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import ArgoClusterSelectInput from "./inputs/ArgoClusterSelectInput";
+import ArgoProjectsSelectInput from "./inputs/ArgoProjectsSelectInput";
 
 function ArgoApplicationEditorPanel({ argoApplicationData, toolData, appID, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [argoApplicationDataDto, setArgoApplicationDataDto] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [clusters, setClusters] = useState([]);
-  const [projects, setProjects] = useState([]);
-  const [loadingArgoData, setLoadingArgoData] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   
   useEffect(() => {
-    loadData();
-  }, []);
+    if(argoApplicationData) {
+      loadData();
+    }
+  }, [argoApplicationData]);
 
   const loadData = async () => {
     try {
       setIsLoading(true);
-      setArgoApplicationDataDto(argoApplicationData);
-      setLoadingArgoData(true);
-      let clusters = await argoActions.getArgoClusters(toolData._id, getAccessToken);
-      let projects = await argoActions.getArgoProjects(toolData._id, getAccessToken);
-      if (clusters.status === 200 && clusters.data && clusters.data.data && clusters.data.data.length > 0) {
-        setClusters(clusters.data.data);
-      }
-      if (projects.status === 200 && projects.data && projects.data.data && projects.data.data.length > 0) {
-        setProjects(projects.data.data);
-      }
+      setArgoApplicationDataDto(argoApplicationData);     
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     } finally {
-      setLoadingArgoData(false);
       setIsLoading(false);
     }
   };
@@ -87,28 +78,20 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, appID, hand
             />
           </Col>
           <Col lg={12}>
-            <DtoSelectInput
+            <ArgoProjectsSelectInput
               setDataFunction={handleProjectChange}
+              argoToolId={toolData._id}
               setDataObject={setArgoApplicationDataDto}
-              textField={"name"}
-              valueField={"name"}
-              busy={!setLoadingArgoData}
               dataObject={argoApplicationDataDto}
-              filter={"contains"}
-              selectOptions={projects ? projects : []}
               fieldName={"projectName"}
             />
           </Col>
           <Col lg={12}>
-            <DtoSelectInput
-              setDataObject={setArgoApplicationDataDto}
-              textField={"server"}
-              valueField={"server"}
-              busy={!setLoadingArgoData}
-              dataObject={argoApplicationDataDto}
-              filter={"contains"}
-              selectOptions={clusters ? clusters : []}
+            <ArgoClusterSelectInput
               fieldName={"cluster"}
+              argoToolId={toolData._id}
+              dataObject={argoApplicationDataDto}
+              setDataObject={setArgoApplicationDataDto}
             />
           </Col>
           <Col lg={12}>
@@ -151,7 +134,7 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, appID, hand
           )}
           <div className="ml-auto mt-3 px-3">
             <SaveButtonBase
-              updateRecord={updateApplication}
+              updateRecord={appID ? updateApplication : createApplication}
               setRecordDto={setArgoApplicationDataDto}
               setData={setArgoApplicationDataDto}
               createRecord={createApplication}

@@ -6,10 +6,11 @@ import { ResponsivePie } from "@nivo/pie";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-import config from "./GitlabTotalCommitsChartConfig";
 import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
+import { defaultConfig, getColorByData, assignStandardColors,
+         shortenPieChartLegend } from "../../insights/charts/charts-views";
 
 function GitlabTotalCommitsChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -53,6 +54,8 @@ function GitlabTotalCommitsChart({ persona, date }) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].gitlabTotalCommitsChart : [];
+      assignStandardColors(dataObject?.data);
+      shortenPieChartLegend(dataObject?.data);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -87,38 +90,15 @@ function GitlabTotalCommitsChart({ persona, date }) {
           </div>
         ) : (
           <ResponsivePie
+            {...defaultConfig()}
             data={data ? data.data : []}
-            margin={{ top: 40, right: 80, bottom: 80, left: 60 }}
             onClick={() => setShowModal(true)}
-            innerRadius={0.5}
-            padAngle={0.7}
-            cornerRadius={3}
-            colors={{ scheme: "nivo" }}
-            borderWidth={1}
-            borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
-            radialLabelsSkipAngle={10}
-            radialLabelsTextXOffset={6}
-            radialLabelsTextColor="#333333"
-            radialLabelsLinkOffset={0}
-            radialLabelsLinkDiagonalLength={16}
-            radialLabelsLinkHorizontalLength={24}
-            radialLabelsLinkStrokeWidth={1}
-            radialLabelsLinkColor={{ from: "color" }}
+            keys={["commits"]}
             slicesLabelsSkipAngle={10}
-            slicesLabelsTextColor="#333333"
-            animate={true}
-            motionStiffness={90}
-            motionDamping={15}
+            sliceLabelsTextColor="#ffffff"
             sortByValue={true}
-            // innerRadius={0.6}
-            // padAngle={0.5}
-            // cornerRadius={5}
-            // radialLabelsLinkColor="inherit"
-            // radialLabelsLinkStrokeWidth={3}
-            // radialLabelsTextColor="inherit:darker(1.2)"
-            defs={config.defs}
-            fill={config.fill}
-            legends={config.legends}
+            colors={getColorByData}
+            innerRadius={0.5}
           />
         )}
       </div>

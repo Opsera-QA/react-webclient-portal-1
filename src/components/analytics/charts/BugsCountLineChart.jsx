@@ -4,9 +4,9 @@
 // Persona - All
 
 import PropTypes from "prop-types";
+import { format } from "date-fns";
 import { ResponsiveLine } from "@nivo/line";
 import ErrorDialog from "../../common/status_notifications/error";
-import config from "./BugsCountLineChartConfigs";
 import "./charts.css";
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
@@ -14,6 +14,8 @@ import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
+import { defaultConfig, getColor, assignStandardColors } from "../../insights/charts/charts-views";
+import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function BugsCountLineChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -60,6 +62,7 @@ function BugsCountLineChart({ persona, date }) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].bugs : [];
+      assignStandardColors(dataObject?.data, true);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -95,42 +98,24 @@ function BugsCountLineChart({ persona, date }) {
             </div>
           ) : (
             <ResponsiveLine
+              {...defaultConfig("Number of Bugs", "Date", 
+                      false, true, "wholeNumbers", "monthDate2")}
               data={data ? data.data : []}
-              onClick={() => setShowModal(true)}
-              margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
               xScale={{ type: "point" }}
-              yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              pointSize={10}
-              pointBorderWidth={8}
-              pointLabel="y"
-              pointLabelYOffset={-12}
-              useMesh={true}
-              lineWidth={3.5}
-              colors={{ scheme: "category10" }}
-              legends={config.legends}
-              tooltip={({ point, color }) => (
-                <div style={{
-                  background: "white",
-                  padding: "9px 12px",
-                  border: "1px solid #ccc",
-                }}>
-                  <strong style={{ color }}>
-                  Timestamp: </strong> {point.data.x}<br></br>
-                  <strong style={{ color }}>  Bugs: </strong> {point.data.y}<br></br>
-                  <strong style={{ color }}>  Project Key: </strong> {point.data.key}
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
+              yScale={{ 
+                type: "linear", 
+                min: "auto", 
+                max: "auto", 
+                stacked: true, 
+                reverse: false 
               }}
+              colors={getColor}
+              onClick={() => setShowModal(true)}
+              tooltip={({ point, color }) => <ChartTooltip 
+                titles = {["Timestamp", "Bugs", "Project Key"]}
+                values = {[format(new Date(point.data.x), "yyyy-MM-dd', 'hh:mm a"), 
+                           point.data.y, point.data.key]}
+                color = {color} />}
             />
           )}
         </div>

@@ -7,6 +7,9 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
+         spaceOutMergeRequestTimeTakenLegend } from '../../../charts-views';
+import ChartTooltip from '../../../ChartTooltip';
 function GithubTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -43,6 +46,8 @@ function GithubTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiC
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "githubTimeTakenToCompleteMergeRequestReviewChart", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.githubTimeTakenToCompleteMergeRequestReviewChart?.data : [];
+      assignStandardColors(dataObject, true);
+      spaceOutMergeRequestTimeTakenLegend(dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -69,46 +74,17 @@ function GithubTimeTakenToCompleteMergeRequestReview({ kpiConfiguration, setKpiC
   return (
     <div className="new-chart mb-3" style={{height: "300px"}}>
           <ResponsiveBar
-            data={metrics}
-            onClick={() => setShowModal(true)}
-            keys={config.keys}
-            indexBy="AssigneeName"
-            margin={config.margin}
-            padding={0.3}
-            layout={"horizontal"}
-            colors={{ scheme: "dark2" }}
-            borderColor={{ theme: "background" }}
-            colorBy="id"
-            defs={config.defs}
-            fill={config.fill}
-            axisTop={null}
-            axisRight={null}
-            axisBottom={config.axisBottom}
-            axisLeft={config.axisLeft}
-            labelSkipWidth={12}
-            labelSkipHeight={12}
-            enableLabel={false}
-            borderRadius={5}
-            labelTextColor="inherit:darker(2)"
-            animate={true}
-            motionStiffness={90}
-            borderWidth={2}
-            motionDamping={15}
-            legends={config.legends}
-            tooltip={({ indexValue, color, value, id }) => (
-              <div>
-                <strong style={{ color }}>Reviewer: </strong> {indexValue}
-                <br></br>
-                <strong style={{ color }}> {"Merge Request Time Taken"}: </strong> {value}
-              </div>
-            )}
-            theme={{
-              tooltip: {
-                container: {
-                  fontSize: "16px",
-                },
-              },
-            }}
+                      data={metrics}
+          {...defaultConfig("Reviewer", "Time (Hours)", 
+                      true, false, "subString", "values")}
+          {...config(getColorByData)}
+          {...adjustBarWidth(metrics, false)}
+          onClick={() => setShowModal(true)}
+          tooltip={({ indexValue, color, value }) => <ChartTooltip 
+                                        titles = {["Reviewer", "Merge Request Time Taken"]}
+                                        values = {[indexValue, value]}
+                                        style = {false}
+                                        color = {color} />}
           />
       </div>
   );

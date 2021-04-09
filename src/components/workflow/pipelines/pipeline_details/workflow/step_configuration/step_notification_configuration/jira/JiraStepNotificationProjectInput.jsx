@@ -13,7 +13,6 @@ function JiraStepNotificationProjectInput({jiraToolId, visible, dataObject, setD
 
   useEffect(() => {
     setProjects([]);
-    console.log("tool Id: " + JSON.stringify(jiraToolId));
     if (jiraToolId && jiraToolId !== "") {
       loadData();
     }

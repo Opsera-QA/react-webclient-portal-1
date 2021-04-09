@@ -4,7 +4,7 @@ import { AuthContext } from "../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../api/apiService";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import ErrorDialog from "../../../common/status_notifications/error";
-import SummaryCountBlocksView from "../summaryCountBlocksView";
+import SummaryCountBlocksView from "../SummaryCountBlocksView";
 import CpuUsageByTimeLineChart from "../../charts/CpuUsageByTimeLineChart";
 import MemoryUsageByTimeLineChart from "../../charts/MemoryUsageByTimeLineChart";
 import InNetworkTrafficByTimeLineChart from "../../charts/InNetworkTrafficByTimeLineChart";

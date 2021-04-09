@@ -21,8 +21,9 @@ import TabPanelContainer from "components/common/panels/general/TabPanelContaine
 import CustomTab from "components/common/tabs/CustomTab";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import PipelineFilterSelectInput from "components/logs/PipelineFilterSelectInput";
-
-import projectTagsMetadata from "components/settings/data_tagging/projects/tagging-project-metadata";
+import ExportLogSearchButton from "components/common/buttons/export/log_search/ExportLogSearchButton";
+import {getAllResultsForExport} from "components/common/buttons/export/exportHelpers";
+import projectTagsMetadata from "components/settings/data_mapping/projects/tagging-project-metadata";
 import Model from "core/data_model/model";
 import JenkinsJobSelectInput from "components/common/list_of_values_input/settings/data_tagging/projects/JenkinsJobSelectInput";
 import ProjectMappingToolSelectInput
@@ -45,6 +46,8 @@ function LogSearch({tools, sideBySide}) {
   const [currentLogTab, setCurrentLogTab] = useState(0);
   const [jenkinsProjectDto, setJenkinsProjectDto] = useState(new Model({ ...projectTagsMetadata.newObjectFields }, projectTagsMetadata, true));
   // const [jenkinsJobs, setJenkinsJobs] = useState([]);
+  const [exportData, setExportData] = useState("");
+  const [exportDisabled, setExportDisabled] = useState(true);
 
   const [date, setDate] = useState([
     {
@@ -63,6 +66,7 @@ function LogSearch({tools, sideBySide}) {
   const node = useRef();
 
   const searchLogs = async (newTab) => {
+    setExportDisabled(true);
     setCurrentPage(1);
     submitClicked(true);
     setSubmittedSearchTerm(searchTerm);
@@ -82,6 +86,7 @@ function LogSearch({tools, sideBySide}) {
     }
 
     await getSearchResults(startDate, endDate, newTab);
+    await getAllResultsForExport(startDate, endDate, setIsLoading, getAccessToken(), searchTerm, filterType, getFormattedCustomFilters(), currentPage, setExportData, setExportDisabled);
   };
 
   const cancelSearchClicked = () => {
@@ -224,6 +229,7 @@ function LogSearch({tools, sideBySide}) {
           searchResults =
             result.data.hasOwnProperty("hits") && result.data.hits.hasOwnProperty("hits") ? result.data.hits : [];
         }
+
         newLogTabData[newLogTab] = searchResults;
         setLogTabData(newLogTabData);
         setIsLoading(false);
@@ -476,6 +482,7 @@ function LogSearch({tools, sideBySide}) {
           <Button variant="outline-secondary" className="ml-1" type="button" onClick={cancelSearchClicked}>
             Clear
           </Button>
+          <ExportLogSearchButton exportDisabled={exportDisabled} isLoading={isLoading} variant="primary" className="ml-1" searchResults={exportData}/>
           {getDateRangeButton()}
         </Col>
       </Row>

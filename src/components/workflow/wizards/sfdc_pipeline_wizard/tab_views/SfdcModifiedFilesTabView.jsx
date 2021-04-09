@@ -9,7 +9,6 @@ import {
 import sfdcTableConstants from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-table-constants";
 import FilterContainer from "components/common/table/FilterContainer";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import InlineBooleanFilter from "components/common/filters/boolean/InlineBooleanFilter";
 import SfdcComponentFilter from "components/common/filters/sfdc/sfdc_component/SfdcComponentFilter";
 import CSVFileUploadComponent from '../csv_file_upload/CSVFileUploadComponent';
@@ -46,7 +45,7 @@ const SfdcModifiedFilesTabView = ({
       getTableTextColumn(fields.find(field => { return field.id === "committedFileId";})),
       getTableTextColumn(fields.find(field => { return field.id === "componentType";})),
       // getTableTextColumn(fields.find(field => { return field.id === "committedFile"})),
-      {...getTableTextColumn(fields.find(field => { return field.id === "committedFile";})), class: "wrap-cell-content"},
+      {...getTableTextColumn(fields.find(field => { return field.id === "committedFile";})), class: "force-text-wrap"},
       getTableDateTimeColumn(fields.find(field => { return field.id === "committedTime";})),
       getTableTextColumn(fields.find(field => { return field.id === "committedBy";})),
       getCheckBoxColumn(handleComponentCheck)  

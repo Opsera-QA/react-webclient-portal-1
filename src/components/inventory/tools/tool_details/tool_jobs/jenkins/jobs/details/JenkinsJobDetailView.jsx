@@ -18,7 +18,6 @@ function JenkinsJobDetailView() {
   } else {
     return (
       <>
-        <BreadcrumbTrail destination="ldapUserDetailView"/>
         {jenkinsJobData &&
         <div className="content-container content-card-1 max-content-width ml-2">
           <div className="pl-2 content-block-header title-text-header-1">Jenkins Job Details

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {Col, Pagination, Row} from "react-bootstrap";
 import {getResultSummary} from "./pagination-helpers";
 
-function DtoBottomPagination({ paginationDto, setPaginationDto, paginationStyle, loadData, isLoading }) {
+function DtoBottomPagination({ paginationDto, setPaginationDto, paginationStyle, loadData, isLoading, scrollOnLoad }) {
   const setPage = (page) => {
     if (page === paginationDto.getData("currentPage")) {
       return;
@@ -12,7 +12,10 @@ function DtoBottomPagination({ paginationDto, setPaginationDto, paginationStyle,
     paginationDto.setData("currentPage", page);
     setPaginationDto({...paginationDto});
     loadData();
-    window.scrollTo(0, 50);
+
+    if (scrollOnLoad !== false) {
+      window.scrollTo(0, 50);
+    }
   };
 
   const getTotalPages = () => {
@@ -90,9 +93,12 @@ DtoBottomPagination.propTypes = {
   setPaginationDto: PropTypes.func,
   loadData: PropTypes.func,
   paginationStyle: PropTypes.string,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  scrollOnLoad: PropTypes.bool
 };
 
-
+DtoBottomPagination.defaultProps = {
+  scrollOnLoad: true
+};
 
 export default DtoBottomPagination;

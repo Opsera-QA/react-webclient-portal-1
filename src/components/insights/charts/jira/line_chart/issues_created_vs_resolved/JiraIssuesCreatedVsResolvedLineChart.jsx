@@ -8,7 +8,8 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-
+import { defaultConfig, getColor, assignIssueColors } from "../../../charts-views";
+import ChartTooltip from "../../../ChartTooltip";
 function JiraIssuesCreatedVsResolvedLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -45,6 +46,7 @@ function JiraIssuesCreatedVsResolvedLineChart({ kpiConfiguration, setKpiConfigur
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "jiraIssuesCreatedAndResolved", kpiConfiguration, dashboardTags);
       const dataObject = response?.data && response?.data?.data[0]?.jiraIssuesCreatedAndResolved.status === 200 ? response?.data?.data[0]?.jiraIssuesCreatedAndResolved?.data : [];
+      assignIssueColors(dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -72,49 +74,13 @@ function JiraIssuesCreatedVsResolvedLineChart({ kpiConfiguration, setKpiConfigur
     <div className="new-chart mb-3" style={{height: "300px"}}>
           <ResponsiveLine
             data={metrics}
+            {...defaultConfig("Number of Issues", "Date", 
+                      false, true, "wholeNumbers", "monthDate2")}
+            {...config(getColor)}
             onClick={() => setShowModal(true)}
-            margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
-            xScale={{
-              type: "time",
-              format: "%Y-%m-%d",
-            }}
-            xFormat="time:%Y-%m-%d"
-            yScale={{
-              type: "linear",
-              stacked: false,
-            }}
-            axisLeft={config.axisLeft}
-            axisBottom={config.axisBottom}
-            pointSize={10}
-            pointBorderWidth={8}
-            pointLabel="y"
-            pointLabelYOffset={-12}
-            useMesh={true}
-            lineWidth={3.5}
-            legends={config.legends}
-            colors={(d) => d.color}
-            // onClick={function(node){console.log(node.id);}}
-            tooltip={(node) => (
-              <div
-                style={{
-                  background: "white",
-                  padding: "9px 12px",
-                  border: "1px solid #ccc",
-                }}
-              >
-                <strong> Date: </strong> {node.point.data.xFormatted} <br></br>
-                <strong>
-                  {node.point.serieId}: {node.point.data.yFormatted}
-                </strong>
-              </div>
-            )}
-            theme={{
-              tooltip: {
-                container: {
-                  fontSize: "16px",
-                },
-              },
-            }}
+            tooltip={(node) => <ChartTooltip 
+                                  titles = {["Date", node.point.serieId]}
+                                  values = {[node.point.data.xFormatted, node.point.data.yFormatted]} />}
           />
       </div>
   );

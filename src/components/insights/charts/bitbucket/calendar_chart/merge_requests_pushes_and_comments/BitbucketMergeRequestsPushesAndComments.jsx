@@ -7,7 +7,7 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, greyHues } from '../../../charts-views';
+import { defaultConfig, gradationalColors } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 
 function BitbucketMergeRequestsPushesAndComments({
@@ -80,7 +80,7 @@ function BitbucketMergeRequestsPushesAndComments({
         <ResponsiveCalendar
           data={metrics}
           {...defaultConfig("", "", false, false, "", "", true)}
-          {...config([...greyHues].reverse(), new Date())}
+          {...config(gradationalColors, new Date())}
           onClick={() => setShowModal(true)}
           tooltip={({ day, value, color }) => <ChartTooltip 
                                         titles = {[day]}

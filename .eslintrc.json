@@ -44,12 +44,12 @@
     ],
     "no-unused-vars": "warn",
     "react/prop-types": "error",
-    "react/no-unescaped-entities": "warn",
-    "react/display-name": "warn",
-    "react/jsx-no-target-blank": "warn",
+    "react/no-unescaped-entities": "error",
+    "react/display-name": "error",
+    "react/jsx-no-target-blank": "error",
     "no-prototype-builtins": "warn",
     "no-useless-escape": "warn",
-    "no-empty-pattern": "warn",
+    "no-empty-pattern": "error",
     "no-fallthrough": "warn"
   }
 }

@@ -12,6 +12,8 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import { defaultConfig, getColor, assignStandardColors } from "../../../charts-views";
+import ChartTooltip from "../../../ChartTooltip";
 
 function JMeterErrorsLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -49,6 +51,7 @@ function JMeterErrorsLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "jmeterErrorsLineChart", kpiConfiguration, dashboardTags);
       const dataObject = response?.data && response?.data?.data[0]?.jmeterErrorsLineChart.status === 200 ? response?.data?.data[0]?.jmeterErrorsLineChart?.data : [];
+      assignStandardColors(dataObject, true);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -76,43 +79,14 @@ function JMeterErrorsLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
       <div className="new-chart mb-3" style={{height: "300px"}}>
             <ResponsiveLine
               data={metrics}
+              {...defaultConfig("Errors", "Build Number", 
+                  true, false, "wholeNumbers", "wholeNumbers")}
+              {...config(getColor)}
               onClick={() => setShowModal(true)}
-              margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
-              xScale={{ type: "point" }}
-              yScale={{ type: "linear", min: "auto", max: "auto", stacked: true, reverse: false }}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              pointSize={10}
-              pointBorderWidth={8}
-              pointLabel="y"
-              pointLabelYOffset={-12}
-              useMesh={true}
-              lineWidth={3.5}
-              colors={{ scheme: "category10" }}
-              legends={config.legends}
-              tooltip={({ point, color }) => (
-                <div
-                  style={{
-                    background: "white",
-                    padding: "9px 12px",
-                    border: "1px solid #ccc",
-                  }}
-                >
-                  <strong style={{ color }}>Build ID: </strong> {point.data.x}
-                  <br></br>
-                  <strong style={{ color }}> Errors: </strong> {point.data.y}
-                  <br></br>
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
+              tooltip={({ point, color }) => <ChartTooltip 
+                              titles = {["Build ID", "Errors"]}
+                              values = {[point.data.x, point.data.y]}
+                              color = {color} />}
             />
         </div>
     );

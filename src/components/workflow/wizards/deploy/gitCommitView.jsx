@@ -93,8 +93,8 @@ const GitCommitView = ({ pipelineId, templateId, autoRun, handleClose, setView }
             <div className="px-2 mt-3">
 
 
-              <h6>What's next you ask?</h6>
-              <div>As part of this demo, we want you to see how it is running real code, pushing it through our piplines.  As such, we want you to feel confident in that
+              <h6>What&apos;s next you ask?</h6>
+              <div>As part of this demo, we want you to see how it is running real code, pushing it through our pipelines.  As such, we want you to feel confident in that
               experience and so we would like you to put a custom text message below.  Put a message that we can then show you is included in your application once it has
               been built.  We just thought this was a nice touch.</div>
 

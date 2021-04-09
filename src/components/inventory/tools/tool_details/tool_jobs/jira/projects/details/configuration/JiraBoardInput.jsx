@@ -1,29 +1,45 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import pipelineStepNotificationActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_notification_configuration/pipeline-step-notification-actions";
+import axios from "axios";
 
 // TODO: Make base
-function JiraBoardInput({visible, jiraToolId, dataObject, setDataObject, disabled}) {
+function JiraBoardInput({visible, jiraToolId, jiraProjectKey, dataObject, setDataObject, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [boards, setBoards] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    setBoards([]);
-    if (jiraToolId !== "") {
-      loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
     }
-  }, [jiraToolId]);
 
-  const loadData = async () => {
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    setBoards([]);
+    if (jiraToolId != null && jiraToolId !== "" && jiraProjectKey != null && jiraProjectKey !== "") {
+      loadData(source);
+    }
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [jiraToolId, jiraProjectKey]);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadProjects();
+      await loadProjects(cancelSource);
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -33,8 +49,8 @@ function JiraBoardInput({visible, jiraToolId, dataObject, setDataObject, disable
     }
   };
 
-  const loadProjects = async () => {
-    const response = await pipelineStepNotificationActions.getJiraBoardsWithId(jiraToolId, getAccessToken);
+  const loadProjects = async (cancelSource = cancelTokenSource) => {
+    const response = await pipelineStepNotificationActions.getJiraBoardsWithIdV2(getAccessToken, cancelSource, jiraToolId, jiraProjectKey);
 
     if (Array.isArray(response?.data?.message)) {
       setBoards(response.data.message);
@@ -55,11 +71,11 @@ function JiraBoardInput({visible, jiraToolId, dataObject, setDataObject, disable
     }
 
     if (jiraToolId === "") {
-      return "A Jira Tool must be selected before selecting Jira Board";
+      return "A Jira Tool and Project must be selected before selecting Jira Board";
     }
 
     if (!isLoading && jiraToolId !== "" && boards.length === 0) {
-      return "No Jira Boards found for selected Jira tool.";
+      return "No Jira Boards found for selected Jira project.";
     }
   };
 
@@ -87,7 +103,8 @@ JiraBoardInput.propTypes = {
   setDataObject: PropTypes.func,
   jiraToolId: PropTypes.string,
   disabled: PropTypes.bool,
-  visible: PropTypes.bool
+  visible: PropTypes.bool,
+  jiraProjectKey: PropTypes.string
 };
 
 JiraBoardInput.defaultProps = {

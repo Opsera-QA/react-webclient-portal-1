@@ -6,13 +6,13 @@ import { AuthContext } from "../../../../contexts/AuthContext";
 import { axiosApiService } from "../../../../api/apiService";
 import LoadingDialog from "../../../common/status_notifications/loading";
 import ErrorDialog from "../../../common/status_notifications/error";
-import SummaryCountBlocksView from "../summaryCountBlocksView";
+import SummaryCountBlocksView from "../SummaryCountBlocksView";
 import TimeToRestoreBarChart from "../../charts/timeToRestoreBarChart.jsx";
 import PipelineSuccessLogs from "../../logs/pipelineSuccessLogs";
 import PipelineFailureLogs from "../../logs/pipelineFailureLogs";
 import OpseraPipelineStatusFailed from "../../logs/opseraPipelineStatusFailed";
 import OpseraPipelineStatusSuccess from "../../logs/opseraPipelineStatusSuccess";
-import OpseraRecentCDTable from "../../metrics/opseraPipelineRecentCD";
+import OpseraRecentCDTable from "../../metrics/OpseraPipelineRecentCD";
 import InfoDialog from "../../../common/status_notifications/info";
 import { Row, Col } from "react-bootstrap";
 

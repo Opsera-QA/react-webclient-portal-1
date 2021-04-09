@@ -1,13 +1,18 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
 import "../../../../theme.css";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 function SuccessIcon() {
   return (
-    <div className="status-icon">
-      <FontAwesomeIcon icon={faCheck} className="cell-icon green fa-md" />
-    </div>
+    <TooltipWrapper innerText={"Success"}>
+      <div>
+        <div className="status-icon">
+          <FontAwesomeIcon icon={faCircle} className="cell-icon green fa-md" />
+        </div>
+      </div>
+    </TooltipWrapper>
   );
 }
 

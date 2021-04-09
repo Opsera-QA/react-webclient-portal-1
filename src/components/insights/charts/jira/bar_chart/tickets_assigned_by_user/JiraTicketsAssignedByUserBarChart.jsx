@@ -8,6 +8,10 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import { defaultConfig, getColorByData, assignStandardColors, capitalizeLegend,
+         adjustBarWidth } from '../../../charts-views';
+import ChartTooltip from '../../../ChartTooltip';
+
 function JiraTicketsAssignedByUserBarChart( { kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis } ) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -44,6 +48,8 @@ function JiraTicketsAssignedByUserBarChart( { kpiConfiguration, setKpiConfigurat
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "jiraTicketsAssignedByUser", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.jiraTicketsAssignedByUser?.data : [];
+      assignStandardColors(dataObject, true);
+      capitalizeLegend(dataObject, ["count"]);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -62,7 +68,6 @@ function JiraTicketsAssignedByUserBarChart( { kpiConfiguration, setKpiConfigurat
     }
   };
 
-
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
@@ -72,45 +77,16 @@ function JiraTicketsAssignedByUserBarChart( { kpiConfiguration, setKpiConfigurat
       <div className="new-chart mb-3" style={{height: "300px"}}>
             <ResponsiveBar
               data={metrics}
+              {...defaultConfig("Users", "Number of Tickets Assigned", 
+                      true, true, "subString", "wholeNumbers")}
+              {...config(getColorByData)}
+              {...adjustBarWidth(metrics)}
               onClick={() => setShowModal(true)}
-              keys={config.keys}
-              indexBy="_id"
-              margin={config.margin}
-              padding={0.3}
-              layout={"horizontal"}
-              colors={{ scheme: "dark2" }}
-              borderColor={{ theme: "background" }}
-              colorBy="id"
-              defs={config.defs}
-              fill={config.fill}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              labelSkipWidth={12}
-              labelSkipHeight={12}
-              enableLabel={false}
-              borderRadius={5}
-              labelTextColor="inherit:darker(2)"
-              animate={true}
-              motionStiffness={90}
-              borderWidth={2}
-              motionDamping={15}
-              legends={config.legends}
-              tooltip={({ indexValue, value, color }) => (
-                <div>
-                  <strong style={{ color }}>  User: </strong> {indexValue}<br></br>
-                  <strong style={{ color }}>  No. of Tickets: </strong> {value} Tickets<br></br>
-                  {/* <strong style={{ color }}>  Percentage: </strong> {data.percentage}% */}
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
+              tooltip={({ indexValue, value, color }) => <ChartTooltip 
+                              titles = {["User", "Number of Tickets"]}
+                              values = {[indexValue, value]}
+                              style = {false}
+                              color = {color} />}
             />
         </div>
     );

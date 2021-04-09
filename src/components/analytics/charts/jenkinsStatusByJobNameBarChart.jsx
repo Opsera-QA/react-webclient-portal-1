@@ -4,11 +4,13 @@ import { ResponsiveBar } from "@nivo/bar";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import InfoDialog from "../../common/status_notifications/info";
-import config from "./jenkinsStatusByJobNameBarChartConfigs";
 import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
+import { defaultConfig, mainColor, failColor, mainPurple, warningColor,
+         adjustBarWidth } from "../../insights/charts/charts-views";
+import ChartTooltip from "../../insights/charts/ChartTooltip";
 
 function JenkinsStatusByJobNameBarChar({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -89,48 +91,28 @@ function JenkinsStatusByJobNameBarChar({ persona, date }) {
             </div>
           ) : (
             <ResponsiveBar
+              {...defaultConfig("Build Tag", "Number of Builds", 
+                      true, false, "cutoffString", "wholeNumbers")}
+              {...adjustBarWidth(data ? data.data : [], false)}
               data={data ? data.data : []}
-              keys={config.keys}
+              keys={["Successful", "Failed", "Aborted", "Unstable"]}
               indexBy="key"
-              onClick={() => setShowModal(true)}
-              margin={config.margin}
-              padding={0.3}
-              layout={"horizontal"}
-              colors={(bar) => {
-                return bar.id === "Failed" ? "red" : "green";
-              }}
-              borderColor={{ theme: "background" }}
               colorBy="id"
-              defs={config.defs}
-              fill={config.fill}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              enableLabel={false}
-              borderRadius={0}
-              labelSkipWidth={12}
-              labelSkipHeight={12}
-              labelTextColor="inherit:darker(2)"
-              animate={true}
-              motionStiffness={90}
-              borderWidth={2}
-              motionDamping={15}
-              legends={config.legends}
-              tooltip={({ indexValue, color, value, id }) => (
-                <div>
-                  <strong style={{ color }}>Build Tag: </strong> {indexValue}
-                  <br></br>
-                  <strong style={{ color }}> {id} Builds: </strong> {value}
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
+              layout="horizontal"
+              colors={(bar) => {
+                switch (bar.id) {
+                  case "Successful": return mainColor;
+                  case "Failed": return failColor;
+                  case "Aborted": return mainPurple;
+                  default: return warningColor;
+                }
               }}
+              onClick={() => setShowModal(true)}
+              tooltip={({ indexValue, color, value, id }) => <ChartTooltip 
+                              titles = {["Build Tag", `${id} Builds`]}
+                              values = {[indexValue, value]}
+                              style = {false}
+                              color = {color} />}
             />
           )}
         </div>

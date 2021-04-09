@@ -1,23 +1,16 @@
-export default {
-  keys: [
-    
-  ],
+export default (colors, today) => ({
+  from: today.setFullYear(today.getFullYear() - 1),
+  to: new Date(),
+  emptyColor: "#ededed",
+  colors,
+  yearSpacing: 40,
+  dayBorderWidth: 2,
+  dayBorderColor: "white",
+  monthBorderColor: "white",
   margin: {
-    "top": 40,
-    "right": 40,
-    "bottom": 40,
-    "left": 40
+    top: 30,
+    right: 40,
+    bottom: 30,
+    left: 40
   },
-  legends: [
-    {
-      "anchor": "bottom-right",
-      "direction": "row",
-      "translateY": 36,
-      "itemCount": 4,
-      "itemWidth": 42,
-      "itemHeight": 36,
-      "itemsSpacing": 14,
-      "itemDirection": "right-to-left"
-    }                
-  ]
-};
+});

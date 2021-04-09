@@ -10,6 +10,8 @@ import {getChartPipelineStatusColumn, getTableTextColumn} from "components/commo
 import opseraRecentCdStatusMetadata
   from "components/insights/charts/opsera/table/recent_cd_status/opsera-recent-cd-status-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
+import Model from "core/data_model/model";
+import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
 function OpseraRecentCDStatusTable({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const fields = opseraRecentCdStatusMetadata.fields;
@@ -19,6 +21,7 @@ function OpseraRecentCDStatusTable({ kpiConfiguration, setKpiConfiguration, dash
   const [metrics, setMetrics] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [tableFilterDto, setTableFilterDto] = useState(new Model({...genericChartFilterMetadata.newObjectFields}, genericChartFilterMetadata, false));
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -41,15 +44,25 @@ function OpseraRecentCDStatusTable({ kpiConfiguration, setKpiConfiguration, dash
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraRecentCDStatus", kpiConfiguration, dashboardTags);
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(
+        getAccessToken,
+        cancelSource,
+        "opseraRecentCDStatus",
+        kpiConfiguration,
+        dashboardTags,
+        filterDto
+      );
       let dataObject = response?.data?.data[0]?.opseraRecentCDStatus?.data;
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+        let newFilterDto = filterDto;
+        newFilterDto.setData("totalCount", response?.data?.data[0]?.opseraRecentCDStatus?.count);
+        setTableFilterDto({...newFilterDto});
       }
     }
     catch (error) {
@@ -68,7 +81,7 @@ function OpseraRecentCDStatusTable({ kpiConfiguration, setKpiConfiguration, dash
   const noDataMessage = "No Data is available for this chart at this time";
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "run_count"), "cell-center no-wrap-inline"),
+      getTableTextColumn(getField(fields, "run_count"), "no-wrap-inline"),
       getTableTextColumn(getField(fields, "pipeline_name")),
       getTableTextColumn(getField(fields, "step_name")),
       getTableTextColumn(getField(fields, "tool")),
@@ -78,12 +91,26 @@ function OpseraRecentCDStatusTable({ kpiConfiguration, setKpiConfiguration, dash
     []
   );
 
+  const getChartTable = () => {
+    return (
+      <CustomTable
+        columns={columns}
+        data={metrics}
+        noDataMessage={noDataMessage}
+        paginationDto={tableFilterDto}
+        setPaginationDto={setTableFilterDto}
+        loadData={loadData}
+        scrollOnLoad={false}
+      />
+    );
+  };
+
   return (
     <div>
       <ChartContainer
         kpiConfiguration={kpiConfiguration}
         setKpiConfiguration={setKpiConfiguration}
-        chart={<CustomTable columns={columns} data={metrics} noDataMessage={noDataMessage} />}
+        chart={getChartTable()}
         loadChart={loadData}
         dashboardData={dashboardData}
         index={index}

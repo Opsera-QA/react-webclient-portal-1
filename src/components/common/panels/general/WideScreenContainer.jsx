@@ -6,7 +6,7 @@ import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import TitleBar from "components/common/fields/TitleBar";
 
 function WideScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading, accessDenied }) {
-  const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
+  const [breadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
 
   const getPageDescription = () => {
     if (pageDescription == null) {
@@ -39,7 +39,7 @@ function WideScreenContainer({ breadcrumbDestination, pageDescription, children,
       <BreadcrumbTrail destination={breadcrumbDestination} />
       <div className="content-container content-card-1 ">
         <div className="pl-2 content-block-header title-text-header-1">
-          <TitleBar titleIcon={breadcrumb.icon} title={breadcrumb.label} isLoading={isLoading}/>
+          <TitleBar titleIcon={breadcrumb.icon} title={breadcrumb.title} isLoading={isLoading}/>
         </div>
         {getPageDescription()}
         <div className="p-2 mt-2 shaded-container wide-screen-container-body">

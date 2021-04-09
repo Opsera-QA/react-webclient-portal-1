@@ -70,7 +70,7 @@ function ContainerScan(props) {
               className="newApp__checkbox"
               onClick={() => selectCard("Anchore")}
             />
-            <img src={require("./imgs/anchore.png")} />
+            <img src={"/img/tools/anchore.png"} />
             <span className="newApp__service-title">Anchore</span>
           </div>
 

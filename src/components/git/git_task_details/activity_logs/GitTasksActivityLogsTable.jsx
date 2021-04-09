@@ -9,14 +9,11 @@ import {
 } from "components/common/table/table-column-helpers";
 import gitTasksActivityLogMetadata
   from "components/git/git_task_details/activity_logs/git-tasks-activity-log-metadata";
-import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
 import gitTaskActions from "components/git/git-task-actions";
 import Model from "core/data_model/model";
 import gitTasksActivityLogFilterMetadata
   from "components/git/git_task_details/activity_logs/git-tasks-activity-log-filter-metadata";
 import StatusFilter from "components/common/filters/status/StatusFilter";
-import TagFilter from "components/common/filters/tags/tag/TagFilter";
-// import NotificationTypeFilter from "components/common/filters/notifications/notification_type/NotificationTypeFilter";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 import GitTaskActivityDetailViewer from "./GitTaskActivityDetailViewer";
@@ -43,7 +40,7 @@ function GitTasksActivityLogsTable({ gitTasksData, allLogs }) {
       getTableTextColumn(fields.find(field => { return field.id === "name";})),
       getTableTextColumn(fields.find(field => { return field.id === "type";})),
       // getTableTextColumn(fields.find(field => { return field.id === "message"})),
-      {...getTableTextColumn(fields.find(field => { return field.id === "message";})), class: "wrap-cell-content"},
+      {...getTableTextColumn(fields.find(field => { return field.id === "message";})), class: "force-text-wrap"},
       getTableTextColumn(fields.find(field => { return field.id === "log_type";})),
       getTableBooleanIconColumn(fields.find(field => { return field.id === "status";})),
       getTableDateTimeColumn(fields.find(field => { return field.id === "createdAt";})),

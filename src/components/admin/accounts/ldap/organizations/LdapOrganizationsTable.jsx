@@ -6,7 +6,7 @@ import NewLdapOrganizationModal from "components/admin/accounts/ldap/organizatio
 import {ldapOrganizationMetaData} from "components/admin/accounts/ldap/organizations/ldap-organizations-metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
-import {faFlag, faSitemap} from "@fortawesome/pro-light-svg-icons";
+import {faSitemap} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 
 function LdapOrganizationsTable({data, isLoading, loadData, authorizedActions}) {
@@ -37,7 +37,7 @@ function LdapOrganizationsTable({data, isLoading, loadData, authorizedActions}) 
     );
   };
 
-  const onRowSelect = (selectedRow, type) => {
+  const onRowSelect = (selectedRow) => {
     history.push(`/admin/organizations/details/${selectedRow.original.name}`);
   };
 

@@ -7,7 +7,8 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors } from '../../../charts-views';
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
+         capitalizeLegend } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 
 function JenkinsBuildsByUserBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -47,6 +48,7 @@ function JenkinsBuildsByUserBarChart({ kpiConfiguration, setKpiConfiguration, da
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "jenkinsBuildsByUser", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.jenkinsBuildsByUser?.data : [];
       assignStandardColors(dataObject, true);
+      capitalizeLegend(dataObject, ["value"]);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -75,8 +77,9 @@ function JenkinsBuildsByUserBarChart({ kpiConfiguration, setKpiConfiguration, da
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Users", "Number of Builds", 
-                      true, true, "subString", "")}
-          {...config(getColorByData)}   
+                      true, false, "subString", "")}
+          {...config(getColorByData)}
+          {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}
           tooltip={({ indexValue, value, color }) => <ChartTooltip 
                               titles = {["User", "Number of Builds"]}

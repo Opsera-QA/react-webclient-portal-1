@@ -7,7 +7,8 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColor, assignStandardColors } from '../../../charts-views';
+import { defaultConfig, getColorByData, assignStandardColors,
+         shortenPieChartLegend } from '../../../charts-views';
 function BitbucketTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -48,6 +49,7 @@ function BitbucketTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfigura
 
       let dataObject = response?.data?.data[0]?.bitbucketTotalCommitsChart?.data;
       assignStandardColors(dataObject);
+      shortenPieChartLegend(dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -71,7 +73,7 @@ function BitbucketTotalCommitsByProjectChart({ kpiConfiguration, setKpiConfigura
         <ResponsivePie
           data={metrics}
           {...defaultConfig()}
-          {...config(getColor)}
+          {...config(getColorByData)}
           onClick={() => setShowModal(true)}
         />
       </div>

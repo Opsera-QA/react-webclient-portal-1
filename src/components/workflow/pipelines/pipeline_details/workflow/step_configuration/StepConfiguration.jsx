@@ -1,126 +1,114 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "contexts/AuthContext";
-import { axiosApiService } from "api/apiService";
-import { Form, Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSave, faSpinner, faCog } from "@fortawesome/pro-light-svg-icons";
-import DropdownList from "react-widgets/lib/DropdownList";
-import { capitalizeFirstLetter } from "components/common/helpers/string-helpers";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCog} from "@fortawesome/pro-light-svg-icons";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import axios from "axios";
+import Model from "core/data_model/model";
+import stepConfigurationMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step-configuration-metadata";
+import pipelineHelpers from "components/workflow/pipelineHelpers";
+import PipelineStepEditorPanelContainer
+  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
+import StepConfigurationToolSelectInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/StepConfigurationToolSelectInput";
+import StepConfigurationTagsInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/StepConfigurationTagsInput";
 
-const INITIAL_DATA = {
-  name: "",
-  tool_type: "",
-  type: "",
-  tool_identifier: "",
-  active: true,
-};
-
-function StepConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
-  const { getAccessToken } = useContext(AuthContext);
+function StepConfiguration({ plan, stepId, parentCallback, closeEditorPanel }) {
   const toastContext = useContext(DialogToastContext);
-  const { plan } = data.workflow;
-  const [formData, setFormData] = useState(INITIAL_DATA);
+  const [stepConfigurationModel, setStepConfigurationModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-  const [isSaving, setIsSaving] = useState(false);
   const [lockTool, setLockTool] = useState(false);
-  const [toolList, setToolList] = useState([]);
-  const [isToolListSearching, setIsToolListSearching] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    const controller = new AbortController();
-    const runEffect = async () => {
-      if (plan && stepId) {
-        try {
-          setIsLoading(true);
-          setLockTool(false);
-          const stepIndex = getStepIndex(stepId);
-          await loadFormData(plan[stepIndex]);
-          await fetchToolDetails();
-          setIsLoading(false);
-        } catch (err) {
-          if (err.name === "AbortError") {
-            console.log("Request was canceled via controller.abort");
-            return;
-          }
-        }
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
       }
-    };
-    runEffect();
+    });
+
     return () => {
-      setIsLoading(false);
-      controller.abort();
+      source.cancel();
+      isMounted.current = false;
     };
   }, [stepId, plan]);
 
-
-  const fetchToolDetails = async () => {
+  const loadData = async () => {
     try {
-      setIsToolListSearching(true);
-      const params = { status: "active", usage: "pipeline" };
-      const accessToken = await getAccessToken();
-      const toolResponse = await axiosApiService(accessToken).get("/registry/tools", { params });
-      setToolList(toolResponse.data);
-      setIsToolListSearching(false);
-    } catch (err) {
-      toastContext.showLoadingErrorDialog(err);
+      setIsLoading(true);
+      setLockTool(false);
+      const stepIndex = pipelineHelpers.getStepIndexFromPlan(plan, stepId);
+
+      if (stepIndex == null || stepIndex === -1) {
+        setStepConfigurationModel(new Model({...stepConfigurationMetadata.newModelBase}, stepConfigurationMetadata, true));
+        return;
+      }
+
+      const step = plan[stepIndex];
+      const currentData = {
+        name: step.name,
+        type: step.type[0],
+        tool_identifier: step.tool && step.tool.tool_identifier ? step.tool.tool_identifier : "",
+        active: step.active === true,
+        tags: step.tags
+      };
+
+      if (step?.tool?.tool_identifier?.length > 0) {
+        setLockTool(true);
+      }
+
+      setStepConfigurationModel(new Model({...currentData}, stepConfigurationMetadata, false));
+    }
+    catch (error) {
+      if (isMounted.current === true) {
+        toastContext.showLoadingErrorDialog(error);
+        console.error(error);
+      }
+    }
+    finally {
+      setIsLoading(false);
     }
   };
 
+  const savePipelineStepConfiguration = async () => {
+    const stepArrayIndex = pipelineHelpers.getStepIndexFromPlan(plan, stepId);
+    const stepConfigurationData = stepConfigurationModel.getPersistData();
 
-  const loadFormData = async (step) => {
-    setFormData(INITIAL_DATA);
-
-    setFormData({
-      name: step.name,
-      type: step.type[0],
-      tool_identifier: step.tool && step.tool.tool_identifier ? step.tool.tool_identifier : "",
-      active: step.active ? true : false,
-    });
-
-    if (step.tool && step.tool.tool_identifier.length > 0) {
-      setLockTool(true);
-    }
-  };
-
-  const callbackFunction = async () => {
-    setIsSaving(true);
-
-    const stepArrayIndex = getStepIndex(stepId);
-
-    if (validateRequiredFields() && plan[stepArrayIndex] !== undefined) {
-      plan[stepArrayIndex].name = formData.name;
-      plan[stepArrayIndex].type[0] = formData.type;
-      plan[stepArrayIndex].tool_category = formData.type;
+    if (stepArrayIndex >= 0 && plan[stepArrayIndex] !== undefined) {
+      plan[stepArrayIndex].name = stepConfigurationData.name;
+      plan[stepArrayIndex].type[0] = stepConfigurationData.type;
+      plan[stepArrayIndex].tool_category = stepConfigurationData.type;
       plan[stepArrayIndex].orchestration_type = "standard";
-      plan[stepArrayIndex].tool = { ...plan[stepArrayIndex].tool, tool_identifier: formData.tool_identifier };
-      plan[stepArrayIndex].active = formData.active;
+      plan[stepArrayIndex].tool = { ...plan[stepArrayIndex].tool, tool_identifier: stepConfigurationData.tool_identifier };
+      plan[stepArrayIndex].active = stepConfigurationData.active;
+      plan[stepArrayIndex].tags = stepConfigurationData.tags;
       await parentCallback(plan);
     }
-    setIsSaving(false);
   };
 
-  const getStepIndex = (step_id) => {
-    let stepArrayIndex = plan.findIndex((x) => x._id === step_id);
-    return stepArrayIndex;
-  };
-
-  const validateRequiredFields = () => {
-    if (formData.name.length === 0 || formData.tool_identifier.length === 0) {
-      toastContext.showMissingRequiredFieldsErrorDialog();
-      return false;
-    }
-    return true;
-  };
-
-  const handleToolIdentifierChange = (selectedOption) => {
-    setFormData({ ...formData, tool_identifier: selectedOption.identifier, type: selectedOption.tool_type_identifier });
-  };
+  if (stepConfigurationModel == null) {
+    return null;
+  }
 
   return (
-    <Form>
+    <PipelineStepEditorPanelContainer
+      handleClose={closeEditorPanel}
+      recordDto={stepConfigurationModel}
+      persistRecord={savePipelineStepConfiguration}
+      isLoading={isLoading}
+    >
       <div className="text-muted mt-1 mb-3">
         A pipeline step represents a tool and an operation. Each step requires a tool to be selected along with a
         display name. After the tool is selected, the step can be edited by clicking on the cog icon (
@@ -128,102 +116,21 @@ function StepConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
         step can be defined. If the tool requires configuration information, jobs or accounts, you must configure those
         in the Tool Registry before setting up the step.
       </div>
-      <div className="mt-4 mb-4">
-        <Form.Check
-          type="switch"
-          id="enabled-switch"
-          label="Step Enabled"
-          className="text-right text-muted"
-          checked={formData.active ? true : false}
-          onChange={() => setFormData({ ...formData, active: !formData.active })}
-        />
-
-        <Form.Group controlId="name" className="mt-2">
-          <Form.Label>Step Name*</Form.Label>
-          <Form.Control
-            maxLength="50"
-            type="text"
-            disabled={!formData.active}
-            placeholder=""
-            value={formData.name || ""}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          />
-        </Form.Group>
-        <Form.Group controlId="tool" className="mt-3">
-          <Form.Label>
-            Tool*{" "}
-            {isToolListSearching && <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />}
-          </Form.Label>
-          {formData.tool_identifier && formData.tool_identifier.length > 0 && lockTool ? (
-            <>
-              <Form.Control
-                maxLength="50"
-                type="text"
-                disabled={true}
-                placeholder=""
-                value={
-                  (toolList[toolList.findIndex((x) => x.identifier === formData.tool_identifier)] &&
-                    toolList[toolList.findIndex((x) => x.identifier === formData.tool_identifier)].name) ||
-                  ""
-                }
-              />
-            </>
-          ) : (
-            <>
-              <DropdownList
-                data={toolList}
-                valueField="identifier"
-                value={toolList[toolList.findIndex((x) => x.identifier === formData.tool_identifier)]}
-                busy={!formData.active ? false : Object.keys(toolList).length === 0 ? true : false}
-                disabled={!formData.active}
-                textField="name"
-                filter="contains"
-                groupBy={(tool) => capitalizeFirstLetter(tool.tool_type_name, " ", "Undefined Type")}
-                onChange={handleToolIdentifierChange}
-              />
-              <Form.Text className="text-muted">
-                Tool cannot be changed after being set. The step would need to be deleted and recreated to change the
-                tool.
-              </Form.Text>
-            </>
-          )}
-        </Form.Group>
+      <div className="step-settings-body">
+        <BooleanToggleInput dataObject={stepConfigurationModel} setDataObject={setStepConfigurationModel} fieldName={"active"}/>
+        <TextInputBase disabled={stepConfigurationModel.getData("active") !== true} dataObject={stepConfigurationModel} setDataObject={setStepConfigurationModel} fieldName={"name"} />
+        <StepConfigurationToolSelectInput disabled={lockTool || stepConfigurationModel.getData("active") !== true} dataObject={stepConfigurationModel} setDataObject={setStepConfigurationModel} />
+        <StepConfigurationTagsInput setStepConfigurationModel={setStepConfigurationModel} stepConfigurationModel={stepConfigurationModel} />
       </div>
-
-      <Button
-        variant="primary"
-        className="mt-2"
-        disabled={isLoading || isSaving}
-        onClick={() => callbackFunction()}>
-        {isSaving ?
-          <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/> :
-          <FontAwesomeIcon icon={faSave} fixedWidth className="mr-1"/>
-        }
-        Save
-      </Button>
-
-      <Button
-        variant="secondary"
-        type="button"
-        className="mt-2 ml-2"
-        disabled={isSaving}
-        onClick={() => {
-          handleCloseClick();
-        }}
-      >
-        <FontAwesomeIcon icon={faTimes} className="mr-1" /> Close
-      </Button>
-
-      <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
-    </Form>
+    </PipelineStepEditorPanelContainer>
   );
 }
 
 StepConfiguration.propTypes = {
-  data: PropTypes.object,
+  plan: PropTypes.array,
   stepId: PropTypes.string,
   parentCallback: PropTypes.func,
-  handleCloseClick: PropTypes.func,
+  closeEditorPanel: PropTypes.func,
 };
 
 export default StepConfiguration;

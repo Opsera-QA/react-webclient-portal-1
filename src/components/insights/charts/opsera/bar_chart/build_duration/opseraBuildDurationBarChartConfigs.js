@@ -1,5 +1,5 @@
 export default (getColor) => ({
-  keys: ["time"],
+  keys: ["Time"],
   colorBy: "id",
   indexBy: "pipelineId",
   colors: getColor

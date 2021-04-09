@@ -30,7 +30,7 @@ function ToastContextProvider ({ children, navBar }) {
   const [overlayPanel, setOverlayPanel] = useState(undefined);
 
   const removeAllBanners = useCallback(() => {
-      setBannerMessages(bannerMessages => []);
+      setBannerMessages([]);
     }, [setBannerMessages]
   );
 
@@ -40,7 +40,7 @@ function ToastContextProvider ({ children, navBar }) {
   );
 
   const removeAllToasts = useCallback(() => {
-      setToasts(toasts => []);
+      setToasts([]);
     }, [setToasts]
   );
 
@@ -61,13 +61,13 @@ function ToastContextProvider ({ children, navBar }) {
         window.scrollTo(0, 0);
       }
 
-      setOverlayPanel(oldOverlayPanel => overlayPanel);
+      setOverlayPanel(overlayPanel);
     }, [setOverlayPanel]
   );
 
   const clearOverlayPanel = useCallback(() => {
     document.body.style.overflow = 'unset';
-    setOverlayPanel(oldOverlayPanel => undefined);
+    setOverlayPanel(undefined);
     }, [setOverlayPanel]
   );
 
@@ -451,10 +451,12 @@ function ToastContextProvider ({ children, navBar }) {
           // Error Banners
           showSystemErrorBanner: showSystemErrorBanner,
           showFormErrorBanner: showFormErrorBanner,
+          showFormValidationErrorBanner: showFormValidationErrorBanner,
 
           // Error Toasts
           showSystemErrorToast: showSystemErrorToast,
           showFormErrorToast: showFormErrorToast,
+          showFormValidationErrorToast: showFormValidationErrorToast,
 
           //Inline Errors
           showInlineErrorMessage: showInlineErrorMessage,

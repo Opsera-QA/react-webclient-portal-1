@@ -77,7 +77,7 @@ function JiraIssuesAssignedToMe() {
       {
         Header: "Ticket Number",
         accessor: "Issue Number",
-        class: "cell-center no-wrap-inline"
+        class: "no-wrap-inline"
       },
       {
         Header: "Issue Type",
@@ -123,6 +123,7 @@ function JiraIssuesAssignedToMe() {
         data={data.jiraTicketsAssignedToMe.data}
         rowStyling={""}
         noDataMessage={noDataMessage}
+        noFooter={true}
       >
       </CustomTable>
     </>

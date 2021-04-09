@@ -11,6 +11,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import InfoDialog from "../../common/status_notifications/info";
+import { mainColor, failColor } from "../../insights/charts/charts-views";
 
 function CircleChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -84,7 +85,7 @@ function CircleChart({ persona, date }) {
           ) : (
             <div
               className="circle"
-              style={{ backgroundColor: data.data && data.data[0].failureRate > 50 ? "#CB4335" : "#66C2A5" }}
+              style={{ backgroundColor: data.data && data.data[0].failureRate > 50 ? failColor : mainColor }}
             >
               {data.data && data.data[0].failureRate.toFixed(2) + "%"}
             </div>

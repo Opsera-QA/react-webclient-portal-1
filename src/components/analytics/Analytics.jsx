@@ -13,16 +13,16 @@ import CodeCoverageMetricsView from "./views/sonarCodeCoverageView";
 import InfoDialog from "../common/status_notifications/info";
 import "./analytics.css";
 import "./charts/charts.css";
-import DeploymentFrequencyLineChart from "./charts/deploymentFrequencyLineChart.jsx";
-import JiraIssuesCreatedByDateLineChart from "./charts/jiraIssuesCreatedByDateLineChart.jsx";
+import DeploymentFrequencyLineChart from "./charts/DeploymentFrequencyLineChart.jsx";
+import JiraIssuesCreatedByDateLineChart from "./charts/JiraIssuesCreatedByDateLineChart.jsx";
 import DeploymentsStackedBarChart from "./charts/DeploymentsStackedBarChart";
 import CircleChart from "./charts/CircleChart";
 import JiraHealthBySprintBarChart from "./charts/JiraHealthBySprintBarChart";
 import SonarSecurityLineChart from "./charts/sonarSecurityLineChart";
-import JMeterHitsLineChart from "./charts/jmeterHitsLineChart";
-import JMeterErrorsLineChart from "./charts/jmeterErrorsLineChart";
-import JMeterThroughputLineChart from "./charts/jmeterThroughputLineChart";
-import JMeterResponseTimeLineChart from "./charts/jmeterResponseTimeLineChart";
+import JMeterHitsLineChart from "./charts/JmeterHitsLineChart";
+import JMeterErrorsLineChart from "./charts/JmeterErrorsLineChart";
+import JMeterThroughputLineChart from "./charts/JmeterThroughputLineChart";
+import JMeterResponseTimeLineChart from "./charts/JmeterResponseTimeLineChart";
 import JMeterResultsTable from "./metrics/jmeterResultsTable";
 // import GitlabPlanCodeView from "./views/GitlabPlanCodeView";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -37,7 +37,7 @@ import OperationsView from "./views/opserations_analytics/operationsViewAnalytic
 import AnalyticsProfileSettings from "../settings/analytics/activateAnalyticsCard";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faAnalytics, faChartNetwork, faChartArea} from "@fortawesome/pro-light-svg-icons";
+import {faAnalytics, faChartNetwork, faChartArea, faRadar} from "@fortawesome/pro-light-svg-icons";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 
 const INDICES = [
@@ -210,7 +210,7 @@ function Analytics() {
   function renderTooltip(props) {
     return (
       <Tooltip id="button-tooltip" {...props}>
-        Select timeframe or manually enter in a "Last XX Days/Months/Years" format
+        Select timeframe or manually enter in a &ldquo;Last XX Days/Months/Years&rdquo; format
       </Tooltip>
     );
   }
@@ -291,6 +291,11 @@ function Analytics() {
       return;
     }
 
+    if (tabSelection === "synopsis") {
+      history.push(`/insights/synopsis`);
+      return;
+    }
+
     setActiveTab(tabSelection);
   };
 
@@ -300,6 +305,7 @@ function Analytics() {
         <NavigationTab icon={faChartNetwork} tabName={"dashboards"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Dashboards"} />
         <NavigationTab icon={faChartArea} tabName={"marketplace"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Marketplace"} />
         <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Analytics"} />
+        <NavigationTab icon={faRadar} tabName={"synopsis"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Synopsis"} />
       </NavigationTabContainer>
     );
   };
@@ -324,37 +330,37 @@ function Analytics() {
               <Col sm={8}>
                 <ListGroup horizontal>
                   <ListGroup.Item
-                    className={"pointer " + (selection === "pipeline" ? "active" : "")}
+                    className={"pointer list-group-item " + (selection === "pipeline" ? "active" : "")}
                     onClick={handleTabClick("pipeline")}
                   >
                     Pipeline
                   </ListGroup.Item>
                   <ListGroup.Item
-                    className={"pointer " + (selection === "security" ? "active" : "")}
+                    className={"pointer list-group-item " + (selection === "security" ? "active" : "")}
                     onClick={handleTabClick("security")}
                   >
                     Security
                   </ListGroup.Item>
                   <ListGroup.Item
-                    className={"pointer " + (selection === "software_development" ? "active" : "")}
+                    className={"pointer list-group-item " + (selection === "software_development" ? "active" : "")}
                     onClick={handleTabClick("software_development")}
                   >
                     Software Development
                   </ListGroup.Item>
                   <ListGroup.Item
-                    className={"pointer " + (selection === "software_testing" ? "active" : "")}
+                    className={"pointer list-group-item " + (selection === "software_testing" ? "active" : "")}
                     onClick={handleTabClick("software_testing")}
                   >
                     Software Testing
                   </ListGroup.Item>
                   <ListGroup.Item
-                    className={"pointer " + (selection === "source_code" ? "active" : "")}
+                    className={"pointer list-group-item " + (selection === "source_code" ? "active" : "")}
                     onClick={handleTabClick("source_code")}
                   >
                     Source Code
                   </ListGroup.Item>
                   <ListGroup.Item
-                    className={"pointer " + (selection === "operations" ? "active" : "")}
+                    className={"pointer list-group-item " + (selection === "operations" ? "active" : "")}
                     onClick={handleTabClick("operations")}
                   >
                     Operations

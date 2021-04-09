@@ -65,6 +65,9 @@ function ToolEditorPanel({ toolData, handleClose }) {
       return (
         <>
           <Col lg={6}>
+            <RegistryToolOrganizationInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
+          </Col>
+          <Col lg={6}>
             <RegistryToolLocationInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
           </Col>
           <Col lg={6}>
@@ -72,9 +75,6 @@ function ToolEditorPanel({ toolData, handleClose }) {
           </Col>
           <Col lg={6}>
             <RegistryToolApplicationsInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
-          </Col>
-          <Col lg={6}>
-            <RegistryToolOrganizationInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
           </Col>
         </>
       );
@@ -109,10 +109,10 @@ function ToolEditorPanel({ toolData, handleClose }) {
         <Col lg={6}>
           <ToolClassificationSelectInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
         </Col>
+        {getDynamicFields()}
         <Col lg={6}>
           <ActivityToggleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"active"}/>
         </Col>
-        {getDynamicFields()}
       </Row>
     </EditorPanelContainer>
   );

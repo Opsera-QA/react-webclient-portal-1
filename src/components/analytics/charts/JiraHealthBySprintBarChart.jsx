@@ -10,11 +10,10 @@ import { ResponsiveBar } from "@nivo/bar";
 import { axiosApiService } from "../../../api/apiService";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-import config from "./jiraHealthBySprintConfigs";
 import "./charts.css";
 import InfoDialog from "../../common/status_notifications/info";
 import ModalLogs from "../../common/modal/modalLogs";
-import { defaultConfig, assignHealthColors } from '../../insights/charts/charts-views';
+import { defaultConfig, assignHealthColors, adjustBarWidth } from '../../insights/charts/charts-views';
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 
 function JiraHealthBySprintBarChart( { persona, date } ) {
@@ -95,9 +94,10 @@ function JiraHealthBySprintBarChart( { persona, date } ) {
             <ResponsiveBar
               data={data ? data.data : []}
               {...defaultConfig("Project", "Number of Issues", 
-                                false, true, 'cutoffString', "wholeNumbers")}
+                                false, false, "cutoffString", "wholeNumbers", false)}
+              {...adjustBarWidth(data ? data.data : [])}
               onClick={() => setShowModal(true)}
-              keys={config.keys}
+              keys={["To Do", "In Development", "In Progress", "Peer Review", "Testing", "Done", "Selected for Development", "Production Deployment"]}
               indexBy="key"
               layout={"horizontal"}
               colors={({ id, data }) => data[`${id}_color`]}

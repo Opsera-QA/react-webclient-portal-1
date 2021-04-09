@@ -35,8 +35,7 @@ function CodeSmellLineChart({ data, persona }) {
         ) : (
           <ResponsiveLine
             data={sonarCodeSmells ? sonarCodeSmells.data : []}
-            {...defaultConfig("Code Smells", "Date", 
-                                false, false, "wholeNumbers", "yearMonthDate")}
+            {...defaultConfig("Code Smells", "Date", false, true, "wholeNumbers", "yearMonthDate")}
             onClick={() => setShowModal(true)}
             colors={getColor}
             tooltip={({ point, color }) => <ChartTooltip 

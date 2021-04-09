@@ -8,7 +8,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
-function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, disabled, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, showClearValueButton, clearDataFunction, className}) {
+function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, disabled, selectOptions, valueField, textField, placeholderText, setDataFunction, busy, showClearValueButton, clearDataFunction, className, showLabel}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
 
@@ -72,24 +72,26 @@ function MultiSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, d
   };
 
   if (field == null) {
-    return <></>;
+    return null;
   }
 
   return (
-    <InputContainer className={className ? className : "custom-multiselect-input"}>
-      <InputLabel field={field} inputPopover={getClearDataIcon()} />
-      <Multiselect
-        data={selectOptions}
-        valueField={valueField}
-        textField={textField}
-        busy={busy}
-        filter="contains"
-        groupBy={groupBy}
-        value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : [] }
-        placeholder={placeholderText}
-        disabled={disabled}
-        onChange={newValue => setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)}
-      />
+    <InputContainer className={className ? className : undefined}>
+      <InputLabel field={field} inputPopover={getClearDataIcon()} showLabel={showLabel} />
+      <div className={"custom-multiselect-input"}>
+        <Multiselect
+          data={selectOptions}
+          valueField={valueField}
+          textField={textField}
+          busy={busy}
+          filter="contains"
+          groupBy={groupBy}
+          value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : [] }
+          placeholder={placeholderText}
+          disabled={disabled}
+          onChange={newValue => setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)}
+        />
+      </div>
       <InfoText errorMessage={errorMessage} field={field} />
     </InputContainer>
   );
@@ -117,6 +119,7 @@ MultiSelectInputBase.propTypes = {
     PropTypes.array
   ]),
   className: PropTypes.string,
+  showLabel: PropTypes.bool
 };
 
 MultiSelectInputBase.defaultProps = {

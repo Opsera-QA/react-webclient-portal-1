@@ -7,6 +7,8 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import { defaultConfig, getColorByData, assignStandardColors,
+         adjustBarWidth } from '../../../charts-views';
 function GitlabMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -43,6 +45,7 @@ function GitlabMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, dash
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "gitlabMergeRequestsByUser", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.gitlabMergeRequestsByUser?.data : [];
+      assignStandardColors(dataObject, true);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -68,42 +71,15 @@ function GitlabMergeRequestsByUser({ kpiConfiguration, setKpiConfiguration, dash
 
   return (
     <div className="new-chart mb-3" style={{height: "300px"}}>
-          <ResponsiveBar
-            data={metrics}
-            onClick={() => setShowModal(true)}
-            keys={config.keys}
-            indexBy="_id"
-            margin={config.margin}
-            padding={0.3}
-            layout={"horizontal"}
-            colors={{ scheme: "category10" }}
-            borderColor={{ theme: "background" }}
-            colorBy="id"
-            defs={config.defs}
-            fill={config.fill}
-            axisTop={null}
-            axisRight={null}
-            axisBottom={config.axisBottom}
-            axisLeft={config.axisLeft}
-            labelSkipWidth={12}
-            labelSkipHeight={12}
-            enableLabel={false}
-            borderRadius={5}
-            labelTextColor="inherit:darker(2)"
-            animate={true}
-            motionStiffness={90}
-            borderWidth={2}
-            motionDamping={15}
-            legends={config.legends}
-            theme={{
-              tooltip: {
-                container: {
-                  fontSize: "16px",
-                },
-              },
-            }}
-          />
-      </div>
+      <ResponsiveBar
+        data={metrics}
+        {...defaultConfig("Author", "Merge Requests", 
+                  true, false, "cutoffString", "wholeNumbers")}
+        {...config(getColorByData)}
+        {...adjustBarWidth(metrics, false)}
+        onClick={() => setShowModal(true)}
+      />
+    </div>
   );
   };
 

@@ -72,7 +72,7 @@ function Monitoring(props) {
               className="newApp__checkbox"
               onClick={() => selectCard("Nagios")}
             />
-            <img src={require("./imgs/nagios.png")} />
+            <img src={"/img/tools/nagios.png"} />
             <span className="newApp__service-title">Nagios</span>
           </div>
 
@@ -85,7 +85,7 @@ function Monitoring(props) {
               checked={isChecked.ZooKeeper && data["ZooKeeper"]}
               className="newApp__checkbox"
             />
-            <img src={require("./imgs/zookeeper.png")} />
+            <img src={"/img/tools/zookeeper.png"} />
             <span className="newApp__service-title">ZooKeeper</span>
           </div>
         </div>

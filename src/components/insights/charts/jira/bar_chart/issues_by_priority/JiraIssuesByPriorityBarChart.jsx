@@ -8,6 +8,10 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import { defaultConfig, getTaskColor, assignTaskColors,
+         adjustBarWidth } from '../../../charts-views';
+import ChartTooltip from '../../../ChartTooltip';
+
 
 function JiraIssuesByPriorityBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -45,6 +49,7 @@ function JiraIssuesByPriorityBarChart({ kpiConfiguration, setKpiConfiguration, d
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "jiraIssuesByPriority", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.jiraIssuesByPriority?.data : [];
+      assignTaskColors(dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -72,58 +77,19 @@ function JiraIssuesByPriorityBarChart({ kpiConfiguration, setKpiConfiguration, d
       <div className="new-chart mb-3" style={{height: "300px"}}>
             <ResponsiveBar
               data={metrics}
+              {...defaultConfig("Project", "Number of Issues", 
+                                true, false, "cutoffString", "wholeNumbers")}
+              {...config(getTaskColor)}
+              {...adjustBarWidth(metrics)}
               onClick={() => setShowModal(true)}
-              keys={config.keys}
-              indexBy="_id"
-              margin={config.margin}
-              padding={0.3}
-              layout={"horizontal"}
-              // colors={({ id, data }) => data[`${id}_color`]}
-              borderColor={{ theme: "background" }}
-              colorBy="id"
-              defs={config.defs}
-              fill={config.fill}
-              axisTop={null}
-              axisRight={null}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              labelSkipWidth={12}
-              labelSkipHeight={12}
-              enableLabel={false}
-              borderRadius={0}
-              labelTextColor="inherit:darker(2)"
-              animate={true}
-              motionStiffness={90}
-              borderWidth={2}
-              motionDamping={15}
-              legends={config.legends}
-              tooltip={({ indexValue, value, id, data }) => (
-                <div>
-                  <strong> Project: </strong> {indexValue}
-                  <br></br>
-                  <strong> Issue Type: </strong> {id}
-                  <br></br>
-                  <strong> No. of Lowest Priority Issues: </strong> {data[id + "-Lowest"]}
-                  <br></br>
-                  <strong> No. of Low Priority Issues: </strong> {data[id + "-Low"]}
-                  <br></br>
-                  <strong> No. of Medium Priority Issues: </strong> {data[id + "-Medium"]}
-                  <br></br>
-                  <strong> No. of High Priority Issues: </strong> {data[id + "-High"]}
-                  <br></br>
-                  <strong> No. of Highest Priority Issues: </strong> {data[id + "-Highest"]}
-                  <br></br>
-                  <strong> No. of Blocker Issues: </strong> {data[id + "-Blocker"]}
-                  <br></br>
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
+              tooltip={({ indexValue, id, data }) => <ChartTooltip 
+                  titles={["Project", "Issue Type", "Number of Lowest Priority Issues",
+                            "Number. of Low Priority Issues", "Number of Medium Priority Issues",
+                            "Number of High Priority Issues", "Number of Highest Priority Issues",
+                            "Number of Blocker Issues"]}
+                  values={[indexValue, id, data[id + "-Lowest"], data[id + "-Low"],
+                           data[id + "-Medium"], data[id + "-High"], data[id + "-Highest"], data[id + "-Blocker"]]} 
+                  style={false} />}
             />
         </div>
     );

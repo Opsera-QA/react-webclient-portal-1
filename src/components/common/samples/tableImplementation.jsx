@@ -69,8 +69,8 @@ function TableImplementationDemo() {
         Header: "State",
         accessor: "active",
         // Note: You can format the cells however you want
-        Cell: (props) => {
-          return props.value ?  <FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" /> : <FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" />;
+        Cell: function getValue(row) {
+          return row.value ?  <FontAwesomeIcon icon={faCheckCircle} className="cell-icon green" /> : <FontAwesomeIcon icon={faTimesCircle} className="cell-icon red" />;
         },
         // Note you can specify cell-specific classes
         class: "pl-3"

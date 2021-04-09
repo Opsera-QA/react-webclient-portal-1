@@ -95,7 +95,7 @@ function JiraIssuesByPriorityBarChart({ persona, date }) {
             <ResponsiveBar
               data={data ? data.data : []}
               {...defaultConfig('Project', 'Number of Issues', 
-                                true, true, 'cutoffString', 'wholeNumbers')}
+                                true, false, 'cutoffString', 'wholeNumbers')}
               onClick={() => setShowModal(true)}
               keys={["Story", "Task", "Subtask", "Bug"]}
               indexBy="project"

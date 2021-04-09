@@ -80,6 +80,7 @@ function DashboardsTable({data, dashboardFilterDto, setDashboardFilterDto, loadD
         isLoading={isLoading}
         body={getDashboardsTable()}
         titleIcon={faChartNetwork}
+        metadata={dashboardMetadata}
         supportSearch={true}
         title={"My Dashboards"}
         filterDto={dashboardFilterDto}

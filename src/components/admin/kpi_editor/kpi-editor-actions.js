@@ -24,6 +24,7 @@ KpiActions.getKpisV2 = async (getAccessToken, cancelTokenSource, kpiFilterDto) =
   return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+// Remove after all instances are updated to v2
 KpiActions.getAllKpis = async (getAccessToken, status, policySupport) => {
   const apiUrl = "/analytics/kpi/configurations";
   const urlParams = {
@@ -36,6 +37,21 @@ KpiActions.getAllKpis = async (getAccessToken, status, policySupport) => {
 
   return baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
+
+KpiActions.getAllKpisV2 = async (getAccessToken, cancelTokenSource, status, policySupport, manualDataEntry) => {
+  const apiUrl = "/analytics/kpi/configurations";
+  const urlParams = {
+    params: {
+      pageSize: 10000,
+      status: status ? status : undefined,
+      policySupport: policySupport ? policySupport : undefined,
+      manualDataEntry: manualDataEntry ? manualDataEntry : undefined
+    },
+  };
+
+  return baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 
 KpiActions.getKpiById = async (getAccessToken, cancelTokenSource, kpiId) => {
   const apiUrl = `/analytics/kpi/configurations/${kpiId}`;

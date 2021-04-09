@@ -59,6 +59,7 @@ function AdminTools() {
         <BreadcrumbPageLink breadcrumbDestination={"templateManagement"} />
         <BreadcrumbPageLink breadcrumbDestination={"siteNotificationManager"} />
         <BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationManagement"} />
+        <BreadcrumbPageLink breadcrumbDestination={"ldapUserManagement"}/>
         <BreadcrumbPageLink breadcrumbDestination={"ldapDepartmentManagement"} />
         <BreadcrumbPageLink breadcrumbDestination={"customerOnboarding"} />
       </Row>

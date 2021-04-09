@@ -12,7 +12,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
-function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setDataFunction, allowCreate, inline}) {
+function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setDataFunction, allowCreate, inline, allowedTypes, getDisabledTags, placeholder}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -102,9 +102,17 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
   const loadTagOptions = (tags) => {
     let currentOptions = [];
 
-    tags.map((tag, index) => {
+    tags.map((tag) => {
       let tagOption = {type: tag["type"], value: tag["value"]};
-      currentOptions.push(tagOption);
+
+      if (Array.isArray(allowedTypes) && allowedTypes.length > 0) {
+        if (allowedTypes.includes(tagOption.type)) {
+          currentOptions.push(tagOption);
+        }
+      }
+      else {
+        currentOptions.push(tagOption);
+      }
     });
 
     if (isMounted?.current === true) {
@@ -171,23 +179,26 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
   if (field == null) {
     return null;
   }
+
   return (
-    <InputContainer className="custom-multiselect-input">
+    <InputContainer>
       {!inline && <InputLabel field={field} className={inline ? "mt-1 mr-2" : undefined}/>}
-      <Multiselect
-        data={[...tagOptions]}
-        textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + data["value"]}
-        filter={"contains"}
-        allowCreate={allowCreate}
-        groupBy={"type"}
-        className={inline ? `inline-filter-input inline-select-filter` : undefined}
-        busy={isLoading}
-        onCreate={(value) => handleCreate(value)}
-        value={[...dataObject?.getArrayData(fieldName)]}
-        placeholder={errorMessage}
-        disabled={disabled || isLoading}
-        onChange={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
-      />
+      <div className={"custom-multiselect-input"}>
+        <Multiselect
+          data={[...tagOptions]}
+          textField={(data) => capitalizeFirstLetter(data["type"]) + ": " + capitalizeFirstLetter(data["value"])}
+          filter={"contains"}
+          allowCreate={allowCreate}
+          groupBy={(tag) => capitalizeFirstLetter(tag?.type, " ", "Undefined Type")}
+          className={inline ? `inline-filter-input inline-select-filter` : undefined}
+          busy={isLoading}
+          onCreate={(value) => handleCreate(value)}
+          value={[...dataObject?.getArrayData(fieldName)]}
+          placeholder={errorMessage? errorMessage : placeholder}
+          disabled={disabled || isLoading || (getDisabledTags && getDisabledTags(tagOptions))}
+          onChange={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
+        />
+      </div>
       <InfoText field={field} errorMessage={errorMessage}/>
     </InputContainer>
   );
@@ -201,13 +212,17 @@ TagManager.propTypes = {
   setDataFunction: PropTypes.func,
   allowCreate: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
   disabled: PropTypes.bool,
-  inline: PropTypes.bool
+  inline: PropTypes.bool,
+  allowedTypes: PropTypes.array,
+  getDisabledTags: PropTypes.func,
+  placeholder: PropTypes.string
 };
 
 TagManager.defaultProps = {
   allowCreate: "onFilter",
   fieldName: "tags",
-  inline: false
+  inline: false,
+  placeholder:""
 };
 
 export default TagManager;

@@ -6,13 +6,13 @@ import GenericItemField from "components/common/fields/multiple_items/GenericIte
 import BooleanField from "components/common/fields/boolean/BooleanField";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
-import StandaloneClipboardTextField from "components/common/fields/text/standalone/StandaloneClipboardTextField";
+import StandaloneLinkField from "components/common/fields/link/standalone/StandaloneLinkField";
 
 function LdapOrganizationAccountSummaryPanel({ ldapOrganizationAccountData, setActiveTab }) {
   const getUrlString = () => {
-    const urlString = "" + process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL +"/account/registration/"+ ldapOrganizationAccountData.orgDomain;
+    const urlString = "" + process.env.REACT_APP_OPSERA_CLIENT_ROOT_URL + "/account/registration/" + ldapOrganizationAccountData?.orgDomain;
     return (
-      <StandaloneClipboardTextField label={"New User Registration URL"} text={urlString} />
+      <StandaloneLinkField label={"New User Registration URL"} link={urlString} openInNewWindow={true} showClipboardButton={true} />
     );
   };
 

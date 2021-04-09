@@ -9,9 +9,9 @@ pipelineStepNotificationActions.getJiraBoards = async (jiraStepNotificationDto, 
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
 };
 
-pipelineStepNotificationActions.getJiraBoardsWithId = async (toolId, getAccessToken) => {
-  const apiUrl = `/connectors/jira/${toolId}/boards`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl);
+pipelineStepNotificationActions.getJiraBoardsWithIdV2 = async (getAccessToken, cancelTokenSource, toolId, projectKey) => {
+  const apiUrl = `/connectors/jira/${toolId}/${projectKey}/boards/`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 pipelineStepNotificationActions.getJiraSprints = async (jiraStepNotificationDto, getAccessToken) => {
@@ -93,6 +93,11 @@ pipelineStepNotificationActions.getJiraParentTickets = async (jiraStepNotificati
 pipelineStepNotificationActions.getJiraParentTickets2 = async (toolId, sprintId, getAccessToken) => {
   const apiUrl = `/connectors/jira/${toolId}/sprint/issues?sprint=${sprintId}`;
   return await baseActions.apiGetCall(getAccessToken, apiUrl);
+};
+
+pipelineStepNotificationActions.getServiceNowUsers = async (toolId, getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/connectors/servicenow/${toolId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 export default pipelineStepNotificationActions;

@@ -24,7 +24,8 @@ function FilterContainer(
     supportViewToggle,
     saveCookies,
     className,
-    stackFilters,
+    metadata,
+    exportButton,
 
     // TODO: Remove after filters are used everywhere
     type
@@ -48,6 +49,7 @@ function FilterContainer(
             setFilterDto={setFilterDto}
             loadData={loadData}
             className={dropdownFilters != null || loadData != null || supportViewToggle ? "mr-3 d-none d-md-block" : null}
+            metadata={metadata}
           />
           <ViewToggle
             supportViewToggle={supportViewToggle}
@@ -59,6 +61,7 @@ function FilterContainer(
           />
           <RefreshButton isLoading={isLoading} loadData={loadData} className={dropdownFilters != null ? "mr-2" : null} />
           <FilterButtons isLoading={isLoading} loadData={loadData} dropdownFilters={dropdownFilters} filterDto={filterDto} />
+          {exportButton}
         </div>
       </div>
     );
@@ -77,7 +80,6 @@ function FilterContainer(
               titleIcon={titleIcon}
               inlineFilters={getInlineFilters()}
               addRecordFunction={addRecordFunction}
-              stackFilters={stackFilters}
             />
           </div>
           <ActiveFilterDisplayer filterDto={filterDto} setFilterDto={setFilterDto} loadData={loadData} />
@@ -107,7 +109,9 @@ FilterContainer.propTypes = {
   saveCookies: PropTypes.func,
   type: PropTypes.string,
   className: PropTypes.string,
-  stackFilters: PropTypes.bool
+  stackFilters: PropTypes.bool,
+  metadata: PropTypes.object,
+  exportButton: PropTypes.object
 };
 
 export default FilterContainer;

@@ -226,6 +226,102 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
   }
 };
 
+/**
+ * Handles all authorization of actions in tool registry.  It factors in the overall user roles and the individual object (pipeline)
+ * access roles.
+ * @param customerAccessRules
+ * @param action
+ * @param owner
+ * @param objectRoles
+ * @returns {boolean}
+ *
+ *
+ * Administrator & Owner Only Roles:
+ * duplicate_pipeline_btn, delete_pipeline_btn,
+ *
+ */
+workflowAuthorizedActions.gitItems = (customerAccessRules, action, owner, objectRoles) => {
+  if (customerAccessRules == null) {
+    return false;
+  }
+
+  if (customerAccessRules.OpseraAdministrator) {
+    return true; //all actions are authorized to Opsera Administrator
+  }
+
+  if (customerAccessRules.Administrator) {
+    return true; //all actions are authorized to administrator
+  }
+
+  if (customerAccessRules.SassPowerUser) {
+    return true; //all  are authorized to Saas User
+  }
+
+  if (process.env.REACT_APP_STACK === "free-trial") {
+    return false; //all actions disabled for user?
+  }
+
+  if (owner && customerAccessRules.UserId === owner) {
+    return true; //owner can do all actions
+  }
+
+  //if no objectRole data passed, then allow actions
+  if (objectRoles && objectRoles.length === 0) {
+    return true;
+  }
+
+  const userObjectRole = calculateUserObjectRole(customerAccessRules.Email, customerAccessRules.Groups, objectRoles);
+  //console.log("userObjectRole: ", objectRoles);
+  if (userObjectRole === "administrator") {
+    return true; //all actions are authorized to administrator
+  }
+
+  if (userObjectRole === "secops") {
+    switch (action) {
+      case "edit_settings":
+      case "edit_access_roles":
+      case "create_task":
+      case "run_task":
+      case "delete_task":
+        return true;
+      default:
+        return false; //all other options are disabled
+    }
+  }
+
+  if (customerAccessRules.PowerUser || userObjectRole === "manager") {
+    switch (action) {
+      case "edit_settings":
+      case "edit_access_roles":
+      case "create_task":
+      case "run_task":
+        return true;
+      default:
+        return false; //all other options are disabled
+    }
+  }
+
+
+  if (userObjectRole === "user") {
+    switch (action) {
+      case "create_task":
+      case "run_task":
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  //return for ReadOnly / Guest access which for now will allow task creation
+  switch (action) {
+    case "create_task":
+      return true;
+    default:
+      return false;
+  }
+};
+
+
 
 //compares the user email to the objectRoles data to see if the user has a specific role
 // (either directly or through group membership)

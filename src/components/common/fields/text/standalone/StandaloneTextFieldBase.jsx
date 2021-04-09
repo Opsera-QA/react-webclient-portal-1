@@ -1,12 +1,22 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import FieldContainer from "components/common/fields/FieldContainer";
+import CopyToClipboardIcon from "components/common/icons/CopyToClipboardIcon";
 
-function StandaloneTextFieldBase({label, text, className}) {
+function StandaloneTextFieldBase({label, text, className, showClipboardButton}) {
+  const getClipboardButton = () => {
+    if (showClipboardButton === true) {
+      return (<CopyToClipboardIcon className={"my-auto ml-auto"} copyString={text} />);
+    }
+  };
+
   return (
     <FieldContainer className={className}>
-      <label className="mb-0 mr-2 text-muted"><span>{label}:</span></label>
-      <span>{text}</span>
+      <div className="w-100 d-flex">
+        <label className="mb-0 mr-2 text-muted"><span>{label}:</span></label>
+        <span>{text}</span>
+        {getClipboardButton()}
+      </div>
     </FieldContainer>
   );
 }
@@ -14,7 +24,8 @@ function StandaloneTextFieldBase({label, text, className}) {
 StandaloneTextFieldBase.propTypes = {
   text: PropTypes.string,
   label: PropTypes.string,
-  className: PropTypes.string
+  className: PropTypes.string,
+  showClipboardButton: PropTypes.bool
 };
 
 export default StandaloneTextFieldBase;

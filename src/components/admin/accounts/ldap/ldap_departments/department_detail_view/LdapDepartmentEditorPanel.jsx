@@ -12,7 +12,7 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 
-function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, setLdapDepartmentData, orgDomain, authorizedActions, handleClose }) {
+function LdapDepartmentEditorPanel({ ldapDepartmentData, reloadData, orgDomain, authorizedActions, handleClose }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [ldapDepartmentDataDto, setLdapDepartmentDataDto] = useState({});
@@ -148,7 +148,6 @@ LdapDepartmentEditorPanel.propTypes = {
   showButton: PropTypes.bool,
   orgDomain: PropTypes.string,
   ldapDepartmentData: PropTypes.object,
-  setLdapDepartmentData: PropTypes.func,
   handleClose: PropTypes.func,
   reloadData: PropTypes.func,
   authorizedActions: PropTypes.array

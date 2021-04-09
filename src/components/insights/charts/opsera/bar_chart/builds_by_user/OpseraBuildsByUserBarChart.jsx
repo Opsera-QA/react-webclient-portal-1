@@ -8,7 +8,8 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import {AuthContext} from "contexts/AuthContext";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors } from '../../../charts-views';
+import { defaultConfig, getColorByData, assignStandardColors, capitalizeLegend,
+         adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 function OpseraBuildsByUserBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -47,6 +48,7 @@ function OpseraBuildsByUserBarChart({ kpiConfiguration, setKpiConfiguration, das
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraPipelinesByUser", kpiConfiguration, dashboardTags);
       let dataObject = response?.data?.data[0]?.opseraPipelinesByUser?.data;
       assignStandardColors(dataObject, true);
+      capitalizeLegend(dataObject, ["value"]);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -75,8 +77,9 @@ function OpseraBuildsByUserBarChart({ kpiConfiguration, setKpiConfiguration, das
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Users", "Number of Builds", 
-                      true, true, "cutoffString", "wholeNumbers")}
+                      true, false, "cutoffString", "wholeNumbers")}
           {...config(getColorByData)}
+          {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}
           tooltip={({ indexValue, value, color }) => <ChartTooltip 
                                         titles = {["User", "Number of Builds"]}

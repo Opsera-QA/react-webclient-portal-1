@@ -7,6 +7,9 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
+         spaceOutMergeRequestTimeTakenLegend } from '../../../charts-views';
+
 function GithubMergeRequestByMaximumTimeChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -43,6 +46,8 @@ function GithubMergeRequestByMaximumTimeChart({ kpiConfiguration, setKpiConfigur
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "githubMergeReqWithMaximumTime", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.githubMergeReqWithMaximumTime?.data : [];
+      assignStandardColors(dataObject, true);
+      spaceOutMergeRequestTimeTakenLegend(dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -69,39 +74,12 @@ function GithubMergeRequestByMaximumTimeChart({ kpiConfiguration, setKpiConfigur
   return (
     <div className="new-chart mb-3" style={{height: "300px"}}>
           <ResponsiveBar
-            data={metrics}
+          data={metrics}
+            {...defaultConfig("Time (Hours)", "Project", 
+                        false, false, "values", "cutoffString")}
+            {...config(getColorByData)}
+            {...adjustBarWidth(metrics)}
             onClick={() => setShowModal(true)}
-            keys={config.keys}
-            indexBy="_id"
-            margin={config.margin}
-            padding={0.3}
-            layout={"vertical"}
-            colors={{ scheme: "category10" }}
-            borderColor={{ theme: "background" }}
-            colorBy="id"
-            defs={config.defs}
-            fill={config.fill}
-            axisTop={null}
-            axisRight={null}
-            axisBottom={config.axisBottom}
-            axisLeft={config.axisLeft}
-            labelSkipWidth={12}
-            labelSkipHeight={12}
-            enableLabel={false}
-            borderRadius={5}
-            labelTextColor="inherit:darker(2)"
-            animate={true}
-            motionStiffness={90}
-            borderWidth={2}
-            motionDamping={15}
-            legends={config.legends}
-            theme={{
-              tooltip: {
-                container: {
-                  fontSize: "16px",
-                },
-              },
-            }}
           />
       </div>
   );

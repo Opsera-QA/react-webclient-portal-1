@@ -7,6 +7,7 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import { defaultConfig, gradationalColors } from '../../../charts-views';
 function GithubCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -73,32 +74,9 @@ function GithubCommitsByAuthor({ kpiConfiguration, setKpiConfiguration, dashboar
     <div className="new-chart mb-3" style={{height: "300px"}}>
           <ResponsiveHeatMap
             data={metrics}
-            keys={users}
-            indexBy="date"
+            {...defaultConfig("Date", "", true, true, "yearMonthDate", "cutoffString")}
+            {...config(users, gradationalColors)}
             onClick={() => setShowModal(true)}
-            margin={{ top: 10, right: 40, bottom: 40, left: 40 }}
-            forceSquare={true}
-            // axisTop={{ orient: 'top', tickSize: 5, tickPadding: 5, tickRotation: -90, legend: '', legendOffset: 36 }}
-            axisRight={null}
-            // axisBottom={null}
-            axisTop={null}
-            axisBottom={config.axisBottom}
-            axisLeft={config.axisLeft}
-            // sizeVariation={0.4}
-            // padding={1}
-            cellOpacity={1}
-            cellBorderColor={{ from: "color", modifiers: [["darker", 0.4]] }}
-            labelTextColor="#fdeded"
-            colors={["#9FC8E5", "#7fa8ca", "#537aa2", "#3F6891"]}
-            cellShape={"circle"}
-            enableLabels={true}
-            defs={config.defs}
-            fill={config.fill}
-            animate={true}
-            motionStiffness={80}
-            motionDamping={9}
-            hoverTarget="cell"
-            cellHoverOthersOpacity={0.25}
           />
       </div>
   );

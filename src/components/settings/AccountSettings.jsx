@@ -8,8 +8,9 @@ import LoadingDialog from "components/common/status_notifications/loading";
 
 function AccountSettings() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const { getUserRecord, setAccessRoles, featureFlagHideItemInProd } = useContext(AuthContext);
+  const { getUserRecord, setAccessRoles, featureFlagHideItemInProd, featureFlagHideItemInTest } = useContext(AuthContext);
   const envIsProd = featureFlagHideItemInProd();
+  const envIsTest = featureFlagHideItemInTest();
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
@@ -57,13 +58,15 @@ function AccountSettings() {
     if (accessRoleData.Administrator || accessRoleData.OpseraAdministrator) {
       return (
         <>
-          <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"ldapUserManagement"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
+          {!envIsTest && !envIsProd && accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"analyticsDataEntryManagement"} />}
           <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"mapping"}/>
           <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"} visible={!envIsProd}/>
+          <BreadcrumbPageLink breadcrumbDestination={"dataMappingManagement"}/>
+          <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>
+          {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"} />}
+          {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"}/>}
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
+          <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
         </>
       );
     }
@@ -72,12 +75,15 @@ function AccountSettings() {
     if (accessRoleData.PowerUser || accessRoleData.SassPowerUser) {
       return (
         <>
-          {accessRoleData.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>}
-          <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
+          {!envIsTest && !envIsProd && accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"analyticsDataEntryManagement"} />}
           <BreadcrumbPageLink breadcrumbDestination={"analyticsProfile"}/>
-          <BreadcrumbPageLink breadcrumbDestination={"mapping"}/>
           <BreadcrumbPageLink breadcrumbDestination={"customerSystemStatus"} visible={!envIsProd}/>
+          <BreadcrumbPageLink breadcrumbDestination={"dataMappingManagement"}/>
+          {accessRoleData.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"ldapGroupManagement"}/>}
+          {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"}/>}
+          {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"}/>}
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
+          <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
         </>
       );
     }
@@ -95,8 +101,6 @@ function AccountSettings() {
       isLoading={isLoading}
     >
       <Row className="ml-3">
-        {/*TODO: Make User Details Link Component*/}
-        {accessRoleData?.Type !== "sass-user" && <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"} />}
         {getRolePageLinks()}
       </Row>
     </ScreenContainer>

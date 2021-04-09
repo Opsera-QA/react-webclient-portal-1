@@ -9,7 +9,8 @@ import "./charts.css";
 import ModalLogs from "../../common/modal/modalLogs";
 import LoadingDialog from "../../common/status_notifications/loading";
 import ErrorDialog from "../../common/status_notifications/error";
-import { defaultConfig, getColor, assignStandardColors } from '../../insights/charts/charts-views';
+import { defaultConfig, getColor, assignStandardColors, 
+         adjustBarWidth, capitalizeLegend } from '../../insights/charts/charts-views';
 import ChartTooltip from '../../insights/charts/ChartTooltip';
 function OpseraBuildDurationBarChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -39,6 +40,7 @@ function OpseraBuildDurationBarChart({ persona, date }) {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res?.data?.data[0] ? res.data.data[0].opseraPipelineDuration : [];
       assignStandardColors(dataObject?.data, true);
+      capitalizeLegend(dataObject?.data, ["value"]);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -91,9 +93,10 @@ function OpseraBuildDurationBarChart({ persona, date }) {
         ) : (
           <ResponsiveBar
             {...defaultConfig('Duration (Minutes)', 'Pipeline Run', 
-                      false, true, 'wholeNumbers', 'values')}
+                      false, false, 'wholeNumbers', 'values')}
+            {...adjustBarWidth(data ? data.data : [])}
             data={data ? data.data : []}
-            keys={["value"]}
+            keys={["Value"]}
             layout="vertical"
             indexBy="item_number"
             onClick={() => setShowModal(true)}

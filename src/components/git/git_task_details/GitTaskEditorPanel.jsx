@@ -127,7 +127,7 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
                          fieldName={"description"}/>
         </Col>
         <Col lg={12}>
-          <TagManager type={"gitTask"} setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto}/>
+          <TagManager type={"task"} setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto}/>
         </Col>
       </Row>
       <GitTasksConfigurationPanel

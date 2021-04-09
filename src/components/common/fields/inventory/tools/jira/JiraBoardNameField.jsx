@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
@@ -8,38 +8,58 @@ import FieldContainer from "components/common/fields/FieldContainer";
 import Label from "components/common/form_fields/Label";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
+import axios from "axios";
 
-function JiraBoardNameField({ dataObject, jiraToolId, fieldName }) {
+function JiraBoardNameField({ dataObject, jiraToolId, fieldName, jiraProjectKey }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
   const toastContext = useContext(DialogToastContext);
   const {getAccessToken} = useContext(AuthContext);
   const [boardName, setBoardName] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
-  }, [jiraToolId]);
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
 
-  const loadData = async () => {
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    if (jiraToolId != null && jiraToolId !== "" && jiraProjectKey != null && jiraProjectKey !== "") {
+      loadData(source);
+    }
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [jiraToolId, jiraProjectKey]);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadBoardName();
+      await loadBoardName(cancelSource);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     } finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
-  const loadBoardName = async () => {
+  const loadBoardName = async (cancelSource = cancelTokenSource) => {
     const jiraBoardId = dataObject.getData(fieldName);
-    if (jiraToolId !== "" && jiraBoardId !== "") {
-      const response = await pipelineStepNotificationActions.getJiraBoardsWithId(jiraToolId, getAccessToken);
+    if (jiraToolId !== "" && jiraBoardId !== "" && jiraProjectKey !== "") {
+      const response = await pipelineStepNotificationActions.getJiraBoardsWithIdV2(getAccessToken, cancelSource, jiraToolId, jiraProjectKey);
       const jiraArray = response?.data?.message;
       if (Array.isArray(jiraArray)) {
         const jiraBoard = jiraArray.find((board) => board.id === jiraBoardId);
 
-        if (jiraBoard != null) {
+        if (isMounted?.current === true && jiraBoard != null) {
           setBoardName(jiraBoard.name);
         }
       }
@@ -69,7 +89,8 @@ function JiraBoardNameField({ dataObject, jiraToolId, fieldName }) {
 JiraBoardNameField.propTypes = {
   dataObject: PropTypes.object,
   jiraToolId: PropTypes.string,
-  fieldName: PropTypes.string
+  fieldName: PropTypes.string,
+  jiraProjectKey: PropTypes.string
 };
 
 export default JiraBoardNameField;

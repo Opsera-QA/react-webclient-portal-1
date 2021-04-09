@@ -7,7 +7,8 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColorByData, assignStandardColors } from '../../../charts-views';
+import { defaultConfig, getColorByData, assignStandardColors, adjustBarWidth,
+  spaceOutMergeRequestTimeTakenLegend } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 
 function BitbucketTimeTakenToCompleteMergeRequestReview({
@@ -55,6 +56,7 @@ function BitbucketTimeTakenToCompleteMergeRequestReview({
       );
       let dataObject = response?.data?.data[0]?.bitbucketTimeTakenToCompleteMergeRequestReviewChart?.data;
       assignStandardColors(dataObject, true);
+      spaceOutMergeRequestTimeTakenLegend(dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -80,8 +82,9 @@ function BitbucketTimeTakenToCompleteMergeRequestReview({
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Reviewer", "Time (Hours)", 
-                      true, true, "subString", "values")}
+                      true, false, "subString", "values")}
           {...config(getColorByData)}
+          {...adjustBarWidth(metrics, false)}
           onClick={() => setShowModal(true)}
           tooltip={({ indexValue, color, value }) => <ChartTooltip 
                                         titles = {["Reviewer", "Merge Request Time Taken"]}

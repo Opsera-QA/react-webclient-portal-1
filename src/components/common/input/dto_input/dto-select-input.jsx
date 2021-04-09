@@ -28,7 +28,7 @@ function DtoSelectInput({ fieldName, dataObject, setDataObject, groupBy, selectO
   }
 
   return (
-    <InputContainer className="custom-select-input">
+    <InputContainer className="custom-select-input my-2">
       <InputLabel field={field} />
       <DropdownList
         allowCreate={allowCreate}

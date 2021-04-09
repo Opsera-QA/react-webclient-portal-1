@@ -1,4 +1,5 @@
 import { axiosApiService } from "../../../../../../api/apiService";
+import baseActions from "utils/actionsBase";
 
 const argoActions = {};
 
@@ -78,6 +79,18 @@ argoActions.getArgoClusters = async (toolID, getAccessToken) => {
   return response;
 };
 
+
+argoActions.getArgoClustersV2 = async (toolID, getAccessToken, cancelTokenSource) => {
+  let postBody = {
+    params: {
+      tool: "argo",
+      toolId: toolID,
+    },
+  };
+  const apiUrl = `/tools/argo/clusters`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 argoActions.getArgoProjects = async (toolID, getAccessToken) => {
   let postBody = {
     params: {
@@ -96,6 +109,17 @@ argoActions.getArgoProjects = async (toolID, getAccessToken) => {
       throw error;
     });
   return response;
+};
+
+argoActions.getArgoProjectsV2 = async (toolID, getAccessToken, cancelTokenSource) => {
+  let postBody = {
+    params: {
+      tool: "argo",
+      toolId: toolID,
+    },
+  };
+  const apiUrl = `/tools/argo/projects`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 argoActions.getArgoApps = async (toolID, getAccessToken) => {

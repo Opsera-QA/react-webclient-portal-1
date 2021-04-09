@@ -14,6 +14,10 @@ import { axiosApiService } from "../../../../../../api/apiService";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import ModalLogs from "components/common/modal/modalLogs";
+import { defaultConfig, getColorByData, assignBooleanColors, adjustBarWidth,
+         capitalizeLegend } from "../../../charts-views";
+import ChartTooltip from "../../../ChartTooltip";
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
 function JenkinsDeploymentsStackedBarChart({ persona, date }) {
   const contextType = useContext(AuthContext);
@@ -41,6 +45,8 @@ function JenkinsDeploymentsStackedBarChart({ persona, date }) {
     try {
       const res = await axiosApiService(accessToken).post(apiUrl, postBody);
       let dataObject = res && res.data ? res.data.data[0].successfulDeploymentFrequency : [];
+      capitalizeLegend(dataObject?.data, ["failed", "success"]);
+      assignBooleanColors(dataObject.data);
       setData(dataObject);
       setLoading(false);
     } catch (err) {
@@ -98,47 +104,16 @@ function JenkinsDeploymentsStackedBarChart({ persona, date }) {
           ) : (
             <ResponsiveBar
               data={data ? data.data : []}
+              {...defaultConfig("Deployment Count", "Date", 
+                      false, true, "values", "yearMonthDate")}
+              {...config(getColorByData)}
+              {...adjustBarWidth(data?.data)}
               onClick={() => setShowModal(true)}
-              keys={config.keys}
-              indexBy="buildTime"
-              margin={{ top: 40, right: 110, bottom: 70, left: 100 }}
-              xScale={{ type: "point" }}
-              yScale={{ type: "linear", min: "auto", max: "auto", stacked: false, reverse: false }}
-              axisTop={null}
-              axisRight={null}
-              enableLabel={false}
-              axisBottom={config.axisBottom}
-              axisLeft={config.axisLeft}
-              pointSize={10}
-              pointBorderWidth={8}
-              pointLabel="y"
-              pointLabelYOffset={-12}
-              useMesh={true}
-              lineWidth={3.5}
-              legends={config.legends}
-              padding={0.3}
-              // layout={"horizontal"}
-              colors={({ id, data }) => data[`${id}_color`]}
-              borderColor={{ theme: "background" }}
-              colorBy="id"
-              defs={config.defs}
-              fill={config.fill}
-              tooltip={({ indexValue, color, value, id, data }) => (
-                <div>
-                  <strong style={{ color }}>Build Time: </strong> {indexValue}
-                  <br></br>
-                  <strong style={{ color }}> {id} Builds: </strong> {value}
-                  <br></br>
-                  <strong> Failure Rate: </strong> {data.failureRate.toFixed(2) + "%"}
-                </div>
-              )}
-              theme={{
-                tooltip: {
-                  container: {
-                    fontSize: "16px",
-                  },
-                },
-              }}
+              tooltip={({ indexValue, color, value, id, data }) => <ChartTooltip 
+                              titles = {["Build Time", `${capitalizeFirstLetter(id)} Builds`, "Failure Rate"]}
+                              values = {[indexValue, value, data?.failureRate?.toFixed(2) + "%"]}
+                              style = {false}
+                              color = {color} />}
             />
           )}
         </div>

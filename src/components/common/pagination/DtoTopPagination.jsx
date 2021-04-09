@@ -30,7 +30,7 @@ DtoTopPagination.propTypes = {
 };
 
 DtoTopPagination.defaultProps = {
-  pageSizeList: [25, 50, 100]
+  pageSizeList: [5, 10, 25, 50, 100]
 };
 
 export default DtoTopPagination;
