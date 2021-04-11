@@ -663,6 +663,14 @@ const breadcrumbs = {
     linkText: "Logs",
     icon: faListAlt
   },
+  blueprint: {
+    parent: undefined,
+    name: "blueprint",
+    path: paths.blueprint,
+    title: "Pipeline Blueprint",
+    linkText: "Pipeline Blueprint",
+    icon: faListAlt
+  },
 
   accessDenied: {
     parent: undefined,
