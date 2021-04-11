@@ -73,7 +73,7 @@ const toolFilterMetadata = {
     sortOption: {text: "Sort: Name", value: "name"},
     search: "",
     activeFilters: [],
-    viewType: "cards",
+    viewType: "card",
   },
   // TODO: If these are the same options everywhere, move to PageSort
   sortOptions: [
