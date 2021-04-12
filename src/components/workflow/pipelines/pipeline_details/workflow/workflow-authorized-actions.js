@@ -227,7 +227,7 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
 };
 
 /**
- * Handles all authorization of actions in tool registry.  It factors in the overall user roles and the individual object (pipeline)
+ * Handles all authorization of actions in git tasks.  It factors in the overall user roles and the individual object (pipeline)
  * access roles.
  * @param customerAccessRules
  * @param action
@@ -235,9 +235,6 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
  * @param objectRoles
  * @returns {boolean}
  *
- *
- * Administrator & Owner Only Roles:
- * duplicate_pipeline_btn, delete_pipeline_btn,
  *
  */
 workflowAuthorizedActions.gitItems = (customerAccessRules, action, owner, objectRoles) => {
@@ -271,7 +268,6 @@ workflowAuthorizedActions.gitItems = (customerAccessRules, action, owner, object
   }
 
   const userObjectRole = calculateUserObjectRole(customerAccessRules.Email, customerAccessRules.Groups, objectRoles);
-  //console.log("userObjectRole: ", objectRoles);
   if (userObjectRole === "administrator") {
     return true; //all actions are authorized to administrator
   }
