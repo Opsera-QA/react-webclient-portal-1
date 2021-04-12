@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import GitTaskTypeSelectInput from "components/common/list_of_values_input/git_tasks/GitTaskTypeSelectInput";
 import SFDCGitTaskEditorPanel from "./sfdc/SFDCGitTaskConfigurationPanel";
+import SFDCBranchStructuringTaskTypeConfigurationPanel from "./sfdc-branch-structure/SFDCBranchStructuringTaskTypeConfigurationPanel";
 
 function GitTasksConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   const getConfigurationPanel = () => {
@@ -9,6 +10,14 @@ function GitTasksConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTa
       case "sync-sfdc-repo":
         return (
           <SFDCGitTaskEditorPanel 
+            gitTasksDataDto={gitTasksDataDto}
+            setGitTasksConfigurationData={setGitTasksConfigurationData}
+            gitTasksConfigurationData={gitTasksConfigurationData}
+          />
+        );
+      case "sync-branch-structure":
+        return (
+          <SFDCBranchStructuringTaskTypeConfigurationPanel 
             gitTasksDataDto={gitTasksDataDto}
             setGitTasksConfigurationData={setGitTasksConfigurationData}
             gitTasksConfigurationData={gitTasksConfigurationData}
