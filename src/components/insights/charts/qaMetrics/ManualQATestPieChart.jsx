@@ -8,11 +8,12 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import {
-  defaultConfig, getColorByData, assignStandardColors,
+  defaultConfig, getColorByData,getColor, assignStandardColors,
   shortenPieChartLegend, mainColor,
 } from "../charts-views";
 import ChartTooltip from "../ChartTooltip";
 import { Col, Container, Row } from "react-bootstrap";
+import DataBlockWrapper from "../../../common/data_boxes/DataBlockWrapper";
 
 function ManualQATestPieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -80,6 +81,7 @@ function ManualQATestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
     }
 
     return (
+
       <div className="new-chart mb-3" style={{height: "300px", display: "flex"}}>
         <Container>
           <Row className="p-1">
@@ -91,7 +93,7 @@ function ManualQATestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
             </div></Col>
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                <div className="green">{metrics[1].data[0].firstPassYield+ "%"}</div>
+                <div className="yellow">{metrics[1].data[0].firstPassYield+ "%"}</div>
               </div>
               <div className="w-100 text-muted mb-1">First Pass Yield</div>
             </div></Col>
@@ -105,7 +107,7 @@ function ManualQATestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
             </div></Col>
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                <div className="green">{metrics[2].data[0].cumulativeDefects+ "%"}</div>
+                <div className="yellow">{metrics[2].data[0].cumulativeDefects+ "%"}</div>
               </div>
               <div className="w-100 text-muted mb-1">Cumulative Open Defects</div>
             </div></Col>
@@ -122,7 +124,7 @@ function ManualQATestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
         <ResponsivePie
           data={metrics[0]?.data[0]?.pairs}
           {...defaultConfig()}
-          {...config(getColorByData)}
+          {...config(getColor)}
           onClick={() => setShowModal(true)}
         />
       </div>
