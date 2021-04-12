@@ -66,14 +66,24 @@ function GitTaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled,
   }
 
   return (
-    <RoleAccessInlineInputBase
-      fieldName={fieldName}
-      dataObject={dataObject}
-      disabled={canEditRoles !== true || disabled}
-      saveData={saveData}
-      noDataMessage={getNoDataMessage()}
-      visible={visible}
-    />
+    <>
+      <RoleAccessInlineInputBase
+        fieldName={fieldName}
+        dataObject={dataObject}
+        disabled={canEditRoles !== true || disabled}
+        saveData={saveData}
+        noDataMessage={getNoDataMessage()}
+        visible={visible}
+      />
+      <div>
+        <div><b>Access Rule Legend</b></div>
+        <div><b>Everyone</b> has full access if no access rules are set.</div>
+        <div><b>Owners</b> and <b>Administrators</b> have full access.</div>
+        <div><b>Managers</b> can edit settings and run or stop tasks.</div>
+        <div><b>Users</b> can run and stop tasks.</div>
+        <div><b>Guests</b> have read only access.</div>
+      </div>
+    </>
   );
 }
 
