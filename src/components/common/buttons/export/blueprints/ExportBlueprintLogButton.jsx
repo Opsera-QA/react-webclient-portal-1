@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
-import ExportDataModal from "components/common/modal/export_data/ExportDataModal";
 import Button from "react-bootstrap/Button";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import ExportBlueprintDataModal from "components/common/modal/export_data/ExportBlueprintDataModal";
 
 //check if item can be parsed to JSON
 function isJson(item) {
@@ -32,7 +32,7 @@ function ExportBlueprintLogButton({isLoading, blueprintLog, pipelineId, runCount
 
   const formatBlueprintLogData = () => {
     let formattedData = [...blueprintLog];
-    
+
     //check each item in the completeInput array and format to match search results
     for (let i = 0; i < formattedData.length; i++) {
         let stepName = logData[i]?.api_response?.start?.step_name ? logData[i]?.api_response?.start?.step_name : logData[i]?.step_name;
@@ -42,8 +42,8 @@ function ExportBlueprintLogButton({isLoading, blueprintLog, pipelineId, runCount
         let body = JSON.stringify(logData[i]?.api_response?.current?.data?.body, null, 4);
         let apiResponse = logData[i]?.api_response?.current?.data?.apiResponse ? JSON.stringify(logData[i]?.api_response?.current?.data?.apiResponse, null, 4) : "ERROR: API response is unavailable";
         let status = logData[i]?.status;
-    
-    //code formatting necessary to format literals 
+
+    //code formatting necessary to format literals
     if(isJson(formattedData[i]) && !api){
       formattedData[i] = {
         step:`Step Name: ${stepName}\n
@@ -68,7 +68,7 @@ name: stepName};
       }
     }
   }
-    
+
     return formattedData;
   };
 
@@ -87,14 +87,12 @@ name: stepName};
           </Button>
         </div>
       </TooltipWrapper>
-      <ExportDataModal
+      <ExportBlueprintDataModal
         showModal={showExportModal}
-        handleCancelModal={closeModal}
-        setParentVisibility={setShowExportModal}
+        closeModal={closeModal}
         isLoading={isLoading}
         formattedData={formatBlueprintLogData()}
         rawData={blueprintLog}
-        exportFrom={"blueprint"}
         summaryData={summaryData}
         logData={logData}
       />

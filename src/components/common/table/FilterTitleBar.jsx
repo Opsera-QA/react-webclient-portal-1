@@ -6,7 +6,7 @@ function FilterTitleBar({ title, inlineFilters, titleIcon, isLoading }) {
   return (
     <div className="d-flex w-100 justify-content-between">
       <div className="d-none d-lg-block my-auto mr-2 filter-title-text text-nowrap">
-        <span><IconBase icon={titleIcon} isLoading={isLoading} className={"mr-1"} />{title}</span>
+        <span><IconBase icon={titleIcon} isLoading={isLoading} className={"mr-2"} />{title}</span>
       </div>
       <div className="d-flex">
         <div className="my-1">{inlineFilters}</div>

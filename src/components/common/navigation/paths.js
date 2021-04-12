@@ -6,6 +6,7 @@ paths.userRecord = "user/myUserRecord";
 paths.accessTokens = "user/accessTokens";
 paths.home = "";
 paths.logs = "logs";
+paths.blueprint = "blueprint";
 
 // Admin Paths
 paths.admin = "admin";

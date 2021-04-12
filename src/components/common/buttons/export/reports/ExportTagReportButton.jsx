@@ -1,13 +1,13 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
 import "jspdf-autotable";
-import ExportDataModal from "components/common/modal/export_data/ExportDataModal";
 import Button from "react-bootstrap/Button";
 import {faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import ExportReportsDataModal from "components/common/modal/export_data/ExportReportsDataModal";
 
-function ExportTagsInPipelineButton({isLoading, tagData, className}) {
+function ExportTagReportButton({isLoading, tagData, className}) {
   const [showExportModal, setShowExportModal] = useState(false);
 
   const closeModal = () => {
@@ -40,24 +40,22 @@ function ExportTagsInPipelineButton({isLoading, tagData, className}) {
           </Button>
         </div>
       </TooltipWrapper>
-      <ExportDataModal
+      <ExportReportsDataModal
         showModal={showExportModal}
-        handleCancelModal={closeModal}
+        closeModal={closeModal}
         setParentVisibility={setShowExportModal}
         isLoading={isLoading}
         formattedData={formatTagData()}
         rawData={rawDataResults()}
-        exportFrom={"tags_in_pipeline"}
-        csvEnabled={true}
-      />
+       />
     </>
   );
 }
 
-ExportTagsInPipelineButton.propTypes = {
+ExportTagReportButton.propTypes = {
   tagData: PropTypes.array,
   isLoading: PropTypes.bool,
   className: PropTypes.string
 };
 
-export default ExportTagsInPipelineButton;
+export default ExportTagReportButton;

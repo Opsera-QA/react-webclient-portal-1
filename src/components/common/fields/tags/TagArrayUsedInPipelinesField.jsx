@@ -11,8 +11,9 @@ import pipelineSummaryMetadata
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
+import TagsUsedInPipelineTable from "components/reports/tags/pipelines/TagsUsedInPipelineTable";
 import axios from "axios";
-import TagsUsedInPipelineTable from 'components/reports/tags/pipelines/TagsUsedInPipelineTable';
+
 
 function TagArrayUsedInPipelinesField({ tags, showTable }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -118,7 +119,7 @@ function TagArrayUsedInPipelinesField({ tags, showTable }) {
 
   return (
     <div>
-      <div className="form-text text-muted mb-2">
+      <div className="form-text text-muted mb-2  ml-2">
         <span>This tag combination is used in {pipelines.length} pipelines</span>
       </div>
       {getDisplay()}

@@ -325,7 +325,7 @@ function PipelineSummaryPanel({
 
   const getTagField = () => {
     return (
-      <Col xs={12} className="mt-2 mr-2 d-flex"><span className="text-muted mr-1">Tags:</span>
+      <Col xs={12} className="py-2 mr-2 d-flex"><span className="text-muted mr-1">Tags:</span>
 
         {!editTags && pipeline.tags &&
         <CustomBadgeContainer>
@@ -507,7 +507,7 @@ function PipelineSummaryPanel({
             Organization:</span> <span
             className="upper-case-first">{pipeline.organizationName}</span></Col>
 
-          <Col lg className="py-1"><span className="text-muted mr-1">Org Account:</span> {pipeline.account}</Col>
+          <Col lg className="py-2"><span className="text-muted mr-1">Org Account:</span> {pipeline.account}</Col>
           <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-2">Type:</span>
             {pipeline.type && !editType && pipelineHelpers.displayPipelineType(pipeline.type)}
             {authorizedAction("edit_pipeline_attribute", pipeline.owner)

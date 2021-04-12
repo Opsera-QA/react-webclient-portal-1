@@ -11,9 +11,10 @@ import Model from "core/data_model/model";
 import DashboardSummaryCard from "components/common/fields/dashboards/DashboardSummaryCard";
 import axios from "axios";
 import dashboardMetadata from "../../../insights/dashboards/dashboard-metadata";
-import LoadingIcon from "components/common/icons/LoadingIcon";
+import TagsUsedInDashboardTable from 'components/reports/tags/dashboards/TagsUsedInDashboardTable';
+import {getSingularOrPluralString} from "components/common/helpers/string-helpers";
 
-function TagArrayUsedInDashboardsField({ tags }) {
+function TagArrayUsedInDashboardsField({ tags, showTable }) {
   const { getAccessToken } = useContext(AuthContext);
   const [dashboards, setDashboards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -63,6 +64,7 @@ function TagArrayUsedInDashboardsField({ tags }) {
       const response = await adminTagsActions.getRelevantDashboardsV2(getAccessToken, cancelSource, tags);
 
       if (isMounted?.current === true && response?.data != null) {
+        console.log(response);
         setDashboards(response?.data?.data);
       }
     }
@@ -85,9 +87,18 @@ function TagArrayUsedInDashboardsField({ tags }) {
     );
   };
 
+  const getDisplay = () => {
+    if (showTable) {
+      return (
+        <TagsUsedInDashboardTable data={dashboards} loadData={loadData} isLoading={isLoading} isMounted={isMounted}/>
+        );
+    }
+
+    return (getDashboardCards());
+  };
 
   if (isLoading) {
-    return <div className={"mb-2"}><LoadingIcon isLoading={isLoading} className={"mr-2 my-auto"} />Loading Dashboards</div>;
+    return <LoadingDialog message={"Loading Dashboards"} size={"sm"} />;
   }
 
   if (!isLoading && tags == null || tags.length === 0) {
@@ -107,16 +118,17 @@ function TagArrayUsedInDashboardsField({ tags }) {
 
   return (
     <div>
-      <div className="form-text text-muted mb-2">
-        <span>This tag combination is used on {dashboards.length} dashboards</span>
+      <div className="form-text text-muted mb-2 ml-2">
+        <span>This tag combination is used on {dashboards.length} {getSingularOrPluralString(dashboards?.length, "dashboard","dashboards")}</span>
       </div>
-      {getDashboardCards()}
+      {getDisplay()}
     </div>
   );
 }
 
 TagArrayUsedInDashboardsField.propTypes = {
   tags: PropTypes.array,
+  showTable: PropTypes.bool
 };
 
 export default TagArrayUsedInDashboardsField;
