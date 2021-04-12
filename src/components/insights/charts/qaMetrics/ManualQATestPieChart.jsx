@@ -87,13 +87,15 @@ function ManualQATestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
           <Row className="p-1">
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                <div>{metrics[0].data[0].totalTests}</div>
+                <div>{metrics[0]?.data[0]?.totalTests}</div>
               </div>
               <div className="w-100 text-muted mb-1">Total Number of Tests Available</div>
             </div></Col>
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                <div className="green">{metrics[1].data[0].firstPassYield+ "%"}</div>
+                { metrics[1]?.data[0]?.firstPassYield ?
+                <div className="green">{metrics[1]?.data[0]?.firstPassYield+ "%"}</div>
+                  : <div>{"N/A"}</div>}
               </div>
               <div className="w-100 text-muted mb-1">First Pass Yield</div>
             </div></Col>
@@ -101,13 +103,15 @@ function ManualQATestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
           <Row className="p-1">
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                <div>{metrics[0].data[0].totalExecuted}</div>
+                <div>{metrics[0]?.data[0]?.totalExecuted}</div>
               </div>
               <div className="w-100 text-muted mb-1">Total Number of Tests executed</div>
             </div></Col>
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                <div>{metrics[2].data[0].cumulativeDefects+ "%"}</div>
+                { metrics[2]?.data[0]?.cumulativeDefects ?
+                <div>{metrics[2]?.data[0]?.cumulativeDefects+ "%"}</div>
+                : <div>{"N/A"}</div>}
               </div>
               <div className="w-100 text-muted mb-1">Cumulative Open Defects</div>
             </div></Col>
@@ -115,7 +119,7 @@ function ManualQATestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
           <Row className="p-1">
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                <div className="green">{metrics[0].data[0].passRate+ "%"}</div>
+                <div className="green">{metrics[0]?.data[0]?.passRate+ "%"}</div>
               </div>
               <div className="w-100 text-muted mb-1">Pass Rate</div>
             </div></Col>
@@ -124,7 +128,7 @@ function ManualQATestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
         <ResponsivePie
           data={metrics[0]?.data[0]?.pairs}
           {...defaultConfig()}
-          {...config(getColor)}
+          {...config(getColorByData)}
           onClick={() => setShowModal(true)}
         />
       </div>
