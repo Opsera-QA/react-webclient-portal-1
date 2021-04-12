@@ -59,6 +59,12 @@ const sfdcGitTaskConfigurationMetadata = {
       regexValidator: regexHelpers.regexTypes.generalText
     },
     {
+      label: "Conversion Type",
+      id: "conversionType",
+      maxLength: 20,
+      regexValidator: regexHelpers.regexTypes.generalText
+    },
+    {
       id: "gitUrl",
     },
     
@@ -109,8 +115,6 @@ const sfdcGitTaskConfigurationMetadata = {
   ],
   newObjectFields:
     {
-    type: "",
-    jobType: "",
     toolConfigId: "",
     autoScaleEnable: false,
     toolName: "",
@@ -118,7 +122,6 @@ const sfdcGitTaskConfigurationMetadata = {
     agentLabels: "",
     toolJobId: "",
     projectId: "",
-    buildType: "ant",
     gitToolId: "",
     gitUrl: "",
     sshUrl: "",
@@ -133,6 +136,7 @@ const sfdcGitTaskConfigurationMetadata = {
     sfdcToolId: "",
     sfdcToolName: "",
     accountUsername: "",
+    conversionType: "",
     }
 };
 
