@@ -13,6 +13,7 @@ import SFDCGitRepositoryInput from "../sfdc/inputs/SFDCGitRepositoryInput";
 import SFDCGitBranchInput from "../sfdc/inputs/SFDCGitBranchInput";
 import SFDCToolInput from "../sfdc/inputs/SFDCToolInput";
 import AgentLabelsMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
+import GitBranchTypeSelectionInput from "../sfdc/inputs/GitBranchTypeSelectionInput";
 
 function SFDCBranchStructuringTaskTypeConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   useEffect(() => {loadData();}, []);
@@ -43,6 +44,9 @@ function SFDCBranchStructuringTaskTypeConfigurationPanel({ gitTasksDataDto, gitT
       </Col>
       <Col lg={12}>
         <SFDCToolInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
+      </Col>
+      <Col lg={12}>
+        <GitBranchTypeSelectionInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
       </Col>
       <Col lg={12}>
         <SFDCJenkinsAccountInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} gitTasksDataDto={gitTasksDataDto} />
