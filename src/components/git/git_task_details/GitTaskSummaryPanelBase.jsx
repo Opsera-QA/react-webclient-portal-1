@@ -46,8 +46,9 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
     return response;
   };
 
-  const actionAllowed = (action) => {
-    return workflowAuthorizedActions.gitItems(getAccessRoleData(), action, gitTasksData?.getData("owner"), gitTasksData?.getData("roles"));
+  const actionAllowed = async (action) => {
+    const accessRoleData = await getAccessRoleData();
+    return workflowAuthorizedActions.gitItems(accessRoleData, action, gitTasksData?.getData("owner"), gitTasksData?.getData("roles"));
   };
 
   return (
@@ -55,6 +56,9 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
       <Row>
         <Col md={6}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"name"}/>
+        </Col>
+        <Col md={6}>
+          <TextFieldBase dataObject={gitTasksData} fieldName={"owner_name"}/>
         </Col>
         <Col md={6}>
           <SmartIdField model={gitTasksData} fieldName={"_id"}/>
