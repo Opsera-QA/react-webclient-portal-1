@@ -23,7 +23,7 @@ import dashboardsActions from "components/insights/dashboards/dashboards-actions
 import {Button} from "react-bootstrap";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
 import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date-helpers";
-import {truncateString} from "components/common/helpers/string-helpers";
+import {capitalizeFirstLetter, truncateString} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 const getTableHeader = (field) => {
@@ -146,6 +146,30 @@ export const getContactArrayColumn = (field, className) => {
         return array.map((item, index) => {
           return (`${item.name}:${item.email}:${item.user_id}${array.length > index + 1 ? ',' : ''}`);
         });
+      }
+
+      return "";
+    },
+    class: className ? className : "no-wrap-inline"
+  };
+};
+
+export const getTagColumn = (field, className, maxShown = 2) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: function stringifyArray(row) {
+      const array = row?.value;
+
+      if (Array.isArray(array) && array.length > 0) {
+        return (
+          //array.length > maxShown ? <TagField
+          <TooltipWrapper innerText={null}>
+            {array.map((tag, index) => {
+              return (`${capitalizeFirstLetter(tag.type)}: ${capitalizeFirstLetter(tag.value)}${array.length > index + 1 && maxShown < index + 1 ? ',' : ''}`);
+            })}
+          </TooltipWrapper>
+        );
       }
 
       return "";

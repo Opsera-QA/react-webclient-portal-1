@@ -71,7 +71,8 @@ function GitTaskDetailView() {
 
     if (isMounted.current === true && gitTask != null) {
       setGitTasksData(new Model(gitTask, gitTasksMetadata, false));
-      setCanDelete(workflowAuthorizedActions.gitItems(getAccessRoleData(), "delete-task", gitTask.owner, gitTask.roles));
+      const accessRoleData = await getAccessRoleData();
+      setCanDelete(workflowAuthorizedActions.gitItems(accessRoleData, "delete-task", gitTask.owner, gitTask.roles));
     }
   };
 
