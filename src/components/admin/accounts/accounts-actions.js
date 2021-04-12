@@ -275,15 +275,6 @@ accountsActions.getLdapUsersWithEmail = async (emailAddress, getAccessToken) => 
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
-// TODO: Remove when V2 is wired up everywhere
-accountsActions.getLdapUsersWithDomain = async (domain, getAccessToken) => {
-  const postBody = {
-    domain: domain
-  };
-  const apiUrl = "/users/account/users";
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
 accountsActions.getLdapUsersWithDomainV2 = async (getAccessToken, cancelTokenSource, domain) => {
   const postBody = {
     domain: domain
@@ -295,15 +286,6 @@ accountsActions.getLdapUsersWithDomainV2 = async (getAccessToken, cancelTokenSou
 accountsActions.getLdapGroupsWithEmail = async (emailAddress, getAccessToken) => {
   const postBody = {
     email: emailAddress
-  };
-  const apiUrl = "/users/account/groups";
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
-// TODO: Remove when V2 is wired up everywhere
-accountsActions.getLdapGroupsWithDomain = async (domain, getAccessToken) => {
-  const postBody = {
-    domain: domain
   };
   const apiUrl = "/users/account/groups";
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);

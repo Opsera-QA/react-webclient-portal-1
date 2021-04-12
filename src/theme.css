@@ -1265,12 +1265,9 @@ div.data-blocks-ellipses {
     background-color: #F3F3F1;
 }
 
-.filter-title {
-    background-color: #4D4283;
-    border-bottom: 1px solid #46415C;
-    color: #fff;
-    vertical-align: middle;
-    white-space: nowrap;
+.filter-title, .popover-title {
+    background-color: #3D3B36 !important;
+    color: #fef7fd;
 }
 
 .filter-title-text {
