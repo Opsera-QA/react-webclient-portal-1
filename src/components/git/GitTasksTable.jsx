@@ -5,7 +5,7 @@ import {
   getTableBooleanIconColumn,
   getTableDateColumn,
   getTableTextColumn,
-  getPipelineActivityStatusColumn
+  getPipelineActivityStatusColumn, getTagColumn
 } from "components/common/table/table-column-helpers";
 import gitTasksMetadata from "./git-tasks-metadata";
 import {useHistory} from "react-router-dom";
@@ -31,6 +31,7 @@ function GitTasksTable({ data, gitTasksFilterDto, setGitTasksFilterDto, loadData
       getTableTextColumn(fields.find(field => { return field.id === "name";}), "force-text-wrap"),
       getTableTextColumn(fields.find(field => { return field.id === "description";}), "force-text-wrap"),
       getTableTextColumn(fields.find(field => { return field.id === "type";})),
+      getTagColumn(fields.find(field => { return field.id === "tags";})),
       getTableDateColumn(fields.find(field => { return field.id === "createdAt";})),
       getTableBooleanIconColumn(fields.find(field => { return field.id === "active";})),
       getPipelineActivityStatusColumn(fields.find(field => { return field.id === "status";})),

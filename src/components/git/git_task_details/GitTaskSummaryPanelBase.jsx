@@ -28,12 +28,6 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
     return () => {
       source.cancel();
       isMounted.current = false;
@@ -81,7 +75,7 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
       </Row>
       <Row className={"mx-0 w-100 my-2"}>
         <div className={"mx-auto"}>
-          <div className={"mx-auto"}><GitTaskRunButton gitTasksData={gitTasksData} loadData={loadData} disable={!actionAllowed("run_task")} /></div>
+          <div className={"mx-auto"}><GitTaskRunButton gitTasksData={gitTasksData} loadData={loadData} actionAllowed={actionAllowed("run_task")} /></div>
         </div>
       </Row>
       <div className="px-3 mt-3">{gitTaskTypeSummaryCard}</div>

@@ -8,7 +8,7 @@ import {
   faSpinner,
   faStop,
   faStopCircle,
-  faTimesCircle, faTrash, faPlay
+  faTimesCircle, faTrash, faPlay, faTag
 } from "@fortawesome/pro-light-svg-icons";
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
 import WarningIcon from "../../common/icons/table/WarningIcon";
@@ -25,6 +25,10 @@ import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pip
 import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date-helpers";
 import {capitalizeFirstLetter, truncateString} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
+import CustomBadge from "components/common/badges/CustomBadge";
+import FieldLabel from "components/common/fields/FieldLabel";
+import FieldContainer from "components/common/fields/FieldContainer";
 
 const getTableHeader = (field) => {
   return field ? field.label : "";
@@ -154,7 +158,7 @@ export const getContactArrayColumn = (field, className) => {
   };
 };
 
-export const getTagColumn = (field, className, maxShown = 2) => {
+export const getTagColumn = (field, maxShown = 2, className) => {
   return {
     Header: getTableHeader(field),
     accessor: getTableAccessor(field),
@@ -162,12 +166,42 @@ export const getTagColumn = (field, className, maxShown = 2) => {
       const array = row?.value;
 
       if (Array.isArray(array) && array.length > 0) {
-        return (
-          //array.length > maxShown ? <TagField
-          <TooltipWrapper innerText={null}>
+        const tags =
+          <CustomBadgeContainer>
             {array.map((tag, index) => {
-              return (`${capitalizeFirstLetter(tag.type)}: ${capitalizeFirstLetter(tag.value)}${array.length > index + 1 && maxShown < index + 1 ? ',' : ''}`);
+              if (typeof tag !== "string") {
+                return (
+                  <CustomBadge
+                    badgeText={<span><span
+                      className="mr-1">{capitalizeFirstLetter(tag.type)}:</span>{capitalizeFirstLetter(tag.value)}</span>}
+                    icon={faTag}
+                    key={index}
+                  />
+                );
+              }
             })}
+          </CustomBadgeContainer>;
+
+        return (
+          <TooltipWrapper innerText={maxShown < array.length ? tags : null} title={"Tags"}>
+            <div>
+              <span className="item-field">
+              {array.map((tag, index) => {
+                if (index + 1 > maxShown) {
+                  return;
+                }
+
+                return (
+                  <span key={index}>
+                    <span className="mr-1 badge badge-light group-badge">
+                      {capitalizeFirstLetter(tag.type)}: {capitalizeFirstLetter(tag.value)}
+                    </span>
+                  </span>
+                );
+              })}
+                <span>{array.length > maxShown ? "..." : ""}</span>
+              </span>
+            </div>
           </TooltipWrapper>
         );
       }

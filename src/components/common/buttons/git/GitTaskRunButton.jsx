@@ -12,8 +12,9 @@ import SFDCViewOverlay from "components/git/git_task_details/configuration_forms
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import GitRunTaskModal from "components/git/git_task_details/GitRunTaskModal";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function GitTaskRunButton({gitTasksData, disable, className, loadData }) {
+function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAllowed }) {
   const [isCanceling, setIsCanceling] = useState(false);
   const {getAccessToken} = useContext(AuthContext);
   const history = useHistory();
@@ -56,26 +57,30 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData }) {
     if (gitTasksData?.getData("status") === "running") {
       return (
         <div className="p-3">
-          <Button variant="danger" onClick={handleCancelRunTask} disabled={isCanceling || disable}>
-            {isCanceling ?
-              <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/> :
-              <FontAwesomeIcon icon={faStop} fixedWidth className="mr-1"/>
-            } Cancel Task
-          </Button>
+          <TooltipWrapper innerText={actionAllowed === false ? "Your Access Role Level Prevents Stopping Tasks" : null}>
+            <Button variant="danger" onClick={handleCancelRunTask} disabled={isCanceling || disable}>
+              {isCanceling ?
+                <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/> :
+                <FontAwesomeIcon icon={faStop} fixedWidth className="mr-1"/>
+              } Cancel Task
+            </Button>
+          </TooltipWrapper>
         </div>
       );
     }
 
     return (
-      <Button
-        variant={"success"}
-        disabled={gitTasksData?.getData("status") === "running" || disable}
-        onClick={() => {setShowModal(true);}}
-      >
-        {gitTasksData?.getData("status") === "running" ?
-          (<span><IconBase isLoading={true} className={"mr-1"}/>Running Task</span>)
-          : (<span><FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/>Run Task</span>)}
-      </Button>
+      <TooltipWrapper innerText={actionAllowed === false ? "Your Access Role Level Prevents Running Tasks" : null}>
+        <Button
+          variant={"success"}
+          disabled={gitTasksData?.getData("status") === "running" || disable}
+          onClick={() => {setShowModal(true);}}
+        >
+          {gitTasksData?.getData("status") === "running" ?
+            (<span><IconBase isLoading={true} className={"mr-1"}/>Running Task</span>)
+            : (<span><FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/>Run Task</span>)}
+        </Button>
+      </TooltipWrapper>
     );
   };
 
@@ -97,7 +102,8 @@ GitTaskRunButton.propTypes = {
   gitTasksData: PropTypes.object,
   loadData: PropTypes.func,
   disable: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  actionAllowed: PropTypes.bool
 };
 
 export default GitTaskRunButton;
