@@ -93,7 +93,7 @@ function ManualQATestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
             </div></Col>
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                <div className="yellow">{metrics[1].data[0].firstPassYield+ "%"}</div>
+                <div className="green">{metrics[1].data[0].firstPassYield+ "%"}</div>
               </div>
               <div className="w-100 text-muted mb-1">First Pass Yield</div>
             </div></Col>
@@ -107,7 +107,7 @@ function ManualQATestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
             </div></Col>
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                <div className="yellow">{metrics[2].data[0].cumulativeDefects+ "%"}</div>
+                <div>{metrics[2].data[0].cumulativeDefects+ "%"}</div>
               </div>
               <div className="w-100 text-muted mb-1">Cumulative Open Defects</div>
             </div></Col>
