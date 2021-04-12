@@ -50,16 +50,13 @@ function ManualQATestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "qaKPIMetricsData", kpiConfiguration, dashboardTags);
-      console.log(kpiConfiguration);
       let dataObject = response?.data ? response?.data?.data[0]?.qaKPIMetricsData?.data : [];
-      console.log("this is the data",dataObject);
       assignStandardColors(dataObject[0]?.data[0]?.pairs);
       shortenPieChartLegend(dataObject[0]?.data[0]?.pairs);
 
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
-        console.log(metrics);
       }
     }
     catch (error) {
@@ -76,7 +73,7 @@ function ManualQATestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
   };
 
   const getChartBody = () => {
-    if (!Array.isArray(metrics) || metrics.length === 0) {
+    if (!Array.isArray(metrics[0]?.data[0]?.pairs) || metrics[0]?.data[0]?.pairs.length === 0) {
       return null;
     }
 
