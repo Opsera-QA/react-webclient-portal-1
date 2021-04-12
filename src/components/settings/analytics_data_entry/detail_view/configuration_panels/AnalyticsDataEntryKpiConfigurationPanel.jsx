@@ -4,6 +4,8 @@ import AnalyticsDataEntryKpiIdentifierSelectInput
   from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryKpiIdentifierSelectInput";
 import TempKpiConfigurationPanel
   from "components/settings/analytics_data_entry/detail_view/configuration_panels/temp/TempKpiConfigurationPanel";
+import FirstPassYieldConfiguration from "./firstPassYield/FirstPassYieldConfiguration";
+import CumulativeOpenDefectsConfiguration from "./cumulativeOpenDefects/CumulativeOpenDefectsConfiguration";
 
 function AnalyticsDataEntryKpiConfigurationPanel({ analyticsDataEntryModel, setAnalyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
   const getConfigurationPanel = () => {
@@ -12,6 +14,22 @@ function AnalyticsDataEntryKpiConfigurationPanel({ analyticsDataEntryModel, setA
       case "qa-manual-test":
         return (
           <TempKpiConfigurationPanel
+            analyticsDataEntryModel={analyticsDataEntryModel}
+            setKpiConfigurationData={setKpiConfigurationData}
+            kpiConfigurationData={kpiConfigurationData}
+          />
+        );
+      case "first-pass-yield":
+        return (
+          <FirstPassYieldConfiguration
+            analyticsDataEntryModel={analyticsDataEntryModel}
+            setKpiConfigurationData={setKpiConfigurationData}
+            kpiConfigurationData={kpiConfigurationData}
+          />
+        );
+      case "cumulative-open-defects":
+        return (
+          <CumulativeOpenDefectsConfiguration
             analyticsDataEntryModel={analyticsDataEntryModel}
             setKpiConfigurationData={setKpiConfigurationData}
             kpiConfigurationData={kpiConfigurationData}

@@ -48,12 +48,12 @@ function ManualQATestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "manualTestData", kpiConfiguration, dashboardTags);
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "qaKPIMetricsData", kpiConfiguration, dashboardTags);
       console.log(kpiConfiguration);
-      let dataObject = response?.data ? response?.data?.data[0]?.manualTestData?.data : [];
+      let dataObject = response?.data ? response?.data?.data[0]?.qaKPIMetricsData?.data : [];
       console.log("this is the data",dataObject);
-      assignStandardColors(dataObject[0]?.pairs);
-      shortenPieChartLegend(dataObject[0]?.pairs);
+      assignStandardColors(dataObject[0]?.data[0]?.pairs);
+      shortenPieChartLegend(dataObject[0]?.data[0]?.pairs);
 
 
       if (isMounted?.current === true && dataObject) {
@@ -85,30 +85,42 @@ function ManualQATestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
           <Row className="p-1">
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                <div>{metrics[0].totalTests}</div>
+                <div>{metrics[0].data[0].totalTests}</div>
               </div>
               <div className="w-100 text-muted mb-1">Total Number of Tests Available</div>
             </div></Col>
-          </Row>
-          <Row className="p-1">
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                <div>{metrics[0].totalExecuted}</div>
+                <div className="green">{metrics[1].data[0].firstPassYield+ "%"}</div>
               </div>
-              <div className="w-100 text-muted mb-1">Total Number of Tests executed</div>
+              <div className="w-100 text-muted mb-1">First Pass Yield</div>
             </div></Col>
           </Row>
           <Row className="p-1">
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                <div>{metrics[0].passRate+ "%"}</div>
+                <div>{metrics[0].data[0].totalExecuted}</div>
+              </div>
+              <div className="w-100 text-muted mb-1">Total Number of Tests executed</div>
+            </div></Col>
+            <Col><div className="metric-box text-center">
+              <div className="box-metric">
+                <div className="green">{metrics[2].data[0].cumulativeDefects+ "%"}</div>
+              </div>
+              <div className="w-100 text-muted mb-1">Cumulative Open Defects</div>
+            </div></Col>
+          </Row>
+          <Row className="p-1">
+            <Col><div className="metric-box text-center">
+              <div className="box-metric">
+                <div className="green">{metrics[0].data[0].passRate+ "%"}</div>
               </div>
               <div className="w-100 text-muted mb-1">Pass Rate</div>
             </div></Col>
           </Row>
         </Container>
         <ResponsivePie
-          data={metrics[0]?.pairs}
+          data={metrics[0]?.data[0]?.pairs}
           {...defaultConfig()}
           {...config(getColorByData)}
           onClick={() => setShowModal(true)}
