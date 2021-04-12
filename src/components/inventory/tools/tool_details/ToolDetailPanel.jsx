@@ -31,6 +31,7 @@ import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import AttributeEditorPanel from "components/inventory/tools/tool_details/AttributeEditorPanel";
 import ToggleTab from "components/common/tabs/detail_view/ToggleTab";
+import ScmToolAccountsPanel from "./ScmToolAccountsPanel";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
@@ -92,6 +93,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         return (
           <>
           {/*<CustomTab icon={faTags} tabName={"tagging"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tagging"}/>*/}
+          <CustomTab icon={faUsers} tabName={"scmaccounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"} disabled={!authorizedAction("edit_tool_account_tabs", toolData?.data)}/>
           </>
         );
       case "jira":
@@ -148,6 +150,8 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         return <ToolProjectsPanel toolData={toolData} isLoading={isLoading} loadData={loadData} />;
       case "pipelines":
         return <ToolPipelinesPanel toolData={toolData} />;
+      case "scmaccounts":
+        return <ScmToolAccountsPanel toolData={toolData} setToolData={setToolData} loadData={loadData} />;
       default:
         return null;
     }
