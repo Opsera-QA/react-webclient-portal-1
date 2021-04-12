@@ -58,6 +58,9 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
           <TextFieldBase dataObject={gitTasksData} fieldName={"name"}/>
         </Col>
         <Col md={6}>
+          <TextFieldBase dataObject={gitTasksData} fieldName={"owner_name"}/>
+        </Col>
+        <Col md={6}>
           <SmartIdField model={gitTasksData} fieldName={"_id"}/>
         </Col>
         <Col md={6}>
