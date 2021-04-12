@@ -107,8 +107,12 @@ import MetricbeatOutNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/
 
 import {
   getDateObjectFromKpiConfiguration,
+  getTagsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 import {Col} from "react-bootstrap";
+
+//QA Testing
+import ManualQATestPieChart from "./qaMetrics/ManualQATestPieChart";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -323,8 +327,8 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "jenkins-change-failure-rate":
         return (
           <Col md={12} className="p-2">
-            <JenkinsChangeFailureRate 
-              persona={"developer"} 
+            <JenkinsChangeFailureRate
+              persona={"developer"}
               date={getDateObject(kpiConfig)}
             />
           </Col>
@@ -490,15 +494,13 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-maintainability-rating":
         return (
-          <Col xl={6} md={12} className="p-2">
-            <SonarMaintainabilityRatingLineChart
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
+          <SonarMaintainabilityRatingLineChart
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
         );
       case "sonar-bugs":
         return (
@@ -1111,14 +1113,27 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "bitbucket-rejected-merge-requests":
         return (
           <Col md={12} className="p-2">
-            <BitbucketRejectedMergeRequestsTable
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
+          <BitbucketRejectedMergeRequestsTable
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+      </Col>
+        );
+      // QA Testing
+      case "qa-manual-test":
+        return (
+          <Col md={12} className="p-2">
+          <ManualQATestPieChart
+            kpiConfiguration={kpiConfig}
+            setKpiConfiguration={setKpiConfig}
+            dashboardData={dashboardData}
+            setKpis={setKpis}
+            index={index}
+          />
+        </Col>
         );
       default:
         return null;

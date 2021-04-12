@@ -113,6 +113,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "bitbucket-rejected-merge-requests",
     "opsera-mean-time-to-restore",
     "opsera-nexus-pipeline-step-info",
+    "qa-manual-test",
   ];
 
   const getKpiFilters = (filter) => {
