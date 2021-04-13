@@ -494,6 +494,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-maintainability-rating":
         return (
+        <Col xl={6} md={12} className="p-2">
           <SonarMaintainabilityRatingLineChart
             kpiConfiguration={kpiConfig}
             setKpiConfiguration={setKpiConfig}
@@ -501,6 +502,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             setKpis={setKpis}
             index={index}
           />
+        </Col>
         );
       case "sonar-bugs":
         return (
