@@ -4,18 +4,18 @@ import modelHelpers from "components/common/model/modelHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import tempKpiConfigurationMetadata
-  from "components/settings/analytics_data_entry/detail_view/configuration_panels/temp/temp-kpi-configuration-metadata";
+import cumulativeOpenDefectsMetadata
+  from "components/settings/analytics_data_entry/detail_view/configuration_panels/cumulative_open_defects/cumulative-open-defects-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PipelineSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineSelectInput";
 import NumberInputBase from "components/common/inputs/text/NumberInputBase";
 import DateTimeRangeInputBase from "components/common/inputs/date/DateTimeRangeInputBase";
 
-function TempKpiConfigurationPanel({ analyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
+function CumulativeOpenDefectsConfiguration({ analyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
   useEffect(() => {loadData();}, []);
 
   const loadData = async () => {
-    const configurationData = modelHelpers.getToolConfigurationModel(analyticsDataEntryModel.getData("data"), tempKpiConfigurationMetadata);
+    const configurationData = modelHelpers.getToolConfigurationModel(analyticsDataEntryModel.getData("data"), cumulativeOpenDefectsMetadata);
     setKpiConfigurationData({...configurationData});
   };
 
@@ -44,28 +44,22 @@ function TempKpiConfigurationPanel({ analyticsDataEntryModel, kpiConfigurationDa
         <TextInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"release"} />
       </Col>
       <Col lg={6}>
-        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_total"} />
+        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_defects"} />
       </Col>
       <Col lg={6}>
-        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_executed"} />
+        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"valid_defects_open"} />
       </Col>
       <Col lg={6}>
-        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_passed"} />
-      </Col>
-      <Col lg={6}>
-        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_failed"} />
-      </Col>
-      <Col lg={6}>
-        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_skipped"} />
+        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"valid_defects_closed"} />
       </Col>
     </Row>
   );
 }
 
-TempKpiConfigurationPanel.propTypes = {
+CumulativeOpenDefectsConfiguration.propTypes = {
   analyticsDataEntryModel: PropTypes.object,
   kpiConfigurationData: PropTypes.object,
   setKpiConfigurationData: PropTypes.func,
 };
 
-export default TempKpiConfigurationPanel;
+export default CumulativeOpenDefectsConfiguration;

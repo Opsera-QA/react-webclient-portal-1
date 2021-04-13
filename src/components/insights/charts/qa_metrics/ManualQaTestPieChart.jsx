@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import { ResponsivePie } from "@nivo/pie";
-import config from "./manualQATestPieChartConfig";
+import config from "components/insights/charts/qa_metrics/manualQaTestPieChartConfig";
 import ModalLogs from "components/common/modal/modalLogs";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
@@ -15,7 +15,7 @@ import ChartTooltip from "../ChartTooltip";
 import { Col, Container, Row } from "react-bootstrap";
 import DataBlockWrapper from "../../../common/data_boxes/DataBlockWrapper";
 
-function ManualQATestPieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -158,11 +158,11 @@ function ManualQATestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
   );
 }
 
-ManualQATestPieChart.propTypes = {
+ManualQaTestPieChart.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
   setKpis: PropTypes.func};
 
-export default ManualQATestPieChart;
+export default ManualQaTestPieChart;

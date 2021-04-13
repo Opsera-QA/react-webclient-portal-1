@@ -1,5 +1,5 @@
-const openDefectsMetadata = {
-  type: "COD Configuration",
+const qaManualTestConfigurationMetadata = {
+  type: "Temp KPI Configuration",
   fields: [
     {
       label: "Domain Name",
@@ -40,22 +40,34 @@ const openDefectsMetadata = {
       maxLength: 20
     },
     {
-      label: "Total Defects",
-      id: "total_defects",
+      label: "Total Test Cases",
+      id: "test_cases_total",
       maxLength: 5,
       isRequired: true
     },
     {
-      label: "Total Valid Defects Open",
-      id: "valid_defects_open",
+      label: "Executed Test Cases",
+      id: "test_cases_executed",
       maxLength: 5,
       isRequired: true
     },
     {
-      label: "Total Valid Defects Closed",
-      id: "valid_defects_closed",
+      label: "Passed Test Cases",
+      id: "test_cases_passed",
       maxLength: 5,
-      // isRequired: true
+      isRequired: true
+    },
+    {
+      label: "Failed Test Cases",
+      id: "test_cases_failed",
+      maxLength: 5,
+      isRequired: true
+    },
+    {
+      label: "Skipped Test Cases",
+      id: "test_cases_skipped",
+      maxLength: 5,
+      isRequired: true
     },
   ],
   newObjectFields: {
@@ -66,10 +78,12 @@ const openDefectsMetadata = {
     to: new Date(),
     sprint: "",
     release: "",
-    total_defects: 0,
-    valid_defects_open: 0,
-    valid_defects_closed: 0
+    test_cases_total: 0,
+    test_cases_executed: 0,
+    test_cases_passed: 0,
+    test_cases_failed: 0,
+    test_cases_skipped: 0
   }
 };
 
-export default openDefectsMetadata;
+export default qaManualTestConfigurationMetadata;
