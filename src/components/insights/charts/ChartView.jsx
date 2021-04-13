@@ -317,30 +317,24 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "jenkins-deployment-frequency":
         return (
-          <Col xl={6} md={12} className="p-2">
             <JenkinsDeploymentFrequencyLineChart
               persona={"developer"}
               date={getDateObject(kpiConfig)}
             />
-          </Col>
         );
       case "jenkins-change-failure-rate":
         return (
-          <Col md={12} className="p-2">
             <JenkinsChangeFailureRate
               persona={"developer"}
               date={getDateObject(kpiConfig)}
             />
-          </Col>
         );
       case "jenkins-deployments-counts":
         return (
-          <Col xl={6} md={12} className="p-2">
             <JenkinsDeploymentsCountsBarChart
               persona={"developer"}
               date={getDateObject(kpiConfig)}
             />
-          </Col>
         );
       case "jenkins-recent-build-status":
         return (
@@ -858,39 +852,31 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       // Metricbeat KPIs
       case "metricbeat-kubernetes-cpu-usage":
         return (
-          <Col xl={6} md={12} className="p-2">
             <MetricbeatCpuUsageByTimeLineChart
               persona={"developer"}
               date={getDateObject(kpiConfig)}
             />
-          </Col>
         );
       case "metricbeat-kubernetes-memory-usage":
         return (
-          <Col xl={6} md={12} className="p-2">
             <MetricbeatMemoryUsageByTimeLineChart
               persona={"developer"}
               date={getDateObject(kpiConfig)}
             />
-          </Col>
         );
       case "metricbeat-kubernetes-in-network-usage":
         return (
-          <Col xl={6} md={12} className="p-2">
             <MetricbeatInNetworkTrafficByTimeLineChart
               persona={"developer"}
               date={getDateObject(kpiConfig)}
             />
-          </Col>
         );
       case "metricbeat-kubernetes-out-network-usage":
         return (
-          <Col xl={6} md={12} className="p-2">
             <MetricbeatOutNetworkTrafficByTimeLineChart
               persona={"developer"}
               date={getDateObject(kpiConfig)}
             />
-          </Col>
         );
 
       // Github KPIs
