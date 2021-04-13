@@ -27,10 +27,15 @@ const scmCreateAccountMetadata = {
         regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
       },
       {
-        label: "Name",
+        label: "Account Name",
         id: "reviewerName",
         isRequired: true,
         maxLength: 100
+      },
+      {
+        label: "Account Type",
+        id: "accountType",
+        isRequired: true,        
       },
       {
         label: "Password",
@@ -107,11 +112,29 @@ const scmCreateAccountMetadata = {
       workspaceName: "",
       repository: "",
       reviewerName: "",
+      accountType: "",
       accountPassword: "",
       secretPrivateKey: "",
       secretAccessTokenKey: "",
       twoFactorAuthentication: false,
     },
+    scmAccountTypeArray: [
+      {
+        "name": "Reviewer",
+        "value": "reviewer",
+        "disabled": false
+      },
+      // {
+      //   "name": "Maintainer",
+      //   "value": "maintainer",
+      //   "disabled": true
+      // },
+      // {
+      //   "name": "Developer",
+      //   "value": "developer",
+      //   "disabled": true
+      // },
+    ],
   };
   
   
