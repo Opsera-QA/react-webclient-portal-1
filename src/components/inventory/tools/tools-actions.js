@@ -139,7 +139,7 @@ toolsActions.getToolLovs = async (getAccessToken) => {
 
 toolsActions.getToolLovsV2 = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = `/registry/configs/summary`;
-  return await baseActions.apiGetCall(getAccessToken, cancelTokenSource, apiUrl);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 // TODO: Remove when all references are updated to V2
@@ -153,7 +153,7 @@ toolsActions.getRelevantPipelinesV2 = async (getAccessToken, cancelTokenSource, 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-toolsActions.updateToolConfiguration = async (toolData, getAccessToken) => {  
+toolsActions.updateToolConfiguration = async (toolData, getAccessToken) => {
   const apiUrl = `/registry/${toolData._id}/update`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, toolData);
 };
@@ -195,7 +195,7 @@ toolsActions.saveKeyPasswordToVault = async (toolConfigurationData, fieldName, v
 
 toolsActions.saveToolConfiguration = async (toolData, configurationItem, getAccessToken) => {
   let newToolData = toolData.getPersistData();
-  newToolData["configuration"] = configurationItem.configuration;  
+  newToolData["configuration"] = configurationItem.configuration;
   return await toolsActions.updateToolConfiguration(newToolData, getAccessToken);
 };
 
@@ -218,11 +218,6 @@ toolsActions.checkSFDXToolConnection = async (getAccessToken, toolDataDto, selec
     "tool": "sfdc"
   };
   const apiUrl = `/tools/sfdc/check-connectivity`;
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
-toolsActions.getScmReviewers = async (getAccessToken, postBody) => {  
-  const apiUrl = `/connectors/bitbucket/getReviewers`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
