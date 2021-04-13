@@ -1,19 +1,17 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import DateTimeInput from "components/common/inputs/date/DateTimeInput";
 
+// TODO: Refactor
 function DateTimeRangeInputBase({ setDataFunction, fromFieldName, toFieldName, dataObject, setDataObject, disabled, className }) {
-  const [errorMessage, setErrorMessage] = useState("");
-
   return (
     <Row className={className}>
       <Col sm={12} md={6}>
         <DateTimeInput
           fieldName={fromFieldName}
           dataObject={dataObject}
-          maxDate={dataObject.getData(toFieldName)}
           disabled={disabled}
           setDataObject={setDataObject}
           setDataFunction={setDataFunction}
@@ -23,15 +21,11 @@ function DateTimeRangeInputBase({ setDataFunction, fromFieldName, toFieldName, d
         <DateTimeInput
           fieldName={toFieldName}
           dataObject={dataObject}
-          minDate={dataObject.getData(fromFieldName)}
           disabled={disabled}
           setDataObject={setDataObject}
           setDataFunction={setDataFunction}
         />
       </Col>
-      <small className="invalid-feedback">
-        <div>{errorMessage}</div>
-      </small>
     </Row>
   );
 }
