@@ -139,7 +139,7 @@ toolsActions.getToolLovs = async (getAccessToken) => {
 
 toolsActions.getToolLovsV2 = async (getAccessToken, cancelTokenSource) => {
   const apiUrl = `/registry/configs/summary`;
-  return await baseActions.apiGetCall(getAccessToken, cancelTokenSource, apiUrl);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 // TODO: Remove when all references are updated to V2

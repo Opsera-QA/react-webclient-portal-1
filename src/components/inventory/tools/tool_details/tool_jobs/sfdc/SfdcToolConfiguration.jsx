@@ -76,7 +76,7 @@ function SfdcToolConfiguration({ toolData }) {
   };
 
   const getDynamicFields = () => {
-    if (sfdcConfigurationDto.getData("buildType") === "sfdx" && sfdcConfigurationDto.getData("checkConnection") === true) {
+    if (sfdcConfigurationDto.getData("buildType") === "sfdx") {
       return (
         <>
         <BooleanToggleInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"checkConnection"} />

@@ -1,5 +1,5 @@
-const tempKpiConfigurationMetadata = {
-  type: "Temp KPI Configuration",
+const cumulativeOpenDefectsMetadata = {
+  type: "Cumulative Open Defects Configuration",
   fields: [
     {
       label: "Domain Name",
@@ -40,34 +40,22 @@ const tempKpiConfigurationMetadata = {
       maxLength: 20
     },
     {
-      label: "Total Test Cases",
-      id: "test_cases_total",
+      label: "Total Defects",
+      id: "total_defects",
       maxLength: 5,
       isRequired: true
     },
     {
-      label: "Executed Test Cases",
-      id: "test_cases_executed",
+      label: "Total Valid Defects Open",
+      id: "valid_defects_open",
       maxLength: 5,
       isRequired: true
     },
     {
-      label: "Passed Test Cases",
-      id: "test_cases_passed",
+      label: "Total Valid Defects Closed",
+      id: "valid_defects_closed",
       maxLength: 5,
-      isRequired: true
-    },
-    {
-      label: "Failed Test Cases",
-      id: "test_cases_failed",
-      maxLength: 5,
-      isRequired: true
-    },
-    {
-      label: "Skipped Test Cases",
-      id: "test_cases_skipped",
-      maxLength: 5,
-      isRequired: true
+      // isRequired: true
     },
   ],
   newObjectFields: {
@@ -78,12 +66,10 @@ const tempKpiConfigurationMetadata = {
     to: new Date(),
     sprint: "",
     release: "",
-    test_cases_total: 0,
-    test_cases_executed: 0,
-    test_cases_passed: 0,
-    test_cases_failed: 0,
-    test_cases_skipped: 0
+    total_defects: 0,
+    valid_defects_open: 0,
+    valid_defects_closed: 0
   }
 };
 
-export default tempKpiConfigurationMetadata;
+export default cumulativeOpenDefectsMetadata;
