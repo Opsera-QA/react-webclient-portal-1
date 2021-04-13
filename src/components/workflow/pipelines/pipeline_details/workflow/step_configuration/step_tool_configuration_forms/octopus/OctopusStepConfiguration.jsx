@@ -93,17 +93,83 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
         value: thresholdVal,
       },
     };
-    parentCallback(item);
-    await octopusActions.createOctopusProject({pipelineId: pipelineId, stepId: stepId}, getAccessToken)
-      .then(function (response) {
-        return;
+    let validateDepVariables = await validateDeploymentVariables();
+    if (validateDepVariables) {
+      await createDeploymentEnvironments();
+      parentCallback(item);
+      await createOctopusProject();8
+    }
+  };
+
+  const createOctopusProject = async () => {
+    await octopusActions
+      .createOctopusProject({ pipelineId: pipelineId, stepId: stepId }, getAccessToken)
+      .then(async (response) => {
+        await removeSensitiveCredentials();
       })
       .catch(function (error) {
         console.log(error);
-        let errorMesage = (error && error.error && error.error.response && error.error.response.data) ? error.error.response.data : "";
-        toastContext.showErrorDialog( `Error in octopus Project Creation:  ${errorMesage}`);
-        return;
-  });
+        let errorMesage =
+          error && error.error && error.error.response && error.error.response.data ? error.error.response.data : "";
+        toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
+      });
+  };
+
+  const removeSensitiveCredentials = async () => {
+    let deploymentVariablesCopy = octopusStepConfigurationDto.getData("deploymentVariables");
+    if (octopusStepConfigurationDto.getData("specifyDepVariables")) {
+      for (let item in octopusStepConfigurationDto.getData("deploymentVariables")) {
+        if (octopusStepConfigurationDto.getData("deploymentVariables")[item]["sensitive"]) {
+          deploymentVariablesCopy.splice(item, 1);
+        }
+      }
+    }
+    if (deploymentVariablesCopy.length !== octopusStepConfigurationDto.getData("deploymentVariables").length) {
+      let newDataObject = octopusStepConfigurationDto;
+      newDataObject.setData("deploymentVariables", deploymentVariablesCopy);
+      setOctopusStepConfigurationDataDto({ ...newDataObject });
+      const item = {
+        configuration: octopusStepConfigurationDto.getPersistData(),
+        threshold: {
+          type: thresholdType,
+          value: thresholdVal,
+        },
+      };
+      parentCallback(item);
+    }
+  };
+
+  const createDeploymentEnvironments = async () => {
+    if (octopusStepConfigurationDto.getData("specifyDepVariables")) {
+      for (let item in octopusStepConfigurationDto.getData("deploymentVariables")) {
+        octopusStepConfigurationDto.getData("deploymentVariables")[item]["scope"] = {
+          environment: [octopusStepConfigurationDto.getData("environmentId")],
+        };
+      }
+    }
+  };
+
+  const validateDeploymentVariables = async () => {
+    if (octopusStepConfigurationDto.getData("specifyDepVariables")) {
+      for (let item in octopusStepConfigurationDto.getData("deploymentVariables")) {
+        if (Object.keys(octopusStepConfigurationDto.getData("deploymentVariables")[item]).length > 4) {
+          let errorMesage = "Validate deployment Variables, Please refer to specified deployment variables format";
+          toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
+          return false;
+        }
+        if (
+          !octopusStepConfigurationDto.getData("deploymentVariables")[item]["description"] ||
+          !octopusStepConfigurationDto.getData("deploymentVariables")[item]["name"] ||
+          !octopusStepConfigurationDto.getData("deploymentVariables")[item]["value"]
+        ) {
+          let errorMesage =
+            "Missing required fields for deployment variables, Please refer to specified deployment variables format";
+          toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
+          return false;
+        }
+      }
+    }
+    return true;
   };
 
   if (isLoading || octopusStepConfigurationDto === undefined) {
