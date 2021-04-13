@@ -106,7 +106,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
     await octopusActions
       .createOctopusProject({ pipelineId: pipelineId, stepId: stepId, variableSet: octopusStepConfigurationDto.getData("specifyDepVariables") ?  octopusStepConfigurationDto.getData("deploymentVariables") : [] }, getAccessToken)
       .then(async (response) => {
-        await removeSensitiveCredentials();
+        return response;
       })
       .catch(function (error) {
         console.log(error);
@@ -114,30 +114,6 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
           error && error.error && error.error.response && error.error.response.data ? error.error.response.data : "";
         toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
       });
-  };
-
-  const removeSensitiveCredentials = async () => {
-    let deploymentVariablesCopy = octopusStepConfigurationDto.getData("deploymentVariables");
-    if (octopusStepConfigurationDto.getData("specifyDepVariables")) {
-      for (let item in octopusStepConfigurationDto.getData("deploymentVariables")) {
-        if (octopusStepConfigurationDto.getData("deploymentVariables")[item]["sensitive"]) {
-          deploymentVariablesCopy.splice(item, 1);
-        }
-      }
-    }
-    if (deploymentVariablesCopy.length !== octopusStepConfigurationDto.getData("deploymentVariables").length) {
-      let newDataObject = octopusStepConfigurationDto;
-      newDataObject.setData("deploymentVariables", deploymentVariablesCopy);
-      setOctopusStepConfigurationDataDto({ ...newDataObject });
-      const item = {
-        configuration: octopusStepConfigurationDto.getPersistData(),
-        threshold: {
-          type: thresholdType,
-          value: thresholdVal,
-        },
-      };
-      parentCallback(item);
-    }
   };
 
   const createDeploymentEnvironments = async () => {
@@ -152,6 +128,11 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
 
   const validateDeploymentVariables = async () => {
     if (octopusStepConfigurationDto.getData("specifyDepVariables")) {
+      if (octopusStepConfigurationDto.getData("deploymentVariables").length === 0) {
+        let errorMesage = "Please specify deployment variables.";
+        toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
+        return false;
+      }
       for (let item in octopusStepConfigurationDto.getData("deploymentVariables")) {
         if (Object.keys(octopusStepConfigurationDto.getData("deploymentVariables")[item]).length > 4) {
           let errorMesage = "Validate deployment Variables, Please refer to specified deployment variables format";
@@ -376,6 +357,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
               setRecordDto={setOctopusStepConfigurationDataDto}
               createRecord={callbackFunction}
               updateRecord={callbackFunction}
+              showSuccessToasts={false}
               lenient={true}
             />
             <CloseButton isLoading={isLoading} closeEditorCallback={closeEditorPanel} />
