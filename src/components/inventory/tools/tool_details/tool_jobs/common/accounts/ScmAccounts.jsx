@@ -12,12 +12,14 @@ import scmCreateAccountMetadata from './scm-create-account-metadata';
 function ScmAccounts({ toolData, loadData, isLoading }) {
   const [showCreateAccountModal, setShowCreateAccountModal] = useState(false);
   const [scmAccountDataDto, setScmAccountDataDto] = useState(undefined);
+  const [editMode, setEditMode] = useState(false);
 
   const createScmAccount = () => {
     setScmAccountDataDto(new Model(Object.assign(scmCreateAccountMetadata.newModelBase, {
       toolId: toolData.getData("_id"),
       service: toolData.getData("tool_identifier")
     }), scmCreateAccountMetadata, true));    
+    setEditMode(false);
     setShowCreateAccountModal(true);
   };
 
@@ -25,6 +27,7 @@ function ScmAccounts({ toolData, loadData, isLoading }) {
     setScmAccountDataDto(
       new Model(toolData.getData("accounts")[rowData.index], scmCreateAccountMetadata, false)
     );
+    setEditMode(true);
     setShowCreateAccountModal(true);
   };
 
@@ -49,6 +52,8 @@ function ScmAccounts({ toolData, loadData, isLoading }) {
         loadData={loadData} 
         scmAccountDataDto={scmAccountDataDto}
         setScmAccountDataDto={setScmAccountDataDto}
+        editMode={editMode}
+        setEditMode={setEditMode}
       />
     </div>
   );

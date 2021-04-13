@@ -1,7 +1,7 @@
 import regexHelpers from "utils/regexHelpers";
 
 const scmCreateAccountMetadata = {
-    type: "SCM Account Credential",
+    type: "Account Credential",
     fields: [      
       {
         label: "Tool",

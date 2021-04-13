@@ -9,11 +9,14 @@ function NewScmAccountModal({
   showModal, 
   loadData, 
   scmAccountDataDto, 
-  setScmAccountDataDto 
+  setScmAccountDataDto,
+  editMode,
+  setEditMode
 }) {
 
   const handleClose = async () => {
     setShowModal(false);
+    setEditMode(false);
     loadData();
   };
 
@@ -29,6 +32,7 @@ function NewScmAccountModal({
         scmAccountDataDto={scmAccountDataDto}
         setScmAccountDataDto={setScmAccountDataDto}
         handleClose={handleClose}
+        editMode={editMode}
       />      
     </CreateModal>
   );
@@ -41,7 +45,9 @@ NewScmAccountModal.propTypes = {
   loadData: PropTypes.func,
   scmAccountDataDto: PropTypes.object,
   setScmAccountDataDto: PropTypes.func,
-  credentialId: PropTypes.string,  
+  credentialId: PropTypes.string,
+  editMode: PropTypes.bool,
+  setEditMode: PropTypes.func,
 };
 
 export default NewScmAccountModal;
