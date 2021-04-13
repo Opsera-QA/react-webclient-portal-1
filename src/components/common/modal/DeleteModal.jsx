@@ -11,7 +11,7 @@ function DeleteModal({ dataObject, showModal, setShowModal, handleDelete }) {
   };
 
   return (
-    <Modal size="md" show={showModal} onHide={handleClose} backdrop="static" centered>
+    <Modal size="md" className={"delete-modal"} show={showModal} onHide={handleClose} backdrop="static" centered>
       <Modal.Header closeButton>
         <Modal.Title>Confirm {dataObject.getType()} Delete</Modal.Title>
       </Modal.Header>

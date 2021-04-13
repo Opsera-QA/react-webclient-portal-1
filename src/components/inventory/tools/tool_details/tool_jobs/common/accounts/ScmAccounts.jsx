@@ -1,61 +1,63 @@
-import React, { useState } from "react";
-import { Button } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import React, {useContext, useState} from "react";
 import ScmAccountsTable from "./ScmAccountsTable";
 import Model from "core/data_model/model";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
-import NewScmAccountModal from './NewScmAccountModal';
+import NewScmAccountOverlay from './NewScmAccountModal';
 import scmCreateAccountMetadata from './scm-create-account-metadata';
+import FilterContainer from "components/common/table/FilterContainer";
+import {faTags} from "@fortawesome/pro-light-svg-icons";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function ScmAccounts({ toolData, loadData, isLoading }) {
-  const [showCreateAccountModal, setShowCreateAccountModal] = useState(false);
-  const [scmAccountDataDto, setScmAccountDataDto] = useState(undefined);
-  const [editMode, setEditMode] = useState(false);
+  const toastContext = useContext(DialogToastContext);
 
-  const createScmAccount = () => {
-    setScmAccountDataDto(new Model(Object.assign(scmCreateAccountMetadata.newModelBase, {
-      toolId: toolData.getData("_id"),
-      service: toolData.getData("tool_identifier")
-    }), scmCreateAccountMetadata, true));    
-    setEditMode(false);
-    setShowCreateAccountModal(true);
+  const editScmAccount = (rowData) => {
+    let scmAccountModel = new Model(toolData.getData("accounts")[rowData.index], scmCreateAccountMetadata, false);
+    toastContext.showOverlayPanel(
+      <NewScmAccountOverlay
+        toolData={toolData}
+        loadData={loadData}
+        scmAccountData={scmAccountModel}
+      />
+    );
   };
 
-  const selectedJobRow = (rowData) => {    
-    setScmAccountDataDto(
-      new Model(toolData.getData("accounts")[rowData.index], scmCreateAccountMetadata, false)
+
+  const createAccount = () => {
+    let scmAccountModel = new Model({...scmCreateAccountMetadata.newModelBase}, scmCreateAccountMetadata, true);
+    scmAccountModel.setData("toolId", toolData.getData("_id"));
+    scmAccountModel.setData("service", toolData.getData("tool_identifier"));
+    toastContext.showOverlayPanel(
+      <NewScmAccountOverlay
+        toolData={toolData}
+        loadData={loadData}
+        scmAccountData={scmAccountModel}
+      />
     );
-    setEditMode(true);
-    setShowCreateAccountModal(true);
+  };
+
+  const getTable = () => {
+    return (
+      <ScmAccountsTable
+        isLoading={isLoading}
+        data={toolData.getData("accounts")}
+        selectedRow={(rowData) => editScmAccount(rowData)}
+      />
+    );
   };
 
   return (
-    <div>
-        <div className="my-1 text-right">
-          <Button variant="primary" size="sm"
-                  onClick={() => createScmAccount()}>
-            <FontAwesomeIcon icon={faPlus} className="mr-1"/> Register New Account Credentials
-          </Button>
-          <br/>
-        </div>
-      <ScmAccountsTable 
-        isLoading={isLoading} 
-        data={toolData.getData("accounts")} 
-        selectedRow={(rowData) => selectedJobRow(rowData)}
-      />
-      <NewScmAccountModal 
-        showModal={showCreateAccountModal} 
-        setShowModal={setShowCreateAccountModal} 
-        toolData={toolData}         
-        loadData={loadData} 
-        scmAccountDataDto={scmAccountDataDto}
-        setScmAccountDataDto={setScmAccountDataDto}
-        editMode={editMode}
-        setEditMode={setEditMode}
-      />
-    </div>
+    <FilterContainer
+      loadData={loadData}
+      addRecordFunction={createAccount}
+      isLoading={isLoading}
+      body={getTable()}
+      type={"Account Credentials"}
+      metadata={scmCreateAccountMetadata}
+      titleIcon={faTags}
+      title={"Accounts"}
+    />
   );
 }
 
