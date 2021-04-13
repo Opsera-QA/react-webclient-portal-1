@@ -32,6 +32,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ValidateProjectButton from "./input/ValidateProjectButton";
 import RollbackToggleInput from "./input/RollbackToggleInput";
 import WorkspaceDeleteToggleInput from "../dotnet/inputs/WorkspaceDeleteToggleInput";
+import OctopusDeploymentVariables from "./input/OctopusDeploymentVariables";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -267,6 +268,23 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                     }
                   />
                 }
+                <TextInputBase
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  dataObject={octopusStepConfigurationDto}
+                  fieldName={"structuredConfigVariablesPath"}
+                  disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
+                />
+                <TextInputBase
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  dataObject={octopusStepConfigurationDto}
+                  fieldName={"xmlConfigTransformVariableValue"}
+                  disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
+                />
+                <OctopusDeploymentVariables
+                  fieldName={"deploymentVariables"}
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                />
               </>
             )}
             <TextInputBase dataObject={octopusStepConfigurationDto} setDataObject={setOctopusStepConfigurationDataDto} fieldName={"octopusPhysicalPath"} />
