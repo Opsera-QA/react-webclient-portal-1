@@ -26,7 +26,7 @@ function TagField({dataObject, fieldName, className, showLabel}) {
     const parsedTags = parseTags();
 
     if (parsedTags.length === 0) {
-      return <span>No Tags Applied</span>;
+      return null;
     }
 
     return (
