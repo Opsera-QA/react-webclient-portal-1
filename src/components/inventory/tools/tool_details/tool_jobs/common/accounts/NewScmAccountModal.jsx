@@ -1,53 +1,44 @@
-import React, { useState, useContext, useEffect } from "react";
-import PropTypes from "prop-types";
-import CreateModal from "../../../../../../common/modal/CreateModal";
+import React, {useContext} from "react";
 import ScmAccountsEditorPanel from "./ScmAccountsEditorPanel";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
+import scmCreateAccountMetadata
+  from "components/inventory/tools/tool_details/tool_jobs/common/accounts/scm-create-account-metadata";
+import PropTypes from "prop-types";
 
 function NewScmAccountModal({ 
-  toolData, 
-  setShowModal, 
-  showModal, 
-  loadData, 
-  scmAccountDataDto, 
-  setScmAccountDataDto,
-  editMode,
-  setEditMode
+  toolData,
+  loadData,
+  scmAccountData,
 }) {
+  const toastContext = useContext(DialogToastContext);
 
-  const handleClose = async () => {
-    setShowModal(false);
-    setEditMode(false);
-    loadData();
+  // TODO: Pass isMounted from Accounts panel
+  const closePanel = () => {
+    // if (isMounted?.current === true) {
+      loadData();
+    // }
+
+    toastContext.removeInlineMessage();
+    toastContext.clearOverlayPanel();
   };
 
+
   return (
-    <CreateModal
-      handleCancelModal={handleClose}
-      objectType={"Account"}
-      showModal={showModal}
-      loadData={loadData}
-    >
-      <ScmAccountsEditorPanel 
+    <CreateCenterPanel closePanel={closePanel} objectType={scmCreateAccountMetadata.type}>
+      <ScmAccountsEditorPanel
         toolData={toolData}        
-        scmAccountDataDto={scmAccountDataDto}
-        setScmAccountDataDto={setScmAccountDataDto}
-        handleClose={handleClose}
-        editMode={editMode}
-      />      
-    </CreateModal>
+        scmAccountData={scmAccountData}
+        handleClose={closePanel}
+      />
+    </CreateCenterPanel>
   );
 }
 
 NewScmAccountModal.propTypes = {
   toolData: PropTypes.object,  
-  showModal: PropTypes.bool,
-  setShowModal: PropTypes.func,
   loadData: PropTypes.func,
-  scmAccountDataDto: PropTypes.object,
-  setScmAccountDataDto: PropTypes.func,
-  credentialId: PropTypes.string,
-  editMode: PropTypes.bool,
-  setEditMode: PropTypes.func,
+  scmAccountData: PropTypes.object,
 };
 
 export default NewScmAccountModal;

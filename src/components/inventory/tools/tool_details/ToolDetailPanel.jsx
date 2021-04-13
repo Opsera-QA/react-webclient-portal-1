@@ -93,7 +93,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         return (
           <>
           {/*<CustomTab icon={faTags} tabName={"tagging"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tagging"}/>*/}
-          <CustomTab icon={faUsers} tabName={"scmaccounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"} disabled={!authorizedAction("edit_tool_account_tabs", toolData?.data)}/>
+          <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"} disabled={!authorizedAction("edit_tool_account_tabs", toolData?.data)}/>
           </>
         );
       case "jira":
@@ -141,7 +141,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case "applications":
         return <ToolApplicationsPanel toolData={toolData} loadData={loadData} isLoading={isLoading}/>;
       case "accounts":
-        return <ToolAccountsPanel isLoading={isLoading} toolData={toolData} loadData={loadData}/>;
+        return <ToolAccountsPanel isLoading={isLoading} toolData={toolData} loadData={loadData} />;
       case "logs":
         return <ToolLogsPanel toolData={toolData}/>;
       case "tagging":
@@ -150,8 +150,6 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         return <ToolProjectsPanel toolData={toolData} isLoading={isLoading} loadData={loadData} />;
       case "pipelines":
         return <ToolPipelinesPanel toolData={toolData} />;
-      case "scmaccounts":
-        return <ScmToolAccountsPanel toolData={toolData} setToolData={setToolData} loadData={loadData} />;
       default:
         return null;
     }
