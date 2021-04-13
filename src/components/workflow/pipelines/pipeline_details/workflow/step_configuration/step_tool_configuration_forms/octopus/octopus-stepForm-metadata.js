@@ -111,6 +111,10 @@ const octopusStepFormMetadata = {
         id: "deploymentVariables"
       },
       {
+        label: "Specify Deployment Variables",
+        id: "specifyDepVariables"
+      },
+      {
         label: "Physical Path",
         id: "octopusPhysicalPath",
         regexValidator: regexHelpers.regexTypes.pathField,
@@ -129,6 +133,7 @@ const octopusStepFormMetadata = {
         octopusToolId: "",
         spaceId: "",
         projectId: "",
+        specifyDepVariables: false,
         projectDescription : "",
         environmentId: "",
         ecrPushStepId: "",
