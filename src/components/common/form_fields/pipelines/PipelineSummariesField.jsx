@@ -1,57 +1,85 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "../../../../contexts/DialogToastContext";
-import pipelineActions from "../../../workflow/pipeline-actions";
-import {AuthContext} from "../../../../contexts/AuthContext";
-import PipelineSummaryCard from "../../../workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
-import Model from "../../../../core/data_model/model";
-import Label from "../Label";
-import pipelineSummaryMetadata from "../../../workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
+import Model from "core/data_model/model";
+import pipelineActions from "components/workflow/pipeline-actions";
+import {AuthContext} from "contexts/AuthContext";
+import pipelineSummaryMetadata
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
+import PipelineSummaryCard from "components/workflow/pipelines/pipeline_details/pipeline_activity/PipelineSummaryCard";
+import Label from "components/common/form_fields/Label";
+import axios from "axios";
 
 function PipelineSummariesField({ fieldName, dataObject }) {
   const {getAccessToken} = useContext(AuthContext);
   const [field] = useState(dataObject.getFieldById(fieldName));
-  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [pipelines, setPipelines] = useState([]);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
       let pipelineIds = dataObject.getData(field.id);
       pipelineIds = Array.isArray(pipelineIds) ? pipelineIds : [pipelineIds];
-      let response = await pipelineActions.getPipelineSummaries(pipelineIds, getAccessToken);
-      setPipelines(response.data);
+      const response = await pipelineActions.getPipelineSummariesV2(getAccessToken, cancelSource, pipelineIds);
+
+      if (isMounted?.current === true && Array.isArray(response?.data)) {
+        setPipelines(response?.data);
+      }
     }
     catch (error) {
       console.error(error);
     }
     finally {
-      setIsLoading(false);
+      if(isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
   const getPipelineCards = () => {
-    return (
-      <>
-      {pipelines.map((pipeline) => {
-        return (
-          <div key={pipeline._id}><PipelineSummaryCard pipelineData={new Model(pipeline, pipelineSummaryMetadata, false)} /></div>
-        );
-      })}
-      </>
-    );
+    if (Array.isArray(pipelines) && pipelines.length > 0) {
+      return (
+        <>
+          {pipelines.map((pipeline) => {
+            return (
+              <div key={pipeline._id}>
+                <PipelineSummaryCard pipelineData={new Model(pipeline, pipelineSummaryMetadata, false)} />
+              </div>
+            );
+          })}
+        </>
+      );
+    }
   };
 
   if (isLoading) {
     return <PipelineSummaryCard isLoading={isLoading} />;
   }
 
-  if (!isLoading && pipelines.length === 0) {
+  if (!isLoading && (!Array.isArray(pipelines) || pipelines.length === 0)) {
     return <span>No Pipelines Found</span>;
   }
 

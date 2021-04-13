@@ -51,9 +51,15 @@ pipelineActions.getPipelinesV2 = async (getAccessToken, cancelTokenSource, pipel
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+// TODO: Remove when all references are updated to V2
 pipelineActions.getPipelineSummaries = async (pipelineIds, getAccessToken) => {
   let apiUrl = `/pipelines/summary`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, pipelineIds);
+};
+
+pipelineActions.getPipelineSummariesV2 = async (getAccessToken, cancelTokenSource, pipelineIds) => {
+  let apiUrl = `/pipelines/summary`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, pipelineIds);
 };
 
 pipelineActions.getPipelineStates = async (pipelineIds, getAccessToken) => {
