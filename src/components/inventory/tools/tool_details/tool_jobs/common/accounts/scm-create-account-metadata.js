@@ -27,7 +27,7 @@ const scmCreateAccountMetadata = {
         regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
       },
       {
-        label: "Reviewer Name",
+        label: "Name",
         id: "reviewerName",
         isRequired: true,
         maxLength: 100
