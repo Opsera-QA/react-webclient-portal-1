@@ -59,6 +59,14 @@ function ScmAccountReviewerInput({dataObject, setDataObject, disabled}) {
         setDataObject({...newDataObject});
     };
 
+    const clearReviewer = (fieldName, selectedOption) => {   
+        let newDataObject = {...dataObject};    
+        newDataObject.setData("reviewerName", "");
+        newDataObject.setData("reviewerId", "");
+        newDataObject.setData("reviewer", "");
+        setDataObject({...newDataObject});
+    };
+
     const getNoReviewersMessage = () => {
         if (!isLoading && (reviewers == null || reviewers.length === 0) && dataObject.getData("repository")) {
           return ("User information is missing or unavailable!");
@@ -76,6 +84,7 @@ function ScmAccountReviewerInput({dataObject, setDataObject, disabled}) {
         placeholderText={getNoReviewersMessage()}
         valueField="value"
         textField="name"
+        clearDataFunction={clearReviewer}        
         disabled={disabled || isLoading || reviewers.length === 0}
       />    
     );

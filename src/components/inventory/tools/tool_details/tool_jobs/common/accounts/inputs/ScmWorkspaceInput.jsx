@@ -14,6 +14,17 @@ function ScmWorkspaceInput({dataObject, setDataObject, disabled}) {
     setDataObject({...newDataObject});
   };
 
+  const clearWorkspace = (fieldName) => {
+    let newDataObject = {...dataObject};    
+    newDataObject.setData("workspace", "");
+    newDataObject.setData("workspaceName", "");
+    newDataObject.setData("repository", "");
+    newDataObject.setData("repoId", "");
+    newDataObject.setData("reviewerName", "");
+    newDataObject.setData("reviewerId", "");
+    setDataObject({...newDataObject});
+  };
+
   if (dataObject.getData("service") !== "bitbucket") {
     return <></>;
   }
@@ -25,6 +36,7 @@ function ScmWorkspaceInput({dataObject, setDataObject, disabled}) {
        dataObject={dataObject}
        setDataObject={setDataObject}
        setDataFunction={setWorkspace}
+       clearDataFunction={clearWorkspace}
        disabled={disabled}
      />
   );

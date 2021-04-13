@@ -4,15 +4,22 @@ import GitRepositoryInput from "components/common/list_of_values_input/tools/git
 
 function ScmRepositoryInput({dataObject, setDataObject, disabled}) {
   const setRepository = (fieldName, selectedOption) => {    
-
     let newDataObject = {...dataObject};
     newDataObject.setData("repository", selectedOption.name);
     newDataObject.setData("repoId", selectedOption.id);
     newDataObject.setData("reviewerName", "");
     newDataObject.setData("reviewerId", "");
-    newDataObject.setData("reviewer", "");
-    // newDataObject.setData("sshUrl", selectedOption.sshUrl || "");
-    // newDataObject.setData("gitUrl", selectedOption.httpUrl || "");
+    newDataObject.setData("reviewer", "");    
+    setDataObject({...newDataObject});
+  };
+
+  const clearRepository = (fieldName) => {
+    let newDataObject = {...dataObject};
+    newDataObject.setData("repository", "");
+    newDataObject.setData("repoId", "");
+    newDataObject.setData("reviewerName", "");
+    newDataObject.setData("reviewerId", "");
+    newDataObject.setData("reviewer", "");    
     setDataObject({...newDataObject});
   };
 
@@ -25,6 +32,7 @@ function ScmRepositoryInput({dataObject, setDataObject, disabled}) {
        dataObject={dataObject}
        setDataObject={setDataObject}
        setDataFunction={setRepository}
+       clearDataFunction={clearRepository}
        disabled={disabled}
      />
   );

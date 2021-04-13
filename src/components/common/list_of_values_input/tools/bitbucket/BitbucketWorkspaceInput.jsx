@@ -6,7 +6,7 @@ import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 
 // TODO: If the workspaces are used by different tools make more generic version
-function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, disabled}) {
+function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [workspaces, setWorkspaces] = useState([]);
@@ -65,6 +65,7 @@ function BitbucketWorkspaceInput({ gitToolId, visible, fieldName, dataObject, se
         placeholderText={getNoWorkspacesMessage()}
         valueField="value"
         textField="name"
+        clearDataFunction={clearDataFunction}
         disabled={disabled || isLoading || workspaces.length === 0}
       />
     </div>
@@ -82,6 +83,7 @@ BitbucketWorkspaceInput.propTypes = {
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
+  clearDataFunction: PropTypes.func
 };
 
 BitbucketWorkspaceInput.defaultProps = {
