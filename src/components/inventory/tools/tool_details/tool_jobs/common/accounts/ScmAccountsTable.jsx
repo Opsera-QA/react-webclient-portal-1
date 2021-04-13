@@ -1,8 +1,13 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
+import { getTableTextColumn, getTableBooleanIconColumn } from "components/common/table/table-column-helpers";
+import {getField} from "components/common/metadata/metadata-helpers";
+import scmCreateAccountMetadata from "./scm-create-account-metadata";
 
 function ScmAccountsTable({ data, selectedRow, isLoading }) {
+
+  let fields = scmCreateAccountMetadata.fields;
 
   const initialState = {
     pageIndex: 0,
@@ -15,23 +20,11 @@ function ScmAccountsTable({ data, selectedRow, isLoading }) {
   };
 
   const columns = useMemo(
-    () => [
-      {
-        Header: "Account Name",
-        accessor: "reviewerName",
-      },
-      {
-        Header: "Repository",
-        accessor: "repository",
-      },      
-      {
-        Header: "Account Type",
-        accessor: "accountType",
-      },      
-      // {
-      //   Header: "Password/Token",
-      //   accessor: "token"
-      // }        
+    () => [      
+      getTableTextColumn(getField(fields, "reviewerName")),
+      getTableTextColumn(getField(fields, "repository")),
+      getTableTextColumn(getField(fields, "accountType")),
+      getTableBooleanIconColumn(getField(fields, "accountPassword"))      
     ],
     []
   );
