@@ -5,6 +5,7 @@ import Col from "react-bootstrap/Col";
 import ScmWorkspaceInput from "./inputs/ScmWorkspaceInput";
 import ScmRepositoryInput from "./inputs/ScmRepositoryInput";
 import ScmAccountReviewerInput from "./inputs/ScmAccountReviewerInput";
+import ScmAccountTypeInput from "./inputs/ScmAccountTypeInput";
 import ScmTwoFactorToggle from "./inputs/ScmTwoFactorToggle";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
@@ -59,6 +60,9 @@ function ScmAccountsEditorPanel({toolData, scmAccountDataDto, setScmAccountDataD
             </Col>
             <Col lg={12}>
                 <ScmAccountReviewerInput dataObject={scmAccountDataDto} setDataObject={setScmAccountDataDto} toolData={toolData} />
+            </Col>
+            <Col lg={12}>        
+              <ScmAccountTypeInput dataObject={scmAccountDataDto} setDataObject={setScmAccountDataDto} />                          
             </Col>
             <Col lg={12}>
                 <ScmTwoFactorToggle dataObject={scmAccountDataDto} setDataObject={setScmAccountDataDto} fieldName={"twoFactorAuthentication"}/>

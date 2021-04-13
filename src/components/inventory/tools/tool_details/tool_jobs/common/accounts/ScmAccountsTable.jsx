@@ -17,18 +17,17 @@ function ScmAccountsTable({ data, selectedRow, isLoading }) {
   const columns = useMemo(
     () => [
       {
-        Header: "Reviewer Name",
+        Header: "Account Name",
         accessor: "reviewerName",
       },
       {
         Header: "Repository",
         accessor: "repository",
+      },      
+      {
+        Header: "Account Type",
+        accessor: "accountType",
       },
-      // },
-      // {
-      //   Header: "Type",
-      //   accessor: "type",
-      // },
       // {
       //   Header: "Password/Token",
       //   accessor: "token"
