@@ -8,7 +8,7 @@ function ScmAccountsTable({ data, selectedRow, isLoading }) {
     pageIndex: 0,
     sortBy: [
       {
-        id: "name",
+        id: "reviewerName",
         desc: false
       }
     ]
@@ -27,7 +27,7 @@ function ScmAccountsTable({ data, selectedRow, isLoading }) {
       {
         Header: "Account Type",
         accessor: "accountType",
-      },
+      },      
       // {
       //   Header: "Password/Token",
       //   accessor: "token"
