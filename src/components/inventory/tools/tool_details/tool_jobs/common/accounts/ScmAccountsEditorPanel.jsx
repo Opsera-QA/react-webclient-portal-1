@@ -16,10 +16,12 @@ import {AuthContext} from "contexts/AuthContext";
 import { Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { DialogToastContext } from "../../../../../../../contexts/DialogToastContext";
 
 function ScmAccountsEditorPanel({toolData, scmAccountDataDto, setScmAccountDataDto, handleClose, editMode}) {  
 
     const { getAccessToken } = useContext(AuthContext);
+    const toastContext = useContext(DialogToastContext);
     const [showDeleteModal, setShowDeleteModal] = useState(false);    
     
     const createAccount = async () => {
@@ -27,26 +29,43 @@ function ScmAccountsEditorPanel({toolData, scmAccountDataDto, setScmAccountDataD
       let scmData = scmAccountDataDto.getPersistData();
       let newToolData = {...toolData};
       
-      const accountVaultKey = `${scmData.toolId}-${scmData.reviewerId}-secret`;        
-      scmData.accountPassword = await toolsActions.saveKeyPasswordToVault(scmAccountDataDto, "accountPassword", scmData.accountPassword, accountVaultKey, getAccessToken, scmAccountDataDto.getData("toolId"));
-      const secretPrivateVaultKey = `${scmData.toolId}-${scmData.reviewerId}-secretPrivateKey`;        
-      scmData.secretPrivateKey = await toolsActions.saveKeyPasswordToVault(scmAccountDataDto, "secretPrivateKey", scmData.secretPrivateKey, secretPrivateVaultKey, getAccessToken, scmAccountDataDto.getData("toolId"));
-      const secretAccessTokenVaultKey = `${scmData.toolId}-${scmData.reviewerId}-secretAccessTokenKey`;        
-      scmData.secretAccessTokenKey = await toolsActions.saveKeyPasswordToVault(scmAccountDataDto,"secretAccessTokenKey", scmData.secretAccessTokenKey, secretAccessTokenVaultKey, getAccessToken, scmAccountDataDto.getData("toolId"));        
+      try {
+        const accountVaultKey = `${scmData.toolId}-${scmData.reviewerId}-secret`;        
+        scmData.accountPassword = await toolsActions.saveKeyPasswordToVault(scmAccountDataDto, "accountPassword", scmData.accountPassword, accountVaultKey, getAccessToken, scmAccountDataDto.getData("toolId"));
+        const secretPrivateVaultKey = `${scmData.toolId}-${scmData.reviewerId}-secretPrivateKey`;        
+        scmData.secretPrivateKey = await toolsActions.saveKeyPasswordToVault(scmAccountDataDto, "secretPrivateKey", scmData.secretPrivateKey, secretPrivateVaultKey, getAccessToken, scmAccountDataDto.getData("toolId"));
+        const secretAccessTokenVaultKey = `${scmData.toolId}-${scmData.reviewerId}-secretAccessTokenKey`;        
+        scmData.secretAccessTokenKey = await toolsActions.saveKeyPasswordToVault(scmAccountDataDto,"secretAccessTokenKey", scmData.secretAccessTokenKey, secretAccessTokenVaultKey, getAccessToken, scmAccountDataDto.getData("toolId"));        
 
-      const accounts = newToolData.getData("accounts");
-      newToolData.setData("accounts", [...accounts, scmData]);
-      
-      return await toolsActions.updateTool(newToolData, getAccessToken);
+        let accounts = newToolData.getData("accounts");      
+        accounts = accounts.filter(acc => !(acc.reviewerId === scmData.reviewerId && acc.repository === scmData.repository));
+        newToolData.setData("accounts", [...accounts, scmData]);
         
+        await toolsActions.updateTool(newToolData, getAccessToken);
+        editMode ? toastContext.showUpdateSuccessResultDialog("Account") : toastContext.showCreateSuccessResultDialog("Account");
+        
+      } catch (error) {
+        editMode ? toastContext.showUpdateFailureResultDialog(error) : toastContext.showCreateFailureResultDialog(error);
+      } finally {
+        handleClose();
+      }      
+
     };
 
     const deleteAccount = async () => {
       let scmData = scmAccountDataDto.getPersistData();
       let newToolData = {...toolData};
-      const accounts = newToolData.getData("accounts");
-      newToolData.setData("accounts", accounts.filter(acc => acc.reviewerId !== scmData.reviewerId));
-      return await toolsActions.updateTool(newToolData, getAccessToken);
+      let accounts = newToolData.getData("accounts");
+      accounts = accounts.filter(acc => !(acc.reviewerId === scmData.reviewerId && acc.repository === scmData.repository));
+      newToolData.setData("accounts", [...accounts]);
+      try {
+        await toolsActions.updateTool(newToolData, getAccessToken);
+        toastContext.showDeleteSuccessResultDialog("Account");
+      } catch (error) {
+        toastContext.showDeleteFailureResultDialog(error);
+      }
+      
+      handleClose();
     };
 
     const getDynamicFields = () => {
