@@ -4,18 +4,18 @@ import modelHelpers from "components/common/model/modelHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import openDefectsMetadata
-  from "components/settings/analytics_data_entry/detail_view/configuration_panels/cumulativeOpenDefects/cumulative-open-defects-metadata";
+import firstPassYieldMetadata
+  from "components/settings/analytics_data_entry/detail_view/configuration_panels/first_pass_yield/first-pass-yield-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PipelineSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineSelectInput";
 import NumberInputBase from "components/common/inputs/text/NumberInputBase";
 import DateTimeRangeInputBase from "components/common/inputs/date/DateTimeRangeInputBase";
 
-function CumulativeOpenDefectsConfiguration({ analyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
+function FirstPassYieldConfiguration({ analyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
   useEffect(() => {loadData();}, []);
 
   const loadData = async () => {
-    const configurationData = modelHelpers.getToolConfigurationModel(analyticsDataEntryModel.getData("data"), openDefectsMetadata);
+    const configurationData = modelHelpers.getToolConfigurationModel(analyticsDataEntryModel.getData("data"), firstPassYieldMetadata);
     setKpiConfigurationData({...configurationData});
   };
 
@@ -44,22 +44,22 @@ function CumulativeOpenDefectsConfiguration({ analyticsDataEntryModel, kpiConfig
         <TextInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"release"} />
       </Col>
       <Col lg={6}>
-        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_defects"} />
+        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_test_cases"} />
       </Col>
       <Col lg={6}>
-        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"valid_defects_open"} />
+        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_passed"} />
       </Col>
       <Col lg={6}>
-        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"valid_defects_closed"} />
+        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_failed"} />
       </Col>
     </Row>
   );
 }
 
-CumulativeOpenDefectsConfiguration.propTypes = {
+FirstPassYieldConfiguration.propTypes = {
   analyticsDataEntryModel: PropTypes.object,
   kpiConfigurationData: PropTypes.object,
   setKpiConfigurationData: PropTypes.func,
 };
 
-export default CumulativeOpenDefectsConfiguration;
+export default FirstPassYieldConfiguration;
