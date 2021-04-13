@@ -39,8 +39,7 @@ function GitTaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled,
     const objectRoles = dataObject?.getData("roles");
     const accessRoleData = await getAccessRoleData();
 
-    // TODO: Change to git tasks method when wired up
-    setCanEditRoles(workflowAuthorizedActions.toolRegistryItems(accessRoleData, "edit_access_roles", owner, objectRoles));
+    setCanEditRoles(workflowAuthorizedActions.gitItems(accessRoleData, "edit_access_roles", owner, objectRoles));
   };
 
   const saveData = async (newRoles) => {
@@ -66,14 +65,24 @@ function GitTaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled,
   }
 
   return (
-    <RoleAccessInlineInputBase
-      fieldName={fieldName}
-      dataObject={dataObject}
-      disabled={canEditRoles !== true || disabled}
-      saveData={saveData}
-      noDataMessage={getNoDataMessage()}
-      visible={visible}
-    />
+    <>
+      <RoleAccessInlineInputBase
+        fieldName={fieldName}
+        dataObject={dataObject}
+        disabled={canEditRoles !== true || disabled}
+        saveData={saveData}
+        noDataMessage={getNoDataMessage()}
+        visible={visible}
+      />
+      <div>
+        <div><b>Access Rule Legend</b></div>
+        <div><b>Everyone</b> has edit and run or stop access, if no access rules are set.</div>
+        <div><b>Owners</b> and <b>Administrators</b> have full access and can delete tasks.</div>
+        <div><b>Managers</b> can edit settings and run or stop tasks.</div>
+        <div><b>Users</b> can run and stop tasks.</div>
+        <div><b>Guests</b> have read only access.</div>
+      </div>
+    </>
   );
 }
 

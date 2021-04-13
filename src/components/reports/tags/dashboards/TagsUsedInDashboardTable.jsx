@@ -2,27 +2,27 @@ import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
-import pipelineSummaryMetadata
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 import {
   getTableBooleanIconColumn,
   getTableDateColumn,
-  getTableTextColumn
+  getTableTextColumn,
+  getLimitedTableTextColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faDiceD20} from "@fortawesome/pro-light-svg-icons";
+import {faChartNetwork} from "@fortawesome/pro-light-svg-icons";
 import ExportTagReportButton from 'components/common/buttons/export/reports/ExportTagReportButton';
+import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 
-function TagsUsedInPipelineTable({ data, loadData, isLoading}) {
+function TagsUsedInDashboardTable({ data, loadData, isLoading}) {
   const history = useHistory();
-  let fields = pipelineSummaryMetadata.fields;
+  let fields = dashboardMetadata.fields;
 
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "name")),
+      getLimitedTableTextColumn(getField(fields, "description"),100),
       getTableTextColumn(getField(fields, "_id")),
-      getTableTextColumn(getField(fields, "description")),
       getTableDateColumn(getField(fields, "createdAt")),
       getTableBooleanIconColumn(getField(fields, "active")),
     ],
@@ -30,7 +30,7 @@ function TagsUsedInPipelineTable({ data, loadData, isLoading}) {
   );
 
   const onRowSelect = (rowData) => {
-    history.push("/workflow/details/" + rowData.original._id);
+    history.push(`/insights/dashboards/${rowData.original._id}/viewer`);
   };
 
   const rowStyling = (row) => {
@@ -57,16 +57,15 @@ function TagsUsedInPipelineTable({ data, loadData, isLoading}) {
       supportSearch={false}
       isLoading={isLoading}
       body={getTagsTable()}
-      metadata={pipelineSummaryMetadata}
-      titleIcon={faDiceD20}
-      title={"Pipelines"}
-      className={"px-2 pb-2"}
+      metadata={dashboardMetadata}
+      titleIcon={faChartNetwork}
+      title={"Dashboards"}
       exportButton={<ExportTagReportButton className={"ml-2"} isLoading={isLoading} tagData={data} />}
     />
   );
 }
 
-TagsUsedInPipelineTable.propTypes = {
+TagsUsedInDashboardTable.propTypes = {
   data: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
@@ -76,4 +75,4 @@ TagsUsedInPipelineTable.propTypes = {
   isMounted: PropTypes.object
 };
 
-export default TagsUsedInPipelineTable;
+export default TagsUsedInDashboardTable;

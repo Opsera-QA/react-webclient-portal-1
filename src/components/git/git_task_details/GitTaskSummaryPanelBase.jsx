@@ -28,12 +28,6 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
-
     return () => {
       source.cancel();
       isMounted.current = false;
@@ -46,8 +40,9 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
     return response;
   };
 
-  const actionAllowed = (action) => {
-    return workflowAuthorizedActions.gitItems(getAccessRoleData(), action, gitTasksData?.getData("owner"), gitTasksData?.getData("roles"));
+  const actionAllowed = async (action) => {
+    const accessRoleData = await getAccessRoleData();
+    return workflowAuthorizedActions.gitItems(accessRoleData, action, gitTasksData?.getData("owner"), gitTasksData?.getData("roles"));
   };
 
   return (
@@ -55,6 +50,9 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
       <Row>
         <Col md={6}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"name"}/>
+        </Col>
+        <Col md={6}>
+          <TextFieldBase dataObject={gitTasksData} fieldName={"owner_name"}/>
         </Col>
         <Col md={6}>
           <SmartIdField model={gitTasksData} fieldName={"_id"}/>
@@ -77,7 +75,7 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
       </Row>
       <Row className={"mx-0 w-100 my-2"}>
         <div className={"mx-auto"}>
-          <div className={"mx-auto"}><GitTaskRunButton gitTasksData={gitTasksData} loadData={loadData} disable={!actionAllowed("run_task")} /></div>
+          <div className={"mx-auto"}><GitTaskRunButton gitTasksData={gitTasksData} loadData={loadData} actionAllowed={actionAllowed("run_task")} /></div>
         </div>
       </Row>
       <div className="px-3 mt-3">{gitTaskTypeSummaryCard}</div>

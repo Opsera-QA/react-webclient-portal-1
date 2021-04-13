@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -11,10 +11,11 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import RoleAccessEditorHelpOverlay from "components/common/help/input/role_access_editor/RoleAccessEditorHelpOverlay";
+import axios from "axios";
 
 const roleTypes = [
   {text: "Administrator", value: "administrator"},
-  {text: "Maintainer", value: "manager"},
+  {text: "Manager", value: "manager"},
   // {text: "SecOps", value: "secops"},
   {text: "User", value: "user"},
   {text: "Guest", value: "guest"},
@@ -31,31 +32,50 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
   const [roles, setRoles] = useState([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
   const [loadingGroups, setLoadingGroups] = useState(true);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
-    unpackData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
-    const {ldap, groups} = user;
+    const {ldap} = user;
     const userRoleAccess = await setAccessRoles(user);
+    unpackData();
 
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
       if (ldap.domain != null) {
-        await getGroupsByDomain(ldap.domain);
-        await getLdapUsers(ldap.domain);
+        await getGroupsByDomain(cancelSource, ldap.domain);
+        await getLdapUsers(cancelSource, ldap.domain);
       }
     }
   };
 
-  const getGroupsByDomain = async (ldapDomain) => {
+  const getGroupsByDomain = async (cancelSource = cancelTokenSource, ldapDomain) => {
     try {
       setLoadingGroups(true);
-      let response = await accountsActions.getLdapGroupsWithDomain(ldapDomain, getAccessToken);
+      let response = await accountsActions.getLdapGroupsWithDomainV2(getAccessToken, cancelSource, ldapDomain);
 
       const groupResponse = response?.data;
 
@@ -79,12 +99,13 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
     }
   };
 
-  const getLdapUsers = async (ldapDomain) => {
+  const getLdapUsers = async (cancelSource = cancelTokenSource, ldapDomain) => {
     try {
       setLoadingUsers(true);
-      let userResponse = await accountsActions.getLdapUsersWithDomain(ldapDomain, getAccessToken);
-      if (userResponse?.data) {
-        setUserList(userResponse.data);
+      const response = await accountsActions.getLdapUsersWithDomainV2(getAccessToken, cancelSource, ldapDomain);
+
+      if (response?.data) {
+        setUserList(response.data);
       }
 
     } catch (error) {

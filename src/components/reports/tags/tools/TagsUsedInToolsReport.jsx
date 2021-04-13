@@ -17,7 +17,7 @@ import TagManager from "components/common/inputs/tags/TagManager";
 
 function TagsUsedInToolsReport() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const [tagsUsedInPipelineDto, setTagsUsedInPipelineDto] = useState(undefined);
+  const [tagsUsedInToolsDto, setTagsUsedInToolsDto] = useState(undefined);
   const { getUserRecord, setAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -45,7 +45,7 @@ function TagsUsedInToolsReport() {
     const userRoleAccess = await setAccessRoles(user);
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      setTagsUsedInPipelineDto(new Model(tagsUsedInPipelineMetadata.newObjectFields, tagsUsedInPipelineMetadata, true));
+      setTagsUsedInToolsDto(new Model(tagsUsedInPipelineMetadata.newObjectFields, tagsUsedInPipelineMetadata, true));
     }
   };
 
@@ -73,20 +73,20 @@ function TagsUsedInToolsReport() {
   return (
     <ScreenContainer
       breadcrumbDestination={"tagsUsedInToolsReport"}
-      pageDescription={"View which tools are in use by a specific tag combination"}
       isLoading={isLoading}
       navigationTabContainer={getNavigationTabContainer()}
       roleRequirement={ROLE_LEVELS.POWER_USERS}
       accessRoleData={accessRoleData}
     >
-      <Row className={"mb-3"}>
-        <Col>
-          <TagManager type={"tags"} allowCreate={false} fieldName={"tags"} dataObject={tagsUsedInPipelineDto} setDataObject={setTagsUsedInPipelineDto}/>
+      <div className={"ml-3 mt-3 mb-2"}>View which tools are in use by a specific tag combination</div>
+      <Row className={"mb-3 mx-0"}>
+        <Col className={"mx-0"}>
+          <TagManager placeholder={"select a tag to view tagged tools"} type={"tags"} allowCreate={false} fieldName={"tags"} dataObject={tagsUsedInToolsDto} setDataObject={setTagsUsedInToolsDto}/>
         </Col>
       </Row>
       <Row className={"px-2"}>
         <Col>
-          <TagArrayUsedInToolsField tags={tagsUsedInPipelineDto?.getData("tags")}/>
+          <TagArrayUsedInToolsField tags={tagsUsedInToolsDto?.getData("tags")} showTable={true}/>
         </Col>
       </Row>
     </ScreenContainer>

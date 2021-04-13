@@ -25,6 +25,7 @@ function SfdcToolConfiguration({ toolData }) {
   const toastContext = useContext(DialogToastContext);
   const [sfdcConfigurationDto, setSfdcConfigurationDto] = useState(undefined);
   const [jenkinsBuildNumber, setJenkinsBuildNumber] = useState("");
+  const [jenkinsJobName, setJenkinsJobName] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -48,8 +49,9 @@ function SfdcToolConfiguration({ toolData }) {
       }
     }
 
-    if (response && response.data != null && response.data.status === 200 && response?.data?.message?.buildParams?.buildNumber ) {   
+    if (response && response.data != null && response.data.status === 200 && response?.data?.message?.buildParams?.buildNumber && response?.data?.message?.buildParams?.jobName ) {   
       setJenkinsBuildNumber(response?.data?.message?.buildParams?.buildNumber); 
+      setJenkinsJobName(response?.data?.message?.buildParams?.jobName); 
       setShowModal(true);
     }
     else {
@@ -65,6 +67,8 @@ function SfdcToolConfiguration({ toolData }) {
         setShowModal={setShowModal}
         jenkinsBuildNumber={jenkinsBuildNumber}
         setJenkinsBuildNumber={setJenkinsBuildNumber}
+        jenkinsJobName={jenkinsJobName}
+        setJenkinsJobName={setJenkinsJobName}
         setLoading={setLoading}
         toolData={toolData}            
       />
@@ -72,29 +76,33 @@ function SfdcToolConfiguration({ toolData }) {
   };
 
   const getDynamicFields = () => {
-    if (sfdcConfigurationDto.getData("checkConnection") === true) {
+    if (sfdcConfigurationDto.getData("buildType") === "sfdx" && sfdcConfigurationDto.getData("checkConnection") === true) {
       return (
         <>
-          <PipelineToolInput
-            toolType={"jenkins"}
-            toolFriendlyName={"Jenkins"}
-            fieldName={"jenkinsToolId"}
-            configurationRequired={true}
-            dataObject={sfdcConfigurationDto}
-            setDataObject={setSfdcConfigurationDto}
-          />
-          <div className="p-2">
-            {/* <TooltipWrapper innerText={"Select Jenkins tool to Test Connection"}> */}
-              <Button size="sm" variant={"secondary"} disabled={!toolData.getData("_id") || sfdcConfigurationDto.getData("jenkinsToolId").length < 1 || loading} onClick={() => testConnection()}>
-                <FontAwesomeIcon icon={loading ? faSpinner:faPlug} className={`mr-2  ${loading ? ' fa-spin' : ''}`} fixedWidth /> Check SFDX Connection
-              </Button>
-            {/* </TooltipWrapper> */}
-          </div>          
+        <BooleanToggleInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"checkConnection"} />
+        {sfdcConfigurationDto.getData("checkConnection") === true && 
+          <>
+            <PipelineToolInput
+              toolType={"jenkins"}
+              toolFriendlyName={"Jenkins"}
+              fieldName={"jenkinsToolId"}
+              configurationRequired={true}
+              dataObject={sfdcConfigurationDto}
+              setDataObject={setSfdcConfigurationDto}
+            />
+            <div className="p-2">
+              {/* <TooltipWrapper innerText={"Select Jenkins tool to Test Connection"}> */}
+                <Button size="sm" variant={"secondary"} disabled={!toolData.getData("_id") || sfdcConfigurationDto.getData("jenkinsToolId").length < 1 || loading} onClick={() => testConnection()}>
+                  <FontAwesomeIcon icon={loading ? faSpinner:faPlug} className={`mr-2  ${loading ? ' fa-spin' : ''}`} fixedWidth /> Check SFDX Connection
+                </Button>
+              {/* </TooltipWrapper> */}
+            </div> 
+          </>
+        }         
         </>
       );
     }
   };
-console.log(loading);
   if (sfdcConfigurationDto == null) {
     return <></>;
   }
@@ -131,7 +139,6 @@ console.log(loading);
           <VaultTextInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"sfdc_token"} />
           <VaultTextInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"sfdc_password"} />
           <SFDCBuildTypeSelectInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"buildType"} />
-          <BooleanToggleInput dataObject={sfdcConfigurationDto} setDataObject={setSfdcConfigurationDto} fieldName={"checkConnection"} />
           {getDynamicFields()}
           {showModal ? getSfdxModal() : null}
         </Col>
