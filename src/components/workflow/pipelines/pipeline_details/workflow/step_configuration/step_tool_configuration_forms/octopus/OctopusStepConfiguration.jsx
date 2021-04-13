@@ -134,6 +134,12 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
         return false;
       }
       for (let item in octopusStepConfigurationDto.getData("deploymentVariables")) {
+        if (octopusStepConfigurationDto.getData("deploymentVariables")[item]?.scope && octopusStepConfigurationDto.getData("deploymentVariables")[item]?.scope?.environment) {
+          let errorMesage =
+            "The scope and environment are auto filled. Please do not specify scope and environment in deployment variables.";
+          toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
+          return false;
+        }
         if (Object.keys(octopusStepConfigurationDto.getData("deploymentVariables")[item]).length > 4) {
           let errorMesage = "Validate deployment Variables, Please refer to specified deployment variables format";
           toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
