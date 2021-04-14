@@ -20,7 +20,7 @@ function LaunchHelpIcon({ helpComponent, helpText, className }) {
     }
   };
 
-  if (helpComponent == null || featureFlagHideItemInProd() || featureFlagHideItemInTest()) {
+  if (helpComponent == null || featureFlagHideItemInProd()) {
     return null;
   }
 

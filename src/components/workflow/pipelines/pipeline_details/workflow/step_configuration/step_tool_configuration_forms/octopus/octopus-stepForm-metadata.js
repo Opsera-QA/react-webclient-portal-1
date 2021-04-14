@@ -95,6 +95,10 @@ const octopusStepFormMetadata = {
         id: "packageId"
       },
       {
+        label: "Rollback to a Previous Version",
+        id: "isRollback"
+      },
+      {
         label: "Physical Path",
         id: "octopusPhysicalPath",
         regexValidator: regexHelpers.regexTypes.pathField,
@@ -105,6 +109,7 @@ const octopusStepFormMetadata = {
       {
         isFullBackup: false,
         toolURL: "",
+        isRollback: false,
         octopusApiKey: "",
         spaceName: "",
         projectName: "",
