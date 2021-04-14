@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import { Button, ButtonGroup, ButtonToolbar, Col, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
 import toolsActions from "components/inventory/tools/tools-actions";
@@ -19,8 +19,8 @@ import ScmTwoFactorToggle
 import axios from "axios";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import DeleteModal from "components/common/modal/DeleteModal";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import DeleteButton from "components/common/buttons/delete/DeleteButton";
 
 function ScmAccountsEditorPanel({toolData, scmAccountData, handleClose}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -29,7 +29,6 @@ function ScmAccountsEditorPanel({toolData, scmAccountData, handleClose}) {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [viewMode, setViewMode] = useState(false);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -45,10 +44,6 @@ function ScmAccountsEditorPanel({toolData, scmAccountData, handleClose}) {
         throw error;
       }
     });
-
-    if(!scmAccountData.isNew()){
-      setViewMode(true);
-    }
 
     return () => {
       source.cancel();
@@ -79,10 +74,6 @@ function ScmAccountsEditorPanel({toolData, scmAccountData, handleClose}) {
     handleClose();
   };
 
-  const editAccount = () => {
-    setViewMode(false);
-  };
-
   const deleteAccount = async () => {
     let scmData = scmAccountDataDto.getPersistData();
     let newToolData = {...toolData};
@@ -109,14 +100,12 @@ function ScmAccountsEditorPanel({toolData, scmAccountData, handleClose}) {
             dataObject={scmAccountDataDto} 
             setDataObject={setScmAccountDataDto}
             fieldName={"secretPrivateKey"}
-            disabled={viewMode}
           />
           <VaultTextInput 
             type={"password"} 
             dataObject={scmAccountDataDto} 
             setDataObject={setScmAccountDataDto}
             fieldName={"secretAccessTokenKey"}
-            disabled={viewMode}
           />
         </div>
       );
@@ -127,10 +116,22 @@ function ScmAccountsEditorPanel({toolData, scmAccountData, handleClose}) {
         dataObject={scmAccountDataDto} 
         setDataObject={setScmAccountDataDto}
         fieldName={"accountPassword"}
-        disabled={viewMode}
       />
     );
-  };  
+  };
+
+  const getDeleteButton = () => {
+    if (!scmAccountDataDto.isNew()) {
+      return (
+        <DeleteButton
+          deleteRecord={() => (setShowDeleteModal(true))}
+          dataObject={scmAccountDataDto}
+          icon={faTrash}
+          size={"md"}
+        />
+      );
+    }
+  };
 
   if (scmAccountDataDto == null) {
     return null;
@@ -138,57 +139,41 @@ function ScmAccountsEditorPanel({toolData, scmAccountData, handleClose}) {
 
   return (
     <>
-      {viewMode && <ButtonToolbar className="justify-content-between my-2 ml-2 mr-2"> 
-        <ButtonGroup>
-          <Button size="sm" className="mr-2" variant="primary" onClick={() => {
-            editAccount();
-          }}>
-            <FontAwesomeIcon icon={faPen} fixedWidth style={{ cursor: "pointer" }}/> Edit Job
-          </Button>
-        </ButtonGroup>       
-        <ButtonGroup>
-          <Button size="sm" className="pull-right mr-2" variant="danger" onClick={() => {
-            setShowDeleteModal(true);
-          }}>
-            <FontAwesomeIcon icon={faTrash} fixedWidth style={{ cursor: "pointer" }}/> Delete Account
-          </Button>
-        </ButtonGroup>
-      </ButtonToolbar> }
       <EditorPanelContainer
         handleClose={handleClose}
         recordDto={scmAccountDataDto}
         updateRecord={saveAccount}
         createRecord={saveAccount}      
         addAnotherOption={false}
-        viewMode={viewMode}
+        extraButtons={getDeleteButton()}
       >
         <Row>
           <Col lg={12}>
             <ScmWorkspaceInput
               dataObject={scmAccountDataDto}
               setDataObject={setScmAccountDataDto}
-              disabled={viewMode || !scmAccountDataDto.isNew()}
+              disabled={!scmAccountDataDto.isNew()}
             />
           </Col>
           <Col lg={12}>
             <ScmRepositoryInput
               dataObject={scmAccountDataDto}
               setDataObject={setScmAccountDataDto}
-              disabled={viewMode || !scmAccountDataDto.isNew()}
+              disabled={!scmAccountDataDto.isNew()}
             />
           </Col>
           <Col lg={12}>
             <ScmAccountReviewerInput
               dataObject={scmAccountDataDto}
               setDataObject={setScmAccountDataDto}
-              disabled={viewMode || !scmAccountDataDto.isNew()}
+              disabled={!scmAccountDataDto.isNew()}
             />
           </Col>
           <Col lg={12}>
             <ScmAccountTypeInput
               dataObject={scmAccountDataDto}
               setDataObject={setScmAccountDataDto}
-              disabled={viewMode || !scmAccountDataDto.isNew()}
+              disabled={!scmAccountDataDto.isNew()}
             />
           </Col>
           <Col lg={12}>
@@ -196,7 +181,6 @@ function ScmAccountsEditorPanel({toolData, scmAccountData, handleClose}) {
               dataObject={scmAccountDataDto}
               setDataObject={setScmAccountDataDto}
               fieldName={"twoFactorAuthentication"}
-              disabled={viewMode}
             />
           </Col>
           <Col lg={12}>
