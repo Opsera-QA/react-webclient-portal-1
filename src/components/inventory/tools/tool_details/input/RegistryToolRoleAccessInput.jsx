@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
+import ToolRegistryRoleAccessHelpDocumentation
+  from "components/common/help/documentation/tool_registry/ToolRegistryRoleAccessHelpDocumentation";
 
 function RegistryToolRoleAccessInput({fieldName, dataObject, setDataObject, disabled, visible}) {
   const { getAccessToken } = useContext(AuthContext);
@@ -28,6 +30,7 @@ function RegistryToolRoleAccessInput({fieldName, dataObject, setDataObject, disa
       disabled={disabled}
       saveData={saveData}
       noDataMessage={getNoDataMessage()}
+      helpComponent={<ToolRegistryRoleAccessHelpDocumentation/>}
       visible={visible}
     />
   );
