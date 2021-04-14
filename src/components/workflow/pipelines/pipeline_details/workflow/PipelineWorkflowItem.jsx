@@ -28,6 +28,9 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import WorkflowAuthorizedActions from "./workflow-authorized-actions";
 import PipelineStepConfigurationSummaryModal from "./step_configuration/PipelineStepConfigurationSummaryModal";
+import pipelineActions from "components/workflow/pipeline-actions";
+
+const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
 const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineId, editWorkflow, parentCallbackEditItem, deleteStep, parentHandleViewSourceActivityLog, customerAccessRules, parentWorkflowStatus, refreshCount }) => {
   const toastContext = useContext(DialogToastContext);
@@ -36,6 +39,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
   const [itemState, setItemState] = useState("");
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [modalDeleteIndex, setModalDeleteIndex] = useState(false);
+  const [modalDeleteObj, setModalDeleteObj] = useState(false);
   const [toolProperties, setToolProperties] = useState({});
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
   const [activityLogModal, setActivityLogModal] = useState({ show: false, header: "", message: "", button: "OK" });
@@ -161,13 +165,23 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
     setIsLoading(false);
   };
 
-  const handleDeleteStepClick = (index) => {
+  const handleDeleteStepClick = (index, pipeline, step) => {
+    let deleteObj = {
+      "pipelineId" : pipeline._id,
+      "stepId": step._id,
+      "toolIdentifier": step?.tool?.tool_identifier
+    };
     setShowDeleteModal(true);
     setModalDeleteIndex(index);
+    setModalDeleteObj(deleteObj);
   };
 
-  const handleDeleteStepClickConfirm = (index) => {
+  const handleDeleteStepClickConfirm = async(index, deleteObj) => {
     setShowDeleteModal(false);
+    if(deleteObj.toolIdentifier && jenkinsTools.includes(deleteObj.toolIdentifier)) {
+      // make an kafka call to delete jenkins job
+      await pipelineActions.deleteJenkinsJob(deleteObj, getAccessToken);
+    }
     deleteStep(index);
   };
 
@@ -320,7 +334,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
                   <FontAwesomeIcon icon={faTrash} className="mr-2 red"
                                    style={{ cursor: "pointer" }}
                                    onClick={() => {
-                                     handleDeleteStepClick(index);
+                                     handleDeleteStepClick(index, pipeline, item);
                                    }}/>
                 </OverlayTrigger>
                 }
@@ -466,7 +480,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
                                  message="Warning! Data about this step cannot be recovered once it is deleted. Do you still want to proceed?"
                                  button="Confirm"
                                  handleCancelModal={() => setShowDeleteModal(false)}
-                                 handleConfirmModal={() => handleDeleteStepClickConfirm(modalDeleteIndex)}/>}
+                                 handleConfirmModal={() => handleDeleteStepClickConfirm(modalDeleteIndex, modalDeleteObj)}/>}
 
 
       <PipelineStepConfigurationSummaryModal
