@@ -37,6 +37,11 @@ function OctopusVersionSelectInput({ fieldName, dataObject, setDataObject, disab
     try {
       const res = await OctopusStepActions.getVersions(dataObject.getData("octopusToolId"),dataObject.getData("spaceId"),dataObject.getData("octopusFeedId"),dataObject.getData("ecrPushStepId"),pipelineId, getAccessToken);
       if (res && res.status === 200) {
+        if (res.data.length === 0) {
+          setPlaceholder("No Versions Found");
+          return;
+        }
+        setPlaceholder("Select a Version");
         setOctopusVersions(res.data);
         return;
       }
@@ -49,16 +54,22 @@ function OctopusVersionSelectInput({ fieldName, dataObject, setDataObject, disab
     }
   };
 
+  const handleDTOChange = async (fieldName, value) => {
+      let newDataObject = dataObject;
+      newDataObject.setData("octopusVersion", value);
+      setDataObject({ ...newDataObject });
+      return;
+  };
+
   return (
     <div>
       <SelectInputBase
         fieldName={fieldName}
+        setDataFunction={handleDTOChange}
         dataObject={dataObject}
         setDataObject={setDataObject}
         selectOptions={versions}
         busy={isLoading}
-        valueField={valueField}
-        textField={textField}
         placeholderText={placeholder}
         disabled={disabled || isLoading || (!isLoading && (versions == null || versions.length === 0))}
       />

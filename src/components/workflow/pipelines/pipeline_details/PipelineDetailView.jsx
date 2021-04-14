@@ -17,7 +17,7 @@ import {
   faDiceD20,
   faMicrochip,
   faBracketsCurly,
-  faSpinner, faHexagon,
+  faSpinner, faHexagon, faGripVertical, faLayerGroup,
 } from "@fortawesome/pro-light-svg-icons";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import Model from "../../../../core/data_model/model";
@@ -61,6 +61,10 @@ function PipelineDetailView() {
   const handleTabClick = (tabSelection) => async e => {
     e.preventDefault();
     clearTimeout(refreshTimer);
+
+    if (tabSelection === "viewer") {
+      return;
+    }
 
     if (tabSelection === "catalog") {
       history.push(`/workflow/catalog`);
@@ -322,8 +326,10 @@ function PipelineDetailView() {
       <NavigationTabContainer>
         <NavigationTab activeTab={activeTab} tabText={"Catalog"} handleTabClick={handleTabClick}
                        tabName={"catalog"} toolTipText={"Template Catalog"} icon={faHexagon}/>
-        <NavigationTab activeTab={activeTab !== "catalog" ? "all" : activeTab} tabText={"Pipelines"}
-                       handleTabClick={handleTabClick} tabName={"all"} toolTipText={"Pipelines"} icon={faDiceD20}/>
+        <NavigationTab activeTab={activeTab} tabText={"Pipelines"}
+                       handleTabClick={handleTabClick} tabName={"pipelines"} toolTipText={"Pipelines"} icon={faDiceD20}/>
+        <NavigationTab activeTab={"viewer"} tabText={"Pipeline Viewer"}
+                       handleTabClick={handleTabClick} tabName={"viewer"} toolTipText={"Pipeline Viewer"} icon={faLayerGroup}/>
       </NavigationTabContainer>
     );
   };
