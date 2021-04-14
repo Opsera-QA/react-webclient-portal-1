@@ -4,7 +4,6 @@ import EditRolesModal from "components/common/inline_inputs/roles/modal/EditRole
 import RoleAccessField from "components/common/fields/multiple_items/RoleAccessField";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 import EditIcon from "components/common/icons/field/EditIcon";
-import RoleAccessEditorHelpOverlay from "components/common/help/input/role_access_editor/RoleAccessEditorHelpOverlay";
 
 function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData, visible, noDataMessage, helpComponent}) {
   const [showModal, setShowModal] = useState(false);
@@ -29,10 +28,7 @@ function RoleAccessInlineInputBase({dataObject, fieldName, disabled, saveData, v
         <div><RoleAccessField dataObject={dataObject} fieldName={fieldName} noDataMessage={noDataMessage} /></div>
         <div className="edit-button d-flex">
           <EditIcon className={"ml-2 mt-2 text-muted"} editFunction={showEditor} disabled={disabled} tooltipBody={"Edit Access Rules"} />
-          <LaunchHelpIcon
-            helpComponent={<RoleAccessEditorHelpOverlay helpComponent={helpComponent} />}
-            className={"mt-2 ml-2 text-muted"}
-          />
+          <LaunchHelpIcon helpComponent={helpComponent} className={"mt-2 ml-2 text-muted"} />
         </div>
       </div>
       <EditRolesModal

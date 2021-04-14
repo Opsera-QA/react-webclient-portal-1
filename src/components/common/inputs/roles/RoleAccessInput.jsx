@@ -10,7 +10,7 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
-import RoleAccessEditorHelpOverlay from "components/common/help/input/role_access_editor/RoleAccessEditorHelpOverlay";
+import RoleAccessEditorHelpOverlayContainer from "components/common/help/input/role_access_editor/RoleAccessEditorHelpOverlayContainer";
 import axios from "axios";
 
 const roleTypes = [
@@ -413,7 +413,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
       errorMessage={errorMessage}
       type={"Role"}
       addAllowed={lastRoleComplete()}
-      helpComponent={<RoleAccessEditorHelpOverlay />}
+      helpComponent={<RoleAccessEditorHelpOverlayContainer />}
     >
       <div>
         {getHeaderBar()}
