@@ -31,7 +31,6 @@ import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import AttributeEditorPanel from "components/inventory/tools/tool_details/AttributeEditorPanel";
 import ToggleTab from "components/common/tabs/detail_view/ToggleTab";
-import ScmToolAccountsPanel from "./ScmToolAccountsPanel";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");

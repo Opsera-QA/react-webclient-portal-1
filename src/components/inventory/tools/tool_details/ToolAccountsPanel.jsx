@@ -9,8 +9,8 @@ function ToolAccountsPanel({ toolData, loadData, isLoading }) {
     switch (toolIdentifier) {
       case "jenkins":
         return <JenkinsAccounts toolData={toolData} loadData={loadData}/>;
-      case "gitlab":
-      case "github":
+      // case "gitlab":
+      // case "github":
       case "bitbucket":
         return <ScmAccounts toolData={toolData} isLoading={isLoading} loadData={loadData}/>;
       default:
