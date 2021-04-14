@@ -8,19 +8,15 @@ import scmCreateAccountMetadata from './scm-create-account-metadata';
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTags} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import ScmAccountsEditorPanel from "./ScmAccountsEditorPanel";
 
 function ScmAccounts({ toolData, loadData, isLoading }) {
   const toastContext = useContext(DialogToastContext);
+  const [scmAccountData, setScmAccountData] = useState(undefined);
 
   const editScmAccount = (rowData) => {
     let scmAccountModel = new Model(toolData.getData("accounts")[rowData.index], scmCreateAccountMetadata, false);
-    toastContext.showOverlayPanel(
-      <NewScmAccountOverlay
-        toolData={toolData}
-        loadData={loadData}
-        scmAccountData={scmAccountModel}
-      />
-    );
+    setScmAccountData(scmAccountModel);    
   };
 
 
@@ -47,17 +43,27 @@ function ScmAccounts({ toolData, loadData, isLoading }) {
     );
   };
 
-  return (
-    <FilterContainer
-      loadData={loadData}
-      addRecordFunction={createAccount}
-      isLoading={isLoading}
-      body={getTable()}
-      type={"Account Credentials"}
-      metadata={scmCreateAccountMetadata}
-      titleIcon={faTags}
-      title={"Accounts"}
-    />
+  return (    
+    <>
+      {scmAccountData ? (
+        <ScmAccountsEditorPanel
+          toolData={toolData}        
+          scmAccountData={scmAccountData}
+          handleClose={loadData}   
+        />
+      ) : (
+        <FilterContainer
+          loadData={loadData}
+          addRecordFunction={createAccount}
+          isLoading={isLoading}
+          body={getTable()}
+          type={"Account Credentials"}
+          metadata={scmCreateAccountMetadata}
+          titleIcon={faTags}
+          title={"Accounts"}
+        />
+      )}
+    </>    
   );
 }
 
