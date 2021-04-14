@@ -112,7 +112,7 @@ function ScmAccountsEditorPanel({toolData, scmAccountData, handleClose}) {
     }
   };
 
-  const handleDelete = () => {
+  const handleDelete = () => {    
     setShowDeleteModal(true);
   };
 
@@ -127,6 +127,7 @@ function ScmAccountsEditorPanel({toolData, scmAccountData, handleClose}) {
       updateRecord={saveAccount}
       createRecord={saveAccount}
       extraButtons={getDeleteButton()}
+      addAnotherOption={false}
     >
       <Row>
         <Col lg={12}>
