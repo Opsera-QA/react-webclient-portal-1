@@ -22,8 +22,9 @@ function RoleAccessEditorHelpOverlay({ isLoading, helpComponent}) {
       closePanel={closePanel}
       titleText={"Rule Base Access"}
     >
-      <div>This is a help document</div>
-      {helpComponent}
+      <div className={"mt-2"}>
+        {helpComponent}
+      </div>
     </HelpOverlayBase>
   );
 }
