@@ -4,18 +4,28 @@ import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlay} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
+import {AuthContext} from "contexts/AuthContext";
 import SFDCViewOverlay from "components/git/git_task_details/configuration_forms/sfdc-org-sync/SFDCViewOverlay";
 
 function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadData }) {
   let toastContext = useContext(DialogToastContext);
+  const { getAccessToken } = useContext(AuthContext);
 
-  const handleRunGitTask = () => {
-    if (gitTasksData.getData("type") !== "sync-sfdc-repo") {
+  const handleRunGitTask = async() => {    
+    if (gitTasksData.getData("type") === "sync-sfdc-repo") {  
+      // open wizard views
+      toastContext.showOverlayPanel(<SFDCViewOverlay gitTasksData={gitTasksData}/>);
+      return;
+    }    
+    if (gitTasksData.getData("type") === "sync-branch-structure") {  
+      // pipeline action call to trigger branch conversion
+      let postBody = {
+        "gitTaskId":gitTasksData.getData("_id")
+      };
+      await sfdcPipelineActions.gitTaskTrigger(getAccessToken, postBody);
       return;
     }
-
-    // open sfdc wizard views
-    toastContext.showOverlayPanel(<SFDCViewOverlay gitTasksData={gitTasksData} refreshData={loadData}/>);
     handleClose();
   };
 

@@ -68,13 +68,16 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
   };
 
   const handleRunTask = () => {
-    // console.log("Run task open wizard", gitTasksData.getData("_id"));
-
-    if (gitTasksData.getData("type") !== "sync-sfdc-repo") {
+    if (gitTasksData.getData("type") === "sync-sfdc-repo") {  
+      // open wizard views
+      toastContext.showOverlayPanel(<SFDCViewOverlay gitTasksData={gitTasksData}/>);
+      return;
+    }    
+    if (gitTasksData.getData("type") === "sync-branch-structure") {  
+      // open wizard views
+      console.log("Git branch task run triggered");
       return;
     }
-    // open wizard views
-    toastContext.showOverlayPanel(<SFDCViewOverlay gitTasksData={gitTasksData}/>);
   };
 
   const getExtraButtons = () => {

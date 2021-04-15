@@ -1,4 +1,5 @@
 import {axiosApiService} from "../../../../api/apiService";
+import baseActions from "utils/actionsBase";
 
 const sfdcPipelineActions = {};
 
@@ -108,5 +109,13 @@ sfdcPipelineActions.gitTaskTrigger = async (postBody, getAccessToken) => {
     .catch(error => {throw { error };});
   return response;
 };
+
+// sfdcPipelineActions.gitSFDCBranchConversionTrigger = async (getAccessToken, gitTasksDataDto) => {
+//   const postBody = {
+//     "gitTaskId":gitTasksDataDto.getData("_id")
+//   };
+//   const apiUrl = "/pipelines/sfdc/gitbranchconversion";
+//   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+// };
 
 export default sfdcPipelineActions;
