@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
 import sfdcGitTaskConfigurationMetadata
-  from "components/git/git_task_details/configuration_forms/sfdc/sfdc-git-task-configuration-metadata";
+  from "components/git/git_task_details/configuration_forms/sfdc-org-sync/sfdc-git-task-configuration-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SFDCJenkinsToolInput from "./inputs/SFDCJenkinsToolInput";

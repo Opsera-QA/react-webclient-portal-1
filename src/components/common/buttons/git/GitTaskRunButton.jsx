@@ -8,7 +8,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import ModalBase from "components/common/modal/ModalBase";
 import IconBase from "components/common/icons/IconBase";
 import gitTaskActions from "components/git/git-task-actions";
-import SFDCViewOverlay from "components/git/git_task_details/configuration_forms/sfdc/SFDCViewOverlay";
+import SFDCViewOverlay from "components/git/git_task_details/configuration_forms/sfdc-org-sync/SFDCViewOverlay";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import GitRunTaskModal from "components/git/git_task_details/GitRunTaskModal";

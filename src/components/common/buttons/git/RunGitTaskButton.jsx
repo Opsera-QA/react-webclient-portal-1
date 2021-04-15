@@ -4,7 +4,7 @@ import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlay} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import SFDCViewOverlay from "components/git/git_task_details/configuration_forms/sfdc/SFDCViewOverlay";
+import SFDCViewOverlay from "components/git/git_task_details/configuration_forms/sfdc-org-sync/SFDCViewOverlay";
 
 function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadData }) {
   let toastContext = useContext(DialogToastContext);

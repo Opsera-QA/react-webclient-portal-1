@@ -13,7 +13,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TagManager from "components/common/inputs/tags/TagManager";
 import { Button } from "react-bootstrap";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import SFDCViewOverlay from "./configuration_forms/sfdc/SFDCViewOverlay";
+import SFDCViewOverlay from "./configuration_forms/sfdc-org-sync/SFDCViewOverlay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlay,

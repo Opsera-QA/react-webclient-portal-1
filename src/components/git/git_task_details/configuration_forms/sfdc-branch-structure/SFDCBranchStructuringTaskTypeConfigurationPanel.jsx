@@ -6,14 +6,14 @@ import sfdcGitBranchTaskConfigurationMetadata
   from "components/git/git_task_details/configuration_forms/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import SFDCJenkinsToolInput from "../sfdc/inputs/SFDCJenkinsToolInput";
-import SFDCJenkinsAccountInput from "../sfdc/inputs/SFDCJenkinsAccountInput";
-import SFDCBitbucketWorkspaceInput from "../sfdc/inputs/SFDCBitbucketWorkspaceInput";
-import SFDCGitRepositoryInput from "../sfdc/inputs/SFDCGitRepositoryInput";
-import SFDCGitBranchInput from "../sfdc/inputs/SFDCGitBranchInput";
-import SFDCToolInput from "../sfdc/inputs/SFDCToolInput";
+import SFDCJenkinsToolInput from "../sfdc-org-sync/inputs/SFDCJenkinsToolInput";
+import SFDCJenkinsAccountInput from "../sfdc-org-sync/inputs/SFDCJenkinsAccountInput";
+import SFDCBitbucketWorkspaceInput from "../sfdc-org-sync/inputs/SFDCBitbucketWorkspaceInput";
+import SFDCGitRepositoryInput from "../sfdc-org-sync/inputs/SFDCGitRepositoryInput";
+import SFDCGitBranchInput from "../sfdc-org-sync/inputs/SFDCGitBranchInput";
+import SFDCToolInput from "../sfdc-org-sync/inputs/SFDCToolInput";
 import AgentLabelsMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
-import GitBranchTypeSelectionInput from "../sfdc/inputs/GitBranchTypeSelectionInput";
+import GitBranchTypeSelectionInput from "../sfdc-org-sync/inputs/GitBranchTypeSelectionInput";
 
 function SFDCBranchStructuringTaskTypeConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   useEffect(() => {loadData();}, []);
