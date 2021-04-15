@@ -1,6 +1,6 @@
 import regexHelpers from "utils/regexHelpers";
 
-const sfdcGitTaskConfigurationMetadata = {
+const sfdcGitBranchTaskConfigurationMetadata = {
   type: "SFDC Git Branch Structuring Task Configuration",
   fields: [
     {
@@ -61,7 +61,8 @@ const sfdcGitTaskConfigurationMetadata = {
     {
       label: "Conversion Type",
       id: "conversionType",
-      maxLength: 20,
+      isRequired: true,
+      maxLength: 50,
       regexValidator: regexHelpers.regexTypes.generalText
     },
     {
@@ -116,6 +117,7 @@ const sfdcGitTaskConfigurationMetadata = {
   newObjectFields:
     {
     toolConfigId: "",
+    jobType: "SFDC_CONVERT_METADATA",
     autoScaleEnable: false,
     toolName: "",
     jobName: "",
@@ -140,4 +142,4 @@ const sfdcGitTaskConfigurationMetadata = {
     }
 };
 
-export default sfdcGitTaskConfigurationMetadata;
+export default sfdcGitBranchTaskConfigurationMetadata;

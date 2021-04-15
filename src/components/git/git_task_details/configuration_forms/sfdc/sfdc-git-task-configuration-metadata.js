@@ -110,7 +110,7 @@ const sfdcGitTaskConfigurationMetadata = {
   newObjectFields:
     {
     type: "",
-    jobType: "",
+    jobType: "SFDC_GIT_SYNC",
     toolConfigId: "",
     autoScaleEnable: false,
     toolName: "",

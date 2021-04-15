@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import modelHelpers from "components/common/model/modelHelpers";
-import sfdcGitTaskConfigurationMetadata
-  from "components/git/git_task_details/configuration_forms/sfdc/sfdc-git-task-configuration-metadata";
+import sfdcGitBranchTaskConfigurationMetadata
+  from "components/git/git_task_details/configuration_forms/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import SFDCJenkinsToolInput from "../sfdc/inputs/SFDCJenkinsToolInput";
@@ -19,7 +19,7 @@ function SFDCBranchStructuringTaskTypeConfigurationPanel({ gitTasksDataDto, gitT
   useEffect(() => {loadData();}, []);
 
   const loadData = async () => {    
-    const configurationData = modelHelpers.getToolConfigurationModel(gitTasksDataDto.getData("configuration"), sfdcGitTaskConfigurationMetadata);
+    const configurationData = modelHelpers.getToolConfigurationModel(gitTasksDataDto.getData("configuration"), sfdcGitBranchTaskConfigurationMetadata);
     setGitTasksConfigurationData({...configurationData});
   };
 
