@@ -2,7 +2,7 @@ import {ApiService} from "api/apiService";
 import React from "react";
 import { CSVLink } from "react-csv";
   
-export const getAllResultsForExport = async (startDate, endDate, setIsLoading, getAccessToken, searchTerm, filterType, getFormattedCustomFilters, currentPage, setExportData, setExportDisabled) => {
+export const getAllResultsForExport = async (startDate, endDate, setIsLoading, getAccessToken, searchTerm, jenkinsProjectDto, filterType, getFormattedCustomFilters, currentPage, setExportData, setExportDisabled) => {
     setIsLoading(true);
 
     const accessToken = await getAccessToken;
@@ -11,6 +11,8 @@ export const getAllResultsForExport = async (startDate, endDate, setIsLoading, g
       route = "/analytics/blueprint";
     }
     const urlParams = {
+      toolId: jenkinsProjectDto?.getData("tool_id"),
+      jobName: jenkinsProjectDto?.getData("key"),
       search: searchTerm,
       date: startDate !== 0 && endDate === 0 ? startDate : undefined,
       start: startDate !== 0 && endDate !== 0 ? startDate : undefined,

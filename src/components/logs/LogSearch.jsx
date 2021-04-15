@@ -86,7 +86,7 @@ function LogSearch({tools, sideBySide}) {
     }
 
     await getSearchResults(startDate, endDate, newTab);
-    await getAllResultsForExport(startDate, endDate, setIsLoading, getAccessToken(), searchTerm, filterType, getFormattedCustomFilters(), currentPage, setExportData, setExportDisabled);
+    await getAllResultsForExport(startDate, endDate, setIsLoading, getAccessToken(), searchTerm, jenkinsProjectDto, filterType, getFormattedCustomFilters(), currentPage, setExportData, setExportDisabled);
   };
 
   const cancelSearchClicked = () => {
@@ -432,8 +432,8 @@ function LogSearch({tools, sideBySide}) {
   const getSearchFields = () => {
     return (
       <Row className={"mx-0 py-2"}>
-        <Col>
-          <label><span>Search Index</span></label>
+        <Col className="custom-select-input my-2">
+          <label><span>Search Index</span><span className="danger-red">*</span></label>
           <DropdownList
             data={Array.isArray(tools) ? tools : []}
             defaultValue={Array.isArray(tools) ? tools[0] : []}
@@ -445,8 +445,8 @@ function LogSearch({tools, sideBySide}) {
           />
         </Col>
         {getDynamicFields()}
-        <Col>
-        <label><span>Search Input</span></label>
+        <Col className="custom-select-input my-2">
+        <label><span>Search Input</span><span className="danger-red">*</span></label>
         <Form.Control
             placeholder={filterType === "blueprint" ? "Enter Build Number" : "Search logs"}
             value={searchTerm}
