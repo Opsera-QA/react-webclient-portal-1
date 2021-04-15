@@ -18,6 +18,7 @@ function PersistAndCloseButtonContainer({ recordDto, setRecordDto, updateRecord,
           setRecordDto={setRecordDto}
           addAnotherOption={addAnotherOption}
           disable={disable}
+          lenient={lenient}
         />
       );
     }

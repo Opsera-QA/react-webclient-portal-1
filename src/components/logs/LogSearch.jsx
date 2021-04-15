@@ -546,6 +546,7 @@ function LogSearch({tools, sideBySide}) {
   const closeTab = (tabName) => {
     let newArray = logTabData;
     newArray.splice(tabName, 1);
+    setCurrentLogTab(tabName - 1);
     setLogTabData([...newArray]);
   };
 

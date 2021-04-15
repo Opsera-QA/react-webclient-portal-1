@@ -101,6 +101,30 @@ export const getStringifiedArrayColumn = (field, className) => {
   };
 };
 
+export const getLimitedStringifiedArrayColumn = (field, maxLength, className) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: function stringifyArray(row) {
+      const array = row?.value;
+
+      if (Array.isArray(array) && array.length > 0) {
+        const value = JSON.stringify(array);
+        const truncatedString = truncateString(value ,maxLength);
+        
+        if (truncatedString !== value) {
+          return (<TooltipWrapper innerText={value}><span>{truncatedString}</span></TooltipWrapper>);
+        }
+
+        return value;
+      }
+
+      return "";
+    },
+    class: className ? className : "no-wrap-inline"
+  };
+};
+
 export const getNameValueArrayColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
@@ -150,6 +174,35 @@ export const getContactArrayColumn = (field, className) => {
         return array.map((item, index) => {
           return (`${item.name}:${item.email}:${item.user_id}${array.length > index + 1 ? ',' : ''}`);
         });
+      }
+
+      return "";
+    },
+    class: className ? className : "no-wrap-inline"
+  };
+};
+
+export const getLimitedContactArrayColumn = (field, maxLength, className) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: function stringifyArray(row) {
+      const array = row?.value;
+
+      if (Array.isArray(array) && array.length > 0) {
+          const valueArr = array.map((item, index) => {
+            return (`${item.name}:${item.email}:${item.user_id}${array.length > index + 1 ? ',' : ''}`);
+          });
+
+          const value = JSON.stringify(valueArr).replace(/[["\]]/g,'');
+
+          const truncatedString = truncateString(value, maxLength);
+          
+          if (truncatedString !== value) {
+            return (<TooltipWrapper innerText={value}><span>{truncatedString}</span></TooltipWrapper>);
+          }
+  
+          return value;
       }
 
       return "";
@@ -223,6 +276,35 @@ export const getTagArrayColumn = (field, className) => {
         return array.map((tag, index) => {
           return (`${tag.type}: ${tag.value}${array.length > index + 1 ? ',' : ''}`);
         });
+      }
+
+      return "";
+    },
+    class: className ? className : "no-wrap-inline"
+  };
+};
+
+export const getLimitedTagArrayColumn = (field, maxLength, className) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: function stringifyArray(row) {
+      const array = row?.value;
+
+      if (Array.isArray(array) && array.length > 0) {
+        const valueArr = array.map((tag, index) => {
+          return (`${tag.type}: ${tag.value}${array.length > index + 1 ? ',' : ''}`);
+        });
+
+        const value = JSON.stringify(valueArr).replace(/[["\]]/g,'');
+
+        const truncatedString = truncateString(value, maxLength);
+
+        if (truncatedString !== value) {
+          return (<TooltipWrapper innerText={value}><span>{truncatedString}</span></TooltipWrapper>);
+        }
+
+        return value;
       }
 
       return "";

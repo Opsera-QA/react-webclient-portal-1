@@ -1,9 +1,6 @@
-import React, { useState, Link } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { Button, Row, Col, Nav, OverlayTrigger, Tooltip } from "react-bootstrap";
-import ModalLogs from "components/common/modal/modalLogs";
-import ModalTable from "./modalTable";
-import ModalXML from "./modalXML";
+import { Button, Row, Col, Nav } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLayerGroup,
@@ -15,90 +12,29 @@ import {
 import Tab from "react-bootstrap/Tab";
 import ReactJson from "react-json-view";
 import ExportBlueprintLogButton from "components/common/buttons/export/blueprints/ExportBlueprintLogButton";
+import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
+import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
+import {useHistory} from "react-router-dom";
+import ShowSecurityReportButton from "components/blueprint/ShowSecurityReportButton";
+import ShowPackageXmlButton from "components/blueprint/ShowPackageXmlButton";
 
-
-function BlueprintSearchResult({ searchResults, blueprintName, numberOfSteps }) {
-  const [showModal, setShowModal] = useState(false);
-  const [showTable, setShowTable] = useState(false);
-  const [modalMessage, setModalMessage] = useState({});
-  const [columns, setColumns] = useState([]);
-  const [tableData, setTableData] = useState({});
-
-  const handleClick = (param) => {
-    setModalMessage(param);
-    setShowModal(true);
-  };
-
-  const tableViewer = (param) => {
-    setShowTable(true);
-    setTableData(param);
-    setColumns([
-      {
-        Header: "Vulnerability",
-        accessor: "vulnerability",
-        class: "cell-center no-wrap-inline",
-      },
-      {
-        Header: "Package Name",
-        accessor: "package_name",
-      },
-      {
-        Header: "Severity",
-        accessor: "severity",
-      },
-      {
-        Header: "CVSS Base",
-        accessor: "cvss_base",
-        Cell: function getValue(row)  {
-          return row ?
-          <div className="console-text-invert-modal">{row.value}</div> :
-          "N/A";
-        }
-      },
-      {
-        Header: "CVSS Exploitability",
-        accessor: "cvss_exploitability_score",
-        Cell: function getValue(row)  {
-          return row ?
-          <div className="console-text-invert-modal">{row.value}</div> :
-          "N/A";
-        }
-      },
-      {
-        Header: "CVSS Impact",
-        accessor: "cvss_impact_score",
-        Cell: function getValue(row) {
-          return row ?
-          <div className="console-text-invert-modal">{row.value}</div> :
-          "N/A";
-        }
-      },
-      {
-        Header: "Vulnerability URL",
-        accessor: "url",
-        Cell: function getValue(row) {
-          return row ?
-          <a href={row.value} target="_blank" rel="noreferrer" className="text-muted console-text-invert-modal">{row.value}</a> :
-          "N/A";
-        },
-      }
-    ]);
-  };
+function BlueprintSearchResult({ logData }) {
+  const history = useHistory();
 
   let completeInput = [];
 
-  for (let item in searchResults.data) {
-    if (searchResults.data.length > 0) {
-      if (searchResults.data[item].api_response) {
-        if (searchResults.data[item].api_response.jenkins_console_log) {
-          completeInput.push(searchResults.data[item].api_response.jenkins_console_log);
-        } else if (searchResults.data[item].api_response.status) {
-          completeInput.push(searchResults.data[item].api_response.status);
-        } else if (searchResults.data[item].api_response.buildLog) {
-          completeInput.push(searchResults.data[item].api_response.buildLog);
+  for (let item in logData.data) {
+    if (logData.data.length > 0) {
+      if (logData.data[item].api_response) {
+        if (logData.data[item].api_response.jenkins_console_log) {
+          completeInput.push(logData.data[item].api_response.jenkins_console_log);
+        } else if (logData.data[item].api_response.status) {
+          completeInput.push(logData.data[item].api_response.status);
+        } else if (logData.data[item].api_response.buildLog) {
+          completeInput.push(logData.data[item].api_response.buildLog);
         } else {
-          if (searchResults.data[item].api_response) {
-            completeInput.push(JSON.stringify(searchResults.data[item].api_response, undefined, 4));
+          if (logData.data[item].api_response) {
+            completeInput.push(JSON.stringify(logData.data[item].api_response, undefined, 4));
           }
         }
       }
@@ -113,188 +49,132 @@ function BlueprintSearchResult({ searchResults, blueprintName, numberOfSteps }) 
     return stringSplit.join(" ");
   }
 
+  // TODO: Make component?
+  const getStatusIcon = (item) => {
+    switch (item?.current?.status) {
+      case "pending":
+        return <FontAwesomeIcon className="float-right mr-2 mt-1 yellow" icon={faExclamationCircle} />;
+      case "success":
+        return <FontAwesomeIcon className="float-right mr-2 mt-1 green" icon={faCheckCircle} />;
+      default:
+        return <FontAwesomeIcon className="float-right mr-2 mt-1 cell-icon red" icon={faTimesCircle} />;
+    }
+  };
+
+  const getRow = (title, text) => {
+    return (
+      <Row>
+        <Col lg className="py-1">
+          <span className="text-muted mr-1">{title}:</span>
+          <span className="console-text-invert-modal w-100">{text}</span>
+        </Col>
+      </Row>
+    );
+  };
+
+  // TODO: Should this be a summary panel? Either way refactor
   function renderStep(item) {
     if (item.start) {
       return (
         <>
-          <div className="mb-1 mt-3 ml-1 bordered-content-block py-2 px-3 max-content-width">
+          <div className="ml-1 bordered-content-block px-3 py-2">
             <Row>
               <Col>
                 <strong>
                   <span className="blueprint-step-title">{makeUpper(item.start.step_type)}</span>
                 </strong>
-                {item.current.status === "pending" ? (
-                  <FontAwesomeIcon className="float-right mr-2 mt-1 yellow" icon={faExclamationCircle} />
-                ) : item.current.status !== "success" ? (
-                  <FontAwesomeIcon className="float-right mr-2 mt-1 cell-icon red" icon={faTimesCircle} />
-                ) : (
-                  <FontAwesomeIcon className="float-right mr-2 mt-1 green" icon={faCheckCircle} />
-                )}
+                {getStatusIcon(item)}
               </Col>
             </Row>
             <hr style={{ margin: " 0.5em auto" }} />
-            <Row>
-              <Col lg className="py-1">
-                <span className="text-muted mr-1">Step Name:</span>
-                <span className="console-text-invert-modal mb-1 max-content-width">{makeUpper(item.start.step_name)}</span>
-              </Col>
-            </Row>
-            {item.start.step_name === "approval" ? (
-              <Row>
-                <Col lg className="py-1">
-                  <span className="text-muted mr-1">Requested At:</span>
-                  <span className="console-text-invert-modal mb-1 max-content-width">{item.start.timestamp}</span>
-                </Col>
-              </Row>
+            {getRow("Step Name", makeUpper(item?.start?.step_name))}
+            {item?.start?.step_name === "approval" ? (
+              <>{getRow("Requested At", makeUpper(item?.start?.timestamp))}</>
             ) : (
               <>
-                <Row>
-                  <Col lg className="py-1">
-                    <span className="text-muted mr-1">Requested At:</span>
-                    <span className="console-text-invert-modal mb-1 max-content-width">{item.current.timestamp}</span>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col lg className="py-1">
-                    <span className="text-muted mr-1">Response Message:</span>
-                    <span className="console-text-invert-modal mb-1 max-content-width">{item.current.message}</span>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col lg={1.5} className="pt-1 ml-3">
-                    <span className="text-muted mr-1">API Response:</span>
-                  </Col>
-                  <Col lg={5} className="pre my-2">
-                    <ReactJson src={item.current.data} displayDataTypes={false} />
-                  </Col>
-                </Row>
+                {getRow("Requested At", makeUpper(item?.current?.timestamp))}
+                {getRow("Response Message", makeUpper(item?.current?.message))}
+                <div className={"py-1"}>
+                  <div className="text-muted mb-2">API Response</div>
+                  <div><ReactJson src={item.current.data} displayDataTypes={false}  /></div>
+                </div>
               </>
             )}
-            {item.start.step_name === "approval" && item.current.status === "success" && (
+            {item?.start?.step_name === "approval" && item?.current?.status === "success" && (
               <>
-                <Row>
-                  <Col lg className="py-1">
-                    <span className="text-muted mr-1">Approved At:</span>
-                    <span className="console-text-invert-modal mb-1 max-content-width">{item.current.timestamp}</span>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col lg className="py-1">
-                    <span className="text-muted mr-1">Approver:</span>
-                    <span className="console-text-invert-modal mb-1 max-content-width">{item.current.approver}</span>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col lg className="py-1">
-                    <span className="text-muted mr-1">Duration:</span>  
-                    <span className="console-text-invert-modal mb-1 max-content-width">{item.current.duration} hours</span>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col lg className="py-1">
-                    <span className="text-muted mr-1">Approval Message:</span>
-                    <span className="console-text-invert-modal mb-1 max-content-width">{item.current.message}</span>
-                  </Col>
-                </Row>
+                {getRow("Approved At", item?.current?.timestamp)}
+                {getRow("Approver", item?.current?.approver)}
+                {getRow("Duration", `${item?.current?.duration} hours`)}
+                {getRow("Approval Message", item?.current?.message)}
               </>
             )}
-              <Row>
-                <Col lg className="py-1">
-                  <span className="text-muted mr-1">Status:</span>
-                  <span className="console-text-invert-modal mb-1 max-content-width">{makeUpper(item.current.status)}</span>
-                </Col>
-              </Row>
+            {getRow("Status", makeUpper(item.current.status))}
           </div>
         </>
       );
     } else {
       return (
-        <div className="pre mt-2">
+        <div className="mt-2">
           <ReactJson src={item} displayDataTypes={false} />
         </div>
       );
     }
   }
 
+  const goToPipeline = () => {
+    history.push(`/workflow/details/${logData?.pipelineId}/summary`);
+  };
+
+
+  // TODO: Refactor
   return (
     <>
-      <br></br>
-      <div className="mb-1 mt-3 bordered-content-block p-3 max-content-width">
-        {searchResults.anchore && (
+      <div className="mt-3 bordered-content-block p-3 max-content-width">
+        <Row>
+          <Col>
+            <strong>
+              <div className="blueprint-title">
+                {logData?.title}
+              </div>
+            </strong>
+          </Col>
           <Button
             variant="outline-dark mr-3"
-            className="float-right mt-1 ml-1"
             size="sm"
             onClick={() => {
-              tableViewer(searchResults.anchore);
+              goToPipeline();
             }}
           >
-            <FontAwesomeIcon icon={faFileCode} fixedWidth className={"mr-1"}  />
-            Security Report
+            <FontAwesomeIcon icon={faDraftingCompass} fixedWidth/>
+            View Pipeline
           </Button>
-        )}
-        {searchResults && searchResults.xmlData && (
-          <Button
-            variant="outline-dark mr-3"
-            className="float-right mt-1 ml-1"
-            size="sm"
-            onClick={() => {
-              handleClick(searchResults.xmlData);
-            }}
-          >
-            <FontAwesomeIcon icon={faFileCode} fixedWidth className={"mr-1"} />
-            Package XML
-          </Button>
-        )}
-        {searchResults &&
-          searchResults.data.length > 0 &&
-          searchResults.data[0].step_configuration &&
-          searchResults.data[0].step_configuration.configuration &&
-          searchResults.data[0].step_configuration.configuration.buildType &&
-          searchResults.data[0].step_configuration.configuration.buildType === "ant" &&
-          !searchResults.xmlData && (
-            <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Package XML is unavailable for this job.</Tooltip>}>
-              <span className="float-right mt-1 ml-1">
-                <Button
-                  variant="outline-dark mr-3"
-                  className="float-right mt-1 ml-1"
-                  size="sm"
-                  disabled
-                  style={{ pointerEvents: "none" }}
-                  onClick={() => {
-                    handleClick(searchResults.xmlData);
-                  }}
-                >
-                  <FontAwesomeIcon icon={faFileCode} fixedWidth className={"mr-1"} />
-                  Package XML
-                </Button>
-              </span>
-            </OverlayTrigger>
-          )}
-        {searchResults.data.length > 0 && (
-          <Tab.Container id="left-tabs-example" defaultActiveKey={0}>
-            {completeInput && 
-            <ExportBlueprintLogButton 
-            className="mr-1" 
-            blueprintLog={completeInput} 
-            pipelineId={searchResults?.data[0]?.pipeline_id ? searchResults.data[0].pipeline_id : "N/A" } 
-            runCount={searchResults?.data[0]?.run_count ? searchResults.data[0].run_count : "N/A"}
-            blueprintName={blueprintName ? blueprintName : "N/A"}
-            numberOfSteps={numberOfSteps ? numberOfSteps : "N/A"}
-            logData={searchResults.data}
-            />}
+        </Row>
+        <hr/>
+        <Row className="mt-1">
+          <Col lg>
+            <StandaloneTextFieldBase label={"Pipeline ID"} text={"" + logData?.pipelineId} />
+          </Col>
+          <Col lg>
+            <StandaloneTextFieldBase label={"Run Number"} text={"" + logData?.runNumber} />
+          </Col>
+          <Col lg className="my-2">
+            <span className="text-muted mr-1">Number of Steps:</span> {logData?.data?.length ? logData?.data?.length : "N/A"}
+          </Col>
+        </Row>
+      </div>
+      <div className="mb-1 mt-3 bordered-content-block p-3 w-100">
+          {logData.data.length > 0 && (
+            <Tab.Container id="left-tabs-example" defaultActiveKey={0}>
             <Row>
-              <Col sm={2}>
-                <div className="blueprint-title pl-3 mb-1">Steps</div>
+              <Col sm={2} className={"pr-0"}>
+                <div className="blueprint-title mb-3">Steps</div>
                 <Nav variant="pills" className="flex-column">
-                  {searchResults.data.map((item, idx) => (
+                  {logData.data.map((item, idx) => (
                     <>
                       <Nav.Item key={idx}>
                         <Nav.Link key={idx} eventKey={idx}>
                           {makeUpper(
-                            item.step_configuration &&
-                              item.step_configuration.configuration &&
-                              item.step_configuration.configuration.jobType
+                              item?.step_configuration?.configuration?.jobType
                               ? item.step_configuration.configuration.jobType
                               : item.tool_identifier
                               ? item.tool_identifier
@@ -315,13 +195,30 @@ function BlueprintSearchResult({ searchResults, blueprintName, numberOfSteps }) 
                   )}
                 </Nav>
               </Col>
-              <Col sm={9} >
-              
-                <Row>
-                  <div className="blueprint-title pl-3 mb-1 ml-2">Blueprint</div>
+              <Col sm={10}>
+                <Row className={"mx-0 mb-2"}>
+                  <div className={"justify-content-between d-flex w-100"}>
+                    <div className="ml-1 blueprint-title">Blueprint</div>
+                    <div className={"d-flex"}>
+                      {<ShowSecurityReportButton logData={logData} />}
+                      {<ShowPackageXmlButton logData={logData} />}
+                      {/*// TODO: Just pass in logData to ExportBlueprintLogButton*/}
+                      {completeInput &&
+                      <ExportBlueprintLogButton
+                        className="mr-2"
+                        blueprintLog={completeInput}
+                        pipelineId={logData?.data[0]?.pipeline_id ? logData.data[0].pipeline_id : "N/A" }
+                        runCount={logData?.data[0]?.run_count ? logData.data[0].run_count : "N/A"}
+                        blueprintName={logData?.title ? logData?.title : "N/A"}
+                        numberOfSteps={logData?.data?.length ? logData?.data?.length : "N/A"}
+                        logData={logData.data}
+                      />
+                      }
+                    </div>
+                  </div>
                 </Row>
                 <Tab.Content>
-                  {searchResults.data.map((item, idx) => (
+                  {logData.data.map((item, idx) => (
                     <Tab.Pane key={idx} eventKey={idx}>
                       {item.api_response.jenkins_console_log ? (
                         <div key={idx} className="console-text-invert">
@@ -351,33 +248,13 @@ function BlueprintSearchResult({ searchResults, blueprintName, numberOfSteps }) 
           </Tab.Container>
         )}
       </div>
-      
-      <ModalXML
-        header={modalMessage._index}
-        size="lg"
-        jsonMessage={modalMessage}
-        dataType="bar"
-        show={showModal}
-        setParentVisibility={setShowModal}
-      />
-      <ModalTable
-        header="Anchore Security Report"
-        column_data={columns}
-        size="lg"
-        jsonData={tableData}
-        stats={searchResults.stats}
-        show={showTable}
-        setParentVisibility={setShowTable}
-      />
     </>
   );
 }
 
 BlueprintSearchResult.propTypes = {
-  searchResults: PropTypes.object,
+  logData: PropTypes.object,
   value: PropTypes.any,
-  blueprintName: PropTypes.any,
-  numberOfSteps: PropTypes.number
 };
 
 export default BlueprintSearchResult;
