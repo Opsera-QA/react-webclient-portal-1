@@ -23,6 +23,11 @@ const serviceNowStepNotificationMetadata = {
     {
       label: "ServiceNow User",
       id: "serviceNowUserId",
+      // isRequired: "true"
+    },
+    {
+      label: "ServiceNow Group",
+      id: "serviceNowGroupId",
       isRequired: "true"
     },
     {
