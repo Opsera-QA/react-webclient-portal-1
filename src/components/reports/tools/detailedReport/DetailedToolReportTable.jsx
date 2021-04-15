@@ -31,7 +31,7 @@ function DetailedToolReportTable({ data, loadData, isLoading }) {
       getNameValueArrayColumn(getField(fields, "applications"), "force-text-wrap"),
       getNameValueArrayColumn(getField(fields, "location"),"no-wrap-inline"),
       getNameValueArrayColumn(getField(fields, "organization"),"no-wrap-inline"),
-      getLimitedTagArrayColumn(getField(fields, "tags"), 60, "force-text-wrap"),
+      getLimitedTagArrayColumn(getField(fields, "tags"), 60, "no-wrap-inline"),
       getLimitedStringifiedArrayColumn(getField(fields, "external_reference"), 50),
       getNameValueArrayColumn(getField(fields, "licensing"),"no-wrap-inline"),
       getNameValueArrayColumn(getField(fields, "compliance"), "force-text-wrap"),
@@ -40,8 +40,6 @@ function DetailedToolReportTable({ data, loadData, isLoading }) {
     ],
     []
   );
-
-  console.log(data);
 
   const onRowSelect = (rowData) => {
     history.push("/inventory/tools/details/" + rowData.original._id);
