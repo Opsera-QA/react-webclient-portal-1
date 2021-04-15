@@ -1,3 +1,5 @@
+import {ACCESS_ROLES} from "components/common/helpers/role-helpers";
+
 const workflowAuthorizedActions = {};
 
 /***
@@ -371,6 +373,74 @@ const calculateUserObjectRole = (userEmail, userGroups, objectRoles) => {
   }
 
   return false;
+};
+
+workflowAuthorizedActions.calculateRoleLevel = (customerAccessRules, objectRoles, dataModel) => {
+  const userEmail = customerAccessRules.Email;
+  const userGroups = customerAccessRules.Groups;
+
+  if (!userEmail) {
+    return ACCESS_ROLES.UNAUTHORIZED;
+  }
+
+  if (!objectRoles || objectRoles.length === 0) {
+    return ACCESS_ROLES.NO_ACCESS_RULES;
+  }
+
+  if (dataModel?.getData("owner") === customerAccessRules.UserId) {
+    return ACCESS_ROLES.OWNER;
+  }
+
+  if (customerAccessRules.OpseraAdministrator || customerAccessRules.Administrator) {
+    return ACCESS_ROLES.ADMINISTRATOR;
+  }
+
+  //filter out only user records (groups null)
+  const userRoles = objectRoles.filter(function(item) {
+    if (!item.user || typeof item.user !== "string") {
+      return false;
+    }
+    return item.user.toLowerCase() === userEmail.toLowerCase();
+  });
+
+  if (userRoles.length > 0) {
+    return userRoles[0].role;
+  }
+
+  //filter out only user records (groups null)
+  const groupRoles = objectRoles.filter(function(item) {
+    return item.group;
+  });
+
+  let userGroupsRole = [];
+  groupRoles.forEach(function(item) {
+    if (userGroups && userGroups.includes(item.group)) {
+      userGroupsRole.push(item.role);
+    }
+  });
+
+  if (userGroupsRole.length === 1) {
+    return userGroupsRole[0];
+  }
+
+  if (userGroupsRole.length >= 1) {
+    if (userGroupsRole.includes("administrator")) {
+      return ACCESS_ROLES.ADMINISTRATOR;
+    }
+    if (userGroupsRole.includes("secops")) {
+      return ACCESS_ROLES.SECOPS;
+    }
+    if (userGroupsRole.includes("manager")) {
+      return ACCESS_ROLES.MANAGER;
+    }
+    if (userGroupsRole.includes("user")) {
+      return ACCESS_ROLES.USER;
+    }
+
+    return userGroupsRole[0];
+  }
+
+  return ACCESS_ROLES.UNAUTHORIZED;
 };
 
 export default workflowAuthorizedActions;

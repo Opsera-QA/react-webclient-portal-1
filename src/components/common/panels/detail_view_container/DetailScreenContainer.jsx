@@ -7,8 +7,24 @@ import TitleBar from "components/common/fields/TitleBar";
 import {getBreadcrumb, getParentBreadcrumb} from "components/common/navigation/trails";
 import RoleRequirementField from "components/common/fields/access/RoleRequirementField";
 import {meetsRequirements} from "components/common/helpers/role-helpers";
+import AccessRoleLevelField from "components/common/fields/access/AccessRoleLevelField";
 
-function DetailScreenContainer({ breadcrumbDestination, actionBar, dataObject, detailPanel, isLoading, accessDenied, metadata, showBreadcrumbTrail, navigationTabContainer, accessRoleData, roleRequirement, titleActionBar }) {
+function DetailScreenContainer(
+  {
+    breadcrumbDestination,
+    actionBar,
+    dataObject,
+    detailPanel,
+    isLoading,
+    accessDenied,
+    metadata,
+    showBreadcrumbTrail,
+    navigationTabContainer,
+    accessRoleData,
+    roleRequirement,
+    titleActionBar,
+    objectRoles
+  }) {
   const [breadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const [parentBreadcrumb] = useState(getParentBreadcrumb(breadcrumbDestination));
 
@@ -62,6 +78,14 @@ function DetailScreenContainer({ breadcrumbDestination, actionBar, dataObject, d
     return <div className="py-2" />;
   };
 
+  const getAccessBasedField = () => {
+    if (objectRoles != null) {
+      return (<AccessRoleLevelField className={"mx-2"} accessRoleData={accessRoleData} objectRoles={objectRoles} dataObject={dataObject} />);
+    }
+
+    return (<RoleRequirementField className={"mx-2"} roleRequirement={roleRequirement} />);
+  };
+
   if (!isLoading && accessDenied) {
     return (
       <AccessDeniedContainer />
@@ -94,7 +118,7 @@ function DetailScreenContainer({ breadcrumbDestination, actionBar, dataObject, d
           </div>
         </div>
         <div className="content-block-footer-text-container pt-2">
-          <RoleRequirementField className={"mx-2"} roleRequirement={roleRequirement} />
+          {getAccessBasedField()}
         </div>
         <div className="content-block-footer"/>
       </div>
@@ -114,7 +138,8 @@ DetailScreenContainer.propTypes = {
   metadata: PropTypes.object,
   accessRoleData: PropTypes.object,
   roleRequirement: PropTypes.string,
-  titleActionBar: PropTypes.object
+  titleActionBar: PropTypes.object,
+  objectRoles: PropTypes.array
 };
 
 export default DetailScreenContainer;

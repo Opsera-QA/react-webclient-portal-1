@@ -25,7 +25,7 @@ HelpOverlayBase.propTypes = {
   closePanel: PropTypes.func.isRequired,
   isLoading: PropTypes.bool,
   className: PropTypes.string,
-  titleIcon: PropTypes.node,
+  titleIcon: PropTypes.object,
   titleText: PropTypes.string
 };
 
