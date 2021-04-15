@@ -38,7 +38,7 @@ function ExportReportsDataModal({ showModal, closeModal, formattedData, rawData,
           item?.tags?.map(tag => `${tag?.type} : ${tag?.value}`).toString(),
           item?.external_reference?.map(ref => ref?.name).toString(),
           item?.licensing?.map(license => `${license?.name} : ${license.value}`),
-          item.compliance?.map(item => `${item?.name} : ${item.value}`),
+          item?.compliance?.map(item => `${item?.name} : ${item.value}`),
           item?.costCenter,
           item.active
         ]
