@@ -25,24 +25,41 @@ function ExportDetailedToolReportDataModal({ showModal, closeModal, formattedDat
   };
 
   const getCsvData = () => {
-    return [["Name", "Owner", "Description", "Contacts", "Applications", "Location", "Organization", "Tags", "External References", "Licensing", "Compliance", "Cost Center", "Active"],
-      formattedData.map(item =>
+    const output = [];
+
+    formattedData.forEach((tool) => {
+      const contacts = Array.isArray(tool?.contacts) ? tool?.contacts?.map(contact => `${contact?.name} : ${contact?.email}`).toString() : "";
+      const applications = Array.isArray(tool?.applications) ? tool?.applications?.map(app => `${app?.name} : ${app?.value}`).toString() : "";
+      const locations = Array.isArray(tool?.location) ? tool?.location?.map(location => `${location?.name} : ${location?.value}`).toString() : "";
+      const organizations = Array.isArray(tool?.organization) ? tool?.organization?.map(org => `${org?.name} : ${org?.value} `).toString() : "";
+      const tags = Array.isArray(tool?.tags) ? tool?.tags?.map(tag => `${tag?.type} : ${tag?.value}`).toString() : "";
+      const external_references = Array.isArray(tool?.external_reference) ? tool?.external_reference?.map(ref => ref?.name).toString() : "";
+      const licensing = Array.isArray(tool?.licensing) ? tool?.licensing?.map(license => `${license?.name} : ${license.value}`) : "";
+      const compliance = Array.isArray(tool?.compliance) ? tool.compliance?.map(item => `${item?.name} : ${item.value}`) : "";
+
+      output.push(
         [
-          item.name,
-          item.owner_name,
-          item.description,
-          item?.contacts?.map(contact => `${contact?.name} : ${contact?.email}`).toString(),
-          item?.applications?.map(app => `${app?.name} : ${app?.value}`).toString(),
-          item?.location?.map(location => `${location?.name} : ${location?.value}`).toString(),
-          item?.organization?.map(org => `${org?.name} : ${org?.value} `).toString(),
-          item?.tags?.map(tag => `${tag?.type} : ${tag?.value}`).toString(),
-          item?.external_reference?.map(ref => ref?.name).toString(),
-          item?.licensing?.map(license => `${license?.name} : ${license.value}`),
-          item.compliance?.map(item => `${item?.name} : ${item.value}`),
-          item?.costCenter,
-          item.active
+          tool.name,
+          tool.owner_name,
+          tool.description,
+          contacts,
+          applications,
+          locations,
+          organizations,
+          tags,
+          external_references,
+          licensing,
+          compliance,
+          tool?.costCenter,
+          tool.active
         ]
-      )];
+      );
+    });
+
+
+    return [["Name", "Owner", "Description", "Contacts", "Applications", "Location", "Organization", "Tags", "External References", "Licensing", "Compliance", "Cost Center", "Active"],
+      ...output
+    ];
   };
 
   if (formattedData == null || !Array.isArray(formattedData)) {
