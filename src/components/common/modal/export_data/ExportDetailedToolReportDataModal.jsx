@@ -25,7 +25,8 @@ function ExportReportsDataModal({ showModal, closeModal, formattedData, rawData,
   };
 
   const getCsvData = () => {
-    return [["Name","Owner","Description","Contacts","Applications","Location","Organization","Tags","External References","Licensing","Compliance","Cost Center","Active"],
+    if(formattedData && Array.isArray(formattedData)){
+      return [["Name","Owner","Description","Contacts","Applications","Location","Organization","Tags","External References","Licensing","Compliance","Cost Center","Active"],
       ...formattedData.map(item =>
         [
           item.name,
@@ -38,11 +39,12 @@ function ExportReportsDataModal({ showModal, closeModal, formattedData, rawData,
           item?.tags?.map(tag => `${tag?.type} : ${tag?.value}`).toString(),
           item?.external_reference?.map(ref => ref?.name).toString(),
           item?.licensing?.map(license => `${license?.name} : ${license.value}`),
-          item?.compliance?.map(item => `${item?.name} : ${item.value}`),
+          item.compliance?.map(item => `${item?.name} : ${item.value}`),
           item?.costCenter,
           item.active
         ]
       )];
+    }
   };
 
   return (
