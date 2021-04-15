@@ -4,7 +4,7 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 export const branchTypes = [
   {name: "Ant to SFDX Branch structure", value: "ant-to-sfdx"},
-  {name: "SFDC to Ant Branch Structure", value: "sfdx-to-ant"}
+  {name: "SFDX to Ant Branch Structure", value: "sfdx-to-ant"}
 ];
 
 function GitBranchTypeSelectionInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction }) {

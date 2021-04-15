@@ -101,6 +101,13 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
     },
     {
+      label: "Destination Branch",
+      id: "destinationBranch",
+      isRequired: true,
+      maxLength: 255,
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+    },
+    {
       id: "sfdcToolId",
       isRequired: true,
       maxLength: 24,
@@ -139,6 +146,7 @@ const sfdcGitBranchTaskConfigurationMetadata = {
     sfdcToolName: "",
     accountUsername: "",
     conversionType: "",
+    destinationBranch: ""
     }
 };
 

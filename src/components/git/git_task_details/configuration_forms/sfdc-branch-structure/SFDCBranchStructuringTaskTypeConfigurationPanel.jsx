@@ -12,6 +12,7 @@ import SFDCBitbucketWorkspaceInput from "../sfdc-org-sync/inputs/SFDCBitbucketWo
 import SFDCGitRepositoryInput from "../sfdc-org-sync/inputs/SFDCGitRepositoryInput";
 import SFDCGitBranchInput from "../sfdc-org-sync/inputs/SFDCGitBranchInput";
 import SFDCToolInput from "../sfdc-org-sync/inputs/SFDCToolInput";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 import AgentLabelsMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
 import GitBranchTypeSelectionInput from "../sfdc-org-sync/inputs/GitBranchTypeSelectionInput";
 
@@ -59,6 +60,9 @@ function SFDCBranchStructuringTaskTypeConfigurationPanel({ gitTasksDataDto, gitT
       </Col>
       <Col lg={12}>
         <SFDCGitBranchInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
+      </Col>
+      <Col lg={12}>
+        <TextInputBase fieldName={"destinationBranch"} dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData}/>
       </Col>
       {getDynamicFields()}
     </Row>
