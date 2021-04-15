@@ -69,9 +69,9 @@ function BlueprintSearch({sideBySide, id, run}) {
         xmlData: false,
         anchore: false,
         stats: false,
-        title: blueprintSearchModel.getData("title"),
-        runNumber: blueprintSearchModel.getData("runNumber"),
-        pipelineId: blueprintSearchModel.getData("pipelineId"),
+        title: blueprintModel.getData("title"),
+        runNumber: blueprintModel.getData("runNumber"),
+        pipelineId: blueprintModel.getData("pipelineId"),
       };
 
       newLogTabData[newLogTab] = newLog;
@@ -85,7 +85,7 @@ function BlueprintSearch({sideBySide, id, run}) {
         newLog.anchore = response?.data?.reports?.anchore_report ? response.data.reports.anchore_report : false;
         newLog.stats = response?.data?.reports?.anchore_stats ? response.data.reports.anchore_stats : false;
         newLogTabData[newLogTab] = newLog;
-        setLogData(newLogTabData);
+        setLogData([...newLogTabData]);
       }
     } catch (error) {
       if (isMounted?.current === true) {
