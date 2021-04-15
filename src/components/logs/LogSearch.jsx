@@ -48,7 +48,7 @@ function LogSearch({tools, sideBySide}) {
   // const [jenkinsJobs, setJenkinsJobs] = useState([]);
   const [exportData, setExportData] = useState("");
   const [exportDisabled, setExportDisabled] = useState(true);
-
+  
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -475,7 +475,7 @@ function LogSearch({tools, sideBySide}) {
             <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />
             {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
           </Button>
-          <Button variant="primary" className="ml-1" onClick={() => {searchLogs();}} disabled={!jenkinsProjectDto?.getData("tool_id") || !jenkinsProjectDto?.getData("key") || !searchTerm}>
+          <Button variant="primary" className="ml-1" onClick={() => {searchLogs();}} disabled={filterType === "blueprint" && (!jenkinsProjectDto?.getData("tool_id") || !jenkinsProjectDto?.getData("key")) || !searchTerm}>
             Search
           </Button>
           {getNewTabButton()}
