@@ -11,7 +11,7 @@ const exportDataMetadata = {
     },
   ],
   newObjectFields: {
-    "exportOption": "pdf",
+    "exportOption": "raw",
     "fileName": ""
   }
 };

@@ -99,6 +99,22 @@ const octopusStepFormMetadata = {
         id: "isRollback"
       },
       {
+        label: "XML Configuration Transformed Variable Value",
+        id: "xmlConfigTransformVariableValue"
+      },
+      {
+        label: "Structured Configuration Variables Path",
+        id: "structuredConfigVariablesPath"
+      },
+      {
+        label: "Deployment Variables",
+        id: "deploymentVariables"
+      },
+      {
+        label: "Specify Deployment Variables",
+        id: "specifyDepVariables"
+      },
+      {
         label: "Physical Path",
         id: "octopusPhysicalPath",
         regexValidator: regexHelpers.regexTypes.pathField,
@@ -117,6 +133,7 @@ const octopusStepFormMetadata = {
         octopusToolId: "",
         spaceId: "",
         projectId: "",
+        specifyDepVariables: false,
         projectDescription : "",
         environmentId: "",
         ecrPushStepId: "",
@@ -128,7 +145,10 @@ const octopusStepFormMetadata = {
         deploymentId : "",
         octopusVersion: "",
         packageId: "",
-        octopusPhysicalPath: ""
+        octopusPhysicalPath: "",
+        deploymentVariables: [],
+        xmlConfigTransformVariableValue: "",
+        structuredConfigVariablesPath: ""
       }
   };
   

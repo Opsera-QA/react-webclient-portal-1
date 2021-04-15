@@ -30,6 +30,7 @@ import ServiceNowStepNotificationToolInput from "./servicenow/ServiceNowStepNoti
 import JiraStepNotificationProjectUserInput from "./jira/JiraStepNotificationProjectUserInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ServiceNowUserSelectInput from "./servicenow/ServiceNowUserSelectInput";
+import ServiceNowGroupSelectInput from "./servicenow/ServiceNowGroupSelectInput";
 
 function StepNotificationConfiguration({ data, stepId, parentCallback, handleCloseClick }) {
   const toastContext = useContext(DialogToastContext);
@@ -287,7 +288,8 @@ function StepNotificationConfiguration({ data, stepId, parentCallback, handleClo
         </small>
         <NotificationLevelInput dataObject={serviceNowDto} setDataObject={setServiceNowDto} fieldName={"event"} />
         <ServiceNowStepNotificationToolInput setDataObject={setServiceNowDto} dataObject={serviceNowDto} />
-        <ServiceNowUserSelectInput serviceNowId={serviceNowDto.getData("toolId")} setDataObject={setServiceNowDto} dataObject={serviceNowDto} />
+        {/* <ServiceNowUserSelectInput serviceNowId={serviceNowDto.getData("toolId")} setDataObject={setServiceNowDto} dataObject={serviceNowDto} /> */}
+        <ServiceNowGroupSelectInput serviceNowId={serviceNowDto.getData("toolId")} setDataObject={setServiceNowDto} dataObject={serviceNowDto} />
       </div>
     );
   };

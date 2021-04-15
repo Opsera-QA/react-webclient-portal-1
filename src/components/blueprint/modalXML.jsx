@@ -4,6 +4,7 @@ import { Button, Modal } from "react-bootstrap";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import docco from "react-syntax-highlighter/dist/esm/styles/hljs/docco";
 import xml from "react-syntax-highlighter/dist/esm/languages/hljs/xml";
+import CloseButton from "components/common/buttons/CloseButton";
 
 SyntaxHighlighter.registerLanguage("xml", xml);
 
@@ -11,7 +12,6 @@ function ModalXML({ header, size, jsonMessage, dataType, show, setParentVisibili
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
-
     setShowModal(show);
   }, [jsonMessage, show]);
 
@@ -21,27 +21,23 @@ function ModalXML({ header, size, jsonMessage, dataType, show, setParentVisibili
   };
 
   return (
-    <>
-      <Modal show={showModal} size={size} onHide={() => handleClose()}>
-        <Modal.Header closeButton>
-          <Modal.Title>Package XML</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="pre">
+    <Modal show={showModal} size={size} onHide={() => handleClose()}>
+      <Modal.Header closeButton>
+        <Modal.Title>Package XML</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="pre">
           <div className="p-3">
             <SyntaxHighlighter language="xml" style={docco}>
               {jsonMessage && jsonMessage.xml ? jsonMessage.xml : jsonMessage ? jsonMessage : "N/A"}
             </SyntaxHighlighter>
-            </div>
           </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleClose()}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+        </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <CloseButton closeEditorCallback={handleClose} showUnsavedChangesMessage={false}/>
+      </Modal.Footer>
+    </Modal>
   );
 }
 
