@@ -23,7 +23,7 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
       let postBody = {
         "gitTaskId":gitTasksData.getData("_id")
       };
-      await sfdcPipelineActions.gitTaskTrigger(getAccessToken, postBody);
+      await sfdcPipelineActions.gitTaskTrigger(postBody, getAccessToken);
       return;
     }
     handleClose();
