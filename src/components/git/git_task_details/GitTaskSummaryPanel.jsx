@@ -4,10 +4,13 @@ import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import GitTaskSummaryPanelBase from "components/git/git_task_details/GitTaskSummaryPanelBase";
 import sfdcGitTaskConfigurationMetadata
-  from "components/git/git_task_details/configuration_forms/sfdc/sfdc-git-task-configuration-metadata";
+  from "components/git/git_task_details/configuration_forms/sfdc-org-sync/sfdc-git-task-configuration-metadata";
 import SFDCGitTaskTypeSummaryCard
-  from "components/git/git_task_details/configuration_forms/sfdc/SFDCGitTaskTypeSummaryCard";
+  from "components/git/git_task_details/configuration_forms/sfdc-org-sync/SFDCGitTaskTypeSummaryCard";
 import axios from "axios";
+import SFDCBranchStructuringTaskTypeSummaryCard from "./configuration_forms/sfdc-branch-structure/SFDCBranchStructuringTaskTypeSummaryCard";
+import sfdcGitBranchTaskConfigurationMetadata
+  from "components/git/git_task_details/configuration_forms/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
 
 function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
   const isMounted = useRef(false);
@@ -39,6 +42,13 @@ function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, load
         return (
           <SFDCGitTaskTypeSummaryCard
             gitTaskConfigurationData={wrapGitTaskType(sfdcGitTaskConfigurationMetadata)}
+            gitTasksData={gitTasksData}
+          />
+        );
+      case "sync-branch-structure":
+        return (
+          <SFDCBranchStructuringTaskTypeSummaryCard
+            gitTaskConfigurationData={wrapGitTaskType(sfdcGitBranchTaskConfigurationMetadata)}
             gitTasksData={gitTasksData}
           />
         );

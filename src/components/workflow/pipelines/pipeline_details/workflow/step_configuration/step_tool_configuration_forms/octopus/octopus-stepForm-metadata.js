@@ -121,7 +121,7 @@ const octopusStepFormMetadata = {
         maxLength: 100
       }
     ],
-    newModelBase:
+  newObjectFields:
       {
         isFullBackup: false,
         toolURL: "",

@@ -2,19 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-// disabling metric selection for now
-export const notificationTypes = [
-  {name: "SFDC Org sync", value: "sync-sfdc-repo"},
-  {name: "SFDC Branch Structuring", value: "sync-branch-structure"}
+export const branchTypes = [
+  {name: "Ant to SFDX Branch structure", value: "ant-to-sfdx"},
+  {name: "SFDX to Ant Branch Structure", value: "sfdx-to-ant"}
 ];
-// TODO: Remove the disabled items from here when done
-function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction }) {
+
+function GitBranchTypeSelectionInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction }) {
   return (
     <SelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      selectOptions={notificationTypes}
+      selectOptions={branchTypes}
       setDataFunction={setDataFunction}
       valueField="value"
       textField="name"
@@ -23,7 +22,7 @@ function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled
   );
 }
 
-GitTaskTypeSelectInput.propTypes = {
+GitBranchTypeSelectionInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
@@ -31,8 +30,8 @@ GitTaskTypeSelectInput.propTypes = {
   disabled: PropTypes.bool,
 };
 
-GitTaskTypeSelectInput.defaultProps = {
-  fieldName: "type"
+GitBranchTypeSelectionInput.defaultProps = {
+  fieldName: "conversionType"
 };
 
-export default GitTaskTypeSelectInput;
+export default GitBranchTypeSelectionInput;
