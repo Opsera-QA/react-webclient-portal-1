@@ -13,10 +13,12 @@ function SFDCBranchStructuringTaskTypeSummaryCard({ gitTasksData, gitTaskConfigu
     <GitTasksSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
       <div className="mb-2">
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"toolName"} />
+        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"conversionType"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"service"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitCredential"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"repository"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitBranch"} />
+        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"destinationBranch"} />
       </div>
     </GitTasksSummaryCardContainer>
   );
