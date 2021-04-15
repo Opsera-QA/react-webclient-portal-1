@@ -20,7 +20,7 @@ const usersTagsMetadata = {
       isRequired: true,
     },
     {
-      label: "Tool Registry Configuration",
+      label: "Tool Registry Entry",
       id: "tool_id",
       isRequired: true,
     },
