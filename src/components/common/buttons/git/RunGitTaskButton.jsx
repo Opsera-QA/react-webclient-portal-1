@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -11,6 +11,7 @@ import SFDCViewOverlay from "components/git/git_task_details/configuration_forms
 function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadData }) {
   let toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleRunGitTask = async() => {    
     if (gitTasksData.getData("type") === "sync-sfdc-repo") {  
@@ -20,11 +21,18 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
     }    
     if (gitTasksData.getData("type") === "sync-branch-structure") {  
       // pipeline action call to trigger branch conversion
-      let postBody = {
-        "gitTaskId":gitTasksData.getData("_id")
-      };
-      await sfdcPipelineActions.gitTaskTrigger(postBody, getAccessToken);
-      // return;
+      try{
+        setIsLoading(true);
+        let postBody = {
+          "gitTaskId":gitTasksData.getData("_id")
+        };
+        await sfdcPipelineActions.gitTaskTrigger(postBody, getAccessToken);
+      } catch (error) {
+        toastContext.showLoadingErrorDialog(error);
+        setIsLoading(false);
+      } finally {
+        setIsLoading(false);
+      }
     }
     handleClose();
   };
@@ -34,7 +42,7 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
     <div className={className}>
       <Button
         variant={"success"}
-        disabled={gitTasksData?.getData("status") === "running" || disable}
+        disabled={gitTasksData?.getData("status") === "running" || disable || isLoading}
         onClick={() => {handleRunGitTask(true);}}
       >
         <span><FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/>Run Task</span>
