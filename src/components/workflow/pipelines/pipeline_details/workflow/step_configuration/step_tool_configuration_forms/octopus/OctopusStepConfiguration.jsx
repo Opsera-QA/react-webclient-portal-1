@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Col, OverlayTrigger, Row } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import OctopusStepFormMetadata from "./octopus-stepForm-metadata";
 import Model from "core/data_model/model";
@@ -10,17 +8,10 @@ import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import OctopusStepActions from "./octopus-step-actions";
 import CloseButton from "../../../../../../../common/buttons/CloseButton";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import octopusActions from "../../../../../../../inventory/tools/tool_details/tool_jobs/octopus/octopus-actions";
 import OctopusToolSelectInput from "./input/OctopusToolSelectInput";
-import ProjectMappingToolSelectInput
-  from "../../../../../../../common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolSelectInput";
-import AzureToolSelectInput
-  from "../../../../../../../inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/AzureToolSelectInput";
-import SpaceNameSelectInput
-  from "../../../../../../../inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/SpaceNameSelectInput";
 import OctopusSpaceNameSelectInput from "./input/OctopusSpaceNameSelectInput";
 import OctopusEnvironmentNameSelectInput from "./input/OctopusEnvironmentSelectInput";
 import OctopusTargetRolesSelectInput from "./input/OctopusTargetRolesSelect";
@@ -31,7 +22,8 @@ import OctopusVersionSelectInput from "./input/OctopusVersionSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ValidateProjectButton from "./input/ValidateProjectButton";
 import RollbackToggleInput from "./input/RollbackToggleInput";
-import WorkspaceDeleteToggleInput from "../dotnet/inputs/WorkspaceDeleteToggleInput";
+import OctopusDeploymentVariables from "./input/OctopusDeploymentVariables";
+import OctopusSpecifyDepVarsToggle from "./input/OctopusSpecifyDepVarsToggle";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -59,7 +51,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
       }
     } else {
       setOctopusStepConfigurationDataDto(
-        new Model({ ...OctopusStepFormMetadata.newModelBase }, OctopusStepFormMetadata, false)
+        new Model({ ...OctopusStepFormMetadata.newObjectFields }, OctopusStepFormMetadata, false)
       );
     }
 
@@ -92,17 +84,70 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
         value: thresholdVal,
       },
     };
-    parentCallback(item);
-    await octopusActions.createOctopusProject({pipelineId: pipelineId, stepId: stepId}, getAccessToken)
-      .then(function (response) {
-        return;
+    let validateDepVariables = await validateDeploymentVariables();
+    if (validateDepVariables) {
+      await createDeploymentEnvironments();
+      parentCallback(item);
+      await createOctopusProject();
+    }
+  };
+
+  const createOctopusProject = async () => {
+    await octopusActions
+      .createOctopusProject({ pipelineId: pipelineId, stepId: stepId, variableSet: octopusStepConfigurationDto.getData("specifyDepVariables") ?  octopusStepConfigurationDto.getData("deploymentVariables") : [] }, getAccessToken)
+      .then(async (response) => {
+        return response;
       })
       .catch(function (error) {
         console.log(error);
-        let errorMesage = (error && error.error && error.error.response && error.error.response.data) ? error.error.response.data : "";
-        toastContext.showErrorDialog( `Error in octopus Project Creation:  ${errorMesage}`);
-        return;
-  });
+        let errorMesage =
+          error && error.error && error.error.response && error.error.response.data ? error.error.response.data : "";
+        toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
+      });
+  };
+
+  const createDeploymentEnvironments = async () => {
+    if (octopusStepConfigurationDto.getData("specifyDepVariables")) {
+      for (let item in octopusStepConfigurationDto.getData("deploymentVariables")) {
+        octopusStepConfigurationDto.getData("deploymentVariables")[item]["scope"] = {
+          environment: [octopusStepConfigurationDto.getData("environmentId")],
+        };
+      }
+    }
+  };
+
+  const validateDeploymentVariables = async () => {
+    if (octopusStepConfigurationDto.getData("specifyDepVariables")) {
+      if (octopusStepConfigurationDto.getData("deploymentVariables").length === 0) {
+        let errorMesage = "Please specify deployment variables.";
+        toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
+        return false;
+      }
+      for (let item in octopusStepConfigurationDto.getData("deploymentVariables")) {
+        if (octopusStepConfigurationDto.getData("deploymentVariables")[item]?.scope && octopusStepConfigurationDto.getData("deploymentVariables")[item]?.scope?.environment) {
+          let errorMesage =
+            "The scope and environment are auto filled. Please do not specify scope and environment in deployment variables.";
+          toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
+          return false;
+        }
+        if (Object.keys(octopusStepConfigurationDto.getData("deploymentVariables")[item]).length > 4) {
+          let errorMesage = "Validate deployment Variables, Please refer to specified deployment variables format";
+          toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
+          return false;
+        }
+        if (
+          !octopusStepConfigurationDto.getData("deploymentVariables")[item]["description"] ||
+          !octopusStepConfigurationDto.getData("deploymentVariables")[item]["name"] ||
+          !octopusStepConfigurationDto.getData("deploymentVariables")[item]["value"]
+        ) {
+          let errorMesage =
+            "Missing required fields for deployment variables, Please refer to specified deployment variables format";
+          toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
+          return false;
+        }
+      }
+    }
+    return true;
   };
 
   if (isLoading || octopusStepConfigurationDto === undefined) {
@@ -246,10 +291,17 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                       : ""
                   }
                 />
-                <RollbackToggleInput dataObject={octopusStepConfigurationDto} setDataObject={setOctopusStepConfigurationDataDto} fieldName={"isRollback"} />
-                {
-                  octopusStepConfigurationDto &&
-                  octopusStepConfigurationDto.getData("isRollback") &&
+                <TextInputBase
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  fieldName={"octopusPhysicalPath"}
+                />
+                <RollbackToggleInput
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  fieldName={"isRollback"}
+                />
+                {octopusStepConfigurationDto && octopusStepConfigurationDto.getData("isRollback") && (
                   <OctopusVersionSelectInput
                     fieldName={"octopusVersion"}
                     dataObject={octopusStepConfigurationDto}
@@ -266,16 +318,46 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                         : ""
                     }
                   />
-                }
+                )}
+                <OctopusSpecifyDepVarsToggle
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  fieldName={"specifyDepVariables"}
+                />
+                {octopusStepConfigurationDto && octopusStepConfigurationDto.getData("specifyDepVariables") && (
+                  <>
+                    <OctopusDeploymentVariables
+                      fieldName={"deploymentVariables"}
+                      dataObject={octopusStepConfigurationDto}
+                      setDataObject={setOctopusStepConfigurationDataDto}
+                    />
+                    <TextInputBase
+                      setDataObject={setOctopusStepConfigurationDataDto}
+                      dataObject={octopusStepConfigurationDto}
+                      fieldName={"structuredConfigVariablesPath"}
+                      disabled={
+                        octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0
+                      }
+                    />
+                    <TextInputBase
+                      setDataObject={setOctopusStepConfigurationDataDto}
+                      dataObject={octopusStepConfigurationDto}
+                      fieldName={"xmlConfigTransformVariableValue"}
+                      disabled={
+                        octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0
+                      }
+                    />
+                  </>
+                )}
               </>
             )}
-            <TextInputBase dataObject={octopusStepConfigurationDto} setDataObject={setOctopusStepConfigurationDataDto} fieldName={"octopusPhysicalPath"} />
           <Row className="mx-1 py-2">
             <SaveButtonBase
               recordDto={octopusStepConfigurationDto}
               setRecordDto={setOctopusStepConfigurationDataDto}
               createRecord={callbackFunction}
               updateRecord={callbackFunction}
+              showSuccessToasts={false}
               lenient={true}
             />
             <CloseButton isLoading={isLoading} closeEditorCallback={closeEditorPanel} />
