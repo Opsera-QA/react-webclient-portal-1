@@ -41,8 +41,6 @@ function DetailedToolReportTable({ data, loadData, isLoading }) {
     []
   );
 
-  console.log(data);
-
   const onRowSelect = (rowData) => {
     history.push("/inventory/tools/details/" + rowData.original._id);
   };
