@@ -16,7 +16,7 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
     if (gitTasksData.getData("type") === "sync-sfdc-repo") {  
       // open wizard views
       toastContext.showOverlayPanel(<SFDCViewOverlay gitTasksData={gitTasksData}/>);
-      return;
+      // return;
     }    
     if (gitTasksData.getData("type") === "sync-branch-structure") {  
       // pipeline action call to trigger branch conversion
@@ -24,7 +24,7 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
         "gitTaskId":gitTasksData.getData("_id")
       };
       await sfdcPipelineActions.gitTaskTrigger(postBody, getAccessToken);
-      return;
+      // return;
     }
     handleClose();
   };
