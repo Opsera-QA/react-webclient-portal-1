@@ -4,10 +4,8 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {AuthContext} from "contexts/AuthContext";
 
 function LaunchHelpIcon({ helpComponent, helpText, className }) {
-  const { featureFlagHideItemInProd, featureFlagHideItemInTest } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
 
   const launchHelp = () => {
@@ -20,7 +18,7 @@ function LaunchHelpIcon({ helpComponent, helpText, className }) {
     }
   };
 
-  if (helpComponent == null || featureFlagHideItemInProd()) {
+  if (helpComponent == null) {
     return null;
   }
 
