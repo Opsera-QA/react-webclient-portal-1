@@ -114,6 +114,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "opsera-mean-time-to-restore",
     "opsera-nexus-pipeline-step-info",
     "qa-manual-test",
+    "selenium-test-results",
   ];
 
   const getKpiFilters = (filter) => {

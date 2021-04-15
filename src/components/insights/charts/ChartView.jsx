@@ -93,6 +93,9 @@ import BitbucketRejectedMergeRequestsTable from "components/insights/charts/bitb
 // Cypress KPIs
 import CypressTestResultsTable from "./cypress/CypressTestResultsTable";
 
+// Selenium KPIs
+import SeleniumTestResultsTable from "./selenium/SeleniumTestResultsTable";
+
 // Junit KPIs
 import JunitTestResultsTable from "./junit/JunitTestResultsTable";
 
@@ -797,6 +800,20 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col xl={6} md={12} className="p-2">
             <CypressTestResultsTable
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+
+      // Selenium KPIs
+      case "selenium-test-results":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <SeleniumTestResultsTable
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
