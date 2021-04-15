@@ -14,8 +14,8 @@ import {AuthContext} from "contexts/AuthContext";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 
-function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, gitTaskTypeSummaryCard, loadData }) {
-  const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
+function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, gitTaskTypeSummaryCard, loadData, accessRoleData }) {
+  const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -32,7 +32,7 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [JSON.stringify(accessRoleData)]);
 
   const updateRecord = async (newDataModel) => {
     const response = await gitTasksActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newDataModel);
@@ -40,8 +40,7 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
     return response;
   };
 
-  const actionAllowed = async (action) => {
-    const accessRoleData = await getAccessRoleData();
+  const actionAllowed = (action) => {
     return workflowAuthorizedActions.gitItems(accessRoleData, action, gitTasksData?.getData("owner"), gitTasksData?.getData("roles"));
   };
 
@@ -88,7 +87,8 @@ GitTaskSummaryPanelBase.propTypes = {
   setGitTasksData: PropTypes.func,
   setActiveTab: PropTypes.func,
   gitTaskTypeSummaryCard: PropTypes.object,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  accessRoleData: PropTypes.object,
 };
 
 export default GitTaskSummaryPanelBase;

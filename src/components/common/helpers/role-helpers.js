@@ -1,3 +1,6 @@
+import workflowAuthorizedActions
+  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+
 export const ROLE_LEVELS = {
   OPSERA_ADMINISTRATORS: "OPSERA_ADMINISTRATORS",
   ADMINISTRATORS: "ADMINISTRATORS",
@@ -6,6 +9,16 @@ export const ROLE_LEVELS = {
   POWER_USERS_AND_SASS: "POWER_USERS_AND_SASS",
   USERS: "USERS",
   USERS_AND_SASS: "USERS_AND_SASS"
+};
+
+export const ACCESS_ROLES = {
+  ADMINISTRATOR: "administrator",
+  OWNER: "owner",
+  SECOPS: "secops",
+  MANAGER: "manager",
+  USER: "user",
+  UNAUTHORIZED: "unauthorized",
+  NO_ACCESS_RULES: "no_access_rules",
 };
 
 export const meetsRequirements = (requirement, accessRoleData) => {
@@ -86,6 +99,32 @@ export const getAccessRoleRequirementMessage = (requirement) => {
       return "Any level User can access this.";
     case ROLE_LEVELS.USERS_AND_SASS:
       return "Any level User can access this.";
+    default:
+      return "UNKNOWN ROLE REQUIREMENTS";
+  }
+};
+
+export const getUserRoleLevel = (accessRoleData, objectRoles, dataObject) => {
+  const roleLevel = workflowAuthorizedActions.calculateRoleLevel(accessRoleData, objectRoles, dataObject);
+  const prefix = "Your access role for this page is: ";
+
+  switch (roleLevel) {
+    case ACCESS_ROLES.ADMINISTRATOR:
+      return prefix + "Administrator";
+    case ACCESS_ROLES.OWNER:
+      return prefix + "Owner";
+    case ACCESS_ROLES.SECOPS:
+      return prefix + "SecOps";
+    case ACCESS_ROLES.MANAGER:
+      return prefix + "Manager";
+    case ACCESS_ROLES.USER:
+      return prefix + "User";
+    case ACCESS_ROLES.UNAUTHORIZED:
+      return "You are unauthorized to view this page.";
+    case ACCESS_ROLES.NO_ACCESS_RULES:
+      return "No Access Rules are currently applied.";
+    default:
+      return "UNKNOWN ROLE LEVEL";
   }
 };
 

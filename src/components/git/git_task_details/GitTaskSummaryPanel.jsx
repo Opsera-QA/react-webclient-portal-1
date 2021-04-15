@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext, useRef} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
@@ -12,7 +12,7 @@ import SFDCBranchStructuringTaskTypeSummaryCard from "./configuration_forms/sfdc
 import sfdcGitBranchTaskConfigurationMetadata
   from "components/git/git_task_details/configuration_forms/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
 
-function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData }) {
+function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -57,7 +57,7 @@ function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, load
     }
   };
 
-  if (gitTasksData == null) {
+  if (gitTasksData == null || accessRoleData == null) {
     return (<LoadingDialog size="sm"/>);
   }
 
@@ -67,6 +67,7 @@ function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, load
       setActiveTab={setActiveTab}
       gitTaskTypeSummaryCard={getTaskTypeSummaryPanel()}
       setGitTasksData={setGitTasksData}
+      accessRoleData={accessRoleData}
       loadData={loadData}
     />
   );
@@ -76,7 +77,8 @@ GitTaskSummaryPanel.propTypes = {
   gitTasksData: PropTypes.object,
   setActiveTab: PropTypes.func,
   setGitTasksData: PropTypes.func,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  accessRoleData: PropTypes.object
 };
 
 export default GitTaskSummaryPanel;

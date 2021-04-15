@@ -5,7 +5,6 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faPlay, faSpinner, faStop} from "@fortawesome/pro-light-svg-icons";
 import {useHistory} from "react-router-dom";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import ModalBase from "components/common/modal/ModalBase";
 import IconBase from "components/common/icons/IconBase";
 import gitTaskActions from "components/git/git-task-actions";
 import SFDCViewOverlay from "components/git/git_task_details/configuration_forms/sfdc-org-sync/SFDCViewOverlay";
@@ -58,7 +57,7 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAll
       return (
         <div className="p-3">
           <TooltipWrapper innerText={actionAllowed === false ? "Your Access Role Level Prevents Stopping Tasks" : null}>
-            <Button variant="danger" onClick={handleCancelRunTask} disabled={isCanceling || disable}>
+            <Button variant="danger" onClick={handleCancelRunTask} disabled={isCanceling || disable || actionAllowed !== true}>
               {isCanceling ?
                 <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/> :
                 <FontAwesomeIcon icon={faStop} fixedWidth className="mr-1"/>
@@ -70,17 +69,19 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAll
     }
 
     return (
-      <TooltipWrapper innerText={actionAllowed === false ? "Your Access Role Level Prevents Running Tasks" : null}>
-        <Button
-          variant={"success"}
-          disabled={gitTasksData?.getData("status") === "running" || disable}
-          onClick={() => {setShowModal(true);}}
-        >
+      <Button
+        variant={"success"}
+        disabled={gitTasksData?.getData("status") === "running" || disable || actionAllowed !== true}
+        onClick={() => {
+          setShowModal(true);
+        }}
+      >
+        <TooltipWrapper innerText={actionAllowed !== true ? "Your Access Role Level Prevents Running Tasks" : null}>
           {gitTasksData?.getData("status") === "running" ?
             (<span><IconBase isLoading={true} className={"mr-1"}/>Running Task</span>)
             : (<span><FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/>Run Task</span>)}
-        </Button>
-      </TooltipWrapper>
+        </TooltipWrapper>
+      </Button>
     );
   };
 
