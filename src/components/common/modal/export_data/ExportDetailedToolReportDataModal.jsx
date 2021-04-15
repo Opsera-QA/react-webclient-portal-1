@@ -27,7 +27,7 @@ function ExportDetailedToolReportDataModal({ showModal, closeModal, formattedDat
   const getCsvData = () => {
     if(formattedData && Array.isArray(formattedData)){
       return [["Name","Owner","Description","Contacts","Applications","Location","Organization","Tags","External References","Licensing","Compliance","Cost Center","Active"],
-      ...formattedData.map(item =>
+        formattedData.map(item =>
         [
           item.name,
           item.owner_name,
