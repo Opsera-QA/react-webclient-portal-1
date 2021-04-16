@@ -70,6 +70,14 @@ export function getJiraIssueDoneStatusFromKpiConfiguration(kpiConfiguration) {
   return null;
 }
 
+export function getSonarProjectKeyFromKpiConfiguration(kpiConfiguration) {
+  if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sonar-project-key")]?.value && 
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sonar-project-key")]?.value.length > 0) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sonar-project-key")].value;
+  }
+  return null;
+}
+
 export function getChartIconFromKpiConfiguration(kpiConfiguration) {
   return faChartBar;
 }

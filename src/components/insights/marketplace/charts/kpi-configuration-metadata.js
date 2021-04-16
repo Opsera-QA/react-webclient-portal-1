@@ -169,4 +169,21 @@ export const kpiJiraIssueDoneStatusFilterMetadata = {
   }
 };
 
+export const kpiSonarProjectKeyFilterMetadata = {
+  type: "Sonar Project Key Filter",
+  fields: [
+    {
+      label: "Type",
+      id: "type"
+    },
+    {
+      label: "Sonar Project Key",
+      id: "value"
+    }
+  ],
+  newObjectFields: {
+    value: []
+  }
+};
+
 export default kpiConfigurationMetadata;
