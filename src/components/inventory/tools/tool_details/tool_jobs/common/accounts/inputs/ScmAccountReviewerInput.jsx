@@ -24,9 +24,11 @@ function ScmAccountReviewerInput({dataObject, setDataObject, disabled}) {
             setIsLoading(true);
             await getReviewers();
         }
-        catch (error) {
-            console.error(error);
-            toastContext.showServiceUnavailableDialog();
+        catch (error) {            
+            if(error.error.response.status !== 500){
+                console.error(error);
+                toastContext.showInlineErrorMessage(error);
+            }            
         }
         finally {
             setIsLoading(false);
@@ -69,7 +71,7 @@ function ScmAccountReviewerInput({dataObject, setDataObject, disabled}) {
 
     const getNoReviewersMessage = () => {
         if (!isLoading && (reviewers == null || reviewers.length === 0) && dataObject.getData("repository")) {
-          return ("User information is missing or unavailable!");
+          return ("No Reviewers found for the given details!");
         }
     };
 
