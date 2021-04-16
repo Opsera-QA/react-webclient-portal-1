@@ -42,6 +42,7 @@ const INDICES = [
   "cypress",
   "metricbeat",
   "anchore",
+  "selenium",
 ];
 const PERSONAS = [
   { value: "developer", label: "Developer" },
@@ -205,7 +206,7 @@ function DashboardHome() {
   );
 
   ValueInput.propTypes = {
-    item: PropTypes.any
+    item: PropTypes.any,
   };
 
   const handleCreate = (name) => {
@@ -442,7 +443,7 @@ DashboardView.propTypes = {
   selection: PropTypes.string,
   persona: PropTypes.string,
   date: PropTypes.object,
-  index: PropTypes.array
+  index: PropTypes.array,
 };
 
 export default DashboardHome;
