@@ -10,13 +10,19 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { line } from "d3-shape";
 import { defaultConfig, getColor, assignStandardColors, mainPurple, accentColor } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
-
+import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
+import DataBlock from "components/common/data_boxes/DataBlock";
+import {Col, Row, Container} from "react-bootstrap";
+import {OverlayTrigger, Popover} from "react-bootstrap";
+import InputPopover from "components/common/inputs/info_text/InputPopover";
 function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
+  const [issueData, setIssueData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [modalData, setModalData] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -47,10 +53,12 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "jiraLeadTime", kpiConfiguration, dashboardTags);
       const dataObject = response?.data && response?.data?.data[0]?.jiraLeadTime.status === 200 ? response?.data?.data[0]?.jiraLeadTime?.data : [];
+      const issueDataObject = response?.data && response?.data?.data[0]?.jiraLeadTime.status === 200 ? response?.data?.data[0]?.jiraLeadTime?.issueData : [];
       assignStandardColors(dataObject && dataObject[0]?.data, true);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+        setIssueData(issueDataObject);
       }
     }
     catch (error) {
@@ -90,21 +98,63 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
         <path d={lineGenerator(nodes)} fill="none" stroke={accentColor} strokeWidth="2" />
       );
     };
+    const onNodeSelect = (node) => {
+      setModalData(issueData.filter(function (item) {return item.y === node.data.y && item.date_finished === node.data.date_finished;}));
+      setShowModal(true);
+    };
+
+    const getPopoverBody = () => {
+      return (
+        <ul>
+          <li><span>The purple line represents the average lead time</span></li>
+          <li><span>The turquoise line represents the rolling average lead time</span></li>
+          <li><span>Each point represents the cluster of issues completed on that specific date in that many days</span></li>
+          <li><span>Click on a specific point to see which Jira issues with that lead time were completed that day</span></li>
+          <li><span>The default issue displayed is Story. If you are interested in the lead time for a specific Jira issue type (Epic, Bug, etc.), configure in the KPI Settings Form</span></li>
+          <li><span>The default completion status is Done. Configure which statuses indicate ticket completion in the KPI Settings Form</span></li>
+        </ul>
+      );
+    };
 
     return (
-      <div className="new-chart mb-3" style={{height: "300px"}}>
+      <div className="new-chart mb-3" style={{height: "300px", display:"flex"}}>
+        <Col><InputPopover tooltipTitle={"Info"} tooltipBody={getPopoverBody()} /></Col>
+        <Col xl={6} md={12} className="p-2">
         <ResponsiveScatterPlot
           data={metrics}
-          {...defaultConfig("Lead Time", "Date", 
+          {...defaultConfig("Elapsed Time (Days)", "Completion Date", 
                       false, true, "wholeNumbers", "monthDate")}
           {...config(getColor, MeanLineLayer, RollingMeanLineLayer)}
-          onClick={() => setShowModal(true)}
+          onClick={(node) => onNodeSelect(node)}
           tooltip={({node, color}) => <ChartTooltip 
-                                        titles = {["Issue", "Date Completed", "Lead Time"]}
-                                        values = {[String(node.data._id), String(node.data.date_finished), 
-                                                  `${node.data.y} ${node.data.y > 1 ? "days" : "day"}`]}
+                                        titles = {["Date Completed", "Lead Time", "Issues Completed"]}
+                                        values = {[String(node.data.date_finished), 
+                                                  `${node.data.y} ${node.data.y > 1 ? "days" : "day"}`, String(node.data.count)]}
                                         color = {color} />}
         />
+
+        </Col>
+        <Container>
+        <Row>
+        <DataBlockWrapper padding={0}>
+        <DataBlock 
+        title={metrics[0].data[0].mean}
+        subTitle="Mean Lead Time (Days)"
+        toolTipText="Average time (in days) taken for a Jira ticket to transition from creation to completion status"
+      />
+      <DataBlock 
+        title={issueData.length}
+        subTitle="Issues Completed"
+        toolTipText="Total number of issues completed in specified time period"
+      />
+      <DataBlock 
+        title={issueData.filter(function(item) {return item.issueType === "Bug";}).length}
+        subTitle="Bugs Completed"
+        toolTipText="Total number of bugs completed in this time period"
+      />
+      </DataBlockWrapper>
+      </Row>
+      </Container>
       </div>
     );
   };
@@ -122,7 +172,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
         setKpis={setKpis}
         isLoading={isLoading}
       />
-      <ModalLogs header="Deployments Graph" size="lg" jsonMessage={metrics} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+      <ModalLogs header="Jira Lead Time" size="lg" jsonMessage={modalData} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
     </>
   );
 }

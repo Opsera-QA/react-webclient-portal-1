@@ -118,4 +118,55 @@ export const kpiJenkinsBuildNumberFilterMetadata = {
   }
 };
 
+export const kpiJiraIssueTypeFilterMetadata = {
+  type: "Jira Issue Type Filter",
+  fields: [
+    {
+      label: "Type",
+      id: "type"
+    },
+    {
+      label: "Jira Issue Type",
+      id: "value"
+    }
+  ],
+  newObjectFields: {
+    value: []
+  }
+};
+
+export const kpiJiraIssueStartStatusFilterMetadata = {
+  type: "Jira Issue Start Status Filter",
+  fields: [
+    {
+      label: "Type",
+      id: "type"
+    },
+    {
+      label: "Jira Issue Start Status",
+      id: "value"
+    }
+  ],
+  newObjectFields: {
+    value: []
+  }
+};
+
+export const kpiJiraIssueDoneStatusFilterMetadata = {
+  type: "Jira Issue Done Status Filter",
+  fields: [
+    {
+      label: "Type",
+      id: "type"
+    },
+    {
+      label: "Jira Issue Done Status",
+      id: "value"
+    }
+  ],
+  newObjectFields: {
+    value: []
+  }
+};
+
 export default kpiConfigurationMetadata;

@@ -18,7 +18,10 @@ kpiLovHelpers.filters = [
   {id: {"type": "date", "value": null}, label: "Date"},
   {id: {"type": "jenkins-result", "value": ""}, label: "Jenkins Result"},
   {id: {"type": "jenkins-job-url", "value": ""}, label: "Jenkins Build URL"},
-  {id: {"type": "jenkins-build-number", "value": []}, label: "Jenkins Build Number"}
+  {id: {"type": "jenkins-build-number", "value": []}, label: "Jenkins Build Number"},
+  {id: {"type": "jira-issue-type", "value": []}, label: "Jira Issues Type"},
+  {id: {"type": "jira-issue-start-status", "value": []}, label: "Jira Issue Start Status"},
+  {id: {"type": "jira-issue-done-status", "value": []}, label: "Jira Issue Done Status"},
 ];
 
 kpiLovHelpers.getFilterById = (id) => {
