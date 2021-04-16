@@ -114,6 +114,8 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "opsera-mean-time-to-restore",
     "opsera-nexus-pipeline-step-info",
     "qa-manual-test",
+    "first-pass-yield",
+    "cumulative-open-defects"
   ];
 
   const getKpiFilters = (filter) => {
