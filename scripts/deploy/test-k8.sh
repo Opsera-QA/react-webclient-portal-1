@@ -2,7 +2,7 @@
 set -xe
 
 clusername=${1:-opsera-test-cluster}
-servicename=${2:-opsera-reactapp}
+servicename=${2:-opsera-reactapp }
 
 mkdir -p  ${PWD}/.tmp/kube-vol
 
@@ -24,7 +24,7 @@ docker run --rm --network host \
 docker run --rm --name kubectl \
         -v ${PWD}/.tmp/kube-vol:/root/.kube \
         440953937617.dkr.ecr.us-east-2.amazonaws.com/kubectl:latest \
-        kubectl -n microservices rollout restart deployment ${servicename}
+        kubectl delete pods -n microservices -l app.kubernetes.io/name=${servicename}
 
 docker run --rm --name kubectl \
         -v ${PWD}/.tmp/kube-vol:/root/.kube \
