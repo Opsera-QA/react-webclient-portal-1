@@ -10,7 +10,6 @@ function SFDCJenkinsToolInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("autoScaleEnable", selectedOption?.configuration?.autoScaleEnable);
     newDataObject.setData("toolJobName", "");
     newDataObject.setData("toolJobId", "");
-    newDataObject.setData("jobType", "");
     newDataObject.setData("gitToolId", "");
     newDataObject.setData("gitUrl", "");
     newDataObject.setData("sshUrl", "");

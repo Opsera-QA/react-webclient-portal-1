@@ -23,6 +23,11 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import PipelineFilterSelectInput from "components/logs/PipelineFilterSelectInput";
 import ExportLogSearchButton from "components/common/buttons/export/log_search/ExportLogSearchButton";
 import {getAllResultsForExport} from "components/common/buttons/export/exportHelpers";
+import projectTagsMetadata from "components/settings/data_mapping/projects/tagging-project-metadata";
+import Model from "core/data_model/model";
+import JenkinsJobSelectInput from "components/common/list_of_values_input/settings/data_tagging/projects/JenkinsJobSelectInput";
+import ProjectMappingToolSelectInput
+  from "components/common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolSelectInput";
 
 // TODO: This entire form needs to be completely refactored
 function LogSearch({tools, sideBySide}) {
@@ -39,9 +44,11 @@ function LogSearch({tools, sideBySide}) {
   const [submittedSearchTerm, setSubmittedSearchTerm] = useState(null);
   const [logTabData, setLogTabData] = useState([]);
   const [currentLogTab, setCurrentLogTab] = useState(0);
+  const [jenkinsProjectDto, setJenkinsProjectDto] = useState(new Model({ ...projectTagsMetadata.newObjectFields }, projectTagsMetadata, true));
+  // const [jenkinsJobs, setJenkinsJobs] = useState([]);
   const [exportData, setExportData] = useState("");
   const [exportDisabled, setExportDisabled] = useState(true);
-
+  
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -79,7 +86,7 @@ function LogSearch({tools, sideBySide}) {
     }
 
     await getSearchResults(startDate, endDate, newTab);
-    await getAllResultsForExport(startDate, endDate, setIsLoading, getAccessToken(), searchTerm, filterType, getFormattedCustomFilters(), currentPage, setExportData, setExportDisabled);
+    await getAllResultsForExport(startDate, endDate, setIsLoading, getAccessToken(), searchTerm, jenkinsProjectDto, filterType, getFormattedCustomFilters(), currentPage, setExportData, setExportDisabled);
   };
 
   const cancelSearchClicked = () => {
@@ -142,6 +149,8 @@ function LogSearch({tools, sideBySide}) {
 
   // Executed every time page number or page size changes
   useEffect(() => {
+    jenkinsProjectDto.setData("tool_identifier", "jenkins");
+    console.log(jenkinsProjectDto);
     if (searchTerm) {
       getSearchResults();
     }
@@ -196,7 +205,10 @@ function LogSearch({tools, sideBySide}) {
     if (filterType === "blueprint") {
       route = "/analytics/blueprint";
     }
+
     const urlParams = {
+      toolId: jenkinsProjectDto?.getData("tool_id"),
+      jobName: jenkinsProjectDto?.getData("key"),
       search: searchTerm,
       date: startDate !== 0 && endDate === 0 ? startDate : undefined,
       start: startDate !== 0 && endDate !== 0 ? startDate : undefined,
@@ -379,6 +391,22 @@ function LogSearch({tools, sideBySide}) {
           <PipelineFilterSelectInput opseraPipelineSelectChange={opseraPipelineSelectChange} pipelineFilter={pipelineFilter} setStepFilter={setStepFilter} stepFilter={stepFilter} />
       );
     }
+    if (filterType === "blueprint") {
+      return (
+        <>
+        <Col>
+          <ProjectMappingToolSelectInput dataObject={jenkinsProjectDto} setDataObject={setJenkinsProjectDto} disabled={false}/>
+        </Col>
+        <Col>
+        <JenkinsJobSelectInput
+            dataObject={jenkinsProjectDto}
+            setDataObject={setJenkinsProjectDto}
+            tool_prop={jenkinsProjectDto.getData("tool_id")}
+          />
+        </Col>
+        </>
+      );
+    }
 
     // if (filterType === "blueprint") {
     //   return (
@@ -404,7 +432,8 @@ function LogSearch({tools, sideBySide}) {
   const getSearchFields = () => {
     return (
       <Row className={"mx-0 py-2"}>
-        <Col>
+        <Col className="custom-select-input my-2">
+          <label><span>Search Index</span><span className="danger-red">*</span></label>
           <DropdownList
             data={Array.isArray(tools) ? tools : []}
             defaultValue={Array.isArray(tools) ? tools[0] : []}
@@ -416,8 +445,9 @@ function LogSearch({tools, sideBySide}) {
           />
         </Col>
         {getDynamicFields()}
-        <Col>
-          <Form.Control
+        <Col className="custom-select-input my-2">
+        <label><span>Search Input</span><span className="danger-red">*</span></label>
+        <Form.Control
             placeholder={filterType === "blueprint" ? "Enter Build Number" : "Search logs"}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -445,7 +475,7 @@ function LogSearch({tools, sideBySide}) {
             <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />
             {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
           </Button>
-          <Button variant="primary" className="ml-1" onClick={() => {searchLogs();}}>
+          <Button variant="primary" className="ml-1" onClick={() => {searchLogs();}} disabled={filterType === "blueprint" && (!jenkinsProjectDto?.getData("tool_id") || !jenkinsProjectDto?.getData("key")) || !searchTerm}>
             Search
           </Button>
           {getNewTabButton()}

@@ -489,8 +489,8 @@ const breadcrumbs = {
     parent: "toolReports",
     name: "detailedToolReport",
     path: paths.detailedToolReport,
-    title: "DetailedToolReport",
-    linkText: "DetailedToolReport",
+    title: "Detailed Tool Report",
+    linkText: "Detailed Tool Report",
     icon: faFileInvoice
   },
 

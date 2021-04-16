@@ -443,4 +443,10 @@ pipelineActions.getSubscribedPipelineIds = async (getAccessToken, cancelTokenSou
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+pipelineActions.deleteJenkinsJob = async (deleteObj, getAccessToken) => {
+  console.log(deleteObj);
+  let apiUrl = `/pipelines/deletejob`;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, deleteObj);
+};
+
 export default pipelineActions;
