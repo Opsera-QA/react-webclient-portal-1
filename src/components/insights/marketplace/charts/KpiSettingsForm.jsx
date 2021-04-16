@@ -11,7 +11,8 @@ import {
   kpiJenkinsBuildNumberFilterMetadata,
   kpiJiraIssueTypeFilterMetadata,
   kpiJiraIssueStartStatusFilterMetadata,
-  kpiJiraIssueDoneStatusFilterMetadata
+  kpiJiraIssueDoneStatusFilterMetadata,
+  kpiSonarProjectKeyFilterMetadata
 } from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import Model from "core/data_model/model";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
@@ -49,6 +50,9 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
   );
   const [kpiJiraIssueDoneStatusFilter, setKpiJiraIssueDoneStatusFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "jira-issue-done-status", kpiJiraIssueDoneStatusFilterMetadata)
+  );
+  const [kpiSonarProjectKeyFilter, setKpiSonarProjectKeyFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "sonar-project-key", kpiSonarProjectKeyFilterMetadata)
   );
 
   const tagFilterEnabled = [
@@ -127,6 +131,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "opsera-nexus-pipeline-step-info",
     "qa-manual-test",
     "selenium-test-results",
+    "sonar-reliability-remediation-effort-by-project"
   ];
 
   const getKpiFilters = (filter) => {
@@ -215,6 +220,17 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
             />
           </div>
         );
+      case "sonar-project-key":
+        return (
+          <div>
+            <MultiTextInputBase
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiSonarProjectKeyFilter}
+              dataObject={kpiSonarProjectKeyFilter}
+            />
+          </div>
+        );
     }
   };
 
@@ -283,6 +299,15 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-done-status")
       ].value = kpiJiraIssueDoneStatusFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sonar-project-key")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sonar-project-key")
+      ].value = kpiSonarProjectKeyFilter.getData("value");
     }
     setKpiSettings({ ...newKpiSettings });
     dashboardData.getData("configuration")[index] = kpiSettings.data;

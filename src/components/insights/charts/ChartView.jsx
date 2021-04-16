@@ -44,6 +44,7 @@ import SonarBugsCountLineChart from "./sonar/line_chart/bugs/SonarBugsCountLineC
 import SonarNewBugsCountLineChart from "./sonar/line_chart/new_bugs/SonarNewBugsCountLineChart";
 import SonarReliabilityRatingLineChart from "./sonar/line_chart/reliability_rating/SonarReliabilityRatingLineChart";
 import SonarReliabilityRemediationEffortLineChart from "./sonar/line_chart/reliability_remediation_effort/SonarReliabilityRemediationEffortLineChart";
+import SonarReliabilityRemediationEffortByProjectLineChart from "./sonar/line_chart/reliability_remediation_effort_by_project/SonarReliabilityRemediationEffortByProjectLineChart";
 import SonarMetricByProjectLineChart from "./sonar/line_chart/metric-by-project/SonarMetricByProjectLineChart";
 import SonarCodeCoverageBarChart from "./sonar/bar_chart/code_coverage/SonarCodeCoverageBarChart";
 import SonarLinesToCoverBarChart from "./sonar/bar_chart/code_coverage/SonarLinesToCoverBarChart";
@@ -526,6 +527,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col xl={6} md={12} className="p-2">
             <SonarReliabilityRemediationEffortLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sonar-reliability-remediation-effort-by-project":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <SonarReliabilityRemediationEffortByProjectLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
