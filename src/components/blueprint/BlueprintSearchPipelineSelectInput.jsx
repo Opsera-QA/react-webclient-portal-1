@@ -68,8 +68,10 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
           parsedArray.push(pipeline);
         }
 
-        if (pipeline._id === dataObject.getData("pipelineId")) {
-          setDataFunction(fieldName, pipeline);
+        if (pipeline._id === dataObject?.getData("pipelineId")) {
+          let newDataObject = dataObject;
+          newDataObject.setData("title", `${pipeline?.name} (${pipeline?._id})`);
+          setDataObject({...newDataObject});
         }
       });
 

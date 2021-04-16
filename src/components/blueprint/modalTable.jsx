@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
-import { format } from "date-fns";
-import ReactJson from "react-json-view";
 import CustomTable from "../common/table/CustomTable";
 import Card from "react-bootstrap/Card";
 import { faCaretUp, faCaretDown } from "@fortawesome/free-solid-svg-icons";
@@ -10,13 +8,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import CardGroup from "react-bootstrap/CardGroup";
 
+// TODO: Refactor
 function ModalTable({ header, column_data, size, jsonData, stats, show, setParentVisibility }) {
   const [showModal, setShowModal] = useState(false);
   const [dataView, setDataView] = useState(jsonData);
   const noDataMessage = "No Data is available for this chart at this time";
   const [pageSize, setPageSize] = useState(15);
   const [currentPage, setCurrentPage] = useState(0);
-  const [logCount, setLogCount] = useState(0);
   const [logData, setLogData] = useState([]);
   const initialState = {
     pageIndex: 0,
@@ -137,7 +135,7 @@ function ModalTable({ header, column_data, size, jsonData, stats, show, setParen
               noDataMessage={noDataMessage}
               initialState={initialState}
               paginationOptions={getPaginationOptions()}
-            ></CustomTable>
+            />
           </div>
         </Modal.Body>
         <Modal.Footer>

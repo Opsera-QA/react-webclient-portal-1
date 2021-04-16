@@ -11,6 +11,8 @@ import axios from "axios";
 import SFDCBranchStructuringTaskTypeSummaryCard from "./configuration_forms/sfdc-branch-structure/SFDCBranchStructuringTaskTypeSummaryCard";
 import sfdcGitBranchTaskConfigurationMetadata
   from "components/git/git_task_details/configuration_forms/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
+import branchToBranchGitTaskConfigurationMetadata from "components/git/git_task_details/configuration_forms/branch-to-branch/branch-to-branch-git-task-configuration";
+import BranchToBranchGitTaskTypeSummaryCard from "components/git/git_task_details/configuration_forms/branch-to-branch/BranchToBranchGitTaskTypeSummaryCard";
 
 function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
   const isMounted = useRef(false);
@@ -49,6 +51,13 @@ function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, load
         return (
           <SFDCBranchStructuringTaskTypeSummaryCard
             gitTaskConfigurationData={wrapGitTaskType(sfdcGitBranchTaskConfigurationMetadata)}
+            gitTasksData={gitTasksData}
+          />
+        );
+      case "sync-git-branches":
+        return (
+          <BranchToBranchGitTaskTypeSummaryCard
+            gitTaskConfigurationData={wrapGitTaskType(branchToBranchGitTaskConfigurationMetadata)}
             gitTasksData={gitTasksData}
           />
         );

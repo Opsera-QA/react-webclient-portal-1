@@ -76,12 +76,12 @@ name: stepName};
   return (
     <>
       <TooltipWrapper innerText={"Export as PDF"}>
-        <div className={'float-right'}>
+        <div>
           <Button
             variant={"outline-dark"}
             size={"sm"}
             disabled={isLoading}
-            className={"mt-1 float-right"}
+            className={"ml-2"}
             onClick={() => setShowExportModal(true)}>
             <span><FontAwesomeIcon icon={faFileDownload} fixedWidth /></span>
           </Button>
