@@ -7,6 +7,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
 import SFDCViewOverlay from "components/git/git_task_details/configuration_forms/sfdc-org-sync/SFDCViewOverlay";
+import gitTasksActions from "components/git/git-task-actions";
 
 function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadData }) {
   let toastContext = useContext(DialogToastContext);
@@ -19,8 +20,7 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
       toastContext.showOverlayPanel(<SFDCViewOverlay gitTasksData={gitTasksData}/>);
       // return;
     }    
-    // if (gitTasksData.getData("type") === "sync-branch-structure") {  
-    else {
+    else if (gitTasksData.getData("type") === "sync-branch-structure") {    
       // pipeline action call to trigger branch conversion
       try{
         setIsLoading(true);
@@ -30,6 +30,27 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
         await sfdcPipelineActions.gitTaskTrigger(postBody, getAccessToken);
       } catch (error) {
         toastContext.showLoadingErrorDialog(error);
+        setIsLoading(false);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    else if (gitTasksData.getData("type") === "sync-git-branches"){
+      // call to trigger merge request
+      try{
+        setIsLoading(true);
+        let postBody = {
+          "gitTaskId":gitTasksData.getData("_id")
+        };
+        await gitTasksActions.processSyncRequest(postBody, getAccessToken);
+      } catch (error) {
+        console.log(error);
+        if(error?.error?.response?.data?.message){
+          toastContext.showLoadingErrorDialog(error.error.response.data.message);  
+        }else{
+          toastContext.showLoadingErrorDialog(error);
+        }
+        
         setIsLoading(false);
       } finally {
         setIsLoading(false);
