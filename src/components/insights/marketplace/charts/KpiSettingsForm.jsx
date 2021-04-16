@@ -9,6 +9,10 @@ import {
   kpiJenkinsResultFilterMetadata,
   kpiJenkinsJobUrlFilterMetadata,
   kpiJenkinsBuildNumberFilterMetadata,
+  kpiJiraIssueTypeFilterMetadata,
+  kpiJiraIssueStartStatusFilterMetadata,
+  kpiJiraIssueDoneStatusFilterMetadata,
+  kpiSonarProjectKeyFilterMetadata
 } from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import Model from "core/data_model/model";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
@@ -37,6 +41,18 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
   );
   const [kpiJenkinsBuildNumberFilter, setKpiJenkinsBuildNumberFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "jenkins-build-number", kpiJenkinsBuildNumberFilterMetadata)
+  );
+  const [kpiJiraIssueTypeFilter, setKpiJiraIssueTypeFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "jira-issue-type", kpiJiraIssueTypeFilterMetadata)
+  );
+  const [kpiJiraIssueStartStatusFilter, setKpiJiraIssueStartStatusFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "jira-issue-start-status", kpiJiraIssueStartStatusFilterMetadata)
+  );
+  const [kpiJiraIssueDoneStatusFilter, setKpiJiraIssueDoneStatusFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "jira-issue-done-status", kpiJiraIssueDoneStatusFilterMetadata)
+  );
+  const [kpiSonarProjectKeyFilter, setKpiSonarProjectKeyFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "sonar-project-key", kpiSonarProjectKeyFilterMetadata)
   );
 
   const tagFilterEnabled = [
@@ -114,6 +130,8 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "opsera-mean-time-to-restore",
     "opsera-nexus-pipeline-step-info",
     "qa-manual-test",
+    "selenium-test-results",
+    "sonar-reliability-remediation-effort-by-project",
     "first-pass-yield",
     "cumulative-open-defects"
   ];
@@ -171,6 +189,50 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
             />
           </div>
         );
+      case "jira-issue-type":
+        return (
+          <div>
+            <MultiTextInputBase
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiJiraIssueTypeFilter}
+              dataObject={kpiJiraIssueTypeFilter}
+            />
+          </div>
+        );
+      case "jira-issue-start-status":
+        return (
+          <div>
+            <MultiTextInputBase
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiJiraIssueStartStatusFilter}
+              dataObject={kpiJiraIssueStartStatusFilter}
+            />
+          </div>
+        );
+      case "jira-issue-done-status":
+        return (
+          <div>
+            <MultiTextInputBase
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiJiraIssueDoneStatusFilter}
+              dataObject={kpiJiraIssueDoneStatusFilter}
+            />
+          </div>
+        );
+      case "sonar-project-key":
+        return (
+          <div>
+            <MultiTextInputBase
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiSonarProjectKeyFilter}
+              dataObject={kpiSonarProjectKeyFilter}
+            />
+          </div>
+        );
     }
   };
 
@@ -212,6 +274,42 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-build-number")
       ].value = kpiJenkinsBuildNumberFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-type")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-type")
+      ].value = kpiJiraIssueTypeFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-start-status")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-start-status")
+      ].value = kpiJiraIssueStartStatusFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-done-status")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-done-status")
+      ].value = kpiJiraIssueDoneStatusFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sonar-project-key")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sonar-project-key")
+      ].value = kpiSonarProjectKeyFilter.getData("value");
     }
     setKpiSettings({ ...newKpiSettings });
     dashboardData.getData("configuration")[index] = kpiSettings.data;

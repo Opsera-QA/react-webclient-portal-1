@@ -44,6 +44,7 @@ import SonarBugsCountLineChart from "./sonar/line_chart/bugs/SonarBugsCountLineC
 import SonarNewBugsCountLineChart from "./sonar/line_chart/new_bugs/SonarNewBugsCountLineChart";
 import SonarReliabilityRatingLineChart from "./sonar/line_chart/reliability_rating/SonarReliabilityRatingLineChart";
 import SonarReliabilityRemediationEffortLineChart from "./sonar/line_chart/reliability_remediation_effort/SonarReliabilityRemediationEffortLineChart";
+import SonarReliabilityRemediationEffortByProjectLineChart from "./sonar/line_chart/reliability_remediation_effort_by_project/SonarReliabilityRemediationEffortByProjectLineChart";
 import SonarMetricByProjectLineChart from "./sonar/line_chart/metric-by-project/SonarMetricByProjectLineChart";
 import SonarCodeCoverageBarChart from "./sonar/bar_chart/code_coverage/SonarCodeCoverageBarChart";
 import SonarLinesToCoverBarChart from "./sonar/bar_chart/code_coverage/SonarLinesToCoverBarChart";
@@ -93,6 +94,9 @@ import BitbucketRejectedMergeRequestsTable from "components/insights/charts/bitb
 // Cypress KPIs
 import CypressTestResultsTable from "./cypress/CypressTestResultsTable";
 
+// Selenium KPIs
+import SeleniumTestResultsTable from "./selenium/SeleniumTestResultsTable";
+
 // Junit KPIs
 import JunitTestResultsTable from "./junit/JunitTestResultsTable";
 
@@ -109,7 +113,7 @@ import {
   getDateObjectFromKpiConfiguration,
   getTagsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
-import {Col} from "react-bootstrap";
+import { Col } from "react-bootstrap";
 
 //QA Testing
 import ManualQaTestPieChart from "components/insights/charts/qa_metrics/ManualQaTestPieChart";
@@ -318,26 +322,11 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           </Col>
         );
       case "jenkins-deployment-frequency":
-        return (
-            <JenkinsDeploymentFrequencyLineChart
-              persona={"developer"}
-              date={getDateObject(kpiConfig)}
-            />
-        );
+        return <JenkinsDeploymentFrequencyLineChart persona={"developer"} date={getDateObject(kpiConfig)} />;
       case "jenkins-change-failure-rate":
-        return (
-            <JenkinsChangeFailureRate
-              persona={"developer"}
-              date={getDateObject(kpiConfig)}
-            />
-        );
+        return <JenkinsChangeFailureRate persona={"developer"} date={getDateObject(kpiConfig)} />;
       case "jenkins-deployments-counts":
-        return (
-            <JenkinsDeploymentsCountsBarChart
-              persona={"developer"}
-              date={getDateObject(kpiConfig)}
-            />
-        );
+        return <JenkinsDeploymentsCountsBarChart persona={"developer"} date={getDateObject(kpiConfig)} />;
       case "jenkins-recent-build-status":
         return (
           <Col xl={6} md={12} className="p-2">
@@ -438,7 +427,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "jira-lead-time":
         return (
-          <Col xl={6} md={12} className="p-2">
+          <Col md={12} className="p-2">
             <JiraLeadTimeLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
@@ -490,15 +479,15 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-maintainability-rating":
         return (
-        <Col xl={6} md={12} className="p-2">
-          <SonarMaintainabilityRatingLineChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
-        </Col>
+          <Col xl={6} md={12} className="p-2">
+            <SonarMaintainabilityRatingLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "sonar-bugs":
         return (
@@ -540,6 +529,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col xl={6} md={12} className="p-2">
             <SonarReliabilityRemediationEffortLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sonar-reliability-remediation-effort-by-project":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <SonarReliabilityRemediationEffortByProjectLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -823,6 +824,20 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           </Col>
         );
 
+      // Selenium KPIs
+      case "selenium-test-results":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <SeleniumTestResultsTable
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+
       // Junit KPIs
       case "junit-test-results":
         return (
@@ -853,33 +868,13 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
 
       // Metricbeat KPIs
       case "metricbeat-kubernetes-cpu-usage":
-        return (
-            <MetricbeatCpuUsageByTimeLineChart
-              persona={"developer"}
-              date={getDateObject(kpiConfig)}
-            />
-        );
+        return <MetricbeatCpuUsageByTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)} />;
       case "metricbeat-kubernetes-memory-usage":
-        return (
-            <MetricbeatMemoryUsageByTimeLineChart
-              persona={"developer"}
-              date={getDateObject(kpiConfig)}
-            />
-        );
+        return <MetricbeatMemoryUsageByTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)} />;
       case "metricbeat-kubernetes-in-network-usage":
-        return (
-            <MetricbeatInNetworkTrafficByTimeLineChart
-              persona={"developer"}
-              date={getDateObject(kpiConfig)}
-            />
-        );
+        return <MetricbeatInNetworkTrafficByTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)} />;
       case "metricbeat-kubernetes-out-network-usage":
-        return (
-            <MetricbeatOutNetworkTrafficByTimeLineChart
-              persona={"developer"}
-              date={getDateObject(kpiConfig)}
-            />
-        );
+        return <MetricbeatOutNetworkTrafficByTimeLineChart persona={"developer"} date={getDateObject(kpiConfig)} />;
 
       // Github KPIs
       case "github-merge-requests-by-user":
@@ -1103,27 +1098,27 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "bitbucket-rejected-merge-requests":
         return (
           <Col md={12} className="p-2">
-          <BitbucketRejectedMergeRequestsTable
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
-      </Col>
+            <BitbucketRejectedMergeRequestsTable
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       // QA Testing
       case "qa-manual-test":
         return (
           <Col md={12} className="p-2">
-          <ManualQaTestPieChart
-            kpiConfiguration={kpiConfig}
-            setKpiConfiguration={setKpiConfig}
-            dashboardData={dashboardData}
-            setKpis={setKpis}
-            index={index}
-          />
-        </Col>
+            <ManualQaTestPieChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
         );
       case "first-pass-yield":
         return (

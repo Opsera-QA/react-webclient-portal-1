@@ -4,7 +4,11 @@ import {
   getTagsFromKpiConfiguration,
   getJenkinsResultFromKpiConfiguration,
   getJenkinsJobUrlFromKpiConfiguration,
-  getJenkinsBuildNumberFromKpiConfiguration
+  getJenkinsBuildNumberFromKpiConfiguration,
+  getJiraIssueTypeFromKpiConfiguration,
+  getJiraIssueStartStatusFromKpiConfiguration,
+  getJiraIssueDoneStatusFromKpiConfiguration,
+  getSonarProjectKeyFromKpiConfiguration
 } from "components/insights/charts/charts-helpers";
 
 const chartsActions = {};
@@ -65,6 +69,10 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, canc
   const jenkinsResult = getJenkinsResultFromKpiConfiguration(kpiConfiguration);
   const jenkinsJobUrl = getJenkinsJobUrlFromKpiConfiguration(kpiConfiguration);
   const jenkinsBuildNumber = getJenkinsBuildNumberFromKpiConfiguration(kpiConfiguration);
+  const jiraIssueType = getJiraIssueTypeFromKpiConfiguration(kpiConfiguration);
+  const jiraIssueStartStatus= getJiraIssueStartStatusFromKpiConfiguration(kpiConfiguration);
+  const jiraIssueDoneStatus= getJiraIssueDoneStatusFromKpiConfiguration(kpiConfiguration);
+  const sonarProjectKey = getSonarProjectKeyFromKpiConfiguration(kpiConfiguration);
 
   const postBody = {
     request: request,
@@ -74,6 +82,10 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, canc
     jenkinsResult: jenkinsResult,
     jenkinsJobUrl: jenkinsJobUrl,
     jenkinsBuildNumber: jenkinsBuildNumber,
+    jiraIssueType: jiraIssueType,
+    jiraIssueStartStatus: jiraIssueStartStatus,
+    jiraIssueDoneStatus: jiraIssueDoneStatus,
+    sonarProjectKey: sonarProjectKey,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
     projectTags: projectTags,

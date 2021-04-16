@@ -14,6 +14,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAllowed }) {
   const [isCanceling, setIsCanceling] = useState(false);
+  const [taskStarting, setTaskStarting] = useState(false);
   const {getAccessToken} = useContext(AuthContext);
   const history = useHistory();
   let toastContext = useContext(DialogToastContext);
@@ -49,6 +50,8 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAll
 
   const handleClose = () => {
     setShowModal(false);
+    // TODO: This should be passed to modal
+    setTaskStarting(true);
   };
 
   const getButton = () => {
@@ -70,7 +73,7 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAll
     return (
       <Button
         variant={"success"}
-        disabled={gitTasksData?.getData("status") === "running" || disable || actionAllowed !== true}
+        disabled={gitTasksData?.getData("status") === "running" || disable || taskStarting || actionAllowed !== true}
         onClick={() => {
           setShowModal(true);
         }}

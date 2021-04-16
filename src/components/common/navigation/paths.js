@@ -89,6 +89,7 @@ paths.tagsUsedInPipelineReport = paths.tagReports + "/tags-used-in-pipeline";
 paths.tagsUsedInToolsReport = paths.tagReports + "/tags-used-in-tools";
 paths.tagsUsedInDashboardsReport = paths.tagReports + "/tags-used-in-dashboards";
 paths.pipelineReports = paths.reports + "/pipelines";
+paths.toolCountsReport = paths.toolReports + "/detailed-tool-report";
 
 //Inventory (Tool Registry) paths
 paths.toolRegistry = "inventory/tools";

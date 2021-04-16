@@ -5,8 +5,28 @@ import {getBreadcrumb} from "components/common/navigation/trails";
 import BreadcrumbTrail from "components/common/navigation/breadcrumbTrail";
 import TitleBar from "components/common/fields/TitleBar";
 
-function WideScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading, accessDenied }) {
+function WideScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading, accessDenied, navigationTabContainer, showBreadcrumbTrail }) {
   const [breadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
+
+  const getTopNavigation = () => {
+    if (showBreadcrumbTrail) {
+      return (<BreadcrumbTrail destination={breadcrumbDestination} />);
+    }
+
+    if (navigationTabContainer) {
+      return (
+        <div className="mb-3">
+          {navigationTabContainer}
+        </div>
+      );
+    }
+
+    return (
+      <div className="mb-3">
+        <div className="sub-navigation-block" />
+      </div>
+    );
+  };
 
   const getPageDescription = () => {
     if (pageDescription == null) {
@@ -36,7 +56,8 @@ function WideScreenContainer({ breadcrumbDestination, pageDescription, children,
 
   return (
     <div className="mb-2 ml-2 max-content-height">
-      <BreadcrumbTrail destination={breadcrumbDestination} />
+      {/* <BreadcrumbTrail destination={breadcrumbDestination} /> */}
+      {getTopNavigation()}
       <div className="content-container content-card-1 ">
         <div className="pl-2 content-block-header title-text-header-1">
           <TitleBar titleIcon={breadcrumb.icon} title={breadcrumb.title} isLoading={isLoading}/>
@@ -57,7 +78,9 @@ WideScreenContainer.propTypes = {
   pageDescription: PropTypes.string,
   isLoading: PropTypes.bool,
   children: PropTypes.any,
-  accessDenied: PropTypes.bool
+  accessDenied: PropTypes.bool,
+  showBreadcrumbTrail: PropTypes.bool,
+  navigationTabContainer: PropTypes.object,
 };
 
 export default WideScreenContainer;
