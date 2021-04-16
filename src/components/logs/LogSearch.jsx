@@ -46,7 +46,18 @@ function LogSearch({tools, sideBySide}) {
   const [currentLogTab, setCurrentLogTab] = useState(0);
   const [exportData, setExportData] = useState("");
   const [exportDisabled, setExportDisabled] = useState(true);
-  const [jenkinsProjectDto, setJenkinsProjectDto] = useState(new Model({ ...projectTagsMetadata.newObjectFields }, projectTagsMetadata, true));
+  const [jenkinsProjectDto, setJenkinsProjectDto] = useState(new Model({
+    type: "project",
+    tool_identifier: "jenkins",
+    tool_id: "",
+    key: "",
+    value: [],
+    owner : "",
+    account : {},
+    tool_prop: "",
+    createdAt: "",
+    active : true
+  }, projectTagsMetadata, true));
   // const [jenkinsJobs, setJenkinsJobs] = useState([]);
 
   const [date, setDate] = useState([
