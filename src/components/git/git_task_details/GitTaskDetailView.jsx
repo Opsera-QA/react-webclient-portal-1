@@ -25,6 +25,7 @@ function GitTaskDetailView() {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [canDelete, setCanDelete] = useState(false);
+  const [accessRoleData, setAccessRoleData] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -71,8 +72,9 @@ function GitTaskDetailView() {
 
     if (isMounted.current === true && gitTask != null) {
       setGitTasksData(new Model(gitTask, gitTasksMetadata, false));
-      const accessRoleData = await getAccessRoleData();
-      setCanDelete(workflowAuthorizedActions.gitItems(accessRoleData, "delete-task", gitTask.owner, gitTask.roles));
+      const customerAccessRules = await getAccessRoleData();
+      setAccessRoleData(customerAccessRules);
+      setCanDelete(workflowAuthorizedActions.gitItems(customerAccessRules, "delete-task", gitTask.owner, gitTask.roles));
     }
   };
 
@@ -99,8 +101,19 @@ function GitTaskDetailView() {
       metadata={gitTasksMetadata}
       dataObject={gitTasksData}
       isLoading={isLoading}
+      accessRoleData={accessRoleData}
+      objectRoles={gitTasksData?.getData("roles")}
       actionBar={getActionBar()}
-      detailPanel={<GitTaskDetailPanel gitTasksData={gitTasksData} isLoading={isLoading} setGitTasksData={setGitTasksData} loadData={getGitTaskData} runTask={location?.state?.runTask} />}
+      detailPanel={
+        <GitTaskDetailPanel
+          gitTasksData={gitTasksData}
+          isLoading={isLoading}
+          setGitTasksData={setGitTasksData}
+          accessRoleData={accessRoleData}
+          loadData={getGitTaskData}
+          runTask={location?.state?.runTask}
+        />
+      }
     />
   );
 }

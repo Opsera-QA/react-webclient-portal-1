@@ -13,7 +13,7 @@ import GitTasksActivityLogsTable
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 
-function GitTaskDetailPanel({ gitTasksData, setGitTasksData, loadData, isLoading, runTask }) {
+function GitTaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleData, runTask }) {
   const [activeTab, setActiveTab] = useState(runTask ? "settings" : "summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -41,6 +41,7 @@ function GitTaskDetailPanel({ gitTasksData, setGitTasksData, loadData, isLoading
           <GitTaskSummaryPanel
             gitTasksData={gitTasksData}
             setActiveTab={setActiveTab}
+            accessRoleData={accessRoleData}
             setGitTasksData={setGitTasksData}
             loadData={loadData}
           />
@@ -78,7 +79,7 @@ GitTaskDetailPanel.propTypes = {
   gitTasksData: PropTypes.object,
   setGitTasksData: PropTypes.func,
   loadData: PropTypes.func,
-  isLoading: PropTypes.bool,
+  accessRoleData: PropTypes.object,
   runTask: PropTypes.bool,
 };
 
