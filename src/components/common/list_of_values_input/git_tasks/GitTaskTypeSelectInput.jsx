@@ -4,7 +4,8 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 // disabling metric selection for now
 export const notificationTypes = [
-  {name: "SFDC Org sync", value: "sync-sfdc-repo"}
+  {name: "SFDC Org sync", value: "sync-sfdc-repo"},
+  {name: "GIT to GIT Sync", value: "sync-git-branches"},
 ];
 // TODO: Remove the disabled items from here when done
 function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction }) {
