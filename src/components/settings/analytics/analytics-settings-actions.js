@@ -65,6 +65,18 @@ analyticsActions.fetchProfileV2 = async (getAccessToken, cancelTokenSource) => {
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+analyticsActions.getDropdownFilterOptions = async (getAccessToken, cancelTokenSource, type) => {
+  const apiUrl = "/analytics/data-entry/filters";
+  const postBody = {
+    params: {
+      type: type
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+
 analyticsActions.createProfile = async (getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = "/analytics/profile/create";

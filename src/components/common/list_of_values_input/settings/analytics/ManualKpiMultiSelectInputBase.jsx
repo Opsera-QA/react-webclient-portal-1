@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import { Multiselect } from 'react-widgets';
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
@@ -7,10 +7,69 @@ import {faTimes} from "@fortawesome/pro-light-svg-icons";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import axios from "axios";
+import {AuthContext} from "contexts/AuthContext";
+import analyticsActions from "components/settings/analytics/analytics-settings-actions";
 
-function ManualKpiMultiSelectInputBase({ fieldName, dataObject, type, setDataObject, groupBy, disabled, selectOptions, placeholderText, setDataFunction, busy, showClearValueButton, clearDataFunction, className}) {
+function ManualKpiMultiSelectInputBase({ fieldName, dataObject, type, setDataObject, groupBy, disabled, placeholderText, setDataFunction, busy, showClearValueButton, clearDataFunction, className}) {
   const [errorMessage, setErrorMessage] = useState("");
+  const { getAccessToken } = useContext(AuthContext);
   const [field] = useState(dataObject.getFieldById(fieldName));
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectOptions, setSelectOptions] = useState([]);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+      await getDropdownOptions(cancelSource);
+    }
+    catch (error) {
+      if (isMounted?.current === true) {
+        setErrorMessage(`Could not load ${type}s.`);
+        console.error(error);
+      }
+    }
+    finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+
+  const getDropdownOptions = async (cancelSource = cancelTokenSource) => {
+    const response = await analyticsActions.getDropdownFilterOptions(getAccessToken, cancelSource, type);
+    const options = response?.data;
+
+    console.log("options: " + JSON.stringify(options));
+
+    if (isMounted?.current === true && Array.isArray(options) && options.length > 0)
+    {
+      setSelectOptions(options);
+    }
+  };
 
   const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
@@ -70,12 +129,12 @@ function ManualKpiMultiSelectInputBase({ fieldName, dataObject, type, setDataObj
       <div className={"custom-multiselect-input"}>
         <Multiselect
           data={selectOptions}
-          busy={busy}
+          busy={busy || isLoading}
           allowCreate={true}
           onCreate={(value) => handleCreate(value)}
           filter="contains"
           groupBy={groupBy}
-          value={dataObject.getData(fieldName) ? [...dataObject.getData(fieldName)] : [] }
+          value={dataObject.getArrayData(fieldName) ? [...dataObject.getArrayData(fieldName)] : [] }
           placeholder={placeholderText}
           disabled={disabled}
           onChange={newValue => setDataFunction ? setDataFunction(field.id, newValue) : validateAndSetData(field.id, newValue)}
@@ -105,6 +164,7 @@ ManualKpiMultiSelectInputBase.propTypes = {
     PropTypes.array
   ]),
   className: PropTypes.string,
+  type: PropTypes.string
 };
 
 ManualKpiMultiSelectInputBase.defaultProps = {

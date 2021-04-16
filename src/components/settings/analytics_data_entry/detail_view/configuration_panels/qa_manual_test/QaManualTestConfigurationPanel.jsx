@@ -10,6 +10,8 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PipelineSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineSelectInput";
 import NumberInputBase from "components/common/inputs/text/NumberInputBase";
 import DateTimeRangeInputBase from "components/common/inputs/date/DateTimeRangeInputBase";
+import ManualKpiMultiSelectInputBase
+  from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
 
 function QaManualTestConfigurationPanel({ analyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
   useEffect(() => {loadData();}, []);
@@ -27,10 +29,10 @@ function QaManualTestConfigurationPanel({ analyticsDataEntryModel, kpiConfigurat
   return (
     <Row className={"mx-0"}>
       <Col lg={6}>
-        <TextInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"domain"} />
+        <ManualKpiMultiSelectInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"domain"} type={"domain"} />
       </Col>
       <Col lg={6}>
-        <TextInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"application"} />
+        <ManualKpiMultiSelectInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"application"} type={"application"} />
       </Col>
       <Col lg={12}>
         <DateTimeRangeInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fromFieldName={"from"} toFieldName={"to"} />
@@ -39,10 +41,10 @@ function QaManualTestConfigurationPanel({ analyticsDataEntryModel, kpiConfigurat
         <PipelineSelectInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"pipeline_id"} />
       </Col>
       <Col lg={6}>
-        <TextInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"sprint"} />
+        <ManualKpiMultiSelectInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"sprint"} type={"sprint"} />
       </Col>
       <Col lg={6}>
-        <TextInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"release"} />
+        <ManualKpiMultiSelectInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"release"} type={"release"} />
       </Col>
       <Col lg={6}>
         <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_total"} />
