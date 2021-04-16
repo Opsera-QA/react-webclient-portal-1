@@ -2,7 +2,7 @@
 
 import PropTypes from "prop-types";
 import { ResponsiveLine } from "@nivo/line";
-import config from "./sonarMetricByProjectLineChartConfigs";
+import config from "./sonarReliabilityRemediationEffortByProjectLineChartConfigs";
 import React, {useState, useEffect, useContext, useRef} from "react";
 import ModalLogs from "components/common/modal/modalLogs";
 import axios from "axios";
@@ -26,7 +26,7 @@ import ChartTooltip from '../../../ChartTooltip';
   "new_technical_debt", "new_uncovered_conditions", "new_uncovered_lines", "new_violations", "new_vulnerabilities", "new_coverage",
   "new_line_coverage", "skipped_tests", "test_errors", "test_execution_time", "test_failures", "test_success_density", "tests",
  */
-function SonarMetricByProjectLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis, sonarMeasure }) {
+function SonarReliabilityRemediationEffortByProjectLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis, sonarMeasure }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -60,8 +60,8 @@ function SonarMetricByProjectLineChart({ kpiConfiguration, setKpiConfiguration, 
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "sonarMeasures-" + sonarMeasure, kpiConfiguration, dashboardTags);
-      const dataObject = response?.data && response?.data?.data[0]?.["sonarMeasures-" + sonarMeasure].status === 200 ? response?.data?.data[0]?.["sonarMeasures-" + sonarMeasure]?.data : [];
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource,"sonarReliabilityRemediationEffortByProject", kpiConfiguration, dashboardTags);
+      const dataObject = response?.data && response?.data?.data[0]?.sonarReliabilityRemediationEffortByProject.status === 200 ? response?.data?.data[0]?.sonarReliabilityRemediationEffortByProject?.data : [];
       assignStandardColors(dataObject);
       shortenLegend(dataObject);
 
@@ -82,14 +82,6 @@ function SonarMetricByProjectLineChart({ kpiConfiguration, setKpiConfiguration, 
     }
   };
 
-  const formatTitle = (str) => {
-    var i, frags = str.split("_");
-    for (i = 0; i < frags.length; i++) {
-      frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1);
-    }
-    return frags.join(" ");
-  };
-
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
@@ -99,14 +91,13 @@ function SonarMetricByProjectLineChart({ kpiConfiguration, setKpiConfiguration, 
       <div className="new-chart mb-3" style={{height: "300px"}}>
             <ResponsiveLine
               data={metrics}
-              {...defaultConfig("Vulnerabilities", "Date", 
+              {...defaultConfig("Remediation Effort Required (min)", "Date", 
                     false, true, "wholeNumbers", "monthDate")}
               {...config(getColor)}
               onClick={() => setShowModal(true)}
               tooltip={(node) => <ChartTooltip 
-                    titles={["Status", "Qualifier", "Date", capitalizeFirstLetter(node.point.data.metric)]}
-                    values={[node.point.data.status, node.point.data.gate, 
-                             node.point.data.xFormatted, node.point.data.yFormatted]} />}
+                    titles={["Project", "Date", "Remediation Effort Required"]}
+                    values={[node.point.data.project, node.point.data.xFormatted, String(node.point.data.yFormatted) + " minutes"]} />}
             />        
       </div>
     );
@@ -126,7 +117,7 @@ function SonarMetricByProjectLineChart({ kpiConfiguration, setKpiConfiguration, 
         isLoading={isLoading}
       />
       <ModalLogs
-        header={formatTitle(sonarMeasure)}
+        header={"Sonar Reliability Remediation Effort By Project"}
         size="lg"
         jsonMessage={metrics}
         dataType="bar"
@@ -138,7 +129,7 @@ function SonarMetricByProjectLineChart({ kpiConfiguration, setKpiConfiguration, 
 }
 
 
-SonarMetricByProjectLineChart.propTypes = {
+SonarReliabilityRemediationEffortByProjectLineChart.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -147,5 +138,5 @@ SonarMetricByProjectLineChart.propTypes = {
   sonarMeasure: PropTypes.string
 };
 
-export default SonarMetricByProjectLineChart;
+export default SonarReliabilityRemediationEffortByProjectLineChart;
 

@@ -46,6 +46,38 @@ export function getJenkinsBuildNumberFromKpiConfiguration(kpiConfiguration) {
   return null;
 }
 
+export function getJiraIssueTypeFromKpiConfiguration(kpiConfiguration) {
+  if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-type")]?.value && 
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-type")]?.value.length > 0) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-type")].value;
+  }
+  return null;
+}
+
+export function getJiraIssueStartStatusFromKpiConfiguration(kpiConfiguration) {
+  if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-start-status")]?.value && 
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-start-status")]?.value.length > 0) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-start-status")].value;
+  }
+  return null;
+}
+
+export function getJiraIssueDoneStatusFromKpiConfiguration(kpiConfiguration) {
+  if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-done-status")]?.value && 
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-done-status")]?.value.length > 0) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-done-status")].value;
+  }
+  return null;
+}
+
+export function getSonarProjectKeyFromKpiConfiguration(kpiConfiguration) {
+  if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sonar-project-key")]?.value && 
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sonar-project-key")]?.value.length > 0) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sonar-project-key")].value;
+  }
+  return null;
+}
+
 export function getChartIconFromKpiConfiguration(kpiConfiguration) {
   return faChartBar;
 }
