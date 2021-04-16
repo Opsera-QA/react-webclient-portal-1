@@ -10,7 +10,7 @@ import {
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faChartNetwork} from "@fortawesome/pro-light-svg-icons";
+import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import ExportToolsUsedInPipelineReportButton from 'components/common/buttons/export/reports/ExportToolsUsedInPipelineReportButton';
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 
@@ -30,14 +30,14 @@ function TagsUsedInDashboardTable({ data, loadData, isLoading}) {
   );
 
   const onRowSelect = (rowData) => {
-    history.push(`/insights/dashboards/${rowData.original._id}/viewer`);
+    history.push("/workflow/details/" + rowData.original._id);
   };
 
   const rowStyling = (row) => {
     return !row["values"].active ? " inactive-row" : "";
   };
 
-  const getTagsTable = () => {
+  const getPipelinesTable = () => {
     return (
       <CustomTable
         className="table-no-border"
@@ -56,10 +56,10 @@ function TagsUsedInDashboardTable({ data, loadData, isLoading}) {
       loadData={loadData}
       supportSearch={false}
       isLoading={isLoading}
-      body={getTagsTable()}
+      body={getPipelinesTable()}
       metadata={dashboardMetadata}
-      titleIcon={faChartNetwork}
-      title={"Dashboards"}
+      titleIcon={faDraftingCompass}
+      title={"Pipelines"}
       exportButton={<ExportToolsUsedInPipelineReportButton className={"ml-2"} isLoading={isLoading} pipelineData={data} />}
     />
   );
