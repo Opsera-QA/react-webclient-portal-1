@@ -1,17 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
-
+import InlineErrorText from "components/common/status_notifications/inline/InlineErrorText";
 
 function BranchToBranchDestinationBranchInput({dataObject, setDataObject, disabled}) {
+  
+  const [validationError, setValidationError] = useState(false);
+
     const setDestinationBranch = (fieldName, selectedOption) => {
+        setValidationError(false);
         let newDataObject = {...dataObject};
-        newDataObject.setData("gitBranch", selectedOption);
-        newDataObject.setData("defaultBranch", selectedOption);
+        if(newDataObject.getData("sourceBranch") === selectedOption){          
+          newDataObject.setData("gitBranch", "");
+          newDataObject.setData("defaultBranch", "");
+          setValidationError(true);
+        }else{
+          newDataObject.setData("gitBranch", selectedOption);
+          newDataObject.setData("defaultBranch", selectedOption);
+        }        
         setDataObject({...newDataObject});
     };
 
     return (
+      <>
         <GitBranchInput
           fieldName={"gitBranch"}
           service={dataObject.getData("service")}
@@ -23,6 +34,8 @@ function BranchToBranchDestinationBranchInput({dataObject, setDataObject, disabl
           setDataObject={setDataObject}
           disabled={disabled}
         />
+        {validationError && <InlineErrorText error="Source and Target Branch cannot be the same" prependMessage="Error: " className="small" />}
+      </>
     );
 }
 
