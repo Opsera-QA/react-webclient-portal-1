@@ -8,6 +8,8 @@ import sfdcGitTaskConfigurationMetadata
 import SFDCGitTaskTypeSummaryCard
   from "components/git/git_task_details/configuration_forms/sfdc/SFDCGitTaskTypeSummaryCard";
 import axios from "axios";
+import branchToBranchGitTaskConfigurationMetadata from "components/git/git_task_details/configuration_forms/branch-to-branch/branch-to-branch-git-task-configuration";
+import BranchToBranchGitTaskTypeSummaryCard from "components/git/git_task_details/configuration_forms/branch-to-branch/BranchToBranchGitTaskTypeSummaryCard";
 
 function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData }) {
   const isMounted = useRef(false);
@@ -39,6 +41,13 @@ function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, load
         return (
           <SFDCGitTaskTypeSummaryCard
             gitTaskConfigurationData={wrapGitTaskType(sfdcGitTaskConfigurationMetadata)}
+            gitTasksData={gitTasksData}
+          />
+        );
+      case "sync-git-branches":
+        return (
+          <BranchToBranchGitTaskTypeSummaryCard
+            gitTaskConfigurationData={wrapGitTaskType(branchToBranchGitTaskConfigurationMetadata)}
             gitTasksData={gitTasksData}
           />
         );
