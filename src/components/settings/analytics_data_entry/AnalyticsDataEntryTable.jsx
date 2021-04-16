@@ -93,7 +93,7 @@ function AnalyticsDataEntryTable({ analyticsDataEntries, isLoading, loadData, is
       inlineFilters={getInlineFilters()}
       setFilterDto={setAnalyticsDataEntryFilterModel}
       title={"Analytics Data Entries"}
-      type={"Analytics Data Entry"}
+      type={"Entry"}
       className={"px-2 pb-2"}
     />
   );

@@ -2,7 +2,7 @@ import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
 const analyticsDataFilterMetadata = {
   idProperty: "_id",
-  type: "Analytics Data Entry",
+  type: "Entry",
   fields: [
     {
       label: "Status",

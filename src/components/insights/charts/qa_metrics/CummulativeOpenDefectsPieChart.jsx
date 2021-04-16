@@ -8,8 +8,8 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import {
-  defaultConfig, getColorByData, getColor, assignStandardColors,
-  shortenPieChartLegend, mainColor, getColorById,
+  defaultConfig, getColorByData,getColor, assignStandardColors,
+  shortenPieChartLegend, mainColor,
 } from "../charts-views";
 import ChartTooltip from "../ChartTooltip";
 import { Col, Container, Row } from "react-bootstrap";
@@ -49,8 +49,8 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "manualTestData", kpiConfiguration, dashboardTags);
-      let dataObject = response?.data ? response?.data?.data[0]?.manualTestData?.data : [];
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "cumulativeOpenDefects", kpiConfiguration, dashboardTags);
+      let dataObject = response?.data ? response?.data?.data[0]?.cumulativeOpenDefects?.data : [];
       assignStandardColors(dataObject[0]?.pairs);
       shortenPieChartLegend(dataObject[0]?.pairs);
 
@@ -86,23 +86,29 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
               <div className="box-metric">
                 <div>{metrics[0]?.totalTests}</div>
               </div>
-              <div className="w-100 text-muted mb-1">Total Number of Tests Available</div>
+              <div className="w-100 text-muted mb-1">Total No of Defects</div>
+            </div></Col>
+            <Col><div className="metric-box text-center">
+              <div className="box-metric">
+                { metrics[0]?.cumulativeDefects ?
+                  <div className ="red">{metrics[0]?.cumulativeDefects+ "%"}</div>
+                  : <div>{"N/A"}</div>}
+              </div>
+              <div className="w-100 text-muted mb-1">Cumulative Open Defects</div>
             </div></Col>
           </Row>
           <Row className="p-1">
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                <div>{metrics[0]?.totalExecuted}</div>
+                <div>{metrics[0]?.passedTests}</div>
               </div>
-              <div className="w-100 text-muted mb-1">Total Number of Tests executed</div>
+              <div className="w-100 text-muted mb-1">Total Valid Defects Open</div>
             </div></Col>
-          </Row>
-          <Row className="p-1">
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                <div className="green">{metrics[0]?.passRate+ "%"}</div>
+                <div>{metrics[0]?.failedTests}</div>
               </div>
-              <div className="w-100 text-muted mb-1">Pass Rate</div>
+              <div className="w-100 text-muted mb-1">Total Valid Defects Closed</div>
             </div></Col>
           </Row>
         </Container>
