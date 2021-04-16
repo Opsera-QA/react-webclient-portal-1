@@ -81,12 +81,6 @@ const scmCreateAccountMetadata = {
         regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
       },
       {
-        label: "Username",
-        id: "accountUsername",
-        isRequired: true,
-        maxLength: 100
-      },
-      {
         label: "Password",
         id: "accountPassword",        
         maxLength: 256
