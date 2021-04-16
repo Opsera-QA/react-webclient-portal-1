@@ -86,12 +86,13 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
             <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Logs"}/>
           </>
         );
-      case "gitlab":
-      case "github":
+      // case "gitlab":
+      // case "github":
       case "bitbucket":
         return (
           <>
           {/*<CustomTab icon={faTags} tabName={"tagging"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tagging"}/>*/}
+          <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"} disabled={!authorizedAction("edit_tool_account_tabs", toolData?.data)}/>
           </>
         );
       case "jira":
@@ -139,7 +140,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case "applications":
         return <ToolApplicationsPanel toolData={toolData} loadData={loadData} isLoading={isLoading}/>;
       case "accounts":
-        return <ToolAccountsPanel isLoading={isLoading} toolData={toolData} loadData={loadData}/>;
+        return <ToolAccountsPanel isLoading={isLoading} toolData={toolData} loadData={loadData} />;
       case "logs":
         return <ToolLogsPanel toolData={toolData}/>;
       case "tagging":

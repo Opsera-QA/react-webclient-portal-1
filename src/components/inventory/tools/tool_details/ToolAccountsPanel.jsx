@@ -1,13 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import JenkinsAccounts from "./tool_jobs/jenkins/accounts/JenkinsAccounts";
+import ScmAccounts from "components/inventory/tools/tool_details/tool_jobs/common/accounts/ScmAccounts";
 
-function ToolAccountsPanel({ toolData, loadData }) {
+function ToolAccountsPanel({ toolData, loadData, isLoading }) {
 
   const getAccountPanel = (toolIdentifier, loadData) => {
     switch (toolIdentifier) {
       case "jenkins":
         return <JenkinsAccounts toolData={toolData} loadData={loadData}/>;
+      // case "gitlab":
+      // case "github":
+      case "bitbucket":
+        return <ScmAccounts toolData={toolData} isLoading={isLoading} loadData={loadData}/>;
       default:
         return <div className="text-center p-5 text-muted mt-5">Opsera account management is not currently available for this tool.</div>;
     }
@@ -26,7 +31,8 @@ function ToolAccountsPanel({ toolData, loadData }) {
 
 ToolAccountsPanel.propTypes = {
   toolData: PropTypes.object,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  isLoading: PropTypes.bool
 };
 
 
