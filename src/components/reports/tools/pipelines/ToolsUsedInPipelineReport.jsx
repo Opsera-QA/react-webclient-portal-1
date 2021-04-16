@@ -60,7 +60,7 @@ function ToolsUsedInPipelineReport() {
         <NavigationTab activeTab={"tools"} tabText={"All Reports"} handleTabClick={handleTabClick} tabName={"all"} icon={faAnalytics} />
         <NavigationTab activeTab={"tools"} tabText={"Tool Reports"} handleTabClick={handleTabClick} tabName={"tools"} icon={faTools} />
         <NavigationTab activeTab={"tools"} tabText={"Tag Reports"} handleTabClick={handleTabClick} tabName={"tags"} icon={faTags} />
-        <NavigationTab activeTab={"tools"} tabText={"Pipeline Reports"} handleTabClick={handleTabClick} tabName={"pipelines"} icon={faDraftingCompass} />
+        {/* <NavigationTab activeTab={"tools"} tabText={"Pipeline Reports"} handleTabClick={handleTabClick} tabName={"pipelines"} icon={faDraftingCompass} /> */}
       </NavigationTabContainer>
     );
   };
@@ -72,20 +72,20 @@ function ToolsUsedInPipelineReport() {
   return (
     <ScreenContainer
       breadcrumbDestination={"toolsUsedInPipelineReport"}
-      pageDescription={"View which pipelines are in use by a specific tool"}
       isLoading={isLoading}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.POWER_USERS}
       navigationTabContainer={getNavigationTabContainer()}
     >
-      <Row className={"mb-3"}>
-        <Col>
+      <div className={"ml-3 mt-3 mb-2"}> View pipelines by tool</div>
+      <Row className={"mb-3 mx-0"}>
+        <Col className={"mx-0"}>
           <ToolSelectInput fieldName={"_id"} dataObject={toolUsedInPipelineDto} setDataObject={setToolUsedInPipelineDto}/>
         </Col>
       </Row>
       <Row className={"px-2"}>
         <Col>
-          <ToolUsedInPipelinesField dataObject={toolUsedInPipelineDto}/>
+          <ToolUsedInPipelinesField dataObject={toolUsedInPipelineDto} showTable={true}/>
         </Col>
       </Row>
     </ScreenContainer>

@@ -64,7 +64,7 @@ function DetailedToolReport() {
         <NavigationTab activeTab={"tools"} tabText={"All Reports"} handleTabClick={handleTabClick} tabName={"all"} icon={faAnalytics} />
         <NavigationTab activeTab={"tools"} tabText={"Tool Reports"} handleTabClick={handleTabClick} tabName={"tools"} icon={faTools} />
         <NavigationTab activeTab={"tools"} tabText={"Tag Reports"} handleTabClick={handleTabClick} tabName={"tags"} icon={faTags} />
-        <NavigationTab activeTab={"tools"} tabText={"Pipeline Reports"} handleTabClick={handleTabClick} tabName={"pipelines"} icon={faDraftingCompass} />
+        {/* <NavigationTab activeTab={"tools"} tabText={"Pipeline Reports"} handleTabClick={handleTabClick} tabName={"pipelines"} icon={faDraftingCompass} /> */}
       </NavigationTabContainer>
     );
   };
