@@ -6,10 +6,10 @@ import branchToBranchGitTaskConfigurationMetadata
   from "components/git/git_task_details/configuration_forms/branch-to-branch/branch-to-branch-git-task-configuration";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import SFDCJenkinsToolInput from "components/git/git_task_details/configuration_forms/sfdc/inputs/SFDCJenkinsToolInput";
-import SFDCJenkinsAccountInput from "components/git/git_task_details/configuration_forms/sfdc/inputs/SFDCJenkinsAccountInput";
-import SFDCBitbucketWorkspaceInput from "components/git/git_task_details/configuration_forms/sfdc/inputs/SFDCBitbucketWorkspaceInput";
-import SFDCGitRepositoryInput from "components/git/git_task_details/configuration_forms/sfdc/inputs/SFDCGitRepositoryInput";
+import SFDCJenkinsToolInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCJenkinsToolInput";
+import SFDCJenkinsAccountInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCJenkinsAccountInput";
+import SFDCBitbucketWorkspaceInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCBitbucketWorkspaceInput";
+import SFDCGitRepositoryInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitRepositoryInput";
 import AgentLabelsMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import BranchToBranchGitReviewerInput from "./inputs/BranchToBranchGitReviewerInput";
