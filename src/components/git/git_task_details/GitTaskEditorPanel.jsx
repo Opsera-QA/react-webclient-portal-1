@@ -13,7 +13,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TagManager from "components/common/inputs/tags/TagManager";
 import { Button } from "react-bootstrap";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import SFDCViewOverlay from "./configuration_forms/sfdc/SFDCViewOverlay";
+import SFDCViewOverlay from "./configuration_forms/sfdc-org-sync/SFDCViewOverlay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlay,
@@ -68,13 +68,16 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
   };
 
   const handleRunTask = () => {
-    // console.log("Run task open wizard", gitTasksData.getData("_id"));
-
-    if (gitTasksData.getData("type") !== "sync-sfdc-repo") {
+    if (gitTasksData.getData("type") === "sync-sfdc-repo") {  
+      // open wizard views
+      toastContext.showOverlayPanel(<SFDCViewOverlay gitTasksData={gitTasksData}/>);
+      return;
+    }    
+    if (gitTasksData.getData("type") === "sync-branch-structure") {  
+      // open wizard views
+      console.log("Git branch task run triggered");
       return;
     }
-    // open wizard views
-    toastContext.showOverlayPanel(<SFDCViewOverlay gitTasksData={gitTasksData}/>);
   };
 
   const getExtraButtons = () => {

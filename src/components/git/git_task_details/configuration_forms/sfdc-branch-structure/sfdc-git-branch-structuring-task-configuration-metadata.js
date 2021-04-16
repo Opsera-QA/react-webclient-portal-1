@@ -1,10 +1,10 @@
 import regexHelpers from "utils/regexHelpers";
 
-const sfdcGitTaskConfigurationMetadata = {
-  type: "SFDC Git Task Configuration",
+const sfdcGitBranchTaskConfigurationMetadata = {
+  type: "SFDC Git Branch Structuring Task Configuration",
   fields: [
     {
-      label: "Jenkins Tool",
+      label: "Select Jenkins Tool",
       id: "toolConfigId",
       isRequired: true,
       maxLength: 24,
@@ -14,7 +14,7 @@ const sfdcGitTaskConfigurationMetadata = {
       label: "Jenkins Tool Name",
       id: "toolName",
       isRequired: true,
-      maxLength: 100,
+      maxLength: 250,
       regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
     },  
     {
@@ -34,14 +34,14 @@ const sfdcGitTaskConfigurationMetadata = {
       regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
     },
     {
-      label: "SCM Type",
+      label: "Select SCM Type",
       id: "service",
       isRequired: true,
       maxLength: 10,
       regexValidator: regexHelpers.regexTypes.loweCaseLetters
     },    
     {
-      label: "Account",
+      label: "Select Account",
       id: "gitCredential",
       isRequired: true,
       maxLength: 50,
@@ -56,6 +56,13 @@ const sfdcGitTaskConfigurationMetadata = {
     {
       id: "projectId",
       maxLength: 20,
+      regexValidator: regexHelpers.regexTypes.generalText
+    },
+    {
+      label: "Conversion Type",
+      id: "conversionType",
+      isRequired: true,
+      maxLength: 50,
       regexValidator: regexHelpers.regexTypes.generalText
     },
     {
@@ -94,6 +101,13 @@ const sfdcGitTaskConfigurationMetadata = {
       regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
     },
     {
+      label: "Destination Branch",
+      id: "destinationBranch",
+      isRequired: true,
+      maxLength: 255,
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+    },
+    {
       id: "sfdcToolId",
       isRequired: true,
       maxLength: 24,
@@ -109,16 +123,14 @@ const sfdcGitTaskConfigurationMetadata = {
   ],
   newObjectFields:
     {
-    type: "",
-    jobType: "",
     toolConfigId: "",
+    jobType: "SFDC_CONVERT_METADATA",
     autoScaleEnable: false,
     toolName: "",
     jobName: "",
     agentLabels: "",
     toolJobId: "",
     projectId: "",
-    buildType: "ant",
     gitToolId: "",
     gitUrl: "",
     sshUrl: "",
@@ -133,7 +145,9 @@ const sfdcGitTaskConfigurationMetadata = {
     sfdcToolId: "",
     sfdcToolName: "",
     accountUsername: "",
+    conversionType: "",
+    destinationBranch: ""
     }
 };
 
-export default sfdcGitTaskConfigurationMetadata;
+export default sfdcGitBranchTaskConfigurationMetadata;
