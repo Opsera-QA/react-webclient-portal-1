@@ -7,7 +7,7 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import ExportDetailedToolReportDataModal from "components/common/modal/export_data/ExportDetailedToolReportDataModal";
 
-function ExportTagReportButton({isLoading, toolData, className}) {
+function ExportDetailedToolReportButton({isLoading, toolData, className}) {
   const [showExportModal, setShowExportModal] = useState(false);
 
   const closeModal = () => {
@@ -52,10 +52,10 @@ function ExportTagReportButton({isLoading, toolData, className}) {
   );
 }
 
-ExportTagReportButton.propTypes = {
+ExportDetailedToolReportButton.propTypes = {
   toolData: PropTypes.array,
   isLoading: PropTypes.bool,
   className: PropTypes.string
 };
 
-export default ExportTagReportButton;
+export default ExportDetailedToolReportButton;
