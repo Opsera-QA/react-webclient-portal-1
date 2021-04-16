@@ -98,8 +98,9 @@ function PipelineFilterSelectInput({ pipelineFilter, opseraPipelineSelectChange,
 
   return (
     <>
-      <Col>
-        <DropdownList
+    <Col className="custom-select-input my-2">
+      <label><span>Pipeline</span></label>
+      <DropdownList
           data={pipelineFilters}
           busy={isLoading}
           disabled={Object.keys(pipelineFilters).length === 0}
@@ -111,7 +112,8 @@ function PipelineFilterSelectInput({ pipelineFilter, opseraPipelineSelectChange,
           onChange={opseraPipelineSelectChange}
         />
       </Col>
-      <Col>
+      <Col className="custom-select-input my-2">
+      <label><span>Step</span></label>
         <DropdownList
           data={pipelineFilter.steps}
           busy={Object.keys(pipelineFilters).length === 0}
