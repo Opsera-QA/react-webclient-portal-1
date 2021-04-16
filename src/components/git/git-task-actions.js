@@ -86,4 +86,9 @@ gitTasksActions.getAllGitTasksActivityLogs = async ( gitTasksActivityFilterDto, 
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
+gitTasksActions.processSyncRequest = async (postBody, getAccessToken) => {
+  const apiUrl = `/tools/git/processSyncRequest`;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
 export default gitTasksActions;
