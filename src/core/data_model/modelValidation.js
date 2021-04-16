@@ -39,7 +39,7 @@ export const fieldValidation = (value, data, field) => {
   }
 
   if (field.isRequired === true) {
-    if (!requiredValidator(value))
+    if (!requiredValidator(value) && value !== 0)
     {
       errorMessages.push(field.label + " is required.");
     }
