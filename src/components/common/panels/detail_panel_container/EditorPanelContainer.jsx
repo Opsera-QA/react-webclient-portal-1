@@ -59,7 +59,7 @@ EditorPanelContainer.propTypes = {
   lenient: PropTypes.bool,
   disable: PropTypes.bool,
   addAnotherOption: PropTypes.bool,
-  extraButtons: PropTypes.any,
+  extraButtons: PropTypes.any
 };
 
 EditorPanelContainer.defaultProps = {

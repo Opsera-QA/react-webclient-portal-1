@@ -44,11 +44,22 @@ function LogSearch({tools, sideBySide}) {
   const [submittedSearchTerm, setSubmittedSearchTerm] = useState(null);
   const [logTabData, setLogTabData] = useState([]);
   const [currentLogTab, setCurrentLogTab] = useState(0);
-  const [jenkinsProjectDto, setJenkinsProjectDto] = useState(new Model({ ...projectTagsMetadata.newObjectFields }, projectTagsMetadata, true));
-  // const [jenkinsJobs, setJenkinsJobs] = useState([]);
   const [exportData, setExportData] = useState("");
   const [exportDisabled, setExportDisabled] = useState(true);
-  
+  const [jenkinsProjectDto, setJenkinsProjectDto] = useState(new Model({
+    type: "project",
+    tool_identifier: "jenkins",
+    tool_id: "",
+    key: "",
+    value: [],
+    owner : "",
+    account : {},
+    tool_prop: "",
+    createdAt: "",
+    active : true
+  }, projectTagsMetadata, true));
+  // const [jenkinsJobs, setJenkinsJobs] = useState([]);
+
   const [date, setDate] = useState([
     {
       startDate: new Date(),
@@ -86,8 +97,7 @@ function LogSearch({tools, sideBySide}) {
     }
 
     await getSearchResults(startDate, endDate, newTab);
-    await getAllResultsForExport(startDate, endDate, setIsLoading, getAccessToken(), searchTerm, jenkinsProjectDto, filterType, getFormattedCustomFilters(), currentPage, setExportData, setExportDisabled);
-  };
+    await getAllResultsForExport(startDate, endDate, setIsLoading, getAccessToken(), searchTerm, jenkinsProjectDto, filterType, getFormattedCustomFilters(), currentPage, setExportData, setExportDisabled);  };
 
   const cancelSearchClicked = () => {
     setDate([
@@ -150,7 +160,6 @@ function LogSearch({tools, sideBySide}) {
   // Executed every time page number or page size changes
   useEffect(() => {
     jenkinsProjectDto.setData("tool_identifier", "jenkins");
-    console.log(jenkinsProjectDto);
     if (searchTerm) {
       getSearchResults();
     }
@@ -205,7 +214,6 @@ function LogSearch({tools, sideBySide}) {
     if (filterType === "blueprint") {
       route = "/analytics/blueprint";
     }
-
     const urlParams = {
       toolId: jenkinsProjectDto?.getData("tool_id"),
       jobName: jenkinsProjectDto?.getData("key"),
@@ -391,6 +399,7 @@ function LogSearch({tools, sideBySide}) {
           <PipelineFilterSelectInput opseraPipelineSelectChange={opseraPipelineSelectChange} pipelineFilter={pipelineFilter} setStepFilter={setStepFilter} stepFilter={stepFilter} />
       );
     }
+
     if (filterType === "blueprint") {
       return (
         <>
@@ -433,7 +442,7 @@ function LogSearch({tools, sideBySide}) {
     return (
       <Row className={"mx-0 py-2"}>
         <Col className="custom-select-input my-2">
-          <label><span>Search Index</span><span className="danger-red">*</span></label>
+          <label><span>Search Index</span><span className="danger-red">*</span></label>          
           <DropdownList
             data={Array.isArray(tools) ? tools : []}
             defaultValue={Array.isArray(tools) ? tools[0] : []}
@@ -475,8 +484,7 @@ function LogSearch({tools, sideBySide}) {
             <FontAwesomeIcon icon={faCalendar} className="mr-1 d-none d-lg-inline" fixedWidth />
             {(calendar && sDate) || eDate ? sDate + " - " + eDate : "Date Range"}
           </Button>
-          <Button variant="primary" className="ml-1" onClick={() => {searchLogs();}} disabled={filterType === "blueprint" && (!jenkinsProjectDto?.getData("tool_id") || !jenkinsProjectDto?.getData("key")) || !searchTerm}>
-            Search
+          <Button variant="primary" className="ml-1" onClick={() => {searchLogs();}} disabled={filterType === "blueprint" && (!jenkinsProjectDto?.getData("tool_id") || !jenkinsProjectDto?.getData("key")) || !searchTerm}>            Search
           </Button>
           {getNewTabButton()}
           <Button variant="outline-secondary" className="ml-1" type="button" onClick={cancelSearchClicked}>

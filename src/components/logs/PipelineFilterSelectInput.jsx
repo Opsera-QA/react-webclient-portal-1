@@ -98,9 +98,9 @@ function PipelineFilterSelectInput({ pipelineFilter, opseraPipelineSelectChange,
 
   return (
     <>
-      <Col className="custom-select-input my-2">
+    <Col className="custom-select-input my-2">
       <label><span>Pipeline</span></label>
-        <DropdownList
+      <DropdownList
           data={pipelineFilters}
           busy={isLoading}
           disabled={Object.keys(pipelineFilters).length === 0}
