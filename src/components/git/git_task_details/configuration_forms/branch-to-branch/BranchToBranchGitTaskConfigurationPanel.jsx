@@ -63,7 +63,7 @@ function BranchToBranchGitTaskConfigurationPanel({ gitTasksDataDto, gitTasksConf
         {gitTasksConfigurationData.getData("gitToolId") && <BooleanToggleInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"autoApprove"} />}
       </Col>
       <Col lg={12}>
-        {gitTasksConfigurationData.getData("autoApprove") && <BranchToBranchGitReviewerInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />}
+        {gitTasksConfigurationData.getData("gitToolId") && gitTasksConfigurationData.getData("autoApprove") && <BranchToBranchGitReviewerInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />}
       </Col>
     </Row>
   );

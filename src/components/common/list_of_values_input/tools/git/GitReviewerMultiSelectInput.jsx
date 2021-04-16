@@ -31,12 +31,14 @@ function GitReviewerMultiSelectInput({gitToolId, visible, fieldName, dataObject,
 
   const getReviewers = async () => {
     const response = await toolsActions.getRoleLimitedToolById(gitToolId, getAccessToken);
-    setReviewers(response.data.data[0].accounts);    
+    if(response.data.data[0].accounts){
+      setReviewers(response.data.data[0].accounts);
+    }    
   };
 
   const getNoReviewersMessage = () => {
-    if (!isLoading && (reviewers == null || reviewers.length === 0) && gitToolId !== "") {
-        return ("No Reviewers Found for this GIT Account");
+    if (!isLoading && (!reviewers || reviewers == null || reviewers.length === 0) && gitToolId !== "") {
+        return ("No Reviewers found for the details provided");
     }
   };
 
