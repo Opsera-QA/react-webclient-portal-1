@@ -19,7 +19,8 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
       toastContext.showOverlayPanel(<SFDCViewOverlay gitTasksData={gitTasksData}/>);
       // return;
     }    
-    if (gitTasksData.getData("type") === "sync-branch-structure") {  
+    // if (gitTasksData.getData("type") === "sync-branch-structure") {  
+    else {
       // pipeline action call to trigger branch conversion
       try{
         setIsLoading(true);
