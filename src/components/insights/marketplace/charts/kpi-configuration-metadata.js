@@ -186,4 +186,72 @@ export const kpiSonarProjectKeyFilterMetadata = {
   }
 };
 
+export const kpiDomainFilterMetadata = {
+  type: "Domain Filter",
+  fields: [
+    {
+      label: "Type",
+      id: "type"
+    },
+    {
+      label: "Domain",
+      id: "value"
+    }
+  ],
+  newObjectFields: {
+    value: []
+  }
+};
+
+export const kpiApplicationFilterMetadata = {
+  type: "Application Filter",
+  fields: [
+    {
+      label: "Type",
+      id: "type"
+    },
+    {
+      label: "Application",
+      id: "value"
+    }
+  ],
+  newObjectFields: {
+    value: []
+  }
+};
+
+export const kpiSprintFilterMetadata = {
+  type: "Sprint Filter",
+  fields: [
+    {
+      label: "Type",
+      id: "type"
+    },
+    {
+      label: "Sprint",
+      id: "value"
+    }
+  ],
+  newObjectFields: {
+    value: []
+  }
+};
+
+export const kpiReleaseFilterMetadata = {
+  type: "Release Filter",
+  fields: [
+    {
+      label: "Type",
+      id: "type"
+    },
+    {
+      label: "Release",
+      id: "value"
+    }
+  ],
+  newObjectFields: {
+    value: []
+  }
+};
+
 export default kpiConfigurationMetadata;

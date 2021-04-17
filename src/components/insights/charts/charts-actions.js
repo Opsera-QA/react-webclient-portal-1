@@ -8,7 +8,11 @@ import {
   getJiraIssueTypeFromKpiConfiguration,
   getJiraIssueStartStatusFromKpiConfiguration,
   getJiraIssueDoneStatusFromKpiConfiguration,
-  getSonarProjectKeyFromKpiConfiguration
+  getSonarProjectKeyFromKpiConfiguration,
+  getDomainFromKpiConfiguration,
+  getApplicationFromKpiConfiguration,
+  getSprintFromKpiConfiguration,
+  getReleaseFromKpiConfiguration
 } from "components/insights/charts/charts-helpers";
 
 const chartsActions = {};
@@ -73,6 +77,10 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, canc
   const jiraIssueStartStatus= getJiraIssueStartStatusFromKpiConfiguration(kpiConfiguration);
   const jiraIssueDoneStatus= getJiraIssueDoneStatusFromKpiConfiguration(kpiConfiguration);
   const sonarProjectKey = getSonarProjectKeyFromKpiConfiguration(kpiConfiguration);
+  const domain = getDomainFromKpiConfiguration(kpiConfiguration);
+  const application = getApplicationFromKpiConfiguration(kpiConfiguration);
+  const sprint = getSprintFromKpiConfiguration(kpiConfiguration);
+  const release = getReleaseFromKpiConfiguration(kpiConfiguration);
 
   const postBody = {
     request: request,
@@ -86,6 +94,10 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, canc
     jiraIssueStartStatus: jiraIssueStartStatus,
     jiraIssueDoneStatus: jiraIssueDoneStatus,
     sonarProjectKey: sonarProjectKey,
+    domain: domain,
+    application: application,
+    release: release,
+    sprint: sprint,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
     projectTags: projectTags,

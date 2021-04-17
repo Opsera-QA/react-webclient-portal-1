@@ -78,6 +78,38 @@ export function getSonarProjectKeyFromKpiConfiguration(kpiConfiguration) {
   return null;
 }
 
+export function getDomainFromKpiConfiguration(kpiConfiguration) {
+  if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "domain")]?.value && 
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "domain")]?.value.length > 0) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "domain")].value;
+  }
+  return null;
+}
+
+export function getApplicationFromKpiConfiguration(kpiConfiguration) {
+  if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "application")]?.value && 
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "application")]?.value.length > 0) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "application")].value;
+  }
+  return null;
+}
+
+export function getReleaseFromKpiConfiguration(kpiConfiguration) {
+  if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "release")]?.value && 
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "release")]?.value.length > 0) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "release")].value;
+  }
+  return null;
+}
+
+export function getSprintFromKpiConfiguration(kpiConfiguration) {
+  if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sprint")]?.value && 
+      kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sprint")]?.value.length > 0) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sprint")].value;
+  }
+  return null;
+}
+
 export function getChartIconFromKpiConfiguration(kpiConfiguration) {
   return faChartBar;
 }

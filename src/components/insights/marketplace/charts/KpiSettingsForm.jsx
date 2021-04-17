@@ -12,7 +12,11 @@ import {
   kpiJiraIssueTypeFilterMetadata,
   kpiJiraIssueStartStatusFilterMetadata,
   kpiJiraIssueDoneStatusFilterMetadata,
-  kpiSonarProjectKeyFilterMetadata
+  kpiSonarProjectKeyFilterMetadata,
+  kpiDomainFilterMetadata,
+  kpiApplicationFilterMetadata,
+  kpiSprintFilterMetadata,
+  kpiReleaseFilterMetadata
 } from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import Model from "core/data_model/model";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
@@ -22,6 +26,7 @@ import dashboardsActions from "components/insights/dashboards/dashboards-actions
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import TagManager from "components/common/inputs/tags/TagManager";
 import JenkinsResultFilterInput from "components/common/list_of_values_input/insights/charts/jenkins/JenkinsResultFilterInput";
+import ManualKpiMultiSelectInputBase from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
 
 function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart, setKpis }) {
@@ -53,6 +58,18 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
   );
   const [kpiSonarProjectKeyFilter, setKpiSonarProjectKeyFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "sonar-project-key", kpiSonarProjectKeyFilterMetadata)
+  );
+  const [kpiDomainFilter, setKpiDomainFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "domain", kpiDomainFilterMetadata)
+  );
+  const [kpiApplicationFilter, setKpiApplicationFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "application", kpiApplicationFilterMetadata)
+  );
+  const [kpiReleaseFilter, setKpiReleaseFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "release", kpiReleaseFilterMetadata)
+  );
+  const [kpiSprintFilter, setKpiSprintFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "sprint", kpiSprintFilterMetadata)
   );
 
   const tagFilterEnabled = [
@@ -233,6 +250,50 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
             />
           </div>
         );
+      case "domain":
+        return (
+          <div>
+            <ManualKpiMultiSelectInputBase
+              type={"domain"}
+              fieldName={"value"}
+              setDataObject={setKpiDomainFilter}
+              dataObject={kpiDomainFilter}
+            />
+          </div>
+        );
+      case "application":
+        return (
+          <div>
+            <ManualKpiMultiSelectInputBase
+              type={"application"}
+              fieldName={"value"}
+              setDataObject={setKpiApplicationFilter}
+              dataObject={kpiApplicationFilter}
+            />
+          </div>
+        );
+      case "release":
+        return (
+          <div>
+            <ManualKpiMultiSelectInputBase
+              type={"release"}
+              fieldName={"value"}
+              setDataObject={setKpiReleaseFilter}
+              dataObject={kpiReleaseFilter}
+            />
+          </div>
+        );
+      case "sprint":
+        return (
+          <div>
+            <ManualKpiMultiSelectInputBase
+              type={"sprint"}
+              fieldName={"value"}
+              setDataObject={setKpiSprintFilter}
+              dataObject={kpiSprintFilter}
+            />
+          </div>
+        );
     }
   };
 
@@ -310,6 +371,42 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sonar-project-key")
       ].value = kpiSonarProjectKeyFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "domain")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "domain")
+      ].value = kpiDomainFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "application")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "application")
+      ].value = kpiApplicationFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sprint")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sprint")
+      ].value = kpiSprintFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "release")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "release")
+      ].value = kpiReleaseFilter.getData("value");
     }
     setKpiSettings({ ...newKpiSettings });
     dashboardData.getData("configuration")[index] = kpiSettings.data;
