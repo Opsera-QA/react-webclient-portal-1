@@ -21,7 +21,12 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
       return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Chart</span>);
     }
     else if (error) {
-      return (<span><FontAwesomeIcon icon={faExclamationCircle} spin fixedWidth className="mr-1"/>Error Loading Chart!</span>);
+      return (
+        <div className="d-flex justify-content-between">
+          <span><FontAwesomeIcon icon={faExclamationCircle} spin fixedWidth className="mr-1"/>Error Loading Chart!</span>
+          <div><ToggleSettingsIcon activeTab={view} setActiveTab={setView}/></div>
+          </div>
+);
     }
     else {
       return (
@@ -35,12 +40,6 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
 
   // TODO: Make ErrorChartContainer
   const getChartBody = () => {
-    if (error) {
-      return (
-        <span>There was an error loading this chart: {error.message}. Please check logs for more details.</span>
-      );
-    }
-
     if (view === "settings") {
       return(
         <KpiSettingsForm
@@ -52,6 +51,12 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
           setKpis={setKpis}
           setView={setView}
         />
+      );
+    }
+
+    if (error) {
+      return (
+        <span>There was an error loading this chart: {error.message}. Please check logs for more details.</span>
       );
     }
 
