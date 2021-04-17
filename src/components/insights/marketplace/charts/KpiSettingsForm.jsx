@@ -241,12 +241,12 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "date")]) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "date")
-        ].value = kpiDateFilter.getData("value");
+      ].value = kpiDateFilter.getData("value");
     }
     if (newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "tags")]) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "tags")
-        ].value = kpiTagsFilter.getData("value");
+      ].value = kpiTagsFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
@@ -255,12 +255,12 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-result")
-        ].value = kpiJenkinsResultFilter.getData("value");
+      ].value = kpiJenkinsResultFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-job-url")
-        ]
+      ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-job-url")
@@ -269,47 +269,47 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-build-number")
-        ]
+      ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-build-number")
-        ].value = kpiJenkinsBuildNumberFilter.getData("value");
+      ].value = kpiJenkinsBuildNumberFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-type")
-        ]
+      ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-type")
-        ].value = kpiJiraIssueTypeFilter.getData("value");
+      ].value = kpiJiraIssueTypeFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-start-status")
-        ]
+      ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-start-status")
-        ].value = kpiJiraIssueStartStatusFilter.getData("value");
+      ].value = kpiJiraIssueStartStatusFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-done-status")
-        ]
+      ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-done-status")
-        ].value = kpiJiraIssueDoneStatusFilter.getData("value");
+      ].value = kpiJiraIssueDoneStatusFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sonar-project-key")
-        ]
+      ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sonar-project-key")
-        ].value = kpiSonarProjectKeyFilter.getData("value");
+      ].value = kpiSonarProjectKeyFilter.getData("value");
     }
     setKpiSettings({ ...newKpiSettings });
     dashboardData.getData("configuration")[index] = kpiSettings.data;
