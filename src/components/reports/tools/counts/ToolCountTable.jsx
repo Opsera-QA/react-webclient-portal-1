@@ -4,7 +4,8 @@ import CustomTable from "components/common/table/CustomTable";
 import toolCountsMetadata from "components/reports/tools/counts/tool-counts-metadata";
 import {getTableTextColumn} from "components/common/table/table-column-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faSitemap, faTally} from "@fortawesome/pro-light-svg-icons";
+import {faTally} from "@fortawesome/pro-light-svg-icons";
+import ExportToolCountButton from 'components/common/buttons/export/reports/ExportToolCountButton';
 
 function ToolCountTable({ data, isLoading, loadData }) {
   let fields = toolCountsMetadata.fields;
@@ -34,15 +35,15 @@ function ToolCountTable({ data, isLoading, loadData }) {
   };
 
   return (
-    <div className="px-2 pb-2">
-      <FilterContainer
-        loadData={loadData}
-        isLoading={isLoading}
-        body={getToolCountsTable()}
-        titleIcon={faTally}
-        title={"Tool Counts"}
-      />
-    </div>
+    <FilterContainer
+      loadData={loadData}
+      isLoading={isLoading}
+      body={getToolCountsTable()}
+      titleIcon={faTally}
+      title={"Tool Counts"}
+      className={"px-2 pb-2"}
+      exportButton={<ExportToolCountButton className={"ml-2"} isLoading={isLoading} toolData={data} />}
+    />
   );
 }
 

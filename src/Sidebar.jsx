@@ -474,9 +474,9 @@ function DefaultUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHide
             <FontAwesomeIcon size="lg" icon={faLayerGroup} fixedWidth/> <span
             className="menu-text">Blueprints</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/reports">
-            <FontAwesomeIcon size="lg" icon={faAnalytics} fixedWidth/> <span
-            className="menu-text">Reports</span></NavLink>
+          {/*<NavLink className="nav-link" activeClassName="chosen" to="/reports">*/}
+          {/*  <FontAwesomeIcon size="lg" icon={faAnalytics} fixedWidth/> <span*/}
+          {/*  className="menu-text">Reports</span></NavLink>*/}
 
           <NavLink className="nav-link" activeClassName="chosen" to="/notifications">
             <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span

@@ -127,7 +127,7 @@ function Reports() {
       breadcrumbDestination={getBreadcrumbDestination()}
       pageDescription={"View reports from this dashboard."}
       accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.POWER_USERS}
+      roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       isLoading={isLoading}
     >
       {getCurrentView()}
