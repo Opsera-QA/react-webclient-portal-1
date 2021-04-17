@@ -131,7 +131,9 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "opsera-nexus-pipeline-step-info",
     "qa-manual-test",
     "selenium-test-results",
-    "sonar-reliability-remediation-effort-by-project"
+    "sonar-reliability-remediation-effort-by-project",
+    "first-pass-yield",
+    "cumulative-open-defects"
   ];
 
   const getKpiFilters = (filter) => {
@@ -249,7 +251,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-result")
-      ]
+        ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-result")
@@ -262,7 +264,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-job-url")
-      ].value = kpiJenkinsJobUrlFilter.getData("value");
+        ].value = kpiJenkinsJobUrlFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[

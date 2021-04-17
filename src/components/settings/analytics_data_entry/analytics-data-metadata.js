@@ -1,6 +1,6 @@
 export const analyticsDataMetadata = {
   idProperty: "name",
-  type: "Analytics Data Entry",
+  type: "Entry",
   detailView: function (record) {
     return `/settings/analytics-data-entries/details/${record.getData("_id")}`;
   },
