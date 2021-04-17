@@ -23,6 +23,10 @@ kpiLovHelpers.filters = [
   {id: {"type": "jira-issue-start-status", "value": []}, label: "Jira Issue Start Status"},
   {id: {"type": "jira-issue-done-status", "value": []}, label: "Jira Issue Done Status"},
   {id: {"type": "sonar-project-key", "value": []}, label: "Sonar Project Keys"},
+  {id: {"type": "domain", "value": []}, label: "Domain"},
+  {id: {"type": "application", "value": []}, label: "Application"},
+  {id: {"type": "release", "value": []}, label: "Release"},
+  {id: {"type": "sprint", "value": []}, label: "Sprint"}
 ];
 
 kpiLovHelpers.getFilterById = (id) => {

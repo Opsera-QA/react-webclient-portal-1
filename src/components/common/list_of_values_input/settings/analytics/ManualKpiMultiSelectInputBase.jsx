@@ -63,8 +63,6 @@ function ManualKpiMultiSelectInputBase({ fieldName, dataObject, type, setDataObj
     const response = await analyticsActions.getDropdownFilterOptions(getAccessToken, cancelSource, type);
     const options = response?.data;
 
-    console.log("options: " + JSON.stringify(options));
-
     if (isMounted?.current === true && Array.isArray(options) && options.length > 0)
     {
       setSelectOptions(options);
