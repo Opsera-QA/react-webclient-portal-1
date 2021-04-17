@@ -11,6 +11,8 @@ function RollbackToggleInput({dataObject, setDataObject, fieldName, disabled}) {
     let sourceScriptFlag = !dataObject.getData("specifyDepVariables");
     newDataObject.setData("specifyDepVariables", sourceScriptFlag);
     newDataObject.setData("deploymentVariables", []);
+    newDataObject.setData("structuredConfigVariablesPath", "");
+    newDataObject.setData("xmlConfigTransformVariableValue", "");
     setDataObject({...newDataObject});
   };
 
