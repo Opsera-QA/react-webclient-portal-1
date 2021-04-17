@@ -34,7 +34,6 @@ function SFDCViewOverlay({ gitTasksData, refreshData }) {
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
-    // refreshData(); // undefined issue here
     history.push(`/git`);
   };
 
