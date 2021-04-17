@@ -189,50 +189,6 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
             />
           </div>
         );
-      case "jira-issue-type":
-        return (
-          <div>
-            <MultiTextInputBase
-              type={"kpi_filter"}
-              fieldName={"value"}
-              setDataObject={setKpiJiraIssueTypeFilter}
-              dataObject={kpiJiraIssueTypeFilter}
-            />
-          </div>
-        );
-      case "jira-issue-start-status":
-        return (
-          <div>
-            <MultiTextInputBase
-              type={"kpi_filter"}
-              fieldName={"value"}
-              setDataObject={setKpiJiraIssueStartStatusFilter}
-              dataObject={kpiJiraIssueStartStatusFilter}
-            />
-          </div>
-        );
-      case "jira-issue-done-status":
-        return (
-          <div>
-            <MultiTextInputBase
-              type={"kpi_filter"}
-              fieldName={"value"}
-              setDataObject={setKpiJiraIssueDoneStatusFilter}
-              dataObject={kpiJiraIssueDoneStatusFilter}
-            />
-          </div>
-        );
-      case "sonar-project-key":
-        return (
-          <div>
-            <MultiTextInputBase
-              type={"kpi_filter"}
-              fieldName={"value"}
-              setDataObject={setKpiSonarProjectKeyFilter}
-              dataObject={kpiSonarProjectKeyFilter}
-            />
-          </div>
-        );
     }
   };
 
