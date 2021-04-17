@@ -114,7 +114,7 @@ const branchToBranchGitTaskConfigurationMetadata = {
   newObjectFields:
     {
     type: "",
-    jobType: "",
+    jobType: "GIT_GIT_SYNC",
     toolConfigId: "",
     autoScaleEnable: false,
     toolName: "",
