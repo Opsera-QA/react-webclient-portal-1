@@ -1,8 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { Col, OverlayTrigger, Row } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import OctopusStepFormMetadata from "./octopus-stepForm-metadata";
 import Model from "core/data_model/model";
@@ -10,17 +8,10 @@ import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import OctopusStepActions from "./octopus-step-actions";
 import CloseButton from "../../../../../../../common/buttons/CloseButton";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import octopusActions from "../../../../../../../inventory/tools/tool_details/tool_jobs/octopus/octopus-actions";
 import OctopusToolSelectInput from "./input/OctopusToolSelectInput";
-import ProjectMappingToolSelectInput
-  from "../../../../../../../common/list_of_values_input/settings/data_tagging/projects/ProjectMappingToolSelectInput";
-import AzureToolSelectInput
-  from "../../../../../../../inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/AzureToolSelectInput";
-import SpaceNameSelectInput
-  from "../../../../../../../inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/SpaceNameSelectInput";
 import OctopusSpaceNameSelectInput from "./input/OctopusSpaceNameSelectInput";
 import OctopusEnvironmentNameSelectInput from "./input/OctopusEnvironmentSelectInput";
 import OctopusTargetRolesSelectInput from "./input/OctopusTargetRolesSelect";
@@ -31,7 +22,6 @@ import OctopusVersionSelectInput from "./input/OctopusVersionSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ValidateProjectButton from "./input/ValidateProjectButton";
 import RollbackToggleInput from "./input/RollbackToggleInput";
-import WorkspaceDeleteToggleInput from "../dotnet/inputs/WorkspaceDeleteToggleInput";
 import OctopusDeploymentVariables from "./input/OctopusDeploymentVariables";
 import OctopusSpecifyDepVarsToggle from "./input/OctopusSpecifyDepVarsToggle";
 
@@ -61,7 +51,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
       }
     } else {
       setOctopusStepConfigurationDataDto(
-        new Model({ ...OctopusStepFormMetadata.newModelBase }, OctopusStepFormMetadata, false)
+        new Model({ ...OctopusStepFormMetadata.newObjectFields }, OctopusStepFormMetadata, false)
       );
     }
 
@@ -301,10 +291,17 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                       : ""
                   }
                 />
-                <RollbackToggleInput dataObject={octopusStepConfigurationDto} setDataObject={setOctopusStepConfigurationDataDto} fieldName={"isRollback"} />
-                {
-                  octopusStepConfigurationDto &&
-                  octopusStepConfigurationDto.getData("isRollback") &&
+                <TextInputBase
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  fieldName={"octopusPhysicalPath"}
+                />
+                <RollbackToggleInput
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  fieldName={"isRollback"}
+                />
+                {octopusStepConfigurationDto && octopusStepConfigurationDto.getData("isRollback") && (
                   <OctopusVersionSelectInput
                     fieldName={"octopusVersion"}
                     dataObject={octopusStepConfigurationDto}
@@ -321,42 +318,39 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                         : ""
                     }
                   />
-                }
-                <TextInputBase
-                  setDataObject={setOctopusStepConfigurationDataDto}
-                  dataObject={octopusStepConfigurationDto}
-                  fieldName={"structuredConfigVariablesPath"}
-                  disabled={
-                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0
-                  }
-                />
-                <TextInputBase
-                  setDataObject={setOctopusStepConfigurationDataDto}
-                  dataObject={octopusStepConfigurationDto}
-                  fieldName={"xmlConfigTransformVariableValue"}
-                  disabled={
-                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0
-                  }
-                />
+                )}
                 <OctopusSpecifyDepVarsToggle
                   dataObject={octopusStepConfigurationDto}
                   setDataObject={setOctopusStepConfigurationDataDto}
                   fieldName={"specifyDepVariables"}
                 />
                 {octopusStepConfigurationDto && octopusStepConfigurationDto.getData("specifyDepVariables") && (
-                  <OctopusDeploymentVariables
-                    fieldName={"deploymentVariables"}
-                    dataObject={octopusStepConfigurationDto}
-                    setDataObject={setOctopusStepConfigurationDataDto}
-                  />
+                  <>
+                    <OctopusDeploymentVariables
+                      fieldName={"deploymentVariables"}
+                      dataObject={octopusStepConfigurationDto}
+                      setDataObject={setOctopusStepConfigurationDataDto}
+                    />
+                    <TextInputBase
+                      setDataObject={setOctopusStepConfigurationDataDto}
+                      dataObject={octopusStepConfigurationDto}
+                      fieldName={"structuredConfigVariablesPath"}
+                      disabled={
+                        octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0
+                      }
+                    />
+                    <TextInputBase
+                      setDataObject={setOctopusStepConfigurationDataDto}
+                      dataObject={octopusStepConfigurationDto}
+                      fieldName={"xmlConfigTransformVariableValue"}
+                      disabled={
+                        octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0
+                      }
+                    />
+                  </>
                 )}
               </>
             )}
-          <TextInputBase
-            dataObject={octopusStepConfigurationDto}
-            setDataObject={setOctopusStepConfigurationDataDto}
-            fieldName={"octopusPhysicalPath"}
-          />
           <Row className="mx-1 py-2">
             <SaveButtonBase
               recordDto={octopusStepConfigurationDto}
