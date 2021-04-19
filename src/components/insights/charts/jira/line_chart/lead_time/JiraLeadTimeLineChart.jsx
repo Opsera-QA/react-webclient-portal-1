@@ -15,6 +15,8 @@ import DataBlock from "components/common/data_boxes/DataBlock";
 import {Col, Row, Container} from "react-bootstrap";
 import {OverlayTrigger, Popover} from "react-bootstrap";
 import InputPopover from "components/common/inputs/info_text/InputPopover";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinus } from "@fortawesome/pro-solid-svg-icons";
 function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -123,7 +125,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
         <ResponsiveScatterPlot
           data={metrics}
           {...defaultConfig("Elapsed Time (Days)", "Completion Date", 
-                      false, true, "wholeNumbers", "monthDate")}
+                      false, true, "wholeNumbers", "monthDate", false, "circle")}
           {...config(getColor, MeanLineLayer, RollingMeanLineLayer)}
           onClick={(node) => onNodeSelect(node)}
           tooltip={({node, color}) => <ChartTooltip 
@@ -153,6 +155,10 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
         toolTipText="Total number of bugs completed in this time period"
       />
       </DataBlockWrapper>
+      <div className="p-3">
+      <FontAwesomeIcon icon={faMinus} color={mainPurple} size="lg"/> Mean Lead Time<br></br>
+      <FontAwesomeIcon icon={faMinus} color={accentColor} size="lg"/> Rolling Mean Lead Time
+      </div>
       </Row>
       </Container>
       </div>

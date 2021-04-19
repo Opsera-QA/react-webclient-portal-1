@@ -217,7 +217,7 @@ const formats = {
 // For properties such as xScale, yScale, colors, colorBy, indexBy, set them individually on charts
 export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
                               largeLeftSpaceRequired=false, largeBottomSpaceRequired=false,
-                              leftLabelFormat="", bottomLabelFormat="", isLegendHidden=false) => ({
+                              leftLabelFormat="", bottomLabelFormat="", isLegendHidden=false, symbol="square") => ({
   margin: { top: 40, right: 20, bottom: largeBottomSpaceRequired ? 80 : 60, 
             left: largeLeftSpaceRequired ? 100 : 60},
   lineWidth: 3.5,
@@ -265,7 +265,7 @@ export const defaultConfig = (leftAxisTitle="", bottomAxisTitle="",
       "itemHeight": 50,
       "itemOpacity": isLegendHidden ? 0 : 1,
       "symbolSize": 10,
-      "symbolShape": "square",
+      "symbolShape": symbol,
       "symbolBorderColor": "rgba(0, 0, 0, .5)"
     }
   ],
