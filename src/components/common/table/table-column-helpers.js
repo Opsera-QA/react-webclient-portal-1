@@ -8,7 +8,7 @@ import {
   faSpinner,
   faStop,
   faStopCircle,
-  faTimesCircle, faTrash, faPlay, faTag
+  faTimesCircle, faTrash, faPlay, faTag, faExclamationCircle
 } from "@fortawesome/pro-light-svg-icons";
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
 import WarningIcon from "../../common/icons/table/WarningIcon";
@@ -27,8 +27,6 @@ import {capitalizeFirstLetter, truncateString} from "components/common/helpers/s
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
-import FieldLabel from "components/common/fields/FieldLabel";
-import FieldContainer from "components/common/fields/FieldContainer";
 
 const getTableHeader = (field) => {
   return field ? field.label : "";
@@ -379,6 +377,8 @@ export const getPipelineStatusIcon = (row) => {
     case "failure":
     case "failed":
       return (<FontAwesomeIcon icon={faTimesCircle} className="cell-icon red vertical-align-item" fixedWidth />);
+    case "error":
+      return (<FontAwesomeIcon icon={faExclamationCircle} className="cell-icon red vertical-align-item" fixedWidth />);
     case "unknown":
       return (<FontAwesomeIcon icon={faCircle} className="cell-icon yellow vertical-align-item" fixedWidth/>);
     case "rejected":
@@ -401,6 +401,8 @@ export const getAssociatedPipelineStatusIcon = (pipelineStatus) => {
     case "failure":
     case "failed":
       return (<FontAwesomeIcon icon={faTimesCircle} className="red" fixedWidth />);
+    case "error":
+      return (<FontAwesomeIcon icon={faExclamationCircle} className="red" fixedWidth />);
     case "unknown":
       return (<FontAwesomeIcon icon={faCircle} className="yellow" fixedWidth/>);
     case "rejected":
@@ -446,6 +448,14 @@ export const getTablePipelineStatusColumn = (field, className) => {
                             icon={faTimesCircle} statusText={"Failed"} tableColumn={true}/>
           </div>
         );
+        case "error":
+          return (
+            <div className="red">
+              <PipelineStatus className="red"
+                              innerText={"An error has occurred in this pipeline.  See activity logs for details."}
+                              icon={faExclamationCircle} statusText={"Failed"} tableColumn={true}/>
+            </div>
+          );
       case "running":
         return (
           <div className="green">
