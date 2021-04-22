@@ -12,7 +12,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 
-function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setDataFunction, allowCreate, inline, allowedTypes, getDisabledTags, placeholder}) {
+function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setDataFunction, allowCreate, inline, allowedTypes, getDisabledTags, placeholderText}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -194,7 +194,7 @@ function TagManager({ fieldName, type, dataObject, setDataObject, disabled, setD
           busy={isLoading}
           onCreate={(value) => handleCreate(value)}
           value={[...dataObject?.getArrayData(fieldName)]}
-          placeholder={errorMessage? errorMessage : placeholder}
+          placeholder={errorMessage ? errorMessage : placeholderText}
           disabled={disabled || isLoading || (getDisabledTags && getDisabledTags(tagOptions))}
           onChange={(tag) => setDataFunction ? setDataFunction(field.id, tag) : validateAndSetData(field.id, tag)}
         />
@@ -215,14 +215,14 @@ TagManager.propTypes = {
   inline: PropTypes.bool,
   allowedTypes: PropTypes.array,
   getDisabledTags: PropTypes.func,
-  placeholder: PropTypes.string
+  placeholderText: PropTypes.string
 };
 
 TagManager.defaultProps = {
   allowCreate: "onFilter",
   fieldName: "tags",
   inline: false,
-  placeholder:""
+  placeholderText: "Select Tags"
 };
 
 export default TagManager;

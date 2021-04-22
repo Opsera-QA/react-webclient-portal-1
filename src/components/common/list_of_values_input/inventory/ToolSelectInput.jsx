@@ -99,7 +99,7 @@ function ToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textF
         valueField={valueField}
         textField={textField}
         className={className}
-        placeholderText={"Select a tool to get started."}
+        placeholderText={"Select a Tool to get started."}
         disabled={disabled || isLoading}
       />
       {getInfoText()}
