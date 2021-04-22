@@ -14,7 +14,7 @@ import OrganizationLeaderLdapUserSelectInput
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 
 function OrganizationEditorPanel({organizationData, handleClose }) {
-  const {getAccessToken} = useContext(AuthContext);
+  const {getAccessToken, isSassUser, getUserRecord} = useContext(AuthContext);
   const [organizationModel, setOrganizationModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
@@ -45,6 +45,16 @@ function OrganizationEditorPanel({organizationData, handleClose }) {
   const loadData = async () => {
     setIsLoading(true);
     setOrganizationModel(organizationData);
+
+    if (isSassUser()) {
+      const user = await getUserRecord();
+      let leader = {};
+      leader["name"] = user?.firstName + " " + user?.lastName;
+      leader["email"] = user?.email;
+      leader["_id"] = user?._id;
+      organizationData.setData("leader", leader);
+    }
+
     setIsLoading(false);
   };
 
@@ -54,6 +64,16 @@ function OrganizationEditorPanel({organizationData, handleClose }) {
 
   const updateOrganization = async () => {
     return await organizationActions.updateOrganizationV2(getAccessToken, cancelTokenSource, organizationModel);
+  };
+
+  const getDynamicField = () => {
+    if (!isSassUser()) {
+      return (
+        <Col lg={6}>
+          <OrganizationLeaderLdapUserSelectInput dataObject={organizationModel} setDataObject={setOrganizationModel} />
+        </Col>
+      );
+    }
   };
 
   if (isLoading || organizationModel == null) {
@@ -72,9 +92,7 @@ function OrganizationEditorPanel({organizationData, handleClose }) {
         <Col lg={6}>
           <TextInputBase fieldName={"name"} dataObject={organizationModel} setDataObject={setOrganizationModel}/>
         </Col>
-        <Col lg={6}>
-          <OrganizationLeaderLdapUserSelectInput dataObject={organizationModel} setDataObject={setOrganizationModel} />
-        </Col>
+        {getDynamicField()}
         <Col lg={6}>
           <TagMultiSelectInput dataObject={organizationModel} setDataObject={setOrganizationModel} />
         </Col>

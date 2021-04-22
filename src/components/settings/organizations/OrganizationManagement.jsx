@@ -78,7 +78,7 @@ function OrganizationManagement() {
     if (isMounted?.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      if (meetsRequirements(ROLE_LEVELS.POWER_USERS, userRoleAccess)) {
+      if (meetsRequirements(ROLE_LEVELS.POWER_USERS_AND_SASS, userRoleAccess)) {
         await getOrganizations(cancelSource);
       }
     }
@@ -89,7 +89,7 @@ function OrganizationManagement() {
       isLoading={!accessRoleData}
       breadcrumbDestination={"organizationManagement"}
       accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.POWER_USERS}
+      roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
     >
       <OrganizationsTable
         isLoading={isLoading}
