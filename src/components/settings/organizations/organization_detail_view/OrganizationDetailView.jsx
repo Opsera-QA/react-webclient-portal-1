@@ -72,7 +72,7 @@ function OrganizationDetailView() {
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
 
-      if (meetsRequirements(ROLE_LEVELS.POWER_USERS, userRoleAccess)) {
+      if (meetsRequirements(ROLE_LEVELS.POWER_USERS_AND_SASS, userRoleAccess)) {
         const response = await organizationActions.getOrganizationV2(getAccessToken, cancelSource, id);
         const organization = response?.data;
 
@@ -115,7 +115,7 @@ function OrganizationDetailView() {
       isLoading={isLoading}
       actionBar={getActionBar()}
       accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.POWER_USERS}
+      roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       detailPanel={<OrganizationDetailPanel organizationData={organizationData} />}
     />
   );
