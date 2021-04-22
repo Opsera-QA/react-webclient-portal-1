@@ -74,13 +74,13 @@ function TagsUsedInDashboardsReport() {
       breadcrumbDestination={"tagsUsedInDashboardsReport"}
       isLoading={isLoading}
       navigationTabContainer={getNavigationTabContainer()}
-      roleRequirement={ROLE_LEVELS.POWER_USERS}
+      roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       accessRoleData={accessRoleData}
+      pageDescription={"View which Dashboards are in use by a specific Tag combination"}
     >
-      <div className={"ml-3 mt-3 mb-2"}>View dashboards by tags</div>
       <Row className={"mb-3 mx-0"}>
         <Col className={"mx-0"}>
-          <TagManager placeholder={"select a tag to view tagged dashboards"} type={"tags"} allowCreate={false} fieldName={"tags"} dataObject={tagsUsedInDashboardDto} setDataObject={setTagsUsedInDashboardDto}/>
+          <TagManager type={"tags"} allowCreate={false} fieldName={"tags"} dataObject={tagsUsedInDashboardDto} setDataObject={setTagsUsedInDashboardDto}/>
         </Col>
       </Row>
       <Row className={"px-2 mx-0"}>

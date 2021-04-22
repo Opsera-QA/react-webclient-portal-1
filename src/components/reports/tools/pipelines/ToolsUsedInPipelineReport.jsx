@@ -74,10 +74,10 @@ function ToolsUsedInPipelineReport() {
       breadcrumbDestination={"toolsUsedInPipelineReport"}
       isLoading={isLoading}
       accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.POWER_USERS}
+      roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       navigationTabContainer={getNavigationTabContainer()}
+      pageDescription={"View which Pipelines use a specific Tool"}
     >
-      <div className={"ml-3 mt-3 mb-2"}> View pipelines by tool</div>
       <Row className={"mb-3 mx-0"}>
         <Col className={"mx-0"}>
           <ToolSelectInput fieldName={"_id"} dataObject={toolUsedInPipelineDto} setDataObject={setToolUsedInPipelineDto}/>

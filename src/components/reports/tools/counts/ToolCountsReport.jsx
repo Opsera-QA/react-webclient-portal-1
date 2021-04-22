@@ -1,5 +1,4 @@
 import React, { useContext, useState, useEffect } from "react";
-import LoadingDialog from "components/common/status_notifications/loading";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -7,7 +6,7 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import ToolCountTable from "components/reports/tools/counts/ToolCountTable";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faAnalytics, faDraftingCompass, faTags, faTools} from "@fortawesome/pro-light-svg-icons";
+import {faAnalytics, faTags, faTools} from "@fortawesome/pro-light-svg-icons";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import {useHistory} from "react-router-dom";
 
@@ -70,10 +69,10 @@ function ToolCountsReport() {
   return (
     <ScreenContainer
       breadcrumbDestination={"toolCountsReport"}
-      pageDescription={"View tool usage counts"}
+      pageDescription={"View Tool usage counts"}
       isLoading={!accessRoleData}
       accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.POWER_USERS}
+      roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       navigationTabContainer={getNavigationTabContainer()}
     >
       <ToolCountTable isLoading={isLoading} data={toolCounts} loadData={loadData} />
