@@ -12,7 +12,7 @@ function IconBase({ isLoading, icon, className, iconSize }) {
     return <FontAwesomeIcon icon={icon} size={iconSize} fixedWidth />;
   };
 
-  if (icon == null) {
+  if (icon == null && isLoading !== true) {
     return null;
   }
 

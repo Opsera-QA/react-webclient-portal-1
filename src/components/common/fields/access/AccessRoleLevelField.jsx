@@ -4,9 +4,9 @@ import {getUserRoleLevel} from "components/common/helpers/role-helpers";
 import {AuthContext} from "contexts/AuthContext";
 
 function AccessRoleLevelField({accessRoleData, objectRoles, dataObject, className}) {
-  const { featureFlagHideItemInProd } = useContext(AuthContext);
+  const { isSassUser } = useContext(AuthContext);
 
-  if (accessRoleData == null || featureFlagHideItemInProd()) {
+  if (accessRoleData == null || isSassUser() === true) {
     return null;
   }
 
