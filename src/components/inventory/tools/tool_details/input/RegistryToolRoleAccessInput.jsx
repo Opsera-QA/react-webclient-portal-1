@@ -7,7 +7,7 @@ import ToolRegistryRoleAccessHelpDocumentation
   from "components/common/help/documentation/tool_registry/ToolRegistryRoleAccessHelpDocumentation";
 
 function RegistryToolRoleAccessInput({fieldName, dataObject, setDataObject, disabled, visible}) {
-  const { getAccessToken } = useContext(AuthContext);
+  const { getAccessToken, isSassUser } = useContext(AuthContext);
 
   const saveData = async (newRoles) => {
     let newDataObject = {...dataObject};
@@ -22,6 +22,10 @@ function RegistryToolRoleAccessInput({fieldName, dataObject, setDataObject, disa
       <span>No Access Rules are currently applied. All users can see or edit this {dataObject?.getType()}.</span>
     );
   };
+
+  if (dataObject == null || isSassUser()) {
+    return null;
+  }
 
   return (
     <RoleAccessInlineInputBase
