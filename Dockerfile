@@ -6,6 +6,7 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 ENV PATH /usr/src/app/node_modules/.bin:$PATH
 COPY package.json /usr/src/app/package.json
+COPY /usr/src/app/src/development_dependencies/* /usr/src/app/src/development_dependencies/
 COPY .npmrc /usr/src/app/.npmrc
 RUN npm install
 RUN npm install react-scripts -g
