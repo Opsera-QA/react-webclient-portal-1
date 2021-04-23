@@ -94,6 +94,13 @@ body {
     min-height: 100vh;
 }
 
+.main-text {
+    font-family: "Avenir Next W01", "Lato", -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
 a, .link-text {
     color: #383060; /*#1578dc;*/
     text-decoration: none;

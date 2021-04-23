@@ -1,13 +1,13 @@
 import React, {useEffect, useRef} from "react";
 import PropTypes from "prop-types";
-import {Grid} from "dhx-suite-package";
+import { TreeGrid } from "dhx-suite-package";
 import "dhx-suite-package/codebase/suite.css";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import DtoTopPagination from "components/common/pagination/DtoTopPagination";
 
-function TableBase(
+function TreeTableBase(
   {
     tableStyleName,
     columns,
@@ -19,12 +19,15 @@ function TableBase(
     paginationDto,
     setPaginationDto,
     loadData,
-    scrollOnLoad
+    scrollOnLoad,
+    groupBy,
+    sort,
+    handleExpansion
   }) {
   const containerRef = useRef(null);
 
   useEffect(() => {
-    let grid = new Grid(containerRef.current, {
+    let treegrid = new TreeGrid(containerRef.current, {
       columns: columns,
       autoWidth: true,
       // selection: "row",
@@ -38,12 +41,24 @@ function TableBase(
       },
     });
 
+    if (groupBy) {
+      treegrid.groupBy(groupBy);
+    }
+
     if (onRowSelect) {
-      grid.events.on("cellClick", onRowSelect);
+      treegrid.events.on("cellClick", (row, column, e) => {onRowSelect(treegrid, row, column, e);});
+    }
+
+    if (sort) {
+      treegrid.data.sort(sort);
+    }
+
+    if (handleExpansion) {
+      handleExpansion(treegrid);
     }
 
     return () => {
-      grid.destructor();
+      treegrid.destructor();
     };
   }, [data]);
 
@@ -85,6 +100,7 @@ function TableBase(
     );
   };
 
+
   // TODO: Replace with new paginator
   const getNewPaginator = () => {
     return (
@@ -106,7 +122,7 @@ function TableBase(
   );
 }
 
-TableBase.propTypes = {
+TreeTableBase.propTypes = {
   tableStyleName: PropTypes.string,
   columns: PropTypes.array,
   data: PropTypes.array,
@@ -121,10 +137,13 @@ TableBase.propTypes = {
   paginationDto: PropTypes.object,
   setPaginationDto: PropTypes.func,
   loadData: PropTypes.func,
-  scrollOnLoad: PropTypes.bool
+  scrollOnLoad: PropTypes.bool,
+  groupBy: PropTypes.string,
+  sort: PropTypes.any,
+  handleExpansion: PropTypes.func
 };
 
-TableBase.defaultProps = {
+TreeTableBase.defaultProps = {
   tableStyleName: "custom-table",
   showHeaderText: true,
   data: [],
@@ -132,4 +151,4 @@ TableBase.defaultProps = {
   tableTitle: ""
 };
 
-export default TableBase;
+export default TreeTableBase;
