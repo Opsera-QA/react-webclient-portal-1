@@ -22,8 +22,24 @@ function ListInputBase(
   const containerRef = useRef(null);
 
   useEffect(() => {
+    if (selectOptions == null) {
+      return;
+    }
+
+    let list = constructList();
+
+    return () => {
+      list?.destructor();
+    };
+  }, [selectOptions, isLoading, searchTerm, dataObject]);
+
+  const constructList = () => {
+    if (Array.isArray(selectOptions) && selectOptions.length > 0) {
+      selectOptions.forEach(data => data.id = data[valueField]);
+    }
+
     let list = new List(containerRef.current, {
-      data: selectOptions,
+      data: selectOptions || [],
       multiselection: disabled !== true || isLoading === true,
       selection: disabled !== true || isLoading === true,
       template
@@ -48,19 +64,8 @@ function ListInputBase(
       list.data.filter();
     }
 
-    // list.data.map(function (item, i) {
-    //   if (!(i % 2)) {
-    //     list.data.update(item.id, {css: "alt-background"});
-    //   }
-    //   else {
-    //     list.data.update(item.id, {css: "primary-background"});
-    //   }
-    // });
-
-    return () => {
-      list.destructor();
-    };
-  }, [selectOptions, isLoading, searchTerm, dataObject]);
+    return list;
+  };
 
   function template(item) {
     return (`
@@ -72,9 +77,6 @@ function ListInputBase(
 
   const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
-    // TODO: If we can get whole objects, we should do that
-    // let parsedValues = parseValues(valueArray);
-
     newDataObject.setData(fieldName, valueArray);
     let errors = newDataObject.isFieldValid(field.id);
 
