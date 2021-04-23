@@ -4746,8 +4746,8 @@
     "address" "^1.0.1"
     "debug" "^2.6.0"
 
-"dhx-suite-package@file:usr/src/app/src/development_dependencies/suite_7.1.2_ultimate":
-  "resolved" "file:usr/src/app/src/development_dependencies/suite_7.1.2_ultimate"
+"dhx-suite-package@file:development_dependencies/suite_7.1.2_ultimate":
+  "resolved" "file:development_dependencies/suite_7.1.2_ultimate"
   "version" "7.1.2"
 
 "diff-sequences@^26.6.2":
