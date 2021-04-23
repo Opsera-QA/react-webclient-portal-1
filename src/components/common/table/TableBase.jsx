@@ -1,11 +1,12 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {Grid} from "dhx-suite-package";
+import {Grid, TreeGrid} from "dhx-suite-package";
 import "dhx-suite-package/codebase/suite.css";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import DtoTopPagination from "components/common/pagination/DtoTopPagination";
+import {useWindowSize} from "components/common/hooks/useWindowSize";
 
 function TableBase(
   {
@@ -19,15 +20,35 @@ function TableBase(
     paginationDto,
     setPaginationDto,
     loadData,
-    scrollOnLoad
+    scrollOnLoad,
+    groupBy,
+    sort,
+    handleExpansion
   }) {
   const containerRef = useRef(null);
+  const [grid, setGrid] = useState(null);
+  const windowSize = useWindowSize();
 
   useEffect(() => {
+    const treeGrid = setUpTreeGrid();
+
+    return () => {
+      treeGrid.destructor();
+    };
+  }, [data]);
+
+  // Refresh width on resize
+  useEffect(() => {
+    if (grid) {
+      grid.config.width = null;
+    }
+  }, [windowSize, grid]);
+
+
+  const setUpTreeGrid = () => {
     let grid = new Grid(containerRef.current, {
       columns: columns,
       autoWidth: true,
-      // selection: "row",
       data: data || [],
       htmlEnable: true,
       resizable: true,
@@ -38,14 +59,28 @@ function TableBase(
       },
     });
 
-    if (onRowSelect) {
-      grid.events.on("cellClick", onRowSelect);
+    if (groupBy) {
+      grid.groupBy(groupBy);
     }
 
-    return () => {
-      grid.destructor();
-    };
-  }, [data]);
+    if (onRowSelect) {
+      grid.events.on("cellClick", (row, column, e) => {
+        onRowSelect(grid, row, column, e);
+      });
+    }
+
+    if (sort) {
+      grid.data.sort(sort);
+    }
+
+    if (handleExpansion) {
+      handleExpansion(grid);
+      grid.config.width = null;
+    }
+
+    setGrid(grid);
+    return grid;
+  };
 
   const getTableBody = () => {
     if (isLoading && (data == null || data.length === 0)) {
@@ -121,7 +156,10 @@ TableBase.propTypes = {
   paginationDto: PropTypes.object,
   setPaginationDto: PropTypes.func,
   loadData: PropTypes.func,
-  scrollOnLoad: PropTypes.bool
+  scrollOnLoad: PropTypes.bool,
+  groupBy: PropTypes.string,
+  sort: PropTypes.any,
+  handleExpansion: PropTypes.func
 };
 
 TableBase.defaultProps = {
