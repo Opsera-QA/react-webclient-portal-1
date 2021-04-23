@@ -9,5 +9,6 @@
       "utils/*": ["src/utils/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["src/development_dependencies/*"]
 }
