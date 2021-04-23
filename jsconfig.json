@@ -10,5 +10,4 @@
     }
   },
   "include": ["src"],
-  "exclude": ["src/development_dependencies/*"]
 }
