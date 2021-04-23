@@ -46,7 +46,7 @@ export declare class Grid extends View implements IGrid {
     editCell(rowId: string | number, colId: string | number, editorType?: EditorType): void;
     editEnd(withoutSave?: boolean): void;
     getSortingState(): {
-        dir: import("../../ts-grid").Dirs;
+        dir: import("../index").Dirs;
         by: string;
     };
     getHeaderFilter(colId: string | number): any;
