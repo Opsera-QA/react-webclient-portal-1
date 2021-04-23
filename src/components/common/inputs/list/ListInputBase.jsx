@@ -14,7 +14,7 @@ function ListInputBase(
     selectOptions, valueField, textField,
     setDataFunction, isLoading, disabled, clearDataFunction,
     showClearValueButton, getCurrentValue,
-    height, icon, filterFunction, showSelectAllButton
+    height, icon, searchFunction, showSelectAllButton
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -55,9 +55,9 @@ function ListInputBase(
       });
     }
 
-    if (filterFunction && searchTerm !== "") {
+    if (searchFunction && searchTerm !== "") {
       list.data.filter((item) => {
-        return filterFunction(item, searchTerm);
+        return searchFunction(item, searchTerm);
       });
     }
     else {
@@ -226,7 +226,7 @@ function ListInputBase(
   return (
     <InputContainer className="list-input my-2">
       <div className={"content-container"}>
-        <InputTitleBar icon={icon} isLoading={isLoading} field={field} setSearchTerm={setSearchTerm} searchTerm={searchTerm}/>
+        <InputTitleBar icon={icon} isLoading={isLoading} field={field} setSearchTerm={setSearchTerm} searchTerm={searchTerm} showSearchBar={searchFunction != null}/>
         {getExtraRow()}
         {getBody()}
       </div>
@@ -261,7 +261,7 @@ ListInputBase.propTypes = {
   showLabel: PropTypes.bool,
   height: PropTypes.string,
   icon: PropTypes.object,
-  filterFunction: PropTypes.func,
+  searchFunction: PropTypes.func,
   showSelectAllButton: PropTypes.bool
 };
 
