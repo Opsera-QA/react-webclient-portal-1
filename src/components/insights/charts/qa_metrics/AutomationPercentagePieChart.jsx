@@ -91,7 +91,7 @@ function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, d
             <Col><div className="metric-box text-center">
               <div className="box-metric">
                 { metrics[0]?.automationRate ?
-                  <div className ="red">{metrics[0]?.automationRate+ "%"}</div>
+                  <div className ="green">{metrics[0]?.automationRate+ "%"}</div>
                   : <div>{"N/A"}</div>}
               </div>
               <div className="w-100 text-muted mb-1">Automation Percentage</div>
