@@ -131,7 +131,7 @@ const SfdcProfileSelectionView = ({
             gitTaskData={gitTaskData}
           />
         }
-    <div className="destSfdcTableContainer mt-2">          
+    <div className="destSfdcTableContainer justify-content-center mt-2">          
         <div className="pr-2">
           <FilterContainer
               loadData={loadData}
