@@ -73,7 +73,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "sprint", kpiSprintFilterMetadata)
   );
   const [kpiProjectFilter, setKpiProjectFilter] = useState(
-    modelHelpers.getDashboardFilterModel(kpiConfiguration, "sprint", kpiProjectFilterMetadata)
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "project", kpiProjectFilterMetadata)
   );
 
   const tagFilterEnabled = [
