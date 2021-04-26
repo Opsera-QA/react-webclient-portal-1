@@ -35,6 +35,22 @@ function AnalyticsDataEntryKpiConfigurationPanel({ analyticsDataEntryModel, setA
             kpiConfigurationData={kpiConfigurationData}
           />
         );
+      case "automation-percentage":
+        return (
+          <CumulativeOpenDefectsConfiguration
+            analyticsDataEntryModel={analyticsDataEntryModel}
+            setKpiConfigurationData={setKpiConfigurationData}
+            kpiConfigurationData={kpiConfigurationData}
+          />
+        );
+      case "adoption-percentage":
+        return (
+          <CumulativeOpenDefectsConfiguration
+            analyticsDataEntryModel={analyticsDataEntryModel}
+            setKpiConfigurationData={setKpiConfigurationData}
+            kpiConfigurationData={kpiConfigurationData}
+          />
+        );
       case "":
         return <div className="text-center text-muted p-5">You must select a KPI before configuring notification type details.</div>;
       default:

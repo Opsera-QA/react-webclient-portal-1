@@ -1144,6 +1144,30 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+      case "automation-percentage":
+        return (
+          <Col md={12} className="p-2">
+            <CummulativeOpenDefectsPieChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "adoption-percentage":
+        return (
+          <Col md={12} className="p-2">
+            <CummulativeOpenDefectsPieChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
       default:
         return null;
     }
