@@ -1,4 +1,4 @@
-import React, { useMemo }  from 'react';
+import React, { useState, useMemo }  from 'react';
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import {
@@ -11,6 +11,7 @@ import { faCode } from "@fortawesome/free-solid-svg-icons";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import InlineBooleanFilter from "components/common/filters/boolean/InlineBooleanFilter";
 import "../../workflowWizard.css";
+import CSVFileUploadComponent from '../csv_file_upload/CSVFileUploadComponent';
 
 
 // TODO: This should further be broken down into two components. I will do it soon, hopefully - Noah
@@ -27,8 +28,24 @@ const SfdcProfileSelectionView = ({
   data,
   handleComponentCheck,
   handleCheckAllClickComponentTypes,
+  
+  fileUploadFlag,
+  recordId,
+  updateAttribute,
+  callbackFunc,  
+  fromGit,
+  fromSFDC,
+  fromDestinationSFDC,
+  fromProfileComponents,
+  allSFDCComponentType,
+  allGitComponentType,
+  allDestSfdcComponentType,
+  allProfileComponentType,
+  gitTaskData
 }) => {
   const fields = sfdcTableConstants.fields;
+
+  const [files, setFiles] = useState([]);
 
   const columnsWithOutCheckBoxCell = useMemo(
     () => [      
@@ -50,7 +67,7 @@ const SfdcProfileSelectionView = ({
   const getDestSfdcModifiedFilesView = () => {
     return (        
       <CustomTable
-        className={"table-no-border"}
+        className={"table-no-border" + (files.length > 0 ? " opacity-half" : " ") }
         columns={columnsWithOutCheckBoxCell}
         data={destData}              
         isLoading={destLoading}
@@ -66,7 +83,7 @@ const SfdcProfileSelectionView = ({
   const getSfdcModifiedFilesView = () => {
     return (  
         <CustomTable
-          className={"table-no-border"}
+          className={"table-no-border" + (files.length > 0 ? " opacity-half" : " ") }
           columns={sfdcColumnsWithCheckBoxCell}
           data={data}              
           isLoading={loading}
@@ -96,19 +113,37 @@ const SfdcProfileSelectionView = ({
   };
 
   return (
-    <div className="destSfdcTableContainer mt-2">
+    <>
+    {fileUploadFlag && 
+          <CSVFileUploadComponent
+            recordId={recordId}
+            updateAttribute={updateAttribute}
+            callbackFunc={callbackFunc}
+            fromGit={fromGit}
+            fromSFDC={fromSFDC}
+            fromDestinationSFDC={fromDestinationSFDC}
+            fromProfileComponents={fromProfileComponents}
+            allSFDCComponentType={allSFDCComponentType}
+            allGitComponentType={allGitComponentType}
+            allDestSfdcComponentType={allDestSfdcComponentType}
+            allProfileComponentType={allProfileComponentType}
+            setFiles={setFiles}
+            gitTaskData={gitTaskData}
+          />
+        }
+    <div className="destSfdcTableContainer mt-2">          
         <div className="pr-2">
-            <FilterContainer
-                loadData={loadData}
-                filterDto={filterDto}
-                setFilterDto={setFilterDto}
-                isLoading={loading}
-                title={"SFDC Files"}
-                titleIcon={faSalesforce}
-                body={getSfdcModifiedFilesView()}
-                supportSearch={true}
-                inlineFilters={getSfdcInlineFilters()}
-            />
+          <FilterContainer
+              loadData={loadData}
+              filterDto={filterDto}
+              setFilterDto={setFilterDto}
+              isLoading={loading}
+              title={"SFDC Files"}
+              titleIcon={faSalesforce}
+              body={getSfdcModifiedFilesView()}
+              supportSearch={true}
+              inlineFilters={getSfdcInlineFilters()}
+          />
         </div>
         <div>
             <FilterContainer
@@ -117,12 +152,13 @@ const SfdcProfileSelectionView = ({
                 setFilterDto={setDestFilterDto}
                 isLoading={destLoading}
                 title={"Destination SFDC Files"}
-                titleIcon={faCode}
+                titleIcon={faSalesforce}
                 body={getDestSfdcModifiedFilesView()}              
                 supportSearch={true}
             />
         </div>
     </div>
+    </>
   );
 
 };
@@ -139,7 +175,22 @@ SfdcProfileSelectionView.propTypes = {
   destFilterDto: PropTypes.object,
   setDestFilterDto: PropTypes.func,
   destLoading: PropTypes.bool,
-  destData: PropTypes.object
+  destData: PropTypes.object,
+
+  
+  fileUploadFlag:  PropTypes.bool,
+  recordId: PropTypes.string,
+  updateAttribute: PropTypes.string,
+  callbackFunc: PropTypes.func,  
+  fromGit: PropTypes.bool,
+  fromSFDC: PropTypes.bool,
+  fromDestinationSFDC: PropTypes.bool,
+  fromProfileComponents: PropTypes.bool,
+  allSFDCComponentType: PropTypes.array,
+  allGitComponentType: PropTypes.array,
+  allDestSfdcComponentType: PropTypes.array,
+  allProfileComponentType: PropTypes.array,
+  gitTaskData: PropTypes.object
 };
 
 export default SfdcProfileSelectionView;

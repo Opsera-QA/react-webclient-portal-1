@@ -1255,7 +1255,7 @@ const SfdcPipelineModifiedFiles = ({
               data={sfdcModifiedFilesTable}
               handleComponentCheck={handleSFDCComponentCheckNew}
               handleCheckAllClickComponentTypes={handleCheckAllClickComponentTypesSfdc}
-              fileUploadFlag={isProfiles ? false : true}
+              fileUploadFlag={true}
               recordId={recordId}
               updateAttribute= {isProfiles ? "profilesList" : "selectedFileList"}
               callbackFunc={isProfiles ? getProfileComponentList : generateXML}
@@ -1305,7 +1305,21 @@ const SfdcPipelineModifiedFiles = ({
               componentType={componentType}
               data={sfdcModifiedFilesTable}
               handleComponentCheck={handleSFDCComponentCheckNew}
-              handleCheckAllClickComponentTypes={handleCheckAllClickComponentTypesSfdc}                      
+              handleCheckAllClickComponentTypes={handleCheckAllClickComponentTypesSfdc}   
+
+              fileUploadFlag={true}
+              recordId={recordId}
+              updateAttribute= {isProfiles ? "profilesList" : "selectedFileList"}
+              callbackFunc={isProfiles ? getProfileComponentList : generateXML}
+              fromGit={fromGit}
+              fromSFDC={fromSFDC}
+              fromDestinationSFDC={fromDestinationSFDC}
+              fromProfileComponents={false}
+              allSFDCComponentType={allSFDCComponentType}
+              allGitComponentType={[]}
+              allDestSfdcComponentType={allDestSfdcComponentType}
+              allProfileComponentType={[]}
+              gitTaskData={gitTaskData}                   
             />
           ) : null }            
         </div>
