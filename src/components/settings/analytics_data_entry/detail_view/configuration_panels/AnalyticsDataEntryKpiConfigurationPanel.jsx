@@ -6,6 +6,8 @@ import QaManualTestConfigurationPanel
   from "components/settings/analytics_data_entry/detail_view/configuration_panels/qa_manual_test/QaManualTestConfigurationPanel";
 import FirstPassYieldConfiguration from "./first_pass_yield/FirstPassYieldConfiguration";
 import CumulativeOpenDefectsConfiguration from "./cumulative_open_defects/CumulativeOpenDefectsConfiguration";
+import AutomationPercentageConfiguration from "./automation_percentage/AutomationPercentageConfiguration";
+import AdoptionPercentageConfiguration from "./adoption_percentage/AdoptionPercentageConfiguration";
 
 function AnalyticsDataEntryKpiConfigurationPanel({ analyticsDataEntryModel, setAnalyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
   const getConfigurationPanel = () => {
@@ -37,7 +39,7 @@ function AnalyticsDataEntryKpiConfigurationPanel({ analyticsDataEntryModel, setA
         );
       case "automation-percentage":
         return (
-          <CumulativeOpenDefectsConfiguration
+          <AutomationPercentageConfiguration
             analyticsDataEntryModel={analyticsDataEntryModel}
             setKpiConfigurationData={setKpiConfigurationData}
             kpiConfigurationData={kpiConfigurationData}
@@ -45,7 +47,7 @@ function AnalyticsDataEntryKpiConfigurationPanel({ analyticsDataEntryModel, setA
         );
       case "adoption-percentage":
         return (
-          <CumulativeOpenDefectsConfiguration
+          <AdoptionPercentageConfiguration
             analyticsDataEntryModel={analyticsDataEntryModel}
             setKpiConfigurationData={setKpiConfigurationData}
             kpiConfigurationData={kpiConfigurationData}
