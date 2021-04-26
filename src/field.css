@@ -51,12 +51,10 @@
 /* End Role Access Input Styling */
 
 /* Property Input Styling */
-.object-properties-input .property-header {
+.object-properties-input .property-header, .input-title-bar {
     background-color: #E6E5E3;
     color: #3D3B36;
     min-height: 40px;
-    /*line-height: 2.4em;*/
-    border-bottom: 5px solid #E6E5E3;
     font-size: 1.1rem;
 }
 
@@ -298,3 +296,7 @@
     border-left: 10px solid #00AA84;
 }
 /* End Custom Badge styling */
+
+.input-search-filter {
+    margin: 5px;
+}

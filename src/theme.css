@@ -400,6 +400,15 @@ a.text-primary:hover, a.text-primary:focus {
     font-size: .8em;
 }
 
+.filter-title-bar {
+    border: 1px solid #e4e4e4;
+}
+
+.custom-table .dhx_grid-filter__label {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
 .custom-table-filter .btn {
     font-size: 1em;
 }
@@ -440,7 +449,9 @@ a.text-primary:hover, a.text-primary:focus {
 .custom-table .table-row {
     margin-bottom: 2em;
     line-height: 2em;
-    /* border-bottom: 1px solid #E6E5E3; */
+}
+
+.custom-table .table-row, .primary-background {
     color: #3D3B36;
     background-color: #fff;
 }
@@ -476,6 +487,9 @@ a.text-primary:hover, a.text-primary:focus {
 
 .custom-table .top-pagination {
     background-color: #E6E5E3;
+    border: 1px solid #e4e4e4;
+    border-bottom: none;
+    border-top: none;
 }
 
 .custom-table .status-icon {
@@ -488,7 +502,11 @@ a.text-primary:hover, a.text-primary:focus {
   background: rgba(230, 229, 227, .5);
 }
 
-.custom-table > tbody > tr:nth-child(even) {
+.custom-table .top-pagination-grid .top-pagination, .title-bar-selection-row {
+    background: rgba(230, 229, 227, .3);
+}
+
+.custom-table > tbody > tr:nth-child(even), .alt-background {
   background: rgba(230, 229, 227, .5); /* Same color as #E6E5E3, only slightly more transparent */
 }
 
@@ -1314,8 +1332,15 @@ div.data-blocks-ellipses {
 
 /* Filter Container Styling */
 .filter-container {
+}
+
+.filter-container-body, .table-border {
     border: 1px solid #E6E5E3;
     border-collapse: collapse;
+}
+
+.filter-container-no-border {
+    border: 0;
 }
 
 .filter-container .content-block-header {

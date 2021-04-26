@@ -75,13 +75,13 @@ function TagsUsedInToolsReport() {
       breadcrumbDestination={"tagsUsedInToolsReport"}
       isLoading={isLoading}
       navigationTabContainer={getNavigationTabContainer()}
-      roleRequirement={ROLE_LEVELS.POWER_USERS}
+      roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       accessRoleData={accessRoleData}
+      pageDescription={"View which Tools are in use by a specific Tag combination"}
     >
-      <div className={"ml-3 mt-3 mb-2"}>View which tools are in use by a specific tag combination</div>
       <Row className={"mb-3 mx-0"}>
         <Col className={"mx-0"}>
-          <TagManager placeholder={"select a tag to view tagged tools"} type={"tags"} allowCreate={false} fieldName={"tags"} dataObject={tagsUsedInToolsDto} setDataObject={setTagsUsedInToolsDto}/>
+          <TagManager type={"tags"} allowCreate={false} fieldName={"tags"} dataObject={tagsUsedInToolsDto} setDataObject={setTagsUsedInToolsDto}/>
         </Col>
       </Row>
       <Row className={"px-2"}>
