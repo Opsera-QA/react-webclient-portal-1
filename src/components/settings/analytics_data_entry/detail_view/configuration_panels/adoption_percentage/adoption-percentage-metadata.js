@@ -2,6 +2,18 @@ const cumulativeOpenDefectsMetadata = {
   type: "Cumulative Open Defects Configuration",
   fields: [
     {
+      label: "Domain Name",
+      id: "domain",
+      isRequired: true,
+      maxLength: 20
+    },
+    {
+      label: "Application Name",
+      id: "application",
+      isRequired: true,
+      maxLength: 20
+    },
+    {
       label: "Project Name",
       id: "project",
       isRequired: true,
@@ -49,6 +61,7 @@ const cumulativeOpenDefectsMetadata = {
   newObjectFields: {
     domain: "",
     application: "",
+    project: "",
     pipeline_id: "",
     from: new Date(),
     to: new Date(),

@@ -4,8 +4,8 @@ import modelHelpers from "components/common/model/modelHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import cumulativeOpenDefectsMetadata
-  from "components/settings/analytics_data_entry/detail_view/configuration_panels/cumulative_open_defects/cumulative-open-defects-metadata";
+import automationPercentageMetadata
+  from "components/settings/analytics_data_entry/detail_view/configuration_panels/automation_percentage/automation-percentage-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PipelineSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineSelectInput";
 import NumberInputBase from "components/common/inputs/text/NumberInputBase";
@@ -17,7 +17,7 @@ function AutomationPercentageConfiguration({ analyticsDataEntryModel, kpiConfigu
   useEffect(() => {loadData();}, []);
 
   const loadData = async () => {
-    const configurationData = modelHelpers.getToolConfigurationModel(analyticsDataEntryModel.getData("data"), cumulativeOpenDefectsMetadata);
+    const configurationData = modelHelpers.getToolConfigurationModel(analyticsDataEntryModel.getData("data"), automationPercentageMetadata);
     setKpiConfigurationData({...configurationData});
   };
 
