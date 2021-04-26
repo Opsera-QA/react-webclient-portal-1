@@ -1,9 +1,8 @@
-export default (getColor, maxValue, MeanLineLayer) => ({
-  keys: ["Count"],
+export default (getColor, maxValue) => ({
+  keys: ["mttr"],
   indexBy: "_id",
   colorBy: "id",
   minValue: 0,
-  maxValue,
-  layers: ["grid", "axes", "bars", MeanLineLayer, "markers", "mesh", "legends"],
+  layers: ["grid", "axes", "bars", "markers", "mesh", "legends"],
   colors: getColor
 });
