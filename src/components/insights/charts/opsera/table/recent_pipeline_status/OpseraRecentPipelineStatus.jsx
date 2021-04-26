@@ -39,6 +39,10 @@ function OpseraRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, das
     []
   );
 
+  const onRowSelect = (rowData) => {
+    history.push(`/blueprint/${rowData.original._id.id}/${rowData.original.run_count}`);
+  };
+
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -97,6 +101,7 @@ function OpseraRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, das
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
+        onRowSelect={onRowSelect}
       />
     );
   };

@@ -16,7 +16,8 @@ import {
   kpiDomainFilterMetadata,
   kpiApplicationFilterMetadata,
   kpiSprintFilterMetadata,
-  kpiReleaseFilterMetadata
+  kpiReleaseFilterMetadata,
+  kpiProjectFilterMetadata
 } from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import Model from "core/data_model/model";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
@@ -70,6 +71,9 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
   );
   const [kpiSprintFilter, setKpiSprintFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "sprint", kpiSprintFilterMetadata)
+  );
+  const [kpiProjectFilter, setKpiProjectFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "project", kpiProjectFilterMetadata)
   );
 
   const tagFilterEnabled = [
@@ -150,7 +154,9 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "selenium-test-results",
     "sonar-reliability-remediation-effort-by-project",
     "first-pass-yield",
-    "cumulative-open-defects"
+    "cumulative-open-defects",
+    "automation-percentage",
+    "adoption-percentage"
   ];
 
   const getKpiFilters = (filter) => {
@@ -258,6 +264,17 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
               fieldName={"value"}
               setDataObject={setKpiDomainFilter}
               dataObject={kpiDomainFilter}
+            />
+          </div>
+        );
+      case "project":
+        return (
+          <div>
+            <ManualKpiMultiSelectInputBase
+              type={"project"}
+              fieldName={"value"}
+              setDataObject={setKpiProjectFilter}
+              dataObject={kpiProjectFilter}
             />
           </div>
         );
@@ -380,6 +397,15 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "domain")
       ].value = kpiDomainFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")
+        ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")
+        ].value = kpiProjectFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
