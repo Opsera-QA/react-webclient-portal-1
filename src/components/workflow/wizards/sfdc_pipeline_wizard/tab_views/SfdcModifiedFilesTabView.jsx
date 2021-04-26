@@ -57,7 +57,7 @@ const SfdcModifiedFilesTabView = ({
     return (  
       <div>
         {/* upload component goes here */}
-        {fileUploadFlag && 
+        {fileUploadFlag && !loading &&
           <CSVFileUploadComponent
             recordId={recordId}
             updateAttribute={updateAttribute}

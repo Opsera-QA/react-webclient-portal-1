@@ -35,6 +35,11 @@ function UserMappingProjectSelectInput({ fieldName, dataObject, setDataObject, d
 
   const loadProjects = async () => {
     const response = await pipelineStepNotificationActions.getJiraProjects2(dataObject.getData("tool_id"), getAccessToken);
+
+    if (response?.data?.status !== 200) {
+      toastContext.showErrorDialog("Error in fetching Jira projects - please validate Jira credentials");
+    }
+    
     if (response?.data?.message != null && Array.isArray(response.data.message)) {
       setProjects(response.data.message);
     }
