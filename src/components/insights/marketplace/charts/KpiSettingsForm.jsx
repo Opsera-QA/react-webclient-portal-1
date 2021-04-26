@@ -273,8 +273,8 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
             <ManualKpiMultiSelectInputBase
               type={"project"}
               fieldName={"value"}
-              setDataObject={setKpiDomainFilter}
-              dataObject={kpiDomainFilter}
+              setDataObject={setKpiProjectFilter}
+              dataObject={kpiProjectFilter}
             />
           </div>
         );
@@ -405,7 +405,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")
-        ].value = kpiDomainFilter.getData("value");
+        ].value = kpiProjectFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
