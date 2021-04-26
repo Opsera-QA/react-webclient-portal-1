@@ -119,6 +119,8 @@ import { Col } from "react-bootstrap";
 import ManualQaTestPieChart from "components/insights/charts/qa_metrics/ManualQaTestPieChart";
 import FirstPassYieldPieChart from "components/insights/charts/qa_metrics/FirstPassYieldPieChart";
 import CummulativeOpenDefectsPieChart from "components/insights/charts/qa_metrics/CummulativeOpenDefectsPieChart";
+import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieChart";
+import AdoptionPercentagePieChart from "./qa_metrics/AdoptionPercentagePieChart";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1136,6 +1138,30 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col md={12} className="p-2">
             <CummulativeOpenDefectsPieChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "automation-percentage":
+        return (
+          <Col md={12} className="p-2">
+            <AutomationPercentagePieChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "adoption-percentage":
+        return (
+          <Col md={12} className="p-2">
+            <AdoptionPercentagePieChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
