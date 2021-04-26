@@ -114,7 +114,7 @@ const SfdcProfileSelectionView = ({
 
   return (
     <>
-    {fileUploadFlag && 
+    {fileUploadFlag && !loading &&
           <CSVFileUploadComponent
             recordId={recordId}
             updateAttribute={updateAttribute}
@@ -176,8 +176,6 @@ SfdcProfileSelectionView.propTypes = {
   setDestFilterDto: PropTypes.func,
   destLoading: PropTypes.bool,
   destData: PropTypes.object,
-
-  
   fileUploadFlag:  PropTypes.bool,
   recordId: PropTypes.string,
   updateAttribute: PropTypes.string,
