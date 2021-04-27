@@ -1,18 +1,12 @@
-import React from "react";
-import { useTable, usePagination, useSortBy } from "react-table";
+import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSortUp, faSortDown, faSpinner } from "@fortawesome/pro-light-svg-icons";
-import DtoBottomPagination from "../pagination/DtoBottomPagination";
-import DtoTopPagination from "../pagination/DtoTopPagination";
-
-export const defaultInitialState = {
-  pageIndex: 0,
-};
-
-export const defaultRowStyling = (row) => {
-  return "";
-};
+import {Grid, TreeGrid} from "dhx-suite-package";
+import "dhx-suite-package/codebase/suite.css";
+import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faExclamationCircle, faSpinner} from "@fortawesome/pro-light-svg-icons";
+import DtoTopPagination from "components/common/pagination/DtoTopPagination";
+import {useWindowSize} from "components/common/hooks/useWindowSize";
 
 function TableBase(
   {
@@ -22,167 +16,127 @@ function TableBase(
     noDataMessage,
     onRowSelect,
     rowStyling,
-    initialState,
-    showHeaderText,
     isLoading,
-    tableTitle,
-    tableFilterBar,
     paginationDto,
     setPaginationDto,
-    loadData
+    loadData,
+    scrollOnLoad,
+    groupBy,
+    sort,
+    handleExpansion
   }) {
+  const containerRef = useRef(null);
+  const [grid, setGrid] = useState(null);
+  const windowSize = useWindowSize();
+
+  useEffect(() => {
+    const treeGrid = setUpTreeGrid();
+
+    return () => {
+      treeGrid.destructor();
+    };
+  }, [data]);
+
+  // Refresh width on resize
+  useEffect(() => {
+    if (grid) {
+      grid.config.width = null;
+    }
+  }, [windowSize, grid]);
 
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    rows
-  } = useTable(
-    {
-      columns,
-      data,
-      initialState
-    },
-    useSortBy,
-    usePagination
-  );
+  const setUpTreeGrid = () => {
+    let grid = new Grid(containerRef.current, {
+      columns: columns,
+      autoWidth: true,
+      data: data || [],
+      htmlEnable: true,
+      resizable: true,
+      // headerRowHeight: 30,
+      rowHeight: 30,
+      rowCss: (row) => {
+        rowStyling ? rowStyling(row) : "";
+      },
+    });
 
-  const defaultNoDataMessage = "No data is currently available";
-
-  const setColumnClass = (id, columnDefinitions) => {
-    let response = "";
-    if (columnDefinitions && id){
-      Object.keys(columnDefinitions).forEach(function(key) {
-        if (columnDefinitions[key].accessor === id) {
-          response = columnDefinitions[key].class;
-        }      
-      });      
-    } 
-    return response;
-  };
-
-  // TODO: Redo the way this works
-  const getRowClassNames = (index, row) => {
-    let rowClassNames = "table-row";
+    if (groupBy) {
+      grid.groupBy(groupBy);
+    }
 
     if (onRowSelect) {
-      rowClassNames += " pointer";
+      grid.events.on("cellClick", (row, column, e) => {
+        onRowSelect(grid, row, column, e);
+      });
     }
 
-    if (rowStyling) {
-      rowClassNames += rowStyling(row);
+    if (sort) {
+      grid.data.sort(sort);
     }
 
-    return rowClassNames;
-  };
-
-  const getTableHeader = () => {
-    if ((isLoading && data == null) || !showHeaderText || !headerGroups) {
-      return (
-        <tr>
-          <th colSpan="12">
-            <div className="no-header-text" />
-          </th>
-        </tr>
-      );
-    }
-    else {
-      return (
-        <>
-          {headerGroups.map((headerGroup, i) => (
-            <tr key={i}  {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column, j) => (getHeaderColumn(column, j)))}
-            </tr>
-          ))}
-          {paginationDto && paginationDto.getData("totalCount") != null &&
-          <tr key={"topPaginator"}>
-            <td className="top-pagination pt-1 px-3" colSpan="12">
-              <DtoTopPagination paginationDto={paginationDto}
-                                setPaginationDto={setPaginationDto}
-                                isLoading={isLoading}
-                                loadData={loadData}/>
-            </td>
-          </tr>
-          }
-        </>
-      );
-    }
-  };
-
-  const getHeaderColumn = (column, key) => {
-    return (
-      <th className="px-2" key={key} {...column.getHeaderProps(column.getSortByToggleProps())}>
-        <div style={{display: "flex", flexWrap: "nowrap"}}>
-          <div>{column.render("Header")}</div>
-          <div className="ml-1">
-            {column.isSorted && <FontAwesomeIcon icon={column.isSortedDesc ? faSortDown : faSortUp}/>}
-          </div>
-        </div>
-      </th>
-    );
-  };
-
-  const getTableRow = (row, index) => {
-    prepareRow(row);
-    return (
-      <tr className={getRowClassNames(index, row)} key={index} {...row.getRowProps({onClick: () => onRowSelect ? onRowSelect(row) : null})}>
-        {row.cells.map((cell, j) => {
-          return (
-            <td key={j} {...cell.getCellProps()} className={"table-cell px-2 " + setColumnClass(cell.column.id, columns)}>
-              {cell.render("Cell")}
-            </td>
-          );
-        })}
-      </tr>);
-  };
-
-  const getTableRows = () => {
-    if (!isLoading && rows.length === 0) {
-      return (
-        <tr>
-          <td colSpan="100%" className="info-text text-center p-5">{noDataMessage ? noDataMessage : defaultNoDataMessage}</td>
-        </tr>
-      );
+    if (handleExpansion) {
+      handleExpansion(grid);
+      grid.config.width = null;
     }
 
-    return (rows.map((row, i) => {return getTableRow(row, i);}));
+    setGrid(grid);
+    return grid;
   };
 
   const getTableBody = () => {
     if (isLoading && (data == null || data.length === 0)) {
       return (
-        <tr>
-          <td colSpan="100%" className="info-text text-center p-3">{tableLoading()}</td>
-        </tr>
-      );
-    } else {
-      return (
-        <div className="table-base-body">
-          {getTableRows()}
+        <div className={"h-100 w-100 table-border"}>
+          <div className="w-100 info-text text-center p-3">
+            <div className="row" style={{ height:"150px", width: "100%"}}>
+              <div className="col-sm-12 my-auto text-center">
+                <span><FontAwesomeIcon icon={faSpinner} spin className="mr-2 mt-1"/>Loading Data</span>
+              </div>
+            </div>
+          </div>
         </div>
       );
     }
+
+    if (!isLoading && (data == null || data.length === 0)) {
+      return (
+        <div className={"h-100 w-100 table-border"}>
+          <div className="w-100 info-text text-center p-3">
+            <div className="row" style={{ height:"150px", width: "100%"}}>
+              <div className="col-sm-12 my-auto text-center">
+                <span><FontAwesomeIcon icon={faExclamationCircle} className="mr-2 mt-1"/>{noDataMessage}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div
+        id="treegrid"
+        style={{width: "100%", minHeight: "500px"}}
+        ref={el => (containerRef.current = el)}
+      />
+    );
   };
 
+  // TODO: Replace with new paginator
+  const getNewPaginator = () => {
+    return (
+      <DtoBottomPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading} loadData={loadData} scrollOnLoad={scrollOnLoad} />
+    );
+  };
+
+
   return (
-    <div className="table-content-block">
-      <table className={tableStyleName} responsive="true" hover="true" {...getTableProps()}>
-        <thead>
-          {getTableHeader()}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {getTableBody()}
-        </tbody>
-        <tfoot>
-        <tr>
-          <td colSpan="100%" className="px-2 py-1 table-footer">
-            <DtoBottomPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading} loadData={loadData} />
-          </td>
-        </tr>
-        </tfoot>
-      </table>
+    <div className={tableStyleName}>
+      <div className={"top-pagination-grid"}>
+        <DtoTopPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading} loadData={loadData} />
+      </div>
+      {getTableBody()}
+      <div className="table-footer">
+        {getNewPaginator()}
+      </div>
     </div>
   );
 }
@@ -201,13 +155,15 @@ TableBase.propTypes = {
   tableFilterBar: PropTypes.object,
   paginationDto: PropTypes.object,
   setPaginationDto: PropTypes.func,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  scrollOnLoad: PropTypes.bool,
+  groupBy: PropTypes.string,
+  sort: PropTypes.any,
+  handleExpansion: PropTypes.func
 };
 
 TableBase.defaultProps = {
   tableStyleName: "custom-table",
-  rowStyling: defaultRowStyling,
-  initialState: defaultInitialState,
   showHeaderText: true,
   data: [],
   isLoading: false,

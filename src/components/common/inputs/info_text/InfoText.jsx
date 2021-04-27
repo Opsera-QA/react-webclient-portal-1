@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 function InfoText({ field, errorMessage }) {
   if (errorMessage != null && errorMessage !== "") {
     return (
-      <small className="invalid-feedback">
+      <small className="red form-text">
         <div>{errorMessage}</div>
       </small>
     );
