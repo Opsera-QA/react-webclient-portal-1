@@ -810,3 +810,22 @@ a:hover, .active, .link-text:hover {
     transform: scaleY(1.2);
     transform-origin: top;
 }
+
+/*TODO: These fonts are a requirement for the DHTMLX Library but once the repo is in order we can probably delete them from the project*/
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto'), url(./fonts/roboto-regular-webfont.woff2) format('woff2');
+    src: local('Roboto'), url(./fonts/roboto-regular-webfont.woff) format('woff');
+}
+
+@font-face {
+    font-family: 'Roboto Bold';
+    src: local('Roboto Bold'), url(./fonts/roboto-bold-webfont.woff2) format('woff2');
+    src: local('Roboto Bold'), url(./fonts/roboto-bold-webfont.woff) format('woff');
+}
+
+@font-face {
+    font-family: 'Roboto Medium';
+    src: local('Roboto Medium'), url(./fonts/roboto-medium-webfont.woff2) format('woff2');
+    src: local('Roboto Medium'), url(./fonts/roboto-medium-webfont.woff) format('woff');
+}
