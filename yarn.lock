@@ -4746,8 +4746,8 @@
     "address" "^1.0.1"
     "debug" "^2.6.0"
 
-"dhx-suite-package@file:development_dependencies/suite_7.1.2_ultimate":
-  "resolved" "file:development_dependencies/suite_7.1.2_ultimate"
+"dhx-suite-package@git+https://dhx-readonly:FQCRwBmVGg4sdbUFSPS1@gitlab.com/opsera-repo/web-portal/dhxsuiteprivatelibrary.git":
+  "resolved" "git+https://dhx-readonly:FQCRwBmVGg4sdbUFSPS1@gitlab.com/opsera-repo/web-portal/dhxsuiteprivatelibrary.git#3d51c8a928ca9f20e5afcf591d9fcacb6356cf89"
   "version" "7.1.2"
 
 "diff-sequences@^26.6.2":
