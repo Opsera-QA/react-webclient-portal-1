@@ -42,6 +42,11 @@ function UserMappingJiraUserSelectInput({ fieldName, dataObject, setDataObject, 
 
   const loadProjects = async () => {
     const response = await pipelineStepNotificationActions.getJiraProjectUsers2(tool_id, tool_user_prop, getAccessToken);
+
+    if (response?.data?.status !== 200) {
+      toastContext.showErrorDialog(response?.data?.message ? "Error in fetching Jira Users: " + response?.data?.message : "Error in fetching Jira Users - please validate Jira credentials");
+    }
+
     if (response?.data?.message != null && Array.isArray(response.data.message)) {
       setProjects(response.data.message);
     }
