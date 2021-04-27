@@ -102,6 +102,18 @@ function DockerPushStepConfiguration({ pipelineId, stepTool, stepId, createJob, 
       <DockerPushBitbucketWorkspaceInput dataObject={dockerPushStepConfigurationDto} setDataObject={setDockerPushStepConfigurationDataDto} />
       <DockerPushGitRepositoryInput dataObject={dockerPushStepConfigurationDto} setDataObject={setDockerPushStepConfigurationDataDto} />
       <DockerPushGitBranchInput  dataObject={dockerPushStepConfigurationDto} setDataObject={setDockerPushStepConfigurationDataDto} />
+      <AWSToolSelectInput
+                    fieldName={"awsToolConfigId"}
+                    dataObject={octopusApplicationDataDto}
+                    setDataObject={setOctopusApplicationDataDto}
+                    disabled={
+                      (octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType").length === 0) ||
+                      appID
+                        ? true
+                        : false
+                    }
+                    tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("cloudType") : ""}
+                  />
       {/* <AgentLabelsMultiSelectInput
         dataObject={dockerPushStepConfigurationDto}
         fieldName={"agentLabels"}
