@@ -58,9 +58,9 @@ const pipelineActivityFilterMetadata = {
       activeFilters.push({filterId: "run", text: `Run: ${filterDto.getData("run")}` });
     }
 
-    // if (filterDto.getData("step_id") != null) {
-    //   activeFilters.push({filterId: "step_id", ...filterDto.getData("step_id")});
-    // }
+    if (filterDto.getData("hide_status") === false) {
+      activeFilters.push({filterId: "hide_status", text: `Hide Status Check Logs: ${filterDto.getData("hide_status")}`});
+    }
 
     if (filterDto.getData("search") != null && filterDto.getData("search") !== "") {
       activeFilters.push({filterId: "search", text: `Keyword: ${filterDto.getData("search")}`});

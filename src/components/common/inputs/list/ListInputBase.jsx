@@ -14,7 +14,7 @@ function ListInputBase(
     selectOptions, valueField, textField,
     setDataFunction, isLoading, disabled, clearDataFunction,
     showClearValueButton, getCurrentValue,
-    height, icon, searchFunction, showSelectAllButton
+    height, icon, searchFunction, showSelectAllButton, customTemplate, disabledOptions
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
@@ -68,6 +68,10 @@ function ListInputBase(
   };
 
   function template(item) {
+    if (customTemplate) {
+      return customTemplate(item);
+    }
+
     return (`
       <div class='list_item'>
         <div class='item_name'>${item[textField]}</div>
@@ -101,6 +105,15 @@ function ListInputBase(
 
   const addItem = (item) => {
     let currentData = findCurrentValue();
+
+    if (Array.isArray(disabledOptions) && disabledOptions.length > 0) {
+      let itemDisabled = disabledOptions.find((option) => option[valueField] === item[valueField]);
+
+      if (itemDisabled) {
+        console.log("item disabled: " + JSON.stringify(item));
+        return false;
+      }
+    }
 
     if (Array.isArray(currentData) && !currentData.includes(item)) {
       if (currentData.length + 1 > field.maxItems) {
@@ -153,7 +166,17 @@ function ListInputBase(
     let newSelections = [];
 
     if (Array.isArray(selectOptions) && selectOptions.length > 0) {
-      newSelections = selectOptions.map(item => item[valueField]);
+      newSelections = selectOptions.map((item) => {
+        if (Array.isArray(disabledOptions) && disabledOptions.length > 0) {
+          let itemDisabled = disabledOptions.find((option) => option[valueField] === item[valueField]);
+
+          if (itemDisabled) {
+            return null;
+          }
+        }
+
+        return item[valueField];
+      });
     }
 
     newDataObject.setData(fieldName, newSelections);
@@ -162,7 +185,7 @@ function ListInputBase(
 
   // TODO: Make selectAllIcon Component
   const getSelectAllIcon = () => {
-    if (dataObject?.getData(field?.id) !== "" && !disabled && showSelectAllButton === true && setDataFunction == null) {
+    if (dataObject?.getData(field?.id) !== "" && !disabled && showSelectAllButton === true) {
       return (
         <span onClick={() => selectAllOptions()} className="my-auto badge badge-success clear-value-badge pointer">
           <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Select All
@@ -262,7 +285,9 @@ ListInputBase.propTypes = {
   height: PropTypes.string,
   icon: PropTypes.object,
   searchFunction: PropTypes.func,
-  showSelectAllButton: PropTypes.bool
+  showSelectAllButton: PropTypes.bool,
+  customTemplate: PropTypes.func,
+  disabledOptions: PropTypes.array
 };
 
 ListInputBase.defaultProps = {
