@@ -80,6 +80,17 @@ function PipelineDetailView() {
     };
   }, []);
 
+  useEffect(() => {
+    setActivityData([]);
+    setFormattedActivityData([]);
+
+    getActivityLogs().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+  }, [tab]);
+
   const handleTabClick = (tabSelection) => async e => {
     e.preventDefault();
     clearTimeout(refreshTimer);
