@@ -12,6 +12,16 @@ sfdcPipelineActions.getComponentTypes = async (postBody, getAccessToken) => {
   return response;
 };
 
+sfdcPipelineActions.getComponentTypesV2 = async (getAccessToken, cancelTokenSource, sfdcToolId, isProfiles) => {
+  const apiUrl = `/pipelines/sfdc/component-types`;
+  const postBody = {
+    "sfdcToolId": sfdcToolId,
+    "isProfiles": isProfiles
+  };
+
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 sfdcPipelineActions.getModifiedFiles = async (postBody, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/sfdc/modified-files`;   
@@ -19,6 +29,11 @@ sfdcPipelineActions.getModifiedFiles = async (postBody, getAccessToken) => {
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
   return response;
+};
+
+sfdcPipelineActions.getModifiedFilesV2 = async (getAccessToken, cancelTokenSource, postBody) => {
+  const apiUrl = `/pipelines/sfdc/modified-files`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 sfdcPipelineActions.generateXML = async (postBody, getAccessToken) => {
@@ -88,6 +103,11 @@ sfdcPipelineActions.setSelectedComponents = async (postBody, getAccessToken) => 
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
   return response;
+};
+
+sfdcPipelineActions.setSelectedComponentsV2 = async (getAccessToken, cancelTokenSource, postBody) => {
+  const apiUrl = `/pipelines/sfdc/setselectedcomponents`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 // process and set csv data
 

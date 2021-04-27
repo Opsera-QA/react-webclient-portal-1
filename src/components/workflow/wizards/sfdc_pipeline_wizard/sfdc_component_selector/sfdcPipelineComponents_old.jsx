@@ -1,28 +1,23 @@
 import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
-import { axiosApiService } from "api/apiService";
 import { Button, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faStepForward,
   faSpinner,
-  faTimes,
   faStepBackward,
-  faCheck,
-  faSquare,
   faInfoCircle
 } from "@fortawesome/free-solid-svg-icons";
 import Moment from "moment";
 import momentLocalizer from "react-widgets-moment";
 import DateTimePicker from "react-widgets/lib/DateTimePicker";
 import DropdownList from "react-widgets/lib/DropdownList";
-import "../../workflows.css";
+import "components/workflow/workflows.css";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
-import sfdcPipelineActions from "./sfdc-pipeline-actions";
+import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {isEqual} from "components/common/helpers/array-helpers";
-import DateTimeRangeInputBase from "components/common/inputs/date/DateTimeRangeInputBase";
 
 const INITIAL_COMPONENT_TYPES_FORM = {
   customerId: "", //ssoUsersID assgined at the Node layer
@@ -36,7 +31,7 @@ const INITIAL_COMPONENT_TYPES_FORM = {
   componentTypes: [],
 };
 
-const SfdcPipelineComponents = ({
+const SfdcPipelineComponents_old = ({
   pipelineId,
   stepId,
   setView,  
@@ -168,7 +163,6 @@ const SfdcPipelineComponents = ({
       return;
     }
     setWarning(false);
-    return;
   };
 
   function checkDateLimit(date) {
@@ -187,7 +181,6 @@ const SfdcPipelineComponents = ({
       return;
     }
     setWarning(false);
-    return;
   }
 
   const handleCheckAllClickComponentTypes = () => {
@@ -581,7 +574,7 @@ const AccountDropDown = ({ data, setAccount, isLoading }) => {
   return <DropdownList data={data} busy={isLoading} valueField="id" textField="name" onChange={setAccount} />;
 };
 
-SfdcPipelineComponents.propTypes = {
+SfdcPipelineComponents_old.propTypes = {
   pipelineId: PropTypes.string,
   stepId: PropTypes.string,
   setView: PropTypes.func,
@@ -622,4 +615,4 @@ AccountDropDown.propTypes = {
   isLoading: PropTypes.bool,
 };
 
-export default SfdcPipelineComponents;
+export default SfdcPipelineComponents_old;

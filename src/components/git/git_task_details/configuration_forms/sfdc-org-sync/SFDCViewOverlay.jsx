@@ -5,7 +5,7 @@ import {AuthContext} from "contexts/AuthContext";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
-import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/sfdcPipelineWizard";
+import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import {useHistory} from "react-router-dom";
 
 function SFDCViewOverlay({ gitTasksData }) {
@@ -45,7 +45,7 @@ function SFDCViewOverlay({ gitTasksData }) {
       titleIcon={faFileInvoice}
       showToasts={true}
       isLoading={isLoading}
-      fullWidth={true}
+      // fullWidth={true}
     >
       <div className={"p-3"}>
         <SfdcPipelineWizard gitTaskData={gitTasksData} closePanel={closePanel} />
