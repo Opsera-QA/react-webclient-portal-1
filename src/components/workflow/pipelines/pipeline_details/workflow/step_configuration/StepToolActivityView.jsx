@@ -1,63 +1,63 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "contexts/AuthContext";  
+import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faSpinner, faSync } from "@fortawesome/free-solid-svg-icons";
 
-function StepToolActivityView({ pipelineId, stepId, tool_identifier, handleClose, itemState }) {
+function StepToolActivityView({ pipelineId, stepId, runCount, tool_identifier, handleClose, itemState }) {
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setLoading] = useState(false);
   const [errors, setErrors] = useState(false);
   const [data, setData] = useState("");
   const [timer, setTimer] = useState();
-    
+
   useEffect(() => {
-    if (pipelineId && stepId && tool_identifier) {
-      setLoading(true);
-
-      //first do a delayed call to get initial data (rather than waiting 30 seconds)
-      setTimeout(async function () {
-        await loadFormData(pipelineId, stepId, tool_identifier);
-      }, 5000);
-
-      const timerInterval = startTimer();
-      setTimer(timerInterval);      
-    } else {
+    if (!pipelineId || !stepId || !tool_identifier || !runCount) {
+      setData("Error: Unable to load tool activity due to missing attributes.");
       setData("");
       clearInterval(timer);
-    }    
+      return;
+    }
+
+    setLoading(true);
+
+    //first do a delayed call to get initial data (rather than waiting 30 seconds)
+    setTimeout(async function() {
+      await loadFormData(pipelineId, stepId, tool_identifier, runCount);
+    }, 5000);
+
+    const timerInterval = startTimer();
+    setTimer(timerInterval);
+
   }, []);
 
   useEffect(() => {
-    console.log("itemState", itemState);
     if (itemState !== "running") {
       //shut it down
-      console.log("entering a shutdown sequence on timer: ", timer);
+      console.debug("entering a shutdown sequence on timer: ", timer);
       clearInterval(timer);
-      setTimeout(async function () {
-        await loadFormData(pipelineId, stepId, tool_identifier);
+
+      setTimeout(async function() {
+        await loadFormData(pipelineId, stepId, tool_identifier, runCount);
         setLoading(false);
       }, 10000);
-    } 
+    }
   }, [itemState]);
 
 
-  const loadFormData = async (pipelineId, stepId, tool_identifier) => {
+  const loadFormData = async (pipelineId, stepId, tool_identifier, runCount) => {
     try {
       setLoading(true);
       const accessToken = await getAccessToken();
       const apiUrl = `/pipelines/${pipelineId}/tool-activity/${stepId}`;
-      const urlParams = { params: { tool: tool_identifier } };
+      const urlParams = { params: { tool: tool_identifier, run_count: runCount } };
       const response = await axiosApiService(accessToken).get(apiUrl, urlParams);
-      console.log("stepId: ", stepId);
-      console.log("tool_identifier: ", tool_identifier);
-      console.log("response: ", response);
+
       if (response.data && response.data.length > 0) {
         setData(response.data);
       }
-    }
-    catch (err) {
+    } catch (err) {
       console.log(err.message);
       setErrors(err.message);
     }
@@ -69,7 +69,7 @@ function StepToolActivityView({ pipelineId, stepId, tool_identifier, handleClose
     const timerInterval = setInterval(async function() {
       counter++;
       console.log("checking data round ", counter);
-      await loadFormData(pipelineId, stepId, tool_identifier);      
+      await loadFormData(pipelineId, stepId, tool_identifier, runCount);
       if (counter > 9) {
         clearInterval(timerInterval);
         setLoading(false);
@@ -90,17 +90,21 @@ function StepToolActivityView({ pipelineId, stepId, tool_identifier, handleClose
     <>
       <div className="console-text workflow-tool-activity-container">
         <div style={{ minHeight: "15px" }}>
-          {isLoading ? 
-            <FontAwesomeIcon icon={faSpinner} fixedWidth size="sm" spin /> 
-            :  
+          {isLoading ?
+            <FontAwesomeIcon icon={faSpinner} fixedWidth size="sm" spin />
+            :
             <FontAwesomeIcon icon={faSync} fixedWidth
-              style={{ cursor: "pointer" }}
-              onClick={() => { loadFormData(pipelineId, stepId, tool_identifier); }} /> }
+                             style={{ cursor: "pointer" }}
+                             onClick={() => {
+                               loadFormData(pipelineId, stepId, tool_identifier);
+                             }} />}
           <div className="text-right float-right">
             <FontAwesomeIcon icon={faTimes} fixedWidth
-              style={{ cursor: "pointer" }}
-              onClick={() => { handleCloseWindow(); }} />
-          </div>      
+                             style={{ cursor: "pointer" }}
+                             onClick={() => {
+                               handleCloseWindow();
+                             }} />
+          </div>
         </div>
         <div className="workflow-tool-activity-window">
           {data && data.length > 0 ? data : <>Loading tool activity, please stand by...</>}
@@ -108,15 +112,15 @@ function StepToolActivityView({ pipelineId, stepId, tool_identifier, handleClose
       </div>
     </>);
 }
-    
 
 
 StepToolActivityView.propTypes = {
   pipelineId: PropTypes.string,
   stepId: PropTypes.string,
   tool_identifier: PropTypes.string,
+  runCount: PropTypes.number,
   handleClose: PropTypes.func,
-  itemState: PropTypes.string
+  itemState: PropTypes.string,
 };
 
 export default StepToolActivityView;
