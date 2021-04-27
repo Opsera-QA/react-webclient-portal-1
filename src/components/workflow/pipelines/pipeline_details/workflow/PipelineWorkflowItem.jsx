@@ -60,7 +60,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
     });
 
     const { run_count } = pipeline.workflow;
-    console.log(pipeline.workflow);
+
     setRunCountState(run_count);
 
   }, [JSON.stringify(item), lastStep, JSON.stringify(pipeline.workflow)]);
