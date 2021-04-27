@@ -252,7 +252,7 @@ const SfdcPipelineComponentSelector = ({
   const getPrefixField = () => {
     return (
       <Col sm={12} lg={6}>
-        <div className="text-muted pl-1 pb-1"><OverlayTrigger
+        <div className="text-muted pb-1"><OverlayTrigger
           placement="right"
           delay={{show: 250, hide: 400}}
           overlay={renderTooltip("Managed components with given NamespacePrefix will be included. Custom components prefixed with the given Prefix will be included")}
@@ -288,7 +288,7 @@ const SfdcPipelineComponentSelector = ({
           className="fa-pull-right pointer pr-1"
           onClick={() => document.body.click()}
         /></OverlayTrigger>
-        <div className="text-muted pl-1 pb-1">Types:</div>
+        <div className="text-muted pb-1">Types:</div>
 
         <Form.Group controlId="formBasicCheckbox" className="ml-1 d-flex">
           <Form.Check
