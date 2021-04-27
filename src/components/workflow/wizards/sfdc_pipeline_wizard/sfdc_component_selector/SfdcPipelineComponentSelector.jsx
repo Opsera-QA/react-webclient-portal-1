@@ -252,26 +252,27 @@ const SfdcPipelineComponentSelector = ({
   const getPrefixField = () => {
     return (
       <Col sm={12} lg={6}>
-        <div className="text-muted pb-1"><OverlayTrigger
-          placement="right"
-          delay={{show: 250, hide: 400}}
-          overlay={renderTooltip("Managed components with given NamespacePrefix will be included. Custom components prefixed with the given Prefix will be included")}
-        ><FontAwesomeIcon
-          icon={faInfoCircle}
-          className="fa-pull-right pointer mt-1"
-          onClick={() => document.body.click()}
-        /></OverlayTrigger>Prefix:
+        <div className={"my-2"}>
+          <div className="text-muted pb-1"><OverlayTrigger
+            placement="right"
+            delay={{show: 250, hide: 400}}
+            overlay={renderTooltip("Managed components with given NamespacePrefix will be included. Custom components prefixed with the given Prefix will be included")}
+          ><FontAwesomeIcon
+            icon={faInfoCircle}
+            className="fa-pull-right pointer mt-1"
+            onClick={() => document.body.click()}
+          /></OverlayTrigger>Prefix:
+          </div>
+          <Form.Group controlId="nameSpacePrefix">
+            <Form.Control
+              maxLength="50"
+              type="text"
+              placeholder=""
+              value={nameSpacePrefix || ""}
+              onChange={(e) => setNameSpacePrefix(e.target.value)}
+            />
+         </Form.Group>
         </div>
-        <Form.Group controlId="nameSpacePrefix">
-          <Form.Control
-            maxLength="50"
-            type="text"
-            placeholder=""
-            value={nameSpacePrefix || ""}
-            className={"mb-1"}
-            onChange={(e) => setNameSpacePrefix(e.target.value)}
-          />
-        </Form.Group>
       </Col>
     );
   };
@@ -279,66 +280,68 @@ const SfdcPipelineComponentSelector = ({
   const getManagedComponentsField = () => {
     return (
       <Col sm={12} lg={6}>
-        <OverlayTrigger
-          placement="left"
-          delay={{show: 250, hide: 400}}
-          overlay={renderTooltip("Select whether managed, custom, or all components will be included")}
-        ><FontAwesomeIcon
-          icon={faInfoCircle}
-          className="fa-pull-right pointer mt-1"
-          onClick={() => document.body.click()}
-        /></OverlayTrigger>
-        <div className="text-muted pb-1">Types:</div>
+        <div className={"my-2"}>
+          <OverlayTrigger
+            placement="left"
+            delay={{show: 250, hide: 400}}
+            overlay={renderTooltip("Select whether managed, custom, or all components will be included")}
+          ><FontAwesomeIcon
+            icon={faInfoCircle}
+            className="fa-pull-right pointer mt-1"
+            onClick={() => document.body.click()}
+          /></OverlayTrigger>
+          <div className="text-muted pb-1">Types:</div>
 
-        <Form.Group controlId="formBasicCheckbox" className="ml-1 d-flex">
-          <Form.Check
-            inline
-            type={"checkbox"}
-            label="Managed"
-            name="managed"
-            checked={formData.managed ? formData.managed : false}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                managed: e.target.checked,
-                custom: false,
-                all: false,
-              })
-            }
-          />
+          <Form.Group controlId="formBasicCheckbox" className="ml-1 d-flex">
+            <Form.Check
+              inline
+              type={"checkbox"}
+              label="Managed"
+              name="managed"
+              checked={formData.managed ? formData.managed : false}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  managed: e.target.checked,
+                  custom: false,
+                  all: false,
+                })
+              }
+            />
 
-          <Form.Check
-            inline
-            type={"checkbox"}
-            label="Custom"
-            name="custom"
-            checked={formData.custom ? formData.custom : false}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                managed: false,
-                custom: e.target.checked,
-                all: false,
-              })
-            }
-          />
+            <Form.Check
+              inline
+              type={"checkbox"}
+              label="Custom"
+              name="custom"
+              checked={formData.custom ? formData.custom : false}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  managed: false,
+                  custom: e.target.checked,
+                  all: false,
+                })
+              }
+            />
 
-          <Form.Check
-            inline
-            type={"checkbox"}
-            label="All"
-            name="all"
-            checked={formData.all ? formData.all : false}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                managed: false,
-                custom: false,
-                all: e.target.checked,
-              })
-            }
-          />
-        </Form.Group>
+            <Form.Check
+              inline
+              type={"checkbox"}
+              label="All"
+              name="all"
+              checked={formData.all ? formData.all : false}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  managed: false,
+                  custom: false,
+                  all: e.target.checked,
+                })
+              }
+            />
+          </Form.Group>
+        </div>
       </Col>
     );
   };
