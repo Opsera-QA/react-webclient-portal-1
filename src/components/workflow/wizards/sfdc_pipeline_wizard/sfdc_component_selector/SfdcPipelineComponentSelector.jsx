@@ -258,7 +258,7 @@ const SfdcPipelineComponentSelector = ({
           overlay={renderTooltip("Managed components with given NamespacePrefix will be included. Custom components prefixed with the given Prefix will be included")}
         ><FontAwesomeIcon
           icon={faInfoCircle}
-          className="fa-pull-right pointer pr-1"
+          className="fa-pull-right pointer"
           onClick={() => document.body.click()}
         /></OverlayTrigger>Prefix:
         </div>
@@ -285,7 +285,7 @@ const SfdcPipelineComponentSelector = ({
           overlay={renderTooltip("Select whether managed, custom, or all components will be included")}
         ><FontAwesomeIcon
           icon={faInfoCircle}
-          className="fa-pull-right pointer pr-1"
+          className="fa-pull-right pointer"
           onClick={() => document.body.click()}
         /></OverlayTrigger>
         <div className="text-muted pb-1">Types:</div>
