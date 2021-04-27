@@ -47,6 +47,7 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
   const [isLoading, setIsLoading] = useState(false);
   const [isToolSet, setIsToolSet] = useState(false);
   const [showSummaryModal, setShowSummaryModal] = useState(false);
+  const [runCountState, setRunCountState] = useState(undefined);
 
   const authorizedAction = (action, owner) => {
     let objectRoles = pipeline?.roles;
@@ -57,6 +58,11 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
     loadFormData(item, lastStep, index, plan).catch(error => {
       throw error;
     });
+
+    const { run_count } = pipeline.workflow;
+    console.log(pipeline.workflow);
+    setRunCountState(run_count);
+
   }, [JSON.stringify(item), lastStep, JSON.stringify(pipeline.workflow)]);
 
 
@@ -489,9 +495,11 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
         showModal={showSummaryModal}
       />
 
+
       {showToolActivity && <StepToolActivityView pipelineId={pipelineId}
                                                  stepId={item._id}
                                                  itemState={itemState}
+                                                 runCount={runCountState}
                                                  tool_identifier={item.tool.tool_identifier}
                                                  handleClose={() => setShowToolActivity(false)}/>}
     </>
