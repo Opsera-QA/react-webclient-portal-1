@@ -7,8 +7,8 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 
-function TerrascanPipelineStepConfigurationSummaryPanel({ commandLinePipelineDataObject, pipelineData, setActiveTab }) {
-  if (commandLinePipelineDataObject == null) {
+function TerrascanPipelineStepConfigurationSummaryPanel({ terrascanLinePipelineDataObject, pipelineData, setActiveTab }) {
+  if (terrascanLinePipelineDataObject == null) {
     return <LoadingDialog size="sm" />;
   }
 
@@ -16,30 +16,36 @@ function TerrascanPipelineStepConfigurationSummaryPanel({ commandLinePipelineDat
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={commandLinePipelineDataObject} fieldName={"toolName"}/>
+          <TextFieldBase dataObject={terrascanLinePipelineDataObject} fieldName={"toolName"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={commandLinePipelineDataObject} fieldName={"toolJobName"}/>
+          <TextFieldBase dataObject={terrascanLinePipelineDataObject} fieldName={"toolJobName"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={commandLinePipelineDataObject} fieldName={"type"}/>
+          <TextFieldBase dataObject={terrascanLinePipelineDataObject} fieldName={"terrascanConfigFilePath"}/>
         </Col>
-        {/* <Col lg={6}>
-          <TextFieldBase dataObject={commandLinePipelineDataObject} fieldName={"gitToolId"}/>
-        </Col> */}
         <Col lg={6}>
-          <JsonField dataObject={commandLinePipelineDataObject} fieldName={"dependencyType"} />
+          <TextFieldBase dataObject={terrascanLinePipelineDataObject} fieldName={"platform"}/>
         </Col>
-        {/* <Col lg={6}>
-          <JsonField dataObject={commandLinePipelineDataObject} fieldName={"dependencies"} />
-        </Col> */}
+        <Col lg={6}>
+          <TextFieldBase dataObject={terrascanLinePipelineDataObject} fieldName={"repository"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={terrascanLinePipelineDataObject} fieldName={"gitBranch"}/>
+        </Col>
+        <Col lg={6}>
+          <JsonField dataObject={terrascanLinePipelineDataObject} fieldName={"rules"} />
+        </Col>
+        <Col lg={6}>
+          <JsonField dataObject={terrascanLinePipelineDataObject} fieldName={"dependencyType"} />
+        </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
   );
 }
 
 TerrascanPipelineStepConfigurationSummaryPanel.propTypes = {
-  commandLinePipelineDataObject: PropTypes.object,
+  terrascanLinePipelineDataObject: PropTypes.object,
   pipelineData: PropTypes.object,
   setActiveTab: PropTypes.func
 };

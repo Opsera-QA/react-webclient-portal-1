@@ -29,7 +29,6 @@ const terrascanStepFormMetadata = {
     {
       label: "Jenkins Job Type",
       id: "toolJobType",
-      // isRequired: true
     },
     {
       label: "Step Job Type",
@@ -70,13 +69,11 @@ const terrascanStepFormMetadata = {
     {
       label: "GIT URL",
       id: "gitUrl",
-      // isRequired: true
     },
     
     {
       label: "GIT SSH URL",
       id: "sshUrl",
-      // isRequired: true
     },
     
     {
@@ -88,12 +85,10 @@ const terrascanStepFormMetadata = {
     {
       label: "Workspace",
       id: "workspace",
-      // isRequired: true
     },
     {
       label: "Workspace/Project",
       id: "workspaceName",
-      // isRequired: true
     },
 
     {
@@ -109,7 +104,6 @@ const terrascanStepFormMetadata = {
     {
       label: "Dependency",
       id: "dependencyType",
-      // isRequired: true
     },
     {
       label: "Output Path",
@@ -126,12 +120,10 @@ const terrascanStepFormMetadata = {
     },
     {
       id: "dependencies",
-      // isRequired: true
     },
     {
       label: "Jenkins Agent",
       id: "agentLabels",
-      // isRequired: true
     },
     {
       label: "Auto-Scaling Enabled?",

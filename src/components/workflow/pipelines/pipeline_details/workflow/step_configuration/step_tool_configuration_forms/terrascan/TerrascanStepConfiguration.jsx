@@ -106,8 +106,8 @@ function TerrascanStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       <TextInputBase dataObject={terrascanStepConfigurationDto} fieldName={"terrascanConfigFilePath"} setDataObject={setTerrascanStepConfigurationDataDto}/>
       <TerrascanPlatformSelectInput dataObject={terrascanStepConfigurationDto} setDataObject={setTerrascanStepConfigurationDataDto} />
       <TerrascanRulesInput dataObject={terrascanStepConfigurationDto} setDataObject={setTerrascanStepConfigurationDataDto} platform={terrascanStepConfigurationDto.getData("platform")} />
-      <TextInputBase setDataObject={terrascanStepConfigurationDto} dataObject={setTerrascanStepConfigurationDataDto} fieldName={"outputPath"} />
-      <TextInputBase setDataObject={terrascanStepConfigurationDto} dataObject={setTerrascanStepConfigurationDataDto} fieldName={"outputFileName"} />
+      <TextInputBase setDataObject={setTerrascanStepConfigurationDataDto} dataObject={terrascanStepConfigurationDto} fieldName={"outputPath"} />
+      <TextInputBase setDataObject={setTerrascanStepConfigurationDataDto} dataObject={terrascanStepConfigurationDto} fieldName={"outputFileName"} />
     </PipelineStepEditorPanelContainer>
   );
 }
