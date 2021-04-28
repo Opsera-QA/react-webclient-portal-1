@@ -24,6 +24,7 @@ import ValidateProjectButton from "./input/ValidateProjectButton";
 import RollbackToggleInput from "./input/RollbackToggleInput";
 import OctopusDeploymentVariables from "./input/OctopusDeploymentVariables";
 import OctopusSpecifyDepVarsToggle from "./input/OctopusSpecifyDepVarsToggle";
+import OctopusProtocolInput from "./input/OctopusProtocolInput";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -349,6 +350,32 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                     />
                   </>
                 )}
+              </>
+            )}
+            {octopusStepConfigurationDto &&
+            octopusStepConfigurationDto.getData("octopusPlatformType") &&
+            octopusStepConfigurationDto.getData("octopusPlatformType") === "Package" && (
+              <>
+                <TextInputBase
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  dataObject={octopusStepConfigurationDto}
+                  fieldName={"websiteName"}                  
+                />
+                <TextInputBase
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  dataObject={octopusStepConfigurationDto}
+                  fieldName={"appPoolName"}
+                />
+                <OctopusProtocolInput 
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  fieldName={"protocol"}
+                />
+                <TextInputBase
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  dataObject={octopusStepConfigurationDto}
+                  fieldName={"bindingPort"}
+                />
               </>
             )}
           <Row className="mx-1 py-2">

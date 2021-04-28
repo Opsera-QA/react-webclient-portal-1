@@ -72,4 +72,18 @@ octopusActions.createOctopusProject = async (toolDataDto, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
+octopusActions.fetchIisThumbprint = async (toolID, getAccessToken, cancelTokenSource) => {  
+  const apiUrl = `tools/octopus/${toolID}/thumbprint`;  
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+octopusActions.validateIisConfig = async (toolDataDto, getAccessToken, cancelTokenSource) => {
+  const toolID = toolDataDto.data.toolId;
+  const postBody = {
+    data: toolDataDto.getPersistData()    
+  };
+  const apiUrl = `registry/action/octopus/${toolID}/validate-iis-config`;  
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 export default octopusActions;
