@@ -7,7 +7,7 @@ import GitActionsHelper
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/helpers/git-actions-helper";
 function ScmAccountReviewerInput({dataObject, setDataObject, disabled}) {    
 
-    const { getAccessToken, getUserRecord } = useContext(AuthContext);
+    const { getAccessToken } = useContext(AuthContext);
     const toastContext = useContext(DialogToastContext);
     const [reviewers, setReviewers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
