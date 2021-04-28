@@ -4,8 +4,9 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import toolsActions from "components/inventory/tools/tools-actions";
-
-function ScmAccountReviewerInput({dataObject, setDataObject, disabled}) {
+import GitActionsHelper
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/helpers/git-actions-helper";
+function ScmAccountReviewerInput({dataObject, setDataObject, disabled}) {    
 
     const { getAccessToken, getUserRecord } = useContext(AuthContext);
     const toastContext = useContext(DialogToastContext);
@@ -37,20 +38,18 @@ function ScmAccountReviewerInput({dataObject, setDataObject, disabled}) {
 
     const getReviewers = async () => {
 
-        const user = await getUserRecord();
-
-        const postBody = {
-            "customerId": user._id,
-            "gitToolId": dataObject.getData("toolId"),
-            "repository": dataObject.getData("repository"),
-            "workspace": dataObject.getData("workspace")
-        };        
-        
-        const response  = await toolsActions.getScmReviewers(getAccessToken, postBody);
+        const response  = await GitActionsHelper
+                                .getReviewers(
+                                    dataObject.getData("service"), 
+                                    dataObject.getData("toolId"),                                    
+                                    dataObject.getData("repoId"), 
+                                    dataObject.getData("workspace"),
+                                    getAccessToken
+                                );
     
         if (Array.isArray(response.data.message.reviewers)) {
             setReviewers(response.data.message.reviewers);
-        }   
+        }
     };
 
     const setReviewerName = (fieldName, selectedOption) => {   
