@@ -46,10 +46,10 @@ function ScmAccountReviewerInput({dataObject, setDataObject, disabled}) {
                                     dataObject.getData("workspace"),
                                     getAccessToken
                                 );
-    
-        if (Array.isArray(response.data.message.reviewers)) {
-            setReviewers(response.data.message.reviewers);
-        }
+
+        if(response.data.status === 200 && Array.isArray(response.data.data.reviewers)){
+            setReviewers(response.data.data.reviewers);
+        }        
     };
 
     const setReviewerName = (fieldName, selectedOption) => {   
