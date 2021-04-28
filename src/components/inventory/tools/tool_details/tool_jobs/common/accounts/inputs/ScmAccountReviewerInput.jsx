@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import toolsActions from "components/inventory/tools/tools-actions";
 import GitActionsHelper
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/helpers/git-actions-helper";
 function ScmAccountReviewerInput({dataObject, setDataObject, disabled}) {    
