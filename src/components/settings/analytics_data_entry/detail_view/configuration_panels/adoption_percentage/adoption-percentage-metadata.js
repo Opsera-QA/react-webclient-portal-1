@@ -1,5 +1,5 @@
-const cumulativeOpenDefectsMetadata = {
-  type: "Cumulative Open Defects Configuration",
+const adoptionPercentageMetadata = {
+  type: "Adoption Percentage Configuration",
   fields: [
     {
       label: "Domain Name",
@@ -72,4 +72,4 @@ const cumulativeOpenDefectsMetadata = {
   }
 };
 
-export default cumulativeOpenDefectsMetadata;
+export default adoptionPercentageMetadata;

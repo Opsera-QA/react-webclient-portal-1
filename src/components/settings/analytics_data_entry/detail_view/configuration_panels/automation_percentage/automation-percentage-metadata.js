@@ -1,4 +1,4 @@
-const cumulativeOpenDefectsMetadata = {
+const automationPercentageMetadata = {
   type: "Automation Percentage Configuration",
   fields: [
     {
@@ -72,4 +72,4 @@ const cumulativeOpenDefectsMetadata = {
   }
 };
 
-export default cumulativeOpenDefectsMetadata;
+export default automationPercentageMetadata;
