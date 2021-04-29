@@ -134,7 +134,7 @@ const octopusStepFormMetadata = {
       },
       {
         label: "Binding Port",
-        id: "bindingPort"
+        id: "port"
       },
     ],
   newObjectFields:
@@ -168,7 +168,7 @@ const octopusStepFormMetadata = {
         websiteName: "",
         appPoolName: "",
         protocol: "HTTP",
-        bindingPort: "80"
+        port: "80"
       }
   };
   
