@@ -54,9 +54,7 @@ const branchToBranchGitTaskConfigurationMetadata = {
       regexValidator: regexHelpers.regexTypes.mongoId
     },        
     {
-      id: "projectId",
-      maxLength: 20,
-      regexValidator: regexHelpers.regexTypes.generalText
+      id: "projectId"
     },
     {
       id: "gitUrl",
