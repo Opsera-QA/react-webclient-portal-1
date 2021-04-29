@@ -1,14 +1,12 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
-import { Button, Form, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Tooltip } from "react-bootstrap";
 import Moment from "moment";
 import momentLocalizer from "react-widgets-moment";
 import LoadingDialog from "components/common/status_notifications/loading";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import axios from "axios";
-import {faCheck, faDiceD20, faSquare} from "@fortawesome/pro-light-svg-icons";
 import Model from "core/data_model/model";
 import sfdcComponentsMetadata
   from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc_component_selector/sfdc-components-metadata";
@@ -37,7 +35,9 @@ const SfdcComponentListInput = ({
       cancelTokenSource.cancel();
     }
 
-    setComponentTypesModel(new Model({...sfdcComponentsMetadata.newObjectFields}, sfdcComponentsMetadata, true));
+    let newComponentTypesModel = new Model({...sfdcComponentsMetadata.newObjectFields}, sfdcComponentsMetadata, true);
+    newComponentTypesModel.setData("selectedComponentTypes", []);
+    setComponentTypesModel({...newComponentTypesModel});
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
@@ -77,29 +77,11 @@ const SfdcComponentListInput = ({
     }
   };
 
-  const handleCheckAllClickComponentTypes = () => {
-    setSelectedComponentTypes(componentTypes.filter((obj)=>{return obj.enabled;}).map(({ name }) => name));
-  };
-
-  const handleUnCheckAllClickComponentTypes = () => {
-    setSelectedComponentTypes([]);
-  };
-
   const renderTooltip = (message, props) => (
     <Tooltip id="button-tooltip" style={{"zIndex": 1500}} {...props}>
       {message.length > 0 ? message : "No file extension found."}
     </Tooltip>
   );
-
-  const handleComponentCheck = (e) => {
-    const newValue = e.target.name;
-    // console.log("selected value: " ,newValue)
-    if (e.target.checked) {
-      setSelectedComponentTypes((selectedComponentTypes) => [...selectedComponentTypes, newValue]);
-    } else {
-      setSelectedComponentTypes(selectedComponentTypes.filter((item) => item !== newValue));
-    }
-  };
 
   const searchFunction = (item, searchTerm) => {
     return item.name.toLowerCase().includes(searchTerm.toLowerCase());
@@ -149,11 +131,11 @@ const SfdcComponentListInput = ({
 
     return (`
       <div class="${className}">
-        <div class="d-flex justify-content-between mb-1">
+        <div class="d-flex justify-content-between">
             <div>${item["name"]}</div>
             <div>${enabled ? "" : "Disabled"}</div>
         </div>
-        <div class="ml-2">${value}</div>
+<!--        <div class="ml-2">${value}</div>-->
       </div>
     `);
   };
