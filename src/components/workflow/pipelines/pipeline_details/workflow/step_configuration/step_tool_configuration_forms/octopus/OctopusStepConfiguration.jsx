@@ -359,12 +359,12 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                 <TextInputBase
                   setDataObject={setOctopusStepConfigurationDataDto}
                   dataObject={octopusStepConfigurationDto}
-                  fieldName={"websiteName"}                  
+                  fieldName={"webSiteName"}                  
                 />
                 <TextInputBase
                   setDataObject={setOctopusStepConfigurationDataDto}
                   dataObject={octopusStepConfigurationDto}
-                  fieldName={"appPoolName"}
+                  fieldName={"applicationPoolName"}
                 />
                 <OctopusProtocolInput 
                   dataObject={octopusStepConfigurationDto}
@@ -374,8 +374,61 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                 <TextInputBase
                   setDataObject={setOctopusStepConfigurationDataDto}
                   dataObject={octopusStepConfigurationDto}
-                  fieldName={"bindingPort"}
+                  fieldName={"port"}
                 />
+                <OctopusDeploymentTypeInputSelect
+                  fieldName={"octopusDeploymentType"}
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  disabled={
+                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+                      ? octopusStepConfigurationDto.getData("octopusPlatformType").length === 0
+                      : true
+                  }
+                  tool_prop={
+                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+                      ? octopusStepConfigurationDto.getData("octopusPlatformType")
+                      : ""
+                  }
+                />
+                <OctopusFeedSelectInput
+                  fieldName={"octopusFeedId"}
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  disabled={
+                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+                      ? octopusStepConfigurationDto.getData("spaceName").length === 0
+                      : true
+                  }
+                  tool_prop={
+                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+                      ? octopusStepConfigurationDto.getData("spaceName")
+                      : ""
+                  }
+                />
+                <RollbackToggleInput
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  fieldName={"isRollback"}
+                />
+                {octopusStepConfigurationDto && octopusStepConfigurationDto.getData("isRollback") && (
+                  <OctopusVersionSelectInput
+                    fieldName={"octopusVersion"}
+                    dataObject={octopusStepConfigurationDto}
+                    setDataObject={setOctopusStepConfigurationDataDto}
+                    pipelineId={pipelineId}
+                    disabled={
+                      octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusFeedId")
+                        ? octopusStepConfigurationDto.getData("octopusFeedId").length === 0
+                        : true
+                    }
+                    tool_prop={
+                      octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusFeedId")
+                        ? octopusStepConfigurationDto.getData("octopusFeedId")
+                        : ""
+                    }
+                  />
+                )}
               </>
             )}
           <Row className="mx-1 py-2">
