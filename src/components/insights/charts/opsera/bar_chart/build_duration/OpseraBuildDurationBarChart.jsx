@@ -70,7 +70,6 @@ function OpseraBuildDurationBarChart({ kpiConfiguration, setKpiConfiguration, da
   };
 
   const onRowSelect = (rowData) => {
-    console.log(rowData);
     history.push(`/blueprint/${rowData.data._id.pipelineId}/${rowData.data._id.run}`);
   };
 
