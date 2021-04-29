@@ -122,11 +122,11 @@ const octopusStepFormMetadata = {
       },
       {
         label: "Website Name",
-        id: "websiteName"
+        id: "webSiteName"
       },
       {
         label: "Application Pool Name",
-        id: "appPoolName"
+        id: "applicationPoolName"
       },
       {
         label: "Protocol",
@@ -165,8 +165,8 @@ const octopusStepFormMetadata = {
         deploymentVariables: [],
         xmlConfigTransformVariableValue: "",
         structuredConfigVariablesPath: "",
-        websiteName: "",
-        appPoolName: "",
+        webSiteName: "",
+        applicationPoolName: "",
         protocol: "HTTP",
         port: "80"
       }
