@@ -359,12 +359,12 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                 <TextInputBase
                   setDataObject={setOctopusStepConfigurationDataDto}
                   dataObject={octopusStepConfigurationDto}
-                  fieldName={"websiteName"}                  
+                  fieldName={"webSiteName"}                  
                 />
                 <TextInputBase
                   setDataObject={setOctopusStepConfigurationDataDto}
                   dataObject={octopusStepConfigurationDto}
-                  fieldName={"appPoolName"}
+                  fieldName={"applicationPoolName"}
                 />
                 <OctopusProtocolInput 
                   dataObject={octopusStepConfigurationDto}
@@ -406,6 +406,29 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                       : ""
                   }
                 />
+                <RollbackToggleInput
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  fieldName={"isRollback"}
+                />
+                {octopusStepConfigurationDto && octopusStepConfigurationDto.getData("isRollback") && (
+                  <OctopusVersionSelectInput
+                    fieldName={"octopusVersion"}
+                    dataObject={octopusStepConfigurationDto}
+                    setDataObject={setOctopusStepConfigurationDataDto}
+                    pipelineId={pipelineId}
+                    disabled={
+                      octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusFeedId")
+                        ? octopusStepConfigurationDto.getData("octopusFeedId").length === 0
+                        : true
+                    }
+                    tool_prop={
+                      octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusFeedId")
+                        ? octopusStepConfigurationDto.getData("octopusFeedId")
+                        : ""
+                    }
+                  />
+                )}
               </>
             )}
           <Row className="mx-1 py-2">
