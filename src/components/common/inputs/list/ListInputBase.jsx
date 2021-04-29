@@ -161,7 +161,6 @@ function ListInputBase(
   };
 
   const selectAllOptions = () => {
-    let newDataObject = dataObject;
     let newSelections = [];
 
     if (Array.isArray(selectOptions) && selectOptions.length > 0) {
@@ -178,8 +177,7 @@ function ListInputBase(
       });
     }
 
-    newDataObject.setData(fieldName, newSelections);
-    setDataObject({...newDataObject});
+    updateValue(newSelections);
   };
 
   // TODO: Make selectAllIcon Component
