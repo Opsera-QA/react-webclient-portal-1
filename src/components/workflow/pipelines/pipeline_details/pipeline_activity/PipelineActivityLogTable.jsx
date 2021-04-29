@@ -27,7 +27,7 @@ function PipelineActivityLogTable({ formattedActivityData, unformattedData, load
     () => [
       {...getTableTextColumn(fields.find(field => { return field.id === "run_count";}), undefined, 100, FILTER_TYPES.SELECT_FILTER)},
         // , class: "cell-center no-wrap-inline"},
-      getTableTextColumn(fields.find(field => { return field.id === "step_name";}), undefined, 175, FILTER_TYPES.SELECT_FILTER),
+      getTableTextColumn(fields.find(field => { return field.id === "step_name";}), undefined, 200, FILTER_TYPES.SELECT_FILTER),
       getTableTextColumn(fields.find(field => { return field.id === "action";}), undefined, 200, FILTER_TYPES.SELECT_FILTER),
       // getTableTextColumn(fields.find(field => { return field.id === "tool_identifier";})),
       getTableTextColumn(fields.find(field => { return field.id === "message";})),

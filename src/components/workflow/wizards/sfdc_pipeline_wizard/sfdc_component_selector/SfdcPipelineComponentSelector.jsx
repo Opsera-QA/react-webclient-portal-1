@@ -27,30 +27,30 @@ import Col from "react-bootstrap/Col";
 // TODO: Should this be SfdcPipelineWizardStepOne? This should also be broken up into two separate components, one for pipeline and one for git tasks
 //  We can write it similarly to tool connection forms where it's dynamic based on inputs
 const SfdcPipelineComponentSelector = ({
-  pipelineId,
-  stepId,
-  setView,  
-  stepToolConfig,
-  sfdcToolId,
-  nameSpacePrefix,
-  setNameSpacePrefix,
-  isProfiles,
-  setSelectedComponentTypes,
-  selectedComponentTypes,
-  setSfdcComponentFilterObject,
-  formData,
-  setFormData,
-  selectedFromDate,
-  setSelectedFromDate,
-  selectedToDate, 
-  setSelectedToDate,
-  fromDate, 
-  setFromDate,
-  toDate, 
-  setToDate,
-  gitTaskData,
-  gitTaskId,
-}) => {
+                                         pipelineId,
+                                         stepId,
+                                         setView,
+                                         stepToolConfig,
+                                         sfdcToolId,
+                                         nameSpacePrefix,
+                                         setNameSpacePrefix,
+                                         isProfiles,
+                                         setSelectedComponentTypes,
+                                         selectedComponentTypes,
+                                         setSfdcComponentFilterObject,
+                                         formData,
+                                         setFormData,
+                                         selectedFromDate,
+                                         setSelectedFromDate,
+                                         selectedToDate,
+                                         setSelectedToDate,
+                                         fromDate,
+                                         setFromDate,
+                                         toDate,
+                                         setToDate,
+                                         gitTaskData,
+                                         gitTaskId,
+                                       }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(false);
   const [configurationError, setConfigurationError] = useState(false);
@@ -271,7 +271,7 @@ const SfdcPipelineComponentSelector = ({
               value={nameSpacePrefix || ""}
               onChange={(e) => setNameSpacePrefix(e.target.value)}
             />
-         </Form.Group>
+          </Form.Group>
         </div>
       </Col>
     );
@@ -405,11 +405,11 @@ const SfdcPipelineComponentSelector = ({
           <div className="text-muted">Select component types to include in this pipeline run.</div>
 
           {error && <ErrorDialog error={error} align={"top"} setError={setError} />}
-          {warning &&  
-            <div className="warning-theme warning-text text-left">
+          {warning &&
+          <div className="warning-theme warning-text text-left">
             <FontAwesomeIcon icon={faInfoCircle} fixedWidth className="mr-1" style={{cursor: "help"}}/>
             You have selected a large date range and as such this may take some time to complete.
-            </div>
+          </div>
           }
 
           {getComponentsBody()}
