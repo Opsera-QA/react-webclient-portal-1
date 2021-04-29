@@ -224,9 +224,9 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
             <FontAwesomeIcon size="lg" icon={faCodeBranch} fixedWidth/> <span
             className="menu-text">Git</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/update">
-            <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
-            className="menu-text">Updates</span></NavLink>
+          {/*<NavLink className="nav-link" activeClassName="chosen" to="/update">*/}
+          {/*  <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span*/}
+          {/*  className="menu-text">Updates</span></NavLink>*/}
           <NavLink className="nav-link" activeClassName="chosen" to="/settings">
             <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span
             className="menu-text">Settings</span></NavLink>
@@ -292,9 +292,9 @@ function SaasUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHideIte
             <FontAwesomeIcon size="lg" icon={faCodeBranch} fixedWidth/> <span
             className="menu-text">Git</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/update">
-            <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
-            className="menu-text">Updates</span></NavLink>
+          {/*<NavLink className="nav-link" activeClassName="chosen" to="/update">*/}
+          {/*  <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span*/}
+          {/*  className="menu-text">Updates</span></NavLink>*/}
           <NavLink className="nav-link" activeClassName="chosen" to="/settings">
             <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span
             className="menu-text">Settings</span></NavLink>
@@ -357,9 +357,9 @@ function AccountAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFla
             <FontAwesomeIcon size="lg" icon={faCodeBranch} fixedWidth/> <span
             className="menu-text">Git</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/update">
-            <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
-            className="menu-text">Updates</span></NavLink>
+          {/*<NavLink className="nav-link" activeClassName="chosen" to="/update">*/}
+          {/*  <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span*/}
+          {/*  className="menu-text">Updates</span></NavLink>*/}
           <NavLink className="nav-link" activeClassName="chosen" to="/settings">
             <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span
             className="menu-text">Settings</span></NavLink>
@@ -421,9 +421,9 @@ function AccountPowerUserNav({ accessRole, featureFlagHideItemInProd, featureFla
             <FontAwesomeIcon size="lg" icon={faCodeBranch} fixedWidth/> <span
             className="menu-text">Git</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/update">
-            <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span
-            className="menu-text">Updates</span></NavLink>
+          {/*<NavLink className="nav-link" activeClassName="chosen" to="/update">*/}
+          {/*  <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span*/}
+          {/*  className="menu-text">Updates</span></NavLink>*/}
           <NavLink className="nav-link" activeClassName="chosen" to="/settings">
             <FontAwesomeIcon size="lg" icon={faCogs} fixedWidth/> <span
             className="menu-text">Settings</span></NavLink>
