@@ -374,7 +374,37 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                 <TextInputBase
                   setDataObject={setOctopusStepConfigurationDataDto}
                   dataObject={octopusStepConfigurationDto}
-                  fieldName={"bindingPort"}
+                  fieldName={"port"}
+                />
+                <OctopusDeploymentTypeInputSelect
+                  fieldName={"octopusDeploymentType"}
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  disabled={
+                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+                      ? octopusStepConfigurationDto.getData("octopusPlatformType").length === 0
+                      : true
+                  }
+                  tool_prop={
+                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+                      ? octopusStepConfigurationDto.getData("octopusPlatformType")
+                      : ""
+                  }
+                />
+                <OctopusFeedSelectInput
+                  fieldName={"octopusFeedId"}
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  disabled={
+                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+                      ? octopusStepConfigurationDto.getData("spaceName").length === 0
+                      : true
+                  }
+                  tool_prop={
+                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+                      ? octopusStepConfigurationDto.getData("spaceName")
+                      : ""
+                  }
                 />
               </>
             )}

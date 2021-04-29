@@ -18,14 +18,14 @@ function OctopusProtocolInput ({fieldName, dataObject, setDataObject}) {
     const handleProtocolSelection = (fieldName, selectedOption) => {
         let newDataObject = dataObject;
         newDataObject.setData(fieldName, selectedOption.value);
-        selectedOption.value === 'http' ? newDataObject.setData("bindingPort", "80") : newDataObject.setData("bindingPort", "443");
+        selectedOption.value === 'http' ? newDataObject.setData("port", "80") : newDataObject.setData("port", "443");
         setDataObject({ ...newDataObject });
     };
 
     const clearProtocolSelection = () => {
         let newDataObject = dataObject;
         newDataObject.setData(fieldName, "");
-        newDataObject.setData("bindingPort", "");
+        newDataObject.setData("port", "");
         setDataObject({ ...newDataObject });
     };
 
