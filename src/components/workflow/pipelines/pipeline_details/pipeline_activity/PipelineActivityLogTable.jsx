@@ -14,8 +14,11 @@ import PipelineRunFilter from "components/common/filters/pipelines/activity_logs
 import FilterContainer from "components/common/table/FilterContainer";
 import PipelineTaskDetailViewer from "components/common/modal/PipelineTaskDetailViewer";
 import ExportPipelineActivityLogButton from "components/common/buttons/export/pipelines/ExportPipelineActivityLogButton";
-import TreeTableBase from "components/common/table/TreeTableBase";
 import BooleanFilter from "components/common/filters/boolean/BooleanFilter";
+import TableBase from "components/common/table/TableBase";
+import TreeBase from "components/common/tree/TreeBase";
+import TreeAndTableBase from "components/common/table/TreeAndTableBase";
+import PaginationContainer from "components/common/pagination/PaginationContainer";
 
 function PipelineActivityLogTable({ formattedActivityData, unformattedData, loadData, isLoading, pipeline, pipelineActivityFilterDto, setPipelineActivityFilterDto }) {
   const fields = pipelineActivityMetadata.fields;
@@ -76,20 +79,55 @@ function PipelineActivityLogTable({ formattedActivityData, unformattedData, load
     return ("Pipeline activity data has not been generated yet. Once this pipeline begins running, it will publish details here.");
   };
 
-  const getPipelineActivityTable = () => {
+  const getTable = () => {
     return (
-      <TreeTableBase
+      <TableBase
         columns={columns}
         data={formattedActivityData}
         isLoading={isLoading}
         noDataMessage={getNoDataMessage()}
         onRowSelect={onRowSelect}
-        loadData={loadData}
-        paginationDto={pipelineActivityFilterDto}
-        setPaginationDto={setPipelineActivityFilterDto}
         handleExpansion={handleExpansion}
+        treeComponent={<TreeBase data={dataset}/>}
       />
     );
+  };
+
+  const getTree = () => {
+    return (
+      <div className={"w-25"}>
+        <TreeBase data={dataset}/>
+      </div>
+    );
+  };
+
+  const getPipelineActivityTable = () => {
+    return (
+      <PaginationContainer
+        loadData={loadData}
+        setFilterDto={setPipelineActivityFilterDto}
+        filterDto={pipelineActivityFilterDto}
+        isLoading={isLoading}
+      >
+        <div className={"d-flex w-100"}>
+          {getTable()}
+        </div>
+      </PaginationContainer>
+    );
+
+
+    // return (
+    //   <TreeAndTableBase
+    //     data={formattedActivityData}
+    //     isLoading={isLoading}
+    //     noDataMessage={getNoDataMessage()}
+    //     tableComponent={getTable()}
+    //     loadData={loadData}
+    //     paginationModel={pipelineActivityFilterDto}
+    //     setPaginationModel={setPipelineActivityFilterDto}
+    //     treeComponent={getTree()}
+    //   />
+    // );
   };
 
   const getDropdownFilters = () => {
@@ -103,8 +141,67 @@ function PipelineActivityLogTable({ formattedActivityData, unformattedData, load
     );
   };
 
+  const dataset = [
+    {
+      "value": "Books",
+      "id": "books",
+      "opened": true,
+      "items": [
+        {
+          "value": "History",
+          "id": "history",
+          "items": [{
+            "value": "John Mack Faragher",
+            "id": "jmf",
+            "icon": {
+              "folder": "fas fa-book",
+              "openFolder": "fas fa-book-open",
+              "file": "fas fa-file"
+            }
+          },
+            {
+              "value": "Jim Dwyer",
+              "id": "jd"
+            },
+            {
+              "value": "Larry Schweikart",
+              "id": "ls"
+            }]
+        },
+        {
+          "value": "Fiction & Fantasy",
+          "id": "fantasy",
+          "items": [{
+            "value": "Audrey Niffenegger",
+            "id": "af"
+          },
+            {
+              "value": "Philip Roth",
+              "id": "pr"
+            }]
+        },
+        {
+          "value": "Teens",
+          "id": "teens",
+          "items": [{
+            "value": "Joss Whedon",
+            "id": "jw"
+          },
+            {
+              "value": "Meg Cabot",
+              "id": "mc"
+            },
+            {
+              "value": "Garth Nix",
+              "id": "gn"
+            }]
+        }
+      ]
+    }
+  ];
+
   return (
-    <div>
+    <div className={"mr-2"}>
       <FilterContainer
         showBorder={false}
         loadData={loadData}
