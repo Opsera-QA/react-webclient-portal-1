@@ -48,6 +48,12 @@ export const itemArray = [
   },
 
   {
+    "name": "Terrascan Version 1.4.0",
+    "dependencyType" : "terrascan",
+    "version": "1.4.0",
+  },
+
+  {
     "name": "Java openJDK Version 8",
     "dependencyType" : "java",
     "version": "8",

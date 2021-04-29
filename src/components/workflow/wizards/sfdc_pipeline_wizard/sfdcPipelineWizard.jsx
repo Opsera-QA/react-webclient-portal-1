@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Moment from "moment";
-import SfdcPipelineComponents from "./sfdcPipelineComponents";
+import SfdcPipelineComponentSelector from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc_component_selector/SfdcPipelineComponentSelector";
 import SfdcPipelineModifiedFiles from "./sfdcPipelineModifiedFiles";
 import ErrorDialog from "components/common/status_notifications/error";
 import SfdcPipelineXMLView from "./sfdcPipelineXMLView";
@@ -179,7 +179,7 @@ const SfdcPipelineWizard = ({
     switch (view) {
       case 1:
         return (
-          <SfdcPipelineComponents
+          <SfdcPipelineComponentSelector
             pipelineId={pipelineId}
             stepId={stepId}
             isOrgToOrg={isOrgToOrg}
@@ -337,7 +337,7 @@ const SfdcPipelineWizard = ({
     );
   } else {
     return (
-      <div className={"m-2"}>
+      <div className={"m-3"}>
         {getBody()}
       </div>
     );
