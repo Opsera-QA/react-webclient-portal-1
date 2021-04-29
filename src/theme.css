@@ -1546,9 +1546,8 @@ div.data-blocks-ellipses {
     margin: 10px auto auto;
 }
 
-/* TODO: Remove and change to w-100 if no custom styling is needed*/
 .full-width-center-overlay {
-    width: 100%;
+    margin: 10px 10px;
 }
 
 .center-overlay-shadow-background {

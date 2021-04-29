@@ -28,6 +28,11 @@ import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
 
+export const FILTER_TYPES = {
+  SEARCH_FILTER: "inputFilter",
+  SELECT_FILTER: "selectFilter",
+};
+
 const getColumnHeader = (field) => {
   return field ? [{ text: field.label }] : [{ text: "" }];
 };
@@ -43,9 +48,9 @@ export const getTableTextColumnWithoutField = (header, id) => {
   };
 };
 
-export const getTableTextColumn = (field, className, maxWidth = undefined) => {
+export const getTableTextColumn = (field, className, maxWidth = undefined, filterType = FILTER_TYPES.SEARCH_FILTER ) => {
   let header = getColumnHeader(field);
-  header.push({ content: "inputFilter" });
+  header.push({ content: filterType });
 
   return {
     header: header,
