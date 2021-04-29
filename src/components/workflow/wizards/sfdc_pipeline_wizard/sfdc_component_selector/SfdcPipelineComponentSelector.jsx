@@ -18,39 +18,38 @@ import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizar
 import axios from "axios";
 import sfdcComponentSelectorMetadata
   from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc_component_selector/sfdc-component-selector-metadata";
-import SfdcComponentListInput_old
-  from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc_component_selector/SfdcComponentListInput_old";
 import SfdcComponentListInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc_component_selector/SfdcComponentListInput";
 import Col from "react-bootstrap/Col";
 
 // TODO: Should this be SfdcPipelineWizardStepOne? This should also be broken up into two separate components, one for pipeline and one for git tasks
 //  We can write it similarly to tool connection forms where it's dynamic based on inputs
-const SfdcPipelineComponentSelector = ({
-                                         pipelineId,
-                                         stepId,
-                                         setView,
-                                         stepToolConfig,
-                                         sfdcToolId,
-                                         nameSpacePrefix,
-                                         setNameSpacePrefix,
-                                         isProfiles,
-                                         setSelectedComponentTypes,
-                                         selectedComponentTypes,
-                                         setSfdcComponentFilterObject,
-                                         formData,
-                                         setFormData,
-                                         selectedFromDate,
-                                         setSelectedFromDate,
-                                         selectedToDate,
-                                         setSelectedToDate,
-                                         fromDate,
-                                         setFromDate,
-                                         toDate,
-                                         setToDate,
-                                         gitTaskData,
-                                         gitTaskId,
-                                       }) => {
+const SfdcPipelineComponentSelector = (
+  {
+    pipelineId,
+    stepId,
+    setView,
+    stepToolConfig,
+    sfdcToolId,
+    nameSpacePrefix,
+    setNameSpacePrefix,
+    isProfiles,
+    setSelectedComponentTypes,
+    selectedComponentTypes,
+    setSfdcComponentFilterObject,
+    formData,
+    setFormData,
+    selectedFromDate,
+    setSelectedFromDate,
+    selectedToDate,
+    setSelectedToDate,
+    fromDate,
+    setFromDate,
+    toDate,
+    setToDate,
+    gitTaskData,
+    gitTaskId,
+  }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(false);
   const [configurationError, setConfigurationError] = useState(false);

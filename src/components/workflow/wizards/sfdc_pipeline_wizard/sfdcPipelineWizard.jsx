@@ -337,7 +337,7 @@ const SfdcPipelineWizard = ({
     );
   } else {
     return (
-      <div className={"m-2"}>
+      <div className={"m-3"}>
         {getBody()}
       </div>
     );

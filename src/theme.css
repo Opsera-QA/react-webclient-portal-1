@@ -461,8 +461,9 @@ a.text-primary:hover, a.text-primary:focus {
     vertical-align: middle;
 }
 
-.custom-table tr.inactive-row {
+.custom-table tr.inactive-row, .table-base .inactive-row {
     opacity: .6;
+    color: red;
 }
 
 .custom-table tr.expiring-within-a-week {
@@ -1546,9 +1547,8 @@ div.data-blocks-ellipses {
     margin: 10px auto auto;
 }
 
-/* TODO: Remove and change to w-100 if no custom styling is needed*/
 .full-width-center-overlay {
-    width: 100%;
+    margin: 10px 10px;
 }
 
 .center-overlay-shadow-background {
