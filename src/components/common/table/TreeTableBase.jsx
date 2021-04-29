@@ -2,25 +2,18 @@ import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import { TreeGrid } from "dhx-suite-package";
 import "dhx-suite-package/codebase/suite.css";
-import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExclamationCircle, faSpinner} from "@fortawesome/pro-light-svg-icons";
-import DtoTopPagination from "components/common/pagination/DtoTopPagination";
 import {useWindowSize} from "components/common/hooks/useWindowSize";
 
 function TreeTableBase(
   {
-    tableStyleName,
     columns,
     data,
     noDataMessage,
     onRowSelect,
     rowStyling,
     isLoading,
-    paginationDto,
-    setPaginationDto,
-    loadData,
-    scrollOnLoad,
     groupBy,
     sort,
     handleExpansion
@@ -52,7 +45,7 @@ function TreeTableBase(
       data: Array.isArray(data) && data.length > 0 ? data : [],
       htmlEnable: true,
       resizable: true,
-      // headerRowHeight: 30,
+      headerRowHeight: 30,
       rowHeight: 30,
       rowCss: (row) => {
         rowStyling ? rowStyling(row) : "";
@@ -120,43 +113,16 @@ function TreeTableBase(
     );
   };
 
-  // TODO: Replace with new paginator
-  const getNewPaginator = () => {
-    return (
-      <DtoBottomPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading}
-                           loadData={loadData} scrollOnLoad={scrollOnLoad}/>
-    );
-  };
-
-
-  return (
-    <div className={tableStyleName}>
-      <div className={"top-pagination-grid"}>
-        <DtoTopPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading} loadData={loadData} />
-      </div>
-      {getTableBody()}
-      <div className="table-footer">
-        {getNewPaginator()}
-      </div>
-    </div>
-  );
+  return (getTableBody());
 }
 
 TreeTableBase.propTypes = {
-  tableStyleName: PropTypes.string,
   columns: PropTypes.array,
   data: PropTypes.array,
   noDataMessage: PropTypes.string,
   onRowSelect: PropTypes.func,
   rowStyling: PropTypes.func,
-  initialState: PropTypes.object,
-  showHeaderText: PropTypes.bool,
   isLoading: PropTypes.bool,
-  tableTitle: PropTypes.string,
-  tableFilterBar: PropTypes.object,
-  paginationDto: PropTypes.object,
-  setPaginationDto: PropTypes.func,
-  loadData: PropTypes.func,
   scrollOnLoad: PropTypes.bool,
   groupBy: PropTypes.string,
   sort: PropTypes.any,
@@ -164,11 +130,8 @@ TreeTableBase.propTypes = {
 };
 
 TreeTableBase.defaultProps = {
-  tableStyleName: "custom-table",
-  showHeaderText: true,
   data: [],
   isLoading: false,
-  tableTitle: ""
 };
 
 export default TreeTableBase;

@@ -404,6 +404,10 @@ a.text-primary:hover, a.text-primary:focus {
     border: 1px solid #e4e4e4;
 }
 
+.dhx_grid-less-width {
+    width: 0;
+}
+
 .custom-table .dhx_grid-filter__label {
     margin-top: auto;
     margin-bottom: auto;
