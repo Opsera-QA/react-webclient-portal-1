@@ -39,7 +39,7 @@ function TreeTableBase(
 
   // Refresh width on resize
   useEffect(() => {
-    if (treeGrid) {
+    if (treeGrid && data) {
       treeGrid.config.width = null;
     }
   }, [windowSize, treeGrid]);
@@ -49,7 +49,7 @@ function TreeTableBase(
     let treeGrid = new TreeGrid(containerRef.current, {
       columns: columns,
       autoWidth: true,
-      data: data || [],
+      data: Array.isArray(data) && data.length > 0 ? data : [],
       htmlEnable: true,
       resizable: true,
       // headerRowHeight: 30,

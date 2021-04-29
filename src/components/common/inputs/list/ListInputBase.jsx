@@ -107,10 +107,9 @@ function ListInputBase(
     let currentData = findCurrentValue();
 
     if (Array.isArray(disabledOptions) && disabledOptions.length > 0) {
-      let itemDisabled = disabledOptions.find((option) => option[valueField] === item[valueField]);
+      let itemDisabled = disabledOptions.find((option) => option[valueField] === item);
 
       if (itemDisabled) {
-        console.log("item disabled: " + JSON.stringify(item));
         return false;
       }
     }
@@ -162,7 +161,6 @@ function ListInputBase(
   };
 
   const selectAllOptions = () => {
-    let newDataObject = dataObject;
     let newSelections = [];
 
     if (Array.isArray(selectOptions) && selectOptions.length > 0) {
@@ -179,8 +177,7 @@ function ListInputBase(
       });
     }
 
-    newDataObject.setData(fieldName, newSelections);
-    setDataObject({...newDataObject});
+    updateValue(newSelections);
   };
 
   // TODO: Make selectAllIcon Component
