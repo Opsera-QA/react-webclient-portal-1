@@ -461,8 +461,9 @@ a.text-primary:hover, a.text-primary:focus {
     vertical-align: middle;
 }
 
-.custom-table tr.inactive-row {
+.custom-table tr.inactive-row, .table-base .inactive-row {
     opacity: .6;
+    color: red;
 }
 
 .custom-table tr.expiring-within-a-week {

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, {useContext, useState, useEffect, useRef} from "react";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import PipelineActivityLogTable from "./pipeline_activity/PipelineActivityLogTable";
@@ -25,6 +25,7 @@ import pipelineActivityActions from "./pipeline_activity/pipeline-activity-actio
 import pipelineActivityFilterMetadata from "./pipeline_activity/pipeline-activity-filter-metadata";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
+import axios from "axios";
 
 const refreshInterval = 8000;
 
@@ -33,7 +34,8 @@ function PipelineDetailView() {
   const [error, setErrors] = useState();
   const [data, setData] = useState({});
   const [pipeline, setPipeline] = useState({});
-  const [activityData, setActivityData] = useState({});
+  const [activityData, setActivityData] = useState([]);
+  const [formattedActivityData, setFormattedActivityData] = useState([]);
   //const [stepStatus, setStepStatus] = useState({});
   const [loading, setLoading] = useState(false);
   const [softLoading, setSoftLoading] = useState(false);
@@ -53,10 +55,41 @@ function PipelineDetailView() {
   const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
   const [customerAccessRules, setCustomerAccessRules] = useState({});
 
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
   useEffect(() => {
     //console.log("Effect  1");
-    initComponent();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    initComponent(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
+
+  useEffect(() => {
+    setActivityData([]);
+    setFormattedActivityData([]);
+
+    getActivityLogs().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+  }, [tab]);
 
   const handleTabClick = (tabSelection) => async e => {
     e.preventDefault();
@@ -89,7 +122,7 @@ function PipelineDetailView() {
   }, [JSON.stringify(pipeline.workflow), refreshCount]);
 
 
-  const initComponent = async () => {
+  const initComponent = async (cancelSource = cancelTokenSource) => {
     setLoading(true);
 
     const userRecord = await getUserRecord(); //RBAC Logic
@@ -100,12 +133,12 @@ function PipelineDetailView() {
       setActiveTab(tab);
     }
 
-    await fetchData();
+    await fetchData(cancelSource);
     setLoading(false);
-    await getActivityLogs();
+    await getActivityLogs(undefined, false, cancelSource);
   };
 
-  async function fetchData() {
+  const fetchData = async (cancelSource = cancelTokenSource) => {
     console.log("Top level fetch data");
     setRefreshCount(refreshCount => refreshCount + 1);
     setSoftLoading(true);
@@ -138,7 +171,7 @@ function PipelineDetailView() {
     } finally {
       setSoftLoading(false);
     }
-  }
+  };
 
   const evaluatePipelineStatus = (pipeline) => {
     console.log("evaluating pipeline status function");
@@ -175,7 +208,7 @@ function PipelineDetailView() {
     return status;
   };
 
-  const getActivityLogs = async (filterDto = pipelineActivityFilterDto, silentLoading = false) => {
+  const getActivityLogs = async (filterDto = pipelineActivityFilterDto, silentLoading = false, cancelSource = cancelTokenSource) => {
     if (activeTab !== "summary" || logsIsLoading) {
       return;
     }
@@ -185,18 +218,121 @@ function PipelineDetailView() {
         setLogsIsLoading(true);
       }
 
-      const response = await pipelineActivityActions.getPipelineActivityLogs(pipelineActivityFilterDto, pipeline?.workflow?.run_count || "0", id, getAccessToken);
-      setActivityData(response.data);
-      const newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", response.data?.count);
-      newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-      setPipelineActivityFilterDto(() => newFilterDto);
+      const response = await pipelineActivityActions.getPipelineActivityLogsV2(getAccessToken, cancelSource, pipelineActivityFilterDto, pipeline?.workflow?.run_count || "0", id);
+      const data = response?.data;
+
+      if (data) {
+        setActivityData([...data.pipelineData]);
+        formatData([...data.pipelineData]);
+        const newFilterDto = filterDto;
+        newFilterDto.setData("totalCount", data?.count);
+        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+        setPipelineActivityFilterDto({...newFilterDto});
+      }
     } catch (err) {
       setErrors(err.message);
       console.log(err.message);
     } finally {
       setLogsIsLoading(false);
     }
+  };
+
+  // const formatData = (data) => {
+  //   const runNumbers = [];
+  //
+  //   data.forEach((row) => {
+  //     const currentRunNumber = row["run_count"];
+  //     row["parent"] = currentRunNumber;
+  //
+  //     if (!runNumbers.includes(currentRunNumber)) {
+  //       runNumbers.push(currentRunNumber);
+  //     }
+  //   });
+  //
+  //   runNumbers.forEach((runNumber) => {
+  //     data.push({"run_count": runNumber, "id": runNumber});
+  //   });
+  //
+  //   setFormattedActivityData(data);
+  // };
+
+  const formatData = (data) => {
+    const runNumbers = [];
+    const runSteps = [];
+
+    data.forEach((row) => {
+      const currentRunNumber = row.run_count;
+      const currentRunStep = row.step_name;
+      const currentStatus = row.status;
+      const createdAt = row.createdAt;
+      const lastRunStep = runSteps.length > 0 ? runSteps[runSteps.length - 1] : undefined;
+      let id;
+      let runNumberStepCount = lastRunStep != null && lastRunStep?.stepName === currentRunStep ? lastRunStep.runNumberStepCount : 0;
+
+      if (lastRunStep != null && lastRunStep.stepName !== currentRunStep) {
+        const existingRunSteps = runSteps.filter((item) => {
+          return item.runNumber === currentRunNumber && item.stepName === currentRunStep;
+        });
+
+        if (existingRunSteps.length > 0) {
+          const lastStep = existingRunSteps[existingRunSteps.length - 1];
+          runNumberStepCount = lastStep ? lastStep.runNumberStepCount + 1 : 0;
+        }
+      }
+
+      id = currentRunNumber + "-" + currentRunStep + "-" + runNumberStepCount;
+      row.parent = id;
+
+      const existingTopLogLevel = runNumbers.filter((item) => {return item.runNumber === currentRunNumber;});
+      if (existingTopLogLevel.length === 0) {
+        runNumbers.push({
+          runNumberStepCount: runNumberStepCount,
+          runNumber: currentRunNumber,
+          // stepName: currentRunStep,
+          // status: currentStatus,
+          // createdAt: createdAt,
+          // message: row.message,
+        });
+      }
+
+      const existingRunStep = runSteps.filter((item) => {return item.id === id;});
+
+      if (existingRunStep.length === 0) {
+        runSteps.push({
+          id: id,
+          runNumberStepCount: runNumberStepCount,
+          runNumber: currentRunNumber,
+          stepName: currentRunStep,
+          status: currentStatus,
+          createdAt: createdAt,
+          message: row.message,
+        });
+      }
+    });
+
+    runNumbers.forEach((runNumber) => {
+      data.push({
+        run_count: runNumber.runNumber,
+        id: runNumber.runNumber,
+        status: runNumber.status,
+        createdAt: runNumber.createdAt,
+        message: runNumber.message,
+      });
+    });
+
+    runSteps.forEach((step) => {
+      data.push({
+        run_count: step.runNumber,
+        parent: step.runNumber,
+        step_name: step.stepName,
+        id: step.id,
+        status: step.status,
+        createdAt: step.createdAt,
+        message: step.message,
+      });
+    });
+
+    setFormattedActivityData(data);
   };
 
   const fetchPlan = async (param) => {
@@ -294,11 +430,12 @@ function PipelineDetailView() {
         <div className="max-content-width-1875">
           <PipelineActivityLogTable
             pipeline={pipeline}
+            unformattedData={activityData}
             isLoading={logsIsLoading}
             loadData={getActivityLogs}
             pipelineActivityFilterDto={pipelineActivityFilterDto}
             setPipelineActivityFilterDto={setPipelineActivityFilterDto}
-            data={activityData.pipelineData}
+            formattedActivityData={formattedActivityData}
           />
         </div>
       </div>

@@ -134,6 +134,9 @@ import nunitStepFormMetadata from "./step_tool_configuration_forms/nunit/nunit-s
 import JFrogDockerPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/jfrog_artifactory_docker/JFrogDockerPipelineStepConfigurationSummaryPanel";
 import jfrogStepFormMetadata from "./step_tool_configuration_forms/jfrog_artifactory_docker/jfrog-stepForm-metadata";
+import TerrascanPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/terrascan/TerrascanPipelineStepConfigurationSummaryPanel";
+import terrascanStepFormMetadata from "./step_tool_configuration_forms/terrascan/terrascan-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -389,6 +392,13 @@ function PipelineStepConfigurationSummary({
             pipelineData={pipelineData}
             jFrogPipelineDataObject={getModelWrappedObject(jfrogStepFormMetadata)}
           />
+        );
+      case "terrascan":
+        return (
+          <TerrascanPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            terrascanLinePipelineDataObject={getModelWrappedObject(terrascanStepFormMetadata)}
+            />
         );
       default:
         return (

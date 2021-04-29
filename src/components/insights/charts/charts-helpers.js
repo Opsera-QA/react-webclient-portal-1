@@ -110,6 +110,14 @@ export function getSprintFromKpiConfiguration(kpiConfiguration) {
   return null;
 }
 
+export function getProjectFromKpiConfiguration(kpiConfiguration) {
+  if (kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "project")]?.value &&
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "project")]?.value.length > 0) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "project")].value;
+  }
+  return null;
+}
+
 export function getChartIconFromKpiConfiguration(kpiConfiguration) {
   return faChartBar;
 }

@@ -119,7 +119,23 @@ const octopusStepFormMetadata = {
         id: "octopusPhysicalPath",
         regexValidator: regexHelpers.regexTypes.pathField,
         maxLength: 100
-      }
+      },
+      {
+        label: "Website Name",
+        id: "webSiteName"
+      },
+      {
+        label: "Application Pool Name",
+        id: "applicationPoolName"
+      },
+      {
+        label: "Protocol",
+        id: "protocol"
+      },
+      {
+        label: "Binding Port",
+        id: "port"
+      },
     ],
   newObjectFields:
       {
@@ -148,7 +164,11 @@ const octopusStepFormMetadata = {
         octopusPhysicalPath: "",
         deploymentVariables: [],
         xmlConfigTransformVariableValue: "",
-        structuredConfigVariablesPath: ""
+        structuredConfigVariablesPath: "",
+        webSiteName: "",
+        applicationPoolName: "",
+        protocol: "HTTP",
+        port: "80"
       }
   };
   

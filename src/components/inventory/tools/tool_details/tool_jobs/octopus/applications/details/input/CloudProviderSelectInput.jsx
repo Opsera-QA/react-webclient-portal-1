@@ -5,13 +5,15 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import OctopusStepActions
   from "../../../../../../../../workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
+import OctopusTargetMetadata from "../../../octopus-target-metadata";
 
 function CloudProviderSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool_prop}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [cloudProviders, setCloudProviders] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a Cloud Provider (AWS or Azure)");
+  // const [placeholder, setPlaceholder] = useState("Select a Cloud Provider (AWS or Azure)");
+  const [placeholder, setPlaceholder] = useState("Select a Cloud Provider");
 
   useEffect(() => {
     if (!disabled) {
@@ -51,6 +53,11 @@ function CloudProviderSelectInput({ fieldName, dataObject, setDataObject, disabl
     if (fieldName === "cloudType") {
       let newDataObject = dataObject;
       newDataObject.setData("cloudType", value);
+      newDataObject.setData("communicationStyle", "");
+      if(value === "TentaclePassive"){
+        newDataObject.setData("communicationStyle", value);
+        newDataObject.setMetaDataFields(OctopusTargetMetadata.fieldsIis);
+      }
       setDataObject({ ...newDataObject });
       return;
     }
