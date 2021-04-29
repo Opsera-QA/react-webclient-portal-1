@@ -6,7 +6,7 @@ import CenterOverlayContainer from "components/common/overlays/center/CenterOver
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
 import {useHistory} from "react-router-dom";
-import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/sfdcPipelineWizard";
+import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 
 function SFDCViewOverlay({ gitTasksData }) {
   const toastContext = useContext(DialogToastContext);
