@@ -48,9 +48,9 @@ export const getTableTextColumnWithoutField = (header, id) => {
   };
 };
 
-export const getTableTextColumn = (field, className, maxWidth = undefined, filterType = FILTER_TYPES.SEARCH_FILTER ) => {
+export const getTableTextColumn = (field, className, maxWidth = undefined, filterType) => {
   let header = getColumnHeader(field);
-  header.push({ content: filterType });
+  // header.push({ content: filterType });
 
   return {
     header: header,
@@ -344,7 +344,7 @@ export const getTableDateColumn = (field, className, width = 150) => {
 
 export const getTableDateTimeColumn = (field, className, width = 175) => {
   let header = getColumnHeader(field);
-  header.push({ content: "inputFilter" });
+  // header.push({ content: "inputFilter" });
 
   return {
     header: header,
@@ -374,7 +374,7 @@ export const getTableDateAndTimeUntilValueColumn = (header, id, fakeColumn = "fa
 
 export const getPipelineActivityStatusColumn = (field, className) => {
   let header = getColumnHeader(field);
-  header.push({ content: "selectFilter" });
+  // header.push({ content: "selectFilter" });
 
   return {
     header: header,

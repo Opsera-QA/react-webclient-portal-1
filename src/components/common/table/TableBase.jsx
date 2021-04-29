@@ -34,7 +34,7 @@ function TableBase({ columns, data, noDataMessage, onRowSelect, rowStyling, isLo
       data: Array.isArray(data) && data.length > 0 ? data : [],
       htmlEnable: true,
       resizable: true,
-      headerRowHeight: 30,
+      // headerRowHeight: 30,
       rowHeight: 30,
       rowCss: (row) => {
         rowStyling ? rowStyling(row) : "";

@@ -28,10 +28,10 @@ function PipelineActivityLogTable({ formattedActivityData, unformattedData, load
 
   const columns = useMemo(
     () => [
-      {...getTableTextColumn(fields.find(field => { return field.id === "run_count";}), undefined, 100, FILTER_TYPES.SELECT_FILTER)},
+      {...getTableTextColumn(fields.find(field => { return field.id === "run_count";}), undefined, 100)},
         // , class: "cell-center no-wrap-inline"},
-      getTableTextColumn(fields.find(field => { return field.id === "step_name";}), undefined, 200, FILTER_TYPES.SELECT_FILTER),
-      getTableTextColumn(fields.find(field => { return field.id === "action";}), undefined, 200, FILTER_TYPES.SELECT_FILTER),
+      getTableTextColumn(fields.find(field => { return field.id === "step_name";}), undefined, 200),
+      getTableTextColumn(fields.find(field => { return field.id === "action";}), undefined, 200),
       // getTableTextColumn(fields.find(field => { return field.id === "tool_identifier";})),
       getTableTextColumn(fields.find(field => { return field.id === "message";})),
       getPipelineActivityStatusColumn(fields.find(field => { return field.id === "status";})),
