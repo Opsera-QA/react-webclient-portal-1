@@ -20,8 +20,9 @@ function BranchToBranchGitTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurati
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitCredential"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"workspace"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"repository"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"sourceBranch"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitBranch"} />        
+        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"sourceBranch"} />        
+        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitBranch"} />
+        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"deleteSourceBranch"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"reviewers"} />
       </div>
     </GitTasksSummaryCardContainer>

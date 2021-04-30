@@ -54,9 +54,7 @@ const branchToBranchGitTaskConfigurationMetadata = {
       regexValidator: regexHelpers.regexTypes.mongoId
     },        
     {
-      id: "projectId",
-      maxLength: 20,
-      regexValidator: regexHelpers.regexTypes.generalText
+      id: "projectId"
     },
     {
       id: "gitUrl",
@@ -108,7 +106,11 @@ const branchToBranchGitTaskConfigurationMetadata = {
       id: "reviewers"
     },
     {
-      id: "reviewersList"
+      id: "reviewerNames"
+    },
+    {
+      label: "Delete Source Branch",
+      id: "deleteSourceBranch"
     }
   ],
   newObjectFields:
@@ -138,7 +140,8 @@ const branchToBranchGitTaskConfigurationMetadata = {
     accountUsername: "",
     autoApprove: false,
     reviewers: [],
-    reviewersList: []
+    reviewerNames: [],
+    deleteSourceBranch: true
     }
 };
 
