@@ -65,7 +65,7 @@ const TerraformStepFormMetadata = {
     },
   ],
   newModelBase: {
-    toolActionType: "execute",
+    toolActionType: "EXECUTE",
     gitFilePath: "",
     gitRepository: "",
     defaultBranch: "",

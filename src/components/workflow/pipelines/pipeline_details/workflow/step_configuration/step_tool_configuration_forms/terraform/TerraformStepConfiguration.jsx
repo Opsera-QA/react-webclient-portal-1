@@ -36,11 +36,11 @@ const SCM_TOOL_LIST = [
 const JOB_TYPES = [
   {
     name: "Execute Script",
-    value: "execute",
+    value: "EXECUTE",
   },
   {
     name: "Delete",
-    value: "delete",
+    value: "DELETE",
   }
 ];
 
