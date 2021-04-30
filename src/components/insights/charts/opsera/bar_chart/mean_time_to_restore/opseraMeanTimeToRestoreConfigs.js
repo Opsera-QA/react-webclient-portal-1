@@ -7,5 +7,5 @@ export default (getColor, maxValue) => ({
   colors: getColor,
   enableLabel: true,
   labelTextColor: "white",
-  label: d => `${d.data.count}`
+  label: d => `#${d.data.count}`
 });
