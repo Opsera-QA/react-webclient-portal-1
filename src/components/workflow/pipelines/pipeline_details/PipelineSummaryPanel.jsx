@@ -31,12 +31,19 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import Modal from "components/common/modal/modal";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
+import TimeInput from "components/common/inputs/date/TimeInput";
 
 const INITIAL_FORM_DATA = {
   name: "",
   project: { name: "", project_id: "" },
   description: "",
   type: [],
+};
+
+const INITIAL_SCHEDULE_DATA = {
+  start: "",
+  end: "" ,
+  frequency: ""
 };
 
 // TODO: This class needs to be reworked with new components and also to cleanup
@@ -68,6 +75,7 @@ function PipelineSummaryPanel({
   const [editRoles, setEditRoles] = useState(false);
   const [editType, setEditType] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+  const [scheduleData, setScheduleData] = useState(INITIAL_SCHEDULE_DATA);
   const [approvalStep, setApprovalStep] = useState({});
   const [pipelineModel, setPipelineModel] = useState(new Model(pipeline, pipelineMetadata, false));
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
@@ -250,6 +258,10 @@ function PipelineSummaryPanel({
     setEditSchedule(false);
   };
 
+  const handleCloseScheduleModal = () => {
+    setEditSchedule(false);
+  };
+
   const handleEditPropertyClick = (type) => {
     switch (type) {
     case "name":
@@ -403,6 +415,72 @@ function PipelineSummaryPanel({
     );
   };
 
+  const updateSchedule = (value) => {
+    if(value){
+      setScheduleData({ start: value });
+      console.log(scheduleData);
+    }
+
+    if(!scheduleData.start){
+      pipelineModel.setData("schedule", new Date());
+      console.log("state not updated " + pipelineModel.data);
+    } 
+
+    if(scheduleData.start){
+      pipelineModel.setData("schedule", scheduleData.start);
+      console.log("state set. model updated " + pipelineModel.data);
+    }
+    
+    return pipelineModel;
+  };
+
+  const handleInputChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setScheduleData({
+      [name]: value
+    });
+    console.log(name);
+    console.log(value);
+    console.log(scheduleData);
+  };
+
+
+  const getSchedulerForm = () => {
+    updateSchedule();
+    return (
+      <Form inline>
+        <Form.Label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">
+          This pipeline should run 
+        </Form.Label>
+        <Form.Control
+           as="select"
+           className="my-1 mr-sm-2"
+           name="frequency"
+           onChange={handleInputChange}
+           custom
+        >
+          <option value="NONE">once</option>
+          <option value="DAY">daily</option>
+          <option value="WEEK">weekly</option>
+          <option value="MONTH">monthly</option>
+        </Form.Control>
+        <Form.Label> at </Form.Label>
+        <div className="mb-3 ml-2">
+          <TimeInput
+            name="start"
+            fieldName="schedule"
+            dataObject={pipelineModel}
+            setDataObject={setPipelineModel}
+            disabled={false}
+            setDataFunction={updateSchedule}
+          />
+        </div>  
+      </Form>
+    );
+  };
+
   if (!pipeline || Object.keys(pipeline).length <= 0) {
     return (<InformationDialog
       message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."/>);
@@ -538,16 +616,26 @@ function PipelineSummaryPanel({
           </Col>
           {editSchedule ?
             <>
+            
               <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Schedule:</span>
-                <SchedulerWidget
+              <Modal header="Schedule"
+                     message={getSchedulerForm(pipeline._id)}
+                     button="Save"
+                     size="lg"
+                     handleCancelModal={handleCloseScheduleModal}
+                     handleConfirmModal={handleCloseScheduleModal}
+                     />
+
+                {/* <SchedulerWidget
                   startDate={pipeline.workflow.schedule ? pipeline.workflow.schedule.start_date : new Date()}
                   frequency={pipeline.workflow.schedule ? pipeline.workflow.schedule.frequency : ""}
                   schedule={pipeline.workflow.schedule ? pipeline.workflow.schedule : null}
                   setEditSchedule={setEditSchedule}
-                  setSchedule={handleSetSchedule}></SchedulerWidget>
+                  setSchedule={handleSetSchedule}></SchedulerWidget> */}
               </Col>
             </> :
             <>
+
               {/*TODO: Remove FF after scheduler is fixed*/}
               {!featureFlagHideItemInProd() &&
 
