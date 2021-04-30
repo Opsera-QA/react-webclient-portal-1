@@ -406,6 +406,11 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                       : ""
                   }
                 />
+                <TextInputBase
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  fieldName={"octopusPhysicalPath"}
+                />
                 <RollbackToggleInput
                   dataObject={octopusStepConfigurationDto}
                   setDataObject={setOctopusStepConfigurationDataDto}
@@ -428,6 +433,36 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                         : ""
                     }
                   />
+                )}
+                <OctopusSpecifyDepVarsToggle
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  fieldName={"specifyDepVariables"}
+                />
+                {octopusStepConfigurationDto && octopusStepConfigurationDto.getData("specifyDepVariables") && (
+                  <>
+                    <OctopusDeploymentVariables
+                      fieldName={"deploymentVariables"}
+                      dataObject={octopusStepConfigurationDto}
+                      setDataObject={setOctopusStepConfigurationDataDto}
+                    />
+                    <TextInputBase
+                      setDataObject={setOctopusStepConfigurationDataDto}
+                      dataObject={octopusStepConfigurationDto}
+                      fieldName={"structuredConfigVariablesPath"}
+                      disabled={
+                        octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0
+                      }
+                    />
+                    <TextInputBase
+                      setDataObject={setOctopusStepConfigurationDataDto}
+                      dataObject={octopusStepConfigurationDto}
+                      fieldName={"xmlConfigTransformVariableValue"}
+                      disabled={
+                        octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0
+                      }
+                    />
+                  </>
                 )}
               </>
             )}
