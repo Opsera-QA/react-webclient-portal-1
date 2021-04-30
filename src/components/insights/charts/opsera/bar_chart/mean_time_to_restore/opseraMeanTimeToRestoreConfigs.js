@@ -4,5 +4,8 @@ export default (getColor, maxValue) => ({
   colorBy: "id",
   minValue: 0,
   layers: ["grid", "axes", "bars", "markers", "mesh", "legends"],
-  colors: getColor
+  colors: getColor,
+  enableLabel: true,
+  labelTextColor: "white",
+  label: d => `#${d.data.count}`
 });
