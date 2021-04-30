@@ -112,6 +112,9 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
 
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
+        <div style={{float: "right", fontSize: "10px"}}>
+          #- total number of deployments
+        </div>
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Planned Mean Time to Restore", "Date", 
