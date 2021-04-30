@@ -254,4 +254,21 @@ export const kpiReleaseFilterMetadata = {
   }
 };
 
+export const kpiProjectFilterMetadata = {
+  type: "Project Filter",
+  fields: [
+    {
+      label: "Type",
+      id: "type"
+    },
+    {
+      label: "Project",
+      id: "value"
+    }
+  ],
+  newObjectFields: {
+    value: []
+  }
+};
+
 export default kpiConfigurationMetadata;

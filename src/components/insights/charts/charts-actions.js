@@ -12,7 +12,8 @@ import {
   getDomainFromKpiConfiguration,
   getApplicationFromKpiConfiguration,
   getSprintFromKpiConfiguration,
-  getReleaseFromKpiConfiguration
+  getReleaseFromKpiConfiguration,
+  getProjectFromKpiConfiguration
 } from "components/insights/charts/charts-helpers";
 
 const chartsActions = {};
@@ -81,6 +82,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, canc
   const application = getApplicationFromKpiConfiguration(kpiConfiguration);
   const sprint = getSprintFromKpiConfiguration(kpiConfiguration);
   const release = getReleaseFromKpiConfiguration(kpiConfiguration);
+  const project = getProjectFromKpiConfiguration(kpiConfiguration);
 
   const postBody = {
     request: request,
@@ -98,6 +100,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, canc
     application: application,
     release: release,
     sprint: sprint,
+    project: project,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
     projectTags: projectTags,
