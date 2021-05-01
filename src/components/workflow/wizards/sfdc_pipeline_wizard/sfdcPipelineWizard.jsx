@@ -112,7 +112,8 @@ const SfdcPipelineWizard = ({
   };
 
   const getCustomUnitTestSteps = (steps) => {
-    return steps.map((step, idx) => (step.tool.configuration.jobType === "SFDC VALIDATE PACKAGE XML" || step.tool.configuration.jobType === "SFDC UNIT TESTING" || step.tool.configuration.jobType === "SFDC DEPLOY") && step.tool.configuration.sfdcUnitTestType === "RunSpecifiedTests" && step.active ? step : '').filter(String);
+    return steps.map((step, idx) => (step.tool && (
+      step.tool.configuration.jobType === "SFDC VALIDATE PACKAGE XML" || step.tool.configuration.jobType === "SFDC UNIT TESTING" || step.tool.configuration.jobType === "SFDC DEPLOY")) && step.tool.configuration.sfdcUnitTestType === "RunSpecifiedTests" && step.active ? step : '').filter(String);
   };
 
   const createJenkinsJob = async () => {
