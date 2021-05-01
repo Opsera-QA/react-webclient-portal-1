@@ -90,9 +90,9 @@ const SfdcPipelineWizard = ({
   //must find step ID of the Sfdc Jenkins Config step (typically first step and has step.tool.job_type set to "sfdc-ant")
   const loadSfdcInitStep = async (steps) => {
     let stepArrayIndex = steps.findIndex(
-      (x) => x.tool && (x.tool.job_type === "sfdc-ant" || x.tool.job_type === "sfdc-ant-profile") && x.tool.tool_identifier === "jenkins"
+      (step) => step.tool && step.active && (step.tool.job_type === "sfdc-ant" || step.tool.job_type === "sfdc-ant-profile") && step.tool.tool_identifier === "jenkins"
     );
-    console.log(stepArrayIndex);
+    // console.log(stepArrayIndex);
     if (stepArrayIndex === -1) {
       setError(
         "Warning, this pipeline is missing the default SFDC Jenkins Step needed.  Please edit the workflow and add the SFDC Ant Job setting in order to run this pipeline."
