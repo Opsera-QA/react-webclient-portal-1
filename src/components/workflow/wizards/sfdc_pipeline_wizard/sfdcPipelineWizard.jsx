@@ -95,7 +95,7 @@ const SfdcPipelineWizard = ({
     console.log(stepArrayIndex);
     if (stepArrayIndex === -1) {
       setError(
-        "Warning, this pipeline is missing the default SFDC Jenkins Step needed.  Please edit the workflow and add the SFDC Ant Job setting in order to run thsi pipeline."
+        "Warning, this pipeline is missing the default SFDC Jenkins Step needed.  Please edit the workflow and add the SFDC Ant Job setting in order to run this pipeline."
       );
     } else {
       console.log("step ID: ", steps[stepArrayIndex]._id);
