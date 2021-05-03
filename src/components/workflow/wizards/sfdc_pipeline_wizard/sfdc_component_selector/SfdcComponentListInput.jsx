@@ -135,7 +135,7 @@ const SfdcComponentListInput = ({
             <div>${item["name"]}</div>
             <div>${enabled ? "" : "Disabled"}</div>
         </div>
-<!--        <div class="ml-2">${value}</div>-->
+       <div class="ml-2">${value}</div>
       </div>
     `);
   };

@@ -1,22 +1,59 @@
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import DropdownList from "react-widgets/lib/DropdownList";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
+import {Combobox} from "dhx-suite-package";
 
-function SelectInputBase(
+// TODO: This will replace select input base after it is verified
+function TempSelectInputBase(
   {
     fieldName, dataObject, setDataObject, groupBy,
     selectOptions, valueField, textField, placeholderText,
     setDataFunction, busy, disabled, clearDataFunction,
     showClearValueButton, errorMessage, getCurrentValue,
-    showLabel, className
+    showLabel
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const comboBox = setUpComboBox();
+
+    return () => {
+      comboBox.destructor();
+    };
+  }, [dataObject, selectOptions, busy]);
+
+  const setUpComboBox = () => {
+    if (Array.isArray(selectOptions) && selectOptions.length > 0) {
+
+      selectOptions.map((item) => {
+        item.value = item[textField];
+        item.id = item[valueField];
+      });
+    }
+
+    let comboBox = new Combobox(containerRef.current, {
+      data: selectOptions,
+      placeholder: busy ? "Loading Data" : placeholderText,
+      value: findCurrentValue()
+    });
+
+    if (disabled || busy) {
+      comboBox.disable();
+    }
+    else {
+      comboBox.events.on("Change", (value) => {
+        updateValue(comboBox.getValue(value));
+      });
+    }
+
+    return comboBox;
+  };
 
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
@@ -24,12 +61,12 @@ function SelectInputBase(
     setDataObject({...newDataObject});
   };
 
-  const updateValue = (data) => {
+  const updateValue = (newValue) => {
     if (setDataFunction) {
-      setDataFunction(field?.id, data);
+      setDataFunction(field?.id, newValue);
     }
     else {
-      validateAndSetData(field?.id, data[valueField]);
+      validateAndSetData(field?.id, newValue[valueField]);
     }
   };
 
@@ -67,26 +104,15 @@ function SelectInputBase(
   }
 
   return (
-    <InputContainer className={className}>
+    <InputContainer>
       <InputLabel showLabel={showLabel} field={field} inputPopover={getClearDataIcon()} />
-      <DropdownList
-        data={selectOptions}
-        valueField={valueField}
-        textField={textField}
-        groupBy={groupBy}
-        value={findCurrentValue()}
-        filter={"contains"}
-        busy={busy}
-        placeholder={placeholderText}
-        onChange={(data) => updateValue(data)}
-        disabled={disabled}
-      />
+      <div className={"w-100"} id="select-input" ref={el => (containerRef.current = el)} />
       <InfoText field={field} errorMessage={errorMessage} />
     </InputContainer>
   );
 }
 
-SelectInputBase.propTypes = {
+TempSelectInputBase.propTypes = {
   selectOptions: PropTypes.array.isRequired,
   setDataObject: PropTypes.func,
   fieldName: PropTypes.string,
@@ -112,12 +138,12 @@ SelectInputBase.propTypes = {
   errorMessage: PropTypes.string,
   getCurrentValue: PropTypes.func,
   showLabel: PropTypes.bool,
-  className: PropTypes.string
+  v2: PropTypes.bool
 };
 
-SelectInputBase.defaultProps = {
+TempSelectInputBase.defaultProps = {
   showClearValueButton: true,
-  className: "custom-select-input my-2"
+  placeholderText: "Select One"
 };
 
-export default SelectInputBase;
+export default TempSelectInputBase;

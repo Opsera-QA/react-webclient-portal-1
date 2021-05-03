@@ -31,7 +31,7 @@ function ListInputBase(
     return () => {
       list?.destructor();
     };
-  }, [selectOptions, isLoading, searchTerm, dataObject]);
+  }, [selectOptions, isLoading, searchTerm]);
 
   const constructList = () => {
     if (Array.isArray(selectOptions) && selectOptions.length > 0) {

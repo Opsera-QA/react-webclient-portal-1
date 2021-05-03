@@ -2,9 +2,8 @@ import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {Grid} from "dhx-suite-package";
 import "dhx-suite-package/codebase/suite.css";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationCircle, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import {useWindowSize} from "components/common/hooks/useWindowSize";
+import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
 
 function TableBase({ columns, data, noDataMessage, onRowSelect, rowStyling, isLoading, sort }) {
   const containerRef = useRef(null);
@@ -12,11 +11,17 @@ function TableBase({ columns, data, noDataMessage, onRowSelect, rowStyling, isLo
   const windowSize = useWindowSize();
 
   useEffect(() => {
-    const treeGrid = setUpTreeGrid();
+    const grid = setUpGrid();
 
     return () => {
-      treeGrid.destructor();
+      grid.destructor();
     };
+  }, []);
+
+  useEffect(() => {
+    if (grid && Array.isArray(data)) {
+      grid.data.parse(data);
+    }
   }, [data]);
 
   // Refresh width on resize
@@ -27,11 +32,11 @@ function TableBase({ columns, data, noDataMessage, onRowSelect, rowStyling, isLo
   }, [windowSize, grid]);
 
 
-  const setUpTreeGrid = () => {
+  const setUpGrid = () => {
     let grid = new Grid(containerRef.current, {
       columns: columns,
       autoWidth: true,
-      data: Array.isArray(data) && data.length > 0 ? data : [],
+      data: data && Array.isArray(data) && data.length > 0 ? data : [],
       htmlEnable: true,
       resizable: true,
       headerRowHeight: 30,
@@ -56,40 +61,24 @@ function TableBase({ columns, data, noDataMessage, onRowSelect, rowStyling, isLo
   };
 
   const getTableBody = () => {
-    if (isLoading && (data == null || data.length === 0)) {
-      return (
-        <div className={"h-100 w-100 table-border"}>
-          <div className="w-100 info-text text-center p-3">
-            <div className="row" style={{ height:"150px", width: "100%"}}>
-              <div className="col-sm-12 my-auto text-center">
-                <span><FontAwesomeIcon icon={faSpinner} spin className="mr-2 mt-1"/>Loading Data</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    if (!isLoading && (data == null || data.length === 0)) {
-      return (
-        <div className={"h-100 w-100 table-border"}>
-          <div className="w-100 info-text text-center p-3">
-            <div className="row" style={{ height:"150px", width: "100%"}}>
-              <div className="col-sm-12 my-auto text-center">
-                <span><FontAwesomeIcon icon={faExclamationCircle} className="mr-2 mt-1"/>{noDataMessage}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
     return (
-      <div className={"w-100"} id="grid" style={{minHeight: "500px"}} ref={el => (containerRef.current = el)} />
+      <div
+        className={"w-100"}
+        id="grid"
+        style={{minHeight: "500px"}}
+        ref={el => (containerRef.current = el)}
+      />
     );
   };
 
-  return (getTableBody());
+  return (
+    <TableBodyLoadingWrapper
+      isLoading={isLoading}
+      data={data}
+      noDataMessage={noDataMessage}
+      tableComponent={getTableBody()}
+    />
+  );
 }
 
 TableBase.propTypes = {
