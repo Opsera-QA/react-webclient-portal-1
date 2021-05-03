@@ -33,7 +33,7 @@ const pipelineActivityMetadata = {
       id: "state"
     },
     {
-      label: "Created",
+      label: "Date",
       id: "createdAt",
     },
     {

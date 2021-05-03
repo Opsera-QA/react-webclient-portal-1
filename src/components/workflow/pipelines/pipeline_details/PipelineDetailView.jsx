@@ -1,7 +1,7 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
-import PipelineActivityLogTable from "./pipeline_activity/PipelineActivityLogTable";
+import PipelineActivityLogTable from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTable";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import InfoDialog from "components/common/status_notifications/info";
@@ -21,8 +21,8 @@ import {
 } from "@fortawesome/pro-light-svg-icons";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import Model from "../../../../core/data_model/model";
-import pipelineActivityActions from "./pipeline_activity/pipeline-activity-actions";
-import pipelineActivityFilterMetadata from "./pipeline_activity/pipeline-activity-filter-metadata";
+import pipelineActivityActions from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-actions";
+import pipelineActivityFilterMetadata from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-filter-metadata";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import axios from "axios";
@@ -237,25 +237,6 @@ function PipelineDetailView() {
     }
   };
 
-  // const formatData = (data) => {
-  //   const runNumbers = [];
-  //
-  //   data.forEach((row) => {
-  //     const currentRunNumber = row["run_count"];
-  //     row["parent"] = currentRunNumber;
-  //
-  //     if (!runNumbers.includes(currentRunNumber)) {
-  //       runNumbers.push(currentRunNumber);
-  //     }
-  //   });
-  //
-  //   runNumbers.forEach((runNumber) => {
-  //     data.push({"run_count": runNumber, "id": runNumber});
-  //   });
-  //
-  //   setFormattedActivityData(data);
-  // };
-
   const formatData = (data) => {
     const runNumbers = [];
     const runSteps = [];
@@ -430,7 +411,7 @@ function PipelineDetailView() {
         <div className="max-content-width-1875">
           <PipelineActivityLogTable
             pipeline={pipeline}
-            unformattedData={activityData}
+            pipelineLogData={activityData}
             isLoading={logsIsLoading}
             loadData={getActivityLogs}
             pipelineActivityFilterDto={pipelineActivityFilterDto}
