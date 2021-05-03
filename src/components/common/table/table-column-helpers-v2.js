@@ -48,9 +48,12 @@ export const getTableTextColumnWithoutField = (header, id) => {
   };
 };
 
-export const getTableTextColumn = (field, className, maxWidth = undefined, filterType) => {
+export const getTableTextColumn = (field, className, maxWidth = undefined, filterType ) => {
   let header = getColumnHeader(field);
-  // header.push({ content: filterType });
+
+  if (filterType) {
+    header.push({ content: filterType });
+  }
 
   return {
     header: header,
@@ -342,9 +345,12 @@ export const getTableDateColumn = (field, className, width = 150) => {
   };
 };
 
-export const getTableDateTimeColumn = (field, className, width = 175) => {
+export const getTableDateTimeColumn = (field, className, width = 175, showFilter) => {
   let header = getColumnHeader(field);
-  // header.push({ content: "inputFilter" });
+
+  if (showFilter) {
+    header.push({ content: "inputFilter" });
+  }
 
   return {
     header: header,
@@ -372,9 +378,12 @@ export const getTableDateAndTimeUntilValueColumn = (header, id, fakeColumn = "fa
   };
 };
 
-export const getPipelineActivityStatusColumn = (field, className) => {
+export const getPipelineActivityStatusColumn = (field, className, showFilter) => {
   let header = getColumnHeader(field);
-  // header.push({ content: "selectFilter" });
+
+  if (showFilter) {
+    header.push({ content: "selectFilter" });
+  }
 
   return {
     header: header,

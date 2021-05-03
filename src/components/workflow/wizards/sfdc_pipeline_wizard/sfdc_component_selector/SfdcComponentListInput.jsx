@@ -36,7 +36,7 @@ const SfdcComponentListInput = ({
     }
 
     let newComponentTypesModel = new Model({...sfdcComponentsMetadata.newObjectFields}, sfdcComponentsMetadata, true);
-    newComponentTypesModel.setData("selectedComponentTypes", []);
+    newComponentTypesModel.setData("selectedComponentTypes", selectedComponentTypes);
     setComponentTypesModel({...newComponentTypesModel});
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
@@ -89,9 +89,9 @@ const SfdcComponentListInput = ({
 
   const setDataFunction = (fieldName, newArray) => {
     let newDataObject = componentTypesModel;
-    newDataObject.setData("selectedComponentTypes", newArray);
-    newDataObject.setData("selected", newArray);
-    setSelectedComponentTypes(newArray);
+    newDataObject.setData("selectedComponentTypes", [...newArray]);
+    newDataObject.setData("selected", [...newArray]);
+    setSelectedComponentTypes([...newArray]);
     setComponentTypesModel({...newDataObject});
   };
 
@@ -135,7 +135,7 @@ const SfdcComponentListInput = ({
             <div>${item["name"]}</div>
             <div>${enabled ? "" : "Disabled"}</div>
         </div>
-<!--        <div class="ml-2">${value}</div>-->
+       <div class="ml-2">${value}</div>
       </div>
     `);
   };
