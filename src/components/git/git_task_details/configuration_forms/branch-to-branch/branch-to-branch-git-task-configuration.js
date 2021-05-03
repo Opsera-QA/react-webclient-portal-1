@@ -106,6 +106,7 @@ const branchToBranchGitTaskConfigurationMetadata = {
       id: "reviewers"
     },
     {
+      label: "Reviewers",
       id: "reviewerNames"
     },
     {
