@@ -162,6 +162,7 @@ function ListInputBase(
     let newSelections = [];
 
     if (Array.isArray(selectOptions) && selectOptions.length > 0) {
+      list.selection.remove();
       selectOptions.forEach((item) => {
         if (Array.isArray(disabledOptions) && disabledOptions.length > 0) {
           let itemDisabled = disabledOptions.find((option) => option[valueField] === item[valueField]);
