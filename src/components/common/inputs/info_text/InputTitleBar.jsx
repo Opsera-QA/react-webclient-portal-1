@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
 
-function InputTitleBar({ field, icon, isLoading, inputPopover, searchTerm, setSearchTerm, showSearchBar }) {
+function InputTitleBar({ field, icon, isLoading, inputPopover, searchTerm, setSearchTerm, showSearchBar, disabled }) {
   const getFormattedLabel = () => {
     return (
       <div className={"my-auto"}>
@@ -25,9 +25,10 @@ function InputTitleBar({ field, icon, isLoading, inputPopover, searchTerm, setSe
       return (
         <input
           placeholder="Search"
+          disabled={isLoading || disabled}
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
-          className={"input-search-filter"}
+          className={"input-search-filter px-2"}
         />
       );
     }
@@ -49,7 +50,8 @@ InputTitleBar.propTypes = {
   isLoading: PropTypes.bool,
   setSearchTerm: PropTypes.func,
   searchTerm: PropTypes.string,
-  showSearchBar: PropTypes.bool
+  showSearchBar: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
 export default InputTitleBar;
