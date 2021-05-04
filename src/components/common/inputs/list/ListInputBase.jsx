@@ -164,16 +164,16 @@ function ListInputBase(
     let newSelections = [];
 
     if (Array.isArray(selectOptions) && selectOptions.length > 0) {
-      newSelections = selectOptions.map((item) => {
+      selectOptions.forEach((item) => {
         if (Array.isArray(disabledOptions) && disabledOptions.length > 0) {
           let itemDisabled = disabledOptions.find((option) => option[valueField] === item[valueField]);
 
           if (itemDisabled) {
-            return null;
+            return;
           }
         }
 
-        return item[valueField];
+        newSelections.push(item[valueField]);
       });
     }
 
