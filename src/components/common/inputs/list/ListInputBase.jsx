@@ -17,6 +17,7 @@ function ListInputBase(
     height, icon, searchFunction, showSelectAllButton, customTemplate, disabledOptions
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
+  const [list, setList] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const containerRef = useRef(null);
@@ -64,10 +65,11 @@ function ListInputBase(
       list.data.filter();
     }
 
+    setList(list);
     return list;
   };
 
-  function template(item) {
+  const template = (item) => {
     if (customTemplate) {
       return customTemplate(item);
     }
@@ -77,7 +79,7 @@ function ListInputBase(
         <div class='item_name'>${item[textField]}</div>
       </div>
     `);
-  }
+  };
 
   const validateAndSetData = (fieldName, valueArray) => {
     let newDataObject = dataObject;
@@ -139,12 +141,8 @@ function ListInputBase(
   };
 
   const clearValue = () => {
-    if (!setDataFunction) {
-      validateAndSetData(field.id, []);
-    }
-    else if (clearDataFunction) {
-      clearDataFunction();
-    }
+    list.selection.remove();
+    updateValue([]);
   };
 
   // TODO: Make clearDataButton Component
@@ -174,6 +172,7 @@ function ListInputBase(
         }
 
         newSelections.push(item[valueField]);
+        list.selection.add(item[valueField]);
       });
     }
 
