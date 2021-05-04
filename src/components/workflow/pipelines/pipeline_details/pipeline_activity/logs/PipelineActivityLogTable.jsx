@@ -23,7 +23,6 @@ function PipelineActivityLogTable({ pipelineLogData, loadData, isLoading, pipeli
   const fields = pipelineActivityMetadata.fields;
   const [showModal, setShowModal] = useState(false);
   const [modalData, setModalData] = useState({});
-  const [treeData, setTreeData] = useState([]);
   const isMounted = useRef(false);
   const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
   const [currentStepName, setCurrentStepName] = useState(undefined);
@@ -87,15 +86,23 @@ function PipelineActivityLogTable({ pipelineLogData, loadData, isLoading, pipeli
     return ("Pipeline activity data has not been generated yet. Once this pipeline begins running, it will publish details here.");
   };
 
+  const handlePagination = (newModel) => {
+    setCurrentRunNumber(undefined);
+    setCurrentStepName(undefined);
+    loadData(newModel);
+  };
+
   const getTable = () => {
     return (
-      <TableBase
-        columns={columns}
-        data={getFilteredData()}
-        isLoading={isLoading}
-        noDataMessage={getNoDataMessage()}
-        onRowSelect={onRowSelect}
-      />
+      <div className={"tree-table"}>
+        <TableBase
+          columns={columns}
+          data={getFilteredData()}
+          isLoading={isLoading}
+          noDataMessage={getNoDataMessage()}
+          onRowSelect={onRowSelect}
+        />
+      </div>
     );
   };
 
@@ -116,7 +123,7 @@ function PipelineActivityLogTable({ pipelineLogData, loadData, isLoading, pipeli
         isLoading={isLoading}
         noDataMessage={getNoDataMessage()}
         tableComponent={getTable()}
-        loadData={loadData}
+        loadData={handlePagination}
         paginationModel={pipelineActivityFilterDto}
         setPaginationModel={setPipelineActivityFilterDto}
         treeComponent={getTree()}

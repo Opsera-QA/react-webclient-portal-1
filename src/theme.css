@@ -434,6 +434,11 @@ a.text-primary:hover, a.text-primary:focus {
     border: 1px solid #dfdfdf;
     border-right: 0;
     background: #fff;
+    width: 25%;
+}
+
+.tree-table {
+    width: 75%;
 }
 
 .custom-table th {

@@ -97,7 +97,7 @@ function PipelineActivityLogTree({ pipelineLogData, setCurrentRunNumber, setCurr
   };
 
   return (
-    <div className={"w-25 p-2 scroll-y table-tree"}>
+    <div className={"p-2 scroll-y table-tree"}>
       <TreeBase data={treeData} onItemClick={onTreeItemClick}/>
     </div>
   );
