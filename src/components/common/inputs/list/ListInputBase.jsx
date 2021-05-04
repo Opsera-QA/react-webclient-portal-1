@@ -7,6 +7,7 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 import {List} from "dhx-suite-package";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
+import ComponentLoadingWrapper from "components/common/loading/ComponentLoadingWrapper";
 
 function ListInputBase(
   {
@@ -14,7 +15,7 @@ function ListInputBase(
     selectOptions, valueField, textField,
     setDataFunction, isLoading, disabled, clearDataFunction,
     showClearValueButton, getCurrentValue,
-    height, icon, searchFunction, showSelectAllButton, customTemplate, disabledOptions
+    height, icon, searchFunction, showSelectAllButton, customTemplate, disabledOptions, noDataMessage
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [list, setList] = useState(undefined);
@@ -33,6 +34,17 @@ function ListInputBase(
       list?.destructor();
     };
   }, [selectOptions, isLoading, searchTerm]);
+
+  // TODO: We should probably also handle selection here. Look at when more use cases arise
+  useEffect(() => {
+    if (list) {
+      const currentValues = findCurrentValue();
+
+      if (Array.isArray(currentValues) && currentValues.length === 0) {
+        list.selection.remove();
+      }
+    }
+  }, [dataObject]);
 
   const constructList = () => {
     if (Array.isArray(selectOptions) && selectOptions.length > 0) {
@@ -182,7 +194,7 @@ function ListInputBase(
 
   // TODO: Make selectAllIcon Component
   const getSelectAllIcon = () => {
-    if (dataObject?.getData(field?.id) !== "" && !disabled && showSelectAllButton === true) {
+    if (!disabled && showSelectAllButton === true) {
       return (
         <span onClick={() => selectAllOptions()} className="my-auto badge badge-success clear-value-badge pointer">
           <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Select All
@@ -214,27 +226,26 @@ function ListInputBase(
     );
   };
 
-  const getBody = () => {
-    if (isLoading) {
-      return (
-        <div className={"h-100 w-100"}>
-          <div className="w-100 info-text text-center p-3">
-            <div className="row" style={{ height: height, width: "100%"}}>
-              <div className="col-sm-12 my-auto text-center">
-                <span><FontAwesomeIcon icon={faSpinner} spin className="mr-2 mt-1"/>Loading Data</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
+  const getList = () => {
     return (
       <div
         id="list"
         style={{width: "100%", height: height}}
         ref={el => (containerRef.current = el)}
       />
+    );
+  };
+
+  const getBody = () => {
+    return (
+      <div style={{height: height}}>
+        <ComponentLoadingWrapper
+          isLoading={isLoading}
+          data={selectOptions}
+          component={getList()}
+          noDataMessage={noDataMessage}
+        />
+      </div>
     );
   };
 
@@ -246,7 +257,15 @@ function ListInputBase(
   return (
     <InputContainer className="list-input my-2">
       <div className={"content-container"}>
-        <InputTitleBar icon={icon} isLoading={isLoading} field={field} setSearchTerm={setSearchTerm} searchTerm={searchTerm} showSearchBar={searchFunction != null}/>
+        <InputTitleBar
+          disabled={disabled}
+          icon={icon}
+          isLoading={isLoading}
+          field={field}
+          setSearchTerm={setSearchTerm}
+          searchTerm={searchTerm}
+          showSearchBar={searchFunction != null}
+        />
         {getExtraRow()}
         {getBody()}
       </div>
@@ -284,11 +303,13 @@ ListInputBase.propTypes = {
   searchFunction: PropTypes.func,
   showSelectAllButton: PropTypes.bool,
   customTemplate: PropTypes.func,
-  disabledOptions: PropTypes.array
+  disabledOptions: PropTypes.array,
+  noDataMessage: PropTypes.string
 };
 
 ListInputBase.defaultProps = {
   height: "300px",
+  noDataMessage: "No items are currently available"
 };
 
 export default ListInputBase;
