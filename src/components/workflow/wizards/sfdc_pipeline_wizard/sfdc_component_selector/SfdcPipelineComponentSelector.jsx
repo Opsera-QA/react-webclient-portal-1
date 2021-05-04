@@ -410,8 +410,11 @@ const SfdcPipelineComponentSelector = (
             You have selected a large date range and as such this may take some time to complete.
           </div>
           }
-
-          {getComponentsBody()}
+          {!sfdcToolId ?
+            <ErrorDialog error={"No SFDC Tool Selected, Un Configured step found"} />
+            :
+            <>{getComponentsBody()}</>
+          }
         </div>
       </div>
     </div>
