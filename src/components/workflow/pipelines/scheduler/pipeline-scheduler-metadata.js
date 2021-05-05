@@ -1,5 +1,6 @@
 const pipelineSchedulerMetadata = {
   idProperty: "_id",
+  type: "Pipeline Scheduled Task",
   // detailView: function(record) {
   //   return `/inventory/tools/details/${record.getData("_id")}`;
   // },
@@ -16,6 +17,10 @@ const pipelineSchedulerMetadata = {
     {
       label: "Description",
       id: "description",
+    },
+    {
+      label: "Notes",
+      id: "notes",
     },
     {
       label: "Active",
@@ -49,6 +54,7 @@ const pipelineSchedulerMetadata = {
   newObjectFields: {
     name: "",
     description: "",
+    notes: "",
     active: true,
     roles: [],
     task: {},
