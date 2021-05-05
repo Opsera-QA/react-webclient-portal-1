@@ -1,24 +1,23 @@
 import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
-import {useHistory} from "react-router-dom";
 import pipelineSchedulerMetadata from "components/workflow/pipelines/scheduler/pipeline-scheduler-metadata";
 import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import TableBase from "components/common/table/TableBase";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 import {faCalendarAlt} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
-import NewTagOverlay from "components/settings/tags/NewTagOverlay";
-import NewPipelineScheduledTaskOverlay from "components/workflow/pipelines/scheduler/NewPipelineScheduledTaskOverlay";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import Model from "core/data_model/model";
 
-function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPaginationModel, loadData, isMounted }) {
-  const toastContext = useContext(DialogToastContext);
+function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPaginationModel, pipelineId, loadData, isMounted, setScheduledTaskData }) {
   const fields = pipelineSchedulerMetadata.fields;
 
   // TODO: Add mechanism to switch to editor panel
-  const onRowSelect = (rowData) => {
-    console.log("row click works!");
-    // history.push(`/workflow/details/${rowData.original._id}/summary`);
+  const onRowSelect = (grid, row) => {
+    if (isMounted?.current === true) {
+      let newModel = new Model({...row}, row, true);
+      setScheduledTaskData({...newModel});
+    }
   };
 
   const columns = useMemo(
@@ -52,7 +51,11 @@ function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPagin
   };
 
   const createScheduledTask = () => {
-    toastContext.showOverlayPanel(<NewPipelineScheduledTaskOverlay loadData={loadData} isMounted={isMounted} />);
+    if (isMounted?.current === true) {
+      let newModel = new Model({...pipelineSchedulerMetadata.newObjectFields}, pipelineSchedulerMetadata, true);
+      newModel.setData("task", { taskType: "RUN", pipelineId: pipelineId});
+      setScheduledTaskData({...newModel});
+    }
   };
 
   return (
@@ -76,7 +79,9 @@ PipelineScheduledTaskTable.propTypes = {
   setPaginationModel: PropTypes.func,
   paginationModel: PropTypes.object,
   loadData: PropTypes.func,
-  isMounted: PropTypes.object
+  isMounted: PropTypes.object,
+  setScheduledTaskData: PropTypes.func,
+  pipelineId: PropTypes.string
 };
 
 export default PipelineScheduledTaskTable;
