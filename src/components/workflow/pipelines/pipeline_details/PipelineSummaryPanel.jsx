@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import PropTypes from "prop-types";
+import PropTypes, { bool } from "prop-types";
 import { useHistory } from "react-router-dom";
 import { Row, Col, Form } from "react-bootstrap";
 import { format } from "date-fns";
@@ -31,7 +31,7 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import Modal from "components/common/modal/modal";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
-import TimeInput from "components/common/inputs/date/TimeInput";
+import ScheduleInput from "components/common/inputs/date/TimeInput";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -41,10 +41,40 @@ const INITIAL_FORM_DATA = {
 };
 
 const INITIAL_SCHEDULE_DATA = {
-  start: "",
-  end: "" ,
-  frequency: ""
+  name: "",
+  description: "",
+  notes: "",
+  active: false, 
+  owner: "",
+  task:{ taskType:"RUN", pipelineId:""},
+  account: "",
+  schedule:{recurring: "NONE", executionDate: ""},
+  date: new Date(),
+  hours: new Date().getHours(),
+  minutes: new Date().getMinutes(),
+  seconds: new Date().getSeconds(),
+  timeString: new Date().toLocaleTimeString(),
+  dateString: new Date().toLocaleDateString(),
+  frequency: "NONE",
 };
+
+// account: "org-opsera-dnd-acc0"
+// active: true
+// createdAt: "2020-12-02T10:16:29.238Z"
+// description: "Start from a blank template"
+// name: "Octopus Pipeline"
+// organizationName: "opsera"
+// owner: "5e1cbf251c26d68f7ce6361e"
+// owner_name: "OpsERA Admin"
+// project: {name: "", project_id: ""}
+// roles: [{…}]
+// tags: []
+// template: "5efc6fabaf75e201aa8c4a7e"
+// type: []
+// updatedAt: "2021-05-04T22:26:51.404Z"
+// workflow: {source: {…}, schedule: {…}, last_step: {…}, plan: Array(1), run_count: 4, …}
+// __v: 0
+// _id: "5fc7697d18cabf7df013609f"
 
 // TODO: This class needs to be reworked with new components and also to cleanup
 function PipelineSummaryPanel({
@@ -253,13 +283,27 @@ function PipelineSummaryPanel({
     }
   };
 
-  const handleSetSchedule = async (schedule) => {
-    await handleSavePropertyClick(pipeline._id, schedule, "schedule");
+  const handleCloseScheduleModal = () => {
     setEditSchedule(false);
   };
 
-  const handleCloseScheduleModal = () => {
+  const handleSaveSchedule = async () => {
+    let account =  await pipeline.account;
+    let owner = pipeline.owner;
+    let id = pipeline._id;
+    let executionDate = scheduleData.date;
+    let recurring = scheduleData.frequency;
+    
+  setScheduleData({
+      ...scheduleData,
+      account: account,
+      owner: owner,
+      task: {taskType: "RUN", pipelineId: id},
+      schedule: {recurring: recurring, executionDate: executionDate},
+    });
+
     setEditSchedule(false);
+    console.log(scheduleData);
   };
 
   const handleEditPropertyClick = (type) => {
@@ -416,42 +460,104 @@ function PipelineSummaryPanel({
   };
 
   const updateSchedule = (value) => {
+    
     if(value){
-      setScheduleData({ start: value });
-      console.log(scheduleData);
+      let hours = value.getHours();
+      let minutes = value.getMinutes();
+      let seconds = value.getSeconds();
+      let newDate = new Date(value.setHours(hours, minutes, seconds));
+     
+      setScheduleData({ ...scheduleData, date: newDate, hours: hours, minutes: minutes, seconds: seconds, timeString: value.toLocaleTimeString(), dateString: value.toLocaleDateString() });
     }
 
-    if(!scheduleData.start){
+    if(!scheduleData.date){
       pipelineModel.setData("schedule", new Date());
-      console.log("state not updated " + pipelineModel.data);
     } 
 
-    if(scheduleData.start){
-      pipelineModel.setData("schedule", scheduleData.start);
-      console.log("state set. model updated " + pipelineModel.data);
+    if(scheduleData.hours){
+      pipelineModel.setData("schedule", scheduleData.date);
     }
-    
+  
+    // console.log(scheduleData);
     return pipelineModel;
   };
 
   const handleInputChange = (e) => {
-    const name = e.target.name;
     const value = e.target.value;
+    const name = e.target.name;
 
-    setScheduleData({
-      [name]: value
-    });
-    console.log(name);
-    console.log(value);
-    console.log(scheduleData);
+    if(name === "active" && scheduleData.active === false){
+      setScheduleData({
+        ...scheduleData,
+        active: true
+      });
+    } else if (name === "active" && scheduleData.active === true){
+      setScheduleData({
+        ...scheduleData,
+        active: false
+      });
+    } else {
+      setScheduleData({
+        ...scheduleData,
+        [name]: value
+      });
+    }
   };
 
 
   const getSchedulerForm = () => {
     updateSchedule();
     return (
+      <>
+      <Form>
+        <Form.Label className="my-2 mr-5">
+          Name:
+        </Form.Label>
+        <Form.Control
+           type="text"
+           className="my-2 mr-sm-1"
+           name="name"
+           onChange={handleInputChange}
+           custom
+        />
+        <br/>
+        <Form.Label className="my-2 mr-2 pr-1">
+          Description:
+        </Form.Label>
+        <Form.Control
+           type="text"
+           className="my-2 mr-sm-2 w-50"
+           name="description"
+           onChange={handleInputChange}
+           custom
+        />
+        <br/>
+        <Form.Label className="my-2 mr-5">
+          Active : 
+        </Form.Label>
+        <Form.Control
+           type="checkbox"
+           className="my-2 mr-sm-2"
+           name="active"
+           onChange={handleInputChange}
+           custom
+        />
+
+        <br/>
+        <Form.Label className="my-2 mr-5">
+          Notes : 
+        </Form.Label>
+        <Form.Control
+           type="text"
+           className="my-2 mr-sm-2 w-50"
+           name="notes"
+           onChange={handleInputChange}
+           custom
+        />
+    
+      </Form>
       <Form inline>
-        <Form.Label className="my-1 mr-2" htmlFor="inlineFormCustomSelectPref">
+        <Form.Label className="my-1 mr-2" >
           This pipeline should run 
         </Form.Label>
         <Form.Control
@@ -467,17 +573,35 @@ function PipelineSummaryPanel({
           <option value="MONTH">monthly</option>
         </Form.Control>
         <Form.Label> at </Form.Label>
-        <div className="mb-3 ml-2">
-          <TimeInput
-            name="start"
+        <div className="ml-2 mr-2">
+          <ScheduleInput
+            name="time"
+            fieldName="schedule"
+            showDate={false}
+            showTime={true}
+            dataObject={pipelineModel}
+            setDataObject={setPipelineModel}
+            disabled={false}
+            setDataFunction={updateSchedule}
+            disableLabel={true}
+          />
+        </div>  
+        <Form.Label> starting on </Form.Label>
+        <div className="ml-2">
+        <ScheduleInput
+            name="date"
+            showDate={true}
+            showTime={false}
             fieldName="schedule"
             dataObject={pipelineModel}
             setDataObject={setPipelineModel}
             disabled={false}
             setDataFunction={updateSchedule}
+            disableLabel={true}
           />
-        </div>  
+        </div>
       </Form>
+      </>
     );
   };
 
@@ -617,13 +741,13 @@ function PipelineSummaryPanel({
           {editSchedule ?
             <>
             
-              <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Schedule:</span>
+              {/* <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Schedule:</span> */}
               <Modal header="Schedule"
-                     message={getSchedulerForm(pipeline._id)}
+                     message={getSchedulerForm()}
                      button="Save"
                      size="lg"
                      handleCancelModal={handleCloseScheduleModal}
-                     handleConfirmModal={handleCloseScheduleModal}
+                     handleConfirmModal={handleSaveSchedule}
                      />
 
                 {/* <SchedulerWidget
@@ -632,7 +756,7 @@ function PipelineSummaryPanel({
                   schedule={pipeline.workflow.schedule ? pipeline.workflow.schedule : null}
                   setEditSchedule={setEditSchedule}
                   setSchedule={handleSetSchedule}></SchedulerWidget> */}
-              </Col>
+              {/* </Col> */}
             </> :
             <>
 

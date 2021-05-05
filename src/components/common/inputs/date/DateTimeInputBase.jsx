@@ -7,11 +7,11 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
-function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFunction, disabled, showDate, showTime, minDate, maxDate }) {
+function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFunction, disabled, showDate, showTime, minDate, maxDate, disableLabel }) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   Moment.locale("en");
-  momentLocalizer();
+  momentLocalizer(); 
 
   useEffect(() => {
     if (dataObject.getData(fieldName) !== "") {
@@ -33,9 +33,17 @@ function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFuncti
     setErrorMessage(newDataObject.getFieldError(fieldName));
   };
 
+  const getLabel = () => {
+    if (disableLabel){
+      return ;
+    } else {
+      return <InputLabel field={field}/>;
+    }
+  }; 
+
   return (
     <InputContainer>
-      <InputLabel field={field}/>
+      {getLabel()}
       <DateTimePicker
         date={showDate}
         min={minDate}
@@ -60,12 +68,14 @@ DateTimeInputBase.propTypes = {
   showDate: PropTypes.bool,
   showTime: PropTypes.bool,
   minDate: PropTypes.any,
-  maxDate: PropTypes.any
+  maxDate: PropTypes.any,
+  disableLabel: PropTypes.bool,
 };
 
 DateTimeInputBase.defaultProps = {
   showDate: true,
-  showTime: true
+  showTime: true,
+  disableLabel: false,
 };
 
 export default DateTimeInputBase;

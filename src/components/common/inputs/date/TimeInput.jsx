@@ -4,7 +4,7 @@ import DateTimeInputBase from "components/common/inputs/date/DateTimeInputBase";
 
 // TODO: This isn't used anywhere, so it WILL need tweaking if we want to somehow just save time without an entire date.
 //  Let me know and I will adjust it. - Noah
-function TimeInput({ fieldName, dataObject, setDataObject, disabled, minDate, maxDate, setDataFunction }) {
+function TimeInput({ fieldName, dataObject, setDataObject, disabled, minDate, maxDate, setDataFunction, disableLabel, showDate, showTime }) {
   return (
     <DateTimeInputBase
       fieldName={fieldName}
@@ -12,9 +12,11 @@ function TimeInput({ fieldName, dataObject, setDataObject, disabled, minDate, ma
       setDataObject={setDataObject}
       minDate={minDate}
       maxDate={maxDate}
-      showDate={false}
+      showDate={showDate}
+      showTime={showTime}
       disabled={disabled}
       setDataFunction={setDataFunction}
+      disableLabel={disableLabel}
     />
   );
 }
@@ -26,7 +28,10 @@ TimeInput.propTypes = {
   disabled: PropTypes.bool,
   minDate: PropTypes.any,
   maxDate: PropTypes.any,
-  setDataFunction: PropTypes.func
+  setDataFunction: PropTypes.func,
+  disableLabel: PropTypes.bool,
+  showDate: PropTypes.bool,
+  showTime: PropTypes.bool
 };
 
 export default TimeInput;
