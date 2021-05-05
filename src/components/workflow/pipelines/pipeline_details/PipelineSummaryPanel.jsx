@@ -58,23 +58,6 @@ const INITIAL_SCHEDULE_DATA = {
   frequency: "NONE",
 };
 
-// account: "org-opsera-dnd-acc0"
-// active: true
-// createdAt: "2020-12-02T10:16:29.238Z"
-// description: "Start from a blank template"
-// name: "Octopus Pipeline"
-// organizationName: "opsera"
-// owner: "5e1cbf251c26d68f7ce6361e"
-// owner_name: "OpsERA Admin"
-// project: {name: "", project_id: ""}
-// roles: [{…}]
-// tags: []
-// template: "5efc6fabaf75e201aa8c4a7e"
-// type: []
-// updatedAt: "2021-05-04T22:26:51.404Z"
-// workflow: {source: {…}, schedule: {…}, last_step: {…}, plan: Array(1), run_count: 4, …}
-// __v: 0
-// _id: "5fc7697d18cabf7df013609f"
 
 // TODO: This class needs to be reworked with new components and also to cleanup
 function PipelineSummaryPanel({
