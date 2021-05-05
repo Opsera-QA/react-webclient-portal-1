@@ -18,7 +18,7 @@ pipelineSchedulerActions.createSchedule = async (getAccessToken, cancelTokenSour
   const postBody = {
     ...scheduledTaskModel.getPersistData()
   };
-  const apiUrl = `/scheduler/`;
+  const apiUrl = `/scheduler/create`;
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
