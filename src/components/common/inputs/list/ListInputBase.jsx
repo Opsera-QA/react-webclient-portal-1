@@ -159,7 +159,7 @@ function ListInputBase(
 
   // TODO: Make clearDataButton Component
   const getClearDataIcon = () => {
-    if (dataObject?.getData(field?.id) !== "" && !disabled && showClearValueButton !== false && (setDataFunction == null || clearDataFunction)) {
+    if (!disabled && dataObject?.getData(field?.id).length > 0 && showClearValueButton !== false && (setDataFunction == null || clearDataFunction)) {
       return (
         <TooltipWrapper innerText={"Clear this Value"}>
           <span onClick={() => clearValue()} className="my-auto badge badge-danger clear-value-badge pointer ml-2">
@@ -194,7 +194,7 @@ function ListInputBase(
 
   // TODO: Make selectAllIcon Component
   const getSelectAllIcon = () => {
-    if (!disabled && showSelectAllButton === true) {
+    if (!disabled && selectOptions.length > 0 && showSelectAllButton === true) {
       return (
         <span onClick={() => selectAllOptions()} className="my-auto badge badge-success clear-value-badge pointer">
           <FontAwesomeIcon icon={faPlus} fixedWidth className="mr-1"/>Select All
@@ -258,7 +258,7 @@ function ListInputBase(
     <InputContainer className="list-input my-2">
       <div className={"content-container"}>
         <InputTitleBar
-          disabled={disabled}
+          disabled={disabled || selectOptions.length === 0}
           icon={icon}
           isLoading={isLoading}
           field={field}
