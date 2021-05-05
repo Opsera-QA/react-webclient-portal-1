@@ -58,6 +58,7 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
       setRecordDto={setSchedulerTaskModel}
       isLoading={isLoading}
       handleClose={handleClose}
+      addAnotherOption={false}
     >
       <Row>
         <Col lg={6}>
