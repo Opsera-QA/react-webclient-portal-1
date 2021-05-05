@@ -309,8 +309,8 @@ function PipelineSummaryPanel({
       setFormData({ ...formData, description: pipeline.description });
       break;
     case "schedule":
-      setEditSchedule(true);
-      // showSchedulerOverlay();
+      // setEditSchedule(true);
+      showSchedulerOverlay();
       break;
     case "tags":
       setEditTags(true);
