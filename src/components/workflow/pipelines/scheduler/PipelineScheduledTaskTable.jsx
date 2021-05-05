@@ -12,10 +12,9 @@ import Model from "core/data_model/model";
 function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPaginationModel, pipelineId, loadData, isMounted, setScheduledTaskData }) {
   const fields = pipelineSchedulerMetadata.fields;
 
-  // TODO: Add mechanism to switch to editor panel
   const onRowSelect = (grid, row) => {
     if (isMounted?.current === true) {
-      let newModel = new Model({...row}, row, true);
+      let newModel = new Model({...row}, row, false);
       setScheduledTaskData({...newModel});
     }
   };
