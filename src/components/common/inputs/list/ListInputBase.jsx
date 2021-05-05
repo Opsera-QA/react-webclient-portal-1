@@ -159,7 +159,7 @@ function ListInputBase(
 
   // TODO: Make clearDataButton Component
   const getClearDataIcon = () => {
-    if (!disabled && dataObject?.getData(field?.id).length > 0 && showClearValueButton !== false && (setDataFunction == null || clearDataFunction)) {
+    if (!disabled && dataObject?.getArrayData(field?.id)?.length > 0 && showClearValueButton !== false && (setDataFunction == null || clearDataFunction)) {
       return (
         <TooltipWrapper innerText={"Clear this Value"}>
           <span onClick={() => clearValue()} className="my-auto badge badge-danger clear-value-badge pointer ml-2">
