@@ -1,13 +1,10 @@
 import React, {useState, useContext, useEffect} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
-import toolMetadata from "components/inventory/tools/tool-metadata";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import ToolEditorPanel from "components/inventory/tools/tool_details/ToolEditorPanel";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import PipelineScheduledTaskEditorPanel from "components/workflow/pipelines/scheduler/PipelineScheduledTaskEditorPanel";
 import pipelineSchedulerMetadata from "components/workflow/pipelines/scheduler/pipeline-scheduler-metadata";
-import axios from "axios";
 
 // TODO: This will probably be inline rather than in another overlay, but for now keeping the mechanism the same
 function NewPipelineScheduledTaskOverlay({ loadData, isMounted, pipelineId }) {
