@@ -21,6 +21,7 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import sfdcComponentFilterMetadata from './sfdc-component-filter-metadata';
 import SfdcModifiedFilesTabView from "./tab_views/SfdcModifiedFilesTabView";
+import CancelButton from "components/common/buttons/CancelButton";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -346,18 +347,7 @@ const SfdcPipelineProfileComponents = ({
             )}
             Proceed with Selected SFDC Files
           </Button>
-
-          <Button
-            variant="outline-secondary"
-            size="sm"
-            className="ml-2"
-            onClick={() => {
-              handleClose();
-            }}
-          >
-            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>
-            Cancel
-          </Button>
+          <CancelButton cancelFunction={handleClose} size={"sm"} className={"ml-1"} />
         </div>
       </div>
     </div>

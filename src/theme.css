@@ -520,6 +520,7 @@ a.text-primary:hover, a.text-primary:focus {
 
 .custom-table .top-pagination-grid .top-pagination, .title-bar-selection-row {
     background: rgba(230, 229, 227, .3);
+    height: 33px;
 }
 
 .custom-table > tbody > tr:nth-child(even), .alt-background {
