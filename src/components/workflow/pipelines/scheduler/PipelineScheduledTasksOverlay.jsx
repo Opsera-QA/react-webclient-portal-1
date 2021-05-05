@@ -21,6 +21,7 @@ function PipelineScheduledTasksOverlay({ pipeline }) {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [scheduledTasksList, setScheduledTasksList] = useState([]);
+  const [scheduledTaskData, setScheduledTaskData] = useState(undefined);
   const isMounted = useRef(false);
 
   useEffect(() => {
@@ -53,7 +54,7 @@ function PipelineScheduledTasksOverlay({ pipeline }) {
       }
     }
     finally {
-      if (isMounted?.current === true ) {
+      if (isMounted?.current === true) {
         setIsLoading(false);
       }
     }
@@ -74,19 +75,43 @@ function PipelineScheduledTasksOverlay({ pipeline }) {
     toastContext.clearOverlayPanel();
   };
 
+  const closeEditorPanel = () => {
+    if (isMounted?.current === true ) {
+      setScheduledTaskData(null);
+    }
+  };
+
+  const getBody = () => {
+    if (scheduledTaskData) {
+      return (
+        <PipelineScheduledTaskEditorPanel
+          handleClose={closeEditorPanel}
+          scheduledTaskData={scheduledTaskData}
+        />
+      );
+    }
+
+    return (
+      <PipelineScheduledTaskTable
+        isLoading={isLoading}
+        setScheduledTaskData={setScheduledTaskData}
+        data={scheduledTasksList}
+        loadData={loadData}
+        isMounted={isMounted}
+        pipelineId={pipeline?._id}
+      />
+    );
+  };
+
   return (
     <CenterOverlayContainer
       titleText={"Pipeline Scheduled Tasks"}
       closePanel={closePanel}
       titleIcon={faCalendarAlt}
       showPanel={true}
+      showCloseButton={scheduledTaskData == null}
     >
-      <PipelineScheduledTaskTable
-        isLoading={isLoading}
-        data={scheduledTasksList}
-        loadData={loadData}
-        isMounted={isMounted}
-      />
+      {getBody()}
     </CenterOverlayContainer>
   );
 }
