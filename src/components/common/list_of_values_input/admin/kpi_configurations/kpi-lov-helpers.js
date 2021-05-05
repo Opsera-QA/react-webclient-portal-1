@@ -26,7 +26,8 @@ kpiLovHelpers.filters = [
   {id: {"type": "domain", "value": []}, label: "Domain"},
   {id: {"type": "application", "value": []}, label: "Application"},
   {id: {"type": "release", "value": []}, label: "Release"},
-  {id: {"type": "sprint", "value": []}, label: "Sprint"}
+  {id: {"type": "sprint", "value": []}, label: "Sprint"},
+  {id: {"type": "project", "value": []}, label: "Project"}
 ];
 
 kpiLovHelpers.getFilterById = (id) => {

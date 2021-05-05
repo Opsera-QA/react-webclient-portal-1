@@ -15,8 +15,10 @@ import opseraRecentPipelineStatusMetadata
 import {getField} from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import { useHistory } from "react-router-dom";
 
 function OpseraRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
+  const history = useHistory();
   const fields = opseraRecentPipelineStatusMetadata.fields;
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -38,6 +40,10 @@ function OpseraRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, das
     ],
     []
   );
+
+  const onRowSelect = (rowData) => {
+    history.push(`/blueprint/${rowData.original._id.id}/${rowData.original.run_count}`);
+  };
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -97,6 +103,7 @@ function OpseraRecentPipelineStatus({ kpiConfiguration, setKpiConfiguration, das
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
+        onRowSelect={onRowSelect}
       />
     );
   };

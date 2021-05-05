@@ -8,5 +8,6 @@ export default (getColor) => ({
     type: "linear",
     stacked: false,
   },
-  colors: getColor
+  colors: getColor,
+  pointSize: 0
 });

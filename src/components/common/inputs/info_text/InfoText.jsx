@@ -10,6 +10,10 @@ function InfoText({ field, errorMessage }) {
     );
   }
 
+  if (field?.formText == null) {
+    return null;
+  }
+
   return (
     <small className="text-muted form-text">
       <div>{field?.formText}</div>

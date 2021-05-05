@@ -7,6 +7,18 @@ import React from "react";
 
 const pipelineHelpers = {};
 
+pipelineHelpers.getStepIndexWithName = (pipeline, stepName) => {
+  const plan = pipeline?.workflow?.plan;
+  let stepArrayIndex;
+
+  if (plan) {
+    stepArrayIndex = pipeline.workflow.plan.findIndex(x => x.name?.toLowerCase() === stepName.toLowerCase());
+  }
+
+  return stepArrayIndex > -1 ? stepArrayIndex + 1 : "UNKNOWN";
+};
+
+
 pipelineHelpers.getPendingApprovalStep = (pipeline) => {
   if (pipeline && pipeline.workflow && pipeline.workflow.last_step && pipeline.workflow.last_step.running && pipeline.workflow.last_step.running.paused) {
     let step_id = pipeline.workflow.last_step.running.step_id;

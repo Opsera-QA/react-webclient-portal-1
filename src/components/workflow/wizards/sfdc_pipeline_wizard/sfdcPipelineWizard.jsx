@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Moment from "moment";
-import SfdcPipelineComponents from "./sfdcPipelineComponents";
+import SfdcPipelineComponentSelector from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc_component_selector/SfdcPipelineComponentSelector";
 import SfdcPipelineModifiedFiles from "./sfdcPipelineModifiedFiles";
 import ErrorDialog from "components/common/status_notifications/error";
 import SfdcPipelineXMLView from "./sfdcPipelineXMLView";
@@ -90,12 +90,12 @@ const SfdcPipelineWizard = ({
   //must find step ID of the Sfdc Jenkins Config step (typically first step and has step.tool.job_type set to "sfdc-ant")
   const loadSfdcInitStep = async (steps) => {
     let stepArrayIndex = steps.findIndex(
-      (x) => x.tool && (x.tool.job_type === "sfdc-ant" || x.tool.job_type === "sfdc-ant-profile") && x.tool.tool_identifier === "jenkins"
+      (step) => step.tool && step.active && (step.tool.job_type === "sfdc-ant" || step.tool.job_type === "sfdc-ant-profile") && step.tool.tool_identifier === "jenkins"
     );
-    console.log(stepArrayIndex);
+    // console.log(stepArrayIndex);
     if (stepArrayIndex === -1) {
       setError(
-        "Warning, this pipeline is missing the default SFDC Jenkins Step needed.  Please edit the workflow and add the SFDC Ant Job setting in order to run thsi pipeline."
+        "Warning, this pipeline is missing the default SFDC Jenkins Step needed.  Please edit the workflow and add the SFDC Ant Job setting in order to run this pipeline."
       );
     } else {
       console.log("step ID: ", steps[stepArrayIndex]._id);
@@ -112,7 +112,8 @@ const SfdcPipelineWizard = ({
   };
 
   const getCustomUnitTestSteps = (steps) => {
-    return steps.map((step, idx) => (step.tool.configuration.jobType === "SFDC VALIDATE PACKAGE XML" || step.tool.configuration.jobType === "SFDC UNIT TESTING" || step.tool.configuration.jobType === "SFDC DEPLOY") && step.tool.configuration.sfdcUnitTestType === "RunSpecifiedTests" && step.active ? step : '').filter(String);
+    return steps.map((step, idx) => (step.tool && (
+      step.tool.configuration.jobType === "SFDC VALIDATE PACKAGE XML" || step.tool.configuration.jobType === "SFDC UNIT TESTING" || step.tool.configuration.jobType === "SFDC DEPLOY")) && step.tool.configuration.sfdcUnitTestType === "RunSpecifiedTests" && step.active ? step : '').filter(String);
   };
 
   const createJenkinsJob = async () => {
@@ -179,7 +180,7 @@ const SfdcPipelineWizard = ({
     switch (view) {
       case 1:
         return (
-          <SfdcPipelineComponents
+          <SfdcPipelineComponentSelector
             pipelineId={pipelineId}
             stepId={stepId}
             isOrgToOrg={isOrgToOrg}
@@ -337,7 +338,7 @@ const SfdcPipelineWizard = ({
     );
   } else {
     return (
-      <div className={"m-2"}>
+      <div className={"m-3"}>
         {getBody()}
       </div>
     );

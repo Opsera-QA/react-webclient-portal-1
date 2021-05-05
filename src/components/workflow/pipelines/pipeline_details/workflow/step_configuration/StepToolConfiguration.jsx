@@ -45,6 +45,7 @@ import pipelineActions from "../../../../pipeline-actions";
 import NUnitStepConfiguration from "./step_tool_configuration_forms/nunit/NUnitStepConfiguration";
 import JFrogDockerStepConfiguration
   from "./step_tool_configuration_forms/jfrog_artifactory_docker/JFrogDockerStepConfiguration";
+import TerrascanStepConfiguration from "./step_tool_configuration_forms/terrascan/TerrascanStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -657,6 +658,22 @@ function StepToolConfiguration({
             setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
             />
+        );
+      case "terrascan":
+        return (
+          <TerrascanStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
         );
     }
   };

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useRef } from "react";
 import { Col, Button, Card } from "react-bootstrap";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
@@ -26,6 +26,10 @@ import NexusRepoSelectInput from "./input/NexusRepoSelectInput";
 import TestConnectionButton from "./input/TestConnectionButton";
 import EditWarningModalToolRegistry from "components/common/modal/EditWarningModalToolRegistry";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
+import OctopusThumbprintDisplay from "./OctopusThumbprintDisplay";
+import axios from "axios";
+import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -34,9 +38,25 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
   const [isLoading, setIsLoading] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const isMounted = useRef(false);
+  const [isValidatingConfig, setIsValidatingConfig] = useState(false);
 
   useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
     loadData();
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
   const loadData = async () => {
@@ -98,6 +118,20 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
 
   const updateApplicationCaller= async () => {
     setShowEditModal(true);
+  };
+
+  const validateIisConfig = async (cancelSource = cancelTokenSource) => {
+    setIsValidatingConfig(true);
+    const response =  await OctopusActions.validateIisConfig(octopusApplicationDataDto, getAccessToken, cancelSource);
+    let newDataObject = octopusApplicationDataDto;
+    if(response.data.status === 200){      
+      newDataObject.setData("healthStatus", response.data.message.healthStatus);      
+    } else {
+      newDataObject.setData("healthStatus", "Not Healthy");
+      toastContext.showLoadingErrorDialog(response.data.message);
+    }
+    setOctopusApplicationDataDto({ ...newDataObject });
+    setIsValidatingConfig(false);
   };
 
   if (isLoading || octopusApplicationDataDto === null || octopusApplicationDataDto === undefined) {
@@ -253,20 +287,23 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
               />
             </Col>
-            <Col lg={12}>
-              <AccountSelectInput
-                fieldName={"accountId"}
-                dataObject={octopusApplicationDataDto}
-                setDataObject={setOctopusApplicationDataDto}
-                disabled={
-                  (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceName").length === 0) ||
-                  (appID && !octopusApplicationDataDto.getData("id"))
-                    ? true
-                    : false
-                }
-                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
-              />
-            </Col>
+            {octopusApplicationDataDto &&
+              octopusApplicationDataDto.getData("cloudType") !== "TentaclePassive" && (
+              <Col lg={12}>
+                <AccountSelectInput
+                  fieldName={"accountId"}
+                  dataObject={octopusApplicationDataDto}
+                  setDataObject={setOctopusApplicationDataDto}
+                  disabled={
+                    (octopusApplicationDataDto && octopusApplicationDataDto.getData("spaceName").length === 0) ||
+                    (appID && !octopusApplicationDataDto.getData("id"))
+                      ? true
+                      : false
+                  }
+                  tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
+                />
+              </Col>
+            )}
             <Col lg={12}>
               <CloudProviderSelectInput
                 fieldName={"cloudType"}
@@ -339,6 +376,15 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 </Col>
               </>
             )}
+            {octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType") === "TentaclePassive" && (
+                <OctopusThumbprintDisplay 
+                  className="my-2" 
+                  dataObject={octopusApplicationDataDto} 
+                  setDataObject={setOctopusApplicationDataDto}
+                  toolData={toolData} 
+                />
+              )
+            }
             <Col lg={12}>
               <EnvironmentNameSelectInput
                 fieldName={"environmentIds"}
@@ -353,6 +399,43 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
               />
             </Col>
+            {octopusApplicationDataDto && octopusApplicationDataDto.getData("cloudType") === "TentaclePassive" && (
+                <>
+                  <Col lg={12}>
+                    <TextInputBase
+                      setDataObject={setOctopusApplicationDataDto}
+                      dataObject={octopusApplicationDataDto}
+                      fieldName={"hostName"}
+                      disabled={false}
+                    />
+                  </Col>
+                  <Col lg={12}>
+                    <TextInputBase
+                      setDataObject={setOctopusApplicationDataDto}
+                      dataObject={octopusApplicationDataDto}
+                      fieldName={"port"}
+                      disabled={false}
+                    />
+                  </Col>
+                  <Col lg={12} className="my-2">
+                    <TextFieldBase dataObject={octopusApplicationDataDto} fieldName={"healthStatus"}/>
+                    <small className="form-text text-muted">
+                      Validate IIS configuration to get the latest health status
+                    </small>
+                  </Col>
+                  <Col lg={12} className="mt-2">
+                    <Button 
+                      size="sm" 
+                      variant="primary" 
+                      onClick={() => validateIisConfig(cancelTokenSource)}
+                      disabled={octopusApplicationDataDto.getData("hostName") === "" || octopusApplicationDataDto.getData("port") === ""}
+                    >
+                      {isValidatingConfig ? (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Validate IIS Configuration</span>) : 'Validate IIS Configuration'}
+                    </Button>
+                  </Col>                                                      
+                </>
+              )
+            } 
             {octopusApplicationDataDto &&
               octopusApplicationDataDto.getData("cloudType") === "AmazonWebServicesAccount" && (
                 <Col lg={12}>
