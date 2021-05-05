@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import {useHistory} from "react-router-dom";
 import pipelineSchedulerMetadata from "components/workflow/pipelines/scheduler/pipeline-scheduler-metadata";
@@ -7,9 +7,12 @@ import TableBase from "components/common/table/TableBase";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 import {faCalendarAlt} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
+import NewTagOverlay from "components/settings/tags/NewTagOverlay";
+import NewPipelineScheduledTaskOverlay from "components/workflow/pipelines/scheduler/NewPipelineScheduledTaskOverlay";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
-function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPaginationModel, loadData }) {
-  let history = useHistory();
+function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPaginationModel, loadData, isMounted }) {
+  const toastContext = useContext(DialogToastContext);
   const fields = pipelineSchedulerMetadata.fields;
 
   // TODO: Add mechanism to switch to editor panel
@@ -48,6 +51,10 @@ function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPagin
     );
   };
 
+  const createScheduledTask = () => {
+    toastContext.showOverlayPanel(<NewPipelineScheduledTaskOverlay loadData={loadData} isMounted={isMounted} />);
+  };
+
   return (
     <FilterContainer
       loadData={loadData}
@@ -56,7 +63,9 @@ function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPagin
       type={"Pipeline Scheduled Task"}
       title={"Pipeline Scheduled Tasks"}
       metadata={pipelineSchedulerMetadata}
+      addRecordFunction={createScheduledTask}
       body={getPipelineScheduledTasksTable()}
+      className={"mt-3 mx-3"}
     />
   );
 }
@@ -66,7 +75,8 @@ PipelineScheduledTaskTable.propTypes = {
   isLoading: PropTypes.bool,
   setPaginationModel: PropTypes.func,
   paginationModel: PropTypes.object,
-  loadData: PropTypes.func
+  loadData: PropTypes.func,
+  isMounted: PropTypes.object
 };
 
 export default PipelineScheduledTaskTable;

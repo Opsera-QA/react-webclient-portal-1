@@ -14,11 +14,7 @@ function NewPipelineScheduledTaskOverlay({ loadData, isMounted, pipelineId }) {
   useEffect(() => {
     isMounted.current = true;
 
-    initializeModel().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    initializeModel();
 
     return () => {
       isMounted.current = false;
@@ -28,7 +24,7 @@ function NewPipelineScheduledTaskOverlay({ loadData, isMounted, pipelineId }) {
   const initializeModel = () => {
     let newModel = new Model({...pipelineSchedulerMetadata.newObjectFields}, pipelineSchedulerMetadata, true);
     newModel.setData("task", { taskType: "RUN", pipelineId: pipelineId});
-    setScheduledTaskData({...newModel})
+    setScheduledTaskData({...newModel});
   };
 
   const closePanel = () => {
