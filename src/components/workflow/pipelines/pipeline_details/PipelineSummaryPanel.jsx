@@ -32,6 +32,8 @@ import Modal from "components/common/modal/modal";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
 import ScheduleInput from "components/common/inputs/date/TimeInput";
+import NewTagOverlay from "components/settings/tags/NewTagOverlay";
+import PipelineScheduledTasksOverlay from "components/workflow/pipelines/scheduler/PipelineScheduledTasksOverlay";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -308,6 +310,7 @@ function PipelineSummaryPanel({
       break;
     case "schedule":
       setEditSchedule(true);
+      // showSchedulerOverlay();
       break;
     case "tags":
       setEditTags(true);
@@ -440,6 +443,10 @@ function PipelineSummaryPanel({
 
       </Col>
     );
+  };
+
+  const showSchedulerOverlay = () => {
+    toastContext.showOverlayPanel(<PipelineScheduledTasksOverlay pipeline={pipeline} />);
   };
 
   const updateSchedule = (value) => {
