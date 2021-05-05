@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from "react";
+import React, {useState, useContext, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import toolMetadata from "components/inventory/tools/tool-metadata";
@@ -13,12 +13,15 @@ import CenterOverlayContainer from "components/common/overlays/center/CenterOver
 import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pipeline-scheduler-actions";
 import PipelineScheduledTaskTable from "components/workflow/pipelines/scheduler/PipelineScheduledTaskTable";
 import FilterContainer from "components/common/table/FilterContainer";
+import {AuthContext} from "contexts/AuthContext";
 
 function PipelineScheduledTasksOverlay({ pipeline }) {
+  const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const [scheduledTasksList, setScheduledTasksList] = useState([]);
+  const isMounted = useRef(false);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -76,11 +79,13 @@ function PipelineScheduledTasksOverlay({ pipeline }) {
       titleText={"Pipeline Scheduled Tasks"}
       closePanel={closePanel}
       titleIcon={faCalendarAlt}
+      showPanel={true}
     >
       <PipelineScheduledTaskTable
         isLoading={isLoading}
         data={scheduledTasksList}
         loadData={loadData}
+        isMounted={isMounted}
       />
     </CenterOverlayContainer>
   );
