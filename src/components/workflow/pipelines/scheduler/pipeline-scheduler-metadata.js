@@ -48,7 +48,7 @@ const pipelineSchedulerMetadata = {
     },
     {
       label: "Execution Date",
-      id: "execution",
+      id: "schedule.executionDate",
     },
   ],
   newObjectFields: {
@@ -58,7 +58,7 @@ const pipelineSchedulerMetadata = {
     active: true,
     roles: [],
     task: {},
-    executionDate: new Date()
+    schedule: { recurring: "NONE", executionDate: "" },
   }
 };
 
