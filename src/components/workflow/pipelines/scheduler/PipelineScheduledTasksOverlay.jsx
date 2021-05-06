@@ -19,7 +19,7 @@ function PipelineScheduledTasksOverlay({ pipeline }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [scheduledTasksList, setScheduledTasksList] = useState([]);
   const [scheduledTaskData, setScheduledTaskData] = useState(undefined);
   const isMounted = useRef(false);
@@ -47,6 +47,7 @@ function PipelineScheduledTasksOverlay({ pipeline }) {
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
+      setIsLoading(true);
       await loadScheduledTasks(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
@@ -65,8 +66,8 @@ function PipelineScheduledTasksOverlay({ pipeline }) {
     const response = await pipelineSchedulerActions.getScheduledTasks(getAccessToken, cancelSource, pipeline._id);
     const newScheduledTasksList = response?.data?.data;
 
-    if (isMounted?.current === true && newScheduledTasksList) {
-      setScheduledTasksList(newScheduledTasksList);
+    if (isMounted?.current === true && Array.isArray(newScheduledTasksList) && newScheduledTasksList.length > 0) {
+      setScheduledTasksList([...newScheduledTasksList]);
     }
   };
 
