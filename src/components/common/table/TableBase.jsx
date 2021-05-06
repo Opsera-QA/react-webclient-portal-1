@@ -5,7 +5,7 @@ import "dhx-suite-package/codebase/suite.css";
 import {useWindowSize} from "components/common/hooks/useWindowSize";
 import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
 
-function TableBase({ columns, data, noDataMessage, onRowSelect, rowStyling, isLoading, sort }) {
+function TableBase({ columns, data, onRowSelect, rowStyling, sort }) {
   const containerRef = useRef(null);
   const [grid, setGrid] = useState(null);
   const windowSize = useWindowSize();
@@ -60,23 +60,12 @@ function TableBase({ columns, data, noDataMessage, onRowSelect, rowStyling, isLo
     return grid;
   };
 
-  const getTableBody = () => {
-    return (
-      <div
-        className={"w-100"}
-        id="grid"
-        style={{minHeight: "500px"}}
-        ref={el => (containerRef.current = el)}
-      />
-    );
-  };
-
   return (
-    <TableBodyLoadingWrapper
-      isLoading={isLoading}
-      data={data}
-      noDataMessage={noDataMessage}
-      tableComponent={getTableBody()}
+    <div
+      className={"w-100"}
+      id="grid"
+      style={{minHeight: "500px"}}
+      ref={el => (containerRef.current = el)}
     />
   );
 }
@@ -84,12 +73,9 @@ function TableBase({ columns, data, noDataMessage, onRowSelect, rowStyling, isLo
 TableBase.propTypes = {
   columns: PropTypes.array,
   data: PropTypes.array,
-  noDataMessage: PropTypes.string,
   onRowSelect: PropTypes.func,
   rowStyling: PropTypes.func,
-  isLoading: PropTypes.bool,
   sort: PropTypes.string,
-  handleExpansion: PropTypes.func
 };
 
 TableBase.defaultProps = {
