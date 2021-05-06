@@ -8,12 +8,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
 import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pipeline-scheduler-actions";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
-import PipelineScheduledTaskFrequencySelectInput from "components/common/list_of_values_input/workflow/scheduler/PipelineScheduledTaskFrequencySelectInput";
-import DateInput from "components/common/inputs/date/DateInput";
-import CheckboxInput from "components/common/inputs/boolean/CheckboxInput";
-import TimeInputBase from "components/common/inputs/time/TimeInputBase";
 import ScheduleEditorPanel from "components/workflow/pipelines/scheduler/schedule/ScheduleEditorPanel";
-
 
 function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -21,6 +16,7 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [scheduleModel, setScheduleModel] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -64,7 +60,7 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
   const getExtraButtons = () => {
     if (!scheduledTaskData.isNew()) {
       return (
-        <DeleteButtonWithInlineConfirmation dataObject={scheduledTaskData} deleteRecord={deleteScheduledTask} />
+        <DeleteButtonWithInlineConfirmation dataObject={scheduledTaskData} deleteRecord={deleteScheduledTask}/>
       );
     }
   };
@@ -79,8 +75,9 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
       handleClose={handleClose}
       extraButtons={getExtraButtons()}
       addAnotherOption={false}
+      disable={scheduleModel == null || !scheduleModel.checkCurrentValidity()}
     >
-  <Row>
+      <Row>
         <Col lg={6}>
           <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"name"}/>
         </Col>
@@ -90,25 +87,11 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
         <Col lg={12}>
           <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"description"}/>
         </Col>
-
-        <ScheduleEditorPanel 
-          handleClose={handleClose}
-          scheduledTaskData={scheduledTaskData} 
-          setSchedulerTaskModel={setSchedulerTaskModel}
-          schedulerTaskModel={schedulerTaskModel}
-          />
-        {/* <Col lg={6}>
-          <DateInput setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"schedule"} />
-        </Col>
-        <Col lg={6}>
-          <PipelineScheduledTaskFrequencySelectInput setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"schedule"}/>
-        </Col>
-        <Col lg={6}>
-          <TimeInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"schedule"} />
-        </Col>
-        <Col lg={12}>
-          <CheckboxInput setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"active"}/>
-        </Col> */}
+        <ScheduleEditorPanel
+          scheduledTaskData={scheduledTaskData}
+          setScheduleModel={setScheduleModel}
+          scheduleModel={scheduleModel}
+        />
       </Row>
     </EditorPanelContainer>
   );

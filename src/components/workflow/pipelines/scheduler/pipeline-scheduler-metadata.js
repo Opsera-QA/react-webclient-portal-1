@@ -27,7 +27,6 @@ const pipelineSchedulerMetadata = {
     {
       label: "Owner",
       id: "owner",
-      isRequired: true
     },
     {
       label: "Roles",
@@ -41,12 +40,10 @@ const pipelineSchedulerMetadata = {
     {
       label: "Account",
       id: "account",
-      isRequired: true
     },
     {
       label: "Schedule",
       id: "schedule",
-      isRequired: true
     },
   ],
   newObjectFields: {
