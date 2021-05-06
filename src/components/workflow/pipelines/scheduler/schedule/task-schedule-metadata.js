@@ -2,6 +2,11 @@ const taskScheduleMetadata = {
   type: "Task Schedule",
   fields: [
     {
+      label: "Active Schedule",
+      id: "active",
+      // isRequired: true,
+    },
+    {
       label: "Execution Date",
       id: "executionDate",
       isRequired: true,
@@ -11,16 +16,11 @@ const taskScheduleMetadata = {
       id: "recurring",
       isRequired: true
     },
-    {
-      label: "Time",
-      id: "time",
-      // isRequired: true
-    }
   ],
   newObjectFields: {
     recurring: "NONE",
     executionDate: new Date(),
-    time: "",
+    active: true,
   },
 };
 

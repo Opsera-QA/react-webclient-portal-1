@@ -36,6 +36,7 @@ function CalendarInputBase({ fieldName, dataObject, setDataObject, disabled, set
 
   const setUpCalendar = () => {
     let calendar = new Calendar(containerRef.current, {
+      width: "75%",
       value: new Date(dataObject.getData(fieldName)),
       dateFormat: dateFormat,
       timePicker: showTimePicker
@@ -59,9 +60,9 @@ function CalendarInputBase({ fieldName, dataObject, setDataObject, disabled, set
 
   return (
     <InputContainer>
-      <div className={"content-container"} style={{width: 252}}>
+      <div className={"content-container"} style={{width: "90%"}}>
         <InputTitleBar icon={faCalendar} field={field}/>
-        <div id="calendar" ref={el => (containerRef.current = el)}/>
+        <div id="calendar" ref={el => (containerRef.current = el)} style={{display: "flex", justifyContent: "center"}}/>
       </div>
       <InfoText field={field} errorMessage={errorMessage}/>
     </InputContainer>

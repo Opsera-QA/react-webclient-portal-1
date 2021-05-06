@@ -9,6 +9,7 @@ import axios from "axios";
 import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pipeline-scheduler-actions";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import ScheduleEditorPanel from "components/workflow/pipelines/scheduler/schedule/ScheduleEditorPanel";
+import CheckboxInput from "components/common/inputs/boolean/CheckboxInput";
 
 function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -46,10 +47,16 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
   };
 
   const createScheduledTask = async () => {
+    let data = scheduleModel?.data;
+    schedulerTaskModel.setData("schedule", { recurring: data?.recurring, executionDate: data?.executionDate});
+    schedulerTaskModel.setData("active", data.active);
     return await pipelineSchedulerActions.createSchedule(getAccessToken, cancelTokenSource, schedulerTaskModel);
   };
 
   const updateScheduledTask = async () => {
+    let data = scheduleModel?.data;
+    schedulerTaskModel.setData("schedule", { recurring: data?.recurring, executionDate: data?.executionDate}, "active", data.active);
+    schedulerTaskModel.setData("active", data.active);
     return await pipelineSchedulerActions.updateSchedule(getAccessToken, cancelTokenSource, schedulerTaskModel);
   };
 

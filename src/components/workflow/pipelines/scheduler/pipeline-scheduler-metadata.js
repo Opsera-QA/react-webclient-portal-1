@@ -12,7 +12,7 @@ const pipelineSchedulerMetadata = {
       isRequired: true
     },
     {
-      label: "Notes",
+      label: "Description",
       id: "description",
     },
     {
@@ -22,7 +22,7 @@ const pipelineSchedulerMetadata = {
     {
       label: "Active",
       id: "active",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Owner",
@@ -50,10 +50,9 @@ const pipelineSchedulerMetadata = {
     name: "",
     description: "",
     notes: "",
-    active: true,
     roles: [],
     task: {},
-    schedule: { recurring: "ONCE", executionDate: new Date() },
+    schedule: { recurring: "NONE", executionDate: new Date() },
   }
 };
 

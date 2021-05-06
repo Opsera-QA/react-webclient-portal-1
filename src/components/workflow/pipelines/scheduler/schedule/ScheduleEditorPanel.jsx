@@ -7,6 +7,7 @@ import PipelineScheduledTaskFrequencySelectInput from "components/common/list_of
 import taskScheduleMetadata from "components/workflow/pipelines/scheduler/schedule/task-schedule-metadata";
 import CalendarInputBase from "components/common/inputs/date/CalendarInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
 // TODO: Jim, when this is all done and working, I will probably make a component out of the schedule component and hook it up here.
 function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleModel }) {
@@ -54,6 +55,7 @@ function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleMode
       </Col>
       <Col lg={6}>
         <PipelineScheduledTaskFrequencySelectInput setDataObject={setScheduleModel} dataObject={scheduleModel} fieldName={"recurring"}/>
+        <BooleanToggleInput setDataObject={setScheduleModel} dataObject={scheduleModel} fieldName={"active"}/>
       </Col>
     </Row>
   );
