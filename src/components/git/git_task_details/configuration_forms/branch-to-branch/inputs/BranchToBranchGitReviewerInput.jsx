@@ -32,6 +32,7 @@ function BranchToBranchGitReviewerInput({dataObject, setDataObject, disabled}) {
                 service={dataObject.getData("service")}
                 gitToolId={dataObject.getData("gitToolId")}
                 workspace={dataObject.getData("workspace")}
+                repository={dataObject.getData("repository")}
                 dataObject={dataObject}
                 setDataObject={setDataObject}
                 setDataFunction={setReviewer}
