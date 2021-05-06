@@ -3,14 +3,14 @@ import PropTypes from "prop-types";
 import InputContainer from "components/common/inputs/InputContainer";
 import {Form} from "react-bootstrap";
 
-function DockerPushSourceScriptToggleInput({dataObject, setDataObject, fieldName, disabled}) {
+function DockerPushNewRepoToggleInput({dataObject, setDataObject, fieldName, disabled}) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
 
-  const triggerAuthenticationChange = () => {
+  const triggerNewRepoChange = () => {
     let newDataObject = dataObject;
-    let sourceScriptFlag = !dataObject.getData("sourceScript");
-    newDataObject.setData("sourceScript", sourceScriptFlag);
-    newDataObject.setData("commands", "");
+    let newRepo = !dataObject.getData("newRepo");
+    newDataObject.setData("newRepo", newRepo);
+    newDataObject.setData("ecrRepoName", "");
     setDataObject({...newDataObject});
   };
 
@@ -22,18 +22,18 @@ function DockerPushSourceScriptToggleInput({dataObject, setDataObject, fieldName
         checked={!!dataObject.getData(fieldName)}
         disabled={disabled}
         label={field.label}
-        onChange={() => triggerAuthenticationChange()}
+        onChange={() => triggerNewRepoChange()}
       />
     </InputContainer>
 
   );
 }
 
-DockerPushSourceScriptToggleInput.propTypes = {
+DockerPushNewRepoToggleInput.propTypes = {
   dataObject: PropTypes.object,
   fieldName: PropTypes.string,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool
 };
 
-export default DockerPushSourceScriptToggleInput;
+export default DockerPushNewRepoToggleInput;

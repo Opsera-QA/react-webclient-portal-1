@@ -151,6 +151,23 @@ const dockerPushStepFormMetadata = {
       {
         label: "Auto-Scaling Enabled?",
         id: "autoScaleEnable"
+      },
+      {
+        label: "AWS Tool",
+        id: "awsToolConfigId"
+      },
+      {
+        label: "Build Step Info",
+        id: "buildStepId",
+        isRequired: true
+      },
+      {
+        label: "Want to use an existing repository?",
+        id: "newRepo",
+      },
+      {
+        label: "Select ECR Repository",
+        id: "ecrRepoName",
       }
         
     ],
@@ -180,16 +197,20 @@ const dockerPushStepFormMetadata = {
       workspaceName: "",
       repository: "",
       gitBranch: "",
-  
+
+      awsToolConfigId: "",
+      
       agentLabels: "",
       autoScaleEnable: false,
   
+      newRepo: false,
+      ecrRepoName: "",
+
       outputPath: "",
       outputFileName: "",
       dependencies: {},
       dependencyType:"",
-      workspaceDeleteFlag: false,
-  
+      buildStepId: "",
       sourceScript: false,
       inputPath: "",
       inputFileName: "",
