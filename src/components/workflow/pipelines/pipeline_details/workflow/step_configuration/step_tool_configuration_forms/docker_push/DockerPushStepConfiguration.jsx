@@ -12,14 +12,6 @@ import DockerPushJenkinsToolInput
 import DockerPushJenkinsJobInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushJenkinsJobInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import DockerPushJenkinsAccountInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushJenkinsAccountInput";
-import DockerPushGitRepositoryInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushGitRepositoryInput";
-import DockerPushGitBranchInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushGitBranchInput";
-import DockerPushBitbucketWorkspaceInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushBitbucketWorkspaceInput";
 import AgentLabelsMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
 import DockerPushNewRepoToggleInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/inputs/DockerPushNewRepoToggleInput";
@@ -59,10 +51,6 @@ function DockerPushStepConfiguration({ pipelineId, plan, stepTool, stepId, creat
 
     let dockerPushConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, dockerPushStepFormMetadata);
 
-    // if (dockerPushConfigurationData.getData("sourceScript") === true) {
-    //   dockerPushConfigurationData.setMetaDataFields(dockerPushStepFormMetadata.fieldsAlt);
-    // }
-
     setDockerPushStepConfigurationDataDto(dockerPushConfigurationData);
 
     if (job_type) {
@@ -95,8 +83,6 @@ function DockerPushStepConfiguration({ pipelineId, plan, stepTool, stepId, creat
     const toolId = dockerPushStepConfigurationDto.getData("toolConfigId");
     console.log("saving and creating job for toolID: ", toolId);
     if (toolId) {
-      // setLoading(true);
-
       const createJobPostBody = {
         jobId: "",
         pipelineId: pipelineId,
@@ -136,7 +122,7 @@ function DockerPushStepConfiguration({ pipelineId, plan, stepTool, stepId, creat
         dataObject={dockerPushStepConfigurationDto}
         setDataObject={setDockerPushStepConfigurationDataDto}
         disabled={
-          (dockerPushStepConfigurationDto && dockerPushStepConfigurationDto.getData("toolConfigId").length === 0) 
+          (dockerPushStepConfigurationDto && dockerPushStepConfigurationDto.getData("toolConfigId") && dockerPushStepConfigurationDto.getData("toolConfigId").length === 0) 
             ? true
             : false
         }
