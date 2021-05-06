@@ -5,15 +5,13 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import axios from "axios";
-import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pipeline-scheduler-actions";
-import taskScheduleMetadata from "components/workflow/pipelines/scheduler/pipeline-scheduler-metadata";
+import taskScheduleMetadata from "components/workflow/pipelines/scheduler/schedule/task-schedule-metadata";
 import PipelineScheduledTaskFrequencySelectInput from "components/common/list_of_values_input/workflow/scheduler/PipelineScheduledTaskFrequencySelectInput";
 import DateInput from "components/common/inputs/date/DateInput";
-import CheckboxInput from "components/common/inputs/boolean/CheckboxInput";
 import TimeInputBase from "components/common/inputs/time/TimeInputBase";
 import Model from "core/data_model/model";
 
-function PipelineScheduledTaskEditorPanel({ setSchedulerTaskModel, handleClose }) {
+function ScheduleEditorPanel({ setSchedulerTaskModel, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [scheduleModel, setScheduleModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
@@ -64,7 +62,7 @@ function PipelineScheduledTaskEditorPanel({ setSchedulerTaskModel, handleClose }
     >
       <Row>
         <Col lg={6}>
-          <DateInput setDataObject={setScheduleModel} dataObject={scheduleModel} fieldName={"executionDate"} />
+          <DateInput setDataObject={setScheduleModel} dataObject={scheduleModel} fieldName={"execution"} />
         </Col>
         <Col lg={6}>
           <PipelineScheduledTaskFrequencySelectInput setDataObject={setScheduleModel} dataObject={scheduleModel} fieldName={"recurring"}/>
@@ -80,12 +78,12 @@ function PipelineScheduledTaskEditorPanel({ setSchedulerTaskModel, handleClose }
   );
 }
 
-PipelineScheduledTaskEditorPanel.propTypes = {
+ScheduleEditorPanel.propTypes = {
   scheduledTaskData: PropTypes.object,
   setSchedulerTaskModel: PropTypes.func,
   handleClose: PropTypes.func
 };
 
-export default PipelineScheduledTaskEditorPanel;
+export default ScheduleEditorPanel;
 
 
