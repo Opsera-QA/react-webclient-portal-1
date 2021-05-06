@@ -7,8 +7,6 @@ import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 function BranchToBranchGitTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
 
-  console.log('BranchToBranchGitTaskTypeSummaryCard');
-
   if (isLoading) {
     return <GitTasksSummaryCardContainer isLoading={isLoading} />;
   }
