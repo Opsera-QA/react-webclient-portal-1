@@ -113,10 +113,6 @@ function DockerPushStepConfiguration({ pipelineId, plan, stepTool, stepId, creat
     >
       <DockerPushJenkinsToolInput dataObject={dockerPushStepConfigurationDto} setDataObject={setDockerPushStepConfigurationDataDto} />
       <DockerPushJenkinsJobInput dataObject={dockerPushStepConfigurationDto} setDataObject={setDockerPushStepConfigurationDataDto} />
-      {/* <DockerPushJenkinsAccountInput dataObject={dockerPushStepConfigurationDto} setDataObject={setDockerPushStepConfigurationDataDto} />
-      <DockerPushBitbucketWorkspaceInput dataObject={dockerPushStepConfigurationDto} setDataObject={setDockerPushStepConfigurationDataDto} />
-      <DockerPushGitRepositoryInput dataObject={dockerPushStepConfigurationDto} setDataObject={setDockerPushStepConfigurationDataDto} />
-      <DockerPushGitBranchInput  dataObject={dockerPushStepConfigurationDto} setDataObject={setDockerPushStepConfigurationDataDto} /> */}
       <AWSToolSelectInput
         fieldName={"awsToolConfigId"}
         dataObject={dockerPushStepConfigurationDto}
