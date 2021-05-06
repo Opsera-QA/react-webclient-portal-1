@@ -1,21 +1,15 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { AuthContext } from "contexts/AuthContext";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import axios from "axios";
-import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pipeline-scheduler-actions";
-import taskScheduleMetadata from "components/workflow/pipelines/scheduler/pipeline-scheduler-metadata";
 import PipelineScheduledTaskFrequencySelectInput from "components/common/list_of_values_input/workflow/scheduler/PipelineScheduledTaskFrequencySelectInput";
-import DateInput from "components/common/inputs/date/DateInput";
-import CheckboxInput from "components/common/inputs/boolean/CheckboxInput";
-import TimeInputBase from "components/common/inputs/time/TimeInputBase";
-import Model from "core/data_model/model";
+import taskScheduleMetadata from "components/workflow/pipelines/scheduler/schedule/task-schedule-metadata";
+import CalendarInputBase from "components/common/inputs/date/CalendarInputBase";
+import modelHelpers from "components/common/model/modelHelpers";
 
-function PipelineScheduledTaskEditorPanel({ setSchedulerTaskModel, handleClose }) {
-  const { getAccessToken } = useContext(AuthContext);
-  const [scheduleModel, setScheduleModel] = useState(undefined);
+// TODO: Jim, when this is all done and working, I will probably make a component out of the schedule component and hook it up here.
+function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleModel }) {
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -43,49 +37,34 @@ function PipelineScheduledTaskEditorPanel({ setSchedulerTaskModel, handleClose }
 
   const loadData = async () => {
     setIsLoading(true);
-    let newModel = newScheduleModel();
-    setScheduleModel({...newModel});
+    const newScheduleModel = modelHelpers.getToolConfigurationModel(scheduledTaskData.getData("schedule"), taskScheduleMetadata);
+    setScheduleModel({...newScheduleModel});
     setIsLoading(false);
-    console.log(scheduleModel);
   };
 
-  const newScheduleModel= () => {
-      let newModel = new Model({...taskScheduleMetadata.newObjectFields}, taskScheduleMetadata, false);
-      return newModel;
-  };
+  if (scheduleModel == null) {
+    return null;
+  }
 
   return (
-    <EditorPanelContainer
-      recordDto={scheduleModel}
-      setRecordDto={setScheduleModel}
-      isLoading={isLoading}
-      handleClose={handleClose}
-      addAnotherOption={false}
-    >
-      <Row>
-        <Col lg={6}>
-          <DateInput setDataObject={setScheduleModel} dataObject={scheduleModel} fieldName={"executionDate"} />
-        </Col>
-        <Col lg={6}>
-          <PipelineScheduledTaskFrequencySelectInput setDataObject={setScheduleModel} dataObject={scheduleModel} fieldName={"recurring"}/>
-        </Col>
-        <Col lg={6}>
-          <TimeInputBase setDataObject={setScheduleModel} dataObject={scheduleModel} fieldName={"time"} />
-        </Col>
-        <Col lg={6}>
-          HEY
-        </Col>
-      </Row>
-    </EditorPanelContainer>
+    <Row className={"w-100 mx-0"}>
+      <Col lg={6}>
+          <CalendarInputBase setDataObject={setScheduleModel} dataObject={scheduleModel} fieldName={"executionDate"}
+                             showTimePicker={true}/>
+      </Col>
+      <Col lg={6}>
+        <PipelineScheduledTaskFrequencySelectInput setDataObject={setScheduleModel} dataObject={scheduleModel} fieldName={"recurring"}/>
+      </Col>
+    </Row>
   );
 }
 
-PipelineScheduledTaskEditorPanel.propTypes = {
+ScheduleEditorPanel.propTypes = {
   scheduledTaskData: PropTypes.object,
-  setSchedulerTaskModel: PropTypes.func,
-  handleClose: PropTypes.func
+  scheduleModel: PropTypes.object,
+  setScheduleModel: PropTypes.func,
 };
 
-export default PipelineScheduledTaskEditorPanel;
+export default ScheduleEditorPanel;
 
 

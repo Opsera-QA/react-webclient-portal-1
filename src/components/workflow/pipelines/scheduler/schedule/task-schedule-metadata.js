@@ -1,29 +1,27 @@
 const taskScheduleMetadata = {
-    idProperty: "_id",
-    type: "Task Schedule",
-    fields: [
-      {
-        label: "ID",
-        id: "_id",
-      },
-      {
-        label: "Execution Date",
-        id:"executionDate"
-      },
-      {
-        label: "Frequency",
-        id: "recurring"
-      },
-      {
-        label: "Time",
-        id: "time"
-      }
-    ],
-    newObjectFields: {
-      recurring: "NONE", 
-      executionDate: new Date(),
-      time: "", 
+  type: "Task Schedule",
+  fields: [
+    {
+      label: "Execution Date",
+      id: "executionDate",
+      isRequired: true,
     },
-  };
-  
-  export default taskScheduleMetadata;
+    {
+      label: "Frequency",
+      id: "recurring",
+      isRequired: true
+    },
+    {
+      label: "Time",
+      id: "time",
+      // isRequired: true
+    }
+  ],
+  newObjectFields: {
+    recurring: "NONE",
+    executionDate: new Date(),
+    time: "",
+  },
+};
+
+export default taskScheduleMetadata;
