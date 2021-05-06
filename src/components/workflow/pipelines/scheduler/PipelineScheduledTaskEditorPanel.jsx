@@ -7,12 +7,13 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
 import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pipeline-scheduler-actions";
-import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlay, faTrash} from "@fortawesome/pro-light-svg-icons";
-import DeleteButton from "components/common/buttons/delete/DeleteButton";
-import DeleteModal from "components/common/modal/DeleteModal";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
+import PipelineScheduledTaskFrequencySelectInput from "components/common/list_of_values_input/workflow/scheduler/PipelineScheduledTaskFrequencySelectInput";
+import DateInput from "components/common/inputs/date/DateInput";
+import CheckboxInput from "components/common/inputs/boolean/CheckboxInput";
+import TimeInputBase from "components/common/inputs/time/TimeInputBase";
+import ScheduleEditorPanel from "components/workflow/pipelines/scheduler/schedule/ScheduleEditorPanel";
+
 
 function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -79,7 +80,7 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
       extraButtons={getExtraButtons()}
       addAnotherOption={false}
     >
-      <Row>
+  <Row>
         <Col lg={6}>
           <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"name"}/>
         </Col>
@@ -89,6 +90,25 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
         <Col lg={12}>
           <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"description"}/>
         </Col>
+
+        <ScheduleEditorPanel 
+          handleClose={handleClose}
+          scheduledTaskData={scheduledTaskData} 
+          setSchedulerTaskModel={setSchedulerTaskModel}
+          schedulerTaskModel={schedulerTaskModel}
+          />
+        {/* <Col lg={6}>
+          <DateInput setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"schedule"} />
+        </Col>
+        <Col lg={6}>
+          <PipelineScheduledTaskFrequencySelectInput setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"schedule"}/>
+        </Col>
+        <Col lg={6}>
+          <TimeInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"schedule"} />
+        </Col>
+        <Col lg={12}>
+          <CheckboxInput setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"active"}/>
+        </Col> */}
       </Row>
     </EditorPanelContainer>
   );

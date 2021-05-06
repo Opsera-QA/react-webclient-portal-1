@@ -22,10 +22,12 @@ const pipelineSchedulerMetadata = {
     {
       label: "Active",
       id: "active",
+      isRequired: true
     },
     {
       label: "Owner",
       id: "owner",
+      isRequired: true
     },
     {
       label: "Roles",
@@ -34,14 +36,17 @@ const pipelineSchedulerMetadata = {
     {
       label: "Task",
       id: "task",
+      isRequired: true
     },
     {
       label: "Account",
       id: "account",
+      isRequired: true
     },
     {
       label: "Schedule",
       id: "schedule",
+      isRequired: true
     },
   ],
   newObjectFields: {
@@ -51,7 +56,7 @@ const pipelineSchedulerMetadata = {
     active: true,
     roles: [],
     task: {},
-    schedule: { recurring: "DAY", executionDate: new Date() },
+    schedule: { recurring: "ONCE", executionDate: new Date() },
   }
 };
 
