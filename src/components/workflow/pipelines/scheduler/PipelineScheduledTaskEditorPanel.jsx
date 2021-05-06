@@ -7,6 +7,12 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
 import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pipeline-scheduler-actions";
+import {Button} from "react-bootstrap";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlay, faTrash} from "@fortawesome/pro-light-svg-icons";
+import DeleteButton from "components/common/buttons/delete/DeleteButton";
+import DeleteModal from "components/common/modal/DeleteModal";
+import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 
 function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -50,6 +56,18 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
     return await pipelineSchedulerActions.updateSchedule(getAccessToken, cancelTokenSource, schedulerTaskModel);
   };
 
+  const deleteScheduledTask = async () => {
+    return await pipelineSchedulerActions.deleteScheduledTask(getAccessToken, cancelTokenSource, schedulerTaskModel.getData("_id"));
+  };
+
+  const getExtraButtons = () => {
+    if (!scheduledTaskData.isNew()) {
+      return (
+        <DeleteButtonWithInlineConfirmation dataObject={scheduledTaskData} deleteRecord={deleteScheduledTask} />
+      );
+    }
+  };
+
   return (
     <EditorPanelContainer
       recordDto={schedulerTaskModel}
@@ -58,6 +76,7 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
       setRecordDto={setSchedulerTaskModel}
       isLoading={isLoading}
       handleClose={handleClose}
+      extraButtons={getExtraButtons()}
       addAnotherOption={false}
     >
       <Row>
