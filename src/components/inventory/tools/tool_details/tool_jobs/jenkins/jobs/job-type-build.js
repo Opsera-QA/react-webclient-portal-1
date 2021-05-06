@@ -130,7 +130,7 @@ const JenkinsJobTypeBuild = {
         "value": "generic-linux",
       }
     ],
-    value: "",  
+    value: "",
     toShow: true,
     disabled: false,
     touched: false,
@@ -147,6 +147,22 @@ const JenkinsJobTypeBuild = {
     value: "",
     linkedId: "buildType",
     linkedValue: "msbuild",
+    toShow: true,
+    disabled: false,
+    touched: false,
+    isValid: false,
+    errorMessage: "",
+    rules: {
+      isRequired: false
+    }
+  },
+  commands: {
+    label: "Commands",
+    id: "commands",
+    type: "textarea",
+    value: "",
+    linkedId: "buildType",
+    linkedValue: "python",
     toShow: true,
     disabled: false,
     touched: false,
