@@ -15,7 +15,7 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       id: "toolName",
       isRequired: true,
       maxLength: 250,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },  
     {
       label: "Auto Scaling",
@@ -31,7 +31,7 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       label: "Jenkins Job Name",
       id: "jobName",
       maxLength: 100,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
     {
       label: "Select SCM Type",
@@ -45,7 +45,7 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       id: "gitCredential",
       isRequired: true,
       maxLength: 50,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
     {
       id: "gitToolId",
@@ -55,8 +55,8 @@ const sfdcGitBranchTaskConfigurationMetadata = {
     },        
     {
       id: "projectId",
-      maxLength: 20,
-      regexValidator: regexHelpers.regexTypes.generalText
+      maxLength: 100,
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
     {
       label: "Conversion Type",
@@ -77,20 +77,20 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       id: "repository",
       isRequired: true,
       maxLength: 255,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
     
     {
       label: "Workspace",
       id: "workspace",
       maxLength: 255,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
     {
       label: "Workspace/Project",
       id: "workspaceName",
       maxLength: 255,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
 
     {
@@ -98,14 +98,14 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       id: "gitBranch",
       isRequired: true,
       maxLength: 255,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
     {
       label: "Destination Branch",
       id: "destinationBranch",
       isRequired: true,
       maxLength: 255,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
     {
       id: "sfdcToolId",
@@ -118,7 +118,7 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       id: "sfdcToolName",
       isRequired: true,
       maxLength: 255,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
   ],
   newObjectFields:
