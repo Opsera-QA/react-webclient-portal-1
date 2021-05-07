@@ -80,6 +80,7 @@ function PipelineScheduledTasksOverlay({ pipeline }) {
     if (isMounted?.current === true ) {
       setScheduledTaskData(null);
     }
+    loadData();
   };
 
   const getBody = () => {

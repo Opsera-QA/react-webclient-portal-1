@@ -50,14 +50,16 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
     let data = scheduleModel?.data;
     schedulerTaskModel.setData("schedule", { recurring: data?.recurring, executionDate: data?.executionDate});
     schedulerTaskModel.setData("active", data.active);
-    return await pipelineSchedulerActions.createSchedule(getAccessToken, cancelTokenSource, schedulerTaskModel);
+    return await pipelineSchedulerActions.createSchedule(getAccessToken, cancelTokenSource, schedulerTaskModel)
+    .then(res => handleClose());
   };
 
   const updateScheduledTask = async () => {
     let data = scheduleModel?.data;
     schedulerTaskModel.setData("schedule", { recurring: data?.recurring, executionDate: data?.executionDate}, "active", data.active);
     schedulerTaskModel.setData("active", data.active);
-    return await pipelineSchedulerActions.updateSchedule(getAccessToken, cancelTokenSource, schedulerTaskModel);
+    return await pipelineSchedulerActions.updateSchedule(getAccessToken, cancelTokenSource, schedulerTaskModel)
+    .then(res => handleClose());
   };
 
   const deleteScheduledTask = async () => {
