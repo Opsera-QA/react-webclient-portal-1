@@ -38,6 +38,8 @@ function SFDCBranchStructuringTaskTypeConfigurationPanel({ gitTasksDataDto, gitT
     }
   };
 
+  console.log(gitTasksConfigurationData);
+
   return (
     <Row>
       <Col lg={12}>
