@@ -15,7 +15,7 @@ const branchToBranchGitTaskConfigurationMetadata = {
       id: "toolName",
       isRequired: true,
       maxLength: 100,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },  
     {
       label: "Auto Scaling",
@@ -31,7 +31,7 @@ const branchToBranchGitTaskConfigurationMetadata = {
       label: "Jenkins Job Name",
       id: "jobName",
       maxLength: 100,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
     {
       label: "SCM Type",
@@ -45,7 +45,7 @@ const branchToBranchGitTaskConfigurationMetadata = {
       id: "gitCredential",
       isRequired: true,
       maxLength: 50,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
     {
       id: "gitToolId",
@@ -54,7 +54,9 @@ const branchToBranchGitTaskConfigurationMetadata = {
       regexValidator: regexHelpers.regexTypes.mongoId
     },        
     {
-      id: "projectId"
+      id: "projectId",
+      maxLength: 100,
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlashSlash
     },
     {
       id: "gitUrl",
@@ -68,34 +70,34 @@ const branchToBranchGitTaskConfigurationMetadata = {
       id: "repository",
       isRequired: true,
       maxLength: 255,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
     
     {
       label: "Workspace",
       id: "workspace",
       maxLength: 255,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
     {
       label: "Workspace/Project",
       id: "workspaceName",
       maxLength: 255,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
     {
       label: "Source Branch",
       id: "sourceBranch",
       isRequired: true,
       maxLength: 255,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
     {
       label: "Target Branch",
       id: "gitBranch",
       isRequired: true,
       maxLength: 255,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },    
     {
       label: "Auto Approve",
