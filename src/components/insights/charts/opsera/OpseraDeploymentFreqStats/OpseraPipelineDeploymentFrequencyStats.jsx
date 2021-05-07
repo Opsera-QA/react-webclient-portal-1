@@ -8,6 +8,10 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import Model from "../../../../../core/data_model/model";
+import bitbucketRejectedMergeRequestsMetadata
+  from "../../bitbucket/table/bitbucket-rejected-merge-requests/bitbucket-rejected-merge-requests-metadata";
+import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
 
 function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -77,7 +81,10 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
         </Popover>
       );
     };
-
+    const onRowSelect = (rowData) => {
+      const chartModel = new Model({...rowData.original}, DeploymentFrequencyInsightsTableMetadata, false);
+      toastContext.showOverlayPanel(<ChartDetailsOverlay chartModel={chartModel} kpiIdentifier={"opsera-deployment-frequency-stats"} />);
+    };
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
         <Container>
