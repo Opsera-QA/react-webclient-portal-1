@@ -4,6 +4,8 @@ import ReactJson from "react-json-view";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import BitbucketRejectedMergeRequestsSummaryPanel
   from "components/insights/charts/bitbucket/table/bitbucket-rejected-merge-requests/BitbucketRejectedMergeRequestsSummaryPanel";
+import OpseraDeploymentFreqStatsSummaryPanel
+  from "../opsera/OpseraDeploymentFreqStats/OpseraDeploymentFreqStatsSummaryPanel";
 
 function ChartSummaryPanelWrapper({ chartModel, kpiIdentifier, setActiveTab }) {
   const getStepConfigurationSummary = () => {
@@ -11,6 +13,13 @@ function ChartSummaryPanelWrapper({ chartModel, kpiIdentifier, setActiveTab }) {
       case "bitbucket-rejected-merge-requests":
         return (
           <BitbucketRejectedMergeRequestsSummaryPanel
+            chartModel={chartModel}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case "opsera-deployment-frequency-stats":
+        return (
+          <OpseraDeploymentFreqStatsSummaryPanel
             chartModel={chartModel}
             setActiveTab={setActiveTab}
           />
