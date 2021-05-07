@@ -429,6 +429,13 @@ a.text-primary:hover, a.text-primary:focus {
     overflow-y: auto;
 }
 
+.table-tree {
+    height: 500px;
+    border: 1px solid #dfdfdf;
+    border-right: 0;
+    background: #fff;
+}
+
 .custom-table th {
     background-color: #fff; /*#2588ec;*/
     border-bottom: 1px solid #E6E5E3; /*#3598fc;*/

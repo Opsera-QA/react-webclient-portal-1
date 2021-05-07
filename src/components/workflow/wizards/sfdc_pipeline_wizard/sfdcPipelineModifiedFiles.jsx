@@ -231,7 +231,7 @@ const SfdcPipelineModifiedFiles = ({
       const sfdcResponse = await sfdcPolling();
 
       if(sfdcResponse.data.data.sfdcErrorMessage){
-        toastContext.showInlineErrorMessage(sfdcResponse.data.data.sfdcErrorMessage);
+        toastContext.showInlineErrorMessage("SFDC Fetch Error : "+ sfdcResponse.data.data.sfdcErrorMessage);
       }
 
       if (!sfdcResponse.data.data || !sfdcResponse.data.paginatedData) {
@@ -263,7 +263,7 @@ const SfdcPipelineModifiedFiles = ({
       const gitResponse = await gitPolling();
 
       if(gitResponse.data.data.gitErrorMessage){
-        toastContext.showInlineErrorMessage(gitResponse.data.data.gitErrorMessage);
+        toastContext.showInlineErrorMessage("Git Fetch Error : "+ gitResponse.data.data.gitErrorMessage);
       }
 
       if (!gitResponse.data.data || !gitResponse.data.paginatedData) {
@@ -294,7 +294,7 @@ const SfdcPipelineModifiedFiles = ({
       const destSfdcResponse = await destSfdcPolling();
 
       if(destSfdcResponse.data.data.destSfdcErrorMessage){
-        toastContext.showInlineErrorMessage(destSfdcResponse.data.data.destSfdcErrorMessage);
+        toastContext.showInlineErrorMessage("Dest SFDC Fetch Error : "+ destSfdcResponse.data.data.destSfdcErrorMessage);
       }
 
       if (!destSfdcResponse.data.data || !destSfdcResponse.data.paginatedData) {

@@ -14,7 +14,7 @@ function SelectInputBase(
     selectOptions, valueField, textField, placeholderText,
     setDataFunction, busy, disabled, clearDataFunction,
     showClearValueButton, errorMessage, getCurrentValue,
-    showLabel
+    showLabel, className
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
@@ -67,7 +67,7 @@ function SelectInputBase(
   }
 
   return (
-    <InputContainer className="custom-select-input my-2">
+    <InputContainer className={className}>
       <InputLabel showLabel={showLabel} field={field} inputPopover={getClearDataIcon()} />
       <DropdownList
         data={selectOptions}
@@ -111,11 +111,13 @@ SelectInputBase.propTypes = {
   showClearValueButton: PropTypes.bool,
   errorMessage: PropTypes.string,
   getCurrentValue: PropTypes.func,
-  showLabel: PropTypes.bool
+  showLabel: PropTypes.bool,
+  className: PropTypes.string
 };
 
 SelectInputBase.defaultProps = {
   showClearValueButton: true,
+  className: "custom-select-input my-2"
 };
 
 export default SelectInputBase;
