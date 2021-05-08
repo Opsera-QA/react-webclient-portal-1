@@ -3,14 +3,13 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import axios from "axios";
-import PipelineScheduledTaskFrequencySelectInput from "components/common/list_of_values_input/workflow/scheduler/PipelineScheduledTaskFrequencySelectInput";
 import taskScheduleMetadata from "components/workflow/pipelines/scheduler/schedule/task-schedule-metadata";
-import CalendarInputBase from "components/common/inputs/date/CalendarInputBase";
+import ScheduleCalendarInput from "components/workflow/pipelines/scheduler/schedule/ScheduleCalendarInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import ActiveScheduleRadioInput from "components/common/list_of_values_input/workflow/scheduler/ActiveScheduleRadioInput";
+import ScheduleFrequencyRadioInput from "components/common/list_of_values_input/workflow/scheduler/ScheduleFrequencyRadioInput";
 
 // TODO: Jim, when this is all done and working, I will probably make a component out of the schedule component and hook it up here.
-function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleModel }) {
+function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleModel, updateScheduleName }) {
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -38,8 +37,11 @@ function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleMode
 
   const loadData = async () => {
     setIsLoading(true);
-    const newScheduleModel = modelHelpers.getToolConfigurationModel(scheduledTaskData.getData("schedule"), taskScheduleMetadata);
-    setScheduleModel({...newScheduleModel});
+    const newScheduleModel = modelHelpers.getToolConfigurationModel(
+      scheduledTaskData.getData("schedule"),
+      taskScheduleMetadata
+    );
+    setScheduleModel({ ...newScheduleModel });
     setIsLoading(false);
   };
 
@@ -50,13 +52,24 @@ function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleMode
   return (
     <Row className={"w-100 mx-0"}>
       <Col lg={6}>
-          <CalendarInputBase setDataObject={setScheduleModel} dataObject={scheduleModel} fieldName={"executionDate"}
-                             showTimePicker={true}/>
+        <ScheduleCalendarInput
+          setDataObject={setScheduleModel}
+          dataObject={scheduleModel}
+          fieldName={"executionDate"}
+          showTimePicker={true}
+          scheduledTaskData={scheduledTaskData}
+          updateScheduleName={updateScheduleName}
+        />
       </Col>
       <Col lg={6}>
-        <PipelineScheduledTaskFrequencySelectInput setDataObject={setScheduleModel} dataObject={scheduleModel} fieldName={"recurring"}/>
         <div className={"mt-5"}>
-          <ActiveScheduleRadioInput setDataObject={setScheduleModel} dataObject={scheduleModel} fieldName={"active"}/>
+          <ScheduleFrequencyRadioInput
+            setDataObject={setScheduleModel}
+            dataObject={scheduleModel}
+            fieldName={"recurring"}
+            scheduledTaskData={scheduledTaskData}
+            updateScheduleName={updateScheduleName}
+          />
         </div>
       </Col>
     </Row>
@@ -67,8 +80,7 @@ ScheduleEditorPanel.propTypes = {
   scheduledTaskData: PropTypes.object,
   scheduleModel: PropTypes.object,
   setScheduleModel: PropTypes.func,
+  updateScheduleName: PropTypes.func,
 };
 
 export default ScheduleEditorPanel;
-
-

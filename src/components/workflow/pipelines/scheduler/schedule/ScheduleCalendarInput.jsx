@@ -1,13 +1,21 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
-import {Calendar} from "dhx-suite-package";
+import { Calendar } from "dhx-suite-package";
 import InputContainer from "components/common/inputs/InputContainer";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
-import {faCalendar} from "@fortawesome/pro-light-svg-icons";
+import { faCalendar } from "@fortawesome/pro-light-svg-icons";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
-// TODO: Add support for date ranges when that instance arises
-function CalendarInputBase({ fieldName, dataObject, setDataObject, disabled, setDataFunction, showTimePicker, dateFormat }) {
+function ScheduleCalendarInput({
+  fieldName,
+  dataObject,
+  setDataObject,
+  disabled,
+  setDataFunction,
+  showTimePicker,
+  dateFormat,
+  updateScheduleName,
+}) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
   const containerRef = useRef(null);
   const [errorMessage, setErrorMessage] = useState("");
@@ -24,11 +32,10 @@ function CalendarInputBase({ fieldName, dataObject, setDataObject, disabled, set
     let newDataObject;
     if (setDataFunction) {
       newDataObject = setDataFunction(value);
-    }
-    else {
-      newDataObject = {...dataObject};
+    } else {
+      newDataObject = { ...dataObject };
       newDataObject.setData(fieldName, value);
-      setDataObject({...newDataObject});
+      setDataObject({ ...newDataObject });
     }
 
     setErrorMessage(newDataObject.getFieldError(fieldName));
@@ -36,16 +43,17 @@ function CalendarInputBase({ fieldName, dataObject, setDataObject, disabled, set
 
   const setUpCalendar = () => {
     let calendar = new Calendar(containerRef.current, {
+      width: "75%",
       value: new Date(dataObject.getData(fieldName)),
       dateFormat: dateFormat,
-      timePicker: showTimePicker
+      timePicker: showTimePicker,
     });
 
     if (disabled) {
       calendar.disable();
-    }
-    else {
+    } else {
       calendar.events.on("Change", (value) => {
+        updateScheduleName(dataObject, value);
         validateAndSetData(value);
       });
     }
@@ -59,23 +67,28 @@ function CalendarInputBase({ fieldName, dataObject, setDataObject, disabled, set
 
   return (
     <InputContainer>
-      <div className={"content-container"} style={{width: 252}}>
-        <InputTitleBar icon={faCalendar} field={field}/>
-        <div id="calendar" ref={el => (containerRef.current = el)}/>
+      <div className={"content-container"} style={{ width: "100%" }}>
+        <InputTitleBar icon={faCalendar} field={field} />
+        <div
+          id="calendar"
+          ref={(el) => (containerRef.current = el)}
+          style={{ display: "flex", justifyContent: "center" }}
+        />
       </div>
-      <InfoText field={field} errorMessage={errorMessage}/>
+      <InfoText field={field} errorMessage={errorMessage} />
     </InputContainer>
   );
 }
 
-CalendarInputBase.propTypes = {
+ScheduleCalendarInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   setDataFunction: PropTypes.func,
   showTimePicker: PropTypes.bool,
-  dateFormat: PropTypes.string
+  dateFormat: PropTypes.string,
+  updateScheduleName: PropTypes.func,
 };
 
-export default CalendarInputBase;
+export default ScheduleCalendarInput;

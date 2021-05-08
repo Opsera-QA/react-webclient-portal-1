@@ -1,15 +1,13 @@
-import React, {useContext, useEffect, useMemo} from "react";
+import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import pipelineSchedulerMetadata from "components/workflow/pipelines/scheduler/pipeline-scheduler-metadata";
 import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers-v2";
-import TableBase from "components/common/table/TableBase";
-import PaginationContainer from "components/common/pagination/PaginationContainer";
 import {faCalendarAlt} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import Model from "core/data_model/model";
 import VanityTable from "components/common/table/VanityTable";
 
-function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPaginationModel, pipelineId, loadData, isMounted, setScheduledTaskData }) {
+function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPaginationModel, pipeline, loadData, isMounted, setScheduledTaskData }) {
   const fields = pipelineSchedulerMetadata.fields;
 
   const onRowSelect = (grid, row) => {
@@ -47,7 +45,7 @@ function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPagin
   const createScheduledTask = () => {
     if (isMounted?.current === true) {
       let newModel = new Model({...pipelineSchedulerMetadata.newObjectFields}, pipelineSchedulerMetadata, true);
-      newModel.setData("task", { taskType: "RUN", pipelineId: pipelineId});
+      newModel.setData("task", { taskType: "RUN", pipelineId: pipeline?._id});
       setScheduledTaskData({...newModel});
     }
   };
@@ -80,7 +78,7 @@ PipelineScheduledTaskTable.propTypes = {
   loadData: PropTypes.func,
   isMounted: PropTypes.object,
   setScheduledTaskData: PropTypes.func,
-  pipelineId: PropTypes.string
+  pipeline: PropTypes.object,
 };
 
 export default PipelineScheduledTaskTable;

@@ -9,15 +9,23 @@ import axios from "axios";
 import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pipeline-scheduler-actions";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 import ScheduleEditorPanel from "components/workflow/pipelines/scheduler/schedule/ScheduleEditorPanel";
-import CheckboxInput from "components/common/inputs/boolean/CheckboxInput";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
+function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, pipeline }) {
   const { getAccessToken } = useContext(AuthContext);
   const [schedulerTaskModel, setSchedulerTaskModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [scheduleModel, setScheduleModel] = useState(undefined);
+  let isNew = true;
+
+  const frequencyLookup ={
+    "NONE": "once",
+    "DAY": "daily",
+    "WEEK": "weekly",
+    "MONTH": "monthly"
+};
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -47,31 +55,40 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
   };
 
   const createScheduledTask = async () => {
-    let data = scheduleModel?.data;
-    schedulerTaskModel.setData("schedule", { recurring: data?.recurring, executionDate: data?.executionDate});
-    schedulerTaskModel.setData("active", data.active);
-    return await pipelineSchedulerActions.createSchedule(getAccessToken, cancelTokenSource, schedulerTaskModel)
-    .then(res => handleClose());
+    schedulerTaskModel.setData("schedule", scheduleModel?.getPersistData());
+    const response = await pipelineSchedulerActions.createSchedule(getAccessToken, cancelTokenSource, schedulerTaskModel);
+    handleClose();
+    return response;
   };
 
   const updateScheduledTask = async () => {
-    let data = scheduleModel?.data;
-    schedulerTaskModel.setData("schedule", { recurring: data?.recurring, executionDate: data?.executionDate}, "active", data.active);
-    schedulerTaskModel.setData("active", data.active);
-    return await pipelineSchedulerActions.updateSchedule(getAccessToken, cancelTokenSource, schedulerTaskModel)
-    .then(res => handleClose());
+    schedulerTaskModel.setData("schedule", scheduleModel?.getPersistData());
+    const response = await pipelineSchedulerActions.updateSchedule(getAccessToken, cancelTokenSource, schedulerTaskModel);
+    handleClose();
+    return response;
   };
 
   const deleteScheduledTask = async () => {
-    return await pipelineSchedulerActions.deleteScheduledTask(getAccessToken, cancelTokenSource, schedulerTaskModel.getData("_id"));
+    const response = await pipelineSchedulerActions.deleteScheduledTask(getAccessToken, cancelTokenSource, schedulerTaskModel.getData("_id"));
+    handleClose();
+    return response;
   };
 
   const getExtraButtons = () => {
     if (!scheduledTaskData.isNew()) {
+      isNew = false;
       return (
         <DeleteButtonWithInlineConfirmation dataObject={scheduledTaskData} deleteRecord={deleteScheduledTask}/>
       );
     }
+  };
+
+  const updateScheduleName = (dataObject, date) => {
+      if(isNew){
+          let updatedDate = date ? date : dataObject.data.executionDate;
+          let info = dataObject.data.recurring == "NONE" ? "on" : "starting on"; 
+          scheduledTaskData.setData("name", `Run ${pipeline?.name} ${frequencyLookup[dataObject.data.recurring]} ${info} ${updatedDate.toLocaleString()}`);
+        }
   };
 
   return (
@@ -84,23 +101,30 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
       handleClose={handleClose}
       extraButtons={getExtraButtons()}
       addAnotherOption={false}
-      disable={scheduleModel == null || !scheduleModel.checkCurrentValidity()}
+      disable={ schedulerTaskModel == null
+        || !schedulerTaskModel.checkCurrentValidity()
+        || scheduleModel == null
+        || !scheduleModel.checkCurrentValidity()
+      }
     >
       <Row>
-        <Col lg={6}>
-          <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"name"}/>
-        </Col>
-        <Col lg={6}>
-          <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"notes"}/>
-        </Col>
-        <Col lg={12}>
-          <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"description"}/>
-        </Col>
         <ScheduleEditorPanel
           scheduledTaskData={scheduledTaskData}
           setScheduleModel={setScheduleModel}
           scheduleModel={scheduleModel}
+          isNew={isNew}
+          pipeline={pipeline}
+          updateScheduleName={updateScheduleName}
         />
+         <Col lg={12}>
+          <BooleanToggleInput setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"active"}/>
+        </Col>
+        <Col lg={12}>
+          <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"name"}/>
+        </Col>
+        <Col lg={12}>
+          <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"description"}/>
+        </Col>
       </Row>
     </EditorPanelContainer>
   );
@@ -109,7 +133,8 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
 PipelineScheduledTaskEditorPanel.propTypes = {
   scheduledTaskData: PropTypes.object,
   setSchedulerTaskModel: PropTypes.func,
-  handleClose: PropTypes.func
+  handleClose: PropTypes.func,
+  pipeline: PropTypes.object
 };
 
 export default PipelineScheduledTaskEditorPanel;

@@ -1,18 +1,12 @@
 import React, {useState, useContext, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
-import Model from "core/data_model/model";
-import toolMetadata from "components/inventory/tools/tool-metadata";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import ToolEditorPanel from "components/inventory/tools/tool_details/ToolEditorPanel";
-import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import PipelineScheduledTaskEditorPanel from "components/workflow/pipelines/scheduler/PipelineScheduledTaskEditorPanel";
-import pipelineSchedulerMetadata from "components/workflow/pipelines/scheduler/pipeline-scheduler-metadata";
 import axios from "axios";
 import {faCalendarAlt} from "@fortawesome/pro-light-svg-icons";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pipeline-scheduler-actions";
 import PipelineScheduledTaskTable from "components/workflow/pipelines/scheduler/PipelineScheduledTaskTable";
-import FilterContainer from "components/common/table/FilterContainer";
 import {AuthContext} from "contexts/AuthContext";
 
 function PipelineScheduledTasksOverlay({ pipeline }) {
@@ -76,11 +70,11 @@ function PipelineScheduledTasksOverlay({ pipeline }) {
     toastContext.clearOverlayPanel();
   };
 
-  const closeEditorPanel = () => {
+  const closeEditorPanel = async () => {
     if (isMounted?.current === true ) {
       setScheduledTaskData(null);
     }
-    loadData();
+   await loadData();
   };
 
   const getBody = () => {
@@ -89,6 +83,7 @@ function PipelineScheduledTasksOverlay({ pipeline }) {
         <PipelineScheduledTaskEditorPanel
           handleClose={closeEditorPanel}
           scheduledTaskData={scheduledTaskData}
+          pipeline={pipeline}
         />
       );
     }
@@ -100,7 +95,7 @@ function PipelineScheduledTasksOverlay({ pipeline }) {
         data={scheduledTasksList}
         loadData={loadData}
         isMounted={isMounted}
-        pipelineId={pipeline?._id}
+        pipeline={pipeline}
       />
     );
   };

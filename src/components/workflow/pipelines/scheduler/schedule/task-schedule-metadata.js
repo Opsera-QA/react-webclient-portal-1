@@ -2,11 +2,6 @@ const taskScheduleMetadata = {
   type: "Task Schedule",
   fields: [
     {
-      label: "Schedule Status",
-      id: "active",
-      isRequired: true,
-    },
-    {
       label: "Execution Date",
       id: "executionDate",
       isRequired: true,
