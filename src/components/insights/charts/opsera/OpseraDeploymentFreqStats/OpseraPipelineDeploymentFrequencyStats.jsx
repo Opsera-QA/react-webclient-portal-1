@@ -9,14 +9,16 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 import Model from "../../../../../core/data_model/model";
-import bitbucketRejectedMergeRequestsMetadata
-  from "../../bitbucket/table/bitbucket-rejected-merge-requests/bitbucket-rejected-merge-requests-metadata";
+import DeploymentFrequencyInsightsTableMetadata
+  from "./deployment-frequency-actionable-metadata.js";
 import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
+  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
@@ -81,10 +83,17 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
         </Popover>
       );
     };
-    const onRowSelect = (rowData) => {
-      const chartModel = new Model({...rowData.original}, DeploymentFrequencyInsightsTableMetadata, false);
-      toastContext.showOverlayPanel(<ChartDetailsOverlay chartModel={chartModel} kpiIdentifier={"opsera-deployment-frequency-stats"} />);
+
+    const onRowSelect = (stat) => {
+      const chartModel = new Model({...DeploymentFrequencyInsightsTableMetadata.newObjectFields}, DeploymentFrequencyInsightsTableMetadata, false);
+      toastContext.showOverlayPanel(
+      <ChartDetailsOverlay 
+        dashboardData={dashboardData} 
+        kpiConfiguration={kpiConfiguration} 
+        chartModel={chartModel} 
+        kpiIdentifier={"opsera-deployment-frequency-stats" + "-" + stat} />);
     };
+
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
         <Container>
@@ -127,7 +136,7 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
               <div className="box-metric">
                 <div className="green">{metrics[0].totalSuccess}</div>
               </div>
-              <div className="w-100 text-muted mb-1">Successful Deployments</div>
+              <div className="w-100 text-muted mb-1" onClick={() => onRowSelect("successful")}>Successful Deployments</div>
             </div></Col>
             <Col><div className="metric-box p-3 text-center">
               <div className="box-metric">

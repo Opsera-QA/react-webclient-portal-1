@@ -17,7 +17,7 @@ function ChartSummaryPanelWrapper({ chartModel, kpiIdentifier, setActiveTab }) {
             setActiveTab={setActiveTab}
           />
         );
-      case "opsera-deployment-frequency-stats":
+      case "opsera-deployment-frequency-stats-successful":
         return (
           <OpseraDeploymentFreqStatsSummaryPanel
             chartModel={chartModel}

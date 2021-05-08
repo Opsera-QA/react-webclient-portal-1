@@ -5,7 +5,7 @@ import {faChartBar} from "@fortawesome/pro-light-svg-icons";
 import ChartDetailsTabPanel from "components/insights/charts/detail_overlay/ChartDetailsTabPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function ChartDetailsOverlay({ chartModel, kpiIdentifier }) {
+function ChartDetailsOverlay({ dashboardData, kpiConfiguration, chartModel, kpiIdentifier }) {
   const toastContext = useContext(DialogToastContext);
   const closePanel = () => {
     // if (isMounted?.current === true) {
@@ -27,7 +27,7 @@ function ChartDetailsOverlay({ chartModel, kpiIdentifier }) {
       showCloseButton={false}
     >
       <div className="shaded-panel m-3">
-        <ChartDetailsTabPanel chartModel={chartModel} kpiIdentifier={kpiIdentifier}/>
+        <ChartDetailsTabPanel dashboardData={dashboardData} kpiConfiguration={kpiConfiguration} chartModel={chartModel} kpiIdentifier={kpiIdentifier}/>
       </div>
     </CenterOverlayContainer>
   );
@@ -35,7 +35,9 @@ function ChartDetailsOverlay({ chartModel, kpiIdentifier }) {
 
 ChartDetailsOverlay.propTypes = {
   chartModel: PropTypes.object,
-  kpiIdentifier: PropTypes.string
+  kpiIdentifier: PropTypes.string,
+  dashboardData: PropTypes.object,
+  kpiConfiguration: PropTypes.object
 };
 
 export default ChartDetailsOverlay;
