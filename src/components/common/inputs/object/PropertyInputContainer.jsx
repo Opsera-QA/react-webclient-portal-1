@@ -18,15 +18,17 @@ function PropertyInputContainer({ children, titleIcon, titleText, field, errorMe
   };
 
   const getAddPropertyButton = () => {
-    return (
-      <Row>
-        <div className="ml-auto mt-2 mr-3 d-flex">
-          <Button variant="secondary" disabled={!addAllowed} onClick={() => addProperty()} size="sm">
-            <span className="text-white"><FontAwesomeIcon className="text-white mr-2" icon={faPlus} fixedWidth />Add {type}</span>
-          </Button>
-        </div>
-      </Row>
-    );
+    if (addProperty) {
+      return (
+        <Row>
+          <div className="ml-auto mt-2 mr-3 d-flex">
+            <Button variant="secondary" disabled={!addAllowed} onClick={() => addProperty()} size="sm">
+              <span className="text-white"><FontAwesomeIcon className="text-white mr-2" icon={faPlus} fixedWidth />Add {type}</span>
+            </Button>
+          </div>
+        </Row>
+      );
+    }
   };
 
   return (

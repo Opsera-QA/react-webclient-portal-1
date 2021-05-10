@@ -7,7 +7,7 @@ export const ruleOperands = [
   {value: "OR", text: "Or"},
 ];
 
-function RuleOperandSelectInput({fieldName, className, dataObject, setDataObject, disabled}) {
+function RuleOperandSelectInput({fieldName, className, dataObject, setDataObject, disabled, showLabel}) {
   return (
     <SelectInputBase
       className={className}
@@ -15,9 +15,11 @@ function RuleOperandSelectInput({fieldName, className, dataObject, setDataObject
       dataObject={dataObject}
       setDataObject={setDataObject}
       selectOptions={ruleOperands}
+      placeholderText={"Select Operand"}
       valueField={"value"}
       textField={"text"}
       disabled={disabled}
+      showLabel={showLabel}
     />
   );
 }
@@ -27,7 +29,8 @@ RuleOperandSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  showLabel: PropTypes.bool
 };
 
 RuleOperandSelectInput.defaultProps = {

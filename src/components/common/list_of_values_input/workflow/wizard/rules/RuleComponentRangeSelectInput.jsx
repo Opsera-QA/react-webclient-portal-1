@@ -8,7 +8,7 @@ export const ruleComponentRanges = [
   {value: "many", text: "Multiple"},
 ];
 
-function RuleComponentSelectInput({fieldName, className, dataObject, setDataObject, disabled}) {
+function RuleComponentRangeSelectInput({fieldName, className, dataObject, setDataObject, disabled, showLabel}) {
   return (
     <SelectInputBase
       className={className}
@@ -16,23 +16,26 @@ function RuleComponentSelectInput({fieldName, className, dataObject, setDataObje
       dataObject={dataObject}
       setDataObject={setDataObject}
       selectOptions={ruleComponentRanges}
+      placeholderText={"Select a Range"}
       valueField={"value"}
       textField={"text"}
       disabled={disabled}
+      showLabel={showLabel}
     />
   );
 }
 
-RuleComponentSelectInput.propTypes = {
+RuleComponentRangeSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  showLabel: PropTypes.bool
 };
 
-RuleComponentSelectInput.defaultProps = {
-  fieldName: "componentRange",
+RuleComponentRangeSelectInput.defaultProps = {
+  fieldName: "range",
 };
 
-export default RuleComponentSelectInput;
+export default RuleComponentRangeSelectInput;
