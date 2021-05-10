@@ -44,7 +44,7 @@ function GitTasksActivityLogsTable({ gitTasksData, allLogs }) {
       getTableTextColumn(fields.find(field => { return field.id === "log_type";})),
       getGitTasksStatusColumn(fields.find(field => { return field.id === "status";})),
       getTableDateTimeColumn(fields.find(field => { return field.id === "createdAt";})),
-      getTableInfoIconColumn(showActivityLog),
+      // getTableInfoIconColumn(showActivityLog),
     ],
     [],
   );
