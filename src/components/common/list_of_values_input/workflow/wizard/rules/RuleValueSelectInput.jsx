@@ -8,6 +8,7 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {Multiselect} from "react-widgets";
 import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
 
+// TODO: Rename file to match
 function RuleValueMultiSelectInput({ fieldName, dataObject, ruleField, setDataObject, disabled, showLabel, className}) {
   const { getAccessToken } = useContext(AuthContext);
   const [ruleValues, setRuleValues] = useState([]);
@@ -82,6 +83,7 @@ function RuleValueMultiSelectInput({ fieldName, dataObject, ruleField, setDataOb
       dataObject={dataObject}
       setDataObject={setDataObject}
       fieldName={fieldName}
+      placeholderText={"Select Rule Values"}
       textField={"id"}
       valueField={"id"}
       busy={isLoading}
@@ -98,6 +100,11 @@ RuleValueMultiSelectInput.propTypes = {
   showLabel: PropTypes.bool,
   disabled: PropTypes.bool,
   className: PropTypes.string,
+  ruleField: PropTypes.string
+};
+
+RuleValueMultiSelectInput.defaultProps = {
+  fieldName: "values"
 };
 
 export default RuleValueMultiSelectInput;
