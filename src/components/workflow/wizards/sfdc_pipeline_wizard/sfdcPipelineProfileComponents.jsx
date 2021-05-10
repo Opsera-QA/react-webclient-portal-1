@@ -115,7 +115,10 @@ const SfdcPipelineProfileComponents = ({
 
       //storing _id so that we can edit this object
       setRecordId(response.data._id);
-
+      let profileSelectedComp = response.data.data.profileComponentList.filter((ele)=>  selectedProfileComponent.some(({componentType, committedFile}) => ele.componentType === componentType && ele.committedFile === committedFile) );
+      if(response.data.data.profileComponentList && response.data.data.profileComponentList.length> 0) {
+        setSelectedProfileComponent(profileSelectedComp);
+      }
     } catch (error) {
       console.error("Error getting API Data: ", error);
       toastContext.showInlineErrorMessage(error);

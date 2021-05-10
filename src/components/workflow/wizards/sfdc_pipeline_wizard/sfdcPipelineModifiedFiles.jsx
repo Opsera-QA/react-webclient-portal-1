@@ -226,7 +226,10 @@ const SfdcPipelineModifiedFiles = ({
       getSfdcTableData(sfdcResponse.data.paginatedData.sfdcCommitList.data, sfdcResponse.data.data.sfdcCommitList);
       //storing _id so that we can edit this object
       setRecordId(sfdcResponse.data._id);
-      
+      let sfdcSelectedComp = sfdcResponse.data.data.sfdcCommitList.filter((ele)=>  sfdcSelectedComponent.some(({componentType, committedFile}) => ele.componentType === componentType && ele.committedFile === committedFile) );
+      if(sfdcResponse.data.data.sfdcCommitList && sfdcResponse.data.data.sfdcCommitList.length> 0) {
+        setSFDCSelectedComponent(sfdcSelectedComp);
+      }
     } catch (error) {
       toastContext.showInlineErrorMessage(error);
     }
@@ -259,7 +262,10 @@ const SfdcPipelineModifiedFiles = ({
       getGitTableData(gitResponse.data.paginatedData.gitCommitList.data, gitResponse.data.data.gitCommitList);
       //storing _id so that we can edit this object
       setRecordId(gitResponse.data._id);
-
+      let gitSelectedComp = gitResponse.data.data.gitCommitList.filter((ele)=>  gitSelectedComponent.some(({componentType, committedFile}) => ele.componentType === componentType && ele.committedFile === committedFile) );
+      if(gitResponse.data.data.gitCommitList && gitResponse.data.data.gitCommitList.length> 0) {
+        setGitSelectedComponent(gitSelectedComp);
+      }
     } catch (error) {
       toastContext.showInlineErrorMessage(error);
     }
