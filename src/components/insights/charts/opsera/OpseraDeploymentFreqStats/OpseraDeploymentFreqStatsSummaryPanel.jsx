@@ -15,9 +15,11 @@ import Model from "core/data_model/model";
 import chartsActions from "components/insights/charts/charts-actions";
 import DeploymentFrequencyInsightsTableMetadata from "components/insights/charts/opsera/OpseraDeploymentFreqStats/deployment-frequency-actionable-metadata.js";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import { DialogToastContext } from "../../../../../contexts/DialogToastContext";
 
 function OpseraDeploymentFreqStatsSummaryPanel({ dashboardData, kpiConfiguration, setActiveTab }) {
   const history = useHistory();
+  const toastContext = useContext(DialogToastContext);
   const fields = DeploymentFrequencyInsightsTableMetadata.fields;
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -53,6 +55,7 @@ function OpseraDeploymentFreqStatsSummaryPanel({ dashboardData, kpiConfiguration
   }, [JSON.stringify(dashboardData)]);
 
   const onRowSelect = (rowData) => {
+    toastContext.clearOverlayPanel();
     history.push(`/blueprint/${rowData.original._id.id}/${rowData.original.run_count}`);
   };
 
@@ -104,7 +107,7 @@ function OpseraDeploymentFreqStatsSummaryPanel({ dashboardData, kpiConfiguration
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
-        // onRowSelect={onRowSelect}
+        onRowSelect={onRowSelect}
       />
     );
   };
