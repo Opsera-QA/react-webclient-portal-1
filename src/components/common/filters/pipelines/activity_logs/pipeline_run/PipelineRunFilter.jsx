@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import NumberPicker from "react-widgets/lib/NumberPicker";
+import simpleNumberLocalizer from "react-widgets-simple-number";
 
 function PipelineRunFilter({ filterDto, setFilterDto, maximumRunCount, className}) {
+  simpleNumberLocalizer();
+
   const validateAndSetData = (fieldName, value) => {
     let newDataObject = filterDto;
     newDataObject.setData(fieldName, value);
