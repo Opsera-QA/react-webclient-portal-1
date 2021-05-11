@@ -28,6 +28,7 @@ import locale    from "react-json-editor-ajrm/locale/en";
 import CloseButton from "../../../../../../../common/buttons/CloseButton";
 
 import DockerSecretsInput from "./DockerSecretsInput";
+import PythonFilesInput from "./PythonFilesInput";
 import Model from "core/data_model/model";
 import _ from "lodash";
 
@@ -89,6 +90,7 @@ const INITIAL_DATA = {
   autoScaleEnable: "",
   dockerBuildPathJson: {},
   dockerSecretKeys: [],
+  inputDetails: [],
   isManualRollBackBranch: false
 };
 
@@ -137,8 +139,9 @@ function JenkinsStepConfiguration({
   const [workspacesList, setWorkspacesList] = useState([]);
   const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
 
-  const [deleteDockerSecrets, setDeleteDockerSecrets] = useState(false);
+  const [deleteDockerSecrets, setDeleteDockerSecrets] = useState(false);  
   const [dataObject, setDataObject] = useState(undefined);
+  const [inputDetailsObj, setInputDetailsObj] = useState(undefined);
 
   let step = {};
 
@@ -217,6 +220,15 @@ function JenkinsStepConfiguration({
         {
           label: "Docker Secrets",
           id: "dockerSecrets"
+        }
+      ]
+    }, true));
+
+    setInputDetailsObj(new Model({inputDetails: []}, {
+      fields: [
+        {
+          label: "Input Details",
+          id: "inputDetails"
         }
       ]
     }, true));
@@ -371,10 +383,18 @@ function JenkinsStepConfiguration({
   useEffect(() => {
     if(dataObject){
       let tmp = dataObject;
-      tmp.setData("dockerSecrets", formData.dockerSecretKeys);      
+      tmp.setData("dockerSecrets", formData.dockerSecretKeys);
       setDataObject(tmp);
     }    
   }, [formData.dockerSecretKeys]);
+
+  useEffect(() => {
+    if(inputDetailsObj){
+      let tmp = inputDetailsObj;
+      tmp.setData("inputDetails", formData.inputDetails);
+      setInputDetailsObj(tmp);
+    }    
+  }, [formData.inputDetails]);
 
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
@@ -404,6 +424,10 @@ function JenkinsStepConfiguration({
       //   await getTestClasses(pipelineId, stepId, toolId);
       //   return;
       // }
+
+      if(formData.buildType === "python") {
+        handleInputFileDetails();
+      }
 
       if( formData.buildType === "docker" && (deleteDockerSecrets || _.isEmpty(formData.dockerBuildPathJson)) && dataObject.data.dockerSecrets?.length !== 0){
         let dockerSecretKey = await saveToVault(pipelineId, stepId, "secretKey", "Vault Secured Key", dataObject.data.dockerSecrets);
@@ -477,6 +501,12 @@ function JenkinsStepConfiguration({
     }catch (err) {
       console.error(err);
     }
+  };
+
+  const handleInputFileDetails = () => {    
+    setFormData(Object.assign(formData, {
+      inputDetails: inputDetailsObj.getData("inputDetails")
+    }));
   };
 
   const saveToVault = async (pipelineId, stepId, key, name, value) => {
@@ -1541,6 +1571,12 @@ function JenkinsStepConfiguration({
                     </div>
                   )}                   */}
                   </>
+                )}                
+                {(formData.buildType === "python") && (
+                  <PythonFilesInput 
+                    setDataObject={setInputDetailsObj} 
+                    dataObject={inputDetailsObj}                            
+                  />                  
                 )}
 
                 {/* gradle and maven specific attributes */}
