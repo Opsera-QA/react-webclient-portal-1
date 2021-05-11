@@ -69,7 +69,7 @@ const pipelineActivityFilterMetadata = {
     return activeFilters;
   },
   newObjectFields: {
-    pageSize: 25,
+    pageSize: 250,
     currentPage: 1,
     sortOption: {},
     search: "",
