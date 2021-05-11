@@ -11,6 +11,7 @@ function TreeAndTableBase({ data, isLoading, noDataMessage, tableComponent, tree
         setFilterDto={setPaginationModel}
         filterDto={paginationModel}
         isLoading={isLoading}
+        scrollOnLoad={false}
       >
         <div className={"d-flex w-100"}>
           {treeComponent}
