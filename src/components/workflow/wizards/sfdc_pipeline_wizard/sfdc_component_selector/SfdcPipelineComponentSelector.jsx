@@ -98,6 +98,7 @@ const SfdcPipelineComponentSelector = (
         <div className="text-muted pb-1">From Date:</div>
         <DateTimePicker
           time={true}
+          dropUp={true}
           min={new Date().setFullYear(new Date().getFullYear() - 1)}
           max={selectedToDate}
           defaultValue={selectedFromDate}
@@ -125,6 +126,7 @@ const SfdcPipelineComponentSelector = (
         {/*/></OverlayTrigger>*/}
         <div className="text-muted pb-1">To Date:</div>
         <DateTimePicker
+          dropUp={true}
           time={true}
           min={selectedFromDate}
           max={new Date()}
