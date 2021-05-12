@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {Grid} from "dhx-suite-package";
 import "dhx-suite-package/codebase/suite.css";
 import {useWindowSize} from "components/common/hooks/useWindowSize";
-import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
 
 function TableBase({ columns, data, onRowSelect, rowStyling, sort }) {
   const containerRef = useRef(null);
@@ -14,6 +13,7 @@ function TableBase({ columns, data, onRowSelect, rowStyling, sort }) {
     const grid = setUpGrid();
 
     return () => {
+      setGrid(null);
       grid.destructor();
     };
   }, []);
