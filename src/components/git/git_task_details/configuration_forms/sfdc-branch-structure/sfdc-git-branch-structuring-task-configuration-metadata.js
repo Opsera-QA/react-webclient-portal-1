@@ -31,7 +31,7 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       label: "Jenkins Job Name",
       id: "jobName",
       maxLength: 100,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlashSlash
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
     {
       label: "Select SCM Type",
@@ -56,7 +56,7 @@ const sfdcGitBranchTaskConfigurationMetadata = {
     {
       id: "projectId",
       maxLength: 100,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlashSlash
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
     {
       label: "Conversion Type",

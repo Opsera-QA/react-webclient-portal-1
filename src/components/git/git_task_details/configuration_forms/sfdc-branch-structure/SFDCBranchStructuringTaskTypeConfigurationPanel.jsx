@@ -11,7 +11,7 @@ import SFDCJenkinsAccountInput from "../sfdc-org-sync/inputs/SFDCJenkinsAccountI
 import SFDCBitbucketWorkspaceInput from "../sfdc-org-sync/inputs/SFDCBitbucketWorkspaceInput";
 import SFDCGitRepositoryInput from "../sfdc-org-sync/inputs/SFDCGitRepositoryInput";
 import SFDCGitBranchInput from "../sfdc-org-sync/inputs/SFDCGitBranchInput";
-import SFDCToolInput from "../sfdc-org-sync/inputs/SFDCToolInput";
+import SFDXToolInput from "./inputs/SFDXToolInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import AgentLabelsMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
 import GitBranchTypeSelectionInput from "../sfdc-org-sync/inputs/GitBranchTypeSelectionInput";
@@ -44,7 +44,7 @@ function SFDCBranchStructuringTaskTypeConfigurationPanel({ gitTasksDataDto, gitT
         <SFDCJenkinsToolInput  dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
       </Col>
       <Col lg={12}>
-        <SFDCToolInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
+        <SFDXToolInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
       </Col>
       <Col lg={12}>
         <GitBranchTypeSelectionInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />

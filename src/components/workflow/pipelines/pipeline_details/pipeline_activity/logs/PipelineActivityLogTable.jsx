@@ -37,7 +37,7 @@ function PipelineActivityLogTable({ pipelineLogData, loadData, isLoading, pipeli
 
   const columns = useMemo(
     () => [
-      {...getTableTextColumn(fields.find(field => { return field.id === "run_count";}), undefined, 75,)},
+      {...getTableTextColumn(fields.find(field => { return field.id === "run_count";}), undefined, 100,)},
       // , class: "cell-center no-wrap-inline"},
       getTableTextColumn(fields.find(field => { return field.id === "step_name";})),
       getTableTextColumn(fields.find(field => { return field.id === "action";})),

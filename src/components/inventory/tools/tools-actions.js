@@ -221,9 +221,4 @@ toolsActions.checkSFDXToolConnection = async (getAccessToken, toolDataDto, selec
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
-toolsActions.getScmReviewers = async (getAccessToken, postBody) => {  
-  const apiUrl = `/connectors/bitbucket/getReviewers`;
-  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
-};
-
 export default toolsActions;
