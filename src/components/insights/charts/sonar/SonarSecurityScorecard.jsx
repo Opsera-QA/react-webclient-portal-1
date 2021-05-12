@@ -93,12 +93,7 @@ function SonarSecurityScorecard({ kpiConfiguration, setKpiConfiguration, dashboa
           <Row>
             <DataBlockWrapper padding={0}>
               <DataBlock
-                title={
-                  metrics[0].vulnerabilitiesScoreCard[0].rating.severity
-                  // " (" +
-                  // metrics[0].vulnerabilitiesScoreCard[0].rating.symbol +
-                  // ")"
-                }
+                title={metrics[0].vulnerabilitiesScoreCard[0].rating.severity}
                 subTitle="Security"
                 toolTipText="Security Score"
                 statusColor={metrics[0].vulnerabilitiesScoreCard[0].rating.color}
@@ -118,49 +113,6 @@ function SonarSecurityScorecard({ kpiConfiguration, setKpiConfiguration, dashboa
             </DataBlockWrapper>
           </Row>
         </Container>
-        {/* <Container>
-          <Row className="p-3">
-            <Col>
-              <div className="metric-box p-3 text-center">
-                <div className="box-metric">
-                  <div
-                    style={{ color: metrics[0]?.vulnerabilitiesScoreCard[0]?.ratingShade }}
-                    //className={metrics[0]?.vulnerabilitiesScoreCard[0]?.ratingShade}
-                  >
-                    {metrics[0]?.vulnerabilitiesScoreCard[0]?.rating}
-                  </div>
-                </div>
-                <div className="w-100 text-muted mb-1">Security</div>
-              </div>
-            </Col>
-            <Col>
-              <div className="metric-box p-3 text-center">
-                <div className="box-metric">
-                  <div
-                    style={{ color: metrics[1]?.reliabilityScoreCard[0]?.ratingShade }}
-                    // className={metrics[1]?.reliabilityScoreCard[0]?.ratingShade}
-                  >
-                    {metrics[1]?.reliabilityScoreCard[0]?.rating}
-                  </div>
-                </div>
-                <div className="w-100 text-muted mb-1">Reliability</div>
-              </div>
-            </Col>
-            <Col>
-              <div className="metric-box p-3 text-center">
-                <div className="box-metric">
-                  <div
-                    style={{ color: metrics[2]?.maintainabilityScoreCard[0]?.ratingShade }}
-                    //className={metrics[2]?.maintainabilityScoreCard[0]?.ratingShade}
-                  >
-                    {metrics[2]?.maintainabilityScoreCard[0]?.rating}
-                  </div>
-                </div>
-                <div className="w-100 text-muted mb-1">Maintainability</div>
-              </div>
-            </Col>
-          </Row>
-        </Container> */}
       </div>
     );
   };
