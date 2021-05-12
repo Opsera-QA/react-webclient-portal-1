@@ -218,7 +218,7 @@ function PipelineDetailView() {
         setLogsIsLoading(true);
       }
 
-      const response = await pipelineActivityActions.getPipelineActivityLogsV2(getAccessToken, cancelSource, pipelineActivityFilterDto, pipeline?.workflow?.run_count || "0", id);
+      const response = await pipelineActivityActions.getPipelineActivityLogsV2(getAccessToken, cancelSource, filterDto, pipeline?.workflow?.run_count || "0", id);
       const data = response?.data;
 
       if (data) {
