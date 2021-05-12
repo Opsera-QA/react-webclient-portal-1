@@ -9,6 +9,9 @@ regexHelpers.regexTypes = {
   // Letters, numbers, spaces, dashes, apostrophes, colons, underscores, and periods allowed
   generalTextWithSpaces: /^[A-Za-z0-9'\-_.: ]*$/,
 
+  // Letters, numbers, spaces, slash, dashes, apostrophes, colons, underscores, and periods allowed
+  generalTextWithSpacesSlash: /^[A-Za-z0-9'\/\-_.: ]*$/,
+
   // spaces, upper and lower case letters, numbers, dashes, periods, comma
   nameField: /^[A-Za-z0-9\-_., ]*$/,
 
