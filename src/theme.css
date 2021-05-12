@@ -442,7 +442,7 @@ a.text-primary:hover, a.text-primary:focus {
 }
 
 .custom-table th {
-    background-color: #fff; /*#2588ec;*/
+    background-color: #f7f7f7; /*#2588ec;*/
     border-bottom: 1px solid #E6E5E3; /*#3598fc;*/
     color: #3D3B36;
     line-height: 2.4em;
@@ -518,7 +518,7 @@ a.text-primary:hover, a.text-primary:focus {
   background: rgba(230, 229, 227, .5);
 }
 
-.custom-table .top-pagination-grid .top-pagination, .title-bar-selection-row {
+.title-bar-selection-row {
     background: rgba(230, 229, 227, .3);
     height: 33px;
 }

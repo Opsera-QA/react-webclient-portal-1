@@ -9,7 +9,7 @@ const pipelineActivityMetadata = {
       id: "_id",
     },
     {
-      label: "Run Count",
+      label: "Run",
       id: "run_count",
     },
     {

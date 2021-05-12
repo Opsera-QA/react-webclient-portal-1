@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
 import { ResponsivePie } from "@nivo/pie";
-import config from "components/insights/charts/qa_metrics/automationPercentagePieChartConfig";
+import config from "components/insights/charts/qa_metrics/adoptionTestPercentagePieChartConfig";
 import ModalLogs from "components/common/modal/modalLogs";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
@@ -15,7 +15,7 @@ import ChartTooltip from "../ChartTooltip";
 import { Col, Container, Row } from "react-bootstrap";
 import DataBlockWrapper from "../../../common/data_boxes/DataBlockWrapper";
 
-function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+function AdoptionPercentagePieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -49,8 +49,8 @@ function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, d
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "automationPercentage", kpiConfiguration, dashboardTags);
-      let dataObject = response?.data ? response?.data?.data[0]?.automationPercentage?.data : [];
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "adoptionPercentage", kpiConfiguration, dashboardTags);
+      let dataObject = response?.data ? response?.data?.data[0]?.adoptionPercentage?.data : [];
       assignStandardColors(dataObject[0]?.pairs);
       shortenPieChartLegend(dataObject[0]?.pairs);
 
@@ -84,31 +84,25 @@ function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, d
           <Row className="p-1">
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                <div>{metrics[0]?.totalTests}</div>
+                <div>{metrics[0]?.executedTests}</div>
               </div>
-              <div className="w-100 text-muted mb-1">Total No of Regression Test Cases</div>
+              <div className="w-100 text-muted mb-1">No of Automated Test Cases Executed</div>
             </div></Col>
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                { metrics[0]?.automationRate ?
-                  <div className ="green">{metrics[0]?.automationRate+ "%"}</div>
+                { metrics[0]?.adoptionRate ?
+                  <div className ="green">{metrics[0]?.adoptionRate+ "%"}</div>
                   : <div>{"N/A"}</div>}
               </div>
-              <div className="w-100 text-muted mb-1">Automation Percentage</div>
+              <div className="w-100 text-muted mb-1">Adoption Rate</div>
             </div></Col>
           </Row>
           <Row className="p-1">
             <Col><div className="metric-box text-center">
               <div className="box-metric">
-                <div>{metrics[0]?.automatedTests}</div>
-              </div>
-              <div className="w-100 text-muted mb-1">Regression Test Cases Automated</div>
-            </div></Col>
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
                 <div>{metrics[0]?.manualTests}</div>
               </div>
-              <div className="w-100 text-muted mb-1">Regression Test Cases Manual</div>
+              <div className="w-100 text-muted mb-1">No of Automated Test Cases Executed Manually</div>
             </div></Col>
           </Row>
         </Container>
@@ -148,11 +142,11 @@ function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, d
   );
 }
 
-AutomationPercentagePieChart.propTypes = {
+AdoptionPercentagePieChart.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
   setKpis: PropTypes.func};
 
-export default AutomationPercentagePieChart;
+export default AdoptionPercentagePieChart;
