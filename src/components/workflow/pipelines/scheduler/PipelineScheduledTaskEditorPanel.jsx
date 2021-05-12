@@ -88,7 +88,7 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, pipe
           // let updatedDate = date ? date : dataObject.data.executionDate;
           // let info = dataObject.data.recurring == "NONE" ? "on" : "starting on"; 
           // scheduledTaskData.setData("name", `Run ${pipeline?.name} ${frequencyLookup[dataObject.data.recurring]} ${info} ${updatedDate.toLocaleString()}`);
-          let scheduleCount = taskList.length;
+          let scheduleCount = taskList.length ? taskList.length + 1 : 1;
           scheduledTaskData.setData("name", `Pipeline Schedule ${scheduleCount}`);
         }
   };

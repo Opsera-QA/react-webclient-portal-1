@@ -71,7 +71,7 @@ function ScheduleCalendarInput({
 
   return (
     <InputContainer>
-      <div className={"content-container"} style={{ width: "100%" }}>
+      <div className={"content-container"} style={{ width: "100%", height: 359 }}>
         <InputTitleBar icon={faCalendar} field={field} />
         <div
           id="calendar"

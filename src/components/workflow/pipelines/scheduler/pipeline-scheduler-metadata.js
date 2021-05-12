@@ -44,6 +44,10 @@ const pipelineSchedulerMetadata = {
       label: "Schedule",
       id: "schedule",
     },
+    {
+      label: "Last Run",
+      id: "lastRun"
+    }
   ],
   newObjectFields: {
     name: "",

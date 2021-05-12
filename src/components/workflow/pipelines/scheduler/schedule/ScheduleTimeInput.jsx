@@ -21,6 +21,8 @@ function ScheduleTimeInput({ fieldName, dataObject, setDataObject, disabled, set
   }, [dataObject, disabled]);
 
   const validateAndSetData = (value) => {
+    updateScheduleName();
+
     let newDataObject;
     if (setDataFunction) {
       newDataObject = setDataFunction(value);
@@ -30,7 +32,7 @@ function ScheduleTimeInput({ fieldName, dataObject, setDataObject, disabled, set
       newDataObject.setData(fieldName, value);
       setDataObject({...newDataObject});
     }
-
+    
     setErrorMessage(newDataObject.getFieldError(fieldName));
   };
 
@@ -49,9 +51,8 @@ function ScheduleTimeInput({ fieldName, dataObject, setDataObject, disabled, set
         let newDate = new Date(dataObject.getData("executionDate"));
       
         newDate.setHours(hours,minutes);
-        
+
         validateAndSetData(newDate);
-        updateScheduleName();
       });
     }
 

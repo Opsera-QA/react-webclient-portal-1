@@ -8,7 +8,7 @@ import Model from "core/data_model/model";
 import VanityTable from "components/common/table/VanityTable";
 
 function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPaginationModel, pipeline, loadData, isMounted, setScheduledTaskData }) {
-  const fields = [...pipelineSchedulerMetadata.fields, {label: "Next Runtime", id: "executionDate"}, {label: "Interval", id: "interval"} ];
+  const fields = [...pipelineSchedulerMetadata.fields, {label: "Next Run", id: "executionDate"}, {label: "Interval", id: "interval"} ];
 
   const frequencyLookup ={
     "NONE": "once",
@@ -36,9 +36,10 @@ function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPagin
   const columns = useMemo(
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "name";})),
-      getTableTextColumn(fields.find(field => { return field.id === "description";})),
+      // getTableTextColumn(fields.find(field => { return field.id === "description";})),
       getTableTextColumn(fields.find(field => { return field.id === "executionDate";})),
       getTableTextColumn(fields.find(field => { return field.id === "interval";})),
+      getTableTextColumn(fields.find(field => { return field.id === "lastRun";})),
       getTableBooleanIconColumn(fields.find(field => { return field.id === "active";})),
     ],
     [],
