@@ -9,7 +9,7 @@ const pipelineActivityMetadata = {
       id: "_id",
     },
     {
-      label: "Run Count",
+      label: "Run",
       id: "run_count",
     },
     {
@@ -33,7 +33,7 @@ const pipelineActivityMetadata = {
       id: "state"
     },
     {
-      label: "Created",
+      label: "Date",
       id: "createdAt",
     },
     {
