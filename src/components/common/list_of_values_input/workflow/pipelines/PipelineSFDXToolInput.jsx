@@ -57,7 +57,7 @@ function PipelineSFDXToolInput({ toolType, toolFriendlyName, placeholderText, vi
       );
     }
 
-    return <span>Select a tool to get started.</span>;
+    return <span>SFDX build type Accounts are only supported.</span>;
   };
 
   if (!visible) {
