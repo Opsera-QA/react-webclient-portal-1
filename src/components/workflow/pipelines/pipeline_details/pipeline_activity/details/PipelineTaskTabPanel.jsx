@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
-import CustomTabContainer from "../../../../common/tabs/CustomTabContainer";
-import SummaryTab from "../../../../common/tabs/detail_view/SummaryTab";
-import JsonTab from "../../../../common/tabs/detail_view/JsonTab";
-import PipelineTaskJsonPanel from "./PipelineTaskJsonPanel";
-import PipelineTaskSummaryPanel from "./PipelineTaskSummaryPanel";
-import ModalTabPanelContainer from "../../../../common/panels/detail_view/ModalTabPanelContainer";
-import PipelineTaskConsoleLogPanel from "./PipelineTaskConsoleLogPanel";
-import ConsoleLogTab from "../../../../common/tabs/detail_view/ConsoleLogTab";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import SummaryTab from "components/common/tabs/detail_view/SummaryTab";
+import JsonTab from "components/common/tabs/detail_view/JsonTab";
+import PipelineTaskJsonPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskJsonPanel";
+import PipelineTaskSummaryPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskSummaryPanel";
+import ModalTabPanelContainer from "components/common/panels/detail_view/ModalTabPanelContainer";
+import PipelineTaskConsoleLogPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskConsoleLogPanel";
+import ConsoleLogTab from "components/common/tabs/detail_view/ConsoleLogTab";
 
 
 function PipelineTaskTabPanel({ pipelineTaskData }) {

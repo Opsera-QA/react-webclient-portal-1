@@ -117,7 +117,8 @@ SelectInputBase.propTypes = {
 
 SelectInputBase.defaultProps = {
   showClearValueButton: true,
-  className: "custom-select-input my-2"
+  className: "custom-select-input my-2",
+  placeholderText: "Select One"
 };
 
 export default SelectInputBase;

@@ -1,8 +1,8 @@
-import baseActions from "../../../../../utils/actionsBase";
+import baseActions from "utils/actionsBase";
 
 const pipelineActivityActions = {};
 
-pipelineActivityActions.getPipelineActivityLogs = async (pipelineActivityFilterDto, runCount, id, getAccessToken) => {
+pipelineActivityActions.getPipelineActivityLogsV2 = async (getAccessToken, cancelTokenSource, pipelineActivityFilterDto, runCount, id) => {
   const run = pipelineActivityFilterDto.getData("run");
   const latest = pipelineActivityFilterDto.getData("latest");
 
@@ -31,7 +31,7 @@ pipelineActivityActions.getPipelineActivityLogs = async (pipelineActivityFilterD
   };
 
   const apiUrl = `/pipelines/${id}/activity`;
-  return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 export default pipelineActivityActions;
