@@ -12,8 +12,10 @@ function ScheduleTimeInput({ fieldName, dataObject, setDataObject, disabled, upd
     const newDate = new Date(dataObject.getData("executionDate"));
 
     newDate.setHours(hours, minutes);
-    newDataObject.setData(fieldName, value);
+   
+    newDataObject.setData(fieldName, newDate);
     setDataObject({...newDataObject});
+    console.log(newDataObject);
     return newDataObject;
   };
 
