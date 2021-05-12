@@ -6,6 +6,9 @@ import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
+import DataBlock from "components/common/data_boxes/DataBlock";
+import InputPopover from "components/common/inputs/info_text/InputPopover";
 
 function SonarSecurityScorecard({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -72,9 +75,49 @@ function SonarSecurityScorecard({ kpiConfiguration, setKpiConfiguration, dashboa
       return null;
     }
 
+    const getPopoverBody = () => {
+      return (
+        <span>
+          The Scores from A to F with colors yellow-green to red represents an accumulated value of
+          Security/Reliability/Maintainability and their severity
+        </span>
+      );
+    };
+
     return (
       <div className="new-chart mb-3" style={{ height: "300px" }}>
+        {/* <Col> */}
+        <InputPopover tooltipTitle={"Info"} tooltipBody={getPopoverBody()} />
+        {/* </Col> */}
         <Container>
+          <Row>
+            <DataBlockWrapper padding={0}>
+              <DataBlock
+                title={
+                  metrics[0].vulnerabilitiesScoreCard[0].rating.symbol +
+                  " " +
+                  metrics[0].vulnerabilitiesScoreCard[0].rating.severity
+                }
+                subTitle="Security"
+                toolTipText="Security Score"
+                statusColor={metrics[0].vulnerabilitiesScoreCard[0].rating.color}
+              />
+              <DataBlock
+                title={metrics[1].reliabilityScoreCard[0].rating.symbol}
+                subTitle="Reliability"
+                toolTipText="Reliability Score"
+                statusColor={metrics[1].reliabilityScoreCard[0].rating.color}
+              />
+              <DataBlock
+                title={metrics[2].maintainabilityScoreCard[0].rating.symbol}
+                subTitle="Maintainability"
+                toolTipText="Maintainability Score"
+                statusColor={metrics[2].maintainabilityScoreCard[0].rating.color}
+              />
+            </DataBlockWrapper>
+          </Row>
+        </Container>
+        {/* <Container>
           <Row className="p-3">
             <Col>
               <div className="metric-box p-3 text-center">
@@ -116,7 +159,7 @@ function SonarSecurityScorecard({ kpiConfiguration, setKpiConfiguration, dashboa
               </div>
             </Col>
           </Row>
-        </Container>
+        </Container> */}
       </div>
     );
   };
