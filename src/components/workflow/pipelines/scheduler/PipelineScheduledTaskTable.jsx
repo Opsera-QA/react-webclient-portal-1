@@ -1,7 +1,7 @@
 import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import pipelineSchedulerMetadata from "components/workflow/pipelines/scheduler/pipeline-scheduler-metadata";
-import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers-v2";
+import {getTableBooleanIconColumn, getTableTextColumn, getTableDateTimeColumn} from "components/common/table/table-column-helpers-v2";
 import {faCalendarAlt} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import Model from "core/data_model/model";
@@ -36,10 +36,9 @@ function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPagin
   const columns = useMemo(
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "name";})),
-      // getTableTextColumn(fields.find(field => { return field.id === "description";})),
-      getTableTextColumn(fields.find(field => { return field.id === "executionDate";})),
+      getTableDateTimeColumn(fields.find(field => { return field.id === "executionDate";})),
       getTableTextColumn(fields.find(field => { return field.id === "interval";})),
-      getTableTextColumn(fields.find(field => { return field.id === "lastRun";})),
+      getTableDateTimeColumn(fields.find(field => { return field.id === "lastRun";})),
       getTableBooleanIconColumn(fields.find(field => { return field.id === "active";})),
     ],
     [],
