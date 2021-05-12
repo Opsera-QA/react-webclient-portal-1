@@ -84,6 +84,7 @@ function PipelineScheduledTasksOverlay({ pipeline }) {
           handleClose={closeEditorPanel}
           scheduledTaskData={scheduledTaskData}
           pipeline={pipeline}
+          taskList={scheduledTasksList}
         />
       );
     }

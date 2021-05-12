@@ -8,7 +8,23 @@ import Model from "core/data_model/model";
 import VanityTable from "components/common/table/VanityTable";
 
 function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPaginationModel, pipeline, loadData, isMounted, setScheduledTaskData }) {
-  const fields = pipelineSchedulerMetadata.fields;
+  const fields = [...pipelineSchedulerMetadata.fields, {label: "Next Runtime", id: "executionDate"}, {label: "Interval", id: "interval"} ];
+
+  const frequencyLookup ={
+    "NONE": "once",
+    "DAY": "daily",
+    "WEEK": "weekly",
+    "MONTH": "monthly"
+};
+
+  let newData = data;
+  newData.forEach(item => {
+    let options = {hour12: false};
+    let date = new Date(item.schedule.executionDate);
+    let dateString = date.toLocaleString(undefined, options);
+    item["executionDate"] = dateString;
+    item["interval"] = frequencyLookup[item.schedule.recurring];
+  });
 
   const onRowSelect = (grid, row) => {
     if (isMounted?.current === true) {
@@ -21,7 +37,8 @@ function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPagin
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "name";})),
       getTableTextColumn(fields.find(field => { return field.id === "description";})),
-      // getTableTextColumn(fields.find(field => { return field.id === "notes";})),
+      getTableTextColumn(fields.find(field => { return field.id === "executionDate";})),
+      getTableTextColumn(fields.find(field => { return field.id === "interval";})),
       getTableBooleanIconColumn(fields.find(field => { return field.id === "active";})),
     ],
     [],

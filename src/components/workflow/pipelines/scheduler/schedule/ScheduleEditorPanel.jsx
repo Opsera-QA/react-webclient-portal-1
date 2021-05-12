@@ -6,7 +6,8 @@ import axios from "axios";
 import taskScheduleMetadata from "components/workflow/pipelines/scheduler/schedule/task-schedule-metadata";
 import ScheduleCalendarInput from "components/workflow/pipelines/scheduler/schedule/ScheduleCalendarInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import ScheduleFrequencyRadioInput from "components/common/list_of_values_input/workflow/scheduler/ScheduleFrequencyRadioInput";
+import ScheduleFrequencySelectInput from "components/common/list_of_values_input/workflow/scheduler/ScheduleFrequencySelectInput";
+import ScheduleTimeInput from "components/workflow/pipelines/scheduler/schedule/ScheduleTimeInput";
 
 // TODO: Jim, when this is all done and working, I will probably make a component out of the schedule component and hook it up here.
 function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleModel, updateScheduleName }) {
@@ -56,19 +57,24 @@ function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleMode
           setDataObject={setScheduleModel}
           dataObject={scheduleModel}
           fieldName={"executionDate"}
-          showTimePicker={true}
+          showTimePicker={false}
           scheduledTaskData={scheduledTaskData}
           updateScheduleName={updateScheduleName}
         />
       </Col>
       <Col lg={6}>
-        <div className={"mt-5"}>
-          <ScheduleFrequencyRadioInput
+        <div>
+          <ScheduleFrequencySelectInput
             setDataObject={setScheduleModel}
             dataObject={scheduleModel}
             fieldName={"recurring"}
-            scheduledTaskData={scheduledTaskData}
             updateScheduleName={updateScheduleName}
+          />
+          <ScheduleTimeInput
+           setDataObject={setScheduleModel}
+           dataObject={scheduleModel}
+           fieldName={"executionDate"}
+           updateScheduleName={updateScheduleName}
           />
         </div>
       </Col>

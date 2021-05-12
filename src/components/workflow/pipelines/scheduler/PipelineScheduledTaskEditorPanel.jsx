@@ -11,7 +11,7 @@ import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete
 import ScheduleEditorPanel from "components/workflow/pipelines/scheduler/schedule/ScheduleEditorPanel";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, pipeline }) {
+function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, pipeline, taskList }) {
   const { getAccessToken } = useContext(AuthContext);
   const [schedulerTaskModel, setSchedulerTaskModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
@@ -85,9 +85,11 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, pipe
 
   const updateScheduleName = (dataObject, date) => {
       if(isNew){
-          let updatedDate = date ? date : dataObject.data.executionDate;
-          let info = dataObject.data.recurring == "NONE" ? "on" : "starting on"; 
-          scheduledTaskData.setData("name", `Run ${pipeline?.name} ${frequencyLookup[dataObject.data.recurring]} ${info} ${updatedDate.toLocaleString()}`);
+          // let updatedDate = date ? date : dataObject.data.executionDate;
+          // let info = dataObject.data.recurring == "NONE" ? "on" : "starting on"; 
+          // scheduledTaskData.setData("name", `Run ${pipeline?.name} ${frequencyLookup[dataObject.data.recurring]} ${info} ${updatedDate.toLocaleString()}`);
+          let scheduleCount = taskList.length;
+          scheduledTaskData.setData("name", `Pipeline Schedule ${scheduleCount}`);
         }
   };
 
@@ -134,7 +136,8 @@ PipelineScheduledTaskEditorPanel.propTypes = {
   scheduledTaskData: PropTypes.object,
   setSchedulerTaskModel: PropTypes.func,
   handleClose: PropTypes.func,
-  pipeline: PropTypes.object
+  pipeline: PropTypes.object,
+  taskList: PropTypes.any,
 };
 
 export default PipelineScheduledTaskEditorPanel;

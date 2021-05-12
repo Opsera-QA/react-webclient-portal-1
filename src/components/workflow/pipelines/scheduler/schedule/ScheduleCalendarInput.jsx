@@ -37,7 +37,7 @@ function ScheduleCalendarInput({
       newDataObject.setData(fieldName, value);
       setDataObject({ ...newDataObject });
     }
-
+    
     setErrorMessage(newDataObject.getFieldError(fieldName));
   };
 
@@ -52,9 +52,13 @@ function ScheduleCalendarInput({
     if (disabled) {
       calendar.disable();
     } else {
-      calendar.events.on("Change", (value) => {
+      calendar.events.on("Change", async (value) => {
+        let executionDate = new Date(dataObject.getData("executionDate"));
+        let time = {hours: executionDate.getHours(), minutes: executionDate.getMinutes()};
+        let newExecutionDate = new Date(value.setHours(time.hours, time.minutes));
+
         updateScheduleName(dataObject, value);
-        validateAndSetData(value);
+        validateAndSetData(newExecutionDate);
       });
     }
 

@@ -7,6 +7,7 @@ import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWra
 
 function VanityTable({ columns, loadData, data, noDataMessage, onRowSelect, rowStyling, isLoading, sort, paginationModel, setPaginationModel }) {
   const getTableBody = () => {
+
     return (
       <PaginationContainer
         loadData={loadData}
