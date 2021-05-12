@@ -1,19 +1,19 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import PipelineTaskSummaryPanelBase from "./PipelineTaskSummaryPanelBase";
-import Model from "../../../../../core/data_model/model";
-import pipelineTaskMetadata from "./pipeline-task-metadata";
+import PipelineTaskSummaryPanelBase from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskSummaryPanelBase";
+import Model from "core/data_model/model";
+import pipelineTaskMetadata from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/pipeline-task-metadata";
 import parallelProcessorPipelineTaskMetadata
-  from "../workflow/step_configuration/step_tool_configuration_forms/parallel_processor/parallel-processor-pipeline-task-metadata";
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/parallel_processor/parallel-processor-pipeline-task-metadata";
 import ParallelProcessorPipelineTaskSummaryPanel
-  from "../workflow/step_configuration/step_tool_configuration_forms/parallel_processor/ParallelProcessorPipelineTaskSummaryPanel";
-import pipelineActions from "../../../pipeline-actions";
-import {AuthContext} from "../../../../../contexts/AuthContext";
-import LoadingDialog from "../../../../common/status_notifications/loading";
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/parallel_processor/ParallelProcessorPipelineTaskSummaryPanel";
+import pipelineActions from "components/workflow/pipeline-actions";
+import {AuthContext} from "contexts/AuthContext";
+import LoadingDialog from "components/common/status_notifications/loading";
 import ChildPipelineTaskSummaryPanel
-  from "../workflow/step_configuration/step_tool_configuration_forms/child/ChildPipelineTaskSummaryPanel";
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/child/ChildPipelineTaskSummaryPanel";
 import childPipelineTaskMetadata
-  from "../workflow/step_configuration/step_tool_configuration_forms/child/child-pipeline-task-metadata";
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/child/child-pipeline-task-metadata";
 
 function PipelineTaskSummaryPanel({ pipelineTaskData }) {
   const {getAccessToken} = useContext(AuthContext);
