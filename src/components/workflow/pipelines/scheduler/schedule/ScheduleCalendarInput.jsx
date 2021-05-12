@@ -12,7 +12,6 @@ function ScheduleCalendarInput({
   dataObject,
   setDataObject,
   disabled,
-  updateScheduleName,
 }) {
   const setDataFunction = (value) => {
     let newDataObject = {...dataObject};
@@ -20,7 +19,6 @@ function ScheduleCalendarInput({
     const time = {hours: executionDate.getHours(), minutes: executionDate.getMinutes()};
     const newExecutionDate = new Date(value.setHours(time.hours, time.minutes));
 
-    updateScheduleName(dataObject, value);
     newDataObject.setData(fieldName, newExecutionDate);
     setDataObject({...newDataObject});
 
@@ -47,7 +45,6 @@ ScheduleCalendarInput.propTypes = {
   setDataFunction: PropTypes.func,
   showTimePicker: PropTypes.bool,
   dateFormat: PropTypes.string,
-  updateScheduleName: PropTypes.func,
 };
 
 export default ScheduleCalendarInput;

@@ -3,10 +3,9 @@ import PropTypes from "prop-types";
 import TimeInput from "components/common/inputs/time/TimeInput";
 
 
-function ScheduleTimeInput({ fieldName, dataObject, setDataObject, disabled, updateScheduleName }) {
+function ScheduleTimeInput({ fieldName, dataObject, setDataObject, disabled }) {
   const setDataFunction = (value) => {
     let newDataObject = {...dataObject};
-    updateScheduleName();
     const hours = value.slice(0,2);
     const minutes = value.slice(3,5);
     const newDate = new Date(dataObject.getData("executionDate"));

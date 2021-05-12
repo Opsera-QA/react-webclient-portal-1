@@ -6,7 +6,6 @@ import axios from "axios";
 import taskScheduleMetadata from "components/workflow/pipelines/scheduler/schedule/task-schedule-metadata";
 import ScheduleCalendarInput from "components/workflow/pipelines/scheduler/schedule/ScheduleCalendarInput";
 import modelHelpers from "components/common/model/modelHelpers";
-import ScheduleFrequencySelectInput from "components/common/list_of_values_input/workflow/scheduler/ScheduleFrequencySelectInput";
 import ScheduleTimeInput from "components/workflow/pipelines/scheduler/schedule/ScheduleTimeInput";
 import ScheduleFrequencyRadioInput
   from "components/common/list_of_values_input/workflow/scheduler/ScheduleFrequencyRadioInput";
@@ -60,7 +59,6 @@ function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleMode
           dataObject={scheduleModel}
           fieldName={"executionDate"}
           scheduledTaskData={scheduledTaskData}
-          updateScheduleName={updateScheduleName}
         />
       </Col>
       <Col lg={4}>
@@ -68,7 +66,6 @@ function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleMode
           setDataObject={setScheduleModel}
           dataObject={scheduleModel}
           fieldName={"executionDate"}
-          updateScheduleName={updateScheduleName}
         />
       </Col>
       <Col lg={4}>
@@ -76,7 +73,6 @@ function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleMode
           setDataObject={setScheduleModel}
           dataObject={scheduleModel}
           fieldName={"recurring"}
-          updateScheduleName={updateScheduleName}
         />
       </Col>
     </Row>

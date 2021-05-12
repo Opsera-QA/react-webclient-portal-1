@@ -5,7 +5,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import {faSync} from "@fortawesome/pro-light-svg-icons";
 
-function ScheduleFrequencyRadioInput({ fieldName, dataObject, setDataObject, updateScheduleName, disabled }) {
+function ScheduleFrequencyRadioInput({ fieldName, dataObject, setDataObject, disabled }) {
   return (
     <InputContainer className={"custom-radio-button-input my-2 h-100"}>
       <div className={"content-container h-100"}>
@@ -32,7 +32,6 @@ function ScheduleFrequencyRadioInput({ fieldName, dataObject, setDataObject, upd
             dataObject={dataObject}
             setDataObject={setDataObject}
             value={"DAY"}
-            onChange={updateScheduleName(dataObject)}
             label={
               <span>
               <div>
@@ -83,7 +82,6 @@ ScheduleFrequencyRadioInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
-  updateScheduleName: PropTypes.func,
 };
 
 ScheduleFrequencyRadioInput.defaultProps = {

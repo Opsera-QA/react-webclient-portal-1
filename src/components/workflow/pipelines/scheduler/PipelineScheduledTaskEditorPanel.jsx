@@ -42,6 +42,12 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, pipe
 
   const loadData = async () => {
     setIsLoading(true);
+
+    if (scheduledTaskData?.isNew()) {
+      const scheduleCount = taskList?.length ? taskList?.length + 1 : 1;
+      scheduledTaskData.setData("name", `Pipeline Schedule ${scheduleCount}`);
+    }
+
     setSchedulerTaskModel(scheduledTaskData);
     setIsLoading(false);
   };
@@ -67,17 +73,10 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, pipe
   };
 
   const getExtraButtons = () => {
-    if (!scheduledTaskData.isNew()) {
+    if (schedulerTaskModel && !schedulerTaskModel?.isNew()) {
       return (
         <DeleteButtonWithInlineConfirmation dataObject={scheduledTaskData} deleteRecord={deleteScheduledTask}/>
       );
-    }
-  };
-
-  const updateScheduleName = (dataObject, date) => {
-    if (scheduledTaskData.isNew()) {
-      let scheduleCount = taskList.length ? taskList.length + 1 : 1;
-      scheduledTaskData.setData("name", `Pipeline Schedule ${scheduleCount}`);
     }
   };
 
@@ -103,7 +102,6 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, pipe
           setScheduleModel={setScheduleModel}
           scheduleModel={scheduleModel}
           pipeline={pipeline}
-          updateScheduleName={updateScheduleName}
         />
          <Col lg={12}>
           <BooleanToggleInput setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"active"}/>
