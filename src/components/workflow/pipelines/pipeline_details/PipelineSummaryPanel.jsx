@@ -23,7 +23,6 @@ import pipelineHelpers from "components/workflow/pipelineHelpers";
 import InformationDialog from "components/common/status_notifications/info";
 import PipelineActionControls from "components/workflow/pipelines/pipeline_details/PipelineActionControls";
 import PipelineSummaryActionBar from "components/common/actions/pipeline/PipelineSummaryActionBar";
-import SchedulerWidget from "components/common/schedulerWidget";
 import PipelineSummaryMessages from "components/workflow/pipelines/pipeline_details/pipelineSummaryMessage";
 import ModalActivityLogsDialog from "components/common/modal/modalActivityLogs";
 import EditTagModal from "components/workflow/EditTagModal";
@@ -31,8 +30,6 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import Modal from "components/common/modal/modal";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
-import ScheduleInput from "components/common/inputs/date/TimeInput";
-import NewTagOverlay from "components/settings/tags/NewTagOverlay";
 import PipelineScheduledTasksOverlay from "components/workflow/pipelines/scheduler/PipelineScheduledTasksOverlay";
 
 const INITIAL_FORM_DATA = {
@@ -564,31 +561,31 @@ function PipelineSummaryPanel({
         </Form.Control>
         <Form.Label> at </Form.Label>
         <div className="ml-2 mr-2">
-          <ScheduleInput
-            name="time"
-            fieldName="schedule"
-            showDate={false}
-            showTime={true}
-            dataObject={pipelineModel}
-            setDataObject={setPipelineModel}
-            disabled={false}
-            setDataFunction={updateSchedule}
-            disableLabel={true}
-          />
+          {/*<ScheduleInput*/}
+          {/*  name="time"*/}
+          {/*  fieldName="schedule"*/}
+          {/*  showDate={false}*/}
+          {/*  showTime={true}*/}
+          {/*  dataObject={pipelineModel}*/}
+          {/*  setDataObject={setPipelineModel}*/}
+          {/*  disabled={false}*/}
+          {/*  setDataFunction={updateSchedule}*/}
+          {/*  disableLabel={true}*/}
+          {/*/>*/}
         </div>  
         <Form.Label> starting on </Form.Label>
         <div className="ml-2">
-        <ScheduleInput
-            name="date"
-            showDate={true}
-            showTime={false}
-            fieldName="schedule"
-            dataObject={pipelineModel}
-            setDataObject={setPipelineModel}
-            disabled={false}
-            setDataFunction={updateSchedule}
-            disableLabel={true}
-          />
+        {/*<ScheduleInput*/}
+        {/*    name="date"*/}
+        {/*    showDate={true}*/}
+        {/*    showTime={false}*/}
+        {/*    fieldName="schedule"*/}
+        {/*    dataObject={pipelineModel}*/}
+        {/*    setDataObject={setPipelineModel}*/}
+        {/*    disabled={false}*/}
+        {/*    setDataFunction={updateSchedule}*/}
+        {/*    disableLabel={true}*/}
+        {/*  />*/}
         </div>
       </Form>
       </>

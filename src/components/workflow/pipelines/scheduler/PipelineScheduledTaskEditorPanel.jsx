@@ -18,14 +18,6 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, pipe
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [scheduleModel, setScheduleModel] = useState(undefined);
-  let isNew = true;
-
-  const frequencyLookup ={
-    "NONE": "once",
-    "DAY": "daily",
-    "WEEK": "weekly",
-    "MONTH": "monthly"
-};
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -76,7 +68,6 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, pipe
 
   const getExtraButtons = () => {
     if (!scheduledTaskData.isNew()) {
-      isNew = false;
       return (
         <DeleteButtonWithInlineConfirmation dataObject={scheduledTaskData} deleteRecord={deleteScheduledTask}/>
       );
@@ -84,13 +75,10 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, pipe
   };
 
   const updateScheduleName = (dataObject, date) => {
-      if(isNew){
-          // let updatedDate = date ? date : dataObject.data.executionDate;
-          // let info = dataObject.data.recurring == "NONE" ? "on" : "starting on"; 
-          // scheduledTaskData.setData("name", `Run ${pipeline?.name} ${frequencyLookup[dataObject.data.recurring]} ${info} ${updatedDate.toLocaleString()}`);
-          let scheduleCount = taskList.length ? taskList.length + 1 : 1;
-          scheduledTaskData.setData("name", `Pipeline Schedule ${scheduleCount}`);
-        }
+    if (scheduledTaskData.isNew()) {
+      let scheduleCount = taskList.length ? taskList.length + 1 : 1;
+      scheduledTaskData.setData("name", `Pipeline Schedule ${scheduleCount}`);
+    }
   };
 
   return (
@@ -114,7 +102,6 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, pipe
           scheduledTaskData={scheduledTaskData}
           setScheduleModel={setScheduleModel}
           scheduleModel={scheduleModel}
-          isNew={isNew}
           pipeline={pipeline}
           updateScheduleName={updateScheduleName}
         />

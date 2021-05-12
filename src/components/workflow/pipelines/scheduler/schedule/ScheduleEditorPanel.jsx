@@ -8,6 +8,8 @@ import ScheduleCalendarInput from "components/workflow/pipelines/scheduler/sched
 import modelHelpers from "components/common/model/modelHelpers";
 import ScheduleFrequencySelectInput from "components/common/list_of_values_input/workflow/scheduler/ScheduleFrequencySelectInput";
 import ScheduleTimeInput from "components/workflow/pipelines/scheduler/schedule/ScheduleTimeInput";
+import ScheduleFrequencyRadioInput
+  from "components/common/list_of_values_input/workflow/scheduler/ScheduleFrequencyRadioInput";
 
 // TODO: Jim, when this is all done and working, I will probably make a component out of the schedule component and hook it up here.
 function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleModel, updateScheduleName }) {
@@ -52,31 +54,30 @@ function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleMode
 
   return (
     <Row className={"w-100 mx-0"}>
-      <Col lg={6}>
+      <Col lg={4}>
         <ScheduleCalendarInput
           setDataObject={setScheduleModel}
           dataObject={scheduleModel}
           fieldName={"executionDate"}
-          showTimePicker={false}
           scheduledTaskData={scheduledTaskData}
           updateScheduleName={updateScheduleName}
         />
       </Col>
-      <Col lg={6}>
-        <div>
-          <ScheduleFrequencySelectInput
-            setDataObject={setScheduleModel}
-            dataObject={scheduleModel}
-            fieldName={"recurring"}
-            updateScheduleName={updateScheduleName}
-          />
-          <ScheduleTimeInput
-           setDataObject={setScheduleModel}
-           dataObject={scheduleModel}
-           fieldName={"executionDate"}
-           updateScheduleName={updateScheduleName}
-          />
-        </div>
+      <Col lg={4}>
+        <ScheduleTimeInput
+          setDataObject={setScheduleModel}
+          dataObject={scheduleModel}
+          fieldName={"executionDate"}
+          updateScheduleName={updateScheduleName}
+        />
+      </Col>
+      <Col lg={4}>
+        <ScheduleFrequencyRadioInput
+          setDataObject={setScheduleModel}
+          dataObject={scheduleModel}
+          fieldName={"recurring"}
+          updateScheduleName={updateScheduleName}
+        />
       </Col>
     </Row>
   );

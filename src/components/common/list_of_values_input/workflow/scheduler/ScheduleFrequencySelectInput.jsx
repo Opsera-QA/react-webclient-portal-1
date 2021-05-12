@@ -23,7 +23,6 @@ function PipelineScheduledTaskFrequencySelectInput({ fieldName, dataObject, setD
         fieldName={fieldName}
         dataObject={dataObject}
         setDataObject={setDataObject}
-        // onChange={handleChange()}
         selectOptions={frequency}
         valueField={"value"}
         textField={"text"}
