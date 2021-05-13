@@ -45,9 +45,7 @@ function DataBlock({
                 {ellipsesContent && <div className="data-blocks-ellipses">{ellipsesContent}</div>}
               </Card.Subtitle>
             )}
-            {text && (
-              <Card.Text style={{ height: view !== "small" ? "350px" : "auto", fontSize: "50px" }}>{text}</Card.Text>
-            )}
+            {text && <Card.Text style={{ height: view !== "small" ? "350px" : "auto" }}>{text}</Card.Text>}
           </Card.Body>
         </Card>
       </TooltipWrapper>

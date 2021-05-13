@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import ModalLogs from "components/common/modal/modalLogs";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
+import ScoreCardDataBlockWrapper from "components/common/data_boxes/ScoreCardDataBlockWrapper";
 import ScoreCardDataBlock from "components/common/data_boxes/ScoreCardDataBlock";
-import InputPopover from "components/common/inputs/info_text/InputPopover";
+// import InputPopover from "components/common/inputs/info_text/InputPopover";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMinus } from "@fortawesome/pro-solid-svg-icons";
 
 function SonarSecurityScorecard({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -86,10 +88,7 @@ function SonarSecurityScorecard({ kpiConfiguration, setKpiConfiguration, dashboa
 
     return (
       <div className="new-chart mb-3" style={{ height: "300px" }}>
-        {/* <Col> */}
-        <InputPopover tooltipTitle={"Info"} tooltipBody={getPopoverBody()} />
-        {/* </Col> */}
-        <Container>
+        {/* <Container>
           <Row>
             <DataBlockWrapper padding={0}>
               <ScoreCardDataBlock
@@ -109,27 +108,47 @@ function SonarSecurityScorecard({ kpiConfiguration, setKpiConfiguration, dashboa
               />
             </DataBlockWrapper>
           </Row>
-        </Container>
+        </Container> */}
         <br />
         <Container>
-          <Row>
-            <DataBlockWrapper padding={0}>
+          <Row className="ml-2">
+            <ScoreCardDataBlockWrapper padding={0}>
               <ScoreCardDataBlock
-                title={metrics[0].vulnerabilitiesScoreCard[0].rating.severity}
+                title={metrics[0].vulnerabilitiesScoreCard[0].rating.symbol}
                 subTitle="Security"
                 toolTipText="Security Score"
               />
               <ScoreCardDataBlock
-                title={metrics[1].reliabilityScoreCard[0].rating.severity}
+                title={metrics[1].reliabilityScoreCard[0].rating.symbol}
                 subTitle="Reliability"
                 toolTipText="Reliability Score"
               />
               <ScoreCardDataBlock
-                title={metrics[2].maintainabilityScoreCard[0].rating.severity}
+                title={metrics[2].maintainabilityScoreCard[0].rating.symbol}
                 subTitle="Maintainability"
                 toolTipText="Maintainability Score"
               />
-            </DataBlockWrapper>
+            </ScoreCardDataBlockWrapper>
+            <Row className="mt-2">
+              <Col>
+                <div className="p-3">
+                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="lg" /> A Minor with low impact
+                  <br></br>
+                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="lg" /> B Minor with high impact
+                  <br></br>
+                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="lg" /> C Major with significant impact
+                </div>
+              </Col>
+              <Col>
+                <div className="p-3">
+                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="lg" /> D Major with very high impact
+                  <br></br>
+                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="lg" /> E Critical
+                  <br></br>
+                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="lg" /> F Blocker
+                </div>
+              </Col>
+            </Row>
           </Row>
         </Container>
       </div>
