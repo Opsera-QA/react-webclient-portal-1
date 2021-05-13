@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Card from "react-bootstrap/Card";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function DataBlock({
+function ScoreCardDataBlock({
   title,
   subTitle,
   toolTipText,
@@ -54,7 +54,7 @@ function DataBlock({
   );
 }
 
-DataBlock.propTypes = {
+ScoreCardDataBlock.propTypes = {
   title: PropTypes.string,
   subTitle: PropTypes.string,
   toolTipText: PropTypes.string,
@@ -67,4 +67,4 @@ DataBlock.propTypes = {
   text: PropTypes.string,
 };
 
-export default DataBlock;
+export default ScoreCardDataBlock;

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import CardDeck from "react-bootstrap/CardDeck";
 
-function DataBlockWrapper({ children, padding }) {
+function ScoreCardDataBlockWrapper({ children, padding }) {
   return (
     <div className="w-100">
       <div className="d-none d-sm-block justify-content-center">
@@ -12,13 +12,13 @@ function DataBlockWrapper({ children, padding }) {
   );
 }
 
-DataBlockWrapper.propTypes = {
+ScoreCardDataBlockWrapper.propTypes = {
   children: PropTypes.node,
   padding: PropTypes.number,
 };
 
-DataBlockWrapper.defaultProps = {
+ScoreCardDataBlockWrapper.defaultProps = {
   padding: 2,
 };
 
-export default DataBlockWrapper;
+export default ScoreCardDataBlockWrapper;
