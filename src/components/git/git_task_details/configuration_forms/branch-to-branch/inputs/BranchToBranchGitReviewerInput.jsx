@@ -12,27 +12,26 @@ function BranchToBranchGitReviewerInput({dataObject, setDataObject, disabled}) {
 
     const setReviewer = (fieldName, selectedOption) => {        
         console.log({selectedOption});
-        let newDataObject = {...dataObject};
-        newDataObject.setData("reviewers", selectedOption.map(option => option.reviewerId));
-        newDataObject.setData("reviewerNames", selectedOption.map(option => option.reviewerName));
+        let newDataObject = {...dataObject};        
+        newDataObject.setData("reviewers", selectedOption.map(option => option.reviewerName));
+        newDataObject.setData("reviewersList", selectedOption);
         setDataObject({...newDataObject});
     };
 
     const clearReviewer = (fieldName) => {
         let newDataObject = {...dataObject};        
         newDataObject.setData("reviewers", []);
-        newDataObject.setData("reviewerNames", []);
+        newDataObject.setData("reviewersList", []);
         setDataObject({...newDataObject});
     };
 
     return (
         <>
             <GitReviewerMultiSelectInput
-                fieldName={"reviewerNames"}
+                fieldName={"reviewers"}
                 service={dataObject.getData("service")}
                 gitToolId={dataObject.getData("gitToolId")}
                 workspace={dataObject.getData("workspace")}
-                repository={dataObject.getData("repository")}
                 dataObject={dataObject}
                 setDataObject={setDataObject}
                 setDataFunction={setReviewer}
