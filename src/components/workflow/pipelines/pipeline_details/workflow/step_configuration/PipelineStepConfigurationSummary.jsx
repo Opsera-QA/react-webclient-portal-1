@@ -137,6 +137,9 @@ import jfrogStepFormMetadata from "./step_tool_configuration_forms/jfrog_artifac
 import TerrascanPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/terrascan/TerrascanPipelineStepConfigurationSummaryPanel";
 import terrascanStepFormMetadata from "./step_tool_configuration_forms/terrascan/terrascan-stepForm-metadata";
+import AzureDevopsPipelineStepConfigurationSummary
+  from "./step_tool_configuration_forms/azure_devops/AzureDevopsPipelineStepConfigurationSummary";
+import azureDevopsStepFormMetadata from "./step_tool_configuration_forms/azure_devops/azureDevops-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -398,6 +401,13 @@ function PipelineStepConfigurationSummary({
           <TerrascanPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             terrascanLinePipelineDataObject={getModelWrappedObject(terrascanStepFormMetadata)}
+          />
+        );
+      case "azure-devops":
+        return (
+          <AzureDevopsPipelineStepConfigurationSummary
+            pipelineData={pipelineData}
+            azureDevopsPipelineDataObject={getModelWrappedObject(azureDevopsStepFormMetadata)}
           />
         );
       default:
