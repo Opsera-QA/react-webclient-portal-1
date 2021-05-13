@@ -1,46 +1,30 @@
-import React, { useContext, useState, useEffect, useMemo } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Button, Form, OverlayTrigger, Tooltip, InputGroup, Row, Col } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCheck,
   faSpinner,
-  faTimes,
   faStepBackward,
-  faPlus,
-  faMinus,
-  faEdit,
-  faPen,
   faCode,
-  faSquare,
-  faSearch,
   faStepForward,
 } from "@fortawesome/free-solid-svg-icons";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import "../../workflows.css";
-import DropdownList from "react-widgets/lib/DropdownList";
 import ErrorDialog from "components/common/status_notifications/error";
 import LoadingDialog from "components/common/status_notifications/loading";
 import { AuthContext } from "contexts/AuthContext";
-import { DialogToastContext } from "../../../../contexts/DialogToastContext";
 import sfdcPipelineActions from "./sfdc-pipeline-actions";
-import filterMetadata from "./filter-metadata";
-import Model from "../../../../core/data_model/model";
-import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
-import PageSize from "components/common/pagination/page_options/PageSize";
+import Model from "core/data_model/model";
 import { isEquals } from "components/common/helpers/array-helpers";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
-import { format } from "date-fns";
-import SfdcComponentFilter from "components/common/filters/sfdc/sfdc_component/SfdcComponentFilter";
 import sfdcComponentFilterMetadata from './sfdc-component-filter-metadata';
-import InlineBooleanFilter from "components/common/filters/boolean/InlineBooleanFilter";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import SfdcModifiedFilesTabView from "./tab_views/SfdcModifiedFilesTabView";
 import GitModifiedFilesTabView from "./tab_views/GitModifiedFilesTabView";
-import SfdcDestModifiedFilesTabView from "./tab_views/SfdcDestModifiedFilesTabView";
 import SfdcProfileSelectionView from "./tab_views/SfdcProfileSelectionView";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
+import CancelButton from "components/common/buttons/CancelButton";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 let timerIds = [];
 
@@ -51,14 +35,11 @@ const SfdcPipelineModifiedFiles = ({
   setView,
   isProfiles,
   isOrgToOrg,
-  stepToolConfig,
-  modifiedFiles,
   fromSFDC,
   fromGit,
   fromDestinationSFDC,
   setFromSFDC,
   setFromGit,
-  setXML,
   setFromDestinationSFDC,
   selectedComponentTypes,
   gitSelectedComponent,
@@ -71,16 +52,13 @@ const SfdcPipelineModifiedFiles = ({
   setRecordId,
   unitTestSteps,
   selectedComp,
-  setSelectedComp,
   sfdcCheckAll,
   setSfdcCheckAll,
-  destSfdcCheckAll,
   setDestSfdcCheckAll,
   gitCheckAll,
   setGitCheckAll,
   gitTaskData,
-  gitTaskId,
-  closePanel
+  gitTaskId
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -248,7 +226,10 @@ const SfdcPipelineModifiedFiles = ({
       getSfdcTableData(sfdcResponse.data.paginatedData.sfdcCommitList.data, sfdcResponse.data.data.sfdcCommitList);
       //storing _id so that we can edit this object
       setRecordId(sfdcResponse.data._id);
-      
+      if(sfdcResponse.data.data.sfdcCommitList && sfdcResponse.data.data.sfdcCommitList.length> 0) {
+        let sfdcSelectedComp = sfdcResponse.data.data.sfdcCommitList.filter((ele)=>  sfdcSelectedComponent.some(({componentType, committedFile}) => ele.componentType === componentType && ele.committedFile === committedFile) );
+        setSFDCSelectedComponent(sfdcSelectedComp);
+      }
     } catch (error) {
       toastContext.showInlineErrorMessage(error);
     }
@@ -281,7 +262,10 @@ const SfdcPipelineModifiedFiles = ({
       getGitTableData(gitResponse.data.paginatedData.gitCommitList.data, gitResponse.data.data.gitCommitList);
       //storing _id so that we can edit this object
       setRecordId(gitResponse.data._id);
-
+      if(gitResponse.data.data.gitCommitList && gitResponse.data.data.gitCommitList.length> 0) {
+        let gitSelectedComp = gitResponse.data.data.gitCommitList.filter((ele)=>  gitSelectedComponent.some(({componentType, committedFile}) => ele.componentType === componentType && ele.committedFile === committedFile) );
+        setGitSelectedComponent(gitSelectedComp);
+      }
     } catch (error) {
       toastContext.showInlineErrorMessage(error);
     }
@@ -666,6 +650,95 @@ const SfdcPipelineModifiedFiles = ({
     }));
   };
 
+  const getView = () => {
+    if (activeTab === "sfdc" && !isOrgToOrg) {
+      return (
+        <SfdcModifiedFilesTabView
+          loadData={loadSfdcData}
+          filterDto={sfdcFilterDto}
+          setFilterDto={setSfdcFilterDto}
+          loading={sfdcLoading}
+          componentType={componentType}
+          data={sfdcModifiedFilesTable}
+          handleComponentCheck={handleSFDCComponentCheckNew}
+          handleCheckAllClickComponentTypes={handleCheckAllClickComponentTypesSfdc}
+          fileUploadFlag={true}
+          recordId={recordId}
+          updateAttribute= {isProfiles ? "profilesList" : "selectedFileList"}
+          callbackFunc={isProfiles ? getProfileComponentList : generateXML}
+          fromGit={fromGit}
+          fromSFDC={fromSFDC}
+          fromDestinationSFDC={fromDestinationSFDC}
+          fromProfileComponents={false}
+          allSFDCComponentType={allSFDCComponentType}
+          allGitComponentType={allGitComponentType}
+          allDestSfdcComponentType={allDestSfdcComponentType}
+          allProfileComponentType={[]}
+          gitTaskData={gitTaskData}
+        />
+      );
+    }
+
+    if (activeTab === "git") {
+      return (
+        <GitModifiedFilesTabView
+          loadData={loadGitData}
+          filterDto={gitFilterDto}
+          setFilterDto={setGitFilterDto}
+          loading={gitLoading}
+          componentType={componentType}
+          data={gitModifiedFilesTable}
+          handleComponentCheck={handleGitComponentCheckNew}
+          handleCheckAllClickComponentTypes={handleCheckAllClickComponentTypesGit}
+          // fileUploadFlag={true}
+          // recordId={recordId}
+          // updateAttribute= {isProfiles ? "profilesList" : "selectedFileList"}
+          // callbackFunc={isProfiles ? getProfileComponentList : generateXML}
+          // fromGit={fromGit}
+          // fromSFDC={fromSFDC}
+          // fromDestinationSFDC={fromDestinationSFDC}
+          // allSFDCComponentType={allSFDCComponentType}
+          // allGitComponentType={allGitComponentType}
+          // allDestSfdcComponentType={allDestSfdcComponentType}
+        />
+      );
+    }
+
+    if (activeTab === "sfdc" && isOrgToOrg) {
+      return (
+        <SfdcProfileSelectionView
+          destLoadData={loadDestSfdcData}
+          destFilterDto={destSfdcFilterDto}
+          setDestFilterDto={setDestSfdcFilterDto}
+          destLoading={destSfdcLoading}
+          destComponentType={componentType}
+          destData={destSfdcModified}
+          loadData={loadSfdcData}
+          filterDto={sfdcFilterDto}
+          setFilterDto={setSfdcFilterDto}
+          loading={sfdcLoading}
+          componentType={componentType}
+          data={sfdcModifiedFilesTable}
+          handleComponentCheck={handleSFDCComponentCheckNew}
+          handleCheckAllClickComponentTypes={handleCheckAllClickComponentTypesSfdc}
+          fileUploadFlag={true}
+          recordId={recordId}
+          updateAttribute= {isProfiles ? "profilesList" : "selectedFileList"}
+          callbackFunc={isProfiles ? getProfileComponentList : generateXML}
+          fromGit={fromGit}
+          fromSFDC={fromSFDC}
+          fromDestinationSFDC={fromDestinationSFDC}
+          fromProfileComponents={false}
+          allSFDCComponentType={allSFDCComponentType}
+          allGitComponentType={[]}
+          allDestSfdcComponentType={allDestSfdcComponentType}
+          allProfileComponentType={[]}
+          gitTaskData={gitTaskData}
+        />
+      );
+    }
+  };
+
   if (error) {
     return (<div className="mt-3">
       <ErrorDialog error={error}/>
@@ -700,84 +773,10 @@ const SfdcPipelineModifiedFiles = ({
             ) : null
             }
           </CustomTabContainer>
-          {activeTab === "sfdc" && !isOrgToOrg ? (            
-            <SfdcModifiedFilesTabView 
-              loadData={loadSfdcData}
-              filterDto={sfdcFilterDto}
-              setFilterDto={setSfdcFilterDto}
-              loading={sfdcLoading}
-              componentType={componentType}
-              data={sfdcModifiedFilesTable}
-              handleComponentCheck={handleSFDCComponentCheckNew}
-              handleCheckAllClickComponentTypes={handleCheckAllClickComponentTypesSfdc}
-              fileUploadFlag={true}
-              recordId={recordId}
-              updateAttribute= {isProfiles ? "profilesList" : "selectedFileList"}
-              callbackFunc={isProfiles ? getProfileComponentList : generateXML}
-              fromGit={fromGit}
-              fromSFDC={fromSFDC}
-              fromDestinationSFDC={fromDestinationSFDC}
-              fromProfileComponents={false}
-              allSFDCComponentType={allSFDCComponentType}
-              allGitComponentType={allGitComponentType}
-              allDestSfdcComponentType={allDestSfdcComponentType}
-              allProfileComponentType={[]}
-              gitTaskData={gitTaskData}
-            />              
-          ) : activeTab === "git" ? (          
-            <GitModifiedFilesTabView 
-              loadData={loadGitData}
-              filterDto={gitFilterDto}
-              setFilterDto={setGitFilterDto}
-              loading={gitLoading}
-              componentType={componentType}
-              data={gitModifiedFilesTable}
-              handleComponentCheck={handleGitComponentCheckNew}
-              handleCheckAllClickComponentTypes={handleCheckAllClickComponentTypesGit}
-              // fileUploadFlag={true}
-              // recordId={recordId}
-              // updateAttribute= {isProfiles ? "profilesList" : "selectedFileList"}
-              // callbackFunc={isProfiles ? getProfileComponentList : generateXML}
-              // fromGit={fromGit}
-              // fromSFDC={fromSFDC}
-              // fromDestinationSFDC={fromDestinationSFDC}
-              // allSFDCComponentType={allSFDCComponentType}
-              // allGitComponentType={allGitComponentType}
-              // allDestSfdcComponentType={allDestSfdcComponentType}   
-            />
-          ) : activeTab === "sfdc" && isOrgToOrg ? (            
-            <SfdcProfileSelectionView 
-              destLoadData={loadDestSfdcData}
-              destFilterDto={destSfdcFilterDto}
-              setDestFilterDto={setDestSfdcFilterDto}
-              destLoading={destSfdcLoading}
-              destComponentType={componentType}
-              destData={destSfdcModified}
-              loadData={loadSfdcData}
-              filterDto={sfdcFilterDto}
-              setFilterDto={setSfdcFilterDto}
-              loading={sfdcLoading}
-              componentType={componentType}
-              data={sfdcModifiedFilesTable}
-              handleComponentCheck={handleSFDCComponentCheckNew}
-              handleCheckAllClickComponentTypes={handleCheckAllClickComponentTypesSfdc}   
-              fileUploadFlag={true}
-              recordId={recordId}
-              updateAttribute= {isProfiles ? "profilesList" : "selectedFileList"}
-              callbackFunc={isProfiles ? getProfileComponentList : generateXML}
-              fromGit={fromGit}
-              fromSFDC={fromSFDC}
-              fromDestinationSFDC={fromDestinationSFDC}
-              fromProfileComponents={false}
-              allSFDCComponentType={allSFDCComponentType}
-              allGitComponentType={[]}
-              allDestSfdcComponentType={allDestSfdcComponentType}
-              allProfileComponentType={[]}
-              gitTaskData={gitTaskData}                   
-            />
-          ) : null }            
+          {getView()}
         </div>
-        <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right">
+        <Row className="mb-3 mr-1">
+          <div className={"ml-auto"}>
           <Button
             variant="secondary"
             size="sm"
@@ -823,22 +822,9 @@ const SfdcPipelineModifiedFiles = ({
             { activeTab === "git" ? 'Proceed with Selected Git Files' : 'Proceed with Selected SFDC Files' }
           </Button>
 
-          <Button
-            variant="outline-secondary"
-            size="sm"
-            className="ml-2"
-            onClick={() => {
-              if(gitTaskData) {
-                closePanel();
-                return;
-              }
-              handleClose();
-            }}
-          >
-            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>
-            Cancel
-          </Button>
-        </div>
+          <CancelButton size={"sm"} className={"ml-2"} cancelFunction={handleClose} />
+          </div>
+        </Row>
       </div>
     </div>
   );
@@ -850,15 +836,12 @@ SfdcPipelineModifiedFiles.propTypes = {
   setView: PropTypes.func,
   isOrgToOrg: PropTypes.bool,
   isProfiles: PropTypes.bool,
-  stepToolConfig: PropTypes.object,
-  modifiedFiles: PropTypes.object,
   setFromSFDC: PropTypes.func,
   fromSFDC: PropTypes.bool,
   selectedComponentTypes: PropTypes.array,
   setFromDestinationSFDC: PropTypes.func,
   fromDestinationSFDC: PropTypes.bool,
   setFromGit: PropTypes.func,
-  setXML: PropTypes.func,
   fromGit: PropTypes.bool,
   handleClose: PropTypes.func,
   gitSelectedComponent: PropTypes.array,
@@ -871,16 +854,13 @@ SfdcPipelineModifiedFiles.propTypes = {
   setRecordId: PropTypes.func,
   unitTestSteps: PropTypes.array,
   selectedComp: PropTypes.object,
-  setSelectedComp: PropTypes.func,
   sfdcCheckAll: PropTypes.bool,
   setSfdcCheckAll: PropTypes.func,
-  destSfdcCheckAll: PropTypes.bool,
   setDestSfdcCheckAll: PropTypes.func,
   gitCheckAll: PropTypes.bool,
   setGitCheckAll: PropTypes.func,
   gitTaskData: PropTypes.object,
   gitTaskId: PropTypes.string,
-  closePanel: PropTypes.func
 };
 
 export default SfdcPipelineModifiedFiles;

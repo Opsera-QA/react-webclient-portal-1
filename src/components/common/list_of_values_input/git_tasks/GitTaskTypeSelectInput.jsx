@@ -9,7 +9,7 @@ export const notificationTypes = [
   {name: "GIT to GIT Sync", value: "sync-git-branches"},
 ];
 // TODO: Remove the disabled items from here when done
-function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction }) {
+function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction, placeholderText }) {
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -17,6 +17,7 @@ function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled
       setDataObject={setDataObject}
       selectOptions={notificationTypes}
       setDataFunction={setDataFunction}
+      placeholderText={placeholderText}
       valueField="value"
       textField="name"
       disabled={disabled}
@@ -28,12 +29,14 @@ GitTaskTypeSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
+  placeholderText: PropTypes.string,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
 GitTaskTypeSelectInput.defaultProps = {
-  fieldName: "type"
+  fieldName: "type",
+  placeholderText: "Select Task Type"
 };
 
 export default GitTaskTypeSelectInput;

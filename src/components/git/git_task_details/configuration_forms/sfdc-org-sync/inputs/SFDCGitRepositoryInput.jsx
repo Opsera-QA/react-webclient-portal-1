@@ -11,6 +11,7 @@ function SFDCGitRepositoryInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("gitUrl", selectedOption.httpUrl || "");
     newDataObject.setData("gitBranch", "");
     newDataObject.setData("defaultBranch", "");
+    newDataObject.setData("sourceBranch", "");
     setDataObject({...newDataObject});
   };
 

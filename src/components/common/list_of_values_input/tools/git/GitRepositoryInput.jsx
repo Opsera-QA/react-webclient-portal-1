@@ -90,6 +90,7 @@ GitRepositoryInput.propTypes = {
 
 GitRepositoryInput.defaultProps = {
   visible: true,
+  placeholderText: "Select Repository"
 };
 
 export default GitRepositoryInput;
