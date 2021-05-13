@@ -31,6 +31,7 @@ import Modal from "components/common/modal/modal";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
 import PipelineScheduledTasksOverlay from "components/workflow/pipelines/scheduler/PipelineScheduledTasksOverlay";
+import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pipeline-scheduler-actions";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -73,6 +74,8 @@ function PipelineSummaryPanel({
   refreshCount,
 }) {
   const contextType = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const toastContext = useContext(DialogToastContext);
   const { featureFlagHideItemInProd, getUserRecord } = contextType;
   const [showModal, setShowModal] = useState(false);
@@ -91,6 +94,7 @@ function PipelineSummaryPanel({
   const [approvalStep, setApprovalStep] = useState({});
   const [pipelineModel, setPipelineModel] = useState(new Model(pipeline, pipelineMetadata, false));
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
+  const [taskCount, setTaskCount] = useState("");
   let history = useHistory();
 
   const authorizedAction = (action, owner) => {
@@ -109,6 +113,7 @@ function PipelineSummaryPanel({
   const loadData = async () => {
     try {
       await loadFormData(pipeline);
+      await getScheduledTasksCount();
     } catch (err) {
       if (err.name === "AbortError") {
         console.log("Request was canceled via controller.abort");
@@ -591,6 +596,14 @@ function PipelineSummaryPanel({
       </>
     );
   };
+  
+  const getScheduledTasksCount = async (cancelSource = cancelTokenSource) => {
+    const response = await pipelineSchedulerActions.getScheduledTasks(getAccessToken, cancelSource, pipeline._id);
+    const taskCount = response?.data?.data?.length;
+    if (taskCount){
+      setTaskCount(taskCount);
+    }
+  };
 
   if (!pipeline || Object.keys(pipeline).length <= 0) {
     return (<InformationDialog
@@ -746,12 +759,13 @@ function PipelineSummaryPanel({
               {/* </Col> */}
             </> :
             <>
-
               {/*TODO: Remove FF after scheduler is fixed*/}
               {!featureFlagHideItemInProd() &&
 
-              <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Schedule:</span>
-                {pipeline.workflow.schedule
+              <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Schedule: </span>
+                {taskCount}
+                
+                {/* {pipeline.workflow.schedule
                 && pipeline.workflow.schedule.start_date !== null
                 && !editSchedule
                   ? <>
@@ -759,7 +773,7 @@ function PipelineSummaryPanel({
                         className="ml-1">Run next on: {format(new Date(pipeline.workflow.schedule.start_date), "yyyy-MM-dd', 'hh:mm a")}</span>
                     <span
                       className="ml-2">Frequency: {pipeline.workflow.schedule ? pipeline.workflow.schedule.frequency : "undefined"}</span>
-                  </> : null}
+                  </> : null} */}
 
 
                 {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" ?
