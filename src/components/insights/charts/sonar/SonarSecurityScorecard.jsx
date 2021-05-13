@@ -8,7 +8,6 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import ScoreCardDataBlockWrapper from "components/common/data_boxes/ScoreCardDataBlockWrapper";
 import ScoreCardDataBlock from "components/common/data_boxes/ScoreCardDataBlock";
-// import InputPopover from "components/common/inputs/info_text/InputPopover";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/pro-solid-svg-icons";
 
@@ -55,7 +54,6 @@ function SonarSecurityScorecard({ kpiConfiguration, setKpiConfiguration, dashboa
         dashboardTags
       );
       let dataObject = response?.data ? response?.data?.data[0]?.sonarSecurityQualityScorecard?.data : [];
-      console.log("dataObject", dataObject);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -77,60 +75,36 @@ function SonarSecurityScorecard({ kpiConfiguration, setKpiConfiguration, dashboa
       return null;
     }
 
-    // const getPopoverBody = () => {
-    //   return (
-    //     <span>
-    //       The Severity from Minor to Blocker with colors yellow-green to red represents an accumulated value of
-    //       Security/Reliability/Maintainability
-    //     </span>
-    //   );
-    // };
-
     return (
       <div className="new-chart mb-3" style={{ height: "300px" }}>
-        {/* <Container>
-          <Row>
-            <DataBlockWrapper padding={0}>
-              <ScoreCardDataBlock
-                text={metrics[0].vulnerabilitiesScoreCard[0].rating.symbol}
-                toolTipText="Security Score"
-                statusColor={metrics[0].vulnerabilitiesScoreCard[0].rating.color}
-              />
-              <ScoreCardDataBlock
-                text={metrics[1].reliabilityScoreCard[0].rating.symbol}
-                toolTipText="Reliability Score"
-                statusColor={metrics[1].reliabilityScoreCard[0].rating.color}
-              />
-              <ScoreCardDataBlock
-                text={metrics[2].maintainabilityScoreCard[0].rating.symbol}
-                toolTipText="Maintainability Score"
-                statusColor={metrics[2].maintainabilityScoreCard[0].rating.color}
-              />
-            </DataBlockWrapper>
-          </Row>
-        </Container> */}
         <br />
         <Container>
           <Row className="ml-2">
             <ScoreCardDataBlockWrapper padding={0}>
-              <ScoreCardDataBlock
-                title={metrics[0].vulnerabilitiesScoreCard[0].rating.symbol}
-                subTitle="Security"
-                toolTipText="Security Score"
-                statusColor={metrics[0].vulnerabilitiesScoreCard[0].rating.color}
-              />
-              <ScoreCardDataBlock
-                title={metrics[1].reliabilityScoreCard[0].rating.symbol}
-                subTitle="Reliability"
-                toolTipText="Reliability Score"
-                statusColor={metrics[1].reliabilityScoreCard[0].rating.color}
-              />
-              <ScoreCardDataBlock
-                title={metrics[2].maintainabilityScoreCard[0].rating.symbol}
-                subTitle="Maintainability"
-                toolTipText="Maintainability Score"
-                statusColor={metrics[2].maintainabilityScoreCard[0].rating.color}
-              />
+              {metrics[0].vulnerabilitiesScoreCard[0].rating && (
+                <ScoreCardDataBlock
+                  title={metrics[0].vulnerabilitiesScoreCard[0].rating.symbol}
+                  subTitle="Security"
+                  toolTipText="Security Score"
+                  statusColor={metrics[0].vulnerabilitiesScoreCard[0].rating.color}
+                />
+              )}
+              {metrics[1].reliabilityScoreCard[0].rating && (
+                <ScoreCardDataBlock
+                  title={metrics[1].reliabilityScoreCard[0].rating.symbol}
+                  subTitle="Reliability"
+                  toolTipText="Reliability Score"
+                  statusColor={metrics[1].reliabilityScoreCard[0].rating.color}
+                />
+              )}
+              {metrics[2].maintainabilityScoreCard[0].rating && (
+                <ScoreCardDataBlock
+                  title={metrics[2].maintainabilityScoreCard[0].rating.symbol}
+                  subTitle="Maintainability"
+                  toolTipText="Maintainability Score"
+                  statusColor={metrics[2].maintainabilityScoreCard[0].rating.color}
+                />
+              )}
             </ScoreCardDataBlockWrapper>
             <Row className="mt-2">
               <Col>
