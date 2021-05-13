@@ -135,20 +135,20 @@ function SonarSecurityScorecard({ kpiConfiguration, setKpiConfiguration, dashboa
             <Row className="mt-2">
               <Col>
                 <div className="p-3">
-                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="lg" /> A Minor with low impact
+                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="xs" /> A Minor with low impact
                   <br></br>
-                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="lg" /> B Minor with high impact
+                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="xs" /> B Minor with high impact
                   <br></br>
-                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="lg" /> C Major with significant impact
+                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="xs" /> C Major with significant impact
                 </div>
               </Col>
               <Col>
                 <div className="p-3">
-                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="lg" /> D Major with very high impact
+                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="xs" /> D Major with very high impact
                   <br></br>
-                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="lg" /> E Critical
+                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="xs" /> E Critical
                   <br></br>
-                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="lg" /> F Blocker
+                  <FontAwesomeIcon icon={faMinus} color={"#494173"} size="xs" /> F Blocker
                 </div>
               </Col>
             </Row>
