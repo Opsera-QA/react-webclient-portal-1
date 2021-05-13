@@ -6,8 +6,6 @@ import GitTasksSummaryCardContainer from "components/git/git_task_details/config
 
 function BranchToBranchGitTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
 
-  console.log('BranchToBranchGitTaskTypeSummaryCard');
-
   if (isLoading) {
     return <GitTasksSummaryCardContainer isLoading={isLoading} />;
   }
