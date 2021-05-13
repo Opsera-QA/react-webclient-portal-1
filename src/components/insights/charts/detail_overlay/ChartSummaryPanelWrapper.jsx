@@ -4,8 +4,10 @@ import ReactJson from "react-json-view";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import BitbucketRejectedMergeRequestsSummaryPanel
   from "components/insights/charts/bitbucket/table/bitbucket-rejected-merge-requests/BitbucketRejectedMergeRequestsSummaryPanel";
-import OpseraDeploymentFreqStatsSummaryPanel
-  from "../opsera/OpseraDeploymentFreqStats/OpseraDeploymentFreqStatsSummaryPanel";
+import OpseraDeploymentFreqStatsSuccessSummaryPanel
+  from "../opsera/OpseraDeploymentFreqStats/OpseraDeploymentFreqStatsSuccessSummaryPanel";
+import OpseraDeploymentFreqStatsFailureSummaryPanel
+  from "../opsera/OpseraDeploymentFreqStats/OpseraDeploymentFreqStatsFailureSummaryPanel";
 
 function ChartSummaryPanelWrapper({ chartModel, kpiIdentifier, setActiveTab }) {
   const getStepConfigurationSummary = () => {
@@ -19,7 +21,14 @@ function ChartSummaryPanelWrapper({ chartModel, kpiIdentifier, setActiveTab }) {
         );
       case "opsera-deployment-frequency-stats-successful":
         return (
-          <OpseraDeploymentFreqStatsSummaryPanel
+          <OpseraDeploymentFreqStatsSuccessSummaryPanel
+            chartModel={chartModel}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case "opsera-deployment-frequency-stats-failed":
+        return (
+          <OpseraDeploymentFreqStatsFailureSummaryPanel
             chartModel={chartModel}
             setActiveTab={setActiveTab}
           />

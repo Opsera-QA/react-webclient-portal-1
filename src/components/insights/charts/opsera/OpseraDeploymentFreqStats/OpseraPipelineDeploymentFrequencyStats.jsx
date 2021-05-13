@@ -134,13 +134,13 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
           <Row className="p-3">
             <Col><div className="metric-box p-3 text-center">
               <div className="box-metric">
-                <div className="green">{metrics[0].totalSuccess}</div>
+                <div className="green" onClick={() => onRowSelect("successful")}>{metrics[0].totalSuccess}</div>
               </div>
-              <div className="w-100 text-muted mb-1" onClick={() => onRowSelect("successful")}>Successful Deployments</div>
+              <div className="w-100 text-muted mb-1">Successful Deployments</div>
             </div></Col>
             <Col><div className="metric-box p-3 text-center">
               <div className="box-metric">
-                <div className="red">{metrics[0].totalFailed}</div>
+                <div className="red" onClick={() => onRowSelect("failed")}>{metrics[0].totalFailed}</div>
               </div>
               <div className="w-100 text-muted mb-1">Failed Deployments</div>
             </div></Col>

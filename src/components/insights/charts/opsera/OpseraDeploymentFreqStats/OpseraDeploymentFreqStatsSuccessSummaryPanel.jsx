@@ -17,7 +17,7 @@ import DeploymentFrequencyInsightsTableMetadata from "components/insights/charts
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import { DialogToastContext } from "../../../../../contexts/DialogToastContext";
 
-function OpseraDeploymentFreqStatsSummaryPanel({ dashboardData, kpiConfiguration, setActiveTab }) {
+function OpseraDeploymentFreqStatsSuccessSummaryPanel({ dashboardData, kpiConfiguration, setActiveTab }) {
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
   const fields = DeploymentFrequencyInsightsTableMetadata.fields;
@@ -119,11 +119,11 @@ function OpseraDeploymentFreqStatsSummaryPanel({ dashboardData, kpiConfiguration
   );
 }
 
-OpseraDeploymentFreqStatsSummaryPanel.propTypes = {
+OpseraDeploymentFreqStatsSuccessSummaryPanel.propTypes = {
   chartModel: PropTypes.object,
   setActiveTab: PropTypes.func,
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object
 };
 
-export default OpseraDeploymentFreqStatsSummaryPanel;
+export default OpseraDeploymentFreqStatsSuccessSummaryPanel;
