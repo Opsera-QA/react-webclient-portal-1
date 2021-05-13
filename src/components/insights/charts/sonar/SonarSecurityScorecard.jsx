@@ -77,14 +77,14 @@ function SonarSecurityScorecard({ kpiConfiguration, setKpiConfiguration, dashboa
       return null;
     }
 
-    const getPopoverBody = () => {
-      return (
-        <span>
-          The Severity from Minor to Blocker with colors yellow-green to red represents an accumulated value of
-          Security/Reliability/Maintainability
-        </span>
-      );
-    };
+    // const getPopoverBody = () => {
+    //   return (
+    //     <span>
+    //       The Severity from Minor to Blocker with colors yellow-green to red represents an accumulated value of
+    //       Security/Reliability/Maintainability
+    //     </span>
+    //   );
+    // };
 
     return (
       <div className="new-chart mb-3" style={{ height: "300px" }}>
@@ -117,16 +117,19 @@ function SonarSecurityScorecard({ kpiConfiguration, setKpiConfiguration, dashboa
                 title={metrics[0].vulnerabilitiesScoreCard[0].rating.symbol}
                 subTitle="Security"
                 toolTipText="Security Score"
+                statusColor={metrics[0].vulnerabilitiesScoreCard[0].rating.color}
               />
               <ScoreCardDataBlock
                 title={metrics[1].reliabilityScoreCard[0].rating.symbol}
                 subTitle="Reliability"
                 toolTipText="Reliability Score"
+                statusColor={metrics[1].reliabilityScoreCard[0].rating.color}
               />
               <ScoreCardDataBlock
                 title={metrics[2].maintainabilityScoreCard[0].rating.symbol}
                 subTitle="Maintainability"
                 toolTipText="Maintainability Score"
+                statusColor={metrics[2].maintainabilityScoreCard[0].rating.color}
               />
             </ScoreCardDataBlockWrapper>
             <Row className="mt-2">
