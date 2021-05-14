@@ -568,6 +568,19 @@ export const getTableBooleanIconColumn = (field, className) => {
   };
 };
 
+export const getGitTasksStatusColumn = (field, className) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: function parseStatus(row) {
+      return (        
+        <div>{getPipelineStatusIcon(row)}</div>        
+      );
+    },
+    class: className ? className : undefined
+  };
+};
+
 export const getTableInfoIconColumn = (showInformationFunction, accessor = "row", className) => {
   return {
     Header: "Info",

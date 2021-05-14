@@ -7,6 +7,13 @@ function SFDCBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
     let newDataObject = {...dataObject};
     newDataObject.setData("workspace", selectedOption.key);
     newDataObject.setData("workspaceName", selectedOption.name);
+    newDataObject.setData("repository", "");
+    newDataObject.setData("projectId", "");
+    newDataObject.setData("sshUrl", "");
+    newDataObject.setData("gitUrl", "");
+    newDataObject.setData("gitBranch", "");
+    newDataObject.setData("defaultBranch", "");
+    newDataObject.setData("sourceBranch", "");
     setDataObject({...newDataObject});
   };
 

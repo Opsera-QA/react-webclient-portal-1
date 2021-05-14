@@ -5,15 +5,32 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import toolsActions from "components/inventory/tools/tools-actions";
 
-function GitReviewerMultiSelectInput({gitToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
+function GitReviewerMultiSelectInput({
+  gitToolId, 
+  visible, 
+  fieldName, 
+  dataObject, 
+  setDataObject, 
+  setDataFunction, 
+  clearDataFunction, 
+  disabled, 
+  service, 
+  workspace,
+  repository
+}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [reviewers, setReviewers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [allReviewers, setAllReviewers] = useState([]);
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [gitToolId]);
+
+  useEffect(() => {    
+    setReviewers(allReviewers.filter(acc => ((service === 'bitbucket' && acc.workspace === workspace && acc.repository === repository) || (service !== 'bitbucket' && acc.repository === repository))));
+  }, [workspace, repository]);
 
   const loadData = async () => {
     try {
@@ -32,7 +49,9 @@ function GitReviewerMultiSelectInput({gitToolId, visible, fieldName, dataObject,
   const getReviewers = async () => {
     const response = await toolsActions.getRoleLimitedToolById(gitToolId, getAccessToken);
     if(response.data.data[0].accounts){
-      setReviewers(response.data.data[0].accounts);
+      setAllReviewers(response.data.data[0].accounts);      
+      setReviewers(response.data.data[0].accounts
+        .filter(acc => ((service === 'bitbucket' && acc.workspace === workspace && acc.repository === repository) || (service !== 'bitbucket' && acc.repository === repository))));
     }    
   };
 
@@ -70,7 +89,10 @@ GitReviewerMultiSelectInput.propTypes = {
     setDataFunction: PropTypes.func,
     disabled: PropTypes.bool,
     visible: PropTypes.bool,
-    clearDataFunction: PropTypes.func
+    clearDataFunction: PropTypes.func,
+    service: PropTypes.string,
+    workspace: PropTypes.string,
+    repository: PropTypes.string
 };
 
 GitReviewerMultiSelectInput.defaultProps = {

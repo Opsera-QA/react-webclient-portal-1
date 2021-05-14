@@ -59,6 +59,9 @@ function BranchToBranchGitTaskConfigurationPanel({ gitTasksDataDto, gitTasksConf
       <Col lg={12}>
         <BranchToBranchDestinationBranchInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
       </Col>
+      <Col lg={12}>
+        <BooleanToggleInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"deleteSourceBranch"} />
+      </Col>      
       {getDynamicFields()}
       <Col lg={12}>
         {gitTasksConfigurationData.getData("gitToolId") && <BooleanToggleInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"autoApprove"} />}
