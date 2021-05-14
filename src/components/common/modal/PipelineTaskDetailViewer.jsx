@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "react-bootstrap";
-import PipelineTaskTabPanel from "../../workflow/pipelines/pipeline_details/pipeline_activity/PipelineTaskTabPanel";
+import PipelineTaskTabPanel from "components/workflow/pipelines/pipeline_details/pipeline_activity/details/PipelineTaskTabPanel";
 
 
 function PipelineTaskDetailViewer({ pipelineTaskData, pipelineData, showModal, setShowModal }) {

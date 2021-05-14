@@ -21,6 +21,8 @@ import sfdcComponentSelectorMetadata
 import SfdcComponentListInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc_component_selector/SfdcComponentListInput";
 import Col from "react-bootstrap/Col";
+import CloseButton from "components/common/buttons/CloseButton";
+import CancelButton from "components/common/buttons/CancelButton";
 
 // TODO: Should this be SfdcPipelineWizardStepOne? This should also be broken up into two separate components, one for pipeline and one for git tasks
 //  We can write it similarly to tool connection forms where it's dynamic based on inputs
@@ -49,10 +51,10 @@ const SfdcPipelineComponentSelector = (
     setToDate,
     gitTaskData,
     gitTaskId,
+    handleClose
   }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(false);
-  const [configurationError, setConfigurationError] = useState(false);
   const [save, setSave] = useState(false);
   const [warning, setWarning] = useState(false);
 
@@ -70,7 +72,6 @@ const SfdcPipelineComponentSelector = (
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    setConfigurationError(false);
     setSave(false);
     setError(false);
     setWarning(false);
@@ -85,24 +86,28 @@ const SfdcPipelineComponentSelector = (
   const getDateFromField = () => {
     return (
       <div className={"my-2"}>
-        <OverlayTrigger
-          placement="right"
-          delay={{show: 250, hide: 400}}
-          overlay={renderTooltip("All files committed after this date will be included")}
-        ><FontAwesomeIcon
-          icon={faInfoCircle}
-          className="fa-pull-right pointer mt-1"
-          onClick={() => document.body.click()}
-        /></OverlayTrigger>
+        {/*<OverlayTrigger*/}
+        {/*  placement="right"*/}
+        {/*  delay={{show: 250, hide: 400}}*/}
+        {/*  overlay={renderTooltip("All files committed after this date will be included")}*/}
+        {/*><FontAwesomeIcon*/}
+        {/*  icon={faInfoCircle}*/}
+        {/*  className="fa-pull-right pointer mt-1"*/}
+        {/*  onClick={() => document.body.click()}*/}
+        {/*/></OverlayTrigger>*/}
         <div className="text-muted pb-1">From Date:</div>
         <DateTimePicker
           time={true}
+          dropUp={true}
           min={new Date().setFullYear(new Date().getFullYear() - 1)}
           max={selectedToDate}
           defaultValue={selectedFromDate}
           onChange={(value) => handleFromDateChange({value})}
           initialValue={new Date(new Date().setHours(0, 0, 0, 0))}
         />
+        <small className="text-muted form-text">
+          All files committed after this date will be included
+        </small>
       </div>
     );
   };
@@ -110,17 +115,18 @@ const SfdcPipelineComponentSelector = (
   const getDateToField = () => {
     return (
       <div className={"my-2"}>
-        <OverlayTrigger
-          placement="right"
-          delay={{show: 250, hide: 400}}
-          overlay={renderTooltip("All files committed before this date will be included")}
-        ><FontAwesomeIcon
-          icon={faInfoCircle}
-          className="fa-pull-right pointer mt-1"
-          onClick={() => document.body.click()}
-        /></OverlayTrigger>
+        {/*<OverlayTrigger*/}
+        {/*  placement="left"*/}
+        {/*  delay={{show: 250, hide: 400}}*/}
+        {/*  overlay={renderTooltip("All files committed before this date will be included")}*/}
+        {/*><FontAwesomeIcon*/}
+        {/*  icon={faInfoCircle}*/}
+        {/*  className="fa-pull-right pointer mt-1"*/}
+        {/*  onClick={() => document.body.click()}*/}
+        {/*/></OverlayTrigger>*/}
         <div className="text-muted pb-1">To Date:</div>
         <DateTimePicker
+          dropUp={true}
           time={true}
           min={selectedFromDate}
           max={new Date()}
@@ -128,6 +134,9 @@ const SfdcPipelineComponentSelector = (
           onChange={(value) => handleToDateChange({value})}
           initialValue={new Date(new Date().setHours(0, 0, 0, 0))}
         />
+        <small className="text-muted form-text">
+          All files committed before this date will be included
+        </small>
       </div>
     );
   };
@@ -252,16 +261,17 @@ const SfdcPipelineComponentSelector = (
     return (
       <Col sm={12} lg={6}>
         <div className={"my-2"}>
-          <div className="text-muted pb-1"><OverlayTrigger
-            placement="right"
-            delay={{show: 250, hide: 400}}
-            overlay={renderTooltip("Managed components with given NamespacePrefix will be included. Custom components prefixed with the given Prefix will be included")}
-          ><FontAwesomeIcon
-            icon={faInfoCircle}
-            className="fa-pull-right pointer mt-1"
-            onClick={() => document.body.click()}
-          /></OverlayTrigger>Prefix:
-          </div>
+          {/*<div className="text-muted pb-1"><OverlayTrigger*/}
+          {/*  placement="right"*/}
+          {/*  delay={{show: 250, hide: 400}}*/}
+          {/*  overlay={renderTooltip("Managed components with given NamespacePrefix will be included. Custom components prefixed with the given Prefix will be included")}*/}
+          {/*><FontAwesomeIcon*/}
+          {/*  icon={faInfoCircle}*/}
+          {/*  className="fa-pull-right pointer mt-1"*/}
+          {/*  onClick={() => document.body.click()}*/}
+          {/*/></OverlayTrigger>Prefix:*/}
+          {/*</div>*/}
+          <div className="text-muted pb-1">Prefix:</div>
           <Form.Group controlId="nameSpacePrefix">
             <Form.Control
               maxLength="50"
@@ -270,6 +280,9 @@ const SfdcPipelineComponentSelector = (
               value={nameSpacePrefix || ""}
               onChange={(e) => setNameSpacePrefix(e.target.value)}
             />
+            <small className="text-muted form-text">
+              Managed components with given NamespacePrefix will be included. Custom components prefixed with the given Prefix will be included
+            </small>
           </Form.Group>
         </div>
       </Col>
@@ -280,65 +293,70 @@ const SfdcPipelineComponentSelector = (
     return (
       <Col sm={12} lg={6}>
         <div className={"my-2"}>
-          <OverlayTrigger
-            placement="left"
-            delay={{show: 250, hide: 400}}
-            overlay={renderTooltip("Select whether managed, custom, or all components will be included")}
-          ><FontAwesomeIcon
-            icon={faInfoCircle}
-            className="fa-pull-right pointer mt-1"
-            onClick={() => document.body.click()}
-          /></OverlayTrigger>
+          {/*<OverlayTrigger*/}
+          {/*  placement="left"*/}
+          {/*  delay={{show: 250, hide: 400}}*/}
+          {/*  overlay={renderTooltip("Select whether managed, custom, or all components will be included")}*/}
+          {/*><FontAwesomeIcon*/}
+          {/*  icon={faInfoCircle}*/}
+          {/*  className="fa-pull-right pointer mt-1"*/}
+          {/*  onClick={() => document.body.click()}*/}
+          {/*/></OverlayTrigger>*/}
+
           <div className="text-muted pb-1">Types:</div>
+          <Form.Group controlId="formBasicCheckbox">
+            <div className={"d-flex"} style={{height: 38}}>
+              <Form.Check
+                inline
+                type={"radio"}
+                label="Managed"
+                name="managed"
+                checked={formData.managed ? formData.managed : false}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    managed: e.target.checked,
+                    custom: false,
+                    all: false,
+                  })
+                }
+              />
 
-          <Form.Group controlId="formBasicCheckbox" className="ml-1 d-flex">
-            <Form.Check
-              inline
-              type={"checkbox"}
-              label="Managed"
-              name="managed"
-              checked={formData.managed ? formData.managed : false}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  managed: e.target.checked,
-                  custom: false,
-                  all: false,
-                })
-              }
-            />
+              <Form.Check
+                inline
+                type={"radio"}
+                label="Custom"
+                name="custom"
+                checked={formData.custom ? formData.custom : false}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    managed: false,
+                    custom: e.target.checked,
+                    all: false,
+                  })
+                }
+              />
 
-            <Form.Check
-              inline
-              type={"checkbox"}
-              label="Custom"
-              name="custom"
-              checked={formData.custom ? formData.custom : false}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  managed: false,
-                  custom: e.target.checked,
-                  all: false,
-                })
-              }
-            />
-
-            <Form.Check
-              inline
-              type={"checkbox"}
-              label="All"
-              name="all"
-              checked={formData.all ? formData.all : false}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  managed: false,
-                  custom: false,
-                  all: e.target.checked,
-                })
-              }
-            />
+              <Form.Check
+                inline
+                type={"radio"}
+                label="All"
+                name="all"
+                checked={formData.all ? formData.all : false}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    managed: false,
+                    custom: false,
+                    all: e.target.checked,
+                  })
+                }
+              />
+            </div>
+            <small className="text-muted form-text">
+              Which components should be included?
+            </small>
           </Form.Group>
         </div>
       </Col>
@@ -346,20 +364,16 @@ const SfdcPipelineComponentSelector = (
   };
 
   const getComponentsBody = () => {
-    // TODO: Write configuration error message, how to determine whether configuration exists or not?
-    if (configurationError) {
-      return <span>SFDC Configuration is missing or incorrect.</span>;
+    if (!sfdcToolId) {
+      return <ErrorDialog error={"No SFDC Tool Selected, please configure the SFDC step in this Pipeline's Workflow."} />;
     }
 
     return (
       <>
-        <div className="mt-3 mr-3">
-          <Row className="px-0 mb-3">
-            {getDateFields()}
-            {getPrefixField()}
-            {getManagedComponentsField()}
-          </Row>
-        </div>
+        <Row className="my-3">
+          {getPrefixField()}
+          {getManagedComponentsField()}
+        </Row>
         <SfdcComponentListInput
           isProfiles={isProfiles}
           selectedComponentTypes={selectedComponentTypes}
@@ -367,31 +381,42 @@ const SfdcPipelineComponentSelector = (
           sfdcToolId={sfdcToolId}
           setError={setError}
         />
-        <div className="flex-container-bottom pr-2 mt-4 mb-2 text-right">
-          <Button variant="secondary" size="sm" className="mr-2" disabled={true}>
-            <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>
-            Back
-          </Button>
 
-          <Button
-            variant="success"
-            size="sm"
-            onClick={() => {
-              handleSubmitComponentTypes();
-            }}
-            disabled={save ||
-            // isProfiles ? selectedComp.length < 1 : false
-            selectedComponentTypes.length < 1
-            }
-          >
-            {save ? (
-              <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
-            ) : (
-              <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
-            )}
-            Next
-          </Button>
+        <div className={"my-3"}>
+          <div className={"text-muted"}>File Selection Filter Range</div>
+          <Row>
+            {getDateFields()}
+          </Row>
         </div>
+
+        <Row className="mx-0 mt-1 mb-3">
+          <div className={"ml-auto d-flex"}>
+            <Button variant="secondary" size="sm" className="mr-2" disabled={true}>
+              <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>
+              Back
+            </Button>
+
+            <Button
+              variant="success"
+              size="sm"
+              onClick={() => {
+                handleSubmitComponentTypes();
+              }}
+              disabled={save ||
+              // isProfiles ? selectedComp.length < 1 : false
+              selectedComponentTypes.length < 1
+              }
+            >
+              {save ? (
+                <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>
+              ) : (
+                <FontAwesomeIcon icon={faStepForward} fixedWidth className="mr-1"/>
+              )}
+              Next
+            </Button>
+            <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
+          </div>
+        </Row>
       </>
     );
   };
@@ -410,11 +435,7 @@ const SfdcPipelineComponentSelector = (
             You have selected a large date range and as such this may take some time to complete.
           </div>
           }
-          {!sfdcToolId ?
-            <ErrorDialog error={"No SFDC Tool Selected, Un Configured step found"} />
-            :
-            <>{getComponentsBody()}</>
-          }
+          {getComponentsBody()}
         </div>
       </div>
     </div>
@@ -445,6 +466,7 @@ SfdcPipelineComponentSelector.propTypes = {
   setToDate: PropTypes.func,
   gitTaskData: PropTypes.object,
   gitTaskId: PropTypes.string,
+  handleClose: PropTypes.func
 };
 
 export default SfdcPipelineComponentSelector;

@@ -11,8 +11,10 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { defaultConfig, getColor, assignStageColors,
          adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
+import { useHistory } from "react-router-dom";
 
 function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+  const history = useHistory();
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -67,6 +69,10 @@ function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfigurat
     }
   };
 
+  const onRowSelect = (rowData) => {
+    history.push(`/blueprint/${rowData.data._id.pipelineId}/${rowData.data._id.run}`);
+  };
+
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
@@ -80,7 +86,7 @@ function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfigurat
                     false, true, "wholeNumbers", "cutoffString")}
           {...config(getColor)}
           {...adjustBarWidth(metrics)}
-          onClick={() => setShowModal(true)}
+          onClick={(data) => onRowSelect(data)}
           tooltip={({ data, value, color , id}) => <ChartTooltip 
                     titles={["Pipeline", "Stage", "Duration"]}
                     values={[data.pipelineId, id, `${value} minutes`]}

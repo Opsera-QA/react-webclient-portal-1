@@ -27,6 +27,10 @@ function PaginationContainer({ isLoading, filterDto, setFilterDto, loadData, chi
     );
   };
 
+  if (filterDto == null) {
+    return children;
+  }
+
   return (
     <div className="pagination-container">
       {getTopPaginator()}

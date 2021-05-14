@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import { Button, Col, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import VaultTextAreaInput from "components/common/inputs/text/VaultTextAreaInput";
 import toolsActions from "components/inventory/tools/tools-actions";
@@ -21,6 +21,7 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import DeleteModal from "components/common/modal/DeleteModal";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
+import scmCreateAccountMetadata from "./scm-create-account-metadata";
 
 function ScmAccountsEditorPanel({toolData, scmAccountData, handleClose}) {
   const {getAccessToken} = useContext(AuthContext);
@@ -53,7 +54,11 @@ function ScmAccountsEditorPanel({toolData, scmAccountData, handleClose}) {
 
   const loadData = async () => {
     if (isMounted?.current === true) {
-      setScmAccountDataDto(scmAccountData);
+      const newScmAccountData = scmAccountData;
+      if(newScmAccountData.getData("service") !== "bitbucket"){
+        newScmAccountData.setMetaDataFields(scmCreateAccountMetadata.fieldsToken);
+      }
+      setScmAccountDataDto(newScmAccountData);
     }
   };
 
