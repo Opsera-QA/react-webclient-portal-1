@@ -156,22 +156,6 @@ const JenkinsJobTypeBuild = {
       isRequired: false
     }
   },
-  commands: {
-    label: "Commands",
-    id: "commands",
-    type: "textarea",
-    value: "",
-    linkedId: "buildType",
-    linkedValue: "python",
-    toShow: true,
-    disabled: false,
-    touched: false,
-    isValid: false,
-    errorMessage: "",
-    rules: {
-      isRequired: false
-    }
-  },
 };
 
 export default JenkinsJobTypeBuild;
