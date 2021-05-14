@@ -78,7 +78,12 @@ const branchToBranchGitTaskConfigurationMetadata = {
       id: "reviewers"
     },
     {
-      id: "reviewersList"
+      label: "Reviewers",
+      id: "reviewerNames"
+    },
+    {
+      label: "Delete Source Branch",
+      id: "deleteSourceBranch"
     }
   ],
   newObjectFields:
@@ -108,7 +113,8 @@ const branchToBranchGitTaskConfigurationMetadata = {
     accountUsername: "",
     autoApprove: false,
     reviewers: [],
-    reviewersList: []
+    reviewerNames: [],
+    deleteSourceBranch: true
     }
 };
 
