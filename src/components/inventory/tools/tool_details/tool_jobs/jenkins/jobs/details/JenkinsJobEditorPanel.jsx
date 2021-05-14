@@ -34,55 +34,6 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData, handleClose }) {
   const [viewForm, toggleViewForm] = useState(true);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-  const pythonAgentLabelOptions = [
-    {
-      "name": "Python 2",
-      "env" : "python",
-      "value": "python2-alpine",
-    },
-    {
-      "name": "Python 3",
-      "env" : "python",
-      "value": "python3-alpine",
-    }
-  ];
-
-  const agentLabelOptions = [
-    {
-      "name": "Ubuntu Agent",
-      "env" : "linux",
-      "value": "generic-linux",
-    }
-  ];
-
-  const getAgentLabelsField = (formField, i) => {
-
-    if(jenkinsFormList["buildType"].value === '' || 
-      (jenkinsFormList["buildType"].value !== 'python' && !toolData.configuration.autoScaleEnable))
-    {
-      return <></>;
-    }
-
-    if(jenkinsFormList["buildType"].value === 'python'){
-      formField.options = pythonAgentLabelOptions;
-    }else {
-      formField.options = agentLabelOptions;
-    }
-
-    return (
-      <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
-        <Form.Label column sm="3">
-          {formField.label}
-          {formField.rules.isRequired && <span style={{ marginLeft: 5, color: "#dc3545" }}>*</span>}
-        </Form.Label>
-        <Col sm="9" className="text-right">
-          {formFieldType(formField)}
-          <Form.Control.Feedback type="invalid">{formField.errorMessage}</Form.Control.Feedback>
-        </Col>
-      </Form.Group>
-    );    
-  };
-
   useEffect(() => {
     //Check if data is available before update
     console.log("jobData: " + JSON.stringify(jobData));
@@ -206,15 +157,6 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData, handleClose }) {
               <option key={i} value={option.value}>{option.name}</option>
             ))}
           </Form.Control>;
-    case "textarea":
-      return <Form.Control 
-                as="textarea" 
-                disabled={formField.disabled}
-                value={formField.value}
-                isInvalid={formField.touched && !formField.isValid}
-                onChange={e => handleFormChange(formField, e.target.value)}
-                rows={5} 
-              />;
     default:
       return <Form.Control value={formField.value} disabled={formField.disabled}
                            isInvalid={formField.touched && !formField.isValid}
@@ -377,8 +319,8 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData, handleClose }) {
           if (formField.toShow && formField.linkedId == undefined) {
             return (
               <>
-              {formField.id === "agentLabels" ? 
-                getAgentLabelsField(formField, i)
+              {formField.id === "agentLabels" && !toolData.configuration.autoScaleEnable ? 
+                <></>
               :
               <Form.Group key={i} controlId="formPlaintextEmail" className="mt-2 vertical-center-cols-in-row">
                 <Form.Label column sm="3">
