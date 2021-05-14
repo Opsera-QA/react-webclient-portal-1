@@ -10,12 +10,7 @@ function TableBase({ columns, data, onRowSelect, rowStyling, sort }) {
   const windowSize = useWindowSize();
 
   useEffect(() => {
-    const grid = setUpGrid();
-
-    return () => {
-      setGrid(null);
-      grid.destructor();
-    };
+    setUpGrid();
   }, []);
 
   useEffect(() => {
