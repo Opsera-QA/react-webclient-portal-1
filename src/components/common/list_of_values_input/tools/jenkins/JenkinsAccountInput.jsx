@@ -8,7 +8,7 @@ import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 import axios from "axios";
 
-function JenkinsAccountInput({ jenkinsId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, configurationRequired, className}) {
+function JenkinsAccountInput({ jenkinsId, visible, fieldName, placeholderText, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, configurationRequired, className}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [jenkinsTools, setJenkinsTools] = useState([]);
@@ -126,6 +126,7 @@ function JenkinsAccountInput({ jenkinsId, visible, fieldName, dataObject, setDat
         setDataFunction={setDataFunction}
         selectOptions={jenkinsAccounts}
         busy={isLoading}
+        placeholderText={placeholderText}
         valueField="gitCredential"
         textField="gitCredential"
         clearDataFunction={clearDataFunction}
@@ -142,6 +143,7 @@ JenkinsAccountInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   setDataFunction: PropTypes.func,
+  placeholderText: PropTypes.string,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   typeFilter: PropTypes.string,
@@ -152,6 +154,7 @@ JenkinsAccountInput.propTypes = {
 
 JenkinsAccountInput.defaultProps = {
   visible: true,
+  placeholderText: "Select One",
 };
 
 export default JenkinsAccountInput;
