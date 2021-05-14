@@ -23,6 +23,7 @@ import GitlabToolConfiguration from "components/inventory/tools/tool_details/too
 import AzureToolConfiguration from "./tool_jobs/azure/AzureToolConfiguration";
 import JFrogToolConfiguration from "./tool_jobs/jfrog_artifactory/JFrogToolConfiguration";
 import ServiceNowToolConfiguration from  "./tool_jobs/service_now/ServiceNowToolConfiguration";
+import AzureDevopsToolConfiguration from "./tool_jobs/azure-devops/AzureDevopsToolConfiguration";
 
 function ToolConfigurationPanel({ toolData }) {
   const getConfiguration = () => {
@@ -72,6 +73,8 @@ function ToolConfigurationPanel({ toolData }) {
         return <JFrogToolConfiguration toolData={toolData} />;
       case "servicenow":
         return <ServiceNowToolConfiguration toolData={toolData} /> ;
+      case "azure-devops":
+        return <AzureDevopsToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>;
     }

@@ -13,8 +13,7 @@ function BranchToBranchGitTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurati
 
   return (
     <GitTasksSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
-      <div className="mb-2">
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"toolName"} />
+      <div className="mb-2">        
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"service"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitCredential"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"workspace"} />
