@@ -4,36 +4,6 @@ const branchToBranchGitTaskConfigurationMetadata = {
   type: "Branch to Branch Git Task Configuration",
   fields: [
     {
-      label: "Jenkins Tool",
-      id: "toolConfigId",
-      isRequired: true,
-      maxLength: 24,
-      regexValidator: regexHelpers.regexTypes.mongoId
-    },
-    {
-      label: "Jenkins Tool Name",
-      id: "toolName",
-      isRequired: true,
-      maxLength: 100,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
-    },  
-    {
-      label: "Auto Scaling",
-      id: "autoScaleEnable"
-    },
-    {
-      label: "Agent Label",
-      id: "agentLabels",
-      regexValidator: regexHelpers.regexTypes.generalTextWithoutSpacesPeriod,
-      maxLength: 50
-    },  
-    {
-      label: "Jenkins Job Name",
-      id: "jobName",
-      maxLength: 100,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
-    },
-    {
       label: "SCM Type",
       id: "service",
       isRequired: true,
@@ -44,7 +14,7 @@ const branchToBranchGitTaskConfigurationMetadata = {
       label: "Account",
       id: "gitCredential",
       isRequired: true,
-      maxLength: 50,
+      maxLength: 250,
       regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
     {
