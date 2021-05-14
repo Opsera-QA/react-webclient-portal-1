@@ -46,7 +46,7 @@ function BranchToBranchGitTaskConfigurationPanel({ gitTasksDataDto, gitTasksConf
       </Col>     
       <Col lg={12}>
         <SFDCSCMToolInput  dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
-      </Col>        
+      </Col>         
       <Col lg={12}>
         <SFDCBitbucketWorkspaceInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
       </Col>
@@ -59,6 +59,9 @@ function BranchToBranchGitTaskConfigurationPanel({ gitTasksDataDto, gitTasksConf
       <Col lg={12}>
         <BranchToBranchDestinationBranchInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
       </Col>
+      <Col lg={12}>
+        <BooleanToggleInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"deleteSourceBranch"} />
+      </Col>      
       {getDynamicFields()}
       <Col lg={12}>
         {gitTasksConfigurationData.getData("gitToolId") && <BooleanToggleInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"autoApprove"} />}
@@ -77,5 +80,3 @@ BranchToBranchGitTaskConfigurationPanel.propTypes = {
 };
 
 export default BranchToBranchGitTaskConfigurationPanel;
-
-
