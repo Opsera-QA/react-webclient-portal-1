@@ -79,7 +79,7 @@ function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfigurat
     }
 
     return (
-      <div className="new-chart mb-3" style={{height: "300px"}}>
+      <div className="new-chart mb-3 pointer" style={{height: "300px"}}>
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Duration (Minutes)", "Pipeline Run", 
@@ -88,7 +88,7 @@ function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfigurat
           {...adjustBarWidth(metrics)}
           onClick={(data) => onRowSelect(data)}
           tooltip={({ data, value, color , id}) => <ChartTooltip 
-                    titles={["Pipeline", "Stage", "Duration"]}
+                    titles={["Pipeline", "Stage", "Duration", "*Click now to view Pipeline Blueprint*"]}
                     values={[data.pipelineId, id, `${value} minutes`]}
                     style={false}
                     color={color} />}
