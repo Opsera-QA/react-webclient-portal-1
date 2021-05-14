@@ -53,6 +53,7 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, p
       titleIcon={faWandMagic}
       showToasts={true}
       fullWidth={true}
+      showCloseButton={false}
     >
       {getBody()}
     </CenterOverlayContainer>
