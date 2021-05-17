@@ -67,7 +67,7 @@ chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessTok
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
-chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, cancelTokenSource, request, kpiConfiguration, dashboardTags, tableFilterDto, projectTags, dashboardOrgs) => {
+chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, cancelTokenSource, request, kpiConfiguration, dashboardTags, tableFilterDto, projectTags, dashboardOrgs, pipelineName) => {
   const apiUrl = "/analytics/metrics";
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const tags = getTagsFromKpiConfiguration(kpiConfiguration);
@@ -104,7 +104,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, canc
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
     projectTags: projectTags,
-    dashboardOrgs: dashboardOrgs
+    dashboardOrgs: dashboardOrgs,
+    pipelineName: pipelineName
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);

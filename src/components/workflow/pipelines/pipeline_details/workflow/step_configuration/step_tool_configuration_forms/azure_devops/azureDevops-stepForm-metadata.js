@@ -17,6 +17,16 @@ const azureDevopsStepFormMetadata = {
       isRequired: true
     },
     {
+      label: "Azure Devops Tool",
+      id: "toolConfigId",
+      isRequired: true
+    },
+    {
+      label: "Access Token",
+      id: "accessToken",
+      isRequired: true
+    },
+    {
       label: "Pipeline Version",
       id: "pipelineVersion",
     },
@@ -26,6 +36,8 @@ const azureDevopsStepFormMetadata = {
     azurePipelineId: "",
     projectName: "",
     pipelineVersion: "",
+    toolConfigId: "",
+    accessToken: ""
   }
 };
 

@@ -1,21 +1,24 @@
 import React, {useState, useEffect, useContext, useRef} from "react";
 import PropTypes from "prop-types";
-import { ResponsiveBar } from "@nivo/bar";
-import "../../../charts.css";
-import config from "./opseraBuildDurationByStageBarChartConfigs";
+import { ResponsivePie } from "@nivo/pie";
+import config from "components/insights/charts/qa_metrics/manualQaTestPieChartConfig";
 import ModalLogs from "components/common/modal/modalLogs";
 import {AuthContext} from "contexts/AuthContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import ChartDetailsOverlay from "components/insights/charts/detail_overlay/ChartDetailsOverlay";
 import axios from "axios";
+import Model from "core/data_model/model";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { defaultConfig, getColor, assignStageColors,
-         adjustBarWidth } from '../../../charts-views';
-import ChartTooltip from '../../../ChartTooltip';
-import { useHistory } from "react-router-dom";
+import {
+  defaultConfig, getColorByData, getColor, assignStandardColors,
+  shortenPieChartLegend, mainColor, getColorById,
+} from "../../../charts-views";
+import SFDCPipelinesInsightsTableMetadata from "components/insights/charts/sfdc/sfdc-pipelines-actionable-metadata.js";
 
-function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
-  const history = useHistory();
-  const {getAccessToken} = useContext(AuthContext);
+function SFDCUnitTestingPieChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+  const { getAccessToken } = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -48,9 +51,11 @@ function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfigurat
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "opseraDurationBySteps", kpiConfiguration, dashboardTags);
-      let dataObject = response?.data ? response?.data?.data[0]?.opseraDurationBySteps?.data : [];
-      assignStageColors(dataObject);
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "sfdcUnitTesting", kpiConfiguration, dashboardTags);
+      let dataObject = response?.data ? response?.data?.data[0]?.sfdcUnitTesting?.data : [];
+      assignStandardColors(dataObject[0]?.pairs);
+      shortenPieChartLegend(dataObject[0]?.pairs);
+
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -69,29 +74,36 @@ function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfigurat
     }
   };
 
-  const onRowSelect = (rowData) => {
-    history.push(`/blueprint/${rowData.data._id.pipelineId}/${rowData.data._id.run}`);
+  const onRowSelect = (data) => {
+    let kpiName = "";
+    if (data.label === "Successful") {kpiName = "sfdc-unit-testing-successful";}
+    if (data.label === "Failure") {kpiName = "sfdc-unit-testing-failure";}
+    const chartModel = new Model({...SFDCPipelinesInsightsTableMetadata.newObjectFields}, SFDCPipelinesInsightsTableMetadata, false);
+    toastContext.showOverlayPanel(
+    <ChartDetailsOverlay
+      dashboardData={dashboardData} 
+      kpiConfiguration={kpiConfiguration} 
+      chartModel={chartModel} 
+      kpiIdentifier={kpiName} />);
   };
 
   const getChartBody = () => {
-    if (!Array.isArray(metrics) || metrics.length === 0) {
+    if (!Array.isArray(metrics[0]?.pairs) || metrics[0]?.pairs.length === 0) {
       return null;
     }
 
     return (
-      <div className="new-chart mb-3 pointer" style={{height: "300px"}}>
-        <ResponsiveBar
-          data={metrics}
-          {...defaultConfig("Duration (Minutes)", "Pipeline Run", 
-                    false, true, "wholeNumbers", "cutoffString")}
-          {...config(getColor)}
-          {...adjustBarWidth(metrics)}
+
+      <div className="new-chart mb-3" style={{height: "300px", display: "flex"}}>
+        <ResponsivePie
+          data={metrics[0]?.pairs}
+          {...defaultConfig()}
+          sortByValue={true}
+          innerRadius={.5}
+          sliceLabelsSkipAngle={10}
+          sliceLabelsTextColor={"#ffffff"}
+          colors={["#ABA4CC", "#696969", "#B1AeA7"]}
           onClick={(data) => onRowSelect(data)}
-          tooltip={({ data, value, color , id}) => <ChartTooltip 
-                    titles={["Pipeline", "Stage", "Duration", "*Click now to view Pipeline Blueprint*"]}
-                    values={[data.pipelineId, id, `${value} minutes`]}
-                    style={false}
-                    color={color} />}
         />
       </div>
     );
@@ -112,7 +124,7 @@ function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfigurat
         isLoading={isLoading}
       />
       <ModalLogs
-        header="Build Duration By Stage"
+        header="Unit Test Data Stats"
         size="lg"
         jsonMessage={metrics}
         dataType="bar"
@@ -123,12 +135,11 @@ function OpseraBuildDurationByStageBarChart({ kpiConfiguration, setKpiConfigurat
   );
 }
 
-OpseraBuildDurationByStageBarChart.propTypes = {
+SFDCUnitTestingPieChart.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func
-};
+  setKpis: PropTypes.func};
 
-export default OpseraBuildDurationByStageBarChart;
+export default SFDCUnitTestingPieChart;
