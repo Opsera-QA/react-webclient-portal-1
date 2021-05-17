@@ -28,6 +28,7 @@ kpiLovHelpers.filters = [
   { id: { type: "release", value: [] }, label: "Release" },
   { id: { type: "sprint", value: [] }, label: "Sprint" },
   { id: { type: "project", value: [] }, label: "Project" },
+  { id: { type: "selenium-test-suites", value: [] }, label: "Selenium Test Suites" },
 ];
 
 kpiLovHelpers.getFilterById = (id) => {

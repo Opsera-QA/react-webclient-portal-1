@@ -163,6 +163,19 @@ export function getProjectFromKpiConfiguration(kpiConfiguration) {
   return null;
 }
 
+export function getSeleniumTestSuitesFromKpiConfiguration(kpiConfiguration) {
+  if (
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "selenium-test-suites")]
+      ?.value &&
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "selenium-test-suites")]?.value
+      .length > 0
+  ) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "selenium-test-suites")]
+      .value;
+  }
+  return null;
+}
+
 export function getChartIconFromKpiConfiguration(kpiConfiguration) {
   return faChartBar;
 }

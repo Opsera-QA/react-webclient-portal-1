@@ -14,6 +14,7 @@ import {
   getSprintFromKpiConfiguration,
   getReleaseFromKpiConfiguration,
   getProjectFromKpiConfiguration,
+  getSeleniumTestSuitesFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 
 const chartsActions = {};
@@ -92,6 +93,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   const sprint = getSprintFromKpiConfiguration(kpiConfiguration);
   const release = getReleaseFromKpiConfiguration(kpiConfiguration);
   const project = getProjectFromKpiConfiguration(kpiConfiguration);
+  const seleniumTestSuites = getSeleniumTestSuitesFromKpiConfiguration(kpiConfiguration);
 
   const postBody = {
     request: request,
@@ -110,6 +112,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     release: release,
     sprint: sprint,
     project: project,
+    seleniumTestSuites: seleniumTestSuites,
     page: tableFilterDto?.getData("currentPage"),
     size: tableFilterDto?.getData("pageSize"),
     projectTags: projectTags,
