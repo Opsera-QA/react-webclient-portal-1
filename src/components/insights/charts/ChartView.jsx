@@ -97,6 +97,7 @@ import CypressTestResultsTable from "./cypress/CypressTestResultsTable";
 
 // Selenium KPIs
 import SeleniumTestResultsTable from "./selenium/SeleniumTestResultsTable";
+import SeleniumTestSummaryPercentages from "./selenium/pie_chart/SeleniumTestSummaryPercentages";
 
 // Junit KPIs
 import JunitTestResultsTable from "./junit/JunitTestResultsTable";
@@ -849,6 +850,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col xl={6} md={12} className="p-2">
             <SeleniumTestResultsTable
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "selenium-test-summary-percentages":
+        return (
+          <Col md={12} className="p-2">
+            <SeleniumTestSummaryPercentages
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}

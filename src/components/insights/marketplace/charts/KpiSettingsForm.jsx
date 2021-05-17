@@ -18,6 +18,7 @@ import {
   kpiSprintFilterMetadata,
   kpiReleaseFilterMetadata,
   kpiProjectFilterMetadata,
+  kpiSeleniumTestSuitesFilterMetadata,
 } from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import Model from "core/data_model/model";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
@@ -28,6 +29,7 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import TagManager from "components/common/inputs/tags/TagManager";
 import JenkinsResultFilterInput from "components/common/list_of_values_input/insights/charts/jenkins/JenkinsResultFilterInput";
 import ManualKpiMultiSelectInputBase from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
+import SeleniumTestSuitesMultiSelectInput from "components/common/list_of_values_input/insights/charts/selenium/SeleniumTestSuitesMultiSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 
 function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart, setKpis }) {
@@ -79,6 +81,9 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
   );
   const [kpiSprintFilter, setKpiSprintFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "sprint", kpiSprintFilterMetadata)
+  );
+  const [kpiSeleniumTestSuitesFilter, setKpiSeleniumTestSuitesFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "selenium-test-suites", kpiSeleniumTestSuitesFilterMetadata)
   );
   const [kpiProjectFilter, setKpiProjectFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "project", kpiProjectFilterMetadata)
@@ -169,6 +174,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "sfdc-profile-migrations",
     "sfdc-unit-testing",
     "sonar-security-scorecard",
+    "selenium-test-summary-percentages",
   ];
 
   const getKpiFilters = (filter) => {
@@ -323,6 +329,20 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
             />
           </div>
         );
+      case "selenium-test-suites":
+        return (
+          <div>
+            <SeleniumTestSuitesMultiSelectInput
+              placeholderText={"Select Test Suites"}
+              type={"kpi_filter"}
+              fieldName={"value"}
+              valueField={"value"}
+              textField={"text"}
+              setDataObject={setKpiSeleniumTestSuitesFilter}
+              dataObject={kpiSeleniumTestSuitesFilter}
+            />
+          </div>
+        );
     }
   };
 
@@ -409,13 +429,11 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       ].value = kpiDomainFilter.getData("value");
     }
     if (
-      newKpiSettings.getData("filters")[
-        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")
-        ]
+      newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")
-        ].value = kpiProjectFilter.getData("value");
+      ].value = kpiProjectFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
@@ -447,6 +465,16 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "release")
       ].value = kpiReleaseFilter.getData("value");
     }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "selenium-test-suites")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "selenium-test-suites")
+      ].value = kpiSeleniumTestSuitesFilter.getData("value");
+    }
+
     setKpiSettings({ ...newKpiSettings });
     dashboardData.getData("configuration")[index] = kpiSettings.data;
     setKpiConfiguration(kpiSettings.data);

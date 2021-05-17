@@ -1,12 +1,12 @@
 const kpiLovHelpers = {};
 
 kpiLovHelpers.chartTypes = [
-  {id: "bar-chart", label: "Bar Chart"},
-  {id: "line-chart", label: "Line Chart"},
-  {id: "pie-chart", label: "Pie Chart"},
-  {id: "calendar", label: "Calendar"},
-  {id: "table", label: "Table"},
-  {id: "number", label: "Number"}
+  { id: "bar-chart", label: "Bar Chart" },
+  { id: "line-chart", label: "Line Chart" },
+  { id: "pie-chart", label: "Pie Chart" },
+  { id: "calendar", label: "Calendar" },
+  { id: "table", label: "Table" },
+  { id: "number", label: "Number" },
 ];
 
 kpiLovHelpers.getChartTypeById = (id) => {
@@ -14,20 +14,21 @@ kpiLovHelpers.getChartTypeById = (id) => {
 };
 
 kpiLovHelpers.filters = [
-  {id: {"type": "tags", "value": []}, label: "Tags"},
-  {id: {"type": "date", "value": null}, label: "Date"},
-  {id: {"type": "jenkins-result", "value": ""}, label: "Jenkins Result"},
-  {id: {"type": "jenkins-job-url", "value": ""}, label: "Jenkins Build URL"},
-  {id: {"type": "jenkins-build-number", "value": []}, label: "Jenkins Build Number"},
-  {id: {"type": "jira-issue-type", "value": []}, label: "Jira Issues Type"},
-  {id: {"type": "jira-issue-start-status", "value": []}, label: "Jira Issue Start Status"},
-  {id: {"type": "jira-issue-done-status", "value": []}, label: "Jira Issue Done Status"},
-  {id: {"type": "sonar-project-key", "value": []}, label: "Sonar Project Keys"},
-  {id: {"type": "domain", "value": []}, label: "Domain"},
-  {id: {"type": "application", "value": []}, label: "Application"},
-  {id: {"type": "release", "value": []}, label: "Release"},
-  {id: {"type": "sprint", "value": []}, label: "Sprint"},
-  {id: {"type": "project", "value": []}, label: "Project"}
+  { id: { type: "tags", value: [] }, label: "Tags" },
+  { id: { type: "date", value: null }, label: "Date" },
+  { id: { type: "jenkins-result", value: "" }, label: "Jenkins Result" },
+  { id: { type: "jenkins-job-url", value: "" }, label: "Jenkins Build URL" },
+  { id: { type: "jenkins-build-number", value: [] }, label: "Jenkins Build Number" },
+  { id: { type: "jira-issue-type", value: [] }, label: "Jira Issues Type" },
+  { id: { type: "jira-issue-start-status", value: [] }, label: "Jira Issue Start Status" },
+  { id: { type: "jira-issue-done-status", value: [] }, label: "Jira Issue Done Status" },
+  { id: { type: "sonar-project-key", value: [] }, label: "Sonar Project Keys" },
+  { id: { type: "domain", value: [] }, label: "Domain" },
+  { id: { type: "application", value: [] }, label: "Application" },
+  { id: { type: "release", value: [] }, label: "Release" },
+  { id: { type: "sprint", value: [] }, label: "Sprint" },
+  { id: { type: "project", value: [] }, label: "Project" },
+  { id: { type: "selenium-test-suites", value: [] }, label: "Selenium Test Suites" },
 ];
 
 kpiLovHelpers.getFilterById = (id) => {
@@ -35,14 +36,14 @@ kpiLovHelpers.getFilterById = (id) => {
 };
 
 kpiLovHelpers.categories = [
-  {value: "pipeline", text: "Pipeline"},
-  {value: "security", text: "Security"},
-  {value: "quality", text: "Quality"},
-  {value: "software-development", text: "Software Development"},
-  {value: "software-testing", text: "Software Testing"},
-  {value: "source-code", text: "Source Code"},
-  {value: "operations", text: "Operations"},
-  {value: "planning", text: "Planning"}
+  { value: "pipeline", text: "Pipeline" },
+  { value: "security", text: "Security" },
+  { value: "quality", text: "Quality" },
+  { value: "software-development", text: "Software Development" },
+  { value: "software-testing", text: "Software Testing" },
+  { value: "source-code", text: "Source Code" },
+  { value: "operations", text: "Operations" },
+  { value: "planning", text: "Planning" },
 ];
 
 kpiLovHelpers.getCategoryById = (id) => {
