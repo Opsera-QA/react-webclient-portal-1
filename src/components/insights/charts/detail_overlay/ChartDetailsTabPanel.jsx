@@ -7,7 +7,7 @@ import ModalTabPanelContainer from "components/common/panels/detail_view/ModalTa
 import ChartSummaryPanelWrapper from "components/insights/charts/detail_overlay/ChartSummaryPanelWrapper";
 import ChartJsonPanel from "components/insights/charts/detail_overlay/ChartJsonPanel";
 
-function ChartDetailsTabPanel({ dashboardData, kpiConfiguration, chartModel, kpiIdentifier }) {
+function ChartDetailsTabPanel({ dashboardData, kpiConfiguration, chartModel, kpiIdentifier, pipelineName }) {
   const [activeTab, setActiveTab] = useState("summary");
 
   const handleTabClick = (activeTab) => e => {
@@ -28,7 +28,7 @@ function ChartDetailsTabPanel({ dashboardData, kpiConfiguration, chartModel, kpi
   const getCurrentView = () => {
     switch (activeTab) {
       case "summary":
-        return <ChartSummaryPanelWrapper dashboardData={dashboardData} kpiConfiguration={kpiConfiguration} chartModel={chartModel} kpiIdentifier={kpiIdentifier} />;
+        return <ChartSummaryPanelWrapper dashboardData={dashboardData} kpiConfiguration={kpiConfiguration} chartModel={chartModel} kpiIdentifier={kpiIdentifier} pipelineName={pipelineName}/>;
       case "json":
         return <ChartJsonPanel chartModel={chartModel.getPersistData()} />;
       // case "settings":
@@ -45,7 +45,8 @@ ChartDetailsTabPanel.propTypes = {
   chartModel: PropTypes.object,
   kpiIdentifier: PropTypes.string,
   dashboardData: PropTypes.object,
-  kpiConfiguration: PropTypes.object
+  kpiConfiguration: PropTypes.object,
+  pipelineName: PropTypes.string
 };
 
 export default ChartDetailsTabPanel;
