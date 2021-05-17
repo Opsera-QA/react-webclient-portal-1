@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import PropTypes, { bool } from "prop-types";
+import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import { Row, Col, Form } from "react-bootstrap";
 import { format } from "date-fns";
@@ -290,7 +290,6 @@ function PipelineSummaryPanel({
     });
 
     setEditSchedule(false);
-    console.log(scheduleData);
   };
 
   const handleEditPropertyClick = (type) => {
@@ -470,7 +469,6 @@ function PipelineSummaryPanel({
       pipelineModel.setData("schedule", scheduleData.date);
     }
   
-    // console.log(scheduleData);
     return pipelineModel;
   };
 

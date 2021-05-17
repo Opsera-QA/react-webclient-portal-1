@@ -14,7 +14,7 @@ function ScheduleTimeInput({ fieldName, dataObject, setDataObject, disabled }) {
    
     newDataObject.setData(fieldName, newDate);
     setDataObject({...newDataObject});
-    console.log(newDataObject);
+    
     return newDataObject;
   };
 
