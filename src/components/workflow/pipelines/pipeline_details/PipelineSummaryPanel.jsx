@@ -493,114 +493,17 @@ function PipelineSummaryPanel({
       });
     }
   };
-
-
-  const getSchedulerForm = () => {
-    updateSchedule();
-    return (
-      <>
-      <Form>
-        <Form.Label className="my-2 mr-5">
-          Name:
-        </Form.Label>
-        <Form.Control
-           type="text"
-           className="my-2 mr-sm-1"
-           name="name"
-           onChange={handleInputChange}
-           custom
-        />
-        <br/>
-        <Form.Label className="my-2 mr-2 pr-1">
-          Description:
-        </Form.Label>
-        <Form.Control
-           type="text"
-           className="my-2 mr-sm-2 w-50"
-           name="description"
-           onChange={handleInputChange}
-           custom
-        />
-        <br/>
-        <Form.Label className="my-2 mr-5">
-          Active : 
-        </Form.Label>
-        <Form.Control
-           type="checkbox"
-           className="my-2 mr-sm-2"
-           name="active"
-           onChange={handleInputChange}
-           custom
-        />
-
-        <br/>
-        <Form.Label className="my-2 mr-5">
-          Notes : 
-        </Form.Label>
-        <Form.Control
-           type="text"
-           className="my-2 mr-sm-2 w-50"
-           name="notes"
-           onChange={handleInputChange}
-           custom
-        />
-    
-      </Form>
-      <Form inline>
-        <Form.Label className="my-1 mr-2" >
-          This pipeline should run 
-        </Form.Label>
-        <Form.Control
-           as="select"
-           className="my-1 mr-sm-2"
-           name="frequency"
-           onChange={handleInputChange}
-           custom
-        >
-          <option value="NONE">once</option>
-          <option value="DAY">daily</option>
-          <option value="WEEK">weekly</option>
-          <option value="MONTH">monthly</option>
-        </Form.Control>
-        <Form.Label> at </Form.Label>
-        <div className="ml-2 mr-2">
-          {/*<ScheduleInput*/}
-          {/*  name="time"*/}
-          {/*  fieldName="schedule"*/}
-          {/*  showDate={false}*/}
-          {/*  showTime={true}*/}
-          {/*  dataObject={pipelineModel}*/}
-          {/*  setDataObject={setPipelineModel}*/}
-          {/*  disabled={false}*/}
-          {/*  setDataFunction={updateSchedule}*/}
-          {/*  disableLabel={true}*/}
-          {/*/>*/}
-        </div>  
-        <Form.Label> starting on </Form.Label>
-        <div className="ml-2">
-        {/*<ScheduleInput*/}
-        {/*    name="date"*/}
-        {/*    showDate={true}*/}
-        {/*    showTime={false}*/}
-        {/*    fieldName="schedule"*/}
-        {/*    dataObject={pipelineModel}*/}
-        {/*    setDataObject={setPipelineModel}*/}
-        {/*    disabled={false}*/}
-        {/*    setDataFunction={updateSchedule}*/}
-        {/*    disableLabel={true}*/}
-        {/*  />*/}
-        </div>
-      </Form>
-      </>
-    );
-  };
   
   const getScheduledTasksCount = async (cancelSource = cancelTokenSource) => {
-    const response = await pipelineSchedulerActions.getScheduledTasks(getAccessToken, cancelSource, pipeline._id);
-    const taskCount = response?.data?.data?.length;
-    if (taskCount){
-      setTaskCount(taskCount);
+    if (!featureFlagHideItemInProd()){
+      const response = await pipelineSchedulerActions.getScheduledTasks(getAccessToken, cancelSource, pipeline._id);
+      const taskCount = response?.data?.data?.length;
+      if (taskCount){
+        setTaskCount(taskCount);
+      }
     }
+    
+    return;
   };
 
   if (!pipeline || Object.keys(pipeline).length <= 0) {
@@ -738,23 +641,6 @@ function PipelineSummaryPanel({
           </Col>
           {editSchedule ?
             <>
-            
-              {/* <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Schedule:</span> */}
-              <Modal header="Schedule"
-                     message={getSchedulerForm()}
-                     button="Save"
-                     size="lg"
-                     handleCancelModal={handleCloseScheduleModal}
-                     handleConfirmModal={handleSaveSchedule}
-                     />
-
-                {/* <SchedulerWidget
-                  startDate={pipeline.workflow.schedule ? pipeline.workflow.schedule.start_date : new Date()}
-                  frequency={pipeline.workflow.schedule ? pipeline.workflow.schedule.frequency : ""}
-                  schedule={pipeline.workflow.schedule ? pipeline.workflow.schedule : null}
-                  setEditSchedule={setEditSchedule}
-                  setSchedule={handleSetSchedule}></SchedulerWidget> */}
-              {/* </Col> */}
             </> :
             <>
               {/*TODO: Remove FF after scheduler is fixed*/}
@@ -762,17 +648,6 @@ function PipelineSummaryPanel({
 
               <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Schedule: </span>
                 {taskCount}
-                
-                {/* {pipeline.workflow.schedule
-                && pipeline.workflow.schedule.start_date !== null
-                && !editSchedule
-                  ? <>
-                      <span
-                        className="ml-1">Run next on: {format(new Date(pipeline.workflow.schedule.start_date), "yyyy-MM-dd', 'hh:mm a")}</span>
-                    <span
-                      className="ml-2">Frequency: {pipeline.workflow.schedule ? pipeline.workflow.schedule.frequency : "undefined"}</span>
-                  </> : null} */}
-
 
                 {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" ?
                   getEditIcon("schedule") : null}
