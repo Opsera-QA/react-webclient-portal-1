@@ -23,8 +23,7 @@ const SfdcPipelineWizard = ({
   handlePipelineWizardRequest,
   handleClose,
   refreshPipelineActivityData,
-  gitTaskData,
-  closePanel
+  gitTaskData
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -105,7 +104,7 @@ const SfdcPipelineWizard = ({
       setSFDCToolId(steps[stepArrayIndex].tool.configuration.sfdcToolId);
       setStepToolConfig(steps[stepArrayIndex].tool.configuration);
       setIsOrgToOrg(steps[stepArrayIndex].tool.configuration.isOrgToOrg);
-      setIsProfiles(steps[stepArrayIndex].tool.job_type === "sfdc-ant-profile" ? true : false);
+      setIsProfiles(steps[stepArrayIndex].tool.job_type === "sfdc-ant-profile");
       setStepToolConfigId(steps[stepArrayIndex].tool.configuration.toolConfigId);
       setStepIndex(stepArrayIndex);
     }
@@ -134,7 +133,7 @@ const SfdcPipelineWizard = ({
         // TODO: add a success toast
         toastContext.showInformationToast("A request to start this task has been submitted.  It will begin shortly.", 20);
         // close modal
-        closePanel();
+        handleClose();
       } else {
         setError(createJobResponse && createJobResponse.data && createJobResponse.data.message);
       }
@@ -214,7 +213,7 @@ const SfdcPipelineWizard = ({
             setToDate={setToDate}
             gitTaskData={gitTaskData}
             gitTaskId={gitTaskId}
-            closePanel={closePanel}
+            closePanel={handleClose}
           />
         );
       case 2:
@@ -256,7 +255,7 @@ const SfdcPipelineWizard = ({
             setGitCheckAll={setGitCheckAll}
             gitTaskData={gitTaskData}
             gitTaskId={gitTaskId}
-            closePanel={closePanel}
+            closePanel={handleClose}
           />
        );
       case 3:
@@ -307,7 +306,7 @@ const SfdcPipelineWizard = ({
             unitTestSteps={unitTestSteps}
             gitTaskData={gitTaskData}
             gitTaskId={gitTaskId}
-            closePanel={closePanel}
+            closePanel={handleClose}
           />
         );
 
@@ -352,7 +351,6 @@ SfdcPipelineWizard.propTypes = {
   handleClose: PropTypes.func,
   refreshPipelineActivityData: PropTypes.func,
   gitTaskData: PropTypes.object,
-  closePanel: PropTypes.func
 };
 
 export default SfdcPipelineWizard;

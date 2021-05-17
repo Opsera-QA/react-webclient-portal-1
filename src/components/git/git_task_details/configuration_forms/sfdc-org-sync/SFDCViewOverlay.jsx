@@ -46,9 +46,10 @@ function SFDCViewOverlay({ gitTasksData }) {
       showToasts={true}
       isLoading={isLoading}
       fullWidth={true}
+      showCloseButton={false}
     >
       <div className={"p-3"}>
-        <SfdcPipelineWizard gitTaskData={gitTasksData} closePanel={closePanel} />
+        <SfdcPipelineWizard gitTaskData={gitTasksData} handleClose={closePanel} closePanel={closePanel} />
       </div>
     </CenterOverlayContainer>
   );

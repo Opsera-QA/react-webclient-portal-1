@@ -119,8 +119,8 @@ import cypressPipelineStepConfigurationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/cypress/cypressPipelineStepConfigurationMetadata";
 import DockerPushPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/DockerPushPipelineStepConfigurationSummaryPanel";
-import dockerPushPipelineStepConfigurationMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/dockerPushPipelineStepConfigurationMetadata";
+import dockerPushStepFormMetadata
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/docker_push/dockerpush-stepForm-metadata";
 import SfdcPipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/SfdcPipelineStepConfigurationSummaryPanel";
 import sfdcPipelineStepConfigurationMetadata
@@ -137,6 +137,9 @@ import jfrogStepFormMetadata from "./step_tool_configuration_forms/jfrog_artifac
 import TerrascanPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/terrascan/TerrascanPipelineStepConfigurationSummaryPanel";
 import terrascanStepFormMetadata from "./step_tool_configuration_forms/terrascan/terrascan-stepForm-metadata";
+import AzureDevopsPipelineStepConfigurationSummary
+  from "./step_tool_configuration_forms/azure_devops/AzureDevopsPipelineStepConfigurationSummary";
+import azureDevopsStepFormMetadata from "./step_tool_configuration_forms/azure_devops/azureDevops-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -376,7 +379,7 @@ function PipelineStepConfigurationSummary({
         return (
           <DockerPushPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            dockerPushDataObject={getModelWrappedObject(dockerPushPipelineStepConfigurationMetadata)}
+            dockerPushDataObject={getModelWrappedObject(dockerPushStepFormMetadata)}
           />
         );
       case "sfdc-configurator":
@@ -398,6 +401,13 @@ function PipelineStepConfigurationSummary({
           <TerrascanPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             terrascanLinePipelineDataObject={getModelWrappedObject(terrascanStepFormMetadata)}
+            />
+        );
+      case "azure-devops":
+        return (
+          <AzureDevopsPipelineStepConfigurationSummary
+            pipelineData={pipelineData}
+            azureDevopsPipelineDataObject={getModelWrappedObject(azureDevopsStepFormMetadata)}
           />
         );
       default:

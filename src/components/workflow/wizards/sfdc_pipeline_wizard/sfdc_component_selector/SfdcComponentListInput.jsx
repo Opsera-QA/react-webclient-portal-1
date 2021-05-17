@@ -12,6 +12,8 @@ import sfdcComponentsMetadata
   from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc_component_selector/sfdc-components-metadata";
 import ListInputBase from "components/common/inputs/list/ListInputBase";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 const SfdcComponentListInput = ({
   sfdcToolId,
@@ -145,8 +147,8 @@ const SfdcComponentListInput = ({
   }
 
   return (
-    <div className={"d-flex"}>
-      <div className={"w-50 mr-1"}>
+    <Row>
+      <Col lg={6}>
         <ListInputBase
           fieldName={"selectedComponentTypes"}
           selectOptions={componentTypes}
@@ -163,9 +165,10 @@ const SfdcComponentListInput = ({
           icon={faSalesforce}
           disabled={isLoading}
           customTemplate={customTemplate}
+          noDataMessage={"No Component Types Found"}
         />
-      </div>
-      <div className={"w-50 ml-1"}>
+      </Col>
+      <Col lg={6}>
         <ListInputBase
           fieldName={"selected"}
           selectOptions={getSelectedOptions()}
@@ -174,16 +177,17 @@ const SfdcComponentListInput = ({
           clearDataFunction={clearDataFunction}
           setDataFunction={setDataFunction}
           disabledOptions={getDisabledOptions()}
+          noDataMessage={"No Components Selected"}
           valueField={"name"}
           textField={"name"}
           isLoading={isLoading}
           searchFunction={searchFunction}
           icon={faSalesforce}
-          disabled={isLoading}
+          disabled={isLoading || getSelectedOptions().length === 0}
           customTemplate={customTemplate}
         />
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 };
 

@@ -55,7 +55,7 @@ function JenkinsJobInput({ jenkinsId, visible, typeFilter, fieldName, dataObject
   const loadJenkinsJobs = () => {
     setIsLoading(true);
     const index = jenkinsTools.findIndex((x) => x.id === jenkinsId);
-    const jobs = (index != -1) && jenkinsTools[index]?.jobs ? jenkinsTools[index].jobs : [];
+    const jobs = (index!= -1) && jenkinsTools[index]?.jobs ? jenkinsTools[index].jobs : [];
 
     if (jobs.length > 0 && typeFilter) {
       let filteredJobs = jobs.filter((job) => {return job.type[0] === typeFilter;});

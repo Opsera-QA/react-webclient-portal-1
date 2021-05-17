@@ -136,6 +136,11 @@ const octopusStepFormMetadata = {
         label: "Binding Port",
         id: "port"
       },
+      {
+        label: "Deployment Lifecycle",
+        id: "lifecycleId",
+        isRequired: true
+      },
     ],
   newObjectFields:
       {
@@ -168,7 +173,8 @@ const octopusStepFormMetadata = {
         webSiteName: "",
         applicationPoolName: "",
         protocol: "HTTP",
-        port: "80"
+        port: "80",
+        lifecycleId: ""
       }
   };
   

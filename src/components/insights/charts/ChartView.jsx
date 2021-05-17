@@ -9,7 +9,7 @@ import OpseraBuildsByUserBarChart from "./opsera/bar_chart/builds_by_user/Opsera
 import OpseraDeploymentFrequencyLineChart from "./opsera/line_chart/deployment_frequency/OpseraDeploymentFrequencyLineChart";
 import OpseraRecentPipelineStatus from "components/insights/charts/opsera/table/recent_pipeline_status/OpseraRecentPipelineStatus";
 import OpseraRecentCDStatusTable from "components/insights/charts/opsera/table/recent_cd_status/OpseraRecentCDStatusTable";
-import OpseraPipelineDeploymentFrequencyStats from "./opsera/OpseraPipelineDeploymentFrequencyStats";
+import OpseraPipelineDeploymentFrequencyStats from "./opsera/OpseraDeploymentFreqStats/OpseraPipelineDeploymentFrequencyStats";
 import OpseraBuildDurationByStageBarChart from "./opsera/bar_chart/duration_by_stage/OpseraBuildDurationByStageBarChart";
 import OpseraMeanTimeToRestoreBarChart from "./opsera/bar_chart/mean_time_to_restore/OpseraMeanTimeToRestoreBarChart";
 import OpseraNexusPipelineStepInfo from "components/insights/charts/opsera/table/nexus_pipeline_step_info/OpseraNexusPipelineStepInfo";
@@ -49,6 +49,7 @@ import SonarMetricByProjectLineChart from "./sonar/line_chart/metric-by-project/
 import SonarCodeCoverageBarChart from "./sonar/bar_chart/code_coverage/SonarCodeCoverageBarChart";
 import SonarLinesToCoverBarChart from "./sonar/bar_chart/code_coverage/SonarLinesToCoverBarChart";
 import SonarRatings from "./sonar/SonarRatings";
+import SonarSecurityScorecard from "./sonar/SonarSecurityScorecard";
 
 // Jmeter KPIs
 import JmeterHitsLineChart from "./jmeter/line_chart/hits/JmeterHitsLineChart";
@@ -109,18 +110,23 @@ import MetricbeatInNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/i
 import MetricbeatMemoryUsageByTimeLineChart from "./metricbeat/line_chart/memory_usage/MetricbeatMemoryUsageByTimeLineChart";
 import MetricbeatOutNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/out_network_usage/MetricbeatOutNetworkTrafficByTimeLineChart";
 
-import {
-  getDateObjectFromKpiConfiguration,
-  getTagsFromKpiConfiguration,
-} from "components/insights/charts/charts-helpers";
-import { Col } from "react-bootstrap";
-
 //QA Testing
 import ManualQaTestPieChart from "components/insights/charts/qa_metrics/ManualQaTestPieChart";
 import FirstPassYieldPieChart from "components/insights/charts/qa_metrics/FirstPassYieldPieChart";
 import CummulativeOpenDefectsPieChart from "components/insights/charts/qa_metrics/CummulativeOpenDefectsPieChart";
 import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieChart";
-import AdoptionTestPercentagePieChart from "./qa_metrics/AdoptionTestPercentagePieChart";
+import AdoptionPercentagePieChart from "./qa_metrics/AdoptionPercentagePieChart";
+
+// SFDC KPIs
+import SFDCBackups from "components/insights/charts/sfdc/SFDCBackups";
+import SFDCProfileMigrationsBarChart from "components/insights/charts/sfdc/bar_chart/profile_migrations/SFDCProfileMigrationsBarChart";
+import SFDCUnitTestingPieChart from "components/insights/charts/sfdc/pie_chart/unit_testing/SFDCUnitTestingPieChart";
+
+import {
+  getDateObjectFromKpiConfiguration,
+  getTagsFromKpiConfiguration,
+} from "components/insights/charts/charts-helpers";
+import { Col } from "react-bootstrap";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -631,6 +637,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col xl={6} md={12} className="p-2">
             <SonarRatings
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sonar-security-scorecard":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <SonarSecurityScorecard
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1161,7 +1179,43 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "adoption-percentage":
         return (
           <Col md={12} className="p-2">
-            <AdoptionTestPercentagePieChart
+            <AdoptionPercentagePieChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sfdc-backups":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <SFDCBackups
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sfdc-profile-migrations":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <SFDCProfileMigrationsBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sfdc-unit-testing":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <SFDCUnitTestingPieChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}

@@ -21,6 +21,7 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import sfdcComponentFilterMetadata from './sfdc-component-filter-metadata';
 import SfdcModifiedFilesTabView from "./tab_views/SfdcModifiedFilesTabView";
+import CancelButton from "components/common/buttons/CancelButton";
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -114,7 +115,10 @@ const SfdcPipelineProfileComponents = ({
 
       //storing _id so that we can edit this object
       setRecordId(response.data._id);
-
+      if(response.data.data.profileComponentList && response.data.data.profileComponentList.length> 0) {
+        let profileSelectedComp = response.data.data.profileComponentList.filter((ele)=>  selectedProfileComponent.some(({componentType, committedFile}) => ele.componentType === componentType && ele.committedFile === committedFile) );
+        setSelectedProfileComponent(profileSelectedComp);
+      }
     } catch (error) {
       console.error("Error getting API Data: ", error);
       toastContext.showInlineErrorMessage(error);
@@ -346,18 +350,7 @@ const SfdcPipelineProfileComponents = ({
             )}
             Proceed with Selected SFDC Files
           </Button>
-
-          <Button
-            variant="outline-secondary"
-            size="sm"
-            className="ml-2"
-            onClick={() => {
-              handleClose();
-            }}
-          >
-            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>
-            Cancel
-          </Button>
+          <CancelButton cancelFunction={handleClose} size={"sm"} className={"ml-1"} />
         </div>
       </div>
     </div>
