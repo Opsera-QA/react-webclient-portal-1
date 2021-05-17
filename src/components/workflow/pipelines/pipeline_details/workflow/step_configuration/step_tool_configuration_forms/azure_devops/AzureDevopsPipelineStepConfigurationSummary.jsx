@@ -26,6 +26,9 @@ function AzureDevopsPipelineStepConfigurationSummaryPanel({ azureDevopsPipelineD
         <Col lg={6}>
           <TextFieldBase dataObject={azureDevopsPipelineDataObject} fieldName={"pipelineVersion"}/>
         </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={azureDevopsPipelineDataObject} fieldName={"toolConfigId"}/>
+        </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
   );
