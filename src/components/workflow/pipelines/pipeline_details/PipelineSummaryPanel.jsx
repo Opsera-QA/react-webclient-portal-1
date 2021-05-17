@@ -506,6 +506,12 @@ function PipelineSummaryPanel({
     return;
   };
 
+  const getTaskCountText = () => {
+    if (taskCount === 0 ) return "no scheduled tasks";
+
+   return taskCount === 1 ? "1 task scheduled" : `${taskCount} tasks scheduled`;
+  };
+
   if (!pipeline || Object.keys(pipeline).length <= 0) {
     return (<InformationDialog
       message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."/>);
@@ -647,7 +653,8 @@ function PipelineSummaryPanel({
               {!featureFlagHideItemInProd() &&
 
               <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Schedule: </span>
-                {taskCount}
+                
+                {getTaskCountText()}
 
                 {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" ?
                   getEditIcon("schedule") : null}
