@@ -14,7 +14,7 @@ function TableBase({ columns, data, onRowSelect, rowStyling, sort }) {
     const grid = setUpGrid();
 
     return () => {
-      grid.destructor();
+      // grid.destructor();
     };
   }, []);
 
