@@ -11,7 +11,7 @@ function PythonFilesInput({ dataObject, setDataObject, disabled, fieldName}) {
       dataObject={dataObject}
       setDataObject={setDataObject}
       fieldName={fieldName}
-      allowIncompleteItems={false}
+      allowIncompleteItems={true}
       type={"Input File"}
       disabled={disabled}
       regexValidationRequired={false}

@@ -107,7 +107,7 @@ function FilesInputBase({
           </Col>
         </Row>
         <Button size="sm" className="my-1 ml-2" variant="success" 
-          disabled={!inputFilePath || inputFilePath.length === 0 || !inputFileName || inputFileName.length === 0}
+          disabled={!allowIncompleteItems && (!inputFilePath || inputFilePath.length === 0 || !inputFileName || inputFileName.length === 0)}
           onClick={() => { addProperty();}}
         >
           Add {type}
