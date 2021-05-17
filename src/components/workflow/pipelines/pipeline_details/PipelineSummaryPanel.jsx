@@ -40,25 +40,6 @@ const INITIAL_FORM_DATA = {
   type: [],
 };
 
-const INITIAL_SCHEDULE_DATA = {
-  name: "",
-  description: "",
-  notes: "",
-  active: false, 
-  owner: "",
-  task:{ taskType:"RUN", pipelineId:""},
-  account: "",
-  schedule:{recurring: "NONE", executionDate: ""},
-  date: new Date(),
-  hours: new Date().getHours(),
-  minutes: new Date().getMinutes(),
-  seconds: new Date().getSeconds(),
-  timeString: new Date().toLocaleTimeString(),
-  dateString: new Date().toLocaleDateString(),
-  frequency: "NONE",
-};
-
-
 // TODO: This class needs to be reworked with new components and also to cleanup
 function PipelineSummaryPanel({
   pipeline,
@@ -90,7 +71,6 @@ function PipelineSummaryPanel({
   const [editRoles, setEditRoles] = useState(false);
   const [editType, setEditType] = useState(false);
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
-  const [scheduleData, setScheduleData] = useState(INITIAL_SCHEDULE_DATA);
   const [approvalStep, setApprovalStep] = useState({});
   const [pipelineModel, setPipelineModel] = useState(new Model(pipeline, pipelineMetadata, false));
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
@@ -450,50 +430,6 @@ function PipelineSummaryPanel({
     toastContext.showOverlayPanel(<PipelineScheduledTasksOverlay pipeline={pipeline} />);
   };
 
-  const updateSchedule = (value) => {
-    
-    if(value){
-      let hours = value.getHours();
-      let minutes = value.getMinutes();
-      let seconds = value.getSeconds();
-      let newDate = new Date(value.setHours(hours, minutes, seconds));
-     
-      setScheduleData({ ...scheduleData, date: newDate, hours: hours, minutes: minutes, seconds: seconds, timeString: value.toLocaleTimeString(), dateString: value.toLocaleDateString() });
-    }
-
-    if(!scheduleData.date){
-      pipelineModel.setData("schedule", new Date());
-    } 
-
-    if(scheduleData.hours){
-      pipelineModel.setData("schedule", scheduleData.date);
-    }
-  
-    return pipelineModel;
-  };
-
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    const name = e.target.name;
-
-    if(name === "active" && scheduleData.active === false){
-      setScheduleData({
-        ...scheduleData,
-        active: true
-      });
-    } else if (name === "active" && scheduleData.active === true){
-      setScheduleData({
-        ...scheduleData,
-        active: false
-      });
-    } else {
-      setScheduleData({
-        ...scheduleData,
-        [name]: value
-      });
-    }
-  };
-  
   const getScheduledTasksCount = async (cancelSource = cancelTokenSource) => {
     if (!featureFlagHideItemInProd()){
       const response = await pipelineSchedulerActions.getScheduledTasks(getAccessToken, cancelSource, pipeline._id);
@@ -502,8 +438,6 @@ function PipelineSummaryPanel({
         setTaskCount(taskCount);
       }
     }
-    
-    return;
   };
 
   const getTaskCountText = () => {
