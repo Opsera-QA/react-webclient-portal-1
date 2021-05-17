@@ -97,7 +97,7 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
         <Container>
-          <Row className="p-3">
+          <Row className="p-1">
             <Col><div className="metric-box p-3 text-center">
               <div className="box-metric">
                 <div>{metrics[0].avg}</div>
