@@ -409,13 +409,11 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       ].value = kpiDomainFilter.getData("value");
     }
     if (
-      newKpiSettings.getData("filters")[
-        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")
-        ]
+      newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")
-        ].value = kpiProjectFilter.getData("value");
+      ].value = kpiProjectFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[

@@ -13,7 +13,7 @@ import {
   getApplicationFromKpiConfiguration,
   getSprintFromKpiConfiguration,
   getReleaseFromKpiConfiguration,
-  getProjectFromKpiConfiguration
+  getProjectFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 
 const chartsActions = {};
@@ -25,11 +25,11 @@ chartsActions.getChart = async (request, metric, date, getAccessToken) => {
     data: [
       {
         request: request,
-        metric: metric
-      }
+        metric: metric,
+      },
     ],
     startDate: date.start,
-    endDate: date.end
+    endDate: date.end,
   };
 
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
@@ -43,16 +43,15 @@ chartsActions.getChartData = async (getAccessToken, cancelTokenSource, request, 
     data: [
       {
         request: request,
-        metric: metric
-      }
+        metric: metric,
+      },
     ],
     startDate: date.start,
-    endDate: date.end
+    endDate: date.end,
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
-
 
 chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessToken) => {
   const apiUrl = "/analytics/metrics";
@@ -61,13 +60,23 @@ chartsActions.getChartMetrics = async (request, metric, date, tags, getAccessTok
     request: request,
     startDate: date.start,
     endDate: date.end,
-    tags: tags
+    tags: tags,
   };
 
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
-chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, cancelTokenSource, request, kpiConfiguration, dashboardTags, tableFilterDto, projectTags, dashboardOrgs, pipelineName) => {
+chartsActions.parseConfigurationAndGetChartMetrics = async (
+  getAccessToken,
+  cancelTokenSource,
+  request,
+  kpiConfiguration,
+  dashboardTags,
+  tableFilterDto,
+  projectTags,
+  dashboardOrgs,
+  pipelineName
+) => {
   const apiUrl = "/analytics/metrics";
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
   const tags = getTagsFromKpiConfiguration(kpiConfiguration);
@@ -75,8 +84,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, canc
   const jenkinsJobUrl = getJenkinsJobUrlFromKpiConfiguration(kpiConfiguration);
   const jenkinsBuildNumber = getJenkinsBuildNumberFromKpiConfiguration(kpiConfiguration);
   const jiraIssueType = getJiraIssueTypeFromKpiConfiguration(kpiConfiguration);
-  const jiraIssueStartStatus= getJiraIssueStartStatusFromKpiConfiguration(kpiConfiguration);
-  const jiraIssueDoneStatus= getJiraIssueDoneStatusFromKpiConfiguration(kpiConfiguration);
+  const jiraIssueStartStatus = getJiraIssueStartStatusFromKpiConfiguration(kpiConfiguration);
+  const jiraIssueDoneStatus = getJiraIssueDoneStatusFromKpiConfiguration(kpiConfiguration);
   const sonarProjectKey = getSonarProjectKeyFromKpiConfiguration(kpiConfiguration);
   const domain = getDomainFromKpiConfiguration(kpiConfiguration);
   const application = getApplicationFromKpiConfiguration(kpiConfiguration);
@@ -105,7 +114,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (getAccessToken, canc
     size: tableFilterDto?.getData("pageSize"),
     projectTags: projectTags,
     dashboardOrgs: dashboardOrgs,
-    pipelineName: pipelineName
+    pipelineName: pipelineName,
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);

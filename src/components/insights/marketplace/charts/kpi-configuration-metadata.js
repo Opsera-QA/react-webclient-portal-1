@@ -1,53 +1,53 @@
 const kpiConfigurationMetadata = {
-    idProperty: "_id",
-    type: "KPI Configuration",
-    fields: [
-      {
-        label: "Name",
-        id: "kpi_name"
-      },
-      {
-        label: "Category",
-        id: "kpi_category"
-      },
-      {
-        label: "Settings",
-        id: "kpi_settings"
-      },
-      {
-        label: "Filters",
-        id: "filters"
-      },
-      {
-        label: "Tags",
-        id: "tags"
-      },
-      {
-        label: "Active",
-        id: "active"
-      },
-      {
-        label: "Updated",
-        id: "updatedAt"
-      }
-    ]
-  };
+  idProperty: "_id",
+  type: "KPI Configuration",
+  fields: [
+    {
+      label: "Name",
+      id: "kpi_name",
+    },
+    {
+      label: "Category",
+      id: "kpi_category",
+    },
+    {
+      label: "Settings",
+      id: "kpi_settings",
+    },
+    {
+      label: "Filters",
+      id: "filters",
+    },
+    {
+      label: "Tags",
+      id: "tags",
+    },
+    {
+      label: "Active",
+      id: "active",
+    },
+    {
+      label: "Updated",
+      id: "updatedAt",
+    },
+  ],
+};
 
 export const kpiDateFilterMetadata = {
   type: "Date Filter",
   fields: [
     {
       label: "Type",
-      id: "type"
+      id: "type",
     },
     {
       label: "Date",
-      id: "value"
-    }
+      id: "value",
+    },
   ],
   newObjectFields: {
-    value: undefined
-  }
+    value: undefined,
+  },
 };
 
 export const kpiTagsFilterMetadata = {
@@ -55,16 +55,16 @@ export const kpiTagsFilterMetadata = {
   fields: [
     {
       label: "Type",
-      id: "type"
+      id: "type",
     },
     {
       label: "Tags",
-      id: "value"
-    }
+      id: "value",
+    },
   ],
   newObjectFields: {
-    value: []
-  }
+    value: [],
+  },
 };
 
 export const kpiJenkinsResultFilterMetadata = {
@@ -72,16 +72,16 @@ export const kpiJenkinsResultFilterMetadata = {
   fields: [
     {
       label: "Type",
-      id: "type"
+      id: "type",
     },
     {
       label: "Result",
-      id: "value"
-    }
+      id: "value",
+    },
   ],
   newObjectFields: {
-    value: ""
-  }
+    value: "",
+  },
 };
 
 export const kpiJenkinsJobUrlFilterMetadata = {
@@ -89,16 +89,16 @@ export const kpiJenkinsJobUrlFilterMetadata = {
   fields: [
     {
       label: "Type",
-      id: "type"
+      id: "type",
     },
     {
       label: "Job URL",
-      id: "value"
-    }
+      id: "value",
+    },
   ],
   newObjectFields: {
-    value: ""
-  }
+    value: "",
+  },
 };
 
 export const kpiJenkinsBuildNumberFilterMetadata = {
@@ -106,16 +106,16 @@ export const kpiJenkinsBuildNumberFilterMetadata = {
   fields: [
     {
       label: "Type",
-      id: "type"
+      id: "type",
     },
     {
       label: "Build Number",
-      id: "value"
-    }
+      id: "value",
+    },
   ],
   newObjectFields: {
-    value: []
-  }
+    value: [],
+  },
 };
 
 export const kpiJiraIssueTypeFilterMetadata = {
@@ -123,16 +123,16 @@ export const kpiJiraIssueTypeFilterMetadata = {
   fields: [
     {
       label: "Type",
-      id: "type"
+      id: "type",
     },
     {
       label: "Jira Issue Type",
-      id: "value"
-    }
+      id: "value",
+    },
   ],
   newObjectFields: {
-    value: []
-  }
+    value: [],
+  },
 };
 
 export const kpiJiraIssueStartStatusFilterMetadata = {
@@ -140,16 +140,16 @@ export const kpiJiraIssueStartStatusFilterMetadata = {
   fields: [
     {
       label: "Type",
-      id: "type"
+      id: "type",
     },
     {
       label: "Jira Issue Start Status",
-      id: "value"
-    }
+      id: "value",
+    },
   ],
   newObjectFields: {
-    value: []
-  }
+    value: [],
+  },
 };
 
 export const kpiJiraIssueDoneStatusFilterMetadata = {
@@ -157,16 +157,16 @@ export const kpiJiraIssueDoneStatusFilterMetadata = {
   fields: [
     {
       label: "Type",
-      id: "type"
+      id: "type",
     },
     {
       label: "Jira Issue Done Status",
-      id: "value"
-    }
+      id: "value",
+    },
   ],
   newObjectFields: {
-    value: []
-  }
+    value: [],
+  },
 };
 
 export const kpiSonarProjectKeyFilterMetadata = {
@@ -174,16 +174,16 @@ export const kpiSonarProjectKeyFilterMetadata = {
   fields: [
     {
       label: "Type",
-      id: "type"
+      id: "type",
     },
     {
       label: "Sonar Project Key",
-      id: "value"
-    }
+      id: "value",
+    },
   ],
   newObjectFields: {
-    value: []
-  }
+    value: [],
+  },
 };
 
 export const kpiDomainFilterMetadata = {
@@ -191,16 +191,16 @@ export const kpiDomainFilterMetadata = {
   fields: [
     {
       label: "Type",
-      id: "type"
+      id: "type",
     },
     {
       label: "Domain",
-      id: "value"
-    }
+      id: "value",
+    },
   ],
   newObjectFields: {
-    value: []
-  }
+    value: [],
+  },
 };
 
 export const kpiApplicationFilterMetadata = {
@@ -208,16 +208,16 @@ export const kpiApplicationFilterMetadata = {
   fields: [
     {
       label: "Type",
-      id: "type"
+      id: "type",
     },
     {
       label: "Application",
-      id: "value"
-    }
+      id: "value",
+    },
   ],
   newObjectFields: {
-    value: []
-  }
+    value: [],
+  },
 };
 
 export const kpiSprintFilterMetadata = {
@@ -225,16 +225,16 @@ export const kpiSprintFilterMetadata = {
   fields: [
     {
       label: "Type",
-      id: "type"
+      id: "type",
     },
     {
       label: "Sprint",
-      id: "value"
-    }
+      id: "value",
+    },
   ],
   newObjectFields: {
-    value: []
-  }
+    value: [],
+  },
 };
 
 export const kpiReleaseFilterMetadata = {
@@ -242,16 +242,16 @@ export const kpiReleaseFilterMetadata = {
   fields: [
     {
       label: "Type",
-      id: "type"
+      id: "type",
     },
     {
       label: "Release",
-      id: "value"
-    }
+      id: "value",
+    },
   ],
   newObjectFields: {
-    value: []
-  }
+    value: [],
+  },
 };
 
 export const kpiProjectFilterMetadata = {
@@ -259,16 +259,16 @@ export const kpiProjectFilterMetadata = {
   fields: [
     {
       label: "Type",
-      id: "type"
+      id: "type",
     },
     {
       label: "Project",
-      id: "value"
-    }
+      id: "value",
+    },
   ],
   newObjectFields: {
-    value: []
-  }
+    value: [],
+  },
 };
 
 export default kpiConfigurationMetadata;
