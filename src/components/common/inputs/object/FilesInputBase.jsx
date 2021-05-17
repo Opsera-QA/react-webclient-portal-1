@@ -96,13 +96,14 @@ function FilesInputBase({
         </Row>
         <Row>
           <Col sm={11} className={"my-1 ml-2"}>
-            <textarea            
-              rows={3}
-              onChange={(event) => setInputFileName(event.target.value)}
+            <input
               className="form-control"
-              placeholder={"Input File Name"}
+              type={"text"}                
+              placeholder={"Input File Name"}                
+              maxLength={nameMaxLength}
+              onChange={(event) => setInputFileName(event.target.value)}
               value={inputFileName}
-            />
+            />            
           </Col>
         </Row>
         <Button size="sm" className="my-1 ml-2" variant="success" 

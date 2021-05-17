@@ -31,6 +31,8 @@ import DockerSecretsInput from "./DockerSecretsInput";
 import PythonFilesInput from "./PythonFilesInput";
 import Model from "core/data_model/model";
 import _ from "lodash";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -90,7 +92,9 @@ const INITIAL_DATA = {
   autoScaleEnable: "",
   dockerBuildPathJson: {},
   dockerSecretKeys: [],
+  customScript: false,
   inputDetails: [],
+  commands: "",
   isManualRollBackBranch: false
 };
 
@@ -141,7 +145,7 @@ function JenkinsStepConfiguration({
 
   const [deleteDockerSecrets, setDeleteDockerSecrets] = useState(false);  
   const [dataObject, setDataObject] = useState(undefined);
-  const [inputDetailsObj, setInputDetailsObj] = useState(undefined);
+  const [pythonScriptData, setPythonScriptData] = useState(undefined);
 
   let step = {};
 
@@ -224,11 +228,19 @@ function JenkinsStepConfiguration({
       ]
     }, true));
 
-    setInputDetailsObj(new Model({inputDetails: []}, {
+    setPythonScriptData(new Model({inputDetails: []}, {
       fields: [
+        {
+          label: "Custom Script",
+          id: "customScript"
+        },
         {
           label: "Input Details",
           id: "inputDetails"
+        },
+        {
+          label: "Commands",
+          id: "commands"
         }
       ]
     }, true));
@@ -389,12 +401,14 @@ function JenkinsStepConfiguration({
   }, [formData.dockerSecretKeys]);
 
   useEffect(() => {
-    if(inputDetailsObj){
-      let tmp = inputDetailsObj;
+    if(pythonScriptData){
+      let tmp = pythonScriptData;
       tmp.setData("inputDetails", formData.inputDetails);
-      setInputDetailsObj(tmp);
+      tmp.setData("commands", formData.commands);
+      tmp.setData("customScript", formData.customScript);
+      setPythonScriptData(tmp);
     }    
-  }, [formData.inputDetails]);
+  }, [formData.inputDetails, formData.commands, formData.customScript]);
 
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
@@ -426,7 +440,7 @@ function JenkinsStepConfiguration({
       // }
 
       if(formData.buildType === "python") {
-        handleInputFileDetails();
+        handlePythonScriptDetails();
       }
 
       if( formData.buildType === "docker" && (deleteDockerSecrets || _.isEmpty(formData.dockerBuildPathJson)) && dataObject.data.dockerSecrets?.length !== 0){
@@ -503,10 +517,20 @@ function JenkinsStepConfiguration({
     }
   };
 
-  const handleInputFileDetails = () => {    
-    setFormData(Object.assign(formData, {
-      inputDetails: inputDetailsObj.getData("inputDetails")
-    }));
+  const handlePythonScriptDetails = () => {
+    if(pythonScriptData.getData("customScript")){
+      setFormData(Object.assign(formData, {
+        customScript: true,
+        inputDetails: [],
+        commands: pythonScriptData.getData("commands")
+      }));
+    }else {
+      setFormData(Object.assign(formData, {
+        customScript: false,
+        inputDetails: pythonScriptData.getData("inputDetails"),
+        commands: ""
+      }));
+    }
   };
 
   const saveToVault = async (pipelineId, stepId, key, name, value) => {
@@ -1573,10 +1597,26 @@ function JenkinsStepConfiguration({
                   </>
                 )}                
                 {(formData.buildType === "python") && (
-                  <PythonFilesInput 
-                    setDataObject={setInputDetailsObj} 
-                    dataObject={inputDetailsObj}                            
-                  />                  
+                  <>
+                    <BooleanToggleInput 
+                      dataObject={pythonScriptData} 
+                      setDataObject={setPythonScriptData} 
+                      fieldName={"customScript"} 
+                    />
+                    { pythonScriptData.getData("customScript") ? (
+                      <TextAreaInput 
+                        dataObject={pythonScriptData}                         
+                        setDataObject={setPythonScriptData}
+                        fieldName={"commands"} 
+                      />
+                    ) : (
+                      <PythonFilesInput 
+                        setDataObject={setPythonScriptData} 
+                        dataObject={pythonScriptData}
+                        fieldName={"inputDetails"}
+                      />
+                    ) }                    
+                  </>                  
                 )}
 
                 {/* gradle and maven specific attributes */}
