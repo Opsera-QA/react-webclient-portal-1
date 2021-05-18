@@ -45,8 +45,8 @@ function PersistAndCloseButtonContainer({ recordDto, setRecordDto, updateRecord,
 
   return (
     <SaveButtonContainer extraButtons={extraButtons}>
-      {getCloseButton()}
       {getSaveButton()}
+      {getCloseButton()}
     </SaveButtonContainer>
   );
 }
