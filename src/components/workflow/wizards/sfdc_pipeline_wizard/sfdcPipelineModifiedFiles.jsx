@@ -504,7 +504,7 @@ const SfdcPipelineModifiedFiles = ({
       typeOfSelection = "gitCommitList"; 
     }
     if (selectedList.length < 1) {
-      setError("Please select atlest one component to proceed!");
+      setError("Please select atleast one component to proceed!");
       setSave(false);
       return;
     }
