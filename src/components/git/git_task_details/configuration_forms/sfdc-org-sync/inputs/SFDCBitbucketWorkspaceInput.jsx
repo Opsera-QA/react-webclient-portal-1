@@ -14,6 +14,9 @@ function SFDCBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("gitBranch", "");
     newDataObject.setData("defaultBranch", "");
     newDataObject.setData("sourceBranch", "");
+    newDataObject.setData("autoApprove", false);
+    newDataObject.setData("reviewers", []);
+    newDataObject.setData("reviewerNames", []);
     setDataObject({...newDataObject});
   };
 

@@ -36,7 +36,7 @@ function SCMTypeInput({dataObject, setDataObject, disabled, gitTasksDataDto}) {
         newDataObject.setData("sourceBranch", "");
         newDataObject.setData("autoApprove", false);
         newDataObject.setData("reviewers", []);
-        newDataObject.setData("reviewersList", []);
+        newDataObject.setData("reviewerNames", []);
         setDataObject({...newDataObject});
     };
 
