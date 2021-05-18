@@ -39,6 +39,7 @@ const SfdcComponentListInput = ({
 
     let newComponentTypesModel = new Model({...sfdcComponentsMetadata.newObjectFields}, sfdcComponentsMetadata, true);
     newComponentTypesModel.setData("selectedComponentTypes", selectedComponentTypes);
+    newComponentTypesModel.setData("selected", selectedComponentTypes);
     setComponentTypesModel({...newComponentTypesModel});
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
