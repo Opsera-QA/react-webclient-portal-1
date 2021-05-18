@@ -1,11 +1,10 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import {faCogs} from "@fortawesome/pro-light-svg-icons";
 import CustomTab from "components/common/tabs/CustomTab";
 
 function ToggleTab({ activeTab, tabText, settingsTabName, tabName, icon, handleTabClick }) {
   if (activeTab === settingsTabName) {
-    return (<CustomTab activeTab={activeTab} tabText={"Settings"} tabName={settingsTabName} handleTabClick={handleTabClick} icon={faCogs} />);
+    return (<CustomTab activeTab={activeTab} tabText={tabText} tabName={settingsTabName} handleTabClick={handleTabClick} icon={icon} />);
   }
 
   return (<CustomTab activeTab={activeTab} tabText={tabText} tabName={tabName} handleTabClick={handleTabClick} icon={icon} />);
