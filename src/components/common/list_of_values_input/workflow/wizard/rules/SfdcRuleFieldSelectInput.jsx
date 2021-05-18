@@ -3,19 +3,27 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 export const ruleFields = [
-  {value: "id", text: "ID"},
-  {value: "name", text: "Name"},
-  // {value: "commitTime", text: "Commit Time"}, // TODO: For future release
+  {value: "committedFileId", text: "ID"},
+  {value: "committedFile", text: "Name"},
+  // {value: "committedTime", text: "Commit Time"}, // TODO: For future release
   {value: "committedBy", text: "Committed By"},
 ];
 
-function RuleFieldSelectInput({fieldName, className, dataObject, setDataObject, disabled, showLabel}) {
+function SfdcRuleFieldSelectInput({fieldName, className, dataObject, setDataObject, disabled, showLabel}) {
+  const setDataFunction = (fieldName, newValue) => {
+    let newDataObject = {...dataObject};
+    newDataObject.setData(fieldName, newValue["value"]);
+    newDataObject.setData("values", []);
+    setDataObject({...newDataObject});
+  };
+
   return (
     <SelectInputBase
       className={className}
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
+      setDataFunction={setDataFunction}
       selectOptions={ruleFields}
       placeholderText={"Select a Field"}
       valueField={"value"}
@@ -26,7 +34,7 @@ function RuleFieldSelectInput({fieldName, className, dataObject, setDataObject, 
   );
 }
 
-RuleFieldSelectInput.propTypes = {
+SfdcRuleFieldSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
@@ -35,8 +43,8 @@ RuleFieldSelectInput.propTypes = {
   showLabel: PropTypes.bool
 };
 
-RuleFieldSelectInput.defaultProps = {
+SfdcRuleFieldSelectInput.defaultProps = {
   fieldName: "field",
 };
 
-export default RuleFieldSelectInput;
+export default SfdcRuleFieldSelectInput;

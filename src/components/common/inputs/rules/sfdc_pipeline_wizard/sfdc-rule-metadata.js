@@ -5,10 +5,12 @@ const sfdcRuleMetadata = {
       id: "type",
       isRequired: true
     },
+    // TODO: Rename componentTypes
     {
-      label: "Component Range",
-      id: "range",
-      isRequired: true
+      label: "Component Filter",
+      id: "componentTypes",
+      isRequired: true,
+      infoText: "Filter by selected component types or leave blank for all"
     },
     {
       label: "Field",
@@ -20,17 +22,12 @@ const sfdcRuleMetadata = {
       id: "values",
       isRequired: true
     },
-    {
-      label: "Operand",
-      id: "operand",
-    },
   ],
   newObjectFields: {
     type: "include",
-    range: "all",
+    componentTypes: [],
     field: "",
     values: [],
-    operand: ""
   }
 };
 

@@ -2,20 +2,17 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
-import adminTagsActions from "components/settings/tags/admin-tags-actions";
-import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import {Multiselect} from "react-widgets";
 import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
+import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 
 // TODO: Rename file to match
-function RuleValueMultiSelectInput({ fieldName, dataObject, ruleField, setDataObject, disabled, showLabel, className}) {
+function RuleValueMultiSelectInput({ fieldName, dataObject, ruleField, setDataObject, disabled, showLabel, className, postBody, modifiedFiles, componentTypes}) {
   const { getAccessToken } = useContext(AuthContext);
   const [ruleValues, setRuleValues] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -25,7 +22,6 @@ function RuleValueMultiSelectInput({ fieldName, dataObject, ruleField, setDataOb
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-
     setRuleValues([]);
 
     loadData(source).catch((error) => {
@@ -38,7 +34,7 @@ function RuleValueMultiSelectInput({ fieldName, dataObject, ruleField, setDataOb
       source.cancel();
       isMounted.current = false;
     };
-  }, [ruleField]);
+  }, [ruleField, modifiedFiles, componentTypes]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -47,7 +43,7 @@ function RuleValueMultiSelectInput({ fieldName, dataObject, ruleField, setDataOb
     }
     catch (error) {
       if (isMounted?.current === true) {
-        setErrorMessage("Could not load rule values.");
+        setErrorMessage(`Could not load ${ruleField} values.`);
         console.error(error);
       }
     }
@@ -59,11 +55,18 @@ function RuleValueMultiSelectInput({ fieldName, dataObject, ruleField, setDataOb
   };
 
   const getRuleValues = async (cancelSource = cancelTokenSource) => {
-    const response = await adminTagsActions.getAllTagsV2(getAccessToken, cancelSource);
-    let ruleValues = response?.data?.data;
+    let newPostBody = postBody;
 
-    if (isMounted?.current === true && Array.isArray(ruleValues) && ruleValues.length > 0) {
-      // setRuleValues(ruleValues);
+    if (ruleField && ruleField !== "") {
+      newPostBody.innerAttribute = ruleField;
+      newPostBody.componentTypes = componentTypes;
+
+      const response = await sfdcPipelineActions.getSfdcComponentListFromPipelineStorageV2(getAccessToken, cancelSource, newPostBody);
+      const ruleValues = response?.data;
+
+      if (isMounted?.current === true && Array.isArray(ruleValues) && ruleValues.length > 0) {
+        setRuleValues(ruleValues);
+      }
     }
   };
 
@@ -100,7 +103,10 @@ RuleValueMultiSelectInput.propTypes = {
   showLabel: PropTypes.bool,
   disabled: PropTypes.bool,
   className: PropTypes.string,
-  ruleField: PropTypes.string
+  ruleField: PropTypes.string,
+  postBody: PropTypes.object,
+  modifiedFiles: PropTypes.array,
+  componentTypes: PropTypes.array
 };
 
 RuleValueMultiSelectInput.defaultProps = {

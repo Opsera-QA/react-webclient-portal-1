@@ -13,21 +13,13 @@ function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, 
     setDataObject({...newDataObject});
   };
 
-  const getInputLabel = () => {
-    if (!inline) {
-      return (
-        <InputLabel field={field} className={inline ? "mt-1 mr-2" : undefined}/>
-      );
-    }
-  };
-
   if (field == null) {
     return <WarningDialog warningMessage={"No field was found for this filter"} />;
   }
 
   return (
     <div className={className}>
-      {getInputLabel()}
+      <InputLabel showLabel={!inline} field={field} className={inline ? "mt-1 mr-2" : undefined}/>
       <DropdownList
         data={selectOptions}
         valueField={valueField}
