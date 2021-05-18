@@ -74,7 +74,7 @@ function PipelineSummaryPanel({
   const [approvalStep, setApprovalStep] = useState({});
   const [pipelineModel, setPipelineModel] = useState(new Model(pipeline, pipelineMetadata, false));
   const [infoModal, setInfoModal] = useState({ show: false, header: "", message: "", button: "OK" });
-  const [taskCount, setTaskCount] = useState("");
+  const [taskCount, setTaskCount] = useState(0);
   let history = useHistory();
 
   const authorizedAction = (action, owner) => {
@@ -254,23 +254,23 @@ function PipelineSummaryPanel({
     setEditSchedule(false);
   };
 
-  const handleSaveSchedule = async () => {
-    let account =  await pipeline.account;
-    let owner = pipeline.owner;
-    let id = pipeline._id;
-    let executionDate = scheduleData.date;
-    let recurring = scheduleData.frequency;
+  // const handleSaveSchedule = async () => {
+  //   let account =  await pipeline.account;
+  //   let owner = pipeline.owner;
+  //   let id = pipeline._id;
+  //   let executionDate = scheduleData.date;
+  //   let recurring = scheduleData.frequency;
     
-  setScheduleData({
-      ...scheduleData,
-      account: account,
-      owner: owner,
-      task: {taskType: "RUN", pipelineId: id},
-      schedule: {recurring: recurring, executionDate: executionDate},
-    });
+  // setScheduleData({
+  //     ...scheduleData,
+  //     account: account,
+  //     owner: owner,
+  //     task: {taskType: "RUN", pipelineId: id},
+  //     schedule: {recurring: recurring, executionDate: executionDate},
+  //   });
 
-    setEditSchedule(false);
-  };
+  //   setEditSchedule(false);
+  // };
 
   const handleEditPropertyClick = (type) => {
     switch (type) {
