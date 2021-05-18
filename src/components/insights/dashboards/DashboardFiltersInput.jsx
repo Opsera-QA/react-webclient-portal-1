@@ -27,7 +27,7 @@ function DashboardFiltersInput({ dataObject, setDataObject, dashboardData, loadD
         {/*/>*/}
         {saveData && <TooltipWrapper innerText={"Saves dashboard view with current settings applied"}>
           <div className={"mx-2"}>
-            <LenientSaveButton saveButtonText={"Save View"} size={"sm"} recordDto={dashboardData} updateRecord={saveData}/>
+            <LenientSaveButton customLabel={"Save View"} size={"sm"} recordDto={dashboardData} updateRecord={saveData}/>
           </div>
         </TooltipWrapper>}
       </div>

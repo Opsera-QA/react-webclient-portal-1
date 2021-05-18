@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from "prop-types";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 
-function StrictSaveButton({recordDto, updateRecord, disable, showSuccessToasts, saveButtonText }) {
+function StrictSaveButton({recordDto, updateRecord, disable, showSuccessToasts, customLabel, showTypeOnLabel }) {
   return (
     <SaveButtonBase
       lenient={false}
@@ -10,7 +10,8 @@ function StrictSaveButton({recordDto, updateRecord, disable, showSuccessToasts, 
       recordDto={recordDto}
       updateRecord={updateRecord}
       showSuccessToasts={showSuccessToasts}
-      saveButtonText={saveButtonText}
+      customLabel={customLabel}
+      showTypeOnLabel={showTypeOnLabel}
     />
   );
 }
@@ -20,7 +21,8 @@ StrictSaveButton.propTypes = {
   updateRecord: PropTypes.func,
   disable: PropTypes.bool,
   showSuccessToasts: PropTypes.bool,
-  saveButtonText: PropTypes.string
+  customLabel: PropTypes.string,
+  showTypeOnLabel: PropTypes.bool
 };
 
 StrictSaveButton.defaultProps = {
