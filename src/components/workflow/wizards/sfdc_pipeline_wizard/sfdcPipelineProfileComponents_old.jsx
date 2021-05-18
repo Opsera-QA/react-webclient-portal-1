@@ -29,7 +29,7 @@ const INITIAL_DATA = {
   committedFile: "",
 };
 
-const SfdcPipelineProfileComponents = ({
+const SfdcPipelineProfileComponents_old = ({
   pipelineId,
   stepId,
   handleClose,
@@ -115,10 +115,7 @@ const SfdcPipelineProfileComponents = ({
 
       //storing _id so that we can edit this object
       setRecordId(response.data._id);
-      if(response.data.data.profileComponentList && response.data.data.profileComponentList.length> 0) {
-        let profileSelectedComp = response.data.data.profileComponentList.filter((ele)=>  selectedProfileComponent.some(({componentType, committedFile}) => ele.componentType === componentType && ele.committedFile === committedFile) );
-        setSelectedProfileComponent(profileSelectedComp);
-      }
+
     } catch (error) {
       console.error("Error getting API Data: ", error);
       toastContext.showInlineErrorMessage(error);
@@ -357,7 +354,7 @@ const SfdcPipelineProfileComponents = ({
   );
 };
 
-SfdcPipelineProfileComponents.propTypes = {
+SfdcPipelineProfileComponents_old.propTypes = {
   pipelineId: PropTypes.string,
   stepId: PropTypes.string,
   setView: PropTypes.func,
@@ -376,4 +373,4 @@ SfdcPipelineProfileComponents.propTypes = {
   setProfileCompCheckAll: PropTypes.func,
 };
 
-export default SfdcPipelineProfileComponents;
+export default SfdcPipelineProfileComponents_old;

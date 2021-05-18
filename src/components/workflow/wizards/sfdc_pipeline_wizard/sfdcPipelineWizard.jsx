@@ -3,14 +3,15 @@ import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import Moment from "moment";
 import SfdcPipelineComponentSelector from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc_component_selector/SfdcPipelineComponentSelector";
-import SfdcPipelineModifiedFiles from "./sfdcPipelineModifiedFiles";
+import SfdcPipelineModifiedFiles from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc_modified_files_selector/SfdcPipelineModifiedFiles";
 import ErrorDialog from "components/common/status_notifications/error";
 import SfdcPipelineXMLView from "./sfdcPipelineXMLView";
 import sfdcPipelineActions from "./sfdc-pipeline-actions";
-import SfdcPipelineProfileComponents from "./sfdcPipelineProfileComponents";
 import SfdcUnitTestSelectionView from "./sfdcUnitTestSelectionView";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import SfdcPipelineProfileComponentsView from "components/workflow/wizards/SfdcPipelineProfileComponentsView";
 
+// TODO: Don't use this way
 const INITIAL_OBJECT_TYPES = {
   managed: false,
   custom: false,
@@ -31,14 +32,10 @@ const SfdcPipelineWizard = ({
   const [view, setView] = useState(1);
   const [modifiedFiles, setModifiedFiles] = useState([]);
   const [stepId, setStepId] = useState("");
-  const [stepToolConfigId, setStepToolConfigId] = useState("");
   const [sfdcToolId, setSFDCToolId] = useState("");
   const [isOrgToOrg, setIsOrgToOrg] = useState(false);
   const [isProfiles, setIsProfiles] = useState(false);
   const [stepToolConfig, setStepToolConfig] = useState("");
-  const [stepIndex, setStepIndex] = useState();
-  const [sfdcComponentFilterObject, setSfdcComponentFilterObject] = useState({});
-  const [selectedComponentTypes, setSelectedComponentTypes] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date(new Date().setHours(0,0,0,0)));
   const [fromSFDC, setFromSFDC] = useState(false);
   const [fromDestinationSFDC, setFromDestinationSFDC] = useState(false);
@@ -47,39 +44,34 @@ const SfdcPipelineWizard = ({
   const [selectedComp, setSelectedComp] = useState([]);
   
   const [nameSpacePrefix, setNameSpacePrefix] = useState("");
-  const [gitSelectedComponent, setGitSelectedComponent] = useState([]);
-  const [sfdcSelectedComponent, setSFDCSelectedComponent] = useState([]);
-  const [destSFDCSelectedComponent, setDestSFDCSelectedComponent] = useState([]);
-  const [selectedProfileComponent, setSelectedProfileComponent] = useState([]);
   const [unitTestSteps, setUnitTestSteps] = useState([]);
   const [recordId, setRecordId] = useState("");
 
-  const [formData, setFormData] = useState(INITIAL_OBJECT_TYPES);
   const [xml, setXML] = useState("");
   const [destructiveXml, setDestructiveXml] = useState("");
 
-  // flags for handling new checkall feature
-  const [sfdcCheckAll, setSfdcCheckAll] = useState(false);
-  const [destSfdcCheckAll, setDestSfdcCheckAll] = useState(false);
-  const [gitCheckAll, setGitCheckAll] = useState(false);
+  const [selectedProfileComponent, setSelectedProfileComponent] = useState([]);
   const [profileCompCheckAll, setProfileCompCheckAll] = useState(false);
 
   const [asOfDate, setAsOfDate] = useState(Moment(new Date(new Date().setDate(new Date().getDate() - 40))).toISOString());
 
-  const [selectedFromDate, setSelectedFromDate] = useState(new Date(new Date().setHours(0,0,0,0)));
-  const [selectedToDate, setSelectedToDate] = useState(new Date());
   const [fromDate, setFromDate] = useState(Moment(new Date(new Date().setHours(0,0,0,0))).toISOString());
   const [toDate, setToDate] = useState(Moment(new Date()).toISOString());
 
   // git tasks specific data
   const [gitTaskId, setGitTaskId] = useState("");
 
+  // TODO: Combine these into metadata for step 1 and keep here to hold state for going back through the wizard
+  const [formData, setFormData] = useState(INITIAL_OBJECT_TYPES);
+  const [selectedFromDate, setSelectedFromDate] = useState(new Date(new Date().setHours(0,0,0,0)));
+  const [selectedToDate, setSelectedToDate] = useState(new Date());
+  const [selectedComponentTypes, setSelectedComponentTypes] = useState([]);
+
 
   useEffect(() => {
     if(gitTaskData) {
       setGitTaskId(gitTaskData.getData("_id"));
       setStepToolConfig(gitTaskData.getData("configuration"));
-      setStepToolConfigId(gitTaskData.getData("configuration").toolConfigId);
       setSFDCToolId(gitTaskData.getData("configuration").sfdcToolId);
       return;
     }
@@ -89,7 +81,7 @@ const SfdcPipelineWizard = ({
   //must find step ID of the Sfdc Jenkins Config step (typically first step and has step.tool.job_type set to "sfdc-ant")
   const loadSfdcInitStep = async (steps) => {
     let stepArrayIndex = steps.findIndex(
-      (step) => step.tool && step.active && (step.tool.job_type === "sfdc-ant" || step.tool.job_type === "sfdc-ant-profile") && step.tool.tool_identifier === "jenkins"
+      (step) => step?.tool && step?.active && (step?.tool?.job_type === "sfdc-ant" || step?.tool?.job_type === "sfdc-ant-profile") && step?.tool?.tool_identifier === "jenkins"
     );
     // console.log(stepArrayIndex);
     if (stepArrayIndex === -1) {
@@ -100,19 +92,22 @@ const SfdcPipelineWizard = ({
       console.log("step ID: ", steps[stepArrayIndex]._id);
       // console.log("uniTest indexes: ", getCustomUnitTestSteps(steps));
       setUnitTestSteps(getCustomUnitTestSteps(steps));
-      setStepId(steps[stepArrayIndex]._id);
-      setSFDCToolId(steps[stepArrayIndex].tool.configuration.sfdcToolId);
-      setStepToolConfig(steps[stepArrayIndex].tool.configuration);
-      setIsOrgToOrg(steps[stepArrayIndex].tool.configuration.isOrgToOrg);
-      setIsProfiles(steps[stepArrayIndex].tool.job_type === "sfdc-ant-profile");
-      setStepToolConfigId(steps[stepArrayIndex].tool.configuration.toolConfigId);
-      setStepIndex(stepArrayIndex);
+      // TODO: Why is step not just passed down with all of the data pulled off of there?
+      setStepId(steps[stepArrayIndex]?._id);
+      setSFDCToolId(steps[stepArrayIndex]?.tool?.configuration?.sfdcToolId);
+      setStepToolConfig(steps[stepArrayIndex]?.tool?.configuration);
+      setIsOrgToOrg(steps[stepArrayIndex]?.tool?.configuration?.isOrgToOrg);
+      setIsProfiles(steps[stepArrayIndex]?.tool?.job_type === "sfdc-ant-profile");
     }
   };
 
   const getCustomUnitTestSteps = (steps) => {
-    return steps.map((step, idx) => (step.tool && (
-      step.tool.configuration.jobType === "SFDC VALIDATE PACKAGE XML" || step.tool.configuration.jobType === "SFDC UNIT TESTING" || step.tool.configuration.jobType === "SFDC DEPLOY")) && step.tool.configuration.sfdcUnitTestType === "RunSpecifiedTests" && step.active ? step : '').filter(String);
+    return steps.map((step, idx) =>
+      (step?.tool
+      && (step?.tool?.configuration?.jobType === "SFDC VALIDATE PACKAGE XML"
+          || step?.tool?.configuration?.jobType === "SFDC UNIT TESTING"
+          || step?.tool?.configuration?.jobType === "SFDC DEPLOY"))
+      && step?.tool?.configuration?.sfdcUnitTestType === "RunSpecifiedTests" && step?.active ? step : '').filter(String);
   };
 
   const createJenkinsJob = async () => {
@@ -182,7 +177,6 @@ const SfdcPipelineWizard = ({
           <SfdcPipelineComponentSelector
             pipelineId={pipelineId}
             stepId={stepId}
-            isOrgToOrg={isOrgToOrg}
             isProfiles={isProfiles}
             stepToolConfig={stepToolConfig}
             sfdcToolId={sfdcToolId}
@@ -193,7 +187,6 @@ const SfdcPipelineWizard = ({
             setSelectedComponentTypes={setSelectedComponentTypes}
             selectedComponentTypes={selectedComponentTypes}
             setModifiedFiles={setModifiedFiles}
-            setSfdcComponentFilterObject={setSfdcComponentFilterObject}
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
             formData={formData}
@@ -207,10 +200,6 @@ const SfdcPipelineWizard = ({
             setSelectedFromDate={setSelectedFromDate}
             selectedToDate={selectedToDate}
             setSelectedToDate={setSelectedToDate}
-            fromDate={fromDate}
-            setFromDate={setFromDate}
-            toDate={toDate}
-            setToDate={setToDate}
             gitTaskData={gitTaskData}
             gitTaskId={gitTaskId}
             closePanel={handleClose}
@@ -236,23 +225,11 @@ const SfdcPipelineWizard = ({
             fromDestinationSFDC={fromDestinationSFDC}
             setFromDestinationSFDC={setFromDestinationSFDC}
             selectedComponentTypes={selectedComponentTypes}
-            gitSelectedComponent={gitSelectedComponent}
-            setGitSelectedComponent={setGitSelectedComponent}
-            sfdcSelectedComponent={sfdcSelectedComponent}
-            setSFDCSelectedComponent={setSFDCSelectedComponent}
-            destSFDCSelectedComponent={destSFDCSelectedComponent}
-            setDestSFDCSelectedComponent={setDestSFDCSelectedComponent}
             recordId={recordId}
             setRecordId={setRecordId}
             unitTestSteps={unitTestSteps}
             selectedComp={selectedComp}
             setSelectedComp={setSelectedComp}
-            sfdcCheckAll={sfdcCheckAll}
-            setSfdcCheckAll={setSfdcCheckAll}
-            destSfdcCheckAll={destSfdcCheckAll}
-            setDestSfdcCheckAll={setDestSfdcCheckAll}
-            gitCheckAll={gitCheckAll}
-            setGitCheckAll={setGitCheckAll}
             gitTaskData={gitTaskData}
             gitTaskId={gitTaskId}
             closePanel={handleClose}
@@ -260,29 +237,15 @@ const SfdcPipelineWizard = ({
        );
       case 3:
         return (
-          <SfdcPipelineProfileComponents
+          <SfdcPipelineProfileComponentsView
             pipelineId={pipelineId}
             stepId={stepId}
             handleClose={handleClose}
             setView={setView}
-            isOrgToOrg={isOrgToOrg}
-            isProfiles={isProfiles}
-            stepToolConfig={stepToolConfig}
-            modifiedFiles={modifiedFiles}
-            fromSFDC={fromSFDC}
-            setFromSFDC={setFromSFDC}
-            fromProfiles={fromProfiles}
-            setFromProfiles={setFromProfiles}
-            setXML={setXML}
-            selectedComponentTypes={selectedComponentTypes}
-            setModifiedFiles={setModifiedFiles}
-            setSelectedProfileComponent={setSelectedProfileComponent}
-            selectedProfileComponent={selectedProfileComponent}
             recordId={recordId}
-            setRecordId={setRecordId}
             unitTestSteps={unitTestSteps}
-            profileCompCheckAll={profileCompCheckAll}
-            setProfileCompCheckAll={setProfileCompCheckAll}
+            setRecordId={setRecordId}
+            gitTaskData={gitTaskData}
           />
         );
 

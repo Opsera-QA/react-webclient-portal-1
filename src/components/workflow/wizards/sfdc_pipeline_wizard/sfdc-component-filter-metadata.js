@@ -33,7 +33,7 @@ const sfdcComponentFilterMetadata = {
         return activeFilters;
     },
     newObjectFields: {
-      pageSize: 50,
+      pageSize: 1500,
       currentPage: 1,
       // classFilter: "",
       checkAll: false,

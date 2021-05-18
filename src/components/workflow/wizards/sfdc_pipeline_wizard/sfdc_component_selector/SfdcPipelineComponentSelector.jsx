@@ -8,7 +8,7 @@ import {
   faSpinner,
   faStepBackward,
   faInfoCircle
-} from "@fortawesome/free-solid-svg-icons";
+} from "@fortawesome/pro-light-svg-icons";
 import Moment from "moment";
 import momentLocalizer from "react-widgets-moment";
 import DateTimePicker from "react-widgets/lib/DateTimePicker";
@@ -21,7 +21,6 @@ import sfdcComponentSelectorMetadata
 import SfdcComponentListInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc_component_selector/SfdcComponentListInput";
 import Col from "react-bootstrap/Col";
-import CloseButton from "components/common/buttons/CloseButton";
 import CancelButton from "components/common/buttons/CancelButton";
 
 // TODO: Should this be SfdcPipelineWizardStepOne? This should also be broken up into two separate components, one for pipeline and one for git tasks
@@ -38,17 +37,12 @@ const SfdcPipelineComponentSelector = (
     isProfiles,
     setSelectedComponentTypes,
     selectedComponentTypes,
-    setSfdcComponentFilterObject,
     formData,
     setFormData,
     selectedFromDate,
     setSelectedFromDate,
     selectedToDate,
     setSelectedToDate,
-    fromDate,
-    setFromDate,
-    toDate,
-    setToDate,
     gitTaskData,
     gitTaskId,
     handleClose
@@ -61,6 +55,7 @@ const SfdcPipelineComponentSelector = (
   const [componentTypeForm, setComponentTypeForm] = useState({...sfdcComponentSelectorMetadata.newObjectFields});
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
   Moment.locale("en");
   momentLocalizer();
 
@@ -86,19 +81,10 @@ const SfdcPipelineComponentSelector = (
   const getDateFromField = () => {
     return (
       <div className={"my-2"}>
-        {/*<OverlayTrigger*/}
-        {/*  placement="right"*/}
-        {/*  delay={{show: 250, hide: 400}}*/}
-        {/*  overlay={renderTooltip("All files committed after this date will be included")}*/}
-        {/*><FontAwesomeIcon*/}
-        {/*  icon={faInfoCircle}*/}
-        {/*  className="fa-pull-right pointer mt-1"*/}
-        {/*  onClick={() => document.body.click()}*/}
-        {/*/></OverlayTrigger>*/}
         <div className="text-muted pb-1">From Date:</div>
         <DateTimePicker
-          time={true}
           dropUp={true}
+          time={true}
           min={new Date().setFullYear(new Date().getFullYear() - 1)}
           max={selectedToDate}
           defaultValue={selectedFromDate}
@@ -115,15 +101,6 @@ const SfdcPipelineComponentSelector = (
   const getDateToField = () => {
     return (
       <div className={"my-2"}>
-        {/*<OverlayTrigger*/}
-        {/*  placement="left"*/}
-        {/*  delay={{show: 250, hide: 400}}*/}
-        {/*  overlay={renderTooltip("All files committed before this date will be included")}*/}
-        {/*><FontAwesomeIcon*/}
-        {/*  icon={faInfoCircle}*/}
-        {/*  className="fa-pull-right pointer mt-1"*/}
-        {/*  onClick={() => document.body.click()}*/}
-        {/*/></OverlayTrigger>*/}
         <div className="text-muted pb-1">To Date:</div>
         <DateTimePicker
           dropUp={true}
@@ -145,14 +122,12 @@ const SfdcPipelineComponentSelector = (
     checkFromToDateLimit(value.value, selectedToDate);
     const date = Moment(value.value).toISOString();
     setSelectedFromDate(value.value);
-    setFromDate(date);
   };
 
   const handleToDateChange = (value) => {
     checkFromToDateLimit(selectedFromDate, value.value);
     const date = Moment(value.value).toISOString();
     setSelectedToDate(value.value);
-    setToDate(date);
   };
 
   const checkFromToDateLimit = (from, to) => {
@@ -222,14 +197,12 @@ const SfdcPipelineComponentSelector = (
       postBody.stepId = gitTaskData ? "N/A" : stepId;
       postBody.gitTaskId = gitTaskData ? gitTaskId : false;
       postBody.gitTaskSFDCToolId = gitTaskData ? stepToolConfig?.sfdcToolId : false;
-      postBody.lastCommitTimeFromStamp = isProfiles ? "1900-01-01T00:00:00.000Z" : fromDate;
-      postBody.lastCommitTimeToStamp = toDate;
+      postBody.lastCommitTimeFromStamp = isProfiles ? "1900-01-01T00:00:00.000Z" : selectedFromDate;
+      postBody.lastCommitTimeToStamp = selectedToDate;
       postBody.componentTypes = isProfiles ? ["Profile"] : selectedComponentTypes;
       // postBody.componentTypes = isProfiles ? selectedComp : selectedComponentTypes;
       postBody.objectType = filtered[0];
       postBody.nameSpacePrefix = nameSpacePrefix;
-
-      setSfdcComponentFilterObject(postBody);
 
       const result = await sfdcPipelineActions.getModifiedFilesV2(getAccessToken, cancelTokenSource, postBody);
       // console.log("in postComponentTypes result: " + JSON.stringify(result));
@@ -250,8 +223,11 @@ const SfdcPipelineComponentSelector = (
     if (!isProfiles) {
       return (
         <>
-          <Col sm={12} lg={6}>{getDateFromField()}</Col>
-          <Col sm={12} lg={6}>{getDateToField()}</Col>
+          <div className={"text-muted"}>File Selection Filter Range</div>
+          <Row>
+            <Col sm={12} lg={6}>{getDateFromField()}</Col>
+            <Col sm={12} lg={6}>{getDateToField()}</Col>
+          </Row>
         </>
       );
     }
@@ -261,16 +237,6 @@ const SfdcPipelineComponentSelector = (
     return (
       <Col sm={12} lg={6}>
         <div className={"my-2"}>
-          {/*<div className="text-muted pb-1"><OverlayTrigger*/}
-          {/*  placement="right"*/}
-          {/*  delay={{show: 250, hide: 400}}*/}
-          {/*  overlay={renderTooltip("Managed components with given NamespacePrefix will be included. Custom components prefixed with the given Prefix will be included")}*/}
-          {/*><FontAwesomeIcon*/}
-          {/*  icon={faInfoCircle}*/}
-          {/*  className="fa-pull-right pointer mt-1"*/}
-          {/*  onClick={() => document.body.click()}*/}
-          {/*/></OverlayTrigger>Prefix:*/}
-          {/*</div>*/}
           <div className="text-muted pb-1">Prefix:</div>
           <Form.Group controlId="nameSpacePrefix">
             <Form.Control
@@ -293,16 +259,6 @@ const SfdcPipelineComponentSelector = (
     return (
       <Col sm={12} lg={6}>
         <div className={"my-2"}>
-          {/*<OverlayTrigger*/}
-          {/*  placement="left"*/}
-          {/*  delay={{show: 250, hide: 400}}*/}
-          {/*  overlay={renderTooltip("Select whether managed, custom, or all components will be included")}*/}
-          {/*><FontAwesomeIcon*/}
-          {/*  icon={faInfoCircle}*/}
-          {/*  className="fa-pull-right pointer mt-1"*/}
-          {/*  onClick={() => document.body.click()}*/}
-          {/*/></OverlayTrigger>*/}
-
           <div className="text-muted pb-1">Types:</div>
           <Form.Group controlId="formBasicCheckbox">
             <div className={"d-flex"} style={{height: 38}}>
@@ -383,19 +339,11 @@ const SfdcPipelineComponentSelector = (
         />
 
         <div className={"my-3"}>
-          <div className={"text-muted"}>File Selection Filter Range</div>
-          <Row>
-            {getDateFields()}
-          </Row>
+          {getDateFields()}
         </div>
 
         <Row className="mx-0 mt-1 mb-3">
           <div className={"ml-auto d-flex"}>
-            <Button variant="secondary" size="sm" className="mr-2" disabled={true}>
-              <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>
-              Back
-            </Button>
-
             <Button
               variant="success"
               size="sm"
@@ -460,10 +408,6 @@ SfdcPipelineComponentSelector.propTypes = {
   setSelectedFromDate: PropTypes.func,
   selectedToDate: PropTypes.string,
   setSelectedToDate: PropTypes.func,
-  fromDate: PropTypes.string,
-  setFromDate: PropTypes.func,
-  toDate: PropTypes.string,
-  setToDate: PropTypes.func,
   gitTaskData: PropTypes.object,
   gitTaskId: PropTypes.string,
   handleClose: PropTypes.func
