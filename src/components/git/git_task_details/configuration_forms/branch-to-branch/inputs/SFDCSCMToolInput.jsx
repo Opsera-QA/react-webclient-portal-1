@@ -26,7 +26,7 @@ function SFDCSCMToolInput({dataObject, setDataObject, disabled}) {
      <PipelineToolInput
        toolType={dataObject.getData("service")}
        toolFriendlyName={"SCM Tool"}
-       fieldName={"gitCredential"}
+       fieldName={"gitToolId"}
        configurationRequired={true}
        dataObject={dataObject}
        setDataObject={setDataObject}
