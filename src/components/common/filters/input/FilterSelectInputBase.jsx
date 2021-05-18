@@ -44,7 +44,7 @@ FilterSelectInputBase.propTypes = {
   selectOptions: PropTypes.array.isRequired,
   groupBy: PropTypes.string,
   valueField: PropTypes.string,
-  textField: PropTypes.string,
+  textField: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
   filter: PropTypes.string,
   placeholderText: PropTypes.string,
   setDataFunction: PropTypes.func,
