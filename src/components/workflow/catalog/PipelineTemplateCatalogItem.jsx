@@ -91,21 +91,21 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
 
   const getEnabledBody = () => {
     return (
-      <Col>
-        <TooltipWrapper innerText={"Create a new template from this template"}>
-          <Button variant="success" size="sm" className="mr-2 mt-2" onClick={() => deployTemplate()}>
-            {loading ?
-              <><FontAwesomeIcon icon={faSpinner} spin fixedWidth/> Working</> :
-              <><FontAwesomeIcon icon={faPlus} fixedWidth/> Create Pipeline</>
-            }
-          </Button>
+      <Col className="col-6 d-flex flex-nowrap">
+       <TooltipWrapper innerText={"Create a new template from this template"}>
+        <Button variant="success" size="sm" className="mr-2 mt-2 text-nowrap" style={{minWidth: "128px", maxHeight: "34px"}} onClick={() => deployTemplate()}>            {loading ?
+            <><FontAwesomeIcon icon={faSpinner} spin fixedWidth/> Working</> :
+            <><FontAwesomeIcon icon={faPlus} className="d-xl-none mr-1" />  Create Pipeline </>
+          }
+        </Button>
+      </TooltipWrapper>
 
-        </TooltipWrapper>
-
-        {accessRoleData.OpseraAdministrator &&
-        <Button variant="outline-secondary" size="sm" className="mr-2 mt-2" onClick={() => showPipelineDetails()}>
-          <FontAwesomeIcon icon={faSearch} className="mr-1"/>Details</Button>
-        }
+      {accessRoleData.OpseraAdministrator &&
+        <Button variant="outline-secondary" size="sm" className="mr-1 mt-2" style={{minWidth: "128px", maxHeight: "34px"}} onClick={() => showPipelineDetails()}>
+          <FontAwesomeIcon icon={faSearch} className="d-xl-none mr-1"/>
+             Details
+        </Button>
+      } 
       </Col>
     );
   };
@@ -156,7 +156,7 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
             <div>
               {template.name}
             </div>
-            <div className="ml-auto mr-1 text-muted small upper-case-first d-none d-md-block">
+            <div className="ml-auto mr-1 text-muted small upper-case-first d-flex">
               <FontAwesomeIcon icon={faHexagon} size="lg"/>
             </div>
           </div>
@@ -167,14 +167,14 @@ const PipelineTemplateCatalogItem = ({ template, accessRoleData, activeTemplates
               <Card.Text className="mb-2">{template.description}</Card.Text>
             </Col>
           </Row>
-          <Row>
+          <Row className="d-flex">
             {getBody()}
-            <Col>
+            <Col className="col-6 pr-1">
               <div className="text-right">
-                <div><small><span className="text-muted mr-2 pb-1">Updated:</span><span
-                  className="">{template.updatedAt && format(new Date(template.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</span></small>
+                <div><small><span className="text-muted mr-1 pb-1">Updated:</span><span
+                  className="text-nowrap">{template.updatedAt && format(new Date(template.updatedAt), "yyyy-MM-dd', 'hh:mm a")}</span></small>
                 </div>
-                <div><small><span className="text-muted mr-2 pb-1">Created:</span><span
+                <div><small><span className="text-muted mr-1 pb-1">Created:</span><span
                   className="">{template.updatedAt && format(new Date(template.createdAt), "yyyy-MM-dd', 'hh:mm a")}</span></small>
                 </div>
               </div>
