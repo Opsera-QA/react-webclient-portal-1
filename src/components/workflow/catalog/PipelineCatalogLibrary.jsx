@@ -5,7 +5,7 @@ import pipelineActions from "components/workflow/pipeline-actions";
 import axios from "axios";
 import PipelineCatalog from "components/workflow/catalog/PipelineCatalog";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
-import CustomTab from "components/common/tabs/CustomTab";
+import PipelineCatalogCustomTab from "components/workflow/catalog/PipelineCatalogCustomTab";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 
 function PipelineCatalogLibrary() {
@@ -115,8 +115,8 @@ function PipelineCatalogLibrary() {
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
-        <CustomTab activeTab={activeTab} tabText={"Marketplace"} handleTabClick={handleTabClick} tabName={"all"} />
-        <CustomTab activeTab={activeTab} tabText={"Private Catalog"} handleTabClick={handleTabClick} tabName={"customer"} />
+        <PipelineCatalogCustomTab activeTab={activeTab} tabText={"Marketplace"} handleTabClick={handleTabClick} tabName={"all"} />
+        <PipelineCatalogCustomTab activeTab={activeTab} tabText={"Private Catalog"} handleTabClick={handleTabClick} tabName={"customer"} />
       </CustomTabContainer>
     );
   };
