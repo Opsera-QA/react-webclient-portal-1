@@ -10,6 +10,7 @@ import { faArrowLeft } from "@fortawesome/pro-solid-svg-icons";
 import { AuthContext } from "../../contexts/AuthContext";
 import "@okta/okta-signin-widget/dist/css/okta-sign-in.min.css";
 import { useOktaAuth } from "@okta/okta-react";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 const OktaSignIn = require("@okta/okta-signin-widget");
 
@@ -22,10 +23,9 @@ const LoginForm = ({ authClient }) => {
   const [resetEmailAddress, setResetEmailAddress] = useState("");
   const [lookupAccountEmail, setLookupAccountEmail] = useState("");
   const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(false);
-  const [message, setMessage] = useState(false);
   const [viewType, setViewType] = useState("domain"); //login, reset or domain
   const [loginType, setLoginType] = useState("standard"); //stardard: Opsera Okta Login, federated: Opsera Signing Widget
+  const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     if (viewType !== "login") {
@@ -43,8 +43,7 @@ const LoginForm = ({ authClient }) => {
 
     authClient.signInWithCredentials({ username, password })
       .then(res => {
-        setErrorMessage(false);
-        setMessage(false);
+        toastContext.removeAllBanners();
         const sessionToken = res.sessionToken;
 
         const tokenOptions = {
@@ -74,9 +73,10 @@ const LoginForm = ({ authClient }) => {
             setLoading(false);
           });
       })
-      .catch(err => {
-        console.log("Found an error", err);
-        setErrorMessage(err.message);
+      .catch(error => {
+        toastContext.removeAllBanners();
+        console.log("Found an error", error);
+        toastContext.showErrorDialog(error);
         setLoading(false);
       });
   };
@@ -136,9 +136,10 @@ const LoginForm = ({ authClient }) => {
       authClient.tokenManager.setTokens(tokens);
       signIn.remove();
       history.push("/");
-    }).catch(function(err) {
-      console.log("Found an error", err);
-      setErrorMessage(err.message);
+    }).catch(function(error) {
+      toastContext.removeAllBanners();
+      console.log("Found an error", error);
+      toastContext.showErrorDialog(error);
     });
   };
 
@@ -168,15 +169,15 @@ const LoginForm = ({ authClient }) => {
       .then(response => {
         console.log("response: ", response);
         setLoading(false);
-        setErrorMessage(false);
-        setMessage(response.data.message);
+        toastContext.removeAllBanners();
+        toastContext.showSystemInformationBanner(response.data.message);
         setViewType("login");
       })
-      .catch(err => {
-        console.log(err.response);
+      .catch(error => {
+        toastContext.removeAllBanners();
+        console.log(error.response.data.message);
         setLoading(false);
-        setErrorMessage(err.response.data.message);
-        setMessage(false);
+        toastContext.showErrorDialog(error.response.data.message);
       });
   };
 
@@ -188,8 +189,7 @@ const LoginForm = ({ authClient }) => {
     const params = { "email": lookupAccountEmail, "hostname": window.location.hostname };
     try {
       const response = await axiosApiService().post(apiUrl, params); //this lookup is currently FF in Node
-      setMessage(false);
-      setErrorMessage(false);
+      toastContext.removeAllBanners();
 
       const {loginAllowed, validHost} = response.data;
 
@@ -201,16 +201,17 @@ const LoginForm = ({ authClient }) => {
       }
 
       if (!validHost) {
-        setErrorMessage("Warning!  You are attempting to log into the wrong Opsera Portal tenant.  Please check with your account owner or contact Opsera to get the proper URL to access your platform.");
+        toastContext.showErrorDialog("Warning!  You are attempting to log into the wrong Opsera Portal tenant.  Please check with your account owner or contact Opsera to get the proper URL to access your platform.");
         return;
       }
 
       //loginAllowed === false: account isn't ready for login (check customer DB settings)
-      setMessage("Congratulations, your account set up is in progress and it should be available shortly. Please check back soon or contact us for assistance!");
-    } catch (err) {
-      console.log(err);
-      setErrorMessage(err);
-      setMessage(false);
+      toastContext.showSystemInformationBanner("Congratulations, your account set up is in progress and it should be available shortly. Please check back soon or contact us for assistance!");
+
+    } catch (error) {
+      toastContext.removeAllBanners();
+      console.log(error);
+      toastContext.showErrorDialog(error);
     } finally {
       setLoading(false);
     }
@@ -237,11 +238,6 @@ const LoginForm = ({ authClient }) => {
                   <div className="h4 auth-header">
                     Sign in
                   </div>
-
-                  {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage} />}
-
-                  {message &&
-                  <InformationDialog message={message} alignment="top" setInformationMessage={setMessage} />}
 
                   <form onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -323,10 +319,6 @@ const LoginForm = ({ authClient }) => {
             Reset Password
           </h4>
 
-          {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage} />}
-
-          {message && <InformationDialog message={message} alignment="top" setInformationMessage={setMessage} />}
-
           <form onSubmit={handleResetPasswordSubmit}>
             <div className="form-group">
               <label htmlFor="username">Email Address</label>
@@ -361,18 +353,6 @@ const LoginForm = ({ authClient }) => {
         <Col>
           <div className="d-flex align-items-center justify-content-center">
             <div className="auth-box-w">
-
-              {message &&
-              <div className="info-block mt-2 mx-2 p-2">
-                <div className="float-right mx-1">
-                  <FontAwesomeIcon icon={faTimes} style={{ cursor: "pointer" }} onClick={() => {
-                    setMessage(false);
-                  }} />
-                </div>
-                {message}
-              </div>
-              }
-
               <div className="logo-w">
                 <img alt="Opsera"
                      src="/img/logos/opsera_bird_infinity_171_126.png"
@@ -383,8 +363,6 @@ const LoginForm = ({ authClient }) => {
               <h4 className="auth-header">
                 Sign in
               </h4>
-
-              {errorMessage && <ErrorDialog error={errorMessage} align="top" setError={setErrorMessage} />}
 
               <form onSubmit={handleDomainLookupSubmit}>
                 <div className="form-group">
@@ -398,7 +376,7 @@ const LoginForm = ({ authClient }) => {
 
                 <div className="buttons-w">
                   <Button variant="warning" className="w-100 mb-3" type="submit"
-                          disabled={!lookupAccountEmail || errorMessage}>
+                          disabled={!lookupAccountEmail}>
                     {loading && <FontAwesomeIcon icon={faSpinner} className="fa-spin mr-1" size="sm" fixedWidth />}
                     Next</Button>
                 </div>
