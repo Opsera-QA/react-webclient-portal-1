@@ -20,7 +20,7 @@ function ToggleUploadButton({ isLoading, uploadType, toggleUpload, variant, size
 
 ToggleUploadButton.propTypes = {
   isLoading: PropTypes.bool,
-  toggleUpload: PropTypes.bool,
+  toggleUpload: PropTypes.func,
   variant: PropTypes.string,
   size: PropTypes.string,
   className: PropTypes.string,
