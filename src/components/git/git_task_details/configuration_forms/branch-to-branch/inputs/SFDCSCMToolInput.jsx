@@ -18,7 +18,7 @@ function SFDCSCMToolInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("workspaceName", "");
     newDataObject.setData("autoApprove", false);
     newDataObject.setData("reviewers", []);
-    newDataObject.setData("reviewersList", []);
+    newDataObject.setData("reviewerNames", []);
     setDataObject({...newDataObject});
   };
 
