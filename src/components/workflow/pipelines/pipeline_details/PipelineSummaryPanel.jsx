@@ -254,24 +254,6 @@ function PipelineSummaryPanel({
     setEditSchedule(false);
   };
 
-  // const handleSaveSchedule = async () => {
-  //   let account =  await pipeline.account;
-  //   let owner = pipeline.owner;
-  //   let id = pipeline._id;
-  //   let executionDate = scheduleData.date;
-  //   let recurring = scheduleData.frequency;
-    
-  // setScheduleData({
-  //     ...scheduleData,
-  //     account: account,
-  //     owner: owner,
-  //     task: {taskType: "RUN", pipelineId: id},
-  //     schedule: {recurring: recurring, executionDate: executionDate},
-  //   });
-
-  //   setEditSchedule(false);
-  // };
-
   const handleEditPropertyClick = (type) => {
     switch (type) {
     case "name":
