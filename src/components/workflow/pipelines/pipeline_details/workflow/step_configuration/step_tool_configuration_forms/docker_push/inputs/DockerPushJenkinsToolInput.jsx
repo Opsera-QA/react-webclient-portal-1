@@ -22,6 +22,25 @@ function DockerPushJenkinsToolInput({dataObject, setDataObject, disabled}) {
     setDataObject({...newDataObject});
   };
 
+  const clearDataFunction = () => {
+    let newDataObject = {...dataObject};
+    newDataObject.setData("toolConfigId", "");
+    newDataObject.setData("toolName", "");
+    newDataObject.setData("toolJobName", "");
+    newDataObject.setData("toolJobId", "");
+    newDataObject.setData("jobType", "");
+    newDataObject.setData("type", "");
+    newDataObject.setData("gitToolId", "");
+    newDataObject.setData("gitUrl", "");
+    newDataObject.setData("sshUrl", "");
+    newDataObject.setData("gitCredential", "");
+    newDataObject.setData("repository", "");
+    newDataObject.setData("gitBranch", "");
+    newDataObject.setData("workspace", "");
+    newDataObject.setData("autoScaleEnable", false);
+    setDataObject({...newDataObject});
+  };
+
   return (
      <PipelineToolInput
        toolType={"jenkins"}
@@ -30,6 +49,7 @@ function DockerPushJenkinsToolInput({dataObject, setDataObject, disabled}) {
        configurationRequired={true}
        dataObject={dataObject}
        setDataObject={setDataObject}
+       clearDataFunction={clearDataFunction}
        setDataFunction={setJenkinsTool}
        disabled={disabled}
      />

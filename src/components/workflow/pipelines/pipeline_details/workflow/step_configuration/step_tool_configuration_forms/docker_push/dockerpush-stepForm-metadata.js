@@ -87,7 +87,7 @@ const dockerPushStepFormMetadata = {
       toolName: "",
       jobName: "",
       toolJobId: "",
-      buildType: "", //hardcoded now but needs to get it from a dropdown
+      buildType: "docker", //hardcoded as this wont change for the docker push step!
       awsToolConfigId: "",
       agentLabels: "",
       autoScaleEnable: false,

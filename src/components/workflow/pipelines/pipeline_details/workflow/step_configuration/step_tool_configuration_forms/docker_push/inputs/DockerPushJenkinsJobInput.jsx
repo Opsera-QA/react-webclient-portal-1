@@ -8,11 +8,21 @@ function DockerPushJenkinsJobInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("toolJobName", selectedOption.name);
     newDataObject.setData("toolJobId", selectedOption._id);
     newDataObject.setData("jobType", selectedOption.type[0]);
+    newDataObject.setData("buildType", selectedOption.configuration?.buildType || "docker");
     newDataObject.setData("jobName", "");
     newDataObject.setData("agentLabels", selectedOption.configuration?.agentLabels || "");    
     setDataObject({...newDataObject});
   };
-
+  const clearDataFunction = () => {
+    let newDataObject = {...dataObject};
+    newDataObject.setData("toolJobName", "");
+    newDataObject.setData("toolJobId", "");
+    newDataObject.setData("jobType", "");
+    newDataObject.setData("buildType", "docker");
+    newDataObject.setData("jobName", "");
+    newDataObject.setData("agentLabels", "");    
+    setDataObject({...newDataObject});
+  };
   return (
      <JenkinsJobInput
        fieldName={"toolJobName"}
@@ -21,6 +31,7 @@ function DockerPushJenkinsJobInput({dataObject, setDataObject, disabled}) {
        configurationRequired={true}
        dataObject={dataObject}
        setDataObject={setDataObject}
+       clearDataFunction={clearDataFunction}
        setDataFunction={setJenkinsJob}
        disabled={disabled}
      />
