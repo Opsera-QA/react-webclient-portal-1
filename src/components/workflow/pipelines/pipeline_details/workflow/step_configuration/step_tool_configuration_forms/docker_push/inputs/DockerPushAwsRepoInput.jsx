@@ -4,9 +4,13 @@ import AWSRepositoryInput from "components/common/list_of_values_input/tools/aws
 
 function DockerPushAwsRepoInput({dataObject, setDataObject, disabled}) {
   const setRepo = (fieldName, selectedOption) => {
-      console.log(selectedOption);
     let newDataObject = {...dataObject};
     newDataObject.setData("ecrRepoName", selectedOption);
+    setDataObject({...newDataObject});
+  };
+  const clearDataFunction = () => {
+    let newDataObject = {...dataObject};
+    newDataObject.setData("ecrRepoName", "");
     setDataObject({...newDataObject});
   };
   return (
@@ -16,6 +20,7 @@ function DockerPushAwsRepoInput({dataObject, setDataObject, disabled}) {
        dataObject={dataObject}
        setDataFunction={setRepo}
        setDataObject={setDataObject}
+       clearDataFunction={clearDataFunction}
        disabled={disabled}
      />
   );
