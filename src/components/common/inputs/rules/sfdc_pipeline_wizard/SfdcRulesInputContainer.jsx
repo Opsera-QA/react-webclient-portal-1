@@ -2,19 +2,13 @@ import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {faFilter} from "@fortawesome/pro-light-svg-icons";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
-import SfdcRuleInput from "components/common/inputs/rules/sfdc_pipeline_wizard/SfdcRuleInput";
+import PipelineWizardRuleInput from "components/common/inputs/rules/sfdc_pipeline_wizard/PipelineWizardRuleInput";
 import sfdcRuleMetadata from "components/common/inputs/rules/sfdc_pipeline_wizard/sfdc-rule-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import RuleTypeSelectInput from "components/common/list_of_values_input/workflow/wizard/rules/RuleTypeSelectInput";
-import RuleComponentRangeSelectInput
-  from "components/common/list_of_values_input/workflow/wizard/rules/RuleComponentRangeSelectInput";
-import RuleFieldSelectInput from "components/common/list_of_values_input/workflow/wizard/rules/RuleFieldSelectInput";
-import RuleValueMultiSelectInput
-  from "components/common/list_of_values_input/workflow/wizard/rules/RuleValueSelectInput";
 
 // TODO: On final refactor of SFDC Wizard, utilize model/set models here
-function SfdcRulesInputContainer({ruleList, setRuleList}) {
+function SfdcRulesInputContainer({ruleList, setRuleList, postBody, modifiedFiles, isGitTab}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [rules, setRules] = useState([]);
   const isMounted = useRef(false);
@@ -54,8 +48,6 @@ function SfdcRulesInputContainer({ruleList, setRuleList}) {
       newPropertyList.push({...sfdcRuleMetadata.newObjectFields});
     }
 
-    console.log("newPropertyList: " + JSON.stringify(newPropertyList));
-
     setRules([...newPropertyList]);
     setRuleList([...newPropertyList]);
   };
@@ -73,7 +65,6 @@ function SfdcRulesInputContainer({ruleList, setRuleList}) {
   };
 
   const deleteRule = (index) => {
-    console.log("deleting index: " + index);
     let newPropertyList = [...rules];
     newPropertyList.splice(index, 1);
     validateAndSetData(newPropertyList);
@@ -92,44 +83,21 @@ function SfdcRulesInputContainer({ruleList, setRuleList}) {
       <div>
         {rules.map((ruleData, index) => {
           return (
-            <SfdcRuleInput
+            <PipelineWizardRuleInput
               key={index}
               index={index}
               addRule={addRule}
               deleteRule={deleteRule}
               ruleData={ruleData}
               updateRule={updateRule}
+              postBody={postBody}
+              modifiedFiles={modifiedFiles}
+              isGitTab={isGitTab}
             />
           );
         })}
       </div>
     );
-  };
-
-  const isPropertyComplete = (property) => {
-    return !(property?.name === "" || property?.email === "");
-  };
-
-  const lastPropertyComplete = () => {
-    let newPropertyList = rules;
-
-    if (newPropertyList.length === 0) {
-      return true;
-    }
-
-    let lastObject = newPropertyList[newPropertyList.length - 1];
-    return isPropertyComplete(lastObject);
-  };
-
-  const lastPropertyEdited = () => {
-    let newPropertyList = rules;
-
-    if (newPropertyList.length === 0) {
-      return true;
-    }
-
-    let lastObject = newPropertyList[newPropertyList.length - 1];
-    return lastObject.name !== "" || lastObject.email !== "";
   };
 
   const getHeaderBar = () => {
@@ -141,7 +109,7 @@ function SfdcRulesInputContainer({ruleList, setRuleList}) {
               Type
             </Col>
             <Col xs={3}>
-              Range
+              Component Filter
             </Col>
             <Col xs={3}>
               Field
@@ -149,9 +117,6 @@ function SfdcRulesInputContainer({ruleList, setRuleList}) {
             <Col xs={3}>
               Value
             </Col>
-            {/*<Col>*/}
-            {/*  <RuleComparisonSelectInput dataObject={ruleModel} setDataObject={updateData} showLabel={false} />*/}
-            {/*</Col>*/}
           </Row>
         </Col>
         <Col sm={1} />
@@ -173,7 +138,6 @@ function SfdcRulesInputContainer({ruleList, setRuleList}) {
         <div className="properties-body-alt">
           {getFieldBody()}
         </div>
-        {/*{getIncompletePropertyMessage()}*/}
       </PropertyInputContainer>
       <small className="text-muted form-text"><div>A file will be included if it meets all of these rules.</div></small>
     </>
@@ -183,6 +147,9 @@ function SfdcRulesInputContainer({ruleList, setRuleList}) {
 SfdcRulesInputContainer.propTypes = {
   ruleList: PropTypes.array,
   setRuleList: PropTypes.func,
+  postBody: PropTypes.object,
+  modifiedFiles: PropTypes.array,
+  isGitTab: PropTypes.bool
 };
 
 export default SfdcRulesInputContainer;

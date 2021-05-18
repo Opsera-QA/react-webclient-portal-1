@@ -97,14 +97,16 @@
 /* End Group Membership Input Panel Styling */
 
 /* Select input styling. TODO: Determine why this doesn't automatically adjust with adjacent inputs */
-.custom-multiselect-input .rw-widget-picker {
-    display: inline-block;
-}
 
 .custom-multiselect-input .rw-multiselect-tag {
     margin-top: .25em;
     vertical-align: middle;
     margin-bottom: .25em;
+}
+
+.custom-multiselect-input .rw-widget-input {
+    /* this is based on form input's height, with a couple extra pixels added */
+    height: calc(1.5em + .75rem + 5px);
 }
 
 .custom-select-input .rw-widget-input {
@@ -299,4 +301,19 @@
 
 .input-search-filter {
     margin: 5px;
+}
+
+.text-input {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }

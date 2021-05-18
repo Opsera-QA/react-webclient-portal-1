@@ -7,6 +7,7 @@ import Pagination from "components/common/pagination";
 import DtoBottomPagination from "../pagination/DtoBottomPagination";
 import DtoTopPagination from "../pagination/DtoTopPagination";
 import NewRecordButton from "components/common/buttons/data/NewRecordButton";
+import PaginationContainer from "components/common/pagination/PaginationContainer";
 
 export const defaultRowStyling = (row) => {
   return "";
@@ -117,16 +118,6 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
             {headerGroup.headers.map((column, j) => (getHeaderColumn(column, j)))}
           </tr>
         ))}
-        <tr key={"topPaginator"}>
-          <td colSpan="12">
-            <DtoTopPagination
-              paginationDto={paginationDto}
-              setPaginationDto={setPaginationDto}
-              isLoading={isLoading}
-              loadData={loadData}
-            />
-          </td>
-        </tr>
       </>
     );
   };
@@ -194,21 +185,14 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
     );
   };
 
-  const getNewPaginator = () => {
-    return (
-       <DtoBottomPagination paginationDto={paginationDto} setPaginationDto={setPaginationDto} isLoading={isLoading} loadData={loadData} scrollOnLoad={scrollOnLoad} />
-    );
-  };
-
   const getFooter = () => {
-    if (noFooter !== true || paginationDto) {
+    if (paginationOptions) {
       return (
         <tfoot>
           <tr>
             <td colSpan="100%">
               <div className="table-footer">
                 {getOldPaginator()}
-                {getNewPaginator()}
               </div>
             </td>
           </tr>
@@ -219,20 +203,20 @@ function CustomTable({ className, tableStyleName, type, columns, data, noDataMes
 
 
   return (
-    <div>
+    <PaginationContainer isLoading={isLoading} filterDto={paginationDto} setFilterDto={setPaginationDto} loadData={loadData} scrollOnLoad={scrollOnLoad}>
       {tableTitle && getTableTitleBar()}
       <div className={className}>
-        <table className={tableStyleName} responsive="true" hover="true" {...getTableProps()}>
-          <thead>
-            {getTableHeader()}
-          </thead>
-          <tbody {...getTableBodyProps()}>
-              {getTableBody()}
-          </tbody>
-          {getFooter()}
-        </table>
+          <table className={tableStyleName} responsive="true" hover="true" {...getTableProps()}>
+            <thead>
+              {getTableHeader()}
+            </thead>
+            <tbody {...getTableBodyProps()}>
+                {getTableBody()}
+            </tbody>
+            {getFooter()}
+          </table>
       </div>
-    </div>
+    </PaginationContainer>
   );
 }
 

@@ -11,11 +11,13 @@ function DtoTopPagination({paginationDto, setPaginationDto, loadData, isLoading,
   }
 
   return (
-    <div className="small top-pagination px-2 py-1 d-flex justify-content-between">
-      <div className="mt-1">{getResultSummary(paginationDto, isLoading)}</div>
-      <div className="d-flex">
-        <div className="mx-2"><PageSort paginationDto={paginationDto} setPaginationDto={setPaginationDto} loadData={loadData} isLoading={isLoading} /></div>
-        <div><PageSize paginationDto={paginationDto} setPaginationDto={setPaginationDto} pageSizeList={pageSizeList} loadData={loadData}  isLoading={isLoading} /></div>
+    <div className={"top-pagination py-2 w-100"}>
+      <div className="px-2 d-flex">
+        <div className="small my-auto">{getResultSummary(paginationDto, isLoading)}</div>
+        <div className="d-flex ml-auto">
+          <div><PageSort paginationDto={paginationDto} setPaginationDto={setPaginationDto} loadData={loadData} isLoading={isLoading} /></div>
+          <div className="ml-2"><PageSize paginationDto={paginationDto} setPaginationDto={setPaginationDto} pageSizeList={pageSizeList} loadData={loadData}  isLoading={isLoading} /></div>
+        </div>
       </div>
     </div>
   );

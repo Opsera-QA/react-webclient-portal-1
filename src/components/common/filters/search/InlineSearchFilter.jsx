@@ -67,7 +67,7 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
           disabled={disabled || isLoading || filterDto == null}
           placeholder="Search"
           value={filterDto?.getData(fieldName) || ""}
-          className="inline-search-filter inline-filter-input"
+          className="text-input inline-search-filter inline-filter-input"
           onKeyPress={(event) => handleKeyPress(event)}
           onChange={e => validateAndSetData(e.target.value)}
         />
@@ -95,7 +95,6 @@ InlineSearchFilter.propTypes = {
 
 InlineSearchFilter.defaultProps = {
   fieldName: "search",
-  className: "inline-search-input-group"
 };
 
 export default InlineSearchFilter;

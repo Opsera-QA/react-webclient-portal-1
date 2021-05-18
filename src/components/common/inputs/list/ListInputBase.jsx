@@ -9,6 +9,7 @@ import {List} from "dhx-suite-package";
 import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import ComponentLoadingWrapper from "components/common/loading/ComponentLoadingWrapper";
 
+// TODO: Make an actual base version and rename this VanityListInput
 function ListInputBase(
   {
     fieldName, dataObject, setDataObject,
