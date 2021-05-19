@@ -50,7 +50,8 @@ const GitModifiedFilesTabView = (
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
+    gitFilterDto?.setData("currentPage", 1);
+    loadData(source, gitFilterDto).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -60,36 +61,13 @@ const GitModifiedFilesTabView = (
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
-
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-    setGitModified([]);
-
-    if (ruleList != null) {
-      getModifiedFiles().catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
-
-    return () => {
-      source.cancel();
-    };
   }, [ruleList]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (cancelSource = cancelTokenSource, newFilterDto = gitFilterDto) => {
     try {
       setIsLoading(true);
       setGitWarningMessage("");
-      await gitPolling(cancelSource);
-
+      await gitPolling(cancelSource, newFilterDto);
     } catch (error) {
       toastContext.showInlineErrorMessage(error);
     }
@@ -100,37 +78,33 @@ const GitModifiedFilesTabView = (
     }
   };
 
-  const gitPolling = async (cancelSource = cancelTokenSource, count = 1) => {
+  const gitPolling = async (cancelSource = cancelTokenSource, newFilterDto = gitFilterDto, count = 1) => {
     if (isMounted?.current !== true) {
       return;
     }
 
-    const gitResponse = await getModifiedFiles();
+    const gitResponse = await getModifiedFiles(cancelSource, newFilterDto);
 
     if (!gitResponse?.data?.data?.gitErrorMessage &&
       (!gitResponse?.data?.data?.gitCommitList || gitResponse?.data?.data?.gitCommitList?.length === 0)
       && count < 5) {
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
       count++;
-      return await gitPolling(cancelSource, count);
+      return await gitPolling(cancelSource, newFilterDto, count);
     }
-
-    return gitResponse;
   };
 
-  const getModifiedFiles = async (cancelSource = cancelTokenSource) => {
-    setIsLoading(true);
-
+  const getModifiedFiles = async (cancelSource = cancelTokenSource, newFilterDto = gitFilterDto) => {
     const postBody = {
       pipelineId: pipelineId,
       stepId: stepId,
       dataType: "sfdc-packageXml",
       fetchAttribute: "gitCommitList",
       rules: ruleList,
-      page: gitFilterDto ? gitFilterDto.getData("currentPage") : 0,
-      size: gitFilterDto ? gitFilterDto.getData("pageSize") : 3000,
-      search: gitFilterDto ? gitFilterDto.getData("search") : "",
-      classFilter: gitFilterDto ? gitFilterDto.getData("classFilter") : ""
+      page: newFilterDto ? newFilterDto.getData("currentPage") : 0,
+      size: newFilterDto ? newFilterDto.getData("pageSize") : 3000,
+      search: newFilterDto ? newFilterDto.getData("search") : "",
+      classFilter: newFilterDto ? newFilterDto.getData("classFilter") : ""
     };
 
     const gitResponse = await sfdcPipelineActions.getListFromPipelineStorageV2(getAccessToken, cancelSource, postBody);
@@ -153,7 +127,11 @@ const GitModifiedFilesTabView = (
 
         //storing _id so that we can edit this object
         setRecordId(gitResponse.data._id);
-        setIsLoading(false);
+
+
+        if (Array.isArray(gitResponse.data.data.gitCommitList.data) && gitResponse.data.data.gitCommitList.data.length > 0) {
+          setIsLoading(false);
+        }
       }
     }
 

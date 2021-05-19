@@ -62,7 +62,9 @@ const SfdcProfileSelectionView = (
     setSfdcModified([]);
     setDestSfdcModified([]);
 
-    loadData(source).catch((error) => {
+    destSfdcFilterDto?.setData("currentPage", 1);
+    sfdcFilterDto?.setData("currentPage", 1);
+    loadData(source, sfdcFilterDto, destSfdcFilterDto).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -74,10 +76,10 @@ const SfdcProfileSelectionView = (
     };
   }, [ruleList]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (cancelSource = cancelTokenSource, newSfdcFilterDto = sfdcFilterDto, newDestFilterDto = destSfdcFilterDto) => {
     try {
-      await sfdcPolling(cancelSource);
-      await destSfdcPolling(cancelSource);
+      await sfdcPolling(cancelSource, newSfdcFilterDto);
+      await destSfdcPolling(cancelSource, newDestFilterDto);
     }
     catch (error) {
       toastContext.showInlineErrorMessage("Error pulling SFDC Files. Check logs for more details.");
@@ -92,8 +94,6 @@ const SfdcProfileSelectionView = (
   };
 
   const getModifiedFiles = async (cancelSource = cancelTokenSource, newFilterDto = sfdcFilterDto) => {
-    setSfdcLoading(true);
-
     const postBody = {
       pipelineId: gitTaskData ? "N/A" : pipelineId,
       stepId: gitTaskData ? "N/A" : stepId,
@@ -132,6 +132,11 @@ const SfdcProfileSelectionView = (
         // TODO: Is this important?
         //storing _id so that we can edit this object
         setRecordId(sfdcResponse?.data?._id);
+
+
+        if (Array.isArray(sfdcResponse.data.data.sfdcCommitList.data) && sfdcResponse.data.data.sfdcCommitList.data.length > 0) {
+          setSfdcLoading(false);
+        }
       }
     }
 
@@ -152,23 +157,16 @@ const SfdcProfileSelectionView = (
     return sfdcResponse?.data?.data?.sfdcCommitList?.data;
   };
 
-  const sfdcPolling = async (cancelSource = cancelTokenSource, count = 1) => {
-    try {
-      if (isMounted?.current !== true) {
-        return;
-      }
-
-      const sfdcCommitList = await getModifiedFiles(cancelSource);
-
-      if (isMounted?.current === true
-        && (!Array.isArray(sfdcCommitList) || sfdcCommitList?.length === 0)
-        && count <= 5) {
-        await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
-        return await sfdcPolling(cancelSource, count + 1);
-      }
+  const sfdcPolling = async (cancelSource = cancelTokenSource, newSfdcFilterDto = sfdcFilterDto, count = 1) => {
+    if (isMounted?.current !== true) {
+      return;
     }
-    finally {
-      setSfdcLoading(false);
+
+    const sfdcCommitList = await getModifiedFiles(cancelSource, newSfdcFilterDto);
+
+    if ((!Array.isArray(sfdcCommitList) || sfdcCommitList?.length === 0) && count <= 5) {
+      await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
+      return await sfdcPolling(cancelSource, count + 1);
     }
   };
 
@@ -184,37 +182,33 @@ const SfdcProfileSelectionView = (
     );
   };
 
-  const destSfdcPolling = async (cancelSource = cancelTokenSource, count = 1) => {
-    try {
-      const destSfdcList = await getModifiedDestinationFiles(cancelSource);
-
-      if (isMounted?.current === true
-        && (!Array.isArray(destSfdcList) || destSfdcList?.length === 0)
-        && count <= 5) {
-        await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
-        return await destSfdcPolling(cancelSource, count + 1);
-      }
-
-      return destSfdcList;
+  const destSfdcPolling = async (cancelSource = cancelTokenSource, newFilterDto = destSfdcFilterDto, count = 1) => {
+    if (isMounted?.current !== true) {
+      return;
     }
-    finally {
-      setDestSfdcLoading(false);
+
+    const destSfdcList = await getModifiedDestinationFiles(cancelSource, newFilterDto);
+
+    if ((!Array.isArray(destSfdcList) || destSfdcList?.length === 0) && count <= 5) {
+      await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
+      return await destSfdcPolling(cancelSource, count + 1);
     }
   };
 
-  const getModifiedDestinationFiles = async (cancelSource = cancelTokenSource) => {
-    setDestSfdcLoading(true);
-
+  const getModifiedDestinationFiles = async (cancelSource = cancelTokenSource, newFilterDto = destSfdcFilterDto) => {
     const postBody = {
       pipelineId: pipelineId,
       stepId: stepId,
       dataType: "sfdc-packageXml",
       fetchAttribute: "destSfdcCommitList",
-      rules: ruleList
+      rules: ruleList,
+      page: newFilterDto ? newFilterDto.getData("currentPage") : 1,
+      size: newFilterDto ? newFilterDto.getData("pageSize") : 1500,
+      search: newFilterDto ? newFilterDto.getData("search") : "",
+      classFilter: newFilterDto ? newFilterDto.getData("classFilter") : ""
     };
 
     const destSfdcResponse = await sfdcPipelineActions.getListFromPipelineStorageV2(getAccessToken, cancelSource, postBody);
-
 
     if (isMounted?.current === true && destSfdcResponse) {
       if (destSfdcResponse?.data?.data?.destSfdcErrorMessage) {
@@ -232,6 +226,9 @@ const SfdcProfileSelectionView = (
         setDestSfdcFilterDto({...newDestSfdcFilterDto});
 
         setDestSfdcModified(destSfdcResponse?.data?.data?.destSfdcCommitList?.data);
+      }
+
+      if (Array.isArray(destSfdcResponse.data.data.sfdcCommitList.data) && destSfdcResponse.data.data.sfdcCommitList.data.length > 0) {
         setDestSfdcLoading(false);
       }
     }

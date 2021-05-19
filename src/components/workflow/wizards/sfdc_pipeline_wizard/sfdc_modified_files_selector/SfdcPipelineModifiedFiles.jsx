@@ -28,6 +28,7 @@ import SfdcRulesInputContainer from "components/common/inputs/rules/sfdc_pipelin
 import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import PipelineWizardHelpDocumentation
   from "components/common/help/documentation/pipelines/wizard/PipelineWizardHelpDocumentation";
+import sfdcRuleMetadata from "components/common/inputs/rules/sfdc_pipeline_wizard/sfdc-rule-metadata";
 
 // TODO: All of these steps should be broken up into separate versions based on whether it's a git task/pipeline run/etc.
 //  It'll be too difficult to maintain if we keep adding onto it like this.
@@ -60,7 +61,7 @@ const SfdcPipelineModifiedFiles = ({
   const [save, setSave] = useState(false);
   const [componentType, setComponentType] = useState([]);
   const [activeTab, setActiveTab] = useState("sfdc");
-  const [ruleList, setRuleList] = useState([]);
+  const [ruleList, setRuleList] = useState([{...sfdcRuleMetadata.newObjectFields}]);
 
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);

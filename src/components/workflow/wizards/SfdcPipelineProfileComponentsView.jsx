@@ -29,6 +29,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import FilterContainer from "components/common/table/FilterContainer";
 import ToggleUploadButton from "components/common/buttons/toggle/ToggleUploadButton";
+import sfdcRuleMetadata from "components/common/inputs/rules/sfdc_pipeline_wizard/sfdc-rule-metadata";
 
 const SfdcPipelineProfileComponentsView = (
   {
@@ -49,7 +50,7 @@ const SfdcPipelineProfileComponentsView = (
   const [filterDto, setFilterDto] = useState(new Model({ ...sfdcComponentFilterMetadata.newObjectFields }, sfdcComponentFilterMetadata, false));
   let timerIds = [];
   const [showFileUpload, setShowFileUpload] = useState(false);
-  const [ruleList, setRuleList] = useState([]);
+  const [ruleList, setRuleList] = useState([{...sfdcRuleMetadata.newObjectFields}]);
 
   const [activeTab, setActiveTab] = useState("sfdc");
   const isMounted = useRef(false);

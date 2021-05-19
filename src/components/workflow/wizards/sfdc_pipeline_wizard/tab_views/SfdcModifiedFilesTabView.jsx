@@ -58,7 +58,8 @@ const SfdcModifiedFilesTabView = (
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
+    sfdcFilterDto?.setData("currentPage", 1);
+    loadData(source, sfdcFilterDto).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -70,35 +71,11 @@ const SfdcModifiedFilesTabView = (
     };
   }, [ruleList]);
 
-  useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    setSfdcModified([]);
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
-
-    if (ruleList != null) {
-      sfdcFilterDto.setData("currentPage", 1);
-      getModifiedFiles(undefined, sfdcFilterDto).catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
-
-    return () => {
-      source.cancel();
-    };
-  }, [ruleList]);
-
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (cancelSource = cancelTokenSource, newFilterDto = sfdcFilterDto) => {
     try {
       setIsLoading(true);
       setSfdcWarningMessage("");
-      await sfdcPolling(cancelSource);
-
+      await sfdcPolling(cancelSource, newFilterDto);
     } catch (error) {
       toastContext.showInlineErrorMessage(error);
     }
@@ -110,8 +87,6 @@ const SfdcModifiedFilesTabView = (
   };
 
   const getModifiedFiles = async (cancelSource = cancelTokenSource, newFilterDto = sfdcFilterDto) => {
-    setIsLoading(true);
-
     const postBody = {
       pipelineId: gitTaskData ? "N/A" : pipelineId,
       stepId: gitTaskData ? "N/A" : stepId,
@@ -150,7 +125,10 @@ const SfdcModifiedFilesTabView = (
         // TODO: Is this important?
         //storing _id so that we can edit this object
         setRecordId(sfdcResponse?.data?._id);
-        setIsLoading(false);
+
+        if (Array.isArray(sfdcResponse.data.data.sfdcCommitList.data) && sfdcResponse.data.data.sfdcCommitList.data.length > 0) {
+          setIsLoading(false);
+        }
       }
     }
 
@@ -171,22 +149,17 @@ const SfdcModifiedFilesTabView = (
     return sfdcResponse?.data?.data?.sfdcCommitList?.data;
   };
 
-  const sfdcPolling = async (cancelSource = cancelTokenSource, count = 1) => {
+  const sfdcPolling = async (cancelSource = cancelTokenSource, newFilterDto = sfdcFilterDto, count = 1) => {
     if (isMounted?.current !== true) {
       return;
     }
 
-    const sfdcCommitList = await getModifiedFiles(cancelSource);
+    const sfdcCommitList = await getModifiedFiles(cancelSource, newFilterDto);
 
-    if (isMounted?.current === true
-      && (!Array.isArray(sfdcCommitList) || sfdcCommitList?.length === 0)
-      && count <= 5) {
-
+    if ((!Array.isArray(sfdcCommitList) || sfdcCommitList?.length === 0) && count <= 5) {
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
-      return await sfdcPolling(cancelSource, count + 1);
+      return await sfdcPolling(cancelSource, newFilterDto, count + 1);
     }
-
-    return sfdcCommitList;
   };
 
   const sfdcColumnsWithCheckBoxCell = useMemo(

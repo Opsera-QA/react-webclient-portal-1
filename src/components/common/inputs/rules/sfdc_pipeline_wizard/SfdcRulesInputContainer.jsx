@@ -49,7 +49,14 @@ function SfdcRulesInputContainer({ruleList, setRuleList, postBody, modifiedFiles
     }
 
     setRules([...newPropertyList]);
-    setRuleList([...newPropertyList]);
+
+    if (JSON.stringify(newPropertyList) !== JSON.stringify(ruleList)) {
+      console.log("rules change, triggering refresh");
+      setRuleList([...newPropertyList]);
+    }
+    else {
+      console.log("Avoiding state retrigger. Rules haven't changed");
+    }
   };
 
   const updateRule = (index, rule) => {
@@ -105,16 +112,16 @@ function SfdcRulesInputContainer({ruleList, setRuleList, postBody, modifiedFiles
       <Row className="d-flex mt-1 mx-2 justify-content-between">
         <Col sm={11} className={"px-0 my-auto"}>
           <Row className={"mx-0"}>
-            <Col xs={3}>
+            <Col xs={1} className={"pr-1 pl-0"}>
               Type
             </Col>
-            <Col xs={3}>
+            <Col xs={4} className={"px-0"}>
               Component Filter
             </Col>
-            <Col xs={3}>
+            <Col xs={2} className={"px-1"}>
               Field
             </Col>
-            <Col xs={3}>
+            <Col xs={5} className={"px-0"}>
               Value
             </Col>
           </Row>
