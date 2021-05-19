@@ -183,4 +183,13 @@ OctopusStepActions.getNexusRepos = async (toolID, getAccessToken) => {
   return [];
 };
 
+OctopusStepActions.getLifecycles = async (id, spaceId, getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/tools/octopus/lifecycle/${id}/${spaceId}`;
+  let response = await baseActions.apiGetCallV2(getAccessToken,cancelTokenSource, apiUrl);
+  if (response && response.status === 200) {
+    return response.data;
+  }
+  return [];
+};
+
 export default OctopusStepActions;

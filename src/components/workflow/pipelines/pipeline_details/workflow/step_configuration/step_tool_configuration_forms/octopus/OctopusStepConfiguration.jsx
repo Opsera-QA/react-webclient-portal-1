@@ -25,6 +25,7 @@ import RollbackToggleInput from "./input/RollbackToggleInput";
 import OctopusDeploymentVariables from "./input/OctopusDeploymentVariables";
 import OctopusSpecifyDepVarsToggle from "./input/OctopusSpecifyDepVarsToggle";
 import OctopusProtocolInput from "./input/OctopusProtocolInput";
+import OctopusLifecycleSelectInput from "./input/OctopusLifecycleSelectInput";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -235,6 +236,21 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
           />
           <OctopusPlatformTypeSelectInput
             fieldName={"octopusPlatformType"}
+            dataObject={octopusStepConfigurationDto}
+            setDataObject={setOctopusStepConfigurationDataDto}
+            disabled={
+              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+                ? octopusStepConfigurationDto.getData("spaceName").length === 0
+                : true
+            }
+            tool_prop={
+              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+                ? octopusStepConfigurationDto.getData("spaceName")
+                : ""
+            }
+          />
+          <OctopusLifecycleSelectInput
+            fieldName={"lifecycleId"}
             dataObject={octopusStepConfigurationDto}
             setDataObject={setOctopusStepConfigurationDataDto}
             disabled={
