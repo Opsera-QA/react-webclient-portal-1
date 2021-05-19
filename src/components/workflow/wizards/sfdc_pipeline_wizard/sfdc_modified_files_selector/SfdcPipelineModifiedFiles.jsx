@@ -53,7 +53,7 @@ const SfdcPipelineModifiedFiles = ({
   gitTaskData,
   gitTaskId
 }) => {
-  const { getAccessToken } = useContext(AuthContext);
+  const { getAccessToken, featureFlagHideItemInProd } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -328,8 +328,8 @@ const SfdcPipelineModifiedFiles = ({
         <CustomTab activeTab={activeTab} tabText={"SFDC Files"} handleTabClick={handleTabClick} tabName={"sfdc"}
                    toolTipText={"SFDC Files"} icon={faSalesforce} />
         {getExtraTabs()}
-        <CustomTab activeTab={activeTab} tabText={"Help"} handleTabClick={handleTabClick} tabName={"help"}
-                   toolTipText={"Help"} icon={faQuestionCircle} />
+        {!featureFlagHideItemInProd() && <CustomTab activeTab={activeTab} tabText={"Help"} handleTabClick={handleTabClick} tabName={"help"}
+                   toolTipText={"Help"} icon={faQuestionCircle} />}
       </CustomTabContainer>
     );
   };

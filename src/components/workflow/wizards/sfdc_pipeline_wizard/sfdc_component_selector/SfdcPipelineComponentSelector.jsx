@@ -48,7 +48,8 @@ const SfdcPipelineComponentSelector = (
     handleClose
   }) => {
   const { getAccessToken } = useContext(AuthContext);
-  const [error, setError] = useState(false);
+  // TODO: Utilize toast context instead
+  const [errorMessage, setErrorMessage] = useState("");
   const [save, setSave] = useState(false);
   const [warning, setWarning] = useState(false);
 
@@ -68,7 +69,7 @@ const SfdcPipelineComponentSelector = (
     setCancelTokenSource(source);
     isMounted.current = true;
     setSave(false);
-    setError(false);
+    setErrorMessage(false);
     setWarning(false);
     setComponentTypeForm({...sfdcComponentSelectorMetadata.newObjectFields});
 
@@ -170,14 +171,14 @@ const SfdcPipelineComponentSelector = (
       // console.log("in handleSubmitComponentTypes result: " + JSON.stringify(result));
       if (result?.data?.status === 500) {
         console.error("Error setting selected Data: ", result.data.message);
-        setError(result.data.message);
+        setErrorMessage(result.data.message);
         setSave(false);
       } else {
         await postComponentTypes();
       }
     } catch (error) {
       console.error("Error setting selected Data: ", error.message);
-      setError("Error setting selected Data: ", error);
+      setErrorMessage("Error setting selected Data: ", error);
     }
     finally {
       setSave(false);
@@ -187,6 +188,12 @@ const SfdcPipelineComponentSelector = (
   const postComponentTypes = async () => {
     // console.log("in postComponentTypes");
     try {
+      
+      if( !selectedFromDate || !selectedToDate ) {
+        setErrorMessage("Invalid date selected");
+        return;
+      }
+      
       let keys = Object.keys(formData);
       let filtered = keys.filter(function (key) {
         return formData[key];
@@ -208,13 +215,13 @@ const SfdcPipelineComponentSelector = (
       // console.log("in postComponentTypes result: " + JSON.stringify(result));
       if (result?.data?.status === 500) {
         console.error("Error getting API Data: ", result?.data?.message);
-        setError(result?.data?.message);
+        setErrorMessage(result?.data?.message);
       } else {
         setView(2); //move to next view
       }
     } catch (error) {
       console.error(error);
-      setError(error);
+      setErrorMessage(error);
     }
 
   };
@@ -335,7 +342,7 @@ const SfdcPipelineComponentSelector = (
           selectedComponentTypes={selectedComponentTypes}
           setSelectedComponentTypes={setSelectedComponentTypes}
           sfdcToolId={sfdcToolId}
-          setError={setError}
+          setError={setErrorMessage}
         />
 
         <div className={"my-3"}>
@@ -352,6 +359,7 @@ const SfdcPipelineComponentSelector = (
               }}
               disabled={save ||
               // isProfiles ? selectedComp.length < 1 : false
+              !selectedFromDate || !selectedToDate  ||
               selectedComponentTypes.length < 1
               }
             >
@@ -376,7 +384,7 @@ const SfdcPipelineComponentSelector = (
           <div className="h5">SalesForce Pipeline Run</div>
           <div className="text-muted">Select component types to include in this pipeline run.</div>
 
-          {error && <ErrorDialog error={error} align={"top"} setError={setError} />}
+          {errorMessage && <ErrorDialog error={errorMessage} align={"top"} setError={setErrorMessage} />}
           {warning &&
           <div className="warning-theme warning-text text-left">
             <FontAwesomeIcon icon={faInfoCircle} fixedWidth className="mr-1" style={{cursor: "help"}}/>
