@@ -1564,7 +1564,10 @@ div.data-blocks-ellipses {
 }
 
 .full-width-center-overlay {
-    margin: 10px 10px;
+    margin: 10px;
+
+    /* full-height - (10px x 2 top + bottom margins) */
+    height: calc(100% - 20px);
 }
 
 .center-overlay-shadow-background {
@@ -1577,12 +1580,12 @@ div.data-blocks-ellipses {
     overflow-x: hidden;
     overflow-y: auto;
     z-index: 1500;
-    height: 100%;
-    max-height: 100%;
-}
 
-.overlay-panel .overlay-panel-body {
-    min-height: 100% !important;
+    /* full-height - (10px x 2 top + bottom margins) */
+    height: calc(100% - 20px);
+    max-height: calc(100% - 20px);
+
+    background-color: rgba(0,0,0,0.7);
 }
 
 /* End Overlay Panel styling */
