@@ -77,9 +77,9 @@ function Application(props) {
   };
 
   const handleAppNameChange = ({ target: { name, value } }) => {
-    // const regex = RegExp('^[A-Za-z0-9-]*$');
+
     const regex = RegExp(regexHelpers.regexTypes.domainField);
-    const trimmedValue = value.trim();
+    const trimmedValue = value.trim().toLowerCase();
     setAppName(trimmedValue);
     if (trimmedValue.length > 20) {
       setAppNameError("Application Names must be less than 20 characters.");
