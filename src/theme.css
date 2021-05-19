@@ -1578,14 +1578,18 @@ div.data-blocks-ellipses {
 .overlay-panel {
     position: fixed;
     overflow-x: hidden;
-    overflow-y: auto;
     z-index: 1500;
 
     /* full-height - (10px x 2 top + bottom margins) */
     height: calc(100% - 20px);
     max-height: calc(100% - 20px);
+}
 
-    background-color: rgba(0,0,0,0.7);
+.overlay-panel-body {
+    overflow-y: auto;
+    /* full-height - (10px x 2 top + bottom margins - title height) */
+    height: calc(100% - 48px);
+    max-height: calc(100% - 48px);
 }
 
 /* End Overlay Panel styling */
