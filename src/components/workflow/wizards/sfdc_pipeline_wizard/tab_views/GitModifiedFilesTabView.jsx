@@ -39,6 +39,11 @@ const GitModifiedFilesTabView = (
   const [gitFilterDto, setGitFilterDto] = useState(new Model({ ...sfdcComponentFilterMetadata.newObjectFields }, sfdcComponentFilterMetadata, false));
   const [isLoading, setIsLoading] = useState(false);
   const [gitWarningMessage, setGitWarningMessage] = useState("");
+
+  // TODO: Remove after node-side status fix
+  const [rulesReloading, setRulesReloading] = useState(false);
+  const [reloadCancelToken, setReloadCancelToken] = useState(undefined);
+
   let timerIds = [];
 
   useEffect(() => {
@@ -62,6 +67,42 @@ const GitModifiedFilesTabView = (
       isMounted.current = false;
     };
   }, [ruleList]);
+
+  useEffect(() => {
+    if (reloadCancelToken) {
+      reloadCancelToken.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setReloadCancelToken(source);
+
+    rulesReload(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+    };
+  }, [ruleList]);
+
+
+  const rulesReload = async (cancelSource = cancelTokenSource, newFilterDto = gitFilterDto) => {
+    try {
+      if (isMounted?.current === true) {
+        setRulesReloading(true);
+        newFilterDto?.setData("currentPage", 1);
+        await getModifiedFiles(cancelSource, newFilterDto);
+      }
+    }
+    catch (error) {
+      toastContext.showInlineErrorMessage(error);
+    }
+    finally {
+      setRulesReloading(false);
+    }
+  };
 
   const loadData = async (cancelSource = cancelTokenSource, newFilterDto = gitFilterDto) => {
     try {

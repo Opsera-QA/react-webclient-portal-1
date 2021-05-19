@@ -49,6 +49,11 @@ const SfdcProfileSelectionView = (
   const [sfdcFilterDto, setSfdcFilterDto] = useState(new Model({ ...sfdcComponentFilterMetadata.newObjectFields }, sfdcComponentFilterMetadata, false));
   const [sfdcModified, setSfdcModified] = useState([]);
   const [sfdcLoading, setSfdcLoading] = useState(false);
+
+  // TODO: Remove after node-side status fix
+  const [rulesReloading, setRulesReloading] = useState(false);
+  const [reloadCancelToken, setReloadCancelToken] = useState(undefined);
+
   let timerIds = [];
 
   useEffect(() => {
@@ -62,8 +67,6 @@ const SfdcProfileSelectionView = (
     setSfdcModified([]);
     setDestSfdcModified([]);
 
-    destSfdcFilterDto?.setData("currentPage", 1);
-    sfdcFilterDto?.setData("currentPage", 1);
     loadData(source, sfdcFilterDto, destSfdcFilterDto).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -74,12 +77,50 @@ const SfdcProfileSelectionView = (
       source.cancel();
       isMounted.current = false;
     };
+  }, []);
+
+  useEffect(() => {
+    if (reloadCancelToken) {
+      reloadCancelToken.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setReloadCancelToken(source);
+
+    rulesReload(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+    };
   }, [ruleList]);
+
+
+  const rulesReload = async (cancelSource = cancelTokenSource, newFilterDto = sfdcFilterDto) => {
+    try {
+      if (isMounted?.current === true) {
+        setRulesReloading(true);
+        newFilterDto?.setData("currentPage", 1);
+        await getModifiedFiles(cancelSource, newFilterDto);
+      }
+    }
+    catch (error) {
+      toastContext.showInlineErrorMessage(error);
+    }
+    finally {
+      setRulesReloading(false);
+    }
+  };
 
   const loadData = async (cancelSource = cancelTokenSource, newSfdcFilterDto = sfdcFilterDto, newDestFilterDto = destSfdcFilterDto) => {
     try {
-      await sfdcPolling(cancelSource, newSfdcFilterDto);
+      setSfdcLoading(true);
+      setDestSfdcLoading(true);
       await destSfdcPolling(cancelSource, newDestFilterDto);
+      await sfdcPolling(cancelSource, newSfdcFilterDto);
     }
     catch (error) {
       toastContext.showInlineErrorMessage("Error pulling SFDC Files. Check logs for more details.");
@@ -135,7 +176,7 @@ const SfdcProfileSelectionView = (
 
 
         if (Array.isArray(sfdcResponse.data.data.sfdcCommitList.data) && sfdcResponse.data.data.sfdcCommitList.data.length > 0) {
-          setSfdcLoading(false);
+          setDestSfdcLoading(false);
         }
       }
     }
@@ -166,7 +207,7 @@ const SfdcProfileSelectionView = (
 
     if ((!Array.isArray(sfdcCommitList) || sfdcCommitList?.length === 0) && count <= 5) {
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
-      return await sfdcPolling(cancelSource, count + 1);
+      return await sfdcPolling(cancelSource, newSfdcFilterDto, count + 1);
     }
   };
 
@@ -226,10 +267,10 @@ const SfdcProfileSelectionView = (
         setDestSfdcFilterDto({...newDestSfdcFilterDto});
 
         setDestSfdcModified(destSfdcResponse?.data?.data?.destSfdcCommitList?.data);
-      }
 
-      if (Array.isArray(destSfdcResponse.data.data.sfdcCommitList.data) && destSfdcResponse.data.data.sfdcCommitList.data.length > 0) {
-        setDestSfdcLoading(false);
+        if ((Array.isArray(destSfdcResponse.data.data.sfdcCommitList.data) && destSfdcResponse.data.data.sfdcCommitList.data.length > 0)) {
+          setDestSfdcLoading(false);
+        }
       }
     }
 
@@ -265,7 +306,7 @@ const SfdcProfileSelectionView = (
           className={"table-no-border" + (files.length > 0 ? " opacity-half" : " ") }
           columns={columnsWithOutCheckBoxCell}
           data={sfdcModified}
-          isLoading={sfdcLoading}
+          isLoading={sfdcLoading || rulesReloading}
           loadData={sfdcPolling}
           noDataMessage={sfdcTableConstants.noDataMessage}
           paginationModel={sfdcFilterDto}
@@ -280,7 +321,7 @@ const SfdcProfileSelectionView = (
         <SfdcRulesInputContainer ruleList={ruleList} setRuleList={setRuleList} postBody={getPostBody()} modifiedFiles={sfdcModified} />
       </div>
       <InlineWarning warningMessage={sfdcWarningMessage} className="pl-3"/>
-      {fileUploadFlag && !sfdcLoading &&
+      {fileUploadFlag && !sfdcLoading && !rulesReloading &&
         <CSVFileUploadComponent
           recordId={recordId}
           updateAttribute={updateAttribute}

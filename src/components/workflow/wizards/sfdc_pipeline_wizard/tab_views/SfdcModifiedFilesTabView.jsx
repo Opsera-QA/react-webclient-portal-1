@@ -49,6 +49,10 @@ const SfdcModifiedFilesTabView = (
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
+  // TODO: Remove after node-side status fix
+  const [rulesReloading, setRulesReloading] = useState(false);
+  const [reloadCancelToken, setReloadCancelToken] = useState(undefined);
+
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -58,8 +62,7 @@ const SfdcModifiedFilesTabView = (
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    sfdcFilterDto?.setData("currentPage", 1);
-    loadData(source, sfdcFilterDto).catch((error) => {
+    loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -69,14 +72,50 @@ const SfdcModifiedFilesTabView = (
       source.cancel();
       isMounted.current = false;
     };
+  }, []);
+
+  useEffect(() => {
+    if (reloadCancelToken) {
+      reloadCancelToken.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setReloadCancelToken(source);
+
+    rulesReload(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+    };
   }, [ruleList]);
+
+  const rulesReload = async (cancelSource = cancelTokenSource, newFilterDto = sfdcFilterDto) => {
+    try {
+      if (isMounted?.current === true) {
+        setRulesReloading(true);
+        newFilterDto?.setData("currentPage", 1);
+        await getModifiedFiles(cancelSource, newFilterDto);
+      }
+    }
+    catch (error) {
+      toastContext.showInlineErrorMessage(error);
+    }
+    finally {
+      setRulesReloading(false);
+    }
+  };
 
   const loadData = async (cancelSource = cancelTokenSource, newFilterDto = sfdcFilterDto) => {
     try {
       setIsLoading(true);
       setSfdcWarningMessage("");
       await sfdcPolling(cancelSource, newFilterDto);
-    } catch (error) {
+    }
+    catch (error) {
       toastContext.showInlineErrorMessage(error);
     }
     finally {
@@ -203,7 +242,7 @@ const SfdcModifiedFilesTabView = (
           className={"table-no-border" + (files.length > 0 ? " opacity-half" : " ") }
           columns={sfdcColumnsWithCheckBoxCell}
           data={sfdcModified}
-          isLoading={isLoading}
+          isLoading={isLoading || rulesReloading}
           loadData={loadData}
           noDataMessage={sfdcTableConstants?.noDataMessage}
           paginationModel={sfdcFilterDto}
