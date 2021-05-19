@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { OverlayTrigger, Popover, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AuthContext } from "contexts/AuthContext";
-import TerraformStepFormMetadata from "./terraform-stepForm-metadata";
+import terraformStepFormMetadata from "./terraform-stepForm-metadata";
 import Model from "core/data_model/model";
 import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
@@ -17,6 +17,9 @@ import pipelineActions from "../../../../../../pipeline-actions";
 import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
 import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import modelHelpers from "components/common/model/modelHelpers";
+import TerraformJobTypeSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformJobTypeSelectInput";
+
 
 const SCM_TOOL_LIST = [
   {
@@ -64,35 +67,55 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
   const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
   const [awsList, setAwsList] = useState([]);
   const [isAwsSearching, setIsAwsSearching] = useState(false);
-
+  const [jobType, setJobType] = useState(""); 
 
   useEffect(() => {
-    loadFormData(stepTool);
+    // loadFormData(stepTool);
+    loadData();
   }, []);
 
-  const loadFormData = async (step) => {
+  // const loadFormData = async (step) => {
+  //   setIsLoading(true);
+  //   let { configuration, threshold } = step;
+  //   if (typeof configuration !== "undefined") {
+  //     setTerraformStepConfigurationDataDto(new Model(configuration, TerraformStepFormMetadata, false));
+  //     await fetchAWSDetails();
+  //     await fetchSCMDetails(configuration);
+  //     await searchRepositories(configuration.type, configuration.gitToolId, configuration.bitbucketWorkspace);
+  //     await searchBranches(configuration.type, configuration.gitToolId, configuration.gitRepositoryID, configuration.bitbucketWorkspace);
+  //     if (typeof threshold !== "undefined") {
+  //       setThresholdType(threshold.type);
+  //       setThresholdValue(threshold.value);
+  //     }
+  //   } else {
+  //     await fetchAWSDetails();
+  //     setTerraformStepConfigurationDataDto(
+  //       new Model({ ...TerraformStepFormMetadata.newModelBase }, TerraformStepFormMetadata, false)
+  //     );
+  //   }
+
+  //   if (plan && stepId) {
+  //     let pipelineSteps = pipelineHelpers.formatStepOptions(plan, stepId);
+  //     setListOfSteps(pipelineSteps);
+  //   }
+
+  //   setIsLoading(false);
+  // };
+
+  const loadData = async () => {
     setIsLoading(true);
-    let { configuration, threshold } = step;
-    if (typeof configuration !== "undefined") {
-      setTerraformStepConfigurationDataDto(new Model(configuration, TerraformStepFormMetadata, false));
-      await fetchAWSDetails();
-      await fetchSCMDetails(configuration);
-      await searchRepositories(configuration.type, configuration.gitToolId, configuration.bitbucketWorkspace);
-      await searchBranches(configuration.type, configuration.gitToolId, configuration.gitRepositoryID, configuration.bitbucketWorkspace);
-      if (typeof threshold !== "undefined") {
-        setThresholdType(threshold.type);
-        setThresholdValue(threshold.value);
-      }
-    } else {
-      await fetchAWSDetails();
-      setTerraformStepConfigurationDataDto(
-        new Model({ ...TerraformStepFormMetadata.newModelBase }, TerraformStepFormMetadata, false)
-      );
+    let { threshold, job_type } = stepTool;
+    let terraformConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, terraformStepFormMetadata);
+
+    setTerraformStepConfigurationDataDto(terraformConfigurationData);
+
+    if (job_type) {
+      setJobType(job_type);
     }
 
-    if (plan && stepId) {
-      let pipelineSteps = pipelineHelpers.formatStepOptions(plan, stepId);
-      setListOfSteps(pipelineSteps);
+    if (threshold) {
+      setThresholdType(threshold?.type);
+      setThresholdValue(threshold?.value);
     }
 
     setIsLoading(false);
@@ -239,6 +262,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
   };
 
   const handleDTOChange = async (fieldName, value) => {
+    console.log(terraformStepConfigurationDto);
     if (fieldName === "type") {
       let newDataObject = terraformStepConfigurationDto;
       newDataObject.setData("type", value.value);
@@ -331,7 +355,12 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
     <>
       {terraformStepConfigurationDto && (
         <>
-          <DtoSelectInput
+        <TerraformJobTypeSelectInput
+          dataObject={terraformStepConfigurationDto}
+          setDataObject={setTerraformStepConfigurationDataDto}
+          disabled={isLoading}
+        />
+          {/* <DtoSelectInput
             setDataObject={setTerraformStepConfigurationDataDto}
             textField={"name"}
             valueField={"value"}
@@ -339,7 +368,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             filter={"contains"}
             selectOptions={JOB_TYPES ? JOB_TYPES : []}
             fieldName={"toolActionType"}
-          />
+          /> */}
           <DtoSelectInput
             setDataObject={setTerraformStepConfigurationDataDto}
             setDataFunction={handleDTOChange}
@@ -375,7 +404,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             selectOptions={SCMList ? SCMList : []}
             fieldName={"gitToolId"}
             busy={isGitSearching}
-            disabled={terraformStepConfigurationDto.getData("type").length === 0 || isGitSearching}
+            // disabled={terraformStepConfigurationDto.getData("type").length === 0 || isGitSearching}
           />
 
           {terraformStepConfigurationDto.getData("type") === "bitbucket" && (
@@ -389,7 +418,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
               selectOptions={workspacesList ? workspacesList : []}
               fieldName={"bitbucketWorkspaceName"}
               busy={isWorkspacesSearching}
-              disabled={terraformStepConfigurationDto.getData("gitToolId").length === 0 || isWorkspacesSearching}
+              // disabled={terraformStepConfigurationDto.getData("gitToolId").length === 0 || isWorkspacesSearching}
             />
           )}
 
@@ -403,7 +432,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             selectOptions={repoList ? repoList : []}
             fieldName={"gitRepository"}
             busy={isRepoSearching}
-            disabled={terraformStepConfigurationDto.getData("gitToolId").length === 0 || isRepoSearching}
+            // disabled={terraformStepConfigurationDto.getData("gitToolId").length === 0 || isRepoSearching}
           />
 
           <DtoSelectInput
@@ -415,15 +444,15 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             selectOptions={branchList ? branchList : []}
             fieldName={"defaultBranch"}
             busy={isBranchSearching}
-            disabled={terraformStepConfigurationDto.getData("gitRepository").length === 0 || isBranchSearching}
+            // disabled={terraformStepConfigurationDto.getData("gitRepository").length === 0 || isBranchSearching}
           />
           <TextInputBase
             setDataObject={setTerraformStepConfigurationDataDto}
             dataObject={terraformStepConfigurationDto}
             fieldName={"gitFilePath"}
-            disabled={
-              terraformStepConfigurationDto && terraformStepConfigurationDto.getData("defaultBranch").length === 0
-            }
+            // disabled={
+            //   terraformStepConfigurationDto && terraformStepConfigurationDto.getData("defaultBranch").length === 0
+            // }
           />
           <DtoSelectInput
             setDataObject={setTerraformStepConfigurationDataDto}
@@ -434,31 +463,31 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             selectOptions={awsList ? awsList : []}
             fieldName={"awsToolConfigId"}
             busy={isAwsSearching}
-            disabled={isAwsSearching || terraformStepConfigurationDto && terraformStepConfigurationDto.getData("defaultBranch").length === 0}
+            // disabled={isAwsSearching || terraformStepConfigurationDto && terraformStepConfigurationDto.getData("defaultBranch").length === 0}
           />
           <TextInputBase
             setDataObject={setTerraformStepConfigurationDataDto}
             dataObject={terraformStepConfigurationDto}
             fieldName={"accessKeyParamName"}
-            disabled={
-              terraformStepConfigurationDto && terraformStepConfigurationDto.getData("awsToolConfigId") && terraformStepConfigurationDto.getData("awsToolConfigId").length === 0
-            }
+            // disabled={
+            //   terraformStepConfigurationDto && terraformStepConfigurationDto.getData("awsToolConfigId") && terraformStepConfigurationDto.getData("awsToolConfigId").length === 0
+            // }
           />
           <TextInputBase
             setDataObject={setTerraformStepConfigurationDataDto}
             dataObject={terraformStepConfigurationDto}
             fieldName={"secrectKeyParamName"}
-            disabled={
-              terraformStepConfigurationDto && terraformStepConfigurationDto.getData("awsToolConfigId") && terraformStepConfigurationDto.getData("awsToolConfigId").length === 0
-            }
+            // disabled={
+            //   terraformStepConfigurationDto && terraformStepConfigurationDto.getData("awsToolConfigId") && terraformStepConfigurationDto.getData("awsToolConfigId").length === 0
+            // }
           />
           <TextInputBase
             setDataObject={setTerraformStepConfigurationDataDto}
             dataObject={terraformStepConfigurationDto}
             fieldName={"regionParamName"}
-            disabled={
-              terraformStepConfigurationDto && terraformStepConfigurationDto.getData("awsToolConfigId") && terraformStepConfigurationDto.getData("awsToolConfigId").length === 0
-            }
+            // disabled={
+            //   terraformStepConfigurationDto && terraformStepConfigurationDto.getData("awsToolConfigId") && terraformStepConfigurationDto.getData("awsToolConfigId").length === 0
+            // }
           />
           <OverlayTrigger
             trigger="click"
