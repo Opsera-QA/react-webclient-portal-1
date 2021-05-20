@@ -1,15 +1,19 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {faFilter} from "@fortawesome/pro-light-svg-icons";
+import {faFilter, faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import PipelineWizardRuleInput from "components/common/inputs/rules/sfdc_pipeline_wizard/PipelineWizardRuleInput";
 import sfdcRuleMetadata from "components/common/inputs/rules/sfdc_pipeline_wizard/sfdc-rule-metadata";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import PipelineWizardRuleInputHelpDocumentation
+  from "components/common/help/documentation/pipelines/wizard/PipelineWizardRuleInputHelpDocumentation";
+import HelpButton from "components/common/buttons/help/HelpButton";
 
 // TODO: On final refactor of SFDC Wizard, utilize model/set models here
 function SfdcRulesInputContainer({ruleList, setRuleList, postBody, modifiedFiles, isGitTab}) {
   const [errorMessage, setErrorMessage] = useState("");
+  const [showHelp, setShowHelp] = useState(false);
   const [rules, setRules] = useState([]);
   const isMounted = useRef(false);
 
@@ -51,11 +55,7 @@ function SfdcRulesInputContainer({ruleList, setRuleList, postBody, modifiedFiles
     setRules([...newPropertyList]);
 
     if (JSON.stringify(newPropertyList) !== JSON.stringify(ruleList)) {
-      console.log("rules change, triggering refresh");
       setRuleList([...newPropertyList]);
-    }
-    else {
-      console.log("Avoiding state retrigger. Rules haven't changed");
     }
   };
 
@@ -131,6 +131,23 @@ function SfdcRulesInputContainer({ruleList, setRuleList, postBody, modifiedFiles
     );
   };
 
+  const getHelp = () => {
+    if (showHelp) {
+     return (
+       <div className={"mt-3"}>
+         <PropertyInputContainer
+           titleIcon={faQuestionCircle}
+           titleText={"File Selection Rule Filter Help Documentation"}
+         >
+           <div className={"p-3"}>
+             <PipelineWizardRuleInputHelpDocumentation />
+           </div>
+         </PropertyInputContainer>
+       </div>
+     );
+    }
+  };
+
   return (
     <>
       <PropertyInputContainer
@@ -138,6 +155,7 @@ function SfdcRulesInputContainer({ruleList, setRuleList, postBody, modifiedFiles
         field={null}
         titleText={"File Selection Rule Filter"}
         errorMessage={errorMessage}
+        toggleButton={<HelpButton toggleHelp={() => setShowHelp(!showHelp)} className={"my-auto"} />}
       >
         <div>
           {getHeaderBar()}
@@ -146,7 +164,7 @@ function SfdcRulesInputContainer({ruleList, setRuleList, postBody, modifiedFiles
           {getFieldBody()}
         </div>
       </PropertyInputContainer>
-      <small className="text-muted form-text"><div>A file will be included if it meets all of these rules.</div></small>
+      {getHelp()}
     </>
   );
 }

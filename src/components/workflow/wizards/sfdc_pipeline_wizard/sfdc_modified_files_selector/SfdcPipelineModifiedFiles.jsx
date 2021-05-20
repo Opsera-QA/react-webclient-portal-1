@@ -249,12 +249,6 @@ const SfdcPipelineModifiedFiles = ({
   };
 
   const getView = () => {
-    if (activeTab === "help") {
-      return (
-        <PipelineWizardHelpDocumentation />
-      );
-    }
-
     if (activeTab === "sfdc") {
       if (isOrgToOrg) {
         return (

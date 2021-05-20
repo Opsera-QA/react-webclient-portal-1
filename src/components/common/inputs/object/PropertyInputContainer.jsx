@@ -7,12 +7,15 @@ import {Button} from "react-bootstrap";
 import {faPlus} from "@fortawesome/pro-light-svg-icons";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 
-function PropertyInputContainer({ children, titleIcon, titleText, field, errorMessage, addProperty, type, addAllowed, helpComponent }) {
+function PropertyInputContainer({ children, titleIcon, titleText, field, errorMessage, addProperty, type, addAllowed, helpComponent, toggleButton }) {
   const getTitleBar = () => {
     return (
-      <div className="px-2 pt-2 d-flex justify-content-between">
-        <div><FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-2"/>{titleText}</div>
-        <LaunchHelpIcon helpComponent={helpComponent} />
+      <div className="pl-2 d-flex justify-content-between">
+        <div className={"pt-2"}><FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-2"/>{titleText}</div>
+        <div>
+          <LaunchHelpIcon helpComponent={helpComponent} className={"pt-2 pr-2"} />
+          <div className={"pt-1 pr-1"}>{toggleButton}</div>
+        </div>
       </div>
     );
   };
@@ -54,7 +57,8 @@ PropertyInputContainer.propTypes = {
   type: PropTypes.string,
   addProperty: PropTypes.func,
   addAllowed: PropTypes.bool,
-  helpComponent: PropTypes.any
+  helpComponent: PropTypes.any,
+  toggleButton: PropTypes.object
 };
 
 export default PropertyInputContainer;
