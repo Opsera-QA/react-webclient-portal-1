@@ -48,6 +48,8 @@ function GitReviewerMultiSelectInput({
 
   const getReviewers = async () => {
     const response = await toolsActions.getRoleLimitedToolById(gitToolId, getAccessToken);
+    console.log({response});
+    console.log({dataObject});    
     if(response.data.data[0].accounts){
       setAllReviewers(response.data.data[0].accounts);      
       setReviewers(response.data.data[0].accounts

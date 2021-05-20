@@ -45,7 +45,7 @@ function CenterOverlayContainer({ children, actionBar, titleText, titleIcon, sho
       <div className={getStyling()}>
         <OverlayTitleBar handleClose={closePanel} isLoading={isLoading} titleText={titleText} titleIcon={titleIcon} />
         {actionBar}
-        <div className="overlay-panel-body">
+        <div className={"overlay-panel-body bg-white"}>
           {showToasts && toastContext?.getInlineBanner()}
           {children}
         </div>

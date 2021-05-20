@@ -5,7 +5,6 @@ import TextFieldBase from "components/common/form_fields/TextFieldBase";
 import GitTasksSummaryCardContainer from "components/git/git_task_details/configuration_forms/GitTasksSummaryCardContainer";
 import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
-
 function BranchToBranchGitTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, isLoading }) {
 
   if (isLoading) {
@@ -14,7 +13,7 @@ function BranchToBranchGitTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurati
 
   return (
     <GitTasksSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
-      <div className="mb-2">
+      <div className="mb-2">        
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"service"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"gitCredential"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"workspace"} />

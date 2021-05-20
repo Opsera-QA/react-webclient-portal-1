@@ -19,6 +19,7 @@ function SFDCJenkinsAccountInput({dataObject, setDataObject, disabled, gitTasksD
     newDataObject.setData("sourceBranch", "");
     newDataObject.setData("workspace", "");
     newDataObject.setData("workspaceName", "");
+    newDataObject.setData("sourceBranch", "");
     setDataObject({...newDataObject});
   };
 

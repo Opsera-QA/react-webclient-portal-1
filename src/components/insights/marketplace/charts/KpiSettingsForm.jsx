@@ -17,7 +17,8 @@ import {
   kpiApplicationFilterMetadata,
   kpiSprintFilterMetadata,
   kpiReleaseFilterMetadata,
-  kpiProjectFilterMetadata
+  kpiProjectFilterMetadata,
+  kpiSeleniumTestSuitesFilterMetadata,
 } from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import Model from "core/data_model/model";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
@@ -28,6 +29,7 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import TagManager from "components/common/inputs/tags/TagManager";
 import JenkinsResultFilterInput from "components/common/list_of_values_input/insights/charts/jenkins/JenkinsResultFilterInput";
 import ManualKpiMultiSelectInputBase from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
+import SeleniumTestSuitesMultiSelectInput from "components/common/list_of_values_input/insights/charts/selenium/SeleniumTestSuitesMultiSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 
 function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart, setKpis }) {
@@ -52,10 +54,18 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "jira-issue-type", kpiJiraIssueTypeFilterMetadata)
   );
   const [kpiJiraIssueStartStatusFilter, setKpiJiraIssueStartStatusFilter] = useState(
-    modelHelpers.getDashboardFilterModel(kpiConfiguration, "jira-issue-start-status", kpiJiraIssueStartStatusFilterMetadata)
+    modelHelpers.getDashboardFilterModel(
+      kpiConfiguration,
+      "jira-issue-start-status",
+      kpiJiraIssueStartStatusFilterMetadata
+    )
   );
   const [kpiJiraIssueDoneStatusFilter, setKpiJiraIssueDoneStatusFilter] = useState(
-    modelHelpers.getDashboardFilterModel(kpiConfiguration, "jira-issue-done-status", kpiJiraIssueDoneStatusFilterMetadata)
+    modelHelpers.getDashboardFilterModel(
+      kpiConfiguration,
+      "jira-issue-done-status",
+      kpiJiraIssueDoneStatusFilterMetadata
+    )
   );
   const [kpiSonarProjectKeyFilter, setKpiSonarProjectKeyFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "sonar-project-key", kpiSonarProjectKeyFilterMetadata)
@@ -71,6 +81,9 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
   );
   const [kpiSprintFilter, setKpiSprintFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "sprint", kpiSprintFilterMetadata)
+  );
+  const [kpiSeleniumTestSuitesFilter, setKpiSeleniumTestSuitesFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "selenium-test-suites", kpiSeleniumTestSuitesFilterMetadata)
   );
   const [kpiProjectFilter, setKpiProjectFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "project", kpiProjectFilterMetadata)
@@ -156,7 +169,12 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "first-pass-yield",
     "cumulative-open-defects",
     "automation-percentage",
-    "adoption-percentage"
+    "adoption-percentage",
+    "sfdc-backups",
+    "sfdc-profile-migrations",
+    "sfdc-unit-testing",
+    "sonar-security-scorecard",
+    "selenium-test-summary-percentages",
   ];
 
   const getKpiFilters = (filter) => {
@@ -311,6 +329,20 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
             />
           </div>
         );
+      case "selenium-test-suites":
+        return (
+          <div>
+            <SeleniumTestSuitesMultiSelectInput
+              placeholderText={"Select Test Suites"}
+              type={"kpi_filter"}
+              fieldName={"value"}
+              valueField={"value"}
+              textField={"text"}
+              setDataObject={setKpiSeleniumTestSuitesFilter}
+              dataObject={kpiSeleniumTestSuitesFilter}
+            />
+          </div>
+        );
     }
   };
 
@@ -329,7 +361,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-result")
-        ]
+      ]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-result")
@@ -342,7 +374,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jenkins-job-url")
-        ].value = kpiJenkinsJobUrlFilter.getData("value");
+      ].value = kpiJenkinsJobUrlFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
@@ -390,13 +422,18 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       ].value = kpiSonarProjectKeyFilter.getData("value");
     }
     if (
-      newKpiSettings.getData("filters")[
-        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "domain")
-      ]
+      newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "domain")]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "domain")
       ].value = kpiDomainFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")
+      ].value = kpiProjectFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
@@ -408,32 +445,36 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       ].value = kpiApplicationFilter.getData("value");
     }
     if (
-      newKpiSettings.getData("filters")[
-        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sprint")
-      ]
+      newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sprint")]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sprint")
       ].value = kpiSprintFilter.getData("value");
     }
     if (
-      newKpiSettings.getData("filters")[
-        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")
-        ]
+      newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")
-        ].value = kpiProjectFilter.getData("value");
+      ].value = kpiProjectFilter.getData("value");
     }
     if (
-      newKpiSettings.getData("filters")[
-        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "release")
-      ]
+      newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "release")]
     ) {
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "release")
       ].value = kpiReleaseFilter.getData("value");
     }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "selenium-test-suites")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "selenium-test-suites")
+      ].value = kpiSeleniumTestSuitesFilter.getData("value");
+    }
+
     setKpiSettings({ ...newKpiSettings });
     dashboardData.getData("configuration")[index] = kpiSettings.data;
     setKpiConfiguration(kpiSettings.data);

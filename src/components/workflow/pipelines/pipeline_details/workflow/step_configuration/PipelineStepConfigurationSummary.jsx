@@ -401,6 +401,13 @@ function PipelineStepConfigurationSummary({
           <TerrascanPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             terrascanLinePipelineDataObject={getModelWrappedObject(terrascanStepFormMetadata)}
+            />
+        );
+      case "azure-devops":
+        return (
+          <AzureDevopsPipelineStepConfigurationSummary
+            pipelineData={pipelineData}
+            azureDevopsPipelineDataObject={getModelWrappedObject(azureDevopsStepFormMetadata)}
           />
         );
       case "azure-devops":

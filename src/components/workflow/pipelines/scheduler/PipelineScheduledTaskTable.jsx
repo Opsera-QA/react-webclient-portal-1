@@ -1,16 +1,30 @@
-import React, {useContext, useEffect, useMemo} from "react";
+import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import pipelineSchedulerMetadata from "components/workflow/pipelines/scheduler/pipeline-scheduler-metadata";
-import {getTableBooleanIconColumn, getTableTextColumn} from "components/common/table/table-column-helpers-v2";
-import TableBase from "components/common/table/TableBase";
-import PaginationContainer from "components/common/pagination/PaginationContainer";
+import {getTableBooleanIconColumn, getTableTextColumn, getTableDateTimeColumn} from "components/common/table/table-column-helpers-v2";
 import {faCalendarAlt} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import Model from "core/data_model/model";
 import VanityTable from "components/common/table/VanityTable";
 
-function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPaginationModel, pipelineId, loadData, isMounted, setScheduledTaskData }) {
-  const fields = pipelineSchedulerMetadata.fields;
+function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPaginationModel, pipeline, loadData, isMounted, setScheduledTaskData }) {
+  const fields = [...pipelineSchedulerMetadata.fields, {label: "Next Run", id: "executionDate"}, {label: "Interval", id: "interval"} ];
+
+  const frequencyLookup ={
+    "NONE": "once",
+    "DAY": "daily",
+    "WEEK": "weekly",
+    "MONTH": "monthly"
+};
+
+  let newData = data;
+  newData.forEach(item => {
+    let options = {hour12: false};
+    let date = new Date(item.schedule.executionDate);
+    let dateString = date.toLocaleString(undefined, options);
+    item["executionDate"] = dateString;
+    item["interval"] = frequencyLookup[item.schedule.recurring];
+  });
 
   const onRowSelect = (grid, row) => {
     if (isMounted?.current === true) {
@@ -22,8 +36,9 @@ function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPagin
   const columns = useMemo(
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "name";})),
-      getTableTextColumn(fields.find(field => { return field.id === "description";})),
-      // getTableTextColumn(fields.find(field => { return field.id === "notes";})),
+      getTableDateTimeColumn(fields.find(field => { return field.id === "executionDate";})),
+      getTableTextColumn(fields.find(field => { return field.id === "interval";})),
+      getTableDateTimeColumn(fields.find(field => { return field.id === "lastRun";})),
       getTableBooleanIconColumn(fields.find(field => { return field.id === "active";})),
     ],
     [],
@@ -47,7 +62,7 @@ function PipelineScheduledTaskTable({ data, isLoading, paginationModel, setPagin
   const createScheduledTask = () => {
     if (isMounted?.current === true) {
       let newModel = new Model({...pipelineSchedulerMetadata.newObjectFields}, pipelineSchedulerMetadata, true);
-      newModel.setData("task", { taskType: "RUN", pipelineId: pipelineId});
+      newModel.setData("task", { taskType: "RUN", pipelineId: pipeline?._id});
       setScheduledTaskData({...newModel});
     }
   };
@@ -80,7 +95,7 @@ PipelineScheduledTaskTable.propTypes = {
   loadData: PropTypes.func,
   isMounted: PropTypes.object,
   setScheduledTaskData: PropTypes.func,
-  pipelineId: PropTypes.string
+  pipeline: PropTypes.object,
 };
 
 export default PipelineScheduledTaskTable;

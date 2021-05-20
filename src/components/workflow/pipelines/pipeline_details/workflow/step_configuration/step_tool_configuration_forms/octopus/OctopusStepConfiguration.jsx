@@ -25,6 +25,7 @@ import RollbackToggleInput from "./input/RollbackToggleInput";
 import OctopusDeploymentVariables from "./input/OctopusDeploymentVariables";
 import OctopusSpecifyDepVarsToggle from "./input/OctopusSpecifyDepVarsToggle";
 import OctopusProtocolInput from "./input/OctopusProtocolInput";
+import OctopusLifecycleSelectInput from "./input/OctopusLifecycleSelectInput";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -86,7 +87,8 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
       },
     };
     let validateDepVariables = await validateDeploymentVariables();
-    if (validateDepVariables) {
+    let validateCondVariables = await validateConditionalVariables();
+    if (validateDepVariables && validateCondVariables) {
       await createDeploymentEnvironments();
       parentCallback(item);
       await createOctopusProject();
@@ -115,6 +117,32 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
         };
       }
     }
+  };
+
+  const validateConditionalVariables = async () => {
+    if (octopusStepConfigurationDto.getData("isRollback")) {
+      if (!octopusStepConfigurationDto.getData("octopusVersion") || octopusStepConfigurationDto.getData("octopusVersion") && octopusStepConfigurationDto.getData("octopusVersion").length === 0) {
+        let errorMesage =
+          "Missing required fields for rollback, Please select a version to rollback a deployment";
+        toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
+        return false;
+    }
+    }
+    if (octopusStepConfigurationDto.getData("octopusPlatformType") && (octopusStepConfigurationDto.getData("octopusPlatformType") === "Azure" || octopusStepConfigurationDto.getData("octopusPlatformType") === "Package")) {
+      if (!octopusStepConfigurationDto.getData("octopusDeploymentType") || octopusStepConfigurationDto.getData("octopusDeploymentType") && octopusStepConfigurationDto.getData("octopusDeploymentType").length === 0) {
+        let errorMesage =
+          "Missing required fields for selected platform type, Please select deployment type";
+        toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
+        return false;
+      }
+      if (!octopusStepConfigurationDto.getData("octopusFeedId") || octopusStepConfigurationDto.getData("octopusFeedId") && octopusStepConfigurationDto.getData("octopusFeedId").length === 0) {
+        let errorMesage =
+          "Missing required fields for selected platform type, Please select a feed";
+        toastContext.showErrorDialog(`Error in octopus Project Creation:  ${errorMesage}`);
+        return false;
+      }
+    }
+    return true;
   };
 
   const validateDeploymentVariables = async () => {
@@ -235,6 +263,21 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
           />
           <OctopusPlatformTypeSelectInput
             fieldName={"octopusPlatformType"}
+            dataObject={octopusStepConfigurationDto}
+            setDataObject={setOctopusStepConfigurationDataDto}
+            disabled={
+              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+                ? octopusStepConfigurationDto.getData("spaceName").length === 0
+                : true
+            }
+            tool_prop={
+              octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName")
+                ? octopusStepConfigurationDto.getData("spaceName")
+                : ""
+            }
+          />
+          <OctopusLifecycleSelectInput
+            fieldName={"lifecycleId"}
             dataObject={octopusStepConfigurationDto}
             setDataObject={setOctopusStepConfigurationDataDto}
             disabled={

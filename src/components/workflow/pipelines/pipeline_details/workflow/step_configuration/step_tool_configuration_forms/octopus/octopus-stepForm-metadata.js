@@ -26,7 +26,9 @@ const octopusStepFormMetadata = {
       {
         label: "Project Name",
         id: "projectName",
-        isRequired: true
+        isRequired: true,
+        regexValidator: regexHelpers.regexTypes.generalText,
+        maxLength: 100
       },
       {
         label: "Environment Name",
@@ -50,7 +52,9 @@ const octopusStepFormMetadata = {
       {
         label: "Project Description",
         id: "projectDescription",
-        isRequired: true
+        isRequired: true,
+        regexValidator: regexHelpers.regexTypes.generalText,
+        maxLength: 100
       },
       {
         label: "Environment Name ID",
@@ -60,6 +64,8 @@ const octopusStepFormMetadata = {
       {
         label: "Namespace",
         id: "namespace",
+        regexValidator: regexHelpers.regexTypes.generalText,
+        maxLength: 100
       },
       {
         label: "Artifact Step",
@@ -100,11 +106,15 @@ const octopusStepFormMetadata = {
       },
       {
         label: "XML Configuration Transformed Variable Value",
-        id: "xmlConfigTransformVariableValue"
+        id: "xmlConfigTransformVariableValue",
+        regexValidator: regexHelpers.regexTypes.pathField,
+        maxLength: 100
       },
       {
         label: "Structured Configuration Variables Path",
-        id: "structuredConfigVariablesPath"
+        id: "structuredConfigVariablesPath",
+        regexValidator: regexHelpers.regexTypes.pathField,
+        maxLength: 100
       },
       {
         label: "Deployment Variables",
@@ -134,7 +144,14 @@ const octopusStepFormMetadata = {
       },
       {
         label: "Binding Port",
-        id: "port"
+        id: "port",
+        regexValidator: regexHelpers.regexTypes.numericalField,
+        maxLength: 50
+      },
+      {
+        label: "Deployment Lifecycle",
+        id: "lifecycleId",
+        isRequired: true
       },
     ],
   newObjectFields:
@@ -168,7 +185,8 @@ const octopusStepFormMetadata = {
         webSiteName: "",
         applicationPoolName: "",
         protocol: "HTTP",
-        port: "80"
+        port: "80",
+        lifecycleId: ""
       }
   };
   

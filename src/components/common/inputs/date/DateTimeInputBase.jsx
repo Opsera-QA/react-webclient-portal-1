@@ -11,7 +11,7 @@ function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFuncti
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   Moment.locale("en");
-  momentLocalizer();
+  momentLocalizer(); 
 
   useEffect(() => {
     if (dataObject.getData(fieldName) !== "") {

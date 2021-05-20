@@ -8,11 +8,17 @@ import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import Model from "../../../../../core/data_model/model";
+import DeploymentFrequencyInsightsTableMetadata
+  from "./deployment-frequency-actionable-metadata.js";
+import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
 function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
+  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
@@ -78,10 +84,20 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
       );
     };
 
+    const onRowSelect = (stat) => {
+      const chartModel = new Model({...DeploymentFrequencyInsightsTableMetadata.newObjectFields}, DeploymentFrequencyInsightsTableMetadata, false);
+      toastContext.showOverlayPanel(
+      <ChartDetailsOverlay 
+        dashboardData={dashboardData} 
+        kpiConfiguration={kpiConfiguration} 
+        chartModel={chartModel} 
+        kpiIdentifier={"opsera-deployment-frequency-stats" + "-" + stat} />);
+    };
+
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
         <Container>
-          <Row className="p-3">
+          <Row className="p-1">
             <Col><div className="metric-box p-3 text-center">
               <div className="box-metric">
                 <div>{metrics[0].avg}</div>
@@ -118,13 +134,13 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
           <Row className="p-3">
             <Col><div className="metric-box p-3 text-center">
               <div className="box-metric">
-                <div className="green">{metrics[0].totalSuccess}</div>
+                <div className="green pointer" onClick={() => onRowSelect("successful")}>{metrics[0].totalSuccess}</div>
               </div>
               <div className="w-100 text-muted mb-1">Successful Deployments</div>
             </div></Col>
             <Col><div className="metric-box p-3 text-center">
               <div className="box-metric">
-                <div className="red">{metrics[0].totalFailed}</div>
+                <div className="red pointer" onClick={() => onRowSelect("failed")}>{metrics[0].totalFailed}</div>
               </div>
               <div className="w-100 text-muted mb-1">Failed Deployments</div>
             </div></Col>

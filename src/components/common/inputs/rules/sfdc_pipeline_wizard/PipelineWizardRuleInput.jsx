@@ -74,10 +74,10 @@ function PipelineWizardRuleInput({ruleData, index, addRule, deleteRule, updateRu
     <Row className="d-flex mx-2 justify-content-between" key={index}>
       <Col sm={11} className={"px-0"}>
         <Row className={"mx-0"}>
-          <Col xs={1}>
+          <Col xs={1} className={"pr-1 pl-0"}>
             <RuleTypeSelectInput dataObject={ruleModel} setDataObject={updateData} showLabel={false} />
           </Col>
-          <Col xs={4}>
+          <Col xs={4} className={"px-0"}>
             <SfdcRuleComponentTypeMultiSelectInput
               dataObject={ruleModel}
               setDataObject={updateData}
@@ -86,10 +86,10 @@ function PipelineWizardRuleInput({ruleData, index, addRule, deleteRule, updateRu
               sfdcModified={modifiedFiles}
             />
           </Col>
-          <Col xs={2}>
+          <Col xs={2} className={"px-1"}>
             {getRulesFieldComponent()}
           </Col>
-          <Col xs={4}>
+          <Col xs={5} className={"px-0"}>
             <RuleValueMultiSelectInput
               ruleField={ruleModel?.getData("field")}
               dataObject={ruleModel}

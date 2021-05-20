@@ -111,6 +111,7 @@ function PipelineCatalog({source, activeTemplates}) {
   };
 
   return (
+    <div style={{minWidth: "660px"}}>
     <FilterContainer
       loadData={loadData}
       filterDto={catalogFilterModel}
@@ -124,6 +125,7 @@ function PipelineCatalog({source, activeTemplates}) {
       title={"Pipeline Templates"}
       className={"pb-2"}
     />
+    </div>
   );
 }
 
