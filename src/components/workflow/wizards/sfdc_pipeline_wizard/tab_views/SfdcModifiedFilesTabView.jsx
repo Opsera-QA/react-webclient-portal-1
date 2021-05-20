@@ -40,7 +40,7 @@ const SfdcModifiedFilesTabView = (
   const [files, setFiles] = useState([]);
   const [showFileUpload, setShowFileUpload] = useState(false);
   const fields = sfdcTableConstants.fields;
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [sfdcWarningMessage, setSfdcWarningMessage] = useState("");
   const [sfdcFilterDto, setSfdcFilterDto] = useState(new Model({ ...sfdcComponentFilterMetadata.newObjectFields }, sfdcComponentFilterMetadata, false));
   const [sfdcModified, setSfdcModified] = useState([]);
@@ -82,11 +82,13 @@ const SfdcModifiedFilesTabView = (
     const source = axios.CancelToken.source();
     setReloadCancelToken(source);
 
-    rulesReload(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if (isLoading !== true && isMounted?.current === true) {
+      rulesReload(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
@@ -274,7 +276,7 @@ const SfdcModifiedFilesTabView = (
         loadData={loadData}
         filterDto={sfdcFilterDto}
         setFilterDto={setSfdcFilterDto}
-        isLoading={isLoading}
+        isLoading={isLoading || rulesReloading}
         title={"SFDC Files"}
         titleIcon={faSalesforce}
         body={getSfdcModifiedFilesView()}

@@ -45,7 +45,7 @@ const SfdcPipelineProfileComponentsView = (
   }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [componentsLoading, setComponentsLoading] = useState(false);
+  const [componentsLoading, setComponentsLoading] = useState(true);
   const [save, setSave] = useState(false);
   const [files, setFiles] = useState([]);
   const [profileComponentList, setProfileComponentList] = useState([]);
@@ -57,6 +57,11 @@ const SfdcPipelineProfileComponentsView = (
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const fields = sfdcTableConstants.fields;
+
+  // TODO: Remove after node-side status fix
+  const [rulesReloading, setRulesReloading] = useState(false);
+  const [reloadCancelToken, setReloadCancelToken] = useState(undefined);
+
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -80,17 +85,16 @@ const SfdcPipelineProfileComponentsView = (
   }, [profileComponentsRuleList]);
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
+    if (reloadCancelToken) {
+      reloadCancelToken.cancel();
     }
 
     setProfileComponentList([]);
     const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
+    setReloadCancelToken(source);
 
-    if (profileComponentsRuleList != null) {
-      filterDto.setData("currentPage", 1);
-      getProfileFiles(cancelTokenSource, filterDto).catch((error) => {
+    if (componentsLoading !== true && isMounted?.current === true) {
+      rulesReload(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
@@ -101,6 +105,23 @@ const SfdcPipelineProfileComponentsView = (
       source.cancel();
     };
   }, [profileComponentsRuleList]);
+
+
+  const rulesReload = async (cancelSource = cancelTokenSource, newFilterDto = filterDto) => {
+    try {
+      if (isMounted?.current === true) {
+        setRulesReloading(true);
+        newFilterDto?.setData("currentPage", 1);
+        await getProfileFiles(cancelSource, newFilterDto);
+      }
+    }
+    catch (error) {
+      toastContext.showInlineErrorMessage(error);
+    }
+    finally {
+      setRulesReloading(false);
+    }
+  };
 
   const loadData = async (cancelSource = cancelTokenSource, newFilterDto = filterDto) => {
     try {
@@ -284,7 +305,7 @@ const SfdcPipelineProfileComponentsView = (
           className={"table-no-border" + (files.length > 0 ? " opacity-half" : " ") }
           columns={sfdcColumnsWithCheckBoxCell}
           data={profileComponentList}
-          isLoading={componentsLoading}
+          isLoading={componentsLoading || rulesReloading}
           loadData={loadData}
           noDataMessage={sfdcTableConstants?.noDataMessage}
           paginationModel={filterDto}
@@ -330,7 +351,7 @@ const SfdcPipelineProfileComponentsView = (
           loadData={loadData}
           filterDto={filterDto}
           setFilterDto={setFilterDto}
-          isLoading={componentsLoading}
+          isLoading={componentsLoading || rulesReloading}
           title={"Profile Components"}
           titleIcon={faSalesforce}
           body={getProfileFilesView()}

@@ -55,8 +55,7 @@ const GitModifiedFilesTabView = (
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    gitFilterDto?.setData("currentPage", 1);
-    loadData(source, gitFilterDto).catch((error) => {
+    loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -66,7 +65,7 @@ const GitModifiedFilesTabView = (
       source.cancel();
       isMounted.current = false;
     };
-  }, [ruleList]);
+  }, []);
 
   useEffect(() => {
     if (reloadCancelToken) {
@@ -76,17 +75,18 @@ const GitModifiedFilesTabView = (
     const source = axios.CancelToken.source();
     setReloadCancelToken(source);
 
-    rulesReload(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if (isLoading !== true && isMounted?.current === true) {
+      rulesReload(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
     };
   }, [ruleList]);
-
 
   const rulesReload = async (cancelSource = cancelTokenSource, newFilterDto = gitFilterDto) => {
     try {
@@ -207,7 +207,7 @@ const GitModifiedFilesTabView = (
         <VanityTable
           columns={gitColumnsWithCheckBoxCell}
           data={gitModified}
-          isLoading={isLoading}
+          isLoading={isLoading || rulesReloading}
           loadData={loadData}
           noDataMessage={sfdcTableConstants?.noDataMessage}
           paginationModel={gitFilterDto}
@@ -235,7 +235,7 @@ const GitModifiedFilesTabView = (
         loadData={loadData}
         filterDto={gitFilterDto}
         setFilterDto={setGitFilterDto}
-        isLoading={isLoading}
+        isLoading={isLoading || rulesReloading}
         title={"GIT Files"}
         titleIcon={faCode}
         body={getGitModifiedFilesView()}

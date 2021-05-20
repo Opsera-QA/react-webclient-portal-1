@@ -48,7 +48,7 @@ const SfdcProfileSelectionView = (
   const [sfdcWarningMessage, setSfdcWarningMessage] = useState("");
   const [sfdcFilterDto, setSfdcFilterDto] = useState(new Model({ ...sfdcComponentFilterMetadata.newObjectFields }, sfdcComponentFilterMetadata, false));
   const [sfdcModified, setSfdcModified] = useState([]);
-  const [sfdcLoading, setSfdcLoading] = useState(false);
+  const [sfdcLoading, setSfdcLoading] = useState(true);
 
   // TODO: Remove after node-side status fix
   const [rulesReloading, setRulesReloading] = useState(false);
@@ -87,7 +87,7 @@ const SfdcProfileSelectionView = (
     const source = axios.CancelToken.source();
     setReloadCancelToken(source);
 
-    if (sfdcLoading !== true) {
+    if (sfdcLoading !== true && isMounted?.current === true) {
       rulesReload(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -99,7 +99,6 @@ const SfdcProfileSelectionView = (
       source.cancel();
     };
   }, [ruleList]);
-
 
   const rulesReload = async (cancelSource = cancelTokenSource, newFilterDto = sfdcFilterDto) => {
     try {
@@ -178,7 +177,7 @@ const SfdcProfileSelectionView = (
 
 
         if (Array.isArray(sfdcResponse.data.data.sfdcCommitList.data) && sfdcResponse.data.data.sfdcCommitList.data.length > 0) {
-          setDestSfdcLoading(false);
+          setSfdcLoading(false);
         }
       }
     }
@@ -238,6 +237,22 @@ const SfdcProfileSelectionView = (
     }
   };
 
+
+  const reloadDestFiles = async (cancelSource = cancelTokenSource, newFilterDto = destSfdcFilterDto) => {
+    try {
+      if (isMounted?.current === true) {
+        setDestSfdcLoading(true);
+        await getModifiedDestinationFiles(cancelSource, newFilterDto);
+      }
+    }
+    catch (error) {
+      toastContext.showInlineErrorMessage(error);
+    }
+    finally {
+      setDestSfdcLoading(false);
+    }
+  };
+
   const getModifiedDestinationFiles = async (cancelSource = cancelTokenSource, newFilterDto = destSfdcFilterDto) => {
     const postBody = {
       pipelineId: pipelineId,
@@ -270,7 +285,7 @@ const SfdcProfileSelectionView = (
 
         setDestSfdcModified(destSfdcResponse?.data?.data?.destSfdcCommitList?.data);
 
-        if ((Array.isArray(destSfdcResponse.data.data.sfdcCommitList.data) && destSfdcResponse.data.data.sfdcCommitList.data.length > 0)) {
+        if ((Array.isArray(destSfdcResponse.data.data.destSfdcCommitList.data) && destSfdcResponse.data.data.destSfdcCommitList.data.length > 0)) {
           setDestSfdcLoading(false);
         }
       }
@@ -339,7 +354,7 @@ const SfdcProfileSelectionView = (
               loadData={rulesReload}
               filterDto={sfdcFilterDto}
               setFilterDto={setSfdcFilterDto}
-              isLoading={sfdcLoading}
+              isLoading={sfdcLoading || rulesReloading}
               title={"SFDC Files"}
               titleIcon={faSalesforce}
               body={getSfdcModifiedFilesView()}
@@ -348,7 +363,7 @@ const SfdcProfileSelectionView = (
         </Col>
         <Col xs={6} className={"pl-1"}>
           <FilterContainer
-            loadData={destSfdcPolling}
+            loadData={reloadDestFiles}
             filterDto={destSfdcFilterDto}
             setFilterDto={setDestSfdcFilterDto}
             isLoading={destSfdcLoading}
