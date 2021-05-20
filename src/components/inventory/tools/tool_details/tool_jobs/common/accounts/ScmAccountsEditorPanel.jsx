@@ -172,6 +172,7 @@ function ScmAccountsEditorPanel({toolData, scmAccountData, handleClose}) {
               dataObject={scmAccountDataDto}
               setDataObject={setScmAccountDataDto}
               disabled={!scmAccountDataDto.isNew()}
+              existingReviewers={toolData.getData("accounts")}
             />
           </Col>
           <Col lg={12}>

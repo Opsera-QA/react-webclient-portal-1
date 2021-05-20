@@ -5,7 +5,9 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import GitActionsHelper
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/helpers/git-actions-helper";
-function ScmAccountReviewerInput({dataObject, setDataObject, disabled}) {    
+function ScmAccountReviewerInput({dataObject, setDataObject, disabled, existingReviewers}) {    
+
+    console.log({existingReviewers});
 
     const { getAccessToken } = useContext(AuthContext);
     const toastContext = useContext(DialogToastContext);
@@ -47,7 +49,9 @@ function ScmAccountReviewerInput({dataObject, setDataObject, disabled}) {
                                 );
 
         if(response.data.status === 200 && Array.isArray(response.data.data.reviewers)){
-            setReviewers(response.data.data.reviewers);
+            let filteredReviewers = existingReviewers.filter(er => er.repoId === dataObject.getData("repoId")).map(er => er.reviewerId);            
+            // setReviewers(response.data.data.reviewers);
+            setReviewers(response.data.data.reviewers.filter(r => !filteredReviewers.includes(r.value)));
         }        
     };
 
@@ -94,6 +98,7 @@ ScmAccountReviewerInput.propTypes = {
     dataObject: PropTypes.object,
     setDataObject: PropTypes.func,
     disabled: PropTypes.bool,
+    existingReviewers: PropTypes.array,
   };
   
   export default ScmAccountReviewerInput;
