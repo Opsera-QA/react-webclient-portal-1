@@ -410,13 +410,6 @@ function PipelineStepConfigurationSummary({
             azureDevopsPipelineDataObject={getModelWrappedObject(azureDevopsStepFormMetadata)}
           />
         );
-      case "azure-devops":
-        return (
-          <AzureDevopsPipelineStepConfigurationSummary
-            pipelineData={pipelineData}
-            azureDevopsPipelineDataObject={getModelWrappedObject(azureDevopsStepFormMetadata)}
-          />
-        );
       default:
         return (
           <SummaryPanelContainer>
