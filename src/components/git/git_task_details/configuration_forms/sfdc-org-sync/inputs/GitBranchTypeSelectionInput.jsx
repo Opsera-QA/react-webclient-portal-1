@@ -31,7 +31,7 @@ GitBranchTypeSelectionInput.propTypes = {
 };
 
 GitBranchTypeSelectionInput.defaultProps = {
-  fieldName: "conversionType",
+  fieldName: "conversionType"
 };
 
 export default GitBranchTypeSelectionInput;

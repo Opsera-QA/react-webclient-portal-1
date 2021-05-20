@@ -91,7 +91,6 @@ function JenkinsJobInput({ jenkinsId, visible, typeFilter, fieldName, dataObject
         setDataObject={setDataObject}
         setDataFunction={setDataFunction}
         selectOptions={jenkinsJobs}
-        placeholderText={placeholderText}
         busy={isLoading}
         valueField="name"
         textField="name"
