@@ -35,7 +35,7 @@ function Application(props) {
   const [appNameError, setAppNameError] = useState(null);
 
   const getApiData = async () => {
-    console.log("user: ", user);
+    // console.log("user: ", user);
     const urlParams = { userid: user.userId };
     const apiCall = new ApiService("/applications", urlParams, token);
     apiCall.get()
@@ -148,13 +148,13 @@ function Application(props) {
   };
 
   const saveTools = async () => {
-    console.log(`saving tools for user ${JSON.stringify(user._id)}`);
+    // console.log(`saving tools for user ${JSON.stringify(user._id)}`);
     let postBody = {
       id: appid,
       tools: data,
       uid: user.userId //specifically uses the legacy ssousers.userId value
     };
-    console.log("POSTBODY", postBody);
+    // console.log("POSTBODY", postBody);
     new ApiService(
       "/applications/create/tools",
       null,
@@ -197,7 +197,7 @@ function Application(props) {
 
   const cancelTools = (e) => {
     if(Object.keys(data).length === 0) {
-      console.log("no selection made");
+      // console.log("no selection made");
       handleTabClick(e);
     }
     setState({ 
