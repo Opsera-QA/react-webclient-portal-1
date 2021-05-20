@@ -348,8 +348,8 @@ const SfdcProfileSelectionView = (
           gitTaskData={gitTaskData}
         />
       }
-      <Row className="mt-2 d-flex">
-        <Col xs={6} className={"pr-1"}>
+      <Row className="mt-2 d-flex" style={{minWidth: "1400px"}}>
+        <Col xs={6} className={"pr-1"} style={{minWidth: "675px"}}>
           <FilterContainer
               loadData={rulesReload}
               filterDto={sfdcFilterDto}
@@ -361,7 +361,7 @@ const SfdcProfileSelectionView = (
               supportSearch={true}
           />
         </Col>
-        <Col xs={6} className={"pl-1"}>
+        <Col xs={6} className={"pl-1"} style={{minWidth: "675px"}}>
           <FilterContainer
             loadData={rulesReload}
             filterDto={destSfdcFilterDto}
