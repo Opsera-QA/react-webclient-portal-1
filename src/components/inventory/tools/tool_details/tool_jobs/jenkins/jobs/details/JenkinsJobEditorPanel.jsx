@@ -197,7 +197,7 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData, handleClose }) {
   const formFieldType = (formField) => {
     switch (formField.type) {
     case "select":
-      return <Form.Control as="select" disabled={formField.disabled } value={formField.value}
+      return <Form.Control as="select" disabled={formField.disabled || viewForm } value={formField.value}
                             onChange={e => handleFormChange(formField, e.target.value)}>
             <option name="Select One" value="" disabled={false}>Select One</option>
             {formField.options.map((option, i) => (
@@ -205,7 +205,7 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData, handleClose }) {
             ))}
           </Form.Control>;
     default:
-      return <Form.Control value={formField.value} disabled={formField.disabled}
+      return <Form.Control value={formField.value} disabled={formField.disabled || viewForm }
                            isInvalid={formField.touched && !formField.isValid}
                            onChange={e => handleFormChange(formField, e.target.value)}/>;
     }
@@ -401,8 +401,8 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData, handleClose }) {
 
 
       <div className="text-right m-2">
-        {!viewForm &&
-        <Button size="sm" variant="secondary" onClick={() => toggleViewForm(false)} className="mr-2">Cancel</Button>}
+        {!viewForm && Object.keys(jobData).length > 0 &&
+        <Button size="sm" variant="secondary" onClick={() => toggleViewForm(true)} className="mr-2">Cancel</Button>}
         {!viewForm &&
         <Button size="sm" variant="primary" onClick={updateJob}><FontAwesomeIcon icon={faSave} fixedWidth/>Save
           Job</Button>}
