@@ -248,7 +248,7 @@ const SfdcProfileSelectionView = (
 
     if ((!Array.isArray(destSfdcList) || destSfdcList?.length === 0) && count <= 5) {
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
-      return await destSfdcPolling(cancelSource, count + 1);
+      return await destSfdcPolling(cancelSource, newFilterDto, count + 1);
     }
   };
 

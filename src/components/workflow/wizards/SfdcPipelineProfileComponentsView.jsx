@@ -149,7 +149,7 @@ const SfdcPipelineProfileComponentsView = (
       && count <= 5) {
 
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
-      return await profilePolling(cancelSource, count + 1);
+      return await profilePolling(cancelSource, count + 1, newFilterDto);
     }
   };
 
