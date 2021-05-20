@@ -195,7 +195,11 @@ function Application(props) {
     // });
   };
 
-  const cancelTools = () => {
+  const cancelTools = (e) => {
+    if(Object.keys(data).length === 0) {
+      console.log("no selection made");
+      handleTabClick(e);
+    }
     setState({ 
       ...data,
       data: {}
@@ -320,7 +324,9 @@ function Application(props) {
                 <ContainerScan app={applicationDetails.data} tools={applicationDetails.tools} isEKS ={isEKS} />            
               </CardColumns>
               <div className="text-right">
-                <Button variant="outline-primary" onClick={cancelTools} disabled={Object.keys(data).length === 0} className="m-2">
+                <Button variant="outline-primary" onClick={cancelTools} 
+                  // disabled={Object.keys(data).length === 0} 
+                className="m-2">
                 Cancel
                 </Button>
                 <Button variant="primary" onClick={saveTools} disabled={Object.keys(data).length === 0}>
