@@ -67,7 +67,7 @@ const SfdcProfileSelectionView = (
     setSfdcModified([]);
     setDestSfdcModified([]);
 
-    loadData(source, sfdcFilterDto, destSfdcFilterDto).catch((error) => {
+    loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
