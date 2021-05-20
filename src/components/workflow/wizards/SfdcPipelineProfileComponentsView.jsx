@@ -82,7 +82,7 @@ const SfdcPipelineProfileComponentsView = (
       source.cancel();
       isMounted.current = false;
     };
-  }, [profileComponentsRuleList]);
+  }, []);
 
   useEffect(() => {
     if (reloadCancelToken) {
@@ -127,7 +127,6 @@ const SfdcPipelineProfileComponentsView = (
     try {
       setComponentsLoading(true);
       await profilePolling(cancelSource, undefined, newFilterDto);
-
     } catch (error) {
       toastContext.showInlineErrorMessage(error);
     }
@@ -139,7 +138,7 @@ const SfdcPipelineProfileComponentsView = (
   };
 
   const profilePolling = async (cancelSource = cancelTokenSource, count = 1, newFilterDto = filterDto) => {
-    if (isMounted?.current !== true) {
+    if (isMounted?.current !== true || rulesReloading === true) {
       return;
     }
 
@@ -152,13 +151,9 @@ const SfdcPipelineProfileComponentsView = (
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
       return await profilePolling(cancelSource, count + 1);
     }
-
-    return sfdcCommitList;
   };
 
   const getProfileFiles = async (cancelSource = cancelTokenSource, newFilterDto = filterDto) => {
-    setComponentsLoading(true);
-
     const postBody = {
       pipelineId: pipelineId,
       stepId: stepId,
@@ -172,7 +167,6 @@ const SfdcPipelineProfileComponentsView = (
     };
 
     const sfdcResponse = await sfdcPipelineActions.getListFromPipelineStorageV2(getAccessToken, cancelSource, postBody);
-    console.log("sfdcResponse: " + JSON.stringify(sfdcResponse?.data?.data?.profileComponentList));
 
     if (isMounted?.current === true && sfdcResponse?.data?.data?.profileComponentList) {
       let newSfdcFilterDto = newFilterDto;
@@ -306,7 +300,7 @@ const SfdcPipelineProfileComponentsView = (
           columns={sfdcColumnsWithCheckBoxCell}
           data={profileComponentList}
           isLoading={componentsLoading || rulesReloading}
-          loadData={loadData}
+          loadData={rulesReload}
           noDataMessage={sfdcTableConstants?.noDataMessage}
           paginationModel={filterDto}
           setPaginationModel={setFilterDto}
@@ -348,7 +342,7 @@ const SfdcPipelineProfileComponentsView = (
           <SfdcRulesInputContainer ruleList={profileComponentsRuleList} setRuleList={setProfileComponentsRuleList} postBody={getPostBody()} modifiedFiles={profileComponentList} />
         </div>
         <FilterContainer
-          loadData={loadData}
+          loadData={rulesReload}
           filterDto={filterDto}
           setFilterDto={setFilterDto}
           isLoading={componentsLoading || rulesReloading}

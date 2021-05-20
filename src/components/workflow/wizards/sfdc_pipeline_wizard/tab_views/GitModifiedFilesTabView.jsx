@@ -130,7 +130,7 @@ const GitModifiedFilesTabView = (
   };
 
   const gitPolling = async (cancelSource = cancelTokenSource, newFilterDto = gitFilterDto, count = 1) => {
-    if (isMounted?.current !== true) {
+    if (isMounted?.current !== true || rulesReloading === true) {
       return;
     }
 
@@ -218,7 +218,7 @@ const GitModifiedFilesTabView = (
           columns={gitColumnsWithCheckBoxCell}
           data={gitModified}
           isLoading={isLoading || rulesReloading}
-          loadData={loadData}
+          loadData={rulesReload}
           noDataMessage={sfdcTableConstants?.noDataMessage}
           paginationModel={gitFilterDto}
           setPaginationModel={setGitFilterDto}
@@ -242,7 +242,7 @@ const GitModifiedFilesTabView = (
       </div>
       <InlineWarning warningMessage={gitWarningMessage} className="pl-3" />
       <FilterContainer
-        loadData={loadData}
+        loadData={rulesReload}
         filterDto={gitFilterDto}
         setFilterDto={setGitFilterDto}
         isLoading={isLoading || rulesReloading}

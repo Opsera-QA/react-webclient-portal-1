@@ -1,6 +1,7 @@
 import React, {useState, useMemo, useRef, useEffect, useContext} from 'react';
 import PropTypes from "prop-types";
 import {
+  getTableDateTimeColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers-v2";
 import sfdcTableConstants from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-table-constants";
@@ -110,13 +111,16 @@ const SfdcProfileSelectionView = (
     };
   }, [ruleList]);
 
-  const rulesReload = async (cancelSource = cancelTokenSource, newFilterDto = sfdcFilterDto) => {
+  const rulesReload = async (cancelSource = cancelTokenSource, newFilterDto = sfdcFilterDto, newDestFilterDto = destSfdcFilterDto) => {
     try {
       if (isMounted?.current === true) {
         setSfdcModified([]);
+        setDestSfdcModified([]);
         setRulesReloading(true);
         newFilterDto?.setData("currentPage", 1);
+        newDestFilterDto?.setData("currentPage", 1);
         await getModifiedFiles(cancelSource, newFilterDto);
+        await getModifiedDestinationFiles(cancelSource, newDestFilterDto);
       }
     }
     catch (error) {
@@ -211,7 +215,7 @@ const SfdcProfileSelectionView = (
   };
 
   const sfdcPolling = async (cancelSource = cancelTokenSource, newSfdcFilterDto = sfdcFilterDto, count = 1) => {
-    if (isMounted?.current !== true) {
+    if (isMounted?.current !== true || rulesReloading === true) {
       return;
     }
 
@@ -248,29 +252,13 @@ const SfdcProfileSelectionView = (
     }
   };
 
-
-  const reloadDestFiles = async (cancelSource = cancelTokenSource, newFilterDto = destSfdcFilterDto) => {
-    try {
-      if (isMounted?.current === true) {
-        setDestSfdcLoading(true);
-        await getModifiedDestinationFiles(cancelSource, newFilterDto);
-      }
-    }
-    catch (error) {
-      toastContext.showInlineErrorMessage(error);
-    }
-    finally {
-      setDestSfdcLoading(false);
-    }
-  };
-
   const getModifiedDestinationFiles = async (cancelSource = cancelTokenSource, newFilterDto = destSfdcFilterDto) => {
     const postBody = {
       pipelineId: pipelineId,
       stepId: stepId,
       dataType: "sfdc-packageXml",
       fetchAttribute: "destSfdcCommitList",
-      // rules: ruleList,
+      rules: ruleList,
       page: newFilterDto ? newFilterDto.getData("currentPage") : 1,
       size: newFilterDto ? newFilterDto.getData("pageSize") : 1500,
       search: newFilterDto ? newFilterDto.getData("search") : "",
@@ -309,6 +297,7 @@ const SfdcProfileSelectionView = (
   const columnsWithOutCheckBoxCell = useMemo(
     () => [      
       {...getTableTextColumn(fields.find(field => { return field.id === "committedFile";})), class: "force-text-wrap"},
+      getTableDateTimeColumn(fields.find(field => { return field.id === "committedTime";})),
     ],
     [],
   );
@@ -319,8 +308,8 @@ const SfdcProfileSelectionView = (
         className={"table-no-border" + (files.length > 0 ? " opacity-half" : " ") }
         columns={columnsWithOutCheckBoxCell}
         data={destSfdcModified}
-        isLoading={destSfdcLoading}
-        loadData={destSfdcPolling}
+        isLoading={destSfdcLoading || rulesReloading}
+        loadData={rulesReload}
         noDataMessage={sfdcTableConstants.noDataMessage}
         paginationModel={destSfdcFilterDto}
         setPaginationModel={setDestSfdcFilterDto}
@@ -335,7 +324,7 @@ const SfdcProfileSelectionView = (
           columns={columnsWithOutCheckBoxCell}
           data={sfdcModified}
           isLoading={sfdcLoading || rulesReloading}
-          loadData={sfdcPolling}
+          loadData={rulesReload}
           noDataMessage={sfdcTableConstants.noDataMessage}
           paginationModel={sfdcFilterDto}
           setPaginationModel={setSfdcFilterDto}
@@ -374,10 +363,10 @@ const SfdcProfileSelectionView = (
         </Col>
         <Col xs={6} className={"pl-1"}>
           <FilterContainer
-            loadData={reloadDestFiles}
+            loadData={rulesReload}
             filterDto={destSfdcFilterDto}
             setFilterDto={setDestSfdcFilterDto}
-            isLoading={destSfdcLoading}
+            isLoading={destSfdcLoading || rulesReloading}
             title={"Destination SFDC Files"}
             titleIcon={faSalesforce}
             body={getDestSfdcModifiedFilesView()}

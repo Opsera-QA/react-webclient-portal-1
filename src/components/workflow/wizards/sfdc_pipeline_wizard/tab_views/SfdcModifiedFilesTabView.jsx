@@ -202,7 +202,7 @@ const SfdcModifiedFilesTabView = (
   };
 
   const sfdcPolling = async (cancelSource = cancelTokenSource, newFilterDto = sfdcFilterDto, count = 1) => {
-    if (isMounted?.current !== true) {
+    if (isMounted?.current !== true || rulesReloading === true) {
       return;
     }
 
@@ -256,7 +256,7 @@ const SfdcModifiedFilesTabView = (
           columns={sfdcColumnsWithCheckBoxCell}
           data={sfdcModified}
           isLoading={isLoading || rulesReloading}
-          loadData={loadData}
+          loadData={rulesReload}
           noDataMessage={sfdcTableConstants?.noDataMessage}
           paginationModel={sfdcFilterDto}
           setPaginationModel={setSfdcFilterDto}
@@ -284,7 +284,7 @@ const SfdcModifiedFilesTabView = (
       </div>
       <InlineWarning warningMessage={sfdcWarningMessage} className="pl-3" />
       <FilterContainer
-        loadData={loadData}
+        loadData={rulesReload}
         filterDto={sfdcFilterDto}
         setFilterDto={setSfdcFilterDto}
         isLoading={isLoading || rulesReloading}
