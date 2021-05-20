@@ -55,7 +55,7 @@ const SfdcComponentListInput = ({
       source.cancel();
       isMounted.current = false;
     };
-  }, [isProfiles, sfdcToolId]);
+  }, [isProfiles, sfdcToolId, selectedComponentTypes]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -79,12 +79,6 @@ const SfdcComponentListInput = ({
       }
     }
   };
-
-  const renderTooltip = (message, props) => (
-    <Tooltip id="button-tooltip" style={{"zIndex": 1500}} {...props}>
-      {message.length > 0 ? message : "No file extension found."}
-    </Tooltip>
-  );
 
   const searchFunction = (item, searchTerm) => {
     return item.name.toLowerCase().includes(searchTerm.toLowerCase());
