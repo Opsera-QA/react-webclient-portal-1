@@ -52,7 +52,9 @@ const SfdcPipelineModifiedFiles = ({
   unitTestSteps,
   selectedComp,
   gitTaskData,
-  gitTaskId
+  gitTaskId,
+  modifiedFilesRuleList,
+  setModifiedFilesRuleList
 }) => {
   const { getAccessToken, featureFlagHideItemInProd } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -61,7 +63,6 @@ const SfdcPipelineModifiedFiles = ({
   const [save, setSave] = useState(false);
   const [componentType, setComponentType] = useState([]);
   const [activeTab, setActiveTab] = useState("sfdc");
-  const [ruleList, setRuleList] = useState([{...sfdcRuleMetadata.newObjectFields}]);
 
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -129,7 +130,7 @@ const SfdcPipelineModifiedFiles = ({
           gitTaskId: gitTaskData ? gitTaskId : false,
           updateAttribute: "selectedFileList",
           typeOfSelection: typeOfSelection,
-          rules: ruleList
+          rules: modifiedFilesRuleList
         };
 
         await sfdcPipelineActions.setListToPipelineStorageV2(getAccessToken, cancelTokenSource, postBody);
@@ -150,7 +151,7 @@ const SfdcPipelineModifiedFiles = ({
         dataType: "sfdc-packageXml",
         updateAttribute: "profilesList",
         typeOfSelection : typeOfSelection,
-        rules: ruleList
+        rules: modifiedFilesRuleList
       };
 
       await sfdcPipelineActions.setListToPipelineStorageV2(getAccessToken, cancelTokenSource, postBody);
@@ -230,7 +231,7 @@ const SfdcPipelineModifiedFiles = ({
     e.preventDefault();
 
     if (activeTab !== tabSelection) {
-      setRuleList([]);
+      setModifiedFilesRuleList([]);
       setActiveTab(tabSelection);
       if(tabSelection === 'sfdc'){
         setFromSFDC(true);
@@ -263,11 +264,11 @@ const SfdcPipelineModifiedFiles = ({
             fromProfileComponents={false}
             gitTaskData={gitTaskData}
             setRecordId={setRecordId}
-            setRuleList={setRuleList}
+            setRuleList={setModifiedFilesRuleList}
             pipelineId={pipelineId}
             stepId={stepId}
             gitTaskId={gitTaskId}
-            ruleList={ruleList}
+            ruleList={modifiedFilesRuleList}
           />
         );
       }
@@ -286,9 +287,9 @@ const SfdcPipelineModifiedFiles = ({
           pipelineId={pipelineId}
           stepId={stepId}
           gitTaskId={gitTaskId}
-          ruleList={ruleList}
+          ruleList={modifiedFilesRuleList}
           setRecordId={setRecordId}
-          setRuleList={setRuleList}
+          setRuleList={setModifiedFilesRuleList}
         />
       );
     }
@@ -301,8 +302,8 @@ const SfdcPipelineModifiedFiles = ({
           pipelineId={pipelineId}
           stepId={stepId}
           gitTaskId={gitTaskId}
-          ruleList={ruleList}
-          setRuleList={setRuleList}
+          ruleList={modifiedFilesRuleList}
+          setRuleList={setModifiedFilesRuleList}
         />
       );
     }
@@ -323,8 +324,6 @@ const SfdcPipelineModifiedFiles = ({
         <CustomTab activeTab={activeTab} tabText={"SFDC Files"} handleTabClick={handleTabClick} tabName={"sfdc"}
                    toolTipText={"SFDC Files"} icon={faSalesforce} />
         {getExtraTabs()}
-        {!featureFlagHideItemInProd() && <CustomTab activeTab={activeTab} tabText={"Help"} handleTabClick={handleTabClick} tabName={"help"}
-                   toolTipText={"Help"} icon={faQuestionCircle} />}
       </CustomTabContainer>
     );
   };
@@ -391,6 +390,8 @@ SfdcPipelineModifiedFiles.propTypes = {
   selectedComp: PropTypes.array,
   gitTaskData: PropTypes.object,
   gitTaskId: PropTypes.string,
+  modifiedFilesRuleList: PropTypes.array,
+  setModifiedFilesRuleList: PropTypes.func
 };
 
 export default SfdcPipelineModifiedFiles;

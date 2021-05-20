@@ -10,6 +10,7 @@ import sfdcPipelineActions from "./sfdc-pipeline-actions";
 import SfdcUnitTestSelectionView from "./sfdcUnitTestSelectionView";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SfdcPipelineProfileComponentsView from "components/workflow/wizards/SfdcPipelineProfileComponentsView";
+import sfdcRuleMetadata from "components/common/inputs/rules/sfdc_pipeline_wizard/sfdc-rule-metadata";
 
 // TODO: Don't use this way
 const INITIAL_OBJECT_TYPES = {
@@ -66,6 +67,8 @@ const SfdcPipelineWizard = ({
   const [selectedFromDate, setSelectedFromDate] = useState(new Date(new Date().setHours(0,0,0,0)));
   const [selectedToDate, setSelectedToDate] = useState(new Date());
   const [selectedComponentTypes, setSelectedComponentTypes] = useState([]);
+  const [profileComponentsRuleList, setProfileComponentsRuleList] = useState([{...sfdcRuleMetadata.newObjectFields}]);
+  const [modifiedFilesRuleList, setModifiedFilesRuleList] = useState([{...sfdcRuleMetadata.newObjectFields}]);
 
 
   useEffect(() => {
@@ -233,6 +236,8 @@ const SfdcPipelineWizard = ({
             gitTaskData={gitTaskData}
             gitTaskId={gitTaskId}
             closePanel={handleClose}
+            modifiedFilesRuleList={modifiedFilesRuleList}
+            setModifiedFilesRuleList={setModifiedFilesRuleList}
           />
        );
       case 3:
@@ -246,6 +251,8 @@ const SfdcPipelineWizard = ({
             unitTestSteps={unitTestSteps}
             setRecordId={setRecordId}
             gitTaskData={gitTaskData}
+            profileComponentsRuleList={profileComponentsRuleList}
+            setProfileComponentsRuleList={setProfileComponentsRuleList}
           />
         );
 

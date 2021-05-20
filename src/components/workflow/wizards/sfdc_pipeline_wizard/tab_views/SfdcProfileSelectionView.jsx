@@ -87,11 +87,13 @@ const SfdcProfileSelectionView = (
     const source = axios.CancelToken.source();
     setReloadCancelToken(source);
 
-    rulesReload(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if (sfdcLoading !== true) {
+      rulesReload(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
@@ -332,9 +334,9 @@ const SfdcProfileSelectionView = (
         />
       }
       <Row className="mt-2 d-flex">
-        <Col xs={6}>
+        <Col xs={6} className={"pr-1"}>
           <FilterContainer
-              loadData={sfdcPolling}
+              loadData={rulesReload}
               filterDto={sfdcFilterDto}
               setFilterDto={setSfdcFilterDto}
               isLoading={sfdcLoading}
@@ -344,7 +346,7 @@ const SfdcProfileSelectionView = (
               supportSearch={true}
           />
         </Col>
-        <Col xs={6}>
+        <Col xs={6} className={"pl-1"}>
           <FilterContainer
             loadData={destSfdcPolling}
             filterDto={destSfdcFilterDto}

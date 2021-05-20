@@ -39,6 +39,8 @@ const SfdcPipelineProfileComponentsView = (
     setView,
     recordId,
     setRecordId,
+    profileComponentsRuleList,
+    setProfileComponentsRuleList,
     gitTaskData // TODO: Is this ever allowed?
   }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -50,7 +52,6 @@ const SfdcPipelineProfileComponentsView = (
   const [filterDto, setFilterDto] = useState(new Model({ ...sfdcComponentFilterMetadata.newObjectFields }, sfdcComponentFilterMetadata, false));
   let timerIds = [];
   const [showFileUpload, setShowFileUpload] = useState(false);
-  const [ruleList, setRuleList] = useState([{...sfdcRuleMetadata.newObjectFields}]);
 
   const [activeTab, setActiveTab] = useState("sfdc");
   const isMounted = useRef(false);
@@ -76,7 +77,7 @@ const SfdcPipelineProfileComponentsView = (
       source.cancel();
       isMounted.current = false;
     };
-  }, [ruleList]);
+  }, [profileComponentsRuleList]);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -87,7 +88,7 @@ const SfdcPipelineProfileComponentsView = (
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
 
-    if (ruleList != null) {
+    if (profileComponentsRuleList != null) {
       filterDto.setData("currentPage", 1);
       getProfileFiles(cancelTokenSource, filterDto).catch((error) => {
         if (isMounted?.current === true) {
@@ -99,7 +100,7 @@ const SfdcPipelineProfileComponentsView = (
     return () => {
       source.cancel();
     };
-  }, [ruleList]);
+  }, [profileComponentsRuleList]);
 
   const loadData = async (cancelSource = cancelTokenSource, newFilterDto = filterDto) => {
     try {
@@ -142,7 +143,7 @@ const SfdcPipelineProfileComponentsView = (
       stepId: stepId,
       dataType: "sfdc-packageXml",
       fetchAttribute: "profileComponentList",
-      rules: ruleList,
+      rules: profileComponentsRuleList,
       page: newFilterDto ? newFilterDto.getData("currentPage") : 1,
       size: newFilterDto ? newFilterDto.getData("pageSize") : 1500,
       search: newFilterDto ? newFilterDto.getData("search") : "",
@@ -178,7 +179,7 @@ const SfdcPipelineProfileComponentsView = (
         dataType: "sfdc-packageXml",
         updateAttribute: "selectedFileList",
         typeOfSelection : "profileComponentList",
-        rules: ruleList
+        rules: profileComponentsRuleList
       };
 
       const response = await sfdcPipelineActions.setListToPipelineStorageV2(getAccessToken, cancelTokenSource, postBody);
@@ -323,7 +324,7 @@ const SfdcPipelineProfileComponentsView = (
           </CustomTabContainer>
         </div>
         <div className={"my-4"}>
-          <SfdcRulesInputContainer ruleList={ruleList} setRuleList={setRuleList} postBody={getPostBody()} modifiedFiles={profileComponentList} />
+          <SfdcRulesInputContainer ruleList={profileComponentsRuleList} setRuleList={setProfileComponentsRuleList} postBody={getPostBody()} modifiedFiles={profileComponentList} />
         </div>
         <FilterContainer
           loadData={loadData}
@@ -363,6 +364,8 @@ SfdcPipelineProfileComponentsView.propTypes = {
   recordId: PropTypes.string,
   setRecordId: PropTypes.func,
   gitTaskData: PropTypes.object,
+  profileComponentsRuleList: PropTypes.array,
+  setProfileComponentsRuleList: PropTypes.func
 };
 
 export default SfdcPipelineProfileComponentsView;
