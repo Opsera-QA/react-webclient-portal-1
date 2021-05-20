@@ -18,6 +18,7 @@ const branchToBranchGitTaskConfigurationMetadata = {
       regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
     {
+      label: "Account",
       id: "gitToolId",
       isRequired: true,
       maxLength: 24,
