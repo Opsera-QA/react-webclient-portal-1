@@ -20,6 +20,12 @@ import SfdcRulesInputContainer from "components/common/inputs/rules/sfdc_pipelin
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import VanityTable from "components/common/table/VanityTable";
+import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
+import {Button} from "react-bootstrap";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faStepBackward, faStepForward} from "@fortawesome/free-solid-svg-icons";
+import IconBase from "components/common/icons/IconBase";
+import CancelButton from "components/common/buttons/CancelButton";
 
 // TODO: This should further be broken down into two components. I will do it soon, hopefully - Noah
 const SfdcProfileSelectionView = (
@@ -34,7 +40,11 @@ const SfdcProfileSelectionView = (
     ruleList,
     setRecordId,
     gitTaskId,
-    setRuleList
+    setRuleList,
+    setView,
+    handleApproveChanges,
+    handleClose,
+    save
   }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -103,6 +113,7 @@ const SfdcProfileSelectionView = (
   const rulesReload = async (cancelSource = cancelTokenSource, newFilterDto = sfdcFilterDto) => {
     try {
       if (isMounted?.current === true) {
+        setSfdcModified([]);
         setRulesReloading(true);
         newFilterDto?.setData("currentPage", 1);
         await getModifiedFiles(cancelSource, newFilterDto);
@@ -259,7 +270,7 @@ const SfdcProfileSelectionView = (
       stepId: stepId,
       dataType: "sfdc-packageXml",
       fetchAttribute: "destSfdcCommitList",
-      rules: ruleList,
+      // rules: ruleList,
       page: newFilterDto ? newFilterDto.getData("currentPage") : 1,
       size: newFilterDto ? newFilterDto.getData("pageSize") : 1500,
       search: newFilterDto ? newFilterDto.getData("search") : "",
@@ -374,6 +385,20 @@ const SfdcProfileSelectionView = (
           />
         </Col>
       </Row>
+      <SaveButtonContainer>
+        <div className={"ml-auto my-3"}>
+          <Button variant="secondary" size="sm" className="mr-2" onClick={() => {setView(1);}}>
+            <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>Back
+          </Button>
+          <Button variant="success" size="sm" onClick={() => handleApproveChanges()}
+                  disabled={!Array.isArray(sfdcModified) || sfdcModified.length === 0}
+          >
+            <IconBase isLoading={save} icon={faStepForward} fixedWidth className="mr-1"/>
+            Proceed with Filtered Files
+          </Button>
+          <CancelButton size={"sm"} className={"ml-2"} cancelFunction={handleClose} />
+        </div>
+      </SaveButtonContainer>
     </>
   );
 
@@ -390,7 +415,11 @@ SfdcProfileSelectionView.propTypes = {
   pipelineId: PropTypes.string,
   ruleList: PropTypes.array,
   setRecordId: PropTypes.func,
-  setRuleList: PropTypes.func
+  setRuleList: PropTypes.func,
+  handleApproveChanges: PropTypes.func,
+  setView: PropTypes.func,
+  handleClose: PropTypes.func,
+  save: PropTypes.bool
 };
 
 export default SfdcProfileSelectionView;

@@ -365,7 +365,9 @@ const SfdcPipelineProfileComponentsView = (
             }}>
               <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>Back
             </Button>
-            <Button variant="success" size="sm" onClick={() => handleApproveChanges()}>
+            <Button variant="success" size="sm" onClick={() => handleApproveChanges()}
+                    disabled={!Array.isArray(profileComponentList) || profileComponentList.length === 0}
+            >
               <IconBase isLoading={save} icon={faStepForward} fixedWidth className="mr-1"/>
               Proceed with Filtered Files
             </Button>

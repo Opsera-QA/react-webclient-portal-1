@@ -7,7 +7,7 @@ import {
 
 import sfdcTableConstants from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-table-constants";
 import FilterContainer from "components/common/table/FilterContainer";
-import { faCode } from "@fortawesome/free-solid-svg-icons";
+import {faCode, faStepBackward, faStepForward} from "@fortawesome/free-solid-svg-icons";
 import InlineSfdcComponentTypesFilter from "components/common/filters/sfdc/sfdc_component/InlineSfdcComponentTypesFilter";
 import VanityTable from "components/common/table/VanityTable";
 import axios from "axios";
@@ -20,6 +20,11 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import SfdcRulesInputContainer from "components/common/inputs/rules/sfdc_pipeline_wizard/SfdcRulesInputContainer";
 import {isEquals} from "components/common/helpers/array-helpers";
+import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
+import {Button} from "react-bootstrap";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import IconBase from "components/common/icons/IconBase";
+import CancelButton from "components/common/buttons/CancelButton";
 
 const GitModifiedFilesTabView = (
   {
@@ -28,7 +33,11 @@ const GitModifiedFilesTabView = (
     stepId,
     ruleList,
     setRecordId,
-    setRuleList
+    setRuleList,
+    setView,
+    handleApproveChanges,
+    handleClose,
+    save
   }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -91,6 +100,7 @@ const GitModifiedFilesTabView = (
   const rulesReload = async (cancelSource = cancelTokenSource, newFilterDto = gitFilterDto) => {
     try {
       if (isMounted?.current === true) {
+        setGitModified([]);
         setRulesReloading(true);
         newFilterDto?.setData("currentPage", 1);
         await getModifiedFiles(cancelSource, newFilterDto);
@@ -242,6 +252,20 @@ const GitModifiedFilesTabView = (
         supportSearch={true}
         inlineFilters={getGitInlineFilters()}
       />
+      <SaveButtonContainer>
+        <div className={"ml-auto my-3"}>
+          <Button variant="secondary" size="sm" className="mr-2" onClick={() => {setView(1);}}>
+            <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>Back
+          </Button>
+          <Button variant="success" size="sm" onClick={() => handleApproveChanges()}
+                  disabled={!Array.isArray(gitModified) || gitModified.length === 0}
+          >
+            <IconBase isLoading={save} icon={faStepForward} fixedWidth className="mr-1"/>
+            Proceed with Filtered Files
+          </Button>
+          <CancelButton size={"sm"} className={"ml-2"} cancelFunction={handleClose} />
+        </div>
+      </SaveButtonContainer>
     </>
   );
 };
@@ -253,7 +277,11 @@ GitModifiedFilesTabView.propTypes = {
   gitTaskId: PropTypes.string,
   ruleList: PropTypes.array,
   setRecordId: PropTypes.func,
-  setRuleList: PropTypes.func
+  setRuleList: PropTypes.func,
+  handleApproveChanges: PropTypes.func,
+  setView: PropTypes.func,
+  handleClose: PropTypes.func,
+  save: PropTypes.bool
 };
 
 export default GitModifiedFilesTabView;

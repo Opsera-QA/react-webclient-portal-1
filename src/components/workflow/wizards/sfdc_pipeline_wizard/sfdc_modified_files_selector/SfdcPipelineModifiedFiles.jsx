@@ -269,6 +269,10 @@ const SfdcPipelineModifiedFiles = ({
             stepId={stepId}
             gitTaskId={gitTaskId}
             ruleList={modifiedFilesRuleList}
+            setView={setView}
+            handleApproveChanges={handleApproveChanges}
+            handleClose={handleClose}
+            save={save}
           />
         );
       }
@@ -290,6 +294,10 @@ const SfdcPipelineModifiedFiles = ({
           ruleList={modifiedFilesRuleList}
           setRecordId={setRecordId}
           setRuleList={setModifiedFilesRuleList}
+          setView={setView}
+          handleApproveChanges={handleApproveChanges}
+          handleClose={handleClose}
+          save={save}
         />
       );
     }
@@ -304,6 +312,10 @@ const SfdcPipelineModifiedFiles = ({
           gitTaskId={gitTaskId}
           ruleList={modifiedFilesRuleList}
           setRuleList={setModifiedFilesRuleList}
+          setView={setView}
+          handleApproveChanges={handleApproveChanges}
+          handleClose={handleClose}
+          save={save}
         />
       );
     }
@@ -328,24 +340,6 @@ const SfdcPipelineModifiedFiles = ({
     );
   };
 
-  // TODO: Clean these up and make button components when doing full SFDC wizard refactor (after each step individually)
-  const getButtons = () => {
-    return (
-      <SaveButtonContainer>
-        <div className={"ml-auto my-3"}>
-          <Button variant="secondary" size="sm" className="mr-2" onClick={() => {setView(1);}}>
-            <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>Back
-          </Button>
-          <Button variant="success" size="sm" onClick={() => handleApproveChanges()}>
-            <IconBase isLoading={save} icon={faStepForward} fixedWidth className="mr-1"/>
-            Proceed with Filtered Files
-          </Button>
-          <CancelButton size={"sm"} className={"ml-2"} cancelFunction={handleClose} />
-        </div>
-      </SaveButtonContainer>
-    );
-  };
-
   if (error) {
     return (<div className="mt-3">
       <ErrorDialog error={error}/>
@@ -365,7 +359,6 @@ const SfdcPipelineModifiedFiles = ({
       </div>
       {getTabContainer()}
       {getView()}
-      {getButtons()}
     </div>
   );
 };
