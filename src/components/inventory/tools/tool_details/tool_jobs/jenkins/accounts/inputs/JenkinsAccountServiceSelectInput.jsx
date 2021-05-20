@@ -9,6 +9,18 @@ const TOOL_TYPES = [
 ];
 
 function JenkinsAccountServiceSelectInput({ fieldName, dataObject, setDataObject, disabled }) {
+
+  const setJenkinsAccountService = (fieldName, selectedOption) => {    
+    let newDataObject = dataObject;
+    newDataObject?.setData(fieldName, selectedOption?.value);
+    newDataObject.setData("credentailsToolId", "");
+    newDataObject.setData("gitCredential", "");
+    newDataObject.setData("gitUserName", "");
+    newDataObject.setData("accountUserName", "");
+    newDataObject.setData("toolId", "");
+    setDataObject({...newDataObject});
+  };
+
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -19,6 +31,7 @@ function JenkinsAccountServiceSelectInput({ fieldName, dataObject, setDataObject
       valueField="value"
       textField="label"
       disabled={disabled}
+      setDataFunction={setJenkinsAccountService}
     />
   );
 }
@@ -28,6 +41,7 @@ JenkinsAccountServiceSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
+  setDataFunction: PropTypes.func,
 };
 
 JenkinsAccountServiceSelectInput.defaultProps = {
