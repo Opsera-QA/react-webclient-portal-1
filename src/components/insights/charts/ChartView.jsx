@@ -110,18 +110,23 @@ import MetricbeatInNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/i
 import MetricbeatMemoryUsageByTimeLineChart from "./metricbeat/line_chart/memory_usage/MetricbeatMemoryUsageByTimeLineChart";
 import MetricbeatOutNetworkTrafficByTimeLineChart from "./metricbeat/line_chart/out_network_usage/MetricbeatOutNetworkTrafficByTimeLineChart";
 
-import {
-  getDateObjectFromKpiConfiguration,
-  getTagsFromKpiConfiguration,
-} from "components/insights/charts/charts-helpers";
-import { Col } from "react-bootstrap";
-
 //QA Testing
 import ManualQaTestPieChart from "components/insights/charts/qa_metrics/ManualQaTestPieChart";
 import FirstPassYieldPieChart from "components/insights/charts/qa_metrics/FirstPassYieldPieChart";
 import CummulativeOpenDefectsPieChart from "components/insights/charts/qa_metrics/CummulativeOpenDefectsPieChart";
 import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieChart";
 import AdoptionTestPercentagePieChart from "./qa_metrics/AdoptionTestPercentagePieChart";
+
+// SFDC KPIs
+import SFDCBackups from "components/insights/charts/sfdc/SFDCBackups";
+import SFDCProfileMigrationsBarChart from "components/insights/charts/sfdc/bar_chart/profile_migrations/SFDCProfileMigrationsBarChart";
+import SFDCUnitTestingPieChart from "components/insights/charts/sfdc/pie_chart/unit_testing/SFDCUnitTestingPieChart";
+
+import {
+  getDateObjectFromKpiConfiguration,
+  getTagsFromKpiConfiguration,
+} from "components/insights/charts/charts-helpers";
+import { Col } from "react-bootstrap";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
@@ -1175,6 +1180,42 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col md={12} className="p-2">
             <AdoptionTestPercentagePieChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sfdc-backups":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <SFDCBackups
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sfdc-profile-migrations":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <SFDCProfileMigrationsBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sfdc-unit-testing":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <SFDCUnitTestingPieChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}

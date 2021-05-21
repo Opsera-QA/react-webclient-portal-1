@@ -170,6 +170,9 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "cumulative-open-defects",
     "automation-percentage",
     "adoption-percentage",
+    "sfdc-backups",
+    "sfdc-profile-migrations",
+    "sfdc-unit-testing",
     "selenium-test-summary-percentages",
   ];
 
