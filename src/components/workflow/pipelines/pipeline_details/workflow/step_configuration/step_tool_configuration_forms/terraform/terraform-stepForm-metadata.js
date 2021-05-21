@@ -31,7 +31,7 @@ const TerraformStepFormMetadata = {
     },
     {
       label: "Secret Key Script Parameter Name",
-      id: "secrectKeyParamName",
+      id: "secretKeyParamName",
     },
     {
       label: "Region Parameter Name",
@@ -64,14 +64,14 @@ const TerraformStepFormMetadata = {
       id: "bitbucketWorkspaceName",
     },
   ],
-  newModelBase: {
+  newObjectFields: {
     toolActionType: "EXECUTE",
     gitFilePath: "",
     gitRepository: "",
     defaultBranch: "",
     awsToolConfigId : "",
     accessKeyParamName: "",
-    secrectKeyParamName: "",
+    secretKeyParamName: "",
     regionParamName: "",
     type:"",
     gitToolId : "",

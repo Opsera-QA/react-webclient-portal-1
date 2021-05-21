@@ -1,6 +1,4 @@
-import baseActions from "utils/actionsBase";
 import pipelineActions from "components/workflow/pipeline-actions";
-
 const terraformStepActions = {};
 
 terraformStepActions.fetchSCMDetails = async (dataObject, fieldName, getAccessToken) => {

@@ -13,8 +13,7 @@ function TerraformAWSCredsSelectInput({dataObject, setDataObject, disabled}) {
 
   useEffect(() => {
     getCredsList();
-    console.log("here", dataObject);
-  }, [dataObject?.data?.type]);
+  }, [dataObject.data.defaultBranch]);
 
   const handleDTOChange = async (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
@@ -24,10 +23,9 @@ function TerraformAWSCredsSelectInput({dataObject, setDataObject, disabled}) {
 
   const getCredsList = async () => {
     setIsLoading(true);
-    if(dataObject?.data?.type?.length){
+    if(dataObject?.data?.defaultBranch?.length){
       try {
         let filteredCredsList = await terraformStepActions?.fetchAWSDetails(getAccessToken);
-        console.log(filteredCredsList);
         setCredsList(filteredCredsList);
       } catch (error) {
         toastContext.showErrorDialog(error);

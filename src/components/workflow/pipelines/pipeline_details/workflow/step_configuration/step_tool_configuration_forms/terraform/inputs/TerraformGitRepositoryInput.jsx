@@ -5,7 +5,6 @@ import GitRepositoryInput from "components/common/list_of_values_input/tools/git
 function TerraformGitRepositoryInput({dataObject, setDataObject, disabled}) {
   const setRepository = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
-    console.log(dataObject);
     newDataObject.setData("gitRepository", selectedOption.name);
     newDataObject.setData("gitRepositoryID", selectedOption.id);
     newDataObject.setData("sshUrl", selectedOption.sshUrl || "");

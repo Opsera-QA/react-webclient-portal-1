@@ -16,7 +16,6 @@ function TerraformSCMToolSelectInput({dataObject, setDataObject, disabled}) {
   }, [dataObject?.data?.type]);
 
   const handleDTOChange = async (fieldName, selectedOption) => {
-    console.log(fieldName, selectedOption);
     let newDataObject = {...dataObject};
     await newDataObject.setData(fieldName, selectedOption.id);
     setDataObject({...newDataObject});
