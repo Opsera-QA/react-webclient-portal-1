@@ -75,7 +75,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   dashboardTags,
   tableFilterDto,
   projectTags,
-  dashboardOrgs
+  dashboardOrgs,
+  pipelineName
 ) => {
   const apiUrl = "/analytics/metrics";
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
@@ -116,6 +117,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     size: tableFilterDto?.getData("pageSize"),
     projectTags: projectTags,
     dashboardOrgs: dashboardOrgs,
+    pipelineName: pipelineName
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
