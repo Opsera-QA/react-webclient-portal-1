@@ -56,6 +56,10 @@ regexHelpers.regexTypes = {
 
   // must start and end with a letter and can only contain lowercase letters, numbers, hyphens, underscores, and forward slashes
   ecrRepoField: /^[a-z0-9](?!.*?[^\na-z0-9-_/]).*?[a-z0-9]$/,
+
+  //only numbers
+  numericalField : /^[0-9]*$/,
+
 };
 
 export default regexHelpers;
