@@ -19,7 +19,8 @@ import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
 import TerraformJobTypeSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformJobTypeSelectInput";
-
+import TerraformSCMToolTypeSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformSCMToolTypeSelectInput";
+import TerraformSCMToolSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformSCMToolSelectInput";
 
 const SCM_TOOL_LIST = [
   {
@@ -74,25 +75,25 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
     loadData();
   }, []);
 
-  // const loadFormData = async (step) => {
-  //   setIsLoading(true);
-  //   let { configuration, threshold } = step;
-  //   if (typeof configuration !== "undefined") {
-  //     setTerraformStepConfigurationDataDto(new Model(configuration, TerraformStepFormMetadata, false));
-  //     await fetchAWSDetails();
-  //     await fetchSCMDetails(configuration);
-  //     await searchRepositories(configuration.type, configuration.gitToolId, configuration.bitbucketWorkspace);
-  //     await searchBranches(configuration.type, configuration.gitToolId, configuration.gitRepositoryID, configuration.bitbucketWorkspace);
-  //     if (typeof threshold !== "undefined") {
-  //       setThresholdType(threshold.type);
-  //       setThresholdValue(threshold.value);
-  //     }
-  //   } else {
-  //     await fetchAWSDetails();
-  //     setTerraformStepConfigurationDataDto(
-  //       new Model({ ...TerraformStepFormMetadata.newModelBase }, TerraformStepFormMetadata, false)
-  //     );
-  //   }
+  const loadFormData = async (step) => {
+    setIsLoading(true);
+    let { configuration, threshold } = step;
+    if (typeof configuration !== "undefined") {
+      setTerraformStepConfigurationDataDto(new Model(configuration, TerraformStepFormMetadata, false));
+      await fetchAWSDetails();
+      await fetchSCMDetails(configuration);
+      await searchRepositories(configuration.type, configuration.gitToolId, configuration.bitbucketWorkspace);
+      await searchBranches(configuration.type, configuration.gitToolId, configuration.gitRepositoryID, configuration.bitbucketWorkspace);
+      if (typeof threshold !== "undefined") {
+        setThresholdType(threshold.type);
+        setThresholdValue(threshold.value);
+      }
+    } else {
+      await fetchAWSDetails();
+      setTerraformStepConfigurationDataDto(
+        new Model({ ...TerraformStepFormMetadata.newModelBase }, TerraformStepFormMetadata, false)
+      );
+    }
 
   //   if (plan && stepId) {
   //     let pipelineSteps = pipelineHelpers.formatStepOptions(plan, stepId);
@@ -103,14 +104,15 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
   // };
 
   const loadData = async () => {
+    console.log(stepTool);
     setIsLoading(true);
-    let { threshold, job_type } = stepTool;
+    let {threshold, configuration } = stepTool;
     let terraformConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, terraformStepFormMetadata);
 
-    setTerraformStepConfigurationDataDto(terraformConfigurationData);
+    if (configuration) {
+      console.log("here");
+      setTerraformStepConfigurationDataDto(new Model(configuration, terraformStepFormMetadata, false));
 
-    if (job_type) {
-      setJobType(job_type);
     }
 
     if (threshold) {
@@ -262,7 +264,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
   };
 
   const handleDTOChange = async (fieldName, value) => {
-    console.log(terraformStepConfigurationDto);
+    // console.log(terraformStepConfigurationDto);
     if (fieldName === "type") {
       let newDataObject = terraformStepConfigurationDto;
       newDataObject.setData("type", value.value);
@@ -360,6 +362,15 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
           setDataObject={setTerraformStepConfigurationDataDto}
           disabled={isLoading}
         />
+        <TerraformSCMToolTypeSelectInput
+          dataObject={terraformStepConfigurationDto}
+          setDataObject={setTerraformStepConfigurationDataDto}
+          disabled={isLoading}
+        />
+        <TerraformSCMToolSelectInput
+          dataObject={terraformStepConfigurationDto}
+          setDataObject={setTerraformStepConfigurationDataDto}
+        />
           {/* <DtoSelectInput
             setDataObject={setTerraformStepConfigurationDataDto}
             textField={"name"}
@@ -369,7 +380,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             selectOptions={JOB_TYPES ? JOB_TYPES : []}
             fieldName={"toolActionType"}
           /> */}
-          <DtoSelectInput
+          {/* <DtoSelectInput
             setDataObject={setTerraformStepConfigurationDataDto}
             setDataFunction={handleDTOChange}
             textField={"name"}
@@ -378,17 +389,17 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             filter={"contains"}
             selectOptions={SCM_TOOL_LIST ? SCM_TOOL_LIST : []}
             fieldName={"type"}
-          />
+          /> */}
 
-          <OverlayTrigger
+          {/* <OverlayTrigger
             trigger="click"
             rootClose
             placement="left"
             overlay={pipelineHelpers.getRegistryPopover(
               SCMList[SCMList.findIndex((x) => x.id === terraformStepConfigurationDto.getData("gitToolId"))]
             )}
-          >
-            <FontAwesomeIcon
+          > */}
+            {/* <FontAwesomeIcon
               icon={faInfoCircle}
               className="fa-pull-right pointer pr-2"
               onClick={() => document.body.click()}
@@ -405,7 +416,7 @@ function TerraformStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
             fieldName={"gitToolId"}
             busy={isGitSearching}
             // disabled={terraformStepConfigurationDto.getData("type").length === 0 || isGitSearching}
-          />
+          /> */}
 
           {terraformStepConfigurationDto.getData("type") === "bitbucket" && (
             <DtoSelectInput
