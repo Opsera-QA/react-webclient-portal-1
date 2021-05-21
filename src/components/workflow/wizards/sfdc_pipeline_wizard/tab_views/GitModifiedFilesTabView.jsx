@@ -94,6 +94,10 @@ const GitModifiedFilesTabView = (
 
     return () => {
       source.cancel();
+
+      if (Array.isArray(timerIds) && timerIds.length > 0) {
+        timerIds?.forEach(timerId => clearTimeout(timerId));
+      }
     };
   }, [ruleList]);
 
