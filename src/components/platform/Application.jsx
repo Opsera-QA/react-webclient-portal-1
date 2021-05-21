@@ -193,7 +193,7 @@ function Application(props) {
     // });
   };
 
-  const cancelTools = () => {
+  const cancelTools = (e) => {
     if(Object.keys(data).length === 0) {
       // console.log("no selection made");
       handleTabClick(e);
