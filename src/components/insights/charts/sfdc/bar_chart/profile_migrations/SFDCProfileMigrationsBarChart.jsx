@@ -94,13 +94,13 @@ function SFDCProfileMigrationsBarChart({ kpiConfiguration, setKpiConfiguration, 
       <div className="new-chart mb-3" style={{height: "300px"}}>
         <ResponsiveBar
           data={metrics}
-          {...defaultConfig("Pipeline Name", "Number of Pipelines", 
+          {...defaultConfig("Pipeline Name", "Number of Pipeline Runs", 
                       true, false, "cutoffString", "wholeNumbers")}
           {...config(getColorById)}
           {...adjustBarWidth(metrics, false)}
           onClick={(data) => onRowSelect(data)}
           tooltip={({indexValue, color, value, id}) => <ChartTooltip 
-                                        titles = {["Pipeline", `${id} Builds`]}
+                                        titles = {["Pipeline", `${id} Profile Migrations`]}
                                         values = {[indexValue, value]}
                                         style = {false}
                                         color = {color} />}
