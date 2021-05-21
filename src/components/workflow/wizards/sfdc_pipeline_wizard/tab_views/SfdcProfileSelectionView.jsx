@@ -99,7 +99,9 @@ const SfdcProfileSelectionView = (
     setReloadCancelToken(source);
 
     if (sfdcLoading !== true && isMounted?.current === true) {
-      rulesReload(source).catch((error) => {
+      sfdcFilterDto?.setData("currentPage", 1);
+      destSfdcFilterDto?.setData("currentPage", 1);
+      rulesReload(source, sfdcFilterDto, destSfdcFilterDto).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
@@ -121,8 +123,6 @@ const SfdcProfileSelectionView = (
         setSfdcModified([]);
         setDestSfdcModified([]);
         setRulesReloading(true);
-        newFilterDto?.setData("currentPage", 1);
-        newDestFilterDto?.setData("currentPage", 1);
         await getModifiedFiles(cancelSource, newFilterDto);
         await getModifiedDestinationFiles(cancelSource, newDestFilterDto);
       }

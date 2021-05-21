@@ -69,6 +69,7 @@ const SfdcPipelineWizard = ({
   const [selectedComponentTypes, setSelectedComponentTypes] = useState([]);
   const [profileComponentsRuleList, setProfileComponentsRuleList] = useState([{...sfdcRuleMetadata.newObjectFields}]);
   const [modifiedFilesRuleList, setModifiedFilesRuleList] = useState([{...sfdcRuleMetadata.newObjectFields}]);
+  const [modifiedFilesTab, setModifiedFilesTab] = useState("sfdc");
 
 
   useEffect(() => {
@@ -238,6 +239,8 @@ const SfdcPipelineWizard = ({
             closePanel={handleClose}
             modifiedFilesRuleList={modifiedFilesRuleList}
             setModifiedFilesRuleList={setModifiedFilesRuleList}
+            activeTab={modifiedFilesTab}
+            setActiveTab={setModifiedFilesTab}
           />
        );
       case 3:

@@ -93,7 +93,8 @@ const SfdcModifiedFilesTabView = (
     setReloadCancelToken(source);
 
     if (isLoading !== true && isMounted?.current === true) {
-      rulesReload(source).catch((error) => {
+      sfdcFilterDto?.setData("currentPage", 1);
+      rulesReload(source, sfdcFilterDto).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
@@ -114,7 +115,6 @@ const SfdcModifiedFilesTabView = (
       if (isMounted?.current === true) {
         setSfdcModified([]);
         setRulesReloading(true);
-        newFilterDto?.setData("currentPage", 1);
         await getModifiedFiles(cancelSource, newFilterDto);
       }
     }

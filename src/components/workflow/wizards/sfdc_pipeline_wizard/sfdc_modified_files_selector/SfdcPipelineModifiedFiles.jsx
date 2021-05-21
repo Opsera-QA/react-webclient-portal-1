@@ -54,7 +54,9 @@ const SfdcPipelineModifiedFiles = ({
   gitTaskData,
   gitTaskId,
   modifiedFilesRuleList,
-  setModifiedFilesRuleList
+  setModifiedFilesRuleList,
+  activeTab,
+  setActiveTab
 }) => {
   const { getAccessToken, featureFlagHideItemInProd } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -62,7 +64,6 @@ const SfdcPipelineModifiedFiles = ({
   const [error, setError] = useState(false);
   const [save, setSave] = useState(false);
   const [componentType, setComponentType] = useState([]);
-  const [activeTab, setActiveTab] = useState("sfdc");
 
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -384,7 +385,9 @@ SfdcPipelineModifiedFiles.propTypes = {
   gitTaskData: PropTypes.object,
   gitTaskId: PropTypes.string,
   modifiedFilesRuleList: PropTypes.array,
-  setModifiedFilesRuleList: PropTypes.func
+  setModifiedFilesRuleList: PropTypes.func,
+  activeTab: PropTypes.string,
+  setActiveTab: PropTypes.func
 };
 
 export default SfdcPipelineModifiedFiles;

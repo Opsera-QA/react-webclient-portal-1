@@ -85,7 +85,8 @@ const GitModifiedFilesTabView = (
     setReloadCancelToken(source);
 
     if (isLoading !== true && isMounted?.current === true) {
-      rulesReload(source).catch((error) => {
+      gitFilterDto?.setData("currentPage", 1);
+      rulesReload(source, gitFilterDto).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
@@ -106,7 +107,6 @@ const GitModifiedFilesTabView = (
       if (isMounted?.current === true) {
         setGitModified([]);
         setRulesReloading(true);
-        newFilterDto?.setData("currentPage", 1);
         await getModifiedFiles(cancelSource, newFilterDto);
       }
     }

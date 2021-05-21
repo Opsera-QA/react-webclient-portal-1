@@ -94,7 +94,8 @@ const SfdcPipelineProfileComponentsView = (
     setReloadCancelToken(source);
 
     if (componentsLoading !== true && isMounted?.current === true) {
-      rulesReload(source).catch((error) => {
+      filterDto?.setData("currentPage", 1);
+      rulesReload(source, filterDto).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
@@ -115,7 +116,6 @@ const SfdcPipelineProfileComponentsView = (
     try {
       if (isMounted?.current === true) {
         setRulesReloading(true);
-        newFilterDto?.setData("currentPage", 1);
         await getProfileFiles(cancelSource, newFilterDto);
       }
     }
