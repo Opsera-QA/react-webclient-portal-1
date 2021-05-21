@@ -1,5 +1,28 @@
 const JenkinsJobTypeShellScript = {
-  
+  buildType: {
+    label: "Script Type",
+    id: "buildType",
+    type: "select",
+    value: "",
+    options: [      
+      {
+        name: "Python",
+        value: "python"
+      },
+      {
+        name: "Others",
+        value: "others"
+      }
+    ],    
+    toShow: true,
+    disabled: false,
+    touched: false,
+    isValid: false,
+    errorMessage: "",    
+    rules: {
+      isRequired: false 
+    }
+  },
   agentLabels: {
     label: "Agent Label",
     id: "agentLabels",

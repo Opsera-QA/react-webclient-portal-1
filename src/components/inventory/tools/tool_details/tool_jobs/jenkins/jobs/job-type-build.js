@@ -20,6 +20,10 @@ const JenkinsJobTypeBuild = {
       {
         name: "MS Build",
         value: "msbuild"
+      },
+      {
+        name: "Python",
+        value: "python"
       }
     ],    
     toShow: true,
@@ -52,6 +56,10 @@ const JenkinsJobTypeBuild = {
       {
         name: "MS Build",
         value: "msbuild"
+      },
+      {
+        name: "Python",
+        value: "python"
       }
     ],    
     toShow: true,
@@ -122,7 +130,7 @@ const JenkinsJobTypeBuild = {
         "value": "generic-linux",
       }
     ],
-    value: "",  
+    value: "",
     toShow: true,
     disabled: false,
     touched: false,
