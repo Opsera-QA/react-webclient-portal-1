@@ -14,7 +14,8 @@ function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, 
   };
 
   if (field == null) {
-    console.log(`No Field was Found for ${fieldName}. Please add to the metadata if you would like it to be shown.`);
+    console.error(`No Field was Found for ${fieldName}. Please add to the metadata if you would like it to be shown.`);
+    return null;
   }
 
   return (
