@@ -14,7 +14,7 @@ function FilterSelectInputBase({ fieldName, dataObject, setDataObject, groupBy, 
   };
 
   if (field == null) {
-    return <WarningDialog warningMessage={"No field was found for this filter"} />;
+    console.log(`No Field was Found for ${fieldName}. Please add to the metadata if you would like it to be shown.`);
   }
 
   return (
