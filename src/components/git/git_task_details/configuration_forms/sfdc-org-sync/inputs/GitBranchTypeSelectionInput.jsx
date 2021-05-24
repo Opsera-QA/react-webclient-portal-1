@@ -7,14 +7,13 @@ export const branchTypes = [
   {name: "SFDX to Ant Branch Structure", value: "sfdx-to-ant"}
 ];
 
-function GitBranchTypeSelectionInput({ fieldName, dataObject, setDataObject, placeholderText, disabled, setDataFunction }) {
+function GitBranchTypeSelectionInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction }) {
   return (
     <SelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
       selectOptions={branchTypes}
-      placeholderText={placeholderText}
       setDataFunction={setDataFunction}
       valueField="value"
       textField="name"
@@ -26,15 +25,13 @@ function GitBranchTypeSelectionInput({ fieldName, dataObject, setDataObject, pla
 GitBranchTypeSelectionInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
-  placeholderText: PropTypes.string,
   setDataObject: PropTypes.func,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
 GitBranchTypeSelectionInput.defaultProps = {
-  fieldName: "conversionType",
-  placeholderText: "Select One",
+  fieldName: "conversionType"
 };
 
 export default GitBranchTypeSelectionInput;

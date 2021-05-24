@@ -568,6 +568,17 @@ export const getTableBooleanIconColumn = (field, className) => {
   };
 };
 
+export const getTableBooleanStringIconColumn = (field, className) => {
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: function getStatusIcon(row) {
+      return row.value === 'success' ? <div><FontAwesomeIcon icon={faCheckCircle} className="green ml-2" /></div> :  <div><FontAwesomeIcon icon={faTimesCircle} className="red ml-2" /></div>;
+    },
+    class: className ? className : "text-left"
+  };
+};
+
 export const getGitTasksStatusColumn = (field, className) => {
   return {
     Header: getTableHeader(field),

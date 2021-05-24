@@ -170,6 +170,10 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "cumulative-open-defects",
     "automation-percentage",
     "adoption-percentage",
+    "sfdc-backups",
+    "sfdc-profile-migrations",
+    "sfdc-unit-testing",
+    "sonar-security-scorecard",
     "selenium-test-summary-percentages",
   ];
 
@@ -425,6 +429,13 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       ].value = kpiDomainFilter.getData("value");
     }
     if (
+      newKpiSettings.getData("filters")[newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "project")
+      ].value = kpiProjectFilter.getData("value");
+    }
+    if (
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "application")
       ]
@@ -463,6 +474,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "selenium-test-suites")
       ].value = kpiSeleniumTestSuitesFilter.getData("value");
     }
+
     setKpiSettings({ ...newKpiSettings });
     dashboardData.getData("configuration")[index] = kpiSettings.data;
     setKpiConfiguration(kpiSettings.data);

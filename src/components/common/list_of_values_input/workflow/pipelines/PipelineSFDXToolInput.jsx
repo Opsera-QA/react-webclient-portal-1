@@ -64,7 +64,7 @@ function PipelineSFDXToolInput({ toolType, toolFriendlyName, placeholderText, vi
     return <></>;
   }
 
-  if (!isLoading && (tools == null || tools.length === 0) && toolFriendlyName && toolType) {
+  if (!isLoading && (tools == null || tools.length === 0) && toolFriendlyName) {
     return (
       <div className="form-text text-muted p-2">
         <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
@@ -91,7 +91,7 @@ function PipelineSFDXToolInput({ toolType, toolFriendlyName, placeholderText, vi
         clearDataFunction={clearDataFunction}
         disabled={disabled || isLoading}
       />
-      <small className="text-muted">
+      <small className="text-muted ml-3">
         {getInfoText()}
       </small>
     </div>
@@ -114,8 +114,7 @@ PipelineSFDXToolInput.propTypes = {
 
 PipelineSFDXToolInput.defaultProps = {
   visible: true,
-  toolType: "sfdc-configurator",
-  placeholderText: "Select One",
+  toolType: "sfdc-configurator"
 };
 
 export default PipelineSFDXToolInput;

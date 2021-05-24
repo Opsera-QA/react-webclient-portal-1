@@ -9,7 +9,7 @@ const TOOL_TYPES = [
 ];
 
 function JenkinsAccountServiceSelectInput({ fieldName, dataObject, setDataObject, disabled }) {
-
+  
   const setJenkinsAccountService = (fieldName, selectedOption) => {    
     let newDataObject = dataObject;
     newDataObject?.setData(fieldName, selectedOption?.value);

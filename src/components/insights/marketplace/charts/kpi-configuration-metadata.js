@@ -254,23 +254,6 @@ export const kpiReleaseFilterMetadata = {
   },
 };
 
-export const kpiProjectFilterMetadata = {
-  type: "Project Filter",
-  fields: [
-    {
-      label: "Type",
-      id: "type",
-    },
-    {
-      label: "Project",
-      id: "value",
-    },
-  ],
-  newObjectFields: {
-    value: [],
-  },
-};
-
 export const kpiSeleniumTestSuitesFilterMetadata = {
   type: "Selenium Test Suites Filter",
   fields: [
@@ -280,6 +263,23 @@ export const kpiSeleniumTestSuitesFilterMetadata = {
     },
     {
       label: "Test Suites",
+      id: "value",
+    },
+  ],
+  newObjectFields: {
+    value: [],
+  },
+};
+
+export const kpiProjectFilterMetadata = {
+  type: "Project Filter",
+  fields: [
+    {
+      label: "Type",
+      id: "type",
+    },
+    {
+      label: "Project",
       id: "value",
     },
   ],

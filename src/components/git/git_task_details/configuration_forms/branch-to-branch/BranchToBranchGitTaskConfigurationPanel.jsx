@@ -46,7 +46,7 @@ function BranchToBranchGitTaskConfigurationPanel({ gitTasksDataDto, gitTasksConf
       </Col>     
       <Col lg={12}>
         <SFDCSCMToolInput  dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
-      </Col>        
+      </Col>         
       <Col lg={12}>
         <SFDCBitbucketWorkspaceInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} />
       </Col>
@@ -80,5 +80,3 @@ BranchToBranchGitTaskConfigurationPanel.propTypes = {
 };
 
 export default BranchToBranchGitTaskConfigurationPanel;
-
-

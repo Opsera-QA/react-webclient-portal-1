@@ -7,7 +7,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 
-function JenkinsJobInput({ jenkinsId, visible, typeFilter, fieldName, placeholderText, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, configurationRequired}) {
+function JenkinsJobInput({ jenkinsId, visible, typeFilter, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, configurationRequired}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [jenkinsTools, setJenkinsTools] = useState([]);
@@ -55,7 +55,7 @@ function JenkinsJobInput({ jenkinsId, visible, typeFilter, fieldName, placeholde
   const loadJenkinsJobs = () => {
     setIsLoading(true);
     const index = jenkinsTools.findIndex((x) => x.id === jenkinsId);
-    const jobs = (index != -1) && jenkinsTools[index]?.jobs ? jenkinsTools[index].jobs : [];
+    const jobs = (index!= -1) && jenkinsTools[index]?.jobs ? jenkinsTools[index].jobs : [];
 
     if (jobs.length > 0 && typeFilter) {
       let filteredJobs = jobs.filter((job) => {return job.type[0] === typeFilter;});
@@ -91,7 +91,6 @@ function JenkinsJobInput({ jenkinsId, visible, typeFilter, fieldName, placeholde
         setDataObject={setDataObject}
         setDataFunction={setDataFunction}
         selectOptions={jenkinsJobs}
-        placeholderText={placeholderText}
         busy={isLoading}
         valueField="name"
         textField="name"
@@ -108,7 +107,6 @@ JenkinsJobInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  placeholderText: PropTypes.string,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
@@ -119,7 +117,6 @@ JenkinsJobInput.propTypes = {
 
 JenkinsJobInput.defaultProps = {
   visible: true,
-  placeholderText: "Select One",
 };
 
 export default JenkinsJobInput;
