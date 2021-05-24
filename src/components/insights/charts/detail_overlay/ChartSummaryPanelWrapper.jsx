@@ -9,6 +9,7 @@ import OpseraDeploymentFreqStatsSuccessSummaryPanel
 import OpseraDeploymentFreqStatsFailureSummaryPanel
   from "../opsera/OpseraDeploymentFreqStats/OpseraDeploymentFreqStatsFailureSummaryPanel";
 import SFDCPipelinesSummaryPanel from "components/insights/charts/sfdc/SFDCPipelinesOverlayPanel";
+import OpseraMeanTimeToRestoreSummaryPanel from "../opsera/bar_chart/mean_time_to_restore/OpseraMeanTimeToRestoreSummaryPanel";
 
 function ChartSummaryPanelWrapper({ chartModel, kpiIdentifier, dashboardData, kpiConfiguration, pipelineName, setActiveTab }) {
   const getStepConfigurationSummary = () => {
@@ -111,6 +112,15 @@ function ChartSummaryPanelWrapper({ chartModel, kpiIdentifier, dashboardData, kp
           <SFDCPipelinesSummaryPanel
             result={"pipelinesSFDCUnitTestingFailure"}
             dashboardData={dashboardData} 
+            kpiConfiguration={kpiConfiguration}
+            chartModel={chartModel}
+            setActiveTab={setActiveTab}
+          />
+        );
+      case "mean-time-to-restore":
+        return (
+          <OpseraMeanTimeToRestoreSummaryPanel
+            dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
             chartModel={chartModel}
             setActiveTab={setActiveTab}
