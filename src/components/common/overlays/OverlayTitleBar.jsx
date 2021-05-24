@@ -22,7 +22,16 @@ function OverlayTitleBar({ titleText, titleIcon, isLoading, handleClose }) {
   }
 
   if (isLoading) {
-    return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Data</span>);
+    return (
+      <div className="px-3 content-block-header title-text-header-1">
+        <div className="d-flex justify-content-between">
+          <div><span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Data</span></div>
+          <div className="pointer" onClick={() => { handleClose();}}>
+            <FontAwesomeIcon icon={faTimes} fixedWidth/>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
