@@ -4,6 +4,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import OverlayTitleBar from "components/common/overlays/OverlayTitleBar";
 import CloseButton from "components/common/buttons/CloseButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 function CenterOverlayContainer({ children, actionBar, titleText, titleIcon, showPanel, closePanel, isLoading, showToasts, showCloseButton, buttonContainer, fullWidth}) {
   const toastContext = useContext(DialogToastContext);
@@ -36,6 +37,14 @@ function CenterOverlayContainer({ children, actionBar, titleText, titleIcon, sho
     return ("center-overlay content-card-1 bg-white");
   };
 
+  const getBody = () => {
+    if (isLoading) {
+      return (<LoadingDialog message={"Loading Data"} size={"sm"} />);
+    }
+
+    return children;
+  };
+
   if (!showPanel) {
     return null;
   }
@@ -47,7 +56,7 @@ function CenterOverlayContainer({ children, actionBar, titleText, titleIcon, sho
         {actionBar}
         <div className={"overlay-panel-body bg-white"}>
           {showToasts && toastContext?.getInlineBanner()}
-          {children}
+          {getBody()}
         </div>
         <div className={"mt-auto"}>
           {getButtons()}
