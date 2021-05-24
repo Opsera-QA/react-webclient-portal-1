@@ -11,7 +11,7 @@ function TableBase({ columns, data, onRowSelect, rowStyling, sort }) {
 
   useEffect(() => {
     setUpGrid();
-  }, []);
+  }, [columns]);
 
   useEffect(() => {
     if (grid && Array.isArray(data)) {
