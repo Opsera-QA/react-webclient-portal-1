@@ -101,6 +101,8 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, pipe
           scheduledTaskData={scheduledTaskData}
           setScheduleModel={setScheduleModel}
           scheduleModel={scheduleModel}
+          schedulerTaskModel={schedulerTaskModel}
+          setSchedulerTaskModel={setSchedulerTaskModel}
           pipeline={pipeline}
         />
          <Col lg={12}>

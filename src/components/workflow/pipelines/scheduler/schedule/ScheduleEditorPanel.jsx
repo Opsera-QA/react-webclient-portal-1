@@ -11,7 +11,7 @@ import ScheduleFrequencyRadioInput
   from "components/common/list_of_values_input/workflow/scheduler/ScheduleFrequencyRadioInput";
 
 // TODO: Jim, when this is all done and working, I will probably make a component out of the schedule component and hook it up here.
-function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleModel, updateScheduleName }) {
+function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleModel, setSchedulerTaskModel, updateScheduleName }) {
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -47,6 +47,13 @@ function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleMode
     setIsLoading(false);
   };
 
+const updateModel = (newDataModel) => {
+  setScheduleModel(newDataModel);
+
+  scheduledTaskData.setData("schedule",scheduleModel?.getPersistData() );
+  setSchedulerTaskModel({...scheduledTaskData});
+};
+
   if (scheduleModel == null) {
     return null;
   }
@@ -55,7 +62,7 @@ function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleMode
     <Row className={"w-100 mx-0"}>
       <Col lg={4}>
         <ScheduleCalendarInput
-          setDataObject={setScheduleModel}
+          setDataObject={updateModel}
           dataObject={scheduleModel}
           fieldName={"executionDate"}
           scheduledTaskData={scheduledTaskData}
@@ -63,14 +70,14 @@ function ScheduleEditorPanel({ scheduledTaskData, scheduleModel, setScheduleMode
       </Col>
       <Col lg={4}>
         <ScheduleTimeInput
-          setDataObject={setScheduleModel}
+          setDataObject={updateModel}
           dataObject={scheduleModel}
           fieldName={"executionDate"}
         />
       </Col>
       <Col lg={4}>
         <ScheduleFrequencyRadioInput
-          setDataObject={setScheduleModel}
+          setDataObject={updateModel}
           dataObject={scheduleModel}
           fieldName={"recurring"}
         />
@@ -83,6 +90,7 @@ ScheduleEditorPanel.propTypes = {
   scheduledTaskData: PropTypes.object,
   scheduleModel: PropTypes.object,
   setScheduleModel: PropTypes.func,
+  setSchedulerTaskModel: PropTypes.func,
   updateScheduleName: PropTypes.func,
 };
 
