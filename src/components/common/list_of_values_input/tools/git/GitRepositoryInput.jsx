@@ -35,7 +35,6 @@ function GitRepositoryInput({ service, gitToolId, workspace, visible, fieldName,
     finally {
       setIsLoading(false);
     }
-    return;
   };
 
   const getRepositories = async () => {

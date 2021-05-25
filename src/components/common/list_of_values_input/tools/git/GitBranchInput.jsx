@@ -31,7 +31,6 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
     finally {
       setIsLoading(false);
     }
-    return;
   };
 
   const getRepositories = async () => {
