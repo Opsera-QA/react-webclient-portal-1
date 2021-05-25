@@ -1,6 +1,6 @@
 const MeanTimeToRestoreSummaryPanelMetadata = {
   idProperty: "_id",
-  type: "Deployment Frequency Insights Table Details",
+  type: "Mean Time to Restore Table Details",
   fields: [
     {
       label: "Name",
