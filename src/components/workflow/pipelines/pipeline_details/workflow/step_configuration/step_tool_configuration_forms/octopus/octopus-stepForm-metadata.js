@@ -153,11 +153,6 @@ const octopusStepFormMetadata = {
         id: "lifecycleId",
         isRequired: true
       },
-      {
-        label: "Deployment Lifecycle",
-        id: "lifecycleId",
-        isRequired: true
-      },
     ],
   newObjectFields:
       {
