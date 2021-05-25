@@ -172,7 +172,7 @@ const SfdcPipelineModifiedFiles = ({
       isProfiles: isProfiles,
       componentTypes: isProfiles ? selectedComponentTypes : [],
       // commitList: selectedList,
-      isSfdc: !!(fromSFDC || fromDestinationSFDC),
+      isSfdc: fromSFDC || fromDestinationSFDC
     };
 
     try {
@@ -201,7 +201,7 @@ const SfdcPipelineModifiedFiles = ({
         gitTaskId: gitTaskData ? gitTaskId : false,
         isProfiles: isProfiles,
         componentTypes: isProfiles ? selectedComponentTypes : [],
-        isSfdc: !!(fromSFDC || fromDestinationSFDC),
+        isSfdc: fromSFDC || fromDestinationSFDC
       };
 
       const result = await sfdcPipelineActions.generateXML(postBody, getAccessToken);
