@@ -17,7 +17,7 @@ import {
   faUsers,
   faBrowser,
   faTags,
-  faDiceD20, faProjectDiagram
+  faDiceD20, faProjectDiagram, faKey,
 } from "@fortawesome/pro-light-svg-icons";
 import ToolApplicationsPanel from "./ToolAppliationsPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
@@ -31,6 +31,7 @@ import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import AttributeEditorPanel from "components/inventory/tools/tool_details/AttributeEditorPanel";
 import ToggleTab from "components/common/tabs/detail_view/ToggleTab";
+import ToolVaultPanel from "./ToolVaultPanel";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
@@ -119,6 +120,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"} disabled={!authorizedAction("edit_tool_connection", toolData?.data)}/>
         {getDynamicTabs()}
         <CustomTab icon={faDiceD20} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
+        <CustomTab icon={faKey} tabName={"vault"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Vault"}/>
       </CustomTabContainer>
     );
   };
@@ -149,6 +151,8 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         return <ToolProjectsPanel toolData={toolData} isLoading={isLoading} loadData={loadData} />;
       case "pipelines":
         return <ToolPipelinesPanel toolData={toolData} />;
+      case "vault":
+        return <ToolVaultPanel toolData={toolData} setToolData={setToolData} />;
       default:
         return null;
     }

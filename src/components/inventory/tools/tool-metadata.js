@@ -116,6 +116,10 @@ const toolMetadata = {
     {
       label: "Updated",
       id: "updatedAt",
+    },
+    {
+      label: "Vault Instance",
+      id: "vault",
     }
   ],
   newObjectFields: {
@@ -135,7 +139,8 @@ const toolMetadata = {
     roles: [],
     configuration: {},
     status: "",
-    tags: []
+    tags: [],
+    vault: ""
   }
 };
 

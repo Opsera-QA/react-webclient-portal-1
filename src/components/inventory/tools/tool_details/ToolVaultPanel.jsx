@@ -1,0 +1,121 @@
+import React, { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
+import VaultSelectInput from "./input/VaultSelectInput";
+import { Col, Row } from "react-bootstrap";
+import toolsActions from "../tools-actions";
+import { AuthContext } from "../../../../contexts/AuthContext";
+import Model from "../../../../core/data_model/model";
+import WarningDialog from "../../../common/status_notifications/WarningDialog";
+import ErrorDialog from "../../../common/status_notifications/error";
+import RequiredFieldsMessage from "../../../common/fields/editor/RequiredFieldsMessage";
+import PersistAndCloseButtonContainer from "../../../common/buttons/saving/containers/PersistAndCloseButtonContainer";
+
+function ToolVaultPanel({ toolData, isLoading }) {
+  const { getAccessToken } = useContext(AuthContext);
+  const [temporaryDataObject, setTemporaryDataObject] = useState(undefined);
+
+  useEffect(() => {
+    setTemporaryDataObject(new Model({ ...toolData?.getPersistData() }, toolData?.getMetaData(), false));
+  }, []);
+
+  const saveData = async () => {
+    toolData.setData("vault", temporaryDataObject.getData("vault"));
+    let newDataObject = { ...toolData };
+    const response = await toolsActions.updateTool(newDataObject, getAccessToken);
+    // setTemporaryDataObject({...newDataObject});
+    return response;
+  };
+
+  const getWarningDialogs = () => {
+    if (
+      (toolData.getData("vault") && toolData.getData("vault").length > 0) ||
+      (temporaryDataObject?.getData("vault") && temporaryDataObject?.getData("vault").length > 0)
+    ) {
+      return (
+        <div className={"px-3"}>
+          <WarningDialog
+            warningMessage={
+              "A non-Opsera provided Hashicorp Vault is in use for this tool. Any operations that require this tool require access to this vault.  If the vault is down, then any Opsera operations will fail as a result. Opsera cannot manage or control the uptime of this tool."
+            }
+          />
+        </div>
+      );
+    }
+  };
+
+  const getErrorDialogs = () => {
+    if (
+      toolData.getData("vault") &&
+      toolData.getData("vault").length > 0 &&
+      temporaryDataObject?.changeMap.has("vault")
+    ) {
+      return (
+        <div className={"py-1"}>
+          <ErrorDialog
+            error={
+              "Changing the Vault Instance does not migrate data between vault instances. In order to successfully change the vault in use please re-save the step configuration with the required information to ensure the tokens/passwords being updated in the vault."
+            }
+            align="stepConfigurationTop"
+          />
+        </div>
+      );
+    }
+  };
+
+  const getPersistButtonContainer = () => {
+    if (temporaryDataObject) {
+      return (
+        <PersistAndCloseButtonContainer
+          createRecord={saveData}
+          updateRecord={saveData}
+          setRecordDto={setTemporaryDataObject}
+          recordDto={temporaryDataObject}
+        />
+      );
+    }
+  };
+
+  const getVaultPanel = () => {
+    if (temporaryDataObject == null) {
+      return null;
+    }
+    return (
+      <>
+        <Row>
+          <Col lg={12}>
+            <VaultSelectInput
+              dataObject={temporaryDataObject}
+              setDataObject={setTemporaryDataObject}
+              fieldName={"vault"}
+            />
+          </Col>
+        </Row>
+        <div>{getPersistButtonContainer()}</div>
+        <div>
+          <RequiredFieldsMessage />
+        </div>
+      </>
+    );
+  };
+
+  return (
+    <>
+      <div className="text-muted p-3">
+        <div className="h6">Vault Management</div>
+        <div className="mb-3">Use this to manage credential/token storage locations in the Opsera platform.</div>
+        {getWarningDialogs()}
+        {getErrorDialogs()}
+        {getVaultPanel()}
+      </div>
+    </>
+  );
+}
+
+ToolVaultPanel.propTypes = {
+  toolData: PropTypes.object,
+  loadData: PropTypes.func,
+  setToolData: PropTypes.func,
+  isLoading: PropTypes.bool,
+};
+
+export default ToolVaultPanel;

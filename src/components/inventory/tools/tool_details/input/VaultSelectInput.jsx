@@ -52,7 +52,7 @@ function VaultToolSelectInput({ fieldName, dataObject, setDataObject, disabled, 
       let results = await PipelineActions.getToolsList("hashicorp_vault", getAccessToken);
 
       const filteredList = results.filter((el) => el.configuration !== undefined);
-      filteredList.unshift({ id: "default", name: "Opsera Default Hashicorp Vault"});
+      filteredList.unshift({ id: "", name: "Opsera Default Hashicorp Vault"});
       if (filteredList) {
         setVaultList(filteredList);
       }
@@ -68,6 +68,7 @@ function VaultToolSelectInput({ fieldName, dataObject, setDataObject, disabled, 
   return (
     <div>
       <SelectInputBase
+
         fieldName={fieldName}
         dataObject={dataObject}
         setDataObject={setDataObject}
@@ -98,7 +99,7 @@ VaultToolSelectInput.propTypes = {
 VaultToolSelectInput.defaultProps = {
   valueField: "id",
   textField: "name",
-  fieldName: "vaultToolConfigId"
+  fieldName: "vault"
 };
 
 export default VaultToolSelectInput;

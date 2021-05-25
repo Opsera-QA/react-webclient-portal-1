@@ -607,6 +607,7 @@ a:hover, .active, .link-text:hover {
 .warning-block {
     background-color: #CF940C;
     color: #FFF;
+    border-radius: 5px;
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
