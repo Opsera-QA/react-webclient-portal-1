@@ -11,6 +11,7 @@ const branchToBranchGitTaskConfigurationMetadata = {
       regexValidator: regexHelpers.regexTypes.loweCaseLetters
     },    
     {
+      label: "Account",
       id: "gitCredential",
       isRequired: true,
       maxLength: 250,
