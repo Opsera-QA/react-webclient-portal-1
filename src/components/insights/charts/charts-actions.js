@@ -76,7 +76,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   tableFilterDto,
   projectTags,
   dashboardOrgs,
-  pipelineName
+  pipelineName,
+  currentDate
 ) => {
   const apiUrl = "/analytics/metrics";
   const date = getDateObjectFromKpiConfiguration(kpiConfiguration);
@@ -118,6 +119,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     projectTags: projectTags,
     dashboardOrgs: dashboardOrgs,
     pipelineName: pipelineName,
+    currentDate: currentDate
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
