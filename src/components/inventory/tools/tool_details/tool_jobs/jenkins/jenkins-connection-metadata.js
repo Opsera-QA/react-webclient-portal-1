@@ -40,6 +40,11 @@ const jenkinsConnectionMetadata = {
       label: "Auto-Scaling Enabled?",
       id: "autoScaleEnable",
     },
+    {
+      label: "Vault Instance",
+      id: "vaultToolConfigId",
+      isRequired: true
+    },
 ],
   fieldsAlt: [
     {
@@ -83,6 +88,11 @@ const jenkinsConnectionMetadata = {
       label: "Auto-Scaling Enabled?",
       id: "autoScaleEnable",
     },
+    {
+      label: "Vault Instance",
+      id: "vaultToolConfigId",
+      isRequired: true
+    },
   ],
   newObjectFields: {
     jenkinsUrl: "",
@@ -93,7 +103,8 @@ const jenkinsConnectionMetadata = {
     proxyUserName: "",
     proxyPassword: "",
     proxyEnable: false,
-    autoScaleEnable: false
+    autoScaleEnable: false,
+    vaultToolConfigId: "default"
   }
 };
 

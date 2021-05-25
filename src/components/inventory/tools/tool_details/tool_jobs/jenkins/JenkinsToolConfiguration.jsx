@@ -12,6 +12,9 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import JenkinsProxyToggle from "components/inventory/tools/tool_details/tool_jobs/jenkins/JenkinsProxyToggle";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import VaultToolSelectInput from "components/common/list_of_values_input/inventory/VaultSelectInput";
+import WarningDialog from "components/common/status_notifications/WarningDialog";
+import ErrorDialog from "components/common/status_notifications/error";
 
 function JenkinsToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -56,6 +59,28 @@ function JenkinsToolConfiguration({ toolData }) {
     );
   };
 
+  const getWarningDialogs = () => {
+    if (jenkinsConfigurationDto.getData("vaultToolConfigId") && jenkinsConfigurationDto.getData("vaultToolConfigId").length > 0 && jenkinsConfigurationDto.getData("vaultToolConfigId") !== "default") {
+      return (
+        <div className={"p-2"}>
+          <WarningDialog warningMessage={"A non-Opsera provided Hasicorp Vault is in use for this tool. Any operations that require this tool require access to this vault.  If the vault is down, then any Opsera operations will fail as a result. Opsera cannot manage or control the uptime of this tool."} />
+        </div>
+      );
+    }
+  };
+
+  const getErrorDialogs = () => {
+    if (toolData.getData("configuration").vaultToolConfigId && toolData.getData("configuration").vaultToolConfigId.length > 0 && jenkinsConfigurationDto.changeMap.has("vaultToolConfigId")) {
+      return (
+        <div className={"p-2"}>
+          <ErrorDialog error={"Changing the Vault Instance does not migrate data between vault instances. In order to successfully change the vault in use please re-save the step configuration with the required information to ensure the tokens/passwords being updated in the vault."} align="stepConfigurationTop" />
+        </div>
+      );
+    }
+  };
+
+
+
   if (jenkinsConfigurationDto == null) {
     return <></>;
   }
@@ -69,8 +94,11 @@ function JenkinsToolConfiguration({ toolData }) {
     >
       <Row>
         <Col sm={12}>
+        {getWarningDialogs()}
+        {getErrorDialogs()}
           <TextInputBase dataObject={jenkinsConfigurationDto} setDataObject={setJenkinsConfigurationDto} fieldName={"jenkinsUrl"} />
           <TextInputBase dataObject={jenkinsConfigurationDto} setDataObject={setJenkinsConfigurationDto} fieldName={"jenkinsPort"} />
+          <VaultToolSelectInput dataObject={jenkinsConfigurationDto} setDataObject={setJenkinsConfigurationDto} fieldName={"vaultToolConfigId"} />
           <TextInputBase dataObject={jenkinsConfigurationDto} setDataObject={setJenkinsConfigurationDto} fieldName={"jUserId"} />
           <JenkinsProxyToggle dataObject={jenkinsConfigurationDto} setDataObject={setJenkinsConfigurationDto} fieldName={"proxyEnable"} />
           {getDynamicFields()}
