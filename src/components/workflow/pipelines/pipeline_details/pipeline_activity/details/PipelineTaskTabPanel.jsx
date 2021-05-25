@@ -20,7 +20,7 @@ function PipelineTaskTabPanel({ pipelineTaskData }) {
 
   const getActionSpecificTab = () => {
     // TODO: Make switch statement if a handful are added
-    if (pipelineTaskData.action === "console output") {
+    if (pipelineTaskData?.action === "console output") {
       return (<ConsoleLogTab activeTab={activeTab} handleTabClick={handleTabClick} />);
     }
   };
@@ -47,6 +47,10 @@ function PipelineTaskTabPanel({ pipelineTaskData }) {
         return null;
     }
   };
+
+  if (pipelineTaskData == null) {
+    return null;
+  }
 
   return (<ModalTabPanelContainer detailView={getCurrentView()} tabContainer={getTabContainer()} />);
 }

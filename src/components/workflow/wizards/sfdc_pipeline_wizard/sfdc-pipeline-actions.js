@@ -45,6 +45,11 @@ sfdcPipelineActions.generateXML = async (postBody, getAccessToken) => {
   return response;
 };
 
+sfdcPipelineActions.generateProfileXML = async (getAccessToken, cancelTokenSource, postBody) => {
+  const apiUrl = `/pipelines/sfdc/generate_profile_xml`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 sfdcPipelineActions.createJobs = async (postBody, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/sfdc/set-jobs`;   
@@ -76,6 +81,16 @@ sfdcPipelineActions.getListFromPipelineStorage = async (postBody, toolFilterDto,
   return response;
 };
 
+sfdcPipelineActions.getListFromPipelineStorageV2 = async (getAccessToken, cancelTokenSource, postBody) => {
+  const apiUrl = `/pipelines/storage/get_v2`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+sfdcPipelineActions.getSfdcComponentListFromPipelineStorageV2 = async (getAccessToken, cancelTokenSource, postBody) => {
+  const apiUrl = `/pipelines/storage/get/components`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 sfdcPipelineActions.setListToPipelineStorage = async (postBody, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/pipelines/storage/update`;   
@@ -83,6 +98,11 @@ sfdcPipelineActions.setListToPipelineStorage = async (postBody, getAccessToken) 
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
   return response;
+};
+
+sfdcPipelineActions.setListToPipelineStorageV2 = async (getAccessToken, cancelTokenSource, postBody) => {
+  const apiUrl = `/pipelines/storage/update_v2`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 sfdcPipelineActions.getProfileComponentList = async (postBody, getAccessToken) => {

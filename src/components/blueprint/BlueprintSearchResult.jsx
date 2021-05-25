@@ -26,8 +26,12 @@ function BlueprintSearchResult({ logData }) {
   for (let item in logData.data) {
     if (logData.data.length > 0) {
       if (logData.data[item].api_response) {
-        if (logData.data[item].api_response.jenkins_console_log) {
+        if (logData.data[item].api_response.jenkinsConsoleLog) {
+          completeInput.push(logData.data[item].api_response.jenkinsConsoleLog);
+        } else if (logData.data[item].api_response.jenkins_console_log) {
           completeInput.push(logData.data[item].api_response.jenkins_console_log);
+        } else if (logData.data[item].step_configuration?.topic === "opsera.pipeline.octopus.console.log") {
+          completeInput.push(logData.data[item].api_response.message);
         } else if (logData.data[item].api_response.status) {
           completeInput.push(logData.data[item].api_response.status);
         } else if (logData.data[item].api_response.buildLog) {
@@ -125,7 +129,6 @@ function BlueprintSearchResult({ logData }) {
     history.push(`/workflow/details/${logData?.pipelineId}/summary`);
   };
 
-
   // TODO: Refactor
   return (
     <>
@@ -174,11 +177,7 @@ function BlueprintSearchResult({ logData }) {
                       <Nav.Item key={idx}>
                         <Nav.Link key={idx} eventKey={idx}>
                           {makeUpper(
-                              item?.step_configuration?.configuration?.jobType
-                              ? item.step_configuration.configuration.jobType
-                              : item.tool_identifier
-                              ? item.tool_identifier
-                              : item.step_name
+                              item?.step_name
                           )}
                         </Nav.Link>
                       </Nav.Item>
@@ -220,9 +219,17 @@ function BlueprintSearchResult({ logData }) {
                 <Tab.Content>
                   {logData.data.map((item, idx) => (
                     <Tab.Pane key={idx} eventKey={idx}>
-                      {item.api_response.jenkins_console_log ? (
+                      {item.api_response.jenkinsConsoleLog ? (
+                        <div key={idx} className="console-text-invert">
+                          {item.api_response.jenkinsConsoleLog}
+                        </div>
+                      ) : item.api_response.jenkins_console_log ? (
                         <div key={idx} className="console-text-invert">
                           {item.api_response.jenkins_console_log}
+                        </div>
+                      ) : item.step_configuration?.topic === "opsera.pipeline.octopus.console.log" ? (
+                        <div key={idx} className="console-text-invert">
+                          {item.api_response.message}
                         </div>
                       ) : item.api_response.buildLog ? (
                         <div key={idx} className="console-text-invert">

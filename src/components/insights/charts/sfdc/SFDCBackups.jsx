@@ -95,13 +95,13 @@ function SfdcBackups({ kpiConfiguration, setKpiConfiguration, dashboardData, ind
         title={metrics[0].success.toString()}
         subTitle="No. of Pipelines with Successful Backups"
         toolTipText="Total number of pipelines with successful backups"
-        // clickAction={() => onRowSelect("sfdc-backups-successful")}
+        clickAction={() => onRowSelect("sfdc-backups-successful")}
       />
       <DataBlock 
         title={metrics[0].failure.toString()}
         subTitle="No. of Pipelines with Failed Backups"
         toolTipText="Total number of pipelines with failed backups"
-        // clickAction={() => onRowSelect("sfdc-backups-failure")}
+        clickAction={() => onRowSelect("sfdc-backups-failure")}
       />
       </DataBlockWrapper>
       </Row>
@@ -111,13 +111,13 @@ function SfdcBackups({ kpiConfiguration, setKpiConfiguration, dashboardData, ind
         title={rollbacks && rollbacks.length > 0 ? rollbacks[0].success.toString() : 0}
         subTitle="No. of Pipelines with Successful Rollbacks"
         toolTipText="Total number of pipelines with successful rollbacks"
-        // clickAction={() => onRowSelect("sfdc-rollbacks-successful")}
+        clickAction={() => onRowSelect("sfdc-rollbacks-successful")}
       />
       <DataBlock 
         title={rollbacks && rollbacks.length > 0 ? rollbacks[0].failure.toString() : 0}
         subTitle="No. of Pipelines with Failed Rollbacks"
         toolTipText="Total number of pipelines with failed rollbacks"
-        // clickAction={() => onRowSelect("sfdc-rollbacks-failure")}
+        clickAction={() => onRowSelect("sfdc-rollbacks-failure")}
       />
       </DataBlockWrapper>
       </Row>

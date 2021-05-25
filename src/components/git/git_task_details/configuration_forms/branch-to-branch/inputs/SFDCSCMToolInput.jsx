@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import PipelineToolInput from "components/common/list_of_values_input/workflow/pipelines/PipelineToolInput";
 
 function SFDCSCMToolInput({dataObject, setDataObject, disabled}) {
-  const setSfdcScmTool = (fieldName, selectedOption) => {    
+  const setSfdcScmTool = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
     newDataObject.setData("gitToolId", selectedOption?.id);
     newDataObject.setData("gitCredential", selectedOption?.name);

@@ -29,7 +29,7 @@ const INITIAL_DATA = {
   committedFile: "",
 };
 
-const SfdcPipelineProfileComponents = ({
+const SfdcPipelineProfileComponents_old = ({
   pipelineId,
   stepId,
   handleClose,
@@ -354,7 +354,7 @@ const SfdcPipelineProfileComponents = ({
   );
 };
 
-SfdcPipelineProfileComponents.propTypes = {
+SfdcPipelineProfileComponents_old.propTypes = {
   pipelineId: PropTypes.string,
   stepId: PropTypes.string,
   setView: PropTypes.func,
@@ -373,4 +373,4 @@ SfdcPipelineProfileComponents.propTypes = {
   setProfileCompCheckAll: PropTypes.func,
 };
 
-export default SfdcPipelineProfileComponents;
+export default SfdcPipelineProfileComponents_old;
