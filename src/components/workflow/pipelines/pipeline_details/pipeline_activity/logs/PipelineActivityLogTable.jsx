@@ -73,19 +73,6 @@ function PipelineActivityLogTable({ pipelineLogData, pipelineActivityMetadata, l
     return ("Pipeline activity data has not been generated yet. Once this pipeline begins running, it will publish details here.");
   };
 
-  const onPageChange = (newPage) => {
-    if (currentLogTreePage !== newPage) {
-      setCurrentLogTreePage(newPage);
-
-      // TODO: Do we want to select the top item when changing pages?
-      //  This will require allowing selection to be passed into tree
-      // const newTopIndex = newPage * 20;
-      // const topItem = pipelineActivityTreeData[newTopIndex];
-      setCurrentRunNumber(undefined);
-      setCurrentStepName(undefined);
-    }
-  };
-
   const getTable = () => {
     return (
       <div className={"tree-table"}>
@@ -107,7 +94,7 @@ function PipelineActivityLogTable({ pipelineLogData, pipelineActivityMetadata, l
         setCurrentRunNumber={setCurrentRunNumber}
         setCurrentStepName={setCurrentStepName}
         currentLogTreePage={currentLogTreePage}
-        onPageChange={onPageChange}
+        setCurrentLogTreePage={setCurrentLogTreePage}
       />
     );
   };

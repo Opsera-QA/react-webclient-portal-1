@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import TreeBase from "components/common/tree/TreeBase";
 import VanityBottomPaginatorBase from "components/common/pagination/VanityBottomPaginatorBase";
 
-function PipelineActivityLogTree({ pipelineLogTree, setCurrentRunNumber, setCurrentStepName, onPageChange}) {
+function PipelineActivityLogTree({ pipelineLogTree, setCurrentRunNumber, setCurrentStepName, currentLogTreePage, setCurrentLogTreePage}) {
   const [treeWidget, setTreeWidget] = useState(undefined);
   const isMounted = useRef(false);
 
@@ -21,6 +21,24 @@ function PipelineActivityLogTree({ pipelineLogTree, setCurrentRunNumber, setCurr
       setCurrentStepName(treeItem.stepName);
     }
   };
+
+  const onPageChange = (newPage) => {
+    if (currentLogTreePage !== newPage) {
+      setCurrentLogTreePage(newPage);
+
+      // TODO: Do we want to select the top item when changing pages?
+      //  This will require allowing selection to be passed into tree
+      // const newTopIndex = newPage * 20;
+      // const topItem = pipelineActivityTreeData[newTopIndex];
+      setCurrentRunNumber(undefined);
+      setCurrentStepName(undefined);
+
+      if (treeWidget) {
+        treeWidget.selection.remove();
+      }
+    }
+  };
+
 
   if (pipelineLogTree == null) {
     return null;
@@ -42,7 +60,8 @@ PipelineActivityLogTree.propTypes = {
   pipelineLogTree: PropTypes.array,
   setCurrentRunNumber: PropTypes.func,
   setCurrentStepName: PropTypes.func,
-  onPageChange: PropTypes.func
+  currentLogTreePage: PropTypes.number,
+  setCurrentLogTreePage: PropTypes.func
 };
 
 export default PipelineActivityLogTree;
