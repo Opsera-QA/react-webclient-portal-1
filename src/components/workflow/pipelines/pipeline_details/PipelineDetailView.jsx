@@ -1,41 +1,47 @@
-import React, {useContext, useState, useEffect, useRef} from "react";
-import { AuthContext } from "contexts/AuthContext";
-import { axiosApiService } from "api/apiService";
-import PipelineActivityLogTable from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTable";
+import React, {useContext, useEffect, useRef, useState} from "react";
+import {AuthContext} from "contexts/AuthContext";
+import {axiosApiService} from "api/apiService";
+import PipelineActivityLogTable
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTable";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ErrorDialog from "components/common/status_notifications/error";
 import InfoDialog from "components/common/status_notifications/info";
 import "../../workflows.css";
-import { useParams } from "react-router-dom";
+import {useHistory, useParams} from "react-router-dom";
 import PipelineWorkflowView from "./workflow/PipelineWorkflowView";
 import PipelineSummaryPanel from "./PipelineSummaryPanel";
 import PipelineHelpers from "../../pipelineHelpers";
-import { useHistory } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-  faDraftingCompass,
-  faDiceD20,
-  faMicrochip,
   faBracketsCurly,
-  faSpinner, faHexagon, faGripVertical, faLayerGroup,
+  faDiceD20,
+  faDraftingCompass,
+  faHexagon,
+  faLayerGroup,
+  faMicrochip,
 } from "@fortawesome/pro-light-svg-icons";
-import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
+import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 import Model from "../../../../core/data_model/model";
-import pipelineActivityActions from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-actions";
-import pipelineActivityFilterMetadata from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-filter-metadata";
+import pipelineActivityActions
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-actions";
+import pipelineActivityFilterMetadata
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-filter-metadata";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import axios from "axios";
+import pipelineActivityHelpers
+  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-helpers";
 
 const refreshInterval = 8000;
 
+// TODO: Find way to refresh logs inside the log components rather than leaving all the methods in here
+//  we could instead pass refresh trigger down. 
 function PipelineDetailView() {
   const { tab, id } = useParams();
   const [error, setErrors] = useState();
   const [data, setData] = useState({});
   const [pipeline, setPipeline] = useState({});
   const [activityData, setActivityData] = useState([]);
-  const [formattedActivityData, setFormattedActivityData] = useState([]);
   //const [stepStatus, setStepStatus] = useState({});
   const [loading, setLoading] = useState(false);
   const [softLoading, setSoftLoading] = useState(false);
@@ -47,6 +53,8 @@ function PipelineDetailView() {
   const [refreshCount, setRefreshCount] = useState(0);
   const [pipelineActivityFilterDto, setPipelineActivityFilterDto] = useState(new Model(pipelineActivityFilterMetadata.newObjectFields, pipelineActivityFilterMetadata, false));
   const history = useHistory();
+  const [pipelineActivityMetadata, setPipelineActivityMetadata] = useState(undefined);
+  const [pipelineActivityTreeData, setPipelineActivityTreeData] = useState([]);
 
   const [refreshTimer, setRefreshTimer] = useState(null);
   let staleRefreshCount = 1;
@@ -57,6 +65,7 @@ function PipelineDetailView() {
 
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [currentLogTreePage, setCurrentLogTreePage] = useState(0);
 
   useEffect(() => {
     //console.log("Effect  1");
@@ -82,14 +91,25 @@ function PipelineDetailView() {
 
   useEffect(() => {
     setActivityData([]);
-    setFormattedActivityData([]);
 
-    getActivityLogs().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if (tab === "summary") {
+      getActivityLogs().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
   }, [tab]);
+
+  useEffect(() => {
+    if (tab === "summary") {
+      pullLogData().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
+  }, [currentLogTreePage]);
 
   const handleTabClick = (tabSelection) => async e => {
     e.preventDefault();
@@ -204,10 +224,10 @@ function PipelineDetailView() {
       return;
     }
     const { workflow } = pipeline;
-    let status = workflow.last_step !== undefined && workflow.last_step.hasOwnProperty("status") ? workflow.last_step.status : false;
-    return status;
+    return workflow.last_step !== undefined && workflow.last_step.hasOwnProperty("status") ? workflow.last_step.status : false;
   };
 
+  // TODO: Find way to put refresh inside table itself
   const getActivityLogs = async (filterDto = pipelineActivityFilterDto, silentLoading = false, cancelSource = cancelTokenSource) => {
     if (activeTab !== "summary" || logsIsLoading) {
       return;
@@ -218,102 +238,62 @@ function PipelineDetailView() {
         setLogsIsLoading(true);
       }
 
-      const response = await pipelineActivityActions.getPipelineActivityLogsV2(getAccessToken, cancelSource, filterDto, pipeline?.workflow?.run_count || "0", id);
-      const data = response?.data;
+      // TODO: if search term applies ignore run count and reconstruct tree?
+      const treeResponse = await pipelineActivityActions.getPipelineActivityLogTree(getAccessToken, cancelSource, id, filterDto);
+      const pipelineTree = pipelineActivityHelpers.constructTree(treeResponse?.data?.data);
+      setPipelineActivityTreeData(pipelineTree);
 
-      if (data) {
-        setActivityData([...data.pipelineData]);
-        formatData([...data.pipelineData]);
-        const newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", data?.count);
-        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-        setPipelineActivityFilterDto({...newFilterDto});
+      if (Array.isArray(pipelineTree) && pipelineTree.length > 0) {
+        await pullLogData(pipelineTree, filterDto, cancelSource);
       }
-    } catch (err) {
-      setErrors(err.message);
-      console.log(err.message);
+    } catch (error) {
+      setErrors(error.message);
+      console.log(error.message);
     } finally {
       setLogsIsLoading(false);
     }
   };
 
-  const formatData = (data) => {
-    const runNumbers = [];
-    const runSteps = [];
+  const pullLogData = async (pipelineTree = pipelineActivityTreeData, filterDto = pipelineActivityFilterDto, cancelSource = cancelTokenSource, silentLoading = false) => {
 
-    data.forEach((row) => {
-      const currentRunNumber = row.run_count;
-      const currentRunStep = row.step_name;
-      const currentStatus = row.status;
-      const createdAt = row.createdAt;
-      const lastRunStep = runSteps.length > 0 ? runSteps[runSteps.length - 1] : undefined;
-      let id;
-      let runNumberStepCount = lastRunStep != null && lastRunStep?.stepName === currentRunStep ? lastRunStep.runNumberStepCount : 0;
+    try {
+      // create run count query based on tree -- tree is 0 index based
+      const startIndex = 20 * currentLogTreePage;
+      let runCountArray = [];
 
-      if (lastRunStep != null && lastRunStep.stepName !== currentRunStep) {
-        const existingRunSteps = runSteps.filter((item) => {
-          return item.runNumber === currentRunNumber && item.stepName === currentRunStep;
-        });
 
-        if (existingRunSteps.length > 0) {
-          const lastStep = existingRunSteps[existingRunSteps.length - 1];
-          runNumberStepCount = lastStep ? lastStep.runNumberStepCount + 1 : 0;
+      if (!silentLoading) {
+        setLogsIsLoading(true);
+      }
+
+      for (let i = startIndex; i < startIndex + 20 && i < pipelineTree.length; i++) {
+        let runCount = pipelineTree[i].runNumber;
+
+        if (runCount) {
+          runCountArray.push(runCount);
         }
       }
 
-      id = currentRunNumber + "-" + currentRunStep + "-" + runNumberStepCount;
-      row.parent = id;
+      const response = await pipelineActivityActions.getPipelineActivityLogsV3(getAccessToken, cancelSource, id, runCountArray, filterDto);
+      const pipelineActivityData = response?.data?.data;
 
-      const existingTopLogLevel = runNumbers.filter((item) => {return item.runNumber === currentRunNumber;});
-      if (existingTopLogLevel.length === 0) {
-        runNumbers.push({
-          runNumberStepCount: runNumberStepCount,
-          runNumber: currentRunNumber,
-          // stepName: currentRunStep,
-          // status: currentStatus,
-          // createdAt: createdAt,
-          // message: row.message,
-        });
+      if (pipelineActivityData) {
+        setActivityData(pipelineActivityData);
+        setPipelineActivityMetadata(response?.data?.metadata);
+
+        // TODO: Remove pagination.
+        const newFilterDto = filterDto;
+        newFilterDto.setData("totalCount", data?.count);
+        newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+        setPipelineActivityFilterDto({...newFilterDto});
       }
-
-      const existingRunStep = runSteps.filter((item) => {return item.id === id;});
-
-      if (existingRunStep.length === 0) {
-        runSteps.push({
-          id: id,
-          runNumberStepCount: runNumberStepCount,
-          runNumber: currentRunNumber,
-          stepName: currentRunStep,
-          status: currentStatus,
-          createdAt: createdAt,
-          message: row.message,
-        });
-      }
-    });
-
-    runNumbers.forEach((runNumber) => {
-      data.push({
-        run_count: runNumber.runNumber,
-        id: runNumber.runNumber,
-        status: runNumber.status,
-        createdAt: runNumber.createdAt,
-        message: runNumber.message,
-      });
-    });
-
-    runSteps.forEach((step) => {
-      data.push({
-        run_count: step.runNumber,
-        parent: step.runNumber,
-        step_name: step.stepName,
-        id: step.id,
-        status: step.status,
-        createdAt: step.createdAt,
-        message: step.message,
-      });
-    });
-
-    setFormattedActivityData(data);
+    } catch (error) {
+      setErrors(error.message);
+      console.log(error.message);
+    }
+    finally {
+      setLogsIsLoading(false);
+    }
   };
 
   const fetchPlan = async (param) => {
@@ -413,10 +393,12 @@ function PipelineDetailView() {
             pipeline={pipeline}
             pipelineLogData={activityData}
             isLoading={logsIsLoading}
-            loadData={getActivityLogs}
+            loadData={pullLogData}
             pipelineActivityFilterDto={pipelineActivityFilterDto}
             setPipelineActivityFilterDto={setPipelineActivityFilterDto}
-            formattedActivityData={formattedActivityData}
+            pipelineActivityMetadata={pipelineActivityMetadata}
+            pipelineActivityTreeData={pipelineActivityTreeData}
+            setCurrentLogTreePage={setCurrentLogTreePage}
           />
         </div>
       </div>
@@ -467,7 +449,6 @@ function PipelineDetailView() {
     <div>
       {getNavigationTabContainer()}
       <div className="h4 mt-2 mb-4">{getPipelineTitle()}</div>
-
       {getNavigationTabs()}
       {getCurrentView()}
     </div>

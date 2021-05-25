@@ -1,20 +1,19 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import TreeBase from "components/common/tree/TreeBase";
+import VanityBottomPaginatorBase from "components/common/pagination/VanityBottomPaginatorBase";
 
-function PipelineActivityLogTree({ pipelineLogData, setCurrentRunNumber, setCurrentStepName}) {
-  const [treeData, setTreeData] = useState([]);
+function PipelineActivityLogTree({ pipelineLogTree, setCurrentRunNumber, setCurrentStepName, onPageChange}) {
+  const [treeWidget, setTreeWidget] = useState(undefined);
   const isMounted = useRef(false);
 
   useEffect(() => {
     isMounted.current = true;
 
-    constructTree(pipelineLogData);
-
     return () => {
       isMounted.current = false;
     };
-  }, [pipelineLogData]);
+  }, [pipelineLogTree]);
 
   const onTreeItemClick = (treeItem) => {
     if (treeItem) {
@@ -23,90 +22,27 @@ function PipelineActivityLogTree({ pipelineLogData, setCurrentRunNumber, setCurr
     }
   };
 
-  const constructTree = () => {
-    let newTree = [];
-
-    if (Array.isArray(pipelineLogData) && pipelineLogData.length > 0) {
-      pipelineLogData.forEach((log) => {
-        const runNumber = log.run_count;
-        const stepName = log.step_name;
-        const stepIndex = log.step_index;
-
-        let currentValue = newTree.find((entry) => {return entry.id === runNumber;});
-
-        if (currentValue != null) {
-          const index = newTree.indexOf(currentValue);
-          const existingStep = currentValue.items.find((item) => { return item.id === `${runNumber}-${stepName}`; });
-
-          if (existingStep == null && stepIndex != null) {
-            currentValue.items.push({
-              id: `${runNumber}-${stepName}`,
-              runNumber: runNumber,
-              stepName: stepName,
-              value: `Step ${stepIndex + 1}: ${stepName}`,
-              icon: {
-                "folder": "fal fa-tasks opsera-primary",
-                "openFolder": "fal fa-tasks opsera-yellow",
-                "file": "fal fa-tasks opsera-primary"
-              }
-            });
-          }
-
-          newTree[index] = currentValue;
-        }
-        else {
-          currentValue = {
-            id: runNumber,
-            runNumber: runNumber,
-            stepName: undefined,
-            value: `Run ${runNumber}`,
-            items: [],
-            icon: {
-              "folder": "fal fa-layer-group opsera-primary",
-              "openFolder": "fal fa-layer-group opsera-yellow",
-              "file": "fal fa-layer-group opsera-primary"
-            }
-          };
-
-          if (stepIndex != null) {
-            currentValue.items.push({
-              id: `${runNumber}-${stepName}`,
-              runNumber: runNumber,
-              stepName: stepName,
-              value: `Step ${stepIndex + 1}: ${stepName}`,
-              icon: {
-                "folder": "fal fa-tasks opsera-primary",
-                "openFolder": "fal fa-tasks opsera-yellow",
-                "file": "fal fa-tasks opsera-primary"
-              }
-            });
-          }
-
-          newTree.push(currentValue);
-        }
-
-      });
-    }
-
-    if (newTree.length > 0) {
-      newTree[0].opened = true;
-      newTree[0].selected = 1;
-    }
-
-    setTreeData(newTree);
-  };
+  if (pipelineLogTree == null) {
+    return null;
+  }
 
   return (
-    <div className={"p-2 scroll-y table-tree"}>
-      <TreeBase data={treeData} onItemClick={onTreeItemClick}/>
+    <div className={"table-tree mb-3"}>
+      <div className={"scroll-y table-tree-with-paginator p-2"}>
+        <TreeBase data={pipelineLogTree} onItemClick={onTreeItemClick} setParentWidget={setTreeWidget}/>
+      </div>
+      <div>
+        <VanityBottomPaginatorBase widgetData={treeWidget?.data} pageSize={20} onPageChange={onPageChange}/>
+      </div>
     </div>
   );
 }
 
 PipelineActivityLogTree.propTypes = {
-  pipelineLogData: PropTypes.array,
+  pipelineLogTree: PropTypes.array,
   setCurrentRunNumber: PropTypes.func,
   setCurrentStepName: PropTypes.func,
+  onPageChange: PropTypes.func
 };
 
 export default PipelineActivityLogTree;
