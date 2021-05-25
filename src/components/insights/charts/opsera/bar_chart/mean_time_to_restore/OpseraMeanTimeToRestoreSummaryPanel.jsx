@@ -9,15 +9,15 @@ import {
   getChartPipelineStatusColumn,
   getTableDateTimeColumn,
   getTableTextColumn,
-} from "../../../../common/table/table-column-helpers";
-import { getField } from "../../../../common/metadata/metadata-helpers";
+} from "components/common/table/table-column-helpers";
+import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import chartsActions from "components/insights/charts/charts-actions";
 import MeanTimeToRestoreSummaryPanelMetadata from "components/insights/charts/opsera/bar_chart/mean_time_to_restore/opseraMeanTimeToRestoreSummaryPanelMetadata";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
-import { DialogToastContext } from "../../../../../contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
 
-function OpseraMeanTimeToRestoreSummaryPanel({ dashboardData, kpiConfiguration, setActiveTab }) {
+function OpseraMeanTimeToRestoreSummaryPanel({ dashboardData, kpiConfiguration, setActiveTab, currentDate }) {
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
   const fields = MeanTimeToRestoreSummaryPanelMetadata.fields;
@@ -32,7 +32,7 @@ function OpseraMeanTimeToRestoreSummaryPanel({ dashboardData, kpiConfiguration, 
   const [tableFilterDto, setTableFilterDto] = useState(
     new Model({ ...genericChartFilterMetadata.newObjectFields }, MeanTimeToRestoreSummaryPanelMetadata, false)
   );
-
+  
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -63,7 +63,7 @@ function OpseraMeanTimeToRestoreSummaryPanel({ dashboardData, kpiConfiguration, 
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "getMTTRListOfPipelines", null, dashboardTags, filterDto, null);
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "getMTTRListOfPipelines", null, dashboardTags, filterDto, null, null, null, currentDate);
       let dataObject = response?.data ? response?.data?.data[0] : [{data: [], count: [{count: 0}]}];
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataObject[0]?.count[0]?.count);
@@ -123,7 +123,8 @@ OpseraMeanTimeToRestoreSummaryPanel.propTypes = {
   chartModel: PropTypes.object,
   setActiveTab: PropTypes.func,
   dashboardData: PropTypes.object,
-  kpiConfiguration: PropTypes.object
+  kpiConfiguration: PropTypes.object,
+  currentDate: PropTypes.string
 };
 
 export default OpseraMeanTimeToRestoreSummaryPanel;

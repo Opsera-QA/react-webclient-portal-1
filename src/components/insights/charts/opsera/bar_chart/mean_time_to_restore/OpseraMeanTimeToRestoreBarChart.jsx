@@ -16,7 +16,8 @@ import MeanTimeToRestoreSummaryPanelMetadata from 'components/insights/charts/op
 import Model from "../../../../../../core/data_model/model";
 
 import ChartDetailsOverlay from "../../../detail_overlay/ChartDetailsOverlay";
-import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
+import { DialogToastContext } from "contexts/DialogToastContext";
+
 function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
   const {getAccessToken} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -123,7 +124,8 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
           dashboardData={dashboardData}
           kpiConfiguration={kpiConfiguration}
           chartModel={chartModel}
-          kpiIdentifier={"mean-time-to-restore"}/>);
+          kpiIdentifier={"mean-time-to-restore"}
+          currentDate={data.data._id}/>);
     };
 
     return (
