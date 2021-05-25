@@ -12,17 +12,17 @@ const TerraformStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Select SCM Tool",
+      label: "SCM Tool",
       id: "gitToolId",
       isRequired: true
     },
     {
-      label: "Select Repository",
+      label: "Repository",
       id: "gitRepository",
       isRequired: true
     },
     {
-      label: "Select AWS Credentials",
+      label: "AWS Credentials",
       id: "awsToolConfigId",
     },
     {
@@ -38,7 +38,7 @@ const TerraformStepFormMetadata = {
       id: "regionParamName",
     },
     {
-      label: "Select Branch",
+      label: "Branch",
       id: "defaultBranch", 
       isRequired: true
     },
