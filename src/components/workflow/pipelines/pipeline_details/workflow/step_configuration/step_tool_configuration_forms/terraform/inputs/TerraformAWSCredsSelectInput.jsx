@@ -15,12 +15,6 @@ function TerraformAWSCredsSelectInput({dataObject, setDataObject, disabled}) {
     getCredsList();
   }, [dataObject.data.defaultBranch]);
 
-  const handleDTOChange = async (fieldName, selectedOption) => {
-    let newDataObject = {...dataObject};
-    await newDataObject.setData(fieldName, selectedOption.id);
-    setDataObject({...newDataObject});
-  };
-
   const getCredsList = async () => {
     setIsLoading(true);
     if(dataObject?.data?.defaultBranch?.length){
@@ -45,7 +39,6 @@ function TerraformAWSCredsSelectInput({dataObject, setDataObject, disabled}) {
        valueField={"id"}
        textField={"name"}
        placeholderText={"Select Credentials"}
-       setDataFunction={handleDTOChange}
        disabled={disabled || isLoading || credsList.length === 0}
        busy={isLoading}
      />

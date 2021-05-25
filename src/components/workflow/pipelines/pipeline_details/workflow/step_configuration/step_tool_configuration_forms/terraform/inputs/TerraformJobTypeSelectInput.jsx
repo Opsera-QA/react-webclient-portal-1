@@ -3,12 +3,6 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function TerraformJobTypeSelectInput({dataObject, setDataObject, disabled}) {
-  
-  const handleDTOChange = async (fieldName, selectedOption) => {
-    let newDataObject = {...dataObject};
-    await newDataObject.setData(fieldName, selectedOption.value);
-    setDataObject({...newDataObject});
-  };
 
   const JOB_TYPES = [
     {
@@ -31,7 +25,6 @@ function TerraformJobTypeSelectInput({dataObject, setDataObject, disabled}) {
        valueField={"value"}
        textField={"name"}
        placeholderText={"Select a Job Type"}
-       setDataFunction={handleDTOChange}
        disabled={disabled}
        busy={disabled}
      />

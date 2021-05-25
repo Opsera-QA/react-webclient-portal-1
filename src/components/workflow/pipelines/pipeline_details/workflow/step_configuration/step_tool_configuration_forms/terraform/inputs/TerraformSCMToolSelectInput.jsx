@@ -15,12 +15,6 @@ function TerraformSCMToolSelectInput({dataObject, setDataObject, disabled}) {
     getToolsList();
   }, [dataObject?.data?.type]);
 
-  const handleDTOChange = async (fieldName, selectedOption) => {
-    let newDataObject = {...dataObject};
-    await newDataObject.setData(fieldName, selectedOption.id);
-    setDataObject({...newDataObject});
-  };
-
   const getToolsList = async () => {
     setIsLoading(true);
     if(dataObject?.data?.type?.length){
@@ -45,7 +39,6 @@ function TerraformSCMToolSelectInput({dataObject, setDataObject, disabled}) {
        valueField={"id"}
        textField={"name"}
        placeholderText={"Select a Tool"}
-       setDataFunction={handleDTOChange}
        disabled={disabled || isLoading || SCMList.length === 0}
        busy={isLoading}
      />
