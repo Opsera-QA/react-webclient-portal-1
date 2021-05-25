@@ -129,17 +129,6 @@ import {
 } from "components/insights/charts/charts-helpers";
 import { Col } from "react-bootstrap";
 
-// SFDC KPIs
-import SFDCBackups from "components/insights/charts/sfdc/SFDCBackups";
-import SFDCProfileMigrationsBarChart from "components/insights/charts/sfdc/bar_chart/profile_migrations/SFDCProfileMigrationsBarChart";
-import SFDCUnitTestingPieChart from "components/insights/charts/sfdc/pie_chart/unit_testing/SFDCUnitTestingPieChart";
-
-import {
-  getDateObjectFromKpiConfiguration,
-  getTagsFromKpiConfiguration,
-} from "components/insights/charts/charts-helpers";
-import { Col } from "react-bootstrap";
-
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
   const [kpiConfig, setKpiConfig] = useState(kpiConfiguration);
@@ -1204,42 +1193,6 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col md={12} className="p-2">
             <AdoptionPercentagePieChart
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
-        );
-      case "sfdc-backups":
-        return (
-          <Col xl={6} md={12} className="p-2">
-            <SFDCBackups
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
-        );
-      case "sfdc-profile-migrations":
-        return (
-          <Col xl={6} md={12} className="p-2">
-            <SFDCProfileMigrationsBarChart
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
-        );
-      case "sfdc-unit-testing":
-        return (
-          <Col xl={6} md={12} className="p-2">
-            <SFDCUnitTestingPieChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
