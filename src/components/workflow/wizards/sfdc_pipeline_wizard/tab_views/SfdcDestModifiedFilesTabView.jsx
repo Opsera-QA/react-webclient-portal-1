@@ -8,7 +8,7 @@ import {
 import sfdcTableConstants from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-table-constants";
 import FilterContainer from "components/common/table/FilterContainer";
 import { faCode } from "@fortawesome/free-solid-svg-icons";
-import SfdcComponentFilter from "components/common/filters/sfdc/sfdc_component/SfdcComponentFilter";
+import InlineSfdcComponentTypesFilter from "components/common/filters/sfdc/sfdc_component/InlineSfdcComponentTypesFilter";
 
 const SfdcDestModifiedFilesTabView = ({
   loadData,
@@ -49,7 +49,7 @@ const SfdcDestModifiedFilesTabView = ({
     return (
       <div className="px-2 d-flex small">        
         <div>
-          <SfdcComponentFilter componentType={componentType} filterDto={filterDto} setFilterDto={setFilterDto} inline={true} />
+          <InlineSfdcComponentTypesFilter componentTypes={componentType} filterDto={filterDto} setFilterDto={setFilterDto} inline={true} />
         </div>
       </div>
     );
