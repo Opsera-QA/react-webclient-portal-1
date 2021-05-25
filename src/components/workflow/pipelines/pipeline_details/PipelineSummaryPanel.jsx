@@ -423,7 +423,7 @@ function PipelineSummaryPanel({
   };
 
   const getTaskCountText = () => {
-    if (taskCount === 0 ) return "no scheduled tasks";
+    if (taskCount === 0 ) return "No scheduled tasks";
 
    return taskCount === 1 ? "1 task scheduled" : `${taskCount} tasks scheduled`;
   };
