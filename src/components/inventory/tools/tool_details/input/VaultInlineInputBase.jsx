@@ -1,18 +1,22 @@
 import React, { useState} from "react";
 import PropTypes from "prop-types";
-import LaunchHelpIcon from "../../../../common/icons/help/LaunchHelpIcon";
 import VaultAccessField from "./VaultInputAccessField";
 import { Link, useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTools } from "@fortawesome/free-solid-svg-icons";
 import ButtonTooltip from "../../../../common/tooltip/ButtonTooltip";
 
-function VaultInlineInputBase({dataObject, fieldName, disabled, saveData, visible, noDataMessage, type, helpComponent}) {
-  const history = useHistory();
+function VaultInlineInputBase({dataObject, fieldName ,visible, noDataMessage}) {
+  const history = useHistory({forceRefresh:true});
 
   if (!visible) {
     return null;
   }
+
+  const viewConfig = () => {
+    history.push(`/inventory/tools/details/${dataObject.getData(fieldName)}`);
+    history.go(0); // to change this later
+  };
 
   return (
     <div className="role-access">
@@ -23,15 +27,12 @@ function VaultInlineInputBase({dataObject, fieldName, disabled, saveData, visibl
             <div className={"ml-2 mt-2 text-muted"}>
             <ButtonTooltip innerText={"View Vault Configuration"}>
               <FontAwesomeIcon
-                onClick={() => {
-                  return history.push(`/inventory/tools/details/${dataObject.getData(fieldName)}`);
-                }}
+                onClick={() => viewConfig()}
                 icon={faTools}
                 fixedWidth
               />
             </ButtonTooltip>
           </div>}
-          <LaunchHelpIcon helpComponent={helpComponent} className={"mt-2 ml-2 text-muted"} />
         </div>
       </div>
     </div>

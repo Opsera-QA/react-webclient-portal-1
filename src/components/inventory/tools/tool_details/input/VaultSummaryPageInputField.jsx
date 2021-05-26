@@ -2,8 +2,6 @@ import React, {useContext} from "react";
 import PropTypes from "prop-types";
 import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
-import ToolRegistryRoleAccessHelpDocumentation
-  from "components/common/help/documentation/tool_registry/ToolRegistryRoleAccessHelpDocumentation";
 import VaultInlineInputBase from "./VaultInlineInputBase";
 
 function VaultSummaryPageInputField({fieldName, dataObject, setDataObject, disabled, visible}) {
@@ -33,7 +31,6 @@ function VaultSummaryPageInputField({fieldName, dataObject, setDataObject, disab
       disabled={disabled}
       saveData={saveData}
       noDataMessage={getNoDataMessage()}
-      helpComponent={<ToolRegistryRoleAccessHelpDocumentation/>}
       visible={visible}
     />
   );
