@@ -13,6 +13,8 @@ import {
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
 import WarningIcon from "../../common/icons/table/WarningIcon";
 import FailIcon from "../../common/icons/table/FailIcon";
+import AngleDown from "../../common/icons/table/AngleDown";
+import AngleUp from "../../common/icons/table/AngleUp";
 import React from "react";
 import Model from "core/data_model/model";
 import PipelineTypesField from "components/common/form_fields/pipelines/PipelineTypesField";
@@ -504,6 +506,30 @@ export const getChartPipelineStatusColumn = (field, className) => {
         case "success":
         case "successful":
           return (<SuccessIcon/>);
+        default:
+          return status;
+      }
+    },
+    class: className ? className :  undefined
+  };
+};
+
+export const getChartTrendStatusColumn = (field, className) => {  
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: function parseStatus(row) {    
+      let status = typeof row?.value === "string" ? row.value.toLowerCase() : status;    
+      switch (status) {
+        case "red":        
+          return (<AngleUp />);
+        case "neutral":
+          // return (<WarningIcon/>);
+          return (<FontAwesomeIcon icon={faPauseCircle} className="cell-icon green vertical-align-item" fixedWidth/>);
+        case "green":        
+          return (<AngleDown/>);
+        case "-":        
+          return status;
         default:
           return status;
       }

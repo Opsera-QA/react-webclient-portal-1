@@ -50,6 +50,9 @@ import SonarCodeCoverageBarChart from "./sonar/bar_chart/code_coverage/SonarCode
 import SonarLinesToCoverBarChart from "./sonar/bar_chart/code_coverage/SonarLinesToCoverBarChart";
 import SonarRatings from "./sonar/SonarRatings";
 import SonarSecurityScorecard from "./sonar/SonarSecurityScorecard";
+import SonarBugsMetricScorecard from "./sonar/table/bugs-scorecard/SonarBugsMetricScorecard";
+import SonarCodeSmellsMetricScorecard from "./sonar/table/codesmells-scorecard/SonarCodeSmellsMetricScorecard";
+import SonarVulnerabilitiesMetricScorecard from "./sonar/table/vulnerabilities-scorecard/SonarVulnerabilitiesMetricScorecard";
 
 // Jmeter KPIs
 import JmeterHitsLineChart from "./jmeter/line_chart/hits/JmeterHitsLineChart";
@@ -650,6 +653,42 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col xl={6} md={12} className="p-2">
             <SonarSecurityScorecard
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sonar-bugs-metric-scorecard":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <SonarBugsMetricScorecard
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sonar-codesmells-metric-scorecard":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <SonarCodeSmellsMetricScorecard
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sonar-vulnerabilities-metric-scorecard":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <SonarVulnerabilitiesMetricScorecard
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
