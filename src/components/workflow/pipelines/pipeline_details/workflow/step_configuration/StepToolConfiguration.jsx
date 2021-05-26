@@ -27,7 +27,7 @@ import AnchoreScanStepConfiguration from "./step_tool_configuration_forms/anchor
 import SFDCStepConfiguration from "./step_tool_configuration_forms/sfdc/SFDCStepConfiguration";
 import NexusStepConfiguration from "./step_tool_configuration_forms/nexus/NexusStepConfiguration";
 import ArgoCDStepConfiguration from "./step_tool_configuration_forms/argo_cd/ArgoCDStepConfiguration";
-import TerraformStepConfiguration from "./step_tool_configuration_forms/terraform/TerraformStepConfiguration";
+import TerraformStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/TerraformStepConfiguration";
 import OctopusStepConfiguration from "./step_tool_configuration_forms/octopus/OctopusStepConfiguration";
 import EBSStepConfiguration from "./step_tool_configuration_forms/ebs/EBSStepConfiguration";
 import AnchoreIntegratorStepConfiguration

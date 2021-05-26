@@ -437,6 +437,11 @@ a.text-primary:hover, a.text-primary:focus {
     width: 25%;
 }
 
+.table-tree-with-paginator {
+    height: 454px;
+    border-bottom: 1px solid #dfdfdf;
+}
+
 .tree-table {
     width: 75%;
 }

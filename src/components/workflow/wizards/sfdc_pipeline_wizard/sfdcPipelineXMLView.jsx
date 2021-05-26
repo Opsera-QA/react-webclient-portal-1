@@ -11,21 +11,37 @@ import {
 import "../../workflows.css";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import LoadingDialog from "components/common/status_notifications/loading";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 
-// syntax highlightner
-import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
-import xml from "react-syntax-highlighter/dist/esm/languages/hljs/xml";
-import docco from "react-syntax-highlighter/dist/esm/styles/hljs/docco";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import CustomTab from "components/common/tabs/CustomTab";
+import UnitTestClassesTabView from "./tab_views/UnitTestClassesTabView";
+import PackageXMLTabView from "./tab_views/PackageXMLTabView";
+import {faCode} from "@fortawesome/pro-light-svg-icons";
 
-SyntaxHighlighter.registerLanguage("xml", xml);
-
-const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestructiveXml, isProfiles, setView, xml, destructiveXml, createJenkinsJob, unitTestSteps, gitTaskData, gitTaskId, closePanel }) => {
+const SfdcPipelineXMLView = ({ 
+  pipelineId, 
+  stepId, 
+  handleClose, 
+  setXML, 
+  setDestructiveXml, 
+  isProfiles, 
+  setView, 
+  xml, 
+  destructiveXml, 
+  createJenkinsJob, 
+  unitTestSteps, 
+  gitTaskData, 
+  gitTaskId, 
+  closePanel,
+  fromSFDC, 
+  fromDestinationSFDC, 
+}) => {
   const { getAccessToken } = useContext(AuthContext);
   const [save, setSave] = useState(false);
   const toastContext = useContext(DialogToastContext);
   const [loading, setLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState("pxml");
 
   useEffect(() => {
     async function loadInitialData () {
@@ -55,6 +71,11 @@ const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestr
     loadInitialData();
   }, []);
 
+  const handleTabClick = (tabSelection) => e => {    
+    e.preventDefault();
+    setActiveTab(tabSelection);        
+  };
+
   const handleApproveChanges = () => {
     //this needs to do the ifnal work writing data to the stepID above: checked compontents, other job data
 
@@ -62,54 +83,39 @@ const SfdcPipelineXMLView = ({ pipelineId, stepId, handleClose, setXML, setDestr
     createJenkinsJob();
   };
 
+  const getView = () => {
+    if (activeTab === "pxml") {
+      return (
+        <PackageXMLTabView 
+          loading={loading}
+          save={save}
+          xml={xml}
+          destructiveXml={destructiveXml}
+        />
+      );
+    } else if (activeTab === "utc") {
+      return (
+        <UnitTestClassesTabView
+          pipelineId={pipelineId}
+          stepId={stepId}
+          unitTestSteps={unitTestSteps}
+          fromSFDC={fromSFDC}
+          fromDestinationSFDC={fromDestinationSFDC}
+        />
+      );
+    }
+  };
+
   return (
     <div>
       <div className="flex-container">
-        <div className="flex-container-content">
-          <div className="h5">SalesForce Pipeline Run: XML Viewer</div>
-          <div className="text-muted mb-2">Please confirm that you want to proceed with this operation.</div>
-          <div className="px-2"></div>
-
-          {save && <LoadingDialog />}
-          
-          {loading ? (
-            <LoadingDialog size="sm" />
-          ) : (
-            <>
-            <div className="d-flex w-30 pr-2">
-            {loading ? (
-              <LoadingDialog size="sm" />
-            ) : (
-              <>
-              {xml && (
-                <div className="col-7 mr-1">
-                <div className="h6 opsera-secondary">Package XML</div>
-                  {/* xml display goes here */}
-                  <SyntaxHighlighter language="xml" style={docco}>
-                    {xml}
-                  </SyntaxHighlighter>
-                </div>
-                )}
-              </>
-            )}
-            {loading ? (
-              <LoadingDialog size="sm" />
-            ) : (
-              <>
-              {destructiveXml && destructiveXml.length > 0 && (
-                <div className="col-5 mr-1">
-                <div className="h6 opsera-secondary">Destructive Package XML</div>
-                  {/* xml display goes here */}
-                  <SyntaxHighlighter language="xml" style={docco}>
-                    {destructiveXml}
-                  </SyntaxHighlighter>
-                </div>
-                )}
-              </>
-            )}
-            </div>
-          </>)}
-        </div>
+        { unitTestSteps.length > 0 && <CustomTabContainer>
+          <CustomTab activeTab={activeTab} tabText={"Package XML"} handleTabClick={handleTabClick} tabName={"pxml"}
+                    toolTipText={"Package XML"} icon={faCheck} />
+          <CustomTab activeTab={activeTab} tabText={"Unit Test Classes"} handleTabClick={handleTabClick} tabName={"utc"}
+                    toolTipText={"Unit Test Classes"} icon={faCode} />
+        </CustomTabContainer>}
+        {getView()}
         <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right">
           <Button
             variant="secondary"
@@ -184,7 +190,9 @@ SfdcPipelineXMLView.propTypes = {
   unitTestSteps: PropTypes.array,
   gitTaskData: PropTypes.object,
   gitTaskId: PropTypes.string,
-  closePanel: PropTypes.func
+  closePanel: PropTypes.func,
+  fromSFDC: PropTypes.bool,
+  fromDestinationSFDC: PropTypes.bool,
 };
 
 export default SfdcPipelineXMLView;
