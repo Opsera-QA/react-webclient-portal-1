@@ -41,7 +41,6 @@ function VaultToolSelectInput({ fieldName, dataObject, setDataObject, disabled, 
         </Link>
       );
     }
-    return <span>Select a tool to get started.</span>;
   };
 
 

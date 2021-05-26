@@ -37,6 +37,7 @@ function ToolVaultPanel({ toolData, isLoading }) {
             warningMessage={
               "A non-Opsera provided Hashicorp Vault is in use for this tool. Any operations that require this tool require access to this vault.  If the vault is down, then any Opsera operations will fail as a result. Opsera cannot manage or control the uptime of this tool."
             }
+            alignment={"toolRegistryWarning"}
           />
         </div>
       );
@@ -100,7 +101,7 @@ function ToolVaultPanel({ toolData, isLoading }) {
     <>
       <div className="text-muted p-3">
         <div className="h6">Vault Management</div>
-        <div className="mb-3">Opsera secures tokens, passwords and other sensitive information in a Hashicorp Vault Instance. By default Opsera uses the vault instance that is spun up for the the specific organization but users have the option to choose whether to store information in the default Opsera provided vault or configure their own Hashicorp vault instance in Tool Registry.</div>
+        <div className="mb-3">Opsera secures tokens, passwords and other sensitive information in a Hashicorp Vault Instance. By default Opsera uses the vault instance that is spun up for the the specific organization but users have the option to choose whether to store information in the default Opsera provided vault or configure their own Hashicorp vault instance in Tool Registry. This setting only applies to this tool. All other tools use the Opsera provided default vault unless specified by the user.</div>
         {getWarningDialogs()}
         {getErrorDialogs()}
         {getVaultPanel()}

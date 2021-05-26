@@ -119,7 +119,7 @@ const toolMetadata = {
     },
     {
       label: "Vault Instance",
-      id: "vault",
+      id: "vault"
     }
   ],
   newObjectFields: {

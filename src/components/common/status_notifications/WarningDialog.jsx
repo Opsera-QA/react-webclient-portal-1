@@ -51,6 +51,29 @@ function WarningDialog({warningMessage, setWarningMessage, alignment}) {
     );
   }
 
+  if (alignment === "toolRegistryWarning") {
+    return (
+      <div className="row">
+        <div className="warning-block step-configuration-dialog-block mt-1">
+          {setWarningMessage && (
+            <div className="float-right ml-1">
+              <FontAwesomeIcon
+                icon={faTimes}
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  clearWarning();
+                }}
+              />
+            </div>
+          )}
+          <div>
+            <span>{messageBody}</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="row">
       <div className="col-sm-12 my-auto warning-block text-center p-2">
