@@ -525,7 +525,7 @@ export const getChartTrendStatusColumn = (field, className) => {
           return (<AngleUp />);
         case "neutral":
           // return (<WarningIcon/>);
-          return (<FontAwesomeIcon icon={faPauseCircle} className="cell-icon green vertical-align-item" fixedWidth/>);
+          return (<FontAwesomeIcon icon={faPauseCircle} className="cell-icon vertical-align-item" fixedWidth/>);
         case "green":        
           return (<AngleDown/>);
         case "-":        
