@@ -36,6 +36,7 @@ function HashicorpVaultToolConfiguration({ toolData }) {
       recordDto={hashicorpVaultConfigurationDto}
       persistRecord={saveHashicorpVaultToolConfiguration}
       toolData={toolData}
+      toolConnectionCheckName={"vault"}
     >
       <Row>
         <Col sm={12}>
