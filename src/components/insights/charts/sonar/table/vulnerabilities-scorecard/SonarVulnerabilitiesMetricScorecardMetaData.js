@@ -1,6 +1,6 @@
 const SonarCodeSmellsMetricScorecardMetaData = {
   idProperty: "_id",
-  type: "Sonar Code Smells Metric Scorecard",
+  type: "Sonar Vulnerabilities Metric Scorecard",
   fields: [
     {
       label: "Run",
