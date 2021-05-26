@@ -1,4 +1,4 @@
-const SonarCodeSmellsMetricScorecardMetaData = {
+const SonarVulnerabilitiesMetricScorecardMetaData = {
   idProperty: "_id",
   type: "Sonar Vulnerabilities Metric Scorecard",
   fields: [
@@ -34,4 +34,4 @@ const SonarCodeSmellsMetricScorecardMetaData = {
   newObjectFields: {},
 };
 
-export default SonarCodeSmellsMetricScorecardMetaData;
+export default SonarVulnerabilitiesMetricScorecardMetaData;
