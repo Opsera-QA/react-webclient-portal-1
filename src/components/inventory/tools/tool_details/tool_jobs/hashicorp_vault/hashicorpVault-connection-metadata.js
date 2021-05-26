@@ -3,20 +3,26 @@ const HashicorpVaultConnectionMetadata = {
   idProperty: "_id",
   fields: [
     {
-      label: "Vault URL",
-      id: "dnsName",
+      label: "Vault URI",
+      id: "vaultUri",
       isRequired: true
     },
     {
-      label: "Password",
-      id: "password",
+      label: "Vault Token",
+      id: "vaultToken",
+      isRequired: true
+    },
+    {
+      label: "Vault Key",
+      id: "vaultKey",
       isRequired: true
     }
   ],
   newObjectFields:
     {
-      dnsName: "",
-      password: ""
+      vaultUri: "",
+      vaultToken: "",
+      vaultKey: ""
     }
 };
 

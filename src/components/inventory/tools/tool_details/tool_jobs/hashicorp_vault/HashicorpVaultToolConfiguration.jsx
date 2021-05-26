@@ -25,7 +25,7 @@ function HashicorpVaultToolConfiguration({ toolData }) {
 
   const saveHashicorpVaultToolConfiguration = async () => {
     let newConfiguration = hashicorpVaultConfigurationDto.getPersistData();
-    newConfiguration.password = await toolsActions.savePasswordToVault(toolData, hashicorpVaultConfigurationDto, "password", newConfiguration.password, getAccessToken);
+    newConfiguration.vaultToken = await toolsActions.savePasswordToVault(toolData, hashicorpVaultConfigurationDto, "vaultToken", newConfiguration.vaultToken, getAccessToken);
 
     const item = {configuration: newConfiguration};
     return await toolsActions.saveToolConfiguration(toolData, item, getAccessToken);
@@ -39,8 +39,9 @@ function HashicorpVaultToolConfiguration({ toolData }) {
     >
       <Row>
         <Col sm={12}>
-          <TextInputBase dataObject={hashicorpVaultConfigurationDto} setDataObject={setHashicorpVaultConfigurationDto} fieldName={"dnsName"} />
-          <VaultTextInput dataObject={hashicorpVaultConfigurationDto} setDataObject={setHashicorpVaultConfigurationDto} fieldName={"password"}/>
+          <TextInputBase dataObject={hashicorpVaultConfigurationDto} setDataObject={setHashicorpVaultConfigurationDto} fieldName={"vaultUri"} />
+          <TextInputBase dataObject={hashicorpVaultConfigurationDto} setDataObject={setHashicorpVaultConfigurationDto} fieldName={"vaultKey"} />
+          <VaultTextInput dataObject={hashicorpVaultConfigurationDto} setDataObject={setHashicorpVaultConfigurationDto} fieldName={"vaultToken"}/>
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>
