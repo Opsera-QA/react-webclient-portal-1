@@ -39,11 +39,6 @@ function VaultInlineInputBase({ dataObject, fieldName, visible }) {
     return null;
   }
 
-  const viewConfig = () => {
-    history.push(`/inventory/tools/details/${dataObject.getData(fieldName)}`);
-    history.go(0); // to change this later
-  };
-
   const getVaultAccessConfigurationItems = () => {
     if (dataObject?.getData(fieldName) == null || dataObject?.getData(fieldName)?.length === 0) {
       return <span>This tool is using the Opsera provided Hashicorp Vault Instance</span>;
@@ -93,7 +88,7 @@ function VaultInlineInputBase({ dataObject, fieldName, visible }) {
           {dataObject?.getData(fieldName) && (
             <div className={"ml-2 mt-2 text-muted"}>
               <ButtonTooltip innerText={"View Vault Configuration"}>
-                <Link to={`/inventory/tools/details/${dataObject.getData(fieldName)}`}>
+                <Link to={`/inventory/tools/details/${dataObject.getData(fieldName)}`} onClick={() => window.location.reload()}>
                   <span>
                     <FontAwesomeIcon icon={faTools} className="pr-1" />
                   </span>
