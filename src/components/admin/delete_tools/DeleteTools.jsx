@@ -25,9 +25,9 @@ class DeleteTools extends PureComponent {
   async componentDidMount() {
     const { getAccessToken, getUserRecord } = this.context;  //this.context is where all data from the above AuthContext component resides.  It's like the state props design wise
     const userInfo = await getUserRecord();
-    this.setState({ administrator: userInfo.groups.includes("Administrators") });
+    this.setState({ administrator: userInfo.groups.includes("Admin") });
 
-    if (!userInfo.groups.includes("Administrators")) {
+    if (!userInfo.groups.includes("Admin")) {
       //move out
       this.props.history.push("/");
     } else {
