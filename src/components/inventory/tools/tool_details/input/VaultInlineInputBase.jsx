@@ -30,7 +30,7 @@ function VaultInlineInputBase({ dataObject, fieldName, visible, disabled }) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    if (!disabled) {
+    if (!disabled && dataObject?.getData(fieldName) && dataObject?.getData(fieldName).length > 0) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
