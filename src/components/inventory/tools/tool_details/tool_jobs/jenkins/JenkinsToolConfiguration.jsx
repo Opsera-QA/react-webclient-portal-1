@@ -55,7 +55,7 @@ function JenkinsToolConfiguration({ toolData }) {
       <VaultTextInput dataObject={jenkinsConfigurationDto} setDataObject={setJenkinsConfigurationDto} fieldName={"jAuthToken"} />
     );
   };
-  
+
   if (jenkinsConfigurationDto == null) {
     return <></>;
   }
