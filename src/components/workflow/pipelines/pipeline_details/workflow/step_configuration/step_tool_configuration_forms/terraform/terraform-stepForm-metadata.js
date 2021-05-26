@@ -12,17 +12,17 @@ const TerraformStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Select SCM Tool",
+      label: "SCM Tool",
       id: "gitToolId",
       isRequired: true
     },
     {
-      label: "Select Repository",
+      label: "Repository",
       id: "gitRepository",
       isRequired: true
     },
     {
-      label: "Select AWS Credentials",
+      label: "AWS Credentials",
       id: "awsToolConfigId",
     },
     {
@@ -31,14 +31,14 @@ const TerraformStepFormMetadata = {
     },
     {
       label: "Secret Key Script Parameter Name",
-      id: "secrectKeyParamName",
+      id: "secretKeyParamName",
     },
     {
       label: "Region Parameter Name",
       id: "regionParamName",
     },
     {
-      label: "Select Branch",
+      label: "Branch",
       id: "defaultBranch", 
       isRequired: true
     },
@@ -64,14 +64,14 @@ const TerraformStepFormMetadata = {
       id: "bitbucketWorkspaceName",
     },
   ],
-  newModelBase: {
+  newObjectFields: {
     toolActionType: "EXECUTE",
     gitFilePath: "",
     gitRepository: "",
     defaultBranch: "",
     awsToolConfigId : "",
     accessKeyParamName: "",
-    secrectKeyParamName: "",
+    secretKeyParamName: "",
     regionParamName: "",
     type:"",
     gitToolId : "",
