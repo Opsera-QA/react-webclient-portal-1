@@ -111,7 +111,8 @@ function VaultInlineInputBase({ dataObject, fieldName, visible, disabled }) {
 
     if (Array.isArray(vaultList) && vaultList.length > 1) {
       const currentValue = dataObject?.getData(fieldName);
-      const foundObject = vaultList.findIndex((obj) => obj.id === currentValue);
+      const foundObjectIndex = vaultList.findIndex((obj) => obj.id === currentValue);
+      const foundObject = vaultList[foundObjectIndex];
 
       if (foundObject) {
         return foundObject.name;
