@@ -54,7 +54,7 @@ function WarningDialog({warningMessage, setWarningMessage, alignment}) {
   if (alignment === "toolRegistryWarning") {
     return (
       <div className="row">
-        <div className="warning-block step-configuration-dialog-block mt-1">
+        <div className="warning-block border-radius-5px step-configuration-dialog-block mt-1">
           {setWarningMessage && (
             <div className="float-right ml-1">
               <FontAwesomeIcon
