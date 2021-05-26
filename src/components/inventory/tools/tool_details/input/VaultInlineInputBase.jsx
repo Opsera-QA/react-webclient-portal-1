@@ -90,7 +90,7 @@ function VaultInlineInputBase({ dataObject, fieldName, visible }) {
           </FieldContainer>
         </div>
         <div className="edit-button d-flex">
-          {dataObject.getData(fieldName) && (
+          {dataObject?.getData(fieldName) && (
             <div className={"ml-2 mt-2 text-muted"}>
               <ButtonTooltip innerText={"View Vault Configuration"}>
                 <Link to={`/inventory/tools/details/${dataObject.getData(fieldName)}`}>

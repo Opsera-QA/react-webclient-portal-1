@@ -39,7 +39,7 @@ const jenkinsConnectionMetadata = {
     {
       label: "Auto-Scaling Enabled?",
       id: "autoScaleEnable",
-    }
+    },
 ],
   fieldsAlt: [
     {
@@ -82,7 +82,7 @@ const jenkinsConnectionMetadata = {
     {
       label: "Auto-Scaling Enabled?",
       id: "autoScaleEnable",
-    }
+    },
   ],
   newObjectFields: {
     jenkinsUrl: "",
