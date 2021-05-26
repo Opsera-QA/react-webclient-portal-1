@@ -115,6 +115,10 @@ const pipelineMetadata = {
       label: "Status",
       id: "workflow",
     },
+    {
+      label: "Schedule",
+      id: "schedule"
+    }
   ]
 };
 
