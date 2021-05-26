@@ -22,7 +22,7 @@ function ToolVaultPanel({ toolData, isLoading }) {
     toolData.setData("vault", temporaryDataObject.getData("vault"));
     let newDataObject = { ...toolData };
     const response = await toolsActions.updateTool(newDataObject, getAccessToken);
-    // setTemporaryDataObject({...newDataObject});
+    setTemporaryDataObject({...newDataObject});
     return response;
   };
 
@@ -45,8 +45,6 @@ function ToolVaultPanel({ toolData, isLoading }) {
 
   const getErrorDialogs = () => {
     if (
-      toolData.getData("vault") &&
-      toolData.getData("vault").length > 0 &&
       temporaryDataObject?.changeMap.has("vault")
     ) {
       return (

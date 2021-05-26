@@ -5,19 +5,13 @@ import {AuthContext} from "contexts/AuthContext";
 import VaultInlineInputBase from "./VaultInlineInputBase";
 
 function VaultSummaryPageInputField({fieldName, dataObject, setDataObject, disabled, visible}) {
-  const { getAccessToken, isSassUser } = useContext(AuthContext);
+  const { getAccessToken } = useContext(AuthContext);
 
   const saveData = async () => {
     let newDataObject = {...dataObject};
     const response = await toolsActions.updateTool(newDataObject, getAccessToken);
     setDataObject({...newDataObject});
     return response;
-  };
-
-  const getNoDataMessage = () => {
-    return (
-      <span>This tool is using the Opsera provided Hashicorp Vault Instance</span>
-    );
   };
 
   if (dataObject == null) {
@@ -30,7 +24,6 @@ function VaultSummaryPageInputField({fieldName, dataObject, setDataObject, disab
       dataObject={dataObject}
       disabled={disabled}
       saveData={saveData}
-      noDataMessage={getNoDataMessage()}
       visible={visible}
     />
   );

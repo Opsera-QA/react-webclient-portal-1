@@ -18,7 +18,6 @@ function VaultToolSelectInput({ fieldName, dataObject, setDataObject, disabled, 
 
   useEffect(() => {
     loadData();
-
   }, []);
 
   const loadData = async () => {
@@ -68,7 +67,7 @@ function VaultToolSelectInput({ fieldName, dataObject, setDataObject, disabled, 
   return (
     <div>
       <SelectInputBase
-
+        className={"py-3"}
         fieldName={fieldName}
         dataObject={dataObject}
         setDataObject={setDataObject}
@@ -77,7 +76,7 @@ function VaultToolSelectInput({ fieldName, dataObject, setDataObject, disabled, 
         valueField={valueField}
         textField={textField}
         placeholderText={placeholder}
-        disabled={disabled || isLoading || (!isLoading && (vaultList == null || vaultList.length === 0))}
+        disabled={disabled || isLoading || (!isLoading && (vaultList == null || vaultList.length === 1))}
       />
       <small className="text-muted ml-3">
         {getInfoText()}

@@ -118,9 +118,9 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <ToggleTab icon={faList} tabName={"attributes"} settingsTabName={"attribute_settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Attributes"}/>
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"} disabled={!authorizedAction("edit_tool_connection", toolData?.data)}/>
+        <CustomTab icon={faKey} tabName={"vault"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Vault"} disabled={!authorizedAction("vault", toolData?.data)}/>
         {getDynamicTabs()}
         <CustomTab icon={faDiceD20} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
-        <CustomTab icon={faKey} tabName={"vault"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Vault"}/>
       </CustomTabContainer>
     );
   };
