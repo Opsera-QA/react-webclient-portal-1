@@ -38,7 +38,7 @@ function FilterContainer(
           <NewRecordButton
             className={"mr-2 my-auto text-nowrap"}
             addRecordFunction={addRecordFunction}
-            type={filterDto?.getType() || type}
+            type={filterDto?.getType() || type || metadata?.type}
             isLoading={isLoading}
             variant={"success"}
           />

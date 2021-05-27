@@ -234,6 +234,10 @@ export class Model {
     });
   };
 
+  getChangeMap = () => {
+    return this.changeMap;
+  }
+
   getOriginalValue = (fieldName) => {
     return this.changeMap.get(fieldName);
   };

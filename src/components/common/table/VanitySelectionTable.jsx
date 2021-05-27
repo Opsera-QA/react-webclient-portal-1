@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import "dhx-suite-package/codebase/suite.css";
-import TableBase from "components/common/table/TableBase";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
+import VanitySelectionTableBase from "components/common/table/VanitySelectionTableBase";
 
-function VanityTable({ columns, loadData, data, noDataMessage, onRowSelect, rowStyling, isLoading, sort, paginationModel, setPaginationModel, tableHeight }) {
+function VanitySelectionTable({ columns, loadData, data, noDataMessage, onRowSelect, rowStyling, isLoading, sort, paginationModel, setPaginationModel, tableHeight, onCellEdit }) {
   const getTableBody = () => {
+
     return (
       <PaginationContainer
         loadData={loadData}
@@ -14,7 +14,7 @@ function VanityTable({ columns, loadData, data, noDataMessage, onRowSelect, rowS
         filterDto={paginationModel}
         setFilterDto={setPaginationModel}
       >
-        <TableBase
+        <VanitySelectionTableBase
           noDataMessage={noDataMessage}
           data={data}
           isLoading={isLoading}
@@ -22,6 +22,7 @@ function VanityTable({ columns, loadData, data, noDataMessage, onRowSelect, rowS
           onRowSelect={onRowSelect}
           rowStyling={rowStyling}
           height={tableHeight}
+          onCellEdit={onCellEdit}
           sort={sort}
         />
       </PaginationContainer>
@@ -39,7 +40,7 @@ function VanityTable({ columns, loadData, data, noDataMessage, onRowSelect, rowS
   );
 }
 
-VanityTable.propTypes = {
+VanitySelectionTable.propTypes = {
   columns: PropTypes.array,
   data: PropTypes.array,
   noDataMessage: PropTypes.string,
@@ -50,7 +51,9 @@ VanityTable.propTypes = {
   paginationModel: PropTypes.object,
   setPaginationModel: PropTypes.func,
   loadData: PropTypes.func,
-  tableHeight: PropTypes.string
+  tableHeight: PropTypes.string,
+  selectRowFunction: PropTypes.func,
+  onCellEdit: PropTypes.func
 };
 
-export default VanityTable;
+export default VanitySelectionTable;
