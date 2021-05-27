@@ -446,6 +446,11 @@ a.text-primary:hover, a.text-primary:focus {
     width: 75%;
 }
 
+/*Don't show pointer unless onclick handler is wired up to new table'*/
+.hide-grid-pointer .dhx_grid-cell [role=button] {
+    cursor: default;
+}
+
 .custom-table th {
     background-color: #f7f7f7; /*#2588ec;*/
     border-bottom: 1px solid #E6E5E3; /*#3598fc;*/

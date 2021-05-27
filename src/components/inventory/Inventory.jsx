@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import {faServer, faTools} from "@fortawesome/pro-light-svg-icons";
+import {faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-//import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import ToolInventory from "components/inventory/tools/ToolInventory";
 import PlatformInventory from "components/inventory/platform/platformInventory";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import { AuthContext } from "../../contexts/AuthContext";
+import {AuthContext} from "contexts/AuthContext";
+import ParametersInventory from "components/inventory/parameters/ParametersInventory";
 
 function Inventory() {
   const { getUserRecord, setAccessRoles } = useContext(AuthContext);
@@ -36,6 +36,8 @@ function Inventory() {
         return <ToolInventory customerAccessRules={customerAccessRules} />;
       case "platform":
         return <PlatformInventory />;
+      // case "parameters":
+      //   return <ParametersInventory />;
       default:
         return null;
     }
@@ -46,6 +48,7 @@ function Inventory() {
       <NavigationTabContainer>
         <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tools"} />
         <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Platform"} />
+        {/*<NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Parameters"} />*/}
       </NavigationTabContainer>
     );
   };

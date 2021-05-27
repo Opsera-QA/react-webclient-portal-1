@@ -11,16 +11,17 @@ parametersActions.createParameterV2 = async (getAccessToken, cancelTokenSource, 
   const postBody = {
     ...parameterModel.getPersistData()
   };
-  const apiUrl = "/registry/parameters/create";
+  const apiUrl = "/registry/parameter/create";
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 parametersActions.updateParameterV2 = async (getAccessToken, cancelTokenSource, parameterModel) => {
+  const id = parameterModel.getData("_id");
+  const apiUrl = `/registry/parameter/${id}/update`;
   const postBody = {
     ...parameterModel.getPersistData()
   };
-  const id = parameterModel.getData("_id");
-  const apiUrl = `/registry/parameter/${id}/update`;
+
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 

@@ -8,7 +8,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
 import parametersActions from "components/inventory/parameters/parameters-actions";
 
-function ParametersEditorPanel({ parameterModel, handleClose }) {
+function ParametersEditorPanel({ parameterModel, loadData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [parameterData, setParameterData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
@@ -24,7 +24,7 @@ function ParametersEditorPanel({ parameterModel, handleClose }) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData().catch((error) => {
+    initializeData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -34,9 +34,9 @@ function ParametersEditorPanel({ parameterModel, handleClose }) {
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [parameterModel]);
 
-  const loadData = async () => {
+  const initializeData = async () => {
     setIsLoading(true);
     setParameterData(parameterModel);
     setIsLoading(false);
@@ -47,8 +47,14 @@ function ParametersEditorPanel({ parameterModel, handleClose }) {
   };
 
   const updateParameter = async () => {
-    return await parametersActions.updateParameterV2(getAccessToken, cancelTokenSource, parameterData);
+    const response =  await parametersActions.updateParameterV2(getAccessToken, cancelTokenSource, parameterData);
+    await loadData();
+    return response;
   };
+
+  if (parameterData == null) {
+    return null;
+  }
 
   return (
     <EditorPanelContainer
@@ -63,6 +69,9 @@ function ParametersEditorPanel({ parameterModel, handleClose }) {
         <Col lg={6}>
           <TextInputBase setDataObject={setParameterData} dataObject={parameterData} fieldName={"name"}/>
         </Col>
+        <Col lg={6}>
+          <TextInputBase setDataObject={setParameterData} dataObject={parameterData} fieldName={"value"}/>
+        </Col>
       </Row>
     </EditorPanelContainer>
   );
@@ -70,7 +79,8 @@ function ParametersEditorPanel({ parameterModel, handleClose }) {
 
 ParametersEditorPanel.propTypes = {
   parameterModel: PropTypes.object,
-  handleClose: PropTypes.func
+  handleClose: PropTypes.func,
+  loadData: PropTypes.func
 };
 
 export default ParametersEditorPanel;

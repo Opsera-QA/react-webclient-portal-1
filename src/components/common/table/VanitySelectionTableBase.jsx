@@ -4,14 +4,14 @@ import {Grid} from "dhx-suite-package";
 import "dhx-suite-package/codebase/suite.css";
 import {useWindowSize} from "components/common/hooks/useWindowSize";
 
-function TableBase({ columns, data, onRowSelect, rowStyling, sort, height }) {
+function VanitySelectionTableBase({columns, data, onRowSelect, rowStyling, sort, height, onCellEdit}) {
   const containerRef = useRef(null);
   const [grid, setGrid] = useState(null);
   const windowSize = useWindowSize();
 
   useEffect(() => {
     setUpGrid();
-  }, []);
+  }, [columns]);
 
   useEffect(() => {
     if (grid && Array.isArray(data)) {
@@ -34,6 +34,7 @@ function TableBase({ columns, data, onRowSelect, rowStyling, sort, height }) {
       data: data && Array.isArray(data) && data.length > 0 ? data : [],
       htmlEnable: true,
       resizable: true,
+      selection: "complex",
       headerRowHeight: 30,
       rowHeight: 30,
       // TODO: Wire up custom row styling
@@ -50,7 +51,13 @@ function TableBase({ columns, data, onRowSelect, rowStyling, sort, height }) {
 
     if (onRowSelect) {
       grid.events.on("cellClick", (row, column, e) => {
-        onRowSelect(grid, row, column, e);
+        return onRowSelect(grid, row, column, e);
+      });
+    }
+
+    if (onCellEdit) {
+      grid.events.on("BeforeEditEnd", (value, row, column) => {
+        return onCellEdit(value, row, column);
       });
     }
 
@@ -63,30 +70,29 @@ function TableBase({ columns, data, onRowSelect, rowStyling, sort, height }) {
   };
 
   return (
-    <div style={{minHeight: height}}>
-      <div
-        className={"w-100 h-100"}
-        id="grid"
-        style={{minHeight: height}}
-        ref={el => (containerRef.current = el)}
-      />
-    </div>
+    <div
+      className={"w-100"}
+      id="grid"
+      style={{minHeight: height}}
+      ref={el => (containerRef.current = el)}
+    />
   );
 }
 
-TableBase.propTypes = {
+VanitySelectionTableBase.propTypes = {
   columns: PropTypes.array,
   data: PropTypes.array,
   onRowSelect: PropTypes.func,
   rowStyling: PropTypes.func,
   sort: PropTypes.string,
-  height: PropTypes.string
+  height: PropTypes.string,
+  onCellEdit: PropTypes.func
 };
 
-TableBase.defaultProps = {
+VanitySelectionTableBase.defaultProps = {
   data: [],
   isLoading: false,
   height: "500px"
 };
 
-export default TableBase;
+export default VanitySelectionTableBase;
