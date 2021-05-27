@@ -241,7 +241,7 @@ function PipelineDetailView() {
       // TODO: if search term applies ignore run count and reconstruct tree?
       const treeResponse = await pipelineActivityActions.getPipelineActivityLogTree(getAccessToken, cancelSource, id, filterDto);
       const pipelineTree = pipelineActivityHelpers.constructTree(treeResponse?.data?.data);
-      setPipelineActivityTreeData(pipelineTree);
+      setPipelineActivityTreeData([...pipelineTree]);
 
       if (Array.isArray(pipelineTree) && pipelineTree.length > 0) {
         await pullLogData(pipelineTree, filterDto, cancelSource);
