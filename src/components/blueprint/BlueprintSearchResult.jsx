@@ -18,7 +18,7 @@ import {useHistory} from "react-router-dom";
 import ShowSecurityReportButton from "components/blueprint/ShowSecurityReportButton";
 import ShowPackageXmlButton from "components/blueprint/ShowPackageXmlButton";
 
-function BlueprintSearchResult({ logData }) {
+function BlueprintSearchResult({ logData, closeModal }) {
   const history = useHistory();
 
   let completeInput = [];
@@ -126,6 +126,10 @@ function BlueprintSearchResult({ logData }) {
   }
 
   const goToPipeline = () => {
+    if (closeModal) {
+      closeModal();
+    }
+
     history.push(`/workflow/details/${logData?.pipelineId}/summary`);
   };
 
@@ -262,6 +266,7 @@ function BlueprintSearchResult({ logData }) {
 BlueprintSearchResult.propTypes = {
   logData: PropTypes.object,
   value: PropTypes.any,
+  closeModal: PropTypes.func,
 };
 
 export default BlueprintSearchResult;
