@@ -19,7 +19,7 @@ const SonarCodeSmellsMetricScorecardMetaData = {
       id: "timestamp",
     },
     {
-      label: "Code Smells (Latest Scan)",
+      label: "Code Smells",
       id: "sonarLatestMeasureValue",
     },
     {
@@ -27,7 +27,7 @@ const SonarCodeSmellsMetricScorecardMetaData = {
       id: "status",
     },
     {
-      label: "Primary Language",
+      label: "Language",
       id: "sonarPrimaryLanguage",
     },
   ],

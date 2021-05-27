@@ -19,7 +19,7 @@ const SonarBugsMetricScorecardMetaData = {
       id: "timestamp",
     },
     {
-      label: "Bugs (Latest Scan)",
+      label: "Bugs",
       id: "sonarLatestMeasureValue",
     },
     {
@@ -27,7 +27,7 @@ const SonarBugsMetricScorecardMetaData = {
       id: "status",
     },
     {
-      label: "Primary Language",
+      label: "Language",
       id: "sonarPrimaryLanguage",
     },
   ],

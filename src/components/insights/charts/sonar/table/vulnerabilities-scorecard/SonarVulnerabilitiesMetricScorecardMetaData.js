@@ -19,7 +19,7 @@ const SonarVulnerabilitiesMetricScorecardMetaData = {
       id: "timestamp",
     },
     {
-      label: "Vulnerabilities (Latest Scan)",
+      label: "Vulnerabilities",
       id: "sonarLatestMeasureValue",
     },
     {
@@ -27,7 +27,7 @@ const SonarVulnerabilitiesMetricScorecardMetaData = {
       id: "status",
     },
     {
-      label: "Primary Language",
+      label: "Language",
       id: "sonarPrimaryLanguage",
     },
   ],

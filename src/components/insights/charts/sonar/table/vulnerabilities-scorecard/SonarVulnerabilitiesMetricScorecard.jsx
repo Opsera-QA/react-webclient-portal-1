@@ -9,6 +9,7 @@ import {
   getChartTrendStatusColumn,
   getTableDateTimeColumn,
   getTableTextColumn,
+  getLimitedTableTextColumn,
 } from "components/common/table/table-column-helpers";
 import SonarVulnerabilitiesMetricScorecardMetaData from "components/insights/charts/sonar/table/vulnerabilities-scorecard/SonarVulnerabilitiesMetricScorecardMetaData";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -34,12 +35,13 @@ function SonarVulnerabilitiesMetricScorecard({ kpiConfiguration, setKpiConfigura
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "run_count")),
-      getTableTextColumn(getField(fields, "projectName"), "no-wrap-inline"),
-      getTableTextColumn(getField(fields, "pipelineId")),
+      // getTableTextColumn(getField(fields, "projectName"), "no-wrap-inline"),
+      getLimitedTableTextColumn(getField(fields, "projectName"), 20),
+      // getTableTextColumn(getField(fields, "pipelineId")),
       getTableDateTimeColumn(getField(fields, "timestamp")),
       getChartTrendStatusColumn(getField(fields, "status")),
       getTableTextColumn(getField(fields, "sonarLatestMeasureValue")),
-      // getTableTextColumn(getField(fields, "sonarPrimaryLanguage")),
+      getTableTextColumn(getField(fields, "sonarPrimaryLanguage")),
     ],
     []
   );
