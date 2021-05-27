@@ -42,18 +42,18 @@ const INITIAL_FORM_DATA = {
 
 // TODO: This class needs to be reworked with new components and also to cleanup
 function PipelineSummaryPanel({
-  pipeline,
-  ownerName,
-  customerAccessRules,
-  parentWorkflowStatus,
-  setActiveTab,
-  fetchPlan,
-  setWorkflowStatus,
-  getActivityLogs,
-  setRefreshCount,
-  setPipeline,
-  refreshCount,
-}) {
+                                pipeline,
+                                ownerName,
+                                customerAccessRules,
+                                parentWorkflowStatus,
+                                setActiveTab,
+                                fetchPlan,
+                                setWorkflowStatus,
+                                getActivityLogs,
+                                setRefreshCount,
+                                setPipeline,
+                                refreshCount,
+                              }) {
   const contextType = useContext(AuthContext);
   const { getAccessToken } = useContext(AuthContext);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -180,59 +180,59 @@ function PipelineSummaryPanel({
       let postBody = {};
 
       switch (type) {
-      case "name":
-        pipeline.name = value.name;
-        postBody = {
-          "name": value.name,
-        };
-        setEditTitle(false);
-        break;
-      case "project":
-        pipeline.project.name = value.project.name;
-        postBody = {
-          "project": {
-            "name": value.project.name,
-            "project_id": "",
-          },
-        };
-        setEditProject(false);
-        break;
-      case "description":
-        pipeline.description = value.description;
-        postBody = {
-          "description": value.description,
-        };
-        setEditDescription(false);
-        break;
-      case "schedule":
-        pipeline.workflow.schedule = value;
-        postBody = {
-          "workflow": pipeline.workflow,
-        };
-        setEditTitle(false);
-        break;
-      case "tags":
-        pipeline.tags = value;
-        postBody = {
-          "tags": pipeline.tags,
-        };
-        setEditTags(false);
-        break;
-      case "type":
-        pipeline.type = value.type;
-        postBody = {
-          "type": value.type,
-        };
-        setEditType(false);
-        break;
-      case "roles":
+        case "name":
+          pipeline.name = value.name;
+          postBody = {
+            "name": value.name,
+          };
+          setEditTitle(false);
+          break;
+        case "project":
+          pipeline.project.name = value.project.name;
+          postBody = {
+            "project": {
+              "name": value.project.name,
+              "project_id": "",
+            },
+          };
+          setEditProject(false);
+          break;
+        case "description":
+          pipeline.description = value.description;
+          postBody = {
+            "description": value.description,
+          };
+          setEditDescription(false);
+          break;
+        case "schedule":
+          pipeline.workflow.schedule = value;
+          postBody = {
+            "workflow": pipeline.workflow,
+          };
+          setEditTitle(false);
+          break;
+        case "tags":
+          pipeline.tags = value;
+          postBody = {
+            "tags": pipeline.tags,
+          };
+          setEditTags(false);
+          break;
+        case "type":
+          pipeline.type = value.type;
+          postBody = {
+            "type": value.type,
+          };
+          setEditType(false);
+          break;
+        case "roles":
 
-        pipeline.roles = [...value];
-        postBody = {
-          "roles": [...value],
-        };
-        setEditRoles(false);
-        break;
+          pipeline.roles = [...value];
+          postBody = {
+            "roles": [...value],
+          };
+          setEditRoles(false);
+          break;
       }
 
       setPipelineModel(new Model({ ...pipeline }, pipelineMetadata, false));
@@ -256,36 +256,36 @@ function PipelineSummaryPanel({
 
   const handleEditPropertyClick = (type) => {
     switch (type) {
-    case "name":
-      setEditTitle(true);
-      setFormData({ ...formData, name: pipeline.name });
-      break;
-    case "project":
-      setEditProject(true);
-      setFormData({
-        ...formData,
-        project: { name: pipeline.project !== undefined && pipeline.project.hasOwnProperty("name") ? pipeline.project.name : "" },
-      });
-      break;
-    case "description":
-      setEditDescription(true);
-      setFormData({ ...formData, description: pipeline.description });
-      break;
-    case "schedule":
-      // setEditSchedule(true);
-      showSchedulerOverlay();
-      break;
-    case "tags":
-      setEditTags(true);
-      break;
-    case "type":
-      setEditType(true);
-      break;
-    case "roles":
-      handleEditAccessRolesClick();
-      break;
-    default:
-      console.error("Missing value or type for edit field");
+      case "name":
+        setEditTitle(true);
+        setFormData({ ...formData, name: pipeline.name });
+        break;
+      case "project":
+        setEditProject(true);
+        setFormData({
+          ...formData,
+          project: { name: pipeline.project !== undefined && pipeline.project.hasOwnProperty("name") ? pipeline.project.name : "" },
+        });
+        break;
+      case "description":
+        setEditDescription(true);
+        setFormData({ ...formData, description: pipeline.description });
+        break;
+      case "schedule":
+        // setEditSchedule(true);
+        showSchedulerOverlay();
+        break;
+      case "tags":
+        setEditTags(true);
+        break;
+      case "type":
+        setEditType(true);
+        break;
+      case "roles":
+        handleEditAccessRolesClick();
+        break;
+      default:
+        console.error("Missing value or type for edit field");
     }
   };
 
@@ -298,7 +298,7 @@ function PipelineSummaryPanel({
         style={{ cursor: "pointer" }}
         onClick={() => {
           handleSavePropertyClick(pipeline._id, formData, field);
-        }}/>
+        }} />
     );
   };
 
@@ -311,7 +311,7 @@ function PipelineSummaryPanel({
         style={{ cursor: "pointer" }}
         onClick={() => {
           handleEditPropertyClick(field);
-        }}/>
+        }} />
     );
   };
 
@@ -324,7 +324,7 @@ function PipelineSummaryPanel({
         style={{ cursor: "pointer" }}
         onClick={() => {
           cancelFunction(false);
-        }}/>
+        }} />
     );
   };
 
@@ -334,16 +334,16 @@ function PipelineSummaryPanel({
 
         {!editTags && pipeline.tags &&
         <CustomBadgeContainer>
-            {pipeline.tags.map((item, idx) => {
-              if (typeof item !== "string")
-                return (
-                  <CustomBadge badgeText={<span><span className="mr-1">{item.type}:</span>{item.value}</span>}
-                    icon={faTag}
-                    key={idx}
-                    />
-                );
-            })}
-          </CustomBadgeContainer>
+          {pipeline.tags.map((item, idx) => {
+            if (typeof item !== "string")
+              return (
+                <CustomBadge badgeText={<span><span className="mr-1">{item.type}:</span>{item.value}</span>}
+                             icon={faTag}
+                             key={idx}
+                />
+              );
+          })}
+        </CustomBadgeContainer>
         }
         <div>
           {authorizedAction("edit_tags", pipeline.owner) && parentWorkflowStatus !== "running" && getEditIcon("tags")}
@@ -354,7 +354,7 @@ function PipelineSummaryPanel({
           setEditTags(false);
         }} onClick={(tags) => {
           handleSavePropertyClick(pipeline._id, tags, "tags");
-        }}/>}
+        }} />}
 
       </Col>
     );
@@ -374,14 +374,14 @@ function PipelineSummaryPanel({
         if (user) {
           return (
             <span key={i} className="mx-1 mb-1 badge badge-light user-badge">
-              <FontAwesomeIcon icon={faUser} fixedWidth className="mr-1"/>{`${user}: ${item.role}`}
+              <FontAwesomeIcon icon={faUser} fixedWidth className="mr-1" />{`${user}: ${item.role}`}
             </span>
           );
         }
 
         return (
           <span key={i} className="mx-1 mb-1 badge badge-light group-badge">
-            <FontAwesomeIcon icon={faUserFriends} fixedWidth className="mr-1"/>{`${group}: ${item.role}`}
+            <FontAwesomeIcon icon={faUserFriends} fixedWidth className="mr-1" />{`${group}: ${item.role}`}
           </span>
         );
       })
@@ -402,7 +402,7 @@ function PipelineSummaryPanel({
           setEditRoles(false);
         }} onClick={(roles) => {
           handleSavePropertyClick(pipeline._id, roles, "roles");
-        }}/>}
+        }} />}
 
       </Col>
     );
@@ -413,24 +413,24 @@ function PipelineSummaryPanel({
   };
 
   const getScheduledTasksCount = async (cancelSource = cancelTokenSource) => {
-    if (!featureFlagHideItemInProd()){
+    if (!featureFlagHideItemInProd()) {
       const response = await pipelineSchedulerActions.getScheduledTasks(getAccessToken, cancelSource, pipeline._id);
       const taskCount = response?.data?.data?.length;
-      if (taskCount){
+      if (taskCount) {
         setTaskCount(taskCount);
       }
     }
   };
 
   const getTaskCountText = () => {
-    if (taskCount === 0 ) return "No scheduled tasks";
+    if (taskCount === 0) return "No scheduled tasks";
 
-   return taskCount === 1 ? "1 task scheduled" : `${taskCount} tasks scheduled`;
+    return taskCount === 1 ? "1 task scheduled" : `${taskCount} tasks scheduled`;
   };
 
   if (!pipeline || Object.keys(pipeline).length <= 0) {
     return (<InformationDialog
-      message="No Pipeline details found.  Please ensure you have access to view the requested pipeline."/>);
+      message="No Pipeline details found.  Please ensure you have access to view the requested pipeline." />);
   }
 
   return (
@@ -444,7 +444,7 @@ function PipelineSummaryPanel({
                                   setRefreshCount={setRefreshCount}
                                   refreshCount={refreshCount}
                                   fetchActivityLogs={getActivityLogs}
-                                  setParentWorkflowStatus={setWorkflowStatus}/>
+                                  setParentWorkflowStatus={setWorkflowStatus} />
 
 
         </div>
@@ -458,7 +458,7 @@ function PipelineSummaryPanel({
                 <>
                   <div className="flex-fill p-2">
                     <Form.Control maxLength="500" type="text" placeholder="" value={formData.name || ""}
-                                  onChange={e => setFormData({ ...formData, name: e.target.value })}/></div>
+                                  onChange={e => setFormData({ ...formData, name: e.target.value })} /></div>
                   <div className="flex-fill p-2">
                     {getSaveIcon("name")}
                     {getCancelIcon(setEditTitle)}
@@ -545,8 +545,8 @@ function PipelineSummaryPanel({
                 <DropdownList
                   data={pipelineHelpers.PIPELINE_TYPES}
                   defaultValue={pipeline.type[0]}
-                  valueField='id'
-                  textField='name'
+                  valueField="id"
+                  textField="name"
                   onChange={e => {
                     let type = formData.type;
                     type[0] = e.id;
@@ -561,23 +561,13 @@ function PipelineSummaryPanel({
             </div>
             }
           </Col>
-          {editSchedule ?
-            <>
-            </> :
-            <>
-              {/*TODO: Remove FF after scheduler is fixed*/}
-              {!featureFlagHideItemInProd() &&
 
-              <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Schedule: </span>
-                
-                {getTaskCountText()}
+          <Col xs={12} sm={6} className="py-2"><span className="text-muted mr-1">Schedule: </span>
+            {getTaskCountText()}
+            {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" ?
+              getEditIcon("schedule") : null}
+          </Col>
 
-                {authorizedAction("edit_pipeline_attribute", pipeline.owner) && parentWorkflowStatus !== "running" ?
-                  getEditIcon("schedule") : null}
-              </Col>
-              }
-            </>
-          }
           {getTagField()}
 
           {customerAccessRules.Type !== "sass-user" && getRoleAccessField()}
@@ -587,7 +577,7 @@ function PipelineSummaryPanel({
               <Col xs={11}>
                 <Form.Control maxLength="2000" as="textarea" type="text" placeholder=""
                               value={formData.description || ""}
-                              onChange={e => setFormData({ ...formData, description: e.target.value })}/></Col>
+                              onChange={e => setFormData({ ...formData, description: e.target.value })} /></Col>
               <Col xs={1} className="my-auto">
                 {getSaveIcon("description")}
                 {getCancelIcon(setEditDescription)}
@@ -626,7 +616,7 @@ function PipelineSummaryPanel({
               lastRun={pipeline.workflow.last_run}
               tags={pipeline.tags}
               run={pipeline.workflow.run_count}
-              getUserRecord={getUserRecord}/>
+              getUserRecord={getUserRecord} />
             }
           </Col>
           }
@@ -638,13 +628,13 @@ function PipelineSummaryPanel({
                                 message="Warning! This pipeline cannot be recovered once this pipeline is deleted. Do you still want to proceed?"
                                 button="Confirm"
                                 handleCancelModal={() => setShowDeleteModal(false)}
-                                handleConfirmModal={() => deleteItem(modalDeleteId)}/> : null}
+                                handleConfirmModal={() => deleteItem(modalDeleteId)} /> : null}
 
       <ModalActivityLogsDialog header="Pipeline Details" size="lg" jsonData={modalMessage} show={showModal}
-                               setParentVisibility={setShowModal}/>
+                               setParentVisibility={setShowModal} />
 
       {infoModal.show && <Modal header={infoModal.header} message={infoModal.message} button={infoModal.button}
-                                handleCancelModal={() => setInfoModal({ ...infoModal, show: false })}/>}
+                                handleCancelModal={() => setInfoModal({ ...infoModal, show: false })} />}
 
     </>
   );
