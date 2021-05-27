@@ -7,19 +7,17 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
 import pipelineSchedulerActions from "components/workflow/pipelines/scheduler/pipeline-scheduler-actions";
-import {Button} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlay, faTrash} from "@fortawesome/pro-light-svg-icons";
-import DeleteButton from "components/common/buttons/delete/DeleteButton";
-import DeleteModal from "components/common/modal/DeleteModal";
 import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
+import ScheduleEditorPanel from "components/workflow/pipelines/scheduler/schedule/ScheduleEditorPanel";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 
-function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
+function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose, pipeline, taskList }) {
   const { getAccessToken } = useContext(AuthContext);
   const [schedulerTaskModel, setSchedulerTaskModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [scheduleModel, setScheduleModel] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -44,26 +42,40 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
 
   const loadData = async () => {
     setIsLoading(true);
+
+    if (scheduledTaskData?.isNew()) {
+      const scheduleCount = taskList?.length ? taskList?.length + 1 : 1;
+      scheduledTaskData.setData("name", `Pipeline Schedule ${scheduleCount}`);
+    }
+
     setSchedulerTaskModel(scheduledTaskData);
     setIsLoading(false);
   };
 
   const createScheduledTask = async () => {
-    return await pipelineSchedulerActions.createSchedule(getAccessToken, cancelTokenSource, schedulerTaskModel);
+    schedulerTaskModel.setData("schedule", scheduleModel?.getPersistData());
+    const response = await pipelineSchedulerActions.createSchedule(getAccessToken, cancelTokenSource, schedulerTaskModel);
+    handleClose();
+    return response;
   };
 
   const updateScheduledTask = async () => {
-    return await pipelineSchedulerActions.updateSchedule(getAccessToken, cancelTokenSource, schedulerTaskModel);
+    schedulerTaskModel.setData("schedule", scheduleModel?.getPersistData());
+    const response = await pipelineSchedulerActions.updateSchedule(getAccessToken, cancelTokenSource, schedulerTaskModel);
+    handleClose();
+    return response;
   };
 
   const deleteScheduledTask = async () => {
-    return await pipelineSchedulerActions.deleteScheduledTask(getAccessToken, cancelTokenSource, schedulerTaskModel.getData("_id"));
+    const response = await pipelineSchedulerActions.deleteScheduledTask(getAccessToken, cancelTokenSource, schedulerTaskModel.getData("_id"));
+    handleClose();
+    return response;
   };
 
   const getExtraButtons = () => {
-    if (!scheduledTaskData.isNew()) {
+    if (schedulerTaskModel && !schedulerTaskModel?.isNew()) {
       return (
-        <DeleteButtonWithInlineConfirmation dataObject={scheduledTaskData} deleteRecord={deleteScheduledTask} />
+        <DeleteButtonWithInlineConfirmation dataObject={scheduledTaskData} deleteRecord={deleteScheduledTask}/>
       );
     }
   };
@@ -78,13 +90,26 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
       handleClose={handleClose}
       extraButtons={getExtraButtons()}
       addAnotherOption={false}
+      disable={ schedulerTaskModel == null
+        || !schedulerTaskModel.checkCurrentValidity()
+        || scheduleModel == null
+        || !scheduleModel.checkCurrentValidity()
+      }
     >
       <Row>
-        <Col lg={6}>
-          <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"name"}/>
+        <ScheduleEditorPanel
+          scheduledTaskData={scheduledTaskData}
+          setScheduleModel={setScheduleModel}
+          scheduleModel={scheduleModel}
+          schedulerTaskModel={schedulerTaskModel}
+          setSchedulerTaskModel={setSchedulerTaskModel}
+          pipeline={pipeline}
+        />
+         <Col lg={12}>
+          <BooleanToggleInput setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"active"}/>
         </Col>
-        <Col lg={6}>
-          <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"notes"}/>
+        <Col lg={12}>
+          <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"name"}/>
         </Col>
         <Col lg={12}>
           <TextInputBase setDataObject={setSchedulerTaskModel} dataObject={schedulerTaskModel} fieldName={"description"}/>
@@ -97,7 +122,9 @@ function PipelineScheduledTaskEditorPanel({ scheduledTaskData, handleClose }) {
 PipelineScheduledTaskEditorPanel.propTypes = {
   scheduledTaskData: PropTypes.object,
   setSchedulerTaskModel: PropTypes.func,
-  handleClose: PropTypes.func
+  handleClose: PropTypes.func,
+  pipeline: PropTypes.object,
+  taskList: PropTypes.any,
 };
 
 export default PipelineScheduledTaskEditorPanel;
