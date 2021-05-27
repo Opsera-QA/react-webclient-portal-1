@@ -34,4 +34,35 @@ pipelineActivityActions.getPipelineActivityLogsV2 = async (getAccessToken, cance
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+pipelineActivityActions.getPipelineActivityLogsV3 = async (getAccessToken, cancelTokenSource, id, runCountArray, pipelineActivityFilterDto) => {
+  const search = pipelineActivityFilterDto?.getData("search");
+  const urlParams = {
+    params: {
+      search: search ? search : undefined,
+      runCountArray: runCountArray,
+      fields: ["run_count", "step_name", "action", "message", "status", "createdAt"]
+    },
+  };
+
+  const apiUrl = `/pipelines/${id}/activity/v2/`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+pipelineActivityActions.getPipelineActivityLogTree = async (getAccessToken, cancelTokenSource, id, pipelineActivityFilterDto) => {
+  const search = pipelineActivityFilterDto?.getData("search");
+  const urlParams = {
+    params: {
+      search: search ? search : undefined
+    },
+  };
+
+  const apiUrl = `/pipelines/${id}/activity/v2/tree`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+pipelineActivityActions.getPipelineActivityLogById = async (getAccessToken, cancelTokenSource, id) => {
+  const apiUrl = `/pipelines/activity/v2/${id}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 export default pipelineActivityActions;
