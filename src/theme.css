@@ -1298,6 +1298,10 @@ div.data-blocks-ellipses {
     min-width: 600px; /* Max Width of the popover */
 }
 
+#popover-basic {
+    z-index: 2000;
+}
+
 .filter-bar {
     background-color: #E8E8E8;
 }
