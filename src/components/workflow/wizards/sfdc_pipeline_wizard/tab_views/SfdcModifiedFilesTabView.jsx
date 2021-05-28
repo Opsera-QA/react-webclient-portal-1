@@ -191,7 +191,7 @@ const SfdcModifiedFilesTabView = (
       }
     }
 
-    return sfdcResponse?.data?.data?.sfdcCommitList;
+    return sfdcResponse;
   };
 
   const getAllModifiedFiles = async () => {
@@ -215,8 +215,8 @@ const SfdcModifiedFilesTabView = (
 
     const sfdcCommitList = await getModifiedFiles(cancelSource, newFilterDto);
 
-    if (sfdcCommitList?.data?.data?.sfdcErrorMessage?.length === 0 &&
-      (!sfdcCommitList?.data?.data?.gitCommitList || sfdcCommitList?.data?.data?.sfdcCommitList?.count === 0)
+    if (sfdcCommitList?.data?.data?.sfdcErrorMessage?.length === (0 || undefined) &&
+      (!sfdcCommitList?.data?.data?.sfdcCommitList || sfdcCommitList?.data?.data?.sfdcCommitList?.count === 0)
       && count < 5) {
       
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));

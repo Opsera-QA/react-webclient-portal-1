@@ -142,8 +142,9 @@ const GitModifiedFilesTabView = (
     }
 
     const gitResponse = await getModifiedFiles(cancelSource, newFilterDto);
+    console.log(gitResponse?.data?.data?.gitErrorMessage?.length );
 
-    if (gitResponse?.data?.data?.gitErrorMessage?.length === 0 &&
+    if (gitResponse?.data?.data?.gitErrorMessage?.length === (0 || undefined) &&
       (!gitResponse?.data?.data?.gitCommitList || gitResponse?.data?.data?.gitCommitList?.count === 0)
       && count < 5) {
       
