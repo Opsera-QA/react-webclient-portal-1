@@ -23,22 +23,24 @@ function BlueprintSearchResult({ logData, closeModal }) {
 
   let completeInput = [];
 
-  for (let item in logData.data) {
-    if (logData.data.length > 0) {
-      if (logData.data[item].api_response) {
-        if (logData.data[item].api_response.jenkinsConsoleLog) {
-          completeInput.push(logData.data[item].api_response.jenkinsConsoleLog);
-        } else if (logData.data[item].api_response.jenkins_console_log) {
-          completeInput.push(logData.data[item].api_response.jenkins_console_log);
-        } else if (logData.data[item].step_configuration?.topic === "opsera.pipeline.octopus.console.log") {
-          completeInput.push(logData.data[item].api_response.message);
-        } else if (logData.data[item].api_response.status) {
-          completeInput.push(logData.data[item].api_response.status);
-        } else if (logData.data[item].api_response.buildLog) {
-          completeInput.push(logData.data[item].api_response.buildLog);
-        } else {
-          if (logData.data[item].api_response) {
-            completeInput.push(JSON.stringify(logData.data[item].api_response, undefined, 4));
+  if (Array.isArray(logData?.data) && logData.data.length > 0) {
+    for (let item in logData.data) {
+      if (logData.data.length > 0) {
+        if (logData.data[item].api_response) {
+          if (logData.data[item].api_response.jenkinsConsoleLog) {
+            completeInput.push(logData.data[item].api_response.jenkinsConsoleLog);
+          } else if (logData.data[item].api_response.jenkins_console_log) {
+            completeInput.push(logData.data[item].api_response.jenkins_console_log);
+          } else if (logData.data[item].step_configuration?.topic === "opsera.pipeline.octopus.console.log") {
+            completeInput.push(logData.data[item].api_response.message);
+          } else if (logData.data[item].api_response.status) {
+            completeInput.push(logData.data[item].api_response.status);
+          } else if (logData.data[item].api_response.buildLog) {
+            completeInput.push(logData.data[item].api_response.buildLog);
+          } else {
+            if (logData.data[item].api_response) {
+              completeInput.push(JSON.stringify(logData.data[item].api_response, undefined, 4));
+            }
           }
         }
       }
@@ -168,14 +170,12 @@ function BlueprintSearchResult({ logData, closeModal }) {
     );
   };
 
-
-  // TODO: Refactor
-  return (
-    <>
-      {getTitleBar()}
-      <div className="mb-1 mt-3 bordered-content-block p-3 w-100">
-          {logData.data.length > 0 && (
-            <Tab.Container id="left-tabs-example" defaultActiveKey={0}>
+  // TODO: Refactor, add more defensive programming
+  const getBody = () => {
+    if (Array.isArray(logData?.data) && logData.data.length > 0) {
+      return (
+        <div className="mb-1 mt-3 bordered-content-block p-3 w-100">
+          <Tab.Container id="left-tabs-example" defaultActiveKey={0}>
             <Row>
               <Col sm={2} className={"pr-0"}>
                 <div className="blueprint-title mb-3">Steps</div>
@@ -185,7 +185,7 @@ function BlueprintSearchResult({ logData, closeModal }) {
                       <Nav.Item key={idx}>
                         <Nav.Link key={idx} eventKey={idx}>
                           {makeUpper(
-                              item?.step_name
+                            item?.step_name
                           )}
                         </Nav.Link>
                       </Nav.Item>
@@ -261,15 +261,22 @@ function BlueprintSearchResult({ logData, closeModal }) {
               </Col>
             </Row>
           </Tab.Container>
-        )}
-      </div>
+        </div>
+      );
+    }
+  };
+
+  // TODO: Refactor
+  return (
+    <>
+      {getTitleBar()}
+      {getBody()}
     </>
   );
 }
 
 BlueprintSearchResult.propTypes = {
   logData: PropTypes.object,
-  value: PropTypes.any,
   closeModal: PropTypes.func,
 };
 
