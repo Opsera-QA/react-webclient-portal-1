@@ -11,6 +11,8 @@ import { Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 
+// TODO : Use GitBranchInput for all git based repo selections with set clear functions.
+
 function JenkinsStepConfBranch({ fieldName, dataObject, setDataObject, disabled, jenkinsList }) {
 
   const [isBranchSearching, setIsBranchSearching] = useState(false);
