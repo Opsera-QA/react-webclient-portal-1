@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
-import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
 import Model from "core/data_model/model";
@@ -10,6 +9,7 @@ import blueprintMetadata from "components/blueprint/blueprint-metadata";
 import blueprintsActions from "components/blueprint/blueprints-actions";
 import BlueprintSearchResult from "components/blueprint/BlueprintSearchResult";
 import LoadingDialog from "components/common/status_notifications/loading";
+import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 
 function BlueprintLogOverlay({ pipelineId, runCount }) {
   const toastContext = useContext(DialogToastContext);
@@ -100,27 +100,26 @@ function BlueprintLogOverlay({ pipelineId, runCount }) {
   };
 
   return (
-    <CenterOverlayContainer
+    <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
       titleText={`Blueprint Search Results`}
       titleIcon={faFileInvoice}
       showToasts={true}
       isLoading={isLoading}
-      fullWidth={true}
       pageLink={`/blueprint/${pipelineId}/${runCount}`}
       linkTooltipText={"View Full Blueprint"}
     >
       <div className={"p-3"}>
         {getBody()}
       </div>
-    </CenterOverlayContainer>
+    </FullScreenCenterOverlayContainer>
   );
 }
 
 BlueprintLogOverlay.propTypes = {
   pipelineId: PropTypes.string,
-  runCount: PropTypes.string
+  runCount: PropTypes.number
 };
 
 export default BlueprintLogOverlay;

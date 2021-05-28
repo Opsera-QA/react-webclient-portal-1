@@ -1579,9 +1579,26 @@ div.data-blocks-ellipses {
 
 .full-width-center-overlay {
     margin: 10px;
+    /* full-height - button panel height */
+    height: calc(100% - 63px);
+}
 
-    /* full-height - (10px x 2 top + bottom margins) */
+.full-screen-center-overlay {
+    /* full-height of container - button panel height */
+    height: calc(100% - 63px);
+}
+
+.full-screen-overlay-panel-body {
+    overflow-y: auto;
+    /* full-height - (10px x 2 top + bottom margins - title height - button panel height) */
+    height: calc(100% - 20px - 63px);
+    max-height: calc(100% - 20px - 63px);
+}
+
+.overlay-margin {
+    /* height is 100% - 10px x2 top and bottom margins */
     height: calc(100% - 20px);
+    margin: 10px;
 }
 
 .center-overlay-shadow-background {
