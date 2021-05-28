@@ -413,13 +413,11 @@ function PipelineSummaryPanel({
   };
 
   const getScheduledTasksCount = async (cancelSource = cancelTokenSource) => {
-    if (!featureFlagHideItemInProd()) {
       const response = await pipelineSchedulerActions.getScheduledTasks(getAccessToken, cancelSource, pipeline._id);
       const taskCount = response?.data?.data?.length;
       if (taskCount) {
         setTaskCount(taskCount);
       }
-    }
   };
 
   const getTaskCountText = () => {
