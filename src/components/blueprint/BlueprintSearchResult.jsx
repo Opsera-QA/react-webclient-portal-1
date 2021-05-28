@@ -138,7 +138,7 @@ function BlueprintSearchResult({ logData, closeModal }) {
   // TODO: Work to have this be a part of the bottom with a container. Just separating for now.
   const getTitleBar = () => {
     return (
-      <div className="mt-3 bordered-content-block p-3 max-content-width">
+      <div className="mt-3 bordered-content-block p-3">
         <Row>
           <Col>
             <strong>

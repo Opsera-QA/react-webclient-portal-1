@@ -23,11 +23,13 @@ function FullScreenCenterOverlayContainer({ children, actionBar, titleText, titl
 
     if (showCloseButton === true) {
       return (
-        <Row className="mx-0 mt-auto d-flex">
-          <div className="ml-auto d-flex">
-            <CloseButton className={"p-3"} size={"sm"} closeEditorCallback={closePanel} showUnsavedChangesMessage={false}/>
-          </div>
-        </Row>
+        <div className={"p-3"}>
+          <Row className="mx-0 mt-auto d-flex">
+            <div className="ml-auto d-flex">
+              <CloseButton size={"sm"} closeEditorCallback={closePanel} showUnsavedChangesMessage={false}/>
+            </div>
+          </Row>
+        </div>
       );
     }
   };
