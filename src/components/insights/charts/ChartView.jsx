@@ -9,7 +9,7 @@ import OpseraBuildsByUserBarChart from "./opsera/bar_chart/builds_by_user/Opsera
 import OpseraDeploymentFrequencyLineChart from "./opsera/line_chart/deployment_frequency/OpseraDeploymentFrequencyLineChart";
 import OpseraRecentPipelineStatus from "components/insights/charts/opsera/table/recent_pipeline_status/OpseraRecentPipelineStatus";
 import OpseraRecentCDStatusTable from "components/insights/charts/opsera/table/recent_cd_status/OpseraRecentCDStatusTable";
-import OpseraPipelineDeploymentFrequencyStats from "./opsera/OpseraPipelineDeploymentFrequencyStats";
+import OpseraPipelineDeploymentFrequencyStats from "./opsera/OpseraDeploymentFreqStats/OpseraPipelineDeploymentFrequencyStats";
 import OpseraBuildDurationByStageBarChart from "./opsera/bar_chart/duration_by_stage/OpseraBuildDurationByStageBarChart";
 import OpseraMeanTimeToRestoreBarChart from "./opsera/bar_chart/mean_time_to_restore/OpseraMeanTimeToRestoreBarChart";
 import OpseraNexusPipelineStepInfo from "components/insights/charts/opsera/table/nexus_pipeline_step_info/OpseraNexusPipelineStepInfo";
