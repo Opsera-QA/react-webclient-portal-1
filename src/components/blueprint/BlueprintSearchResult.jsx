@@ -133,9 +133,9 @@ function BlueprintSearchResult({ logData, closeModal }) {
     history.push(`/workflow/details/${logData?.pipelineId}/summary`);
   };
 
-  // TODO: Refactor
-  return (
-    <>
+  // TODO: Work to have this be a part of the bottom with a container. Just separating for now.
+  const getTitleBar = () => {
+    return (
       <div className="mt-3 bordered-content-block p-3 max-content-width">
         <Row>
           <Col>
@@ -145,16 +145,12 @@ function BlueprintSearchResult({ logData, closeModal }) {
               </div>
             </strong>
           </Col>
-          <Button
-            variant="outline-dark mr-3"
-            size="sm"
-            onClick={() => {
-              goToPipeline();
-            }}
-          >
+          {!closeModal &&
+          <Button variant="outline-dark mr-3" size="sm" onClick={() => { goToPipeline();}}>
             <FontAwesomeIcon icon={faDraftingCompass} fixedWidth/>
             View Pipeline
           </Button>
+          }
         </Row>
         <hr/>
         <Row className="mt-1">
@@ -169,6 +165,14 @@ function BlueprintSearchResult({ logData, closeModal }) {
           </Col>
         </Row>
       </div>
+    );
+  };
+
+
+  // TODO: Refactor
+  return (
+    <>
+      {getTitleBar()}
       <div className="mb-1 mt-3 bordered-content-block p-3 w-100">
           {logData.data.length > 0 && (
             <Tab.Container id="left-tabs-example" defaultActiveKey={0}>
@@ -203,10 +207,10 @@ function BlueprintSearchResult({ logData, closeModal }) {
                   <div className={"justify-content-between d-flex w-100"}>
                     <div className="ml-1 blueprint-title">Blueprint</div>
                     <div className={"d-flex"}>
-                      {<ShowSecurityReportButton logData={logData} />}
-                      {<ShowPackageXmlButton logData={logData} />}
+                      {!closeModal && <ShowSecurityReportButton logData={logData} />}
+                      {!closeModal && <ShowPackageXmlButton logData={logData} />}
                       {/*// TODO: Just pass in logData to ExportBlueprintLogButton*/}
-                      {completeInput &&
+                      {!closeModal && completeInput &&
                       <ExportBlueprintLogButton
                         className="mr-2"
                         blueprintLog={completeInput}
