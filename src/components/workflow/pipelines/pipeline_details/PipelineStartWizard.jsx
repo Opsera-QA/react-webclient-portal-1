@@ -17,8 +17,9 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, p
   const getWarningMessage = () => {
     if (pipelineOrientation === "middle") {
       return (
-        <div className="info-text pl-4">
-          Warning!  This pipeline is in the middle of running.  If you proceed, this will cancel the running job and start the pipeline over.
+        <div className="warning-text pl-4 mt-1">
+          Warning! This pipeline is in an failed or incomplete state and is no longer running.  If you proceed, this will clear
+          the current state of the pipeline and begin a brand new run.
         </div>
       );
     }
