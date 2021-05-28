@@ -234,7 +234,7 @@ const SfdcProfileSelectionView = (
       
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
       count++;
-      return await sfdcPolling(cancelSource, newFilterDto, count);
+      return await sfdcPolling(cancelSource, newSfdcFilterDto, count);
     } else {
       // console.log("stop polling");
       stopPolling();
