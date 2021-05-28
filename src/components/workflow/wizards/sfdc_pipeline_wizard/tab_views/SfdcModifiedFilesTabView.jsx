@@ -103,12 +103,15 @@ const SfdcModifiedFilesTabView = (
 
     return () => {
       source.cancel();
-
-      if (Array.isArray(timerIds) && timerIds.length > 0) {
-        timerIds?.forEach(timerId => clearTimeout(timerId));
-      }
+      stopPolling();
     };
   }, [ruleList]);
+
+  const stopPolling = () => {
+    if (Array.isArray(timerIds) && timerIds.length > 0) {
+      timerIds?.forEach(timerId => clearTimeout(timerId));
+    }
+  };
 
   const rulesReload = async (cancelSource = cancelTokenSource, newFilterDto = sfdcFilterDto) => {
     try {
@@ -212,10 +215,22 @@ const SfdcModifiedFilesTabView = (
 
     const sfdcCommitList = await getModifiedFiles(cancelSource, newFilterDto);
 
-    if ((!Array.isArray(sfdcCommitList) || sfdcCommitList?.length === 0) && count <= 5) {
+    if (sfdcCommitList?.data?.data?.sfdcErrorMessage?.length === 0 &&
+      (!sfdcCommitList?.data?.data?.gitCommitList || sfdcCommitList?.data?.data?.sfdcCommitList?.count === 0)
+      && count < 5) {
+      
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
-      return await sfdcPolling(cancelSource, newFilterDto, count + 1);
+      count++;
+      return await sfdcPolling(cancelSource, newFilterDto, count);
+    } else {
+      // console.log("stop polling");
+      stopPolling();
     }
+
+    // if ((!Array.isArray(sfdcCommitList) || sfdcCommitList?.length === 0) && count <= 5) {
+    //   await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
+    //   return await sfdcPolling(cancelSource, newFilterDto, count + 1);
+    // }
   };
 
   const sfdcColumnsWithCheckBoxCell = useMemo(
