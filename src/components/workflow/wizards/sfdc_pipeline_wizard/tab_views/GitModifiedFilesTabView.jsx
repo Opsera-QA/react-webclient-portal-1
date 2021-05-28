@@ -95,12 +95,15 @@ const GitModifiedFilesTabView = (
 
     return () => {
       source.cancel();
-
-      if (Array.isArray(timerIds) && timerIds.length > 0) {
-        timerIds?.forEach(timerId => clearTimeout(timerId));
-      }
+      stopPolling();
     };
   }, [ruleList]);
+
+  const stopPolling = () => {
+    if (Array.isArray(timerIds) && timerIds.length > 0) {
+      timerIds?.forEach(timerId => clearTimeout(timerId));
+    }
+  };
 
   const rulesReload = async (cancelSource = cancelTokenSource, newFilterDto = gitFilterDto) => {
     try {
@@ -140,12 +143,16 @@ const GitModifiedFilesTabView = (
 
     const gitResponse = await getModifiedFiles(cancelSource, newFilterDto);
 
-    if (!gitResponse?.data?.data?.gitErrorMessage &&
-      (!gitResponse?.data?.data?.gitCommitList || gitResponse?.data?.data?.gitCommitList?.length === 0)
+    if (gitResponse?.data?.data?.gitErrorMessage?.length === 0 &&
+      (!gitResponse?.data?.data?.gitCommitList || gitResponse?.data?.data?.gitCommitList?.count === 0)
       && count < 5) {
+      
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
       count++;
       return await gitPolling(cancelSource, newFilterDto, count);
+    } else {
+      // console.log("stop polling");
+      stopPolling();
     }
   };
 
