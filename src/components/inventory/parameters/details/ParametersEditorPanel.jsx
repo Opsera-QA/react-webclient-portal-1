@@ -7,6 +7,8 @@ import EditorPanelContainer from "components/common/panels/detail_panel_containe
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
 import parametersActions from "components/inventory/parameters/parameters-actions";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import DeleteButtonWithConfirmation from "components/common/buttons/delete/DeleteButtonWithConfirmationModal";
 
 function ParametersEditorPanel({ parameterModel, loadData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -52,6 +54,19 @@ function ParametersEditorPanel({ parameterModel, loadData, handleClose }) {
     return response;
   };
 
+  const deleteParameter = async () => {
+    const response =  await parametersActions.deleteParameterV2(getAccessToken, cancelTokenSource, parameterData);
+    await loadData();
+    return response;
+  };
+
+  // TODO: Add RBAC check
+  const getDeleteButton = () => {
+    if (!parameterData.isNew()) {
+      return (<DeleteButtonWithConfirmation deleteRecord={deleteParameter} dataObject={parameterData} />);
+    }
+  };
+
   if (parameterData == null) {
     return null;
   }
@@ -64,6 +79,7 @@ function ParametersEditorPanel({ parameterModel, loadData, handleClose }) {
       setRecordDto={setParameterData}
       isLoading={isLoading}
       handleClose={handleClose}
+      extraButtons={getDeleteButton()}
     >
       <Row>
         <Col lg={6}>
@@ -71,6 +87,9 @@ function ParametersEditorPanel({ parameterModel, loadData, handleClose }) {
         </Col>
         <Col lg={6}>
           <TextInputBase setDataObject={setParameterData} dataObject={parameterData} fieldName={"value"}/>
+        </Col>
+        <Col lg={6}>
+          <BooleanToggleInput setDataObject={setParameterData} dataObject={parameterData} fieldName={"vaultEnabled"} disabled={!parameterData?.isNew()}/>
         </Col>
       </Row>
     </EditorPanelContainer>

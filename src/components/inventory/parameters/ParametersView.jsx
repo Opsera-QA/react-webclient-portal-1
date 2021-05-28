@@ -6,6 +6,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import ParameterTable from "components/inventory/parameters/ParameterTable";
 import ParametersEditorPanel from "components/inventory/parameters/details/ParametersEditorPanel";
 import Model from "core/data_model/model";
+import TableAndDetailPanelContainer from "components/common/table/TableAndDetailPanelContainer";
 
 function ParametersView({isLoading, loadData, parameterList, parameterMetadata, customerAccessRules, isMounted}) {
   const toastContext = useContext(DialogToastContext);
@@ -68,10 +69,7 @@ function ParametersView({isLoading, loadData, parameterList, parameterMetadata, 
   };
 
   return (
-    <div>
-      <div>{getTableView()}</div>
-      <div>{getEditorPanel()}</div>
-    </div>
+    <TableAndDetailPanelContainer detailPanel={getEditorPanel()} table={getTableView()} />
   );
 }
 
