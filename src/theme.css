@@ -1585,14 +1585,14 @@ div.data-blocks-ellipses {
 
 .full-screen-center-overlay {
     /* full-height of container - button panel height */
-    height: calc(100% - 63px);
+    height: calc(100vh - 100px);
 }
 
 .full-screen-overlay-panel-body {
     overflow-y: auto;
     /* full-height - (10px x 2 top + bottom margins - title height - button panel height) */
-    height: calc(100% - 20px - 63px);
-    max-height: calc(100% - 20px - 63px);
+    height: calc(100vh - 20px - 48px - 63px);
+    max-height: calc(100vh - 20px - 48px - 63px);
 }
 
 .overlay-margin {
