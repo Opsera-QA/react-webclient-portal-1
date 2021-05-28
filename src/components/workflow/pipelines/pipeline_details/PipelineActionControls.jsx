@@ -165,7 +165,24 @@ function PipelineActionControls({
     await PipelineActions.run(pipelineId, {}, getAccessToken)
       .catch(err => {
         setStartPipeline(false);
-        console.log(err);
+        console.error(err);
+        toastContext.showLoadingErrorDialog(err.error);
+      });
+
+    setTimeout(async function() {
+      await fetchData();
+      setStartPipeline(false);
+    }, delayCheckInterval);
+  }
+
+  async function startNewPipelineRun(pipelineId) {
+    setStartPipeline(true);
+    toastContext.showInformationToast("A request to start this pipeline from the start has been submitted.  Resetting pipeline status and then the pipeline will begin momentarily.", 20);
+
+    await PipelineActions.newStart(pipelineId, getAccessToken)
+      .catch(err => {
+        setStartPipeline(false);
+        console.error(err);
         toastContext.showLoadingErrorDialog(err.error);
       });
 
@@ -253,9 +270,10 @@ function PipelineActionControls({
   const handlePipelineWizardRequest = async (pipelineId, restartBln) => {
     handlePipelineStartWizardClose();
     if (restartBln) {
-      console.log("clearing pipeline activity and then starting over");
-      await resetPipelineState(pipelineId);
-      await runPipeline(pipelineId);
+      console.log("Starting pipeline from beginning: clearing current pipeline status and activity");
+      /*await resetPipelineState(pipelineId);
+      await runPipeline(pipelineId);*/
+      await startNewPipelineRun(pipelineId);
       return;
     }
 
