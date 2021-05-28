@@ -134,9 +134,9 @@ function PipelineWorkflowItemList({
     } else if (!item.active) {
       classString += " workflow-step-disabled";
     } else if (typeof (last_step) !== "undefined") {
-      if (typeof (last_step.success) !== "undefined" && last_step.success.step_id === item_id) {
+      if (last_step.success && typeof (last_step.success) !== "undefined" && last_step.success.step_id === item_id) {
         classString += " workflow-step-success";
-      } else if (typeof (last_step.running) !== "undefined" && last_step.running.step_id === item_id) {
+      } else if (last_step.running && typeof (last_step.running) !== "undefined" && last_step.running.step_id === item_id) {
         if (last_step.running.paused) {
           classString += " workflow-step-warning";
         } else if (last_step.running.status === "stopped") {
@@ -144,7 +144,7 @@ function PipelineWorkflowItemList({
         } else {
           classString += " workflow-step-running";
         }
-      } else if (typeof (last_step.failed) !== "undefined" && last_step.failed.step_id === item_id) {
+      } else if (last_step.failed && typeof (last_step.failed) !== "undefined" && last_step.failed.step_id === item_id) {
         classString += " workflow-step-failure";
       }
     }
