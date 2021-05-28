@@ -142,18 +142,10 @@ const GitModifiedFilesTabView = (
     }
 
     const gitResponse = await getModifiedFiles(cancelSource, newFilterDto);
-    console.log(gitResponse?.data?.data?.gitErrorMessage?.length );
-
-    if (gitResponse?.data?.data?.gitErrorMessage?.length === (0 || undefined) &&
-      (!gitResponse?.data?.data?.gitCommitList || gitResponse?.data?.data?.gitCommitList?.count === 0)
-      && count < 5) {
-      
+    
+    if ((!Array.isArray(gitResponse) || gitResponse?.length === 0) && count <= 5) {
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
-      count++;
-      return await gitPolling(cancelSource, newFilterDto, count);
-    } else {
-      // console.log("stop polling");
-      stopPolling();
+      return await gitPolling(cancelSource, newFilterDto, count + 1);
     }
   };
 
@@ -198,7 +190,7 @@ const GitModifiedFilesTabView = (
       }
     }
 
-    return gitResponse;
+    return gitResponse?.data?.data?.gitCommitList;
   };
 
   const getPostBody = () => {
