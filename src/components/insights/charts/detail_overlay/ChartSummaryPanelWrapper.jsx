@@ -5,7 +5,8 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import BitbucketRejectedMergeRequestsSummaryPanel
   from "components/insights/charts/bitbucket/table/bitbucket-rejected-merge-requests/BitbucketRejectedMergeRequestsSummaryPanel";
 import SFDCPipelinesSummaryPanel from "components/insights/charts/sfdc/SFDCPipelinesOverlayPanel";
-function ChartSummaryPanelWrapper({ dashboardData, kpiConfiguration, chartModel, kpiIdentifier, pipelineName, setActiveTab }) {
+import OpseraMeanTimeToRestoreSummaryPanel from "../opsera/bar_chart/mean_time_to_restore/OpseraMeanTimeToRestoreSummaryPanel";
+function ChartSummaryPanelWrapper({ dashboardData, kpiConfiguration, chartModel, kpiIdentifier, pipelineName, currentDate, setActiveTab }) {
   const getStepConfigurationSummary = () => {
     switch (kpiIdentifier) {
       case "bitbucket-rejected-merge-requests":
@@ -97,6 +98,16 @@ function ChartSummaryPanelWrapper({ dashboardData, kpiConfiguration, chartModel,
             setActiveTab={setActiveTab}
           />
         );
+      case "mean-time-to-restore":
+        return (
+          <OpseraMeanTimeToRestoreSummaryPanel
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            chartModel={chartModel}
+            setActiveTab={setActiveTab}
+            currentDate={currentDate}
+          />
+        );
       default:
         return (
           <SummaryPanelContainer>
@@ -119,7 +130,8 @@ ChartSummaryPanelWrapper.propTypes = {
   kpiIdentifier: PropTypes.string,
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object,
-  pipelineName: PropTypes.string
+  pipelineName: PropTypes.string,
+  currentDate: PropTypes.string
 };
 
 export default ChartSummaryPanelWrapper;
