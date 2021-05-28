@@ -77,48 +77,10 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Jenkins Agent",
       id: "agentLabels",
-    },
-    {
-      label:"Job Type",
-      id: "jenkinsJobType",
-      isRequired: true
-    },
-    {	
-      label:"Output File Name",	
-      id:"outputFileName"	
-    },	
-    {	
-      label:"Output File Path",	
-      id:"outputPath"	
-    },	
-    {	
-      label:"Script File Name",	
-      id:"inputFileName"	
-    },	
-    {	
-      label:"Script File Path",	
-      id:"inputFilePath"	
-    },
-    {	
-      label: "Docker Secrets",	
-      id: "dockerSecrets"	
-    },
-    {
-      label: "Want to use a Custom Script",
-      id: "customScript"
-    },
-    {
-      label: "Input Details",
-      id: "inputDetails"
-    },
-    {
-      label: "Commands",
-      id: "commands"
     }
   ],
   newModelBase: {
     jobType: "",
-    jenkinsJobType:"",
     toolConfigId: "",
     jenkinsUrl: "",
     jenkinsPort: "",
