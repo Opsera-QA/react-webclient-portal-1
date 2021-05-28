@@ -57,7 +57,7 @@ function ParameterTable({ data, parameterMetadata, loadData, isLoading, onRowSel
         columns={columns}
         isLoading={isLoading || parameterMetadata == null}
         loadData={loadData}
-        tableHeight={"500px"}
+        tableHeight={"calc(25vh)"}
         onCellEdit={onCellEdit}
       />
     );
