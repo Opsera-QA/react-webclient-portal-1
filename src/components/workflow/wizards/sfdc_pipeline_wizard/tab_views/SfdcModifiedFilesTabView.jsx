@@ -215,22 +215,10 @@ const SfdcModifiedFilesTabView = (
 
     const sfdcCommitList = await getModifiedFiles(cancelSource, newFilterDto);
 
-    if (sfdcCommitList?.data?.data?.sfdcErrorMessage?.length === 0 &&
-      (!sfdcCommitList?.data?.data?.gitCommitList || sfdcCommitList?.data?.data?.sfdcCommitList?.count === 0)
-      && count < 5) {
-      
+    if ((!Array.isArray(sfdcCommitList) || sfdcCommitList?.length === 0) && count <= 5) {
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
-      count++;
-      return await sfdcPolling(cancelSource, newFilterDto, count);
-    } else {
-      // console.log("stop polling");
-      stopPolling();
+      return await sfdcPolling(cancelSource, newFilterDto, count + 1);
     }
-
-    // if ((!Array.isArray(sfdcCommitList) || sfdcCommitList?.length === 0) && count <= 5) {
-    //   await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
-    //   return await sfdcPolling(cancelSource, newFilterDto, count + 1);
-    // }
   };
 
   const sfdcColumnsWithCheckBoxCell = useMemo(
