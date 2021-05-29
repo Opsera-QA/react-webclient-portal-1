@@ -1,38 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { Button, Form, OverlayTrigger, Popover, Row, Col, Tooltip } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faExclamationCircle,
-  faTimes,
-  faSave,
-  faSpinner,
-  faEllipsisH,
-  faTools,
-} from "@fortawesome/free-solid-svg-icons";
-import DropdownList from "react-widgets/lib/DropdownList";
+
+
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import { axiosApiService } from "../../../../../../../../api/apiService";
-import { Link } from "react-router-dom";
+
 import {
   getErrorDialog,
-  getMissingRequiredFieldsErrorDialog,
-  getServiceUnavailableDialog,
+
 } from "../../../../../../../common/toasts/toasts";
 import SFDCConfiguration from "./jenkins_step_config_sub_forms/SFDCConfiguration";
-import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import pipelineActions from "components/workflow/pipeline-actions";
-import JSONInput from "react-json-editor-ajrm";
-import locale from "react-json-editor-ajrm/locale/en";
-import CloseButton from "../../../../../../../common/buttons/CloseButton";
-
-import DockerSecretsInput from "./DockerSecretsInput";
-import PythonFilesInput from "./PythonFilesInput";
-import Model from "core/data_model/model";
-import _ from "lodash";
-import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import jenkinsPipelineStepConfigurationMetadata from "./jenkinsPipelineStepConfigurationMetadata";
 import modelHelpers from "components/common/model/modelHelpers";
@@ -46,14 +25,10 @@ import JenkinsStepConfRepository from "./inputs/jenkinsStepConfRepository";
 import JenkinsStepConfBranch from "./inputs/jenkinsStepConfBranch";
 import JenkinsStepConfPython from "./inputs/jenkinsStepConfPython";
 import JenkinsStepConfGradleMavenScriptFilePath from "./inputs/jenkinsStepConfGradleMavenScriptFilePath";
+import JenkinsStepConfBuilXmlStepInfo from "./inputs/jenkinsStepConfBuilXmlStepInfo";
+import JenkinsStepConfDocker from "./inputs/jenkinsStepConfDocker";
 
-const JOB_OPTIONS = [
-  { value: "", label: "Select One", isDisabled: "yes" },
-  { value: "job", label: "Custom Job" },
-  { value: "opsera-job", label: "Opsera Managed Jobs" },
-  { value: "sfdc-ant", label: "SFDC Package Generation Job" },
-  { value: "sfdc-ant-profile", label: "SFDC Profile Migration" },
-];
+
 
 //This must match the form below and the data object expected.  Each tools' data object is different
 const INITIAL_DATA = {
@@ -132,33 +107,33 @@ function JenkinsStepConfiguration({
   const { getAccessToken } = useContext(AuthContext);
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [renderForm, setRenderForm] = useState(false);
-  const [loading, setLoading] = useState(false);
+  //const [loading, setLoading] = useState(false);
   const [jenkinsList, setJenkinsList] = useState([]);
-  const [isJenkinsSearching, setisJenkinsSearching] = useState(false);
+ // const [isJenkinsSearching, setisJenkinsSearching] = useState(false);
   const [accountsList, setAccountsList] = useState([]);
   const [jobsList, setJobsList] = useState([]);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [jobType, setJobType] = useState("");
 
-  const [repoList, setRepoList] = useState([]);
-  const [isRepoSearching, setIsRepoSearching] = useState(false);
-  const [branchList, setBranchList] = useState([]);
-  const [isBranchSearching, setIsBranchSearching] = useState(false);
+  // const [repoList, setRepoList] = useState([]);
+  // const [isRepoSearching, setIsRepoSearching] = useState(false);
+  // const [branchList, setBranchList] = useState([]);
+  // const [isBranchSearching, setIsBranchSearching] = useState(false);
 
-  const [dockerNameErr, setDockerNameErr] = useState(false);
-  const [dockerTagErr, setDockerTagErr] = useState(false);
+  // const [dockerNameErr, setDockerNameErr] = useState(false);
+  // const [dockerTagErr, setDockerTagErr] = useState(false);
 
   const [listOfSteps, setListOfSteps] = useState([]);
   const [show, setShow] = useState(false);
   const [save, setSave] = useState(false);
 
-  const [workspacesList, setWorkspacesList] = useState([]);
-  const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
+  // const [workspacesList, setWorkspacesList] = useState([]);
+  // const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
 
-  const [deleteDockerSecrets, setDeleteDockerSecrets] = useState(false);
-  const [dataObject, setDataObject] = useState(undefined);
-  const [pythonScriptData, setPythonScriptData] = useState(undefined);
+  // const [deleteDockerSecrets, setDeleteDockerSecrets] = useState(false);
+  // const [dataObject, setDataObject] = useState(undefined);
+  // const [pythonScriptData, setPythonScriptData] = useState(undefined);
 
   const [jenkinsStepConfigurationDto, setJenkinsStepConfigurationDto] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
@@ -229,33 +204,38 @@ function JenkinsStepConfiguration({
     }
     fetchJenkinsDetails("jenkins");
 
-    setDataObject(new Model({ dockerSecrets: [] }, {
-      fields: [
-        {
-          label: "Docker Secrets",
-          id: "dockerSecrets"
-        }
-      ]
-    }, true));
-
-    setPythonScriptData(new Model({ inputDetails: [] }, {
-      fields: [
-        {
-          label: "Want to use a Custom Script",
-          id: "customScript"
-        },
-        {
-          label: "Input Details",
-          id: "inputDetails"
-        },
-        {
-          label: "Commands",
-          id: "commands"
-        }
-      ]
-    }, true));
-
   }, []);
+
+  useEffect(() => {
+    if (jenkinsStepConfigurationDto?.data?.toolConfigId) {
+      // console.log(jenkinsList[jenkinsList.findIndex(x => x.id === formData.toolConfigId)].accounts);
+      setAccountsList(
+        jenkinsList[jenkinsList.findIndex((x) => x.id === jenkinsStepConfigurationDto?.data?.toolConfigId)]
+          ? jenkinsList[jenkinsList.findIndex((x) => x.id === jenkinsStepConfigurationDto?.data?.toolConfigId)].accounts
+          : []
+      );
+
+      setJobsList(
+        jenkinsList[jenkinsList.findIndex((x) => x.id === jenkinsStepConfigurationDto?.data?.toolConfigId)]
+          ? jenkinsList[jenkinsList.findIndex((x) => x.id === jenkinsStepConfigurationDto?.data?.toolConfigId)].jobs
+          : []
+      );
+    }
+  }, [jenkinsList, jenkinsStepConfigurationDto?.data?.toolConfigId]);
+
+  useEffect(() => {
+    if (jobsList && jobsList.length > 0 && jenkinsStepConfigurationDto?.data?.toolJobId && jenkinsStepConfigurationDto?.data?.toolJobId.length > 0 && !jobsList[jobsList.findIndex((x) => x._id === jenkinsStepConfigurationDto?.data?.toolJobId)]) {
+     let toast = getErrorDialog(
+        "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Reigstry.",
+        setShowToast,
+        "detailPanelTop"
+      );
+      setToast(toast);
+      setShowToast(true);
+      return;
+    }
+    setShowToast(false);
+  }, [jobsList, jenkinsStepConfigurationDto?.data?.toolJobId]);
 
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
@@ -368,9 +348,11 @@ function JenkinsStepConfiguration({
       <JenkinsStepConfWorkspaceProjectInput dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} jenkinsList={jenkinsList} jobsList={jobsList} accountsList={accountsList} />
       <JenkinsStepConfRepository dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
       <JenkinsStepConfBranch dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} jenkinsList={jenkinsList} />
+      <JenkinsStepConfBuilXmlStepInfo  dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} listOfSteps={listOfSteps} />
+      <JenkinsStepConfDocker dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
       <JenkinsStepConfPython dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
       <JenkinsStepConfGradleMavenScriptFilePath dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
-
+      
     </PipelineStepEditorPanelContainer>
   );
 

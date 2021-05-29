@@ -59,12 +59,14 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Docker Name",
       id: "dockerName",
-      isRequired: true
+      isRequired: true,
+      regexValidator:RegExp("^[ a-z0-9_.-]*$")
     },
     {
       label: "Docker Tag",
       id: "dockerTagName",
-      isRequired: true
+      isRequired: true,
+      regexValidator:RegExp("^[ a-z0-9_.-]*$")
     },
     {
       label: "Docker File Path",
