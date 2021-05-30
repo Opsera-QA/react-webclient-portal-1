@@ -9,14 +9,14 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
-import PipelineDetails from "components/insights/summary/PipelineDetails";
+import PipelineDetails from "components/insights/summary/pipeline_details/PipelineDetails";
 import ProjectDetails from "components/insights/summary/ProjectDetails";
 import DashboardFiltersInput from "components/insights/dashboards/DashboardFiltersInput";
 import DashboardFilterOrganizationInput from "components/insights/dashboards/DashboardFilterOrganizationInput";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
 import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
-import {faAnalytics, faChartNetwork, faChartArea, faRadar} from "@fortawesome/pro-light-svg-icons";
+import {faAnalytics, faChartNetwork, faChartArea, faRadar} from "@fortawesome/pro-light-svg-icons";  
 
 function InsightsSummary() {
   const {getUserRecord, setAccessRoles} = useContext(AuthContext);
@@ -140,7 +140,7 @@ function InsightsSummary() {
         <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Analytics"} />
         <NavigationTab icon={faRadar} tabName={"synopsis"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Synopsis"} />
       </NavigationTabContainer>
-    );
+    ); 
   };
 
   if (!accessRoleData) {

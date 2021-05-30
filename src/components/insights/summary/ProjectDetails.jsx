@@ -110,7 +110,7 @@ function ProjectDetails({dashboardData, setDashboardData}) {
   const getChartBody = () => {
 
     return (
-      <div className="w-100 pl-4 pr-4 ">
+      <div className="w-100 px-4">
         <FilterContainer
           loadData={loadData}
           isLoading={isLoading}

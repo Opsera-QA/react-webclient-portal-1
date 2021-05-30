@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext, useMemo, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
@@ -6,10 +6,12 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import DataBlock from "components/common/data_boxes/DataBlock";
+import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel }) {
+function PipelineDetails({ dashboardData, toggleDynamicPanel }) {
+  const fields = BuildDetailsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -51,8 +53,6 @@ function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel }) {
   ) => {
     try {
       setIsLoading(true);
-      // TODO: Handle pagination
-      tableFilterDto.setData("pageSize", 1000);
       let dashboardTags =
         dashboardData?.data?.filters[
           dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
@@ -63,11 +63,10 @@ function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel }) {
             (obj) => obj.type === "organizations"
           )
         ]?.value;
-
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "summaryTotalPipelines",
+        "summaryPipelinesPassedWithQualityAndSecurity",
         null,
         dashboardTags,
         filterDto,
@@ -97,7 +96,10 @@ function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel }) {
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("total_pipelines", metrics[0]?.data);
+    toggleDynamicPanel(
+      "Successful Pipelines (Security and Quality)",
+      metrics[0]?.data
+    );
   };
 
   const getChartBody = () => {
@@ -115,9 +117,10 @@ function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel }) {
             />
           )
         }
-        subTitle="Total Number of Pipelines Executed"
-        toolTipText="Total Number of Pipelines Executed"
+        subTitle="Successful Pipelines (Security and Quality)"
+        toolTipText="Successful Pipelines (Security and Quality)"
         clickAction={() => onDataBlockSelect()}
+        statusColor="success"
       />
     );
   };
@@ -125,13 +128,12 @@ function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel }) {
   return getChartBody();
 }
 
-TotalPipelinesExecuted.propTypes = {
+PipelineDetails.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
   setKpiConfiguration: PropTypes.func,
   setKpis: PropTypes.func,
-  setSelectedDataBlock: PropTypes.func,
 };
 
-export default TotalPipelinesExecuted;
+export default PipelineDetails;
