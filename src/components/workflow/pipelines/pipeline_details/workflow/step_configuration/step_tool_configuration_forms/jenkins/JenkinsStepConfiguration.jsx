@@ -98,7 +98,7 @@ function JenkinsStepConfiguration({
   callbackSaveToVault,
   callbackGetFromVault,
   callbackDeleteFromVault,
-  
+  createJob,
   setToast,
   setShowToast,
   closeEditorPanel
