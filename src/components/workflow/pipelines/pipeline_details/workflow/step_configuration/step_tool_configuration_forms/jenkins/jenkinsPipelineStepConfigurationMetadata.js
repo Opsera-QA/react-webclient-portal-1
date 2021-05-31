@@ -45,7 +45,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       label: "Rollback Branch Name",
       id: "rollbackBranchName",
       isRequired: true,
-      fieldText:"An Orphan branch will be created with only the back up specific files."
+      formText:"An Orphan branch will be created with only the back up specific files."
     },
     {
       label: "Branch Name",
@@ -62,14 +62,14 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "dockerName",
       isRequired: true,
       regexValidator:RegExp("^[ a-z0-9_.-]*$"),
-      fieldText:"Accepts aplhanumeric, lowercase without spaces. only - . (dot) and _ are allowed"
+      formText:"Accepts aplhanumeric, lowercase without spaces. only - . (dot) and _ are allowed"
     },
     {
       label: "Docker Tag",
       id: "dockerTagName",
       isRequired: true,
       regexValidator:RegExp("^[ a-z0-9_.-]*$"),
-      fieldText:"Accepts aplhanumeric, lowercase without spaces. only - . (dot) and _ are allowed"
+      formText:"Accepts aplhanumeric, lowercase without spaces. only - . (dot) and _ are allowed"
     },
     {
       label: "Docker File Path",
@@ -79,7 +79,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Build Arguments",
       id: "buildArgs",
-      fieldText:"Enter runtime build arguments as a JSON Object",
+      formText:"Enter runtime build arguments as a JSON Object",
       isRequired: false
     },
     {
@@ -105,7 +105,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {	
       label:"Script File Name",	
       id:"inputFileName",
-      fieldText:"File name with extension is expected.",
+      formText:"File name with extension is expected.",
       isRequired: false
     },	
     {	
