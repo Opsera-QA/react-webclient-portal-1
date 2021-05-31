@@ -27,6 +27,7 @@ import JenkinsStepConfPython from "./inputs/jenkinsStepConfPython";
 import JenkinsStepConfGradleMavenScriptFilePath from "./inputs/jenkinsStepConfGradleMavenScriptFilePath";
 import JenkinsStepConfBuilXmlStepInfo from "./inputs/jenkinsStepConfBuilXmlStepInfo";
 import JenkinsStepConfDocker from "./inputs/jenkinsStepConfDocker";
+import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 
 
 
@@ -97,7 +98,7 @@ function JenkinsStepConfiguration({
   callbackSaveToVault,
   callbackGetFromVault,
   callbackDeleteFromVault,
-  createJob,
+  
   setToast,
   setShowToast,
   closeEditorPanel
@@ -238,10 +239,11 @@ function JenkinsStepConfiguration({
   }, [jobsList, jenkinsStepConfigurationDto?.data?.toolJobId]);
 
   const loadFormData = async (step) => {
+    console.log(step,'**** 1');
     let { configuration, threshold, job_type } = step;
     let stepToolNew = null;
     if (typeof configuration !== "undefined") {
-      stepToolNew = { configuration: { ...configuration, jenkinsJobType: '' } };
+      stepToolNew = { ...step  };
 
       if (typeof configuration !== "undefined") {
         setFormData(configuration);
@@ -285,18 +287,19 @@ function JenkinsStepConfiguration({
   };
 
   const saveConfig = async() => {
+    
     const createJobPostBody = {
       jobId: "",
       pipelineId: pipelineId,
       stepId: stepId,
       buildParams: {
-        stepId: formData?.stepIdXML,
+        stepId: jenkinsStepConfigurationDto?.data.stepIdXML,
       },
     };
     console.log("createJobPostBody: ", createJobPostBody);
 
     const toolConfiguration = {
-      configuration: formData,
+      configuration: jenkinsStepConfigurationDto,
       threshold: {
         type: thresholdType,
         value: thresholdVal,
@@ -308,6 +311,9 @@ function JenkinsStepConfiguration({
     await createJob( formData.toolConfigId, toolConfiguration, stepId, createJobPostBody);
   
   };
+  if (isLoading || jenkinsStepConfigurationDto == null) {
+    return <DetailPanelLoadingDialog />;
+  }
 
 
 

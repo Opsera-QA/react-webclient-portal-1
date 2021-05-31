@@ -85,7 +85,9 @@ function StepToolConfiguration({
   };
 
   const callbackFunction = async (tool) => {
+    console.log(tool,'************** herere');
     let stepArrayIndex = getStepIndex(editItem.step_id);
+    console.log(stepArrayIndex,"**********stepArrayIndex");
     plan[stepArrayIndex].tool.configuration = tool.configuration;
     plan[stepArrayIndex].tool.threshold = tool.threshold;
     plan[stepArrayIndex].tool.job_type = tool.job_type;

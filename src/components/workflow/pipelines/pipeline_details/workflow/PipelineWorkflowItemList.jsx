@@ -152,7 +152,7 @@ function PipelineWorkflowItemList({
     return classString;
   };
 
-
+console.log(lastStep,'******');
   return (
     <>
       {pipelineSteps && pipelineSteps.map((item, index) => (

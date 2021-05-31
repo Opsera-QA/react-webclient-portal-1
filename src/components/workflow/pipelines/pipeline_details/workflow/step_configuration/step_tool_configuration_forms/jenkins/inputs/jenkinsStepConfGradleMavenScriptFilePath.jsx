@@ -12,7 +12,6 @@ function JenkinsStepConfGradleMavenScriptFilePath({ dataObject, setDataObject })
         return(<>
             <TextInputBase dataObject={dataObject} fieldName={"inputFilePath"} setDataObject={setDataObject} />
             <TextInputBase dataObject={dataObject} fieldName={"inputFileName"} setDataObject={setDataObject} />
-            <small>File name with extension is expected.</small>
             <TextInputBase dataObject={dataObject} fieldName={"outputPath"} setDataObject={setDataObject} />
             <TextInputBase dataObject={dataObject} fieldName={"outputFileName"} setDataObject={setDataObject} />
 

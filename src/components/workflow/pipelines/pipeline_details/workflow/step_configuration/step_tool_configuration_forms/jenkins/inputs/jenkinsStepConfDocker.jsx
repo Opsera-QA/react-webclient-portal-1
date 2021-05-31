@@ -44,19 +44,10 @@ function JenkinsStepConfDocker({ dataObject, setDataObject }) {
 	return (
 		<div className={"mb-3"}>
 			<TextInputBase disabled={false} fieldName={'dockerName'} dataObject={dataObject} setDataObject={setDataObject} />
-			<small className="text-muted form-text">
-				<div> Accepts aplhanumeric, lowercase without spaces. only - . (dot) and _ are allowed</div>
-			</small>
 			<TextInputBase disabled={false} fieldName={'dockerTagName'} dataObject={dataObject} setDataObject={setDataObject} />
-			<small className="text-muted form-text">
-				<div> Accepts aplhanumeric, lowercase without spaces. only - . (dot) and _ are allowed</div>
-			</small>
 			<TextInputBase disabled={false} fieldName={'dockerPath'} dataObject={dataObject} setDataObject={setDataObject} />
 			{renderPopOver()}
 			<JsonInput fieldName={'buildArgs'} dataObject={dataObject} setDataObject={setDataObject} />
-			<small className="form-text text-muted form-group m-2 text-left">
-				Enter runtime build arguments as a JSON Object
-			</small>  
 			<DockerSecretsInput 
 				setDataObject={setDataObject} 
 				dataObject={dataObject}

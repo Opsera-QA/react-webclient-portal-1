@@ -44,7 +44,8 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Rollback Branch Name",
       id: "rollbackBranchName",
-      isRequired: true
+      isRequired: true,
+      fieldText:"An Orphan branch will be created with only the back up specific files."
     },
     {
       label: "Branch Name",
@@ -60,25 +61,31 @@ const jenkinsPipelineStepConfigurationMetadata = {
       label: "Docker Name",
       id: "dockerName",
       isRequired: true,
-      regexValidator:RegExp("^[ a-z0-9_.-]*$")
+      regexValidator:RegExp("^[ a-z0-9_.-]*$"),
+      fieldText:"Accepts aplhanumeric, lowercase without spaces. only - . (dot) and _ are allowed"
     },
     {
       label: "Docker Tag",
       id: "dockerTagName",
       isRequired: true,
-      regexValidator:RegExp("^[ a-z0-9_.-]*$")
+      regexValidator:RegExp("^[ a-z0-9_.-]*$"),
+      fieldText:"Accepts aplhanumeric, lowercase without spaces. only - . (dot) and _ are allowed"
     },
     {
       label: "Docker File Path",
       id: "dockerPath",
+      isRequired: false
     },
     {
       label: "Build Arguments",
       id: "buildArgs",
+      fieldText:"Enter runtime build arguments as a JSON Object",
+      isRequired: false
     },
     {
       label: "Jenkins Agent",
       id: "agentLabels",
+      isRequired: false
     },
     {
       label:"Job Type",
@@ -87,36 +94,46 @@ const jenkinsPipelineStepConfigurationMetadata = {
     },
     {	
       label:"Output File Name",	
-      id:"outputFileName"	
+      id:"outputFileName"	,
+      isRequired: false
     },	
     {	
       label:"Output File Path",	
-      id:"outputPath"	
+      id:"outputPath",
+      isRequired: false
     },	
     {	
       label:"Script File Name",	
-      id:"inputFileName"	
+      id:"inputFileName",
+      fieldText:"File name with extension is expected.",
+      isRequired: false
     },	
     {	
       label:"Script File Path",	
-      id:"inputFilePath"	
+      id:"inputFilePath",
+      isRequired: false
     },
     {	
       label: "Docker Secrets",	
-      id: "dockerSecrets"	
+      id: "dockerSecrets",
+      isRequired: false
     },
     {
       label: "Want to use a Custom Script",
-      id: "customScript"
+      id: "customScript",
+      isRequired: false
     },
     {
       label: "Input Details",
-      id: "inputDetails"
+      id: "inputDetails",
+      isRequired: false
     },
     {
       label: "Commands",
-      id: "commands"
-    }
+      id: "commands",
+      isRequired: false
+    },
+    
   ],
   newModelBase: {
     jobType: "",
@@ -158,7 +175,8 @@ const jenkinsPipelineStepConfigurationMetadata = {
     agentLabels:"",
     isNewBranch:false,
     isManualRollBackBranch:false,
-    hasUpstreamBranch:false
+    hasUpstreamBranch:false,
+    workspaceDeleteFlag:false,
   }
 };
 

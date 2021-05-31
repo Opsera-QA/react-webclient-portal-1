@@ -142,11 +142,7 @@ function JenkinsStepConfBranch({ fieldName, dataObject, setDataObject, disabled,
   const renderRollbackBranch = () => {
     if (dataObject.data.isManualRollBackBranch) {
       //Rollback Branch Name
-      return (
-        <>
-          <TextInputBase disabled={false} fieldName={'rollbackBranchName'} dataObject={dataObject} setDataObject={setDataObject} />
-          <Form.Text className="text-muted">An Orphan branch will be created with only the back up specific files.</Form.Text>
-        </>);
+      return (<TextInputBase disabled={false} fieldName={'rollbackBranchName'} dataObject={dataObject} setDataObject={setDataObject} />);
     }
   };
   const loadIsManualRollBackBranch = () => {
