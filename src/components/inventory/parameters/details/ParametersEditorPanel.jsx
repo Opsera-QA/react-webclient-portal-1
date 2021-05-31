@@ -9,6 +9,8 @@ import axios from "axios";
 import parametersActions from "components/inventory/parameters/parameters-actions";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import DeleteButtonWithConfirmation from "components/common/buttons/delete/DeleteButtonWithConfirmationModal";
+import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
+import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 
 function ParametersEditorPanel({ parameterModel, loadData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -26,17 +28,19 @@ function ParametersEditorPanel({ parameterModel, loadData, handleClose }) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    initializeData().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if (parameterModel && Object.keys(parameterModel).length !== 0) {
+      initializeData().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
       isMounted.current = false;
     };
-  }, [parameterModel]);
+  }, [JSON.stringify(parameterModel)]);
 
   const initializeData = async () => {
     setIsLoading(true);
@@ -87,6 +91,9 @@ function ParametersEditorPanel({ parameterModel, loadData, handleClose }) {
         </Col>
         <Col lg={6}>
           <TextInputBase setDataObject={setParameterData} dataObject={parameterData} fieldName={"value"}/>
+        </Col>
+        <Col lg={12}>
+          <RoleAccessInput dataObject={parameterData} setDataObject={setParameterData} fieldName={"roles"} />
         </Col>
         <Col lg={6}>
           <BooleanToggleInput setDataObject={setParameterData} dataObject={parameterData} fieldName={"vaultEnabled"} disabled={!parameterData?.isNew()}/>

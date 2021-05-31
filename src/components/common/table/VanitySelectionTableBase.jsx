@@ -50,7 +50,7 @@ function VanitySelectionTableBase({columns, data, onRowSelect, rowStyling, sort,
     });
 
     if (onRowSelect) {
-      grid.events.on("cellClick", (row, column, e) => {
+      grid.events.on("beforeSelect", (row, column, e) => {
         return onRowSelect(grid, row, column, e);
       });
     }

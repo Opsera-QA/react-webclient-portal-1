@@ -35,7 +35,7 @@ function ParameterTable({ data, parameterMetadata, loadData, isLoading, onRowSel
 
       setColumns(
         [
-          getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
+          getTableTextColumn(getField(fields, "name"), "no-wrap-inline", 350),
           getEditableTextColumn(getField(fields, "value")),
           getTableBooleanIconColumn(getField(fields, "vaultEnabled"), undefined, 150),
         ]
@@ -67,7 +67,6 @@ function ParameterTable({ data, parameterMetadata, loadData, isLoading, onRowSel
     <FilterContainer
       loadData={loadData}
       addRecordFunction={createParameter}
-      supportSearch={true}
       showBorder={false}
       isLoading={isLoading}
       body={getParameterTable()}

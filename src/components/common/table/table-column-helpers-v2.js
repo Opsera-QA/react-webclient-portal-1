@@ -87,12 +87,11 @@ export const getLimitedTableTextColumn = (field, maxLength, className, autoAdjus
   };
 };
 
-export const getEditableTextColumn = (field, maxLength, className, autoAdjust = true) => {
+export const getEditableTextColumn = (field, maxLength, className) => {
   return {
     header: getColumnHeader(field),
     id: getColumnId(field),
     class: className ? className : undefined,
-    adjust: autoAdjust,
     editable: true,
     Cell: function parseText(row) {
       const value = row?.value;
