@@ -4,7 +4,7 @@ import {Grid} from "dhx-suite-package";
 import "dhx-suite-package/codebase/suite.css";
 import {useWindowSize} from "components/common/hooks/useWindowSize";
 
-function VanitySelectionTableBase({columns, data, onRowSelect, rowStyling, sort, height, onCellEdit}) {
+function VanitySelectionTableBase({columns, data, onRowSelect, rowStyling, sort, height, onCellEdit, onRowUnselect}) {
   const containerRef = useRef(null);
   const [grid, setGrid] = useState(null);
   const windowSize = useWindowSize();
@@ -50,8 +50,10 @@ function VanitySelectionTableBase({columns, data, onRowSelect, rowStyling, sort,
     });
 
     if (onRowSelect) {
-      grid.events.on("beforeSelect", (row, column, e) => {
-        return onRowSelect(grid, row, column, e);
+      grid.selection.events.on("beforeSelect", async (row, column, e) => {
+        const response = await onRowSelect(grid, row, column, e);
+        console.log("before select response: " + JSON.stringify(response));
+        return response === true;
       });
     }
 
@@ -83,6 +85,7 @@ VanitySelectionTableBase.propTypes = {
   columns: PropTypes.array,
   data: PropTypes.array,
   onRowSelect: PropTypes.func,
+  onRowUnselect: PropTypes.func,
   rowStyling: PropTypes.func,
   sort: PropTypes.string,
   height: PropTypes.string,

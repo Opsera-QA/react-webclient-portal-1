@@ -11,9 +11,9 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import DeleteButtonWithConfirmation from "components/common/buttons/delete/DeleteButtonWithConfirmationModal";
 import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
+import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 
-function ParametersEditorPanel({ parameterModel, loadData, handleClose }) {
-  const { getAccessToken } = useContext(AuthContext);
+function ParametersEditorPanel({ parameterModel, handleClose }) {
   const [parameterData, setParameterData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
@@ -48,26 +48,10 @@ function ParametersEditorPanel({ parameterModel, loadData, handleClose }) {
     setIsLoading(false);
   };
 
-  const createParameter = async () => {
-    return await parametersActions.createParameterV2(getAccessToken, cancelTokenSource, parameterData);
-  };
-
-  const updateParameter = async () => {
-    const response =  await parametersActions.updateParameterV2(getAccessToken, cancelTokenSource, parameterData);
-    await loadData();
-    return response;
-  };
-
-  const deleteParameter = async () => {
-    const response =  await parametersActions.deleteParameterV2(getAccessToken, cancelTokenSource, parameterData);
-    await loadData();
-    return response;
-  };
-
   // TODO: Add RBAC check
   const getDeleteButton = () => {
     if (!parameterData.isNew()) {
-      return (<DeleteButtonWithConfirmation deleteRecord={deleteParameter} dataObject={parameterData} />);
+      return (<DeleteButtonWithConfirmation deleteRecord={() => parameterData.deleteModel()} dataObject={parameterData} />);
     }
   };
 
@@ -75,12 +59,11 @@ function ParametersEditorPanel({ parameterModel, loadData, handleClose }) {
     return null;
   }
 
+  // TODO: Create new VanityEditorPanel, handle save or update in new save/create buttons
   return (
-    <EditorPanelContainer
-      recordDto={parameterData}
-      createRecord={createParameter}
-      updateRecord={updateParameter}
-      setRecordDto={setParameterData}
+    <VanityEditorPanelContainer
+      model={parameterData}
+      setModel={setParameterData}
       isLoading={isLoading}
       handleClose={handleClose}
       extraButtons={getDeleteButton()}
@@ -99,14 +82,13 @@ function ParametersEditorPanel({ parameterModel, loadData, handleClose }) {
           <BooleanToggleInput setDataObject={setParameterData} dataObject={parameterData} fieldName={"vaultEnabled"} disabled={!parameterData?.isNew()}/>
         </Col>
       </Row>
-    </EditorPanelContainer>
+    </VanityEditorPanelContainer>
   );
 }
 
 ParametersEditorPanel.propTypes = {
   parameterModel: PropTypes.object,
   handleClose: PropTypes.func,
-  loadData: PropTypes.func
 };
 
 export default ParametersEditorPanel;

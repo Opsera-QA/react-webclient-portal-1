@@ -13,24 +13,17 @@ import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 import NewParameterOverlay from "components/inventory/parameters/NewParameterOverlay";
 import VanitySelectionTable from "components/common/table/VanitySelectionTable";
 
-function ParameterTable({ data, parameterMetadata, loadData, isLoading, onRowSelect, onCellEdit }) {
+function ParameterTable({ data, parameterMetadata, loadData, isLoading, onRowSelect, onCellEdit, isMounted, getAccessToken, cancelTokenSource }) {
   const toastContext = useContext(DialogToastContext);
-  const isMounted = useRef(false);
   const [columns, setColumns] = useState([]);
 
   useEffect(() => {
-    isMounted.current = true;
-
     setColumns([]);
     loadColumnMetadata(parameterMetadata);
-
-    return () => {
-      isMounted.current = false;
-    };
   }, [JSON.stringify(parameterMetadata)]);
 
   const loadColumnMetadata = (newActivityMetadata) => {
-    if (newActivityMetadata?.fields) {
+    if (isMounted?.current === true && newActivityMetadata?.fields) {
       const fields = newActivityMetadata.fields;
 
       setColumns(
@@ -44,7 +37,15 @@ function ParameterTable({ data, parameterMetadata, loadData, isLoading, onRowSel
   };
 
   const createParameter = () => {
-    toastContext.showOverlayPanel(<NewParameterOverlay parameterMetadata={parameterMetadata} loadData={loadData} isMounted={isMounted} />);
+    toastContext.showOverlayPanel(
+      <NewParameterOverlay
+        parameterMetadata={parameterMetadata}
+        loadData={loadData}
+        isMounted={isMounted}
+        getAccessToken={getAccessToken}
+        cancelTokenSource={cancelTokenSource}
+      />
+    );
   };
 
   const getParameterTable = () => {
@@ -87,7 +88,10 @@ ParameterTable.propTypes = {
   setToolFilterDto: PropTypes.func,
   parameterMetadata: PropTypes.object,
   onRowSelect: PropTypes.func,
-  onCellEdit: PropTypes.func
+  onCellEdit: PropTypes.func,
+  isMounted: PropTypes.object,
+  getAccessToken: PropTypes.func,
+  cancelTokenSource: PropTypes.object
 };
 
 export default ParameterTable;
