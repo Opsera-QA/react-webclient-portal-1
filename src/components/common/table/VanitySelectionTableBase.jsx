@@ -52,7 +52,6 @@ function VanitySelectionTableBase({columns, data, onRowSelect, rowStyling, sort,
     if (onRowSelect) {
       grid.selection.events.on("beforeSelect", async (row, column, e) => {
         const response = await onRowSelect(grid, row, column, e);
-        console.log("before select response: " + JSON.stringify(response));
         return response === true;
       });
     }
