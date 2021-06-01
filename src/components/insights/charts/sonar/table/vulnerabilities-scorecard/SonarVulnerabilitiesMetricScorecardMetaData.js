@@ -11,6 +11,10 @@ const SonarVulnerabilitiesMetricScorecardMetaData = {
       id: "pipelineId",
     },
     {
+      label: "Pipeline Name",
+      id: "pipelineName",
+    },
+    {
       label: "Project",
       id: "projectName",
     },
