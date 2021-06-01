@@ -103,12 +103,15 @@ const SfdcModifiedFilesTabView = (
 
     return () => {
       source.cancel();
-
-      if (Array.isArray(timerIds) && timerIds.length > 0) {
-        timerIds?.forEach(timerId => clearTimeout(timerId));
-      }
+      stopPolling();
     };
   }, [ruleList]);
+
+  const stopPolling = () => {
+    if (Array.isArray(timerIds) && timerIds.length > 0) {
+      timerIds?.forEach(timerId => clearTimeout(timerId));
+    }
+  };
 
   const rulesReload = async (cancelSource = cancelTokenSource, newFilterDto = sfdcFilterDto) => {
     try {

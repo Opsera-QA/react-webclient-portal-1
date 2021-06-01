@@ -1,15 +1,15 @@
 import React, {useState, useContext} from "react";
 import PropTypes from "prop-types";
-import Model from "core/data_model/model";
-import toolMetadata from "components/inventory/tools/tool-metadata";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import ToolEditorPanel from "components/inventory/tools/tool_details/ToolEditorPanel";
 import CreateCenterPanel from "components/common/overlays/center/CreateCenterPanel";
 import ParametersEditorPanel from "components/inventory/parameters/details/ParametersEditorPanel";
+import ParameterModel from "components/inventory/parameters/parameter.model";
 
-function NewParameterOverlay({ loadData, isMounted, parameterMetadata }) {
+function NewParameterOverlay({ loadData, isMounted, parameterMetadata, getAccessToken, cancelTokenSource }) {
   const toastContext = useContext(DialogToastContext);
-  const [parameterModel, setParameterModel] = useState(new Model({...parameterMetadata.newObjectFields}, parameterMetadata, true));
+  const [parameterModel, setParameterModel] = useState(
+    new ParameterModel({...parameterMetadata.newObjectFields}, parameterMetadata, true, getAccessToken, cancelTokenSource, loadData)
+  );
 
   const closePanel = () => {
     if (isMounted?.current === true) {
@@ -30,7 +30,9 @@ function NewParameterOverlay({ loadData, isMounted, parameterMetadata }) {
 NewParameterOverlay.propTypes = {
   isMounted: PropTypes.object,
   loadData: PropTypes.func,
-  parameterMetadata: PropTypes.object
+  parameterMetadata: PropTypes.object,
+  getAccessToken: PropTypes.func,
+  cancelTokenSource: PropTypes.object
 };
 
 export default NewParameterOverlay;

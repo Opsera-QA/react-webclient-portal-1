@@ -6,12 +6,14 @@ import toolFilterMetadata from "components/inventory/tools/tool-filter-metadata"
 import PropTypes from "prop-types";
 import axios from "axios";
 import parametersActions from "components/inventory/parameters/parameters-actions";
+import ParametersView from "components/inventory/parameters/ParametersView";
 
 function ParametersInventory({ customerAccessRules }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
   const [parameterList, setParameterList] = useState([]);
+  const [parameterMetadata, setParameterMetadata] = useState(undefined);
   const [parameterFilterModel, setParameterFilterModel] = useState(new Model({ ...toolFilterMetadata.newObjectFields }, toolFilterMetadata, false));
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -56,10 +58,9 @@ function ParametersInventory({ customerAccessRules }) {
   const getParameters = async (filterDto = parameterFilterModel, cancelSource = cancelTokenSource) => {
     const response = await parametersActions.getParameters(getAccessToken, cancelSource, filterDto);
 
-    console.log("received parameters: " + JSON.stringify(response));
-
     if (isMounted?.current === true && response?.data?.data) {
       setParameterList(response.data.data);
+      setParameterMetadata(response.data.metadata);
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.count);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
@@ -67,16 +68,14 @@ function ParametersInventory({ customerAccessRules }) {
     }
   };
 
-  return (<></>
-    // <ParameterTable
-    //   isLoading={isLoading}
-    //   loadData={loadData}
-    //   saveCookies={saveCookies}
-    //   data={parameterList}
-    //   toolFilterDto={parameterFilterModel}
-    //   setToolFilterDto={setParameterFilterModel}
-    //   customerAccessRules={customerAccessRules}
-    // />
+  return (
+    <ParametersView
+      isLoading={isLoading}
+      loadData={loadData}
+      parameterList={parameterList}
+      parameterMetadata={parameterMetadata}
+      customerAccessRules={customerAccessRules}
+    />
   );
 }
 

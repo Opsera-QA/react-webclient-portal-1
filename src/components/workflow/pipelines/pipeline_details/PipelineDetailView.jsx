@@ -31,6 +31,7 @@ import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import axios from "axios";
 import pipelineActivityHelpers
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/pipeline-activity-helpers";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 const refreshInterval = 8000;
 
@@ -38,7 +39,7 @@ const refreshInterval = 8000;
 //  we could instead pass refresh trigger down. 
 function PipelineDetailView() {
   const { tab, id } = useParams();
-  const [error, setErrors] = useState();
+  const toastContext = useContext(DialogToastContext);
   const [data, setData] = useState({});
   const [pipeline, setPipeline] = useState({});
   const [activityData, setActivityData] = useState([]);
@@ -183,11 +184,11 @@ function PipelineDetailView() {
           }
         }
       } else {
-        setErrors("Pipeline not found");
+        toastContext.showLoadingErrorDialog("Pipeline not found");
       }
-    } catch (err) {
-      console.error(err.message);
-      setErrors(err.message);
+    } catch (error) {
+      console.error(error.message);
+      toastContext.showLoadingErrorDialog(error);
     } finally {
       setSoftLoading(false);
     }
@@ -241,13 +242,13 @@ function PipelineDetailView() {
       // TODO: if search term applies ignore run count and reconstruct tree?
       const treeResponse = await pipelineActivityActions.getPipelineActivityLogTree(getAccessToken, cancelSource, id, filterDto);
       const pipelineTree = pipelineActivityHelpers.constructTree(treeResponse?.data?.data);
-      setPipelineActivityTreeData(pipelineTree);
+      setPipelineActivityTreeData([...pipelineTree]);
 
       if (Array.isArray(pipelineTree) && pipelineTree.length > 0) {
         await pullLogData(pipelineTree, filterDto, cancelSource);
       }
     } catch (error) {
-      setErrors(error.message);
+      toastContext.showLoadingErrorDialog(error);
       console.log(error.message);
     } finally {
       setLogsIsLoading(false);
@@ -288,7 +289,7 @@ function PipelineDetailView() {
         setPipelineActivityFilterDto({...newFilterDto});
       }
     } catch (error) {
-      setErrors(error.message);
+      toastContext.showLoadingErrorDialog(error);
       console.log(error.message);
     }
     finally {
@@ -348,7 +349,7 @@ function PipelineDetailView() {
   };
 
   const getCurrentView = () => {
-    if (loading && !error) {
+    if (loading) {
       return (<LoadingDialog size="md" message={"Loading pipeline..."}/>);
     }
 
@@ -433,11 +434,6 @@ function PipelineDetailView() {
       </NavigationTabContainer>
     );
   };
-
-  // TODO: Create pipeline summary error container
-  if (error && !loading) {
-    return (<ErrorDialog error={error} align={"top"} setError={setErrors}/>);
-  }
 
   if (!loading && (data.length === 0 || data.pipeline == null)) {
     return (<InfoDialog

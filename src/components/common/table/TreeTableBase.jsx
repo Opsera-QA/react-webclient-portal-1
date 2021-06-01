@@ -5,6 +5,7 @@ import "dhx-suite-package/codebase/suite.css";
 import {useWindowSize} from "components/common/hooks/useWindowSize";
 import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
 
+// TODO: extract table loading as we noticed issues, make VanityTreeTable
 function TreeTableBase(
   {
     columns,
@@ -15,7 +16,8 @@ function TreeTableBase(
     isLoading,
     groupBy,
     sort,
-    handleExpansion
+    handleExpansion,
+    height
   }) {
   const containerRef = useRef(null);
   const [treeGrid, setTreeGrid] = useState(null);
@@ -78,7 +80,7 @@ function TreeTableBase(
     return (
       <div
         id="treegrid"
-        style={{minHeight: "500px"}}
+        style={{minHeight: height}}
         ref={el => (containerRef.current = el)}
       />
     );
@@ -88,6 +90,7 @@ function TreeTableBase(
     <TableBodyLoadingWrapper
       isLoading={isLoading}
       data={data}
+      tableHeight={height}
       noDataMessage={noDataMessage}
       tableComponent={getTableBody()}
     />
@@ -104,12 +107,14 @@ TreeTableBase.propTypes = {
   scrollOnLoad: PropTypes.bool,
   groupBy: PropTypes.string,
   sort: PropTypes.any,
-  handleExpansion: PropTypes.func
+  handleExpansion: PropTypes.func,
+  tableHeight: PropTypes.string
 };
 
 TreeTableBase.defaultProps = {
   data: [],
   isLoading: false,
+  height: "500px"
 };
 
 export default TreeTableBase;

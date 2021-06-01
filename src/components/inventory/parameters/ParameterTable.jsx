@@ -1,51 +1,80 @@
-import React, {useMemo} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {
-  getLimitedTableTextColumn,
+  getEditableTextColumn,
   getTableBooleanIconColumn,
-  getTableDateColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers-v2";
-import {useHistory} from "react-router-dom";
-import toolMetadata from "components/inventory/tools/tool-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
-import VanityTable from "components/common/table/VanityTable";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faHandshake} from "@fortawesome/pro-light-svg-icons";
+import NewParameterOverlay from "components/inventory/parameters/NewParameterOverlay";
+import VanitySelectionTable from "components/common/table/VanitySelectionTable";
 
-function ParameterTable({ data, toolFilterDto, setToolFilterDto, loadData, isLoading }) {
-  let history = useHistory();
-  const fields = toolMetadata.fields;
+function ParameterTable({ data, parameterMetadata, setParameterData, loadData, isLoading, getNewModel, isMounted, getAccessToken, cancelTokenSource }) {
+  const toastContext = useContext(DialogToastContext);
+  const [columns, setColumns] = useState([]);
 
-  const rowStyling = (row) => {
-    return !row["values"].active ? " inactive-row" : "";
+  useEffect(() => {
+    setColumns([]);
+    loadColumnMetadata(parameterMetadata);
+  }, [JSON.stringify(parameterMetadata)]);
+
+  const loadColumnMetadata = (newActivityMetadata) => {
+    if (isMounted?.current === true && newActivityMetadata?.fields) {
+      const fields = newActivityMetadata.fields;
+
+      setColumns(
+        [
+          getTableTextColumn(getField(fields, "name"), "no-wrap-inline", 350),
+          getEditableTextColumn(getField(fields, "value")),
+          getTableBooleanIconColumn(getField(fields, "vaultEnabled"), undefined, 150),
+        ]
+      );
+    }
   };
 
-  const columns = useMemo(
-    () => [
-      getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
-      getLimitedTableTextColumn(getField(fields, "description"), 100),
-      getTableTextColumn(getField(fields, "tool_identifier"), "no-wrap-inline"),
-      getTableTextColumn(getField(fields, "owner_name"), "no-wrap-inline"),
-      getTableDateColumn(getField(fields, "createdAt")),
-      getTableBooleanIconColumn(getField(fields, "active")),
-    ],
-    []
-  );
+  const createParameter = () => {
+    toastContext.showOverlayPanel(
+      <NewParameterOverlay
+        parameterMetadata={parameterMetadata}
+        loadData={loadData}
+        isMounted={isMounted}
+        getAccessToken={getAccessToken}
+        cancelTokenSource={cancelTokenSource}
+      />
+    );
+  };
 
-  const onRowSelect = (rowData) => {
-    history.push(`/inventory/tools/details/${rowData.original._id}`);
+  const getParameterTable = () => {
+    return (
+      <VanitySelectionTable
+        className="table-no-border"
+        noDataMessage={"No Parameters have been created yet"}
+        data={data}
+        columns={columns}
+        isLoading={isLoading || parameterMetadata == null}
+        loadData={loadData}
+        getNewModel={getNewModel}
+        setParentModel={setParameterData}
+        tableHeight={"calc(25vh)"}
+      />
+    );
   };
 
   return (
-    <VanityTable
-      className="table-no-border"
-      columns={columns}
-      data={data}
-      isLoading={isLoading}
-      onRowSelect={onRowSelect}
-      paginationDto={toolFilterDto}
-      setPaginationDto={setToolFilterDto}
-      rowStyling={rowStyling}
+    <FilterContainer
       loadData={loadData}
+      addRecordFunction={createParameter}
+      showBorder={false}
+      isLoading={isLoading}
+      body={getParameterTable()}
+      metadata={parameterMetadata}
+      type={"Parameter"}
+      titleIcon={faHandshake}
+      title={"Parameters"}
+      className={"px-2 pb-2"}
     />
   );
 }
@@ -54,8 +83,12 @@ ParameterTable.propTypes = {
   data: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  toolFilterDto: PropTypes.object,
-  setToolFilterDto: PropTypes.func,
+  parameterMetadata: PropTypes.object,
+  getNewModel: PropTypes.func,
+  setParameterData: PropTypes.func,
+  isMounted: PropTypes.object,
+  getAccessToken: PropTypes.func,
+  cancelTokenSource: PropTypes.object
 };
 
 export default ParameterTable;

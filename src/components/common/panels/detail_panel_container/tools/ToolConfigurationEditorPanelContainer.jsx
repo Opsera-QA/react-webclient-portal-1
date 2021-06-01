@@ -23,7 +23,7 @@ function ToolConfigurationEditorPanelContainer({children, isLoading, persistReco
   return (
     <Form className="scroll-y full-height">
       <div>
-        <div className="d-flex justify-content-between px-2">
+        <div className="d-flex justify-content-between">
           <div className="text-muted pt-1 pb-3">Enter tool specific configuration information below.  These settings will be used for pipelines.</div>
           <div>{getToolConnectionCheckButton()}</div>
         </div>

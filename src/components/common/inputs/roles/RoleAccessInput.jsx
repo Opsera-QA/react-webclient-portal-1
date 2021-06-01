@@ -21,7 +21,7 @@ const roleTypes = [
   {text: "Guest", value: "guest"},
 ];
 
-function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
+function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }) {
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
   const [userList, setUserList] = useState([]);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -400,6 +400,12 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
     }
   };
 
+  const getHelpComponent = () => {
+    if (helpComponent) {
+      return (helpComponent);
+    }
+  };
+
   if (field == null) {
     return <></>;
   }
@@ -413,7 +419,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject}) {
       errorMessage={errorMessage}
       type={"Role"}
       addAllowed={lastRoleComplete()}
-      helpComponent={<RoleAccessEditorHelpOverlayContainer />}
+      helpComponent={getHelpComponent()}
     >
       <div>
         {getHeaderBar()}
@@ -430,6 +436,7 @@ RoleAccessInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   fieldName: PropTypes.string,
+  helpComponent: PropTypes.object
 };
 
 export default RoleAccessInput;

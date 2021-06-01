@@ -26,6 +26,7 @@ function DeleteButtonWithConfirmation({deleteRecord, dataObject, disabled, size,
 
     if (isMounted?.current === true) {
       setIsDeleting(false);
+      setShowDeleteModal(false);
     }
   };
 

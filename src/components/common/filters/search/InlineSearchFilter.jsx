@@ -56,7 +56,7 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
     }
   };
 
-  if (supportSearch !== true) {
+  if (supportSearch !== true || filterDto == null) {
     return null;
   }
 
@@ -64,7 +64,7 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
     <div className={className}>
       <InputGroup size="sm" className={"flex-nowrap"}>
         <input
-          disabled={disabled || isLoading || filterDto == null}
+          disabled={disabled || isLoading}
           placeholder="Search"
           value={filterDto?.getData(fieldName) || ""}
           className="text-input inline-search-filter inline-filter-input"
@@ -72,7 +72,7 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
           onChange={e => validateAndSetData(e.target.value)}
         />
         <InputGroup.Append>
-          <Button className="inline-filter-input filter-bg-white" disabled={isLoading || disabled || filterDto == null} variant="outline-primary" onClick={handleSearch}>
+          <Button className="inline-filter-input filter-bg-white" disabled={isLoading || disabled} variant="outline-primary" onClick={handleSearch}>
             {getSearchIcon()}
           </Button>
         </InputGroup.Append>

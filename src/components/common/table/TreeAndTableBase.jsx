@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
 
-function TreeAndTableBase({ data, isLoading, noDataMessage, tableComponent, treeComponent, loadData, paginationModel, setPaginationModel }) {
+function TreeAndTableBase({ data, isLoading, noDataMessage, tableComponent, treeComponent, loadData, paginationModel, setPaginationModel, tableHeight }) {
   const getTableBody = () => {
     return (
       <PaginationContainer
@@ -26,6 +26,7 @@ function TreeAndTableBase({ data, isLoading, noDataMessage, tableComponent, tree
       isLoading={isLoading}
       data={data}
       noDataMessage={noDataMessage}
+      tableHeight={tableHeight}
       tableComponent={getTableBody()}
     />
   );
@@ -40,7 +41,8 @@ TreeAndTableBase.propTypes = {
   treeComponent: PropTypes.object,
   loadData: PropTypes.func,
   paginationModel: PropTypes.object,
-  setPaginationModel: PropTypes.func
+  setPaginationModel: PropTypes.func,
+  tableHeight: PropTypes.string
 };
 
 export default TreeAndTableBase;

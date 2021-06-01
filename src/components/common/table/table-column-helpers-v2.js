@@ -87,6 +87,31 @@ export const getLimitedTableTextColumn = (field, maxLength, className, autoAdjus
   };
 };
 
+export const getEditableTextColumn = (field, maxLength, className) => {
+  return {
+    header: getColumnHeader(field),
+    id: getColumnId(field),
+    class: className ? className : undefined,
+    editable: true,
+    Cell: function parseText(row) {
+      const value = row?.value;
+
+      if (value != null) {
+        const truncatedString = truncateString(value, maxLength);
+
+        if (truncatedString !== value) {
+          return (<TooltipWrapper innerText={value}><span>{truncatedString}</span></TooltipWrapper>);
+        }
+
+        return value;
+      }
+
+      return "";
+    },
+  };
+};
+
+
 export const getStringifiedArrayColumn = (field, className) => {
   return {
     header: getColumnHeader(field),

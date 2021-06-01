@@ -185,6 +185,7 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
     case "edit_tool_projects_tabs":
     case "edit_access_roles":
     case "create_tool":
+    case "vault":
       return true;
     default:
       return false; //all other options are disabled
@@ -202,6 +203,7 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
     case "edit_tool_projects_tabs":
     case "edit_access_roles":
     case "create_tool":
+    case "vault":
       return true;
     default:
       return false; //all other options are disabled

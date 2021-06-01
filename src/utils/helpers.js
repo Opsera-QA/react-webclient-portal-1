@@ -41,7 +41,23 @@ export function isOpseraPassword(password) {
 }
 
 export function matchesRegex(regex, value) {
-  return regex.test(String(value));
+  let meetsRegex = false;
+
+  try {
+    if (typeof regex === "string") {
+      meetsRegex = eval(regex)?.test(String(value));
+    }
+    else {
+      meetsRegex = regex.test(String(value));
+    }
+  }
+  catch (error) {
+    console.error("Regex Validation Error: ", error);
+    // TODO: Should we return false if regex error occurs?
+    return true;
+  }
+
+  return meetsRegex;
 }
 
 export function handleError(error) {

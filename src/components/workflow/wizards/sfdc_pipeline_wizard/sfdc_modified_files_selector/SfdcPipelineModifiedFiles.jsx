@@ -96,7 +96,7 @@ const SfdcPipelineModifiedFiles = ({
     uniqueComponentTypes.map(item => componentTypesArr.push({"text": item, "value": item}));
     setComponentType(componentTypesArr);
     setLoading(false);
-    setFromSFDC(true);
+    setFromSFDC(activeTab !== "git");
   };
 
   const handleApproveChanges = async () => {

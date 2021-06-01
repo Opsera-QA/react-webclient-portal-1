@@ -4,7 +4,7 @@ import {Grid} from "dhx-suite-package";
 import "dhx-suite-package/codebase/suite.css";
 import {useWindowSize} from "components/common/hooks/useWindowSize";
 
-function TableBase({ columns, data, onRowSelect, rowStyling, sort }) {
+function TableBase({ columns, data, onRowSelect, rowStyling, sort, height }) {
   const containerRef = useRef(null);
   const [grid, setGrid] = useState(null);
   const windowSize = useWindowSize();
@@ -36,8 +36,15 @@ function TableBase({ columns, data, onRowSelect, rowStyling, sort }) {
       resizable: true,
       headerRowHeight: 30,
       rowHeight: 30,
+      // TODO: Wire up custom row styling
       rowCss: (row) => {
-        rowStyling ? rowStyling(row) : "";
+        let styling = onRowSelect != null ? "pointer" : "hide-grid-pointer";
+
+        if (rowStyling) {
+          styling = `${styling} ${rowStyling(row)}`;
+        }
+
+        return styling;
       },
     });
 
@@ -56,12 +63,14 @@ function TableBase({ columns, data, onRowSelect, rowStyling, sort }) {
   };
 
   return (
-    <div
-      className={"w-100"}
-      id="grid"
-      style={{minHeight: "500px"}}
-      ref={el => (containerRef.current = el)}
-    />
+    <div style={{minHeight: height}}>
+      <div
+        className={"w-100 h-100"}
+        id="grid"
+        style={{minHeight: height}}
+        ref={el => (containerRef.current = el)}
+      />
+    </div>
   );
 }
 
@@ -71,11 +80,13 @@ TableBase.propTypes = {
   onRowSelect: PropTypes.func,
   rowStyling: PropTypes.func,
   sort: PropTypes.string,
+  height: PropTypes.string
 };
 
 TableBase.defaultProps = {
   data: [],
   isLoading: false,
+  height: "500px"
 };
 
 export default TableBase;
