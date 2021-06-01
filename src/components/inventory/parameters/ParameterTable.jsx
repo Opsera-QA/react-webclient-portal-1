@@ -1,8 +1,7 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {
   getEditableTextColumn,
-  getLimitedTableTextColumn,
   getTableBooleanIconColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers-v2";
@@ -13,7 +12,7 @@ import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 import NewParameterOverlay from "components/inventory/parameters/NewParameterOverlay";
 import VanitySelectionTable from "components/common/table/VanitySelectionTable";
 
-function ParameterTable({ data, parameterMetadata, loadData, isLoading, onRowSelect, onCellEdit, isMounted, getAccessToken, cancelTokenSource }) {
+function ParameterTable({ data, parameterMetadata, setParameterData, loadData, isLoading, getNewModel, isMounted, getAccessToken, cancelTokenSource }) {
   const toastContext = useContext(DialogToastContext);
   const [columns, setColumns] = useState([]);
 
@@ -52,14 +51,14 @@ function ParameterTable({ data, parameterMetadata, loadData, isLoading, onRowSel
     return (
       <VanitySelectionTable
         className="table-no-border"
-        onRowSelect={onRowSelect}
         noDataMessage={"No Parameters have been created yet"}
         data={data}
         columns={columns}
         isLoading={isLoading || parameterMetadata == null}
         loadData={loadData}
+        getNewModel={getNewModel}
+        setParentModel={setParameterData}
         tableHeight={"calc(25vh)"}
-        onCellEdit={onCellEdit}
       />
     );
   };
@@ -84,11 +83,9 @@ ParameterTable.propTypes = {
   data: PropTypes.array,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
-  toolFilterDto: PropTypes.object,
-  setToolFilterDto: PropTypes.func,
   parameterMetadata: PropTypes.object,
-  onRowSelect: PropTypes.func,
-  onCellEdit: PropTypes.func,
+  getNewModel: PropTypes.func,
+  setParameterData: PropTypes.func,
   isMounted: PropTypes.object,
   getAccessToken: PropTypes.func,
   cancelTokenSource: PropTypes.object
