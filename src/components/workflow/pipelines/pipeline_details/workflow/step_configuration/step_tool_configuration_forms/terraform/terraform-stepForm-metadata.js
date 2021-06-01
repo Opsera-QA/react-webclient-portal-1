@@ -63,6 +63,10 @@ const TerraformStepFormMetadata = {
       label: "BitBucket Workspace/Project",
       id: "bitbucketWorkspaceName",
     },
+    {
+      label: "Output Keys",
+      id: "terraformOutputKeys"
+    }
   ],
   newObjectFields: {
     toolActionType: "EXECUTE",
@@ -80,7 +84,8 @@ const TerraformStepFormMetadata = {
     gitUrl:"",
     bitbucketWorkspace : "",
     bitbucketWorkspaceName: "",
-    keyValueMap: {}
+    keyValueMap: {},
+    terraformOutputKeys: []
   }
 };
 
