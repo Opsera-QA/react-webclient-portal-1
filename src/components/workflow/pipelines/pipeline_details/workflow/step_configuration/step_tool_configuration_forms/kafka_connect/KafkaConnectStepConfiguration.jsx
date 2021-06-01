@@ -16,6 +16,7 @@ import KafkaConnectBitbucketWorkspaceInput
 import KafkaConnectToolSelectInput from "./inputs/KafkaConnectToolSelectInput";
 import KafkaConnectSCMToolTypeSelectInput from "./inputs/KafkConnectSCMToolTypeSelectInput";
 import KafkaConnectSCMToolSelectInput from "./inputs/KafkaConnectSCMToolSelectInput";
+import KafkaConnectSCMRepoFiles from "./inputs/KafkaConnectSCMRepoFiles";
 
 function KafkaConnectStepConfiguration({ pipelineId, stepTool, stepId, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -72,6 +73,7 @@ function KafkaConnectStepConfiguration({ pipelineId, stepTool, stepId, closeEdit
       <KafkaConnectGitRepositoryInput dataObject={kafkaConnectStepConfigurationDto} setDataObject={setKafkaConnectStepConfigurationDataDto} />
       <KafkaConnectGitBranchInput  dataObject={kafkaConnectStepConfigurationDto} setDataObject={setKafkaConnectStepConfigurationDataDto} />
       <TextInputBase setDataObject={setKafkaConnectStepConfigurationDataDto} dataObject={kafkaConnectStepConfigurationDto} fieldName={"connectorFilePath"} />
+      <KafkaConnectSCMRepoFiles setDataObject={setKafkaConnectStepConfigurationDataDto} dataObject={kafkaConnectStepConfigurationDto} />
     </PipelineStepEditorPanelContainer>
   );
 }

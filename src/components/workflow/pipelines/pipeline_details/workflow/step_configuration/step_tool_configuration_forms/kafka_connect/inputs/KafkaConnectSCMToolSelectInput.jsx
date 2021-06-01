@@ -57,7 +57,6 @@ function KafkaConnectSCMToolSelectInput({dataObject, setDataObject, disabled}) {
 
   const getToolsList = async (tool, cancelSource) => {
     setIsLoading(true);
-    if(dataObject?.data?.type?.length){
       try {
         let results = await PipelineActions.getToolsListV2(getAccessToken, cancelSource, tool);
         if (results.data) {
@@ -79,7 +78,6 @@ function KafkaConnectSCMToolSelectInput({dataObject, setDataObject, disabled}) {
       } catch (error) {
         toastContext.showErrorDialog(error);
       }
-    }
     setIsLoading(false);
     return;
   };
@@ -107,4 +105,7 @@ KafkaConnectSCMToolSelectInput.propTypes = {
   className: PropTypes.string
 };
 
+KafkaConnectSCMToolSelectInput.defaultProps = {
+  disabled : false
+};
 export default KafkaConnectSCMToolSelectInput;
