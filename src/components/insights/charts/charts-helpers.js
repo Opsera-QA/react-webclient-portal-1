@@ -176,6 +176,19 @@ export function getSeleniumTestSuitesFromKpiConfiguration(kpiConfiguration) {
   return null;
 }
 
+export function getSonarProjectLanguagesFromKpiConfiguration(kpiConfiguration) {
+  if (
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sonar-project-languages")]
+      ?.value &&
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sonar-project-languages")]
+      ?.value.length > 0
+  ) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "sonar-project-languages")]
+      .value;
+  }
+  return null;
+}
+
 export function getChartIconFromKpiConfiguration(kpiConfiguration) {
   return faChartBar;
 }

@@ -15,6 +15,7 @@ import {
   getReleaseFromKpiConfiguration,
   getProjectFromKpiConfiguration,
   getSeleniumTestSuitesFromKpiConfiguration,
+  getSonarProjectLanguagesFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 
 const chartsActions = {};
@@ -95,6 +96,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   const release = getReleaseFromKpiConfiguration(kpiConfiguration);
   const project = getProjectFromKpiConfiguration(kpiConfiguration);
   const seleniumTestSuites = getSeleniumTestSuitesFromKpiConfiguration(kpiConfiguration);
+  const sonarProjectLanguages = getSonarProjectLanguagesFromKpiConfiguration(kpiConfiguration);
 
   const postBody = {
     request: request,
@@ -119,7 +121,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     projectTags: projectTags,
     dashboardOrgs: dashboardOrgs,
     pipelineName: pipelineName,
-    currentDate: currentDate
+    currentDate: currentDate,
+    sonarProjectLanguages: sonarProjectLanguages,
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);

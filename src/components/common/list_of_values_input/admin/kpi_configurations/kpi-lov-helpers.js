@@ -29,6 +29,7 @@ kpiLovHelpers.filters = [
   { id: { type: "sprint", value: [] }, label: "Sprint" },
   { id: { type: "project", value: [] }, label: "Project" },
   { id: { type: "selenium-test-suites", value: [] }, label: "Selenium Test Suites" },
+  { id: { type: "sonar-project-languages", value: [] }, label: "Sonar Project Languages" },
 ];
 
 kpiLovHelpers.getFilterById = (id) => {
