@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 import { AuthContext } from "../../../../../../../../contexts/AuthContext";
 import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
-import { axiosApiService } from "../../../../../../../../api/apiService";
 
 import {
   getErrorDialog,
@@ -117,24 +116,9 @@ function JenkinsStepConfiguration({
   const [thresholdType, setThresholdType] = useState("");
   const [jobType, setJobType] = useState("");
 
-  // const [repoList, setRepoList] = useState([]);
-  // const [isRepoSearching, setIsRepoSearching] = useState(false);
-  // const [branchList, setBranchList] = useState([]);
-  // const [isBranchSearching, setIsBranchSearching] = useState(false);
-
-  // const [dockerNameErr, setDockerNameErr] = useState(false);
-  // const [dockerTagErr, setDockerTagErr] = useState(false);
-
   const [listOfSteps, setListOfSteps] = useState([]);
   const [show, setShow] = useState(false);
   const [save, setSave] = useState(false);
-
-  // const [workspacesList, setWorkspacesList] = useState([]);
-  // const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
-
-  // const [deleteDockerSecrets, setDeleteDockerSecrets] = useState(false);
-  // const [dataObject, setDataObject] = useState(undefined);
-  // const [pythonScriptData, setPythonScriptData] = useState(undefined);
 
   const [jenkinsStepConfigurationDto, setJenkinsStepConfigurationDto] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
@@ -239,7 +223,7 @@ function JenkinsStepConfiguration({
   }, [jobsList, jenkinsStepConfigurationDto?.data?.toolJobId]);
 
   const loadFormData = async (step) => {
-    console.log(step,'**** 1');
+   
     let { configuration, threshold, job_type } = step;
     let stepToolNew = null;
     if (typeof configuration !== "undefined") {
@@ -268,7 +252,6 @@ function JenkinsStepConfiguration({
 
   };
   const callbackFunction = async () => {
-    console.log("saving data");
     //if (validateRequiredFields()) {
     setIsLoading(true);
 
@@ -304,11 +287,11 @@ function JenkinsStepConfiguration({
         type: thresholdType,
         value: thresholdVal,
       },
-      job_type: jobType,
+      job_type: jenkinsStepConfigurationDto?.data.jenkinsJobType, //jobType,
     };
     console.log("item: ", toolConfiguration);
 
-    await createJob( formData.toolConfigId, toolConfiguration, stepId, createJobPostBody);
+    await createJob( jenkinsStepConfigurationDto?.data.toolConfigId, toolConfiguration, stepId, createJobPostBody);
   
   };
   if (isLoading || jenkinsStepConfigurationDto == null) {
@@ -351,7 +334,7 @@ function JenkinsStepConfiguration({
         saveConfig={saveConfig}
       />
       <JenkinsStepConfGitCredential dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} jenkinsList={jenkinsList} jobsList={jobsList} accountsList={accountsList} />
-      <JenkinsStepConfWorkspaceProjectInput dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} jenkinsList={jenkinsList} jobsList={jobsList} accountsList={accountsList} />
+      <JenkinsStepConfWorkspaceProjectInput dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
       <JenkinsStepConfRepository dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
       <JenkinsStepConfBranch dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} jenkinsList={jenkinsList} />
       <JenkinsStepConfBuilXmlStepInfo  dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} listOfSteps={listOfSteps} />

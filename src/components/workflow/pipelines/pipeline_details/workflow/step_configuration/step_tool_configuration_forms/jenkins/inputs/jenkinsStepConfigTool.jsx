@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import { Button, Form, OverlayTrigger, Popover, Row, Col, Tooltip } from "react-bootstrap";
+import {  OverlayTrigger} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTools,faEllipsisH } from "@fortawesome/pro-light-svg-icons";

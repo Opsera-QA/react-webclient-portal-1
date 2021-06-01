@@ -24,7 +24,6 @@ function JenkinsStepConfDocker({ dataObject, setDataObject }) {
 				overlay={
 					<Popover id="popover-basic" style={{ maxWidth: "500px" }}>
 						<Popover.Title as="h3">Build Arguments</Popover.Title>
-
 						<Popover.Content>
 							<div className="text-muted mb-2">
 								Enter Runtime Build arguments as a key value pair JSON. You can add any number of runtime arguments to the
@@ -60,10 +59,8 @@ function JenkinsStepConfDocker({ dataObject, setDataObject }) {
 }
 
 JenkinsStepConfDocker.propTypes = {
-	fieldName: PropTypes.string,
 	dataObject: PropTypes.object,
 	setDataObject: PropTypes.func,
-	disabled: PropTypes.bool,
 };
 
 

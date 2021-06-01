@@ -11,14 +11,13 @@ import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
 
-function JenkinsStepConfWorkspaceProjectInput({ fieldName, dataObject, setDataObject, disabled, jenkinsList, jobsList, accountsList }) {
+function JenkinsStepConfWorkspaceProjectInput({ fieldName, dataObject, setDataObject, disabled,}) {
 	const toastContext = useContext(DialogToastContext);
 	const [isWorkspacesSearching, setIsWorkspacesSearching] = useState(false);
 	const { getAccessToken } = useContext(AuthContext);
 	const [workspacesList, setWorkspacesList] = useState([]);
 
 	const jobType = dataObject.getData('jobType');
-	const jenkinsUrl = dataObject.getData('jenkinsUrl');
 	const excludeArr = ["SFDC VALIDATE PACKAGE XML", "SFDC UNIT TESTING", "SFDC DEPLOY"];
 	const isOrgToOrg = dataObject.getData('isOrgToOrg');
 	const gitToolId = dataObject.getData('gitToolId');
@@ -112,9 +111,6 @@ JenkinsStepConfWorkspaceProjectInput.propTypes = {
 	dataObject: PropTypes.object,
 	setDataObject: PropTypes.func,
 	disabled: PropTypes.bool,
-	jenkinsList: PropTypes.any,
-	jobsList: PropTypes.any,
-	accountsList: PropTypes.any,
 
 };
 

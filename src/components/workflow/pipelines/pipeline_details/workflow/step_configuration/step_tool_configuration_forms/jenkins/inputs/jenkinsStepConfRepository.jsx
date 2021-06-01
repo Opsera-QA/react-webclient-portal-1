@@ -1,18 +1,13 @@
 import React,{useEffect, useState, useContext} from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Form, OverlayTrigger, Popover, Row, Col, Tooltip } from "react-bootstrap";
+import {  Form } from "react-bootstrap";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import pipelineActions from "components/workflow/pipeline-actions";
 import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { DialogToastContext } from "../../../../../../../../../contexts/DialogToastContext";
 
-import {
-    faExclamationCircle,
-    
-  } from "@fortawesome/free-solid-svg-icons";
 
 function JenkinsStepConfRepository({ fieldName, dataObject, setDataObject, disabled }) {
     const { getAccessToken } = useContext(AuthContext);
@@ -44,7 +39,6 @@ function JenkinsStepConfRepository({ fieldName, dataObject, setDataObject, disab
           setIsRepoSearching(false);
           return;
         }
-          //console.log(results);
           setRepoList(results);
           setIsRepoSearching(false);
       }

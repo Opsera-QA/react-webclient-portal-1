@@ -1,24 +1,19 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, {  useState } from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import pipelineActions from "components/workflow/pipeline-actions";
-import { DialogToastContext } from "../../../../../../../../../contexts/DialogToastContext";
-import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Form, OverlayTrigger, Tooltip } from "react-bootstrap";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 
 
 // TODO : Use GitBranchInput for all git based repo selections with set clear functions.
 
 function JenkinsStepConfBranch({ fieldName, dataObject, setDataObject, disabled, jenkinsList }) {
 
-  const [isBranchSearching, setIsBranchSearching] = useState(false);
   const [branchList, setBranchList] = useState([]);
-  const toastContext = useContext(DialogToastContext);
-  const { getAccessToken } = useContext(AuthContext);
+ 
   const service = dataObject.getData('service');
   const gitToolId = dataObject.getData('gitToolId');
   const repoId = dataObject.getData('repoId');
@@ -35,33 +30,7 @@ function JenkinsStepConfBranch({ fieldName, dataObject, setDataObject, disabled,
     </Tooltip>
   );
 
-  useEffect(() => {
-    //setShowToast(false);
-
-    async function fetchBranches(service, gitToolId, repoId, workspaces) {
-      setIsBranchSearching(true);
-      // Set results state
-      let results = await pipelineActions.searchBranches(service, gitToolId, repoId, workspaces, getAccessToken);
-      if (typeof (results) != "object") {
-        setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-        let errorMessage = "Branch information is missing or unavailable!";
-        toastContext.showErrorDialog(errorMessage);
-        setIsBranchSearching(false);
-        return;
-      }
-      setBranchList(results);
-      setIsBranchSearching(false);
-    }
-
-    if (service && service.length > 0 && gitToolId && gitToolId.length > 0 && repoId && repoId.length > 0) {
-      // Fire off our API call
-      fetchBranches(service, gitToolId, repoId, workspace);
-    } else {
-      // setIsRepoSearching(true);
-      setIsBranchSearching(true);
-      setBranchList([{ value: "", name: "Select One", isDisabled: "yes" }]);
-    }
-  }, [repoId]);
+ 
 
 
   const handleDTOChange = (fieldName, selectedOption) => {
@@ -99,31 +68,25 @@ function JenkinsStepConfBranch({ fieldName, dataObject, setDataObject, disabled,
   };
 
 
-  const loader = () => {
-    if (isBranchSearching) {
-      return <DetailPanelLoadingDialog type="branches from selected repository" />;
-    }
-    return null;
-  };
+  
   const loadBranchSelect = () => {
-    if (branchList && branchList.length > 0) {
       return (
         <>
-          <SelectInputBase
-            fieldName={fieldName}
-            dataObject={dataObject}
-            setDataFunction={handleDTOChange}
-            setDataObject={setDataObject}
-            placeholderText={"Select"}
-            selectOptions={branchList}
-            valueField="value"
-            textField="name"
-            disabled={disabled}
-          />
+          <GitBranchInput
+              fieldName={"gitBranch"}
+              service={dataObject.getData("service")}
+              gitToolId={dataObject.getData("gitToolId")}
+              workspace={dataObject.getData("workspace")}
+              repoId={dataObject.getData("repoId")}
+              dataObject={dataObject}
+              setDataFunction={handleDTOChange}
+              setDataObject={setDataObject}
+              disabled={disabled}
+              setsetBranchList={setBranchList}
+            />
           {loadWorkspaceDeleteFlag()}
         </>);
-    }
-    return <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />;
+    
   };
   const loadWorkspaceDeleteFlag = () => {
     return (
@@ -169,14 +132,7 @@ function JenkinsStepConfBranch({ fieldName, dataObject, setDataObject, disabled,
   };
   const renderUpstreamBranch = () => {
     if (dataObject.data.hasUpstreamBranch) {
-      if (isBranchSearching) {
-        return (<><Form.Label>Branch Name*</Form.Label>
-          <div className="form-text text-muted mt-2 p-2">
-            <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
-          Loading branches from selected repository
-          </div></>
-        );
-      } else if (branchList && branchList.length > 0) {
+      if (branchList && branchList.length > 0) {
         return (
           <SelectInputBase
             fieldName={'upstreamBranch'}
@@ -198,16 +154,7 @@ function JenkinsStepConfBranch({ fieldName, dataObject, setDataObject, disabled,
   };
 
   const renderBranch = () => {
-    if (isBranchSearching) {
-
-      return (<>
-        <Form.Label>Branch*</Form.Label>
-        <div className="form-text text-muted mt-2 p-2">
-          <FontAwesomeIcon icon={faSpinner} spin className="text-muted mr-1" fixedWidth />
-                        Loading branches from selected repository
-                      </div>
-      </>);
-    } else if (branchList && branchList.length > 0) {
+    if (branchList && branchList.length > 0) {
       return (
         <SelectInputBase
           fieldName={'branch'}
@@ -274,7 +221,6 @@ function JenkinsStepConfBranch({ fieldName, dataObject, setDataObject, disabled,
     if (service && gitToolId && repoId && !excludeArrs.includes(jobType) && !isOrgToOrg) {
       return (
         <>
-          {loader()}
           {loadBranchSelect()}
           {loadIsManualRollBackBranch()}
           {loadIsNewBranch()}

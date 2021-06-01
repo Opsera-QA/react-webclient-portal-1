@@ -14,7 +14,6 @@ function JenkinsStepConfGitCredential({ fieldName, dataObject, setDataObject, di
 
 	//formData.jenkinsUrl && jenkinsList.length > 0 && formData.jobType && formData.jobType.length > 0 &&
 	const jobType = dataObject.getData('jobType');
-	console.log(jobType, 'Accoutn page ****');
 	const jenkinsUrl = dataObject.getData('jenkinsUrl');
 	const excludeArr = ["SFDC VALIDATE PACKAGE XML", "SFDC UNIT TESTING", "SFDC DEPLOY"];
 	const isOrgToOrg = dataObject.getData('isOrgToOrg');
@@ -25,8 +24,6 @@ function JenkinsStepConfGitCredential({ fieldName, dataObject, setDataObject, di
 		let newDataObject = { ...dataObject };
 		const emptyFields = ['repoId', 'gitUrl', 'sshUrl', 'repository', 'workspace',
 			'workspaceName', 'branch', 'projectId', 'defaultBranch'];
-
-		console.log(value, '**** selected value');
 		newDataObject.setData('gitToolId', value.toolId);
 		newDataObject.setData('gitCredential', value.gitCredential);
 		newDataObject.setData('gitUserName', value.gitUserName);

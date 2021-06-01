@@ -6,7 +6,7 @@ import {AuthContext} from "contexts/AuthContext";
 import GitActionsHelper
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/helpers/git-actions-helper";
 
-function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
+function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled,setBranchList}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [branches, setBranches] = useState([]);
@@ -37,9 +37,15 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
     const response  = await GitActionsHelper.searchBranches(service, gitToolId, repoId, workspace, getAccessToken);
     let branchesResponse = response?.data?.data;
 
+    //to set data in parent component
     if (Array.isArray(branchesResponse)) {
       setBranches(branchesResponse);
+      if(typeof setBranchList!=='undefined' ){
+        console.log(typeof setBranchList);
+        setBranchList(branchesResponse);
+      }
     }
+    //to set data in parent component -end
   };
 
   if (!visible) {
@@ -82,7 +88,8 @@ GitBranchInput.propTypes = {
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
-  clearDataFunction: PropTypes.func
+  clearDataFunction: PropTypes.func,
+  setBranchList:PropTypes.func
 };
 
 GitBranchInput.defaultProps = {

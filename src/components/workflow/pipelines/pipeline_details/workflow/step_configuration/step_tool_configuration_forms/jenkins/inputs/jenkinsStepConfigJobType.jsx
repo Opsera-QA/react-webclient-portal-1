@@ -1,14 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTools } from "@fortawesome/pro-light-svg-icons";
-import {
-	getErrorDialog
-} from "../../../../../../../../common/toasts/toasts";
 
-function JenkinsStepConfigJobType({ dataObject, setDataObject, disabled, jenkinsList, renderForm, setToast, setShowToast, setAccountsList, setJobsList }) {
+
+function JenkinsStepConfigJobType({ dataObject, setDataObject, disabled, setShowToast }) {
 	const JOB_OPTIONS = [
 		{ value: "", label: "Select One", isDisabled: "yes" },
 		{ value: "job", label: "Custom Job" },
@@ -75,13 +70,9 @@ JenkinsStepConfigJobType.propTypes = {
 	dataObject: PropTypes.object,
 	setDataObject: PropTypes.func,
 	disabled: PropTypes.bool,
-	className: PropTypes.string,
-	jenkinsList: PropTypes.any,
-	renderForm: PropTypes.any,
 	setToast: PropTypes.func,
 	setShowToast: PropTypes.func,
-	setAccountsList: PropTypes.func,
-	setJobsList: PropTypes.func,
+	
 };
 
 export default JenkinsStepConfigJobType;
