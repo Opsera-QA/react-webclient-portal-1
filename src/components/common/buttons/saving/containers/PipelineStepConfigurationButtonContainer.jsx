@@ -17,7 +17,7 @@ function PipelineStepConfigurationButtonContainer({ recordDto, persistRecord, ha
 PipelineStepConfigurationButtonContainer.propTypes = {
   recordDto: PropTypes.object,
   persistRecord: PropTypes.func,
-  handleClose: PropTypes.fun
+  handleClose: PropTypes.func
 };
 
 export default PipelineStepConfigurationButtonContainer;
