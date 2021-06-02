@@ -2,8 +2,9 @@ import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import IconBase from "components/common/icons/IconBase";
+import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 
-function TitleBar({ title, titleIcon, isLoading, inactive, titleActionBar }) {
+function TitleBar({ title, titleIcon, isLoading, inactive, titleActionBar, helpComponent }) {
   const getInactiveText = () => {
     if (inactive) {
       return (<span className="text-white-50 mx-1">{inactive && "Inactive"}</span>);
@@ -12,15 +13,16 @@ function TitleBar({ title, titleIcon, isLoading, inactive, titleActionBar }) {
 
   const getRightSideItems = () => {
     return (
-      <div className="ml-auto d-flex mr-1">
+      <div className="ml-auto d-flex mr-2">
         {getInactiveText()}
         {titleActionBar}
+        <LaunchHelpIcon helpComponent={helpComponent} className={"mx-1"} />
       </div>
     );
   };
 
   if (isLoading) {
-    return (<span><IconBase isLoading={isLoading} className={"mr-2"}/>Loading Data</span>);
+    return (<span><IconBase isLoading={isLoading} className={"mr-1"}/>Loading Data</span>);
   }
 
   return (
@@ -37,7 +39,8 @@ TitleBar.propTypes = {
   title: PropTypes.string,
   titleActionBar: PropTypes.object,
   titleIcon: PropTypes.object,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  helpComponent: PropTypes.object
 };
 
 export default TitleBar;
