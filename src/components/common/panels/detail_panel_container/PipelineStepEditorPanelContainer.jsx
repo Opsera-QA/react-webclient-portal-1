@@ -6,7 +6,7 @@ import PipelineStepConfigurationButtonContainer
   from "../../buttons/saving/containers/PipelineStepConfigurationButtonContainer";
 
 // TODO: After final refactor of pipeline configurations, this component might be irrelevant
-function PipelineStepEditorPanelContainer({ children, isLoading, showRequiredFieldsMessage, persistRecord, recordDto, handleClose }) {
+function PipelineStepEditorPanelContainer({ children, isLoading, disable, showRequiredFieldsMessage, persistRecord, recordDto, handleClose }) {
   const getRequiredFieldsMessage = () => {
     if (showRequiredFieldsMessage) {
       return (
@@ -29,6 +29,7 @@ function PipelineStepEditorPanelContainer({ children, isLoading, showRequiredFie
           persistRecord={persistRecord}
           recordDto={recordDto}
           handleClose={handleClose}
+          disable={disable}
         />
         {getRequiredFieldsMessage()}
       </div>
@@ -40,6 +41,7 @@ function PipelineStepEditorPanelContainer({ children, isLoading, showRequiredFie
 PipelineStepEditorPanelContainer.propTypes = {
   children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   isLoading: PropTypes.bool,
+  disable: PropTypes.bool,
   showRequiredFieldsMessage: PropTypes.bool,
   persistRecord: PropTypes.func,
   recordDto: PropTypes.object,

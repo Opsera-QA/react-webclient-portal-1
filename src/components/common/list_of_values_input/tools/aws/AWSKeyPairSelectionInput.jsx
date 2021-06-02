@@ -6,14 +6,14 @@ import {AuthContext} from "contexts/AuthContext";
 import AWSActionsHelper
   from "components/common/list_of_values_input/tools/aws/aws-actions-helper";
 
-function AWSRepositoryInput({  awsToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
+function AWSKeyPairSelectionInput({  awsToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [repositories, setRepositories] = useState([]);
+  const [keyPairs, setKeyPairs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setRepositories([]);
+    setKeyPairs([]);
     if ( awsToolId && awsToolId !== "") {
       loadData();
     }
@@ -22,7 +22,7 @@ function AWSRepositoryInput({  awsToolId, visible, fieldName, dataObject, setDat
   const loadData = async () => {
     try {
       setIsLoading(true);
-      await getRepositories();
+      await getKeyPairs();
     }
     catch (error) {
       console.error(error);
@@ -33,12 +33,12 @@ function AWSRepositoryInput({  awsToolId, visible, fieldName, dataObject, setDat
     }
   };
 
-  const getRepositories = async () => {
-    const response  = await AWSActionsHelper.searchECRRepositories(awsToolId, getAccessToken);
-    let repositoriesResponse = response?.data?.data;
+  const getKeyPairs = async () => {
+    const response  = await AWSActionsHelper.getKeyPairs(awsToolId, getAccessToken);
+    let keyPairsResponse = response?.data?.data;
 
-    if (Array.isArray(repositoriesResponse)) {
-      setRepositories(repositoriesResponse);
+    if (Array.isArray(keyPairsResponse)) {
+      setKeyPairs(keyPairsResponse);
     }
   };
 
@@ -46,9 +46,9 @@ function AWSRepositoryInput({  awsToolId, visible, fieldName, dataObject, setDat
     return <></>;
   }
 
-  const getNoRepositoriesMessage = () => {
-    if (!isLoading && (repositories == null || repositories.length === 0) && awsToolId !== "") {
-      return ("No Repositories Found!");
+  const getNoKeyPairsMessage = () => {
+    if (!isLoading && (keyPairs == null || keyPairs.length === 0) && awsToolId !== "") {
+      return ("No Key Pairs Found!");
     }
   };
 
@@ -59,19 +59,19 @@ function AWSRepositoryInput({  awsToolId, visible, fieldName, dataObject, setDat
         dataObject={dataObject}
         setDataObject={setDataObject}
         setDataFunction={setDataFunction}
-        selectOptions={repositories}
+        selectOptions={keyPairs}
         busy={isLoading}
-        placeholderText={getNoRepositoriesMessage()}
+        placeholderText={getNoKeyPairsMessage()}
         clearDataFunction={clearDataFunction}
         valueField="name"
         textField="name"
-        disabled={disabled || isLoading || repositories.length === 0}
+        disabled={disabled || isLoading || keyPairs.length === 0}
       />
     </div>
   );
 }
 
-AWSRepositoryInput.propTypes = {
+AWSKeyPairSelectionInput.propTypes = {
   awsToolId: PropTypes.string,
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
@@ -82,8 +82,8 @@ AWSRepositoryInput.propTypes = {
   clearDataFunction: PropTypes.func
 };
 
-AWSRepositoryInput.defaultProps = {
+AWSKeyPairSelectionInput.defaultProps = {
   visible: true,
 };
 
-export default AWSRepositoryInput;
+export default AWSKeyPairSelectionInput;

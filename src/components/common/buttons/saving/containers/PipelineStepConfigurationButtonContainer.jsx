@@ -5,10 +5,10 @@ import PipelineStepConfigurationSaveButtonContainer from "./PipelineStepConfigur
 import LenientSaveButton from "../LenientSaveButton";
 
 // TODO: This will probably be removed if we make an actual detail view or if we do the modal concept where we have the tabs
-function PipelineStepConfigurationButtonContainer({ recordDto, persistRecord, handleClose }) {
+function PipelineStepConfigurationButtonContainer({ recordDto, persistRecord, disable, handleClose }) {
   return (
     <PipelineStepConfigurationSaveButtonContainer>
-      <LenientSaveButton recordDto={recordDto} updateRecord={persistRecord} />
+      <LenientSaveButton recordDto={recordDto} updateRecord={persistRecord} disable={disable} />
       <CloseButton recordDto={recordDto} closeEditorCallback={handleClose}  />
     </PipelineStepConfigurationSaveButtonContainer>
   );
@@ -17,7 +17,8 @@ function PipelineStepConfigurationButtonContainer({ recordDto, persistRecord, ha
 PipelineStepConfigurationButtonContainer.propTypes = {
   recordDto: PropTypes.object,
   persistRecord: PropTypes.func,
-  handleClose: PropTypes.func
+  handleClose: PropTypes.func,
+  disable: PropTypes.bool
 };
 
 export default PipelineStepConfigurationButtonContainer;
