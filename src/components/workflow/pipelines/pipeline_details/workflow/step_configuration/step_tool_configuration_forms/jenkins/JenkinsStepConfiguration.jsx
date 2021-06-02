@@ -27,7 +27,7 @@ import JenkinsStepConfGradleMavenScriptFilePath from "./inputs/jenkinsStepConfGr
 import JenkinsStepConfBuilXmlStepInfo from "./inputs/jenkinsStepConfBuilXmlStepInfo";
 import JenkinsStepConfDocker from "./inputs/jenkinsStepConfDocker";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-
+import JenkinsStepConfSFDCConfiguration from "./inputs/JenkinsStepConfSFDCConfiguration";
 
 
 //This must match the form below and the data object expected.  Each tools' data object is different
@@ -107,9 +107,7 @@ function JenkinsStepConfiguration({
   const { getAccessToken } = useContext(AuthContext);
   const [formData, setFormData] = useState(INITIAL_DATA);
   const [renderForm, setRenderForm] = useState(false);
-  //const [loading, setLoading] = useState(false);
   const [jenkinsList, setJenkinsList] = useState([]);
- // const [isJenkinsSearching, setisJenkinsSearching] = useState(false);
   const [accountsList, setAccountsList] = useState([]);
   const [jobsList, setJobsList] = useState([]);
   const [thresholdVal, setThresholdValue] = useState("");
@@ -117,25 +115,16 @@ function JenkinsStepConfiguration({
   const [jobType, setJobType] = useState("");
 
   const [listOfSteps, setListOfSteps] = useState([]);
-  const [show, setShow] = useState(false);
-  const [save, setSave] = useState(false);
 
   const [jenkinsStepConfigurationDto, setJenkinsStepConfigurationDto] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
-
-  let step = {};
-
-  let stepArrayIndex = plan.findIndex(x => x._id === stepId);
-  if (stepArrayIndex > 0) {
-    step = plan[stepArrayIndex];
-  }
 
   useEffect(() => {
     if (plan && stepId) {
       setListOfSteps(formatStepOptions(plan, stepId));
     }
   }, [plan, stepId]);
-  
+
   const formatStepOptions = (plan, stepId) => {
     let STEP_OPTIONS = plan.slice(
       0,
@@ -210,7 +199,7 @@ function JenkinsStepConfiguration({
 
   useEffect(() => {
     if (jobsList && jobsList.length > 0 && jenkinsStepConfigurationDto?.data?.toolJobId && jenkinsStepConfigurationDto?.data?.toolJobId.length > 0 && !jobsList[jobsList.findIndex((x) => x._id === jenkinsStepConfigurationDto?.data?.toolJobId)]) {
-     let toast = getErrorDialog(
+      let toast = getErrorDialog(
         "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Reigstry.",
         setShowToast,
         "detailPanelTop"
@@ -223,11 +212,11 @@ function JenkinsStepConfiguration({
   }, [jobsList, jenkinsStepConfigurationDto?.data?.toolJobId]);
 
   const loadFormData = async (step) => {
-   
+
     let { configuration, threshold, job_type } = step;
     let stepToolNew = null;
     if (typeof configuration !== "undefined") {
-      stepToolNew = { ...step  };
+      stepToolNew = { ...step };
 
       if (typeof configuration !== "undefined") {
         setFormData(configuration);
@@ -269,31 +258,6 @@ function JenkinsStepConfiguration({
     // }
   };
 
-  const saveConfig = async() => {
-    
-    const createJobPostBody = {
-      jobId: "",
-      pipelineId: pipelineId,
-      stepId: stepId,
-      buildParams: {
-        stepId: jenkinsStepConfigurationDto?.data.stepIdXML,
-      },
-    };
-    console.log("createJobPostBody: ", createJobPostBody);
-
-    const toolConfiguration = {
-      configuration: jenkinsStepConfigurationDto,
-      threshold: {
-        type: thresholdType,
-        value: thresholdVal,
-      },
-      job_type: jenkinsStepConfigurationDto?.data.jenkinsJobType, //jobType,
-    };
-    console.log("item: ", toolConfiguration);
-
-    await createJob( jenkinsStepConfigurationDto?.data.toolConfigId, toolConfiguration, stepId, createJobPostBody);
-  
-  };
   if (isLoading || jenkinsStepConfigurationDto == null) {
     return <DetailPanelLoadingDialog />;
   }
@@ -314,34 +278,16 @@ function JenkinsStepConfiguration({
       <JenkinsStepConfigJobType dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} setShowToast={setShowToast} />
       <JenkinsStepConfigJobName dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
       <JenkinsStepConfigToolJobId dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} jenkinsList={jenkinsList} jobsList={jobsList} />
-      <SFDCConfiguration
-        plan={plan}
-        pipelineId={pipelineId}
-        stepId={stepId}
-        step={step}
-        show={show}
-        setShow={setShow}
-        save={save}
-        setSave={setSave}
-        renderForm={renderForm}
-        jobType={jenkinsStepConfigurationDto?.data.jenkinsJobType}
-        jenkinsList={jenkinsList}
-        accountsList={accountsList}
-        formData={formData}
-        setFormData={setFormData}
-        setToast={setToast}
-        setShowToast={setShowToast}
-        saveConfig={saveConfig}
-      />
+      <JenkinsStepConfSFDCConfiguration dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} renderForm={renderForm} />
       <JenkinsStepConfGitCredential dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} jenkinsList={jenkinsList} jobsList={jobsList} accountsList={accountsList} />
       <JenkinsStepConfWorkspaceProjectInput dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
       <JenkinsStepConfRepository dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
       <JenkinsStepConfBranch dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} jenkinsList={jenkinsList} />
-      <JenkinsStepConfBuilXmlStepInfo  dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} listOfSteps={listOfSteps} />
+      <JenkinsStepConfBuilXmlStepInfo dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} listOfSteps={listOfSteps} />
       <JenkinsStepConfDocker dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
       <JenkinsStepConfPython dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
       <JenkinsStepConfGradleMavenScriptFilePath dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
-      
+
     </PipelineStepEditorPanelContainer>
   );
 

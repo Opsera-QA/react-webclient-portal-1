@@ -25,7 +25,7 @@ export const RegistryPopover = (data) => {
                 {Object.entries(data.configuration).map(function (a) {
                   return (
                     <div key={a}>
-                      {a[1].length > 0 && (
+                      {a[1]!=null && a[1].length > 0 && (
                         <>
                           <span className="text-muted pr-1">{a[0]}: </span> {a[1]}
                         </>

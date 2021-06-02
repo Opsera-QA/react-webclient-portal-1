@@ -133,6 +133,23 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "commands",
       isRequired: false
     },
+    {
+      label:"SalesForce Credentials",
+      id:"sfdcToolId",
+      isRequired:true,
+    },
+    {
+      label:"Unit Test Type",
+      id:"sfdcUnitTestType",
+      formText:"Note: TestLevel of NoTestRun cannot be used in production organizations"
+    },
+    {
+      label:"Destination SalesForce Credentials",
+      id:"sfdcDestToolId",
+      isRequired:true
+
+    }
+    
     
   ],
   newModelBase: {

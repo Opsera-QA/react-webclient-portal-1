@@ -5,7 +5,6 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function JenkinsStepConfigJobType({ dataObject, setDataObject, disabled, setShowToast }) {
 	const JOB_OPTIONS = [
-		{ value: "", label: "Select One", isDisabled: "yes" },
 		{ value: "job", label: "Custom Job" },
 		{ value: "opsera-job", label: "Opsera Managed Jobs" },
 		{ value: "sfdc-ant", label: "SFDC Package Generation Job" },

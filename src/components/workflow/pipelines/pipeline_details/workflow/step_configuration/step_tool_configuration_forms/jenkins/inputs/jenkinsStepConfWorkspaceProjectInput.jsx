@@ -47,7 +47,6 @@ function JenkinsStepConfWorkspaceProjectInput({ fieldName, dataObject, setDataOb
 
 		if (service === "bitbucket" && gitToolId && gitToolId.length > 0) {
 			// Fire off our API call
-			console.log(service, gitToolId, gitToolId, '**** @@@');
 			fetchRepos(service, gitToolId);
 		} else {
 			setIsWorkspacesSearching(true);
