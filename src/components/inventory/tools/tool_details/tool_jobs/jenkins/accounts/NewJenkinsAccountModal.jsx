@@ -4,6 +4,7 @@ import CreateModal from "../../../../../../common/modal/CreateModal";
 import Model from "../../../../../../../core/data_model/model";
 import jenkinsCreateAccountMetadata from "./jenkins-create-account-metadata";
 import JenkinsAccountEditorPanelNEW from "./JenkinsAccountEditorPanel";
+import RequiredFieldsMessage from "../../../../../../common/fields/editor/RequiredFieldsMessage";
 
 function NewJenkinsAccountModal({ toolData, setShowModal, showModal, loadData, jenkinsAccountDataDto, credentialId }) {
   const [jenkinsAccountData, setJenkinsAccountData] = useState(undefined);
@@ -36,6 +37,9 @@ function NewJenkinsAccountModal({ toolData, setShowModal, showModal, loadData, j
         handleClose={handleClose}
         credentialId={credentialId}
       />
+      <div>
+        <RequiredFieldsMessage/>
+      </div>
     </CreateModal>
   );
 }

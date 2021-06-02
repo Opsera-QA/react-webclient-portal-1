@@ -7,7 +7,6 @@ import { AuthContext } from "../../../../contexts/AuthContext";
 import Model from "../../../../core/data_model/model";
 import WarningDialog from "../../../common/status_notifications/WarningDialog";
 import ErrorDialog from "../../../common/status_notifications/error";
-import RequiredFieldsMessage from "../../../common/fields/editor/RequiredFieldsMessage";
 import PersistAndCloseButtonContainer from "../../../common/buttons/saving/containers/PersistAndCloseButtonContainer";
 
 function ToolVaultPanel({ toolData, isLoading }) {
@@ -90,9 +89,6 @@ function ToolVaultPanel({ toolData, isLoading }) {
           </Col>
         </Row>
         <div>{getPersistButtonContainer()}</div>
-        <div>
-          <RequiredFieldsMessage />
-        </div>
       </>
     );
   };
