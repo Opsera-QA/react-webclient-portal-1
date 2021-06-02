@@ -1,10 +1,11 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState, useRef} from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import AWSActionsHelper
   from "components/common/list_of_values_input/tools/aws/aws-actions-helper";
+import axios from "axios";
 
 function AWSKeyPairSelectionInput({  awsToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);
@@ -12,33 +13,57 @@ function AWSKeyPairSelectionInput({  awsToolId, visible, fieldName, dataObject, 
   const [keyPairs, setKeyPairs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  
   useEffect(() => {
-    setKeyPairs([]);
-    if ( awsToolId && awsToolId !== "") {
-      loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
     }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    if ( awsToolId && awsToolId !== "") {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, [awsToolId]);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getKeyPairs();
+      await getKeyPairs(cancelSource);
     }
     catch (error) {
-      console.error(error);
-      toastContext.showFormErrorBanner(error);
+      if (isMounted?.current === true) {
+        toastContext.showFormErrorBanner(error);
+        console.error(error);
+      }
     }
     finally {
       setIsLoading(false);
     }
   };
 
-  const getKeyPairs = async () => {
-    const response  = await AWSActionsHelper.getKeyPairs(awsToolId, getAccessToken);
-    let keyPairsResponse = response?.data?.data;
 
-    if (Array.isArray(keyPairsResponse)) {
-      setKeyPairs(keyPairsResponse);
+  const getKeyPairs = async (cancelSource = cancelTokenSource) => {
+    if (isMounted?.current === true) {
+      const response  = await AWSActionsHelper.getKeyPairs(awsToolId, getAccessToken, cancelSource);
+      let keyPairsResponse = response?.data?.data;
+
+      if (Array.isArray(keyPairsResponse)) {
+        setKeyPairs(keyPairsResponse);
+      }
     }
   };
 

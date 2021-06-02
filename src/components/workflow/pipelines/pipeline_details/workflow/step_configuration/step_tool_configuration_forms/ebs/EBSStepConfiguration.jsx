@@ -103,17 +103,15 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
   };
 
   const handleCreateAndSave = async () => {
-    if (ebsStepConfigurationDto.checkCurrentValidity()) {
-      let newConfiguration = ebsStepConfigurationDto.getPersistData();
-      const item = {
-        configuration: newConfiguration,
-        threshold: {
-          type: thresholdType,
-          value: thresholdVal,
-        },
-      };
-      parentCallback(item);
-    }
+    let newConfiguration = ebsStepConfigurationDto.getPersistData();
+    const item = {
+      configuration: newConfiguration,
+      threshold: {
+        type: thresholdType,
+        value: thresholdVal,
+      },
+    };
+    parentCallback(item);
   };
 
   if (isLoading || ebsStepConfigurationDto == null) {
@@ -126,7 +124,6 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
       recordDto={ebsStepConfigurationDto}
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
-      disable={!ebsStepConfigurationDto.checkCurrentValidity()}
     >
       <AWSToolSelectInput
         fieldName={"awsToolConfigId"}

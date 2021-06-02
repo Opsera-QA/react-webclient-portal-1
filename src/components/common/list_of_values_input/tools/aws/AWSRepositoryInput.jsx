@@ -1,44 +1,67 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState, useRef} from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import AWSActionsHelper
   from "components/common/list_of_values_input/tools/aws/aws-actions-helper";
-
+import axios from "axios";
 function AWSRepositoryInput({  awsToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [repositories, setRepositories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  
   useEffect(() => {
-    setRepositories([]);
-    if ( awsToolId && awsToolId !== "") {
-      loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
     }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    if ( awsToolId && awsToolId !== "") {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, [awsToolId]);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRepositories();
+      await getRepositories(cancelSource);
     }
     catch (error) {
-      console.error(error);
-      toastContext.showFormErrorBanner(error);
+      if (isMounted?.current === true) {
+        toastContext.showFormErrorBanner(error);
+        console.error(error);
+      }
     }
     finally {
       setIsLoading(false);
     }
   };
 
-  const getRepositories = async () => {
-    const response  = await AWSActionsHelper.searchECRRepositories(awsToolId, getAccessToken);
-    let repositoriesResponse = response?.data?.data;
+  const getRepositories = async (cancelSource = cancelTokenSource) => {
+    if (isMounted?.current === true) {
+      const response  = await AWSActionsHelper.searchECRRepositories(awsToolId, getAccessToken, cancelSource);
+      let repositoriesResponse = response?.data?.data;
 
-    if (Array.isArray(repositoriesResponse)) {
-      setRepositories(repositoriesResponse);
+      if (Array.isArray(repositoriesResponse)) {
+        setRepositories(repositoriesResponse);
+      }
     }
   };
 

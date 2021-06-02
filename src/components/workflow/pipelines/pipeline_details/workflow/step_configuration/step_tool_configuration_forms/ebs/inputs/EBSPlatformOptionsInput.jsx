@@ -18,26 +18,13 @@ const PLATFORM_OPTIONS = [
   ];
 
 function EBSPlatformOptionsInput({dataObject, setDataObject, disabled}) {
-    const setPlatformOptions = (fieldName, selectedOption) => {
-        let newDataObject = {...dataObject};
-        newDataObject.setData("platform", selectedOption.value);
-        setDataObject({...newDataObject});
-      };
-    const clearDataFunction = () => {
-        let newDataObject = {...dataObject};
-        newDataObject.setData("platform", "");
-        setDataObject({...newDataObject});
-      };
     return (
         <SelectInputBase
-            setDataFunction={setPlatformOptions}
-            setDataObject={setDataObject}
             valueField="value"
             textField="label"
             dataObject={dataObject}
-            clearDataFunction={clearDataFunction}
             filter={"contains"}
-            selectOptions={PLATFORM_OPTIONS ? PLATFORM_OPTIONS : []}
+            selectOptions={PLATFORM_OPTIONS}
             fieldName={"platform"}
             disabled={disabled}
         />     

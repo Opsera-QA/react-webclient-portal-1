@@ -9,26 +9,14 @@ const ACCESS_OPTIONS = [
   ];
 
 function EBSAccessOptionsInput({dataObject, setDataObject, disabled}) {
-    const setAccess = (fieldName, selectedOption) => {
-        let newDataObject = {...dataObject};
-        newDataObject.setData("bucketAccess", selectedOption.value);
-        setDataObject({...newDataObject});
-      };
-    const clearDataFunction = () => {
-        let newDataObject = {...dataObject};
-        newDataObject.setData("bucketAccess", "");
-        setDataObject({...newDataObject});
-      };
     return (
         <SelectInputBase
-            setDataFunction={setAccess}
             setDataObject={setDataObject}
             valueField="value"
             textField="label"
             dataObject={dataObject}
             filter={"contains"}
-            clearDataFunction={clearDataFunction}
-            selectOptions={ACCESS_OPTIONS ? ACCESS_OPTIONS : []}
+            selectOptions={ACCESS_OPTIONS}
             fieldName={"bucketAccess"}
             disabled={disabled}
         />     
