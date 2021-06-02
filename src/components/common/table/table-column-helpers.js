@@ -15,6 +15,10 @@ import WarningIcon from "../../common/icons/table/WarningIcon";
 import FailIcon from "../../common/icons/table/FailIcon";
 import AngleDown from "../../common/icons/table/AngleDown";
 import AngleUp from "../../common/icons/table/AngleUp";
+import ArrowCircleDown from "../../common/icons/table/ArrowCircleDown";
+import ArrowCircleUp from "../../common/icons/table/ArrowCircleUp";
+import MinusCircle from "../../common/icons/table/MinusCircle";
+import PauseCircle from "../../common/icons/table/PauseCircle";
 import React from "react";
 import Model from "core/data_model/model";
 import PipelineTypesField from "components/common/form_fields/pipelines/PipelineTypesField";
@@ -522,14 +526,13 @@ export const getChartTrendStatusColumn = (field, className) => {
       let status = typeof row?.value === "string" ? row.value.toLowerCase() : status;    
       switch (status) {
         case "red":        
-          return (<AngleUp />);
+          return (<ArrowCircleUp />);
         case "neutral":
-          // return (<WarningIcon/>);
-          return (<FontAwesomeIcon icon={faPauseCircle} className="cell-icon vertical-align-item" fixedWidth/>);
+          return (<PauseCircle/>);
         case "green":        
-          return (<AngleDown/>);
+        return (<ArrowCircleDown/>);
         case "-":        
-          return status;
+          return (<MinusCircle/>);
         default:
           return status;
       }
