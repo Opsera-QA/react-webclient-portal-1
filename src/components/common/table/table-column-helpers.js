@@ -13,8 +13,6 @@ import {
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
 import WarningIcon from "../../common/icons/table/WarningIcon";
 import FailIcon from "../../common/icons/table/FailIcon";
-import AngleDown from "../../common/icons/table/AngleDown";
-import AngleUp from "../../common/icons/table/AngleUp";
 import ArrowCircleDown from "../../common/icons/table/ArrowCircleDown";
 import ArrowCircleUp from "../../common/icons/table/ArrowCircleUp";
 import MinusCircle from "../../common/icons/table/MinusCircle";
