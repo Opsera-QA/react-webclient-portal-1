@@ -23,7 +23,8 @@ function DetailScreenContainer(
     accessRoleData,
     roleRequirement,
     titleActionBar,
-    objectRoles
+    objectRoles,
+    helpComponent
   }) {
   const [breadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const [parentBreadcrumb] = useState(getParentBreadcrumb(breadcrumbDestination));
@@ -58,6 +59,7 @@ function DetailScreenContainer(
         title={dataObject?.getDetailViewTitle()}
         inactive={activeField ? dataObject?.getData(activeField) === false : false}
         titleActionBar={titleActionBar}
+        helpComponent={helpComponent}
       />
     );
   };
@@ -139,7 +141,8 @@ DetailScreenContainer.propTypes = {
   accessRoleData: PropTypes.object,
   roleRequirement: PropTypes.string,
   titleActionBar: PropTypes.object,
-  objectRoles: PropTypes.array
+  objectRoles: PropTypes.array,
+  helpComponent: PropTypes.object
 };
 
 export default DetailScreenContainer;

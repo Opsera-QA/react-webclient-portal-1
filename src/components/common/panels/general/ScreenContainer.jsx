@@ -8,7 +8,21 @@ import RoleRequirementField from "components/common/fields/access/RoleRequiremen
 import {meetsRequirements} from "components/common/helpers/role-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function ScreenContainer({ breadcrumbDestination, pageDescription, children, isLoading, accessDenied, showBreadcrumbTrail, navigationTabContainer, accessRoleData, roleRequirement, hasTabContainer, titleActionBar }) {
+function ScreenContainer(
+  {
+    breadcrumbDestination,
+    pageDescription,
+    children,
+    isLoading,
+    accessDenied,
+    showBreadcrumbTrail,
+    navigationTabContainer,
+    accessRoleData,
+    roleRequirement,
+    hasTabContainer,
+    titleActionBar,
+    helpComponent
+  }) {
   const [breadcrumb, setBreadcrumb] = useState(getBreadcrumb(breadcrumbDestination));
   const toastContext = useContext(DialogToastContext);
 
@@ -102,7 +116,13 @@ function ScreenContainer({ breadcrumbDestination, pageDescription, children, isL
       {getTopNavigation()}
       <div className="content-container content-card-1 ">
         <div className="pl-2 content-block-header title-text-header-1">
-          <TitleBar titleIcon={breadcrumb.icon} title={breadcrumb.title} isLoading={isLoading} titleActionBar={titleActionBar}/>
+          <TitleBar
+            titleIcon={breadcrumb.icon}
+            title={breadcrumb.title}
+            isLoading={isLoading}
+            titleActionBar={titleActionBar}
+            helpComponent={helpComponent}
+          />
         </div>
         {getBody()}
         <div className="content-block-footer-text-container pt-2">
@@ -126,7 +146,8 @@ ScreenContainer.propTypes = {
   titleActionBar: PropTypes.object,
   accessRoleData: PropTypes.object,
   roleRequirement: PropTypes.string,
-  hasTabContainer: PropTypes.bool
+  hasTabContainer: PropTypes.bool,
+  helpComponent: PropTypes.bool
 };
 
 export default ScreenContainer;
