@@ -7,6 +7,7 @@ import NavigationTabContainer from "components/common/tabs/navigation/Navigation
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {AuthContext} from "contexts/AuthContext";
 import ParametersInventory from "components/inventory/parameters/ParametersInventory";
+import ToolRegistryHelpDocumentation from "../common/help/documentation/tool_registry/ToolRegistryHelpDocumentation";
 
 function Inventory() {
   const { getUserRecord, setAccessRoles } = useContext(AuthContext);
@@ -61,6 +62,9 @@ function Inventory() {
         The Opsera Tool Registry allows you to register, track and configure all of the tools in your organization in
         one centralized location.
       `}
+      helpComponent={
+        <ToolRegistryHelpDocumentation />
+      }
     >
       {getCurrentView()}
     </ScreenContainer>
