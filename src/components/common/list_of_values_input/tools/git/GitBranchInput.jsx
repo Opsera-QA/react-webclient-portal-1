@@ -45,7 +45,6 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
         setBranchList(branchesResponse);
       }
     }
-    //to set data in parent component -end
   };
 
   if (!visible) {

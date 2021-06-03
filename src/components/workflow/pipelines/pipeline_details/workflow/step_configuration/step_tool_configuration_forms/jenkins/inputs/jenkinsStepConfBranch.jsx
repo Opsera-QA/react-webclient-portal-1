@@ -8,7 +8,6 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 
 
-// TODO : Use GitBranchInput for all git based repo selections with set clear functions.
 
 function JenkinsStepConfBranch({ fieldName, dataObject, setDataObject, disabled, jenkinsList }) {
 
