@@ -84,13 +84,12 @@ function KafkaConnectToolSelectInput({ fieldName, dataObject, setDataObject, dis
             name: item.name,
             id: item._id,
             configuration: item.configuration,
-            accounts: item.accounts,
-            jobs: item.jobs,
           });
         });
         results = respObj;
       }
       const filteredList = results.filter((el) => el.configuration !== undefined);
+      console.log(filteredList);
       if (filteredList) {
         setKafkaConnectList(filteredList);
       }
@@ -114,7 +113,7 @@ function KafkaConnectToolSelectInput({ fieldName, dataObject, setDataObject, dis
         valueField={valueField}
         textField={textField}
         placeholderText={placeholder}
-        disabled={disabled || isLoading || (!isLoading && (kafkaConnectList == null || kafkaConnectList.length === 1))}
+        disabled={disabled || isKafkaConnectSearching || (kafkaConnectList == null || kafkaConnectList.length === 0)}
       />
       <small className="text-muted ml-3">{getInfoText()}</small>
     </div>

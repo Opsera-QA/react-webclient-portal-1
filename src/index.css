@@ -809,3 +809,12 @@ a:hover, .active, .link-text:hover {
     transform: scaleY(1.2);
     transform-origin: top;
 }
+
+.likeALink:hover {
+    text-decoration: underline;
+}
+
+.likeALink {
+    color: blue;
+    cursor: pointer;
+}

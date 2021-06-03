@@ -37,7 +37,7 @@ function KafkaConnectSCMToolSelectInput({dataObject, setDataObject, disabled}) {
       source.cancel();
       isMounted.current = false;
     };
-  }, [dataObject?.data?.service]);
+  }, [dataObject?.data?.service, disabled]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -83,7 +83,6 @@ function KafkaConnectSCMToolSelectInput({dataObject, setDataObject, disabled}) {
   };
 
   return (
-    
      <SelectInputBase
        fieldName={"gitToolId"}
        dataObject={dataObject}
