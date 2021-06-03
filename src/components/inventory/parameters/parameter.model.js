@@ -1,9 +1,9 @@
-import ModelBase from "core/data_model/model.base";
+import ModelBase, {DataState} from "core/data_model/model.base";
 import parametersActions from "components/inventory/parameters/parameters-actions";
 
 export class ParameterModel extends ModelBase {
-  constructor(data, metaData, newModel, getAccessToken, cancelTokenSource, loadData) {
-    super(data, metaData, newModel);
+  constructor(data, metaData, newModel, setStateFunction, getAccessToken, cancelTokenSource, loadData) {
+    super(data, metaData, newModel, setStateFunction);
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;
     this.loadData = loadData;
@@ -23,6 +23,17 @@ export class ParameterModel extends ModelBase {
     const response =  await parametersActions.deleteParameterV2(this.getAccessToken, this.cancelTokenSource, this);
     await this.loadData();
     return response;
+  };
+
+  getValueFromVault = async () => {
+    const response = await parametersActions.getParameterValueFromVaultV2(this.getAccessToken, this.cancelTokenSource, this.getData("_id"));
+
+    if (response?.data?.data) {
+      this.setData("value", response.data.data, false);
+
+      //TODO: Attach to setData function
+      this.setStateFunction({...this});
+    }
   };
 
   getNewInstance = (newData = this.getNewObjectFields()) => {

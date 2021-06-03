@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {faTrash} from "@fortawesome/pro-light-svg-icons";
@@ -6,8 +6,10 @@ import {cannotBeUndone} from "components/common/tooltip/popover-text";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import DeleteModal from "components/common/modal/DeleteModal";
 import IconBase from "components/common/icons/IconBase";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function DeleteButtonWithConfirmation({deleteRecord, dataObject, disabled, size, icon, className}) {
+  const toastContext = useContext(DialogToastContext);
   const [isDeleting, setIsDeleting] = useState(false);
   const isMounted = useRef(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -22,11 +24,20 @@ function DeleteButtonWithConfirmation({deleteRecord, dataObject, disabled, size,
 
   const handleDelete = async () => {
     setIsDeleting(true);
-    await deleteRecord();
 
-    if (isMounted?.current === true) {
-      setIsDeleting(false);
-      setShowDeleteModal(false);
+    try {
+      await deleteRecord();
+      toastContext.showDeleteSuccessResultDialog(dataObject?.getType());
+    }
+    catch (error) {
+      toastContext.showDeleteFailureResultDialog(dataObject?.getType(), error);
+      console.error(error);
+    }
+    finally {
+      if (isMounted?.current === true) {
+        setIsDeleting(false);
+        setShowDeleteModal(false);
+      }
     }
   };
 

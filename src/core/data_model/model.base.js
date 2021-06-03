@@ -9,11 +9,12 @@ export const DataState = {
 
 export class ModelBase {
 
-  constructor(data, metaData, newModel) {
+  constructor(data, metaData, newModel, setStateFunction) {
     this.metaData = {...metaData};
     this.data = {...this.getNewObjectFields(), ...data};
     this.newModel = newModel;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
+    this.setStateFunction = setStateFunction;
     this.changeMap = new Map();
   }
 
@@ -50,9 +51,13 @@ export class ModelBase {
     return fieldName && fieldName.includes('.') ? this.getNestedData(fieldName) : this.data[fieldName];
   };
 
-  setData = (fieldName, newValue) => {
+  setData = (fieldName, newValue, addToChangeMap = true) => {
     const oldValue = this.getData(fieldName);
-    this.propertyChange(fieldName, newValue, oldValue);
+
+    if (addToChangeMap !== false) {
+      this.propertyChange(fieldName, newValue, oldValue);
+    }
+
     this.data[fieldName] = newValue;
   };
 
