@@ -260,7 +260,7 @@ const SfdcPipelineProfileComponentsView = (
     };
 
     const sfdcResponse = await sfdcPipelineActions.getListFromPipelineStorageV2(getAccessToken, cancelTokenSource, postBody);
-    return sfdcResponse?.data?.data?.profileComponentList?.data;
+    return sfdcResponse?.data?.data?.profileComponentList;
   };
 
   const sfdcColumnsWithCheckBoxCell = useMemo(

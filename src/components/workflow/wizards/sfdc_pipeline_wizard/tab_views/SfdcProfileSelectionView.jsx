@@ -218,7 +218,7 @@ const SfdcProfileSelectionView = (
     };
 
     const sfdcResponse = await sfdcPipelineActions.getListFromPipelineStorageV2(getAccessToken, cancelTokenSource, postBody);
-    return sfdcResponse?.data?.data?.sfdcCommitList?.data;
+    return sfdcResponse?.data?.data?.sfdcCommitList;
   };
 
   const sfdcPolling = async (cancelSource = cancelTokenSource, newSfdcFilterDto = sfdcFilterDto, count = 1) => {
