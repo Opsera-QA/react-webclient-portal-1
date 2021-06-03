@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
-import {faInfoSquare} from "@fortawesome/pro-light-svg-icons";
+import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 
 function HelpOverlayBase({ children, showPanel, closePanel, isLoading, className, titleIcon, titleText}) {
   return (
@@ -31,7 +31,7 @@ HelpOverlayBase.propTypes = {
 
 HelpOverlayBase.defaultProps = {
   className: "px-3 help-body",
-  titleIcon: faInfoSquare,
+  titleIcon: faQuestionCircle,
   titleText: "Help"
 };
 
