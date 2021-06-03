@@ -447,6 +447,9 @@ export const getPipelineStatusIconCss = (value) => {
     case "stopped":
     case "halted":
       return ("fa-octagon red");
+    case "passed":
+    case "success":
+    case "successful":
     default:
       return ("fa-check-circle green");
   }
@@ -534,27 +537,24 @@ export const getTablePipelineStatusColumn = (field, className) => {
   };
 };
 
-export const getChartPipelineStatusColumn = (field, className) => {
+export const getChartPipelineStatusColumn = (field, className, width = 120) => {
   return {
     header: getColumnHeader(field),
     id: getColumnId(field),
-    Cell: function parseStatus(row) {
-      let status = typeof row?.value === "string" ? row.value.toLowerCase() : status;
-      switch (status) {
-        case "failure":
-        case "failed":
-          return (<FailIcon />);
-        case "unknown":
-          return (<WarningIcon/>);
-        case "passed":
-        case "success":
-        case "successful":
-          return (<SuccessIcon/>);
-        default:
-          return status;
+    width: width,
+    template: function (text, row, col) {
+      if (text == null) {
+        return "";
       }
+
+      return (
+        `<span>
+          <i class="fal ${getPipelineStatusIconCss(text)} cell-icon vertical-align-item"></i>
+          <span class="ml-1">${text}</span>
+        </span>`
+      );
     },
-    class: className ? className :  undefined
+    class: className ? className : undefined
   };
 };
 
