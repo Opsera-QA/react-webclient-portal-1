@@ -66,7 +66,8 @@ function CSVFileUploadComponent(
       setLoadingAllFiles(true);
       const componentTypeList = await pullComponentsFunction(true);
 
-      console.log("componentTypeList: " + JSON.stringify(componentTypeList));
+      console.log(componentTypeList?.length);
+      // console.log("componentTypeList: " + JSON.stringify(componentTypeList));
       if (Array.isArray(componentTypeList) && componentTypeList.length > 0) {
         setAllComponentTypes(componentTypeList);
       }
