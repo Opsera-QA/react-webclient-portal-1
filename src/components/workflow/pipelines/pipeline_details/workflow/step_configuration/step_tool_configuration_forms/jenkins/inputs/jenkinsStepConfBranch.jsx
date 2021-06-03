@@ -30,14 +30,18 @@ function JenkinsStepConfBranch({ fieldName, dataObject, setDataObject, disabled,
     </Tooltip>
   );
 
- 
-
-
   const handleDTOChange = (fieldName, selectedOption) => {
     let newDataObject = { ...dataObject };
     newDataObject.setData("branch", selectedOption.value);
     newDataObject.setData("defaultBranch", selectedOption.value);
     newDataObject.setData("gitBranch", selectedOption.value);
+    setDataObject({ ...newDataObject });
+  };
+  const clearDataFunction = (fieldName) => {
+    let newDataObject = { ...dataObject };
+    newDataObject.setData("branch", "");
+    newDataObject.setData("defaultBranch", "");
+    newDataObject.setData("gitBranch", "");
     setDataObject({ ...newDataObject });
   };
 
@@ -61,14 +65,17 @@ function JenkinsStepConfBranch({ fieldName, dataObject, setDataObject, disabled,
     newDataObject.setData("hasUpstreamBranch", value);
     setDataObject({ ...newDataObject });
   };
-  const handleUpstreamBranchChange = (selectedData) => {
+  const handleUpstreamBranchChange = (fieldName,selectedData) => {
     let newDataObject = { ...dataObject };
     newDataObject.setData("upstreamBranch", selectedData.value);
     setDataObject({ ...newDataObject });
   };
+  const clearUpstreamBranchChange = (fieldName) => {
+    let newDataObject = { ...dataObject };
+    newDataObject.setData("upstreamBranch", "");
+    setDataObject({ ...newDataObject });
+  };
 
-
-  
   const loadBranchSelect = () => {
       return (
         <>
@@ -83,6 +90,7 @@ function JenkinsStepConfBranch({ fieldName, dataObject, setDataObject, disabled,
               setDataObject={setDataObject}
               disabled={disabled}
               setsetBranchList={setBranchList}
+              clearDataFunction={clearDataFunction}
             />
           {loadWorkspaceDeleteFlag()}
         </>);
@@ -144,6 +152,7 @@ function JenkinsStepConfBranch({ fieldName, dataObject, setDataObject, disabled,
             valueField="value"
             textField="name"
             disabled={disabled}
+            clearDataFunction={clearUpstreamBranchChange}
           />
         );
       } else {
@@ -166,6 +175,7 @@ function JenkinsStepConfBranch({ fieldName, dataObject, setDataObject, disabled,
           valueField="value"
           textField="name"
           disabled={disabled}
+          clearDataFunction={clearDataFunction}
         />
       );
     } else {

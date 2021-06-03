@@ -47,6 +47,22 @@ function JenkinsStepConfigJobType({ dataObject, setDataObject, disabled, setShow
 		setDataObject({ ...newDataObject });
 
 	};
+	const clearDataFunction =(fieldName)=>{
+		let newDataObject = { ...dataObject };
+		newDataObject.setData("buildType", '');
+		newDataObject.setData("jobDescription", "");
+		newDataObject.setData("jobType", "");
+		newDataObject.setData("isOrgToOrg", false);
+		newDataObject.setData("sfdcToolId", "");
+		newDataObject.setData("accountUsername", "");
+		newDataObject.setData('jenkinsJobType', "");
+		newDataObject.setData("toolJobId", "");
+		newDataObject.setData("toolJobType", "");
+		newDataObject.setData("rollbackBranchName", "");
+		newDataObject.setData("stepIdXML", "");
+		newDataObject.setData("sfdcDestToolId", "");
+		setDataObject({ ...newDataObject });
+	};
 	return (
 		<>
 			<SelectInputBase
@@ -59,6 +75,8 @@ function JenkinsStepConfigJobType({ dataObject, setDataObject, disabled, setShow
 				valueField="value"
 				textField="label"
 				disabled={disabled}
+				clearDataFunction={clearDataFunction}
+				
 			/>
 
 		</>);

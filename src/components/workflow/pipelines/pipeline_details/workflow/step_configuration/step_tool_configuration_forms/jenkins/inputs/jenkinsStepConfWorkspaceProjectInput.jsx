@@ -63,6 +63,14 @@ function JenkinsStepConfWorkspaceProjectInput({ fieldName, dataObject, setDataOb
 		emptyFields.forEach(item => newDataObject.setData(item), "");
 		setDataObject({ ...newDataObject });
 	};
+	const clearDataFunction = (fieldName)=>{
+		let newDataObject = { ...dataObject };
+		const emptyFields = ['repository', 'repoId', 'projectId', 'gitUrl', 'sshUrl', 'branch', 'defaultBranch', 'gitBranch'];
+		newDataObject.setData('workspace', "");
+		newDataObject.setData('workspaceName', "");
+		emptyFields.forEach(item => newDataObject.setData(item), "");
+		setDataObject({ ...newDataObject });
+	};
 
 
 	const renderNotification = () => {
@@ -97,6 +105,7 @@ function JenkinsStepConfWorkspaceProjectInput({ fieldName, dataObject, setDataOb
 					valueField="key"
 					textField="name"
 					disabled={disabled}
+					clearDataFunction={clearDataFunction}
 				/>
 			) : null}
 		</>);

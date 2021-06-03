@@ -71,6 +71,20 @@ function JenkinsStepConfRepository({ fieldName, dataObject, setDataObject, disab
           setDataObject({...newDataObject});
         
       };
+      const clearDataFunction = (fieldName, selectedOption) => {
+        let newDataObject = {...dataObject};
+        
+          newDataObject.setData("repository", "");
+          newDataObject.setData("repoId", "");
+          newDataObject.setData("projectId", "");
+          newDataObject.setData("gitUrl",  "");
+          newDataObject.setData("sshUrl",  "");
+          newDataObject.setData("branch", "");
+          newDataObject.setData("defaultBranch", "");
+          newDataObject.setData("gitBranch", "");
+          setDataObject({...newDataObject});
+        
+      };
 
       if(service && gitToolId && !excludeArr.includes(jobType) && 
       (service === "bitbucket"?  workspace && workspace.length > 0 : true ) && 
@@ -96,6 +110,7 @@ function JenkinsStepConfRepository({ fieldName, dataObject, setDataObject, disab
               valueField="value"
               textField="name"
               disabled={disabled}
+              clearDataFunction={clearDataFunction}
             />
               
             ) : (

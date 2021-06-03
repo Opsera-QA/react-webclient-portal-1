@@ -9,9 +9,14 @@ function JenkinsStepConfBuilXmlStepInfo({ dataObject, setDataObject, disabled, l
 
 	const jobType = dataObject.getData('jobType');
 
-	const handleDTOChange = (selectedOption) => {
+	const handleDTOChange = (fieldName,selectedOption) => {
 		let newDataObject = { ...dataObject };
 		newDataObject.setData('stepIdXML', selectedOption._id);
+		setDataObject({ ...newDataObject });
+	};
+	const clearDataFunction =(fieldName)=>{
+		let newDataObject = { ...dataObject };
+		newDataObject.setData('stepIdXML', "");
 		setDataObject({ ...newDataObject });
 	};
 	if (jobType !== "SFDC PUSH ARTIFACTS") {
@@ -29,6 +34,7 @@ function JenkinsStepConfBuilXmlStepInfo({ dataObject, setDataObject, disabled, l
 			valueField="gitCredential"
 			textField="gitCredential"
 			disabled={disabled}
+			clearDataFunction={clearDataFunction}
 		/>);
 	} else {
 		return (

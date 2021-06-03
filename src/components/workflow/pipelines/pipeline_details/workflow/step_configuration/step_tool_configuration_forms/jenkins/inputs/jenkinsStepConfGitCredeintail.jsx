@@ -31,7 +31,17 @@ function JenkinsStepConfGitCredential({ fieldName, dataObject, setDataObject, di
 		emptyFields.forEach(item => newDataObject.setData(item), "");
 		setDataObject({ ...newDataObject });
 	};
-
+	const clearDataFunction = (fieldName) => {
+		let newDataObject = { ...dataObject };
+		const emptyFields = ['repoId', 'gitUrl', 'sshUrl', 'repository', 'workspace',
+			'workspaceName', 'branch', 'projectId', 'defaultBranch'];
+		newDataObject.setData('gitToolId', "");
+		newDataObject.setData('gitCredential', "");
+		newDataObject.setData('gitUserName', "");
+		newDataObject.setData('service', "");
+		emptyFields.forEach(item => newDataObject.setData(item), "");
+		setDataObject({ ...newDataObject });
+	};
 	const renderNotification = () => {
 		if (accountsList.length < 1) {
 			return (<div className="form-text text-muted p-2">
@@ -63,6 +73,8 @@ function JenkinsStepConfGitCredential({ fieldName, dataObject, setDataObject, di
 							valueField="gitCredential"
 							textField="gitCredential"
 							disabled={disabled}
+							clearDataFunction={clearDataFunction}
+
 						/>) : null}
 				</>
 			);

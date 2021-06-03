@@ -109,7 +109,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       isRequired: false
     },	
     {	
-      label:"Script File Path",	
+      label:"Specify Script File Path",	
       id:"inputFilePath",
       isRequired: false
     },

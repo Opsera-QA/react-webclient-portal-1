@@ -44,9 +44,10 @@ function JenkinsStepConfigTool({ dataObject, setDataObject, disabled, jenkinsLis
 	const getInfoText = () => {
 		if (dataObject.data.toolConfigId && dataObject.data.toolConfigId.length > 0) {
 			return (
-				<Link to={"/inventory/tools/details/" + dataObject.data.toolConfigId}>
-					<FontAwesomeIcon icon={faTools} className="pr-1" /> View/edit this tool&apos;s Registry settings
-				</Link>);
+				<Link to={`/inventory/tools/details/${dataObject.getData('toolConfigId')}`}>
+				<span><FontAwesomeIcon icon={faTools} className="pr-1 dark-gray" />View Or Edit this Tool&apos;s Registry settings</span>
+				</Link>
+				);
 		}
 		return null;
 	};
@@ -82,7 +83,9 @@ function JenkinsStepConfigTool({ dataObject, setDataObject, disabled, jenkinsLis
 					disabled={disabled}
 					busy={!jenkinsList}
 				/>
-				{getInfoText()}
+				<small className="text-muted">
+					{getInfoText()}
+				</small>
 			</>
 		);
 	}
