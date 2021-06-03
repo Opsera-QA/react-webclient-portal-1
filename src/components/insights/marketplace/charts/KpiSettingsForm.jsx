@@ -19,6 +19,7 @@ import {
   kpiReleaseFilterMetadata,
   kpiProjectFilterMetadata,
   kpiSeleniumTestSuitesFilterMetadata,
+  kpiSonarProjectLanguagesFilterMetadata,
 } from "components/insights/marketplace/charts/kpi-configuration-metadata";
 import Model from "core/data_model/model";
 import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
@@ -31,6 +32,7 @@ import JenkinsResultFilterInput from "components/common/list_of_values_input/ins
 import ManualKpiMultiSelectInputBase from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
 import SeleniumTestSuitesMultiSelectInput from "components/common/list_of_values_input/insights/charts/selenium/SeleniumTestSuitesMultiSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
+import SonarProjectLanguagesMultiSelectInput from "components/common/list_of_values_input/insights/charts/sonar/SonarProjectLanguagesMultiSelectInput";
 
 function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -87,6 +89,13 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
   );
   const [kpiProjectFilter, setKpiProjectFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "project", kpiProjectFilterMetadata)
+  );
+  const [kpiSonarProjectLanguagesFilter, setKpiSonarProjectLanguagesFilter] = useState(
+    modelHelpers.getDashboardFilterModel(
+      kpiConfiguration,
+      "sonar-project-languages",
+      kpiSonarProjectLanguagesFilterMetadata
+    )
   );
 
   const tagFilterEnabled = [
@@ -175,6 +184,9 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "sfdc-unit-testing",
     "sonar-security-scorecard",
     "selenium-test-summary-percentages",
+    "sonar-bugs-metric-scorecard",
+    "sonar-codesmells-metric-scorecard",
+    "sonar-vulnerabilities-metric-scorecard",
   ];
 
   const getKpiFilters = (filter) => {
@@ -343,6 +355,20 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
             />
           </div>
         );
+      case "sonar-project-languages":
+        return (
+          <div>
+            <SonarProjectLanguagesMultiSelectInput
+              placeholderText={"Select Language(s)"}
+              type={"kpi_filter"}
+              fieldName={"value"}
+              valueField={"value"}
+              textField={"text"}
+              setDataObject={setKpiSonarProjectLanguagesFilter}
+              dataObject={kpiSonarProjectLanguagesFilter}
+            />
+          </div>
+        );
     }
   };
 
@@ -473,6 +499,15 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "selenium-test-suites")
       ].value = kpiSeleniumTestSuitesFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sonar-project-languages")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "sonar-project-languages")
+      ].value = kpiSonarProjectLanguagesFilter.getData("value");
     }
 
     setKpiSettings({ ...newKpiSettings });

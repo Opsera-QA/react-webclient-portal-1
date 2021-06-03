@@ -288,4 +288,21 @@ export const kpiProjectFilterMetadata = {
   },
 };
 
+export const kpiSonarProjectLanguagesFilterMetadata = {
+  type: "Sonar Project Languages",
+  fields: [
+    {
+      label: "Type",
+      id: "type",
+    },
+    {
+      label: "Language(s)",
+      id: "value",
+    },
+  ],
+  newObjectFields: {
+    value: [],
+  },
+};
+
 export default kpiConfigurationMetadata;
