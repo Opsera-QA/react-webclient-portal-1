@@ -8,27 +8,38 @@ import Model from "../../../../core/data_model/model";
 import WarningDialog from "../../../common/status_notifications/WarningDialog";
 import ErrorDialog from "../../../common/status_notifications/error";
 import PersistAndCloseButtonContainer from "../../../common/buttons/saving/containers/PersistAndCloseButtonContainer";
+import RequiredFieldsMessage from "../../../common/fields/editor/RequiredFieldsMessage";
 
 function ToolVaultPanel({ toolData, isLoading }) {
   const { getAccessToken } = useContext(AuthContext);
   const [temporaryDataObject, setTemporaryDataObject] = useState(undefined);
 
   useEffect(() => {
-    setTemporaryDataObject(new Model({ ...toolData?.getPersistData() }, toolData?.getMetaData(), false));
+    setTemporaryDataObject(
+      new Model(
+        { ...toolData?.getPersistData() },
+        toolData?.getMetaData(),
+        false
+      )
+    );
   }, []);
 
   const saveData = async () => {
     toolData.setData("vault", temporaryDataObject.getData("vault"));
     let newDataObject = { ...toolData };
-    const response = await toolsActions.updateTool(newDataObject, getAccessToken);
-    setTemporaryDataObject({...newDataObject});
+    const response = await toolsActions.updateTool(
+      newDataObject,
+      getAccessToken
+    );
+    setTemporaryDataObject({ ...newDataObject });
     return response;
   };
 
   const getWarningDialogs = () => {
     if (
       (toolData.getData("vault") && toolData.getData("vault").length > 0) ||
-      (temporaryDataObject?.getData("vault") && temporaryDataObject?.getData("vault").length > 0)
+      (temporaryDataObject?.getData("vault") &&
+        temporaryDataObject?.getData("vault").length > 0)
     ) {
       return (
         <div className={"px-3"}>
@@ -44,9 +55,7 @@ function ToolVaultPanel({ toolData, isLoading }) {
   };
 
   const getErrorDialogs = () => {
-    if (
-      temporaryDataObject?.changeMap.has("vault")
-    ) {
+    if (temporaryDataObject?.changeMap.has("vault")) {
       return (
         <div className={"py-1"}>
           <ErrorDialog
@@ -89,6 +98,9 @@ function ToolVaultPanel({ toolData, isLoading }) {
           </Col>
         </Row>
         <div>{getPersistButtonContainer()}</div>
+        <div>
+          <RequiredFieldsMessage />
+        </div>
       </>
     );
   };
@@ -97,7 +109,15 @@ function ToolVaultPanel({ toolData, isLoading }) {
     <>
       <div className="text-muted p-3">
         <div className="h6">Vault Management</div>
-        <div className="mb-3">Opsera secures tokens, passwords and other sensitive information in a Hashicorp Vault Instance. By default Opsera uses the vault instance that is spun up for the the specific organization but users have the option to choose whether to store information in the default Opsera provided vault or configure their own Hashicorp vault instance in Tool Registry. This setting only applies to this tool. All other tools use the Opsera provided default vault unless specified by the user.</div>
+        <div className="mb-3">
+          Opsera secures tokens, passwords and other sensitive information in a
+          Hashicorp Vault Instance. By default Opsera uses the vault instance
+          that is spun up for the the specific organization but users have the
+          option to choose whether to store information in the default Opsera
+          provided vault or configure their own Hashicorp vault instance in Tool
+          Registry. This setting only applies to this tool. All other tools use
+          the Opsera provided default vault unless specified by the user.
+        </div>
         {getWarningDialogs()}
         {getErrorDialogs()}
         {getVaultPanel()}
