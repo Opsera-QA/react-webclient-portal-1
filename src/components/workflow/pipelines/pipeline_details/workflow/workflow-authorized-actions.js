@@ -1,7 +1,9 @@
-import {ACCESS_ROLES} from "components/common/helpers/role-helpers";
+import {ACCESS_ROLES, ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import * as roleHelpers from "components/common/helpers/role-helpers";
 
 const workflowAuthorizedActions = {};
 
+// TODO: This should be broken up into separate files once the standard is complete
 /***
  * Example syntax to use in component:
  *
@@ -230,6 +232,62 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
   }
 };
 
+
+/**
+ * Handles all authorization of actions for customParameters.  It factors in the overall user roles and the individual object (parameter)
+ * access roles.
+ * @param customerAccessRules
+ * @param action
+ * @param roleDefinitions
+ * @param owner
+ * @param objectRoles
+ * @returns {boolean}
+ *
+ *
+ * Administrator & Owner Only Roles:
+ *
+ */
+workflowAuthorizedActions.isCustomerParameterActionAllowed = (customerAccessRules, action, owner, objectRoles, roleDefinitions) => {
+  if (customerAccessRules == null || roleDefinitions == null) {
+    return false;
+  }
+
+  let roleAllowed = false;
+  const allowedRoles = roleHelpers.getAllowedRoles(action, roleDefinitions);
+
+  if (!Array.isArray(allowedRoles) || allowedRoles.length === 0) {
+    return false;
+  }
+
+  if (allowedRoles.includes(ACCESS_ROLES.NO_ACCESS_RULES) ) {
+    return true;
+  }
+
+  // TODO: After standard is set, we should just pull based on userObjectRole created with calculateUserObjectRole instead of checking this way.
+  if (customerAccessRules.OpseraAdministrator) {
+    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.OPSERA_ADMINISTRATOR);
+  }
+
+  if (customerAccessRules.Administrator) {
+    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.ADMINISTRATOR);
+  }
+
+  if (customerAccessRules.SassPowerUser) {
+    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.SAAS_USER);
+  }
+
+  if (process.env.REACT_APP_STACK === "free-trial") {
+    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.FREE_TRIAL_USER);
+  }
+
+  if (owner && customerAccessRules.UserId === owner) {
+    roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.OWNER);
+  }
+
+  const userObjectRole = calculateUserObjectRole(customerAccessRules.Email, customerAccessRules.Groups, objectRoles);
+  return roleAllowed || allowedRoles.includes(userObjectRole);
+};
+
 /**
  * Handles all authorization of actions in git tasks.  It factors in the overall user roles and the individual object (pipeline)
  * access roles.
@@ -393,8 +451,20 @@ workflowAuthorizedActions.calculateRoleLevel = (customerAccessRules, objectRoles
     return ACCESS_ROLES.OWNER;
   }
 
-  if (customerAccessRules.OpseraAdministrator || customerAccessRules.Administrator) {
+  if (customerAccessRules.OpseraAdministrator) {
+    return ACCESS_ROLES.OPSERA_ADMINISTRATOR;
+  }
+
+  if (customerAccessRules.Administrator) {
     return ACCESS_ROLES.ADMINISTRATOR;
+  }
+
+  if (customerAccessRules.SassPowerUser) {
+    return ACCESS_ROLES.SAAS_USER;
+  }
+
+  if (process.env.REACT_APP_STACK === "free-trial") {
+    return ACCESS_ROLES.FREE_TRIAL_USER;
   }
 
   //filter out only user records (groups null)
@@ -442,7 +512,7 @@ workflowAuthorizedActions.calculateRoleLevel = (customerAccessRules, objectRoles
     return userGroupsRole[0];
   }
 
-  return ACCESS_ROLES.UNAUTHORIZED;
+  return ACCESS_ROLES.READ_ONLY;
 };
 
 export default workflowAuthorizedActions;
