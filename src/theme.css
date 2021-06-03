@@ -1094,6 +1094,11 @@ div.data-blocks-body {
   height: 100%;
 }
 
+.selected-data-block {
+    border-bottom: 2px solid #CF940C !important;
+    border-radius: 5px;
+}
+
 div.data-blocks-status {
   content: "";
   width: 10px;
