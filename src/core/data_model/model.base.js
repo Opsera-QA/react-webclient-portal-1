@@ -51,7 +51,7 @@ export class ModelBase {
     return fieldName && fieldName.includes('.') ? this.getNestedData(fieldName) : this.data[fieldName];
   };
 
-  setData = (fieldName, newValue, addToChangeMap = true) => {
+  setData = (fieldName, newValue, addToChangeMap = true, refreshState = false) => {
     const oldValue = this.getData(fieldName);
 
     if (addToChangeMap !== false) {
@@ -59,6 +59,10 @@ export class ModelBase {
     }
 
     this.data[fieldName] = newValue;
+
+    if (this.setStateFunction && refreshState === true) {
+      this.setStateFunction({...this});
+    }
   };
 
   createModel = async () => {

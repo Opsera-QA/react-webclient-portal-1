@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {
   getEditableTextColumn,
@@ -11,10 +11,33 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 import NewParameterOverlay from "components/inventory/parameters/NewParameterOverlay";
 import VanitySelectionTable from "components/common/table/VanitySelectionTable";
+import workflowAuthorizedActions
+  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+import {AuthContext} from "contexts/AuthContext";
 
-function ParameterTable({ data, parameterMetadata, setParameterData, loadData, isLoading, getNewModel, isMounted, getAccessToken, cancelTokenSource }) {
+function ParameterTable({ data, parameterMetadata, setParameterData, loadData, isLoading, getNewModel, isMounted, getAccessToken, cancelTokenSource, parameterRoleDefinitions }) {
   const toastContext = useContext(DialogToastContext);
+  const { getAccessRoleData } = useContext(AuthContext);
+  const [userRoleAccess, setUserRoleAccess] = useState(undefined);
   const [columns, setColumns] = useState([]);
+
+  useEffect(() => {
+    if (parameterRoleDefinitions) {
+      loadAccessRoleData().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
+  }, [parameterRoleDefinitions]);
+
+  const loadAccessRoleData = async () => {
+    const accessRoleData = await getAccessRoleData();
+
+    if (accessRoleData) {
+      setUserRoleAccess(accessRoleData);
+    }
+  };
 
   useEffect(() => {
     setColumns([]);
@@ -63,10 +86,22 @@ function ParameterTable({ data, parameterMetadata, setParameterData, loadData, i
     );
   };
 
+  const getAddRecordFunction = () => {
+    const addAllowed = workflowAuthorizedActions.isCustomerParameterActionAllowed(userRoleAccess, "create_parameter", undefined, undefined, parameterRoleDefinitions);
+
+    if (addAllowed === true) {
+      return createParameter;
+    }
+  };
+
+  if (userRoleAccess == null) {
+    return null;
+  }
+
   return (
     <FilterContainer
       loadData={loadData}
-      addRecordFunction={createParameter}
+      addRecordFunction={getAddRecordFunction()}
       showBorder={false}
       isLoading={isLoading}
       body={getParameterTable()}
@@ -88,7 +123,8 @@ ParameterTable.propTypes = {
   setParameterData: PropTypes.func,
   isMounted: PropTypes.object,
   getAccessToken: PropTypes.func,
-  cancelTokenSource: PropTypes.object
+  cancelTokenSource: PropTypes.object,
+  parameterRoleDefinitions: PropTypes.object
 };
 
 export default ParameterTable;
