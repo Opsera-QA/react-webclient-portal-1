@@ -3,18 +3,33 @@ import PropTypes from "prop-types";
 import Card from "react-bootstrap/Card";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
+// TODO: I need to remember to rewrite this
 function DataBlock({ title, subTitle, toolTipText, clickAction, statusColor, 
-                   ellipsesContent, footerText, modal, view }) {
+                   ellipsesContent, footerText, modal, view, className }) {
   const statusColors = {
     success: "#00897b",
     danger: "#E57373",
     warning: "#F1AD0F"
   };
 
+  const getCardClassNames = () => {
+    let classNames = "box-metric";
+
+    if (clickAction) {
+      classNames += " pointer";
+    }
+
+    if (className) {
+      classNames += " " + className;
+    }
+
+    return classNames;
+  };
+
   return (
     <>
       <TooltipWrapper innerText={toolTipText}>
-        <Card className="box-metric pointer"
+        <Card className={getCardClassNames()}
               style={{ height: view !== "small" ? "100px" : "auto", maxWidth: "250px"}}
               onClick={clickAction}>
           <Card.Body className="data-blocks-body">
@@ -38,7 +53,7 @@ function DataBlock({ title, subTitle, toolTipText, clickAction, statusColor,
 }
 
 DataBlock.propTypes = {
-  title: PropTypes.string,
+  title: PropTypes.any,
   subTitle: PropTypes.string,
   toolTipText: PropTypes.string,
   clickAction: PropTypes.func,
@@ -46,7 +61,8 @@ DataBlock.propTypes = {
   ellipsesContent: PropTypes.node,
   footerText: PropTypes.node,
   modal: PropTypes.node,
-  view: PropTypes.string
+  view: PropTypes.string,
+  className: PropTypes.string
 };
 
 export default DataBlock;
