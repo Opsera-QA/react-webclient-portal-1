@@ -88,6 +88,11 @@ const SfdcPipelineWizard = ({
       (step) => step?.tool && step?.active && (step?.tool?.job_type === "sfdc-ant" || step?.tool?.job_type === "sfdc-ant-profile") && step?.tool?.tool_identifier === "jenkins"
     );
     // console.log(stepArrayIndex);
+    if(stepArrayIndex === -1){
+      stepArrayIndex = steps.findIndex(
+        (step) => step?.tool && step?.active && (step?.tool?.job_type.toUpperCase() === "SFDC CREATE PACKAGE XML" || step?.tool?.job_type.toUpperCase() === "SFDC PROFILE DEPLOY") && step?.tool?.tool_identifier === "sfdc-configurator"
+      );
+    }
     if (stepArrayIndex === -1) {
       setError(
         "Warning, this pipeline is missing the default SFDC Jenkins Step needed.  Please edit the workflow and add the SFDC Ant Job setting in order to run this pipeline."
@@ -101,7 +106,7 @@ const SfdcPipelineWizard = ({
       setSFDCToolId(steps[stepArrayIndex]?.tool?.configuration?.sfdcToolId);
       setStepToolConfig(steps[stepArrayIndex]?.tool?.configuration);
       setIsOrgToOrg(steps[stepArrayIndex]?.tool?.configuration?.isOrgToOrg);
-      setIsProfiles(steps[stepArrayIndex]?.tool?.job_type === "sfdc-ant-profile");
+      setIsProfiles(steps[stepArrayIndex]?.tool?.job_type === "sfdc-ant-profile"  || steps[stepArrayIndex]?.tool?.job_type.toUpperCase() === "SFDC PROFILE DEPLOY");
     }
   };
 
