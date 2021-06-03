@@ -14,6 +14,7 @@ function ParametersInventory({ customerAccessRules }) {
   const [isLoading, setLoading] = useState(false);
   const [parameterList, setParameterList] = useState([]);
   const [parameterMetadata, setParameterMetadata] = useState(undefined);
+  const [parameterRoleDefinitions, setParameterRoleDefinitions] = useState(undefined);
   const [parameterFilterModel, setParameterFilterModel] = useState(new Model({ ...toolFilterMetadata.newObjectFields }, toolFilterMetadata, false));
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -61,6 +62,7 @@ function ParametersInventory({ customerAccessRules }) {
     if (isMounted?.current === true && response?.data?.data) {
       setParameterList(response.data.data);
       setParameterMetadata(response.data.metadata);
+      setParameterRoleDefinitions(response.data.roles);
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.count);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
@@ -76,6 +78,7 @@ function ParametersInventory({ customerAccessRules }) {
       setParameterList={setParameterList}
       parameterMetadata={parameterMetadata}
       customerAccessRules={customerAccessRules}
+      parameterRoleDefinitions={parameterRoleDefinitions}
     />
   );
 }

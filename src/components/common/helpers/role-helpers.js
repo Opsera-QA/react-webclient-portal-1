@@ -12,13 +12,18 @@ export const ROLE_LEVELS = {
 };
 
 export const ACCESS_ROLES = {
+  OPSERA_ADMINISTRATOR: "opsera_administrator",
   ADMINISTRATOR: "administrator",
+  SAAS_USER: "saas_user",
+  POWER_USER: "power_user",
   OWNER: "owner",
   SECOPS: "secops",
   MANAGER: "manager",
   USER: "user",
   UNAUTHORIZED: "unauthorized",
   NO_ACCESS_RULES: "no_access_rules",
+  FREE_TRIAL_USER: "free_trial_user",
+  READ_ONLY: "read_only",
 };
 
 export const meetsRequirements = (requirement, accessRoleData) => {
@@ -109,6 +114,8 @@ export const getUserRoleLevel = (accessRoleData, objectRoles, dataObject) => {
   const prefix = "Your access role for this page is: ";
 
   switch (roleLevel) {
+    case ACCESS_ROLES.OPSERA_ADMINISTRATOR:
+      return prefix + "Opsera Administrator";
     case ACCESS_ROLES.ADMINISTRATOR:
       return prefix + "Administrator";
     case ACCESS_ROLES.OWNER:
@@ -119,6 +126,8 @@ export const getUserRoleLevel = (accessRoleData, objectRoles, dataObject) => {
       return prefix + "Manager";
     case ACCESS_ROLES.USER:
       return prefix + "User";
+    case ACCESS_ROLES.READ_ONLY:
+      return prefix + "Guest";
     case ACCESS_ROLES.UNAUTHORIZED:
       return "You are unauthorized to view this page.";
     case ACCESS_ROLES.NO_ACCESS_RULES:
@@ -126,6 +135,11 @@ export const getUserRoleLevel = (accessRoleData, objectRoles, dataObject) => {
     default:
       return "UNKNOWN ROLE LEVEL";
   }
+};
+
+export const getAllowedRoles = (actionName, roleDefinitions) => {
+  const roleDefinition = roleDefinitions[actionName];
+  return roleDefinition?.allowedRoles;
 };
 
 export const isAnLdapUser = (user, accessRole) => {

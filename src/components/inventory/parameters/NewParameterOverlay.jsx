@@ -8,7 +8,7 @@ import ParameterModel from "components/inventory/parameters/parameter.model";
 function NewParameterOverlay({ loadData, isMounted, parameterMetadata, getAccessToken, cancelTokenSource }) {
   const toastContext = useContext(DialogToastContext);
   const [parameterModel, setParameterModel] = useState(
-    new ParameterModel({...parameterMetadata.newObjectFields}, parameterMetadata, true, getAccessToken, cancelTokenSource, loadData)
+    new ParameterModel({...parameterMetadata.newObjectFields}, parameterMetadata, true, undefined, getAccessToken, cancelTokenSource, loadData)
   );
 
   const closePanel = () => {

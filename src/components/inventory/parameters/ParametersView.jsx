@@ -1,7 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import workflowAuthorizedActions
-  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import ParameterTable from "components/inventory/parameters/ParameterTable";
 import ParametersEditorPanel from "components/inventory/parameters/details/ParametersEditorPanel";
 import TableAndDetailPanelContainer from "components/common/table/TableAndDetailPanelContainer";
@@ -9,7 +7,7 @@ import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import ParameterModel from "components/inventory/parameters/parameter.model";
 
-function ParametersView({isLoading, loadData, parameterList, setParameterList, parameterMetadata, customerAccessRules}) {
+function ParametersView({isLoading, loadData, parameterList, setParameterList, parameterMetadata, parameterRoleDefinitions}) {
   const { getAccessToken } = useContext(AuthContext);
   const [parameterData, setParameterData] = useState(undefined);
   const isMounted = useRef(false);
@@ -30,10 +28,6 @@ function ParametersView({isLoading, loadData, parameterList, setParameterList, p
     };
   }, []);
 
-  const authorizedAction = (action, owner, objectRoles) => {
-    return workflowAuthorizedActions.toolRegistryItems(customerAccessRules, action, owner, objectRoles);
-  };
-
   const getTableView = () => {
     return (
       <ParameterTable
@@ -41,7 +35,7 @@ function ParametersView({isLoading, loadData, parameterList, setParameterList, p
         loadData={loadData}
         data={parameterList}
         parameterMetadata={parameterMetadata}
-        customerAccessRules={customerAccessRules}
+        parameterRoleDefinitions={parameterRoleDefinitions}
         cancelTokenSource={cancelTokenSource}
         isMounted={isMounted}
         getAccessToken={getAccessToken}
@@ -68,7 +62,6 @@ function ParametersView({isLoading, loadData, parameterList, setParameterList, p
     return newModel;
   };
 
-  // TODO: Create editor panel container for table/editor panel
   const getEditorPanel = () => {
     return (
       <ParametersEditorPanel
@@ -76,7 +69,6 @@ function ParametersView({isLoading, loadData, parameterList, setParameterList, p
         loadData={loadData}
         parameterModel={parameterData}
         parameterMetadata={parameterMetadata}
-        customerAccessRules={customerAccessRules}
       />
     );
   };
@@ -92,8 +84,8 @@ ParametersView.propTypes = {
   createNewRecord: PropTypes.func,
   loadData: PropTypes.func,
   parameterMetadata: PropTypes.object,
-  customerAccessRules: PropTypes.object,
-  setParameterList: PropTypes.func
+  setParameterList: PropTypes.func,
+  parameterRoleDefinitions: PropTypes.object
 };
 
 export default ParametersView;
