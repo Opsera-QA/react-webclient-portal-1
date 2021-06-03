@@ -13,8 +13,8 @@ import TerraformGitBranchInput from "components/workflow/pipelines/pipeline_deta
 import TerraformAWSCredsSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformAWSCredsSelectInput";
 import TerraformRuntimeArgsInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformRuntimeArgsInput";
 import terraformStepFormMetadata from "./terraform-stepForm-metadata";
-import MultiSelectInputBase from "../../../../../../../common/inputs/select/MultiSelectInputBase";
-import MultiTextInputBase from "../../../../../../../common/inputs/text/MultiTextInputBase";
+import TerraformParameterSelectInput from "./inputs/TerraformParameterSelectInput";
+import TerraformSaveResponseParameters from "./inputs/TerraformSaveResponseParameters";
 
 function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -82,8 +82,15 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"accessKeyParamName"} />
       <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"secretKeyParamName"} />
       <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"regionParamName"} />
-      <MultiTextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"terraformOutputKeys"} />
       <TerraformRuntimeArgsInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
+      <TerraformSaveResponseParameters
+        dataObject={terraformStepConfigurationDto}
+        setDataObject={setTerraformStepConfigurationDataDto}
+        fieldName={"saveParameters"}
+      />
+      {terraformStepConfigurationDto && terraformStepConfigurationDto.getData("saveParameters") && (
+        <TerraformParameterSelectInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
+      )}
     </PipelineStepEditorPanelContainer>
   );
 }

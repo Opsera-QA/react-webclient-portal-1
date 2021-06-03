@@ -64,8 +64,12 @@ const TerraformStepFormMetadata = {
       id: "bitbucketWorkspaceName",
     },
     {
-      label: "Output Keys",
-      id: "terraformOutputKeys"
+      label: "Parameters",
+      id: "parameters"
+    },
+    {
+      label: "Save Output Parameters?",
+      id: "saveParameters"
     }
   ],
   newObjectFields: {
@@ -85,7 +89,8 @@ const TerraformStepFormMetadata = {
     bitbucketWorkspace : "",
     bitbucketWorkspaceName: "",
     keyValueMap: {},
-    terraformOutputKeys: []
+    parameters: "",
+    saveParameters: false
   }
 };
 
