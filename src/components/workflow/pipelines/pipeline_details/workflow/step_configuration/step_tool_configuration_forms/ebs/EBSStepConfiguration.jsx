@@ -9,18 +9,18 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
 import AgentLabelsMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
 import EBSCreateDomainToggleInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSCreateDomainToggleInput";
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EbsCreateDomainToggleInput";
 import AWSToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/AWSToolSelectInput";
 import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import JsonInput from "components/common/inputs/object/JsonInput";
 import _ from "lodash";
-import EBSAccessOptionsInput from "./inputs/EBSAccessOptionsInput";
+import EBSAccessOptionsInput from "./inputs/EbsAccessOptionsInput";
 import Model from "core/data_model/model";
-import EBSPlatformOptionsInput from "./inputs/EBSPlatformOptionsInput";
-import EBSBucketInput from "./inputs/EBSBucketInput";
-import EBSKeyPairInput from "./inputs/EBSKeyPairInput";
+import EBSPlatformOptionsInput from "./inputs/EbsPlatformOptionsInput";
+import EBSBucketInput from "./inputs/EbsBucketInput";
+import EBSKeyPairInput from "./inputs/EbsKeyPairInput";
 function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, callbackSaveToVault, pipelineId, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
@@ -104,6 +104,7 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
 
   const handleCreateAndSave = async () => {
     let newConfiguration = ebsStepConfigurationDto.getPersistData();
+
     const item = {
       configuration: newConfiguration,
       threshold: {

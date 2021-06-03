@@ -9,10 +9,6 @@ const ebsStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Access Key",
-      id: "accessKey"
-    },
-    {
       label: "Docker Volume Path",
       id: "dockerVolumePath",
       fieldText : "Enter Source, Target path as a JSON Object"
@@ -58,8 +54,7 @@ const ebsStepFormMetadata = {
     },
     {
       label: "EC2 Key Name",
-      id: "ec2KeyName",
-      // isRequired: true
+      id: "ec2KeyName"
     },
     {
       label: "Application Port",
@@ -96,10 +91,6 @@ const ebsStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Access Key",
-      id: "accessKey"
-    },
-    {
       label: "Docker Volume Path",
       id: "dockerVolumePath",
       fieldText : "Enter Source, Target path as a JSON Object"
@@ -108,10 +99,6 @@ const ebsStepFormMetadata = {
       label: "Environments",
       id: "environments",
       fieldText : "Enter environments as a JSON Object"
-    },
-    {
-      label: "Secret Key",
-      id: "secretKey"
     },
     {
       label: "S3 Bucket Name",
@@ -149,8 +136,7 @@ const ebsStepFormMetadata = {
     },
     {
       label: "EC2 Key Name",
-      id: "ec2KeyName",
-      // isRequired: true
+      id: "ec2KeyName"
     },
     {
       label: "Application Port",
@@ -186,8 +172,6 @@ const ebsStepFormMetadata = {
   newModelBase:
     {
       awsToolConfigId: "",
-      accessKey: "",
-      secretKey: "",
       bucketName: "",
       regions: "",
       applicationName: "",
