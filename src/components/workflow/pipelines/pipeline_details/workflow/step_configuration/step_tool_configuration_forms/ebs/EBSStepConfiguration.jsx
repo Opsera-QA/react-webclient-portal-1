@@ -6,21 +6,21 @@ import PropTypes from "prop-types";
 import ebsStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/ebs-stepForm-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import modelHelpers from "components/common/model/modelHelpers";
-import AgentLabelsMultiSelectInput from "components/common/list_of_values_input/workflow/pipelines/AgentLabelsMultiSelectInput";
-import EBSCreateDomainToggleInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EbsCreateDomainToggleInput";
 import AWSToolSelectInput from "components/inventory/tools/tool_details/tool_jobs/octopus/applications/details/input/AWSToolSelectInput";
-import DtoSelectInput from "components/common/input/dto_input/dto-select-input";
 import pipelineHelpers from "components/workflow/pipelineHelpers";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import JsonInput from "components/common/inputs/object/JsonInput";
-import _ from "lodash";
-import EBSAccessOptionsInput from "./inputs/EbsAccessOptionsInput";
 import Model from "core/data_model/model";
-import EBSPlatformOptionsInput from "./inputs/EbsPlatformOptionsInput";
-import EBSBucketInput from "./inputs/EbsBucketInput";
-import EBSKeyPairInput from "./inputs/EbsKeyPairInput";
+import EBSAccessOptionsInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSAccessOptionsInput";
+import EBSBucketInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSBucketInput";
+import EBSKeyPairInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSKeyPairInput";
+import EBSPlatformOptionsInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSPlatformOptionsInput";
+import EBSCreateDomainToggleInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/ebs/inputs/EBSCreateDomainToggleInput";
 function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, callbackSaveToVault, pipelineId, closeEditorPanel }) {
   const [isLoading, setIsLoading] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
