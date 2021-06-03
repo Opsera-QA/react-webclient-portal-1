@@ -31,7 +31,7 @@ parametersActions.deleteParameterV2 = async (getAccessToken, cancelTokenSource, 
 };
 
 parametersActions.getParameterValueFromVaultV2 = async (getAccessToken, cancelTokenSource, id) => {
-  const apiUrl = `/registry/parameter/${id}`;
+  const apiUrl = `/registry/parameter/${id}/value`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 

@@ -10,7 +10,6 @@ function VanitySelectionTable({ columns, getNewModel, setParentModel, loadData, 
   const toastContext = useContext(DialogToastContext);
   const selectedItemRef = useRef({});
 
-  // TODO: Should we put this into the table itself and pass down the state object?
   const onRowSelect = async (grid, row, column, e) => {
     const selectedModel = getModel();
     // // Don't change rows if invalid, save before changing rows if valid

@@ -12,6 +12,7 @@ import DeleteButtonWithConfirmation from "components/common/buttons/delete/Delet
 import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
+import VisibleVaultTextInput from "components/common/inputs/text/VisibleVaultTextInput";
 
 function ParametersEditorPanel({ parameterModel, handleClose }) {
   const [parameterData, setParameterData] = useState(undefined);
@@ -73,7 +74,7 @@ function ParametersEditorPanel({ parameterModel, handleClose }) {
           <TextInputBase setDataObject={setParameterData} dataObject={parameterData} fieldName={"name"}/>
         </Col>
         <Col lg={6}>
-          <TextInputBase setDataObject={setParameterData} dataObject={parameterData} fieldName={"value"}/>
+          <VisibleVaultTextInput setDataObject={setParameterData} dataObject={parameterData} fieldName={"value"}/>
         </Col>
         <Col lg={12}>
           <RoleAccessInput dataObject={parameterData} setDataObject={setParameterData} fieldName={"roles"} />

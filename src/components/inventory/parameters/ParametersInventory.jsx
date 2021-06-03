@@ -73,6 +73,7 @@ function ParametersInventory({ customerAccessRules }) {
       isLoading={isLoading}
       loadData={loadData}
       parameterList={parameterList}
+      setParameterList={setParameterList}
       parameterMetadata={parameterMetadata}
       customerAccessRules={customerAccessRules}
     />

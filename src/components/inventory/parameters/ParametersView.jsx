@@ -9,7 +9,7 @@ import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import ParameterModel from "components/inventory/parameters/parameter.model";
 
-function ParametersView({isLoading, loadData, parameterList, parameterMetadata, customerAccessRules}) {
+function ParametersView({isLoading, loadData, parameterList, setParameterList, parameterMetadata, customerAccessRules}) {
   const { getAccessToken } = useContext(AuthContext);
   const [parameterData, setParameterData] = useState(undefined);
   const isMounted = useRef(false);
@@ -46,13 +46,24 @@ function ParametersView({isLoading, loadData, parameterList, parameterMetadata, 
         isMounted={isMounted}
         getAccessToken={getAccessToken}
         getNewModel={getNewModel}
-        setParameterData={setParameterData}
+        setParameterData={setModel}
       />
     );
   };
 
+  const setModel = (newModel) => {
+    const selectedRecordIndex = parameterList.findIndex((parameter) => { return parameter._id === newModel.getData("_id"); });
+
+    if (selectedRecordIndex !== -1) {
+      parameterList[selectedRecordIndex] = newModel.getPersistData();
+      setParameterList([...parameterList]);
+    }
+
+    setParameterData({...newModel});
+  };
+
   const getNewModel = (newRowData) => {
-    let newModel = {...new ParameterModel(newRowData, parameterMetadata, false, getAccessToken, cancelTokenSource, loadData)};
+    let newModel = {...new ParameterModel({...newRowData}, parameterMetadata, false, setModel, getAccessToken, cancelTokenSource, loadData)};
     setParameterData({...newModel});
     return newModel;
   };
@@ -82,6 +93,7 @@ ParametersView.propTypes = {
   loadData: PropTypes.func,
   parameterMetadata: PropTypes.object,
   customerAccessRules: PropTypes.object,
+  setParameterList: PropTypes.func
 };
 
 export default ParametersView;

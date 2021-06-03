@@ -1624,3 +1624,23 @@ div.data-blocks-ellipses {
 }
 
 /* End Overlay Panel styling */
+
+/* Loading Input Icon Styling */
+.loading-input-wrapper {
+    display:inline-block;
+    position: relative;
+}
+
+.loading-input-wrapper:after {
+    font-family: 'FontAwesome';
+    content: '\f110';
+    position: absolute;
+    right: 6px;
+    top: 7px;
+    -webkit-animation: fa-spin 2s infinite linear;
+    animation: fa-spin 2s infinite linear;
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.5;
+}
+/* End Loading Input Icon Styling */
