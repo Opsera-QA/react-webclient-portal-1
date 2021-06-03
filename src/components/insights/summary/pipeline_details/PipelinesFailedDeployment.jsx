@@ -10,8 +10,7 @@ import BuildDetailsMetadata from "components/insights/summary/build-details-meta
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function PipelineFailedDeployment({ dashboardData, toggleDynamicPanel }) {
-  const fields = BuildDetailsMetadata.fields;
+function PipelineFailedDeployment({ dashboardData, toggleDynamicPanel, selectedDataBlock }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -96,29 +95,31 @@ function PipelineFailedDeployment({ dashboardData, toggleDynamicPanel }) {
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("Pipelines Failing Deployment Step", metrics[0]?.data);
+    toggleDynamicPanel("deployment_failed", metrics[0]?.data);
   };
 
   const getChartBody = () => {
     return (
-      <DataBlock
-        title={
-          !isLoading && metrics[0]?.count[0] ? (
-            metrics[0]?.count[0]?.count
-          ) : (
-            <FontAwesomeIcon
-              icon={faSpinner}
-              spin
-              fixedWidth
-              className="mr-1"
-            />
-          )
-        }
-        subTitle="Pipelines Failing Deployment Step"
-        toolTipText="Pipelines Failing Deployment Step"
-        clickAction={() => onDataBlockSelect()}
-        statusColor="danger"
-      />
+      <div className={selectedDataBlock === "deployment_failed" ? "selected-data-block" : undefined}>
+        <DataBlock
+          title={
+            !isLoading && metrics[0]?.count[0] ? (
+              metrics[0]?.count[0]?.count
+            ) : (
+              <FontAwesomeIcon
+                icon={faSpinner}
+                spin
+                fixedWidth
+                className="mr-1"
+              />
+            )
+          }
+          subTitle="Pipelines Failing Deployment Step"
+          toolTipText="Pipelines Failing Deployment Step"
+          clickAction={() => onDataBlockSelect()}
+          statusColor="danger"
+        />
+      </div>
     );
   };
 
@@ -126,11 +127,9 @@ function PipelineFailedDeployment({ dashboardData, toggleDynamicPanel }) {
 }
 
 PipelineFailedDeployment.propTypes = {
-  kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  index: PropTypes.number,
-  setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func,
+  toggleDynamicPanel: PropTypes.func,
+  selectedDataBlock: PropTypes.string,
 };
 
 export default PipelineFailedDeployment;

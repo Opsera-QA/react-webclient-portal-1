@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef, useMemo } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-// import axios from "axios";
 import TotalPipelinesExecuted from "components/insights/summary/TotalPipelinesExecuted";
 import PipelinesPassedWithQualityAndSecurity from "components/insights/summary/pipeline_details/PipelinesPassedWithQualityAndSecurity";
 import PipelinesFailedSecurity from "components/insights/summary/pipeline_details/PipelinesFailedSecurity";
@@ -24,28 +23,28 @@ function PipelineDetails({ dashboardData }) {
             tableTitle="Pipelines Executed"
           />
         );
-      case "Successful Pipelines (Security and Quality)":
+      case "successful_pipelines":
         return (
           <InsightsPipelineDetailsTable
             data={selectedDataBlockTableData}
             tableTitle="Successful Pipelines (Security and Quality)"
           />
         );
-      case "Pipelines Failing Security Step":
+      case "security_failed":
         return (
           <InsightsPipelineDetailsTable
             data={selectedDataBlockTableData}
             tableTitle="Pipelines Failing Security Step"
           />
         );
-      case "Pipelines Failing Quality Step":
+      case "quality_failed":
         return (
           <InsightsPipelineDetailsTable
             data={selectedDataBlockTableData}
             tableTitle="Pipelines Failing Quality Step"
           />
         );
-      case "Pipelines Failing Deployment Step":
+      case "deployment_failed":
         return (
           <InsightsPipelineDetailsTable
             data={selectedDataBlockTableData}
@@ -58,14 +57,8 @@ function PipelineDetails({ dashboardData }) {
   };
 
   const toggleDynamicPanel = (name, dataSet) => {
-    if(name === selectedDataBlock || dataSet.length === 0){
-      setSelectedDataBlock('');
-      setSelectedDataBlockTableData([]);
-    }
-    else{
-      setSelectedDataBlock(name);
-      setSelectedDataBlockTableData(dataSet);
-    }
+    setSelectedDataBlock(name);
+    setSelectedDataBlockTableData(dataSet);
   };
 
   return (
@@ -74,22 +67,27 @@ function PipelineDetails({ dashboardData }) {
         <TotalPipelinesExecuted
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
         />
         <PipelinesPassedWithQualityAndSecurity
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
         />
         <PipelinesFailedSecurity
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
         />
         <PipelinesFailedQuality
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
         />
         <PipelinesFailedDeployment
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
         />
       </DataBlockWrapper>
       {getDynamicPanel()}

@@ -10,7 +10,7 @@ import BuildDetailsMetadata from "components/insights/summary/build-details-meta
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function PipelineFailedQuality({ dashboardData, toggleDynamicPanel }) {
+function PipelineFailedQuality({ dashboardData, toggleDynamicPanel, selectedDataBlock }) {
   const fields = BuildDetailsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -96,29 +96,31 @@ function PipelineFailedQuality({ dashboardData, toggleDynamicPanel }) {
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("Pipelines Failing Quality Step", metrics[0]?.data);
+    toggleDynamicPanel("quality_failed", metrics[0]?.data);
   };
 
   const getChartBody = () => {
     return (
-      <DataBlock
-        title={
-          !isLoading && metrics[0]?.count[0] ? (
-            metrics[0]?.count[0]?.count
-          ) : (
-            <FontAwesomeIcon
-              icon={faSpinner}
-              spin
-              fixedWidth
-              className="mr-1"
-            />
-          )
-        }
-        subTitle="Pipelines Failing Quality Step"
-        toolTipText="Pipelines Failing Quality Step"
-        clickAction={() => onDataBlockSelect()}
-        statusColor="danger"
-      />
+      <div className={selectedDataBlock === "quality_failed" ? "selected-data-block" : undefined}>
+        <DataBlock
+          title={
+            !isLoading && metrics[0]?.count[0] ? (
+              metrics[0]?.count[0]?.count
+            ) : (
+              <FontAwesomeIcon
+                icon={faSpinner}
+                spin
+                fixedWidth
+                className="mr-1"
+              />
+            )
+          }
+          subTitle="Pipelines Failing Quality Step"
+          toolTipText="Pipelines Failing Quality Step"
+          clickAction={() => onDataBlockSelect()}
+          statusColor="danger"
+        />
+      </div>
     );
   };
 
@@ -126,11 +128,9 @@ function PipelineFailedQuality({ dashboardData, toggleDynamicPanel }) {
 }
 
 PipelineFailedQuality.propTypes = {
-  kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  index: PropTypes.number,
-  setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func,
+  toggleDynamicPanel: PropTypes.func,
+  selectedDataBlock: PropTypes.string,
 };
 
 export default PipelineFailedQuality;

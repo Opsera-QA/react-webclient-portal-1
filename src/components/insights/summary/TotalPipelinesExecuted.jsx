@@ -9,7 +9,7 @@ import DataBlock from "components/common/data_boxes/DataBlock";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel }) {
+function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel, selectedDataBlock }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -102,23 +102,25 @@ function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel }) {
 
   const getChartBody = () => {
     return (
-      <DataBlock
-        title={
-          !isLoading && metrics[0]?.count[0] ? (
-            metrics[0]?.count[0]?.count
-          ) : (
-            <FontAwesomeIcon
-              icon={faSpinner}
-              spin
-              fixedWidth
-              className="mr-1"
-            />
-          )
-        }
-        subTitle="Total Number of Pipelines Executed"
-        toolTipText="Total Number of Pipelines Executed"
-        clickAction={() => onDataBlockSelect()}
-      />
+      <div className={selectedDataBlock === "total_pipelines" ? "selected-data-block" : undefined}>
+        <DataBlock
+          title={
+            !isLoading && metrics[0]?.count[0] ? (
+              metrics[0]?.count[0]?.count
+            ) : (
+              <FontAwesomeIcon
+                icon={faSpinner}
+                spin
+                fixedWidth
+                className="mr-1"
+              />
+            )
+          }
+          subTitle="Total Number of Pipelines Executed"
+          toolTipText="Total Number of Pipelines Executed"
+          clickAction={() => onDataBlockSelect()}
+        />
+      </div>
     );
   };
 
@@ -126,12 +128,9 @@ function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel }) {
 }
 
 TotalPipelinesExecuted.propTypes = {
-  kpiConfiguration: PropTypes.object,
+  selectedDataBlock: PropTypes.string,
   dashboardData: PropTypes.object,
-  index: PropTypes.number,
-  setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func,
-  setSelectedDataBlock: PropTypes.func,
+  toggleDynamicPanel: PropTypes.func,
 };
 
 export default TotalPipelinesExecuted;

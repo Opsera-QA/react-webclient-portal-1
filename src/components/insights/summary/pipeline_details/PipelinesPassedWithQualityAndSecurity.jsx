@@ -10,7 +10,7 @@ import BuildDetailsMetadata from "components/insights/summary/build-details-meta
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function PipelineDetails({ dashboardData, toggleDynamicPanel }) {
+function PipelineDetails({ dashboardData, toggleDynamicPanel, selectedDataBlock }) {
   const fields = BuildDetailsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -96,32 +96,31 @@ function PipelineDetails({ dashboardData, toggleDynamicPanel }) {
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel(
-      "Successful Pipelines (Security and Quality)",
-      metrics[0]?.data
-    );
+    toggleDynamicPanel("successful_pipelines", metrics[0]?.data);
   };
 
   const getChartBody = () => {
     return (
-      <DataBlock
-        title={
-          !isLoading && metrics[0]?.count[0] ? (
-            metrics[0]?.count[0]?.count
-          ) : (
-            <FontAwesomeIcon
-              icon={faSpinner}
-              spin
-              fixedWidth
-              className="mr-1"
-            />
-          )
-        }
-        subTitle="Successful Pipelines (Security and Quality)"
-        toolTipText="Successful Pipelines (Security and Quality)"
-        clickAction={() => onDataBlockSelect()}
-        statusColor="success"
-      />
+      <div className={selectedDataBlock === "successful_pipelines" ? "selected-data-block" : undefined}>
+        <DataBlock
+          title={
+            !isLoading && metrics[0]?.count[0] ? (
+              metrics[0]?.count[0]?.count
+            ) : (
+              <FontAwesomeIcon
+                icon={faSpinner}
+                spin
+                fixedWidth
+                className="mr-1"
+              />
+            )
+          }
+          subTitle="Successful Pipelines (Security and Quality)"
+          toolTipText="Successful Pipelines (Security and Quality)"
+          clickAction={() => onDataBlockSelect()}
+          statusColor="success"
+        />
+      </div>
     );
   };
 
@@ -129,11 +128,9 @@ function PipelineDetails({ dashboardData, toggleDynamicPanel }) {
 }
 
 PipelineDetails.propTypes = {
-  kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
-  index: PropTypes.number,
-  setKpiConfiguration: PropTypes.func,
-  setKpis: PropTypes.func,
+  toggleDynamicPanel: PropTypes.func,
+  selectedDataBlock: PropTypes.string,
 };
 
 export default PipelineDetails;
