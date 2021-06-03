@@ -280,6 +280,8 @@ const SfdcPipelineWizard = ({
             gitTaskData={gitTaskData}
             gitTaskId={gitTaskId}
             closePanel={handleClose}
+            fromSFDC={fromSFDC}            
+            fromDestinationSFDC={fromDestinationSFDC}
           />
         );
 

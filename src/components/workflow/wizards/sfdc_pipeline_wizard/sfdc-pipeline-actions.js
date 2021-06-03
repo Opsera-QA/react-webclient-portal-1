@@ -68,6 +68,11 @@ sfdcPipelineActions.setTestClassesList = async (postBody, getAccessToken) => {
   return response;
 };
 
+sfdcPipelineActions.setTestClassesListV2 = async (getAccessToken, cancelTokenSource, postBody) => {  
+  const apiUrl = `/pipelines/sfdc/getTestClasses`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 sfdcPipelineActions.getListFromPipelineStorage = async (postBody, toolFilterDto, getAccessToken) => {
   postBody.page = toolFilterDto ? toolFilterDto.getData("currentPage") : 0;
   postBody.size = toolFilterDto ? toolFilterDto.getData("pageSize") : 50;
