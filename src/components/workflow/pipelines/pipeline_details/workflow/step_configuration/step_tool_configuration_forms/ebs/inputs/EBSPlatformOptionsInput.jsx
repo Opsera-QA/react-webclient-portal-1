@@ -20,6 +20,7 @@ const PLATFORM_OPTIONS = [
 function EBSPlatformOptionsInput({dataObject, setDataObject, disabled}) {
     return (
         <SelectInputBase
+            setDataObject={setDataObject}
             valueField="value"
             textField="label"
             dataObject={dataObject}
