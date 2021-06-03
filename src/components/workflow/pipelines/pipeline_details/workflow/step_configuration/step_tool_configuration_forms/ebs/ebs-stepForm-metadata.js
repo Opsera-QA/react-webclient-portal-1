@@ -150,7 +150,7 @@ const ebsStepFormMetadata = {
     {
       label: "EC2 Key Name",
       id: "ec2KeyName",
-      isRequired: true
+      // isRequired: true
     },
     {
       label: "Application Port",
