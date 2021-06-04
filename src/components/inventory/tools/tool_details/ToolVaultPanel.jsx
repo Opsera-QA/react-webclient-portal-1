@@ -52,7 +52,7 @@ function ToolVaultPanel({ toolData, isLoading }) {
         <div className={"py-1"}>
           <ErrorDialog
             error={
-              "Changing the Vault Instance does not migrate data between vault instances. In order to successfully change the vault in use please re-save the step configuration with the required information to ensure the tokens/passwords being updated in the vault."
+              "Changing the Vault Instance does not migrate data between vault instances. In order to successfully change the vault in use please re-save the step configuration with the required information to ensure the tokens/passwords being updated in the vault. This tool would be broken until the connection information is re-saved after a vault change."
             }
             align="stepConfigurationTop"
           />
