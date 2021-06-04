@@ -20,15 +20,6 @@ function ElasticBeanstalkPipelineStepConfigurationSummaryPanel({ elasticBeanstal
           <TextFieldBase dataObject={elasticBeanstalkPipelineStepData} fieldName={"ec2KeyName"} />
         </Col>
         <Col lg={6}>
-          <VaultField dataObject={elasticBeanstalkPipelineStepData} fieldName={"accessKey"} />
-        </Col>
-        <Col lg={6}>
-          <VaultField dataObject={elasticBeanstalkPipelineStepData} fieldName={"secretKey"} />
-        </Col>
-        <Col lg={6}>
-          <VaultField dataObject={elasticBeanstalkPipelineStepData} fieldName={"awsAccountId"} />
-        </Col>
-        <Col lg={6}>
           <TextFieldBase dataObject={elasticBeanstalkPipelineStepData} fieldName={"port"} />
         </Col>
         <Col lg={6}>
@@ -41,7 +32,7 @@ function ElasticBeanstalkPipelineStepConfigurationSummaryPanel({ elasticBeanstal
           <TextFieldBase dataObject={elasticBeanstalkPipelineStepData} fieldName={"applicationVersionLabel"} />
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={elasticBeanstalkPipelineStepData} fieldName={"s3StepId"} />
+          <TextFieldBase dataObject={elasticBeanstalkPipelineStepData} fieldName={"s3ECRStepId"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={elasticBeanstalkPipelineStepData} fieldName={"hostedZoneId"} />

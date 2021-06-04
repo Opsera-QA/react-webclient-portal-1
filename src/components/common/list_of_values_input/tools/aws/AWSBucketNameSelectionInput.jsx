@@ -6,10 +6,11 @@ import {AuthContext} from "contexts/AuthContext";
 import AWSActionsHelper
   from "components/common/list_of_values_input/tools/aws/aws-actions-helper";
 import axios from "axios";
-function AWSRepositoryInput({  awsToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
+
+function AWSBucketNameSelectionInput({  awsToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [repositories, setRepositories] = useState([]);
+  const [bucketList, setBucketList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const isMounted = useRef(false);
@@ -41,7 +42,7 @@ function AWSRepositoryInput({  awsToolId, visible, fieldName, dataObject, setDat
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getRepositories(cancelSource);
+      await getBucketList(cancelSource);
     }
     catch (error) {
       if (isMounted?.current === true) {
@@ -54,13 +55,13 @@ function AWSRepositoryInput({  awsToolId, visible, fieldName, dataObject, setDat
     }
   };
 
-  const getRepositories = async (cancelSource = cancelTokenSource) => {
+  const getBucketList = async (cancelSource = cancelTokenSource) => {
     if (isMounted?.current === true) {
-      const response  = await AWSActionsHelper.searchECRRepositories(awsToolId, getAccessToken, cancelSource);
-      let repositoriesResponse = response?.data?.data;
+      const response  = await AWSActionsHelper.getBucketList(awsToolId, getAccessToken, cancelSource);
+      let bucketListResponse = response?.data?.data;
 
-      if (Array.isArray(repositoriesResponse)) {
-        setRepositories(repositoriesResponse);
+      if (Array.isArray(bucketListResponse)) {
+        setBucketList(bucketListResponse);
       }
     }
   };
@@ -69,9 +70,9 @@ function AWSRepositoryInput({  awsToolId, visible, fieldName, dataObject, setDat
     return <></>;
   }
 
-  const getNoRepositoriesMessage = () => {
-    if (!isLoading && (repositories == null || repositories.length === 0) && awsToolId !== "") {
-      return ("No Repositories Found!");
+  const getNoBucketsMessage = () => {
+    if (!isLoading && (bucketList == null || bucketList.length === 0) && awsToolId !== "") {
+      return ("No Buckets Found!");
     }
   };
 
@@ -82,19 +83,19 @@ function AWSRepositoryInput({  awsToolId, visible, fieldName, dataObject, setDat
         dataObject={dataObject}
         setDataObject={setDataObject}
         setDataFunction={setDataFunction}
-        selectOptions={repositories}
+        selectOptions={bucketList}
         busy={isLoading}
-        placeholderText={getNoRepositoriesMessage()}
+        placeholderText={getNoBucketsMessage()}
         clearDataFunction={clearDataFunction}
         valueField="name"
         textField="name"
-        disabled={disabled || isLoading || repositories.length === 0}
+        disabled={disabled || isLoading || bucketList.length === 0}
       />
     </div>
   );
 }
 
-AWSRepositoryInput.propTypes = {
+AWSBucketNameSelectionInput.propTypes = {
   awsToolId: PropTypes.string,
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
@@ -105,8 +106,8 @@ AWSRepositoryInput.propTypes = {
   clearDataFunction: PropTypes.func
 };
 
-AWSRepositoryInput.defaultProps = {
+AWSBucketNameSelectionInput.defaultProps = {
   visible: true,
 };
 
-export default AWSRepositoryInput;
+export default AWSBucketNameSelectionInput;
