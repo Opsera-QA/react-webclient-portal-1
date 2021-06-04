@@ -5,14 +5,26 @@ import GitRepositoryInput from "components/common/list_of_values_input/tools/git
 function SFDCGitRepositoryInput({dataObject, setDataObject, disabled}) {
   const setRepository = (fieldName, selectedOption) => {
 
-    console.log({selectedOption});
-
     let newDataObject = {...dataObject};
     newDataObject.setData("repository", selectedOption.name);
     newDataObject.setData("projectId", selectedOption.id);
     newDataObject.setData("repoId", selectedOption.id);
     newDataObject.setData("sshUrl", selectedOption.sshUrl);
     newDataObject.setData("gitUrl", selectedOption.httpUrl);
+    newDataObject.setData("branch", "");
+    newDataObject.setData("gitBranch", "");
+    newDataObject.setData("defaultBranch", "");
+    newDataObject.setData("sourceBranch", "");
+    setDataObject({...newDataObject});
+  };
+
+  const clearData = () => {
+    let newDataObject = {...dataObject};
+    newDataObject.setData("repository", "");
+    newDataObject.setData("projectId", "");
+    newDataObject.setData("repoId", "");
+    newDataObject.setData("sshUrl", "");
+    newDataObject.setData("gitUrl", "");
     newDataObject.setData("branch", "");
     newDataObject.setData("gitBranch", "");
     newDataObject.setData("defaultBranch", "");
@@ -30,6 +42,7 @@ function SFDCGitRepositoryInput({dataObject, setDataObject, disabled}) {
        setDataObject={setDataObject}
        setDataFunction={setRepository}
        disabled={disabled}
+       clearDataFunction={clearData}
      />
   );
 }

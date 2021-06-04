@@ -11,6 +11,15 @@ function SFDCGitBranchInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("branch", selectedOption);
     setDataObject({...newDataObject});
   };
+
+  const clearData = () => {
+    let newDataObject = {...dataObject};
+    newDataObject.setData("gitBranch", "");
+    newDataObject.setData("defaultBranch", "");
+    newDataObject.setData("branch", "");
+    setDataObject({...newDataObject});
+  };
+
   return (
      <GitBranchInput
        fieldName={"gitBranch"}
@@ -22,6 +31,7 @@ function SFDCGitBranchInput({dataObject, setDataObject, disabled}) {
        setDataFunction={setBranch}
        setDataObject={setDataObject}
        disabled={disabled}
+       clearDataFunction={clearData}
      />
   );
 }
