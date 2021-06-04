@@ -9,26 +9,11 @@ function SFDCProfileMigrationJobSummaryCard({ sfdcStepConfigurationDto }) {
     return (
       <>
         <Col lg={6}>
-          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"toolConfigId"} />
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"sfdcToolName"} />
         </Col>        
         <Col lg={6}>
-          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"service"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"accountId"} />
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"sfdcDestToolName"} />
         </Col>        
-        <Col lg={6}>
-          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"gitCredential"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"workspace"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"repository"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"branch"} />
-        </Col>
       </>
     );
   };
