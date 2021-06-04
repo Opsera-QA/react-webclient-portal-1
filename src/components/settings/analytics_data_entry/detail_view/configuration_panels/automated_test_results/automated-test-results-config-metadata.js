@@ -1,4 +1,4 @@
-const qaManualTestConfigurationMetadata = {
+const automatedTestResultsConfigMetadata = {
   type: "Temp KPI Configuration",
   fields: [
     {
@@ -93,4 +93,4 @@ const qaManualTestConfigurationMetadata = {
   }
 };
 
-export default qaManualTestConfigurationMetadata;
+export default automatedTestResultsConfigMetadata;

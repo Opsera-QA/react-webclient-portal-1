@@ -8,6 +8,7 @@ import FirstPassYieldConfiguration from "./first_pass_yield/FirstPassYieldConfig
 import CumulativeOpenDefectsConfiguration from "./cumulative_open_defects/CumulativeOpenDefectsConfiguration";
 import AutomationPercentageConfiguration from "./automation_percentage/AutomationPercentageConfiguration";
 import AdoptionPercentageConfiguration from "./adoption_percentage/AdoptionPercentageConfiguration";
+import AutomatedTestResultsConfigPanel from "./automated_test_results/AutomatedTestResultsConfigPanel";
 
 function AnalyticsDataEntryKpiConfigurationPanel({ analyticsDataEntryModel, setAnalyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
   const getConfigurationPanel = () => {
@@ -53,6 +54,15 @@ function AnalyticsDataEntryKpiConfigurationPanel({ analyticsDataEntryModel, setA
             kpiConfigurationData={kpiConfigurationData}
           />
         );
+      case "automated-test-results":
+        return (
+          <AutomatedTestResultsConfigPanel
+            analyticsDataEntryModel={analyticsDataEntryModel}
+            setKpiConfigurationData={setKpiConfigurationData}
+            kpiConfigurationData={kpiConfigurationData}
+          />
+        );
+
       case "":
         return <div className="text-center text-muted p-5">You must select a KPI before configuring notification type details.</div>;
       default:
