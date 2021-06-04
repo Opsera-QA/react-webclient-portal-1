@@ -89,15 +89,11 @@ function ParametersEditorPanel({ parameterModel, parameterRoleDefinitions, handl
       <Row>
         <Col lg={6}>
           <TextInputBase disabled={!parameterData?.isNew()} setDataObject={setParameterData} dataObject={parameterData} fieldName={"name"}/>
-        </Col>
-        <Col lg={6}>
           <VisibleVaultTextInput disabled={canEdit !== true} setDataObject={setParameterData} dataObject={parameterData} fieldName={"value"}/>
-        </Col>
-        <Col lg={12}>
-          <RoleAccessInput disabled={canEdit !== true} dataObject={parameterData} setDataObject={setParameterData} fieldName={"roles"} />
-        </Col>
-        <Col lg={6}>
           <BooleanToggleInput setDataObject={setParameterData} dataObject={parameterData} fieldName={"vaultEnabled"} disabled={!parameterData?.isNew()}/>
+        </Col>
+        <Col lg={6} className={"my-2"}>
+          <RoleAccessInput disabled={canEdit !== true} dataObject={parameterData} setDataObject={setParameterData} fieldName={"roles"} />
         </Col>
       </Row>
     </VanityEditorPanelContainer>

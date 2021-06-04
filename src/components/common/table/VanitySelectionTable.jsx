@@ -1,18 +1,19 @@
-import React, {useContext, useRef} from "react";
+import React, {useContext, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import PaginationContainer from "components/common/pagination/PaginationContainer";
 import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
 import VanitySelectionTableBase from "components/common/table/VanitySelectionTableBase";
 import {persistUpdatedRecord} from "components/common/buttons/saving/saving-helpers-v2";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import UnsavedChangesModal from "components/common/modal/UnsavedChangesModal";
 
-function VanitySelectionTable({ columns, getNewModel, setParentModel, loadData, data, noDataMessage, rowStyling, isLoading, sort, paginationModel, setPaginationModel, tableHeight }) {
+function VanitySelectionTable({ columns, getNewModel, parentModel, setParentModel, loadData, data, noDataMessage, rowStyling, isLoading, sort, paginationModel, setPaginationModel, tableHeight }) {
   const toastContext = useContext(DialogToastContext);
   const selectedItemRef = useRef({});
 
   const onRowSelect = async (grid, row, column, e) => {
     const selectedModel = getModel();
-    // // Don't change rows if invalid, save before changing rows if valid
+    // Don't change rows if invalid, save before changing rows if valid
     if (selectedModel != null) {
       // We are still on same row
       if (selectedModel.getData("_id") === row?._id) {
@@ -39,17 +40,29 @@ function VanitySelectionTable({ columns, getNewModel, setParentModel, loadData, 
   };
 
   const onCellEdit = (value, row, column) => {
-    const selectedModel = {...getModel()};
+    const selectedModel = getModel();
 
     // Value should only be undefined if canceled out
     if (value !== undefined) {
       const fieldName = column?.id;
+
+      if (selectedModel?.getData(fieldName) === value) {
+        return true;
+      }
+
       selectedModel.setData(fieldName, value);
 
       const fieldErrors = selectedModel.isFieldValid(fieldName);
 
       if (Array.isArray(fieldErrors) && fieldErrors.length > 0) {
-        toastContext.showFormErrorToast(fieldErrors[0]);
+        toastContext.showOverlayPanel(
+          <UnsavedChangesModal
+            model={selectedModel}
+            errors={fieldErrors}
+            handleContinueEditing={handleContinueEditing}
+            handleRevert={handleRevert}
+          />
+        );
         return false;
       }
 
@@ -57,8 +70,16 @@ function VanitySelectionTable({ columns, getNewModel, setParentModel, loadData, 
       setParentModel({...selectedModel});
       return true;
     }
+  };
 
-    return true;
+  const handleContinueEditing = () => {
+    toastContext.clearOverlayPanel();
+  };
+
+  const handleRevert = (selectedModel) => {
+    toastContext.clearOverlayPanel();
+    selectedModel?.resetData();
+    setParentModel({...selectedModel});
   };
 
   const getModel = () => {
@@ -77,6 +98,7 @@ function VanitySelectionTable({ columns, getNewModel, setParentModel, loadData, 
         setFilterDto={setPaginationModel}
       >
         <VanitySelectionTableBase
+          selectedItemId={parentModel?.getData("_id")}
           noDataMessage={noDataMessage}
           data={data}
           isLoading={isLoading}
@@ -114,7 +136,8 @@ VanitySelectionTable.propTypes = {
   loadData: PropTypes.func,
   tableHeight: PropTypes.string,
   getNewModel: PropTypes.func,
-  setParentModel: PropTypes.func
+  setParentModel: PropTypes.func,
+  parentModel: PropTypes.object
 };
 
 export default VanitySelectionTable;

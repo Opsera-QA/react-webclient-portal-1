@@ -8,7 +8,6 @@ export const DataState = {
 };
 
 export class ModelBase {
-
   constructor(data, metaData, newModel, setStateFunction) {
     this.metaData = {...metaData};
     this.data = {...this.getNewObjectFields(), ...data};
@@ -177,25 +176,28 @@ export class ModelBase {
   };
 
   propertyChange = (id, newValue, oldValue) => {
-    if (!this.changeMap.has(id)) {
+    let newChangeMap = new Map(this.changeMap);
+    if (!newChangeMap.has(id)) {
       // console.log("Field added to change map: " + id);
       // console.log("oldValue: " + JSON.stringify(oldValue));
       // console.log("newValue: " + JSON.stringify(newValue));
-      this.changeMap.set(id, oldValue);
+      newChangeMap.set(id, oldValue);
 
       if (this.dataState !== DataState.NEW) {
         this.dataState = DataState.CHANGED;
       }
     }
-    else if (this.changeMap.get(id) === newValue
-         || (this.changeMap.get(id) === null && newValue === null)) {
+    else if (newChangeMap.get(id) === newValue
+         || (newChangeMap.get(id) === null && newValue === null)) {
       // console.log("Fieldname removed from change map: " + id);
-      this.changeMap.delete(id);
+      newChangeMap.delete(id);
 
       if (this.changeMap.size === 0 && this.dataState === DataState.CHANGED) {
         this.dataState  = DataState.LOADED;
       }
     }
+
+    this.changeMap = newChangeMap;
   };
 
   clearChangeMap = () => {
@@ -244,9 +246,15 @@ export class ModelBase {
 
   resetData = () => {
     this.changeMap.forEach((value, key) => {
-      let originalValue = this.changeMap.get(key);
-      this.setData(key, originalValue);
+      this.data[key] = value;
     });
+    this.clearChangeMap();
+  };
+
+  updateState = () => {
+    if (this.setStateFunction) {
+      this.setStateFunction({...this});
+    }
   };
 
   getChangeMap = () => {
