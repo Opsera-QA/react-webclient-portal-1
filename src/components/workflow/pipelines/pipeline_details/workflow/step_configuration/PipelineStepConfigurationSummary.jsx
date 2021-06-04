@@ -417,7 +417,7 @@ function PipelineStepConfigurationSummary({
         return (
           <KafkaConnectPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            azureDevopsPipelineDataObject={getModelWrappedObject(kafkaConnectStepFormMetadata)}
+            kafkaConnectPipelineDataObject={getModelWrappedObject(kafkaConnectStepFormMetadata)}
           />
         );
       default:
