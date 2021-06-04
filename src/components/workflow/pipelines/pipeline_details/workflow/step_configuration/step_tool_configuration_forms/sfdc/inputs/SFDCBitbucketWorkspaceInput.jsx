@@ -10,6 +10,13 @@ function SFDCBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
     setDataObject({...newDataObject});
   };
 
+  const clearData = () => {
+    let newDataObject = {...dataObject};
+    newDataObject.setData("workspace", "");
+    newDataObject.setData("workspaceName", "");
+    setDataObject({...newDataObject});
+  };
+
   if (dataObject.getData("service") !== "bitbucket") {
     return <></>;
   }
@@ -22,6 +29,7 @@ function SFDCBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
        setDataObject={setDataObject}
        setDataFunction={setWorkspace}
        disabled={disabled}
+       clearDataFunction={clearData}
      />
   );
 }

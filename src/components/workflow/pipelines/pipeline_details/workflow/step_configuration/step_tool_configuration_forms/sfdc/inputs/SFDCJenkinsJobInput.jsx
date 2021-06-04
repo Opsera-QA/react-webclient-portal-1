@@ -17,6 +17,19 @@ function SFDCJenkinsJobInput({dataObject, setDataObject, disabled}) {
     setDataObject({...newDataObject});
   };
 
+  const clearData = () => {
+    let newDataObject = {...dataObject};
+    newDataObject.setData("toolJobName", "");
+    newDataObject.setData("toolJobType", "");
+    newDataObject.setData("toolJobId", "");
+    newDataObject.setData("jobType", "");
+    newDataObject.setData("jobName", "");
+    newDataObject.setData("jobDescription", "");
+    newDataObject.setData("buildType", "");
+    newDataObject.setData("agentLabels", "");
+    setDataObject({...newDataObject});
+  };
+
   // TODO : Type filter needs to be checked 
   return (
      <JenkinsJobInput
@@ -28,6 +41,7 @@ function SFDCJenkinsJobInput({dataObject, setDataObject, disabled}) {
        setDataObject={setDataObject}
        setDataFunction={setJenkinsJob}
        disabled={disabled}
+       clearDataFunction={clearData}
      />
   );
 }

@@ -8,6 +8,13 @@ function SFDCGitUpstreamBranchInput({dataObject, setDataObject, disabled}) {
     newDataObject.setData("upstreamBranch", selectedOption);
     setDataObject({...newDataObject});
   };
+
+  const clearData = () => {
+    let newDataObject = {...dataObject};
+    newDataObject.setData("upstreamBranch", "");    
+    setDataObject({...newDataObject});
+  };
+
   return (
      <GitBranchInput
        fieldName={"upstreamBranch"}
@@ -19,6 +26,7 @@ function SFDCGitUpstreamBranchInput({dataObject, setDataObject, disabled}) {
        setDataFunction={setBranch}
        setDataObject={setDataObject}
        disabled={disabled}
+       clearDataFunction={clearData}
      />
   );
 }

@@ -11,6 +11,14 @@ function DestSFDCToolInput({dataObject, setDataObject, disabled}) {
     setDataObject({...newDataObject});
   };
 
+  const clearToolData = () => {
+    let newDataObject = {...dataObject};
+    newDataObject.setData("sfdcDestToolId", "");
+    newDataObject.setData("destAccountUsername", "");
+    newDataObject.setData("sfdcDestToolName", "");
+    setDataObject({...newDataObject});
+  };
+
   return (
      <PipelineToolInput
        toolType={"sfdc-configurator"}
@@ -21,6 +29,7 @@ function DestSFDCToolInput({dataObject, setDataObject, disabled}) {
        setDataObject={setDataObject}
        setDataFunction={setDestSFDCTool}
        disabled={disabled}
+       clearDataFunction={clearToolData}
      />
   );
 }
