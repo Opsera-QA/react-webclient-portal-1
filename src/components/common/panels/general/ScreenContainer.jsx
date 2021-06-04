@@ -147,7 +147,7 @@ ScreenContainer.propTypes = {
   accessRoleData: PropTypes.object,
   roleRequirement: PropTypes.string,
   hasTabContainer: PropTypes.bool,
-  helpComponent: PropTypes.bool
+  helpComponent: PropTypes.object
 };
 
 export default ScreenContainer;

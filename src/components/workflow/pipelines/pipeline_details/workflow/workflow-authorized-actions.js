@@ -232,8 +232,10 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
 
 
 /**
+ * TODO: This should be moved to roleHelpers. Leaving here for now until the other use cases are updated to follow this format.
  * Handles all authorization of actions for customParameters.  It factors in the overall user roles and the individual object (parameter)
- * access roles.
+ * access roles. It will be customized based on roleDefinitions passed in.
+ *
  * @param customerAccessRules
  * @param action
  * @param roleDefinitions
@@ -242,10 +244,8 @@ workflowAuthorizedActions.toolRegistryItems = (customerAccessRules, action, owne
  * @returns {boolean}
  *
  *
- * Administrator & Owner Only Roles:
- *
  */
-workflowAuthorizedActions.isCustomerParameterActionAllowed = (customerAccessRules, action, owner, objectRoles, roleDefinitions) => {
+workflowAuthorizedActions.isActionAllowed = (customerAccessRules, action, owner, objectRoles, roleDefinitions) => {
   if (customerAccessRules == null || roleDefinitions == null) {
     return false;
   }
@@ -257,11 +257,10 @@ workflowAuthorizedActions.isCustomerParameterActionAllowed = (customerAccessRule
     return false;
   }
 
-  if (allowedRoles.includes(ACCESS_ROLES.NO_ACCESS_RULES) ) {
+  if (allowedRoles.includes(ACCESS_ROLES.NO_ACCESS_RULES)) {
     return true;
   }
 
-  // TODO: After standard is set, we should just pull based on userObjectRole created with calculateUserObjectRole instead of checking this way.
   if (customerAccessRules.OpseraAdministrator) {
     roleAllowed = roleAllowed || allowedRoles.includes(ACCESS_ROLES.OPSERA_ADMINISTRATOR);
   }

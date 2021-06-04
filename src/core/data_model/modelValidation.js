@@ -85,6 +85,11 @@ export const fieldValidation = (value, data, field) => {
     errorMessages.push("Does not meet field requirements.");
   }
 
+  if (field.regexValidatorV2 != null && value !== "" && !matchesRegex(field.regexValidatorV2, value))
+  {
+    errorMessages.push(field.regexErrorText);
+  }
+
   if (field.maxItems != null && value.length > field.maxItems)
   {
     errorMessages.push(`You have selected ${value.length} values, but the maximum allowed is ${field.maxItems}`);
