@@ -151,8 +151,11 @@ const commandLineStepFormMetadata = {
     {
       label: "Auto-Scaling Enabled?",
       id: "autoScaleEnable"
+    },
+    {
+      label: "Terraform Step",
+      id: "terraformStepId"
     }
-      
   ],
   fieldsAlt: [
     {
@@ -306,6 +309,10 @@ const commandLineStepFormMetadata = {
     {
       label: "Auto-Scaling Enabled?",
       id: "autoScaleEnable"
+    },
+    {
+      label: "Terraform Step",
+      id: "terraformStepId"
     }
   ],
   newModelBase: {
@@ -348,6 +355,7 @@ const commandLineStepFormMetadata = {
     inputPath: "",
     inputFileName: "",
     commands: "",
+    terraformStepId: ""
   }
 };
 
