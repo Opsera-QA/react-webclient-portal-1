@@ -810,11 +810,11 @@ a:hover, .active, .link-text:hover {
     transform-origin: top;
 }
 
-.likeALink:hover {
+.dropdown-data-fetch:hover {
     text-decoration: underline;
 }
 
-.likeALink {
+.dropdown-data-fetch {
     color: blue;
     cursor: pointer;
 }

@@ -13,6 +13,7 @@ import KafkaConnectSCMToolTypeSelectInput from "./inputs/KafkConnectSCMToolTypeS
 import KafkaConnectSCMToolSelectInput from "./inputs/KafkaConnectSCMToolSelectInput";
 import KafkaConnectSCMRepoFiles from "./inputs/KafkaConnectSCMRepoFiles";
 import OctopusLifecycleSelectInput from "../octopus/input/OctopusLifecycleSelectInput";
+import KafkaConnectActionSelectInput from "./inputs/KafkaConnectActionSelectInput";
 
 function KafkaConnectStepConfiguration({ pipelineId, stepTool, stepId, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -65,6 +66,10 @@ function KafkaConnectStepConfiguration({ pipelineId, stepTool, stepId, closeEdit
       isLoading={isLoading}
     >
       <KafkaConnectToolSelectInput
+        dataObject={kafkaConnectStepConfigurationDto}
+        setDataObject={setKafkaConnectStepConfigurationDataDto}
+      />
+      <KafkaConnectActionSelectInput
         dataObject={kafkaConnectStepConfigurationDto}
         setDataObject={setKafkaConnectStepConfigurationDataDto}
       />
