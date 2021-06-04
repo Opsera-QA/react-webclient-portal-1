@@ -69,6 +69,7 @@ function ParametersView({isLoading, loadData, parameterList, setParameterList, p
         loadData={loadData}
         parameterModel={parameterData}
         parameterMetadata={parameterMetadata}
+        parameterRoleDefinitions={parameterRoleDefinitions}
       />
     );
   };

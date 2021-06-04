@@ -13,9 +13,16 @@ import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/Rol
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 import VisibleVaultTextInput from "components/common/inputs/text/VisibleVaultTextInput";
+import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import workflowAuthorizedActions
+  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 
-function ParametersEditorPanel({ parameterModel, handleClose }) {
+function ParametersEditorPanel({ parameterModel, parameterRoleDefinitions, handleClose }) {
+  const { getAccessRoleData } = useContext(AuthContext);
   const [parameterData, setParameterData] = useState(undefined);
+  const [accessRoleData, setAccessRoleData] = useState(undefined);
+  const [canEdit, setCanEdit] = useState(false);
+  const [canDelete, setCanDelete] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -41,17 +48,28 @@ function ParametersEditorPanel({ parameterModel, handleClose }) {
       source.cancel();
       isMounted.current = false;
     };
-  }, [JSON.stringify(parameterModel)]);
+  }, [parameterModel && parameterModel.getData("_id")]);
 
   const initializeData = async () => {
     setIsLoading(true);
-    setParameterData(parameterModel);
+    await loadRoles();
+    setParameterData({...parameterModel});
     setIsLoading(false);
   };
 
-  // TODO: Add RBAC check
+  const loadRoles = async () => {
+    const userRoleAccess = await getAccessRoleData();
+    if (isMounted?.current === true && userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+      const deleteAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "delete_parameter", parameterModel.getData("owner"), parameterModel.getData("roles"), parameterRoleDefinitions);
+      setCanDelete(deleteAllowed);
+      const editAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "update_parameter", parameterModel.getData("owner"), parameterModel.getData("roles"), parameterRoleDefinitions);
+      setCanEdit(editAllowed);
+    }
+  };
+
   const getDeleteButton = () => {
-    if (!parameterData.isNew()) {
+    if (canDelete && !parameterData.isNew()) {
       return (<DeleteButtonWithConfirmation deleteRecord={() => parameterData.deleteModel()} dataObject={parameterData} />);
     }
   };
@@ -60,7 +78,6 @@ function ParametersEditorPanel({ parameterModel, handleClose }) {
     return null;
   }
 
-  // TODO: Create new VanityEditorPanel, handle save or update in new save/create buttons
   return (
     <VanityEditorPanelContainer
       model={parameterData}
@@ -71,13 +88,13 @@ function ParametersEditorPanel({ parameterModel, handleClose }) {
     >
       <Row>
         <Col lg={6}>
-          <TextInputBase setDataObject={setParameterData} dataObject={parameterData} fieldName={"name"}/>
+          <TextInputBase disabled={!parameterData?.isNew()} setDataObject={setParameterData} dataObject={parameterData} fieldName={"name"}/>
         </Col>
         <Col lg={6}>
-          <VisibleVaultTextInput setDataObject={setParameterData} dataObject={parameterData} fieldName={"value"}/>
+          <VisibleVaultTextInput disabled={canEdit !== true} setDataObject={setParameterData} dataObject={parameterData} fieldName={"value"}/>
         </Col>
         <Col lg={12}>
-          <RoleAccessInput dataObject={parameterData} setDataObject={setParameterData} fieldName={"roles"} />
+          <RoleAccessInput disabled={canEdit !== true} dataObject={parameterData} setDataObject={setParameterData} fieldName={"roles"} />
         </Col>
         <Col lg={6}>
           <BooleanToggleInput setDataObject={setParameterData} dataObject={parameterData} fieldName={"vaultEnabled"} disabled={!parameterData?.isNew()}/>
@@ -90,6 +107,7 @@ function ParametersEditorPanel({ parameterModel, handleClose }) {
 ParametersEditorPanel.propTypes = {
   parameterModel: PropTypes.object,
   handleClose: PropTypes.func,
+  parameterRoleDefinitions: PropTypes.object
 };
 
 export default ParametersEditorPanel;

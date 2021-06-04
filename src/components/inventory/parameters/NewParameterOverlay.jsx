@@ -5,7 +5,7 @@ import CreateCenterPanel from "components/common/overlays/center/CreateCenterPan
 import ParametersEditorPanel from "components/inventory/parameters/details/ParametersEditorPanel";
 import ParameterModel from "components/inventory/parameters/parameter.model";
 
-function NewParameterOverlay({ loadData, isMounted, parameterMetadata, getAccessToken, cancelTokenSource }) {
+function NewParameterOverlay({ loadData, isMounted, parameterMetadata, getAccessToken, cancelTokenSource, parameterRoleDefinitions }) {
   const toastContext = useContext(DialogToastContext);
   const [parameterModel, setParameterModel] = useState(
     new ParameterModel({...parameterMetadata.newObjectFields}, parameterMetadata, true, undefined, getAccessToken, cancelTokenSource, loadData)
@@ -22,7 +22,7 @@ function NewParameterOverlay({ loadData, isMounted, parameterMetadata, getAccess
 
   return (
     <CreateCenterPanel closePanel={closePanel} objectType={parameterMetadata?.type} loadData={loadData}>
-      <ParametersEditorPanel handleClose={closePanel} parameterModel={parameterModel}/>
+      <ParametersEditorPanel handleClose={closePanel} parameterModel={parameterModel} parameterRoleDefinitions={parameterRoleDefinitions}/>
     </CreateCenterPanel>
   );
 }
@@ -32,7 +32,8 @@ NewParameterOverlay.propTypes = {
   loadData: PropTypes.func,
   parameterMetadata: PropTypes.object,
   getAccessToken: PropTypes.func,
-  cancelTokenSource: PropTypes.object
+  cancelTokenSource: PropTypes.object,
+  parameterRoleDefinitions: PropTypes.object
 };
 
 export default NewParameterOverlay;

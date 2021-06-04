@@ -16,11 +16,13 @@ function VisibleVaultTextInput({fieldName, dataObject, setDataObject, disabled})
   useEffect(() => {
     isMounted.current = true;
 
-    getValueFromVault().catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if (!dataObject.isNew()) {
+      getValueFromVault().catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       isMounted.current = false;
@@ -43,8 +45,14 @@ function VisibleVaultTextInput({fieldName, dataObject, setDataObject, disabled})
       }
     }
     catch (error) {
-      setErrorMessage("Could not pull value from Vault");
-      console.error(error);
+      if (isMounted.current === true) {
+        if (error?.response?.status === 404) {
+          setErrorMessage("No value stored in vault");
+        } else {
+          setErrorMessage("Could not pull value from Vault");
+          console.error(error);
+        }
+      }
     }
     finally {
       setIsLoading(false);

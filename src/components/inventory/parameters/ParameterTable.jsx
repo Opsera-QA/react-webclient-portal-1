@@ -66,6 +66,7 @@ function ParameterTable({ data, parameterMetadata, setParameterData, loadData, i
         isMounted={isMounted}
         getAccessToken={getAccessToken}
         cancelTokenSource={cancelTokenSource}
+        parameterRoleDefinitions={parameterRoleDefinitions}
       />
     );
   };
@@ -87,16 +88,12 @@ function ParameterTable({ data, parameterMetadata, setParameterData, loadData, i
   };
 
   const getAddRecordFunction = () => {
-    const addAllowed = workflowAuthorizedActions.isCustomerParameterActionAllowed(userRoleAccess, "create_parameter", undefined, undefined, parameterRoleDefinitions);
+    const addAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "create_parameter", undefined, undefined, parameterRoleDefinitions);
 
     if (addAllowed === true) {
       return createParameter;
     }
   };
-
-  if (userRoleAccess == null) {
-    return null;
-  }
 
   return (
     <FilterContainer
