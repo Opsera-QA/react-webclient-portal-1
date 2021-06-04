@@ -41,7 +41,6 @@ function VisibleVaultTextInput({fieldName, dataObject, setDataObject, disabled})
       setIsLoading(true);
       if (dataObject?.getData("vaultEnabled") === true) {
         await dataObject.getValueFromVault(fieldName);
-        setDataObject({...dataObject});
       }
     }
     catch (error) {

@@ -41,6 +41,7 @@ function ParametersView({isLoading, loadData, parameterList, setParameterList, p
         getAccessToken={getAccessToken}
         getNewModel={getNewModel}
         setParameterData={setModel}
+        parameterData={parameterData}
       />
     );
   };
@@ -53,7 +54,9 @@ function ParametersView({isLoading, loadData, parameterList, setParameterList, p
       setParameterList([...parameterList]);
     }
 
-    setParameterData({...newModel});
+    if (parameterData?.getData("_id") === newModel?.getData("_id")) {
+      setParameterData({...newModel});
+    }
   };
 
   const getNewModel = (newRowData) => {

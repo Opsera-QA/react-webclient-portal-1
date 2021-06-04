@@ -14,9 +14,7 @@ export class ParameterModel extends ModelBase {
   };
 
   saveModel = async () => {
-    const response =  await parametersActions.updateParameterV2(this.getAccessToken, this.cancelTokenSource, this);
-    await this.loadData();
-    return response;
+    return await parametersActions.updateParameterV2(this.getAccessToken, this.cancelTokenSource, this);
   };
 
   deleteModel = async () => {

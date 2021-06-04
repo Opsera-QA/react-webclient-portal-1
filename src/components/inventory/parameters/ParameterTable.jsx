@@ -15,7 +15,7 @@ import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import {AuthContext} from "contexts/AuthContext";
 
-function ParameterTable({ data, parameterMetadata, setParameterData, loadData, isLoading, getNewModel, isMounted, getAccessToken, cancelTokenSource, parameterRoleDefinitions }) {
+function ParameterTable({ data, parameterMetadata, setParameterData, parameterData, loadData, isLoading, getNewModel, isMounted, getAccessToken, cancelTokenSource, parameterRoleDefinitions }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessRoleData } = useContext(AuthContext);
   const [userRoleAccess, setUserRoleAccess] = useState(undefined);
@@ -83,6 +83,7 @@ function ParameterTable({ data, parameterMetadata, setParameterData, loadData, i
         getNewModel={getNewModel}
         setParentModel={setParameterData}
         tableHeight={"calc(25vh)"}
+        parentModel={parameterData}
       />
     );
   };
@@ -121,7 +122,8 @@ ParameterTable.propTypes = {
   isMounted: PropTypes.object,
   getAccessToken: PropTypes.func,
   cancelTokenSource: PropTypes.object,
-  parameterRoleDefinitions: PropTypes.object
+  parameterRoleDefinitions: PropTypes.object,
+  parameterData: PropTypes.object
 };
 
 export default ParameterTable;
