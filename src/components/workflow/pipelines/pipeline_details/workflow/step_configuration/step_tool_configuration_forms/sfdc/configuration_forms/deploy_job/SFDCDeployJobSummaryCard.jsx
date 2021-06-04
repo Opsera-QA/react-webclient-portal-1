@@ -2,26 +2,34 @@ import React from "react";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import TextFieldBase from "components/common/form_fields/TextFieldBase";
-import SFDCJobSummaryCardContainer from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/configuration_forms/SFDCJobSummaryCardContainer";
+import { Col } from "react-bootstrap";
 
-function SFDCDeployJobSummaryCard({ sfdcStepConfigurationDto, isLoading }) {
-  if (isLoading) {
-    return <SFDCJobSummaryCardContainer isLoading={isLoading} />;
-  }
+function SFDCDeployJobSummaryCard({ sfdcStepConfigurationDto }) {
+  const getSummaryFields = () =>{    
+    return (
+      <>
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"sfdcToolName"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"sfdcUnitTestType"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"stepIdXML"} />
+        </Col>
+      </>
+    );
+  };
 
   return (
-    <SFDCJobSummaryCardContainer sfdcStepConfigurationDto={sfdcStepConfigurationDto} isLoading={isLoading}>
-      <div className="mb-2">
-        <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"sfdcToolName"} />
-        <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"sfdcUnitTestType"} />
-      </div>
-    </SFDCJobSummaryCardContainer>
+    <>
+      {sfdcStepConfigurationDto && getSummaryFields()}      
+    </>
   );
 }
 
 SFDCDeployJobSummaryCard.propTypes = {
-  sfdcStepConfigurationDto: PropTypes.object,
-  isLoading: PropTypes.bool,
+  sfdcStepConfigurationDto: PropTypes.object,  
 };
 
 export default SFDCDeployJobSummaryCard;
