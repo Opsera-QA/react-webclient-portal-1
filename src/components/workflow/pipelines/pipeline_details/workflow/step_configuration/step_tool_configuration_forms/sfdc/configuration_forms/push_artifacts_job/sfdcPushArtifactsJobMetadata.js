@@ -22,6 +22,10 @@ const sfdcPushArtifactsJobMetadata = {
             isRequired: true
         },
         {
+            label: "Upstream Branch",
+            id: "upstreamBranch"
+        },
+        {
             label: "Build/Xml Step Info",
             id: "stepIdXML",
             isRequired: true

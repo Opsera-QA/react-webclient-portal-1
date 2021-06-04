@@ -2,27 +2,46 @@ import React from "react";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import TextFieldBase from "components/common/form_fields/TextFieldBase";
-import SFDCJobSummaryCardContainer from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/configuration_forms/SFDCJobSummaryCardContainer";
+import { Col } from "react-bootstrap";
 
-function SFDCProfileMigrationJobSummaryCard({ sfdcStepConfigurationDto, isLoading }) {
-  if (isLoading) {
-    return <SFDCJobSummaryCardContainer isLoading={isLoading} />;
-  }
+function SFDCProfileMigrationJobSummaryCard({ sfdcStepConfigurationDto }) {
+  const getSummaryFields = () =>{    
+    return (
+      <>
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"toolConfigId"} />
+        </Col>        
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"service"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"accountId"} />
+        </Col>        
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"gitCredential"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"workspace"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"repository"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"branch"} />
+        </Col>
+      </>
+    );
+  };
 
   return (
-    <SFDCJobSummaryCardContainer sfdcStepConfigurationDto={sfdcStepConfigurationDto} isLoading={isLoading}>
-      <div className="mb-2">
-        <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"sfdcToolName"} />
-        <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"isOrgToOrg"} />
-        <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"sfdcDestToolName"} />
-      </div>
-    </SFDCJobSummaryCardContainer>
+    <>
+      {sfdcStepConfigurationDto && getSummaryFields()}      
+    </>
   );
 }
 
 SFDCProfileMigrationJobSummaryCard.propTypes = {
   sfdcStepConfigurationDto: PropTypes.object,
-  isLoading: PropTypes.bool,
 };
 
 export default SFDCProfileMigrationJobSummaryCard;

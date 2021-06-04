@@ -1,42 +1,91 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Card} from "react-bootstrap";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEnvelope, faSpinner} from "@fortawesome/pro-light-svg-icons";
+import SFDCPackageJobSummaryCard from "./create_package_xml_job/SFDCPackageJobSummaryCard";
+import SFDCBackupJobSummaryCard from "./backup_job/SFDCBackupJobSummaryCard";
+import SFDCDeployJobSummaryCard from "./deploy_job/SFDCDeployJobSummaryCard";
+import SFDCProfileMigrationJobSummaryCard from "./profile_migration_job/SFDCProfileMigrationJobSummaryCard";
+import SFDCPushArtifactsJobSummaryCard from "./push_artifacts_job/SFDCPushArtifactsJobSummaryCard";
+import SFDCUnitTestJobSummaryCard from "./unit_test_job/SFDCUnitTestJobSummaryCard";
+import SFDCValidatePackageXMLJobSummaryCard from "./validate_package_xml_job/SFDCValidatePackageXMLJobSummaryCard";
+import sdfcBackupJobMetadata from "../configuration_forms/backup_job/sdfcBackupJobMetadata";
+import sfdcCreatePackageXmlJobMetadata from "../configuration_forms/create_package_xml_job/sfdcCreatePackageXmlJobMetadata";
+import sfdcProfileMigrationJobMetadata from "../configuration_forms/profile_migration_job/sfdcProfileMigrationJobMetadata";
+import sfdcValidatePackageXmlJobMetadata from "../configuration_forms/validate_package_xml_job/sfdcValidatePackageXmlJobMetadata";
+import sfdcDeployJobMetadata from "../configuration_forms/deploy_job/sfdcDeployJobMetadata";
+import sdfcUnitTestJobMetadata from "../configuration_forms/unit_test_job/sdfcUnitTestJobMetadata";
+import sfdcPushArtifactsJobMetadata from "../configuration_forms/push_artifacts_job/sfdcPushArtifactsJobMetadata";
+import TextFieldBase from "components/common/form_fields/TextFieldBase";
+import { Col } from "react-bootstrap";
 
 function SFDCJobSummaryCardContainer({ children, isLoading, sfdcStepConfigurationDto }) {
-  const getCardTitle = () => {
-    if (isLoading) {
-      return (<div className="ml-1"><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Notification Type</div>);
+
+  const getJobSummaryPanel = () => {
+    
+    switch (sfdcStepConfigurationDto.getData("jobType")) {
+
+      case "SFDC CREATE PACKAGE XML":        
+        sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sfdcCreatePackageXmlJobMetadata.fields))]);
+        return (
+         <SFDCPackageJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
+        );
+
+      case "SFDC PROFILE DEPLOY":
+        sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sfdcProfileMigrationJobMetadata.fields))]);
+        return (
+         <SFDCProfileMigrationJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
+        );
+
+      case "SFDC VALIDATE PACKAGE XML":
+        sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sfdcValidatePackageXmlJobMetadata.fields))]);
+        return (
+          <SFDCValidatePackageXMLJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
+         );
+
+      case "SFDC BACK UP":
+        sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sdfcBackupJobMetadata.fields))]);
+        return (
+          <SFDCBackupJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
+        );
+        
+      case "SFDC DEPLOY":
+        sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sfdcDeployJobMetadata.fields))]);
+        return (
+          <SFDCDeployJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
+         );
+         
+      case "SFDC UNIT TESTING":
+        sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sdfcUnitTestJobMetadata.fields))]);
+        return (
+          <SFDCUnitTestJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
+         );
+         
+      case "SFDC PUSH ARTIFACTS":
+        sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sfdcPushArtifactsJobMetadata.fields))]);
+        return (
+          <SFDCPushArtifactsJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
+         );
+
+      default:
+        return <></>;
     }
-
-    return (
-      <div className="w-100 mx-2">
-        <div><span><FontAwesomeIcon icon={faEnvelope} fixedWidth className="mr-1"/>Notification Type: {notificationData.getData("type")}</span></div>
-      </div>
-    );
-  };
-
-  const getCardBody = () => {
-    if (isLoading) {
-      return (<div className="m-3" />);
-    }
-
-    return children;
   };
 
   return (
-    <Card className="mb-2 pipeline-summary-card">
-      <Card.Title>
-        <div className="d-flex pipeline-card-title small p-1">
-          {getCardTitle()}
-        </div>
-      </Card.Title>
-      <Card.Body className="py-0 px-3 h-100 small">
-        {getCardBody()}
-      </Card.Body>
-      <Card.Footer />
-    </Card>
+    <>
+      <Col lg={6}>
+        <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"toolConfigId"} />
+      </Col>
+      <Col lg={6}>
+        <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"jobType"} />
+      </Col>
+      <Col lg={6}>
+        <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"jobName"} />
+      </Col>
+      <Col lg={6}>
+        <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"toolJobId"} />
+      </Col>
+      {sfdcStepConfigurationDto && getJobSummaryPanel()}
+    </>
   );
 }
 

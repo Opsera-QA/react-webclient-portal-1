@@ -2,26 +2,59 @@ import React from "react";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import TextFieldBase from "components/common/form_fields/TextFieldBase";
-import SFDCJobSummaryCardContainer from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/configuration_forms/SFDCJobSummaryCardContainer";
+import { Col } from "react-bootstrap";
 
-function SFDCPushArtifactsJobSummaryCard({ sfdcStepConfigurationDto, isLoading }) {
-  if (isLoading) {
-    return <SFDCJobSummaryCardContainer isLoading={isLoading} />;
-  }
+function SFDCPushArtifactsJobSummaryCard({ sfdcStepConfigurationDto }) {
+  console.log({sfdcStepConfigurationDto});
+  const getSummaryFields = () =>{    
+    return (
+      <>                
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"service"} />
+        </Col>        
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"gitCredential"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"workspace"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"repository"} />
+        </Col>        
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"gitBranch"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"upstreamBranch"} />
+        </Col>                
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"stepIdXML"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"scriptFilePath"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"scriptFileName"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"outputPath"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"outputFileName"} />
+        </Col>
+      </>
+    );
+  };
 
   return (
-    <SFDCJobSummaryCardContainer sfdcStepConfigurationDto={sfdcStepConfigurationDto} isLoading={isLoading}>
-      <div className="mb-2">
-        <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"sfdcToolName"} />
-        <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"sfdcUnitTestType"} />
-      </div>
-    </SFDCJobSummaryCardContainer>
+    <>
+      {sfdcStepConfigurationDto && getSummaryFields()}      
+    </>
   );
 }
 
 SFDCPushArtifactsJobSummaryCard.propTypes = {
   sfdcStepConfigurationDto: PropTypes.object,
-  isLoading: PropTypes.bool,
 };
 
 export default SFDCPushArtifactsJobSummaryCard;
