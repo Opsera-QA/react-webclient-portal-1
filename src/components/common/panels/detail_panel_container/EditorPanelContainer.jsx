@@ -52,9 +52,9 @@ function EditorPanelContainer(
   const getBooleanToggle = () => {
     if (showBooleanToggle === true) {
       return (
-        <div className={"m-2"}>
+        <div className={"mt-2"}>
           <Row className={"mx-0 d-flex"}>
-            <div className={"d-flex ml-auto"}>
+            <div className={"d-flex ml-auto mr-4"}>
               <Form.Check
                 type="switch"
                 id={"active"}
@@ -77,7 +77,7 @@ function EditorPanelContainer(
   return (
     <div className="h-100">
       {getBooleanToggle()}
-      <div className="mx-2 p-3">
+      <div className={showBooleanToggle === true ? "mx-2 px-3 pb-3" : "mx-2 p-3"}>
         <div>{children}</div>
         <div>
           <div>{getPersistButtonContainer()}</div>
