@@ -22,9 +22,13 @@ function SfdcValidatePackageXmlJobSummaryCard({ sfdcStepConfigurationDto }) {
     );
   };
 
+  if (sfdcStepConfigurationDto == null) {
+    return null;
+  }
+
   return (
     <>
-      {sfdcStepConfigurationDto && getSummaryFields()}      
+      {getSummaryFields()}
     </>
   );
 }

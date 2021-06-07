@@ -29,14 +29,11 @@ function SfdcPackageJobEditorPanel({ sfdcStepConfigurationDto, setSfdcStepConfig
     }
       return (
       <>
-        {/* account */}
         <SfdcJenkinsAccountInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
-        {/* workspace */}
         <SfdcBitbucketWorkspaceInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
-        {/* repo */}
         <SfdcGitRepositoryInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
-        {/* branch */}
         <SfdcGitBranchInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
+        {/* Workspace Delete Flag */}
         <div>
           <BooleanToggleInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} fieldName={"workspaceDeleteFlag"} />
           <div className="small text-muted pb-2">Deletes the Jenkins workspace before building.</div>
@@ -46,12 +43,10 @@ function SfdcPackageJobEditorPanel({ sfdcStepConfigurationDto, setSfdcStepConfig
   };
 
   return (
-    <>
-      {/* salesforce creds */}
+    <>      
       <SfdcToolInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
       {/* is org to org */}
-      <BooleanToggleInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} fieldName={"isOrgToOrg"} />
-      {/* get dynamic fields based on above selection */}
+      <BooleanToggleInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} fieldName={"isOrgToOrg"} />      
       {getDynamicFields()}
     </>
   );
