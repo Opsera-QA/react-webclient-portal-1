@@ -137,6 +137,7 @@ function ChartSummaryPanelWrapper({ chartModel, kpiIdentifier, dashboardData, kp
             chartModel={chartModel}
             setActiveTab={setActiveTab}
             currentDate={currentDate}
+            pipelineName={pipelineName}
           />
         );
       case "status-by-pipeline-failed":
@@ -147,6 +148,7 @@ function ChartSummaryPanelWrapper({ chartModel, kpiIdentifier, dashboardData, kp
             chartModel={chartModel}
             setActiveTab={setActiveTab}
             currentDate={currentDate}
+            pipelineName={pipelineName}
           />
         );
       default:

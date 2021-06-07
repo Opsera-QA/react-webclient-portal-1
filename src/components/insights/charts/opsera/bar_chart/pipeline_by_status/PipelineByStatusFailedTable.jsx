@@ -17,7 +17,7 @@ import PipelineByStatusTableMetadata from "components/insights/charts/opsera/bar
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import { DialogToastContext } from "contexts/DialogToastContext";
 
-function PipelineByStatusFailedTable({ dashboardData, kpiConfiguration, setActiveTab, currentDate }) {
+function PipelineByStatusFailedTable({ dashboardData, kpiConfiguration, setActiveTab, currentDate, pipelineName }) {
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
   const fields = PipelineByStatusTableMetadata.fields;
@@ -63,7 +63,7 @@ function PipelineByStatusFailedTable({ dashboardData, kpiConfiguration, setActiv
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "listOfFailedRuns", null, dashboardTags, filterDto, null, null, null, currentDate);
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "listOfFailedRuns", null, dashboardTags, filterDto, null, null, pipelineName , currentDate);
       let dataObject = response?.data ? response?.data?.data[0] : [{data: [], count: [{count: 0}]}];
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", dataObject[0]?.count[0]?.count);
