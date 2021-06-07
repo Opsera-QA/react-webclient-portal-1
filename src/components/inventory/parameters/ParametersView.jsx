@@ -26,7 +26,7 @@ function ParametersView({isLoading, loadData, parameterList, setParameterList, p
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [parameterList]);
 
   const getTableView = () => {
     return (
@@ -50,8 +50,14 @@ function ParametersView({isLoading, loadData, parameterList, setParameterList, p
     const selectedRecordIndex = parameterList.findIndex((parameter) => { return parameter._id === newModel.getData("_id"); });
 
     if (selectedRecordIndex !== -1) {
-      parameterList[selectedRecordIndex] = newModel.getPersistData();
-      setParameterList([...parameterList]);
+      if (newModel?.isDeleted() === true) {
+        parameterList.splice(selectedRecordIndex, 1);
+        setParameterList([...parameterList]);
+      }
+      else {
+        parameterList[selectedRecordIndex] = newModel.getPersistData();
+        setParameterList([...parameterList]);
+      }
     }
 
     if (parameterData?.getData("_id") === newModel?.getData("_id")) {

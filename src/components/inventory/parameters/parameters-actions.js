@@ -27,7 +27,7 @@ parametersActions.updateParameterV2 = async (getAccessToken, cancelTokenSource, 
 
 parametersActions.deleteParameterV2 = async (getAccessToken, cancelTokenSource, parameterModel) => {
   const apiUrl = `/registry/parameter/${parameterModel.getData("_id")}`;
-  return baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 parametersActions.getParameterValueFromVaultV2 = async (getAccessToken, cancelTokenSource, id) => {
