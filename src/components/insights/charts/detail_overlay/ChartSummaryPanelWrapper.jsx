@@ -10,6 +10,8 @@ import OpseraDeploymentFreqStatsFailureSummaryPanel
   from "../opsera/OpseraDeploymentFreqStats/OpseraDeploymentFreqStatsFailureSummaryPanel";
 import SFDCPipelinesSummaryPanel from "components/insights/charts/sfdc/SFDCPipelinesOverlayPanel";
 import OpseraMeanTimeToRestoreSummaryPanel from "../opsera/bar_chart/mean_time_to_restore/OpseraMeanTimeToRestoreSummaryPanel";
+import PipelineByStatusSuccessfulTable from "../opsera/bar_chart/pipeline_by_status/PipelineByStatusSuccessfulTable";
+import PipelineByStatusFailedTable from "../opsera/bar_chart/pipeline_by_status/PipelineByStatusFailedTable";
 
 function ChartSummaryPanelWrapper({ chartModel, kpiIdentifier, dashboardData, kpiConfiguration, pipelineName, currentDate, setActiveTab }) {
   const getStepConfigurationSummary = () => {
@@ -120,6 +122,26 @@ function ChartSummaryPanelWrapper({ chartModel, kpiIdentifier, dashboardData, kp
       case "mean-time-to-restore":
         return (
           <OpseraMeanTimeToRestoreSummaryPanel
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            chartModel={chartModel}
+            setActiveTab={setActiveTab}
+            currentDate={currentDate}
+          />
+        );
+      case "status-by-pipeline-successful":
+        return (
+          <PipelineByStatusSuccessfulTable
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            chartModel={chartModel}
+            setActiveTab={setActiveTab}
+            currentDate={currentDate}
+          />
+        );
+      case "status-by-pipeline-failed":
+        return (
+          <PipelineByStatusFailedTable
             dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
             chartModel={chartModel}
