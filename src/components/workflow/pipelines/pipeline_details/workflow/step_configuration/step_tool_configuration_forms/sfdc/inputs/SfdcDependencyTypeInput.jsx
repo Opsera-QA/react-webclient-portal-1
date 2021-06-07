@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import DependencyMultiSelectInput
   from "components/common/list_of_values_input/workflow/pipelines/DependencyMultiSelectInput";
 
-function SFDCDependencyTypeInput({dataObject, setDataObject, disabled}) {
+function SfdcDependencyTypeInput({dataObject, setDataObject, disabled}) {
   const setDependencyTypes = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
 
@@ -28,10 +28,10 @@ function SFDCDependencyTypeInput({dataObject, setDataObject, disabled}) {
   );
 }
 
-SFDCDependencyTypeInput.propTypes = {
+SfdcDependencyTypeInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default SFDCDependencyTypeInput;
+export default SfdcDependencyTypeInput;

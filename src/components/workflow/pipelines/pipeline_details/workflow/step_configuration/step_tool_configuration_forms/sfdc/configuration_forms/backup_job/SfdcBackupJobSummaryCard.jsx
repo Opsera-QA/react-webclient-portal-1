@@ -4,16 +4,16 @@ import "components/inventory/tools/tools.css";
 import TextFieldBase from "components/common/form_fields/TextFieldBase";
 import { Col } from "react-bootstrap";
 
-function SFDCPackageJobSummaryCard({ sfdcStepConfigurationDto }) {
+function SfdcBackupJobSummaryCard({ sfdcStepConfigurationDto }) {
   const getSummaryFields = () =>{    
     return (
-      <>        
+      <>
         <Col lg={6}>
           <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"sfdcToolName"} />
-        </Col>        
+        </Col>                
         <Col lg={6}>
           <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"service"} />
-        </Col>               
+        </Col>                
         <Col lg={6}>
           <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"gitCredential"} />
         </Col>
@@ -26,6 +26,12 @@ function SFDCPackageJobSummaryCard({ sfdcStepConfigurationDto }) {
         <Col lg={6}>
           <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"branch"} />
         </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"rollbackBranchName"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"stepIdXML"} />
+        </Col>
       </>
     );
   };
@@ -37,8 +43,8 @@ function SFDCPackageJobSummaryCard({ sfdcStepConfigurationDto }) {
   );
 }
 
-SFDCPackageJobSummaryCard.propTypes = {
-  sfdcStepConfigurationDto: PropTypes.object,
+SfdcBackupJobSummaryCard.propTypes = {
+  sfdcStepConfigurationDto: PropTypes.object,  
 };
 
-export default SFDCPackageJobSummaryCard;
+export default SfdcBackupJobSummaryCard;

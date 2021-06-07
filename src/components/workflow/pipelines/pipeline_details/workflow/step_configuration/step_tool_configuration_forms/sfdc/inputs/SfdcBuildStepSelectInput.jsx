@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function SFDCBuildStepSelectInput({ fieldName, dataObject, setDataObject, setDataFunction, disabled, listOfSteps }) {    
+function SfdcBuildStepSelectInput({ fieldName, dataObject, setDataObject, setDataFunction, disabled, listOfSteps }) {    
     return (
       <SelectInputBase
         fieldName={fieldName}
@@ -17,7 +17,7 @@ function SFDCBuildStepSelectInput({ fieldName, dataObject, setDataObject, setDat
     );
   }
   
-  SFDCBuildStepSelectInput.propTypes = {
+  SfdcBuildStepSelectInput.propTypes = {
     currentPipelineId: PropTypes.string,
     fieldName: PropTypes.string,
     dataObject: PropTypes.object,
@@ -30,4 +30,4 @@ function SFDCBuildStepSelectInput({ fieldName, dataObject, setDataObject, setDat
     listOfSteps: PropTypes.array
   };
   
-  export default SFDCBuildStepSelectInput;
+  export default SfdcBuildStepSelectInput;

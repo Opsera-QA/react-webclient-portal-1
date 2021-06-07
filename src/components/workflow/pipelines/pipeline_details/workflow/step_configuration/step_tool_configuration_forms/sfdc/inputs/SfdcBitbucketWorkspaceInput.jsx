@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import BitbucketWorkspaceInput from "components/common/list_of_values_input/tools/bitbucket/BitbucketWorkspaceInput";
 
-function SFDCBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
+function SfdcBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
   const setWorkspace = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
     newDataObject.setData("workspace", selectedOption);
@@ -34,10 +34,10 @@ function SFDCBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
   );
 }
 
-SFDCBitbucketWorkspaceInput.propTypes = {
+SfdcBitbucketWorkspaceInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default SFDCBitbucketWorkspaceInput;
+export default SfdcBitbucketWorkspaceInput;

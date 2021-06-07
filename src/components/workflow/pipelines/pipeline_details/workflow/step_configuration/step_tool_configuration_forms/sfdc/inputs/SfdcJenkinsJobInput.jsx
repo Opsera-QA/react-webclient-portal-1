@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import JenkinsJobInput from "components/common/list_of_values_input/tools/jenkins/JenkinsJobInput";
 
-function SFDCJenkinsJobInput({dataObject, setDataObject, disabled}) {
+function SfdcJenkinsJobInput({dataObject, setDataObject, disabled}) {
   const setJenkinsJob = (fieldName, selectedOption) => {    
 
     let newDataObject = {...dataObject};
@@ -46,10 +46,10 @@ function SFDCJenkinsJobInput({dataObject, setDataObject, disabled}) {
   );
 }
 
-SFDCJenkinsJobInput.propTypes = {
+SfdcJenkinsJobInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default SFDCJenkinsJobInput;
+export default SfdcJenkinsJobInput;

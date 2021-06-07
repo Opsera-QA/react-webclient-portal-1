@@ -1,19 +1,17 @@
 import React from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import PropTypes from "prop-types";
-import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
-import BooleanField from "components/common/fields/boolean/BooleanField";
-import SFDCJobSummaryCardContainer
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/configuration_forms/SFDCJobSummaryCardContainer";
+import SfdcJobSummaryCardContainer
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/configuration_forms/SfdcJobSummaryCardContainer";
 
 function SfdcPipelineStepConfigurationSummaryPanel({ sfdcDataObject, pipelineData, setActiveTab }) {
   
   return (
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
-        <SFDCJobSummaryCardContainer 
+        <SfdcJobSummaryCardContainer 
           sfdcStepConfigurationDto={sfdcDataObject}
         />
       </Row>

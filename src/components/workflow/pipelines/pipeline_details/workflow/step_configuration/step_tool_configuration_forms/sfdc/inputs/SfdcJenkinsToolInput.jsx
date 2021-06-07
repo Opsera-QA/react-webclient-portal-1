@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import PipelineToolInput from "components/common/list_of_values_input/workflow/pipelines/PipelineToolInput";
 
-function SFDCJenkinsToolInput({dataObject, setDataObject, disabled}) {
+function SfdcJenkinsToolInput({dataObject, setDataObject, disabled}) {
   const setJenkinsTool = (fieldName, selectedOption) => {
 
     let newDataObject = {...dataObject};
@@ -48,10 +48,10 @@ function SFDCJenkinsToolInput({dataObject, setDataObject, disabled}) {
   );
 }
 
-SFDCJenkinsToolInput.propTypes = {
+SfdcJenkinsToolInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default SFDCJenkinsToolInput;
+export default SfdcJenkinsToolInput;

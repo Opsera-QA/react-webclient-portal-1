@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import JenkinsAccountInput from "components/common/list_of_values_input/tools/jenkins/JenkinsAccountInput";
 
-function SFDCJenkinsAccountInput({dataObject, setDataObject, disabled}) {
+function SfdcJenkinsAccountInput({dataObject, setDataObject, disabled}) {
   const setJenkinsAccount = (fieldName, selectedOption) => {
 
     let newDataObject = {...dataObject};
@@ -48,10 +48,10 @@ function SFDCJenkinsAccountInput({dataObject, setDataObject, disabled}) {
   );
 }
 
-SFDCJenkinsAccountInput.propTypes = {
+SfdcJenkinsAccountInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default SFDCJenkinsAccountInput;
+export default SfdcJenkinsAccountInput;

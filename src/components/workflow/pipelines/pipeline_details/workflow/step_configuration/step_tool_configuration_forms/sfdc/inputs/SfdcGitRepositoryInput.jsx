@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import GitRepositoryInput from "components/common/list_of_values_input/tools/git/GitRepositoryInput";
 
-function SFDCGitRepositoryInput({dataObject, setDataObject, disabled}) {
+function SfdcGitRepositoryInput({dataObject, setDataObject, disabled}) {
   const setRepository = (fieldName, selectedOption) => {
 
     let newDataObject = {...dataObject};
@@ -47,10 +47,10 @@ function SFDCGitRepositoryInput({dataObject, setDataObject, disabled}) {
   );
 }
 
-SFDCGitRepositoryInput.propTypes = {
+SfdcGitRepositoryInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default SFDCGitRepositoryInput;
+export default SfdcGitRepositoryInput;

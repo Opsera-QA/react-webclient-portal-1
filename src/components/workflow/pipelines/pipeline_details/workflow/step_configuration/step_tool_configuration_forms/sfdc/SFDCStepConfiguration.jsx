@@ -7,12 +7,12 @@ import sfdcStepFormMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/sfdc-stepForm-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 // input imports
-import SFDCJenkinsToolInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/inputs/SFDCJenkinsToolInput";
-import SFDCDependencyTypeInput
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/inputs/SFDCDependencyTypeInput";
-import SFDCJobConfigurationPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/configuration_forms/SFDCJobConfigurationPanel";
+import SfdcJenkinsToolInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/inputs/SfdcJenkinsToolInput";
+import SfdcDependencyTypeInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/inputs/SfdcDependencyTypeInput";
+import SfdcJobConfigurationPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/configuration_forms/SfdcJobConfigurationPanel";
 import { getMissingRequiredFieldsErrorDialog } from "../../../../../../../common/toasts/toasts";
 
 function SFDCStepConfiguration({ 
@@ -158,27 +158,11 @@ function SFDCStepConfiguration({
       recordDto={sfdcStepConfigurationDto}
       persistRecord={handleCreateAndSave}
       isLoading={isLoading}
-      // disable={
-      //   !notificationDataDto.checkCurrentValidity()
-      //   || (notificationConfigurationDataDto == null || !notificationConfigurationDataDto.checkCurrentValidity())
-      //   || (notificationMethodDataDto == null || !notificationMethodDataDto.checkCurrentValidity())
-      // }
-    >
-      {/* compoent specific input goes here */}
-      <SFDCJenkinsToolInput dataObject={sfdcStepConfigurationDto} setDataObject={setSFDCStepConfigurationDataDto} />
-      {/* <SFDCJenkinsJobInput dataObject={sfdcStepConfigurationDto} setDataObject={setSFDCStepConfigurationDataDto} /> */}
-      
+    >      
+      <SfdcJenkinsToolInput dataObject={sfdcStepConfigurationDto} setDataObject={setSFDCStepConfigurationDataDto} />
       {/* depending on job type dynamic forms needs ot be displayed */}
-      <SFDCJobConfigurationPanel sfdcStepConfigurationDto={sfdcStepConfigurationDto} setSFDCStepConfigurationDataDto={setSFDCStepConfigurationDataDto} listOfSteps={listOfSteps} />
-
-      {/* <SFDCJenkinsAccountInput dataObject={sfdcStepConfigurationDto} setDataObject={setSFDCStepConfigurationDataDto} />
-      <SFDCBitbucketWorkspaceInput dataObject={sfdcStepConfigurationDto} setDataObject={setSFDCStepConfigurationDataDto} />
-      <SFDCGitRepositoryInput dataObject={sfdcStepConfigurationDto} setDataObject={setSFDCStepConfigurationDataDto} />
-      <SFDCGitBranchInput  dataObject={sfdcStepConfigurationDto} setDataObject={setSFDCStepConfigurationDataDto} /> */}
-      {/* <AgentLabelsMultiSelectInput dataObject={sfdcStepConfigurationDto} fieldName={"agentLabels"}setDataObject={setSFDCStepConfigurationDataDto} />  */}
-      <SFDCDependencyTypeInput dataObject={sfdcStepConfigurationDto} setDataObject={setSFDCStepConfigurationDataDto} />
-      
-      {/* SFDC Job sepecifc inputs needs to be added here */}
+      <SfdcJobConfigurationPanel sfdcStepConfigurationDto={sfdcStepConfigurationDto} setSFDCStepConfigurationDataDto={setSFDCStepConfigurationDataDto} listOfSteps={listOfSteps} />
+      <SfdcDependencyTypeInput dataObject={sfdcStepConfigurationDto} setDataObject={setSFDCStepConfigurationDataDto} />
     </PipelineStepEditorPanelContainer>
   );
 }

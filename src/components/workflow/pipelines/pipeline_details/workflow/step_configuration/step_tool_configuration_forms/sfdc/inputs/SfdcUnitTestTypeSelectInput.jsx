@@ -17,7 +17,7 @@ const PROD_UNIT_TEST_OPTIONS = [
   { value: "RunSpecifiedTests", label: "Run Specified Tests" },
 ];
 
-function SFDCUnitTestTypeSelectInput({ fieldName, dataObject, setDataObject, setDataFunction, disabled, isProd }) {
+function SfdcUnitTestTypeSelectInput({ fieldName, dataObject, setDataObject, setDataFunction, disabled, isProd }) {
   console.log(isProd);
   return (
     <SelectInputBase
@@ -33,7 +33,7 @@ function SFDCUnitTestTypeSelectInput({ fieldName, dataObject, setDataObject, set
   );
 }
 
-SFDCUnitTestTypeSelectInput.propTypes = {
+SfdcUnitTestTypeSelectInput.propTypes = {
   currentPipelineId: PropTypes.string,
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
@@ -46,4 +46,4 @@ SFDCUnitTestTypeSelectInput.propTypes = {
   isProd: PropTypes.bool,
 };
 
-export default SFDCUnitTestTypeSelectInput;
+export default SfdcUnitTestTypeSelectInput;

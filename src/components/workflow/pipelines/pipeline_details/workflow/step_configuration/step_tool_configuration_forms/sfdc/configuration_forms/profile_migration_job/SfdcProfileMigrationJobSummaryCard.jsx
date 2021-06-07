@@ -4,20 +4,16 @@ import "components/inventory/tools/tools.css";
 import TextFieldBase from "components/common/form_fields/TextFieldBase";
 import { Col } from "react-bootstrap";
 
-function SFDCValidatePackageXMLJobSummaryCard({ sfdcStepConfigurationDto }) {
-  const getSummaryFields = () =>{
-    
+function SfdcProfileMigrationJobSummaryCard({ sfdcStepConfigurationDto }) {
+  const getSummaryFields = () =>{    
     return (
-      <>                
+      <>
         <Col lg={6}>
           <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"sfdcToolName"} />
-        </Col>
+        </Col>        
         <Col lg={6}>
-          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"sfdcUnitTestType"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"stepIdXML"} />
-        </Col>
+          <TextFieldBase dataObject={sfdcStepConfigurationDto} fieldName={"sfdcDestToolName"} />
+        </Col>        
       </>
     );
   };
@@ -29,8 +25,8 @@ function SFDCValidatePackageXMLJobSummaryCard({ sfdcStepConfigurationDto }) {
   );
 }
 
-SFDCValidatePackageXMLJobSummaryCard.propTypes = {
+SfdcProfileMigrationJobSummaryCard.propTypes = {
   sfdcStepConfigurationDto: PropTypes.object,
 };
 
-export default SFDCValidatePackageXMLJobSummaryCard;
+export default SfdcProfileMigrationJobSummaryCard;

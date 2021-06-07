@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 
-function SFDCGitBranchInput({dataObject, setDataObject, disabled}) {
+function SfdcGitBranchInput({dataObject, setDataObject, disabled}) {
   const setBranch = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
     // newDataObject.setData("branch", selectedOption);
@@ -36,10 +36,10 @@ function SFDCGitBranchInput({dataObject, setDataObject, disabled}) {
   );
 }
 
-SFDCGitBranchInput.propTypes = {
+SfdcGitBranchInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
-export default SFDCGitBranchInput;
+export default SfdcGitBranchInput;
