@@ -136,7 +136,6 @@ function ChartSummaryPanelWrapper({ chartModel, kpiIdentifier, dashboardData, kp
             kpiConfiguration={kpiConfiguration}
             chartModel={chartModel}
             setActiveTab={setActiveTab}
-            currentDate={currentDate}
             pipelineName={pipelineName}
           />
         );
@@ -147,7 +146,6 @@ function ChartSummaryPanelWrapper({ chartModel, kpiIdentifier, dashboardData, kp
             kpiConfiguration={kpiConfiguration}
             chartModel={chartModel}
             setActiveTab={setActiveTab}
-            currentDate={currentDate}
             pipelineName={pipelineName}
           />
         );
