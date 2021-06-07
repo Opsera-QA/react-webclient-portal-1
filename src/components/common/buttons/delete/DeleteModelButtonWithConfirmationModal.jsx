@@ -8,7 +8,7 @@ import DeleteModal from "components/common/modal/DeleteModal";
 import IconBase from "components/common/icons/IconBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function DeleteButtonWithConfirmation({deleteRecord, dataObject, disabled, size, icon, className}) {
+function DeleteModelButtonWithConfirmation({dataObject, disabled, size, icon, className}) {
   const toastContext = useContext(DialogToastContext);
   const [isDeleting, setIsDeleting] = useState(false);
   const isMounted = useRef(false);
@@ -26,7 +26,7 @@ function DeleteButtonWithConfirmation({deleteRecord, dataObject, disabled, size,
     setIsDeleting(true);
 
     try {
-      await deleteRecord();
+      const response = await dataObject.deleteModel();
       toastContext.showDeleteSuccessResultDialog(dataObject?.getType());
     }
     catch (error) {
@@ -61,9 +61,8 @@ function DeleteButtonWithConfirmation({deleteRecord, dataObject, disabled, size,
   );
 }
 
-DeleteButtonWithConfirmation.propTypes = {
+DeleteModelButtonWithConfirmation.propTypes = {
   dataObject: PropTypes.object,
-  deleteRecord: PropTypes.func,
   className: PropTypes.string,
   disabled: PropTypes.bool,
   size: PropTypes.string,
@@ -71,9 +70,9 @@ DeleteButtonWithConfirmation.propTypes = {
 };
 
 
-DeleteButtonWithConfirmation.defaultProps = {
+DeleteModelButtonWithConfirmation.defaultProps = {
   size: "md",
   icon: faTrash
 };
 
-export default DeleteButtonWithConfirmation;
+export default DeleteModelButtonWithConfirmation;
