@@ -1,6 +1,6 @@
 const PipelineByStatusTableMetadata = {
   idProperty: "_id",
-  type: "SFDC Pipeline Details",
+  type: "Opsera Pipeline By Status Details",
   fields: [
     {
       label: "Name",

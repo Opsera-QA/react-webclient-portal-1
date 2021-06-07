@@ -11,7 +11,7 @@ import { defaultConfig, getColorById, assignBooleanColors,
          adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
 import Model from "../../../../../../core/data_model/model";
-import SFDCPipelinesInsightsTableMetadata from "../../../sfdc/sfdc-pipelines-actionable-metadata";
+import PipelineByStatusTableMetadata from "components/insights/charts/opsera/bar_chart/pipeline_by_status/pipeline-by-status-table-metadata";
 import ChartDetailsOverlay from "../../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
 
@@ -75,7 +75,7 @@ function OpseraPipelineByStatusBarChart({ kpiConfiguration, setKpiConfiguration,
     let pipeline = data.indexValue;
     if (data.id === "Successful") {kpiName = "status-by-pipeline-successful";}
     if (data.id === "Failure") {kpiName = "status-by-pipeline-failed";}
-    const chartModel = new Model({...SFDCPipelinesInsightsTableMetadata.newObjectFields}, SFDCPipelinesInsightsTableMetadata, false);
+    const chartModel = new Model({...PipelineByStatusTableMetadata.newObjectFields}, PipelineByStatusTableMetadata, false);
     toastContext.showOverlayPanel(
       <ChartDetailsOverlay
         dashboardData={dashboardData}
@@ -98,7 +98,7 @@ function OpseraPipelineByStatusBarChart({ kpiConfiguration, setKpiConfiguration,
                       true, false, "cutoffString", "wholeNumbers")}
           {...config(getColorById)}
           {...adjustBarWidth(metrics, false)}
-          onClick={() => setShowModal(true)}
+          onClick={(data) => onRowSelect(data)}
           tooltip={({indexValue, color, value, id}) => <ChartTooltip 
                                         titles = {["Pipeline", `${id} Builds`]}
                                         values = {[indexValue, value]}
