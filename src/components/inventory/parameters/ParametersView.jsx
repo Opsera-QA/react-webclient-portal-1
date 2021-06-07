@@ -26,7 +26,7 @@ function ParametersView({isLoading, loadData, parameterList, setParameterList, p
       source.cancel();
       isMounted.current = false;
     };
-  }, [parameterList]);
+  }, []);
 
   const getTableView = () => {
     return (
@@ -60,13 +60,10 @@ function ParametersView({isLoading, loadData, parameterList, setParameterList, p
       }
     }
 
-    if (parameterData?.getData("_id") === newModel?.getData("_id")) {
-      if (newModel.isDeleted()) {
-        setParameterData(undefined);
-      }
-      else {
-        setParameterData({...newModel});
-      }
+    if (!newModel || newModel?.isDeleted()) {
+      setParameterData(undefined);
+    } else {
+      setParameterData({...newModel});
     }
   };
 

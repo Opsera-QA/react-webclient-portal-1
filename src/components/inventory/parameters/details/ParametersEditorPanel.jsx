@@ -8,7 +8,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
 import parametersActions from "components/inventory/parameters/parameters-actions";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
-import DeleteButtonWithConfirmation from "components/common/buttons/delete/DeleteButtonWithConfirmationModal";
+import DeleteModelButtonWithConfirmation from "components/common/buttons/delete/DeleteModelButtonWithConfirmationModal";
 import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
@@ -70,7 +70,7 @@ function ParametersEditorPanel({ parameterModel, parameterRoleDefinitions, handl
 
   const getDeleteButton = () => {
     if (canDelete && !parameterData.isNew()) {
-      return (<DeleteButtonWithConfirmation deleteRecord={() => parameterData.deleteModel()} dataObject={parameterData} />);
+      return (<DeleteModelButtonWithConfirmation dataObject={parameterData} />);
     }
   };
 
@@ -93,7 +93,7 @@ function ParametersEditorPanel({ parameterModel, parameterRoleDefinitions, handl
           <BooleanToggleInput setDataObject={setParameterData} dataObject={parameterData} fieldName={"vaultEnabled"} disabled={!parameterData?.isNew()}/>
         </Col>
         <Col lg={6} className={"my-2"}>
-          <RoleAccessInput disabled={canEdit !== true} dataObject={parameterData} setDataObject={setParameterData} fieldName={"roles"} />
+          {/*<RoleAccessInput disabled={canEdit !== true} dataObject={parameterData} setDataObject={setParameterData} fieldName={"roles"} />*/}
         </Col>
       </Row>
     </VanityEditorPanelContainer>
