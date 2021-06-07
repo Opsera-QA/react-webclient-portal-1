@@ -6,12 +6,11 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import automatedTestResultsConfigMetadata
   from "components/settings/analytics_data_entry/detail_view/configuration_panels/automated_test_results/automated-test-results-config-metadata";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PipelineSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineSelectInput";
-import NumberInputBase from "components/common/inputs/text/NumberInputBase";
 import DateTimeRangeInputBase from "components/common/inputs/date/DateTimeRangeInputBase";
 import ManualKpiMultiSelectInputBase
   from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
+import PositiveIntegerNumberInput from "../../../../../common/inputs/number/PositiveIntegerNumberInput";
 
 function AutomatedTestResultsConfigPanel({ analyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
   useEffect(() => {loadData();}, []);
@@ -47,22 +46,22 @@ function AutomatedTestResultsConfigPanel({ analyticsDataEntryModel, kpiConfigura
         <ManualKpiMultiSelectInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"release"} type={"release"} />
       </Col>
       <Col lg={6}>
-        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_total"} />
+        <PositiveIntegerNumberInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_total"} />
       </Col>
       <Col lg={6}>
-        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_executed"} />
+        <PositiveIntegerNumberInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_executed"} />
       </Col>
       <Col lg={6}>
-        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_passed"} />
+        <PositiveIntegerNumberInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_passed"} />
       </Col>
       <Col lg={6}>
-        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_failed"} />
+        <PositiveIntegerNumberInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_failed"} />
       </Col>
       <Col lg={6}>
-        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_blocked"} />
+        <PositiveIntegerNumberInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_blocked"} />
       </Col>
       <Col lg={6}>
-        <NumberInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_skipped"} />
+        <PositiveIntegerNumberInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_skipped"} />
       </Col>
     </Row>
   );
