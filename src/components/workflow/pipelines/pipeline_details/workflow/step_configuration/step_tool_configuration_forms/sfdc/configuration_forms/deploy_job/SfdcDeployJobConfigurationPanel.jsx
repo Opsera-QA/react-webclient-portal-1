@@ -17,12 +17,9 @@ function SfdcDeployJobEditorPanel({ sfdcStepConfigurationDto, setSfdcStepConfigu
   }
 
   return (
-    <>
-      {/* salesforce creds */}
-      <SfdcToolInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
-      {/* Unit Test Type selection input */}
+    <>      
+      <SfdcToolInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />      
       <SfdcUnitTestTypeSelectInput dataObject={sfdcStepConfigurationDto} fieldName={"sfdcUnitTestType"} setDataObject={setSfdcStepConfigurationDataDto} isProd={true} />
-      {/* Build Step Info */}
       <SfdcBuildStepSelectInput dataObject={sfdcStepConfigurationDto} fieldName={"stepIdXML"} setDataObject={setSfdcStepConfigurationDataDto} listOfSteps={listOfSteps} />
     </>
   );

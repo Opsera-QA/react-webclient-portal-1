@@ -47,20 +47,18 @@ function SfdcPushArtifactsJobEditorPanel({ sfdcStepConfigurationDto, setSfdcStep
   };
 
   return (
-    <>
-      {/* account */}
-      <SfdcJenkinsAccountInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
-      {/* workspace */}
-      <SfdcBitbucketWorkspaceInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
-      {/* repo */}
+    <>      
+      <SfdcJenkinsAccountInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />      
+      <SfdcBitbucketWorkspaceInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />      
       <SfdcGitRepositoryInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
       {/* is a new branch flag */}
       <BooleanToggleInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} fieldName={"isNewBranch"} />
-      {getBackupFields()}
-      {/* Build Step Info */}
+      {getBackupFields()}      
       <SfdcBuildStepSelectInput dataObject={sfdcStepConfigurationDto} fieldName={"stepIdXML"} setDataObject={setSfdcStepConfigurationDataDto} listOfSteps={listOfSteps} />
+      {/* Script File Details */}
       <TextInputBase fieldName={"scriptFilePath"} dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
       <TextInputBase fieldName={"scriptFileName"} dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
+      {/* Output File Details */}
       <TextInputBase setDataObject={setSfdcStepConfigurationDataDto} dataObject={sfdcStepConfigurationDto} fieldName={"outputPath"} />
       <TextInputBase setDataObject={setSfdcStepConfigurationDataDto} dataObject={sfdcStepConfigurationDto} fieldName={"outputFileName"} />
     </>

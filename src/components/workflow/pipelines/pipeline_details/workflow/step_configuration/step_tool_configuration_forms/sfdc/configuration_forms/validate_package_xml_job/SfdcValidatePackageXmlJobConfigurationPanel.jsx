@@ -18,11 +18,8 @@ function SfdcValidatePackageXmlJobEditorPanel({ sfdcStepConfigurationDto, setSfd
 
   return (
     <>
-      {/* salesforce creds */}
       <SfdcToolInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
-      {/* Unit Test Type selection input */}
       <SfdcUnitTestTypeSelectInput dataObject={sfdcStepConfigurationDto} fieldName={"sfdcUnitTestType"} setDataObject={setSfdcStepConfigurationDataDto} isProd={true} />
-      {/* Build Step Info */}
       <SfdcBuildStepSelectInput dataObject={sfdcStepConfigurationDto} fieldName={"stepIdXML"} setDataObject={setSfdcStepConfigurationDataDto} listOfSteps={listOfSteps} />
     </>
   );
