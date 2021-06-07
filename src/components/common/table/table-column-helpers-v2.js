@@ -87,27 +87,12 @@ export const getLimitedTableTextColumn = (field, maxLength, className, autoAdjus
   };
 };
 
-export const getEditableTextColumn = (field, maxLength, className) => {
+export const getEditableTextColumn = (field, maxLength, className, editable = true) => {
   return {
     header: getColumnHeader(field),
     id: getColumnId(field),
     class: className ? className : undefined,
-    editable: true,
-    Cell: function parseText(row) {
-      const value = row?.value;
-
-      if (value != null) {
-        const truncatedString = truncateString(value, maxLength);
-
-        if (truncatedString !== value) {
-          return (<TooltipWrapper innerText={value}><span>{truncatedString}</span></TooltipWrapper>);
-        }
-
-        return value;
-      }
-
-      return "";
-    },
+    editable: editable,
   };
 };
 

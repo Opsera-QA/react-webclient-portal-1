@@ -51,11 +51,10 @@ function VanitySelectionTable({ columns, getNewModel, parentModel, setParentMode
       }
 
       selectedModel.setData(fieldName, value);
-
       const fieldErrors = selectedModel.isFieldValid(fieldName);
 
       if (Array.isArray(fieldErrors) && fieldErrors.length > 0) {
-        toastContext.showOverlayPanel(
+        toastContext.showModal(
           <UnsavedChangesModal
             model={selectedModel}
             errors={fieldErrors}
@@ -115,7 +114,7 @@ function VanitySelectionTable({ columns, getNewModel, parentModel, setParentMode
 
   return (
     <TableBodyLoadingWrapper
-      isLoading={isLoading}
+      isLoading={isLoading || columns == null}
       data={data}
       noDataMessage={noDataMessage}
       tableComponent={getTableBody()}

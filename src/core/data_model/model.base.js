@@ -15,6 +15,7 @@ export class ModelBase {
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
     this.setStateFunction = setStateFunction;
     this.changeMap = new Map();
+    this.isLoading = false;
   }
 
   /**
@@ -58,10 +59,7 @@ export class ModelBase {
     }
 
     this.data[fieldName] = newValue;
-
-    if (this.setStateFunction && refreshState === true) {
-      this.setStateFunction({...this});
-    }
+    this.updateState();
   };
 
   createModel = async () => {
@@ -344,6 +342,14 @@ export class ModelBase {
   getActiveField = () => {
     return this.metaData?.activeField;
   }
+
+  getIsLoading = () => {
+    return this.isLoading === true;
+  };
+
+  setIsLoading = (isLoading = true) => {
+    this.isLoading = isLoading;
+  };
 
   getFieldById = (id) => {
     return this.metaData?.fields.find(field => {return field.id === id; });
