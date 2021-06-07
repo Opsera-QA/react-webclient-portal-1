@@ -17,12 +17,28 @@ function KafkaConnectActionSelectInput({dataObject, setDataObject, isLoading, di
       name: "Delete",
       value: "delete",
     },
+    {
+      name: "Validate",
+      value: "validate",
+    },
+    {
+      name: "Restart",
+      value: "restart",
+    },
+    {
+      name: "Resume",
+      value: "resume",
+    },
+    {
+      name: "Pause",
+      value: "pause",
+    },
   ];
 
   return (
 
     <SelectInputBase
-      fieldName={"action"}
+      fieldName={"kafkaConnectAction"}
       dataObject={dataObject}
       setDataObject={setDataObject}
       selectOptions={ACTION_LIST}

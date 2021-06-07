@@ -57,8 +57,8 @@ const kafkaConnectStepFormMetadata = {
       isRequired: true
     },
     {
-      label: "Action",
-      id: "action",
+      label: "Kafka Connect Action",
+      id: "kafkaConnectAction",
       isRequired: true
     }
   ],
@@ -75,7 +75,7 @@ const kafkaConnectStepFormMetadata = {
     gitBranch: "",
     connectorFileName : "",
     connectorFilePath : "",
-    action: ""
+    kafkaConnectAction: ""
   }
 };
 

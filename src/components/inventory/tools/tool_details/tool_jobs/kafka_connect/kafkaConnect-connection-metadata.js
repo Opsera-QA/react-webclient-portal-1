@@ -5,12 +5,10 @@ const KafkaConnectConnectionMetadata = {
     {
       label: "Username",
       id: "username",
-      isRequired: true
     },
     {
       label: "Password",
       id: "password",
-      isRequired: true
     },
     {
       label: "Tool URL",

@@ -30,7 +30,7 @@ function KafkaConnectPipelineStepConfigurationSummaryPanel({ kafkaConnectPipelin
           <TextFieldBase dataObject={kafkaConnectPipelineDataObject} fieldName={"connectorFilePath"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={kafkaConnectPipelineDataObject} fieldName={"action"}/>
+          <TextFieldBase dataObject={kafkaConnectPipelineDataObject} fieldName={"kafkaConnectAction"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
