@@ -3,10 +3,28 @@ import PropTypes from "prop-types";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PersistAndCloseButtonContainer from "components/common/buttons/saving/containers/PersistAndCloseButtonContainer";
+import {Form} from "react-bootstrap";
+import Row from "react-bootstrap/Row";
 
-function EditorPanelContainer({ children, isLoading, showRequiredFieldsMessage, createRecord, updateRecord, recordDto, setRecordDto, handleClose, lenient, disable, addAnotherOption, extraButtons }) {
+function EditorPanelContainer(
+  {
+    children,
+    isLoading,
+    showRequiredFieldsMessage,
+    createRecord,
+    updateRecord,
+    recordDto,
+    setRecordDto,
+    handleClose,
+    lenient,
+    disable,
+    addAnotherOption,
+    extraButtons,
+    showBooleanToggle,
+    enabledText,
+    disabledText
+  }) {
 
-  // TODO: Remove check. Editor panels should always have the message. If not an editor panel, use summary or detail or make a new panel.
   const getRequiredFieldsMessage = () => {
     if (showRequiredFieldsMessage) {
       return (<RequiredFieldsMessage />);
@@ -31,16 +49,40 @@ function EditorPanelContainer({ children, isLoading, showRequiredFieldsMessage, 
     }
   };
 
+  const getBooleanToggle = () => {
+    if (showBooleanToggle === true) {
+      return (
+        <div className={"m-2"}>
+          <Row className={"mx-0 d-flex"}>
+            <div className={"d-flex ml-auto"}>
+              <Form.Check
+                type="switch"
+                id={"active"}
+                checked={!!recordDto?.getData("active")}
+                label={<span> </span>}
+                onChange={() => { recordDto?.setData("active");}}
+              />
+              <div style={{marginTop: "1px"}}>{recordDto?.getData("active") === true ? enabledText : disabledText}</div>
+            </div>
+          </Row>
+        </div>
+      );
+    }
+  };
+
   if (isLoading) {
     return (<LoadingDialog size="sm"/>);
   }
 
   return (
-    <div className="p-3 h-100">
-      <div>{children}</div>
-      <div>
-        <div>{getPersistButtonContainer()}</div>
-        <div>{getRequiredFieldsMessage()}</div>
+    <div className="h-100">
+      {getBooleanToggle()}
+      <div className="mx-2 p-3">
+        <div>{children}</div>
+        <div>
+          <div>{getPersistButtonContainer()}</div>
+          <div>{getRequiredFieldsMessage()}</div>
+        </div>
       </div>
     </div>
   );
@@ -59,12 +101,17 @@ EditorPanelContainer.propTypes = {
   lenient: PropTypes.bool,
   disable: PropTypes.bool,
   addAnotherOption: PropTypes.bool,
-  extraButtons: PropTypes.any
+  extraButtons: PropTypes.any,
+  showBooleanToggle: PropTypes.bool,
+  enabledText: PropTypes.string,
+  disabledText: PropTypes.string
 };
 
 EditorPanelContainer.defaultProps = {
   showRequiredFieldsMessage: true,
-  addAnotherOption: true
+  addAnotherOption: true,
+  enabledText: "Enabled",
+  disabledText: "Disabled"
 };
 
 export default EditorPanelContainer;

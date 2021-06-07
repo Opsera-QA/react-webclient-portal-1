@@ -8,7 +8,7 @@ function UnsavedChangesModal({ model, errors, handleRevert, handleContinueEditin
   const toastContext = useContext(DialogToastContext);
 
   const handleModalClose = () => {
-    toastContext.clearOverlayPanel();
+    toastContext.clearModal();
   };
 
   const getBody = () => {

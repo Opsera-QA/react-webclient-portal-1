@@ -71,6 +71,16 @@ function ToastContextProvider ({ children, navBar }) {
     }, [setOverlayPanel]
   );
 
+  const showModal = useCallback((modal) => {
+      setOverlayPanel(modal);
+    }, [setOverlayPanel]
+  );
+
+  const clearModal = useCallback(() => {
+      setOverlayPanel(undefined);
+    }, [setOverlayPanel]
+  );
+
   const setInlineMessage = useCallback((bannerMessage, id, notificationType) => {
       let newBannerMessage = {id: id, bannerMessage: bannerMessage, type: notificationType};
       setInlineBanner(newBannerMessage);
@@ -476,7 +486,9 @@ function ToastContextProvider ({ children, navBar }) {
           clearToastsArray: clearToastsArray, //tmp solution till next version of toasts
 
           showOverlayPanel: showOverlayPanel,
-          clearOverlayPanel: clearOverlayPanel
+          clearOverlayPanel: clearOverlayPanel,
+          showModal: showModal,
+          clearModal: clearModal
         }}>
         <OverlayPanelContainer overlayPanel={overlayPanel} />
         {navBar}
