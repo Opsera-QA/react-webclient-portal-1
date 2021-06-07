@@ -18,7 +18,9 @@ export class ParameterModel extends ModelBase {
   };
 
   deleteModel = async () => {
-    const response =  await parametersActions.deleteParameterV2(this.getAccessToken, this.cancelTokenSource, this);
+    const response = await parametersActions.deleteParameterV2(this.getAccessToken, this.cancelTokenSource, this);
+    this.dataState = DataState.DELETED;
+    this.updateState();
     await this.loadData();
     return response;
   };
@@ -28,9 +30,6 @@ export class ParameterModel extends ModelBase {
 
     if (response?.data?.data) {
       this.setData(fieldName, response.data.data, false);
-
-      //TODO: Attach to setData function
-      this.setStateFunction({...this});
     }
   };
 

@@ -229,9 +229,9 @@ export class Model {
 
   resetData = () => {
     this.changeMap.forEach((value, key) => {
-      let originalValue = this.changeMap.get(key);
-      this.setData(key, originalValue);
+      this.data[key] = value;
     });
+    this.clearChangeMap();
   };
 
   getChangeMap = () => {

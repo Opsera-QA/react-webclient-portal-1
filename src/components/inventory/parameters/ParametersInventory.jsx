@@ -60,7 +60,7 @@ function ParametersInventory({ customerAccessRules }) {
     const response = await parametersActions.getParameters(getAccessToken, cancelSource, filterDto);
 
     if (isMounted?.current === true && response?.data?.data) {
-      setParameterList(response.data.data);
+      setParameterList([...response.data.data]);
       setParameterMetadata(response.data.metadata);
       setParameterRoleDefinitions(response.data.roles);
       let newFilterDto = filterDto;
