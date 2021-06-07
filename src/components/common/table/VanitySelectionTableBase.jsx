@@ -28,6 +28,18 @@ function VanitySelectionTableBase({columns, data, onRowSelect, rowStyling, sort,
     }
   }, [data]);
 
+  useEffect(() => {
+    if (grid) {
+
+      let selection;
+      if (selectedItemId) {
+        selection = grid.data.find((item) => {return item._id === selectedItemId;});
+      }
+
+      grid.selection.setCell(selection);
+    }
+  }, [selectedItemId]);
+
   // Refresh width on resize
   useEffect(() => {
     if (grid) {
