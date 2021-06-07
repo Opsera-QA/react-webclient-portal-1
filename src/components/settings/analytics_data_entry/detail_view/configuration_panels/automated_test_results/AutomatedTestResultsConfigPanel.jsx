@@ -4,8 +4,8 @@ import modelHelpers from "components/common/model/modelHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import qaManualTestConfigurationMetadata
-  from "components/settings/analytics_data_entry/detail_view/configuration_panels/qa_manual_test/qa-manual-test-configuration-metadata";
+import automatedTestResultsConfigMetadata
+  from "components/settings/analytics_data_entry/detail_view/configuration_panels/automated_test_results/automated-test-results-config-metadata";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import PipelineSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineSelectInput";
 import NumberInputBase from "components/common/inputs/text/NumberInputBase";
@@ -13,11 +13,11 @@ import DateTimeRangeInputBase from "components/common/inputs/date/DateTimeRangeI
 import ManualKpiMultiSelectInputBase
   from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
 
-function QaManualTestConfigurationPanel({ analyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
+function AutomatedTestResultsConfigPanel({ analyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
   useEffect(() => {loadData();}, []);
 
   const loadData = async () => {
-    const configurationData = modelHelpers.getToolConfigurationModel(analyticsDataEntryModel.getData("data"), qaManualTestConfigurationMetadata);
+    const configurationData = modelHelpers.getToolConfigurationModel(analyticsDataEntryModel.getData("data"), automatedTestResultsConfigMetadata);
     console.log("configurationData: " + JSON.stringify(configurationData));
     setKpiConfigurationData({...configurationData});
   };
@@ -68,10 +68,10 @@ function QaManualTestConfigurationPanel({ analyticsDataEntryModel, kpiConfigurat
   );
 }
 
-QaManualTestConfigurationPanel.propTypes = {
+AutomatedTestResultsConfigPanel.propTypes = {
   analyticsDataEntryModel: PropTypes.object,
   kpiConfigurationData: PropTypes.object,
   setKpiConfigurationData: PropTypes.func,
 };
 
-export default QaManualTestConfigurationPanel;
+export default AutomatedTestResultsConfigPanel;
