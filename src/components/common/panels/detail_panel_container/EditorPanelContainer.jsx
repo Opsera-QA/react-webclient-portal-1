@@ -52,18 +52,20 @@ function EditorPanelContainer(
   const getBooleanToggle = () => {
     if (showBooleanToggle === true) {
       return (
-        <Row className={"mx-0 d-flex"}>
-          <div className={"d-flex ml-auto"}>
-            <Form.Check
-              type="switch"
-              id={"active"}
-              checked={!!recordDto?.getData("active")}
-              label={<span> </span>}
-              onChange={() => { recordDto?.setData("active");}}
-            />
-            <div style={{marginTop: "1px"}}>{recordDto?.getData("active") === true ? enabledText : disabledText}</div>
-          </div>
-        </Row>
+        <div className={"m-2"}>
+          <Row className={"mx-0 d-flex"}>
+            <div className={"d-flex ml-auto"}>
+              <Form.Check
+                type="switch"
+                id={"active"}
+                checked={!!recordDto?.getData("active")}
+                label={<span> </span>}
+                onChange={() => { recordDto?.setData("active");}}
+              />
+              <div style={{marginTop: "1px"}}>{recordDto?.getData("active") === true ? enabledText : disabledText}</div>
+            </div>
+          </Row>
+        </div>
       );
     }
   };
@@ -74,8 +76,7 @@ function EditorPanelContainer(
 
   return (
     <div className="h-100">
-      <div className={"m-2"}>{getBooleanToggle()}
-      </div>
+      {getBooleanToggle()}
       <div className="mx-2 p-3">
         <div>{children}</div>
         <div>
