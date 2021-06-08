@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
-import {faDiceD20} from "@fortawesome/pro-light-svg-icons";
+import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import { Button, Modal } from "react-bootstrap";
 import FilterContainer from "components/common/table/FilterContainer";
 import VanityTable from "components/common/table/VanityTable";
@@ -51,7 +51,7 @@ function PipelineDetailsVanityTableModal({ header, size, tableMessage, show, set
               title={header}
               body={getTable()}
               isLoading={isLoading}
-              titleIcon={faDiceD20}
+              titleIcon={faDraftingCompass}
             />
           </div>
         </div>
