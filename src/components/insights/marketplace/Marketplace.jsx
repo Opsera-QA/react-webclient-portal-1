@@ -46,7 +46,7 @@ function Marketplace () {
     e.preventDefault();
 
     if (tabSelection === "analytics") {
-      history.push(`/analytics`);
+      history.push(`/insights/analytics`);
       return;
     }
 
@@ -56,7 +56,7 @@ function Marketplace () {
     }
 
     if (tabSelection === "dashboards") {
-      history.push(`/insights/dashboards`);
+      history.push(`/insights`);
       return;
     }
 

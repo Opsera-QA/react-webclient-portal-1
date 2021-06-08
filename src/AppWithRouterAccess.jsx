@@ -20,7 +20,7 @@ import Analytics from "./components/analytics/Analytics";
 import Logs from "./components/logs/Logs";
 import Update from "./components/update/Update";
 import AdminTools from "./components/admin/AdminTools";
-import DeleteTools from "./components/settings/delete_tools/DeleteTools";
+import DeleteTools from "./components/admin/delete_tools/DeleteTools";
 import RegisteredUsersManagement from "./components/admin/registered_users/RegisteredUsersManagement";
 import RegisteredUserDetailView
   from "./components/admin/registered_users/registered_user_details/RegisteredUserDetailView";
@@ -294,9 +294,6 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/dashboard" component={Dashboard}/>
                   <SecureRoute path="/tools/:id?" component={ApiConnector}/>
                   <SecureRoute path="/platform" component={Platform}/>
-                  <SecureRoute path="/analytics" exact component={Analytics}/>
-                  <SecureRoute path="/insights/dashboards" exact component={Insights}/>
-                  <SecureRoute path="/insights/dashboards/:id/:tab?" exact component={DashboardDetailView}/>
                   <SecureRoute path="/logs" exact component={Logs}/>
                   <SecureRoute path="/blueprint/:id?/:run?" exact component={Blueprint}/>
                   <SecureRoute path="/update" component={Update}/>
@@ -314,10 +311,11 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/notifications" exact component={Notifications}/>
                   <SecureRoute path="/notifications/details/:id" exact component={NotificationDetailView}/>
 
-                  {/* marketplace */}
+                  {/* Insights */}
+                  <SecureRoute path="/insights/analytics" exact component={Analytics}/>
+                  <SecureRoute path="/insights" exact component={Insights}/>
+                  <SecureRoute path="/insights/dashboards/:id/:tab?" exact component={DashboardDetailView}/>
                   <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace}/>
-
-                  {/*insights summary */}
                   <SecureRoute path="/insights/synopsis" component={InsightsSummary}/>
 
                   {/* git tasks */}
@@ -326,6 +324,7 @@ const AppWithRouterAccess = () => {
 
                   {/* Administration Pages */}
                   <SecureRoute path="/admin" exact component={AdminTools}/>
+                  <SecureRoute path="/admin/delete" component={DeleteTools}/>
                   <SecureRoute path="/admin/manage_systems" component={ManageSystems}/>
                   <SecureRoute path="/admin/registered-users" exact component={RegisteredUsersManagement}/>
                   <SecureRoute path="/admin/registered-users/:id" exact component={RegisteredUserDetailView}/>
@@ -386,7 +385,7 @@ const AppWithRouterAccess = () => {
                                component={ProjectMappingDetailView}/>
                   <SecureRoute path="/settings/data_mapping/user_mapping/details/:usersMappingId" exact
                                component={UsersMappingDetailView}/>
-                  <SecureRoute path="/settings/delete" component={DeleteTools}/>
+
                   <SecureRoute path="/admin/demo/api" component={ApiConnectionDemo}/>
                   <SecureRoute path="/demo/table" component={CommonTableDemo}/>
 
