@@ -294,9 +294,6 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/dashboard" component={Dashboard}/>
                   <SecureRoute path="/tools/:id?" component={ApiConnector}/>
                   <SecureRoute path="/platform" component={Platform}/>
-                  <SecureRoute path="/analytics" exact component={Analytics}/>
-                  <SecureRoute path="/insights/dashboards" exact component={Insights}/>
-                  <SecureRoute path="/insights/dashboards/:id/:tab?" exact component={DashboardDetailView}/>
                   <SecureRoute path="/logs" exact component={Logs}/>
                   <SecureRoute path="/blueprint/:id?/:run?" exact component={Blueprint}/>
                   <SecureRoute path="/update" component={Update}/>
@@ -314,10 +311,11 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/notifications" exact component={Notifications}/>
                   <SecureRoute path="/notifications/details/:id" exact component={NotificationDetailView}/>
 
-                  {/* marketplace */}
+                  {/* Insights */}
+                  <SecureRoute path="/insights/analytics" exact component={Analytics}/>
+                  <SecureRoute path="/insights" exact component={Insights}/>
+                  <SecureRoute path="/insights/dashboards/:id/:tab?" exact component={DashboardDetailView}/>
                   <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace}/>
-
-                  {/*insights summary */}
                   <SecureRoute path="/insights/synopsis" component={InsightsSummary}/>
 
                   {/* git tasks */}
