@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function JenkinsXmlStepInfoSelectInput({ dataObject, fieldName, setDataObject, disabled, plan, stepId }) {
-  const jobType = dataObject.getData("jobType");
   const [listOfSteps, setListOfSteps] = useState([]);
 
   useEffect(() => {
@@ -13,13 +12,10 @@ function JenkinsXmlStepInfoSelectInput({ dataObject, fieldName, setDataObject, d
   }, [plan, stepId]);
 
   const formatStepOptions = (plan, stepId) => {
-    return plan.slice(
-      0,
-      plan.findIndex((element) => element._id === stepId)
-    );
+    return plan.slice(0, plan.findIndex((element) => element._id === stepId));
   };
 
-  if (jobType !== "SFDC PUSH ARTIFACTS") {
+  if (dataObject == null || dataObject.getData("jobType") !== "SFDC PUSH ARTIFACTS") {
     return null;
   }
 

@@ -9,60 +9,58 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { RegistryPopover } from "../utility";
 import { faExclamationCircle, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 
-function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDataObject, disabled, jobType }) {
+function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDataObject, disabled, jobType, toolConfigId }) {
   const [jobsList, setJobsList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const toastContext = useContext(DialogToastContext);
 
-  useEffect(() => {
-    if (jenkinsList && jenkinsList.length > 0) {
-      setJobsList(
-        jenkinsList[jenkinsList.findIndex((x) => x.id === dataObject?.data.toolConfigId)]
-          ? jenkinsList[jenkinsList.findIndex((x) => x.id === dataObject?.data.toolConfigId)].jobs
-          : []
-      );
-      setIsLoading(false);
-    } else {
-      setIsLoading(true);
+  useEffect(()=>{
+    setJobsList([]);
+
+    if(Array.isArray(jenkinsList) && jenkinsList.length > 0){
+      const jobs = jenkinsList[jenkinsList.findIndex((x) => x.id === toolConfigId)]?.jobs
+
+      if (Array.isArray(jobs) && jobs.length > 0) {
+        setJobsList(jobs);
+      }
     }
-  }, [jenkinsList, dataObject?.data.toolConfigId]);
+  },[jenkinsList, toolConfigId]);
 
   useEffect(() => {
+    const toolJobId = dataObject?.getData("toolJobId");
     if (
-      jobsList &&
-      jobsList.length > 0 &&
-      dataObject?.data.toolJobId &&
-      dataObject?.data.toolJobId.length > 0 &&
-      !jobsList[jobsList.findIndex((x) => x._id === dataObject?.data.toolJobId)]
+      jobsList?.length > 0 &&
+      toolJobId?.length > 0 &&
+      !jobsList[jobsList.findIndex((x) => x._id === toolJobId)]
     ) {
       toastContext.showLoadingErrorDialog(
-        "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Reigstry."
+        "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Registry."
       );
-      return;
     }
-  }, [jobsList, dataObject?.data.toolJobId]);
+  }, [jobsList, dataObject?.getData("toolJobId")]);
 
-  
-
-  const handleDTOChange = (fieldName, value) => {
+  const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = { ...dataObject };
-    newDataObject.setData("toolJobId", value._id);
-    newDataObject.setData("toolJobType", value.type);
-    newDataObject.setData(jobType, value.type[0]);
-    if ("configuration" in value) {
-      const keys = Object.keys(value.configuration);
-      keys.forEach((item) => {
-        if (!["toolJobId", "toolJobType", "jobType"].includes(item)) {
-          newDataObject.setData(item, value.configuration[item]);
-        }
-      });
-    }
+    newDataObject.setData("toolJobId", selectedOption._id);
+    newDataObject.setData("toolJobType", selectedOption.type);
+    newDataObject.setData(jobType, selectedOption.type[0]);
     newDataObject.setData("rollbackBranchName", "");
     newDataObject.setData("stepIdXML", "");
     newDataObject.setData("sfdcDestToolId", "");
     newDataObject.setData("destAccountUsername", "");
     newDataObject.setData("buildToolVersion", "6.3");
     newDataObject.setData("buildArgs", {});
+
+    // TODO: There is probably a less confusing way of doing this
+    if ("configuration" in selectedOption) {
+      const keys = Object.keys(selectedOption.configuration);
+      keys.forEach((item) => {
+        if (!["toolJobId", "toolJobType", "jobType"].includes(item)) {
+          newDataObject.setData(item, selectedOption.configuration[item]);
+        }
+      });
+    }
+
     setDataObject({ ...newDataObject });
   };
 
@@ -79,7 +77,8 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
     }
   };
 
-  const renderOverLayTrigger = () => {
+  // TODO: This should probably be inline
+  const renderOverlayTrigger = () => {
     const toolJobId = dataObject.getData("toolJobId");
     return (
       <OverlayTrigger
@@ -97,18 +96,18 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
     );
   };
   
-  if (jobType != "opsera-job") {
+  if (jobType !== "opsera-job") {
     return <></>;
   }
 
   return (
     <>
-      {renderOverLayTrigger()}
+      {renderOverlayTrigger()}
       {renderNoJobsMessage()}
       <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
-        setDataFunction={handleDTOChange}
+        setDataFunction={setDataFunction}
         setDataObject={setDataObject}
         placeholderText={"Select Job Type"}
         selectOptions={jobsList}
@@ -128,12 +127,11 @@ JenkinsToolJobIdSelectInput.propTypes = {
   disabled: PropTypes.bool,
   jenkinsList: PropTypes.any,
   jobType: PropTypes.string,
+  toolConfigId: PropTypes.string
 };
 
 JenkinsToolJobIdSelectInput.defaultProps = {
-  fieldName: "toolJobId", //job
-  disabled: false,
-  jobType: undefined,
+  fieldName: "toolJobId",
 };
 
 export default JenkinsToolJobIdSelectInput;

@@ -148,6 +148,7 @@ function JenkinsStepConfiguration({
           jobType={jenkinsJobTypeDto?.data.job_type}
           dataObject={jenkinsStepConfigurationDto}
           setDataObject={setJenkinsStepConfigurationDto}
+          toolConfigId={jenkinsStepConfigurationDto?.getData("toolConfigId")}
         />
         {loadSfdcConfigurationPanel()}
         <JenkinsGitCredentialsSelectInput
