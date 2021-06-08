@@ -35,7 +35,7 @@ const SfdcPipelineXMLView = ({
   gitTaskId, 
   closePanel,
   fromSFDC, 
-  fromDestinationSFDC, 
+  fromDestinationSFDC,
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [save, setSave] = useState(false);
@@ -109,13 +109,13 @@ const SfdcPipelineXMLView = ({
   return (
     <div>
       <div className="flex-container">
-        { unitTestSteps.length > 0 && <CustomTabContainer>
+        { unitTestSteps.length > 0 && <CustomTabContainer>            
           <CustomTab activeTab={activeTab} tabText={"Package XML"} handleTabClick={handleTabClick} tabName={"pxml"}
                     toolTipText={"Package XML"} icon={faCheck} />
           <CustomTab activeTab={activeTab} tabText={"Unit Test Classes"} handleTabClick={handleTabClick} tabName={"utc"}
                     toolTipText={"Unit Test Classes"} icon={faCode} />
         </CustomTabContainer>}
-        {getView()}
+        {getView()}        
         <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right">
           <Button
             variant="secondary"

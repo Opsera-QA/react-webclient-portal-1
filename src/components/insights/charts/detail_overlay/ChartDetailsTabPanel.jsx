@@ -47,7 +47,7 @@ ChartDetailsTabPanel.propTypes = {
   dashboardData: PropTypes.object,
   kpiConfiguration: PropTypes.object,
   pipelineName: PropTypes.string,
-  currentDate : PropTypes.string
+  currentDate: PropTypes.string
 };
 
 export default ChartDetailsTabPanel;
