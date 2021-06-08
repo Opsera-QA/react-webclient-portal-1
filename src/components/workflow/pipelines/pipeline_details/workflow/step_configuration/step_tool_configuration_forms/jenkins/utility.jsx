@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/pro-light-svg-icons";
 
+// TODO: This code is duplicated all over and also should be a React component. Revisit soon.
 export const RegistryPopover = (data) => {
     if (data) {
       return (

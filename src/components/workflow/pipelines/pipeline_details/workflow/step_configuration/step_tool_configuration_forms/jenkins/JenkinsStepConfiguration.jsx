@@ -12,11 +12,11 @@ import JenkinsJobTypeSelectInput from "./inputs/jenkinsJobTypeSelectInput";
 import Model from "core/data_model/model";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import JenkinsToolJobIdSelectInput from "./inputs/jenkinsToolJobIdSelectInput";
-import JenkinsSfdcConfigurationPanel from "./inputs/jenkinsSfdcConfigurationPanel";
+import JenkinsSfdcConfigurationPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsSfdcConfigurationPanel";
 import JenkinsGitCredeintailSelectInput from "./inputs/jenkinsGitCredeintailSelectInput";
 import JenkinsWorkspaceProjectSelectInput from "./inputs/jenkinsWorkspaceProjectSelectInput";
 import JenkinsRepositorySelectInput from "./inputs/jenkinsRepositorySelectInput";
-import JenkinsBranchPanel from "./inputs/jenkinsBranchPanel";
+import JenkinsStepConfigurationBranchEditorPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepConfigurationBranchEditorPanel";
 import JenkinsXmlStepInfoSelectInput from "./inputs/jenkinsXmlStepInfoSelectInput";
 import JenkinsDockerPanel from "./inputs/jenkinsDockerPanel";
 import JenkinsPythonPanel from "./inputs/jenkinsPythonPanel";
@@ -162,7 +162,7 @@ function JenkinsStepConfiguration({
           <JenkinsGitCredeintailSelectInput dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} jenkinsList={jenkinsList} />
           <JenkinsWorkspaceProjectSelectInput dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
           <JenkinsRepositorySelectInput dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
-          <JenkinsBranchPanel dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} jenkinsList={jenkinsList} />
+          <JenkinsStepConfigurationBranchEditorPanel dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} jenkinsList={jenkinsList} />
           <JenkinsXmlStepInfoSelectInput dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} plan={plan} stepId={stepId} />
           <JenkinsDockerPanel dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
           <JenkinsPythonPanel dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />

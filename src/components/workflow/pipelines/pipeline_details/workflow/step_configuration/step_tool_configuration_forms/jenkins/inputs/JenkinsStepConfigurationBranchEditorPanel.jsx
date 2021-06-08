@@ -5,7 +5,7 @@ import GitUpstreamBranchInput from "components/common/list_of_values_input/tools
 import GitBranchManualRollBackBranchInput from "components/common/list_of_values_input/tools/git/GitBranchManualRollBackBranchInput";
 import { Form } from "react-bootstrap";
 
-function JenkinsBranchPanel({ fieldName, dataObject, setDataObject, disabled, jenkinsList }) {
+function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setDataObject, disabled, jenkinsList }) {
   const [branchList, setBranchList] = useState([]);
 
   const service = dataObject.getData("service");
@@ -103,7 +103,7 @@ function JenkinsBranchPanel({ fieldName, dataObject, setDataObject, disabled, je
   );
 }
 
-JenkinsBranchPanel.propTypes = {
+JenkinsStepConfigurationBranchEditorPanel.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
@@ -111,8 +111,8 @@ JenkinsBranchPanel.propTypes = {
   jenkinsList: PropTypes.any,
 };
 
-JenkinsBranchPanel.defaultProps = {
+JenkinsStepConfigurationBranchEditorPanel.defaultProps = {
   fieldName: "branch",
 };
 
-export default JenkinsBranchPanel;
+export default JenkinsStepConfigurationBranchEditorPanel;
