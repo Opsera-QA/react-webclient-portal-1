@@ -396,6 +396,17 @@ pipelineActions.searchRepositories = async (service, gitAccountId, workspaces, g
   return response;
 };
 
+pipelineActions.searchRepositoriesV2 = async (getAccessToken, cancelTokenSource, service, gitAccountId, workspaces) => {
+  const apiUrl = `/tools/properties`;
+  const postBody = {
+    tool: service,
+    metric: "getRepositories",
+    gitAccountId: gitAccountId,
+    workspaces: workspaces,
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 // TODO: in case we  want to reuse this route, we should probably construct the array inside wherever uses it instead
 //  We can always have a function in a helper that does the parsing of data automatically and call that instead
 pipelineActions.searchBranches = async (service, gitAccountId, repoId, workspaces, getAccessToken) => {
