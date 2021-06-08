@@ -18,8 +18,8 @@ function ExportPipelineActivityLogDataModal({showModal, closeModal, formattedDat
       headStyles: {fontSize: 8, minCellWidth: 19, fillColor: [54, 46, 84]},
       columnStyles: {0: {halign: 'center'}},
       margin: {left: 2, right: 2},
-      head: [["Run Count", "Action", "Task", "Tool", "Message", "Status", "Created"]],
-      body: formattedData.map(item => [item.run_count, item.action, item.step_name, item.tool_identifier, item.message, item.status, item.createdAt])
+      head: [["Run", "Task", "Action", "Message", "Status", "Date"]],
+      body: formattedData.map(item => [item.run_count, item.step_name, item.action, item.message, item.status, item.createdAt])
     });
 
     return pdfExporter;
@@ -47,5 +47,3 @@ ExportPipelineActivityLogDataModal.propTypes = {
 };
 
 export default ExportPipelineActivityLogDataModal;
-
-
