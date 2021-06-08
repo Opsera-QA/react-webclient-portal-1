@@ -61,78 +61,68 @@ const jenkinsPipelineStepConfigurationMetadata = {
       label: "Docker Name",
       id: "dockerName",
       isRequired: true,
-      regexValidator:RegExp("^[ a-z0-9_.-]*$"),
-      formText:"Accepts aplhanumeric, lowercase without spaces. only - . (dot) and _ are allowed"
+      // TODO: This should be the pattern but this is probably fine.
+      regexValidator: RegExp("^[a-z0-9_.-]*$"),
+      isLowercase: true,
+      formText:"Lowercase alphanumeric characters and underscore, period, and dash are allowed"
     },
     {
       label: "Docker Tag",
       id: "dockerTagName",
       isRequired: true,
       regexValidator:RegExp("^[ a-z0-9_.-]*$"),
-      formText:"Accepts aplhanumeric, lowercase without spaces. only - . (dot) and _ are allowed"
+      formText:"Lowercase alphanumeric characters and underscore, period, and dash are allowed"
     },
     {
       label: "Docker File Path",
       id: "dockerPath",
-      isRequired: false
     },
     {
       label: "Build Arguments",
       id: "buildArgs",
       formText:"Enter runtime build arguments as a JSON Object",
-      isRequired: false
     },
     {
       label: "Jenkins Agent",
       id: "agentLabels",
-      isRequired: false
     },
-    
-    {	
+    {
       label:"Output File Name",	
       id:"outputFileName"	,
-      isRequired: false
-    },	
+    },
     {	
       label:"Output File Path",	
       id:"outputPath",
-      isRequired: false
-    },	
+    },
     {	
       label:"Script File Name",	
       id:"inputFileName",
       formText:"File name with extension is expected.",
-      isRequired: false
-    },	
+    },
     {	
       label:"Specify Script File Path",	
       id:"inputFilePath",
-      isRequired: false
     },
     {	
       label: "Docker Secrets",	
       id: "dockerSecrets",
-      isRequired: false
     },
     {
       label: "Want to use a Custom Script",
       id: "customScript",
-      isRequired: false
     },
     {
       label: "Input Details",
       id: "inputDetails",
-      isRequired: false
     },
     {
       label: "Commands",
       id: "commands",
-      isRequired: false
     },
     {
       label:"Specify SalesForce Credentials",
       id:"sfdcToolId",
-      isRequired:true,
+      isRequired: true,
     },
     {
       label:"Unit Test Type",
@@ -142,12 +132,12 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label:"Destination SalesForce Credentials",
       id:"sfdcDestToolId",
-      isRequired:true
+      isRequired: true
     },
     {
       id:"upstreamBranch",
       label:"Specify Upstream Branch",
-      isRequired:true
+      isRequired: true
     }
   ],
   newModelBase: {
