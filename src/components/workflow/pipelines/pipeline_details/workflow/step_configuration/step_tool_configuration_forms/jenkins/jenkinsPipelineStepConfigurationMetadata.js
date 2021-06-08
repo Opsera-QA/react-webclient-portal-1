@@ -62,7 +62,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "dockerName",
       isRequired: true,
       // TODO: This should be the pattern but this is probably fine.
-      regexValidator: RegExp("^[a-z0-9_.-]*$"),
+      regexValidator: RegExp("^[a-zA-Z0-9_.-]*$"),
       isLowercase: true,
       formText:"Lowercase alphanumeric characters and underscore, period, and dash are allowed"
     },
@@ -70,7 +70,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       label: "Docker Tag",
       id: "dockerTagName",
       isRequired: true,
-      regexValidator:RegExp("^[ a-z0-9_.-]*$"),
+      regexValidator:RegExp("^[a-zA-Z0-9_.-]*$"),
       formText:"Lowercase alphanumeric characters and underscore, period, and dash are allowed"
     },
     {
