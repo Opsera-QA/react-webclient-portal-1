@@ -18,4 +18,13 @@ KafkaConnectActions.getSCMRepoFiles = async (dataObject, getAccessToken, cancelT
   return [];
 };
 
+KafkaConnectActions.getConfigurations = async (id, getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/tools/kafkaConnect/configurations/${id}`;
+  let response = await baseActions.apiGetCallV2(getAccessToken,cancelTokenSource, apiUrl);
+  if (response && response.status === 200) {
+    return response.data;
+  }
+  return [];
+};
+
 export default KafkaConnectActions;

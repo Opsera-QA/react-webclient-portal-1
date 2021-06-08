@@ -9,7 +9,6 @@ const kafkaConnectStepFormMetadata = {
     {
       label: "SCM Tool",
       id: "gitToolId",
-      isRequired: true
     },
     {
       label: "Repository ID",
@@ -18,7 +17,6 @@ const kafkaConnectStepFormMetadata = {
     {
       label: "SCM Service Type",
       id: "service",
-      isRequired: true
     },
     {
       label: "GIT URL",
@@ -31,7 +29,6 @@ const kafkaConnectStepFormMetadata = {
     {
       label: "Repository",
       id: "repository",
-      isRequired: true
     },
     {
       label: "Workspace",
@@ -44,22 +41,23 @@ const kafkaConnectStepFormMetadata = {
     {
       label: "Branch",
       id: "gitBranch",
-      isRequired: true
     },
     {
       label: "Connector File Name",
       id: "connectorFileName",
-      isRequired: true
     },
     {
       label: "Connector File Path",
       id: "connectorFilePath",
-      isRequired: true
     },
     {
       label: "Kafka Connect Action",
       id: "kafkaConnectAction",
       isRequired: true
+    },
+    {
+      label: "Kafka Connector",
+      id: "kafkaConnectorName"
     }
   ],
   newObjectFields: {
@@ -75,7 +73,8 @@ const kafkaConnectStepFormMetadata = {
     gitBranch: "",
     connectorFileName : "",
     connectorFilePath : "",
-    kafkaConnectAction: ""
+    kafkaConnectAction: "",
+    kafkaConnectorName: ""
   }
 };
 

@@ -35,12 +35,31 @@ function KafkaConnectActionSelectInput({dataObject, setDataObject, isLoading, di
     },
   ];
 
+  const handleDtoChange = async (fieldName, value) => {
+    let newDataObject = dataObject;
+    newDataObject.setData("gitToolId", "");
+    newDataObject.setData("repoId", "");
+    newDataObject.setData("gitUrl", "");
+    newDataObject.setData("sshUrl", "");
+    newDataObject.setData("service", "");
+    newDataObject.setData("workspace", "");
+    newDataObject.setData("workspaceName", "");
+    newDataObject.setData("repository", "");
+    newDataObject.setData("gitBranch", "");
+    newDataObject.setData("connectorFileName", "");
+    newDataObject.setData("connectorFilePath", "");
+    newDataObject.setData("kafkaConnectorName", "");
+    newDataObject.setData("kafkaConnectAction", value.value);
+    setDataObject({ ...newDataObject });
+  };
+
   return (
 
     <SelectInputBase
       fieldName={"kafkaConnectAction"}
       dataObject={dataObject}
       setDataObject={setDataObject}
+      setDataFunction={handleDtoChange}
       selectOptions={ACTION_LIST}
       valueField={"value"}
       textField={"name"}
