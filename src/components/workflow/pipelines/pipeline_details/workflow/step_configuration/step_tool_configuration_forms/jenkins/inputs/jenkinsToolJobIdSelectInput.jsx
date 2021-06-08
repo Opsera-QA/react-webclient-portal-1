@@ -16,7 +16,7 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
     setJobsList([]);
 
     if(Array.isArray(jenkinsList) && jenkinsList.length > 0){
-      const jobs = jenkinsList[jenkinsList.findIndex((x) => x.id === toolConfigId)]?.jobs
+      const jobs = jenkinsList[jenkinsList.findIndex((x) => x.id === toolConfigId)]?.jobs;
 
       if (Array.isArray(jobs) && jobs.length > 0) {
         setJobsList(jobs);
@@ -35,7 +35,7 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
         "Preselected job is no longer available.  It may have been deleted.  Please select another job from the list or recreate the job in Tool Registry."
       );
     }
-  }, [jobsList, dataObject?.getData("toolJobId")]);
+  }, [jobsList, dataObject && dataObject.getData("toolJobId")]);
 
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = { ...dataObject };
@@ -63,7 +63,7 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
   };
 
   const renderNoJobsMessage = () => {
-    if (!isLoading && jobsList.length < 1) {
+    if (jobsList.length === 0) {
       return (
         <div className="form-text text-muted p-2">
           <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />

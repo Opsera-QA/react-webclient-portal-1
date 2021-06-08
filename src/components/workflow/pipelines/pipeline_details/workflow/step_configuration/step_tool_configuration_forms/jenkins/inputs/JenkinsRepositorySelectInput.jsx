@@ -12,7 +12,7 @@ function JenkinsRepositorySelectInput({ fieldName, dataObject, setDataObject, di
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [repoList, setRepoList] = useState([]);
+  const [repositories, setRepositories] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -25,7 +25,7 @@ function JenkinsRepositorySelectInput({ fieldName, dataObject, setDataObject, di
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    setRepoList([]);
+    setRepositories([]);
     if (service?.length > 0 && gitToolId?.length > 0) {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
@@ -40,10 +40,10 @@ function JenkinsRepositorySelectInput({ fieldName, dataObject, setDataObject, di
     };
   }, [service, gitToolId]);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await pipelineActions.searchRepositoriesV2(getAccessToken, cancelTokenSource, service, gitToolId, getAccessToken);
+      const response = await pipelineActions.searchRepositoriesV2(getAccessToken, cancelSource, service, gitToolId, getAccessToken);
       const repositoryList = response?.data?.data;
 
       if (isMounted?.current === true) {
@@ -52,7 +52,7 @@ function JenkinsRepositorySelectInput({ fieldName, dataObject, setDataObject, di
           toastContext.showErrorDialog(errorMessage);
         }
         else {
-          setRepoList(repositoryList);
+          setRepositories(repositoryList);
         }
       }
     }
@@ -116,7 +116,7 @@ function JenkinsRepositorySelectInput({ fieldName, dataObject, setDataObject, di
       setDataFunction={setDataFunction}
       setDataObject={setDataObject}
       placeholderText={"Select Jenkins Repository"}
-      selectOptions={repoList}
+      selectOptions={repositories}
       valueField="value"
       textField="name"
       disabled={isLoading || disabled}
@@ -131,6 +131,8 @@ JenkinsRepositorySelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
+  service: PropTypes.string,
+  gitToolId: PropTypes.string
 };
 
 JenkinsRepositorySelectInput.defaultProps = {

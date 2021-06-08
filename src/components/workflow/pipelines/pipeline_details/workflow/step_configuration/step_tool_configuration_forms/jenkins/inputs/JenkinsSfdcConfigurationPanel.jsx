@@ -131,7 +131,7 @@ function JenkinsSfdcConfigurationPanel({ dataObject, setDataObject }) {
         <JenkinsSfdcUnitTestTypeSelectInput dataObject={dataObject} setDataObject={setDataObject} />
       );
     }
-  }
+  };
 
   if (dataObject == null) {
     return null;

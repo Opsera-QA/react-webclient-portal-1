@@ -22,7 +22,7 @@ function JenkinsGitCredentialsSelectInput({
     setAccountsList([]);
 
     if(Array.isArray(jenkinsList) && jenkinsList.length > 0){
-      const accounts = jenkinsList[jenkinsList.findIndex((x) => x.id === toolConfigId)]?.accounts
+      const accounts = jenkinsList[jenkinsList.findIndex((x) => x.id === toolConfigId)]?.accounts;
 
       if (Array.isArray(accounts) && accounts.length > 0) {
         setAccountsList(accounts);
@@ -79,7 +79,7 @@ function JenkinsGitCredentialsSelectInput({
         <div className="form-text text-muted p-2">
           <Form.Label className="w-100">Account*</Form.Label>
           <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
-          No Credentials have been created for <span>{jenkinsUrl}</span>. Please go to
+          No Credentials have been created for <span>{dataObject?.getData("jenkinsUrl")}</span>. Please go to
           <Link to="/inventory/tools"> Tool Registry</Link> and add credentials for this Jenkins in order to proceed.
         </div>
       );
@@ -125,6 +125,7 @@ JenkinsGitCredentialsSelectInput.propTypes = {
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   jenkinsList: PropTypes.any,
+  toolConfigId: PropTypes.string
 };
 
 JenkinsGitCredentialsSelectInput.defaultProps = {

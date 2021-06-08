@@ -97,7 +97,12 @@ function JenkinsWorkspaceProjectSelectInput({ fieldName, dataObject, setDataObje
   };
 
   const valid = () => {
-    return service === "bitbucket" && gitToolId && jobType && excludeArr.includes(dataObject.getData("jobType")) && !dataObject.getData("isOrgToOrg");
+    return (
+      service === "bitbucket"
+      && gitToolId
+      && dataObject.getData("jobType") && excludeArr.includes(dataObject.getData("jobType"))
+      && !dataObject.getData("isOrgToOrg")
+    );
   };
 
   if (dataObject == null || !valid()) {
