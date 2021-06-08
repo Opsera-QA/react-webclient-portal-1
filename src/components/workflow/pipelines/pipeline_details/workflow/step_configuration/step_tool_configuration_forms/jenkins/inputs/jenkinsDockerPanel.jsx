@@ -9,7 +9,6 @@ function JenkinsDockerPanel({ dataObject, setDataObject }) {
   const [deleteDockerSecrets, setDeleteDockerSecrets] = useState(false);
 
 
-  if (dataObject.data.buildType != "docker") {
     return null;
   }
 

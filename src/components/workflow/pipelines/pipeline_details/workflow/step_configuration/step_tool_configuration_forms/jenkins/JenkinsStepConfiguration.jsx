@@ -19,7 +19,7 @@ import JenkinsStepConfigurationBranchEditorPanel from "components/workflow/pipel
 import JenkinsXmlStepInfoSelectInput from "./inputs/jenkinsXmlStepInfoSelectInput";
 import JenkinsStepConfigurationDockerEditorPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepConfigurationDockerEditorPanel";
 import JenkinsPythonPanel from "./inputs/jenkinsPythonPanel";
-import JenkinsGradleMavenScriptFilePathPanel from "./inputs/jenkinsGradleMavenScriptFilePathPanel";
+import JenkinsGradleMavenScriptFilePathPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsGradleMavenScriptFilePathPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 
