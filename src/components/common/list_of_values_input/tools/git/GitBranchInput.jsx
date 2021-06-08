@@ -40,9 +40,8 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
     //to set data in parent component
     if (Array.isArray(branchesResponse)) {
       setBranches(branchesResponse);
-      if(typeof setBranchList!=='undefined' ){
-        console.log(typeof setBranchList);
-        setBranchList(branchesResponse);
+      if (setBranchList != null) {
+        setBranchList(branchesResponse); 
       }
     }
   };
@@ -56,7 +55,6 @@ function GitBranchInput({ service, gitToolId, repoId, workspace, visible, fieldN
       return ("No Branches Found!");
     }
   };
-
   return (
     <div>
       <SelectInputBase
@@ -93,6 +91,7 @@ GitBranchInput.propTypes = {
 
 GitBranchInput.defaultProps = {
   visible: true,
+  setBranchList:null,
 };
 
 export default GitBranchInput;

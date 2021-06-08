@@ -87,11 +87,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "agentLabels",
       isRequired: false
     },
-    {
-      label:"Job Type",
-      id: "jenkinsJobType",
-      isRequired: true
-    },
+    
     {	
       label:"Output File Name",	
       id:"outputFileName"	,
@@ -134,7 +130,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       isRequired: false
     },
     {
-      label:"SalesForce Credentials",
+      label:"Specify SalesForce Credentials",
       id:"sfdcToolId",
       isRequired:true,
     },
@@ -147,14 +143,15 @@ const jenkinsPipelineStepConfigurationMetadata = {
       label:"Destination SalesForce Credentials",
       id:"sfdcDestToolId",
       isRequired:true
-
+    },
+    {
+      id:"upstreamBranch",
+      label:"Specify Upstream Branch",
+      isRequired:true
     }
-    
-    
   ],
   newModelBase: {
     jobType: "",
-    jenkinsJobType:"",
     toolConfigId: "",
     jenkinsUrl: "",
     jenkinsPort: "",
@@ -194,6 +191,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     isManualRollBackBranch:false,
     hasUpstreamBranch:false,
     workspaceDeleteFlag:false,
+    gitBranch:""
   }
 };
 
