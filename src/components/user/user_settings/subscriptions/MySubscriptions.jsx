@@ -3,7 +3,7 @@ import axios from "axios";
 import TabPanelContainer from "components/common/panels/general/TabPanelContainer";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
-import {faDiceD20, faTag} from "@fortawesome/pro-light-svg-icons";
+import {faDraftingCompass, faTag} from "@fortawesome/pro-light-svg-icons";
 import TagSubscriptionsPanel from "components/user/user_settings/subscriptions/TagSubscriptionsPanel";
 import PipelineSubscriptionsPanel from "components/user/user_settings/subscriptions/PipelineSubscriptionsPanel";
 
@@ -36,7 +36,7 @@ function MySubscriptions() {
     return (
       <CustomTabContainer>
         <CustomTab activeTab={activeTab} tabText={"Tag Subscriptions"} handleTabClick={handleTabClick} tabName={"tags"} icon={faTag}/>
-        <CustomTab activeTab={activeTab} tabText={"Pipeline Subscriptions"} handleTabClick={handleTabClick} tabName={"pipelines"} icon={faDiceD20} disabled={true} />
+        <CustomTab activeTab={activeTab} tabText={"Pipeline Subscriptions"} handleTabClick={handleTabClick} tabName={"pipelines"} icon={faDraftingCompass} disabled={true} />
       </CustomTabContainer>
     );
   };

@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from "react";
 import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
-import {faDiceD20} from "@fortawesome/pro-light-svg-icons";
+import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import CustomTable from "components/common/table/CustomTable";
 import { Button, Modal } from "react-bootstrap";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -51,7 +51,7 @@ function PipelineDetailsTableModal({ header, size, tableMessage, show, setParent
               title={header}
               body={getTable()}
               isLoading={isLoading}
-              titleIcon={faDiceD20}
+              titleIcon={faDraftingCompass}
             />
           </div>
         </div>

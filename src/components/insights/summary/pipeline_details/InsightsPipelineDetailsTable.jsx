@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useMemo, useContext} from "react";
 import {useHistory} from "react-router-dom";
 import PropTypes from "prop-types";
-import {faDiceD20} from "@fortawesome/pro-light-svg-icons";
+import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
 import {
   getChartPipelineStatusColumn,
@@ -54,7 +54,7 @@ function InsightsPipelineDetailsTable({ tableTitle, data, loadData, tableFilterD
       title={tableTitle}
       body={getTable()}
       isLoading={isLoading}
-      titleIcon={faDiceD20}
+      titleIcon={faDraftingCompass}
       className={"p-4"}
     />
   );
