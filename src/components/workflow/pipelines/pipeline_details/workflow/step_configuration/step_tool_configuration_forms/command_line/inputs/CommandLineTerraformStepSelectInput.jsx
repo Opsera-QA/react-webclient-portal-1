@@ -34,15 +34,17 @@ function CommandLineTerraformStepSelectInput({ fieldName, dataObject, setDataObj
     try {
       if (plan && stepId) {
         let pipelineSteps = formatStepOptions(plan, stepId);
-        let groupedSteps = _.groupBy(pipelineSteps, "tool.tool_identifier");
-        let terraformSteps = Object.keys(groupedSteps).length > 0 && groupedSteps.terraform ? [...groupedSteps.terraform] : [];
+        // let groupedSteps = _.groupBy(pipelineSteps, "tool.tool_identifier");
+        // let terraformSteps = Object.keys(groupedSteps).length > 0 && groupedSteps.terraform ? [...groupedSteps.terraform] : [];
+        let terraformSteps = pipelineSteps.filter(step => step.tool.tool_identifier.toLowerCase() === 'terraform' && step.tool.configuration.saveParameters);        
         if (terraformSteps.length === 0) {
-          setPlaceholder("Configure a Terraform Step to use this option");
+          // setPlaceholder("Configure a Terraform Step to use this option");
+          dataObject.setData("terraformStepId", "");
         }
         setCommandLineTerraformList(terraformSteps);
       }
     } catch(error) {
-      setPlaceholder("Configure a Terraform Step to use this option");
+      // setPlaceholder("Configure a Terraform Step to use this option");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     } finally {
@@ -56,6 +58,10 @@ const formatStepOptions = (plan, stepId) => {
     plan.findIndex((element) => element._id === stepId)
   );
 };
+
+if(terraformList === null || terraformList.length === 0){
+  return null;
+}
 
 
   return (
