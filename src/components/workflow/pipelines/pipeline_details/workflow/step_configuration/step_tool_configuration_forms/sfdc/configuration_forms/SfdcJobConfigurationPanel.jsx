@@ -4,7 +4,7 @@ import SfdcJenkinsJobInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/sfdc/inputs/SfdcJenkinsJobInput";
 import SfdcPackageJobEditorPanel from "./create_package_xml_job/SfdcPackageJobConfigurationPanel";
 import SfdcProfileMigrationJobEditorPanel from "./profile_migration_job/SfdcProfileMigrationJobConfigurationPanel";
-import SfdcValidatePackageXmlJobEditorPanel from "./validate_package_xml_job/SfdcValidatePackageXmlJobConfigurationPanel";
+import SfdcValidatePackageXmlJobEditorPanel from "./validate_package/SfdcValidatePackageConfigPanel";
 import SfdcPushArtifactsJobEditorPanel from "./push_artifacts_job/SfdcPushArtifactsJobConfigurationPanel";
 import SfdcDeployJobEditorPanel from "./deploy_job/SfdcDeployJobConfigurationPanel";
 import SfdcUnitTestEditorPanel from "./unit_test_job/SfdcUnitTestJobConfigurationPanel";
@@ -13,7 +13,7 @@ import sfdcPushArtifactsJobMetadata from "../configuration_forms/push_artifacts_
 import sdfcBackupJobMetadata from "../configuration_forms/backup_job/sdfcBackupJobMetadata";
 import sfdcCreatePackageXmlJobMetadata from "../configuration_forms/create_package_xml_job/sfdcCreatePackageXmlJobMetadata";
 import sfdcProfileMigrationJobMetadata from "../configuration_forms/profile_migration_job/sfdcProfileMigrationJobMetadata";
-import sfdcValidatePackageXmlJobMetadata from "../configuration_forms/validate_package_xml_job/sfdcValidatePackageXmlJobMetadata";
+import sfdcValidatePackageMetadata from "../configuration_forms/validate_package/sfdcValidatePackageMetadata";
 import sfdcDeployJobMetadata from "../configuration_forms/deploy_job/sfdcDeployJobMetadata";
 import sdfcUnitTestJobMetadata from "../configuration_forms/unit_test_job/sdfcUnitTestJobMetadata";
 
@@ -34,7 +34,7 @@ function SfdcJobConfigurationPanel({ sfdcStepConfigurationDto, setSfdcStepConfig
         );
 
       case "SFDC VALIDATE PACKAGE XML":
-        sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sfdcValidatePackageXmlJobMetadata.fields))]);
+        sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sfdcValidatePackageMetadata.fields))]);
         return (
           <SfdcValidatePackageXmlJobEditorPanel sfdcStepConfigurationDto={sfdcStepConfigurationDto} setSfdcStepConfigurationDataDto={setSfdcStepConfigurationDataDto} listOfSteps={listOfSteps} />
          );

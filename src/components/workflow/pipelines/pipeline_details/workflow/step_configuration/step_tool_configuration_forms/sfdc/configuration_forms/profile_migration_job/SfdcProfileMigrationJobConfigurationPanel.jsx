@@ -17,11 +17,7 @@ function SfdcProfileMigrationJobEditorPanel({ sfdcStepConfigurationDto, setSfdcS
 
   return (
     <>
-      {/* Jenkins acc details */}
-      {/* <SFDCJenkinsAccountInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} /> */}
-      {/* salesforce creds */}
       <SfdcToolInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
-      {/* Dest SFDC org details */}
       <DestSfdcToolInput  dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
     </>
   );

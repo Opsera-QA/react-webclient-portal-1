@@ -6,11 +6,11 @@ import SfdcDeployJobSummaryCard from "./deploy_job/SfdcDeployJobSummaryCard";
 import SfdcProfileMigrationJobSummaryCard from "./profile_migration_job/SfdcProfileMigrationJobSummaryCard";
 import SfdcPushArtifactsJobSummaryCard from "./push_artifacts_job/SfdcPushArtifactsJobSummaryCard";
 import SfdcUnitTestJobSummaryCard from "./unit_test_job/SfdcUnitTestJobSummaryCard";
-import SfdcValidatePackageXmlJobSummaryCard from "./validate_package_xml_job/SfdcValidatePackageXmlJobSummaryCard";
+import SfdcValidatePackageSummaryCard from "./validate_package/SfdcValidatePackageSummaryCard";
 import sdfcBackupJobMetadata from "../configuration_forms/backup_job/sdfcBackupJobMetadata";
 import sfdcCreatePackageXmlJobMetadata from "../configuration_forms/create_package_xml_job/sfdcCreatePackageXmlJobMetadata";
 import sfdcProfileMigrationJobMetadata from "../configuration_forms/profile_migration_job/sfdcProfileMigrationJobMetadata";
-import sfdcValidatePackageXmlJobMetadata from "../configuration_forms/validate_package_xml_job/sfdcValidatePackageXmlJobMetadata";
+import sfdcValidatePackageMetadata from "../configuration_forms/validate_package/sfdcValidatePackageMetadata";
 import sfdcDeployJobMetadata from "../configuration_forms/deploy_job/sfdcDeployJobMetadata";
 import sdfcUnitTestJobMetadata from "../configuration_forms/unit_test_job/sdfcUnitTestJobMetadata";
 import sfdcPushArtifactsJobMetadata from "../configuration_forms/push_artifacts_job/sfdcPushArtifactsJobMetadata";
@@ -36,9 +36,9 @@ function SfdcJobSummaryCardContainer({ children, isLoading, sfdcStepConfiguratio
         );
 
       case "SFDC VALIDATE PACKAGE XML":
-        sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sfdcValidatePackageXmlJobMetadata.fields))]);
+        sfdcStepConfigurationDto.setMetaDataFields([...new Set(sfdcStepConfigurationDto.getFields().concat(sfdcValidatePackageMetadata.fields))]);
         return (
-          <SfdcValidatePackageXmlJobSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
+          <SfdcValidatePackageSummaryCard sfdcStepConfigurationDto={sfdcStepConfigurationDto} />
          );
 
       case "SFDC BACK UP":
