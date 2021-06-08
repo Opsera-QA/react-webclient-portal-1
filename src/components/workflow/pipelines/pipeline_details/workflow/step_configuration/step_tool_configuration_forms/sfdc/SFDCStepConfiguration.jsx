@@ -161,7 +161,7 @@ function SFDCStepConfiguration({
     >      
       <SfdcJenkinsToolInput dataObject={sfdcStepConfigurationDto} setDataObject={setSFDCStepConfigurationDataDto} />
       {/* depending on job type dynamic forms needs ot be displayed */}
-      <SfdcJobConfigurationPanel sfdcStepConfigurationDto={sfdcStepConfigurationDto} setSFDCStepConfigurationDataDto={setSFDCStepConfigurationDataDto} listOfSteps={listOfSteps} />
+      <SfdcJobConfigurationPanel sfdcStepConfigurationDto={sfdcStepConfigurationDto} setSfdcStepConfigurationDataDto={setSFDCStepConfigurationDataDto} listOfSteps={listOfSteps} />
       <SfdcDependencyTypeInput dataObject={sfdcStepConfigurationDto} setDataObject={setSFDCStepConfigurationDataDto} />
     </PipelineStepEditorPanelContainer>
   );

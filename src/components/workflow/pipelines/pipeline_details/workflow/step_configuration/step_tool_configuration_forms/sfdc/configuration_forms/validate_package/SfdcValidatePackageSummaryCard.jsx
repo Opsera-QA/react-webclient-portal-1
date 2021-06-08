@@ -4,7 +4,7 @@ import "components/inventory/tools/tools.css";
 import TextFieldBase from "components/common/form_fields/TextFieldBase";
 import { Col } from "react-bootstrap";
 
-function SfdcValidatePackageXmlJobSummaryCard({ sfdcStepConfigurationDto }) {
+function SfdcValidatePackageSummaryCard({ sfdcStepConfigurationDto }) {
   const getSummaryFields = () =>{
     
     return (
@@ -33,8 +33,8 @@ function SfdcValidatePackageXmlJobSummaryCard({ sfdcStepConfigurationDto }) {
   );
 }
 
-SfdcValidatePackageXmlJobSummaryCard.propTypes = {
+SfdcValidatePackageSummaryCard.propTypes = {
   sfdcStepConfigurationDto: PropTypes.object,
 };
 
-export default SfdcValidatePackageXmlJobSummaryCard;
+export default SfdcValidatePackageSummaryCard;
