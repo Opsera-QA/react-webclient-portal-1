@@ -16,10 +16,7 @@ function JenkinsGitCredentialsSelectInput({
   jenkinsList,
   toolConfigId
 }) {
-  const [accountsList, setAccountsList]=useState([]);
-  const jobType = dataObject?.getData("jobType");
-  const jenkinsUrl = dataObject?.getData("jenkinsUrl");
-  const isOrgToOrg = dataObject?.getData("isOrgToOrg");
+  const [accountsList, setAccountsList] = useState([]);
 
   useEffect(()=>{
     setAccountsList([]);
@@ -91,11 +88,12 @@ function JenkinsGitCredentialsSelectInput({
 
 
   if(
-       !jenkinsUrl
+    dataObject == null
+    || !dataObject?.getData("jenkinsUrl")
     || !Array.isArray(jenkinsList) || jenkinsList.length === 0
-    || !jobType || jobType.length === 0
-    || excludeArr.includes(jobType)
-    || isOrgToOrg
+    || !dataObject?.getData("jobType") || dataObject?.getData("jobType").length === 0
+    || excludeArr.includes(dataObject?.getData("jobType"))
+    || dataObject?.getData("isOrgToOrg")
   ){
     return null;
   }

@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { OverlayTrigger } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { DialogToastContext } from "contexts/DialogToastContext";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { RegistryPopover } from "../utility";
@@ -11,7 +10,6 @@ import { faExclamationCircle, faEllipsisH } from "@fortawesome/free-solid-svg-ic
 
 function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDataObject, disabled, jobType, toolConfigId }) {
   const [jobsList, setJobsList] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const toastContext = useContext(DialogToastContext);
 
   useEffect(()=>{
@@ -113,8 +111,7 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
         selectOptions={jobsList}
         valueField="_id"
         textField="name"
-        disabled={disabled || isLoading}
-        busy={isLoading}
+        disabled={disabled}
       />
     </>
   );

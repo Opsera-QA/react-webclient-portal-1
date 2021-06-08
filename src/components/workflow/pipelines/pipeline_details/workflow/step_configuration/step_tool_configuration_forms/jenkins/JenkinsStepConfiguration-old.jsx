@@ -979,7 +979,6 @@ function JenkinsStepConfiguration({
             </Form.Label>
           )}
         </Form.Group>
-1111
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Job Type*</Form.Label>
           {jobType !== undefined ? (
@@ -994,7 +993,7 @@ function JenkinsStepConfiguration({
             />
           ) : null}
         </Form.Group>
-222
+
         {jobType === "job" ? (
           <Form.Group controlId="branchField">
             <Form.Label>Job Name*</Form.Label>
@@ -1007,7 +1006,6 @@ function JenkinsStepConfiguration({
               onChange={(e) => setFormData({ ...formData, jobName: e.target.value })}
             />
           </Form.Group>
-333
         ) : (
           <>
             {jobType === "opsera-job" && (

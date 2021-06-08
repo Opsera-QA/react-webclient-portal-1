@@ -7,14 +7,16 @@ import JenkinsDestinationSalesForceCredentialsInput from "components/common/list
 import JenkinsSfdcUnitTestTypeSelectInput from "components/common/list_of_values_input/tools/jenkins/JenkinsSfdcUnitTestTypeSelectInput";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 // TODO: Is this supposed to still be in here
 const testArr = ["SFDC UNIT TESTING", "SFDC VALIDATE PACKAGE XML", "SFDC DEPLOY"];
 
 function JenkinsSfdcConfigurationPanel({ dataObject, setDataObject }) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [sfdcList, setSFDCList] = useState([]);
   const { getAccessToken } = useContext(AuthContext);
+  const { toastContext } = useContext(DialogToastContext);
+  const [isLoading, setIsLoading] = useState(false);
+  const [sfdcList, setSfdcList] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -27,6 +29,7 @@ function JenkinsSfdcConfigurationPanel({ dataObject, setDataObject }) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
+    setSfdcList([]);
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -58,17 +61,16 @@ function JenkinsSfdcConfigurationPanel({ dataObject, setDataObject }) {
         });
 
         if (Array.isArray(tools) && tools.length > 0) {
-          const filteredList = tools.filter((el) => el.configuration !== undefined); //filter out items that do not have any configuration data!
-          if (filteredList) {
-            setSFDCList(filteredList);
-            setIsLoading(false);
+          const filteredList = tools.filter((el) => el.configuration !== undefined);
+          if (Array.isArray(filteredList) && filteredList.length > 0) {
+            setSfdcList(filteredList);
           }
         }
       }
     }
     catch (error) {
       console.error(error);
-      // Add ToastContext call
+      toastContext.showErrorDialog(error);
     }
     finally {
       setIsLoading(false);
