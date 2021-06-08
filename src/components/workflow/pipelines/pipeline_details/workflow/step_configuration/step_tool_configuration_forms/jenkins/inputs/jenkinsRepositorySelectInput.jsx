@@ -8,7 +8,6 @@ import { DialogToastContext } from "../../../../../../../../../contexts/DialogTo
 function JenkinsRepositorySelectInput({ fieldName, dataObject, setDataObject, disabled }) {
   const { getAccessToken } = useContext(AuthContext);
   const [isRepoSearching, setIsRepoSearching] = useState(false);
-
   const [repoList, setRepoList] = useState([]);
   const jobType = dataObject.getData("jobType");
   const toastContext = useContext(DialogToastContext);
@@ -45,7 +44,7 @@ function JenkinsRepositorySelectInput({ fieldName, dataObject, setDataObject, di
     }
   }, [service, gitToolId, gitCredential, workspace]);
 
-  const handleDTOChange = (fieldName, selectedOption) => {
+  const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = { ...dataObject };
 
     newDataObject.setData("repository", selectedOption.name);
@@ -70,6 +69,7 @@ function JenkinsRepositorySelectInput({ fieldName, dataObject, setDataObject, di
     newDataObject.setData("gitBranch", "");
     setDataObject({ ...newDataObject });
   };
+
   const valid = () => {
     return (
       service &&
@@ -80,7 +80,7 @@ function JenkinsRepositorySelectInput({ fieldName, dataObject, setDataObject, di
     );
   };
 
-  if (!valid()) {
+  if (dataObject == null || !valid()) {
     return null;
   }
 
@@ -88,7 +88,7 @@ function JenkinsRepositorySelectInput({ fieldName, dataObject, setDataObject, di
     <SelectInputBase
       fieldName={fieldName}
       dataObject={dataObject}
-      setDataFunction={handleDTOChange}
+      setDataFunction={setDataFunction}
       setDataObject={setDataObject}
       placeholderText={"Select"}
       selectOptions={repoList}

@@ -6,7 +6,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 
 
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import JenkinsToolConfigIdSelectInput from "./inputs/jenkinsToolConfigIdSelectInput";
+import JenkinsToolConfigIdSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsToolConfigIdSelectInput";
 import JenkinsJobTypeSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsJobTypeSelectInput";
 import Model from "core/data_model/model";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
