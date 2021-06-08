@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function JenkinsXmlStepInfoSelectInput({ dataObject, setDataObject, disabled, plan, stepId }) {
+function JenkinsXmlStepInfoSelectInput({ dataObject, fieldName, setDataObject, disabled, plan, stepId }) {
   const jobType = dataObject.getData("jobType");
   const [listOfSteps, setListOfSteps] = useState([]);
 
@@ -13,25 +13,19 @@ function JenkinsXmlStepInfoSelectInput({ dataObject, setDataObject, disabled, pl
   }, [plan, stepId]);
 
   const formatStepOptions = (plan, stepId) => {
-    let STEP_OPTIONS = plan.slice(
+    return plan.slice(
       0,
       plan.findIndex((element) => element._id === stepId)
     );
-    STEP_OPTIONS.unshift({ _id: "", name: "Select One", isDisabled: "yes" });
-    return STEP_OPTIONS;
   };
 
-  const clearDataFunction = (fieldName) => {
-    let newDataObject = { ...dataObject };
-    newDataObject.setData("stepIdXML", "");
-    setDataObject({ ...newDataObject });
-  };
   if (jobType !== "SFDC PUSH ARTIFACTS") {
     return null;
   }
+
   return (
     <SelectInputBase
-      fieldName={"stepIdXML"}
+      fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
       placeholderText={"Select Build-Xml Step Info"}
@@ -39,10 +33,10 @@ function JenkinsXmlStepInfoSelectInput({ dataObject, setDataObject, disabled, pl
       valueField="_id"
       textField="name"
       disabled={disabled}
-      clearDataFunction={clearDataFunction}
     />
   );
 }
+
 JenkinsXmlStepInfoSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
@@ -50,9 +44,11 @@ JenkinsXmlStepInfoSelectInput.propTypes = {
   listOfSteps: PropTypes.any,
   stepId: PropTypes.string,
   plan: PropTypes.object,
+  fieldName: PropTypes.string
 };
+
 JenkinsXmlStepInfoSelectInput.defaultProps = {
-  disabled: false,
+  fieldName: "stepIdXML",
 };
 
 export default JenkinsXmlStepInfoSelectInput;

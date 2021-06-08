@@ -10,13 +10,13 @@ import JenkinsToolConfigIdSelectInput from "components/workflow/pipelines/pipeli
 import JenkinsJobTypeSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsJobTypeSelectInput";
 import Model from "core/data_model/model";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import JenkinsToolJobIdSelectInput from "./inputs/jenkinsToolJobIdSelectInput";
+import JenkinsToolJobIdSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsToolJobIdSelectInput";
 import JenkinsSfdcConfigurationPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsSfdcConfigurationPanel";
 import JenkinsGitCredentialsSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsGitCredentialsSelectInput";
 import JenkinsWorkspaceProjectSelectInput from "./inputs/jenkinsWorkspaceProjectSelectInput";
 import JenkinsRepositorySelectInput from "./inputs/jenkinsRepositorySelectInput";
 import JenkinsStepConfigurationBranchEditorPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepConfigurationBranchEditorPanel";
-import JenkinsXmlStepInfoSelectInput from "./inputs/jenkinsXmlStepInfoSelectInput";
+import JenkinsXmlStepInfoSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsXmlStepInfoSelectInput";
 import JenkinsStepConfigurationDockerEditorPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepConfigurationDockerEditorPanel";
 import JenkinsPythonPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepConfigurationPythonEditorPanel";
 import JenkinsGradleMavenScriptFilePathPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsGradleMavenScriptFilePathPanel";
