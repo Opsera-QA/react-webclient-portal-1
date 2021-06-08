@@ -16,9 +16,9 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 
 function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
+  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
@@ -87,11 +87,11 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
     const onRowSelect = (stat) => {
       const chartModel = new Model({...DeploymentFrequencyInsightsTableMetadata.newObjectFields}, DeploymentFrequencyInsightsTableMetadata, false);
       toastContext.showOverlayPanel(
-        <ChartDetailsOverlay
-          dashboardData={dashboardData}
-          kpiConfiguration={kpiConfiguration}
-          chartModel={chartModel}
-          kpiIdentifier={"opsera-deployment-frequency-stats" + "-" + stat} />);
+      <ChartDetailsOverlay 
+        dashboardData={dashboardData} 
+        kpiConfiguration={kpiConfiguration} 
+        chartModel={chartModel} 
+        kpiIdentifier={"opsera-deployment-frequency-stats" + "-" + stat} />);
     };
 
     return (

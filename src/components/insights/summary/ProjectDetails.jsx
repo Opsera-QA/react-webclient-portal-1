@@ -5,11 +5,13 @@ import BuildDetailsTableModal from "components/common/modal/BuildDetailsTableMod
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import { getTableTextColumn } from "components/common/table/table-column-helpers";
+import { getLimitedTableTextColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
-import {faProjectDiagram} from "@fortawesome/pro-light-svg-icons";
+import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faSpinner, faProjectDiagram} from "@fortawesome/pro-light-svg-icons";
 import ProjectDetailsMetadata from "./project-details-metadata";
 import FilterContainer from "components/common/table/FilterContainer";
 

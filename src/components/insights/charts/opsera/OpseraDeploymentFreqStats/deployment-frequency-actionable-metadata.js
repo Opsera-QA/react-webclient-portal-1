@@ -27,3 +27,4 @@ const DeploymentFrequencyInsightsTableMetadata = {
 };
 
 export default DeploymentFrequencyInsightsTableMetadata;
+  

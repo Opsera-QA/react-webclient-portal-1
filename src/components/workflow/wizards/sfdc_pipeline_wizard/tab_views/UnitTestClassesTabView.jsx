@@ -33,13 +33,12 @@ const UnitTestClassesTabView = ({pipelineId, stepId, unitTestSteps, fromSFDC, fr
       };
     }, []);
 
-
     useEffect(() => {
         if(Object.keys(selectedStep).length > 0){
           setSelectedUnitTestClassesList([]);          
           getUnitTestList();
         }
-      }, [selectedStep]);
+    }, [selectedStep]);
     
     const getUnitTestList = async (cancelSource = cancelTokenSource) => {
       setUnitTestListLoading(true);
@@ -68,17 +67,17 @@ const UnitTestClassesTabView = ({pipelineId, stepId, unitTestSteps, fromSFDC, fr
         setUnitTestListLoading(false);
       }
     };
-  
 
     const handleStepClick = async (step) => {        
         let isSfdc = fromSFDC || fromDestinationSFDC ? true : false;
         await getTestClasses(step, isSfdc);
     };
 
-    const getTestClasses = async(unitStep, isSfdc) => {    
+    const getTestClasses = async(unitStep, isSfdc) => {
+    
         setLoading(true);
         // call api to get test classes
-        try {
+        try {          
           const res = await sfdcPipelineActions.setTestClassesListV2(
             getAccessToken, 
             cancelTokenSource, 

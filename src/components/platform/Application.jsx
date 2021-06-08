@@ -35,7 +35,6 @@ function Application(props) {
   const [appNameError, setAppNameError] = useState(null);
 
   const getApiData = async () => {
-    // console.log("user: ", user);
     const urlParams = { userid: user.userId };
     const apiCall = new ApiService("/applications", urlParams, token);
     apiCall.get()
@@ -77,7 +76,6 @@ function Application(props) {
   };
 
   const handleAppNameChange = ({ target: { name, value } }) => {
-
     const regex = RegExp(regexHelpers.regexTypes.domainField);
     const trimmedValue = value.trim().toLowerCase();
     setAppName(trimmedValue);
@@ -325,8 +323,8 @@ function Application(props) {
               </CardColumns>
               <div className="text-right">
                 <Button variant="outline-primary" onClick={cancelTools} 
-                  // disabled={Object.keys(data).length === 0} 
-                className="m-2">
+                  // disabled={Object.keys(data).length === 0}
+                 className="m-2">
                 Cancel
                 </Button>
                 <Button variant="primary" onClick={saveTools} disabled={Object.keys(data).length === 0}>
