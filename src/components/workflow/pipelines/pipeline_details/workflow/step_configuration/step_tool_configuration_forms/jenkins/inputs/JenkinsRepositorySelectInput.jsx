@@ -47,7 +47,6 @@ function JenkinsRepositorySelectInput({ fieldName, dataObject, setDataObject, di
       const repositoryList = response?.data?.data;
 
       if (isMounted?.current === true) {
-
         if (!Array.isArray(repositoryList) || repositoryList.length === 0) {
           let errorMessage = "Repository information is missing or unavailable!";
           toastContext.showErrorDialog(errorMessage);

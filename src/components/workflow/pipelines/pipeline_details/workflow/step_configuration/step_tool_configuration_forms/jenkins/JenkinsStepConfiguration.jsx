@@ -156,6 +156,7 @@ function JenkinsStepConfiguration({
           dataObject={jenkinsStepConfigurationDto}
           setDataObject={setJenkinsStepConfigurationDto}
           jenkinsList={jenkinsList}
+          toolConfigId={jenkinsStepConfigurationDto?.getData("toolConfigId")}
         />
         <JenkinsWorkspaceProjectSelectInput dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
         <JenkinsRepositorySelectInput
