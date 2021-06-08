@@ -21,7 +21,6 @@ import JenkinsStepConfigurationDockerEditorPanel from "components/workflow/pipel
 import JenkinsPythonPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsStepConfigurationPythonEditorPanel";
 import JenkinsGradleMavenScriptFilePathPanel from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/inputs/JenkinsGradleMavenScriptFilePathPanel";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import axios from "axios";
 
 function JenkinsStepConfiguration({
   stepTool,
@@ -77,7 +76,7 @@ function JenkinsStepConfiguration({
                 },
               ],
             },
-            true
+            false
           )
         );
       }
@@ -86,14 +85,13 @@ function JenkinsStepConfiguration({
         setThresholdType(threshold?.type);
         setThresholdValue(threshold?.value);
       }
-      setIsLoading(false);
     }
     catch (error) {
       console.error(error);
-      // todo add toas message
+      toastContext.showErrorDialog(error);
     }
     finally {
-
+      setIsLoading(false);
     }
   };
 

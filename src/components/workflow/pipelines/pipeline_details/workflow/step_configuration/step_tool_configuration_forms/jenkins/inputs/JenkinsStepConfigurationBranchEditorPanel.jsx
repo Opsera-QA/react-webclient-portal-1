@@ -5,23 +5,16 @@ import GitUpstreamBranchInput from "components/common/list_of_values_input/tools
 import GitBranchManualRollBackBranchInput from "components/common/list_of_values_input/tools/git/GitBranchManualRollBackBranchInput";
 import { Form } from "react-bootstrap";
 
+const excludeArrs = [
+  "SFDC VALIDATE PACKAGE XML",
+  "SFDC UNIT TESTING",
+  "SFDC DEPLOY",
+  "SFDC BACK UP",
+  "SFDC PUSH ARTIFACTS",
+];
+
 function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setDataObject, disabled, jenkinsList }) {
   const [branchList, setBranchList] = useState([]);
-
-  const service = dataObject.getData("service");
-  const gitToolId = dataObject.getData("gitToolId");
-  const repoId = dataObject.getData("repoId");
-  const jobType = dataObject.getData("jobType");
-  const excludeArrs = [
-    "SFDC VALIDATE PACKAGE XML",
-    "SFDC UNIT TESTING",
-    "SFDC DEPLOY",
-    "SFDC BACK UP",
-    "SFDC PUSH ARTIFACTS",
-  ];
-  const isOrgToOrg = dataObject.getData("isOrgToOrg");
-  const jenkinsUrl = dataObject.getData("jenkinsUrl");
-  const workspaceDeleteFlag = dataObject.getData("workspaceDeleteFlag");
 
   const handleDTOChange = (fieldName, selectedOption) => {
     let newDataObject = { ...dataObject };
@@ -30,7 +23,8 @@ function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setD
     newDataObject.setData("gitBranch", selectedOption.value);
     setDataObject({ ...newDataObject });
   };
-  const clearDataFunction = (fieldName) => {
+
+  const clearDataFunction = () => {
     let newDataObject = { ...dataObject };
     newDataObject.setData("branch", "");
     newDataObject.setData("defaultBranch", "");
@@ -46,25 +40,46 @@ function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setD
 
   const valid = () => {
     return (
-      jenkinsUrl &&
+      dataObject.getData("jenkinsUrl") &&
       jenkinsList.length > 0 &&
-      jobType &&
-      jobType.length > 0 &&
-      service &&
-      gitToolId &&
-      repoId &&
-      !excludeArrs.includes(jobType) &&
-      !isOrgToOrg
+      dataObject.getData("jobType") &&
+      dataObject.getData("jobType").length > 0 &&
+      dataObject.getData("service") &&
+      dataObject.getData("gitToolId") &&
+      dataObject.getData("repoId") &&
+      !excludeArrs.includes(dataObject.getData("jobType")) &&
+      !dataObject.getData("isOrgToOrg")
     );
   };
-  if (!valid()) {
+
+  const getDynamicFields = () => {
+    if (dataObject.getData("jobType") === "SFDC BACK UP") {
+      return (
+        <GitBranchManualRollBackBranchInput dataObject={dataObject} setDataObject={setDataObject}/>
+      );
+    }
+
+    if (dataObject.getData("jobType") === "SFDC PUSH ARTIFACTS") {
+      return (
+        <GitUpstreamBranchInput
+          dataObject={dataObject}
+          setDataObject={setDataObject}
+          options={branchList}
+          handleDTOChange={handleDTOChange}
+          clearDataFunction={clearDataFunction}
+        />
+      );
+    }
+  };
+
+  if (dataObject == null || !valid()) {
     return null;
   }
 
   return (
     <>
       <GitBranchInput
-        fieldName={"branch"}
+        fieldName={fieldName}
         service={dataObject.getData("service")}
         gitToolId={dataObject.getData("gitToolId")}
         workspace={dataObject.getData("workspace")}
@@ -82,23 +97,12 @@ function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setD
           type="checkbox"
           label={"Delete workspace before building"}
           id={`workspaceDeleteFlag`}
-          checked={workspaceDeleteFlag}
+          checked={dataObject.getData("workspaceDeleteFlag")}
           onChange={(e) => handleWorkspaceDeleteFlagChange(e.target.checked)}
         />
-        <Form.Text className="text-muted">Deletes the Jenkins workspace before building.</Form.Text>
+        <Form.Text className="text-muted">Delete the Jenkins Workspace before building.</Form.Text>
       </Form.Group>
-      {jobType === "SFDC BACK UP" && (
-        <GitBranchManualRollBackBranchInput dataObject={dataObject} setDataObject={setDataObject} />
-      )}
-      {jobType === "SFDC PUSH ARTIFACTS" && (
-        <GitUpstreamBranchInput
-          dataObject={dataObject}
-          setDataObject={setDataObject}
-          options={branchList}
-          handleDTOChange={handleDTOChange}
-          clearDataFunction={clearDataFunction}
-        />
-      )}
+      {getDynamicFields()}
     </>
   );
 }
