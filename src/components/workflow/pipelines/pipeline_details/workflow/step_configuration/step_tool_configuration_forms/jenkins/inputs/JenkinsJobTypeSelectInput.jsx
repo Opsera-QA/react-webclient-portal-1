@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-const JOB_OPTIONS = [
+export const JENKINS_JOB_OPTIONS = [
   { value: "job", label: "Custom Job" },
   { value: "opsera-job", label: "Opsera Managed Jobs" },
   { value: "sfdc-ant", label: "SFDC Package Generation Job" },
@@ -11,11 +11,13 @@ const JOB_OPTIONS = [
 
 function JenkinsJobTypeSelectInput({ dataObject, setDataObject, jobTypeObject, setJobTypeObject }) {
  
-  const handleJobTypeChange = (fieldName, selectedOption) => {
+  const setDataFunction = (fieldName, selectedOption) => {
     let newJobObject = { ...jobTypeObject };
     newJobObject.setData("job_type", selectedOption.value);
     setJobTypeObject({ ...newJobObject });
+
     let newDataObject = { ...dataObject };
+
     switch (selectedOption.value) {
       case "sfdc-ant":
         newDataObject.setData("buildType", "ant");
@@ -39,6 +41,7 @@ function JenkinsJobTypeSelectInput({ dataObject, setDataObject, jobTypeObject, s
         newDataObject.setData("buildArgs", {});
         break;
     }
+
     newDataObject.setData("toolJobId", "");
     newDataObject.setData("toolJobType", "");
     newDataObject.setData("rollbackBranchName", "");
@@ -47,7 +50,7 @@ function JenkinsJobTypeSelectInput({ dataObject, setDataObject, jobTypeObject, s
     setDataObject({ ...newDataObject });
   };
   
-  if (!jobTypeObject) {
+  if (jobTypeObject == null) {
     return <></>;
   }
 
@@ -57,12 +60,11 @@ function JenkinsJobTypeSelectInput({ dataObject, setDataObject, jobTypeObject, s
         fieldName={"job_type"}
         dataObject={jobTypeObject}
         setDataObject={setJobTypeObject}
-        setDataFunction={handleJobTypeChange}
+        setDataFunction={setDataFunction}
         placeholderText={"Select Job Type"}
-        selectOptions={JOB_OPTIONS}
+        selectOptions={JENKINS_JOB_OPTIONS}
         valueField="value"
         textField="label"
-        disabled={false}
       />
     </div>
   );
