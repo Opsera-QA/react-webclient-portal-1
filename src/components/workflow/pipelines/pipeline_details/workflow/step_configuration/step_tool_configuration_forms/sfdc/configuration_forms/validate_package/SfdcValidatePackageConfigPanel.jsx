@@ -5,7 +5,7 @@ import SfdcToolInput from "../../inputs/SfdcToolInput";
 import SfdcUnitTestTypeSelectInput from "../../inputs/SfdcUnitTestTypeSelectInput";
 import SfdcBuildStepSelectInput from "../../inputs/SfdcBuildStepSelectInput";
 
-function SfdcValidatePackageXmlJobEditorPanel({ sfdcStepConfigurationDto, setSfdcStepConfigurationDataDto, listOfSteps }) {
+function SfdcValidatePackageConfigPanel({ sfdcStepConfigurationDto, setSfdcStepConfigurationDataDto, listOfSteps }) {
   useEffect(() => {loadData();}, []);
 
   const loadData = async () => {
@@ -25,10 +25,10 @@ function SfdcValidatePackageXmlJobEditorPanel({ sfdcStepConfigurationDto, setSfd
   );
 }
 
-SfdcValidatePackageXmlJobEditorPanel.propTypes = {
+SfdcValidatePackageConfigPanel.propTypes = {
   sfdcStepConfigurationDto: PropTypes.object,
   setSfdcStepConfigurationDataDto: PropTypes.func,
   listOfSteps: PropTypes.array
 };
 
-export default SfdcValidatePackageXmlJobEditorPanel;
+export default SfdcValidatePackageConfigPanel;
