@@ -10,7 +10,7 @@ function JenkinsToolConfigIdSelectInput({ dataObject, setDataObject, disabled, s
     // TODO: We should be checking for configuration when pulling files and only presenting options that are accessible.
     //  I would suggest showing them in the dropdown with (configuration needed) or (not configured) appended and disabled as selectable options
     //  I think it already removes not configured options this with the configuration needed set to true prop.
-    if (!selectedOption?.configuration || selectedOption?.id) {
+    if (!selectedOption?.configuration || !selectedOption?.id) {
       toastContext.showErrorDialog(
         "Connection information missing for this tool!  This Jenkins tool does not have connection details defined in its Tool Registry record.  Please go into Tool Registry and add connection information in order for Opsera to work with this tool."
       );
