@@ -417,7 +417,7 @@ function PipelineSummaryPanel({
       const taskCount = response?.data?.data?.length;
       if (taskCount) {
         setTaskCount(taskCount);
-      }
+    }
   };
 
   const getTaskCountText = () => {

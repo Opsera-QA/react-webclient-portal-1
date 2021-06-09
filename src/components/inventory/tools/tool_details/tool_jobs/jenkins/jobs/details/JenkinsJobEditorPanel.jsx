@@ -205,7 +205,7 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData, handleClose }) {
             ))}
           </Form.Control>;
     default:
-      return <Form.Control value={formField.value} disabled={formField.disabled || viewForm }
+      return <Form.Control value={formField.value} disabled={formField.disabled || viewForm}
                            isInvalid={formField.touched && !formField.isValid}
                            onChange={e => handleFormChange(formField, e.target.value)}/>;
     }
@@ -402,7 +402,7 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData, handleClose }) {
 
       <div className="text-right m-2">
         {!viewForm && Object.keys(jobData).length > 0 &&
-        <Button size="sm" variant="secondary" onClick={() => toggleViewForm(true)} className="mr-2">Cancel</Button>}
+        <Button size="sm" variant="secondary" onClick={()=> toggleViewForm(true)} className="mr-2">Cancel</Button>}
         {!viewForm &&
         <Button size="sm" variant="primary" onClick={updateJob}><FontAwesomeIcon icon={faSave} fixedWidth/>Save
           Job</Button>}
