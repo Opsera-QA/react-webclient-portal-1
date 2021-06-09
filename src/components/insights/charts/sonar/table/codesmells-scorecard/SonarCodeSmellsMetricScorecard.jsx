@@ -35,20 +35,17 @@ function SonarCodeSmellsMetricScorecard({ kpiConfiguration, setKpiConfiguration,
   const columns = useMemo(
     () => [
       getTableTextColumn(getField(fields, "run_count")),
-      // getTableTextColumn(getField(fields, "projectName"), "no-wrap-inline"),
       getLimitedTableTextColumn(getField(fields, "projectName"), 20),
-      // getTableTextColumn(getField(fields, "pipelineId")),
-      getTableTextColumn(getField(fields, "pipelineName")),
+      getLimitedTableTextColumn(getField(fields, "pipelineName"), 20),
       getTableDateTimeColumn(getField(fields, "timestamp")),
       getChartTrendStatusColumn(getField(fields, "status")),
       getTableTextColumn(getField(fields, "sonarLatestMeasureValue")),
-      getTableTextColumn(getField(fields, "sonarPrimaryLanguage")),
+      getLimitedTableTextColumn(getField(fields, "sonarPrimaryLanguage"), 20),
     ],
     []
   );
 
   const onRowSelect = (rowData) => {
-    console.log("rowData", rowData);
     history.push(`/blueprint/${rowData.original.pipelineId}/${rowData.original.run_count}`);
   };
 
@@ -86,13 +83,16 @@ function SonarCodeSmellsMetricScorecard({ kpiConfiguration, setKpiConfiguration,
         dashboardTags,
         filterDto
       );
-      let dataObject = response?.data?.data[0]?.sonarCodeSmellsCodeBasedMetricScorecard?.data;
-      console.log("dataObject", dataObject);
+
+      let dataObject = response?.data?.data[0]?.sonarCodeSmellsCodeBasedMetricScorecard?.data[0]?.data;
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;
-        newFilterDto.setData("totalCount", response?.data?.data[0]?.sonarCodeSmellsCodeBasedMetricScorecard?.count);
+        newFilterDto.setData(
+          "totalCount",
+          response?.data?.data[0]?.sonarCodeSmellsCodeBasedMetricScorecard?.data[0]?.count[0]?.count
+        );
         setTableFilterDto({ ...newFilterDto });
       }
     } catch (error) {
