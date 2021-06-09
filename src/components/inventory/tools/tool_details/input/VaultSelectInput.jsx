@@ -75,7 +75,7 @@ function VaultToolSelectInput({ fieldName, dataObject, setDataObject, disabled, 
     setIsVaultSearching(true);
     try {
       let results = await PipelineActions.getToolsListV2(getAccessToken, cancelSource, "hashicorp_vault");
-      if (results.data) {
+      if (results?.data) {
         let respObj = [];
         let arrOfObj = results.data;
         arrOfObj.map((item) => {
@@ -89,7 +89,7 @@ function VaultToolSelectInput({ fieldName, dataObject, setDataObject, disabled, 
         });
         results = respObj;
       }
-      const filteredList = results.filter((el) => el.configuration !== undefined);
+      const filteredList = results ? results.filter((el) => el.configuration !== undefined) : [];
       filteredList.unshift({ id: "", name: "Opsera Default Hashicorp Vault" });
       if (filteredList) {
         setVaultList(filteredList);
