@@ -36,6 +36,7 @@ function KafkaConnectToolConfiguration({ toolData }) {
       recordDto={kafkaConnectConfigurationDto}
       persistRecord={saveKafkaConnectToolConfiguration}
       toolData={toolData}
+      toolConnectionCheckName={"kafka_connect"}
     >
       <Row>
         <Col sm={12}>
