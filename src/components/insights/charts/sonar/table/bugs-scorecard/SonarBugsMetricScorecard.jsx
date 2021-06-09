@@ -83,7 +83,7 @@ function SonarBugsMetricScorecard({ kpiConfiguration, setKpiConfiguration, dashb
         dashboardTags,
         filterDto
       );
-      let dataObject = response?.data?.data[0]?.sonarBugsCodeBasedMetricScorecard?.data[0].data;
+      let dataObject = response?.data?.data[0]?.sonarBugsCodeBasedMetricScorecard?.data[0]?.data;
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
