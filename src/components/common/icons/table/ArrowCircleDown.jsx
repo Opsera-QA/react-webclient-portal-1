@@ -6,7 +6,7 @@ import "../../../../theme.css";
 
 function ArrowCircleDown() {
   return (
-    <TooltipWrapper innerText={"Risk"}>
+    <TooltipWrapper innerText={"Success"}>
       <div>
         <div className="status-icon">
           <FontAwesomeIcon
