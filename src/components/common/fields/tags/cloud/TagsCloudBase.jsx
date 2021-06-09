@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faChartNetwork, faDiceD20, faExclamationCircle, faEye, faTag, faWrench} from "@fortawesome/pro-light-svg-icons";
+import {faChartNetwork, faDraftingCompass, faExclamationCircle, faEye, faTag, faWrench} from "@fortawesome/pro-light-svg-icons";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
@@ -32,7 +32,7 @@ function TagsCloudBase({ tagsWithUsage, onTagClick, className, getTooltip, subsc
             <TooltipWrapper innerText={getTooltip(tagWithUsage)} key={tag?._id}>
               <span className={classNames} style={getDynamicBadgeStyle(tagWithUsage)} onClick={() => {handleClick(tag);}}>
                 <span><IconBase icon={faTag} isLoading={subscribingToTag === tag?._id} className={"mr-1"} />{`${capitalizeFirstLetter(tag?.type)}: ${tag?.value}`}</span>
-                <span className="ml-3"><FontAwesomeIcon icon={faDiceD20} fixedWidth className="mr-1"/>{tagWithUsage?.pipeline_usage_count}</span>
+                <span className="ml-3"><FontAwesomeIcon icon={faDraftingCompass} fixedWidth className="mr-1"/>{tagWithUsage?.pipeline_usage_count}</span>
                 <span className="ml-2"><FontAwesomeIcon icon={faWrench} fixedWidth className="mr-1"/>{tagWithUsage?.tool_usage_count}</span>
                 <span className="ml-2"><FontAwesomeIcon icon={faChartNetwork} fixedWidth className="mr-1"/>{tagWithUsage?.dashboard_usage_count}</span>
                 {getSubscribedEye(subscribed)}

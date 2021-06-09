@@ -20,12 +20,12 @@ function RoleAccessEditorHelpOverlayContainer({ isLoading, children}) {
       showPanel={true}
       isLoading={isLoading}
       closePanel={closePanel}
-      titleText={"Rule Base Access"}
+      titleText={"Access Rules Help"}
     >
-      <div className={"mt-2"}>
-        <div className={"mb-2"}>
-          Access Rules define who has privileges to interact with a resource.
-          Individual users or groups can be used to grant the access.
+      <div className={"mt-3"}>
+        <div className={"mb-3"}>
+          <b>Access Rules,</b> or <b>Rule Based Access Controls (RBAC) </b>define who has privileges to interact with a resource.
+            Individual users or groups can be used to grant the access.
         </div>
         {children}
       </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { faBracketsCurly, faDiceD20, faHexagon, faMicrochip, faUser } from "@fortawesome/pro-light-svg-icons";
+import { faBracketsCurly, faDraftingCompass, faHexagon, faMicrochip, faUser } from "@fortawesome/pro-light-svg-icons";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
@@ -98,7 +98,7 @@ function Pipelines() {
     return (
       <CustomTabContainer>
         <CustomTab activeTab={activeTab} tabText={"All Pipelines"} handleTabClick={handleTabClick} tabName={"all"}
-                   toolTipText={"All Pipelines"} icon={faDiceD20}/>
+                   toolTipText={"All Pipelines"} icon={faDraftingCompass}/>
         <CustomTab activeTab={activeTab} tabText={"My Pipelines"} handleTabClick={handleTabClick} tabName={"owner"}
                    toolTipText={"My Pipelines"} icon={faUser}/>
         <CustomTab activeTab={activeTab} tabText={"Software Development"} handleTabClick={handleTabClick}
@@ -117,7 +117,7 @@ function Pipelines() {
         <NavigationTab activeTab={activeTab} tabText={"Catalog"} handleTabClick={handleTabClick} tabName={"catalog"}
                        toolTipText={"Template Catalog"} icon={faHexagon}/>
         <NavigationTab activeTab={activeTab !== "catalog" ? "all" : activeTab} tabText={"Pipelines"}
-                       handleTabClick={handleTabClick} tabName={"all"} toolTipText={"Pipelines"} icon={faDiceD20}/>
+                       handleTabClick={handleTabClick} tabName={"all"} toolTipText={"Pipelines"} icon={faDraftingCompass}/>
       </NavigationTabContainer>
     );
   };

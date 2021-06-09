@@ -102,7 +102,7 @@ function OverviewLanding() {
 
   const loadAnalytics = () => {
     // eslint-disable-next-line react/prop-types
-    history.push("/analytics");
+    history.push("/insights/analytics");
   };
 
   const handleTabClick = (tabSelection) => e => {
