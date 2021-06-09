@@ -17,7 +17,7 @@ import {
   faUsers,
   faBrowser,
   faTags,
-  faDiceD20, faProjectDiagram, faKey,
+  faDraftingCompass, faProjectDiagram, faKey,
 } from "@fortawesome/pro-light-svg-icons";
 import ToolApplicationsPanel from "./ToolAppliationsPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
@@ -133,7 +133,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         <ToggleTab icon={faList} tabName={"attributes"} settingsTabName={"attribute_settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Attributes"}/>
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"} disabled={!authorizedAction("edit_tool_connection", toolData?.data)}/>
         {getDynamicTabs()}
-        <CustomTab icon={faDiceD20} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
+        <CustomTab icon={faDraftingCompass} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
       </CustomTabContainer>
     );
   };

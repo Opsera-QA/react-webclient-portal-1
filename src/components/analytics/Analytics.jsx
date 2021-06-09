@@ -278,7 +278,7 @@ function Analytics() {
     e.preventDefault();
 
     if (tabSelection === "analytics") {
-      history.push(`/analytics`);
+      history.push(`/insights/analytics`);
       return;
     }
 
@@ -288,7 +288,7 @@ function Analytics() {
     }
 
     if (tabSelection === "dashboards") {
-      history.push(`/insights/dashboards`);
+      history.push(`/insights`);
       return;
     }
 

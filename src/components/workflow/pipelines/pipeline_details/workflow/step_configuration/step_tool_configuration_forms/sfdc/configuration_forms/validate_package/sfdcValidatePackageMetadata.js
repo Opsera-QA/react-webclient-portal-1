@@ -1,4 +1,4 @@
-const sfdcValidatePackageXmlJobMetadata = {
+const sfdcValidatePackageMetadata = {
     fields: [
         {
             label: "SFDC Account",
@@ -19,4 +19,4 @@ const sfdcValidatePackageXmlJobMetadata = {
     ]
 };
 
-export default sfdcValidatePackageXmlJobMetadata;
+export default sfdcValidatePackageMetadata;

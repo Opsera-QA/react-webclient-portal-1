@@ -6,7 +6,7 @@ import TagEditorPanel from "components/settings/tags/tags_detail_view/TagEditorP
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import CustomTab from "components/common/tabs/CustomTab";
-import {faChartNetwork, faDiceD20, faWrench} from "@fortawesome/pro-light-svg-icons";
+import {faChartNetwork, faDraftingCompass, faWrench} from "@fortawesome/pro-light-svg-icons";
 import SingleTagUsedInToolsField from "components/common/fields/tags/SingleTagUsedInToolsField";
 import SingleTagUsedInPipelinesField from "components/common/fields/tags/SingleTagUsedInPipelinesField";
 import SingleTagUsedInDashboardsField from "components/common/fields/tags/cloud/SingleTagUsedInDashboardsField";
@@ -28,7 +28,7 @@ function TagDetailPanel({ tagData, setTagData, accessRoleData }) {
       <CustomTabContainer>
         <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <CustomTab tabText={"Tool Usage"} handleTabClick={handleTabClick} icon={faWrench} activeTab={activeTab} tabName={"tools"} />
-        <CustomTab tabText={"Pipeline Usage"} handleTabClick={handleTabClick} icon={faDiceD20} activeTab={activeTab} tabName={"pipelines"} />
+        <CustomTab tabText={"Pipeline Usage"} handleTabClick={handleTabClick} icon={faDraftingCompass} activeTab={activeTab} tabName={"pipelines"} />
         <CustomTab tabText={"Dashboard Usage"} handleTabClick={handleTabClick} icon={faChartNetwork} activeTab={activeTab} tabName={"dashboards"} />
       </CustomTabContainer>
     );

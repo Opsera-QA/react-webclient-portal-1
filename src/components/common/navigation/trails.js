@@ -127,14 +127,6 @@ const breadcrumbs = {
     linkText: "Template Details",
     icon: faStream
   },
-  deleteTools: {
-    parent: "admin",
-    name: "deleteTools",
-    path: paths.deleteTools,
-    title: "Delete Tools",
-    linkText: "Delete Tools",
-    icon: faTimes
-  },
 
   toolManagement: {
     parent: "admin",
@@ -381,6 +373,15 @@ const breadcrumbs = {
     title: "Customer Onboarding",
     linkText: "Customer Onboarding",
     icon: faUserPlus
+  },
+  
+  deleteTools: {
+    parent: "admin",
+    name: "deleteTools",
+    path: paths.deleteTools,
+    title: "Delete Tools",
+    linkText: "Delete Tools",
+    icon: faTimes
   },
 
   //Pipelines

@@ -22,11 +22,11 @@ function CopyToClipboardIconBase({ copyString, className, copyText, copiedText, 
   }
 
   return (
-    <ButtonTooltip trigger={["hover", "focus"]} innerText={copiedToClipboard ? copiedText : copyText}>
+    <ButtonTooltip trigger={["hover", "focus"]} innerText={copiedToClipboard === true ? copiedText : copyText}>
       <div className={className}>
         <FontAwesomeIcon
           onClick={() => {copyToClipboard();}}
-          icon={copiedToClipboard ? copiedIcon : copyIcon}
+          icon={copiedToClipboard === true ? copiedIcon : copyIcon}
           size={size}
           fixedWidth
           className={"pointer"}
@@ -47,8 +47,8 @@ CopyToClipboardIconBase.propTypes = {
 };
 
 CopyToClipboardIconBase.defaultProps = {
-  copyText: "Copied to Clipboard!",
-  copiedText: "Copy to clipboard",
+  copyText: "Copy to clipboard",
+  copiedText: "Copied to Clipboard!",
   copyIcon: faClipboardList,
   copiedIcon: faClipboardCheck
 };

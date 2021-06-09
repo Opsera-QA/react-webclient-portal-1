@@ -17,12 +17,9 @@ function SfdcUnitTestEditorPanel({ sfdcStepConfigurationDto, setSfdcStepConfigur
   }
 
   return (
-    <>
-      {/* salesforce creds */}
+    <>      
       <SfdcToolInput dataObject={sfdcStepConfigurationDto} setDataObject={setSfdcStepConfigurationDataDto} />
-      {/* Unit Test Type selection input */}
-      <SfdcUnitTestTypeSelectInput dataObject={sfdcStepConfigurationDto} fieldName={"sfdcUnitTestType"} setDataObject={setSfdcStepConfigurationDataDto} isProd={false} />
-      {/* Build Step Info */}
+      <SfdcUnitTestTypeSelectInput dataObject={sfdcStepConfigurationDto} fieldName={"sfdcUnitTestType"} setDataObject={setSfdcStepConfigurationDataDto} isProd={false} />      
       <SfdcBuildStepSelectInput dataObject={sfdcStepConfigurationDto} fieldName={"stepIdXML"} setDataObject={setSfdcStepConfigurationDataDto} listOfSteps={listOfSteps} />
     </>
   );
