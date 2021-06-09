@@ -6,7 +6,7 @@ import _ from "lodash";
 import { Button, OverlayTrigger, Popover } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faInfoCircle } from "@fortawesome/pro-light-svg-icons";
-function CommandLineTerraformStepSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, plan, stepId}) {
+function StepConfigTerraformStepSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, plan, stepId}) {
   
   const toastContext = useContext(DialogToastContext);
   const [terraformList, setCommandLineTerraformList] = useState([]);
@@ -65,14 +65,14 @@ const formatStepOptions = (plan, stepId) => {
 const setTerraformDetails = (fieldName, selectedOption) => {  
   let newDataObject = {...dataObject};
   newDataObject.setData(fieldName, selectedOption._id);
-  newDataObject.setData("terraformCustomParameters", selectedOption.tool.configuration.customParameters);
+  newDataObject.setData("customParameters", selectedOption.tool.configuration.customParameters);
   setDataObject({...newDataObject});
 };
 
 const refreshParameters = () => {  
   let terraformStep = plan.find(step => step._id === dataObject.getData(fieldName));  
   let newDataObject = {...dataObject};
-  newDataObject.setData("terraformCustomParameters", terraformStep?.tool?.configuration?.customParameters);
+  newDataObject.setData("customParameters", terraformStep?.tool?.configuration?.customParameters);
   setDataObject({...newDataObject});
 };
 
@@ -103,11 +103,11 @@ const getHelpText = () => {
 };
 
 const getTerraformCustomParametersDisplay = () => {
-  if(dataObject.getData("terraformCustomParameters")){
-    let parameters = dataObject.getData("terraformCustomParameters").map(param => param.parameterName);
+  if(dataObject.getData("customParameters")){
+    let parameters = dataObject.getData("customParameters").map(param => param.parameterName);
     return (
       <>
-        <label>Terraform Custom Parameters <span>{getHelpText()}</span></label>
+        <label>Custom Parameters <span>{getHelpText()}</span></label>
         <textarea
           disabled={true}
           value={parameters.join(', ')}
@@ -156,7 +156,7 @@ if(terraformList === null || terraformList.length === 0){
   );
 }
 
-CommandLineTerraformStepSelectInput.propTypes = {
+StepConfigTerraformStepSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
@@ -168,10 +168,10 @@ CommandLineTerraformStepSelectInput.propTypes = {
   stepId : PropTypes.string
 };
 
-CommandLineTerraformStepSelectInput.defaultProps = {
+StepConfigTerraformStepSelectInput.defaultProps = {
   valueField: "_id",
   textField: "name",
   fieldName: "terraformStepId"
 };
 
-export default CommandLineTerraformStepSelectInput;
+export default StepConfigTerraformStepSelectInput;
