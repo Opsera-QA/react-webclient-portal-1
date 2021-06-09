@@ -74,7 +74,7 @@ function OpseraPipelineByStatusBarChart({ kpiConfiguration, setKpiConfiguration,
     let kpiName = "";
     let pipeline = data.indexValue;
     if (data.id === "Successful") {kpiName = "status-by-pipeline-successful";}
-    if (data.id === "Failure") {kpiName = "status-by-pipeline-failed";}
+    if (data.id === "Failed") {kpiName = "status-by-pipeline-failed";}
     const chartModel = new Model({...PipelineByStatusTableMetadata.newObjectFields}, PipelineByStatusTableMetadata, false);
     toastContext.showOverlayPanel(
       <ChartDetailsOverlay
