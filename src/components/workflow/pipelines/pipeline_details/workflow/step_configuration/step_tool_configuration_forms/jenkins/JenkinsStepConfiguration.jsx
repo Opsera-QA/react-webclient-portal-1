@@ -131,7 +131,6 @@ function JenkinsStepConfiguration({
     if (jenkinsJobTypeDto?.getData("job_type") === "job") {
       return (
         <div className={"mb-3"}>
-          {jenkinsStepConfigurationDto.getData("jobName")}
           <TextInputBase
             fieldName={"jobName"}
             dataObject={jenkinsStepConfigurationDto}
