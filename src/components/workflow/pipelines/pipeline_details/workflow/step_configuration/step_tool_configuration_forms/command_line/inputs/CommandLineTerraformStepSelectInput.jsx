@@ -3,16 +3,13 @@ import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import _ from "lodash";
-import { Button, OverlayTrigger, Popover } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle } from "@fortawesome/pro-light-svg-icons";
+
 function CommandLineTerraformStepSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, plan, stepId}) {
-  
   const toastContext = useContext(DialogToastContext);
   const [terraformList, setCommandLineTerraformList] = useState([]);
   const [isCommandLineTerraformSearching, setIsCommandLineTerraformSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  // const [placeholder, setPlaceholder] = useState("Select Terraform Step");
+  const [placeholder, setPlaceholder] = useState("Select Terraform Step");
 
   useEffect(() => {
     loadData();
@@ -62,76 +59,6 @@ const formatStepOptions = (plan, stepId) => {
   );
 };
 
-const setTerraformDetails = (fieldName, selectedOption) => {  
-  let newDataObject = {...dataObject};
-  newDataObject.setData(fieldName, selectedOption._id);
-  newDataObject.setData("terraformCustomParameters", selectedOption.tool.configuration.customParameters);
-  setDataObject({...newDataObject});
-};
-
-const refreshParameters = () => {  
-  let terraformStep = plan.find(step => step._id === dataObject.getData(fieldName));  
-  let newDataObject = {...dataObject};
-  newDataObject.setData("terraformCustomParameters", terraformStep?.tool?.configuration?.customParameters);
-  setDataObject({...newDataObject});
-};
-
-const getHelpText = () => {
-  return (
-    <OverlayTrigger
-      trigger="click"
-      rootClose
-      placement="left"
-      overlay={
-        <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
-          <Popover.Title as="h3">Terraform Custom Parameters</Popover.Title>
-          <Popover.Content>
-            <div className="text-muted mb-2">              
-              This is a list of the mapped terraform output parameters available for use within commands in this step. In order to use any of these parameters in the step - enter them in the commands with the following syntax: <strong>{"${parameter_name}"}</strong>, where the parameter_name is the one of the names derived from this list of available parameters. You can refresh the list of available parameters by clicking on the Refresh button.
-            </div>
-          </Popover.Content>
-        </Popover>
-      }
-    >
-      <FontAwesomeIcon
-        icon={faInfoCircle}
-        className="fa-pull-right pointer pr-2 mt-1 pl-0"
-        onClick={() => document.body.click()}
-      />
-    </OverlayTrigger>
-  );
-};
-
-const getTerraformCustomParametersDisplay = () => {
-  if(dataObject.getData("terraformCustomParameters")){
-    let parameters = dataObject.getData("terraformCustomParameters").map(param => param.parameterName);
-    return (
-      <>
-        <label>Terraform Custom Parameters <span>{getHelpText()}</span></label>
-        <textarea
-          disabled={true}
-          value={parameters.join(', ')}
-          className="form-control"
-          rows={3}
-        />
-        <div className="bottom-zoom-btns">
-          <Button
-            size="sm"
-            className="mt-1 ml-2 px-2"
-            style={{height: "99%"}}
-            variant="primary"          
-            onClick={() => {
-              refreshParameters();
-            }}
-          >
-            Refresh
-          </Button>
-        </div>        
-      </>      
-    );
-  }
-};
-
 if(terraformList === null || terraformList.length === 0){
   return null;
 }
@@ -143,15 +70,13 @@ if(terraformList === null || terraformList.length === 0){
         fieldName={fieldName}
         dataObject={dataObject}
         setDataObject={setDataObject}
-        setDataFunction={setTerraformDetails}
         selectOptions={terraformList ? terraformList : []}
         busy={isCommandLineTerraformSearching}
         valueField={valueField}
         textField={textField}
-        placeholderText={"Select Terraform Step"}
+        placeholderText={placeholder}
         disabled={disabled || isLoading || (!isLoading && (terraformList == null || terraformList.length === 0))}
       />
-      { getTerraformCustomParametersDisplay() }
     </div>
   );
 }
