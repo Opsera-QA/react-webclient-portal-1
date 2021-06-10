@@ -15,6 +15,10 @@ const kafkaConnectStepFormMetadata = {
       id: "repoId",
     },
     {
+      label: "Project ID",
+      id: "projectId",
+    },
+    {
       label: "SCM Service Type",
       id: "service",
     },
@@ -40,7 +44,7 @@ const kafkaConnectStepFormMetadata = {
     },
     {
       label: "Branch",
-      id: "gitBranch",
+      id: "defaultBranch",
     },
     {
       label: "Connector File Name",
@@ -64,13 +68,14 @@ const kafkaConnectStepFormMetadata = {
     kafkaToolId: "",
     gitToolId: "",
     repoId: "",
+    projectId: "",
     gitUrl: "",
     sshUrl: "",
     service: "",
     workspace: "",
     workspaceName: "",
     repository: "",
-    gitBranch: "",
+    defaultBranch: "",
     connectorFileName : "",
     connectorFilePath : "",
     kafkaConnectAction: "",

@@ -6,12 +6,12 @@ function KafkaConnectGitBranchInput({dataObject, setDataObject, disabled}) {
   const setBranch = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
     // newDataObject.setData("branch", selectedOption);
-    newDataObject.setData("gitBranch", selectedOption);
+    newDataObject.setData("defaultBranch", selectedOption);
     setDataObject({...newDataObject});
   };
   return (
      <GitBranchInput
-       fieldName={"gitBranch"}
+       fieldName={"defaultBranch"}
        service={dataObject.getData("service")}
        gitToolId={dataObject.getData("gitToolId")}
        workspace={dataObject.getData("workspace")}

@@ -7,6 +7,7 @@ function KafkaConnectGitRepositoryInput({dataObject, setDataObject, disabled}) {
     let newDataObject = {...dataObject};
     newDataObject.setData("repository", selectedOption.name);
     newDataObject.setData("repoId", selectedOption.id);
+    newDataObject.setData("projectId", selectedOption.id);
     newDataObject.setData("sshUrl", selectedOption.sshUrl || "");
     newDataObject.setData("gitUrl", selectedOption.httpUrl || "");
     setDataObject({...newDataObject});
