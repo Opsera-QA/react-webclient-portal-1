@@ -33,7 +33,8 @@ import Model from "core/data_model/model";
 import _ from "lodash";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
-import StepConfigTerraformStepSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/common/inputs/StepConfigTerraformStepSelectInput";
+import PythonTerraformStepSelectInput from "./PythonTerraformStepSelectInput";
+import CommandLineTerraformStepSelectInput from "../command_line/inputs/CommandLineTerraformStepSelectInput";
 import PipelineStepEditorPanelContainer
   from "../../../../../../../common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 
@@ -99,8 +100,7 @@ const INITIAL_DATA = {
   inputDetails: [],
   commands: "",
   terraformStepId: "",
-  isManualRollBackBranch: false,
-  customParameters: ""
+  isManualRollBackBranch: false
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -250,10 +250,6 @@ function JenkinsStepConfiguration({
         {
           label: "Terraform Step",
           id: "terraformStepId"
-        },
-        {
-          label: "Custom Parameters",
-          id: "customParameters"
         }
       ]
     }, true));
@@ -420,10 +416,9 @@ function JenkinsStepConfiguration({
       tmp.setData("commands", formData.commands);
       tmp.setData("customScript", formData.customScript);
       tmp.setData("terraformStepId", formData.terraformStepId);
-      tmp.setData("customParameters", formData.customParameters);
       setPythonScriptData(tmp);
     }    
-  }, [formData.inputDetails, formData.commands, formData.customScript, formData.terraformStepId, formData.customParameters]);
+  }, [formData.inputDetails, formData.commands, formData.customScript, formData.terraformStepId]);
 
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
@@ -538,16 +533,14 @@ function JenkinsStepConfiguration({
         customScript: true,
         inputDetails: [],
         commands: pythonScriptData.getData("commands"),
-        terraformStepId: pythonScriptData.getData("terraformStepId"),
-        customParameters: pythonScriptData.getData("customParameters")
+        terraformStepId: pythonScriptData.getData("terraformStepId")
       }));
     }else {
       setFormData(Object.assign(formData, {
         customScript: false,
         inputDetails: pythonScriptData.getData("inputDetails"),
         commands: "",
-        terraformStepId: "",
-        customParameters: ""
+        terraformStepId: pythonScriptData.getData("terraformStepId")
       }));
     }
   };
@@ -1623,19 +1616,11 @@ function JenkinsStepConfiguration({
                       fieldName={"customScript"} 
                     />
                     { pythonScriptData.getData("customScript") ? (
-                      <>
-                        <TextAreaInput 
-                          dataObject={pythonScriptData}                         
-                          setDataObject={setPythonScriptData}
-                          fieldName={"commands"} 
-                        />
-                        <StepConfigTerraformStepSelectInput 
-                          setDataObject={setPythonScriptData} 
-                          dataObject={pythonScriptData} 
-                          plan={plan} 
-                          stepId={stepId} 
-                        />
-                      </>                      
+                      <TextAreaInput 
+                        dataObject={pythonScriptData}                         
+                        setDataObject={setPythonScriptData}
+                        fieldName={"commands"} 
+                      />
                     ) : (
                       <PythonFilesInput 
                         setDataObject={setPythonScriptData} 
@@ -1643,7 +1628,8 @@ function JenkinsStepConfiguration({
                         fieldName={"inputDetails"}
                       />
                     )
-                    }                    
+                    }
+                    <PythonTerraformStepSelectInput setDataObject={setPythonScriptData} dataObject={pythonScriptData} plan={plan} stepId={stepId} />
                   </>
                 )}
 
