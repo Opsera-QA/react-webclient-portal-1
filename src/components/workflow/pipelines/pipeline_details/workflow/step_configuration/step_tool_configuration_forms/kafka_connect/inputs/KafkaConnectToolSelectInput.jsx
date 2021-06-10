@@ -76,7 +76,7 @@ function KafkaConnectToolSelectInput({ fieldName, dataObject, setDataObject, dis
     setIsKafkaConnectSearching(true);
     try {
       let results = await PipelineActions.getToolsListV2(getAccessToken, cancelSource, "kafka_connect");
-      if (results.data) {
+      if (results?.data) {
         let respObj = [];
         let arrOfObj = results.data;
         arrOfObj.map((item) => {
@@ -88,8 +88,7 @@ function KafkaConnectToolSelectInput({ fieldName, dataObject, setDataObject, dis
         });
         results = respObj;
       }
-      const filteredList = results.filter((el) => el.configuration !== undefined);
-      console.log(filteredList);
+      const filteredList = results ? results.filter((el) => el.configuration !== undefined) : [];
       if (filteredList) {
         setKafkaConnectList(filteredList);
       }

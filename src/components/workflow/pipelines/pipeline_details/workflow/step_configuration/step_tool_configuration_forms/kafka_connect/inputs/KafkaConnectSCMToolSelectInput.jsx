@@ -59,7 +59,7 @@ function KafkaConnectSCMToolSelectInput({dataObject, setDataObject, disabled}) {
     setIsLoading(true);
       try {
         let results = await PipelineActions.getToolsListV2(getAccessToken, cancelSource, tool);
-        if (results.data) {
+        if (results?.data) {
           let respObj = [];
           let arrOfObj = results.data;
           arrOfObj.map((item) => {
@@ -73,7 +73,7 @@ function KafkaConnectSCMToolSelectInput({dataObject, setDataObject, disabled}) {
           });
           results = respObj;
         }
-        const filteredList = results.filter((el) => el.configuration !== undefined);
+        const filteredList = results ? results.filter((el) => el.configuration !== undefined) : [];
         setSCMList(filteredList);
       } catch (error) {
         toastContext.showErrorDialog(error);
