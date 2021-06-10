@@ -105,6 +105,7 @@ function JenkinsStepConfiguration({
       },
       job_type: jenkinsJobTypeDto.getData("job_type"),
     };
+
     setIsLoading(false);
     parentCallback(item);
   };
