@@ -4,12 +4,13 @@ import RoleAccessEditorHelpOverlayContainer from "components/common/help/input/r
 function GitRoleAccessHelpDocumentation() {
   return (
     <RoleAccessEditorHelpOverlayContainer>
-      <div><b>Access Rule Legend</b></div>
-      <div><b>Everyone</b> has edit and run or stop access, if no access rules are set.</div>
-      <div><b>Owners</b> and <b>Administrators</b> have full access and can delete tasks.</div>
-      <div><b>Managers</b> can edit settings and run or stop tasks.</div>
-      <div><b>Users</b> can run and stop tasks.</div>
-      <div><b>Guests</b> have read only access.</div>
+
+      <div><b>Owners</b> and <b>Administrators</b> have full editing capabilities.</div>
+      <div><b>Managers</b> and <b>SecOps</b> roles can view or edit tool.</div>
+      <div><b>Guests</b> have read-only access.</div>
+      <div><b>Users</b> can only use resource.</div>
+      <div>If no <b>Access Rules</b> are applied, <b>all</b> users can view or edit the tool.</div>
+
     </RoleAccessEditorHelpOverlayContainer>
   );
 }
