@@ -49,12 +49,9 @@ import AzureDevopsToolConfiguration
   from "../../../../../inventory/tools/tool_details/tool_jobs/azure-devops/AzureDevopsToolConfiguration";
 import AzureDevopsStepConfiguration
   from "./step_tool_configuration_forms/azure_devops/AzureDevopsStepToolConfiguration";
-<<<<<<< HEAD
 import JenkinsStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
-=======
 import KafkaConnectStepConfiguration from "./step_tool_configuration_forms/kafka_connect/KafkaConnectStepConfiguration";
->>>>>>> kafka connect pipeline support
 
 function StepToolConfiguration({
   pipeline,
