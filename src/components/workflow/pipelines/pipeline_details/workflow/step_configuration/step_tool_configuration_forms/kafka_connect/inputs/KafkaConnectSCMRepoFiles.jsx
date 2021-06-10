@@ -49,7 +49,6 @@ function KafkaConnectSCMRepoFilesSelectInput({
   const loadFiles = async () => {
     try {
       const res = await KafkaConnectActions.getSCMRepoFiles(dataObject, getAccessToken, cancelTokenSource);
-      console.log(res);
       if (res && res.status === 200) {
         if (res.message.length === 0) {
           setPlaceholder("No Files Found");
@@ -62,7 +61,6 @@ function KafkaConnectSCMRepoFilesSelectInput({
       setPlaceholder("No Files Found");
       setKafkaConnectSCMRepoFiles([]);
     } catch (error) {
-      console.log(error);
       setPlaceholder("No Files Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();

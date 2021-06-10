@@ -71,7 +71,6 @@ function KafkaConnectConfigurationSelectInput({
         getAccessToken,
         cancelTokenSource
       );
-      console.log(res);
       if (res && res.status === 200) {
         if (res.data.length === 0) {
           setPlaceholder("No Configurations Found");
