@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function InfoText({ field, errorMessage }) {
+function InfoText({ field, errorMessage, customMessage }) {
   if (errorMessage != null && errorMessage !== "") {
     return (
       <small className="red form-text">
@@ -10,20 +10,29 @@ function InfoText({ field, errorMessage }) {
     );
   }
 
-  if (field?.formText == null) {
+  if (field?.formText == null && customMessage == null) {
     return null;
+  }
+
+  if (field.formText != null && field.formText !== "") {
+    return (
+      <small className="text-muted form-text">
+        <div>{field?.formText}</div>
+      </small>
+    );
   }
 
   return (
     <small className="text-muted form-text">
-      <div>{field?.formText}</div>
+      <div>{customMessage}</div>
     </small>
   );
 }
 
 InfoText.propTypes = {
   field: PropTypes.object,
-  errorMessage: PropTypes.string
+  errorMessage: PropTypes.string,
+  customMessage: PropTypes.string
 };
 
 export default InfoText;
