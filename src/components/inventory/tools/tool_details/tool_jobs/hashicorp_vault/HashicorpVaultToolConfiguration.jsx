@@ -10,6 +10,7 @@ import {AuthContext} from "contexts/AuthContext";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import WarningDialog from "../../../../../common/status_notifications/WarningDialog";
 
 function HashicorpVaultToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -18,6 +19,23 @@ function HashicorpVaultToolConfiguration({ toolData }) {
   useEffect(() => {
     loadData();
   }, []);
+
+  const getWarningDialogs = () => {
+    if (
+      (toolData.getData("configuration") && Object.keys(toolData.getData("configuration")).length > 0 && hashicorpVaultConfigurationDto?.changeMap?.size > 0)
+    ) {
+      return (
+        <div className={"px-3 pb-4"}>
+          <WarningDialog
+            warningMessage={
+              "Changing the vault configuration may break tools which are using this vault for storage. Please use the Test Connection button in order to ensure that the updated credentials are able to communicate with the vault instance."
+            }
+            alignment={"toolRegistryWarning"}
+          />
+        </div>
+      );
+    }
+  };
 
   const loadData = async () => {
     setHashicorpVaultConfigurationDto(modelHelpers.getToolConfigurationModel(toolData.getData("configuration"), HashicorpVaultConnectionMetadata));
@@ -34,6 +52,8 @@ function HashicorpVaultToolConfiguration({ toolData }) {
   };
 
   return (
+    <>
+      {getWarningDialogs()}
     <ToolConfigurationEditorPanelContainer
       recordDto={hashicorpVaultConfigurationDto}
       persistRecord={saveHashicorpVaultToolConfiguration}
@@ -48,6 +68,7 @@ function HashicorpVaultToolConfiguration({ toolData }) {
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>
+    </>
   );
 }
 

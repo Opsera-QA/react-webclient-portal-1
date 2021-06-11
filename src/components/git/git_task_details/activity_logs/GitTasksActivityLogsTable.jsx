@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
 import { AuthContext } from "contexts/AuthContext";
 import {
-  getGitTasksStatusColumn, 
+  getGitTasksStatusColumn,
   getTableDateTimeColumn, getTableInfoIconColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers";
@@ -44,7 +44,7 @@ function GitTasksActivityLogsTable({ gitTasksData, allLogs }) {
       getTableTextColumn(fields.find(field => { return field.id === "log_type";})),
       getGitTasksStatusColumn(fields.find(field => { return field.id === "status";})),
       getTableDateTimeColumn(fields.find(field => { return field.id === "createdAt";})),
-      // getTableInfoIconColumn(showActivityLog),
+      getTableInfoIconColumn(showActivityLog),
     ],
     [],
   );
@@ -116,7 +116,7 @@ function GitTasksActivityLogsTable({ gitTasksData, allLogs }) {
         supportSearch={true}
         // dropdownFilters={getDropdownFilters()}
         titleIcon={faTable}
-        title={"Git Tasks Activity Logs"}
+        title={"Opsera Tasks Activity Logs"}
       />
       {/* <ModalActivityLogsDialog size={"lg"} header={"Git Tasks Activity Log"} jsonData={modalData} show={showModal} setParentVisibility={setShowModal} /> */}
       <GitTaskActivityDetailViewer

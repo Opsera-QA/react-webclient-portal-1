@@ -371,6 +371,16 @@ pipelineActions.searchWorkSpaces = async (service, gitAccountId, getAccessToken)
   return response;
 };
 
+pipelineActions.searchWorkspacesV2 = async (getAccessToken, cancelTokenSource, service, gitAccountId) => {
+  const apiUrl = `/tools/properties`;
+  const postBody = {
+    tool: service,
+    metric: "getWorkSpaces",
+    gitAccountId: gitAccountId,
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 // TODO: We should be handling not getting data inside the places that call this route instead
 //  We can always have a function in a helper that does the parsing of data automatically and call that instead
 pipelineActions.searchRepositories = async (service, gitAccountId, workspaces, getAccessToken) => {
@@ -394,6 +404,17 @@ pipelineActions.searchRepositories = async (service, gitAccountId, workspaces, g
     })
     .catch(error => {throw { error };});
   return response;
+};
+
+pipelineActions.searchRepositoriesV2 = async (getAccessToken, cancelTokenSource, service, gitAccountId, workspaces) => {
+  const apiUrl = `/tools/properties`;
+  const postBody = {
+    tool: service,
+    metric: "getRepositories",
+    gitAccountId: gitAccountId,
+    workspaces: workspaces,
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 // TODO: in case we  want to reuse this route, we should probably construct the array inside wherever uses it instead

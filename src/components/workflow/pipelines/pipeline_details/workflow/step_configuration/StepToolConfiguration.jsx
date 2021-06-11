@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import PipelineActions from "../../../../pipeline-actions";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
-import JenkinsConfiguration from "./step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
 import JUnitStepConfiguration from "./step_tool_configuration_forms/junit/JUnitStepConfiguration";
 import XUnitStepConfiguration from "./step_tool_configuration_forms/xunit/XUnitStepConfiguration";
 import SonarStepConfiguration from "./step_tool_configuration_forms/sonar/SonarStepConfiguration";
@@ -50,6 +49,9 @@ import AzureDevopsToolConfiguration
   from "../../../../../inventory/tools/tool_details/tool_jobs/azure-devops/AzureDevopsToolConfiguration";
 import AzureDevopsStepConfiguration
   from "./step_tool_configuration_forms/azure_devops/AzureDevopsStepToolConfiguration";
+import JenkinsStepConfiguration
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
+import KafkaConnectStepConfiguration from "./step_tool_configuration_forms/kafka_connect/KafkaConnectStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -201,18 +203,11 @@ function StepToolConfiguration({
     switch (toolName) {
       case "jenkins":
         return (
-          <JenkinsConfiguration
-            pipelineId={pipeline._id}
-            plan={pipeline.workflow.plan}
-            stepId={stepId}
+          <JenkinsStepConfiguration
             stepTool={stepTool}
+            plan={pipeline?.workflow?.plan}
+            stepId={stepId}
             parentCallback={callbackFunction}
-            callbackSaveToVault={saveToVault}
-            callbackGetFromVault={getFromVault}
-            callbackDeleteFromVault={deleteFromVaultUsingVaultKey}
-            createJob={createJob}
-            setToast={setToast}
-            setShowToast={setShowToast}
             closeEditorPanel={closeEditorPanel}
           />
         );
@@ -682,6 +677,22 @@ function StepToolConfiguration({
       case "azure-devops":
         return (
           <AzureDevopsStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "kafka_connect":
+        return (
+          <KafkaConnectStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}

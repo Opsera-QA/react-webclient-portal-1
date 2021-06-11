@@ -151,8 +151,6 @@ function PipelineWorkflowItemList({
 
     return classString;
   };
-
-
   return (
     <>
       {pipelineSteps && pipelineSteps.map((item, index) => (

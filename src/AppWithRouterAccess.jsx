@@ -319,8 +319,8 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/insights/synopsis" component={InsightsSummary}/>
 
                   {/* git tasks */}
-                  <SecureRoute path="/git" exact component={GitComponent}/>
-                  <SecureRoute path="/git/details/:id" exact component={GitTaskDetailView}/>
+                  <SecureRoute path="/task" exact component={GitComponent}/>
+                  <SecureRoute path="/task/details/:id" exact component={GitTaskDetailView}/>
 
                   {/* Administration Pages */}
                   <SecureRoute path="/admin" exact component={AdminTools}/>

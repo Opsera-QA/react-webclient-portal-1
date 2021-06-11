@@ -8,7 +8,7 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 
-function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, configurationRequired}) {
+function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, configurationRequired, setJenkinsList}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tools, setTools] = useState([]);
@@ -40,9 +40,15 @@ function PipelineToolInput({ toolType, toolFriendlyName, placeholderText, visibl
       if (configurationRequired) {
         const filteredTools = response?.filter((tool) => {return tool.configuration != null && Object.entries(tool.configuration).length > 0; });
         setTools(filteredTools);
+        if(setJenkinsList!==null){
+          setJenkinsList(filteredTools);
+        }
       }
       else {
         setTools(response);
+        if(setJenkinsList!==null){
+          setJenkinsList(response);
+        }
       }
     }
   };
@@ -108,11 +114,13 @@ PipelineToolInput.propTypes = {
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   configurationRequired: PropTypes.bool,
-  clearDataFunction: PropTypes.func
+  clearDataFunction: PropTypes.func,
+  setJenkinsList:PropTypes.func,
 };
 
 PipelineToolInput.defaultProps = {
   visible: true,
+  setJenkinsList:null
 };
 
 export default PipelineToolInput;

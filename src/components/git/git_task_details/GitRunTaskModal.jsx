@@ -23,7 +23,7 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, loadData }) {
   return (
     <ModalBase
       showModal={showModal}
-      title="Git Task Confirmation"
+      title="Opsera Task Confirmation"
       handleClose={handleClose}
       buttonContainer={getButtonContainer()}
     >

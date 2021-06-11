@@ -4,7 +4,7 @@ import CustomTable from "components/common/table/CustomTable";
 import { useHistory } from "react-router-dom";
 import {
   getTableBooleanIconColumn,
-  getTableTextColumn
+  getTableTextColumn, getTableDateTimeColumn
 } from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -25,6 +25,10 @@ function AnalyticsDataEntryTable({ analyticsDataEntries, isLoading, loadData, is
     () => [
       getTableTextColumn(getField(fields, "kpi_identifier")),
       getTableTextColumn(getField(fields, "owner_name")),
+      getTableTextColumn(getField(fields, "data.domain")),
+      getTableTextColumn(getField(fields, "data.application")),
+      getTableDateTimeColumn(getField(fields, "data.from")),
+      getTableDateTimeColumn(getField(fields, "data.to")),
       getTableBooleanIconColumn(getField(fields, "active"))
     ],
     []
