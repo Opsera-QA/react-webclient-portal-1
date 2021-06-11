@@ -56,10 +56,6 @@ export const analyticsDataMetadata = {
   newObjectFields: {
     kpi_identifier: "",
     owner: "",
-    "data.domain": "",
-    "data.application": "",
-    "data.from": "",
-    "data.to": "",
     data: {},
     active: true,
     tags: []

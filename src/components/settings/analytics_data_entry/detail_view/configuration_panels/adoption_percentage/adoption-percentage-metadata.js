@@ -59,14 +59,14 @@ const adoptionPercentageMetadata = {
     }
   ],
   newObjectFields: {
-    domain: "",
-    application: "",
-    project: "",
+    domain: [],
+    application: [],
+    project: [],
     pipeline_id: "",
     from: new Date(),
     to: new Date(),
-    sprint: "",
-    release: "",
+    sprint: [],
+    release: [],
     total_executed: 0,
     total_manual: 0
   }
