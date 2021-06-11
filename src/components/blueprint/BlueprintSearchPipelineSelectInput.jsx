@@ -15,8 +15,10 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
+    setIsLoading(true);
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
@@ -25,7 +27,7 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
+    loadData(source, searchTerm).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -35,12 +37,12 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [searchTerm]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (cancelSource = cancelTokenSource, searchTerm) => {
     try {
       setIsLoading(true);
-      await loadPipelines(cancelSource);
+      await loadPipelines(cancelSource, searchTerm);
     }
     catch (error) {
       if(isMounted?.current === true){
@@ -55,10 +57,9 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
     }
   };
 
-  const loadPipelines = async (cancelSource = cancelTokenSource) => {
-    const response = await pipelineActions.getAllPipelinesV2(getAccessToken, cancelSource);
+  const loadPipelines = async (cancelSource = cancelTokenSource, searchTerm) => {
+    const response = await pipelineActions.getAllPipelinesV3(getAccessToken, cancelSource, searchTerm);
     const pipelines = response?.data?.response;
-
     if (Array.isArray(pipelines) && pipelines.length > 0) {
 
       let parsedArray = [];
@@ -91,7 +92,7 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
     return <></>;
   }
 
-  if (!isLoading && (pipelines == null || pipelines.length === 0)) {
+  if (!isLoading && (pipelines == null)) {
     return (
       <div className="form-text text-muted p-2">
         <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
@@ -112,6 +113,7 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
       busy={isLoading}
       placeholderText={"Select A Pipeline"}
       disabled={disabled}
+      onSearch={(searchTerm) => {setSearchTerm(searchTerm);}}
       showLabel={showLabel}
     />
   );

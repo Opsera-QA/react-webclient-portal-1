@@ -14,7 +14,7 @@ function SelectInputBase(
     selectOptions, valueField, textField, placeholderText,
     setDataFunction, busy, disabled, clearDataFunction,
     showClearValueButton, errorMessage, getCurrentValue,
-    showLabel, className
+    showLabel, className, onSearch
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
@@ -78,6 +78,7 @@ function SelectInputBase(
         filter={"contains"}
         busy={busy}
         placeholder={placeholderText}
+        onSearch={onSearch}
         onChange={(data) => updateValue(data)}
         disabled={disabled}
       />
@@ -112,7 +113,8 @@ SelectInputBase.propTypes = {
   errorMessage: PropTypes.string,
   getCurrentValue: PropTypes.func,
   showLabel: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  onSearch: PropTypes.func
 };
 
 SelectInputBase.defaultProps = {
