@@ -35,6 +35,7 @@ function KafkaConnectSCMRepoFilesSelectInput({
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
+      setKafkaConnectSCMRepoFiles([]);
       await loadFiles(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
@@ -51,6 +52,7 @@ function KafkaConnectSCMRepoFilesSelectInput({
       const res = await KafkaConnectActions.getSCMRepoFiles(dataObject, getAccessToken, cancelTokenSource);
       if (res && res.status === 200) {
         if (res.message.length === 0) {
+          dataObject.setData("connectorFileName", undefined);
           setPlaceholder("No Files Found");
           return;
         }
@@ -58,9 +60,11 @@ function KafkaConnectSCMRepoFilesSelectInput({
         setKafkaConnectSCMRepoFiles(res.message);
         return;
       }
+      dataObject.setData("connectorFileName", undefined);
       setPlaceholder("No Files Found");
       setKafkaConnectSCMRepoFiles([]);
     } catch (error) {
+      dataObject.setData("connectorFileName", undefined);
       setPlaceholder("No Files Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
