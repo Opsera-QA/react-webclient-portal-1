@@ -25,6 +25,10 @@ function AnalyticsDataEntryTable({ analyticsDataEntries, isLoading, loadData, is
     () => [
       getTableTextColumn(getField(fields, "kpi_identifier")),
       getTableTextColumn(getField(fields, "owner_name")),
+      getTableTextColumn(getField(fields, "data.domain")),
+      getTableTextColumn(getField(fields, "data.application")),
+      getTableTextColumn(getField(fields, "data.from")),
+      getTableTextColumn(getField(fields, "data.to")),
       getTableBooleanIconColumn(getField(fields, "active"))
     ],
     []

@@ -29,6 +29,26 @@ export const analyticsDataMetadata = {
       id: "account",
     },
     {
+      label: "Domain Name",
+      id: "data.domain",
+    },
+    {
+      label: "Application Name",
+      id: "data.application",
+    },
+    {
+      label: "Pipeline",
+      id: "pipeline_id",
+    },
+    {
+      label: "From",
+      id: "data.from",
+    },
+    {
+      label: "To",
+      id: "data.to",
+    },
+    {
       label: "Status",
       id: "active",
     },
@@ -40,6 +60,10 @@ export const analyticsDataMetadata = {
   newObjectFields: {
     kpi_identifier: "",
     owner: "",
+    "data.domain": "",
+    "data.application": "",
+    "data.from": "",
+    "data.to": "",
     data: {},
     active: true,
     tags: []
