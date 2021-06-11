@@ -13,8 +13,7 @@ import PipelineSummaryPanel from "./PipelineSummaryPanel";
 import PipelineHelpers from "../../pipelineHelpers";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {
-  faBracketsCurly,
-  faDiceD20,
+  faBracketsCurly, faDiceD20,
   faDraftingCompass,
   faHexagon,
   faLayerGroup,
@@ -316,7 +315,7 @@ function PipelineDetailView() {
     case "ai-ml":
       return faMicrochip;
     default:
-      return faDiceD20;
+      return faDraftingCompass;
     }
   };
 
@@ -336,7 +335,7 @@ function PipelineDetailView() {
           </li>
           <li className="nav-item">
             <a className={"nav-link " + (activeTab === "model" ? "active" : "")} href="#"
-               onClick={handleTabClick("model")}><FontAwesomeIcon icon={faDraftingCompass}
+               onClick={handleTabClick("model")}><FontAwesomeIcon icon={faDiceD20}
                                                                   className="mr-2"/>Workflow</a>
           </li>
           {/*<li className="nav-item">*/}
@@ -428,7 +427,7 @@ function PipelineDetailView() {
         <NavigationTab activeTab={activeTab} tabText={"Catalog"} handleTabClick={handleTabClick}
                        tabName={"catalog"} toolTipText={"Template Catalog"} icon={faHexagon}/>
         <NavigationTab activeTab={activeTab} tabText={"Pipelines"}
-                       handleTabClick={handleTabClick} tabName={"pipelines"} toolTipText={"Pipelines"} icon={faDiceD20}/>
+                       handleTabClick={handleTabClick} tabName={"pipelines"} toolTipText={"Pipelines"} icon={faDraftingCompass}/>
         <NavigationTab activeTab={"viewer"} tabText={"Pipeline Viewer"}
                        handleTabClick={handleTabClick} tabName={"viewer"} toolTipText={"Pipeline Viewer"} icon={faLayerGroup}/>
       </NavigationTabContainer>

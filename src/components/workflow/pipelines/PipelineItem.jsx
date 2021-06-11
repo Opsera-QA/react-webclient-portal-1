@@ -10,7 +10,7 @@ import PipelineStatus from "./PipelineStatus";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import {
-  faDiceD20, faBracketsCurly, faMicrochip, faFlag, faPause,
+  faDraftingCompass, faBracketsCurly, faMicrochip, faFlag, faPause,
   faSearch,
   faSpinner, faStop,
   faTimesCircle, faCheckCircle,
@@ -94,7 +94,7 @@ const PipelineItem = ({ item, dataModel }) => {
     if (!type) {
       return (
         <TooltipWrapper innerText={"No Pipeline Type Assigned"}>
-          <FontAwesomeIcon icon={faDiceD20} className="ml-1 pipeline-text" size="lg"/>
+          <FontAwesomeIcon icon={faDraftingCompass} className="ml-1 pipeline-text" size="lg"/>
         </TooltipWrapper>
       );
     }
@@ -121,7 +121,7 @@ const PipelineItem = ({ item, dataModel }) => {
     default:
       return (
         <TooltipWrapper innerText={"No Pipeline Type Assigned"}>
-          <FontAwesomeIcon icon={faDiceD20} className="ml-1 pipeline-text" size="lg"/>
+          <FontAwesomeIcon icon={faDraftingCompass} className="ml-1 pipeline-text" size="lg"/>
         </TooltipWrapper>
       );
     }

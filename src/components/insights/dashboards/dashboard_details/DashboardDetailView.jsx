@@ -106,7 +106,7 @@ function DashboardDetailView() {
         <div className="d-inline-flex float-right">
           <FavoriteInput dataObject={dashboardData} setDataObject={setDashboardData} fieldName={"isFavorite"}/>
           <ActionBarDeleteButton2
-            relocationPath={"/insights/dashboards"}
+            relocationPath={"/insights"}
             dataObject={dashboardData}
             handleDelete={handleDelete}
           />
@@ -129,7 +129,7 @@ function DashboardDetailView() {
     e.preventDefault();
 
     if (tabSelection === "analytics") {
-      history.push(`/analytics`);
+      history.push(`/insights/analytics`);
       return;
     }
 
@@ -139,7 +139,7 @@ function DashboardDetailView() {
     }
 
     if (tabSelection === "dashboards") {
-      history.push(`/insights/dashboards`);
+      history.push(`/insights`);
       return;
     }
 
@@ -187,7 +187,7 @@ function DashboardDetailView() {
       detailPanel={<DashboardViewer
         dashboardData={dashboardData}
         breadcrumbDestination={"dashboardDetails"}
-        managementViewLink={"/insights/dashboards"}
+        managementViewLink={"/insights"}
         managementTitle={"Dashboards"}
         type={"Dashboard"}
       />}

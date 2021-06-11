@@ -106,7 +106,7 @@ function FreeTrialNav({ accessRole, featureFlagHideItemInProd, featureFlagHideIt
             className="menu-text">Pipelines</span></NavLink>
 
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards">
+          <NavLink className="nav-link" activeClassName="chosen" to="/insights">
             <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
             className="menu-text">Insights</span></NavLink>
 
@@ -169,13 +169,13 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards">
+          <NavLink className="nav-link" activeClassName="chosen" to="/insights">
             <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
             className="menu-text">Insights</span></NavLink>
 
           {/*<div className="d-flex flex-row">
             <div>
-              <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards"
+              <NavLink className="nav-link" activeClassName="chosen" to="/insights"
                        onClick={() => setInsights(true)}>
                 <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
                 className="menu-text">Insights</span>
@@ -190,7 +190,7 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
           </div>
 
           {insights && <>
-            <NavLink className="nav-link no-wrap" activeClassName="chosen" exact to="/insights/dashboards">
+            <NavLink className="nav-link no-wrap" activeClassName="chosen" exact to="/insights">
               <span className="menu-text-sub">My Dashboards</span>
             </NavLink>
 
@@ -265,7 +265,7 @@ function SaasUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHideIte
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards">
+          <NavLink className="nav-link" activeClassName="chosen" to="/insights">
             <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
             className="menu-text">Insights</span></NavLink>
 
@@ -330,7 +330,7 @@ function AccountAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFla
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards">
+          <NavLink className="nav-link" activeClassName="chosen" to="/insights">
             <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
             className="menu-text">Insights</span></NavLink>
 
@@ -394,7 +394,7 @@ function AccountPowerUserNav({ accessRole, featureFlagHideItemInProd, featureFla
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards">
+          <NavLink className="nav-link" activeClassName="chosen" to="/insights">
             <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
             className="menu-text">Insights</span></NavLink>
 
@@ -459,7 +459,7 @@ function DefaultUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHide
             <FontAwesomeIcon size="lg" icon={faDraftingCompass} fixedWidth/> <span
             className="menu-text">Pipelines</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/insights/dashboards">
+          <NavLink className="nav-link" activeClassName="chosen" to="/insights">
             <FontAwesomeIcon size="lg" icon={faChartNetwork} fixedWidth/> <span
             className="menu-text">Insights</span></NavLink>
 

@@ -16,8 +16,9 @@ import {
   faTable,
   faUsers,
   faBrowser,
-  faTags,
-  faDiceD20, faProjectDiagram
+  faProjectDiagram,
+  faDraftingCompass,
+  faKey
 } from "@fortawesome/pro-light-svg-icons";
 import ToolApplicationsPanel from "./ToolAppliationsPanel";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
@@ -31,6 +32,7 @@ import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import AttributeEditorPanel from "components/inventory/tools/tool_details/AttributeEditorPanel";
 import ToggleTab from "components/common/tabs/detail_view/ToggleTab";
+import ToolVaultPanel from "./ToolVaultPanel";
 
 function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const [activeTab, setActiveTab] = useState(tab ? tab : "summary");
@@ -111,14 +113,36 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
     }
   };
 
+  const getVaultTab = () => {
+    switch (toolData?.getData("tool_identifier")) {
+      case "jenkins":
+        return (
+            <CustomTab icon={faKey} tabName={"vault"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Vault"} disabled={!authorizedAction("vault", toolData?.data)}/>
+        );
+      case "gitlab":
+      case "github":
+        return (
+            <CustomTab icon={faKey} tabName={"vault"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Vault"} disabled={!authorizedAction("vault", toolData?.data)}/>
+        );
+      case "sonar":
+        return (
+          <>
+            <CustomTab icon={faKey} tabName={"vault"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Vault"} disabled={!authorizedAction("vault", toolData?.data)}/>
+          </>
+        );
+      default: return <></>;
+    }
+  };
+
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
         <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
         <ToggleTab icon={faList} tabName={"attributes"} settingsTabName={"attribute_settings"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Attributes"}/>
+        {getVaultTab()}
         <CustomTab icon={faClipboardList} tabName={"configuration"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Connection"} disabled={!authorizedAction("edit_tool_connection", toolData?.data)}/>
         {getDynamicTabs()}
-        <CustomTab icon={faDiceD20} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
+        <CustomTab icon={faDraftingCompass} tabName={"pipelines"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Usage"}/>
       </CustomTabContainer>
     );
   };
@@ -149,6 +173,8 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         return <ToolProjectsPanel toolData={toolData} isLoading={isLoading} loadData={loadData} />;
       case "pipelines":
         return <ToolPipelinesPanel toolData={toolData} />;
+      case "vault":
+        return <ToolVaultPanel toolData={toolData} setToolData={setToolData} />;
       default:
         return null;
     }

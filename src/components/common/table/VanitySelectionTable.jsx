@@ -11,8 +11,14 @@ function VanitySelectionTable({ columns, getNewModel, parentModel, setParentMode
   const toastContext = useContext(DialogToastContext);
   const selectedItemRef = useRef({});
 
+  useEffect(() => {
+    selectedItemRef.current = {...parentModel};
+  }, [parentModel]);
+
+
   const onRowSelect = async (grid, row, column, e) => {
     const selectedModel = getModel();
+
     // Don't change rows if invalid, save before changing rows if valid
     if (selectedModel != null) {
       // We are still on same row
@@ -43,7 +49,7 @@ function VanitySelectionTable({ columns, getNewModel, parentModel, setParentMode
     const selectedModel = getModel();
 
     // Value should only be undefined if canceled out
-    if (value !== undefined) {
+    if (value !== undefined && !selectedModel?.isDeleted()) {
       const fieldName = column?.id;
 
       if (selectedModel?.getData(fieldName) === value) {

@@ -7,7 +7,7 @@ import SingleTagUsedInDashboardsField from "components/common/fields/tags/cloud/
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import CustomTab from "components/common/tabs/CustomTab";
-import {faChartNetwork, faDiceD20, faWrench} from "@fortawesome/pro-light-svg-icons";
+import {faChartNetwork, faDraftingCompass, faWrench} from "@fortawesome/pro-light-svg-icons";
 
 function TagUsagePanel({ tagData, closePanel }) {
   const [activeTab, setActiveTab] = useState("tools");
@@ -21,7 +21,7 @@ function TagUsagePanel({ tagData, closePanel }) {
     return (
       <CustomTabContainer>
         <CustomTab tabText={"Tool Usage"} handleTabClick={handleTabClick} icon={faWrench} activeTab={activeTab} tabName={"tools"} />
-        <CustomTab tabText={"Pipeline Usage"} handleTabClick={handleTabClick} icon={faDiceD20} activeTab={activeTab} tabName={"pipelines"} />
+        <CustomTab tabText={"Pipeline Usage"} handleTabClick={handleTabClick} icon={faDraftingCompass} activeTab={activeTab} tabName={"pipelines"} />
         <CustomTab tabText={"Dashboard Usage"} handleTabClick={handleTabClick} icon={faChartNetwork} activeTab={activeTab} tabName={"dashboards"} />
       </CustomTabContainer>
     );

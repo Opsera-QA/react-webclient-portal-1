@@ -91,6 +91,13 @@ function ManualKpiMultiSelectInputBase({ fieldName, dataObject, type, setDataObj
   };
 
   const handleCreate = (newValue) => {
+    const parsedString = typeof newValue === "string" ? newValue.trim() : null;
+
+    if (parsedString == null || parsedString.length === 0 || parsedString === "") {
+      setErrorMessage("Empty strings or strings with only spaces are not allowed");
+      return;
+    }
+
     let newValueArray = dataObject.getArrayData(fieldName);
     newValueArray.push(newValue);
     validateAndSetData(fieldName, newValueArray);
@@ -128,7 +135,7 @@ function ManualKpiMultiSelectInputBase({ fieldName, dataObject, type, setDataObj
         <Multiselect
           data={selectOptions}
           busy={busy || isLoading}
-          allowCreate={true}
+          allowCreate={"onFilter"}
           onCreate={(value) => handleCreate(value)}
           filter="contains"
           groupBy={groupBy}

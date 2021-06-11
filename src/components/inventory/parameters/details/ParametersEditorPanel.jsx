@@ -36,6 +36,10 @@ function ParametersEditorPanel({ parameterModel, parameterRoleDefinitions, handl
     setCancelTokenSource(source);
     isMounted.current = true;
 
+    if (parameterModel == null) {
+      setParameterData(undefined);
+    }
+
     if (parameterModel && Object.keys(parameterModel).length !== 0) {
       initializeData().catch((error) => {
         if (isMounted?.current === true) {
@@ -93,7 +97,7 @@ function ParametersEditorPanel({ parameterModel, parameterRoleDefinitions, handl
           <BooleanToggleInput setDataObject={setParameterData} dataObject={parameterData} fieldName={"vaultEnabled"} disabled={!parameterData?.isNew()}/>
         </Col>
         <Col lg={6} className={"my-2"}>
-          {/*<RoleAccessInput disabled={canEdit !== true} dataObject={parameterData} setDataObject={setParameterData} fieldName={"roles"} />*/}
+          <RoleAccessInput disabled={canEdit !== true} dataObject={parameterData} setDataObject={setParameterData} fieldName={"roles"} />
         </Col>
       </Row>
     </VanityEditorPanelContainer>
