@@ -5,8 +5,8 @@ import BitbucketWorkspaceInput from "components/common/list_of_values_input/tool
 function SfdcBitbucketWorkspaceInput({dataObject, setDataObject, disabled}) {
   const setWorkspace = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
-    newDataObject.setData("workspace", selectedOption);
-    newDataObject.setData("workspaceName", selectedOption);
+    newDataObject.setData("workspace", selectedOption.key);
+    newDataObject.setData("workspaceName", selectedOption.name);
     setDataObject({...newDataObject});
   };
 
