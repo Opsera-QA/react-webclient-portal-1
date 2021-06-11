@@ -7,7 +7,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
-function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFunction, disabled, showDate, showTime, minDate, maxDate }) {
+function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFunction, disabled, showDate, showTime, minDate, maxDate, dropUp }) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   Moment.locale("en");
@@ -42,6 +42,7 @@ function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFuncti
         max={maxDate}
         time={showTime}
         disabled={disabled}
+        dropUp={dropUp}
         value={new Date(dataObject.getData(fieldName))}
         onChange={(value) => validateAndSetData(value)}
         defaultValue={new Date()}
@@ -60,7 +61,8 @@ DateTimeInputBase.propTypes = {
   showDate: PropTypes.bool,
   showTime: PropTypes.bool,
   minDate: PropTypes.any,
-  maxDate: PropTypes.any
+  maxDate: PropTypes.any,
+  dropUp: PropTypes.bool
 };
 
 DateTimeInputBase.defaultProps = {
