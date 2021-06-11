@@ -89,7 +89,7 @@ function KafkaConnectConfigurationSelectInput({
     }
   };
 
-  const handleDtoChange = async (fieldName, value) => {
+  const setDataFunction = async (fieldName, value) => {
     let newDataObject = dataObject;
     newDataObject.setData("kafkaConnectorName", value);
     setDataObject({ ...newDataObject });
@@ -100,7 +100,7 @@ function KafkaConnectConfigurationSelectInput({
       <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
-        setDataFunction={handleDtoChange}
+        setDataFunction={setDataFunction}
         setDataObject={setDataObject}
         selectOptions={configurations}
         busy={isLoading}
