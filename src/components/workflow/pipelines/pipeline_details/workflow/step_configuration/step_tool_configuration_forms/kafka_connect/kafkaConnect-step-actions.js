@@ -5,7 +5,7 @@ const KafkaConnectActions = {};
 KafkaConnectActions.getSCMRepoFiles = async (dataObject, getAccessToken, cancelTokenSource) => {
   const apiUrl = `/tools/scm/getFilesUnderPath`;
   const postBody = {
-    branch: dataObject?.getData("gitBranch"),
+    branch: dataObject?.getData("defaultBranch"),
     filePath: dataObject?.getData("connectorFilePath"),
     gitToolId: dataObject?.getData("gitToolId"),
     projectId: dataObject?.getData("repoId"),

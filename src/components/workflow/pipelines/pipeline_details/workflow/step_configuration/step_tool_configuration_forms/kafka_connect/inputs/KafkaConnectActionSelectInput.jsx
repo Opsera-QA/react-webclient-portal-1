@@ -35,7 +35,7 @@ function KafkaConnectActionSelectInput({dataObject, setDataObject, isLoading, di
     },
   ];
 
-  const handleDtoChange = async (fieldName, value) => {
+  const setDataFunction = async (fieldName, value) => {
     let newDataObject = dataObject;
     newDataObject.setData("gitToolId", "");
     newDataObject.setData("repoId", "");
@@ -59,7 +59,7 @@ function KafkaConnectActionSelectInput({dataObject, setDataObject, isLoading, di
       fieldName={"kafkaConnectAction"}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      setDataFunction={handleDtoChange}
+      setDataFunction={setDataFunction}
       selectOptions={ACTION_LIST}
       valueField={"value"}
       textField={"name"}
