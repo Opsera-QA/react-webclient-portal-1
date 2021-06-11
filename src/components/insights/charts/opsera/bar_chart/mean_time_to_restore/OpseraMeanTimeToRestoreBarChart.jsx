@@ -136,7 +136,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Planned Mean Time to Restore (in minutes)", "Date", 
-                    false, false, "wholeNumbers", "monthDate2").legends.itemDirection("left-to-right")}
+                    false, false, "wholeNumbers", "monthDate2")}
           {...config(getColorByData, getMaxValue(metrics))}
           {...adjustBarWidth(metrics)}
           onClick={(data) => onRowSelect(data)}
