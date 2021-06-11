@@ -59,14 +59,14 @@ const automationPercentageMetadata = {
     }
   ],
   newObjectFields: {
-    domain: "",
-    application: "",
-    project: "",
+    domain: [],
+    application: [],
+    project: [],
     pipeline_id: "",
     from: new Date(),
     to: new Date(),
-    sprint: "",
-    release: "",
+    sprint: [],
+    release: [],
     total_tests: 0,
     total_automated: 0
   }
