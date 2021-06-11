@@ -2,13 +2,13 @@ import regexHelpers from "utils/regexHelpers";
 
 const gitTasksMetadata = {
   idProperty: "_id",
-  type: "Git Task",
+  type: "Task",
   activeField: "active",
   detailView: function(record) {
-    return `/git/details/${record.getData("_id")}`;
+    return `/task/details/${record.getData("_id")}`;
   },
   detailViewTitle: function (record) {
-    return `Git Task Details [${record.getData("name")}]`;
+    return `Task Details [${record.getData("name")}]`;
   },
   fields: [
     {
@@ -75,6 +75,10 @@ const gitTasksMetadata = {
       label: "Access Rules",
       id: "roles",
     },
+    {
+      label: "Jenkins List",
+      id: "jenkinsIds",
+    }, 
   ],
   newObjectFields: {
     name: "",
@@ -87,6 +91,7 @@ const gitTasksMetadata = {
     tags: [],
     roles: [],
     account: "",
+    jenkinsIds: []
   }
 };
 

@@ -17,7 +17,7 @@ import {
   faLifeRing,
   faCogs,
   faChartNetwork,
-  faCaretSquareUp, faAnalytics, faEnvelope, faCodeBranch,
+  faCaretSquareUp, faAnalytics, faEnvelope, faTasks,
 } from "@fortawesome/pro-light-svg-icons";
 import "./sidebar.css";
 
@@ -220,9 +220,9 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
             <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
             className="menu-text">Notifications</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/git">
-            <FontAwesomeIcon size="lg" icon={faCodeBranch} fixedWidth/> <span
-            className="menu-text">Git</span></NavLink>
+          <NavLink className="nav-link" activeClassName="chosen" to="/task">
+            <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
+            className="menu-text">Tasks</span></NavLink>
 
           {/*<NavLink className="nav-link" activeClassName="chosen" to="/update">*/}
           {/*  <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span*/}
@@ -288,9 +288,9 @@ function SaasUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHideIte
             <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
             className="menu-text">Notifications</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/git">
-            <FontAwesomeIcon size="lg" icon={faCodeBranch} fixedWidth/> <span
-            className="menu-text">Git</span></NavLink>
+          <NavLink className="nav-link" activeClassName="chosen" to="/task">
+            <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
+            className="menu-text">Tasks</span></NavLink>
 
           {/*<NavLink className="nav-link" activeClassName="chosen" to="/update">*/}
           {/*  <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span*/}
@@ -353,9 +353,9 @@ function AccountAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFla
             <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
             className="menu-text">Notifications</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/git">
-            <FontAwesomeIcon size="lg" icon={faCodeBranch} fixedWidth/> <span
-            className="menu-text">Git</span></NavLink>
+          <NavLink className="nav-link" activeClassName="chosen" to="/task">
+            <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
+            className="menu-text">Tasks</span></NavLink>
 
           {/*<NavLink className="nav-link" activeClassName="chosen" to="/update">*/}
           {/*  <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span*/}
@@ -417,9 +417,9 @@ function AccountPowerUserNav({ accessRole, featureFlagHideItemInProd, featureFla
             <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
             className="menu-text">Notifications</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/git">
-            <FontAwesomeIcon size="lg" icon={faCodeBranch} fixedWidth/> <span
-            className="menu-text">Git</span></NavLink>
+          <NavLink className="nav-link" activeClassName="chosen" to="/task">
+            <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
+            className="menu-text">Tasks</span></NavLink>
 
           {/*<NavLink className="nav-link" activeClassName="chosen" to="/update">*/}
           {/*  <FontAwesomeIcon size="lg" icon={faDownload} fixedWidth/> <span*/}
@@ -482,9 +482,9 @@ function DefaultUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHide
             <FontAwesomeIcon size="lg" icon={faEnvelope} fixedWidth/> <span
             className="menu-text">Notifications</span></NavLink>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/git">
-            <FontAwesomeIcon size="lg" icon={faCodeBranch} fixedWidth/> <span
-            className="menu-text">Git</span></NavLink>
+          <NavLink className="nav-link" activeClassName="chosen" to="/task">
+            <FontAwesomeIcon size="lg" icon={faTasks} fixedWidth/> <span
+            className="menu-text">Tasks</span></NavLink>
 
 
         </div>

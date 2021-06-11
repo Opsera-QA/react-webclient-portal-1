@@ -1,6 +1,6 @@
 const gitTasksFilterMetadata = {
   idProperty: "_id",
-  type: "Git Task",
+  type: "Task",
   fields: [
     {
       label: "Status",

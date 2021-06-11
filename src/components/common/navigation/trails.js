@@ -4,7 +4,7 @@ import {
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
   faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey,
-  faHexagon, faListAlt, faEye, faCodeBranch, faUserChart, faRadar
+  faHexagon, faListAlt, faEye, faCodeBranch, faUserChart, faRadar, faTasks
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
@@ -594,17 +594,17 @@ const breadcrumbs = {
     parent: undefined,
     name: "gitTasksManagement",
     path: paths.gitTasks,
-    title: "Git Task Management",
-    linkText: "Git Task Management",
-    icon: faCodeBranch
+    title: "Opsera Task Management",
+    linkText: "Opsera Task Management",
+    icon: faTasks
   },
   gitTasksDetailView: {
     parent: "gitTasksManagement",
     name: "gitTasksDetailView",
     path: paths.gitTasksDetailView,
-    title: "Git Task Details",
-    linkText: "Git Task Details",
-    icon: faCodeBranch
+    title: "Opsera Task Details",
+    linkText: "Opsera Task Details",
+    icon: faTasks
   },
 
   //General
