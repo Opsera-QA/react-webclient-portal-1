@@ -30,7 +30,7 @@ TerraformParameterSelectInput.propTypes = {
 
 
 TerraformParameterSelectInput.defaultProps = {
-  fieldName: "parameters"
+  fieldName: "customParameters"
 };
 
 export default TerraformParameterSelectInput;

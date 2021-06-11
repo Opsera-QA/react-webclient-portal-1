@@ -65,7 +65,7 @@ const TerraformStepFormMetadata = {
     },
     {
       label: "Parameters",
-      id: "parameters"
+      id: "customParameters"
     },
     {
       label: "Save Output Parameters?",
@@ -89,7 +89,7 @@ const TerraformStepFormMetadata = {
     bitbucketWorkspace : "",
     bitbucketWorkspaceName: "",
     keyValueMap: {},
-    parameters: "",
+    customParameters: "",
     saveParameters: false
   }
 };
