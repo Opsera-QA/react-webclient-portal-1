@@ -27,7 +27,8 @@ import CommandLineSourceScriptToggleInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/command_line/inputs/CommandLineSourceScriptToggleInput";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import WorkspaceDeleteToggleInput from "./inputs/WorkspaceDeleteToggleInput";
-import CommandLineTerraformStepSelectInput from "./inputs/CommandLineTerraformStepSelectInput";
+import StepConfigTerraformStepSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/common/inputs/StepConfigTerraformStepSelectInput";
+
 
 function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -130,7 +131,7 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
       <CommandLineDependencyTypeInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
       <TextInputBase setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} fieldName={"outputPath"} />
       <TextInputBase setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} fieldName={"outputFileName"} />
-      <CommandLineTerraformStepSelectInput setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} plan={plan} stepId={stepId} />
+      <StepConfigTerraformStepSelectInput setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} plan={plan} stepId={stepId} />
       <WorkspaceDeleteToggleInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"workspaceDeleteFlag"} />
     </PipelineStepEditorPanelContainer>
   );

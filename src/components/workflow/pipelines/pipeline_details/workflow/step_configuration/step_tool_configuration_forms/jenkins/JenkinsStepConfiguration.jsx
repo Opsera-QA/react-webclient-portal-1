@@ -105,6 +105,7 @@ function JenkinsStepConfiguration({
       },
       job_type: jenkinsJobTypeDto.getData("job_type"),
     };
+
     setIsLoading(false);
     parentCallback(item);
   };
@@ -114,8 +115,8 @@ function JenkinsStepConfiguration({
   }
 
   const loadSfdcConfigurationPanel = () => {
-    const jobType = jenkinsJobTypeDto.data.job_type;
-    const toolJobType = jenkinsStepConfigurationDto?.data.toolJobType;
+    const jobType = jenkinsJobTypeDto?.getData("job_type");
+    const toolJobType = jenkinsStepConfigurationDto?.getData("toolJobType");
     if (["sfdc-ant-profile", "sfdc-ant"].includes(jobType) || toolJobType.includes("SFDC")) {
       return (
         <JenkinsSfdcConfigurationPanel
@@ -130,7 +131,6 @@ function JenkinsStepConfiguration({
     if (jenkinsJobTypeDto?.getData("job_type") === "job") {
       return (
         <div className={"mb-3"}>
-          {jenkinsStepConfigurationDto.getData("jobName")}
           <TextInputBase
             fieldName={"jobName"}
             dataObject={jenkinsStepConfigurationDto}
@@ -144,7 +144,7 @@ function JenkinsStepConfiguration({
       <div>
         <JenkinsToolJobIdSelectInput
           jenkinsList={jenkinsList}
-          jobType={jenkinsJobTypeDto?.data.job_type}
+          jobType={jenkinsJobTypeDto?.getData("job_type")}
           dataObject={jenkinsStepConfigurationDto}
           setDataObject={setJenkinsStepConfigurationDto}
           toolConfigId={jenkinsStepConfigurationDto?.getData("toolConfigId")}

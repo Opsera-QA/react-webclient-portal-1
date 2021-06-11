@@ -43,7 +43,7 @@ function JenkinsRepositorySelectInput({ fieldName, dataObject, setDataObject, di
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      const response = await pipelineActions.searchRepositoriesV2(getAccessToken, cancelSource, service, gitToolId, getAccessToken);
+      const response = await pipelineActions.searchRepositoriesV2(getAccessToken, cancelSource, service, gitToolId, dataObject.getData("workspace"));
       const repositoryList = response?.data?.data;
 
       if (isMounted?.current === true) {
@@ -106,6 +106,7 @@ function JenkinsRepositorySelectInput({ fieldName, dataObject, setDataObject, di
   };
 
   if (dataObject == null || !valid()) {
+    console.log(dataObject.getData("workspace"));
     return null;
   }
 

@@ -51,6 +51,7 @@ import AzureDevopsStepConfiguration
   from "./step_tool_configuration_forms/azure_devops/AzureDevopsStepToolConfiguration";
 import JenkinsStepConfiguration
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration";
+import KafkaConnectStepConfiguration from "./step_tool_configuration_forms/kafka_connect/KafkaConnectStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -676,6 +677,22 @@ function StepToolConfiguration({
       case "azure-devops":
         return (
           <AzureDevopsStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "kafka_connect":
+        return (
+          <KafkaConnectStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}

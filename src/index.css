@@ -809,3 +809,12 @@ a:hover, .active, .link-text:hover {
     transform: scaleY(1.2);
     transform-origin: top;
 }
+
+.dropdown-data-fetch:hover {
+    text-decoration: underline;
+}
+
+.dropdown-data-fetch {
+    color: blue;
+    cursor: pointer;
+}

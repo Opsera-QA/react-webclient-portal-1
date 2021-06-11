@@ -16,11 +16,11 @@ const excludeArrs = [
 function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setDataObject, disabled, jenkinsList }) {
   const [branchList, setBranchList] = useState([]);
 
-  const handleDTOChange = (fieldName, selectedOption) => {
+  const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = { ...dataObject };
-    newDataObject.setData("branch", selectedOption.value);
-    newDataObject.setData("defaultBranch", selectedOption.value);
-    newDataObject.setData("gitBranch", selectedOption.value);
+    newDataObject.setData("branch", selectedOption);
+    newDataObject.setData("defaultBranch", selectedOption);
+    newDataObject.setData("gitBranch", selectedOption);
     setDataObject({ ...newDataObject });
   };
 
@@ -65,7 +65,7 @@ function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setD
           dataObject={dataObject}
           setDataObject={setDataObject}
           options={branchList}
-          handleDTOChange={handleDTOChange}
+          handleDTOChange={setDataFunction}
           clearDataFunction={clearDataFunction}
         />
       );
@@ -85,7 +85,7 @@ function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setD
         workspace={dataObject.getData("workspace")}
         repoId={dataObject.getData("repoId")}
         dataObject={dataObject}
-        setDataFunction={handleDTOChange}
+        setDataFunction={setDataFunction}
         setDataObject={setDataObject}
         disabled={disabled}
         setBranchList={setBranchList}
