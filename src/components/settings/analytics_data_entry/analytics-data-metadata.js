@@ -37,10 +37,6 @@ export const analyticsDataMetadata = {
       id: "data.application",
     },
     {
-      label: "Pipeline",
-      id: "pipeline_id",
-    },
-    {
       label: "From",
       id: "data.from",
     },
