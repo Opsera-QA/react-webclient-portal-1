@@ -22,7 +22,7 @@ function GitTasksTable({ data, gitTasksFilterDto, setGitTasksFilterDto, loadData
     const id = rowData?.original?._id;
 
     if (id) {
-      history.push({pathname: `/git/details/${id}`});
+      history.push({pathname: `/task/details/${id}`});
     }
   };
 

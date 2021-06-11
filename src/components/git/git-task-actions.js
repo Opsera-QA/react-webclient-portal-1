@@ -91,4 +91,28 @@ gitTasksActions.processSyncRequest = async (postBody, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
+gitTasksActions.generateCert = async (getAccessToken, id) => {
+  const postBody= {"taskId" : id};
+  const apiUrl = `/tasks/generatecert`;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+gitTasksActions.getCert = async (getAccessToken, id, cancelTokenSource) => {
+  const postBody= {"taskId" : id};
+  const apiUrl = `/tasks/getcert`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+gitTasksActions.getPrivateKey = async (getAccessToken, id, cancelTokenSource) => {
+  const postBody= {"taskId" : id};
+  const apiUrl = `/tasks/getprivatekey`;
+  return await baseActions.apiPostCall(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+gitTasksActions.syncCertToJenkins = async (getAccessToken, gitTasksDataDto, cancelTokenSource) => {
+  const postBody= {"taskId" : gitTasksDataDto.getData("_id"), "jenkinsId": gitTasksDataDto.getData("jenkinsIds")};
+  const apiUrl = `/tasks/synchcert`;
+  return await baseActions.apiPostCall(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 export default gitTasksActions;

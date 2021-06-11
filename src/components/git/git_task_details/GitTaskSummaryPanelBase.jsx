@@ -72,11 +72,13 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
           <GitTaskRoleAccessInput dataObject={gitTasksData} setDataObject={setGitTasksData} disabled={!actionAllowed("edit_access_roles")} />
         </Col>
       </Row>
-      <Row className={"mx-0 w-100 my-2"}>
-        <div className={"mx-auto"}>
-          <div className={"mx-auto"}><GitTaskRunButton gitTasksData={gitTasksData} loadData={loadData} actionAllowed={actionAllowed("run_task")} /></div>
-        </div>
-      </Row>
+      {gitTasksData.getData("type") != "sfdc-cert-gen" && 
+        <Row className={"mx-0 w-100 my-2"}>
+          <div className={"mx-auto"}>
+            <div className={"mx-auto"}><GitTaskRunButton gitTasksData={gitTasksData} loadData={loadData} actionAllowed={actionAllowed("run_task")} /></div>
+          </div>
+        </Row>
+      }
       <div className="px-3 mt-3">{gitTaskTypeSummaryCard}</div>
     </SummaryPanelContainer>
   );

@@ -122,10 +122,10 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
         <Col lg={6}>
           <TextInputBase setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto} fieldName={"name"}/>
         </Col>
-        <Col lg={6}>
+        {/* <Col lg={6}>
           <ActivityToggleInput dataObject={gitTasksDataDto} setDataObject={setGitTasksDataDto} fieldName={"active"}/>
-        </Col>
-        <Col lg={12}>
+        </Col> */}
+        <Col lg={6}>
           <TextInputBase setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto}
                          fieldName={"description"}/>
         </Col>

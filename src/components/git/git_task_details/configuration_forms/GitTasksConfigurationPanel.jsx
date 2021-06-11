@@ -4,7 +4,7 @@ import GitTaskTypeSelectInput from "components/common/list_of_values_input/git_t
 import SFDCGitTaskEditorPanel from "./sfdc-org-sync/SFDCGitTaskConfigurationPanel";
 import SFDCBranchStructuringTaskTypeConfigurationPanel from "./sfdc-branch-structure/SFDCBranchStructuringTaskTypeConfigurationPanel";
 import BranchToBranchGitTaskConfigurationPanel from "./branch-to-branch/BranchToBranchGitTaskConfigurationPanel";
-
+import SFDXCertGenTaskTypeConfigurationPanel from "./sfdx-cert-gen/SFDXCertGenTaskTypeConfigurationPanel";
 function GitTasksConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   const getConfigurationPanel = () => {
     switch (gitTasksDataDto.getData("type")) {
@@ -32,9 +32,17 @@ function GitTasksConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTa
             gitTasksConfigurationData={gitTasksConfigurationData}
           />
         );
+      case "sfdc-cert-gen":
+        return (
+          <SFDXCertGenTaskTypeConfigurationPanel
+            gitTasksDataDto={gitTasksDataDto}
+            setGitTasksConfigurationData={setGitTasksConfigurationData}
+            gitTasksConfigurationData={gitTasksConfigurationData}
+          />
+        );
       case "":
       default:
-        return <div className="text-center text-muted p-5">You must select a notification type before configuring notification type details.</div>;
+        return <div className="text-center text-muted p-5">You must select a task type before configuring task details.</div>;
     }
   };
 
