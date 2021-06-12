@@ -14,7 +14,7 @@ function SelectInputBase(
     selectOptions, valueField, textField, placeholderText,
     setDataFunction, busy, disabled, clearDataFunction,
     showClearValueButton, errorMessage, getCurrentValue,
-    showLabel, className
+    showLabel, className, onSearch
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
@@ -80,6 +80,7 @@ function SelectInputBase(
         placeholder={placeholderText}
         onChange={(data) => updateValue(data)}
         disabled={disabled}
+        onSearch={onSearch}
       />
       <InfoText field={field} errorMessage={errorMessage} />
     </InputContainer>
@@ -112,7 +113,8 @@ SelectInputBase.propTypes = {
   errorMessage: PropTypes.string,
   getCurrentValue: PropTypes.func,
   showLabel: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  onSearch: PropTypes.func
 };
 
 SelectInputBase.defaultProps = {
