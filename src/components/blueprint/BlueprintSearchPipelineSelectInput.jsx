@@ -6,7 +6,7 @@ import axios from 'axios';
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
-import DynamicResultSelectInputBase from "components/common/inputs/select/DynamicResultSelectInputBase";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, setDataObject, disabled, showLabel}) {
   const toastContext = useContext(DialogToastContext);
@@ -39,9 +39,10 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
   }, [searchTerm]);
 
   const loadData = async (cancelSource = cancelTokenSource, searchTerm) => {
+    let canceled = false;
     try {
       setIsLoading(true);
-      await loadPipelines(cancelSource, searchTerm);
+      canceled = await loadPipelines(cancelSource, searchTerm);
     }
     catch (error) {
       if(isMounted?.current === true){
@@ -50,7 +51,7 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
       }
     }
     finally {
-      if(isMounted?.current === true){
+      if(isMounted?.current === true && canceled !== true){
         setIsLoading(false);
       }
     }
@@ -58,6 +59,11 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
 
   const loadPipelines = async (cancelSource = cancelTokenSource, searchTerm) => {
     const response = await pipelineActions.getAllPipelinesV3(getAccessToken, cancelSource, searchTerm);
+
+    if (response === undefined) {
+      return true;
+    }
+
     const pipelines = response?.data?.response;
     if (Array.isArray(pipelines) && pipelines.length > 0) {
 
@@ -77,6 +83,8 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
 
       setPipelines(parsedArray);
     }
+
+    return false;
   };
 
   const setDataFunction = (fieldName, pipeline) => {
@@ -101,7 +109,7 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
   }
 
   return (
-    <DynamicResultSelectInputBase
+    <SelectInputBase
       fieldName={fieldName}
       selectOptions={pipelines}
       dataObject={dataObject}
