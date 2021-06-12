@@ -112,7 +112,7 @@ SelectInputBase.propTypes = {
   errorMessage: PropTypes.string,
   getCurrentValue: PropTypes.func,
   showLabel: PropTypes.bool,
-  className: PropTypes.string,
+  className: PropTypes.string
 };
 
 SelectInputBase.defaultProps = {
