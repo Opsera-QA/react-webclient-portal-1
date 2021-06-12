@@ -8,13 +8,13 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
 
-function SelectInputBase(
+function DynamicResultSelectInputBase(
   {
     fieldName, dataObject, setDataObject, groupBy,
     selectOptions, valueField, textField, placeholderText,
     setDataFunction, busy, disabled, clearDataFunction,
     showClearValueButton, errorMessage, getCurrentValue,
-    showLabel, className
+    showLabel, className, onSearch
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
@@ -78,6 +78,7 @@ function SelectInputBase(
         filter={"contains"}
         busy={busy}
         placeholder={placeholderText}
+        onSearch={onSearch}
         onChange={(data) => updateValue(data)}
         disabled={disabled}
       />
@@ -86,7 +87,7 @@ function SelectInputBase(
   );
 }
 
-SelectInputBase.propTypes = {
+DynamicResultSelectInputBase.propTypes = {
   selectOptions: PropTypes.array.isRequired,
   setDataObject: PropTypes.func,
   fieldName: PropTypes.string,
@@ -113,12 +114,13 @@ SelectInputBase.propTypes = {
   getCurrentValue: PropTypes.func,
   showLabel: PropTypes.bool,
   className: PropTypes.string,
+  onSearch: PropTypes.func
 };
 
-SelectInputBase.defaultProps = {
+DynamicResultSelectInputBase.defaultProps = {
   showClearValueButton: true,
   className: "custom-select-input my-2",
   placeholderText: "Select One"
 };
 
-export default SelectInputBase;
+export default DynamicResultSelectInputBase;

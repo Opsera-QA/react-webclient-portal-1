@@ -6,7 +6,7 @@ import axios from 'axios';
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import pipelineActions from "components/workflow/pipeline-actions";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import DynamicResultSelectInputBase from "components/common/inputs/select/DynamicResultSelectInputBase";
 
 function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, setDataObject, disabled, showLabel}) {
   const toastContext = useContext(DialogToastContext);
@@ -18,7 +18,6 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    setIsLoading(true);
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
     }
@@ -102,7 +101,7 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
   }
 
   return (
-    <SelectInputBase
+    <DynamicResultSelectInputBase
       fieldName={fieldName}
       selectOptions={pipelines}
       dataObject={dataObject}
