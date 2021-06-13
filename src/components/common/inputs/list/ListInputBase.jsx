@@ -16,8 +16,9 @@ function ListInputBase(
     selectOptions, valueField, textField,
     setDataFunction, isLoading, disabled, clearDataFunction,
     showClearValueButton, getCurrentValue,
-    height, icon, searchFunction, showSelectAllButton, customTemplate, disabledOptions, noDataMessage
-}) {
+    height, icon, searchFunction, showSelectAllButton, customTemplate, disabledOptions, noDataMessage,
+    customTitle
+  }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const [list, setList] = useState(undefined);
   const [errorMessage, setErrorMessage] = useState("");
@@ -262,6 +263,7 @@ function ListInputBase(
           disabled={disabled || selectOptions.length === 0}
           icon={icon}
           isLoading={isLoading}
+          customTitle={customTitle}
           field={field}
           setSearchTerm={setSearchTerm}
           searchTerm={searchTerm}
@@ -305,7 +307,8 @@ ListInputBase.propTypes = {
   showSelectAllButton: PropTypes.bool,
   customTemplate: PropTypes.func,
   disabledOptions: PropTypes.array,
-  noDataMessage: PropTypes.string
+  noDataMessage: PropTypes.string,
+  customTitle: PropTypes.string
 };
 
 ListInputBase.defaultProps = {
