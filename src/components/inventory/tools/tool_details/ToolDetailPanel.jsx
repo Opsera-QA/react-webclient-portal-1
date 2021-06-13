@@ -72,13 +72,13 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const getDynamicTabs = () => {
     switch (toolData?.getData("tool_identifier")) {
       case "jenkins":
-      return (
-        <>
-          <CustomTab icon={faAbacus} tabName={"jobs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Jobs"} disabled={!authorizedAction("edit_tool_job_tabs", toolData?.data)}/>
-          <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"} disabled={!authorizedAction("edit_tool_account_tabs", toolData?.data)}/>
-          <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Logs"}/>
-        </>
-      );
+        return (
+          <>
+            <CustomTab icon={faAbacus} tabName={"jobs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Jobs"} disabled={!authorizedAction("edit_tool_job_tabs", toolData?.data)}/>
+            <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"} disabled={!authorizedAction("edit_tool_account_tabs", toolData?.data)}/>
+            <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Logs"}/>
+          </>
+        );
       case "argo":
       case "octopus":
         return (
@@ -89,17 +89,11 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
         );
       case "gitlab":
       case "github":
+      case "bitbucket":
         return (
           <>
             {/*<CustomTab icon={faTags} tabName={"tagging"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tagging"}/>*/}
             <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"} disabled={!authorizedAction("edit_tool_account_tabs", toolData?.data)}/>
-          </>
-        );
-      case "bitbucket":
-        return (
-          <>
-          {/*<CustomTab icon={faTags} tabName={"tagging"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tagging"}/>*/}
-          <CustomTab icon={faUsers} tabName={"accounts"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Accounts"} disabled={!authorizedAction("edit_tool_account_tabs", toolData?.data)}/>
           </>
         );
       case "jira":
@@ -107,7 +101,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
           <>
             <CustomTab icon={faProjectDiagram} tabName={"projects"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Projects"} disabled={!authorizedAction("edit_tool_projects_tabs", toolData?.data)}/>
           </>
-          );
+        );
       case "sfdc-configurator":
         return (
           <>
@@ -121,19 +115,12 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
   const getVaultTab = () => {
     switch (toolData?.getData("tool_identifier")) {
       case "jenkins":
-        return (
-            <CustomTab icon={faKey} tabName={"vault"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Vault"} disabled={!authorizedAction("vault", toolData?.data)}/>
-        );
       case "gitlab":
       case "github":
-        return (
-            <CustomTab icon={faKey} tabName={"vault"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Vault"} disabled={!authorizedAction("vault", toolData?.data)}/>
-        );
       case "sonar":
+      case "kafka_connect":
         return (
-          <>
             <CustomTab icon={faKey} tabName={"vault"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Vault"} disabled={!authorizedAction("vault", toolData?.data)}/>
-          </>
         );
       default: return <></>;
     }
