@@ -117,7 +117,8 @@ function JenkinsStepConfiguration({
   const loadSfdcConfigurationPanel = () => {
     const jobType = jenkinsJobTypeDto?.getData("job_type");
     const toolJobType = jenkinsStepConfigurationDto?.getData("toolJobType");
-    if (["sfdc-ant-profile", "sfdc-ant"].includes(jobType) || toolJobType.includes("SFDC")) {
+      if ((jobType  && (["sfdc-ant-profile", "sfdc-ant"]).some(item=>item === jobType ? jobType :"")) || 
+          (toolJobType  && toolJobType.some(item=>item==="SFDC"))) {
       return (
         <JenkinsSfdcConfigurationPanel
           dataObject={jenkinsStepConfigurationDto}
