@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import OverlayTitleBar from "components/common/overlays/OverlayTitleBar";
 import CloseButton from "components/common/buttons/CloseButton";
-import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 
@@ -60,7 +59,7 @@ function FullScreenCenterOverlayContainer({ children, actionBar, titleText, titl
           />
           <div>
             {actionBar}
-            <div className={"full-screen-overlay-panel-body"}>
+            <div className={showCloseButton === true || buttonContainer != null ? "full-screen-overlay-panel-body-with-buttons" : "full-screen-overlay-panel-body"}>
               {showToasts && toastContext?.getInlineBanner()}
               {getBody()}
             </div>
