@@ -1,5 +1,5 @@
-const firstPassYieldMetadata = {
-  type: "FPY Configuration",
+const automatedTestResultsConfigMetadata = {
+  type: "Temp KPI Configuration",
   fields: [
     {
       label: "Domain Name",
@@ -40,20 +40,38 @@ const firstPassYieldMetadata = {
       maxLength: 20
     },
     {
-      label: "Total Test Cases Planned for First Run",
-      id: "total_test_cases",
+      label: "Total Test Cases",
+      id: "test_cases_total",
       maxLength: 5,
       isRequired: true
     },
     {
-      label: "Total Test Cases Passed in First Run",
+      label: "Executed Test Cases",
+      id: "test_cases_executed",
+      maxLength: 5,
+      isRequired: true
+    },
+    {
+      label: "Passed Test Cases",
       id: "test_cases_passed",
       maxLength: 5,
       isRequired: true
     },
     {
-      label: "Total Test Cases Failed in First Run",
+      label: "Failed Test Cases",
       id: "test_cases_failed",
+      maxLength: 5,
+      isRequired: true
+    },
+    {
+      label: "Blocked Test Cases",
+      id: "test_cases_blocked",
+      maxLength: 5,
+      isRequired: true
+    },
+    {
+      label: "Skipped Test Cases",
+      id: "test_cases_skipped",
       maxLength: 5,
       isRequired: true
     },
@@ -66,10 +84,13 @@ const firstPassYieldMetadata = {
     to: new Date(),
     sprint: [],
     release: [],
-    total_test_cases: 0,
+    test_cases_total: 0,
+    test_cases_executed: 0,
     test_cases_passed: 0,
-    test_cases_failed: 0
+    test_cases_failed: 0,
+    test_cases_blocked: 0,
+    test_cases_skipped: 0
   }
 };
 
-export default firstPassYieldMetadata;
+export default automatedTestResultsConfigMetadata;

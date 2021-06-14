@@ -4,19 +4,20 @@ import modelHelpers from "components/common/model/modelHelpers";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import adoptionPercentageMetadata
-  from "components/settings/analytics_data_entry/detail_view/configuration_panels/adoption_percentage/adoption-percentage-metadata";
+import automatedTestResultsConfigMetadata
+  from "components/settings/analytics_data_entry/detail_view/configuration_panels/automated_test_results/automated-test-results-config-metadata";
 import PipelineSelectInput from "components/common/list_of_values_input/workflow/pipelines/PipelineSelectInput";
 import DateTimeRangeInputBase from "components/common/inputs/date/DateTimeRangeInputBase";
 import ManualKpiMultiSelectInputBase
   from "components/common/list_of_values_input/settings/analytics/ManualKpiMultiSelectInputBase";
 import PositiveIntegerNumberInput from "../../../../../common/inputs/number/PositiveIntegerNumberInput";
 
-function AdoptionPercentageConfiguration({ analyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
+function AutomatedTestResultsConfigPanel({ analyticsDataEntryModel, kpiConfigurationData, setKpiConfigurationData }) {
   useEffect(() => {loadData();}, []);
 
   const loadData = async () => {
-    const configurationData = modelHelpers.getToolConfigurationModel(analyticsDataEntryModel.getData("data"), adoptionPercentageMetadata);
+    const configurationData = modelHelpers.getToolConfigurationModel(analyticsDataEntryModel.getData("data"), automatedTestResultsConfigMetadata);
+    console.log("configurationData: " + JSON.stringify(configurationData));
     setKpiConfigurationData({...configurationData});
   };
 
@@ -32,9 +33,6 @@ function AdoptionPercentageConfiguration({ analyticsDataEntryModel, kpiConfigura
       <Col lg={6}>
         <ManualKpiMultiSelectInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"application"} type={"application"} />
       </Col>
-      <Col lg={6}>
-        <ManualKpiMultiSelectInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"project"} type={"project"} />
-      </Col>
       <Col lg={12}>
         <DateTimeRangeInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fromFieldName={"from"} toFieldName={"to"} />
       </Col>
@@ -48,19 +46,31 @@ function AdoptionPercentageConfiguration({ analyticsDataEntryModel, kpiConfigura
         <ManualKpiMultiSelectInputBase dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"release"} type={"release"} />
       </Col>
       <Col lg={6}>
-        <PositiveIntegerNumberInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_executed"} />
+        <PositiveIntegerNumberInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_total"} />
       </Col>
       <Col lg={6}>
-        <PositiveIntegerNumberInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"total_manual"} />
+        <PositiveIntegerNumberInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_executed"} />
+      </Col>
+      <Col lg={6}>
+        <PositiveIntegerNumberInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_passed"} />
+      </Col>
+      <Col lg={6}>
+        <PositiveIntegerNumberInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_failed"} />
+      </Col>
+      <Col lg={6}>
+        <PositiveIntegerNumberInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_blocked"} />
+      </Col>
+      <Col lg={6}>
+        <PositiveIntegerNumberInput dataObject={kpiConfigurationData} setDataObject={setKpiConfigurationData} fieldName={"test_cases_skipped"} />
       </Col>
     </Row>
   );
 }
 
-AdoptionPercentageConfiguration.propTypes = {
+AutomatedTestResultsConfigPanel.propTypes = {
   analyticsDataEntryModel: PropTypes.object,
   kpiConfigurationData: PropTypes.object,
   setKpiConfigurationData: PropTypes.func,
 };
 
-export default AdoptionPercentageConfiguration;
+export default AutomatedTestResultsConfigPanel;
