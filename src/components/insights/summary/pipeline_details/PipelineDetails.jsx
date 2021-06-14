@@ -7,15 +7,21 @@ import PipelinesFailedQuality from "components/insights/summary/pipeline_details
 import PipelinesFailedDeployment from "components/insights/summary/pipeline_details/PipelinesFailedDeployment";
 import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
 import InsightsPipelineDetailsTable from "components/insights/summary/pipeline_details/InsightsPipelineDetailsTable";
+import PipelinesByProjectTable from "components/insights/summary/PipelinesByProjectTable";
+import PipelinesByProjectDataBlock from "components/insights/summary/pipeline_details/PipelinesByProjectDataBlock";
 
 function PipelineDetails({ dashboardData }) {
-  const [selectedDataBlock, setSelectedDataBlock] = useState("");
-  const [selectedDataBlockTableData, setSelectedDataBlockTableData] = useState(
-    []
-  );
+  const [selectedDataBlock, setSelectedDataBlock] = useState("pipelines_by_project");
+  const [selectedDataBlockTableData, setSelectedDataBlockTableData] = useState([]);
 
   const getDynamicPanel = () => {
     switch (selectedDataBlock) {
+      case "pipelines_by_project":
+        return (
+          <PipelinesByProjectTable
+            dashboardData={selectedDataBlockTableData}
+          />
+        );
       case "total_pipelines":
         return (
           <InsightsPipelineDetailsTable
@@ -57,13 +63,23 @@ function PipelineDetails({ dashboardData }) {
   };
 
   const toggleDynamicPanel = (name, dataSet) => {
-    setSelectedDataBlock(name);
-    setSelectedDataBlockTableData(dataSet);
+    if (selectedDataBlock === name) {
+      setSelectedDataBlock("");
+      setSelectedDataBlockTableData([]);
+    }
+    else {
+      setSelectedDataBlock(name);
+      setSelectedDataBlockTableData(dataSet);
+    }
   };
 
   return (
     <>
       <DataBlockWrapper padding={4}>
+        <PipelinesByProjectDataBlock
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+        />
         <TotalPipelinesExecuted
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}

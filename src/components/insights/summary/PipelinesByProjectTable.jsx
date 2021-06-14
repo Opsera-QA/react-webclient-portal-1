@@ -5,17 +5,15 @@ import BuildDetailsTableModal from "components/common/modal/BuildDetailsTableMod
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
-import { getLimitedTableTextColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
+import { getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
-import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faSpinner, faProjectDiagram} from "@fortawesome/pro-light-svg-icons";
+import {faProjectDiagram} from "@fortawesome/pro-light-svg-icons";
 import ProjectDetailsMetadata from "./project-details-metadata";
 import FilterContainer from "components/common/table/FilterContainer";
 
-function ProjectDetails({dashboardData, setDashboardData}) {
+function PipelinesByProjectTable({dashboardData, setDashboardData}) {
   const fields = ProjectDetailsMetadata.fields;
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -137,7 +135,7 @@ function ProjectDetails({dashboardData, setDashboardData}) {
   );
 }
 
-ProjectDetails.propTypes = {
+PipelinesByProjectTable.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -145,4 +143,4 @@ ProjectDetails.propTypes = {
   setKpis: PropTypes.func
 };
 
-export default ProjectDetails;
+export default PipelinesByProjectTable;
