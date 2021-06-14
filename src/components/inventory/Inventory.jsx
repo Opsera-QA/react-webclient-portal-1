@@ -37,8 +37,8 @@ function Inventory() {
         return <ToolInventory customerAccessRules={customerAccessRules} />;
       case "platform":
         return <PlatformInventory />;
-      // case "parameters":
-      //   return <ParametersInventory />;
+      case "parameters":
+        return <ParametersInventory />;
       default:
         return null;
     }
@@ -49,7 +49,7 @@ function Inventory() {
       <NavigationTabContainer>
         <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tools"} />
         <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Platform"} />
-        {/*<NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Parameters"} />*/}
+        <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Parameters"} />
       </NavigationTabContainer>
     );
   };
