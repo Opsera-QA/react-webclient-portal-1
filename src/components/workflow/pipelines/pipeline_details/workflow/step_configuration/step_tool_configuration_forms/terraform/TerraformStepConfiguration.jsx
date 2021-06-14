@@ -15,6 +15,8 @@ import terraformStepFormMetadata from "./terraform-stepForm-metadata";
 import TerraformRuntimeArgumentsInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformRuntimeArgumentsInput";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import TerraformParameterSelectInput from "./inputs/TerraformParameterSelectInput";
+import TerraformSaveResponseParameters from "./inputs/TerraformSaveResponseParameters";
 
 function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback }) {
   const toastContext = useContext(DialogToastContext);
@@ -101,7 +103,19 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"accessKeyParamName"} />
       <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"secretKeyParamName"} />
       <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"regionParamName"} />
+<<<<<<< HEAD
       <TerraformRuntimeArgumentsInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
+=======
+      <TerraformRuntimeArgsInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
+      <TerraformSaveResponseParameters
+        dataObject={terraformStepConfigurationDto}
+        setDataObject={setTerraformStepConfigurationDataDto}
+        fieldName={"saveParameters"}
+      />
+      {terraformStepConfigurationDto && terraformStepConfigurationDto.getData("saveParameters") && (
+        <TerraformParameterSelectInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
+      )}
+>>>>>>> adding the terraform parameters picker
     </PipelineStepEditorPanelContainer>
   );
 }
