@@ -185,7 +185,9 @@ const jenkinsPipelineStepConfigurationMetadata = {
     isManualRollBackBranch:false,
     hasUpstreamBranch:false,
     workspaceDeleteFlag:false,
-    gitBranch:""
+    gitBranch:"",
+    customParameters:[],
+    terraformStepId:""
   }
 };
 

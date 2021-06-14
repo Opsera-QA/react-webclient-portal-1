@@ -35,12 +35,7 @@ function PythonTerraformStepSelectInput({ fieldName, dataObject, setDataObject, 
       if (plan && stepId) {
         let pipelineSteps = formatStepOptions(plan, stepId);
         let groupedSteps = _.groupBy(pipelineSteps, "tool.tool_identifier");
-        let terraformSteps = Object.keys(groupedSteps).length > 0 && 
-                            groupedSteps.terraform 
-                            ? [...groupedSteps.terraform] : 
-                            groupedSteps.jenkins 
-                            ? [...groupedSteps.jenkins] :
-                            [];
+        let terraformSteps = Object.keys(groupedSteps).length > 0 && groupedSteps.terraform ? [...groupedSteps.terraform] : [];
         if (terraformSteps.length === 0) {
           setPlaceholder("Configure a Terraform Step to use this option");
         }
@@ -58,7 +53,7 @@ function PythonTerraformStepSelectInput({ fieldName, dataObject, setDataObject, 
 const formatStepOptions = (plan, stepId) => {
   return plan.slice(
     0,
-    plan.findIndex((element) => element._id === stepId) +1
+    plan.findIndex((element) => element._id === stepId)
   );
 };
 
