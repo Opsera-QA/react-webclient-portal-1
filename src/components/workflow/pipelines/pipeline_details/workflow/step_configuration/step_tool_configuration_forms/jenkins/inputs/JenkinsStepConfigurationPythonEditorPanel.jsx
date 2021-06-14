@@ -3,13 +3,18 @@ import PropTypes from "prop-types";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import PythonFilesInput from "../PythonFilesInput";
+import PythonTerraformStepSelectInput from "../PythonTerraformStepSelectInput";
+// import StepConfigTerraformStepSelectInput from "../../common/inputs/StepConfigTerraformStepSelectInput";
 
-function JenkinsStepConfigurationPythonEditorPanel({ dataObject, setDataObject }) {
+function JenkinsStepConfigurationPythonEditorPanel({ dataObject, setDataObject ,plan,stepId }) {
 
   // This could potentially be its own input BUT let's not do that now
   const getDynamicInput = () => {
     if (dataObject.getData("customScript") === true) {
-      return (<TextAreaInput dataObject={dataObject} setDataObject={setDataObject} fieldName={"commands"} />);
+      return (<><TextAreaInput dataObject={dataObject} setDataObject={setDataObject} fieldName={"commands"} />
+     
+      <PythonTerraformStepSelectInput dataObject={dataObject} setDataObject={setDataObject}  plan={plan}  stepId={stepId} />
+       </>);
     }
 
     return (<PythonFilesInput setDataObject={setDataObject} dataObject={dataObject} fieldName={"inputDetails"} />);
@@ -31,6 +36,8 @@ JenkinsStepConfigurationPythonEditorPanel.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   jenkinsList: PropTypes.any,
+  plan : PropTypes.array,
+  stepId : PropTypes.string
 };
 
 export default JenkinsStepConfigurationPythonEditorPanel;
