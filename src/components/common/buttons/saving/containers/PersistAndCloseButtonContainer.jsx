@@ -35,7 +35,7 @@ function PersistAndCloseButtonContainer({ recordDto, setRecordDto, updateRecord,
       return (
         <CloseEditorButton
           closeEditorCallback={handleClose}
-          className={recordDto.isNew() ? "mt-auto mx-1" : undefined}
+          className={recordDto.isNew() ? "mt-auto mx-1" : "mx-1"}
           dataModel={recordDto}
           setRecordDto={setRecordDto}
         />

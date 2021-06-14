@@ -32,7 +32,6 @@ CloseButton.propTypes = {
 
 CloseButton.defaultProps = {
   size: "md",
-  className: "mx-1",
   showUnsavedChangesMessage: true
 };
 
