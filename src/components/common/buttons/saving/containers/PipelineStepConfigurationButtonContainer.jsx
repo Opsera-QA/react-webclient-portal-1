@@ -9,7 +9,7 @@ function PipelineStepConfigurationButtonContainer({ recordDto, persistRecord, ha
   return (
     <PipelineStepConfigurationSaveButtonContainer>
       <LenientSaveButton recordDto={recordDto} updateRecord={persistRecord} />
-      <CloseButton recordDto={recordDto} closeEditorCallback={handleClose}  />
+      <CloseButton className={"mx-1"} recordDto={recordDto} closeEditorCallback={handleClose}  />
     </PipelineStepConfigurationSaveButtonContainer>
   );
 }
