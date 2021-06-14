@@ -44,12 +44,7 @@ function StepConfigTerraformStepSelectInput({
         let pipelineSteps = formatStepOptions(plan, stepId);
         // let groupedSteps = _.groupBy(pipelineSteps, "tool.tool_identifier");
         // let terraformSteps = Object.keys(groupedSteps).length > 0 && groupedSteps.terraform ? [...groupedSteps.terraform] : [];
-        let terraformSteps = pipelineSteps.filter(
-          (step) =>
-            (step.tool.tool_identifier.toLowerCase() === "terraform" ||
-              step.tool.tool_identifier.toLowerCase() === "jenkins") &&
-            step.tool.configuration.customParameters.length > 0
-        );
+        let terraformSteps = pipelineSteps.filter(step => step.tool.tool_identifier.toLowerCase() === 'terraform' && step.tool.configuration.customParameters.length > 0);
         if (terraformSteps.length === 0) {
           // setPlaceholder("Configure a Terraform Step to use this option");
           let newDataObject = { ...dataObject };
