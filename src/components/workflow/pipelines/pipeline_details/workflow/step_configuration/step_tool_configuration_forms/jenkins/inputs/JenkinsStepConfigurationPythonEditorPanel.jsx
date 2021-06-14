@@ -4,7 +4,7 @@ import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleIn
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import PythonFilesInput from "../PythonFilesInput";
 import PythonTerraformStepSelectInput from "../PythonTerraformStepSelectInput";
-// import StepConfigTerraformStepSelectInput from "../../common/inputs/StepConfigTerraformStepSelectInput";
+
 
 function JenkinsStepConfigurationPythonEditorPanel({ dataObject, setDataObject ,plan,stepId }) {
 
