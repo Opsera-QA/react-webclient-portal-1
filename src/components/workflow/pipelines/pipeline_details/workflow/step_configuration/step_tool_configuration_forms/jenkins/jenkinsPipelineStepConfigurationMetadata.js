@@ -138,6 +138,10 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id:"upstreamBranch",
       label:"Specify Upstream Branch",
       isRequired: true
+    },
+    {
+      id:"terraformStepId",
+      label:"Terraform Step"
     }
   ],
   newModelBase: {
@@ -181,7 +185,9 @@ const jenkinsPipelineStepConfigurationMetadata = {
     isManualRollBackBranch:false,
     hasUpstreamBranch:false,
     workspaceDeleteFlag:false,
-    gitBranch:""
+    gitBranch:"",
+    customParameters:[],
+    terraformStepId:""
   }
 };
 
