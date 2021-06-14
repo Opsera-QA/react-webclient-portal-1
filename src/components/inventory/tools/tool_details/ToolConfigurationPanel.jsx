@@ -25,6 +25,7 @@ import JFrogToolConfiguration from "./tool_jobs/jfrog_artifactory/JFrogToolConfi
 import ServiceNowToolConfiguration from  "./tool_jobs/service_now/ServiceNowToolConfiguration";
 import AzureDevopsToolConfiguration from "./tool_jobs/azure-devops/AzureDevopsToolConfiguration";
 import HashicorpVaultToolConfiguration from "./tool_jobs/hashicorp_vault/HashicorpVaultToolConfiguration";
+import KafkaConnectToolConfiguration from "./tool_jobs/kafka_connect/KafkaConnectToolConfiguration";
 
 function ToolConfigurationPanel({ toolData }) {
   const getConfiguration = () => {
@@ -78,6 +79,8 @@ function ToolConfigurationPanel({ toolData }) {
         return <AzureDevopsToolConfiguration toolData={toolData} />;
       case "hashicorp_vault":
         return <HashicorpVaultToolConfiguration toolData={toolData} />;
+      case "kafka_connect":
+        return <KafkaConnectToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>;
     }
