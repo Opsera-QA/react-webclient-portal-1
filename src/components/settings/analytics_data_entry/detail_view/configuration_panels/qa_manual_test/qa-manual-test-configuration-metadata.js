@@ -64,6 +64,12 @@ const qaManualTestConfigurationMetadata = {
       isRequired: true
     },
     {
+      label: "Blocked Test Cases",
+      id: "test_cases_blocked",
+      maxLength: 5,
+      isRequired: true
+    },
+    {
       label: "Skipped Test Cases",
       id: "test_cases_skipped",
       maxLength: 5,
@@ -71,17 +77,18 @@ const qaManualTestConfigurationMetadata = {
     },
   ],
   newObjectFields: {
-    domain: "",
-    application: "",
+    domain: [],
+    application: [],
     pipeline_id: "",
     from: new Date(),
     to: new Date(),
-    sprint: "",
-    release: "",
+    sprint: [],
+    release: [],
     test_cases_total: 0,
     test_cases_executed: 0,
     test_cases_passed: 0,
     test_cases_failed: 0,
+    test_cases_blocked: 0,
     test_cases_skipped: 0
   }
 };
