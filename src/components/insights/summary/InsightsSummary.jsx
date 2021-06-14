@@ -10,7 +10,7 @@ import NavigationTabContainer from "components/common/tabs/navigation/Navigation
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import PipelineDetails from "components/insights/summary/pipeline_details/PipelineDetails";
-import ProjectDetails from "components/insights/summary/ProjectDetails";
+import PipelinesByProjectTable from "components/insights/summary/PipelinesByProjectTable";
 import DashboardFiltersInput from "components/insights/dashboards/DashboardFiltersInput";
 import DashboardFilterOrganizationInput from "components/insights/dashboards/DashboardFilterOrganizationInput";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
@@ -101,7 +101,6 @@ function InsightsSummary() {
         </div>
         </ActionBarContainer>
         <PipelineDetails dashboardData={dashboardData} setDashboardData={setDashboardData}/>
-        <ProjectDetails dashboardData={dashboardData} setDashboardData={setDashboardData}/>
         </div>
       );
   };
