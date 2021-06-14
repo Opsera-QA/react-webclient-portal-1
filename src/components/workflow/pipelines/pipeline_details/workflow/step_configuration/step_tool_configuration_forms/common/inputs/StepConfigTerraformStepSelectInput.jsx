@@ -38,11 +38,14 @@ function StepConfigTerraformStepSelectInput({ fieldName, dataObject, setDataObje
       if (plan && stepId) {
         let pipelineSteps = formatStepOptions(plan, stepId);
         // let groupedSteps = _.groupBy(pipelineSteps, "tool.tool_identifier");
-        // let terraformSteps = Object.keys(groupedSteps).length > 0 && groupedSteps.terraform ? [...groupedSteps.terraform] : [];
-        let terraformSteps = pipelineSteps.filter(step => step.tool.tool_identifier.toLowerCase() === 'terraform' && step.tool.configuration.saveParameters);        
+        // let terraformSteps = Object.keys(groupedSteps).length > 0 && groupedSteps.terraform ? [...groupedSteps.terraform] : [];        
+        let terraformSteps = pipelineSteps.filter(step => step.tool.tool_identifier.toLowerCase() === 'terraform' && step.tool.configuration.customParameters.length > 0);
         if (terraformSteps.length === 0) {
           // setPlaceholder("Configure a Terraform Step to use this option");
-          dataObject.setData("terraformStepId", "");
+          let newDataObject = {...dataObject};          
+          newDataObject.setData("terraformStepId", "");
+          newDataObject.setData("customParameters", []);
+          setDataObject({...newDataObject});
         }
         setCommandLineTerraformList(terraformSteps);
       }
@@ -62,10 +65,17 @@ const formatStepOptions = (plan, stepId) => {
   );
 };
 
-const setTerraformDetails = (fieldName, selectedOption) => {  
+const setTerraformDetails = (fieldName, selectedOption) => {
   let newDataObject = {...dataObject};
   newDataObject.setData(fieldName, selectedOption._id);
   newDataObject.setData("customParameters", selectedOption.tool.configuration.customParameters);
+  setDataObject({...newDataObject});
+};
+
+const clearTerraformDetails = (fieldName) => {
+  let newDataObject = {...dataObject};
+  newDataObject.setData("terraformStepId", "");
+  newDataObject.setData("customParameters", []);
   setDataObject({...newDataObject});
 };
 
@@ -144,6 +154,7 @@ if(terraformList === null || terraformList.length === 0){
         dataObject={dataObject}
         setDataObject={setDataObject}
         setDataFunction={setTerraformDetails}
+        clearDataFunction={clearTerraformDetails}
         selectOptions={terraformList ? terraformList : []}
         busy={isCommandLineTerraformSearching}
         valueField={valueField}
