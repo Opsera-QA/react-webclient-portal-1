@@ -1,4 +1,5 @@
 import { axiosApiService } from "api/apiService";
+import baseActions from "utils/actionsBase";
 
 const GitActionsHelper = {};
 
@@ -20,6 +21,17 @@ const GitActionsHelper = {};
         throw error;
       });
     return res;
+  };
+
+  GitActionsHelper.searchRepositoriesV2 = async (service, gitAccountId, workspaces, getAccessToken, cancelTokenSource) => {
+    let postBody = {
+      tool: service,
+      metric: "getRepositories",
+      gitAccountId: gitAccountId,
+      workspaces: workspaces
+    };
+    const apiUrl = "/tools/properties";
+    return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
   };
 
   GitActionsHelper.searchBranches = async (service, gitAccountId, repoId,workspaces, getAccessToken) => {
