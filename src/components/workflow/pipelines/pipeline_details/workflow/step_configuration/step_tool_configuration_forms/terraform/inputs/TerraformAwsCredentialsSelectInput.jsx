@@ -4,16 +4,15 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import axios from "axios";
-import PipelineActions from "../../../../../../../pipeline-actions";
+import pipelineActions from "components/workflow/pipeline-actions";
 
-function TerraformSCMToolSelectInput({dataObject, setDataObject, disabled}) {
+function TerraformAwsCredentialsSelectInput({dataObject, setDataObject, disabled}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [SCMList, setSCMList] = useState([]);
+  const [awsCredentials, setAwsCredentials] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -36,70 +35,67 @@ function TerraformSCMToolSelectInput({dataObject, setDataObject, disabled}) {
       source.cancel();
       isMounted.current = false;
     };
-  }, [dataObject?.data?.type, disabled]);
+  }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getToolsList(dataObject?.data?.type, cancelSource);
+      await getCredentials(cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
-        toastContext.showLoadingErrorDialog(error);
+        toastContext.showServiceUnavailableDialog();
       }
     } finally {
       setIsLoading(false);
     }
   };
 
-  const getToolsList = async (tool, cancelSource) => {
-    setIsLoading(true);
-    try {
-      let results = await PipelineActions.getToolsListV2(getAccessToken, cancelSource, tool);
-      if (results?.data) {
-        let respObj = [];
-        let arrOfObj = results.data;
-        arrOfObj.map((item) => {
-          respObj.push({
-            name: item.name,
-            id: item._id,
-            configuration: item.configuration,
-            accounts: item.accounts,
-            jobs: item.jobs,
-          });
+  const getCredentials = async (cancelSource = cancelTokenSource) => {
+    const response = await pipelineActions.getToolsListV2(getAccessToken, cancelSource, "aws_account");
+    const data = response?.data;
+
+    if (isMounted?.current === true && Array.isArray(data) && data.length > 0) {
+      let formattedData = [];
+      data.map((item) => {
+        if (item.configuration == null) {
+          return;
+        }
+
+        formattedData.push({
+          name: item.name,
+          id: item._id,
+          configuration: item.configuration,
         });
-        results = respObj;
+      });
+
+      if (Array.isArray(formattedData) && formattedData.length > 0) {
+        setAwsCredentials(formattedData);
       }
-      const filteredList = results ? results.filter((el) => el.configuration !== undefined) : [];
-      setSCMList(filteredList);
-    } catch (error) {
-      toastContext.showErrorDialog(error);
     }
-    setIsLoading(false);
-    return;
   };
 
   return (
     
      <SelectInputBase
-       fieldName={"gitToolId"}
+       fieldName={"awsToolConfigId"}
        dataObject={dataObject}
        setDataObject={setDataObject}
-       selectOptions={SCMList ? SCMList : []}
+       selectOptions={awsCredentials ? awsCredentials : []}
        valueField={"id"}
        textField={"name"}
-       placeholderText={"Select a Tool"}
-       disabled={disabled || isLoading || SCMList.length === 0}
+       placeholderText={"Select Credentials"}
+       disabled={disabled || isLoading || awsCredentials.length === 0}
        busy={isLoading}
      />
   );
 }
 
-TerraformSCMToolSelectInput.propTypes = {
+TerraformAwsCredentialsSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
-export default TerraformSCMToolSelectInput;
+export default TerraformAwsCredentialsSelectInput;

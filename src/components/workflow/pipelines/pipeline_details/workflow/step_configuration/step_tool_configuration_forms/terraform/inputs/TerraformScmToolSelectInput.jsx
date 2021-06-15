@@ -3,17 +3,17 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import terraformStepActions from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/terraform-step-actions";
 import axios from "axios";
-import PipelineActions from "../../../../../../../pipeline-actions";
+import pipelineActions from "components/workflow/pipeline-actions";
 
-function TerraformAWSCredsSelectInput({dataObject, setDataObject, disabled, tool_prop}) {
+function TerraformScmToolSelectInput({dataObject, setDataObject, disabled, type}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
-  const [credsList, setCredsList] = useState([]);
+  const [scmList, setScmList] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -24,7 +24,8 @@ function TerraformAWSCredsSelectInput({dataObject, setDataObject, disabled, tool
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    if (!disabled) {
+    setScmList([]);
+    if (type && type !== "") {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -36,12 +37,12 @@ function TerraformAWSCredsSelectInput({dataObject, setDataObject, disabled, tool
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [type]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getCredsList(cancelSource);
+      await getToolsList(dataObject?.data?.type, cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -52,56 +53,51 @@ function TerraformAWSCredsSelectInput({dataObject, setDataObject, disabled, tool
     }
   };
 
-  const getCredsList = async (cancelSource) => {
-    setIsLoading(true);
-    try {
-      let results = await PipelineActions.getToolsListV2(getAccessToken, cancelSource, "aws_account");
-      if (results?.data) {
-        let respObj = [];
-        let arrOfObj = results.data;
-        arrOfObj.map((item) => {
-          respObj.push({
-            name: item.name,
-            id: item._id,
-            configuration: item.configuration,
-          });
+  const getToolsList = async (tool, cancelSource) => {
+    const response = await pipelineActions.getToolsListV2(getAccessToken, cancelSource, tool);
+    const data = response?.data;
+
+    if (Array.isArray(data) && data.length > 0) {
+      let filteredArray = [];
+      data.map((item) => {
+        if (item.configuration == null) {
+          return;
+        }
+
+        filteredArray.push({
+          name: item.name,
+          id: item._id,
+          configuration: item.configuration,
+          accounts: item.accounts,
+          jobs: item.jobs,
         });
-        results = respObj;
-      }
-      const filteredList = results ? results.filter((el) => el.configuration !== undefined) : [];
-      if (filteredList) {
-        setCredsList(filteredList);
-      }
-    } catch (error) {
-      console.error(error);
-      toastContext.showServiceUnavailableDialog();
-    } finally {
-      setIsLoading(false);
+      });
+
+      setScmList([...filteredArray]);
     }
   };
 
   return (
-    
      <SelectInputBase
-       fieldName={"awsToolConfigId"}
+       fieldName={"gitToolId"}
        dataObject={dataObject}
        setDataObject={setDataObject}
-       selectOptions={credsList ? credsList : []}
+       selectOptions={scmList ? scmList : []}
        valueField={"id"}
        textField={"name"}
-       placeholderText={"Select Credentials"}
-       disabled={disabled || isLoading || credsList.length === 0}
+       placeholderText={"Select a Tool"}
+       disabled={type == null || type === "" || disabled || isLoading || scmList.length === 0}
        busy={isLoading}
      />
   );
 }
 
-TerraformAWSCredsSelectInput.propTypes = {
+TerraformScmToolSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string,
-  tool_prop: PropTypes.string
+  type: PropTypes.string
 };
 
-export default TerraformAWSCredsSelectInput;
+export default TerraformScmToolSelectInput;
