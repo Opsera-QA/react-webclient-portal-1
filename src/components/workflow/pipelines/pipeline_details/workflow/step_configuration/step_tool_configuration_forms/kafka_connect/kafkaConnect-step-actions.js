@@ -9,6 +9,7 @@ KafkaConnectActions.getSCMRepoFiles = async (dataObject, getAccessToken, cancelT
     filePath: dataObject?.getData("connectorFilePath"),
     gitToolId: dataObject?.getData("gitToolId"),
     projectId: dataObject?.getData("repoId"),
+    workspace: dataObject?.getData("workspace"),
     service: dataObject?.getData("service"),
   };
   let response = await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
