@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
@@ -14,40 +14,26 @@ import TerraformAwsCredentialsSelectInput from "components/workflow/pipelines/pi
 import terraformStepFormMetadata from "./terraform-stepForm-metadata";
 import TerraformRuntimeArgumentsInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformRuntimeArgumentsInput";
-import axios from "axios";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback }) {
+  const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [jobType, setJobType] = useState("");
   const [terraformStepConfigurationDto, setTerraformStepConfigurationDataDto] = useState(undefined);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
     isMounted.current = true;
 
-    setScmList([]);
-    if (type && type !== "") {
-      loadData(source).catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
-    }
+    loadData();
 
     return () => {
-      source.cancel();
       isMounted.current = false;
     };
-  }, [type]);
+  }, []);
 
   const loadData = () => {
 
