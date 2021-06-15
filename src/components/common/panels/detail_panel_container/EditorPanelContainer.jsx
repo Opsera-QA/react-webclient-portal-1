@@ -5,6 +5,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import PersistAndCloseButtonContainer from "components/common/buttons/saving/containers/PersistAndCloseButtonContainer";
 import {Form} from "react-bootstrap";
 import Row from "react-bootstrap/Row";
+import EditorPanelToggleInput from "components/common/inputs/boolean/EditorPanelToggleInput";
 
 function EditorPanelContainer(
   {
@@ -52,20 +53,12 @@ function EditorPanelContainer(
   const getBooleanToggle = () => {
     if (showBooleanToggle === true) {
       return (
-        <div className={"mt-2"}>
-          <Row className={"mx-0 d-flex"}>
-            <div className={"d-flex ml-auto mr-4"}>
-              <Form.Check
-                type="switch"
-                id={"active"}
-                checked={!!recordDto?.getData("active")}
-                label={<span> </span>}
-                onChange={() => { recordDto?.setData("active");}}
-              />
-              <div style={{marginTop: "1px"}}>{recordDto?.getData("active") === true ? enabledText : disabledText}</div>
-            </div>
-          </Row>
-        </div>
+        <EditorPanelToggleInput
+          setDataObject={setRecordDto}
+          dataObject={recordDto}
+          disabledText={disabledText}
+          enabledText={enabledText}
+        />
       );
     }
   };
