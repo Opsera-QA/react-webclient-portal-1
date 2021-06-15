@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-export const SCM_TOOL_LIST = [
+export const TERRAFORM_SCM_TOOL_LIST = [
   {
     name: "Gitlab",
     value: "gitlab",
@@ -49,7 +49,7 @@ function TerraformScmToolTypeSelectInput({fieldName, dataObject, setDataObject, 
        fieldName={fieldName}
        dataObject={dataObject}
        setDataObject={setDataObject}
-       selectOptions={SCM_TOOL_LIST}
+       selectOptions={TERRAFORM_SCM_TOOL_LIST}
        clearDataFunction={clearDataFunction}
        valueField={"value"}
        textField={"name"}
