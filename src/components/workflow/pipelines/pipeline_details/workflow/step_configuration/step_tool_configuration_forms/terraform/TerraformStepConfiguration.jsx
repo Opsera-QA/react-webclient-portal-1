@@ -103,10 +103,7 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"accessKeyParamName"} />
       <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"secretKeyParamName"} />
       <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"regionParamName"} />
-<<<<<<< HEAD
       <TerraformRuntimeArgumentsInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
-=======
-      <TerraformRuntimeArgsInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
       <TerraformSaveResponseParameters
         dataObject={terraformStepConfigurationDto}
         setDataObject={setTerraformStepConfigurationDataDto}
@@ -115,7 +112,6 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       {terraformStepConfigurationDto && terraformStepConfigurationDto.getData("saveParameters") && (
         <TerraformParameterSelectInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
       )}
->>>>>>> adding the terraform parameters picker
     </PipelineStepEditorPanelContainer>
   );
 }
