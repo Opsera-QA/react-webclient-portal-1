@@ -47,7 +47,9 @@ function TerraformAwsCredentialsSelectInput({dataObject, setDataObject, disabled
         toastContext.showServiceUnavailableDialog();
       }
     } finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -76,7 +78,6 @@ function TerraformAwsCredentialsSelectInput({dataObject, setDataObject, disabled
   };
 
   return (
-    
      <SelectInputBase
        fieldName={"awsToolConfigId"}
        dataObject={dataObject}

@@ -48,7 +48,9 @@ function TerraformScmToolSelectInput({dataObject, setDataObject, disabled, type}
         toastContext.showLoadingErrorDialog(error);
       }
     } finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 

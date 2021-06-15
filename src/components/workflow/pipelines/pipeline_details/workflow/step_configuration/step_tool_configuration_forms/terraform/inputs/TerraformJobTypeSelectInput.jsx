@@ -14,7 +14,6 @@ export const TERRAFORM_JOB_TYPES = [
 ];
 
 function TerraformJobTypeSelectInput({dataObject, setDataObject, disabled}) {
-
   return (
      <SelectInputBase
        fieldName={"toolActionType"}
