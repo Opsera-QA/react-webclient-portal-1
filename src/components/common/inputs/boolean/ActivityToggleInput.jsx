@@ -15,11 +15,11 @@ function ActivityToggleInput({ fieldName, dataObject, setDataObject, disabled })
   };
 
   return (
-    <InputContainer>
-      <div className={"d-flex toggle-alignment"}>
-        <div className={"mt-4"}>Show in Application</div>
+    <InputContainer className={"d-flex small"}>
+      <div className={"d-flex ml-auto toggle-alignment"}>
+        <div className={""}>Show in Application</div>
         <TooltipWrapper innerText={`Toggle this record as ${dataObject?.getData(fieldName) === true ? "inactive" : "active"}`}>
-          <div className={"ml-4 mt-4"}>
+          <div className={"ml-2 "}>
             <Form.Check
               type="switch"
               id={field.id}

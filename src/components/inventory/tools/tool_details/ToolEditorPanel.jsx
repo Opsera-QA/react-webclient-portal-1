@@ -5,10 +5,8 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import toolsActions from "components/inventory/tools/tools-actions";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
-import ToolClassificationSelectInput
-  from "components/common/list_of_values_input/inventory/ToolClassificationSelectInput";
-import RegistryToolIdentifierSelectInput
-  from "components/inventory/tools/tool_details/input/RegistryToolIdentifierSelectInput";
+import ToolClassificationSelectInput from "components/common/list_of_values_input/inventory/ToolClassificationSelectInput";
+import RegistryToolIdentifierSelectInput from "components/inventory/tools/tool_details/input/RegistryToolIdentifierSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import RegistryToolLocationInput from "components/inventory/tools/tool_details/input/RegistryToolLocationInput";
@@ -67,6 +65,12 @@ function ToolEditorPanel({ toolData, handleClose }) {
           <Col lg={6}>
             <RegistryToolOrganizationInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
           </Col>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Col lg={6}></Col>
           <Col lg={6}>
             <RegistryToolLocationInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
           </Col>
@@ -90,15 +94,16 @@ function ToolEditorPanel({ toolData, handleClose }) {
       isLoading={isLoading}
       handleClose={handleClose}
     >
+      <ActivityToggleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"active"} />
       <Row>
         <Col lg={6}>
-          <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"name"}/>
+          <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"name"} />
         </Col>
         <Col lg={6}>
           <RegistryToolIdentifierSelectInput dataObject={toolDataDto} setDataObject={setToolDataDto} />
         </Col>
         <Col lg={12}>
-          <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"description"}/>
+          <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"description"} />
         </Col>
         <Col lg={6}>
           <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"costCenter"} />
@@ -109,10 +114,7 @@ function ToolEditorPanel({ toolData, handleClose }) {
         <Col lg={6}>
           <ToolClassificationSelectInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
         </Col>
-        {getDynamicFields()}
-        <Col lg={6}>
-          <ActivityToggleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"active"}/>
-        </Col>
+        {getDynamicFields()}    
       </Row>
     </EditorPanelContainer>
   );
@@ -125,5 +127,3 @@ ToolEditorPanel.propTypes = {
 };
 
 export default ToolEditorPanel;
-
-
