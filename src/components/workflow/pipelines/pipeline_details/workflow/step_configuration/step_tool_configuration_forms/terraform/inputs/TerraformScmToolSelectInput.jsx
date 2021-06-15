@@ -14,7 +14,6 @@ function TerraformScmToolSelectInput({dataObject, setDataObject, disabled, type}
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -42,7 +41,7 @@ function TerraformScmToolSelectInput({dataObject, setDataObject, disabled, type}
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await getToolsList(dataObject?.data?.type, cancelSource);
+      await getToolsList(type, cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -57,7 +56,7 @@ function TerraformScmToolSelectInput({dataObject, setDataObject, disabled, type}
     const response = await pipelineActions.getToolsListV2(getAccessToken, cancelSource, tool);
     const data = response?.data;
 
-    if (Array.isArray(data) && data.length > 0) {
+    if (isMounted?.current === true && Array.isArray(data) && data.length > 0) {
       let filteredArray = [];
       data.map((item) => {
         if (item.configuration == null) {
