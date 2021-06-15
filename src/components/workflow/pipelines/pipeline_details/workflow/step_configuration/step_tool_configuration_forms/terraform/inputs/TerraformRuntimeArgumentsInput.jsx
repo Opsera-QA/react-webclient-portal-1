@@ -6,7 +6,8 @@ import locale from "react-json-editor-ajrm/locale/en";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faInfoCircle} from "@fortawesome/pro-light-svg-icons";
 
-function TerraformRuntimeArguments({dataObject, setDataObject}) {
+// TODO: Refactor into generic component
+function TerraformRuntimeArgumentsInput({dataObject, setDataObject}) {
     const [jsonEditorInvalid, setJsonEditorInvalid] = useState(false);
     const [jsonEditor, setJsonEditor] = useState({});
 
@@ -74,9 +75,9 @@ function TerraformRuntimeArguments({dataObject, setDataObject}) {
   );
 }
 
-TerraformRuntimeArguments.propTypes = {
+TerraformRuntimeArgumentsInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   };
   
-  export default TerraformRuntimeArguments;
+  export default TerraformRuntimeArgumentsInput;

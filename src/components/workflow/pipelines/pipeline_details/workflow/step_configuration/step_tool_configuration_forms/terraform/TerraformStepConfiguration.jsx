@@ -11,8 +11,9 @@ import TerraformBitbucketWorkspaceInput from "components/workflow/pipelines/pipe
 import TerraformGitRepositoryInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformGitRepositoryInput";
 import TerraformGitBranchInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformGitBranchInput";
 import TerraformAwsCredentialsSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformAwsCredentialsSelectInput";
-import TerraformRuntimeArgsInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformRuntimeArgsInput";
 import terraformStepFormMetadata from "./terraform-stepForm-metadata";
+import TerraformRuntimeArgumentsInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformRuntimeArgumentsInput";
 
 function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(true);
@@ -83,7 +84,7 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"accessKeyParamName"} />
       <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"secretKeyParamName"} />
       <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"regionParamName"} />
-      <TerraformRuntimeArgsInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
+      <TerraformRuntimeArgumentsInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
     </PipelineStepEditorPanelContainer>
   );
 }
