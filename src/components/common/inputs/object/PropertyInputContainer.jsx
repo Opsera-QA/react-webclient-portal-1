@@ -10,11 +10,11 @@ import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 function PropertyInputContainer({ children, titleIcon, titleText, field, errorMessage, addProperty, type, addAllowed, helpComponent, toggleButton }) {
   const getTitleBar = () => {
     return (
-      <div className="pl-2 d-flex justify-content-between">
-        <div className={"pt-2"}><FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-2"/>{titleText}</div>
+      <div className="px-2 pt-2 d-flex justify-content-between">
+        <div><FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-2"/>{titleText}</div>
         <div>
           <LaunchHelpIcon helpComponent={helpComponent} className={"pt-2 pr-2"} />
-          <div className={"pt-1 pr-1"}>{toggleButton}</div>
+          <div>{toggleButton}</div>
         </div>
       </div>
     );
