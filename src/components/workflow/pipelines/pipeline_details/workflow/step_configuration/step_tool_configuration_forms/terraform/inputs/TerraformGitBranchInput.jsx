@@ -28,6 +28,7 @@ function TerraformGitBranchInput({dataObject, setDataObject, disabled}) {
        repoId={dataObject?.getData("gitRepositoryID")}
        dataObject={dataObject}
        setDataFunction={setDataFunction}
+       clearDataFunction={clearDataFunction}
        setDataObject={setDataObject}
        disabled={disabled}
      />
