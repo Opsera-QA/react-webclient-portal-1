@@ -1,29 +1,79 @@
-import React,{useContext, useState, useEffect} from "react";
+import React, { useContext, useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import terraformStepActions from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/terraform-step-actions";
+import axios from "axios";
+import PipelineActions from "../../../../../../../pipeline-actions";
 
 function TerraformSCMToolSelectInput({dataObject, setDataObject, disabled}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
   const [SCMList, setSCMList] = useState([]);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
 
   useEffect(() => {
-    getToolsList();
-  }, [dataObject?.data?.type]);
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
 
-  const getToolsList = async () => {
-    setIsLoading(true);
-    if(dataObject?.data?.type?.length){
-      try {
-        let filteredToolsList = await terraformStepActions?.fetchSCMDetails(dataObject, "type", getAccessToken);
-        setSCMList(filteredToolsList);
-      } catch (error) {
-        toastContext.showErrorDialog(error);
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    if (!disabled) {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [dataObject?.data?.type, disabled]);
+
+  const loadData = async (cancelSource = cancelTokenSource) => {
+    try {
+      setIsLoading(true);
+      await getToolsList(dataObject?.data?.type, cancelSource);
+    } catch (error) {
+      if (isMounted?.current === true) {
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
       }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const getToolsList = async (tool, cancelSource) => {
+    setIsLoading(true);
+    try {
+      let results = await PipelineActions.getToolsListV2(getAccessToken, cancelSource, tool);
+      if (results?.data) {
+        let respObj = [];
+        let arrOfObj = results.data;
+        arrOfObj.map((item) => {
+          respObj.push({
+            name: item.name,
+            id: item._id,
+            configuration: item.configuration,
+            accounts: item.accounts,
+            jobs: item.jobs,
+          });
+        });
+        results = respObj;
+      }
+      const filteredList = results ? results.filter((el) => el.configuration !== undefined) : [];
+      setSCMList(filteredList);
+    } catch (error) {
+      toastContext.showErrorDialog(error);
     }
     setIsLoading(false);
     return;

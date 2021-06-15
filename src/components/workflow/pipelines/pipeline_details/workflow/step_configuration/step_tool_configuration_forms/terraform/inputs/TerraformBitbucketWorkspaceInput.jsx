@@ -10,8 +10,8 @@ function TerraformBitbucketWorkspaceInput({dataObject, setDataObject, disabled})
     setDataObject({...newDataObject});
   };
 
-  if (dataObject.getData("type") !== "bitbucket") {
-    return <></>;
+  if (dataObject?.getData("type") !== "bitbucket") {
+    return null;
   }
 
   return (
