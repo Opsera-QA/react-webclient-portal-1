@@ -14,6 +14,8 @@ import RegistryToolApplicationsInput from "components/inventory/tools/tool_detai
 import RegistryToolOrganizationInput from "components/inventory/tools/tool_details/input/RegistryToolOrganizationInput";
 import RegistryToolContactInput from "components/inventory/tools/tool_details/input/RegistryToolContactInput";
 import TagManager from "components/common/inputs/tags/TagManager";
+import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
+
 import axios from "axios";
 
 function ToolEditorPanel({ toolData, handleClose }) {
@@ -65,6 +67,9 @@ function ToolEditorPanel({ toolData, handleClose }) {
           <Col lg={6}>
             <RegistryToolOrganizationInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
           </Col>
+          <Col lg={12}>
+            <RoleAccessInput dataObject={toolDataDto} setDataObject={setToolDataDto} fieldName={"roles"} />
+          </Col> 
         </>
       );
     } else {
@@ -114,7 +119,8 @@ function ToolEditorPanel({ toolData, handleClose }) {
         <Col lg={6}>
           <ToolClassificationSelectInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
         </Col>
-        {getDynamicFields()}    
+        {getDynamicFields()} 
+          
       </Row>
     </EditorPanelContainer>
   );
