@@ -91,12 +91,12 @@ function ParametersEditorPanel({ parameterModel, parameterRoleDefinitions, handl
       extraButtons={getDeleteButton()}
     >
       <Row>
-        <Col lg={6}>
+        <Col lg={5}>
           <TextInputBase disabled={!parameterData?.isNew()} setDataObject={setParameterData} dataObject={parameterData} fieldName={"name"}/>
           <VisibleVaultTextInput disabled={canEdit !== true} setDataObject={setParameterData} dataObject={parameterData} fieldName={"value"}/>
           <BooleanToggleInput setDataObject={setParameterData} dataObject={parameterData} fieldName={"vaultEnabled"} disabled={!parameterData?.isNew()}/>
         </Col>
-        <Col lg={6} className={"my-2"}>
+        <Col lg={7} className={"my-2"}>
           <RoleAccessInput disabled={canEdit !== true} dataObject={parameterData} setDataObject={setParameterData} fieldName={"roles"} />
         </Col>
       </Row>

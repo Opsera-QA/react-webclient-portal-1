@@ -2,7 +2,11 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExclamationTriangle, faIdCard, faTimes} from "@fortawesome/pro-light-svg-icons";
+import {
+  faExclamationTriangle,
+  faIdCard,
+  faTimes,
+} from "@fortawesome/pro-light-svg-icons";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import DropdownList from "react-widgets/lib/DropdownList";
@@ -10,7 +14,6 @@ import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import accountsActions from "components/admin/accounts/accounts-actions";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
-import RoleAccessEditorHelpOverlayContainer from "components/common/help/input/role_access_editor/RoleAccessEditorHelpOverlayContainer";
 import axios from "axios";
 
 const roleTypes = [
@@ -253,28 +256,56 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
 
   const getTypeInput = (role, index) => {
     return (
-      <div className="mt-2 w-100 d-flex">
-        <div className="ml-auto">
+      <div className="mt-2 d-inline-flex">
+        <div className="m-auto mr-2">
           <input
-            className="mx-2"
+            className="mr-2"
             type="radio"
             name={`roleAccessType-${index}`}
             value={"group"}
             checked={role["roleAccessType"] === "group"}
-            onChange={() => updateProperty(role, "roleAccessType", "group")}/>Group
+            onChange={() => updateProperty(role, "roleAccessType", "group")}
+          />
+          <span className={"mr-2"}>Group</span>
         </div>
-        <div className="mr-auto">
+        <div className="m-auto ml-2">
           <input
-            className="mx-2"
+            className="mr-2"
             type="radio"
             name={`roleAccessType-${index}`}
             value={"user"}
             checked={role["roleAccessType"] === "user"}
-            onChange={() => updateProperty(role, "roleAccessType", "user")}/>User
+            onChange={() => updateProperty(role, "roleAccessType", "user")}
+          />
+          <span>User</span>
         </div>
       </div>
     );
   };
+
+  // TODO: For V2
+  // const getButtonTypeInput = (role, index) => {
+  //   return (
+  //     <div className="d-flex mt-1 justify-content-between">
+  //       <Button
+  //         name={`roleAccessType-${index}-group`}
+  //         variant={role["roleAccessType"] === "group" ? "success" : "outline-secondary"}
+  //         size="sm"
+  //         onClick={() => updateProperty(role, "roleAccessType", "group")}
+  //       >
+  //         <FontAwesomeIcon icon={faUserFriends} fixedWidth className={"mr-1"}/>Group
+  //       </Button>
+  //       <Button
+  //         variant={role["roleAccessType"] === "user" ? "success" : "outline-secondary"}
+  //         size="sm"
+  //         name={`roleAccessType-${index}-user`}
+  //         onClick={() => updateProperty(role, "roleAccessType", "user")}
+  //       >
+  //         <FontAwesomeIcon icon={faUser} fixedWidth className={"mr-1"}/>User
+  //       </Button>
+  //     </div>
+  //   );
+  // };
 
   const getAssigneeInput = (role) => {
     if (role["roleAccessType"] === "user") {
@@ -336,18 +367,18 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
       <div className="d-flex my-2" key={index}>
         <Col sm={11}>
           <Row>
-            <Col sm={2}>
+            <Col sm={4} className={"pr-1"}>
               {getTypeInput(role, index)}
             </Col>
-            <Col sm={5} className={"pl-1 pr-0"}>
+            <Col sm={4} className={"pl-1 pr-0"}>
               {getAssigneeInput(role)}
             </Col>
-            <Col sm={5} className={"pl-2 pr-1"}>
+            <Col sm={4} className={"pl-2 pr-2"}>
               {getRoleTypeInput(role)}
             </Col>
           </Row>
         </Col>
-        <Col sm={1} className={"pr-3 pl-0 delete-button"}>
+        <Col sm={1} className={"px-0 mr-auto delete-button"}>
           {getDeletePropertyButton(index)}
         </Col>
       </div>
@@ -374,17 +405,21 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
 
   const getHeaderBar = () => {
     return (
-      <div className="d-flex justify-content-between page-description">
-        <div className={"mr-auto ml-3 mt-1"}>
-          {/*<span className="text-muted ml-5">Type</span>*/}
-        </div>
-        <div className={"mr-auto mt-1"}>
-          <span className="text-muted">Assignee</span>
-        </div>
-        <div className={"mr-auto mt-1"}>
-          <span className="text-muted">Access Type</span>
-        </div>
-        <div />
+      <div className="d-flex mt-1">
+        <Col sm={11}>
+          <Row>
+            <Col sm={4}>
+              {/*<span className="text-muted ml-5">Type</span>*/}
+            </Col>
+            <Col sm={4} className={"mx-auto"}>
+              <span className="text-muted">Assignee</span>
+            </Col>
+            <Col sm={4} className={"mx-auto"}>
+              <span className="text-muted">Access Type</span>
+            </Col>
+          </Row>
+        </Col>
+        <Col sm={1} className={"pr-3 pl-0 delete-button"} />
       </div>
     );
   };
@@ -411,24 +446,26 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
   }
 
   return (
-    <PropertyInputContainer
-      titleIcon={faIdCard}
-      field={field}
-      addProperty={addRole}
-      titleText={"Roles"}
-      errorMessage={errorMessage}
-      type={"Role"}
-      addAllowed={lastRoleComplete()}
-      helpComponent={getHelpComponent()}
-    >
-      <div>
-        {getHeaderBar()}
-      </div>
-      <div className="properties-body-alt">
-        {getFieldBody()}
-      </div>
-      {getIncompleteRoleMessage()}
-    </PropertyInputContainer>
+    <div style={{minWidth: "575px"}}>
+      <PropertyInputContainer
+        titleIcon={faIdCard}
+        field={field}
+        addProperty={addRole}
+        titleText={"Roles"}
+        errorMessage={errorMessage}
+        type={"Role"}
+        addAllowed={lastRoleComplete()}
+        helpComponent={getHelpComponent()}
+      >
+        <div>
+          {getHeaderBar()}
+        </div>
+        <div className="properties-body-alt">
+          {getFieldBody()}
+        </div>
+        {getIncompleteRoleMessage()}
+      </PropertyInputContainer>
+    </div>
   );
 }
 
