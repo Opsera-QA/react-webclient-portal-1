@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { Button, OverlayTrigger, Popover } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBracketsCurly, faInfoCircle, faTimes } from "@fortawesome/pro-light-svg-icons";
+import { faBracketsCurly, faInfoCircle, faSync, faTimes } from "@fortawesome/pro-light-svg-icons";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { DialogToastContext } from "../../../../contexts/DialogToastContext";
@@ -10,27 +10,22 @@ import { AuthContext } from "../../../../contexts/AuthContext";
 import parametersActions from "../../../inventory/parameters/parameters-actions";
 import DropdownList from "react-widgets/lib/DropdownList";
 import axios from "axios";
-import ReactJson from "react-json-view";
-
-const SAMPLE_DATA = {
-  subnet_list: [
-    "item1", "item2", "item3"
-  ]
-};
 
 function ParameterSelectListInputBase({
-                                     dataObject,
-                                     setDataObject,
-                                     fieldName,
-                                     disabledFields,
-                                     type,
-                                     titleIcon,
-                                     allowIncompleteItems,
-                                     titleText,
-                                     nameMaxLength,
-                                     regexValidationRequired,
-                                     disabled,
-                                   }) {
+  dataObject,
+  setDataObject,
+  fieldName,
+  disabledFields,
+  type,
+  titleIcon,
+  allowIncompleteItems,
+  titleText,
+  nameMaxLength,
+  regexValidationRequired,
+  disabled,
+  plan,
+  tool_prop,
+}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [properties, setProperties] = useState([]);
@@ -124,10 +119,7 @@ function ParameterSelectListInputBase({
 
     if (newPropertyList && newPropertyList.length > 0) {
       newPropertyList.map((property) => {
-        if (
-          (allowIncompleteItems !== true && property["parameterId"] === "") ||
-          property["parameterName"] === ""
-        ) {
+        if ((allowIncompleteItems !== true && property["parameterId"] === "") || property["parameterName"] === "") {
           return;
         }
         newArray.push(property);
@@ -139,12 +131,21 @@ function ParameterSelectListInputBase({
   };
 
   const addProperty = () => {
+    let currentData = dataObject?.getData(fieldName);
+    let items = Array.isArray(currentData) && currentData.length > 0 ? currentData : [];
+    for (let item in items) {
+      if (Object.values(items[item]).includes(parameterName)) {
+        let errorMessage =
+          "Existing parameters can not be added again";
+        toastContext.showErrorDialog(errorMessage);
+        return false;
+      }
+    }
     setProperties([
-      ...properties,
+      ...items,
       {
         parameterId,
-        parameterName,
-        outputKey,
+        parameterName
       },
     ]);
     setParameterId("");
@@ -152,7 +153,9 @@ function ParameterSelectListInputBase({
   };
 
   const deleteProperty = (index) => {
-    let newPropertyList = properties;
+    let currentData = dataObject?.getData(fieldName);
+    let items = Array.isArray(currentData) && currentData.length > 0 ? currentData : [];
+    let newPropertyList = items;
     newPropertyList.splice(index, 1);
     validateAndSetData(newPropertyList);
   };
@@ -182,14 +185,11 @@ function ParameterSelectListInputBase({
           <Button
             size="sm"
             className="mt-1 ml-2 px-2"
-            style={{height: "99%"}}
+            style={{ height: "99%" }}
             variant="success"
             disabled={
-              !allowIncompleteItems &&
-              (!parameterId ||
-                parameterId.length === 0 ||
-                !parameterName ||
-                parameterName.length === 0)
+              allowIncompleteItems &&
+              (!parameterId || parameterId.length === 0 || !parameterName || parameterName.length === 0)
             }
             onClick={() => {
               addProperty();
@@ -198,7 +198,6 @@ function ParameterSelectListInputBase({
             Add
           </Button>
         </Row>
-
       </div>
     );
   };
@@ -230,7 +229,10 @@ function ParameterSelectListInputBase({
     return (
       <>
         <div className="flex-fill">
-          {dataObject?.getData("customParameters").map((property, index) => {
+          {(dataObject?.getData("customParameters") && Array.isArray(dataObject?.getData("customParameters"))
+            ? dataObject?.getData("customParameters")
+            : []
+          ).map((property, index) => {
             return getPropertyRow(property, index);
           })}
         </div>
@@ -274,24 +276,23 @@ function ParameterSelectListInputBase({
         placement="left"
         overlay={
           <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
-            <Popover.Title as="h3">Response Parameter Mapping</Popover.Title>
-
+            <Popover.Title as="h3">Parameter Selection</Popover.Title>
             <Popover.Content>
               <div className="text-muted mb-2">
-                This functionality helps users map Opsera Global Parameters to output data from a Terrform script. Select a created parameter from the dropdown list and enter the exact name of the output key from your terraform script in order to set up a mapping.<br/><br/>
-                For instance for the following sample Terraform output that displays a list of subnet ID&apos;s the Output Key would be <strong>subnet_list</strong>. Upon execution of the script, the data from the Output Key would be stored in the Vault under the specified parameter.
-                {
-                  <div className={"mt-2"}>
-                    Sample:
-                    <ReactJson
-                      className={"mt-1 py-1"}
-                      src={SAMPLE_DATA}
-                      displayDataTypes={false}
-                    />
-                  </div>
-                }
+                This functionality helps users use Opsera Parameters that are defined under the Parameters tab in Tool
+                Registry. In order to use any of these parameters in the step - enter them in the commands with the
+                following syntax: <strong>{"${parameter_name}"}</strong>, where the parameter_name is the one of the
+                names derived from this list of available parameters.
+                <br />
+                <br />
+                If the <strong>Use Terraform Output</strong> checkbox has been selected, the available parameters will
+                appear in the Parameter selection option with <strong>Terraform Output</strong> as the Parameter Origin.
+                They use the same syntax mentioned above in order to be used in the commands.
+                <br />
+                <br />
+                You must select all parameters that you pass in the commands in the parameter selection view as well in
+                order for the details to be fetched during runtime.
               </div>
-
             </Popover.Content>
           </Popover>
         }
@@ -312,9 +313,54 @@ function ParameterSelectListInputBase({
           <FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-2" />
           {titleText}
         </div>
+        <span>
+        {getRefreshButton()}
         {getHelpText()}
+        </span>
       </div>
     );
+  };
+
+  const refreshParameters = () => {
+    let terraformStep = plan.find((step) => step._id === tool_prop);
+    let newDataObject = { ...dataObject };
+    let tempCustomParamsObject =
+      terraformStep?.tool?.configuration?.customParameters &&
+      Array.isArray(terraformStep?.tool?.configuration?.customParameters)
+        ? terraformStep?.tool?.configuration?.customParameters
+        : [];
+    let currentCustomParamsObject = newDataObject?.getData("customParameters");
+    let filtered = [];
+    for (let item in currentCustomParamsObject) {
+      if (!currentCustomParamsObject[item]?.outputKey) {
+        filtered.push(currentCustomParamsObject[item]);
+      }
+    }
+    newDataObject.setData("customParameters", [...tempCustomParamsObject, ...filtered]);
+    setDataObject({ ...newDataObject });
+  };
+
+  const getRefreshButton = () => {
+    if (tool_prop && tool_prop.length > 0) {
+      return (
+        <OverlayTrigger
+          trigger="hover"
+          rootClose
+          placement="top"
+          overlay={
+            <Popover id="popover-basic" style={{ maxWidth: "500px" }}>
+              <Popover.Content>
+                <div className="text-muted mb-2">
+                  Refresh Terraform Output Parameters
+                </div>
+              </Popover.Content>
+            </Popover>
+          }
+        >
+          <FontAwesomeIcon icon={faSync} className="fa-pull-right pointer pr-2 mt-1 pl-0" onClick={() => refreshParameters()}/>
+        </OverlayTrigger>
+      );
+    }
   };
 
   if (field == null) {
@@ -346,6 +392,9 @@ ParameterSelectListInputBase.propTypes = {
   nameMaxLength: PropTypes.number,
   regexValidationRequired: PropTypes.bool,
   disabled: PropTypes.bool,
+  plan: PropTypes.array,
+  stepId: PropTypes.string,
+  tool_prop: PropTypes.string,
 };
 
 ParameterSelectListInputBase.defaultProps = {

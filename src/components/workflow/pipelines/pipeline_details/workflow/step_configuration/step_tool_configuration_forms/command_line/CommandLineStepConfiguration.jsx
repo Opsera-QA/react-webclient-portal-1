@@ -84,6 +84,14 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
     return (<TextAreaInput dataObject={commandLineStepConfigurationDto} fieldName={"commands"} setDataObject={setCommandLineStepConfigurationDataDto}/>);
   };
 
+  const getTerraformSelect = () => {
+    if (commandLineStepConfigurationDto?.getData("useTerraformOutput")) {
+      return (
+        <StepConfigTerraformStepSelectInput setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} plan={plan} stepId={stepId} />
+      );
+    }
+  };
+
   const handleCreateAndSave = async () => {
     const toolId = commandLineStepConfigurationDto.getData("toolConfigId");
     console.log("saving and creating job for toolID: ", toolId);
@@ -134,12 +142,8 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
         setDataObject={setCommandLineStepConfigurationDataDto}
       /> */}
       <CommandLineSourceScriptToggleInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"sourceScript"}/>
-      <StepConfigUseTerraformOutput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"useTerraformOutput"} />
-      {
-        commandLineStepConfigurationDto && commandLineStepConfigurationDto.getData("useTerraformOutput") &&
-        <StepConfigTerraformStepSelectInput setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} plan={plan} stepId={stepId} />
-      }
-      {getDynamicFields()}
+      <StepConfigUseTerraformOutput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>
+      {getTerraformSelect()}
       <ParameterSelectListInputBase
         titleIcon={faFileCode}
         dataObject={commandLineStepConfigurationDto}
@@ -149,7 +153,11 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
         type={"Parameter"}
         regexValidationRequired={false}
         titleText={"Parameter Selection"}
+        plan={plan}
+        tool_prop={commandLineStepConfigurationDto?.getData("terraformStepId") && commandLineStepConfigurationDto?.getData("terraformStepId").length > 0 ?
+          commandLineStepConfigurationDto?.getData("terraformStepId") : ""}
       />
+      {getDynamicFields()}
       <CommandLineDependencyTypeInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
       <TextInputBase setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} fieldName={"outputPath"} />
       <TextInputBase setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} fieldName={"outputFileName"} />

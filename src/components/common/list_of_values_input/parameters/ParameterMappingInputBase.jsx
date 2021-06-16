@@ -140,6 +140,14 @@ function ParameterMappingInputBase({
   };
 
   const addProperty = () => {
+    for (let item in properties) {
+      if (Object.values(properties[item]).includes(parameterName) || Object.values(properties[item]).includes(outputKey)) {
+        let errorMessage =
+          "Existing parameters can not be added again";
+        toastContext.showErrorDialog(errorMessage);
+        return false;
+      }
+    }
     setProperties([
       ...properties,
       {
@@ -198,7 +206,7 @@ function ParameterMappingInputBase({
             style={{height: "99%"}}
             variant="success"
             disabled={
-              !allowIncompleteItems &&
+              allowIncompleteItems &&
               (!parameterId ||
                 parameterId.length === 0 ||
                 !parameterName ||
