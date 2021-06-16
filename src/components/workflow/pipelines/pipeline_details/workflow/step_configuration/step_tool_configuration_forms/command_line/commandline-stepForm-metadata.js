@@ -158,7 +158,8 @@ const commandLineStepFormMetadata = {
     },
     {
       label: "Parameters",
-      id: "customParameters"
+      id: "customParameters",
+      maxItems: 15,
     },
     {
       label: "Use Terraform Output",
@@ -324,7 +325,8 @@ const commandLineStepFormMetadata = {
     },
     {
       label: "Parameters",
-      id: "customParameters"
+      id: "customParameters",
+      maxItems: 15,
     },
     {
       label: "Use Terraform Output",

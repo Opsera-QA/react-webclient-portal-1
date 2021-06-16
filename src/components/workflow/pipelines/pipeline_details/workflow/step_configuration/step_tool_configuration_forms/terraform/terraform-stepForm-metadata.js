@@ -65,7 +65,8 @@ const TerraformStepFormMetadata = {
     },
     {
       label: "Parameters",
-      id: "customParameters"
+      id: "customParameters",
+      maxItems: 15,
     },
     {
       label: "Save Output Parameters?",

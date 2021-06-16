@@ -145,7 +145,8 @@ const jenkinsPipelineStepConfigurationMetadata = {
     },
     {
       label: "Parameters",
-      id: "customParameters"
+      id: "customParameters",
+      maxItems: 15,
     },
     {
       label: "Use Terraform Output",
