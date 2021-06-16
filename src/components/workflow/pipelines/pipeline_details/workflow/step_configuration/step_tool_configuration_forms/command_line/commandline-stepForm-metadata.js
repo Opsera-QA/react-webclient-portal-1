@@ -155,6 +155,14 @@ const commandLineStepFormMetadata = {
     {
       label: "Terraform Step",
       id: "terraformStepId"
+    },
+    {
+      label: "Parameters",
+      id: "customParameters"
+    },
+    {
+      label: "Use Terraform Output",
+      id: "useTerraformOutput"
     }
   ],
   fieldsAlt: [
@@ -313,6 +321,14 @@ const commandLineStepFormMetadata = {
     {
       label: "Terraform Step",
       id: "terraformStepId"
+    },
+    {
+      label: "Parameters",
+      id: "customParameters"
+    },
+    {
+      label: "Use Terraform Output",
+      id: "useTerraformOutput"
     }
   ],
   newModelBase: {
@@ -355,7 +371,9 @@ const commandLineStepFormMetadata = {
     inputPath: "",
     inputFileName: "",
     commands: "",
-    terraformStepId: ""
+    terraformStepId: "",
+    customParameters: [],
+    useTerraformOutput : false
   }
 };
 

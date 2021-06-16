@@ -28,6 +28,13 @@ import CommandLineSourceScriptToggleInput
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import WorkspaceDeleteToggleInput from "./inputs/WorkspaceDeleteToggleInput";
 import StepConfigTerraformStepSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/common/inputs/StepConfigTerraformStepSelectInput";
+import ParameterSelectInput from "../../../../../../../common/list_of_values_input/parameters/ParameterSelectInput";
+import ParameterMappingInputBase
+  from "../../../../../../../common/list_of_values_input/parameters/ParameterMappingInputBase";
+import { faFileCode } from "@fortawesome/pro-light-svg-icons";
+import ParameterSelectListInputBase
+  from "../../../../../../../common/list_of_values_input/parameters/ParameterSelectListInputBase";
+import StepConfigUseTerraformOutput from "../common/inputs/StepConfigUseTerraformOutput";
 
 
 function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, plan }) {
@@ -127,11 +134,25 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
         setDataObject={setCommandLineStepConfigurationDataDto}
       /> */}
       <CommandLineSourceScriptToggleInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"sourceScript"}/>
+      <StepConfigUseTerraformOutput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"useTerraformOutput"} />
+      {
+        commandLineStepConfigurationDto && commandLineStepConfigurationDto.getData("useTerraformOutput") &&
+        <StepConfigTerraformStepSelectInput setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} plan={plan} stepId={stepId} />
+      }
       {getDynamicFields()}
+      <ParameterSelectListInputBase
+        titleIcon={faFileCode}
+        dataObject={commandLineStepConfigurationDto}
+        setDataObject={setCommandLineStepConfigurationDataDto}
+        fieldName={"customParameters"}
+        allowIncompleteItems={true}
+        type={"Parameter"}
+        regexValidationRequired={false}
+        titleText={"Parameter Selection"}
+      />
       <CommandLineDependencyTypeInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} />
       <TextInputBase setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} fieldName={"outputPath"} />
       <TextInputBase setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} fieldName={"outputFileName"} />
-      <StepConfigTerraformStepSelectInput setDataObject={setCommandLineStepConfigurationDataDto} dataObject={commandLineStepConfigurationDto} plan={plan} stepId={stepId} />
       <WorkspaceDeleteToggleInput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"workspaceDeleteFlag"} />
     </PipelineStepEditorPanelContainer>
   );

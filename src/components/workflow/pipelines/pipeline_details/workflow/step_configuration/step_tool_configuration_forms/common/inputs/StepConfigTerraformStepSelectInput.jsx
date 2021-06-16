@@ -5,7 +5,7 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import _ from "lodash";
 import { Button, OverlayTrigger, Popover } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle } from "@fortawesome/pro-light-svg-icons";
+import { faInfoCircle, faSync } from "@fortawesome/pro-light-svg-icons";
 function StepConfigTerraformStepSelectInput({
   fieldName,
   dataObject,
@@ -49,7 +49,6 @@ function StepConfigTerraformStepSelectInput({
           // setPlaceholder("Configure a Terraform Step to use this option");
           let newDataObject = { ...dataObject };
           newDataObject.setData("terraformStepId", "");
-          newDataObject.setData("customParameters", []);
           setDataObject({ ...newDataObject });
         }
         setCommandLineTerraformList(terraformSteps);
@@ -73,22 +72,50 @@ function StepConfigTerraformStepSelectInput({
   const setTerraformDetails = (fieldName, selectedOption) => {
     let newDataObject = { ...dataObject };
     newDataObject.setData(fieldName, selectedOption._id);
-    newDataObject.setData("customParameters", selectedOption.tool.configuration.customParameters);
+    let tempCustomParamsObject = selectedOption?.tool?.configuration?.customParameters && Array.isArray(selectedOption?.tool?.configuration?.customParameters) ? selectedOption?.tool?.configuration?.customParameters : [];
+    let currentCustomParamsObject = newDataObject?.getData("customParameters");
+    newDataObject.setData("customParameters", [...tempCustomParamsObject, ...currentCustomParamsObject]);
     setDataObject({ ...newDataObject });
   };
 
   const clearTerraformDetails = (fieldName) => {
     let newDataObject = { ...dataObject };
+    let currentCustomParamsObject = newDataObject?.getData("customParameters");
     newDataObject.setData("terraformStepId", "");
-    newDataObject.setData("customParameters", []);
+    let filtered = [];
+    for (let item in currentCustomParamsObject) {
+      if (!currentCustomParamsObject[item]?.outputKey) {
+        filtered.push(currentCustomParamsObject[item]);
+      }
+    }
+    newDataObject.setData("customParameters", filtered);
     setDataObject({ ...newDataObject });
   };
 
   const refreshParameters = () => {
     let terraformStep = plan.find((step) => step._id === dataObject.getData(fieldName));
     let newDataObject = { ...dataObject };
-    newDataObject.setData("customParameters", terraformStep?.tool?.configuration?.customParameters);
+    let tempCustomParamsObject = terraformStep?.tool?.configuration?.customParameters && Array.isArray(terraformStep?.tool?.configuration?.customParameters) ? terraformStep?.tool?.configuration?.customParameters : [];
+    let currentCustomParamsObject = newDataObject?.getData("customParameters");
+    let filtered = [];
+    for (let item in currentCustomParamsObject) {
+      if (!currentCustomParamsObject[item]?.outputKey) {
+        filtered.push(currentCustomParamsObject[item]);
+      }
+    }
+    newDataObject.setData("customParameters", [...tempCustomParamsObject, ...filtered]);
     setDataObject({ ...newDataObject });
+  };
+
+  const getInfoText = () => {
+    if (dataObject.getData(fieldName).length > 0) {
+      return (
+        <small>
+          <FontAwesomeIcon icon={faSync} className="pr-1" />
+          Refresh Terraform Output List
+        </small>
+      );
+    }
   };
 
   const getHelpText = () => {
@@ -121,33 +148,6 @@ function StepConfigTerraformStepSelectInput({
     );
   };
 
-  const getTerraformCustomParametersDisplay = () => {
-    if (dataObject.getData("customParameters")) {
-      let parameters = dataObject.getData("customParameters").map((param) => param.parameterName);
-      return (
-        <>
-          <label>
-            Custom Parameters <span>{getHelpText()}</span>
-          </label>
-          <textarea disabled={true} value={parameters.join(", ")} className="form-control" rows={3} />
-          <div className="bottom-zoom-btns">
-            <Button
-              size="sm"
-              className="mt-1 ml-2 px-2"
-              style={{ height: "99%" }}
-              variant="primary"
-              onClick={() => {
-                refreshParameters();
-              }}
-            >
-              Refresh
-            </Button>
-          </div>
-        </>
-      );
-    }
-  };
-
   if (terraformList === null || terraformList.length === 0) {
     return null;
   }
@@ -167,7 +167,9 @@ function StepConfigTerraformStepSelectInput({
         placeholderText={"Select Terraform Step"}
         disabled={disabled || isLoading || (!isLoading && (terraformList == null || terraformList.length === 0))}
       />
-      {getTerraformCustomParametersDisplay()}
+      <div onClick={() => refreshParameters()} className="text-muted ml-3 dropdown-data-fetch">
+        {getInfoText()}
+      </div>
     </div>
   );
 }
