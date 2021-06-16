@@ -7,6 +7,11 @@ scriptsActions.getScripts = async (getAccessToken, cancelTokenSource) => {
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+scriptsActions.getScriptById = async (getAccessToken, cancelTokenSource, id) => {
+  const apiUrl = `/registry/scripts/${id}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 scriptsActions.createScriptV2 = async (getAccessToken, cancelTokenSource, parameterModel) => {
   const postBody = {
     ...parameterModel.getPersistData()
@@ -28,6 +33,11 @@ scriptsActions.updateScriptV2 = async (getAccessToken, cancelTokenSource, parame
 scriptsActions.deleteScriptV2 = async (getAccessToken, cancelTokenSource, parameterModel) => {
   const apiUrl = `/registry/script/${parameterModel.getData("_id")}`;
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+scriptsActions.getScriptValueFromVault = async (getAccessToken, cancelTokenSource, id) => {
+  const apiUrl = `/registry/script/${id}/value`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 export default scriptsActions;
