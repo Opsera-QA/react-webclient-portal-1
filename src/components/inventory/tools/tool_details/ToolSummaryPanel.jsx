@@ -8,6 +8,7 @@ import RegistryToolRoleAccessInput from "components/inventory/tools/tool_details
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import VaultSummaryPageInputField from "./input/VaultSummaryPageInputField";
+import TagField from "components/common/fields/multiple_items/TagField";
 
 function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessRules }) {
   useEffect(() => {
@@ -34,6 +35,18 @@ function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessR
         <Col lg={6}>
           <TextFieldBase dataObject={toolData} fieldName={"tool_identifier"} />
         </Col>
+        <Col lg={12} sm={12}>
+          <TextFieldBase dataObject={toolData} fieldName={"description"} />
+        </Col>
+        <Col sm={12} lg={6}>
+          <TextFieldBase dataObject={toolData} fieldName={"costCenter"}/>
+        </Col>
+        <Col sm={12} lg={6}>
+          <TagField dataObject={toolData} fieldName={"tags"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={toolData} fieldName={"classification"} />
+        </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={toolData} fieldName={"tool_type_identifier"} />
         </Col>
@@ -42,12 +55,6 @@ function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessR
         </Col>
         <Col lg={6}>
           <DateFieldBase dataObject={toolData} fieldName={"createdAt"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={toolData} fieldName={"classification"} />
-        </Col>
-        <Col lg={12}>
-          <TextFieldBase dataObject={toolData} fieldName={"description"} />
         </Col>
         <Col lg={6}>
           <RegistryToolRoleAccessInput dataObject={toolData} setDataObject={setToolData} disabled={!authorizedAction("edit_access_roles", toolData?.data)} />

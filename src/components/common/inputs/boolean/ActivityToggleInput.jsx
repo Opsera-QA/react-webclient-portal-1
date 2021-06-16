@@ -6,7 +6,7 @@ import InfoText from "components/common/inputs/info_text/InfoText";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 function ActivityToggleInput({ fieldName, dataObject, setDataObject, disabled }) {
-    const [field] = useState(dataObject.getFieldById(fieldName));
+  const [field] = useState(dataObject.getFieldById(fieldName));
 
   const validateAndSetData = (value) => {
     let newDataObject = dataObject;
