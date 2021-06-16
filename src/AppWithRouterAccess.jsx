@@ -20,7 +20,7 @@ import Analytics from "./components/analytics/Analytics";
 import Logs from "./components/logs/Logs";
 import Update from "./components/update/Update";
 import AdminTools from "./components/admin/AdminTools";
-import DeleteTools from "./components/admin/delete_tools/DeleteTools";
+import DeleteTools from "./components/settings/delete_tools/DeleteTools";
 import RegisteredUsersManagement from "./components/admin/registered_users/RegisteredUsersManagement";
 import RegisteredUserDetailView
   from "./components/admin/registered_users/registered_user_details/RegisteredUserDetailView";
@@ -324,7 +324,6 @@ const AppWithRouterAccess = () => {
 
                   {/* Administration Pages */}
                   <SecureRoute path="/admin" exact component={AdminTools}/>
-                  <SecureRoute path="/admin/delete" component={DeleteTools}/>
                   <SecureRoute path="/admin/manage_systems" component={ManageSystems}/>
                   <SecureRoute path="/admin/registered-users" exact component={RegisteredUsersManagement}/>
                   <SecureRoute path="/admin/registered-users/:id" exact component={RegisteredUserDetailView}/>
@@ -385,6 +384,7 @@ const AppWithRouterAccess = () => {
                                component={ProjectMappingDetailView}/>
                   <SecureRoute path="/settings/data_mapping/user_mapping/details/:usersMappingId" exact
                                component={UsersMappingDetailView}/>
+                  <SecureRoute path="/settings/delete" component={DeleteTools}/>
 
                   <SecureRoute path="/admin/demo/api" component={ApiConnectionDemo}/>
                   <SecureRoute path="/demo/table" component={CommonTableDemo}/>

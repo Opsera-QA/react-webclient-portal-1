@@ -557,6 +557,18 @@ export const getGitTaskTableRunButtonColumn = (accessor = "row", headerText, var
   };
 };
 
+export const getDeletePlatformToolTableButtonColumn = (accessor = "row", headerText, variant, buttonText, buttonFunction, className) => {
+  return {
+    Header: headerText,
+    accessor: accessor,
+    Cell: function getDeleteButton(row) {
+      return <Button size={"sm"} variant={variant} disabled={row?.data[row?.row?.index].toolStatus !== "ACTIVE"} onClick={() => {buttonFunction(row?.data[row?.row?.index]);}} >
+                {buttonText}
+            </Button>;
+    },
+    class: className ? className :  "no-wrap-inline py-1"
+  };
+};
 export const getTableBooleanIconColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
