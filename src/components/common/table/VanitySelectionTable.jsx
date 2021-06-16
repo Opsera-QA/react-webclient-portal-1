@@ -7,7 +7,7 @@ import {persistUpdatedRecord} from "components/common/buttons/saving/saving-help
 import {DialogToastContext} from "contexts/DialogToastContext";
 import UnsavedChangesModal from "components/common/modal/UnsavedChangesModal";
 
-function VanitySelectionTable({ columns, getNewModel, parentModel, setParentModel, loadData, data, noDataMessage, rowStyling, isLoading, sort, paginationModel, setPaginationModel, tableHeight }) {
+function VanitySelectionTable({ columns, getNewModel, parentModel, setParentModel, loadData, data, noDataMessage, rowStyling, isLoading, sort, paginationModel, setPaginationModel, tableHeight, rowSelection }) {
   const toastContext = useContext(DialogToastContext);
   const selectedItemRef = useRef({});
 
@@ -104,6 +104,7 @@ function VanitySelectionTable({ columns, getNewModel, parentModel, setParentMode
       >
         <VanitySelectionTableBase
           selectedItemId={parentModel?.getData("_id")}
+          rowSelection={rowSelection}
           noDataMessage={noDataMessage}
           data={data}
           isLoading={isLoading}
@@ -142,7 +143,13 @@ VanitySelectionTable.propTypes = {
   tableHeight: PropTypes.string,
   getNewModel: PropTypes.func,
   setParentModel: PropTypes.func,
-  parentModel: PropTypes.object
+  parentModel: PropTypes.object,
+  rowSelection: PropTypes.string
+};
+
+// TODO: This should probably be set to row and just passed in as complex when need be.
+VanitySelectionTable.defaultProps = {
+  rowSelection: "complex"
 };
 
 export default VanitySelectionTable;

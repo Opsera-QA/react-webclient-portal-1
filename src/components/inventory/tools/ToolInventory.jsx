@@ -13,7 +13,7 @@ import ToolRegistryHelpDocumentation
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
+import {faFileCode, faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
 
 function ToolInventory({ customerAccessRules, handleTabClick }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -102,6 +102,7 @@ function ToolInventory({ customerAccessRules, handleTabClick }) {
         <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Tools"} />
         <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Platform"} />
         <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Parameters"} />
+        {/*<NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Scripts"} />*/}
       </NavigationTabContainer>
     );
   };

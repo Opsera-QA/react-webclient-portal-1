@@ -6,20 +6,21 @@ import toolFilterMetadata from "components/inventory/tools/tool-filter-metadata"
 import PropTypes from "prop-types";
 import axios from "axios";
 import parametersActions from "components/inventory/parameters/parameters-actions";
-import ParametersView from "components/inventory/parameters/ParametersView";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
+import {faFileCode, faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
+import ScriptsView from "components/inventory/scripts/ScriptsView";
+import scriptsActions from "components/inventory/scripts/scripts-actions";
 
-function ParametersInventory({ customerAccessRules, handleTabClick }) {
+function ScriptsInventory({ customerAccessRules, handleTabClick }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
-  const [parameterList, setParameterList] = useState([]);
-  const [parameterMetadata, setParameterMetadata] = useState(undefined);
-  const [parameterRoleDefinitions, setParameterRoleDefinitions] = useState(undefined);
-  const [parameterFilterModel, setParameterFilterModel] = useState(new Model({ ...toolFilterMetadata.newObjectFields }, toolFilterMetadata, false));
+  const [scriptList, setScriptList] = useState([]);
+  const [scriptMetadata, setScriptMetadata] = useState(undefined);
+  const [scriptRoleDefinitions, setScriptRoleDefinitions] = useState(undefined);
+  const [scriptFilterModel, setParameterFilterModel] = useState(new Model({ ...toolFilterMetadata.newObjectFields }, toolFilterMetadata, false));
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -32,7 +33,7 @@ function ParametersInventory({ customerAccessRules, handleTabClick }) {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(parameterFilterModel, source).catch((error) => {
+    loadData(scriptFilterModel, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -44,10 +45,10 @@ function ParametersInventory({ customerAccessRules, handleTabClick }) {
     };
   }, []);
 
-  const loadData = async (filterDto = parameterFilterModel, cancelSource = cancelTokenSource) => {
+  const loadData = async (filterDto = scriptFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setLoading(true);
-      await getParameters(filterDto, cancelSource);
+      await getScripts(filterDto, cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
@@ -60,13 +61,13 @@ function ParametersInventory({ customerAccessRules, handleTabClick }) {
     }
   };
 
-  const getParameters = async (filterDto = parameterFilterModel, cancelSource = cancelTokenSource) => {
-    const response = await parametersActions.getParameters(getAccessToken, cancelSource, filterDto);
+  const getScripts = async (filterDto = scriptFilterModel, cancelSource = cancelTokenSource) => {
+    const response = await scriptsActions.getScripts(getAccessToken, cancelSource, filterDto);
 
     if (isMounted?.current === true && response?.data?.data) {
-      setParameterList([...response.data.data]);
-      setParameterMetadata(response.data.metadata);
-      setParameterRoleDefinitions(response.data.roles);
+      setScriptList([...response.data.data]);
+      setScriptMetadata(response.data.metadata);
+      setScriptRoleDefinitions(response.data.roles);
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.count);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
@@ -80,7 +81,7 @@ function ParametersInventory({ customerAccessRules, handleTabClick }) {
         <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={"parameters"} tabText={"Tools"} />
         <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={"parameters"} tabText={"Platform"} />
         <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={"parameters"} tabText={"Parameters"} />
-        {/*<NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"parameters"} tabText={"Scripts"} />*/}
+        <NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Scripts"} />
       </NavigationTabContainer>
     );
   };
@@ -89,24 +90,24 @@ function ParametersInventory({ customerAccessRules, handleTabClick }) {
   return (
     <ScreenContainer
       navigationTabContainer={getNavigationTabContainer()}
-      breadcrumbDestination={"customParameters"}
+      breadcrumbDestination={"scripts"}
     >
-      <ParametersView
+      <ScriptsView
         isLoading={isLoading}
         loadData={loadData}
-        parameterList={parameterList}
-        setParameterList={setParameterList}
-        parameterMetadata={parameterMetadata}
+        scriptList={scriptList}
+        setScriptList={setScriptList}
+        scriptMetadata={scriptMetadata}
         customerAccessRules={customerAccessRules}
-        parameterRoleDefinitions={parameterRoleDefinitions}
+        scriptRoleDefinitions={scriptRoleDefinitions}
       />
     </ScreenContainer>
   );
 }
 
-ParametersInventory.propTypes = {
+ScriptsInventory.propTypes = {
   customerAccessRules: PropTypes.object,
   handleTabClick: PropTypes.func
 };
 
-export default ParametersInventory;
+export default ScriptsInventory;
