@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 export const SCRIPT_LIBRARY_LANGUAGES = [
-  {text: "cli", value: "CLI"},
-  {text: "powershell", value: "Powershell"},
-  {text: "c_sharp", value: "C#"},
-  {text: "f_sharp", value: "F#"},
-  {text: "python", value: "Python"}
+  {value: "cli", text: "CLI"},
+  {value: "powershell", text: "Powershell"},
+  {value: "c_sharp", text: "C#"},
+  {value: "f_sharp", text: "F#"},
+  {value: "python", text: "Python"}
 ];
 
 function ScriptLanguageSelectInput({fieldName, dataObject, setDataObject, disabled}) {

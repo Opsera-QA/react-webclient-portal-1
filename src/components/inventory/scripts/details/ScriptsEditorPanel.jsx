@@ -5,14 +5,14 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
-import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import DeleteModelButtonWithConfirmation from "components/common/buttons/delete/DeleteModelButtonWithConfirmationModal";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
-import VisibleVaultTextInput from "components/common/inputs/text/VisibleVaultTextInput";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
+import ScriptLanguageSelectInput
+  from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
 
 function ScriptsEditorPanel({ scriptModel, scriptRoleDefinitions, handleClose }) {
   const { getAccessRoleData } = useContext(AuthContext);
@@ -62,9 +62,9 @@ function ScriptsEditorPanel({ scriptModel, scriptRoleDefinitions, handleClose })
     const userRoleAccess = await getAccessRoleData();
     if (isMounted?.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
-      const deleteAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "delete_parameter", scriptModel.getData("owner"), scriptModel.getData("roles"), scriptRoleDefinitions);
+      const deleteAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "delete_script", scriptModel.getData("owner"), scriptModel.getData("roles"), scriptRoleDefinitions);
       setCanDelete(deleteAllowed);
-      const editAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "update_parameter", scriptModel.getData("owner"), scriptModel.getData("roles"), scriptRoleDefinitions);
+      const editAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "update_script", scriptModel.getData("owner"), scriptModel.getData("roles"), scriptRoleDefinitions);
       setCanEdit(editAllowed);
     }
   };
@@ -90,7 +90,7 @@ function ScriptsEditorPanel({ scriptModel, scriptRoleDefinitions, handleClose })
       <Row>
         <Col md={12} lg={scriptData?.isNew() ? 4 : 5}>
           <TextInputBase disabled={!scriptData?.isNew()} setDataObject={setScriptData} dataObject={scriptData} fieldName={"name"}/>
-          {/*<BooleanToggleInput setDataObject={setScriptData} dataObject={scriptData} fieldName={"vaultEnabled"} disabled={!scriptData?.isNew()}/>*/}
+          <ScriptLanguageSelectInput setDataObject={setScriptData} dataObject={scriptData} />
         </Col>
         <Col md={12} lg={scriptData?.isNew() ? 8 : 7} className={"my-2"}>
           <RoleAccessInput disabled={canEdit !== true} dataObject={scriptData} setDataObject={setScriptData} fieldName={"roles"} />
