@@ -65,29 +65,29 @@ function ToolEditorPanel({ toolData, handleClose }) {
       return (
         <>
           <Col lg={6}>
-            <RegistryToolOrganizationInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
+            <RegistryToolOrganizationInput setDataObject={setToolDataDto} dataObject={toolDataDto}/>
           </Col>
           <Col lg={12}>
-            <RoleAccessInput dataObject={toolDataDto} setDataObject={setToolDataDto} fieldName={"roles"} />
-          </Col> 
-        </>
-      );
-    } else {
-      return (
-        <>
-          <Col lg={6}></Col>
-          <Col lg={6}>
-            <RegistryToolLocationInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
-          </Col>
-          <Col lg={6}>
-            <RegistryToolContactInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
-          </Col>
-          <Col lg={6}>
-            <RegistryToolApplicationsInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
+            <RoleAccessInput dataObject={toolDataDto} setDataObject={setToolDataDto} fieldName={"roles"}/>
           </Col>
         </>
       );
     }
+
+    return (
+      <>
+        <Col lg={6}/>
+        <Col lg={6}>
+          <RegistryToolLocationInput setDataObject={setToolDataDto} dataObject={toolDataDto}/>
+        </Col>
+        <Col lg={6}>
+          <RegistryToolContactInput setDataObject={setToolDataDto} dataObject={toolDataDto}/>
+        </Col>
+        <Col lg={6}>
+          <RegistryToolApplicationsInput setDataObject={setToolDataDto} dataObject={toolDataDto}/>
+        </Col>
+      </>
+    );
   };
 
   return (
@@ -97,9 +97,9 @@ function ToolEditorPanel({ toolData, handleClose }) {
       updateRecord={updateTool}
       setRecordDto={setToolDataDto}
       isLoading={isLoading}
+      showBooleanToggle={true}
       handleClose={handleClose}
     >
-      <ActivityToggleInput setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"active"} />
       <Row>
         <Col lg={6}>
           <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"name"} />
