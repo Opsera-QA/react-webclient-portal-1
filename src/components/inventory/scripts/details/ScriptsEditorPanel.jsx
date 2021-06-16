@@ -12,6 +12,7 @@ import VanityEditorPanelContainer from "components/common/panels/detail_panel_co
 import VisibleVaultTextInput from "components/common/inputs/text/VisibleVaultTextInput";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 
 function ScriptsEditorPanel({ scriptModel, scriptRoleDefinitions, handleClose }) {
   const { getAccessRoleData } = useContext(AuthContext);
@@ -89,11 +90,15 @@ function ScriptsEditorPanel({ scriptModel, scriptRoleDefinitions, handleClose })
       <Row>
         <Col md={12} lg={scriptData?.isNew() ? 4 : 5}>
           <TextInputBase disabled={!scriptData?.isNew()} setDataObject={setScriptData} dataObject={scriptData} fieldName={"name"}/>
-          {/*<VisibleVaultTextInput disabled={canEdit !== true} setDataObject={setScriptData} dataObject={scriptData} fieldName={"value"}/>*/}
           {/*<BooleanToggleInput setDataObject={setScriptData} dataObject={scriptData} fieldName={"vaultEnabled"} disabled={!scriptData?.isNew()}/>*/}
         </Col>
         <Col md={12} lg={scriptData?.isNew() ? 8 : 7} className={"my-2"}>
           <RoleAccessInput disabled={canEdit !== true} dataObject={scriptData} setDataObject={setScriptData} fieldName={"roles"} />
+        </Col>
+      </Row>
+      <Row>
+        <Col md={8}>
+          <TextAreaInput disabled={canEdit !== true} setDataObject={setScriptData} dataObject={scriptData} fieldName={"value"}/>
         </Col>
       </Row>
     </VanityEditorPanelContainer>
