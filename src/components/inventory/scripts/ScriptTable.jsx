@@ -49,6 +49,7 @@ function ScriptTable({ data, scriptMetadata, setScriptData, scriptData, loadData
       setColumns(
         [
           getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
+          getTableTextColumn(getField(fields, "type"), "no-wrap-inline"),
         ]
       );
     }
