@@ -26,7 +26,6 @@ paths.siteNotificationManager = paths.admin + "/site-notifications";
 paths.siteNotificationDetailView = paths.siteNotificationManagement + "/details/";
 
 paths.toolManagement = paths.admin + "/tools";
-paths.deleteTools = paths.admin + "/delete/";
 paths.toolCategoryDetailView = paths.toolManagement + "/types/details/";
 paths.toolIdentifierDetailView = paths.toolManagement + "/identifiers/details/";
 
@@ -67,6 +66,7 @@ paths.ldapUserDetailView = paths.ldapUserManagement;
 paths.ldapGroupManagement = paths.accountSettings + "/groups";
 paths.ldapGroupDetailView = paths.ldapUserManagement;
 paths.tagManagement = paths.accountSettings + "/tags";
+paths.deleteTools = paths.accountSettings + "/delete/";
 paths.tagDetailView = paths.tagManagement + "/details/";
 paths.organizationManagement = paths.accountSettings + "/organizations";
 paths.organizationDetailView = paths.organizationManagement + "/details/";

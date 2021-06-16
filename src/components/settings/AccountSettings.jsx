@@ -66,7 +66,8 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"} visible={!isSassUser()} />
           <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"} visible={!isSassUser()}/>
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
-          <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
+          <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>        
+          <BreadcrumbPageLink breadcrumbDestination={"deleteTools"} />
         </>
       );
     }
@@ -83,7 +84,8 @@ function AccountSettings() {
           <BreadcrumbPageLink breadcrumbDestination={"myUserRecord"} visible={!isSassUser()}/>
           <BreadcrumbPageLink breadcrumbDestination={"organizationManagement"} visible={!isSassUser() || !envIsProd}/>
           {/*<BreadcrumbPageLink breadcrumbDestination={"ldapOrganizationAccountManagement"} />*/}
-          <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>
+          <BreadcrumbPageLink breadcrumbDestination={"tagManagement"}/>       
+          <BreadcrumbPageLink breadcrumbDestination={"deleteTools"} />
         </>
       );
     }
