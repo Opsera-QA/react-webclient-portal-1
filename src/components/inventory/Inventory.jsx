@@ -35,8 +35,8 @@ function Inventory() {
         return <PlatformInventory handleTabClick={handleTabClick} />;
       case "parameters":
         return <ParametersInventory customerAccessRules={customerAccessRules} handleTabClick={handleTabClick} />;
-      // case "scripts":
-      //   return <ScriptsInventory customerAccessRules={customerAccessRules} handleTabClick={handleTabClick} />;
+      case "scripts":
+        return <ScriptsInventory customerAccessRules={customerAccessRules} handleTabClick={handleTabClick} />;
       default:
         return null;
     }

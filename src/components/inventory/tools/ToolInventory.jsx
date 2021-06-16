@@ -102,7 +102,7 @@ function ToolInventory({ customerAccessRules, handleTabClick }) {
         <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Tools"} />
         <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Platform"} />
         <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Parameters"} />
-        {/*<NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Scripts"} />*/}
+        <NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Scripts"} />
       </NavigationTabContainer>
     );
   };

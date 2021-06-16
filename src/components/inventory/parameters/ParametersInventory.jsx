@@ -10,7 +10,7 @@ import ParametersView from "components/inventory/parameters/ParametersView";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
+import {faFileCode, faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
 
 function ParametersInventory({ customerAccessRules, handleTabClick }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -80,7 +80,7 @@ function ParametersInventory({ customerAccessRules, handleTabClick }) {
         <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={"parameters"} tabText={"Tools"} />
         <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={"parameters"} tabText={"Platform"} />
         <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={"parameters"} tabText={"Parameters"} />
-        {/*<NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"parameters"} tabText={"Scripts"} />*/}
+        <NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"parameters"} tabText={"Scripts"} />
       </NavigationTabContainer>
     );
   };

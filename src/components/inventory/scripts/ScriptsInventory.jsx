@@ -78,10 +78,10 @@ function ScriptsInventory({ customerAccessRules, handleTabClick }) {
   const getNavigationTabContainer = () => {
     return (
       <NavigationTabContainer>
-        <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={"parameters"} tabText={"Tools"} />
-        <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={"parameters"} tabText={"Platform"} />
-        <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={"parameters"} tabText={"Parameters"} />
-        <NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Scripts"} />
+        <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={"scripts"} tabText={"Tools"} />
+        <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={"scripts"} tabText={"Platform"} />
+        <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={"scripts"} tabText={"Parameters"} />
+        <NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"scripts"} tabText={"Scripts"} />
       </NavigationTabContainer>
     );
   };

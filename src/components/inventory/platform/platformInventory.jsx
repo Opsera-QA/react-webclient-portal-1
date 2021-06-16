@@ -10,7 +10,7 @@ import ToolRegistryHelpDocumentation
   from "components/common/help/documentation/tool_registry/ToolRegistryHelpDocumentation";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
+import {faFileCode, faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 
@@ -124,7 +124,7 @@ function PlatformInventory ({ handleTabClick }) {
         <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={"platform"} tabText={"Tools"} />
         <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={"platform"} tabText={"Platform"} />
         <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={"platform"} tabText={"Parameters"} />
-        {/*<NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"platform"} tabText={"Scripts"} />*/}
+        <NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"platform"} tabText={"Scripts"} />
       </NavigationTabContainer>
     );
   };
