@@ -25,7 +25,7 @@ const roleTypes = [
 ];
 
 function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }) {
-  const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
+  const {getUserRecord, getAccessToken, setAccessRoles, isSassUser} = useContext(AuthContext);
   const [userList, setUserList] = useState([]);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -441,7 +441,7 @@ function RoleAccessInput({ fieldName, dataObject, setDataObject, helpComponent }
     }
   };
 
-  if (field == null) {
+  if (field == null || isSassUser() === true) {
     return <></>;
   }
 
