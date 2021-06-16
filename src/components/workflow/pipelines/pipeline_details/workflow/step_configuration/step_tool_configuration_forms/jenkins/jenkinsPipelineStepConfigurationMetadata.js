@@ -142,6 +142,14 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       id:"terraformStepId",
       label:"Terraform Step"
+    },
+    {
+      label: "Parameters",
+      id: "customParameters"
+    },
+    {
+      label: "Use Terraform Output",
+      id: "useTerraformOutput"
     }
   ],
   newModelBase: {
@@ -187,7 +195,8 @@ const jenkinsPipelineStepConfigurationMetadata = {
     workspaceDeleteFlag:false,
     gitBranch:"",
     customParameters:[],
-    terraformStepId:""
+    terraformStepId:"",
+    useTerraformOutput: false
   }
 };
 
