@@ -10,9 +10,14 @@ import axios from "axios";
 import { defaultConfig, getColorById, assignBooleanColors,
          adjustBarWidth } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
+import Model from "../../../../../../core/data_model/model";
+import PipelineByStatusTableMetadata from "components/insights/charts/opsera/bar_chart/pipeline_by_status/pipeline-by-status-table-metadata";
+import ChartDetailsOverlay from "../../../detail_overlay/ChartDetailsOverlay";
+import { DialogToastContext } from "../../../../../../contexts/DialogToastContext";
 
 function OpseraPipelineByStatusBarChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis}) {
   const {getAccessToken} = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -65,20 +70,36 @@ function OpseraPipelineByStatusBarChart({ kpiConfiguration, setKpiConfiguration,
     }
   };
 
+  const onRowSelect = (data) => {
+    let kpiName = "";
+    let pipeline = data.indexValue;
+    if (data.id === "Successful") {kpiName = "status-by-pipeline-successful";}
+    if (data.id === "Failed") {kpiName = "status-by-pipeline-failed";}
+    const chartModel = new Model({...PipelineByStatusTableMetadata.newObjectFields}, PipelineByStatusTableMetadata, false);
+    toastContext.showOverlayPanel(
+      <ChartDetailsOverlay
+        dashboardData={dashboardData}
+        kpiConfiguration={kpiConfiguration}
+        chartModel={chartModel}
+        kpiIdentifier={kpiName}
+        pipelineName={pipeline} />);
+  };
+
+
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
     }
 
     return (
-      <div className="new-chart mb-3" style={{height: "300px"}}>
+      <div className="new-chart mb-3 pointer" style={{height: "300px"}}>
         <ResponsiveBar
           data={metrics}
           {...defaultConfig("Pipeline Name", "Number of Pipelines", 
                       true, false, "cutoffString", "wholeNumbers")}
           {...config(getColorById)}
           {...adjustBarWidth(metrics, false)}
-          onClick={() => setShowModal(true)}
+          onClick={(data) => onRowSelect(data)}
           tooltip={({indexValue, color, value, id}) => <ChartTooltip 
                                         titles = {["Pipeline", `${id} Builds`]}
                                         values = {[indexValue, value]}

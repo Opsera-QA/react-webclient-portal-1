@@ -1595,6 +1595,13 @@ div.data-blocks-ellipses {
 
 .full-screen-overlay-panel-body {
     overflow-y: auto;
+    /* full-height - (10px x 2 top + bottom margins - button panel height) */
+    height: calc(100vh - 20px - 70px);
+    max-height: calc(100vh - 20px - 70px);
+}
+
+.full-screen-overlay-panel-body-with-buttons {
+    overflow-y: auto;
     /* full-height - (10px x 2 top + bottom margins - title height - button panel height) */
     height: calc(100vh - 20px - 48px - 63px);
     max-height: calc(100vh - 20px - 48px - 63px);

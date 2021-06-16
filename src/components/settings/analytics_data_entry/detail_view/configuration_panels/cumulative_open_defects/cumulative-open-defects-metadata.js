@@ -59,13 +59,13 @@ const cumulativeOpenDefectsMetadata = {
     },
   ],
   newObjectFields: {
-    domain: "",
-    application: "",
+    domain: [],
+    application: [],
     pipeline_id: "",
     from: new Date(),
     to: new Date(),
-    sprint: "",
-    release: "",
+    sprint: [],
+    release: [],
     total_defects: 0,
     valid_defects_open: 0,
     valid_defects_closed: 0

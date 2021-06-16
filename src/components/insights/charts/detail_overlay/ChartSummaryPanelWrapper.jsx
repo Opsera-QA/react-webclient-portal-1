@@ -10,6 +10,9 @@ import OpseraDeploymentFreqStatsSuccessSummaryPanel
   from "../opsera/OpseraDeploymentFreqStats/OpseraDeploymentFreqStatsSuccessSummaryPanel";
 import OpseraDeploymentFreqStatsFailureSummaryPanel
   from "../opsera/OpseraDeploymentFreqStats/OpseraDeploymentFreqStatsFailureSummaryPanel";
+import PipelineByStatusSuccessfulTable from "../opsera/bar_chart/pipeline_by_status/PipelineByStatusSuccessfulTable";
+import PipelineByStatusFailedTable from "../opsera/bar_chart/pipeline_by_status/PipelineByStatusFailedTable";
+
 function ChartSummaryPanelWrapper({ dashboardData, kpiConfiguration, chartModel, kpiIdentifier, pipelineName, currentDate, setActiveTab }) {
   const getStepConfigurationSummary = () => {
     switch (kpiIdentifier) {
@@ -124,6 +127,26 @@ function ChartSummaryPanelWrapper({ dashboardData, kpiConfiguration, chartModel,
           <OpseraDeploymentFreqStatsFailureSummaryPanel
             chartModel={chartModel}
             setActiveTab={setActiveTab}
+          />
+        );
+      case "status-by-pipeline-successful":
+        return (
+          <PipelineByStatusSuccessfulTable
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            chartModel={chartModel}
+            setActiveTab={setActiveTab}
+            pipelineName={pipelineName}
+          />
+        );
+      case "status-by-pipeline-failed":
+        return (
+          <PipelineByStatusFailedTable
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            chartModel={chartModel}
+            setActiveTab={setActiveTab}
+            pipelineName={pipelineName}
           />
         );
       default:

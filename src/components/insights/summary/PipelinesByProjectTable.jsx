@@ -13,7 +13,7 @@ import {faProjectDiagram} from "@fortawesome/pro-light-svg-icons";
 import ProjectDetailsMetadata from "./project-details-metadata";
 import FilterContainer from "components/common/table/FilterContainer";
 
-function ProjectDetails({dashboardData, setDashboardData}) {
+function PipelinesByProjectTable({dashboardData, setDashboardData}) {
   const fields = ProjectDetailsMetadata.fields;
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -135,7 +135,7 @@ function ProjectDetails({dashboardData, setDashboardData}) {
   );
 }
 
-ProjectDetails.propTypes = {
+PipelinesByProjectTable.propTypes = {
   kpiConfiguration: PropTypes.object,
   dashboardData: PropTypes.object,
   index: PropTypes.number,
@@ -143,4 +143,4 @@ ProjectDetails.propTypes = {
   setKpis: PropTypes.func
 };
 
-export default ProjectDetails;
+export default PipelinesByProjectTable;

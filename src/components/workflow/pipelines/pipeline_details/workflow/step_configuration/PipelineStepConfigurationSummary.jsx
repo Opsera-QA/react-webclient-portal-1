@@ -140,6 +140,9 @@ import terrascanStepFormMetadata from "./step_tool_configuration_forms/terrascan
 import AzureDevopsPipelineStepConfigurationSummary
   from "./step_tool_configuration_forms/azure_devops/AzureDevopsPipelineStepConfigurationSummary";
 import azureDevopsStepFormMetadata from "./step_tool_configuration_forms/azure_devops/azureDevops-stepForm-metadata";
+import KafkaConnectPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/kafka_connect/KafkaConnectPipelineStepConfigurationSummaryPanel";
+import kafkaConnectStepFormMetadata from "./step_tool_configuration_forms/kafka_connect/kafkaConnect-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -408,6 +411,13 @@ function PipelineStepConfigurationSummary({
           <AzureDevopsPipelineStepConfigurationSummary
             pipelineData={pipelineData}
             azureDevopsPipelineDataObject={getModelWrappedObject(azureDevopsStepFormMetadata)}
+          />
+        );
+      case "kafka_connect":
+        return (
+          <KafkaConnectPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            kafkaConnectPipelineDataObject={getModelWrappedObject(kafkaConnectStepFormMetadata)}
           />
         );
       default:
