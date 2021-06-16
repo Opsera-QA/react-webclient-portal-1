@@ -78,6 +78,10 @@ const jenkinsPipelineStepConfigurationMetadata = {
       label: "Jenkins Agent",
       id: "agentLabels",
     },
+    {
+      label: "Terraform Step",
+      id: "terraformStepId"
+    },
   ],
   newModelBase: {
     jobType: "",
@@ -116,6 +120,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
     sfdcUnitTestType: "",
     workspace: "",
     agentLabels:"",
+    terraformStepId: ""
   }
 };
 
