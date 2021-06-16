@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen, faSave } from "@fortawesome/free-solid-svg-icons";
 import "components/inventory/tools/tools.css";
 
+import WarningDialog from "../../../../../../../common/status_notifications/WarningDialog";
 import JobTypeBuild from "../job-type-build.js";
 import JobTypeCodeScan from "../job-type-code-scan.js";
 import JenkinsJobTypeCypressUnitTesting from "../job-type-cypress-unit-testing.js";
@@ -306,6 +307,14 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData, handleClose }) {
 
   return (
     <>
+       { viewForm || Object.keys(jobData).length > 0 && 
+        <WarningDialog
+        warningMessage={
+          "Editing this template doesn't update the pipeline configuration, please update the job from pipeline step before running the pipeline."
+        }
+        alignment={"toolRegistryWarning"}
+        />
+      }
       {viewForm && <ButtonToolbar className="justify-content-between my-2 ml-2 mr-2">
         <ButtonGroup>
           <Button size="sm" className="mr-2" variant="primary" onClick={() => {
@@ -330,7 +339,7 @@ function JenkinsJobEditorPanel({ toolData, jobData, loadData, handleClose }) {
             Job Type
           </Form.Label>
           <Col sm="9" className="text-right">
-            <Form.Control as="select" disabled={viewForm} value={formType}
+            <Form.Control as="select" disabled={viewForm || Object.keys(jobData).length > 0} value={formType}
                           onChange={e => handleFormTypeChange(e.target.value)}>
               <option name="Select One" value="" disabled={true}>Select One</option>
               {jobTypes.map((option, i) => (
