@@ -1,6 +1,8 @@
 import React, {useEffect} from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
+import TagField from "components/common/fields/multiple_items/TagField";
+import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
@@ -26,7 +28,12 @@ function ToolAttributesPanel({ toolData, setActiveTab, customerAccessRules }) {
       settingsTab="attribute_settings"
     >
       <Row>
-        
+      <Col sm={12} lg={6}>
+          <TextFieldBase dataObject={toolData} fieldName={"costCenter"}/>
+        </Col>
+        <Col sm={12} lg={6}>
+          <TagField dataObject={toolData} fieldName={"tags"}/>
+        </Col> 
         <Col sm={12} lg={6}>
           <NameValueFieldBase dataObject={toolData} fieldName={"licensing"} icon={faIdCard}/>
         </Col>
