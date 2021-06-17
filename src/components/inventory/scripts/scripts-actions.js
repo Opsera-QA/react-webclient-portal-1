@@ -2,9 +2,17 @@ import baseActions from "utils/actionsBase";
 
 const scriptsActions = {};
 
-scriptsActions.getScripts = async (getAccessToken, cancelTokenSource) => {
+scriptsActions.getScripts = async (getAccessToken, cancelTokenSource, filterModel, fields) => {
+  const search = filterModel?.getData("search");
+  const urlParams = {
+    params: {
+      search: search,
+      fields: fields
+    },
+  };
+
   const apiUrl = "/registry/scripts";
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 scriptsActions.getScriptById = async (getAccessToken, cancelTokenSource, id) => {
