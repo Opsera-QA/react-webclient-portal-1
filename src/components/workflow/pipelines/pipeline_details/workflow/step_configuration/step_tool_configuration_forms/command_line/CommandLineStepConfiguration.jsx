@@ -28,9 +28,6 @@ import CommandLineSourceScriptToggleInput
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import WorkspaceDeleteToggleInput from "./inputs/WorkspaceDeleteToggleInput";
 import StepConfigTerraformStepSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/common/inputs/StepConfigTerraformStepSelectInput";
-import ParameterSelectInput from "../../../../../../../common/list_of_values_input/parameters/ParameterSelectInput";
-import ParameterMappingInputBase
-  from "../../../../../../../common/list_of_values_input/parameters/ParameterMappingInputBase";
 import { faFileCode } from "@fortawesome/pro-light-svg-icons";
 import ParameterSelectListInputBase
   from "../../../../../../../common/list_of_values_input/parameters/ParameterSelectListInputBase";
