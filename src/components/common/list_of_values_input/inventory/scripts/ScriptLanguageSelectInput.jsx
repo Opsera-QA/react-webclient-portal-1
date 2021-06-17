@@ -10,6 +10,20 @@ export const SCRIPT_LIBRARY_LANGUAGES = [
   {value: "python", text: "Python"}
 ];
 
+export const getScriptLanguageDisplayText = (value) => {
+  if (value == null || value === "") {
+    return "";
+  }
+
+  const foundScriptLanguage = SCRIPT_LIBRARY_LANGUAGES.find((language) => {return language.value === value;});
+
+  if (foundScriptLanguage == null) {
+    return "";
+  }
+
+  return (foundScriptLanguage.text);
+};
+
 function ScriptLanguageSelectInput({fieldName, dataObject, setDataObject, disabled}) {
   return (
     <SelectInputBase
