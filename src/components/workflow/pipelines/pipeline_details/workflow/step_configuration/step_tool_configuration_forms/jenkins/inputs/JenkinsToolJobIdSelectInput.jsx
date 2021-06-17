@@ -65,12 +65,12 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
   const renderNoJobsMessage = () => {
     if (jobsList.length === 0) {
       return (
-        <div className="form-text text-muted p-2">
+        <small className="form-text text-muted p-2">
           <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
           No jobs have been created for <span>{dataObject.getData("jenkinsUrl")}</span>. Please go to
           <Link to={"/inventory/tools/details/" + dataObject.getData("toolConfigId")}> Tool Registry</Link> and add
           credentials and register a job for this Jenkins in order to proceed.{" "}
-        </div>
+        </small>
       );
     }
   };
@@ -101,18 +101,18 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
   return (
     <>
       {renderOverlayTrigger()}
-      {renderNoJobsMessage()}
       <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
         setDataFunction={setDataFunction}
         setDataObject={setDataObject}
-        placeholderText={"Select Job Type"}
+        placeholderText={jobsList.length === 0 ? "No jobs have been created" :"Select Job Type"}
         selectOptions={jobsList}
         valueField="_id"
         textField="name"
-        disabled={disabled}
+        disabled={disabled || jobsList.length === 0 }
       />
+      {renderNoJobsMessage()}
     </>
   );
 }

@@ -25,8 +25,9 @@ function JenkinsStepConfiguration({
   stepTool,
   plan,
   stepId,
-  parentCallback,
+  createJob,
   closeEditorPanel,
+  pipelineId
 }) {
   const toastContext = useContext(DialogToastContext);
   const [jenkinsList, setJenkinsList] = useState([]);
@@ -63,10 +64,9 @@ function JenkinsStepConfiguration({
       setJenkinsStepConfigurationDto(jenkinsConfigurationData);
 
       // TODO: This should be metadata
-      if (job_type) {
         setJenkinsJobTypeDto(
           new Model(
-            { job_type: job_type },
+            { job_type: job_type ? job_type : '' },
             {
               fields: [
                 {
@@ -78,7 +78,6 @@ function JenkinsStepConfiguration({
             false
           )
         );
-      }
 
       if (threshold) {
         setThresholdType(threshold?.type);
@@ -94,20 +93,32 @@ function JenkinsStepConfiguration({
     }
   };
 
-  const callbackFunction = async () => {
-    setIsLoading(true);
 
-    const item = {
-      configuration: jenkinsStepConfigurationDto.getPersistData(),
-      threshold: {
-        type: thresholdType,
-        value: thresholdVal,
-      },
-      job_type: jenkinsJobTypeDto.getData("job_type"),
-    };
+  const handleCreateAndSave = async () => {
+    const toolId = jenkinsStepConfigurationDto.getData("toolConfigId");
+    console.log("saving and creating job for toolID: ", toolId);
+    if (toolId) {
+      // setLoading(true);
 
-    setIsLoading(false);
-    parentCallback(item);
+      const createJobPostBody = {
+        jobId: "",
+        pipelineId: pipelineId,
+        stepId: stepId,
+      };
+      console.log("createJobPostBody: ", createJobPostBody);
+
+      const toolConfiguration = {
+        configuration: jenkinsStepConfigurationDto.getPersistData(),
+        threshold: {
+          type: thresholdType,
+          value: thresholdVal,
+        },
+        job_type: jenkinsJobTypeDto.getData("job_type"),
+      };
+      console.log("item: ", toolConfiguration);
+
+      await createJob(toolId, toolConfiguration, stepId, createJobPostBody);
+    }
   };
 
   if (isLoading || jenkinsStepConfigurationDto == null) {
@@ -182,7 +193,7 @@ function JenkinsStepConfiguration({
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
       recordDto={jenkinsStepConfigurationDto}
-      persistRecord={callbackFunction}
+      persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
       <JenkinsToolConfigIdSelectInput
@@ -206,8 +217,9 @@ JenkinsStepConfiguration.propTypes = {
   stepTool: PropTypes.object,
   plan: PropTypes.array,
   stepId: PropTypes.string,
-  parentCallback: PropTypes.func,
+  createJob: PropTypes.func,
   closeEditorPanel: PropTypes.func,
+  pipelineId: PropTypes.string
 };
 
 export default JenkinsStepConfiguration;

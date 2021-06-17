@@ -51,5 +51,8 @@ JenkinsRepositorySelectInput.propTypes = {
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
 };
+JenkinsRepositorySelectInput.defaultProps = {
+  disabled: false,
+};
 
 export default JenkinsRepositorySelectInput;
