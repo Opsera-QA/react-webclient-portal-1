@@ -12,7 +12,7 @@ import DeleteModelButtonWithConfirmation from "components/common/buttons/delete/
 import RoleAccessInlineInputBase from "components/common/inline_inputs/roles/RoleAccessInlineInputBase";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
-import VisibleVaultTextInput from "components/common/inputs/text/VisibleVaultTextInput";
+import ParameterValueTextInput from "components/inventory/parameters/details/ParameterValueTextInput";
 import {meetsRequirements, ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
@@ -93,7 +93,7 @@ function ParametersEditorPanel({ parameterModel, parameterRoleDefinitions, handl
       <Row>
         <Col md={12} lg={parameterData?.isNew() ? 4 : 5}>
           <TextInputBase disabled={!parameterData?.isNew()} setDataObject={setParameterData} dataObject={parameterData} fieldName={"name"}/>
-          <VisibleVaultTextInput disabled={canEdit !== true} setDataObject={setParameterData} dataObject={parameterData} fieldName={"value"}/>
+          <ParameterValueTextInput disabled={canEdit !== true} setDataObject={setParameterData} dataObject={parameterData} fieldName={"value"}/>
           <BooleanToggleInput setDataObject={setParameterData} dataObject={parameterData} fieldName={"vaultEnabled"} disabled={!parameterData?.isNew()}/>
         </Col>
         <Col md={12} lg={parameterData?.isNew() ? 8 : 7} className={"my-2"}>
