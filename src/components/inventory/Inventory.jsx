@@ -3,6 +3,7 @@ import ToolInventory from "components/inventory/tools/ToolInventory";
 import PlatformInventory from "components/inventory/platform/platformInventory";
 import {AuthContext} from "contexts/AuthContext";
 import ParametersInventory from "components/inventory/parameters/ParametersInventory";
+import ScriptsInventory from "components/inventory/scripts/ScriptsInventory";
 
 function Inventory() {
   const { getUserRecord, setAccessRoles } = useContext(AuthContext);
@@ -34,6 +35,8 @@ function Inventory() {
         return <PlatformInventory handleTabClick={handleTabClick} />;
       case "parameters":
         return <ParametersInventory customerAccessRules={customerAccessRules} handleTabClick={handleTabClick} />;
+      // case "scripts":
+      //   return <ScriptsInventory customerAccessRules={customerAccessRules} handleTabClick={handleTabClick} />;
       default:
         return null;
     }

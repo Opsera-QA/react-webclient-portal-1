@@ -13,6 +13,10 @@ import {
 import SuccessIcon from "../../common/icons/table/SuccessIcon";
 import WarningIcon from "../../common/icons/table/WarningIcon";
 import FailIcon from "../../common/icons/table/FailIcon";
+import ArrowCircleDown from "../../common/icons/table/ArrowCircleDown";
+import ArrowCircleUp from "../../common/icons/table/ArrowCircleUp";
+import MinusCircle from "../../common/icons/table/MinusCircle";
+import PauseCircle from "../../common/icons/table/PauseCircle";
 import React from "react";
 import Model from "core/data_model/model";
 import PipelineTypesField from "components/common/form_fields/pipelines/PipelineTypesField";
@@ -512,6 +516,29 @@ export const getChartPipelineStatusColumn = (field, className) => {
   };
 };
 
+export const getChartTrendStatusColumn = (field, className) => {  
+  return {
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
+    Cell: function parseStatus(row) {    
+      let status = typeof row?.value === "string" ? row.value.toLowerCase() : status;    
+      switch (status) {
+        case "red":        
+          return (<ArrowCircleUp />);
+        case "neutral":
+          return (<PauseCircle/>);
+        case "green":        
+        return (<ArrowCircleDown/>);
+        case "-":        
+          return (<MinusCircle/>);
+        default:
+          return status;
+      }
+    },
+    class: className ? className :  undefined
+  };
+};
+
 export const getTableFavoriteColumn = (field, className) => {
   return {
     Header: getTableHeader(field),
@@ -557,6 +584,18 @@ export const getGitTaskTableRunButtonColumn = (accessor = "row", headerText, var
   };
 };
 
+export const getDeletePlatformToolTableButtonColumn = (accessor = "row", headerText, variant, buttonText, buttonFunction, className) => {
+  return {
+    Header: headerText,
+    accessor: accessor,
+    Cell: function getDeleteButton(row) {
+      return <Button size={"sm"} variant={variant} disabled={row?.data[row?.row?.index].toolStatus !== "ACTIVE"} onClick={() => {buttonFunction(row?.data[row?.row?.index]);}} >
+                {buttonText}
+            </Button>;
+    },
+    class: className ? className :  "no-wrap-inline py-1"
+  };
+};
 export const getTableBooleanIconColumn = (field, className) => {
   return {
     Header: getTableHeader(field),

@@ -4,7 +4,7 @@ import {Grid} from "dhx-suite-package";
 import "dhx-suite-package/codebase/suite.css";
 import {useWindowSize} from "components/common/hooks/useWindowSize";
 
-function VanitySelectionTableBase({columns, data, onRowSelect, rowStyling, sort, height, onCellEdit, selectedItemId}) {
+function VanitySelectionTableBase({columns, data, onRowSelect, rowStyling, sort, height, onCellEdit, selectedItemId, rowSelection}) {
   const containerRef = useRef(null);
   const [grid, setGrid] = useState(null);
   const windowSize = useWindowSize();
@@ -55,7 +55,7 @@ function VanitySelectionTableBase({columns, data, onRowSelect, rowStyling, sort,
       data: data && Array.isArray(data) && data.length > 0 ? data : [],
       htmlEnable: true,
       resizable: true,
-      selection: "complex",
+      selection: rowSelection,
       headerRowHeight: 30,
       rowHeight: 30,
       // TODO: Wire up custom row styling
@@ -109,13 +109,15 @@ VanitySelectionTableBase.propTypes = {
   rowStyling: PropTypes.func,
   sort: PropTypes.string,
   height: PropTypes.string,
-  onCellEdit: PropTypes.func
+  onCellEdit: PropTypes.func,
+  rowSelection: PropTypes.string
 };
 
 VanitySelectionTableBase.defaultProps = {
   data: [],
   isLoading: false,
-  height: "500px"
+  height: "500px",
+  rowSelection: "row"
 };
 
 export default VanitySelectionTableBase;

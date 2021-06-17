@@ -124,6 +124,7 @@ function PlatformInventory ({ handleTabClick }) {
         <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={"platform"} tabText={"Tools"} />
         <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={"platform"} tabText={"Platform"} />
         <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={"platform"} tabText={"Parameters"} />
+        {/*<NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"platform"} tabText={"Scripts"} />*/}
       </NavigationTabContainer>
     );
   };
