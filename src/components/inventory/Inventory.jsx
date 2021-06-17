@@ -4,11 +4,20 @@ import PlatformInventory from "components/inventory/platform/platformInventory";
 import {AuthContext} from "contexts/AuthContext";
 import ParametersInventory from "components/inventory/parameters/ParametersInventory";
 import ScriptsInventory from "components/inventory/scripts/ScriptsInventory";
+import {useParams} from "react-router-dom";
+
+const SUPPORTED_VIEWS = [
+  "tools",
+  "platform",
+  "parameters",
+  // "scripts"
+];
 
 function Inventory() {
+  const { tab } = useParams();
   const { getUserRecord, setAccessRoles } = useContext(AuthContext);
   const [customerAccessRules, setCustomerAccessRules] = useState({});
-  const [activeTab, setActiveTab] = useState("tools");
+  const [activeTab, setActiveTab] = useState(tab == null || !SUPPORTED_VIEWS.includes(tab) ? "tools" : tab);
 
   useEffect(() => {
     initComponent().catch(error => {
