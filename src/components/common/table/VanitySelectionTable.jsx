@@ -147,9 +147,8 @@ VanitySelectionTable.propTypes = {
   rowSelection: PropTypes.string
 };
 
-// TODO: This should probably be set to row and just passed in as complex when need be.
 VanitySelectionTable.defaultProps = {
-  rowSelection: "complex"
+  rowSelection: "row"
 };
 
 export default VanitySelectionTable;
