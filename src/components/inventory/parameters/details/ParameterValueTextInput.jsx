@@ -3,15 +3,12 @@ import PropTypes from "prop-types";
 import InputLabel from "components/common/form_fields/input/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
-import ShowSensitiveDataButton from "components/common/buttons/data/ShowSensitiveDataButton";
-import CopyToClipboardButton from "components/common/buttons/data/CopyToClipboardButton";
 
-// TODO: This is tailored to Parameters but leaving here for potential generic use
-function VisibleVaultTextInput({fieldName, dataObject, setDataObject, disabled}) {
+// TODO: Use new VisibleVaultTextInput when complete
+function ParameterValueTextInput({fieldName, dataObject, setDataObject, disabled}) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [valueShown, setValueShown] = useState(false);
   const isMounted = useRef(false);
 
   useEffect(() => {
@@ -28,7 +25,7 @@ function VisibleVaultTextInput({fieldName, dataObject, setDataObject, disabled})
     return () => {
       isMounted.current = false;
     };
-  }, []);
+  }, [dataObject.getData("_id")]);
 
   const validateAndSetData = (value) => {
     let newDataObject = dataObject;
@@ -42,7 +39,6 @@ function VisibleVaultTextInput({fieldName, dataObject, setDataObject, disabled})
       setIsLoading(true);
       if (dataObject?.getData("vaultEnabled") === true) {
         await dataObject.getValueFromVault(fieldName);
-        setValueShown(true);
       }
     }
     catch (error) {
@@ -60,58 +56,27 @@ function VisibleVaultTextInput({fieldName, dataObject, setDataObject, disabled})
     }
   };
 
-  const hideValue = () => {
-    setValueShown(false);
-  };
-
-  const getPullFromVaultButton = () => {
-    if (dataObject?.getData("vaultEnabled") === true) {
-      return (
-        <ShowSensitiveDataButton
-          isLoading={isLoading}
-          showData={getValueFromVault}
-          hideData={hideValue}
-          className={"input-button mr-2"}
-          valueShown={valueShown}
-        />
-      );
-    }
-  };
-
-  const getButtons = () => {
-    if (!dataObject?.isNew()) {
-      return (
-        <div className={"d-flex ml-2"}>
-          {getPullFromVaultButton()}
-          <CopyToClipboardButton copyString={dataObject?.getData(fieldName)} className={"input-button"} />
-        </div>
-      );
-    }
-  };
-
   return (
     <InputContainer>
       <InputLabel field={field}/>
-      <div className={"d-flex"}>
+      <div className={isLoading ? "d-flex loading-input-wrapper" : ""}>
         <input
-          type={dataObject?.getData("vaultEnabled") === true && valueShown === false && !isLoading ? "password" : undefined}
           disabled={disabled || isLoading}
           value={isLoading ? "Loading Value From Vault" : dataObject?.getData(fieldName)}
           onChange={(event) => validateAndSetData(event.target.value)}
           className="form-control"
         />
-        {getButtons()}
       </div>
       <InfoText field={field} errorMessage={errorMessage}/>
     </InputContainer>
   );
 }
 
-VisibleVaultTextInput.propTypes = {
+ParameterValueTextInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 
-export default VisibleVaultTextInput;
+export default ParameterValueTextInput;
