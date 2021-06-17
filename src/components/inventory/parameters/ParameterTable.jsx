@@ -84,6 +84,7 @@ function ParameterTable({ data, parameterMetadata, setParameterData, parameterDa
         setParentModel={setParameterData}
         tableHeight={"calc(25vh)"}
         parentModel={parameterData}
+        rowSelection={"complex"}
       />
     );
   };
