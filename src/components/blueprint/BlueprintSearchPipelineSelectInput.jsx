@@ -12,10 +12,12 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [pipelines, setPipelines] = useState([]);
+  const [disabledPipelines, setDisabledPipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPipeline, setCurrentPipeline] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -68,20 +70,28 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
     if (Array.isArray(pipelines) && pipelines.length > 0) {
 
       let parsedArray = [];
+      let disabledArray = [];
 
       pipelines.forEach((pipeline) => {
         if (pipeline?.workflow?.run_count > 0) {
           parsedArray.push(pipeline);
         }
 
+        if (pipeline?.workflow?.run_count === 0) {
+          disabledArray.push(pipeline);
+        }
+
         if (pipeline._id === dataObject?.getData("pipelineId")) {
           let newDataObject = dataObject;
           newDataObject.setData("title", `${pipeline?.name} (${pipeline?._id})`);
+          setCurrentPipeline(pipeline);
           setDataObject({...newDataObject});
         }
       });
 
-      setPipelines(parsedArray);
+      if (currentPipeline && !pipelines.some(pipeline => pipeline._id === currentPipeline?._id)) {pipelines.push(currentPipeline);}
+      setDisabledPipelines(disabledArray);
+      setPipelines(pipelines);
     }
 
     return false;
@@ -92,6 +102,7 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
     newDataObject.setData("pipelineId", pipeline?._id);
     newDataObject.setData("runNumber", pipeline?.workflow?.run_count);
     newDataObject.setData("title", `${pipeline?.name} (${pipeline?._id})`);
+    setCurrentPipeline(pipeline);
     setDataObject({...newDataObject});
   };
 
@@ -119,7 +130,7 @@ function BlueprintSearchPipelineSelectInput({ visible, fieldName, dataObject, se
       setDataFunction={setDataFunction}
       busy={isLoading}
       placeholderText={"Select A Pipeline"}
-      disabled={disabled}
+      disabled={disabledPipelines}
       onSearch={(searchTerm) => {setSearchTerm(searchTerm);}}
       showLabel={showLabel}
     />
