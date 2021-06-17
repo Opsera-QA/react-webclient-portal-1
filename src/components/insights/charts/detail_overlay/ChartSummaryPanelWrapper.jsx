@@ -12,6 +12,9 @@ import SFDCPipelinesSummaryPanel from "components/insights/charts/sfdc/SFDCPipel
 import OpseraMeanTimeToRestoreSummaryPanel from "../opsera/bar_chart/mean_time_to_restore/OpseraMeanTimeToRestoreSummaryPanel";
 import PipelineByStatusSuccessfulTable from "../opsera/bar_chart/pipeline_by_status/PipelineByStatusSuccessfulTable";
 import PipelineByStatusFailedTable from "../opsera/bar_chart/pipeline_by_status/PipelineByStatusFailedTable";
+import SonarRatingsBugsSummaryPanel from "../sonar/sonar_ratings/SonarRatingsBugsSummaryPanel";
+import SonarRatingsVulnerabilitiesSummaryPanel from "../sonar/sonar_ratings/SonarRatingsVulnerabilitiesSummaryPanel";
+import SonarRatingsDebtRatioSummaryPanel from "../sonar/sonar_ratings/SonarRatingsDebtRatioSummaryPanel";
 
 function ChartSummaryPanelWrapper({ chartModel, kpiIdentifier, dashboardData, kpiConfiguration, pipelineName, currentDate, setActiveTab }) {
   const getStepConfigurationSummary = () => {
@@ -142,6 +145,36 @@ function ChartSummaryPanelWrapper({ chartModel, kpiIdentifier, dashboardData, kp
       case "status-by-pipeline-failed":
         return (
           <PipelineByStatusFailedTable
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            chartModel={chartModel}
+            setActiveTab={setActiveTab}
+            pipelineName={pipelineName}
+          />
+        );
+      case "sonar-ratings-bugs":
+        return (
+          <SonarRatingsBugsSummaryPanel
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            chartModel={chartModel}
+            setActiveTab={setActiveTab}
+            pipelineName={pipelineName}
+          />
+        );
+      case "sonar-ratings-vulnerabilities":
+        return (
+          <SonarRatingsVulnerabilitiesSummaryPanel
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            chartModel={chartModel}
+            setActiveTab={setActiveTab}
+            pipelineName={pipelineName}
+          />
+        );
+      case "sonar-ratings-debt-ratio":
+        return (
+          <SonarRatingsDebtRatioSummaryPanel
             dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
             chartModel={chartModel}

@@ -6,9 +6,14 @@ import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
+import Model from "../../../../../core/data_model/model";
+import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
+import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
+import { DialogToastContext } from "../../../../../contexts/DialogToastContext";
 
 function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
+  const toastContext = useContext(DialogToastContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -61,6 +66,16 @@ function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, in
     }
   };
 
+  const onRowSelect = (stat) => {
+    const chartModel = new Model({...SonarRatingsBugsActionableMetadata.newObjectFields}, SonarRatingsBugsActionableMetadata, false);
+    toastContext.showOverlayPanel(
+      <ChartDetailsOverlay
+        dashboardData={dashboardData}
+        kpiConfiguration={kpiConfiguration}
+        chartModel={chartModel}
+        kpiIdentifier={"sonar-ratings" + "-" + stat} />);
+  };
+
   const getChartBody = () => {
     if (!Array.isArray(metrics) || metrics.length === 0) {
       return null;
@@ -104,19 +119,19 @@ function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, in
       <Row className="p-3">
           <Col><div className="metric-box p-3 text-center">
           <div className="box-metric">
-            <div>{metrics[0].vulnerabilities}</div>
+            <div className="pointer" onClick={() => onRowSelect("vulnerabilities")}>{metrics[0].vulnerabilities}</div>
           </div>
           <div className="w-100 text-muted mb-1">Vulnerabilities</div>    
         </div></Col>
           <Col><div className="metric-box p-3 text-center">
           <div className="box-metric">
-            <div>{metrics[0].bugs}</div>
+            <div className="red pointer" onClick={() => onRowSelect("bugs")}>{metrics[0].bugs}</div>
           </div>  
           <div className="w-100 text-muted mb-1">Bugs</div>    
         </div></Col>
           <Col><div className="metric-box p-3 text-center">
           <div className="box-metric">
-            <div>{metrics[0].technical_debt_ratio + "%"}</div>
+            <div className="pointer" onClick={() => onRowSelect("debt-ratio")}>{metrics[0].technical_debt_ratio + "%"}</div>
           </div>  
           <div className="w-100 text-muted mb-1">Technical Debt Ratio</div>    
         </div></Col>
