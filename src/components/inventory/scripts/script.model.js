@@ -1,6 +1,5 @@
 import ModelBase, {DataState} from "core/data_model/model.base";
 import scriptsActions from "components/inventory/scripts/scripts-actions";
-import parametersActions from "components/inventory/parameters/parameters-actions";
 
 export class ScriptModel extends ModelBase {
   constructor(data, metaData, newModel, setStateFunction, getAccessToken, cancelTokenSource, loadData) {
@@ -28,10 +27,13 @@ export class ScriptModel extends ModelBase {
 
   getValueFromVault = async (fieldName = "value") => {
     const response = await scriptsActions.getValueFromVault(this.getAccessToken, this.cancelTokenSource, this.getData("_id"));
+    const value = response?.data?.data;
 
-    if (response?.data?.data) {
-      this.setData(fieldName, response.data.data, false);
+    if (value) {
+      this.setData(fieldName, value, false);
     }
+
+    return value;
   };
 
 
