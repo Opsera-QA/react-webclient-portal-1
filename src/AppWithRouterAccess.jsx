@@ -287,7 +287,7 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/user/:tab?" exact component={UserSettings}/>
                   <SecureRoute path="/user/access-tokens/details/:tokenId?" exact component={AccessTokenDetailView}/>
 
-                  <SecureRoute path="/inventory/:view" exact component={Inventory}/>
+                  <SecureRoute path="/inventory/:tab" exact component={Inventory}/>
                   <SecureRoute path="/inventory/tools/details/:id/:tab?" exact component={ToolDetailView}/>
                   <SecureRoute path="/inventory/tools/details/:id/projects/:projectId" exact
                                component={ToolProjectsView}/>
