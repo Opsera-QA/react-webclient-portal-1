@@ -36,7 +36,7 @@ function StepConfigUseTerraformOutput({ dataObject, setDataObject, fieldName, di
     let newDataObject = dataObject;
     let sourceScriptFlag = !dataObject.getData("useTerraformOutput");
     newDataObject.setData("useTerraformOutput", sourceScriptFlag);
-    let customParameters = dataObject.getData("customParameters");
+    let customParameters = dataObject?.getData("customParameters") && Array.isArray(dataObject?.getData("customParameters")) ? dataObject?.getData("customParameters") : [];
     if (!sourceScriptFlag) {
       newDataObject.setData("terraformStepId", "");
     }
