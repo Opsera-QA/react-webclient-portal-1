@@ -1,17 +1,19 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {
+  getScriptLanguageColumn,
   getTableTextColumn
 } from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faHandshake} from "@fortawesome/pro-light-svg-icons";
+import {faFileCode} from "@fortawesome/pro-light-svg-icons";
 import NewScriptOverlay from "components/inventory/scripts/NewScriptOverlay";
 import VanitySelectionTable from "components/common/table/VanitySelectionTable";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import {AuthContext} from "contexts/AuthContext";
+
 
 function ScriptTable({ data, scriptMetadata, setScriptData, scriptData, loadData, isLoading, getNewModel, isMounted, getAccessToken, cancelTokenSource, scriptRoleDefinitions }) {
   const toastContext = useContext(DialogToastContext);
@@ -49,7 +51,7 @@ function ScriptTable({ data, scriptMetadata, setScriptData, scriptData, loadData
       setColumns(
         [
           getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
-          getTableTextColumn(getField(fields, "type"), "no-wrap-inline"),
+          getScriptLanguageColumn(getField(fields, "type"), "no-wrap-inline"),
         ]
       );
     }
@@ -102,7 +104,7 @@ function ScriptTable({ data, scriptMetadata, setScriptData, scriptData, loadData
       body={getScriptTable()}
       metadata={scriptMetadata}
       type={"Script"}
-      titleIcon={faHandshake}
+      titleIcon={faFileCode}
       title={"Scripts"}
       className={"px-2 pb-2"}
     />
