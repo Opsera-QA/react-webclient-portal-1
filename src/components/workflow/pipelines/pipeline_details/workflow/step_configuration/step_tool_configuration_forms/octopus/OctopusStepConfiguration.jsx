@@ -26,6 +26,8 @@ import OctopusDeploymentVariables from "./input/OctopusDeploymentVariables";
 import OctopusSpecifyDepVarsToggle from "./input/OctopusSpecifyDepVarsToggle";
 import OctopusProtocolInput from "./input/OctopusProtocolInput";
 import OctopusLifecycleSelectInput from "./input/OctopusLifecycleSelectInput";
+import OctopusScriptTypeSelectInput from "./input/OctopusScriptTypeSelectInput";
+import OctopusScriptTypeDetailsView from "./input/OctopusScriptTypeDetailsView";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -303,7 +305,8 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
             )}
           {octopusStepConfigurationDto &&
             octopusStepConfigurationDto.getData("octopusPlatformType") &&
-            octopusStepConfigurationDto.getData("octopusPlatformType") === "Azure" && (
+          (octopusStepConfigurationDto.getData("octopusPlatformType") === "Azure" ||
+            octopusStepConfigurationDto.getData("octopusPlatformType") === "Script") && (
               <>
                 <OctopusDeploymentTypeInputSelect
                   fieldName={"octopusDeploymentType"}
@@ -320,6 +323,34 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                       : ""
                   }
                 />
+                <OctopusScriptTypeSelectInput
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  disabled={
+                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+                      ? octopusStepConfigurationDto.getData("octopusPlatformType").length === 0
+                      : true
+                  }
+                  tool_prop={
+                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+                      ? octopusStepConfigurationDto.getData("octopusPlatformType")
+                      : ""
+                  }
+                  />
+                  <OctopusScriptTypeDetailsView
+                    dataObject={octopusStepConfigurationDto}
+                    setDataObject={setOctopusStepConfigurationDataDto}
+                    disabled={
+                      octopusStepConfigurationDto && octopusStepConfigurationDto.getData("scriptSource")
+                        ? octopusStepConfigurationDto.getData("scriptSource").length === 0
+                        : true
+                    }
+                    tool_prop={
+                      octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+                        ? octopusStepConfigurationDto.getData("octopusPlatformType")
+                        : ""
+                    }
+                  />
                 <OctopusFeedSelectInput
                   fieldName={"octopusFeedId"}
                   dataObject={octopusStepConfigurationDto}
