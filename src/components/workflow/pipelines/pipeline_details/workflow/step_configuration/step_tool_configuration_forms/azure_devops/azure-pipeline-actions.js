@@ -1,5 +1,4 @@
 import baseActions from "utils/actionsBase";
-import pipelineActions from "components/workflow/pipeline-actions";
 
 const azurePipelineActions = {};
 

@@ -60,9 +60,12 @@ function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, 
   };
 
   const loadAzurePipelines = async (cancelSource = cancelTokenSource) => {
-    const vaultResults = await azurePipelineActions.getAzurePersonalAccessToken(getAccessToken, cancelTokenSource, model.getData("accessToken"));
+    const vaultAccessToken = model.getData("accessToken");
+    const vaultKey = vaultAccessToken?.vaultKey;
+    const vaultResults = await azurePipelineActions.getAzurePersonalAccessToken(getAccessToken, cancelTokenSource, vaultKey);
+    const secureKey = vaultResults?.data;
     const user = await getUserRecord();
-    const results = await azurePipelineActions.getAzurePipelines(getAccessToken, cancelSource, model, vaultResults?.data, user._id);
+    const results = await azurePipelineActions.getAzurePipelines(getAccessToken, cancelSource, model, secureKey, user._id);
     const azurePipelinesArray = await results?.data?.message?.message?.value;
 
     if (Array.isArray(azurePipelinesArray) && azurePipelinesArray.length > 0) {
