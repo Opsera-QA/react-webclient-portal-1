@@ -48,7 +48,11 @@ function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, 
       await loadAzurePipelines(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        setErrorMessage("There was an error pulling Azure Pipelines!");
+        console.error(error);
+        toastContext.showServiceUnavailableDialog();
+      }
     }
     finally {
       setIsLoading(false);
@@ -56,27 +60,15 @@ function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, 
   };
 
   const loadAzurePipelines = async (cancelSource = cancelTokenSource) => {
-    try {
-      const vaultResults = await azurePipelineActions.getAzurePersonalAccessToken(getAccessToken, cancelTokenSource, model.getData("accessToken"));
-      const user = await getUserRecord();
-      const results = await azurePipelineActions.getAzurePipelines(getAccessToken, cancelSource, model, vaultResults?.data, user._id);
-      const azurePipelinesArray = await results?.data?.message?.message?.value;
-    
-      if (Array.isArray(azurePipelinesArray) && azurePipelinesArray.length > 0) {
-        setAzureDevopsList(azurePipelinesArray);
-      }
-      else {
-        setErrorMessage("No Azure Pipelines Found");
-      }
-    } catch(error) {
-      if (isMounted?.current === true) {
-        setErrorMessage("There was an error pulling Azure Pipelines!");
-        console.error(error);
-        toastContext.showServiceUnavailableDialog();
-      }
-    } finally {
-      if (isMounted?.current === true) {
-      }
+    const vaultResults = await azurePipelineActions.getAzurePersonalAccessToken(getAccessToken, cancelTokenSource, model.getData("accessToken"));
+    const user = await getUserRecord();
+    const results = await azurePipelineActions.getAzurePipelines(getAccessToken, cancelSource, model, vaultResults?.data, user._id);
+    const azurePipelinesArray = await results?.data?.message?.message?.value;
+
+    if (Array.isArray(azurePipelinesArray) && azurePipelinesArray.length > 0) {
+      setAzureDevopsList(azurePipelinesArray);
+    } else {
+      setErrorMessage("No Azure Pipelines Found");
     }
   };
 
