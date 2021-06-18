@@ -12,7 +12,6 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import axios from "axios";
 import ReactJson from "react-json-view";
 import InfoText from "../../inputs/info_text/InfoText";
-import InputContainer from "../../inputs/InputContainer";
 
 const SAMPLE_DATA = {
   subnet_list: [
