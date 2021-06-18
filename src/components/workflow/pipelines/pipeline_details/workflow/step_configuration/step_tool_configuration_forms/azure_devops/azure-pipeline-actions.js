@@ -18,7 +18,7 @@ azurePipelineActions.getAzurePipelines = async (getAccessToken, cancelTokenSourc
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
 };
 
-pipelineActions.getAzurePersonalAccessToken = async (getAccessToken, cancelTokenSource, vaultId) => {
+azurePipelineActions.getAzurePersonalAccessToken = async (getAccessToken, cancelTokenSource, vaultId) => {
   const apiUrl = `/vault/${vaultId}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
