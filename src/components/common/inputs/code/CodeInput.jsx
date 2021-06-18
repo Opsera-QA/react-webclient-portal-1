@@ -42,7 +42,10 @@ function CodeInput({model, setModel, fieldName, mode, className, isLoading, disa
 
   const getTitleBarActionButtons = () => {
     return (
-      <div>
+      <div className={"d-flex"}>
+        <div className={"mr-2"}>
+          {titleBarActionButtons}
+        </div>
         <ToggleThemeIcon theme={theme} toggleTheme={toggleTheme} />
       </div>
     );
@@ -69,7 +72,9 @@ function CodeInput({model, setModel, fieldName, mode, className, isLoading, disa
         </div>
       </div>
       <div className={"object-properties-footer"}>
-        <InfoText field={field} errorMessage={errorMessage}/>
+        <div className={"px-2"}>
+          <InfoText field={field} errorMessage={errorMessage}/>
+        </div>
       </div>
     </InputContainer>
   );

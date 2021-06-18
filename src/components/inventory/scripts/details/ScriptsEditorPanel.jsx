@@ -77,42 +77,6 @@ function ScriptsEditorPanel({ scriptModel, scriptRoleDefinitions, handleClose })
     }
   };
 
-  const getFields = () => {
-    if (isSassUser() === true) {
-      return (
-        <Row>
-          <Col md={6}>
-            <TextInputBase disabled={!scriptData?.isNew()} setDataObject={setScriptData} dataObject={scriptData} fieldName={"name"}/>
-          </Col>
-          <Col md={6}>
-            <ScriptLanguageSelectInput setDataObject={setScriptData} dataObject={scriptData} />
-          </Col>
-          <Col md={8}>
-            <TextAreaInput disabled={canEdit !== true} setDataObject={setScriptData} dataObject={scriptData} fieldName={"value"}/>
-          </Col>
-        </Row>
-      );
-    }
-
-    return (
-      <Row>
-        <Col md={12} lg={scriptData?.isNew() ? 4 : 5}>
-          <TextInputBase disabled={!scriptData?.isNew()} setDataObject={setScriptData} dataObject={scriptData} fieldName={"name"}/>
-          <ScriptLanguageSelectInput setDataObject={setScriptData} dataObject={scriptData} />
-        </Col>
-        <Col md={12} lg={scriptData?.isNew() ? 8 : 7} className={"my-2"}>
-          <RoleAccessInput disabled={canEdit !== true} dataObject={scriptData} setDataObject={setScriptData} fieldName={"roles"} />
-        </Col>
-        <Col md={12}>
-          <ScriptValueInput
-            disabled={canEdit !== true}
-            setModel={setScriptData}
-            model={scriptData}
-          />
-        </Col>
-      </Row>
-    );
-  };
 
   if (scriptData == null) {
     return null;
@@ -126,7 +90,24 @@ function ScriptsEditorPanel({ scriptModel, scriptRoleDefinitions, handleClose })
       handleClose={handleClose}
       extraButtons={getDeleteButton()}
     >
-      {getFields()}
+      <Row>
+        <Col md={6}>
+          <TextInputBase disabled={!scriptData?.isNew()} setDataObject={setScriptData} dataObject={scriptData} fieldName={"name"}/>
+        </Col>
+        <Col md={6}>
+          <ScriptLanguageSelectInput setDataObject={setScriptData} dataObject={scriptData} />
+        </Col>
+        <Col md={8}>
+          <ScriptValueInput
+            disabled={canEdit !== true}
+            setModel={setScriptData}
+            model={scriptData}
+          />
+        </Col>
+        <Col md={8} className={"my-2"}>
+          <RoleAccessInput disabled={canEdit !== true} dataObject={scriptData} setDataObject={setScriptData} fieldName={"roles"} />
+        </Col>
+      </Row>
     </VanityEditorPanelContainer>
   );
 }
