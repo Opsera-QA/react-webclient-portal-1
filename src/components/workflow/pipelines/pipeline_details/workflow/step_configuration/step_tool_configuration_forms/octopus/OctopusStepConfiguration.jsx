@@ -263,8 +263,8 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                 : ""
             }
           />
-          <OctopusPlatformTypeSelectInput
-            fieldName={"octopusPlatformType"}
+          <OctopusLifecycleSelectInput
+            fieldName={"lifecycleId"}
             dataObject={octopusStepConfigurationDto}
             setDataObject={setOctopusStepConfigurationDataDto}
             disabled={
@@ -278,8 +278,8 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                 : ""
             }
           />
-          <OctopusLifecycleSelectInput
-            fieldName={"lifecycleId"}
+          <OctopusPlatformTypeSelectInput
+            fieldName={"octopusPlatformType"}
             dataObject={octopusStepConfigurationDto}
             setDataObject={setOctopusStepConfigurationDataDto}
             disabled={
@@ -366,11 +366,16 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                       : ""
                   }
                 />
+                {octopusStepConfigurationDto &&
+                octopusStepConfigurationDto.getData("octopusPlatformType") &&
+                  octopusStepConfigurationDto.getData("octopusPlatformType") !== "Script" && (
                 <TextInputBase
                   dataObject={octopusStepConfigurationDto}
                   setDataObject={setOctopusStepConfigurationDataDto}
                   fieldName={"octopusPhysicalPath"}
                 />
+                )
+                }
                 <RollbackToggleInput
                   dataObject={octopusStepConfigurationDto}
                   setDataObject={setOctopusStepConfigurationDataDto}

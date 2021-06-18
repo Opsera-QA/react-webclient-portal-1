@@ -6,7 +6,7 @@ function OctopusScriptTypeSelectInput({dataObject, setDataObject, isLoading, dis
 
   const ACTION_LIST = [
     {
-      name: "Script Library",
+      name: "Inline",
       value: "inline",
     },
     {
