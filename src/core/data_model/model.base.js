@@ -7,6 +7,13 @@ export const DataState = {
   DELETED: 3
 };
 
+// TODO: After converting table to use Models instead of raw objects, the removal of these can probably happen
+export const temporaryObjectProperties = [
+  "$height",
+  "id",
+  "__v"
+];
+
 export class ModelBase {
   constructor(data, metaData, newModel, setStateFunction) {
     this.metaData = {...metaData};
@@ -205,6 +212,7 @@ export class ModelBase {
 
   // TODO: Only send changemap for updates after getting everything else working
   getPersistData = () => {
+    this.removeTemporaryObjectProperties();
     return this.trimStrings();
   };
 
@@ -228,6 +236,26 @@ export class ModelBase {
     }
 
     return data;
+  };
+
+  removeTemporaryObjectProperties = () => {
+    let data = this.data;
+
+    try {
+      temporaryObjectProperties.forEach((key) => {
+        // console.log(`deleting temp object property ${key}: [${data[key]}]`);
+        delete data[key];
+      });
+
+      this.data = data;
+    }
+    catch (error) {
+      console.error("Could not remove temporary object properties.");
+      return this.data;
+    }
+
+    return data;
+
   };
 
   isNew = () => {
