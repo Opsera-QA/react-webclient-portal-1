@@ -28,7 +28,7 @@ import CommandLineSourceScriptToggleInput
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import WorkspaceDeleteToggleInput from "./inputs/WorkspaceDeleteToggleInput";
 import StepConfigTerraformStepSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/common/inputs/StepConfigTerraformStepSelectInput";
-import { faFileCode } from "@fortawesome/pro-light-svg-icons";
+import { faHandshake } from "@fortawesome/pro-light-svg-icons";
 import ParameterSelectListInputBase
   from "../../../../../../../common/list_of_values_input/parameters/ParameterSelectListInputBase";
 import StepConfigUseTerraformOutput from "../common/inputs/StepConfigUseTerraformOutput";
@@ -142,7 +142,7 @@ function CommandLineStepConfiguration({ pipelineId, stepTool, stepId, createJob,
       <StepConfigUseTerraformOutput dataObject={commandLineStepConfigurationDto} setDataObject={setCommandLineStepConfigurationDataDto} fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>
       {getTerraformSelect()}
       <ParameterSelectListInputBase
-        titleIcon={faFileCode}
+        titleIcon={faHandshake}
         dataObject={commandLineStepConfigurationDto}
         setDataObject={setCommandLineStepConfigurationDataDto}
         fieldName={"customParameters"}
