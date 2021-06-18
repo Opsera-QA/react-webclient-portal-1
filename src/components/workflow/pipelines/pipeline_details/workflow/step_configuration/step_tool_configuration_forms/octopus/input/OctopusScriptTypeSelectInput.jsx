@@ -19,12 +19,22 @@ function OctopusScriptTypeSelectInput({dataObject, setDataObject, isLoading, dis
     return null;
   }
 
+  const setDataFunction = (fieldName, value) => {
+    let newDataObject = dataObject;
+    newDataObject.setData("scriptFileName", "");
+    newDataObject.setData("scriptParameters", "");
+    newDataObject.setData("scriptId", "");
+    newDataObject.setData("scriptSource", value.value);
+    setDataObject({...newDataObject});
+  };
+
   return (
 
     <SelectInputBase
       fieldName={"scriptSource"}
       dataObject={dataObject}
       setDataObject={setDataObject}
+      setDataFunction={setDataFunction}
       selectOptions={ACTION_LIST}
       valueField={"value"}
       textField={"name"}
