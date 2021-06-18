@@ -87,8 +87,8 @@ function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, 
       <SelectInputBase
         setDataFunction={setDataFunction}
         fieldName={fieldName}
-        model={model}
-        setModel={setModel}
+        dataObject={model}
+        setDataObject={setModel}
         selectOptions={azureDevopsList}
         busy={isLoading}
         errorMessage={errorMessage}
