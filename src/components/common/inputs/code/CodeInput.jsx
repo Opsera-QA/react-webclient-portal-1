@@ -5,9 +5,10 @@ import FieldTitleBar from "components/common/fields/FieldTitleBar";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import CodeInputBase from "components/common/inputs/code/CodeInputBase";
+import ToggleThemeIcon from "components/common/buttons/toggle/ToggleThemeIcon";
 
 // TODO: If more are added, make sure to add the respective imports into CodeInputBase
-const CODE_THEME_TYPES = {
+export const CODE_THEME_TYPES = {
   LIGHT: "chrome",
   DARK: "twilight"
 };
@@ -15,7 +16,7 @@ const CODE_THEME_TYPES = {
 function CodeInput({model, setModel, fieldName, mode, className, isLoading, disabled, titleBarActionButtons}) {
   const [field] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
-  const [theme, setTheme] = useState(CODE_THEME_TYPES.LIGHT);
+  const [theme, setTheme] = useState(CODE_THEME_TYPES.DARK);
 
   const validateAndSetData = (value) => {
     let newModel = model;
@@ -34,6 +35,19 @@ function CodeInput({model, setModel, fieldName, mode, className, isLoading, disa
     setModel({...newModel});
   };
 
+  const toggleTheme = () => {
+    const newTheme = theme === CODE_THEME_TYPES.DARK ? CODE_THEME_TYPES.LIGHT : CODE_THEME_TYPES.DARK;
+    setTheme(newTheme);
+  };
+
+  const getTitleBarActionButtons = () => {
+    return (
+      <div>
+        <ToggleThemeIcon theme={theme} toggleTheme={toggleTheme} />
+      </div>
+    );
+  };
+
   if (field == null) {
     return null;
   }
@@ -42,7 +56,7 @@ function CodeInput({model, setModel, fieldName, mode, className, isLoading, disa
     <InputContainer className={className}>
       <div className="object-properties-input">
         <div className="content-container">
-          <FieldTitleBar field={field} icon={faFileCode} isLoading={isLoading} actionButtons={titleBarActionButtons} />
+          <FieldTitleBar field={field} icon={faFileCode} isLoading={isLoading} actionButtons={getTitleBarActionButtons()} />
           <CodeInputBase
             mode={mode}
             theme={theme}
