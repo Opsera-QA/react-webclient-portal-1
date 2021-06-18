@@ -217,15 +217,6 @@ pipelineActions.getFromVault = async (vaultId, getAccessToken) => {
   return response;
 };
 
-pipelineActions.getAzurePersonalAccessToken = async (vaultId, getAccessToken, cancelTokenSource) => {
-  const apiUrl = `/vault/${vaultId}`;   
-  const response = await axiosApiGetCall(getAccessToken, cancelTokenSource, apiUrl)
-    .then((result) =>  {return result;})
-    .catch(error => {throw { error };});
-   
-  return response;
-};
-
 pipelineActions.deleteFromVaultUsingVaultKey = async (vaultId, getAccessToken) => {
   const accessToken = await getAccessToken();
   const apiUrl = `/vault/${vaultId}`;
@@ -499,11 +490,6 @@ pipelineActions.deleteJenkinsJob = async (deleteObj, getAccessToken) => {
   console.log(deleteObj);
   let apiUrl = `/pipelines/deletejob`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, deleteObj);
-};
-
-pipelineActions.getAzurePipelines = async (getAccessToken, cancelTokenSource, postBody) => {
-  const apiURL = `azure/get-pipelines`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
 };
 
 export default pipelineActions;

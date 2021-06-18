@@ -2,19 +2,17 @@ import React, {useContext, useEffect, useState, useRef} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
-import PipelineActions from "../../../../../../../pipeline-actions";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTools } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import {AuthContext} from "contexts/AuthContext";
+import azurePipelineActions
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_devops/azure-pipeline-actions";
 
-function AzureDevopsPipelineSelectInput({ fieldName, dataObject, setDataObject, disabled, organization, projectName, textField, valueField,}) {
+function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, organization, projectName, textField, valueField}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken, getUserRecord } = useContext(AuthContext);
   const [azureDevopsList, setAzureDevopsList] = useState([]);
-  const [isAzureDevopsSearching, setIsAzureDevopsSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select an Azure Devops Pipeline");
+  const [errorMessage, setErrorMessage] = useState("");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -28,13 +26,15 @@ function AzureDevopsPipelineSelectInput({ fieldName, dataObject, setDataObject, 
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    
-    loadData(source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
+    setAzureDevopsList([]);
+
+    if (organization != null && organization !== "" && projectName != null && projectName !== "") {
+      loadData(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
       });
-    
+    }
 
     return () => {
       source.cancel();
@@ -45,7 +45,7 @@ function AzureDevopsPipelineSelectInput({ fieldName, dataObject, setDataObject, 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await fetchAzureDevopsDetails(cancelSource);
+      await loadAzurePipelines(cancelSource);
     }
     catch (error) {
       toastContext.showLoadingErrorDialog(error);
@@ -55,95 +55,63 @@ function AzureDevopsPipelineSelectInput({ fieldName, dataObject, setDataObject, 
     }
   };
 
-  const getInfoText = () => {
-    if (dataObject.getData(!fieldName)) {
-      return (
-          <span><FontAwesomeIcon icon={faTools} className="pr-1" />Pipeline unavailable</span>
-      );
-    }
-    return <span>Select an Azure DevOps Pipeline.</span>;
-  };
-
-
-  const fetchAzureDevopsDetails = async (cancelSource) => {
-    setIsAzureDevopsSearching(true);
+  const loadAzurePipelines = async (cancelSource = cancelTokenSource) => {
     try {
-      const vaultAccessToken = await dataObject.getData("accessToken");
-      const vaultResults = await PipelineActions.getAzurePersonalAccessToken(vaultAccessToken.vaultKey, getAccessToken, cancelTokenSource);
+      const vaultResults = await azurePipelineActions.getAzurePersonalAccessToken(getAccessToken, cancelTokenSource, model.getData("accessToken"));
       const user = await getUserRecord();
-
-      const postBody = {
-        stepConfiguration: {
-          "organizationName": organization,
-          "azurePipelineId": await dataObject.getData("azurePipelineId"),
-          "projectName": projectName
-        },
-        secureKey: vaultResults?.data,
-        userId: user._id
-        };
-
-      if (!organization || !projectName ){
-        setPlaceholder("No Azure Devops Pipelines Available");
-        return;
-      }
-
-      let results = await PipelineActions.getAzurePipelines(getAccessToken, cancelSource, postBody);
-      let azurePipelinesArray = await results?.data?.message?.message?.value;
+      const results = await azurePipelineActions.getAzurePipelines(getAccessToken, cancelSource, model, vaultResults?.data, user._id);
+      const azurePipelinesArray = await results?.data?.message?.message?.value;
     
-      const filteredList = azurePipelinesArray.filter((pipeline) => pipeline.name !== undefined);  
-  
-      if (filteredList) {
-        setAzureDevopsList(filteredList);
+      if (Array.isArray(azurePipelinesArray) && azurePipelinesArray.length > 0) {
+        setAzureDevopsList(azurePipelinesArray);
+      }
+      else {
+        setErrorMessage("No Azure Pipelines Found");
       }
     } catch(error) {
-      setPlaceholder("No Azure Devops Pipelines Found");
-      console.error(error);
-      toastContext.showServiceUnavailableDialog();
+      if (isMounted?.current === true) {
+        setErrorMessage("There was an error pulling Azure Pipelines!");
+        console.error(error);
+        toastContext.showServiceUnavailableDialog();
+      }
     } finally {
-      setIsAzureDevopsSearching(false);
+      if (isMounted?.current === true) {
+      }
     }
   };
 
-  const handleDTOChange = async (fieldName, value) => {
+  const setDataFunction = async (fieldName, value) => {
     if (fieldName === "azurePipelineId") {
-      let newDataObject = dataObject;
+      let newDataObject = model;
       newDataObject.setData("azurePipelineId", value.id);
-      setDataObject({ ...newDataObject });
-      return;
+      setModel({ ...newDataObject });
     }
   };
-
 
   return (
-    <div>
       <SelectInputBase
-        setDataFunction={handleDTOChange}
+        setDataFunction={setDataFunction}
         fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        selectOptions={azureDevopsList ? azureDevopsList : []}
-        busy={isAzureDevopsSearching}
+        model={model}
+        setModel={setModel}
+        selectOptions={azureDevopsList}
+        busy={isLoading}
+        errorMessage={errorMessage}
         valueField={valueField}
         textField={textField}
-        placeholderText={placeholder}
-        disabled={disabled || isLoading || (!isLoading && (azureDevopsList == null || azureDevopsList.length === 0))}
+        placeholderText={"Select an Azure Devops Pipeline"}
+        disabled={disabled || isLoading || azureDevopsList?.length === 0}
       />
-      <small className="text-muted ml-3">
-        {getInfoText()}
-      </small>
-    </div>
   );
 }
 
 AzureDevopsPipelineSelectInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  tool_prop: PropTypes.string,
-  getFromVault: PropTypes.func,
   organization: PropTypes.string,
   projectName: PropTypes.string
 };
