@@ -139,19 +139,12 @@ function ParameterSelectListInputBase({
       return;
     }
 
-    for (let item in properties) {
-      if (Object.values(properties[item]).includes(parameterName)) {
-        setErrorMessage("Existing parameters can not be added again");
-        return;
-      }
-    }
-
     let currentData = dataObject?.getData(fieldName);
     let items = Array.isArray(currentData) && currentData.length > 0 ? currentData : [];
     for (let item in items) {
       if (Object.values(items[item]).includes(parameterName)) {
         setErrorMessage("Existing parameters can not be added again");
-        return false;
+        return;
       }
     }
     setProperties([
