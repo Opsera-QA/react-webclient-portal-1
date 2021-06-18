@@ -11,8 +11,6 @@ import TagTypeSelectInput from "components/common/list_of_values_input/settings/
 import TagConfigurationInput from "components/common/list_of_values_input/settings/tags/TagConfigurationInput";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 import axios from "axios";
-import ScriptLibrarySelectInput
-  from "components/common/list_of_values_input/inventory/scripts/ScriptLibrarySelectInput";
 
 function TagEditorPanel({ tagData, setTagData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -85,7 +83,7 @@ function TagEditorPanel({ tagData, setTagData, handleClose }) {
       <Row>
         <Col md={6}>
           <TagTypeSelectInput dataObject={tagDataDto} setDataObject={setTagDataDto}/>
-          <ScriptLibrarySelectInput fieldName={"value"} setDataObject={setTagDataDto} dataObject={tagDataDto}/>
+          <TextInputBase fieldName={"value"} setDataObject={setTagDataDto} dataObject={tagDataDto}/>
           <ActivityToggleInput fieldName={"active"} setDataObject={setTagDataDto} dataObject={tagDataDto}/>
         </Col>
         <Col md={6}>
