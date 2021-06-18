@@ -5,6 +5,7 @@ import SummaryPanelContainer from "components/common/panels/detail_view/SummaryP
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SmartIdField from "components/common/fields/text/id/SmartIdField";
 import OwnerNameField from "components/common/fields/text/general/OwnerNameField";
+import CodeField from "components/common/fields/code/CodeField";
 
 function ScriptSummaryPanel({ scriptModel }) {
   return (
@@ -24,7 +25,7 @@ function ScriptSummaryPanel({ scriptModel }) {
           <TextFieldBase dataObject={scriptModel} fieldName={"type"} />
         </Col>
         <Col lg={12}>
-          <TextFieldBase dataObject={scriptModel} fieldName={"value"} />
+          <CodeField model={scriptModel} fieldName={"value"} language={"java"} theme={"github"} />
         </Col>
       </Row>
     </SummaryPanelContainer>

@@ -13,6 +13,8 @@ import workflowAuthorizedActions
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import ScriptLanguageSelectInput
   from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
+import CodeInput from "components/common/inputs/code/CodeInput";
+import ScriptValueInput from "components/inventory/scripts/details/ScriptValueInput";
 
 function ScriptsEditorPanel({ scriptModel, scriptRoleDefinitions, handleClose }) {
   const { getAccessRoleData, isSassUser } = useContext(AuthContext);
@@ -93,22 +95,22 @@ function ScriptsEditorPanel({ scriptModel, scriptRoleDefinitions, handleClose })
     }
 
     return (
-      <>
-        <Row>
-          <Col md={12} lg={scriptData?.isNew() ? 4 : 5}>
-            <TextInputBase disabled={!scriptData?.isNew()} setDataObject={setScriptData} dataObject={scriptData} fieldName={"name"}/>
-            <ScriptLanguageSelectInput setDataObject={setScriptData} dataObject={scriptData} />
-          </Col>
-          <Col md={12} lg={scriptData?.isNew() ? 8 : 7} className={"my-2"}>
-            <RoleAccessInput disabled={canEdit !== true} dataObject={scriptData} setDataObject={setScriptData} fieldName={"roles"} />
-          </Col>
-        </Row>
-        <Row>
-          <Col md={8}>
-            <TextAreaInput disabled={canEdit !== true} setDataObject={setScriptData} dataObject={scriptData} fieldName={"value"}/>
-          </Col>
-        </Row>
-      </>
+      <Row>
+        <Col md={12} lg={scriptData?.isNew() ? 4 : 5}>
+          <TextInputBase disabled={!scriptData?.isNew()} setDataObject={setScriptData} dataObject={scriptData} fieldName={"name"}/>
+          <ScriptLanguageSelectInput setDataObject={setScriptData} dataObject={scriptData} />
+        </Col>
+        <Col md={12} lg={scriptData?.isNew() ? 8 : 7} className={"my-2"}>
+          <RoleAccessInput disabled={canEdit !== true} dataObject={scriptData} setDataObject={setScriptData} fieldName={"roles"} />
+        </Col>
+        <Col md={12}>
+          <ScriptValueInput
+            disabled={canEdit !== true}
+            setModel={setScriptData}
+            model={scriptData}
+          />
+        </Col>
+      </Row>
     );
   };
 
