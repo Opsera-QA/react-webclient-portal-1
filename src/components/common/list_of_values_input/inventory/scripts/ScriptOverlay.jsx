@@ -85,7 +85,7 @@ function ScriptOverlay({ scriptId }) {
     <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
-      titleText={`${scriptModel?.getData("name")} Script Viewer`}
+      titleText={`[${scriptModel?.getData("name")}] Script Viewer`}
       titleIcon={faFileCode}
       showToasts={true}
       isLoading={isLoading}
