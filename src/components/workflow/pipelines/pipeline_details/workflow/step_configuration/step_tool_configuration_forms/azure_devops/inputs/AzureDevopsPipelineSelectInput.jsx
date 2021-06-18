@@ -65,8 +65,18 @@ function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, 
     const vaultResults = await azurePipelineActions.getAzurePersonalAccessToken(getAccessToken, cancelTokenSource, vaultKey);
     const secureKey = vaultResults?.data;
     const user = await getUserRecord();
-    const results = await azurePipelineActions.getAzurePipelines(getAccessToken, cancelSource, model, secureKey, user._id);
-    const azurePipelinesArray = await results?.data?.message?.message?.value;
+    const result = await azurePipelineActions.getAzurePipelines(getAccessToken, cancelSource, model, secureKey, user._id);
+    // const azurePipelinesArray = result?.data?.message;
+    // remove lines 71 - 79 once dev is updated
+    let azurePipelinesArray;
+
+    if (Array.isArray(result?.data?.message)){
+      azurePipelinesArray = result.data.message;
+    } else {
+      if (Array.isArray(result?.data?.message?.message?.value)){
+        azurePipelinesArray = result.data.message.message.value;
+      }
+    }
 
     if (Array.isArray(azurePipelinesArray) && azurePipelinesArray.length > 0) {
       setAzureDevopsList(azurePipelinesArray);
