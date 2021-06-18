@@ -7,8 +7,11 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import scriptsActions from "components/inventory/scripts/scripts-actions";
+import ScriptOverlay from "components/common/list_of_values_input/inventory/scripts/ScriptOverlay";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function ScriptLibrarySelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, className, fields, setDataFunction}) {
+  let toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [scripts, setScripts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -64,15 +67,17 @@ function ScriptLibrarySelectInput({ fieldName, dataObject, setDataObject, disabl
     }
   };
 
+  const toggleScriptOverlay = () => {
+    toastContext.showOverlayPanel(<ScriptOverlay scriptId={dataObject.getData(fieldName)} />);
+  };
+
   // TODO: Add script overlay toggle when finished
   const getInfoText = () => {
     if (dataObject.getData(fieldName) !== "") {
       return (
-        <small className="text-muted d-flex">
-          <Link to={`/inventory/tools/`}>
-            <span><FontAwesomeIcon icon={faFileCode} className="pr-1" />View this Script&apos;s Registry settings</span>
-          </Link>
-        </small>
+        <div className="text-muted d-flex pointer" onClick={() => {toggleScriptOverlay();}}>
+            <span><FontAwesomeIcon icon={faFileCode} className="pr-1" />View this Script</span>
+        </div>
       );
     }
   };
@@ -83,7 +88,7 @@ function ScriptLibrarySelectInput({ fieldName, dataObject, setDataObject, disabl
         <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
         No scripts have been registered.
         Please go to
-        <Link to="/inventory/tools"> Tool Registry</Link> and add an entry for this repository in order to
+        <Link to="/inventory/scripts"> Tool Registry</Link> and add an entry for this repository in order to
         proceed.
       </div>
     );
