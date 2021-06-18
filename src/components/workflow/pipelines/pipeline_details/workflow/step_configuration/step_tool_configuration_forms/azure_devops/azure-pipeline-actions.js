@@ -6,9 +6,9 @@ const azurePipelineActions = {};
 azurePipelineActions.getAzurePipelines = async (getAccessToken, cancelTokenSource, model, secureKey, userId) => {
   const postBody = {
     stepConfiguration: {
-      "organizationName": model.getData("organizationName"),
-      "azurePipelineId": model.getData("azurePipelineId"),
-      "projectName": model.getData("projectName")
+      "organizationName": model?.getData("organizationName"),
+      "azurePipelineId": model?.getData("azurePipelineId"),
+      "projectName": model?.getData("projectName")
     },
     secureKey: secureKey,
     userId: userId
