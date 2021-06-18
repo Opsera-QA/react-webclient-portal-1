@@ -10,6 +10,7 @@ import { AuthContext } from "../../../../contexts/AuthContext";
 import parametersActions from "../../../inventory/parameters/parameters-actions";
 import DropdownList from "react-widgets/lib/DropdownList";
 import axios from "axios";
+import InfoText from "../../inputs/info_text/InfoText";
 
 function ParameterSelectListInputBase({
   dataObject,
@@ -131,14 +132,19 @@ function ParameterSelectListInputBase({
   };
 
   const addProperty = () => {
+    setErrorMessage("");
+
+    if (properties.length + 1 > field.maxItems) {
+      setErrorMessage(`You have reached the maximum allowed number of ${type}. Please remove one to add another.`);
+      return;
+    }
+
     let currentData = dataObject?.getData(fieldName);
     let items = Array.isArray(currentData) && currentData.length > 0 ? currentData : [];
     for (let item in items) {
       if (Object.values(items[item]).includes(parameterName)) {
-        let errorMessage =
-          "Existing parameters can not be added again";
-        toastContext.showErrorDialog(errorMessage);
-        return false;
+        setErrorMessage("Existing parameters can not be added again");
+        return;
       }
     }
     setProperties([
@@ -153,6 +159,7 @@ function ParameterSelectListInputBase({
   };
 
   const deleteProperty = (index) => {
+    setErrorMessage("");
     let currentData = dataObject?.getData(fieldName);
     let items = Array.isArray(currentData) && currentData.length > 0 ? currentData : [];
     let newPropertyList = items;
@@ -376,6 +383,7 @@ function ParameterSelectListInputBase({
         <div>{properties.length > 0 ? getHeaderBar() : null}</div>
         <div className="properties-body-alt">{getFieldBody()}</div>
       </div>
+      <InfoText field={field} errorMessage={errorMessage}/>
     </div>
   );
 }

@@ -78,7 +78,7 @@ StepConfigUseTerraformOutput.propTypes = {
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   plan: PropTypes.array,
-  stepId: PropTypes.array,
+  stepId: PropTypes.string,
 };
 
 export default StepConfigUseTerraformOutput;

@@ -11,6 +11,7 @@ import parametersActions from "../../../inventory/parameters/parameters-actions"
 import DropdownList from "react-widgets/lib/DropdownList";
 import axios from "axios";
 import ReactJson from "react-json-view";
+import InfoText from "../../inputs/info_text/InfoText";
 
 const SAMPLE_DATA = {
   subnet_list: [
@@ -140,12 +141,17 @@ function ParameterMappingInputBase({
   };
 
   const addProperty = () => {
+    setErrorMessage("");
+
+    if (properties.length + 1 > field.maxItems) {
+      setErrorMessage(`You have reached the maximum allowed number of ${type}. Please remove one to add another.`);
+      return;
+    }
+
     for (let item in properties) {
       if (Object.values(properties[item]).includes(parameterName) || Object.values(properties[item]).includes(outputKey)) {
-        let errorMessage =
-          "Existing parameters can not be added again";
-        toastContext.showErrorDialog(errorMessage);
-        return false;
+        setErrorMessage("Existing parameters can not be added again");
+        return;
       }
     }
     setProperties([
@@ -162,6 +168,7 @@ function ParameterMappingInputBase({
   };
 
   const deleteProperty = (index) => {
+    setErrorMessage("");
     let newPropertyList = properties;
     newPropertyList.splice(index, 1);
     validateAndSetData(newPropertyList);
@@ -353,6 +360,7 @@ function ParameterMappingInputBase({
         <div>{properties.length > 0 ? getHeaderBar() : null}</div>
         <div className="properties-body-alt">{getFieldBody()}</div>
       </div>
+      <InfoText field={field} errorMessage={errorMessage}/>
     </div>
   );
 }

@@ -7,7 +7,7 @@ import StepConfigTerraformStepSelectInput from "../../common/inputs/StepConfigTe
 import StepConfigUseTerraformOutput from "../../common/inputs/StepConfigUseTerraformOutput";
 import ParameterSelectListInputBase
   from "../../../../../../../../common/list_of_values_input/parameters/ParameterSelectListInputBase";
-import { faFileCode } from "@fortawesome/pro-light-svg-icons";
+import { faHandshake } from "@fortawesome/pro-light-svg-icons";
 import PipelineStepEditorPanelContainer
   from "../../../../../../../../common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 
@@ -29,7 +29,7 @@ function JenkinsStepConfigurationPythonEditorPanel({ dataObject, setDataObject, 
           <StepConfigUseTerraformOutput dataObject={dataObject} setDataObject={setDataObject} fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>
           {getTerraformSelect()}
           <ParameterSelectListInputBase
-            titleIcon={faFileCode}
+            titleIcon={faHandshake}
             dataObject={dataObject}
             setDataObject={setDataObject}
             fieldName={"customParameters"}
