@@ -140,7 +140,7 @@ function ParameterSelectListInputBase({
     }
 
     for (let item in properties) {
-      if (Object.values(properties[item]).includes(parameterName) || Object.values(properties[item]).includes(outputKey)) {
+      if (Object.values(properties[item]).includes(parameterName)) {
         setErrorMessage("Existing parameters can not be added again");
         return;
       }
