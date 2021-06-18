@@ -1,5 +1,6 @@
 import baseActions from "utils/actionsBase";
 import {axiosApiService} from "api/apiService";
+import {axiosApiGetCall} from "api/apiServiceV2";
 
 // TODO: This is getting large. I think it might be wise to separate it into separate files
 //  (pipeline actions being add/get/update/delete, catalog for catalog related,
@@ -213,6 +214,15 @@ pipelineActions.getFromVault = async (vaultId, getAccessToken) => {
   const response = await axiosApiService(accessToken).get(apiUrl)
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
+  return response;
+};
+
+pipelineActions.getAzurePersonalAccessToken = async (vaultId, getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/vault/${vaultId}`;   
+  const response = await axiosApiGetCall(getAccessToken, cancelTokenSource, apiUrl)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+   
   return response;
 };
 
@@ -489,6 +499,11 @@ pipelineActions.deleteJenkinsJob = async (deleteObj, getAccessToken) => {
   console.log(deleteObj);
   let apiUrl = `/pipelines/deletejob`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, deleteObj);
+};
+
+pipelineActions.getAzurePipelines = async (getAccessToken, cancelTokenSource, postBody) => {
+  const apiURL = `azure/get-pipelines`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
 };
 
 export default pipelineActions;

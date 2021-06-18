@@ -9,14 +9,13 @@ import azureDevopsStepFormMetadata
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "../../../../../../../common/inputs/text/TextInputBase";
 import AzureDevopsToolSelectInput from "./inputs/AzureDevopsToolSelectInput";
-import OctopusToolSelectInput from "../octopus/input/OctopusToolSelectInput";
+import AzureDevopsPipelineSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_devops/inputs/AzureDevopsPipelineSelectInput";
 
-function AzureDevopsStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback }) {
+function AzureDevopsStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
   const [azureDevopsStepConfigurationDto, setAzureDevopsStepConfigurationDataDto] = useState(undefined);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
-
 
   useEffect(() => {
     loadData();
@@ -59,14 +58,10 @@ function AzureDevopsStepConfiguration({ pipelineId, stepTool, stepId, createJob,
       persistRecord={callbackFunction}
       isLoading={isLoading}
     >
-      <AzureDevopsToolSelectInput
-        fieldName={"toolConfigId"}
-        dataObject={azureDevopsStepConfigurationDto}
-        setDataObject={setAzureDevopsStepConfigurationDataDto}
-        />
-      <TextInputBase dataObject={azureDevopsStepConfigurationDto} fieldName={"organizationName"} setDataObject={setAzureDevopsStepConfigurationDataDto}/>
-      <TextInputBase setDataObject={setAzureDevopsStepConfigurationDataDto} dataObject={azureDevopsStepConfigurationDto} fieldName={"azurePipelineId"} />
+      <AzureDevopsToolSelectInput fieldName={"toolConfigId"} dataObject={azureDevopsStepConfigurationDto} setDataObject={setAzureDevopsStepConfigurationDataDto} />
+      <TextInputBase dataObject={azureDevopsStepConfigurationDto} setDataObject={setAzureDevopsStepConfigurationDataDto} fieldName={"organizationName"}/>
       <TextInputBase setDataObject={setAzureDevopsStepConfigurationDataDto} dataObject={azureDevopsStepConfigurationDto} fieldName={"projectName"} />
+      <AzureDevopsPipelineSelectInput organization={azureDevopsStepConfigurationDto.getData("organizationName")} projectName={azureDevopsStepConfigurationDto.getData("projectName")} dataObject={azureDevopsStepConfigurationDto} setDataObject={setAzureDevopsStepConfigurationDataDto} fieldName={"azurePipelineId"}/>
       <TextInputBase setDataObject={setAzureDevopsStepConfigurationDataDto} dataObject={azureDevopsStepConfigurationDto} fieldName={"pipelineVersion"} />
     </PipelineStepEditorPanelContainer>
   );
