@@ -153,6 +153,22 @@ const octopusStepFormMetadata = {
         id: "lifecycleId",
         isRequired: true
       },
+      {
+        label: "Script Type",
+        id: "scriptSource"
+      },
+      {
+        label: "Script File Name",
+        id: "scriptFileName"
+      },
+      {
+        label: "Script Parameters",
+        id: "scriptParameters"
+      },
+      {
+        label: "Opsera Script Library",
+        id: "scriptId"
+      },
     ],
   newObjectFields:
       {
@@ -186,7 +202,11 @@ const octopusStepFormMetadata = {
         applicationPoolName: "",
         protocol: "HTTP",
         port: "80",
-        lifecycleId: ""
+        lifecycleId: "",
+        scriptSource: "",
+        scriptParameters: "",
+        scriptFileName: "",
+        scriptId: ""
       }
   };
   
