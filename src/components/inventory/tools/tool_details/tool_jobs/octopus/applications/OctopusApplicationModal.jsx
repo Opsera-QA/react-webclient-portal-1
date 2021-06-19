@@ -5,6 +5,7 @@ import OctopusEnvironmentMetadata from "../octopus-environment-metadata";
 import OctopusAccountMetadata from "../octopus-account-metadata";
 import OctopusTargetMetadata from "../octopus-target-metadata";
 import OctopusFeedMetadata from "../octopus-feed-metadata";
+import OctopusTomcatMetadata from "../octopus-tomcat-metadata";
 import Model from "../../../../../../../core/data_model/model";
 import OctopusApplicationEditorPanel from "./details/OctopusEditorPanel";
 
@@ -31,6 +32,8 @@ function ExistingOctopusApplicationModal({
         setOctopusApplicationData(new Model(octopusApplicationDataObj.getPersistData(), OctopusTargetMetadata, false));
       if (octopusApplicationDataObj.type === "feed")
         setOctopusApplicationData(new Model(octopusApplicationDataObj.getPersistData(), OctopusFeedMetadata, false));
+      if (octopusApplicationDataObj.type === "tomcat")
+        setOctopusApplicationData(new Model(octopusApplicationDataObj.getPersistData(), OctopusTomcatMetadata, false));
     } else {
       setNewModel();
     }
@@ -47,6 +50,8 @@ function ExistingOctopusApplicationModal({
       setOctopusApplicationData(new Model({ ...OctopusTargetMetadata.newModelBase }, OctopusTargetMetadata, true));
     if (type === "feed")
       setOctopusApplicationData(new Model({ ...OctopusFeedMetadata.newModelBase }, OctopusFeedMetadata, true));
+    if (type === "tomcat")
+      setOctopusApplicationData(new Model({ ...OctopusTomcatMetadata.newModelBase }, OctopusTomcatMetadata, true));
   };
 
   const handleClose = () => {
