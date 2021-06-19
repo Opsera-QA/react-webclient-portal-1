@@ -41,6 +41,7 @@ const SfdcPipelineXMLView = ({
   const [save, setSave] = useState(false);
   const toastContext = useContext(DialogToastContext);
   const [loading, setLoading] = useState(false);
+  const [rollBack, setRollBack] = useState(false);
   const [activeTab, setActiveTab] = useState("pxml");
 
   useEffect(() => {
@@ -57,10 +58,11 @@ const SfdcPipelineXMLView = ({
         const response = await sfdcPipelineActions.getListFromPipelineStorage(postBody, "", getAccessToken);
         
         if(!response.data.data || !response.data.data.packageXml) {
-          toastContext.showInlineErrorMessage("something went wrong! not a valid object");
+          toastContext.showInlineErrorMessage("something went wrong while generating XML.");
         }
         setXML(response.data.data.packageXml);
         setDestructiveXml(response.data.data.destructiveXml ? response.data.data.destructiveXml : "");
+        setRollBack(response?.data?.data?.selectedFileList  && response?.data?.data?.selectedFileList.length === 0 ? true : false);
       } catch (error) {
         console.error("Error getting API Data: ", error);
         toastContext.showInlineErrorMessage(error);
@@ -90,6 +92,7 @@ const SfdcPipelineXMLView = ({
           loading={loading}
           save={save}
           xml={xml}
+          rollBack={rollBack}
           destructiveXml={destructiveXml}
         />
       );
@@ -145,7 +148,7 @@ const SfdcPipelineXMLView = ({
               setSave(true);
               handleApproveChanges();
             }}
-            disabled={save}
+            disabled={save || (rollBack && destructiveXml.length === 0) }
           >
             {save ? (
               <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
