@@ -7,18 +7,28 @@ const OctopusTomcatMetadata = {
         isRequired: true
       },
       {
+        label: "Space Name",
+        id: "spaceName",
+        isRequired: true
+      },
+      {
+        label: "Space ID",
+        id: "spaceId",
+        isRequired: true
+      },
+      {
         label: "Tomcat Manager URL",
-        id: "tomcatManagerUrl",
+        id: "managerUrl",
         isRequired: true
       },
       {
         label: "Username",
-        id: "tomcatUserName",
+        id: "userName",
         isRequired: true
       },
       {
         label: "Password",
-        id: "tomcatPassword",
+        id: "password",
         isRequired: true
       },
       {
@@ -27,7 +37,9 @@ const OctopusTomcatMetadata = {
       },
     ],
     newModelBase: {
-      name: "",    
+      name: "",
+      spaceName : "",
+      spaceId : "",    
       managerUrl : "",
       userName : "",
       password: "",
