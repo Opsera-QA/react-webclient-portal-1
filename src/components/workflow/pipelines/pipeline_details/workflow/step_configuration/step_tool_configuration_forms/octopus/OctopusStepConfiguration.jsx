@@ -28,6 +28,7 @@ import OctopusProtocolInput from "./input/OctopusProtocolInput";
 import OctopusLifecycleSelectInput from "./input/OctopusLifecycleSelectInput";
 import OctopusScriptTypeSelectInput from "./input/OctopusScriptTypeSelectInput";
 import OctopusScriptTypeDetailsView from "./input/OctopusScriptTypeDetailsView";
+import OctopusDeployToTomcatDetailsView from "./sub-forms/OctopusDeployToTomcatDetailsView";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -431,6 +432,23 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                 )}
               </>
             )}
+            {octopusStepConfigurationDto &&
+              octopusStepConfigurationDto.getData("octopusPlatformType") &&
+              octopusStepConfigurationDto.getData("octopusPlatformType").toLowerCase() === "deploy to tomcat via manager" && (
+                <OctopusDeployToTomcatDetailsView
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  disabled={false}
+                  tool_prop={
+                    octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
+                      ? octopusStepConfigurationDto.getData("octopusPlatformType")
+                      : ""
+                  }
+                  pipelineId={pipelineId}
+                />
+              )}
+
+
             {octopusStepConfigurationDto &&
             octopusStepConfigurationDto.getData("octopusPlatformType") &&
             octopusStepConfigurationDto.getData("octopusPlatformType") === "Package" && (
