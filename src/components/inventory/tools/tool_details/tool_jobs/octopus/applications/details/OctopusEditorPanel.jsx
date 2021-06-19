@@ -30,6 +30,8 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import OctopusThumbprintDisplay from "./OctopusThumbprintDisplay";
 import axios from "axios";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
+import VaultTextInput from "components/common/inputs/text/VaultTextInput";
+import toolsActions from "components/inventory/tools/tools-actions";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -92,8 +94,18 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
     }
   };
 
+  const saveTomcatPasswordToVault = async () => {
+    let newConfiguration = octopusApplicationDataDto.getPersistData();
+    const tomcatManagerPasswordKey = `${newConfiguration.toolId}-${newConfiguration.name.toLowerCase()}${newConfiguration.userName.toLowerCase()}-secretKey`;
+    newConfiguration.password = await toolsActions.saveKeyPasswordToVault(octopusApplicationDataDto, "password", newConfiguration.password, tomcatManagerPasswordKey, getAccessToken, newConfiguration.toolId);
+    octopusApplicationDataDto.setData("password", newConfiguration.password);
+  }
+
   const createApplication = async () => {
     try {
+      if(type === "tomcat"){        
+        await saveTomcatPasswordToVault();
+      }
       await OctopusActions.createOctopusApplication(octopusApplicationDataDto, type, getAccessToken);
       toastContext.showCreateSuccessResultDialog(type ? type.charAt(0).toUpperCase() + type.slice(1) : "");
       handleClose();
@@ -512,6 +524,41 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                     : false
                 }
                 tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
+              />
+            </Col>
+          </Row>
+        )}
+        {octopusApplicationDataDto && type && type === "tomcat" && !isLoading && (
+          <Row>
+            <Col lg={12}>
+              <TextInputBase 
+                dataObject={octopusApplicationDataDto} 
+                setDataObject={setOctopusApplicationDataDto} 
+                fieldName={"name"} 
+                disabled={octopusApplicationDataDto.getData("name")} 
+              />              
+            </Col>
+            <Col lg={12}>
+              <TextInputBase 
+                dataObject={octopusApplicationDataDto} 
+                setDataObject={setOctopusApplicationDataDto} 
+                fieldName={"tomcatManagerUrl"}
+                disabled={octopusApplicationDataDto.getData("tomcatManagerUrl")} 
+              />              
+            </Col>
+            <Col lg={12}>              
+              <TextInputBase 
+                dataObject={octopusApplicationDataDto} 
+                setDataObject={setOctopusApplicationDataDto} 
+                fieldName={"tomcatUserName"} 
+                disabled={octopusApplicationDataDto.getData("tomcatUserName")} 
+              />
+            </Col>
+            <Col lg={12}>              
+              <VaultTextInput 
+                dataObject={octopusApplicationDataDto} 
+                setDataObject={setOctopusApplicationDataDto} 
+                fieldName={"tomcatPassword"}                 
               />
             </Col>
           </Row>
