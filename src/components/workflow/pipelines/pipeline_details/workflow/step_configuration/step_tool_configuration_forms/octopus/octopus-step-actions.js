@@ -123,6 +123,15 @@ OctopusStepActions.getFeedList = async (id, spaceId, getAccessToken) => {
   return [];
 };
 
+OctopusStepActions.getTomcatManagerList = async (id, spaceId, getAccessToken) => {
+  const apiUrl = `/tools/octopus/tomcat/list/${id}/octopus/${spaceId}`;
+  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
+  if (response && response.status === 200) {
+    return response.data;
+  }
+  return [];
+};
+
 OctopusStepActions.getPlatformTypes = async (id, spaceId, getAccessToken) => {
   const apiUrl = `/tools/octopus/platform/types/${id}/octopus/${spaceId}`;
   let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
