@@ -99,7 +99,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
     const tomcatManagerPasswordKey = `${newConfiguration.toolId}-${newConfiguration.name.toLowerCase()}${newConfiguration.userName.toLowerCase()}-secretKey`;
     newConfiguration.password = await toolsActions.saveKeyPasswordToVault(octopusApplicationDataDto, "password", newConfiguration.password, tomcatManagerPasswordKey, getAccessToken, newConfiguration.toolId);
     octopusApplicationDataDto.setData("password", newConfiguration.password);
-  }
+  };
 
   const createApplication = async () => {
     try {
@@ -115,6 +115,9 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
   };
 
   const updateApplication = async () => {
+    if(type === "tomcat"){        
+      await saveTomcatPasswordToVault();      
+    }
     return await OctopusActions.updateOctopusApplication(octopusApplicationDataDto, type, getAccessToken, appID);
   };
 
@@ -535,30 +538,39 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 dataObject={octopusApplicationDataDto} 
                 setDataObject={setOctopusApplicationDataDto} 
                 fieldName={"name"} 
-                disabled={octopusApplicationDataDto.getData("name")} 
+                disabled={false} 
               />              
+            </Col>
+            <Col lg={12}>
+              <SpaceNameSelectInput
+                fieldName={"spaceName"}
+                dataObject={octopusApplicationDataDto}
+                setDataObject={setOctopusApplicationDataDto}
+                disabled={false}
+                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
+              />
             </Col>
             <Col lg={12}>
               <TextInputBase 
                 dataObject={octopusApplicationDataDto} 
                 setDataObject={setOctopusApplicationDataDto} 
-                fieldName={"tomcatManagerUrl"}
-                disabled={octopusApplicationDataDto.getData("tomcatManagerUrl")} 
+                fieldName={"managerUrl"}
+                disabled={false} 
               />              
             </Col>
             <Col lg={12}>              
               <TextInputBase 
                 dataObject={octopusApplicationDataDto} 
                 setDataObject={setOctopusApplicationDataDto} 
-                fieldName={"tomcatUserName"} 
-                disabled={octopusApplicationDataDto.getData("tomcatUserName")} 
+                fieldName={"userName"} 
+                disabled={false} 
               />
             </Col>
             <Col lg={12}>              
               <VaultTextInput 
                 dataObject={octopusApplicationDataDto} 
                 setDataObject={setOctopusApplicationDataDto} 
-                fieldName={"tomcatPassword"}                 
+                fieldName={"password"}                 
               />
             </Col>
           </Row>
