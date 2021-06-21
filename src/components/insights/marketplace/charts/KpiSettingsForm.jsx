@@ -188,6 +188,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "sonar-bugs-metric-scorecard",
     "sonar-codesmells-metric-scorecard",
     "sonar-vulnerabilities-metric-scorecard",
+    "sonar-reliability-remediation-agg-by-time",
   ];
 
   const getKpiFilters = (filter) => {
