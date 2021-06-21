@@ -37,9 +37,9 @@ function JenkinsStepConfiguration({
   const [jenkinsJobTypeDto, setJenkinsJobTypeDto] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
-
   useEffect(() => {
     isMounted.current = true;
+
 
     loadData().catch((error) => {
       if (isMounted?.current === true) {
@@ -97,6 +97,7 @@ function JenkinsStepConfiguration({
   const handleCreateAndSave = async () => {
     const toolId = jenkinsStepConfigurationDto.getData("toolConfigId");
     console.log("saving and creating job for toolID: ", toolId);
+    console.log("step id",stepId);
     if (toolId) {
       // setLoading(true);
 
@@ -104,6 +105,9 @@ function JenkinsStepConfiguration({
         jobId: "",
         pipelineId: pipelineId,
         stepId: stepId,
+        buildParams: {
+          stepId: jenkinsStepConfigurationDto.getData("stepIdXML"),
+        },
       };
       console.log("createJobPostBody: ", createJobPostBody);
 

@@ -20,7 +20,7 @@ import {
   getMissingRequiredFieldsErrorDialog,
   getServiceUnavailableDialog,
 } from "../../../../../../../common/toasts/toasts";
-import SFDCConfiguration from "./sub_forms/SFDCConfiguration";
+import SFDCConfiguration from "./jenkins_step_config_sub_forms/SFDCConfiguration";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import pipelineActions from "components/workflow/pipeline-actions";
 import JSONInput from "react-json-editor-ajrm";
@@ -33,6 +33,13 @@ import Model from "core/data_model/model";
 import _ from "lodash";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
+import StepConfigTerraformStepSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/common/inputs/StepConfigTerraformStepSelectInput";
+import StepConfigUseTerraformOutput from "../common/inputs/StepConfigUseTerraformOutput";
+import PipelineStepEditorPanelContainer
+  from "../../../../../../../common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import ParameterSelectListInputBase
+  from "../../../../../../../common/list_of_values_input/parameters/ParameterSelectListInputBase";
+import { faHandshake } from "@fortawesome/pro-light-svg-icons";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -95,7 +102,10 @@ const INITIAL_DATA = {
   customScript: false,
   inputDetails: [],
   commands: "",
-  isManualRollBackBranch: false
+  isManualRollBackBranch: false,
+  terraformStepId: "",
+  customParameters: [],
+  useTerraformOutput: false
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -241,6 +251,19 @@ function JenkinsStepConfiguration({
         {
           label: "Commands",
           id: "commands"
+        },
+        {
+          label: "Terraform Step",
+          id: "terraformStepId"
+        },
+        {
+          label: "Custom Parameters",
+          id: "customParameters",
+          maxItems: 15,
+        },
+        {
+          label: "Use Terraform Output",
+          id: "useTerraformOutput"
         }
       ]
     }, true));
@@ -406,9 +429,12 @@ function JenkinsStepConfiguration({
       tmp.setData("inputDetails", formData.inputDetails);
       tmp.setData("commands", formData.commands);
       tmp.setData("customScript", formData.customScript);
+      tmp.setData("terraformStepId", formData.terraformStepId);
+      tmp.setData("customParameters", formData.customParameters);
+      tmp.setData("useTerraformOutput", formData.useTerraformOutput);
       setPythonScriptData(tmp);
     }    
-  }, [formData.inputDetails, formData.commands, formData.customScript]);
+  }, [formData.inputDetails, formData.commands, formData.customScript, formData.terraformStepId, formData.customParameters, formData.useTerraformOutput]);
 
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
@@ -522,13 +548,19 @@ function JenkinsStepConfiguration({
       setFormData(Object.assign(formData, {
         customScript: true,
         inputDetails: [],
-        commands: pythonScriptData.getData("commands")
+        commands: pythonScriptData.getData("commands"),
+        terraformStepId: pythonScriptData.getData("terraformStepId"),
+        customParameters: pythonScriptData.getData("customParameters"),
+        useTerraformOutput: pythonScriptData.getData("useTerraformOutput")
       }));
     }else {
       setFormData(Object.assign(formData, {
         customScript: false,
         inputDetails: pythonScriptData.getData("inputDetails"),
-        commands: ""
+        commands: "",
+        terraformStepId: "",
+        customParameters: [],
+        useTerraformOutput: false
       }));
     }
   };
@@ -871,6 +903,14 @@ function JenkinsStepConfiguration({
   
   };
 
+  const getTerraformSelect = () => {
+    if (pythonScriptData?.getData("useTerraformOutput")) {
+      return (
+        <StepConfigTerraformStepSelectInput setDataObject={setPythonScriptData} dataObject={pythonScriptData} plan={plan} stepId={stepId} />
+      );
+    }
+  };
+
   const RegistryPopover = (data) => {
     if (data) {
       return (
@@ -979,6 +1019,7 @@ function JenkinsStepConfiguration({
             </Form.Label>
           )}
         </Form.Group>
+
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Job Type*</Form.Label>
           {jobType !== undefined ? (
@@ -1055,7 +1096,7 @@ function JenkinsStepConfiguration({
                 )}
               </>
             )}
-4444
+
             <SFDCConfiguration
               plan={plan}
               pipelineId={pipelineId}
@@ -1075,7 +1116,7 @@ function JenkinsStepConfiguration({
               setShowToast={setShowToast}
               saveConfig={saveConfig}
             />
-55555
+
             {formData.jenkinsUrl && jenkinsList.length > 0 && formData.jobType && formData.jobType.length > 0 && (
               <>
                 {formData.jobType != "SFDC VALIDATE PACKAGE XML" &&
@@ -1110,7 +1151,7 @@ function JenkinsStepConfiguration({
                       ) : null}
                     </Form.Group>
                   )}
-6666
+
               {formData.service && formData.service === "bitbucket" && 
               formData.gitToolId &&
               formData.jobType != "SFDC VALIDATE PACKAGE XML" &&
@@ -1158,7 +1199,7 @@ function JenkinsStepConfiguration({
                 {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
               </Form.Group>
             )}
-7777
+
             {formData.service &&
               formData.gitToolId &&
               formData.jobType != "SFDC VALIDATE PACKAGE XML" &&
@@ -1194,7 +1235,7 @@ function JenkinsStepConfiguration({
                   {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
                 </Form.Group>
               )}
-8888
+
             {formData.service &&
               formData.gitToolId &&
               formData.repoId &&
@@ -1230,7 +1271,6 @@ function JenkinsStepConfiguration({
                   )}
                   {/* <Form.Text className="text-muted">Tool cannot be changed after being set.  The step would need to be deleted and recreated to change the tool.</Form.Text> */}
                 </Form.Group>
-
                   <Form.Group controlId="workspaceDeleteFlag">
                     <Form.Check inline
                                 type="checkbox"
@@ -1248,7 +1288,7 @@ function JenkinsStepConfiguration({
                   </Form.Group>
               </>
               )}
-999
+
               
               {formData.jobType === "SFDC BACK UP" && (
                 <>
@@ -1285,7 +1325,7 @@ function JenkinsStepConfiguration({
                   }
                 </>
                 )}
-  10101              
+                
               {formData.jobType === "SFDC PUSH ARTIFACTS" && (
                 <>
                 {/* isNewBranch -> flag to decide if the branch is a new branch (true) or existing branch (false)
@@ -1303,7 +1343,7 @@ function JenkinsStepConfiguration({
                     />
                     <Form.Text className="text-muted">Creates a new branch and push the artifacts.</Form.Text>
                   </Form.Group>
-1111   
+                
                   {formData.isNewBranch ? 
                   <>
                     <Form.Group controlId="gitBranchName">
@@ -1604,11 +1644,28 @@ function JenkinsStepConfiguration({
                       fieldName={"customScript"} 
                     />
                     { pythonScriptData.getData("customScript") ? (
-                      <TextAreaInput 
-                        dataObject={pythonScriptData}                         
-                        setDataObject={setPythonScriptData}
-                        fieldName={"commands"} 
-                      />
+                      <>
+                        <StepConfigUseTerraformOutput dataObject={pythonScriptData} setDataObject={setPythonScriptData} fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>
+                        {getTerraformSelect()}
+                        <ParameterSelectListInputBase
+                          titleIcon={faHandshake}
+                          dataObject={pythonScriptData}
+                          setDataObject={setPythonScriptData}
+                          fieldName={"customParameters"}
+                          allowIncompleteItems={true}
+                          type={"Parameter"}
+                          regexValidationRequired={false}
+                          titleText={"Parameter Selection"}
+                          plan={plan}
+                          tool_prop={pythonScriptData?.getData("terraformStepId") && pythonScriptData?.getData("terraformStepId").length > 0 ?
+                            pythonScriptData?.getData("terraformStepId") : ""}
+                        />
+                        <TextAreaInput 
+                          dataObject={pythonScriptData}                         
+                          setDataObject={setPythonScriptData}
+                          fieldName={"commands"} 
+                        />
+                      </>
                     ) : (
                       <PythonFilesInput 
                         setDataObject={setPythonScriptData} 

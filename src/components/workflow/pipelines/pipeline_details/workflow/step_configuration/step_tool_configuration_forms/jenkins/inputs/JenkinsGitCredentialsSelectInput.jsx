@@ -94,7 +94,7 @@ function JenkinsGitCredentialsSelectInput({
     && jenkinsList.length > 0
     && dataObject?.getData("jobType") 
     && dataObject?.getData("jobType").length >= 0
-    && !excludeArr.includes(dataObject?.getData("jobType"))
+    && excludeArr.some(item => item!==dataObject?.getData("jobType"))
     && !dataObject?.getData("isOrgToOrg"); 
    
   };

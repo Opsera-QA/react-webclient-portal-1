@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import PropTypes from "prop-types";
 import GitBranchInput from "components/common/list_of_values_input/tools/git/GitBranchInput";
 import GitUpstreamBranchInput from "components/common/list_of_values_input/tools/git/GitUpstreamBranchInput";
 import GitBranchManualRollBackBranchInput from "components/common/list_of_values_input/tools/git/GitBranchManualRollBackBranchInput";
 import { Form } from "react-bootstrap";
+import ConsoleLogTab from "components/common/tabs/detail_view/ConsoleLogTab";
 
 const excludeArrs = [
   "SFDC VALIDATE PACKAGE XML",
@@ -15,6 +16,16 @@ const excludeArrs = [
 
 function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setDataObject, disabled, jenkinsList }) {
   const [branchList, setBranchList] = useState([]);
+  const toolJobType = dataObject.getData("toolJobType");
+  useEffect(() => {
+    if (toolJobType && toolJobType.includes("SFDC")) {
+      let newDataObject = { ...dataObject };
+      newDataObject.setData("buildType", "ant");
+      setDataObject({ ...newDataObject });
+
+      
+    }
+  }, [toolJobType]);
 
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = { ...dataObject };
@@ -39,15 +50,16 @@ function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setD
   };
 
   const valid = () => {
+    // console.log("service : ",dataObject.getData("service"));
+    // console.log("gittoolid : ",dataObject.getData("gitToolId"));
+    // console.log("repoId : ",dataObject.getData("repoId"));
+    // console.log("job type",dataObject.getData("jobType"));
+    // console.log("isorg : ",dataObject.getData("isOrgToOrg"));
     return (
-      dataObject.getData("jenkinsUrl") &&
-      jenkinsList.length > 0 &&
-      dataObject.getData("jobType") &&
-      dataObject.getData("jobType").length > 0 &&
       dataObject.getData("service") &&
       dataObject.getData("gitToolId") &&
-      dataObject.getData("repoId") &&
-      !excludeArrs.includes(dataObject.getData("jobType")) &&
+      dataObject.getData("repoId") &&     
+      excludeArrs.some(item=>item!==dataObject.getData("jobType")) &&
       !dataObject.getData("isOrgToOrg")
     );
   };
@@ -71,8 +83,7 @@ function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setD
       );
     }
   };
-
-  if (dataObject == null || !valid()) {
+  if (dataObject === null || !valid()) {
     return null;
   }
 

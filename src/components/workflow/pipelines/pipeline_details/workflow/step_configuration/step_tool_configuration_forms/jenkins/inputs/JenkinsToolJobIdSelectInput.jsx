@@ -38,16 +38,19 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
   }, [jobsList, dataObject && dataObject.getData("toolJobId")]);
 
   const setDataFunction = (fieldName, selectedOption) => {
+    
     let newDataObject = { ...dataObject };
     newDataObject.setData("toolJobId", selectedOption._id);
     newDataObject.setData("toolJobType", selectedOption.type);
-    newDataObject.setData(jobType, selectedOption.type[0]);
-    newDataObject.setData("rollbackBranchName", "");
-    newDataObject.setData("stepIdXML", "");
-    newDataObject.setData("sfdcDestToolId", "");
-    newDataObject.setData("destAccountUsername", "");
-    newDataObject.setData("buildToolVersion", "6.3");
-    newDataObject.setData("buildArgs", {});
+    switch (selectedOption.type[0]) {
+      case "SFDC":
+        newDataObject.setData('jobType',selectedOption.configuration.jobType);
+      break;
+      default:
+        newDataObject.setData('jobType',selectedOption.type[0]);
+        newDataObject.setData("rollbackBranchName", "");
+      break;
+    }
 
     // TODO: There is probably a less confusing way of doing this
     if ("configuration" in selectedOption) {
@@ -58,8 +61,15 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
         }
       });
     }
+    
+    newDataObject.setData("stepIdXML", "");
+    newDataObject.setData("sfdcDestToolId", "");
+    newDataObject.setData("destAccountUsername", "");
+    newDataObject.setData("buildToolVersion", "6.3");
+    newDataObject.setData("buildArgs", {});
 
     setDataObject({ ...newDataObject });
+    console.log(dataObject.data,'*****123');
   };
 
   const renderNoJobsMessage = () => {
@@ -100,7 +110,7 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
 
   return (
     <>
-      {renderOverlayTrigger()}
+      {renderOverlayTrigger()}123
       <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}

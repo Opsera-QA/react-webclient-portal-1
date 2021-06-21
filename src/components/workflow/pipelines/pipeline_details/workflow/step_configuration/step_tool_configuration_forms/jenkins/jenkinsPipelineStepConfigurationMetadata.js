@@ -151,6 +151,10 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Use Terraform Output",
       id: "useTerraformOutput"
+    },
+    {
+      label:"Configure Branch Name",
+      id:"isManualRollBackBranch"
     }
   ],
   newModelBase: {
