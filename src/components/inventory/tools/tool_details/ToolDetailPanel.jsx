@@ -30,7 +30,7 @@ import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTa
 import { AuthContext } from "contexts/AuthContext";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
-import AttributeEditorPanel from "components/inventory/tools/tool_details/AttributeEditorPanel";
+import ToolAttributeEditorPanel from "components/inventory/tools/tool_details/ToolAttributeEditorPanel";
 import ToggleTab from "components/common/tabs/detail_view/ToggleTab";
 import ToolVaultPanel from "./ToolVaultPanel";
 
@@ -149,7 +149,7 @@ function ToolDetailPanel({ toolData, setToolData, loadData, isLoading, tab }) {
       case "attributes":
         return <ToolAttributesPanel toolData={toolData} setActiveTab={setActiveTab} customerAccessRules={customerAccessRules} />;
       case "attribute_settings":
-        return <AttributeEditorPanel toolData={toolData} setToolData={setToolData} loadData={loadData} handleClose={toggleAttributesPanel} />;
+        return <ToolAttributeEditorPanel toolData={toolData} setToolData={setToolData} loadData={loadData} handleClose={toggleAttributesPanel} />;
       case "configuration":
         return <ToolConfigurationPanel toolData={toolData} loadData={loadData}/>;
       case "jobs":
