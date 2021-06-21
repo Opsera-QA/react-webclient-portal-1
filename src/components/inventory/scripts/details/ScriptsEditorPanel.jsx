@@ -10,15 +10,12 @@ import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import VanityEditorPanelContainer from "components/common/panels/detail_panel_container/VanityEditorPanelContainer";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
-import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import ScriptLanguageSelectInput
   from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
-import CodeInput from "components/common/inputs/code/CodeInput";
 import ScriptValueInput from "components/inventory/scripts/details/ScriptValueInput";
 
-function ScriptsEditorPanel({ scriptModel, scriptRoleDefinitions, handleClose }) {
-  const { getAccessRoleData, isSassUser } = useContext(AuthContext);
-  const [scriptData, setScriptData] = useState(undefined);
+function ScriptsEditorPanel({ scriptModel, setScriptModel, scriptModelId, scriptRoleDefinitions, handleClose }) {
+  const { getAccessRoleData } = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [canEdit, setCanEdit] = useState(false);
   const [canDelete, setCanDelete] = useState(false);
@@ -35,9 +32,6 @@ function ScriptsEditorPanel({ scriptModel, scriptRoleDefinitions, handleClose })
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    if (scriptModel == null) {
-      setScriptData(undefined);
-    }
 
     if (scriptModel && Object.keys(scriptModel).length !== 0) {
       initializeData().catch((error) => {
@@ -51,12 +45,11 @@ function ScriptsEditorPanel({ scriptModel, scriptRoleDefinitions, handleClose })
       source.cancel();
       isMounted.current = false;
     };
-  }, [scriptModel && scriptModel.getData("_id")]);
+  }, [scriptModelId]);
 
   const initializeData = async () => {
     setIsLoading(true);
     await loadRoles();
-    setScriptData({...scriptModel});
     setIsLoading(false);
   };
 
@@ -72,40 +65,39 @@ function ScriptsEditorPanel({ scriptModel, scriptRoleDefinitions, handleClose })
   };
 
   const getDeleteButton = () => {
-    if (canDelete && !scriptData.isNew()) {
-      return (<DeleteModelButtonWithConfirmation dataObject={scriptData} />);
+    if (canDelete && !scriptModel.isNew()) {
+      return (<DeleteModelButtonWithConfirmation dataObject={scriptModel} />);
     }
   };
 
-
-  if (scriptData == null) {
+  if (scriptModel == null) {
     return null;
   }
 
   return (
     <VanityEditorPanelContainer
-      model={scriptData}
-      setModel={setScriptData}
+      model={scriptModel}
+      setModel={setScriptModel}
       isLoading={isLoading}
       handleClose={handleClose}
       extraButtons={getDeleteButton()}
     >
       <Row>
         <Col md={6}>
-          <TextInputBase disabled={!scriptData?.isNew()} setDataObject={setScriptData} dataObject={scriptData} fieldName={"name"}/>
+          <TextInputBase disabled={!scriptModel?.isNew()} setDataObject={setScriptModel} dataObject={scriptModel} fieldName={"name"}/>
         </Col>
         <Col md={6}>
-          <ScriptLanguageSelectInput setDataObject={setScriptData} dataObject={scriptData} />
+          <ScriptLanguageSelectInput setDataObject={setScriptModel} dataObject={scriptModel} />
         </Col>
         <Col md={8}>
           <ScriptValueInput
             disabled={canEdit !== true}
-            setModel={setScriptData}
-            model={scriptData}
+            setModel={setScriptModel}
+            model={scriptModel}
           />
         </Col>
         <Col md={8} className={"my-2"}>
-          <RoleAccessInput disabled={canEdit !== true} dataObject={scriptData} setDataObject={setScriptData} fieldName={"roles"} />
+          <RoleAccessInput disabled={canEdit !== true} dataObject={scriptModel} setDataObject={setScriptModel} fieldName={"roles"} />
         </Col>
       </Row>
     </VanityEditorPanelContainer>
@@ -115,7 +107,9 @@ function ScriptsEditorPanel({ scriptModel, scriptRoleDefinitions, handleClose })
 ScriptsEditorPanel.propTypes = {
   scriptModel: PropTypes.object,
   handleClose: PropTypes.func,
-  scriptRoleDefinitions: PropTypes.object
+  scriptModelId: PropTypes.string,
+  scriptRoleDefinitions: PropTypes.object,
+  setScriptModel: PropTypes.func
 };
 
 export default ScriptsEditorPanel;

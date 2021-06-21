@@ -2,8 +2,8 @@ import ModelBase, {DataState} from "core/data_model/model.base";
 import parametersActions from "components/inventory/parameters/parameters-actions";
 
 export class ParameterModel extends ModelBase {
-  constructor(data, metaData, newModel, setStateFunction, getAccessToken, cancelTokenSource, loadData) {
-    super(data, metaData, newModel, setStateFunction);
+  constructor(data, metaData, newModel, getAccessToken, cancelTokenSource, loadData) {
+    super(data, metaData, newModel);
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;
     this.loadData = loadData;
@@ -20,7 +20,7 @@ export class ParameterModel extends ModelBase {
   deleteModel = async () => {
     const response = await parametersActions.deleteParameterV2(this.getAccessToken, this.cancelTokenSource, this);
     this.dataState = DataState.DELETED;
-    this.updateState();
+    this.unselectModel();
     await this.loadData();
     return response;
   };

@@ -40,7 +40,6 @@ export class Model {
           this.data[id] = newValue;
         }
       },
-      // configurable: true
     });
   };
 

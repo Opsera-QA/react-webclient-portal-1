@@ -25,7 +25,7 @@ function ParameterValueTextInput({fieldName, dataObject, setDataObject, disabled
     return () => {
       isMounted.current = false;
     };
-  }, [dataObject.getData("_id")]);
+  }, []);
 
   const validateAndSetData = (value) => {
     let newDataObject = dataObject;

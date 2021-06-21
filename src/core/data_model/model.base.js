@@ -19,11 +19,34 @@ export class ModelBase {
     this.metaData = {...metaData};
     this.data = {...this.getNewObjectFields(), ...data};
     this.newModel = newModel;
+    this.id = data?._id;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
     this.setStateFunction = setStateFunction;
     this.changeMap = new Map();
+    this.initializeObjectProperties({...metaData});
     this.isLoading = false;
   }
+
+  initializeObjectProperties = (metaData) => {
+    const fields = metaData?.fields;
+    if (Array.isArray(fields)) {
+      for (const field of fields) {
+        let id = field.id;
+
+        Object.defineProperty(this, id, {
+          get: () => {
+            return this.getData(id);
+          },
+          set: (newValue) => {
+            if (this.getData(id) !== newValue) {
+              this.setData(id, newValue);
+            }
+          },
+        });
+      }
+    }
+  };
+
 
   /**
    * Retrieve nested item from object/array
@@ -194,10 +217,9 @@ export class ModelBase {
     }
     else if (newChangeMap.get(id) === newValue
          || (newChangeMap.get(id) === null && newValue === null)) {
-      // console.log("Fieldname removed from change map: " + id);
       newChangeMap.delete(id);
 
-      if (this.changeMap.size === 0 && this.dataState === DataState.CHANGED) {
+      if (newChangeMap.size === 0 && this.dataState === DataState.CHANGED) {
         this.dataState  = DataState.LOADED;
       }
     }
@@ -281,6 +303,22 @@ export class ModelBase {
     if (this.setStateFunction) {
       this.setStateFunction({...this});
     }
+  };
+
+  unselectModel = () => {
+    if (this.setStateFunction) {
+      this.setStateFunction(undefined);
+    }
+  };
+
+  setSetStateFunction = (setStateFunction) => {
+    if (setStateFunction) {
+      this.setStateFunction = setStateFunction;
+    }
+  };
+
+  getSetStateFunction = () => {
+    return this.setStateFunction;
   };
 
   getChangeMap = () => {
@@ -380,7 +418,7 @@ export class ModelBase {
   };
 
   getFieldById = (id) => {
-    return this.metaData?.fields.find(field => {return field.id === id; });
+    return this.metaData?.fields?.find(field => {return field.id === id; });
   };
 
   getDefaultValue = (fieldName) => {
@@ -399,6 +437,21 @@ export class ModelBase {
 
   getNewInstance = (newData = this.getNewObjectFields()) => {
     return new ModelBase({...newData}, this.metaData, this.newModel);
+  };
+
+  // TODO: Wire up role definitions inside the model itself instead of checking on the components themselves.
+  //  Override these in the extended class and add any other relevant definitions.
+  //  That way it can be recalled anywhere you have the model
+  canAdd = () => {
+    return false;
+  };
+
+  canUpdate = () => {
+    return false;
+  };
+
+  canDelete = () => {
+    return false;
   };
 }
 

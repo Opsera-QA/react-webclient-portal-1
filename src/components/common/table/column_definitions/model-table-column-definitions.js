@@ -1,8 +1,6 @@
 import { format } from "date-fns";
 import React from "react";
 import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date-helpers";
-import {truncateString} from "components/common/helpers/string-helpers";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {
   getScriptLanguageDisplayText,
 } from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
@@ -20,10 +18,25 @@ export const getColumnId = (field) => {
   return field ? field.id : "";
 };
 
-export const getTableTextColumnWithoutField = (header, id) => {
+export const getOwnerNameField = (maxWidth) => {
+  return {
+    header: [{ text: "Owner Name" }],
+    id: "owner_name",
+    maxWidth: maxWidth,
+    template: function (rawData, row) {
+      return row ? row.getData("owner_name") : "";
+    },
+  };
+};
+
+export const getTableTextColumnWithoutField = (header, id, maxWidth) => {
   return {
     header: header,
-    id: id
+    id: id,
+    maxWidth: maxWidth,
+    template: function (rawData, row) {
+      return row ? row.getData(id) : "";
+    },
   };
 };
 
@@ -38,7 +51,10 @@ export const getTableTextColumn = (field, className, maxWidth = undefined, filte
     header: header,
     id: getColumnId(field),
     class: className ? className : undefined,
-    maxWidth: maxWidth
+    maxWidth: maxWidth,
+    template: function (rawData, row) {
+      return row ? row.getData(field?.id) : "";
+    },
   };
 };
 
@@ -48,6 +64,9 @@ export const getEditableTextColumn = (field, maxLength, className, editable = tr
     id: getColumnId(field),
     class: className ? className : undefined,
     editable: editable,
+    template: function (rawData, row) {
+      return row ? row.getData(field?.id) : "";
+    },
   };
 };
 
@@ -182,11 +201,12 @@ export const getTableBooleanIconColumn = (field, className, width = 60) => {
     align: "center",
     width: width,
     template: function (text, row, col) {
-      if (text == null) {
+      const value = row?.getData(field.id);
+      if (value == null) {
         return "";
       }
 
-      const iconCss = text === true ? "fa-check-circle green" : "fa-times-circle red";
+      const iconCss = value === true ? "fa-check-circle green" : "fa-times-circle red";
       return (
         `<i class="fa ${iconCss} cell-icon vertical-align-item"></i>`
       );
@@ -219,8 +239,8 @@ export const getScriptLanguageColumn = (field, className, showFilter) => {
     header: header,
     id: getColumnId(field),
     width: 150,
-    template: function (value) {
-      return getScriptLanguageDisplayText(value);
+    template: function (value, row) {
+      return getScriptLanguageDisplayText(row?.getData(field?.id));
     },
     class: className ? className : undefined
   };

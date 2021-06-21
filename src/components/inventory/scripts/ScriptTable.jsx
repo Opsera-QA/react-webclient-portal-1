@@ -1,9 +1,5 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {
-  getScriptLanguageColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -13,9 +9,14 @@ import VanitySelectionTable from "components/common/table/VanitySelectionTable";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import {AuthContext} from "contexts/AuthContext";
+import {
+  getOwnerNameField,
+  getScriptLanguageColumn,
+  getTableTextColumn
+} from "components/common/table/column_definitions/model-table-column-definitions";
 
 
-function ScriptTable({ data, scriptMetadata, setScriptData, scriptData, loadData, isLoading, getNewModel, isMounted, getAccessToken, cancelTokenSource, scriptRoleDefinitions }) {
+function ScriptTable({ data, scriptMetadata, setScriptData, scriptData, loadData, isLoading, isMounted, getAccessToken, cancelTokenSource, scriptRoleDefinitions }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessRoleData } = useContext(AuthContext);
   const [userRoleAccess, setUserRoleAccess] = useState(undefined);
@@ -52,6 +53,7 @@ function ScriptTable({ data, scriptMetadata, setScriptData, scriptData, loadData
         [
           getTableTextColumn(getField(fields, "name"), "no-wrap-inline"),
           getScriptLanguageColumn(getField(fields, "type"), "no-wrap-inline"),
+          getOwnerNameField(),
         ]
       );
     }
@@ -79,8 +81,8 @@ function ScriptTable({ data, scriptMetadata, setScriptData, scriptData, loadData
         columns={columns}
         isLoading={isLoading || scriptMetadata == null}
         loadData={loadData}
-        getNewModel={getNewModel}
         setParentModel={setScriptData}
+        parentModelId={scriptData?.getData("_id")}
         tableHeight={"calc(25vh)"}
         parentModel={scriptData}
       />
@@ -116,7 +118,6 @@ ScriptTable.propTypes = {
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   scriptMetadata: PropTypes.object,
-  getNewModel: PropTypes.func,
   setScriptData: PropTypes.func,
   isMounted: PropTypes.object,
   getAccessToken: PropTypes.func,
