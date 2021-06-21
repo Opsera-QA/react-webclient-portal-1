@@ -5,9 +5,8 @@ import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import ScriptTable from "components/inventory/scripts/ScriptTable";
 import ScriptsEditorPanel from "components/inventory/scripts/details/ScriptsEditorPanel";
-import ScriptModel from "components/inventory/scripts/script.model";
 
-function ScriptsView({isLoading, loadData, scriptList, setScriptList, scriptMetadata, scriptRoleDefinitions}) {
+function ScriptsView({isLoading, loadData, scriptList, scriptMetadata, scriptRoleDefinitions}) {
   const { getAccessToken } = useContext(AuthContext);
   const [scriptData, setScriptData] = useState(undefined);
   const isMounted = useRef(false);
@@ -39,7 +38,6 @@ function ScriptsView({isLoading, loadData, scriptList, setScriptList, scriptMeta
         cancelTokenSource={cancelTokenSource}
         isMounted={isMounted}
         getAccessToken={getAccessToken}
-        getNewModel={getNewModel}
         setScriptData={setModel}
         scriptData={scriptData}
       />
@@ -47,30 +45,13 @@ function ScriptsView({isLoading, loadData, scriptList, setScriptList, scriptMeta
   };
 
   const setModel = (newModel) => {
-    const selectedRecordIndex = scriptList.findIndex((parameter) => { return parameter._id === newModel.getData("_id"); });
+    const newValue = !newModel || newModel?.isDeleted() ? undefined : {...newModel};
 
-    if (selectedRecordIndex !== -1) {
-      if (newModel?.isDeleted() === true) {
-        scriptList.splice(selectedRecordIndex, 1);
-        setScriptList([...scriptList]);
-      }
-      else {
-        scriptList[selectedRecordIndex] = newModel.getPersistData();
-        setScriptList([...scriptList]);
-      }
+    if (newModel) {
+      newValue.setSetStateFunction(setScriptData);
     }
 
-    if (!newModel || newModel?.isDeleted()) {
-      setScriptData(undefined);
-    } else {
-      setScriptData({...newModel});
-    }
-  };
-
-  const getNewModel = (newRowData) => {
-    let newModel = {...new ScriptModel({...newRowData}, scriptMetadata, false, setModel, getAccessToken, cancelTokenSource, loadData)};
-    setScriptData({...newModel});
-    return newModel;
+    setScriptData(newValue);
   };
 
   const getEditorPanel = () => {
@@ -79,7 +60,8 @@ function ScriptsView({isLoading, loadData, scriptList, setScriptList, scriptMeta
         isLoading={isLoading}
         loadData={loadData}
         scriptModel={scriptData}
-        scriptMetadata={scriptMetadata}
+        setScriptModel={setScriptData}
+        scriptModelId={scriptData?.getData("_id")}
         scriptRoleDefinitions={scriptRoleDefinitions}
       />
     );
@@ -96,7 +78,6 @@ ScriptsView.propTypes = {
   createNewRecord: PropTypes.func,
   loadData: PropTypes.func,
   scriptMetadata: PropTypes.object,
-  setScriptList: PropTypes.func,
   scriptRoleDefinitions: PropTypes.object
 };
 

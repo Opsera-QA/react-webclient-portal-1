@@ -5,9 +5,8 @@ import ParametersEditorPanel from "components/inventory/parameters/details/Param
 import TableAndDetailPanelContainer from "components/common/table/TableAndDetailPanelContainer";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
-import ParameterModel from "components/inventory/parameters/parameter.model";
 
-function ParametersView({isLoading, loadData, parameterList, setParameterList, parameterMetadata, parameterRoleDefinitions}) {
+function ParametersView({isLoading, loadData, parameterList, parameterMetadata, parameterRoleDefinitions}) {
   const { getAccessToken } = useContext(AuthContext);
   const [parameterData, setParameterData] = useState(undefined);
   const isMounted = useRef(false);
@@ -39,7 +38,6 @@ function ParametersView({isLoading, loadData, parameterList, setParameterList, p
         cancelTokenSource={cancelTokenSource}
         isMounted={isMounted}
         getAccessToken={getAccessToken}
-        getNewModel={getNewModel}
         setParameterData={setModel}
         parameterData={parameterData}
       />
@@ -47,30 +45,13 @@ function ParametersView({isLoading, loadData, parameterList, setParameterList, p
   };
 
   const setModel = (newModel) => {
-    const selectedRecordIndex = parameterList.findIndex((parameter) => { return parameter._id === newModel.getData("_id"); });
+    const newValue = !newModel || newModel?.isDeleted() ? undefined : {...newModel};
 
-    if (selectedRecordIndex !== -1) {
-      if (newModel?.isDeleted() === true) {
-        parameterList.splice(selectedRecordIndex, 1);
-        setParameterList([...parameterList]);
-      }
-      else {
-        parameterList[selectedRecordIndex] = newModel.getPersistData();
-        setParameterList([...parameterList]);
-      }
+    if (newModel) {
+      newValue.setSetStateFunction(setParameterData);
     }
 
-    if (!newModel || newModel?.isDeleted()) {
-      setParameterData(undefined);
-    } else {
-      setParameterData({...newModel});
-    }
-  };
-
-  const getNewModel = (newRowData) => {
-    let newModel = {...new ParameterModel({...newRowData}, parameterMetadata, false, setModel, getAccessToken, cancelTokenSource, loadData)};
-    setParameterData({...newModel});
-    return newModel;
+    setParameterData(newValue);
   };
 
   const getEditorPanel = () => {
@@ -78,8 +59,9 @@ function ParametersView({isLoading, loadData, parameterList, setParameterList, p
       <ParametersEditorPanel
         isLoading={isLoading}
         loadData={loadData}
+        parameterModelId={parameterData?.getData("_id")}
         parameterModel={parameterData}
-        parameterMetadata={parameterMetadata}
+        setParameterModel={setParameterData}
         parameterRoleDefinitions={parameterRoleDefinitions}
       />
     );

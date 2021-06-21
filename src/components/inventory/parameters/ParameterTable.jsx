@@ -1,10 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
-import {
-  getEditableTextColumn,
-  getTableBooleanIconColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import FilterContainer from "components/common/table/FilterContainer";
@@ -14,8 +9,12 @@ import VanitySelectionTable from "components/common/table/VanitySelectionTable";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import {AuthContext} from "contexts/AuthContext";
+import {
+  getEditableTextColumn, getTableBooleanIconColumn,
+  getTableTextColumn
+} from "components/common/table/column_definitions/model-table-column-definitions";
 
-function ParameterTable({ data, parameterMetadata, setParameterData, parameterData, loadData, isLoading, getNewModel, isMounted, getAccessToken, cancelTokenSource, parameterRoleDefinitions }) {
+function ParameterTable({ data, parameterMetadata, setParameterData, parameterData, loadData, isLoading, isMounted, getAccessToken, cancelTokenSource, parameterRoleDefinitions }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessRoleData } = useContext(AuthContext);
   const [userRoleAccess, setUserRoleAccess] = useState(undefined);
@@ -80,10 +79,10 @@ function ParameterTable({ data, parameterMetadata, setParameterData, parameterDa
         columns={columns}
         isLoading={isLoading || parameterMetadata == null}
         loadData={loadData}
-        getNewModel={getNewModel}
         setParentModel={setParameterData}
         tableHeight={"calc(25vh)"}
         parentModel={parameterData}
+        parentModelId={parameterData?.getData("_id")}
         rowSelection={"complex"}
       />
     );
@@ -118,7 +117,6 @@ ParameterTable.propTypes = {
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   parameterMetadata: PropTypes.object,
-  getNewModel: PropTypes.func,
   setParameterData: PropTypes.func,
   isMounted: PropTypes.object,
   getAccessToken: PropTypes.func,

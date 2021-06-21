@@ -10,7 +10,8 @@ import ParametersView from "components/inventory/parameters/ParametersView";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
+import {faFileCode, faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
+import ParameterModel from "components/inventory/parameters/parameter.model";
 
 function ParametersInventory({ customerAccessRules, handleTabClick }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -62,10 +63,25 @@ function ParametersInventory({ customerAccessRules, handleTabClick }) {
 
   const getParameters = async (filterDto = parameterFilterModel, cancelSource = cancelTokenSource) => {
     const response = await parametersActions.getParameters(getAccessToken, cancelSource, filterDto);
+    const parameters = response?.data?.data;
 
-    if (isMounted?.current === true && response?.data?.data) {
-      setParameterList([...response.data.data]);
-      setParameterMetadata(response.data.metadata);
+    if (isMounted?.current === true && Array.isArray(parameters)) {
+      const newParameterMetadata = response.data.metadata;
+      setParameterMetadata(newParameterMetadata);
+
+      if (Array.isArray(parameters) && parameters.length > 0) {
+        let modelWrappedArray = [];
+
+        // TODO: Integrate role definitions into data call
+        parameters.forEach((parameter) => {
+          let newModel = new ParameterModel({...parameter}, newParameterMetadata, false, getAccessToken, cancelTokenSource, loadData);
+          console.log(newModel.value);
+          modelWrappedArray.push(newModel);
+        });
+
+        setParameterList([...modelWrappedArray]);
+      }
+
       setParameterRoleDefinitions(response.data.roles);
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.count);

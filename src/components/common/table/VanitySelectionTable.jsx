@@ -7,13 +7,13 @@ import {persistUpdatedRecord} from "components/common/buttons/saving/saving-help
 import {DialogToastContext} from "contexts/DialogToastContext";
 import UnsavedChangesModal from "components/common/modal/UnsavedChangesModal";
 
-function VanitySelectionTable({ columns, getNewModel, parentModel, setParentModel, loadData, data, noDataMessage, rowStyling, isLoading, sort, paginationModel, setPaginationModel, tableHeight, rowSelection }) {
+function VanitySelectionTable({ columns, parentModel, setParentModel, parentModelId, loadData, data, noDataMessage, rowStyling, isLoading, sort, paginationModel, setPaginationModel, tableHeight, rowSelection }) {
   const toastContext = useContext(DialogToastContext);
   const selectedItemRef = useRef({});
 
   useEffect(() => {
-    selectedItemRef.current = {...parentModel};
-  }, [parentModel]);
+    selectedItemRef.current = parentModel;
+  }, [parentModelId]);
 
 
   const onRowSelect = async (grid, row, column, e) => {
@@ -22,7 +22,7 @@ function VanitySelectionTable({ columns, getNewModel, parentModel, setParentMode
     // Don't change rows if invalid, save before changing rows if valid
     if (selectedModel != null) {
       // We are still on same row
-      if (selectedModel.getData("_id") === row?._id) {
+      if (selectedModel.getData("_id") === row?.getData("_id")) {
         return true;
       }
 
@@ -36,12 +36,8 @@ function VanitySelectionTable({ columns, getNewModel, parentModel, setParentMode
       }
     }
 
-    let newRow = {...row};
-    delete newRow["id"];
-    delete newRow["$height"];
-    const newModel = getNewModel(newRow);
-
-    selectedItemRef.current = {...newModel};
+    setParentModel(row);
+    selectedItemRef.current = row;
     return true;
   };
 
@@ -71,7 +67,7 @@ function VanitySelectionTable({ columns, getNewModel, parentModel, setParentMode
         return false;
       }
 
-      selectedItemRef.current = {...selectedModel};
+      selectedItemRef.current = selectedModel;
       setParentModel({...selectedModel});
       return true;
     }
@@ -103,7 +99,7 @@ function VanitySelectionTable({ columns, getNewModel, parentModel, setParentMode
         setFilterDto={setPaginationModel}
       >
         <VanitySelectionTableBase
-          selectedItemId={parentModel?.getData("_id")}
+          selectedItem={JSON.stringify(parentModel?.getPersistData())}
           rowSelection={rowSelection}
           noDataMessage={noDataMessage}
           data={data}
@@ -141,7 +137,7 @@ VanitySelectionTable.propTypes = {
   setPaginationModel: PropTypes.func,
   loadData: PropTypes.func,
   tableHeight: PropTypes.string,
-  getNewModel: PropTypes.func,
+  parentModelId: PropTypes.string,
   setParentModel: PropTypes.func,
   parentModel: PropTypes.object,
   rowSelection: PropTypes.string
