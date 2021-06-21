@@ -49,6 +49,28 @@ function OctopusDeployToTomcatDetailsView({dataObject, setDataObject, isLoading,
 
   return (
     <>
+      <OctopusTomcatSelectInput
+        fieldName={"tomcatManagerId"}
+        dataObject={dataObject}
+        setDataObject={setDataObject}
+        disabled={false}
+        tool_prop={
+          dataObject && dataObject.getData("octopusPlatformType")
+            ? dataObject.getData("octopusPlatformType")
+            : ""
+        }        
+      />
+      <TextInputBase
+        dataObject={dataObject}
+        setDataObject={setDataObject}
+        fieldName={"contextPath"}
+      />
+      <CustomDeploymentScriptToggleInput
+        dataObject={dataObject}
+        setDataObject={setDataObject}
+        fieldName={"customDeploymentScriptsEnabled"}
+      />
+      {getCustomScriptsInput()}
       <OctopusFeedSelectInput
         fieldName={"octopusFeedId"}
         dataObject={dataObject}
@@ -116,29 +138,7 @@ function OctopusDeployToTomcatDetailsView({dataObject, setDataObject, isLoading,
             }
           />
         </>
-      )}
-      <OctopusTomcatSelectInput
-        fieldName={"tomcatManagerId"}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        disabled={false}
-        tool_prop={
-          dataObject && dataObject.getData("octopusPlatformType")
-            ? dataObject.getData("octopusPlatformType")
-            : ""
-        }        
-      />
-      <TextInputBase
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        fieldName={"contextPath"}
-      />
-      <CustomDeploymentScriptToggleInput
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        fieldName={"customDeploymentScriptsEnabled"}
-      />
-      {getCustomScriptsInput()}
+      )}      
     </>
   );
 }
