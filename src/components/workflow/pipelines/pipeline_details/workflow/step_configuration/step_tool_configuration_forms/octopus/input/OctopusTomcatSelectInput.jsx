@@ -2,17 +2,17 @@ import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import axios from "axios";
 import OctopusStepActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
-import {AuthContext} from "contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
+import axios from "axios";
 
-function OctopusDeploymentTypeSelectInput({ fieldName, dataObject, setDataObject, setDataFunction, disabled, textField, valueField, className}) {
+function OctopusTomcatSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, platformType}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [deploymentType, setOctopusDeploymentTypes] = useState([]);
+  const [tomcatManagers, setTomcatManagers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a Deployment Type");
+  const [placeholder, setPlaceholder] = useState("Select a Tomcat Instance");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -25,7 +25,7 @@ function OctopusDeploymentTypeSelectInput({ fieldName, dataObject, setDataObject
     setCancelTokenSource(source);
 
     isMounted.current = true;
-    setOctopusDeploymentTypes([]);
+    setTomcatManagers([]);
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -36,16 +36,16 @@ function OctopusDeploymentTypeSelectInput({ fieldName, dataObject, setDataObject
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [platformType]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadTypes(cancelSource);
+      await loadTomcatManagerList(cancelSource);
     }
     catch (error) {
       if (isMounted?.current === true) {
-        setPlaceholder("Error Pulling Deployment Types");
+        setPlaceholder("Error Pulling Tomcat Instances");
         console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
@@ -57,46 +57,59 @@ function OctopusDeploymentTypeSelectInput({ fieldName, dataObject, setDataObject
     }
   };
 
-  const loadTypes = async (cancelSource = cancelTokenSource) => {
-    const response = await OctopusStepActions.getDeploymentTypesV2(getAccessToken, cancelSource, dataObject.getData("octopusToolId"), dataObject.getData("spaceId"), dataObject.getData("octopusPlatformType"));
+  const loadTomcatManagerList = async (cancelSource = cancelTokenSource) => {
+    const response = await OctopusStepActions.getTomcatManagerListV2(getAccessToken, cancelSource, dataObject.getData("octopusToolId"),dataObject.getData("spaceId"));
     const data = response?.data;
 
     if (isMounted?.current === true && Array.isArray(data)) {
-      setOctopusDeploymentTypes(data);
+      setTomcatManagers(data);
     }
   };
 
-  return (
+  const setDataFunction = (fieldName, value) => {
+    let newDataObject = dataObject;
+    newDataObject.setData(fieldName, value.id);
+    newDataObject.setData("tomcatManagerDetails", value);
+    setDataObject({ ...newDataObject });
+  };
+
+  const clearDataFunction = () => {    
+    let newDataObject = dataObject;
+    newDataObject.setData(fieldName, "");
+    newDataObject.setData("tomcatManagerDetails", "");
+    setDataObject({ ...newDataObject });
+  };
+
+  return (    
     <SelectInputBase
-      className={className}
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      selectOptions={deploymentType}
-      busy={isLoading}
       setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      selectOptions={tomcatManagers}
+      busy={isLoading}
       valueField={valueField}
       textField={textField}
       placeholderText={placeholder}
       disabled={disabled || isLoading}
-    />
+    />    
   );
 }
 
-OctopusDeploymentTypeSelectInput.propTypes = {
+OctopusTomcatSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  className: PropTypes.string
+  platformType: PropTypes.string
 };
 
-OctopusDeploymentTypeSelectInput.defaultProps = {
-  valueField: "deploymentType",
+OctopusTomcatSelectInput.defaultProps = {
+  valueField: "id",
   textField: "name"
 };
 
-export default OctopusDeploymentTypeSelectInput;
+export default OctopusTomcatSelectInput;

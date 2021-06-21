@@ -169,6 +169,33 @@ const octopusStepFormMetadata = {
         label: "Opsera Script Library",
         id: "scriptId"
       },
+      {
+        label: "Context Path",
+        id: "contextPath"
+      },
+      {
+        label: "Custom Deployment Scripts",
+        id: "customDeploymentScriptsEnabled"
+      },
+      {
+        label: "Pre-Deployment Script",
+        id: "preDeploymentScriptId"
+      },
+      {
+        label: "Deployment Script",
+        id: "deploymentScriptId"
+      },
+      {
+        label: "Post-Deployment Script",
+        id: "postDeploymentScriptId"
+      },
+      {        
+        id: "tomcatManagerDetails"
+      },
+      {
+        label: "Tomcat Manager",
+        id: "tomcatManagerId"
+      },
     ],
   newObjectFields:
       {
@@ -206,7 +233,14 @@ const octopusStepFormMetadata = {
         scriptSource: "",
         scriptParameters: "",
         scriptFileName: "",
-        scriptId: ""
+        scriptId: "",
+        contextPath: "",
+        customDeploymentScriptsEnabled: false,
+        preDeploymentScriptId: "",
+        deploymentScriptId: "",
+        postDeploymentScriptId: "",
+        tomcatManagerDetails: {},
+        tomcatManagerId: "",
       }
   };
   

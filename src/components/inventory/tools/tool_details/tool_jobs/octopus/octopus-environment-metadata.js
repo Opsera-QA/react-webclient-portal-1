@@ -36,11 +36,15 @@ const OctopusEnvironmentMetadata = {
       id: "active",
     },
     {
+      label: "Updated",
+      id: "updatedAt",
+    },
+    {
       label: "ID",
       id: "id"
     }
 ],
-  newModelBase: {
+  newObjectFields: {
     _id: "",
     type: "environment",
     name : "",
