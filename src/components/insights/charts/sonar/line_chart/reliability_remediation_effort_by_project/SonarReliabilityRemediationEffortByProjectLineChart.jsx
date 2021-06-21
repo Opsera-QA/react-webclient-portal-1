@@ -20,10 +20,10 @@ import {
 import ChartTooltip from "../../../ChartTooltip";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import VanityTable from "components/common/table/VanityTable";
-import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
+// import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import {
-  getChartPipelineStatusColumn,
-  getTableDateTimeColumn,
+  // getChartPipelineStatusColumn,
+  // getTableDateTimeColumn,
   getTableTextColumn,
 } from "components/common/table/table-column-helpers-v2";
 import { getField } from "components/common/metadata/metadata-helpers";
@@ -133,10 +133,8 @@ function SonarReliabilityRemediationEffortByProjectLineChart({
    * getArrayOfProjects go over metrics and get the array of data for an specific project
    */
   const getArrayOfProject = (node) => {
-    let key = node.serieId;
     for (let project of metrics) {
-      if (key === project.id) {
-        // filterSelectedProjectArr(project.data);
+      if (node.serieId === project.id) {
         return project.data;
       }
     }
@@ -178,7 +176,6 @@ function SonarReliabilityRemediationEffortByProjectLineChart({
     return (
       <VanityTable
         className={"no-table-border"}
-        // loadData={loadData}
         data={arr}
         columns={columns}
         onRowSelect={onRowSelect}
@@ -193,7 +190,7 @@ function SonarReliabilityRemediationEffortByProjectLineChart({
       <FullScreenCenterOverlayContainer
         closePanel={closePanel}
         showPanel={true}
-        titleText={dataForTable[0].project}
+        titleText={node.data.project}
         showToasts={true}
         isLoading={false}
         linkTooltipText={"View Full Blueprint"}
