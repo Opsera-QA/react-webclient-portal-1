@@ -23,21 +23,21 @@ function OctopusDeployToTomcatDetailsView({dataObject, setDataObject, isLoading,
       return (
         <>
           <ScriptLibrarySelectInput
-            fieldName={"preDeploymentScript"}
+            fieldName={"preDeploymentScriptId"}
             dataObject={dataObject}
             setDataObject={setDataObject}
             busy={isLoading}
             disabled={disabled || isLoading}
           />
           <ScriptLibrarySelectInput
-            fieldName={"deploymentScript"}
+            fieldName={"deploymentScriptId"}
             dataObject={dataObject}
             setDataObject={setDataObject}
             busy={isLoading}
             disabled={disabled || isLoading}
           />
           <ScriptLibrarySelectInput
-            fieldName={"postDeploymentScript"}
+            fieldName={"postDeploymentScriptId"}
             dataObject={dataObject}
             setDataObject={setDataObject}
             busy={isLoading}

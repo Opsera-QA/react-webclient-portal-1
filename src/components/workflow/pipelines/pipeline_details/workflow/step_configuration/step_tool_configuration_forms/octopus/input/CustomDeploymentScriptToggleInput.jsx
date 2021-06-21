@@ -10,9 +10,9 @@ function CustomDeploymentScriptToggleInput({dataObject, setDataObject, fieldName
     let newDataObject = dataObject;
     let sourceScriptFlag = !dataObject.getData(fieldName);
     newDataObject.setData(fieldName, sourceScriptFlag);
-    newDataObject.setData("preDeploymentScript", "");
-    newDataObject.setData("deploymentScript", "");
-    newDataObject.setData("postDeploymentScript", "");
+    newDataObject.setData("preDeploymentScriptId", "");
+    newDataObject.setData("deploymentScriptId", "");
+    newDataObject.setData("postDeploymentScriptId", "");
     setDataObject({...newDataObject});
   };
 
