@@ -59,7 +59,7 @@ function OctopusTomcatSelectInput({ fieldName, dataObject, setDataObject, disabl
 
   const loadTomcatManagerList = async (cancelSource = cancelTokenSource) => {
     const response = await OctopusStepActions.getTomcatManagerListV2(getAccessToken, cancelSource, dataObject.getData("octopusToolId"),dataObject.getData("spaceId"));
-    const data = response?.data;
+    const data = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(data)) {
       setTomcatManagers(data);
