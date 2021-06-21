@@ -99,7 +99,7 @@ const commandLineStepFormMetadata = {
     },
     
     {
-      label: "Want to specifiy the path for a script file?",
+      label: "Custom Script Path",
       id: "sourceScript",
     },
     {
@@ -156,6 +156,15 @@ const commandLineStepFormMetadata = {
       label: "Terraform Step",
       id: "terraformStepId"
     },
+    {
+      label: "Parameters",
+      id: "customParameters",
+      maxItems: 15,
+    },
+    {
+      label: "Use Terraform Output",
+      id: "useTerraformOutput"
+    }
   ],
   fieldsAlt: [
     {
@@ -260,7 +269,7 @@ const commandLineStepFormMetadata = {
     },
     
     {
-      label: "Want to specify the path for a script file?",
+      label: "Custom Script Path",
       id: "sourceScript",
     },
     {
@@ -314,6 +323,15 @@ const commandLineStepFormMetadata = {
       label: "Terraform Step",
       id: "terraformStepId"
     },
+    {
+      label: "Parameters",
+      id: "customParameters",
+      maxItems: 15,
+    },
+    {
+      label: "Use Terraform Output",
+      id: "useTerraformOutput"
+    }
   ],
   newModelBase: {
 
@@ -355,7 +373,9 @@ const commandLineStepFormMetadata = {
     inputPath: "",
     inputFileName: "",
     commands: "",
-    terraformStepId: ""
+    terraformStepId: "",
+    customParameters: [],
+    useTerraformOutput : false
   }
 };
 
