@@ -1,7 +1,7 @@
 import FilterModelBase from "core/data_model/filterModel.base";
 
-const parameterFilterMetadata = {
-  type: "Parameter",
+const scriptsFilterMetadata = {
+  type: "Scripts",
   fields: [
     {
       label: "Page Size",
@@ -32,9 +32,9 @@ const parameterFilterMetadata = {
   },
 };
 
-export class ParameterFilterModel extends FilterModelBase {
+export class ScriptsFilterModel extends FilterModelBase {
   constructor(getAccessToken, cancelTokenSource, loadData) {
-    super(parameterFilterMetadata);
+    super(scriptsFilterMetadata);
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;
     this.loadData = loadData;
@@ -59,6 +59,6 @@ export class ParameterFilterModel extends FilterModelBase {
   }
 }
 
-export default ParameterFilterModel;
+export default ScriptsFilterModel;
 
 

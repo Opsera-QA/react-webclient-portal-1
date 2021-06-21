@@ -14,9 +14,11 @@ import {
   getScriptLanguageColumn,
   getTableTextColumn
 } from "components/common/table/column_definitions/model-table-column-definitions";
+import VanityPaginationContainer from "components/common/pagination/v2/VanityPaginationContainer";
+import VanityDataContainer from "components/common/containers/VanityDataContainer";
 
 
-function ScriptTable({ data, scriptMetadata, setScriptData, scriptData, loadData, isLoading, isMounted, getAccessToken, cancelTokenSource, scriptRoleDefinitions }) {
+function ScriptTable({ data, scriptMetadata, setScriptData, scriptData, loadData, isLoading, isMounted, getAccessToken, cancelTokenSource, scriptRoleDefinitions, scriptFilterModel }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessRoleData } = useContext(AuthContext);
   const [userRoleAccess, setUserRoleAccess] = useState(undefined);
@@ -81,6 +83,7 @@ function ScriptTable({ data, scriptMetadata, setScriptData, scriptData, loadData
         columns={columns}
         isLoading={isLoading || scriptMetadata == null}
         loadData={loadData}
+        paginationModel={scriptFilterModel}
         setParentModel={setScriptData}
         parentModelId={scriptData?.getData("_id")}
         tableHeight={"calc(25vh)"}
@@ -98,14 +101,13 @@ function ScriptTable({ data, scriptMetadata, setScriptData, scriptData, loadData
   };
 
   return (
-    <FilterContainer
+    <VanityDataContainer
       loadData={loadData}
       addRecordFunction={getAddRecordFunction()}
-      showBorder={false}
+      paginationModel={scriptFilterModel}
       isLoading={isLoading}
       body={getScriptTable()}
       metadata={scriptMetadata}
-      type={"Script"}
       titleIcon={faFileCode}
       title={"Scripts"}
       className={"px-2 pb-2"}
@@ -123,6 +125,7 @@ ScriptTable.propTypes = {
   getAccessToken: PropTypes.func,
   cancelTokenSource: PropTypes.object,
   scriptRoleDefinitions: PropTypes.object,
+  scriptFilterModel: PropTypes.object,
   scriptData: PropTypes.object
 };
 
