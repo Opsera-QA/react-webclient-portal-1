@@ -1,9 +1,7 @@
-import {validateData, validateField} from "core/data_model/modelValidation";
-
 export class FilterModelBase {
-  constructor(data, metaData) {
+  constructor(metaData) {
     this.metaData = {...metaData};
-    this.data = {...this.getNewObjectFields(), ...data};
+    this.data = {...this.getNewObjectFields()};
   }
 
   getData = (fieldName) => {
@@ -17,85 +15,6 @@ export class FilterModelBase {
 
   setData = (fieldName, newValue) => {
       this.data[fieldName] = newValue;
-  };
-
-  setMetaData = (metaData) => {
-    this.metaData = metaData;
-  };
-
-  setMetaDataFields = (newMetaDataFields) => {
-    this.metaData.fields = newMetaDataFields;
-  };
-
-  setTextData = (fieldName, newValue) => {
-    const field = this.getFieldById(fieldName);
-    if (field) {
-      if (field.lowercase === true) {
-        newValue = newValue.toLowerCase();
-      }
-      else if (field.uppercase === true) {
-        newValue = newValue.toUpperCase();
-      }
-
-      // The input mask will limit text entry,
-      // but complex validation can be done by using
-      // "regexValidator" in metadata to not prevent text entry
-      if (field.inputMaskRegex != null) {
-        let format = field.inputMaskRegex;
-        let meetsRegex = format.test(newValue);
-
-        if (newValue !== '' && !meetsRegex) {
-          return;
-        }
-      }
-
-      this.propertyChange(fieldName, newValue, this.getData(fieldName));
-      this.data[fieldName] = newValue;
-    }
-  };
-
-  getArrayData = (fieldName) => {
-    let currentValue = this.getData(fieldName);
-
-    if (currentValue == null) {
-      return [];
-    }
-
-    if (!Array.isArray(currentValue)) {
-      console.error(`Value was not saved as array. Returning in array.`);
-      console.error(`Value: ${JSON.stringify(currentValue)}`);
-      return [currentValue];
-    }
-
-    return currentValue;
-  };
-
-  isModelValid = () => {
-    return validateData(this);
-  };
-
-  // TODO Replace top method with getErrors and rename this
-  isModelValid2 = () => {
-    // Trim strings before testing validity
-    this.trimStrings();
-    let isValid = validateData(this);
-    return isValid === true;
-  };
-
-  // This is a validity check without trimming
-  checkCurrentValidity = () => {
-    let isValid = validateData(this);
-    return isValid === true;
-  };
-
-  isFieldValid = (fieldName) => {
-    return validateField(this, this.getFieldById(fieldName));
-  };
-
-  // Returns first error if exists
-  getFieldError = (fieldName) => {
-    let errors = validateField(this, this.getFieldById(fieldName));
-    return errors != null ? errors[0] : "";
   };
 
   getPersistData = () => {
@@ -135,7 +54,37 @@ export class FilterModelBase {
   };
 
   getActiveFilters = () => {
-    return this.metaData.getActiveFilters(this);
+    console.error("No getActiveFilters function was wired up.");
+  };
+
+  canSearch = () => {
+    return false;
+  };
+
+  canSetPageSize = () => {
+    return true;
+  };
+
+  canSort = () => {
+    return false;
+  };
+
+  getSortOptions = () => {
+    return null;
+  };
+
+  showPagination = () => {
+    return false;
+  };
+
+  getPageSizes = () => {
+    return [
+      {value: 50, text: "50 results per page"},
+      {value: 100, text: "100 results per page"},
+      {value: 150, text: "150 results per page"},
+      {value: 200, text: "200 results per page"},
+      {value: 250, text: "250 results per page"},
+    ];
   };
 
   getFilterValue = (fieldName) => {
@@ -178,11 +127,7 @@ export class FilterModelBase {
   };
 
   getNewObjectFields = () => {
-    return this.metaData.newObjectFields != null ? this.metaData.newObjectFields : {};
-  };
-
-  clone = () => {
-    return new FilterModelBase(JSON.parse(JSON.stringify(this.data)), this.metaData);
+    return this.metaData?.newObjectFields != null ? this.metaData.newObjectFields : {};
   };
 }
 

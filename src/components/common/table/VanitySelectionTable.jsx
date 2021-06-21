@@ -1,20 +1,19 @@
 import React, {useContext, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
-import PaginationContainer from "components/common/pagination/PaginationContainer";
 import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
 import VanitySelectionTableBase from "components/common/table/VanitySelectionTableBase";
 import {persistUpdatedRecord} from "components/common/buttons/saving/saving-helpers-v2";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import UnsavedChangesModal from "components/common/modal/UnsavedChangesModal";
+import VanityPaginationContainer from "components/common/pagination/v2/VanityPaginationContainer";
 
-function VanitySelectionTable({ columns, parentModel, setParentModel, parentModelId, loadData, data, noDataMessage, rowStyling, isLoading, sort, paginationModel, setPaginationModel, tableHeight, rowSelection }) {
+function VanitySelectionTable({ columns, parentModel, setParentModel, parentModelId, loadData, data, noDataMessage, rowStyling, isLoading, sort, paginationModel, tableHeight, rowSelection }) {
   const toastContext = useContext(DialogToastContext);
   const selectedItemRef = useRef({});
 
   useEffect(() => {
     selectedItemRef.current = parentModel;
   }, [parentModelId]);
-
 
   const onRowSelect = async (grid, row, column, e) => {
     const selectedModel = getModel();
@@ -92,12 +91,7 @@ function VanitySelectionTable({ columns, parentModel, setParentModel, parentMode
 
   const getTableBody = () => {
     return (
-      <PaginationContainer
-        loadData={loadData}
-        isLoading={isLoading}
-        filterDto={paginationModel}
-        setFilterDto={setPaginationModel}
-      >
+      <VanityPaginationContainer loadData={loadData} isLoading={isLoading} paginationModel={paginationModel}>
         <VanitySelectionTableBase
           selectedItem={JSON.stringify(parentModel?.getPersistData())}
           rowSelection={rowSelection}
@@ -111,7 +105,7 @@ function VanitySelectionTable({ columns, parentModel, setParentModel, parentMode
           onCellEdit={onCellEdit}
           sort={sort}
         />
-      </PaginationContainer>
+      </VanityPaginationContainer>
     );
   };
 
@@ -134,7 +128,6 @@ VanitySelectionTable.propTypes = {
   isLoading: PropTypes.bool,
   sort: PropTypes.string,
   paginationModel: PropTypes.object,
-  setPaginationModel: PropTypes.func,
   loadData: PropTypes.func,
   tableHeight: PropTypes.string,
   parentModelId: PropTypes.string,

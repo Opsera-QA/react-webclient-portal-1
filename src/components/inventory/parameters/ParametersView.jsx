@@ -6,7 +6,7 @@ import TableAndDetailPanelContainer from "components/common/table/TableAndDetail
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 
-function ParametersView({isLoading, loadData, parameterList, parameterMetadata, parameterRoleDefinitions}) {
+function ParametersView({isLoading, loadData, parameterList, parameterMetadata, parameterRoleDefinitions, parameterFilterModel}) {
   const { getAccessToken } = useContext(AuthContext);
   const [parameterData, setParameterData] = useState(undefined);
   const isMounted = useRef(false);
@@ -35,6 +35,7 @@ function ParametersView({isLoading, loadData, parameterList, parameterMetadata, 
         data={parameterList}
         parameterMetadata={parameterMetadata}
         parameterRoleDefinitions={parameterRoleDefinitions}
+        parameterFilterModel={parameterFilterModel}
         cancelTokenSource={cancelTokenSource}
         isMounted={isMounted}
         getAccessToken={getAccessToken}
@@ -78,6 +79,7 @@ ParametersView.propTypes = {
   createNewRecord: PropTypes.func,
   loadData: PropTypes.func,
   parameterMetadata: PropTypes.object,
+  parameterFilterModel: PropTypes.object,
   setParameterList: PropTypes.func,
   parameterRoleDefinitions: PropTypes.object
 };
