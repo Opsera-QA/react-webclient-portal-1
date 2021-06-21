@@ -62,7 +62,6 @@ function SonarReliabilityRemediationEffortAggBytimeLineChart({
         response?.data && response?.data?.data[0]?.sonarReliabilityRemediationEffortAggregattionByTime.status === 200
           ? response?.data?.data[0]?.sonarReliabilityRemediationEffortAggregattionByTime?.data
           : [];
-      console.log("dataObject", dataObject);
 
       assignStandardColors(dataObject);
       shortenLegend(dataObject);
