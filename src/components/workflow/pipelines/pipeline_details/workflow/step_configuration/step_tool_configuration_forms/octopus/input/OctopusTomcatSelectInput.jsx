@@ -1,10 +1,11 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import OctopusStepActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
 import { AuthContext } from "contexts/AuthContext";
+import axios from "axios";
 
 function OctopusTomcatSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, platformType}) {
   const toastContext = useContext(DialogToastContext);
@@ -12,39 +13,56 @@ function OctopusTomcatSelectInput({ fieldName, dataObject, setDataObject, disabl
   const [tomcatManagers, setTomcatManagers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [placeholder, setPlaceholder] = useState("Select a Tomcat Instance");
-
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    if (!disabled) {
-      loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
     }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    setTomcatManagers([]);
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, [platformType]);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadTypes();
+      await loadTomcatManagerList(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        setPlaceholder("Error Pulling Tomcat Instances");
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
     }
   };
 
-  const loadTypes = async () => {
-    try {
-      const res = await OctopusStepActions.getTomcatManagerList(dataObject.getData("octopusToolId"),dataObject.getData("spaceId"),getAccessToken);
-      if (res && res.status === 200) {
-        setTomcatManagers(res.data);
-        return;
-      }
-      setTomcatManagers([]);
-    } catch (error) {
-      setPlaceholder("No Tomcat Manager Instance Found");
-      console.error(error);
-      toastContext.showServiceUnavailableDialog();
+  const loadTomcatManagerList = async (cancelSource = cancelTokenSource) => {
+    const response = await OctopusStepActions.getTomcatManagerListV2(getAccessToken, cancelSource, dataObject.getData("octopusToolId"),dataObject.getData("spaceId"));
+    const data = response?.data;
+
+    if (isMounted?.current === true && Array.isArray(data)) {
+      setTomcatManagers(data);
     }
   };
 
@@ -74,7 +92,7 @@ function OctopusTomcatSelectInput({ fieldName, dataObject, setDataObject, disabl
       valueField={valueField}
       textField={textField}
       placeholderText={placeholder}
-      disabled={disabled || isLoading || (!isLoading && (tomcatManagers == null || tomcatManagers.length === 0))}
+      disabled={disabled || isLoading}
     />    
   );
 }

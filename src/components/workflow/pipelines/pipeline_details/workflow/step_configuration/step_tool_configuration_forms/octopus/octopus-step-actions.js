@@ -123,13 +123,9 @@ OctopusStepActions.getFeedList = async (id, spaceId, getAccessToken) => {
   return [];
 };
 
-OctopusStepActions.getTomcatManagerList = async (id, spaceId, getAccessToken) => {
+OctopusStepActions.getTomcatManagerListV2 = async (getAccessToken, cancelTokenSource, id, spaceId) => {
   const apiUrl = `/tools/octopus/tomcat/list/${id}/octopus/${spaceId}`;
-  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
-  if (response && response.status === 200) {
-    return response.data;
-  }
-  return [];
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 OctopusStepActions.getPlatformTypes = async (id, spaceId, getAccessToken) => {
@@ -141,13 +137,9 @@ OctopusStepActions.getPlatformTypes = async (id, spaceId, getAccessToken) => {
   return [];
 };
 
-OctopusStepActions.getDeploymentTypes = async (id, spaceId,platformType, getAccessToken) => {
+OctopusStepActions.getDeploymentTypesV2 = async (getAccessToken, cancelTokenSource, id, spaceId, platformType) => {
   const apiUrl = `/tools/octopus/deployment/types/${id}/octopus/${spaceId}/${platformType}`;
-  let response = await baseActions.apiGetCall(getAccessToken, apiUrl);
-  if (response && response.status === 200) {
-    return response.data;
-  }
-  return [];
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 OctopusStepActions.getTargetRoles = async (id, spaceId, getAccessToken) => {
