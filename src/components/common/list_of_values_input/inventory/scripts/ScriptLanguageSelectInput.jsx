@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 export const SCRIPT_LIBRARY_LANGUAGES = [
-  {value: "cli", text: "CLI", mode: "io"},
+  {value: "bash", text: "Bash", mode: "io"},
   {value: "powershell", text: "Powershell", mode: "powershell"},
   {value: "c_sharp", text: "C#", mode: "csharp"},
   {value: "f_sharp", text: "F#", mode: "fsharp"},
