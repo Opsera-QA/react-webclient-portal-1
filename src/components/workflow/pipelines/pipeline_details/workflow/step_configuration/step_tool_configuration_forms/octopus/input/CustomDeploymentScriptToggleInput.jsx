@@ -4,7 +4,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import {Form} from "react-bootstrap";
 
 function CustomDeploymentScriptToggleInput({dataObject, setDataObject, fieldName, disabled}) {
-  const [field, setField] = useState(dataObject.getFieldById(fieldName));
+  const [field, setField] = useState(dataObject?.getFieldById(fieldName));
 
   const handleChange = () => {
     let newDataObject = dataObject;
@@ -16,8 +16,11 @@ function CustomDeploymentScriptToggleInput({dataObject, setDataObject, fieldName
     setDataObject({...newDataObject});
   };
 
+  if (field == null) {
+    return null;
+  }
+
   return (
-    <>
     <InputContainer>
       <Form.Check
         type="switch"
@@ -28,7 +31,6 @@ function CustomDeploymentScriptToggleInput({dataObject, setDataObject, fieldName
         onChange={() => handleChange()}
       />
     </InputContainer>
-</>
   );
 }
 

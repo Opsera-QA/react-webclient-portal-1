@@ -439,7 +439,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                   dataObject={octopusStepConfigurationDto}
                   setDataObject={setOctopusStepConfigurationDataDto}
                   disabled={false}
-                  tool_prop={
+                  platformType={
                     octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusPlatformType")
                       ? octopusStepConfigurationDto.getData("octopusPlatformType")
                       : ""

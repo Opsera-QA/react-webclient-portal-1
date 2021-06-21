@@ -31,31 +31,30 @@ function OctopusApplicationsTable({ toolData, loadData, selectedRow, isLoading }
   }
 
   const createOctopusApplication = (type) => {
-    if (type === "environment") {
-      setShowCreateOctopusModal(true);
-      setType("environment");
-      return;
-    }
-    if (type === "account") {
-      setShowCreateOctopusModal(true);
-      setType("account");
-      return;
-    }
-    if (type === "target") {
-      setShowCreateOctopusModal(true);
-      setType("target");
-      return;
-    }
-    if (type === "feed") {
-      setShowCreateOctopusModal(true);
-      setType("feed");
-      return;
-    }
-    if (type === "tomcat") {
-      setShowCreateOctopusModal(true);
-      setType("tomcat");
-      return;
-    }
+    switch (type) {
+      case "environment":
+        setShowCreateOctopusModal(true);
+        setType("environment");
+        return;
+      case "account":
+        setShowCreateOctopusModal(true);
+        setType("account");
+        return;
+      case "target":
+        setShowCreateOctopusModal(true);
+        setType("target");
+        return;
+      case "feed":
+        setShowCreateOctopusModal(true);
+        setType("feed");
+        return;
+      case "tomcat":
+        setShowCreateOctopusModal(true);
+        setType("tomcat");
+        return;
+      default:
+        return null;
+    }    
   };
 
   const columns = useMemo(

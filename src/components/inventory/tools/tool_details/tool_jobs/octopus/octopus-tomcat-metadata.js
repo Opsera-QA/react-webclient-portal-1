@@ -36,7 +36,7 @@ const OctopusTomcatMetadata = {
         id: "active",
       },
     ],
-    newModelBase: {
+    newObjectFields: {
       name: "",
       spaceName : "",
       spaceId : "",    

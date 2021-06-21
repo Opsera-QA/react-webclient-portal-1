@@ -10,9 +10,9 @@ import OctopusVersionSelectInput from "../input/OctopusVersionSelectInput";
 import OctopusSpecifyDepVarsToggle from "../input/OctopusSpecifyDepVarsToggle";
 import OctopusDeploymentVariables from "../input/OctopusDeploymentVariables";
 
-function OctopusDeployToTomcatDetailsView({dataObject, setDataObject, isLoading, disabled, tool_prop, pipelineId}) {
+function OctopusDeployToTomcatDetailsView({dataObject, setDataObject, isLoading, disabled, platformType, pipelineId}) {
 
-  if (!tool_prop || (tool_prop && tool_prop.length === 0) || (tool_prop && tool_prop.toLowerCase() !== "deploy to tomcat via manager")) {
+  if (!platformType || platformType.toLowerCase() !== "deploy to tomcat via manager") {
     return null;
   }
 
@@ -54,7 +54,7 @@ function OctopusDeployToTomcatDetailsView({dataObject, setDataObject, isLoading,
         dataObject={dataObject}
         setDataObject={setDataObject}
         disabled={false}
-        tool_prop={
+        platformType={
           dataObject && dataObject.getData("octopusPlatformType")
             ? dataObject.getData("octopusPlatformType")
             : ""
@@ -151,7 +151,7 @@ OctopusDeployToTomcatDetailsView.propTypes = {
   disabled: PropTypes.bool,
   isLoading: PropTypes.bool,
   className: PropTypes.string,
-  tool_prop: PropTypes.string,
+  platformType: PropTypes.string,
   pipelineId: PropTypes.string
 };
 

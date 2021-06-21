@@ -6,7 +6,7 @@ import OctopusStepActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
 import { AuthContext } from "contexts/AuthContext";
 
-function OctopusTomcatSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool_prop}) {
+function OctopusTomcatSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, platformType}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [tomcatManagers, setTomcatManagers] = useState([]);
@@ -18,7 +18,7 @@ function OctopusTomcatSelectInput({ fieldName, dataObject, setDataObject, disabl
     if (!disabled) {
       loadData();
     }
-  }, [tool_prop]);
+  }, [platformType]);
 
   const loadData = async () => {
     try {
@@ -48,36 +48,34 @@ function OctopusTomcatSelectInput({ fieldName, dataObject, setDataObject, disabl
     }
   };
 
-  const setTomcatDetails = (fieldName, value) => {
+  const setDataFunction = (fieldName, value) => {
     let newDataObject = dataObject;
     newDataObject.setData(fieldName, value.id);
     newDataObject.setData("tomcatManagerDetails", value);
     setDataObject({ ...newDataObject });
   };
 
-  const clearTomcatDetails = () => {    
+  const clearDataFunction = () => {    
     let newDataObject = dataObject;
     newDataObject.setData(fieldName, "");
     newDataObject.setData("tomcatManagerDetails", "");
     setDataObject({ ...newDataObject });
   };
 
-  return (
-    <div>
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        setDataFunction={setTomcatDetails}
-        clearDataFunction={clearTomcatDetails}
-        selectOptions={tomcatManagers}
-        busy={isLoading}
-        valueField={valueField}
-        textField={textField}
-        placeholderText={placeholder}
-        disabled={disabled || isLoading || (!isLoading && (tomcatManagers == null || tomcatManagers.length === 0))}
-      />
-    </div>
+  return (    
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={dataObject}
+      setDataObject={setDataObject}
+      setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
+      selectOptions={tomcatManagers}
+      busy={isLoading}
+      valueField={valueField}
+      textField={textField}
+      placeholderText={placeholder}
+      disabled={disabled || isLoading || (!isLoading && (tomcatManagers == null || tomcatManagers.length === 0))}
+    />    
   );
 }
 
@@ -88,7 +86,7 @@ OctopusTomcatSelectInput.propTypes = {
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  tool_prop: PropTypes.string
+  platformType: PropTypes.string
 };
 
 OctopusTomcatSelectInput.defaultProps = {
