@@ -82,6 +82,15 @@ const jenkinsPipelineStepConfigurationMetadata = {
       label: "Terraform Step",
       id: "terraformStepId"
     },
+    {
+      label: "Parameters",
+      id: "customParameters",
+      maxItems: 15,
+    },
+    {
+      label: "Use Terraform Output",
+      id: "useTerraformOutput"
+    }
   ],
   newModelBase: {
     jobType: "",
@@ -120,7 +129,9 @@ const jenkinsPipelineStepConfigurationMetadata = {
     sfdcUnitTestType: "",
     workspace: "",
     agentLabels:"",
-    terraformStepId: ""
+    terraformStepId: "",
+    customParameters: [],
+    useTerraformOutput: false
   }
 };
 

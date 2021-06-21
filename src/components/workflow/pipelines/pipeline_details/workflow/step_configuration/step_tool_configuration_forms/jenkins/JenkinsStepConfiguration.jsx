@@ -34,6 +34,12 @@ import _ from "lodash";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 import StepConfigTerraformStepSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/common/inputs/StepConfigTerraformStepSelectInput";
+import StepConfigUseTerraformOutput from "../common/inputs/StepConfigUseTerraformOutput";
+import PipelineStepEditorPanelContainer
+  from "../../../../../../../common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import ParameterSelectListInputBase
+  from "../../../../../../../common/list_of_values_input/parameters/ParameterSelectListInputBase";
+import { faHandshake } from "@fortawesome/pro-light-svg-icons";
 
 const JOB_OPTIONS = [
   { value: "", label: "Select One", isDisabled: "yes" },
@@ -98,7 +104,8 @@ const INITIAL_DATA = {
   commands: "",
   isManualRollBackBranch: false,
   terraformStepId: "",
-  customParameters: ""
+  customParameters: [],
+  useTerraformOutput: false
 };
 
 //data is JUST the tool object passed from parent component, that's returned through parent Callback
@@ -251,7 +258,12 @@ function JenkinsStepConfiguration({
         },
         {
           label: "Custom Parameters",
-          id: "customParameters"
+          id: "customParameters",
+          maxItems: 15,
+        },
+        {
+          label: "Use Terraform Output",
+          id: "useTerraformOutput"
         }
       ]
     }, true));
@@ -419,9 +431,10 @@ function JenkinsStepConfiguration({
       tmp.setData("customScript", formData.customScript);
       tmp.setData("terraformStepId", formData.terraformStepId);
       tmp.setData("customParameters", formData.customParameters);
+      tmp.setData("useTerraformOutput", formData.useTerraformOutput);
       setPythonScriptData(tmp);
     }    
-  }, [formData.inputDetails, formData.commands, formData.customScript, formData.terraformStepId, formData.customParameters]);
+  }, [formData.inputDetails, formData.commands, formData.customScript, formData.terraformStepId, formData.customParameters, formData.useTerraformOutput]);
 
   const loadFormData = async (step) => {
     let { configuration, threshold, job_type } = step;
@@ -537,7 +550,8 @@ function JenkinsStepConfiguration({
         inputDetails: [],
         commands: pythonScriptData.getData("commands"),
         terraformStepId: pythonScriptData.getData("terraformStepId"),
-        customParameters: pythonScriptData.getData("customParameters")
+        customParameters: pythonScriptData.getData("customParameters"),
+        useTerraformOutput: pythonScriptData.getData("useTerraformOutput")
       }));
     }else {
       setFormData(Object.assign(formData, {
@@ -545,7 +559,8 @@ function JenkinsStepConfiguration({
         inputDetails: pythonScriptData.getData("inputDetails"),
         commands: "",
         terraformStepId: "",
-        customParameters: ""
+        customParameters: [],
+        useTerraformOutput: false
       }));
     }
   };
@@ -886,6 +901,14 @@ function JenkinsStepConfiguration({
 
     await createJob( formData.toolConfigId, toolConfiguration, stepId, createJobPostBody);
   
+  };
+
+  const getTerraformSelect = () => {
+    if (pythonScriptData?.getData("useTerraformOutput")) {
+      return (
+        <StepConfigTerraformStepSelectInput setDataObject={setPythonScriptData} dataObject={pythonScriptData} plan={plan} stepId={stepId} />
+      );
+    }
   };
 
   const RegistryPopover = (data) => {
@@ -1622,16 +1645,25 @@ function JenkinsStepConfiguration({
                     />
                     { pythonScriptData.getData("customScript") ? (
                       <>
+                        <StepConfigUseTerraformOutput dataObject={pythonScriptData} setDataObject={setPythonScriptData} fieldName={"useTerraformOutput"} plan={plan} stepId={stepId}/>
+                        {getTerraformSelect()}
+                        <ParameterSelectListInputBase
+                          titleIcon={faHandshake}
+                          dataObject={pythonScriptData}
+                          setDataObject={setPythonScriptData}
+                          fieldName={"customParameters"}
+                          allowIncompleteItems={true}
+                          type={"Parameter"}
+                          regexValidationRequired={false}
+                          titleText={"Parameter Selection"}
+                          plan={plan}
+                          tool_prop={pythonScriptData?.getData("terraformStepId") && pythonScriptData?.getData("terraformStepId").length > 0 ?
+                            pythonScriptData?.getData("terraformStepId") : ""}
+                        />
                         <TextAreaInput 
                           dataObject={pythonScriptData}                         
                           setDataObject={setPythonScriptData}
                           fieldName={"commands"} 
-                        />
-                        <StepConfigTerraformStepSelectInput 
-                          setDataObject={setPythonScriptData} 
-                          dataObject={pythonScriptData} 
-                          plan={plan} 
-                          stepId={stepId} 
                         />
                       </>
                     ) : (
