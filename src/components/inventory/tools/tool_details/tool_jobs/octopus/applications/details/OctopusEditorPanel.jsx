@@ -31,7 +31,7 @@ import OctopusThumbprintDisplay from "./OctopusThumbprintDisplay";
 import axios from "axios";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
-import toolsActions from "components/inventory/tools/tools-actions";
+import pipelineActions from "components/workflow/pipeline-actions";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -97,8 +97,12 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
   const saveTomcatPasswordToVault = async () => {
     let newConfiguration = octopusApplicationDataDto.getPersistData();
     const tomcatManagerPasswordKey = `${newConfiguration.toolId}-${newConfiguration.name.toLowerCase()}${newConfiguration.userName.toLowerCase()}-secretKey`;
-    newConfiguration.password = await toolsActions.saveKeyPasswordToVault(octopusApplicationDataDto, "password", newConfiguration.password, tomcatManagerPasswordKey, getAccessToken, newConfiguration.toolId);
-    octopusApplicationDataDto.setData("password", newConfiguration.password);
+    if (newConfiguration.password != null && typeof(newConfiguration.password) === "string") {
+      const body = { "key": tomcatManagerPasswordKey, "value": newConfiguration.password, "toolId": newConfiguration.toolId };
+      const response = await pipelineActions.saveToolRegistryRecordToVault(body, getAccessToken);
+      newConfiguration.password = response?.status === 200 ? { name: "Vault Secured Key", vaultKey: tomcatManagerPasswordKey } : {};
+      octopusApplicationDataDto.setData("password", newConfiguration.password);
+    }
   };
 
   const createApplication = async () => {
@@ -538,7 +542,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
                 dataObject={octopusApplicationDataDto} 
                 setDataObject={setOctopusApplicationDataDto} 
                 fieldName={"name"} 
-                disabled={false} 
+                disabled={appID} 
               />              
             </Col>
             <Col lg={12}>
@@ -576,7 +580,8 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
           </Row>
         )}
         <Row>
-          {appID && octopusApplicationDataDto && octopusApplicationDataDto.getData("id") && (
+          {/* {appID && octopusApplicationDataDto && octopusApplicationDataDto.getData("id") && ( */}
+          {appID && octopusApplicationDataDto && (
             <div className="mr-auto ml-2 mt-3 px-3">
               <Button variant="outline-primary" size="sm" onClick={() => setShowDeleteModal(true)}>
                 <FontAwesomeIcon icon={faTrash} className="danger-red" /> Delete{" "}
