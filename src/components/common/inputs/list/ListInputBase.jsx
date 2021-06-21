@@ -55,8 +55,8 @@ function ListInputBase(
 
     let list = new List(containerRef.current, {
       data: selectOptions || [],
-      multiselection: disabled !== true || isLoading === true,
-      selection: disabled !== true || isLoading === true,
+      multiselection: disabled !== true && isLoading !== true,
+      selection: disabled !== true && isLoading !== true,
       template
     });
 
