@@ -580,8 +580,7 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
           </Row>
         )}
         <Row>
-          {/* {appID && octopusApplicationDataDto && octopusApplicationDataDto.getData("id") && ( */}
-          {appID && octopusApplicationDataDto && (
+          {appID && octopusApplicationDataDto && (octopusApplicationDataDto.getData("id") || type === "tomcat") && (
             <div className="mr-auto ml-2 mt-3 px-3">
               <Button variant="outline-primary" size="sm" onClick={() => setShowDeleteModal(true)}>
                 <FontAwesomeIcon icon={faTrash} className="danger-red" /> Delete{" "}
