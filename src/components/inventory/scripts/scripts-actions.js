@@ -3,10 +3,9 @@ import baseActions from "utils/actionsBase";
 const scriptsActions = {};
 
 scriptsActions.getScripts = async (getAccessToken, cancelTokenSource, filterModel, fields) => {
-  const search = filterModel?.getData("search");
   const urlParams = {
     params: {
-      search: search,
+      search: filterModel?.getData("search"),
       fields: fields
     },
   };

@@ -16,7 +16,7 @@ export const CODE_THEME_TYPES = {
 function CodeInput({model, setModel, fieldName, mode, className, isLoading, disabled, titleBarActionButtons}) {
   const [field] = useState(model?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
-  const [theme, setTheme] = useState(CODE_THEME_TYPES.DARK);
+  const [theme, setTheme] = useState(CODE_THEME_TYPES.LIGHT);
 
   const validateAndSetData = (value) => {
     let newModel = model;

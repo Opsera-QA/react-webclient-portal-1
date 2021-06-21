@@ -6,7 +6,7 @@ import {AuthContext} from "contexts/AuthContext";
 import ScriptTable from "components/inventory/scripts/ScriptTable";
 import ScriptsEditorPanel from "components/inventory/scripts/details/ScriptsEditorPanel";
 
-function ScriptsView({isLoading, loadData, scriptList, scriptMetadata, scriptRoleDefinitions}) {
+function ScriptsView({isLoading, loadData, scriptList, scriptMetadata, scriptRoleDefinitions, scriptFilterModel}) {
   const { getAccessToken } = useContext(AuthContext);
   const [scriptData, setScriptData] = useState(undefined);
   const isMounted = useRef(false);
@@ -37,6 +37,7 @@ function ScriptsView({isLoading, loadData, scriptList, scriptMetadata, scriptRol
         scriptRoleDefinitions={scriptRoleDefinitions}
         cancelTokenSource={cancelTokenSource}
         isMounted={isMounted}
+        scriptFilterModel={scriptFilterModel}
         getAccessToken={getAccessToken}
         setScriptData={setModel}
         scriptData={scriptData}
@@ -78,7 +79,8 @@ ScriptsView.propTypes = {
   createNewRecord: PropTypes.func,
   loadData: PropTypes.func,
   scriptMetadata: PropTypes.object,
-  scriptRoleDefinitions: PropTypes.object
+  scriptRoleDefinitions: PropTypes.object,
+  scriptFilterModel: PropTypes.object
 };
 
 export default ScriptsView;
