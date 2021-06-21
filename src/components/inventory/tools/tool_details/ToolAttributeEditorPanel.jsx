@@ -10,8 +10,7 @@ import RegistryToolApplicationsInput from "components/inventory/tools/tool_detai
 import RegistryToolOrganizationInput from "components/inventory/tools/tool_details/input/RegistryToolOrganizationInput";
 import RegistryToolContactInput from "components/inventory/tools/tool_details/input/RegistryToolContactInput";
 
-// TODO: Rename ToolAttributeEditorPanel
-function AttributeEditorPanel({ toolData, setToolData, handleClose }) {
+function ToolAttributeEditorPanel({ toolData, setToolData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const [toolDataDto, setToolDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -61,12 +60,12 @@ function AttributeEditorPanel({ toolData, setToolData, handleClose }) {
   );
 }
 
-AttributeEditorPanel.propTypes = {
+ToolAttributeEditorPanel.propTypes = {
   toolData: PropTypes.object,
   setToolData: PropTypes.func,
   handleClose: PropTypes.func
 };
 
-export default AttributeEditorPanel;
+export default ToolAttributeEditorPanel;
 
 
