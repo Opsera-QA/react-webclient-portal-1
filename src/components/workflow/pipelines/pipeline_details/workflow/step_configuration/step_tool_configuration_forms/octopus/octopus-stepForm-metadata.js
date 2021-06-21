@@ -179,15 +179,15 @@ const octopusStepFormMetadata = {
       },
       {
         label: "Pre-Deployment Script",
-        id: "preDeploymentScript"
+        id: "preDeploymentScriptId"
       },
       {
         label: "Deployment Script",
-        id: "deploymentScript"
+        id: "deploymentScriptId"
       },
       {
         label: "Post-Deployment Script",
-        id: "postDeploymentScript"
+        id: "postDeploymentScriptId"
       },
       {        
         id: "tomcatManagerDetails"
@@ -236,9 +236,9 @@ const octopusStepFormMetadata = {
         scriptId: "",
         contextPath: "",
         customDeploymentScriptsEnabled: false,
-        preDeploymentScript: "",
-        deploymentScript: "",
-        postDeploymentScript: "",
+        preDeploymentScriptId: "",
+        deploymentScriptId: "",
+        postDeploymentScriptId: "",
         tomcatManagerDetails: {},
         tomcatManagerId: "",
       }
