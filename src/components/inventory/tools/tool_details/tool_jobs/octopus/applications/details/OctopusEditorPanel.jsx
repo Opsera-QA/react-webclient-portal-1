@@ -44,6 +44,8 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
   const isMounted = useRef(false);
   const [isValidatingConfig, setIsValidatingConfig] = useState(false);
 
+  console.log({toolData});
+
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
@@ -107,7 +109,13 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
 
   const createApplication = async () => {
     try {
-      if(type === "tomcat"){        
+      if(type === "tomcat"){
+        let actions = toolData.getData("actions");
+        let newName = octopusApplicationDataDto.getData("name");
+        if(actions.filter(action => action.name === newName).length > 0){
+          toastContext.showCreateFailureResultDialog(type ? type.charAt(0).toUpperCase() + type.slice(1) : "", "Tomcat Manager Instance Name should be unique. Please with a different name");
+          return;
+        }
         await saveTomcatPasswordToVault();
       }
       await OctopusActions.createOctopusApplication(octopusApplicationDataDto, type, getAccessToken);
