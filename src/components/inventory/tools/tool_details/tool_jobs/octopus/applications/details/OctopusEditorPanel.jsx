@@ -44,8 +44,6 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
   const isMounted = useRef(false);
   const [isValidatingConfig, setIsValidatingConfig] = useState(false);
 
-  console.log({toolData});
-
   useEffect(() => {
     if (cancelTokenSource) {
       cancelTokenSource.cancel();
