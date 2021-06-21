@@ -99,7 +99,7 @@ const commandLineStepFormMetadata = {
     },
     
     {
-      label: "Want to specifiy the path for a script file?",
+      label: "Custom Script Path",
       id: "sourceScript",
     },
     {
@@ -269,7 +269,7 @@ const commandLineStepFormMetadata = {
     },
     
     {
-      label: "Want to specify the path for a script file?",
+      label: "Custom Script Path",
       id: "sourceScript",
     },
     {
