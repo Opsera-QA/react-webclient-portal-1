@@ -8,7 +8,7 @@ import ScriptModel from "components/inventory/scripts/script.model";
 function NewScriptOverlay({ loadData, isMounted, scriptMetadata, getAccessToken, cancelTokenSource, scriptRoleDefinitions }) {
   const toastContext = useContext(DialogToastContext);
   const [scriptModel, setScriptModel] = useState(
-    new ScriptModel({...scriptMetadata.newObjectFields}, scriptMetadata, true, undefined, getAccessToken, cancelTokenSource, loadData)
+    new ScriptModel({...scriptMetadata.newObjectFields}, scriptMetadata, true, getAccessToken, cancelTokenSource, loadData)
   );
 
   const closePanel = () => {
@@ -22,7 +22,7 @@ function NewScriptOverlay({ loadData, isMounted, scriptMetadata, getAccessToken,
 
   return (
     <CreateCenterPanel closePanel={closePanel} objectType={scriptMetadata?.type} loadData={loadData}>
-      <ScriptsEditorPanel handleClose={closePanel} scriptModel={scriptModel} scriptRoleDefinitions={scriptRoleDefinitions}/>
+      <ScriptsEditorPanel handleClose={closePanel} setScriptModel={setScriptModel} scriptModel={scriptModel} scriptRoleDefinitions={scriptRoleDefinitions}/>
     </CreateCenterPanel>
   );
 }
