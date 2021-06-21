@@ -1,8 +1,6 @@
 import { AuthContext } from "contexts/AuthContext";
 import React, {useContext, useEffect, useRef, useState} from "react";
-import Model from "core/data_model/model";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import toolFilterMetadata from "components/inventory/tools/tool-filter-metadata";
 import PropTypes from "prop-types";
 import axios from "axios";
 import parametersActions from "components/inventory/parameters/parameters-actions";
@@ -12,6 +10,7 @@ import NavigationTabContainer from "components/common/tabs/navigation/Navigation
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {faFileCode, faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
 import ParameterModel from "components/inventory/parameters/parameter.model";
+import ParameterFilterModel from "components/inventory/parameters/parameter.filter.model";
 
 function ParametersInventory({ customerAccessRules, handleTabClick }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -20,7 +19,7 @@ function ParametersInventory({ customerAccessRules, handleTabClick }) {
   const [parameterList, setParameterList] = useState([]);
   const [parameterMetadata, setParameterMetadata] = useState(undefined);
   const [parameterRoleDefinitions, setParameterRoleDefinitions] = useState(undefined);
-  const [parameterFilterModel, setParameterFilterModel] = useState(new Model({ ...toolFilterMetadata.newObjectFields }, toolFilterMetadata, false));
+  const [parameterFilterModel, setParameterFilterModel] = useState(new ParameterFilterModel());
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -75,7 +74,6 @@ function ParametersInventory({ customerAccessRules, handleTabClick }) {
         // TODO: Integrate role definitions into data call
         parameters.forEach((parameter) => {
           let newModel = new ParameterModel({...parameter}, newParameterMetadata, false, getAccessToken, cancelTokenSource, loadData);
-          console.log(newModel.value);
           modelWrappedArray.push(newModel);
         });
 
@@ -112,6 +110,7 @@ function ParametersInventory({ customerAccessRules, handleTabClick }) {
         loadData={loadData}
         parameterList={parameterList}
         setParameterList={setParameterList}
+        parameterFilterModel={parameterFilterModel}
         parameterMetadata={parameterMetadata}
         customerAccessRules={customerAccessRules}
         parameterRoleDefinitions={parameterRoleDefinitions}

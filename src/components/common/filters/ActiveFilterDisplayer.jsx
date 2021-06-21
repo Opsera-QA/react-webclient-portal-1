@@ -20,7 +20,13 @@ function ActiveFilterDisplayer({filterDto, setFilterDto, loadData}) {
     let newDto = filterDto;
     newDto.setData(fieldName, filterDto.getDefaultValue(fieldName));
     newDto.setData("currentPage", 1);
-    setFilterDto({...newDto});
+
+    // TODO: Setting state on filter model should only be handled in the load data function and this should be removed.
+    //  Leaving here for now to prevent unintended side effects
+    if (setFilterDto) {
+      setFilterDto({...newDto});
+    }
+
     loadData(newDto);
   };
 

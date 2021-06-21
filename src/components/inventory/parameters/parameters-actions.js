@@ -2,9 +2,17 @@ import baseActions from "utils/actionsBase";
 
 const parametersActions = {};
 
-parametersActions.getParameters = async (getAccessToken, cancelTokenSource) => {
+parametersActions.getParameters = async (getAccessToken, cancelTokenSource, paginationModel) => {
+  const urlParams = {
+    params: {
+      // size: paginationModel?.getData("size"),
+      // page: paginationModel?.getData("currentPage"),
+      search: paginationModel?.getData("search"),
+    },
+  };
+
   const apiUrl = "/registry/parameters";
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 parametersActions.createParameterV2 = async (getAccessToken, cancelTokenSource, parameterModel) => {
