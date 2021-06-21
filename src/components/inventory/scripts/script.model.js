@@ -20,7 +20,7 @@ export class ScriptModel extends ModelBase {
   deleteModel = async () => {
     const response = await scriptsActions.deleteScriptV2(this.getAccessToken, this.cancelTokenSource, this);
     this.dataState = DataState.DELETED;
-    this.updateState();
+    this.unselectModel();
     await this.loadData();
     return response;
   };
