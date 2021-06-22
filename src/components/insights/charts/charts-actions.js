@@ -6,6 +6,8 @@ import {
   getJenkinsJobUrlFromKpiConfiguration,
   getJenkinsBuildNumberFromKpiConfiguration,
   getJiraIssueTypeFromKpiConfiguration,
+  getJiraIssueComponentsFromKpiConfiguration,
+  getJiraIssueLabelsFromKpiConfiguration,
   getJiraIssueStartStatusFromKpiConfiguration,
   getJiraIssueDoneStatusFromKpiConfiguration,
   getSonarProjectKeyFromKpiConfiguration,
@@ -87,6 +89,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   const jenkinsJobUrl = getJenkinsJobUrlFromKpiConfiguration(kpiConfiguration);
   const jenkinsBuildNumber = getJenkinsBuildNumberFromKpiConfiguration(kpiConfiguration);
   const jiraIssueType = getJiraIssueTypeFromKpiConfiguration(kpiConfiguration);
+  const jiraIssueComponents = getJiraIssueComponentsFromKpiConfiguration(kpiConfiguration);
+  const jiraIssueLabels = getJiraIssueLabelsFromKpiConfiguration(kpiConfiguration);
   const jiraIssueStartStatus = getJiraIssueStartStatusFromKpiConfiguration(kpiConfiguration);
   const jiraIssueDoneStatus = getJiraIssueDoneStatusFromKpiConfiguration(kpiConfiguration);
   const sonarProjectKey = getSonarProjectKeyFromKpiConfiguration(kpiConfiguration);
@@ -107,6 +111,8 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     jenkinsJobUrl: jenkinsJobUrl,
     jenkinsBuildNumber: jenkinsBuildNumber,
     jiraIssueType: jiraIssueType,
+    jiraIssueComponents: jiraIssueComponents,
+    jiraIssueLabels: jiraIssueLabels,
     jiraIssueStartStatus: jiraIssueStartStatus,
     jiraIssueDoneStatus: jiraIssueDoneStatus,
     sonarProjectKey: sonarProjectKey,
