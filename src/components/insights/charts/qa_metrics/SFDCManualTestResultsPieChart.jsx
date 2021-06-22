@@ -49,8 +49,8 @@ function SFDCManualTestResultsPieChart({ kpiConfiguration, setKpiConfiguration, 
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "manualTestData", kpiConfiguration, dashboardTags);
-      let dataObject = response?.data ? response?.data?.data[0]?.manualTestData?.data : [];
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "sfdcManualTestResults", kpiConfiguration, dashboardTags);
+      let dataObject = response?.data ? response?.data?.data[0]?.sfdcManualTestResults?.data : [];
       assignStandardColors(dataObject[0]?.pairs);
       shortenPieChartLegend(dataObject[0]?.pairs);
 
