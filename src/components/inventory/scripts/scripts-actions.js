@@ -2,7 +2,7 @@ import baseActions from "utils/actionsBase";
 
 const scriptsActions = {};
 
-scriptsActions.getScripts = async (getAccessToken, cancelTokenSource, filterModel, fields) => {
+scriptsActions.getScripts = async (getAccessToken, cancelTokenSource, filterModel, fields = ["name", "type", "owner", "roles"]) => {
   const urlParams = {
     params: {
       search: filterModel?.getData("search"),
@@ -42,7 +42,7 @@ scriptsActions.deleteScriptV2 = async (getAccessToken, cancelTokenSource, script
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-scriptsActions.getScriptValueFromVault = async (getAccessToken, cancelTokenSource, id) => {
+scriptsActions.getScriptValue = async (getAccessToken, cancelTokenSource, id) => {
   const apiUrl = `/registry/script/${id}/value`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };

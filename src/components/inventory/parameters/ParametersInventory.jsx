@@ -11,9 +11,11 @@ import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {faFileCode, faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
 import ParameterModel from "components/inventory/parameters/parameter.model";
 import ParameterFilterModel from "components/inventory/parameters/parameter.filter.model";
+import workflowAuthorizedActions
+  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 
 function ParametersInventory({ customerAccessRules, handleTabClick }) {
-  const { getAccessToken } = useContext(AuthContext);
+  const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
   const [parameterList, setParameterList] = useState([]);
@@ -63,24 +65,27 @@ function ParametersInventory({ customerAccessRules, handleTabClick }) {
   const getParameters = async (filterDto = parameterFilterModel, cancelSource = cancelTokenSource) => {
     const response = await parametersActions.getParameters(getAccessToken, cancelSource, filterDto);
     const parameters = response?.data?.data;
+    const userRoleAccess = await getAccessRoleData();
 
     if (isMounted?.current === true && Array.isArray(parameters)) {
       const newParameterMetadata = response.data.metadata;
       setParameterMetadata(newParameterMetadata);
+      const roleDefinitions = response?.data?.roles;
+      setParameterRoleDefinitions(roleDefinitions);
 
       if (Array.isArray(parameters) && parameters.length > 0) {
         let modelWrappedArray = [];
 
-        // TODO: Integrate role definitions into data call
         parameters.forEach((parameter) => {
-          let newModel = new ParameterModel({...parameter}, newParameterMetadata, false, getAccessToken, cancelTokenSource, loadData);
+          const deleteAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "delete_parameter", parameter.owner, parameter.roles, parameterRoleDefinitions);
+          const updateAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "update_parameter", parameter.owner, parameter.roles, parameterRoleDefinitions);
+          let newModel = new ParameterModel({...parameter}, newParameterMetadata, false, getAccessToken, cancelTokenSource, loadData, updateAllowed, deleteAllowed);
           modelWrappedArray.push(newModel);
         });
 
         setParameterList([...modelWrappedArray]);
       }
 
-      setParameterRoleDefinitions(response.data.roles);
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.count);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());

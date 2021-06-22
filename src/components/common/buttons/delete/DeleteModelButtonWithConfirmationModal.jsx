@@ -8,7 +8,7 @@ import DeleteModal from "components/common/modal/DeleteModal";
 import IconBase from "components/common/icons/IconBase";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function DeleteModelButtonWithConfirmation({dataObject, disabled, size, icon, className}) {
+function DeleteModelButtonWithConfirmation({model, disabled, size, icon, className}) {
   const toastContext = useContext(DialogToastContext);
   const [isDeleting, setIsDeleting] = useState(false);
   const isMounted = useRef(false);
@@ -26,11 +26,11 @@ function DeleteModelButtonWithConfirmation({dataObject, disabled, size, icon, cl
     setIsDeleting(true);
 
     try {
-      const response = await dataObject.deleteModel();
-      toastContext.showDeleteSuccessResultDialog(dataObject?.getType());
+      const response = await model.deleteModel();
+      toastContext.showDeleteSuccessResultDialog(model?.getType());
     }
     catch (error) {
-      toastContext.showDeleteFailureResultDialog(dataObject?.getType(), error);
+      toastContext.showDeleteFailureResultDialog(model?.getType(), error);
       console.error(error);
     }
     finally {
@@ -41,20 +41,24 @@ function DeleteModelButtonWithConfirmation({dataObject, disabled, size, icon, cl
     }
   };
 
+  if (model == null || model?.isNew() || model?.canDelete() === false) {
+    return null;
+  }
+
   return (
     <div className={className}>
       <TooltipWrapper innerText={cannotBeUndone}>
         <Button size={size} variant="danger" disabled={isDeleting || disabled} onClick={() => setShowDeleteModal(true)}>
           <span>
             <IconBase icon={icon} isLoading={isDeleting} className="mr-2" fixedWidth />
-            {isDeleting ? `Deleting ${dataObject.getType()}` : `Delete ${dataObject.getType()}`}
+            {isDeleting ? `Deleting ${model.getType()}` : `Delete ${model.getType()}`}
           </span>
         </Button>
       </TooltipWrapper>
       <DeleteModal
         showModal={showDeleteModal}
         setShowModal={setShowDeleteModal}
-        dataObject={dataObject}
+        dataObject={model}
         handleDelete={handleDelete}
       />
     </div>
@@ -62,7 +66,7 @@ function DeleteModelButtonWithConfirmation({dataObject, disabled, size, icon, cl
 }
 
 DeleteModelButtonWithConfirmation.propTypes = {
-  dataObject: PropTypes.object,
+  model: PropTypes.object,
   className: PropTypes.string,
   disabled: PropTypes.bool,
   size: PropTypes.string,

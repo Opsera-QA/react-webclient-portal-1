@@ -65,7 +65,6 @@ function ParameterTable({ data, parameterMetadata, setParameterData, parameterDa
         isMounted={isMounted}
         getAccessToken={getAccessToken}
         cancelTokenSource={cancelTokenSource}
-        parameterRoleDefinitions={parameterRoleDefinitions}
       />
     );
   };
