@@ -46,14 +46,10 @@ function ScriptsEditorPanel({ scriptModel, setScriptModel, scriptModelId, handle
           <TextInputBase disabled={!scriptModel?.isNew()} setDataObject={setScriptModel} dataObject={scriptModel} fieldName={"name"}/>
         </Col>
         <Col md={6}>
-          <ScriptLanguageSelectInput setDataObject={setScriptModel} dataObject={scriptModel} />
+          <ScriptLanguageSelectInput setModel={setScriptModel} model={scriptModel} />
         </Col>
         <Col md={8}>
-          <ScriptValueInput
-            disabled={scriptModel?.canUpdate() !== true}
-            setModel={setScriptModel}
-            model={scriptModel}
-          />
+          <ScriptValueInput setModel={setScriptModel} model={scriptModel} />
         </Col>
         <Col md={8} className={"my-2"}>
           <RoleAccessInput disabled={scriptModel?.canUpdate() !== true} dataObject={scriptModel} setDataObject={setScriptModel} fieldName={"roles"} />

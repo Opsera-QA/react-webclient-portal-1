@@ -38,24 +38,24 @@ export const getScriptLanguageDisplayMode = (value) => {
   return (foundScriptLanguage.mode);
 };
 
-function ScriptLanguageSelectInput({fieldName, dataObject, setDataObject, disabled}) {
+function ScriptLanguageSelectInput({fieldName, model, setModel, disabled}) {
   return (
     <SelectInputBase
       fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
+      dataObject={model}
+      setDataObject={setModel}
       selectOptions={SCRIPT_LIBRARY_LANGUAGES}
       valueField={"value"}
       textField={"text"}
-      disabled={disabled}
+      disabled={model?.canUpdate() !== true || disabled}
     />
   );
 }
 
 ScriptLanguageSelectInput.propTypes = {
   fieldName: PropTypes.string,
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  model: PropTypes.object,
+  setModel: PropTypes.func,
   disabled: PropTypes.bool,
 };
 
