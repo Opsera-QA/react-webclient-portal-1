@@ -10,7 +10,7 @@ function ScriptValueInput({model, setModel, fieldName, className, disabled}) {
 
   return (
     <CodeInput
-      disabled={disabled}
+      disabled={model?.canUpdate() !== true || disabled}
       isLoading={isLoading}
       mode={getScriptLanguageDisplayMode(model?.getData("type"))}
       className={className}
