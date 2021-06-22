@@ -15,6 +15,7 @@ export const notificationTypes = [
   {name: "SFDC Branch Structuring", value: "sync-branch-structure"},
   {name: "GIT to GIT Sync", value: "sync-git-branches"},
   {name: "Generate Certificate for SFDX", value: "sfdc-cert-gen"},
+  {name: "Create ECS Cluster", value: "ecs_cluster_creation"},
 ];
 
 function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction, placeholderText }) {

@@ -15,6 +15,11 @@ import branchToBranchGitTaskConfigurationMetadata from "components/git/git_task_
 import BranchToBranchGitTaskTypeSummaryCard from "components/git/git_task_details/configuration_forms/branch-to-branch/BranchToBranchGitTaskTypeSummaryCard";
 import sfdxCertGenTaskConfigurationMetadata from "components/git/git_task_details/configuration_forms/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
 import SFDXCertGenTaskTypeSummaryCard from "./configuration_forms/sfdx-cert-gen/SFDXCertGenTaskTypeSummaryCard";
+import ECSCreationTaskTypeSummaryCard from "./configuration_forms/ecs-cluster-creation/ECSCreationTaskTypeSummaryCard";
+import ec2ClusterCreationTaskConfigurationMetadata
+  from "./configuration_forms/ecs-cluster-creation/ecs-creation-git-task-configuration";
+
+
 function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -68,7 +73,14 @@ function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, load
             gitTaskConfigurationData={wrapGitTaskType(sfdxCertGenTaskConfigurationMetadata)}
             gitTasksData={gitTasksData}
           />
-        );    
+        );
+      case "ecs_cluster_creation":
+        return (
+          <ECSCreationTaskTypeSummaryCard
+            gitTaskConfigurationData={wrapGitTaskType(ec2ClusterCreationTaskConfigurationMetadata)}
+            gitTasksData={gitTasksData}
+          />
+        );
       default:
         return (<div>No type associated with this Task</div>);
     }
