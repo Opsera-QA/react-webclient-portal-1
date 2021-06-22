@@ -13,11 +13,11 @@ function AzureDevopsToolSelectInput({ fieldName, dataObject, setDataObject, disa
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [azureDevopsList, setAzureDevopsList] = useState([]);
-  const [isAzureDevopsSearching, setIsAzureDevopsSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select an Azure Devops token");
+  const [placeholderText, setPlaceholderText] = useState("Select an Azure Devops token");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -27,6 +27,8 @@ function AzureDevopsToolSelectInput({ fieldName, dataObject, setDataObject, disa
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
+
+    setErrorMessage("");
 
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
@@ -47,8 +49,9 @@ function AzureDevopsToolSelectInput({ fieldName, dataObject, setDataObject, disa
     }
     catch (error) {
       if (isMounted?.current === true) {
-        console.error(error);
-        toastContext.showLoadingErrorDialog(error);
+        setPlaceholderText("Could not pull Azure DevOps Tools");
+        setErrorMessage(`An Error Occurred Pulling Azure DevOps Tools: ${error}`);
+        console.error(error);  
       }
     }
     finally {
@@ -69,57 +72,45 @@ function AzureDevopsToolSelectInput({ fieldName, dataObject, setDataObject, disa
 
 
   const fetchAzureDevopsDetails = async (cancelSource = cancelTokenSource) => {
-    setIsAzureDevopsSearching(true);
+    setIsLoading(true);
     try {
-      const results = await PipelineActions.getToolsListV2(getAccessToken, cancelSource, "azure-devops" );
-      const resultsArray = results?.data;
-      const filteredList = resultsArray.filter((el) => el.configuration !== undefined);
-      
-      const newDevOpsToolList = filteredList ? filteredList.map(tool => {
-        return {
-          accounts: tool.accounts,
-          configuration: tool.configuration,
-          id: tool._id,
-          jobs: tool.jobs,
-          name: tool.name,
-        };
-      }) : undefined; 
+      const results = await PipelineActions.getToolsListV2(getAccessToken, cancelSource, "azure-devops");
+      const azureToolsArray = results?.data?.filter((el) => el.configuration !== undefined);
 
-      if (newDevOpsToolList) {
-        setAzureDevopsList(newDevOpsToolList);
+      if (azureToolsArray && Array.isArray(azureToolsArray)) {
+        setAzureDevopsList(azureToolsArray);
       }
+
     } catch(error) {
-      setPlaceholder("No Azure Devops Tools Found");
       console.error(error);
-      toastContext.showServiceUnavailableDialog();
+      toastContext.showLoadingErrorDialog(error);
     } finally {
-      setIsAzureDevopsSearching(false);
+      setIsLoading(false);
     }
   };
 
-  const handleDTOChange = async (fieldName, value) => {
-    if (fieldName === "toolConfigId") {
-      let newDataObject = dataObject;
-      newDataObject.setData("toolConfigId", value.id);
-      newDataObject.setData("accessToken", value.configuration.accessToken);
-      setDataObject({ ...newDataObject });
-    }
-  };
+  const setDataFunction = async (fieldName, newAzureTool) => {
+    let newDataObject = dataObject;
+    newDataObject.setData("toolConfigId", newAzureTool?._id);
+    newDataObject.setData("accessToken", newAzureTool?.configuration?.accessToken);
+    setDataObject({ ...newDataObject });
+};
 
 
   return (
     <div>
       <SelectInputBase
-        setDataFunction={handleDTOChange}
+        setDataFunction={setDataFunction}
         fieldName={fieldName}
         dataObject={dataObject}
         setDataObject={setDataObject}
-        selectOptions={azureDevopsList ? azureDevopsList : []}
-        busy={isAzureDevopsSearching}
+        selectOptions={azureDevopsList}
+        busy={isLoading}
         valueField={valueField}
         textField={textField}
-        placeholderText={placeholder}
-        disabled={disabled || isLoading || (!isLoading && (azureDevopsList == null || azureDevopsList.length === 0))}
+        placeholderText={placeholderText}
+        errorMessage={errorMessage}
+        disabled={disabled || isLoading}
       />
       <small className="text-muted ml-3">
         {getInfoText()}
@@ -139,7 +130,7 @@ AzureDevopsToolSelectInput.propTypes = {
 };
 
 AzureDevopsToolSelectInput.defaultProps = {
-  valueField: "id",
+  valueField: "_id",
   textField: "name"
 };
 
