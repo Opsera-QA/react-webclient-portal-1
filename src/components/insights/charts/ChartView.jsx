@@ -53,6 +53,7 @@ import SonarRatings from "./sonar/SonarRatings";
 import SonarBugsMetricScorecard from "./sonar/table/bugs-scorecard/SonarBugsMetricScorecard";
 import SonarCodeSmellsMetricScorecard from "./sonar/table/codesmells-scorecard/SonarCodeSmellsMetricScorecard";
 import SonarVulnerabilitiesMetricScorecard from "./sonar/table/vulnerabilities-scorecard/SonarVulnerabilitiesMetricScorecard";
+import SonarReliabilityRemediationEffortAggByTimetLineChart from "./sonar/line_chart/reliability_remediation_effort_aggregation_by_time/SonarReliabilityRemediationEffortAggBytimeLineChart";
 
 // Jmeter KPIs
 import JmeterHitsLineChart from "./jmeter/line_chart/hits/JmeterHitsLineChart";
@@ -121,7 +122,6 @@ import CummulativeOpenDefectsPieChart from "components/insights/charts/qa_metric
 import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieChart";
 import AdoptionPercentagePieChart from "./qa_metrics/AdoptionPercentagePieChart";
 import AutomatedTestResultsPieChart from "./qa_metrics/AutomatedTestResultsPieChart";
-
 
 // SFDC KPIs
 import SFDCBackups from "components/insights/charts/sfdc/SFDCBackups";
@@ -563,6 +563,19 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
+      case "sonar-reliability-remediation-agg-by-time":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <SonarReliabilityRemediationEffortAggByTimetLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+
       case "sonar-vulnerabilities-by-project":
         return (
           <Col xl={6} md={12} className="p-2">
