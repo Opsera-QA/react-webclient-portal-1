@@ -10,6 +10,8 @@ import {
   kpiJenkinsJobUrlFilterMetadata,
   kpiJenkinsBuildNumberFilterMetadata,
   kpiJiraIssueTypeFilterMetadata,
+  kpiJiraIssueComponentsFilterMetadata,
+  kpiJiraIssueLabelsFilterMetadata,
   kpiJiraIssueStartStatusFilterMetadata,
   kpiJiraIssueDoneStatusFilterMetadata,
   kpiSonarProjectKeyFilterMetadata,
@@ -54,6 +56,12 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
   );
   const [kpiJiraIssueTypeFilter, setKpiJiraIssueTypeFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "jira-issue-type", kpiJiraIssueTypeFilterMetadata)
+  );
+  const [kpiJiraIssueComponentsFilter, setKpiJiraIssueComponentsFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "jira-issue-components", kpiJiraIssueComponentsFilterMetadata)
+  );
+  const [kpiJiraIssueLabelsFilter, setKpiJiraIssueLabelsFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "jira-issue-labels", kpiJiraIssueLabelsFilterMetadata)
   );
   const [kpiJiraIssueStartStatusFilter, setKpiJiraIssueStartStatusFilter] = useState(
     modelHelpers.getDashboardFilterModel(
@@ -254,6 +262,28 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
             />
           </div>
         );
+      case "jira-issue-components":
+        return (
+          <div>
+            <MultiTextInputBase
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiJiraIssueComponentsFilter}
+              dataObject={kpiJiraIssueComponentsFilter}
+            />
+          </div>
+        );
+      case "jira-issue-labels":
+        return (
+          <div>
+            <MultiTextInputBase
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiJiraIssueLabelsFilter}
+              dataObject={kpiJiraIssueLabelsFilter}
+            />
+          </div>
+        );
       case "jira-issue-start-status":
         return (
           <div>
@@ -420,6 +450,24 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-type")
       ].value = kpiJiraIssueTypeFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-components")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-components")
+      ].value = kpiJiraIssueComponentsFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-labels")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-labels")
+      ].value = kpiJiraIssueLabelsFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[
