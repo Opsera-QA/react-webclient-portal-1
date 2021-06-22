@@ -122,6 +122,7 @@ import CummulativeOpenDefectsPieChart from "components/insights/charts/qa_metric
 import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieChart";
 import AdoptionPercentagePieChart from "./qa_metrics/AdoptionPercentagePieChart";
 import AutomatedTestResultsPieChart from "./qa_metrics/AutomatedTestResultsPieChart";
+import SFDCManualTestResultsPieChart from "./qa_metrics/SFDCManualTestResultsPieChart";
 
 // SFDC KPIs
 import SFDCBackups from "components/insights/charts/sfdc/SFDCBackups";
@@ -1259,6 +1260,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col md={12} className="p-2">
             <AutomatedTestResultsPieChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sfdc-manual-test":
+        return (
+          <Col md={12} className="p-2">
+            <SFDCManualTestResultsPieChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
