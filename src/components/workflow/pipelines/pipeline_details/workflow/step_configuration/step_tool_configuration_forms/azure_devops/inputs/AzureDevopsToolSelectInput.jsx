@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState, useRef} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
@@ -6,7 +6,8 @@ import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
 import PipelineActions from "../../../../../../../../workflow/pipeline-actions";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faExclamationCircle, faTools } from "@fortawesome/free-solid-svg-icons";
+import { faTools } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 function AzureDevopsToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool_prop}) {
   const toastContext = useContext(DialogToastContext);
@@ -15,19 +16,40 @@ function AzureDevopsToolSelectInput({ fieldName, dataObject, setDataObject, disa
   const [isAzureDevopsSearching, setIsAzureDevopsSearching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [placeholder, setPlaceholder] = useState("Select an Azure Devops token");
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
 
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await fetchAzureDevopsDetails();
+      await fetchAzureDevopsDetails(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
     finally {
       setIsLoading(false);
@@ -46,14 +68,25 @@ function AzureDevopsToolSelectInput({ fieldName, dataObject, setDataObject, disa
   };
 
 
-  const fetchAzureDevopsDetails = async () => {
+  const fetchAzureDevopsDetails = async (cancelSource = cancelTokenSource) => {
     setIsAzureDevopsSearching(true);
     try {
-      let results = await PipelineActions.getToolsList("azure-devops", getAccessToken);
+      const results = await PipelineActions.getToolsListV2(getAccessToken, cancelSource, "azure-devops" );
+      const resultsArray = results?.data;
+      const filteredList = resultsArray.filter((el) => el.configuration !== undefined);
+      
+      const newDevOpsToolList = filteredList ? filteredList.map(tool => {
+        return {
+          accounts: tool.accounts,
+          configuration: tool.configuration,
+          id: tool._id,
+          jobs: tool.jobs,
+          name: tool.name,
+        };
+      }) : undefined; 
 
-      const filteredList = results.filter((el) => el.configuration !== undefined);
-      if (filteredList) {
-        setAzureDevopsList(filteredList);
+      if (newDevOpsToolList) {
+        setAzureDevopsList(newDevOpsToolList);
       }
     } catch(error) {
       setPlaceholder("No Azure Devops Tools Found");
@@ -70,7 +103,6 @@ function AzureDevopsToolSelectInput({ fieldName, dataObject, setDataObject, disa
       newDataObject.setData("toolConfigId", value.id);
       newDataObject.setData("accessToken", value.configuration.accessToken);
       setDataObject({ ...newDataObject });
-      return;
     }
   };
 
