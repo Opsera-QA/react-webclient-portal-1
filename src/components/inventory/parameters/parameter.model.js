@@ -2,11 +2,13 @@ import ModelBase, {DataState} from "core/data_model/model.base";
 import parametersActions from "components/inventory/parameters/parameters-actions";
 
 export class ParameterModel extends ModelBase {
-  constructor(data, metaData, newModel, getAccessToken, cancelTokenSource, loadData) {
+  constructor(data, metaData, newModel, getAccessToken, cancelTokenSource, loadData, canUpdate = false, canDelete = false) {
     super(data, metaData, newModel);
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;
     this.loadData = loadData;
+    this.updateAllowed = canUpdate;
+    this.deleteAllowed = canDelete;
   }
 
   createModel = async () => {

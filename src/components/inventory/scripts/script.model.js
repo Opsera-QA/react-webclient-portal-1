@@ -2,11 +2,14 @@ import ModelBase, {DataState} from "core/data_model/model.base";
 import scriptsActions from "components/inventory/scripts/scripts-actions";
 
 export class ScriptModel extends ModelBase {
-  constructor(data, metaData, newModel, getAccessToken, cancelTokenSource, loadData) {
+  constructor(data, metaData, newModel, getAccessToken, cancelTokenSource, loadData, canUpdate = false, canDelete = false) {
     super(data, metaData, newModel);
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;
     this.loadData = loadData;
+    this.scriptPulled = false;
+    this.updateAllowed = canUpdate;
+    this.deleteAllowed = canDelete;
   }
 
   createModel = async () => {
@@ -25,17 +28,21 @@ export class ScriptModel extends ModelBase {
     return response;
   };
 
-  getValueFromVault = async (fieldName = "value") => {
-    const response = await scriptsActions.getValueFromVault(this.getAccessToken, this.cancelTokenSource, this.getData("_id"));
+  pullScriptFromDb = async () => {
+    const response = await scriptsActions.getScriptValue(this.getAccessToken, this.cancelTokenSource, this.getData("_id"));
     const value = response?.data?.data;
+    this.scriptPulled = true;
 
     if (value) {
-      this.setData(fieldName, value, false);
+      this.setData("value", value, false);
     }
 
     return value;
   };
 
+  hasScriptBeenPulled = () => {
+    return this.scriptPulled === true;
+  }
 
   getNewInstance = (newData = this.getNewObjectFields()) => {
     return new ScriptModel({...newData}, this.metaData, this.newModel, this.setStateFunction, this.getAccessToken, this.cancelTokenSource, this.loadData);

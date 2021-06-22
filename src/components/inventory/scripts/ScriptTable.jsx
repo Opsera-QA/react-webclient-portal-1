@@ -69,7 +69,6 @@ function ScriptTable({ data, scriptMetadata, setScriptData, scriptData, loadData
         isMounted={isMounted}
         getAccessToken={getAccessToken}
         cancelTokenSource={cancelTokenSource}
-        scriptRoleDefinitions={scriptRoleDefinitions}
       />
     );
   };
