@@ -53,7 +53,6 @@ import SonarRatings from "./sonar/SonarRatings";
 import SonarBugsMetricScorecard from "./sonar/table/bugs-scorecard/SonarBugsMetricScorecard";
 import SonarCodeSmellsMetricScorecard from "./sonar/table/codesmells-scorecard/SonarCodeSmellsMetricScorecard";
 import SonarVulnerabilitiesMetricScorecard from "./sonar/table/vulnerabilities-scorecard/SonarVulnerabilitiesMetricScorecard";
-import SonarReliabilityRemediationEffortAggByTimetLineChart from "./sonar/line_chart/reliability_remediation_effort_aggregation_by_time/SonarReliabilityRemediationEffortAggBytimeLineChart";
 
 // Jmeter KPIs
 import JmeterHitsLineChart from "./jmeter/line_chart/hits/JmeterHitsLineChart";
@@ -120,9 +119,8 @@ import ManualQaTestPieChart from "components/insights/charts/qa_metrics/ManualQa
 import FirstPassYieldPieChart from "components/insights/charts/qa_metrics/FirstPassYieldPieChart";
 import CummulativeOpenDefectsPieChart from "components/insights/charts/qa_metrics/CummulativeOpenDefectsPieChart";
 import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieChart";
-import AdoptionPercentagePieChart from "./qa_metrics/AdoptionPercentagePieChart";
+import AdoptionTestPercentagePieChart from "./qa_metrics/AdoptionTestPercentagePieChart";
 import AutomatedTestResultsPieChart from "./qa_metrics/AutomatedTestResultsPieChart";
-import SFDCManualTestResultsPieChart from "./qa_metrics/SFDCManualTestResultsPieChart";
 
 // SFDC KPIs
 import SFDCBackups from "components/insights/charts/sfdc/SFDCBackups";
@@ -564,19 +562,6 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
             />
           </Col>
         );
-      case "sonar-reliability-remediation-agg-by-time":
-        return (
-          <Col xl={6} md={12} className="p-2">
-            <SonarReliabilityRemediationEffortAggByTimetLineChart
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
-        );
-
       case "sonar-vulnerabilities-by-project":
         return (
           <Col xl={6} md={12} className="p-2">
@@ -1247,7 +1232,7 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
       case "adoption-percentage":
         return (
           <Col md={12} className="p-2">
-            <AdoptionPercentagePieChart
+            <AdoptionTestPercentagePieChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1260,18 +1245,6 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col md={12} className="p-2">
             <AutomatedTestResultsPieChart
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
-        );
-      case "sfdc-manual-test":
-        return (
-          <Col md={12} className="p-2">
-            <SFDCManualTestResultsPieChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
