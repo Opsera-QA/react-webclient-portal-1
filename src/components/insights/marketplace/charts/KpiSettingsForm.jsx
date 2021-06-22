@@ -282,6 +282,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
         return (
           <div>
             <SonarProjectsMultiSelectInput
+              placeholderText={"Select Project(s)"}
               type={"kpi_filter"}
               fieldName={"value"}
               setDataObject={setKpiSonarProjectKeyFilter}
