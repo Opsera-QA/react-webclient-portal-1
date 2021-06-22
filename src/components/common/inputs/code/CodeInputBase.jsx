@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import AceEditor from "react-ace";
 
@@ -14,6 +14,17 @@ import "ace-builds/src-noconflict/mode-python";
 ace.config.set('basePath', 'ace-builds/');
 
 function CodeInputBase({value, inputId, mode, theme, isLoading, disabled, setDataFunction}) {
+  const [script, setScript] = useState("");
+
+  useEffect(() => {
+    setScript(value);
+  }, [value]);
+
+  const handleData = (newValue) => {
+    setScript(newValue);
+    setDataFunction(newValue);
+  };
+
   if (setDataFunction == null) {
     console.log("set data function is null");
     return null;
@@ -25,10 +36,10 @@ function CodeInputBase({value, inputId, mode, theme, isLoading, disabled, setDat
         mode={mode}
         theme={theme}
         readOnly={disabled === true || isLoading === true}
-        onChange={(newValue) => setDataFunction(newValue)}
+        onChange={(newValue) => handleData(newValue)}
         highlightActiveLine={true}
         name={inputId}
-        value={value}
+        value={script}
         editorProps={{$blockScrolling: true}}
         width={"100%"}
       />

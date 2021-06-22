@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {faExclamationTriangle, faFileCode, faFileDownload} from "@fortawesome/pro-light-svg-icons";
 import FieldTitleBar from "components/common/fields/FieldTitleBar";
@@ -26,11 +26,11 @@ function CodeInput({model, setModel, fieldName, mode, className, isLoading, disa
     if (typeof value === "string" && value.length > 1047576) {
       //1,048,576 is 1MB
       const parsedValue = value.substr(0, 1048576);
-      newModel.setTextData(fieldName, parsedValue);
+      newModel.setData(fieldName, parsedValue);
       setErrorMessage("Code Entry is limited to 1,048,576 characters (1MB). Truncating value.");
     }
     else {
-      newModel.setTextData(fieldName, value);
+      newModel.setData(fieldName, value);
       setErrorMessage(newModel.getFieldError(fieldName));
     }
 
