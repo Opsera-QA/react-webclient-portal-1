@@ -2,7 +2,7 @@ import ModelBase, {DataState} from "core/data_model/model.base";
 import scriptsActions from "components/inventory/scripts/scripts-actions";
 
 export class ScriptModel extends ModelBase {
-  constructor(data, metaData, newModel, getAccessToken, cancelTokenSource, loadData, canUpdate = false, canDelete = false) {
+  constructor(data, metaData, newModel, getAccessToken, cancelTokenSource, loadData, canUpdate = false, canDelete = false, setStateFunction) {
     super(data, metaData, newModel);
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;
@@ -10,6 +10,7 @@ export class ScriptModel extends ModelBase {
     this.scriptPulled = false;
     this.updateAllowed = canUpdate;
     this.deleteAllowed = canDelete;
+    this.setStateFunction = setStateFunction;
   }
 
   createModel = async () => {
@@ -45,7 +46,7 @@ export class ScriptModel extends ModelBase {
   }
 
   getNewInstance = (newData = this.getNewObjectFields()) => {
-    return new ScriptModel({...newData}, this.metaData, this.newModel, this.setStateFunction, this.getAccessToken, this.cancelTokenSource, this.loadData);
+    return new ScriptModel({...newData}, this.metaData, this.newModel, this.getAccessToken, this.cancelTokenSource, this.loadData, this.updateAllowed, this.deleteAllowed);
   };
 }
 

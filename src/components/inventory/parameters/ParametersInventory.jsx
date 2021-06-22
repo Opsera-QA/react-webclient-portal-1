@@ -77,9 +77,10 @@ function ParametersInventory({ customerAccessRules, handleTabClick }) {
         let modelWrappedArray = [];
 
         parameters.forEach((parameter) => {
-          const deleteAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "delete_parameter", parameter.owner, parameter.roles, parameterRoleDefinitions);
-          const updateAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "update_parameter", parameter.owner, parameter.roles, parameterRoleDefinitions);
-          let newModel = new ParameterModel({...parameter}, newParameterMetadata, false, getAccessToken, cancelTokenSource, loadData, updateAllowed, deleteAllowed);
+          const deleteAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "delete_parameter", parameter.owner, parameter.roles, roleDefinitions);
+          const updateAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "update_parameter", parameter.owner, parameter.roles, roleDefinitions);
+          const newModel = {...new ParameterModel({...parameter}, newParameterMetadata, false, getAccessToken, cancelTokenSource, loadData, updateAllowed, deleteAllowed)};
+
           modelWrappedArray.push(newModel);
         });
 
