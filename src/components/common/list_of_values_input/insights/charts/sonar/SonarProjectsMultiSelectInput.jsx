@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
@@ -6,6 +6,7 @@ import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInp
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import chartsActions from "components/insights/charts/charts-actions";
+import axios from "axios";
 
 function SonarProjectsMultiSelectInput({
   placeholderText,
@@ -22,21 +23,35 @@ function SonarProjectsMultiSelectInput({
   const { getAccessToken } = useContext(AuthContext);
   const [sonarProjects, setSonarProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const validateAndSetData = (fieldName, value) => {
-    let newDataObject = dataObject;
-    newDataObject.setData(fieldName, value);
-    setDataObject({ ...newDataObject });
-  };
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    setSonarProjects([]);
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadTools();
+      await loadTools(cancelSource);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     } finally {
@@ -44,14 +59,18 @@ function SonarProjectsMultiSelectInput({
     }
   };
 
-  const loadTools = async () => {
+  const loadTools = async (cancelSource = cancelTokenSource) => {
     const response = await chartsActions.parseConfigurationAndGetChartMetrics(
       getAccessToken,
-      undefined,
+      cancelSource,
       "getSonarProjectsList"
     );
-    if (response.data != null) {
-      setSonarProjects(response?.data?.data[0]?.SonarProjectsList?.data);
+
+    if (isMounted?.current === true && response?.data != null) {
+      const sonarProjectList = response?.data?.data[0]?.SonarProjectsList?.data;
+
+      if (Array.isArray(sonarProjectList) && sonarProjectList.length > 0)
+      setSonarProjects(sonarProjectList);
     }
   };
 
@@ -76,7 +95,6 @@ function SonarProjectsMultiSelectInput({
       textField={textField}
       placeholderText={placeholderText}
       disabled={disabled || isLoading}
-      onChange={(newValue) => validateAndSetData(field.id, newValue)}
     />
   );
 }
