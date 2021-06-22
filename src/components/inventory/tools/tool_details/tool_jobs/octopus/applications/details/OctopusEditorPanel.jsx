@@ -30,6 +30,8 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import OctopusThumbprintDisplay from "./OctopusThumbprintDisplay";
 import axios from "axios";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
+import VaultTextInput from "components/common/inputs/text/VaultTextInput";
+import pipelineActions from "components/workflow/pipeline-actions";
 
 function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID, handleClose, type }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -92,8 +94,28 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
     }
   };
 
+  const saveTomcatPasswordToVault = async () => {
+    let newConfiguration = octopusApplicationDataDto.getPersistData();
+    const tomcatManagerPasswordKey = `${newConfiguration.toolId}-${newConfiguration.name.toLowerCase()}${newConfiguration.userName.toLowerCase()}-secretKey`;
+    if (newConfiguration.password != null && typeof(newConfiguration.password) === "string") {
+      const body = { "key": tomcatManagerPasswordKey, "value": newConfiguration.password, "toolId": newConfiguration.toolId };
+      const response = await pipelineActions.saveToolRegistryRecordToVault(body, getAccessToken);
+      newConfiguration.password = response?.status === 200 ? { name: "Vault Secured Key", vaultKey: tomcatManagerPasswordKey } : {};
+      octopusApplicationDataDto.setData("password", newConfiguration.password);
+    }
+  };
+
   const createApplication = async () => {
     try {
+      if(type === "tomcat"){
+        let actions = toolData.getData("actions");
+        let newName = octopusApplicationDataDto.getData("name");
+        if(actions.filter(action => action.name === newName).length > 0){
+          toastContext.showCreateFailureResultDialog(type ? type.charAt(0).toUpperCase() + type.slice(1) : "", "Tomcat Manager Instance Name should be unique. Please with a different name");
+          return;
+        }
+        await saveTomcatPasswordToVault();
+      }
       await OctopusActions.createOctopusApplication(octopusApplicationDataDto, type, getAccessToken);
       toastContext.showCreateSuccessResultDialog(type ? type.charAt(0).toUpperCase() + type.slice(1) : "");
       handleClose();
@@ -103,6 +125,9 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
   };
 
   const updateApplication = async () => {
+    if(type === "tomcat"){        
+      await saveTomcatPasswordToVault();      
+    }
     return await OctopusActions.updateOctopusApplication(octopusApplicationDataDto, type, getAccessToken, appID);
   };
 
@@ -516,8 +541,52 @@ function OctopusApplicationEditorPanel({ octopusApplicationData, toolData, appID
             </Col>
           </Row>
         )}
+        {octopusApplicationDataDto && type && type === "tomcat" && !isLoading && (
+          <Row>
+            <Col lg={12}>
+              <TextInputBase 
+                dataObject={octopusApplicationDataDto} 
+                setDataObject={setOctopusApplicationDataDto} 
+                fieldName={"name"} 
+                disabled={appID} 
+              />              
+            </Col>
+            <Col lg={12}>
+              <SpaceNameSelectInput
+                fieldName={"spaceName"}
+                dataObject={octopusApplicationDataDto}
+                setDataObject={setOctopusApplicationDataDto}
+                disabled={false}
+                tool_prop={octopusApplicationDataDto ? octopusApplicationDataDto.getData("spaceId") : ""}
+              />
+            </Col>
+            <Col lg={12}>
+              <TextInputBase 
+                dataObject={octopusApplicationDataDto} 
+                setDataObject={setOctopusApplicationDataDto} 
+                fieldName={"managerUrl"}
+                disabled={false} 
+              />              
+            </Col>
+            <Col lg={12}>              
+              <TextInputBase 
+                dataObject={octopusApplicationDataDto} 
+                setDataObject={setOctopusApplicationDataDto} 
+                fieldName={"userName"} 
+                disabled={false} 
+              />
+            </Col>
+            <Col lg={12}>              
+              <VaultTextInput 
+                dataObject={octopusApplicationDataDto} 
+                setDataObject={setOctopusApplicationDataDto} 
+                fieldName={"password"}                 
+              />
+            </Col>
+          </Row>
+        )}
         <Row>
-          {appID && octopusApplicationDataDto && octopusApplicationDataDto.getData("id") && (
+          {appID && octopusApplicationDataDto && (octopusApplicationDataDto.getData("id") || type === "tomcat") && (
             <div className="mr-auto ml-2 mt-3 px-3">
               <Button variant="outline-primary" size="sm" onClick={() => setShowDeleteModal(true)}>
                 <FontAwesomeIcon icon={faTrash} className="danger-red" /> Delete{" "}

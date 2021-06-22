@@ -14,7 +14,12 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
   const validateAndSetData = (value) => {
     let newFilterDto = {...filterDto};
     newFilterDto.setData(fieldName, value);
-    setFilterDto({...newFilterDto});
+
+    // TODO: Setting state on filter model should only be handled in the load data function and this should be removed.
+    //  Leaving here for now to prevent unintended side effects
+    if (setFilterDto) {
+      setFilterDto({...newFilterDto});
+    }
   };
 
   const handleSearch = async () => {
@@ -34,7 +39,13 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
 
       setIsSearching(true);
       newFilterDto.setData("currentPage", 1);
-      setFilterDto({...newFilterDto});
+
+      // TODO: Setting state on filter model should only be handled in the load data function and this should be removed.
+      //  Leaving here for now to prevent unintended side effects
+      if (setFilterDto) {
+        setFilterDto({...newFilterDto});
+      }
+
       await loadData(newFilterDto);
     }
     finally {

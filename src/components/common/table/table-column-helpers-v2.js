@@ -42,55 +42,12 @@ export const getTableTextColumn = (field, className, maxWidth = undefined, filte
   };
 };
 
-export const getLimitedTableTextColumn = (field, maxLength, className, autoAdjust = true) => {
-  return {
-    header: getColumnHeader(field),
-    id: getColumnId(field),
-    class: className ? className : undefined,
-    adjust: autoAdjust,
-    Cell: function parseText(row) {
-      const value = row?.value;
-
-      if (value != null) {
-        const truncatedString = truncateString(value, maxLength);
-
-        if (truncatedString !== value) {
-          return (<TooltipWrapper innerText={value}><span>{truncatedString}</span></TooltipWrapper>);
-        }
-
-        return value;
-      }
-
-      return "";
-    },
-  };
-};
-
 export const getEditableTextColumn = (field, maxLength, className, editable = true) => {
   return {
     header: getColumnHeader(field),
     id: getColumnId(field),
     class: className ? className : undefined,
     editable: editable,
-  };
-};
-
-export const getRoleArrayColumn = (field, className) => {
-  return {
-    header: getColumnHeader(field),
-    id: getColumnId(field),
-    Cell: function stringifyArray(row) {
-      const array = row?.value;
-
-      if (Array.isArray(array) && array.length > 0) {
-        return array.map((item, index) => {
-          return (`${item.role}:${item.user}:${item.group}${array.length > index + 1 ? ',' : ''}`);
-        });
-      }
-
-      return "";
-    },
-    class: className ? className : "no-wrap-inline"
   };
 };
 

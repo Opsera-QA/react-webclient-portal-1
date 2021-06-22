@@ -79,7 +79,7 @@ function SelectInputBase(
         busy={busy}
         placeholder={placeholderText}
         onChange={(data) => updateValue(data)}
-        disabled={disabled}
+        disabled={disabled || !Array.isArray(selectOptions) || selectOptions.length === 0}
         onSearch={onSearch}
       />
       <InfoText field={field} errorMessage={errorMessage} />

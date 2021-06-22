@@ -108,7 +108,7 @@ TreeTableBase.propTypes = {
   groupBy: PropTypes.string,
   sort: PropTypes.any,
   handleExpansion: PropTypes.func,
-  tableHeight: PropTypes.string
+  height: PropTypes.string
 };
 
 TreeTableBase.defaultProps = {

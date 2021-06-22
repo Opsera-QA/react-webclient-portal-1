@@ -58,7 +58,7 @@ const OctopusAccountMetadata = {
       id: "id"
     }
 ],
-  newModelBase: {
+  newObjectFields: {
     _id: "",
     type: "account",
     cloudType : "",

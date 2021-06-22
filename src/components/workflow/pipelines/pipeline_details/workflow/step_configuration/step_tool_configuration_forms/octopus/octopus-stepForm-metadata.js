@@ -153,6 +153,49 @@ const octopusStepFormMetadata = {
         id: "lifecycleId",
         isRequired: true
       },
+      {
+        label: "Script Type",
+        id: "scriptSource"
+      },
+      {
+        label: "Script File Name",
+        id: "scriptFileName"
+      },
+      {
+        label: "Script Parameters",
+        id: "scriptParameters"
+      },
+      {
+        label: "Opsera Script Library",
+        id: "scriptId"
+      },
+      {
+        label: "Context Path",
+        id: "contextPath"
+      },
+      {
+        label: "Custom Deployment Scripts",
+        id: "customDeploymentScriptsEnabled"
+      },
+      {
+        label: "Pre-Deployment Script",
+        id: "preDeploymentScriptId"
+      },
+      {
+        label: "Deployment Script",
+        id: "deploymentScriptId"
+      },
+      {
+        label: "Post-Deployment Script",
+        id: "postDeploymentScriptId"
+      },
+      {        
+        id: "tomcatManagerDetails"
+      },
+      {
+        label: "Tomcat Manager",
+        id: "tomcatManagerId"
+      },
     ],
   newObjectFields:
       {
@@ -186,7 +229,18 @@ const octopusStepFormMetadata = {
         applicationPoolName: "",
         protocol: "HTTP",
         port: "80",
-        lifecycleId: ""
+        lifecycleId: "",
+        scriptSource: "",
+        scriptParameters: "",
+        scriptFileName: "",
+        scriptId: "",
+        contextPath: "",
+        customDeploymentScriptsEnabled: false,
+        preDeploymentScriptId: "",
+        deploymentScriptId: "",
+        postDeploymentScriptId: "",
+        tomcatManagerDetails: {},
+        tomcatManagerId: "",
       }
   };
   

@@ -13,7 +13,6 @@ function ValidateProjectButton({ toolDataDto, disable }) {
   const [isTesting, setIsTesting] = useState(false);
   const [successfulValidation, setSuccessfulValidation] = useState(false);
   const [failedConnection, setFailedConnection] = useState(false);
-  console.log(toolDataDto);
 
   const testConnection = async () => {
     try {

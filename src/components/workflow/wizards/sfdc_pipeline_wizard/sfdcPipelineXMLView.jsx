@@ -35,12 +35,13 @@ const SfdcPipelineXMLView = ({
   gitTaskId, 
   closePanel,
   fromSFDC, 
-  fromDestinationSFDC, 
+  fromDestinationSFDC,
 }) => {
   const { getAccessToken } = useContext(AuthContext);
   const [save, setSave] = useState(false);
   const toastContext = useContext(DialogToastContext);
   const [loading, setLoading] = useState(false);
+  const [rollBack, setRollBack] = useState(false);
   const [activeTab, setActiveTab] = useState("pxml");
 
   useEffect(() => {
@@ -57,10 +58,11 @@ const SfdcPipelineXMLView = ({
         const response = await sfdcPipelineActions.getListFromPipelineStorage(postBody, "", getAccessToken);
         
         if(!response.data.data || !response.data.data.packageXml) {
-          toastContext.showInlineErrorMessage("something went wrong! not a valid object");
+          toastContext.showInlineErrorMessage("something went wrong while generating XML.");
         }
         setXML(response.data.data.packageXml);
         setDestructiveXml(response.data.data.destructiveXml ? response.data.data.destructiveXml : "");
+        setRollBack(response?.data?.data?.selectedFileList  && response?.data?.data?.selectedFileList.length === 0 ? true : false);
       } catch (error) {
         console.error("Error getting API Data: ", error);
         toastContext.showInlineErrorMessage(error);
@@ -90,6 +92,7 @@ const SfdcPipelineXMLView = ({
           loading={loading}
           save={save}
           xml={xml}
+          rollBack={rollBack}
           destructiveXml={destructiveXml}
         />
       );
@@ -109,13 +112,13 @@ const SfdcPipelineXMLView = ({
   return (
     <div>
       <div className="flex-container">
-        { unitTestSteps.length > 0 && <CustomTabContainer>
+        { unitTestSteps.length > 0 && <CustomTabContainer>            
           <CustomTab activeTab={activeTab} tabText={"Package XML"} handleTabClick={handleTabClick} tabName={"pxml"}
                     toolTipText={"Package XML"} icon={faCheck} />
           <CustomTab activeTab={activeTab} tabText={"Unit Test Classes"} handleTabClick={handleTabClick} tabName={"utc"}
                     toolTipText={"Unit Test Classes"} icon={faCode} />
         </CustomTabContainer>}
-        {getView()}
+        {getView()}        
         <div className="flex-container-bottom pr-2 mt-3 mb-2 text-right">
           <Button
             variant="secondary"
@@ -145,7 +148,7 @@ const SfdcPipelineXMLView = ({
               setSave(true);
               handleApproveChanges();
             }}
-            disabled={save}
+            disabled={save || (rollBack && destructiveXml.length === 0) }
           >
             {save ? (
               <FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth />
