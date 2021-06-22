@@ -79,8 +79,8 @@ function ScriptsInventory({ customerAccessRules, handleTabClick }) {
         scripts.forEach((script) => {
           const deleteAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "delete_script", script.owner, script.roles, newScriptRoleDefinitions);
           const updateAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "update_script", script.owner, script.roles, newScriptRoleDefinitions);
+          const newModel = {...new ScriptModel({...script}, newScriptMetadata, false, getAccessToken, cancelTokenSource, loadData, updateAllowed, deleteAllowed)};
 
-          let newModel = {...new ScriptModel({...script}, newScriptMetadata, false, getAccessToken, cancelTokenSource, loadData, updateAllowed, deleteAllowed)};
           modelWrappedArray.push(newModel);
         });
         setScriptList([...modelWrappedArray]);
