@@ -7,7 +7,7 @@ import OctopusStepActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/octopus/octopus-step-actions";
 import {AuthContext} from "contexts/AuthContext";
 
-function OctopusDeploymentTypeSelectInput({ fieldName, dataObject, setDataObject, setDataFunction, disabled, textField, valueField, className}) {
+function OctopusDeploymentTypeSelectInput({ fieldName, dataObject, setDataObject, setDataFunction, disabled, textField, valueField, className, tool_prop}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [deploymentType, setOctopusDeploymentTypes] = useState([]);
@@ -36,7 +36,7 @@ function OctopusDeploymentTypeSelectInput({ fieldName, dataObject, setDataObject
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [tool_prop]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -59,7 +59,7 @@ function OctopusDeploymentTypeSelectInput({ fieldName, dataObject, setDataObject
 
   const loadTypes = async (cancelSource = cancelTokenSource) => {
     const response = await OctopusStepActions.getDeploymentTypesV2(getAccessToken, cancelSource, dataObject.getData("octopusToolId"), dataObject.getData("spaceId"), dataObject.getData("octopusPlatformType"));
-    const data = response?.data;
+    const data = response?.data?.data;
 
     if (isMounted?.current === true && Array.isArray(data)) {
       setOctopusDeploymentTypes(data);
@@ -91,7 +91,8 @@ OctopusDeploymentTypeSelectInput.propTypes = {
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  className: PropTypes.string
+  className: PropTypes.string,
+  tool_prop: PropTypes.string
 };
 
 OctopusDeploymentTypeSelectInput.defaultProps = {
