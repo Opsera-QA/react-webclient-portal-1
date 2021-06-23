@@ -60,6 +60,7 @@ function AzureDevopsStepConfiguration({ stepTool, closeEditorPanel, parentCallba
       <AzureDevopsPipelineSelectInput
         organization={azureDevopsModel.getData("organizationName")}
         projectName={azureDevopsModel.getData("projectName")}
+        toolConfigId={azureDevopsModel.getData("toolConfigId")}
         model={azureDevopsModel}
         setModel={setAzureDevopsModel}
         fieldName={"azurePipelineId"}

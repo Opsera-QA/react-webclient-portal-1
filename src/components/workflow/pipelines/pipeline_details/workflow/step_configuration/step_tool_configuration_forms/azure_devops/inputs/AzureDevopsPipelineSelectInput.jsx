@@ -7,7 +7,7 @@ import {AuthContext} from "contexts/AuthContext";
 import azurePipelineActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_devops/azure-pipeline-actions";
 
-function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, organization, projectName, textField, valueField}) {
+function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, organization, projectName, textField, valueField, toolConfigId}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken, getUserRecord } = useContext(AuthContext);
   const [azureDevopsList, setAzureDevopsList] = useState([]);
@@ -40,7 +40,7 @@ function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, 
       source.cancel();
       isMounted.current = false;
     };
-  }, [organization, projectName]);
+  }, [projectName, organization, toolConfigId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -62,7 +62,7 @@ function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, 
   const loadAzurePipelines = async (cancelSource = cancelTokenSource) => {
     const vaultAccessToken = model.getData("accessToken");
     const vaultKey = vaultAccessToken?.vaultKey;
-    const vaultResults = await azurePipelineActions.getAzurePersonalAccessToken(getAccessToken, cancelTokenSource, vaultKey);
+    const vaultResults = await azurePipelineActions.getAzurePersonalAccessToken(getAccessToken, cancelSource, vaultKey);
     const secureKey = vaultResults?.data;
     const user = await getUserRecord();
     const result = await azurePipelineActions.getAzurePipelines(getAccessToken, cancelSource, model, secureKey, user._id);
@@ -79,8 +79,10 @@ function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, 
     }
 
     if (Array.isArray(azurePipelinesArray) && azurePipelinesArray.length > 0) {
+      setErrorMessage("");
       setAzureDevopsList(azurePipelinesArray);
     } else {
+      model.setData("azurePipelineId", "");
       setErrorMessage("No Azure Pipelines Found");
     }
   };
@@ -118,7 +120,8 @@ AzureDevopsPipelineSelectInput.propTypes = {
   textField: PropTypes.string,
   valueField: PropTypes.string,
   organization: PropTypes.string,
-  projectName: PropTypes.string
+  projectName: PropTypes.string,
+  toolConfigId: PropTypes.string
 };
 
 AzureDevopsPipelineSelectInput.defaultProps = {
