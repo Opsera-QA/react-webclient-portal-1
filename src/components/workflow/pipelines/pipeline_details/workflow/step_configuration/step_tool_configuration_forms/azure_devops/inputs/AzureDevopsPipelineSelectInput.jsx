@@ -27,7 +27,6 @@ function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, 
     isMounted.current = true;
 
     setAzureDevopsList([]);
-    setErrorMessage("");
 
     if (organization != null && organization !== "" && projectName != null && projectName !== "") {
       loadData(source).catch((error) => {
@@ -80,6 +79,7 @@ function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, 
     }
 
     if (Array.isArray(azurePipelinesArray) && azurePipelinesArray.length > 0) {
+      setErrorMessage("");
       setAzureDevopsList(azurePipelinesArray);
     } else {
       model.setData("azurePipelineId", "");
