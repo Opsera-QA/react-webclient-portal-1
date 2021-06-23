@@ -154,6 +154,11 @@ const octopusStepFormMetadata = {
         isRequired: true
       },
       {
+        label: "Bindings",
+        id: "bindings",
+        maxItems: 15,
+      },
+      {
         label: "Script Type",
         id: "scriptSource"
       },
@@ -230,6 +235,7 @@ const octopusStepFormMetadata = {
         protocol: "HTTP",
         port: "80",
         lifecycleId: "",
+        bindings: "",
         scriptSource: "",
         scriptParameters: "",
         scriptFileName: "",

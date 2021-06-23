@@ -463,7 +463,12 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                   dataObject={octopusStepConfigurationDto}
                   fieldName={"applicationPoolName"}
                 />
-                <OctopusProtocolInput 
+                <OctopusMultiProtocolInput
+                  dataObject={octopusStepConfigurationDto}
+                  setDataObject={setOctopusStepConfigurationDataDto}
+                  fieldName={"bindings"}
+                />
+                {/* <OctopusProtocolInput 
                   dataObject={octopusStepConfigurationDto}
                   setDataObject={setOctopusStepConfigurationDataDto}
                   fieldName={"protocol"}
@@ -472,7 +477,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
                   setDataObject={setOctopusStepConfigurationDataDto}
                   dataObject={octopusStepConfigurationDto}
                   fieldName={"port"}
-                />
+                /> */}
                 <OctopusDeploymentTypeInputSelect
                   fieldName={"octopusDeploymentType"}
                   dataObject={octopusStepConfigurationDto}
