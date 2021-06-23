@@ -9,6 +9,7 @@ import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
 import InsightsPipelineDetailsTable from "components/insights/summary/pipeline_details/InsightsPipelineDetailsTable";
 import PipelinesByProjectTable from "components/insights/summary/PipelinesByProjectTable";
 import PipelinesByProjectDataBlock from "components/insights/summary/pipeline_details/PipelinesByProjectDataBlock";
+import TotalPipelinesPassedDeployment from 'components/insights/summary/pipeline_details/TotalPipelinesPassedDeployment';
 
 function PipelineDetails({ dashboardData }) {
   const [selectedDataBlock, setSelectedDataBlock] = useState("pipelines_by_project");
@@ -57,6 +58,13 @@ function PipelineDetails({ dashboardData }) {
             tableTitle="Pipelines Failing Deployment Step"
           />
         );
+      case "successful_pipelines_deployment":
+        return(
+          <InsightsPipelineDetailsTable
+            data={selectedDataBlockTableData}
+            tableTitle="Successful Pipelines (Deployments)"
+          />
+        );
       default:
         return null;
     }
@@ -90,6 +98,11 @@ function PipelineDetails({ dashboardData }) {
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
         />
+        <TotalPipelinesPassedDeployment
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+        />
         <PipelinesFailedSecurity
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
@@ -105,6 +118,7 @@ function PipelineDetails({ dashboardData }) {
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
         />
+        
       </DataBlockWrapper>
       {getDynamicPanel()}
     </>
