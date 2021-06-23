@@ -31,6 +31,14 @@ function JenkinsRepositorySelectInput({dataObject, setDataObject, disabled}) {
 
     setDataObject({ ...newDataObject });
   };
+  const valid =()=>{
+    return dataObject.data.service && dataObject.data.gitToolId &&
+      !["SFDC VALIDATE PACKAGE XML","SFDC UNIT TESTING","SFDC DEPLOY"].some(item=>item === dataObject.data.jobType) &&
+      (dataObject.data.service === "bitbucket" ? dataObject.data.workspace && dataObject.data.workspace.length > 0 : true ) && 
+      !dataObject.data.isOrgToOrg;
+  };
+  if(!valid()) return null;
+
   return (
      <GitRepositoryInput
        fieldName={"repository"}
@@ -49,7 +57,7 @@ function JenkinsRepositorySelectInput({dataObject, setDataObject, disabled}) {
 JenkinsRepositorySelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  disabled: PropTypes.bool,
+  disabled: PropTypes.bool
 };
 JenkinsRepositorySelectInput.defaultProps = {
   disabled: false,

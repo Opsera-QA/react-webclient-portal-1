@@ -155,6 +155,10 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label:"Configure Branch Name",
       id:"isManualRollBackBranch"
+    },
+    {
+      label:"Jenkins - Job Type",
+      id:"job_type",
     }
   ],
   newModelBase: {
@@ -201,7 +205,8 @@ const jenkinsPipelineStepConfigurationMetadata = {
     gitBranch:"",
     customParameters:[],
     terraformStepId:"",
-    useTerraformOutput: false
+    useTerraformOutput: false,
+    job_type:""
   }
 };
 

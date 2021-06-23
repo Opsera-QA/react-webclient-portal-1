@@ -34,19 +34,15 @@ function JenkinsStepConfiguration({
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [jenkinsStepConfigurationDto, setJenkinsStepConfigurationDto] = useState(undefined);
-  const [jenkinsJobTypeDto, setJenkinsJobTypeDto] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   useEffect(() => {
     isMounted.current = true;
-
-
     loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
     return () => {
       isMounted.current = false;
     };
@@ -60,24 +56,9 @@ function JenkinsStepConfiguration({
         stepTool,
         jenkinsPipelineStepConfigurationMetadata
       );
+      jenkinsConfigurationData.setData('job_type',job_type);
 
       setJenkinsStepConfigurationDto(jenkinsConfigurationData);
-
-      // TODO: This should be metadata
-        setJenkinsJobTypeDto(
-          new Model(
-            { job_type: job_type ? job_type : '' },
-            {
-              fields: [
-                {
-                  label: "Jenkins - Job Type",
-                  id: "job_type",
-                },
-              ],
-            },
-            false
-          )
-        );
 
       if (threshold) {
         setThresholdType(threshold?.type);
@@ -109,15 +90,14 @@ function JenkinsStepConfiguration({
           stepId: jenkinsStepConfigurationDto.getData("stepIdXML"),
         },
       };
-      console.log("createJobPostBody: ", createJobPostBody);
-
+      
       const toolConfiguration = {
         configuration: jenkinsStepConfigurationDto.getPersistData(),
         threshold: {
           type: thresholdType,
           value: thresholdVal,
         },
-        job_type: jenkinsJobTypeDto.getData("job_type"),
+        job_type: jenkinsStepConfigurationDto.getData("job_type"),
       };
       console.log("item: ", toolConfiguration);
 
@@ -130,7 +110,7 @@ function JenkinsStepConfiguration({
   }
 
   const loadSfdcConfigurationPanel = () => {
-    const jobType = jenkinsJobTypeDto?.getData("job_type");
+    const jobType = jenkinsStepConfigurationDto?.getData("job_type");
     const toolJobType = jenkinsStepConfigurationDto?.getData("toolJobType");
       if ((jobType  && (["sfdc-ant-profile", "sfdc-ant"]).some(item=>item === jobType ? jobType :"")) || 
           (toolJobType  && toolJobType.some(item=>item==="SFDC"))) {
@@ -144,7 +124,7 @@ function JenkinsStepConfiguration({
   };
 
   const getJobForm = () => {
-    if (jenkinsJobTypeDto?.getData("job_type") === "job") {
+    if (jenkinsStepConfigurationDto?.getData("job_type") === "job") {
       return (
         <div className={"mb-3"}>
           <TextInputBase
@@ -160,7 +140,7 @@ function JenkinsStepConfiguration({
       <div>
         <JenkinsToolJobIdSelectInput
           jenkinsList={jenkinsList}
-          jobType={jenkinsJobTypeDto?.getData("job_type")}
+          
           dataObject={jenkinsStepConfigurationDto}
           setDataObject={setJenkinsStepConfigurationDto}
           toolConfigId={jenkinsStepConfigurationDto?.getData("toolConfigId")}
@@ -175,14 +155,13 @@ function JenkinsStepConfiguration({
         <JenkinsWorkspaceProjectSelectInput
           dataObject={jenkinsStepConfigurationDto}
           setDataObject={setJenkinsStepConfigurationDto}
-          service={jenkinsStepConfigurationDto.getData("service")}
-          gitToolId={jenkinsStepConfigurationDto.getData("gitToolId")}
         />
         <JenkinsRepositorySelectInput
           dataObject={jenkinsStepConfigurationDto}
           setDataObject={setJenkinsStepConfigurationDto}
           service={jenkinsStepConfigurationDto.getData("service")}
           gitToolId={jenkinsStepConfigurationDto.getData("gitToolId")}
+          
         />
         <JenkinsStepConfigurationBranchEditorPanel dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} jenkinsList={jenkinsList} />
         <JenkinsXmlStepInfoSelectInput dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} plan={plan} stepId={stepId} />
@@ -208,9 +187,7 @@ function JenkinsStepConfiguration({
       />
       <JenkinsJobTypeSelectInput
         dataObject={jenkinsStepConfigurationDto}
-        setDataObject={setJenkinsStepConfigurationDto}
-        jobTypeObject={jenkinsJobTypeDto}
-        setJobTypeObject={setJenkinsJobTypeDto}
+        setDataObject={setJenkinsStepConfigurationDto}   
       />
       {getJobForm()}
     </PipelineStepEditorPanelContainer>

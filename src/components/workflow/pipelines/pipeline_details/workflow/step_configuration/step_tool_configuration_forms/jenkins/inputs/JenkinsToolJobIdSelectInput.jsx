@@ -8,9 +8,10 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { RegistryPopover } from "../utility";
 import { faExclamationCircle, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 
-function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDataObject, disabled, jobType, toolConfigId }) {
+function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDataObject, disabled, toolConfigId }) {
   const [jobsList, setJobsList] = useState([]);
   const toastContext = useContext(DialogToastContext);
+  const job_type = dataObject.data.job_type;
 
   useEffect(()=>{
     setJobsList([]);
@@ -37,21 +38,26 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
     }
   }, [jobsList, dataObject && dataObject.getData("toolJobId")]);
 
+  useEffect(() => {
+    if (dataObject.data.toolJobType && dataObject.data.toolJobType.includes("SFDC")) {
+      let newDataObject = { ...dataObject };
+      newDataObject.setData("buildType", "ant");
+      setDataObject({ ...newDataObject });      
+    }
+  }, [dataObject.data.toolJobType]);
+
   const setDataFunction = (fieldName, selectedOption) => {
     
     let newDataObject = { ...dataObject };
     newDataObject.setData("toolJobId", selectedOption._id);
     newDataObject.setData("toolJobType", selectedOption.type);
-    switch (selectedOption.type[0]) {
-      case "SFDC":
-        newDataObject.setData('jobType',selectedOption.configuration.jobType);
-      break;
-      default:
-        newDataObject.setData('jobType',selectedOption.type[0]);
-        newDataObject.setData("rollbackBranchName", "");
-      break;
-    }
-
+    newDataObject.setData("jobType", selectedOption.type[0]);
+    newDataObject.setData("rollbackBranchName", "");
+    newDataObject.setData("stepIdXML", "");
+    newDataObject.setData("sfdcDestToolId", "");
+    newDataObject.setData("destAccountUsername", "");
+    newDataObject.setData("buildToolVersion", "6.3");
+    newDataObject.setData("buildArgs", {});
     // TODO: There is probably a less confusing way of doing this
     if ("configuration" in selectedOption) {
       const keys = Object.keys(selectedOption.configuration);
@@ -69,7 +75,6 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
     newDataObject.setData("buildArgs", {});
 
     setDataObject({ ...newDataObject });
-    console.log(dataObject.data,'*****123');
   };
 
   const renderNoJobsMessage = () => {
@@ -104,13 +109,12 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
     );
   };
   
-  if (jobType !== "opsera-job") {
+  if (job_type !== "opsera-job") {
     return <></>;
   }
-
   return (
     <>
-      {renderOverlayTrigger()}123
+      {renderOverlayTrigger()}
       <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
@@ -133,7 +137,6 @@ JenkinsToolJobIdSelectInput.propTypes = {
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   jenkinsList: PropTypes.any,
-  jobType: PropTypes.string,
   toolConfigId: PropTypes.string
 };
 
