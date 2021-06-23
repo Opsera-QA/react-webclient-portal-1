@@ -28,7 +28,7 @@ function JenkinsGitCredentialsSelectInput({
         setAccountsList(accounts);
       }
     }
-  },[jenkinsList]);
+  },[jenkinsList,toolConfigId]);
 
   const setDataFunction = (fieldName, value) => {
     let newDataObject = {...dataObject};
@@ -76,32 +76,34 @@ function JenkinsGitCredentialsSelectInput({
   const getNoCredentialsMessage = () => {
     if (accountsList.length === 0) {
       return (
-        <div className="form-text text-muted p-2">
-          <Form.Label className="w-100">Account*</Form.Label>
+        <small className="text-muted p-2">         
           <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
           No Credentials have been created for <span>{dataObject?.getData("jenkinsUrl")}</span>. Please go to
           <Link to="/inventory/tools"> Tool Registry</Link> and add credentials for this Jenkins in order to proceed.
-        </div>
+        </small>
       );
     } 
   };
 
+  
 
-  if(
-    dataObject == null
-    || !dataObject?.getData("jenkinsUrl")
-    || !Array.isArray(jenkinsList) || jenkinsList.length === 0
-    || !dataObject?.getData("jobType") || dataObject?.getData("jobType").length === 0
-    || excludeArr.includes(dataObject?.getData("jobType"))
-    || dataObject?.getData("isOrgToOrg")
-  ){
+  const checkValidity = ()=>{
+    return dataObject !== null
+    && dataObject?.getData("jenkinsUrl")
+    && Array.isArray(jenkinsList) 
+    && jenkinsList.length > 0
+    && dataObject?.getData("jobType") 
+    && dataObject?.getData("jobType").length >= 0
+    && excludeArr.some(item => item!==dataObject?.getData("jobType"))
+    && !dataObject?.getData("isOrgToOrg"); 
+   
+  };
+  if(!checkValidity()){
     return null;
   }
-
     
   return (
-    <>
-      {getNoCredentialsMessage()}
+    <>      
       <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
@@ -112,8 +114,9 @@ function JenkinsGitCredentialsSelectInput({
         valueField="gitCredential"
         textField="gitCredential"
         clearDataFunction={clearDataFunction}
-        disabled={disabled}
+        disabled={disabled || accountsList.length===0}
       />
+      {getNoCredentialsMessage()}
     </>
   );
     

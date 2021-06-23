@@ -6,15 +6,19 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 
-const excludeArr = ["SFDC VALIDATE PACKAGE XML", "SFDC UNIT TESTING", "SFDC DEPLOY"];
 
-function JenkinsWorkspaceProjectSelectInput({ fieldName, dataObject, setDataObject, disabled, service, gitToolId }) {
+
+function JenkinsWorkspaceProjectSelectInput({ fieldName, dataObject, setDataObject, disabled}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [workspacesList, setWorkspacesList] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const service =  dataObject.getData("service");
+  const gitToolId =  dataObject.getData("gitToolId");
+  const jobType =  dataObject.getData("jobType");
+
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -97,12 +101,11 @@ function JenkinsWorkspaceProjectSelectInput({ fieldName, dataObject, setDataObje
   };
 
   const valid = () => {
-    return (
-      service === "bitbucket"
-      && gitToolId
-      && dataObject.getData("jobType") && !excludeArr.includes(dataObject.getData("jobType"))
-      && !dataObject.getData("isOrgToOrg")
-    );
+   return service && service === "bitbucket" &&  gitToolId && 
+   jobType != "SFDC VALIDATE PACKAGE XML" && 
+   jobType != "SFDC UNIT TESTING" && 
+   jobType != "SFDC DEPLOY" 
+   && !dataObject.getData("isOrgToOrg");
   };
 
   if (dataObject == null || !valid()) {
@@ -131,8 +134,6 @@ JenkinsWorkspaceProjectSelectInput.propTypes = {
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
-  service: PropTypes.string,
-  gitToolId: PropTypes.string
 };
 
 JenkinsWorkspaceProjectSelectInput.defaultProps = {

@@ -8,9 +8,10 @@ import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { RegistryPopover } from "../utility";
 import { faExclamationCircle, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
 
-function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDataObject, disabled, jobType, toolConfigId }) {
+function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDataObject, disabled, toolConfigId }) {
   const [jobsList, setJobsList] = useState([]);
   const toastContext = useContext(DialogToastContext);
+  const job_type = dataObject.data.job_type;
 
   useEffect(()=>{
     setJobsList([]);
@@ -37,18 +38,26 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
     }
   }, [jobsList, dataObject && dataObject.getData("toolJobId")]);
 
+  useEffect(() => {
+    if (dataObject.data.toolJobType && dataObject.data.toolJobType.includes("SFDC")) {
+      let newDataObject = { ...dataObject };
+      newDataObject.setData("buildType", "ant");
+      setDataObject({ ...newDataObject });      
+    }
+  }, [dataObject.data.toolJobType]);
+
   const setDataFunction = (fieldName, selectedOption) => {
+    
     let newDataObject = { ...dataObject };
     newDataObject.setData("toolJobId", selectedOption._id);
     newDataObject.setData("toolJobType", selectedOption.type);
-    newDataObject.setData(jobType, selectedOption.type[0]);
+    newDataObject.setData("jobType", selectedOption.type[0]);
     newDataObject.setData("rollbackBranchName", "");
     newDataObject.setData("stepIdXML", "");
     newDataObject.setData("sfdcDestToolId", "");
     newDataObject.setData("destAccountUsername", "");
     newDataObject.setData("buildToolVersion", "6.3");
     newDataObject.setData("buildArgs", {});
-
     // TODO: There is probably a less confusing way of doing this
     if ("configuration" in selectedOption) {
       const keys = Object.keys(selectedOption.configuration);
@@ -58,6 +67,12 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
         }
       });
     }
+    
+    newDataObject.setData("stepIdXML", "");
+    newDataObject.setData("sfdcDestToolId", "");
+    newDataObject.setData("destAccountUsername", "");
+    newDataObject.setData("buildToolVersion", "6.3");
+    newDataObject.setData("buildArgs", {});
 
     setDataObject({ ...newDataObject });
   };
@@ -65,12 +80,12 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
   const renderNoJobsMessage = () => {
     if (jobsList.length === 0) {
       return (
-        <div className="form-text text-muted p-2">
+        <small className="form-text text-muted p-2">
           <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
           No jobs have been created for <span>{dataObject.getData("jenkinsUrl")}</span>. Please go to
           <Link to={"/inventory/tools/details/" + dataObject.getData("toolConfigId")}> Tool Registry</Link> and add
           credentials and register a job for this Jenkins in order to proceed.{" "}
-        </div>
+        </small>
       );
     }
   };
@@ -94,25 +109,24 @@ function JenkinsToolJobIdSelectInput({ fieldName, jenkinsList, dataObject, setDa
     );
   };
   
-  if (jobType !== "opsera-job") {
+  if (job_type !== "opsera-job") {
     return <></>;
   }
-
   return (
     <>
       {renderOverlayTrigger()}
-      {renderNoJobsMessage()}
       <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
         setDataFunction={setDataFunction}
         setDataObject={setDataObject}
-        placeholderText={"Select Job Type"}
+        placeholderText={jobsList.length === 0 ? "No jobs have been created" :"Select Job Type"}
         selectOptions={jobsList}
         valueField="_id"
         textField="name"
-        disabled={disabled}
+        disabled={disabled || jobsList.length === 0 }
       />
+      {renderNoJobsMessage()}
     </>
   );
 }
@@ -123,7 +137,6 @@ JenkinsToolJobIdSelectInput.propTypes = {
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   jenkinsList: PropTypes.any,
-  jobType: PropTypes.string,
   toolConfigId: PropTypes.string
 };
 

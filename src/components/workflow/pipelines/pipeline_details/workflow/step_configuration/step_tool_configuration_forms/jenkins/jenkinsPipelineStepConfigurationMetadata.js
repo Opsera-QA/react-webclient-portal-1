@@ -146,11 +146,19 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Parameters",
       id: "customParameters",
-      maxItems: 15,
+      //maxItems: 15,
     },
     {
       label: "Use Terraform Output",
       id: "useTerraformOutput"
+    },
+    {
+      label:"Configure Branch Name",
+      id:"isManualRollBackBranch"
+    },
+    {
+      label:"Jenkins - Job Type",
+      id:"job_type",
     }
   ],
   newModelBase: {
@@ -197,7 +205,8 @@ const jenkinsPipelineStepConfigurationMetadata = {
     gitBranch:"",
     customParameters:[],
     terraformStepId:"",
-    useTerraformOutput: false
+    useTerraformOutput: false,
+    job_type:""
   }
 };
 

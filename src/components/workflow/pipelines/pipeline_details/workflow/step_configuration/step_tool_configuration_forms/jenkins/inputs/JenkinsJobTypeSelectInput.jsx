@@ -9,14 +9,12 @@ export const JENKINS_JOB_OPTIONS = [
   { value: "sfdc-ant-profile", label: "SFDC Profile Migration" },
 ];
 
-function JenkinsJobTypeSelectInput({ dataObject, setDataObject, jobTypeObject, setJobTypeObject }) {
+function JenkinsJobTypeSelectInput({ dataObject, setDataObject }) {
  
   const setDataFunction = (fieldName, selectedOption) => {
-    let newJobObject = { ...jobTypeObject };
-    newJobObject.setData("job_type", selectedOption.value);
-    setJobTypeObject({ ...newJobObject });
-
     let newDataObject = { ...dataObject };
+    newDataObject.setData("job_type", selectedOption.value);
+    
 
     switch (selectedOption.value) {
       case "sfdc-ant":
@@ -50,7 +48,7 @@ function JenkinsJobTypeSelectInput({ dataObject, setDataObject, jobTypeObject, s
     setDataObject({ ...newDataObject });
   };
   
-  if (jobTypeObject == null) {
+  if (dataObject == null) {
     return <></>;
   }
 
@@ -58,8 +56,8 @@ function JenkinsJobTypeSelectInput({ dataObject, setDataObject, jobTypeObject, s
     <div className={"mb-3"}>
       <SelectInputBase
         fieldName={"job_type"}
-        dataObject={jobTypeObject}
-        setDataObject={setJobTypeObject}
+        dataObject={dataObject}
+        setDataObject={setDataObject}
         setDataFunction={setDataFunction}
         placeholderText={"Select Job Type"}
         selectOptions={JENKINS_JOB_OPTIONS}
@@ -71,8 +69,7 @@ function JenkinsJobTypeSelectInput({ dataObject, setDataObject, jobTypeObject, s
 }
 
 JenkinsJobTypeSelectInput.propTypes = {
-  setJobTypeObject: PropTypes.func,
-  jobTypeObject: PropTypes.object,
+  
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
 };

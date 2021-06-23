@@ -69,7 +69,6 @@ function JenkinsSfdcConfigurationPanel({ dataObject, setDataObject }) {
       }
     }
     catch (error) {
-      console.error(error);
       toastContext.showErrorDialog(error);
     }
     finally {
