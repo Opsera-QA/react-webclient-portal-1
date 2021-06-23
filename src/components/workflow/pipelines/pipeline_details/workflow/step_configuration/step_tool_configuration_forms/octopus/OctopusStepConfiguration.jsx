@@ -29,7 +29,7 @@ import OctopusLifecycleSelectInput from "./input/OctopusLifecycleSelectInput";
 import OctopusScriptTypeSelectInput from "./input/OctopusScriptTypeSelectInput";
 import OctopusScriptTypeDetailsView from "./input/OctopusScriptTypeDetailsView";
 import OctopusDeployToTomcatDetailsView from "./sub-forms/OctopusDeployToTomcatDetailsView";
-
+import OctopusMultiProtocolInput from "./input/OctopusMultiProtocolInput";
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
