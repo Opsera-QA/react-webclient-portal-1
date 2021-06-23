@@ -193,4 +193,9 @@ OctopusStepActions.getLifecycles = async (id, spaceId, getAccessToken, cancelTok
   return [];
 };
 
+OctopusStepActions.getCerts = async (id, spaceId, environmentId, getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/tools/octopus/certificates/${id}/${spaceId}/${environmentId}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 export default OctopusStepActions;
