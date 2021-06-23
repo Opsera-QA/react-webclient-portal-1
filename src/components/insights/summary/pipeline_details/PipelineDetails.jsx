@@ -62,7 +62,7 @@ function PipelineDetails({ dashboardData }) {
         return(
           <InsightsPipelineDetailsTable
             data={selectedDataBlockTableData}
-            tableTitle="successful pipelines deployment"
+            tableTitle="Successful Pipelines (Deployments)"
           />
         );
       default:
