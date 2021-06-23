@@ -69,7 +69,6 @@ function JenkinsSfdcConfigurationPanel({ dataObject, setDataObject }) {
       }
     }
     catch (error) {
-      console.error(error);
       toastContext.showErrorDialog(error);
     }
     finally {
@@ -126,7 +125,6 @@ function JenkinsSfdcConfigurationPanel({ dataObject, setDataObject }) {
   };
 
   const getUnitTestTypeInput = () => {
-    console.log(dataObject?.getData("jobType"),'**********jobType');
     if (dataObject?.getData("sfdcToolId")?.length > 0 && testArr.includes(dataObject?.getData("jobType"))) {
       return (
         <JenkinsSfdcUnitTestTypeSelectInput dataObject={dataObject} setDataObject={setDataObject} />

@@ -50,17 +50,13 @@ function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setD
   };
 
   const valid = () => {
-    // console.log("service : ",dataObject.getData("service"));
-    // console.log("gittoolid : ",dataObject.getData("gitToolId"));
-    // console.log("repoId : ",dataObject.getData("repoId"));
-    // console.log("job type",dataObject.getData("jobType"));
-    // console.log("isorg : ",dataObject.getData("isOrgToOrg"));
     return (
       dataObject.getData("service") &&
       dataObject.getData("gitToolId") &&
       dataObject.getData("repoId") &&     
       excludeArrs.some(item=>item!==dataObject.getData("jobType")) &&
       !dataObject.getData("isOrgToOrg")
+      
     );
   };
 
@@ -101,6 +97,7 @@ function JenkinsStepConfigurationBranchEditorPanel({ fieldName, dataObject, setD
         disabled={disabled}
         setBranchList={setBranchList}
         clearDataFunction={clearDataFunction}
+       visible ={!dataObject.getData("isManualRollBackBranch")}
       />
       <Form.Group controlId="workspaceDeleteFlag">
         <Form.Check

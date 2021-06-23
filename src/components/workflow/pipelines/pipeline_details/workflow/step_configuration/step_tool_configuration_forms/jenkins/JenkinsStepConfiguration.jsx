@@ -77,8 +77,6 @@ function JenkinsStepConfiguration({
 
   const handleCreateAndSave = async () => {
     const toolId = jenkinsStepConfigurationDto.getData("toolConfigId");
-    console.log("saving and creating job for toolID: ", toolId);
-    console.log("step id",stepId);
     if (toolId) {
       // setLoading(true);
 
@@ -99,7 +97,6 @@ function JenkinsStepConfiguration({
         },
         job_type: jenkinsStepConfigurationDto.getData("job_type"),
       };
-      console.log("item: ", toolConfiguration);
 
       await createJob(toolId, toolConfiguration, stepId, createJobPostBody);
     }
