@@ -121,9 +121,9 @@ function SonarReliabilityRemediationEffortAggBytimeLineChart({
 
   const getProjectsFromDate = (date) => {
     let projectsData = insights[0]?.data;
-    if (projectsData.length) {
+    if (projectsData?.length) {
       for (let thisDateObject of projectsData) {
-        if (thisDateObject.id === date) {
+        if (thisDateObject?.id === date) {
           if (thisDateObject?.data) {
             return thisDateObject.data;
           }
