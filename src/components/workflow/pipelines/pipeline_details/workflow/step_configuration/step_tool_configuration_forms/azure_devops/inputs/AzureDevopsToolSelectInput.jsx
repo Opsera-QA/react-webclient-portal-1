@@ -85,6 +85,14 @@ function AzureDevopsToolSelectInput({ fieldName, dataObject, setDataObject, disa
     setDataObject({...newDataObject});
   };
 
+  const clearDataFunction = async () => {
+    let newDataObject = dataObject;
+    newDataObject.setData("toolConfigId", "");
+    newDataObject.setData("azurePipelineId", "");
+    newDataObject.setData("accessToken", "");
+    setDataObject({...newDataObject});
+  };
+
   return (
     <div>
       <SelectInputBase
@@ -96,7 +104,9 @@ function AzureDevopsToolSelectInput({ fieldName, dataObject, setDataObject, disa
         busy={isLoading}
         valueField={valueField}
         textField={textField}
+        requireClearDataConfirmation={true}
         placeholderText={placeholderText}
+        clearDataFunction={clearDataFunction}
         errorMessage={errorMessage}
         disabled={disabled || isLoading}
       />
