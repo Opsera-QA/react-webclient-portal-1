@@ -86,7 +86,7 @@ function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, in
       <Container>
       <Row className="p-3">
         <Col><div className="metric-box p-3 text-center">
-        <div className="box-metric">
+        <div className="box-metric pointer" onClick={() => onRowSelect("vulnerabilities")}>
         {metrics[0].security_rating <= 1 && <div className="green">A</div>}
         {1 < metrics[0].security_rating && metrics[0].security_rating <= 2 && <div className="green">B</div>}
         {2 < metrics[0].security_rating && metrics[0].security_rating <= 3 && <div className="yellow">C</div>}
@@ -96,7 +96,7 @@ function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, in
         <div className="w-100 text-muted mb-1">Security</div>  
       </div></Col>
         <Col><div className="metric-box p-3 text-center">
-        <div className="box-metric">
+        <div className="box-metric pointer" onClick={() => onRowSelect("bugs")}>
         {metrics[0].reliability_rating <= 1 && <div className="green">A</div>}
         {1 < metrics[0].reliability_rating && metrics[0].reliability_rating <= 2 && <div className="green">B</div>}
         {2 < metrics[0].reliability_rating && metrics[0].reliability_rating <= 3 && <div className="yellow">C</div>}

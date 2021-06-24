@@ -13,14 +13,14 @@ import {
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import chartsActions from "components/insights/charts/charts-actions";
-import SonarVulnerabilitiesMetricScorecardMetaData from "components/insights/charts/sonar/table/vulnerabilities-scorecard/SonarVulnerabilitiesMetricScorecardMetaData";
+import SonarDebtRatioMetaData from "components/insights/charts/sonar/sonar_ratings/SonarDebtRatioMetadata";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import { DialogToastContext } from "contexts/DialogToastContext";
 
-function SonarRatingsDebtRatioSummaryPanel({ dashboardData, kpiConfiguration, setActiveTab, currentDate }) {
+function SonarRatingsDebtRatioSummaryPanel({ dashboardData, kpiConfiguration, setActiveTab }) {
   const history = useHistory();
   const toastContext = useContext(DialogToastContext);
-  const fields = SonarVulnerabilitiesMetricScorecardMetaData.fields;
+  const fields = SonarDebtRatioMetaData.fields;
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -30,7 +30,7 @@ function SonarRatingsDebtRatioSummaryPanel({ dashboardData, kpiConfiguration, se
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tableFilterDto, setTableFilterDto] = useState(
-    new Model({ ...genericChartFilterMetadata.newObjectFields }, SonarVulnerabilitiesMetricScorecardMetaData, false)
+    new Model({ ...genericChartFilterMetadata.newObjectFields }, SonarDebtRatioMetaData, false)
   );
 
   useEffect(() => {
@@ -67,19 +67,20 @@ function SonarRatingsDebtRatioSummaryPanel({ dashboardData, kpiConfiguration, se
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "sonarVulnerabilitiesCodeBasedMetricScorecard",
+        "sonarDebtRatioByProject",
         kpiConfiguration,
         dashboardTags,
         filterDto
       );
-      let dataObject = response?.data?.data[0]?.sonarVulnerabilitiesCodeBasedMetricScorecard?.data[0]?.data;
-
+      console.log("response",response);
+      let dataObject = response?.data?.data[0]?.sonarDebtRatioByProject?.data[0].data;
+      console.log("dataobject",dataObject);
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;
         newFilterDto.setData(
           "totalCount",
-          response?.data?.data[0]?.sonarVulnerabilitiesCodeBasedMetricScorecard?.data[0]?.count[0]?.count
+          response?.data?.data[0]?.sonarDebtRatioByProject?.data[0]?.count[0]?.count
         );
         setTableFilterDto({ ...newFilterDto });
       }
@@ -101,8 +102,8 @@ function SonarRatingsDebtRatioSummaryPanel({ dashboardData, kpiConfiguration, se
       getTableTextColumn(getField(fields, "run_count")),
       getLimitedTableTextColumn(getField(fields, "projectName"), 20),
       getLimitedTableTextColumn(getField(fields, "pipelineName"), 20),
-      getTableDateTimeColumn(getField(fields, "timestamp")),
-      getTableTextColumn(getField(fields, "sonarLatestMeasureValue")),
+      getTableDateTimeColumn(getField(fields, "date")),
+      getTableTextColumn(getField(fields, "technical_debt_ratio")),
     ],
     []
   );
@@ -133,8 +134,7 @@ SonarRatingsDebtRatioSummaryPanel.propTypes = {
   chartModel: PropTypes.object,
   setActiveTab: PropTypes.func,
   dashboardData: PropTypes.object,
-  kpiConfiguration: PropTypes.object,
-  currentDate: PropTypes.string
+  kpiConfiguration: PropTypes.object
 };
 
 export default SonarRatingsDebtRatioSummaryPanel;

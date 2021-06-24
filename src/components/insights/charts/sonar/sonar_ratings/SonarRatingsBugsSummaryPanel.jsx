@@ -56,14 +56,14 @@ function SonarRatingsBugsSummaryPanel({ dashboardData, kpiConfiguration, setActi
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const onRowSelect = (rowData) => {
-    toastContext.clearOverlayPanel();
-    history.push(`/blueprint/${rowData.original.pipelineId}/${rowData.original.run_count}`);
-  };
-
-  // const onRowSelect = (grid, row) => {
-  //   toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={row._id.pipelineId} runCount={row.run_count} />);
+  // const onRowSelect = (rowData) => {
+  //   toastContext.clearOverlayPanel();
+  //   history.push(`/blueprint/${rowData.original.pipelineId}/${rowData.original.run_count}`);
   // };
+
+  const onRowSelect = (grid, row) => {
+    toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={row.pipelineId} runCount={row.run_count} />);
+  };
 
   const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
