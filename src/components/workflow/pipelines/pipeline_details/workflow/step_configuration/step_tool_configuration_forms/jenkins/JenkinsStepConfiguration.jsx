@@ -1469,7 +1469,7 @@ function JenkinsStepConfiguration({
                   <Form.Group controlId="dockerName">
                     <Form.Label>Docker Name*</Form.Label>
                     <Form.Control
-                      maxLength="50"
+                      maxLength="256"
                       type="text"
                       placeholder=""
                       value={formData.dockerName || ""}
@@ -1496,7 +1496,7 @@ function JenkinsStepConfiguration({
                   <Form.Group controlId="dockerTag">
                     <Form.Label>Docker Tag*</Form.Label>
                     <Form.Control
-                      maxLength="50"
+                      maxLength="256"
                       type="text"
                       placeholder=""
                       value={formData.dockerTagName || ""}
@@ -1524,7 +1524,7 @@ function JenkinsStepConfiguration({
                   <Form.Group controlId="dockerPath">
                     <Form.Label>Docker File Path</Form.Label>
                     <Form.Control
-                      maxLength="50"
+                      maxLength="256"
                       type="text"
                       placeholder=""
                       value={formData.dockerPath || ""}
@@ -1682,7 +1682,7 @@ function JenkinsStepConfiguration({
                    <Form.Group controlId="inputFilePath">
                       <Form.Label>Script File Path</Form.Label>
                       <Form.Control
-                        maxLength="50"
+                        maxLength="256"
                         type="text"
                         placeholder=""
                         value={formData.inputFilePath || ""}
@@ -1695,7 +1695,7 @@ function JenkinsStepConfiguration({
                     <Form.Group controlId="inputFileName">
                       <Form.Label>Script File Name</Form.Label>
                       <Form.Control
-                        maxLength="50"
+                        maxLength="256"
                         type="text"
                         placeholder=""
                         value={formData.inputFileName || ""}
@@ -1709,7 +1709,7 @@ function JenkinsStepConfiguration({
                     <Form.Group controlId="outputPath">
                       <Form.Label>Output File Path</Form.Label>
                       <Form.Control
-                        maxLength="50"
+                        maxLength="256"
                         type="text"
                         placeholder=""
                         value={formData.outputPath || ""}
@@ -1722,7 +1722,7 @@ function JenkinsStepConfiguration({
                     <Form.Group controlId="outputFileName">
                       <Form.Label>Output File Name</Form.Label>
                       <Form.Control
-                        maxLength="50"
+                        maxLength="256"
                         type="text"
                         placeholder=""
                         value={formData.outputFileName || ""}

@@ -1,3 +1,6 @@
+import regexHelpers from "utils/regexHelpers";
+
+
 const azureDevopsStepFormMetadata = {
   type: "Azure Devops Tool Configuration",
   fields: [
@@ -29,6 +32,7 @@ const azureDevopsStepFormMetadata = {
     {
       label: "Pipeline Version",
       id: "pipelineVersion",
+      regexValidator: regexHelpers.regexTypes.numericalField
     },
   ],
   newObjectFields: {

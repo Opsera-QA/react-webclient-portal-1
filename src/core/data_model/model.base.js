@@ -25,6 +25,8 @@ export class ModelBase {
     this.changeMap = new Map();
     this.initializeObjectProperties({...metaData});
     this.isLoading = false;
+    this.updateAllowed = false;
+    this.deleteAllowed = false;
   }
 
   initializeObjectProperties = (metaData) => {
@@ -105,7 +107,7 @@ export class ModelBase {
   };
 
   getDetailViewLink = () => {
-    console.error("No getDetailViewLink function was wired up");
+    // console.error("No getDetailViewLink function was wired up");
     return null;
   };
 
@@ -439,19 +441,12 @@ export class ModelBase {
     return new ModelBase({...newData}, this.metaData, this.newModel);
   };
 
-  // TODO: Wire up role definitions inside the model itself instead of checking on the components themselves.
-  //  Override these in the extended class and add any other relevant definitions.
-  //  That way it can be recalled anywhere you have the model
-  canAdd = () => {
-    return false;
-  };
-
   canUpdate = () => {
-    return false;
+    return this.updateAllowed === true;
   };
 
   canDelete = () => {
-    return false;
+    return this.deleteAllowed === true;
   };
 }
 

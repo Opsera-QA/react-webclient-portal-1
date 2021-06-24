@@ -53,6 +53,7 @@ import SonarRatings from "./sonar/SonarRatings";
 import SonarBugsMetricScorecard from "./sonar/table/bugs-scorecard/SonarBugsMetricScorecard";
 import SonarCodeSmellsMetricScorecard from "./sonar/table/codesmells-scorecard/SonarCodeSmellsMetricScorecard";
 import SonarVulnerabilitiesMetricScorecard from "./sonar/table/vulnerabilities-scorecard/SonarVulnerabilitiesMetricScorecard";
+import SonarReliabilityRemediationEffortAggByTimetLineChart from "./sonar/line_chart/reliability_remediation_effort_aggregation_by_time/SonarReliabilityRemediationEffortAggBytimeLineChart";
 
 // Jmeter KPIs
 import JmeterHitsLineChart from "./jmeter/line_chart/hits/JmeterHitsLineChart";
@@ -121,6 +122,7 @@ import CummulativeOpenDefectsPieChart from "components/insights/charts/qa_metric
 import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieChart";
 import AdoptionTestPercentagePieChart from "./qa_metrics/AdoptionTestPercentagePieChart";
 import AutomatedTestResultsPieChart from "./qa_metrics/AutomatedTestResultsPieChart";
+import SFDCManualTestResultsPieChart from "./qa_metrics/SFDCManualTestResultsPieChart";
 
 // SFDC KPIs
 import SFDCBackups from "components/insights/charts/sfdc/SFDCBackups";
@@ -554,6 +556,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col xl={6} md={12} className="p-2">
             <SonarReliabilityRemediationEffortByProjectLineChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sonar-reliability-remediation-agg-by-time":
+        return (
+          <Col xl={6} md={12} className="p-2">
+            <SonarReliabilityRemediationEffortAggByTimetLineChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
@@ -1245,6 +1259,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col md={12} className="p-2">
             <AutomatedTestResultsPieChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "sfdc-manual-test":
+        return (
+          <Col md={12} className="p-2">
+            <SFDCManualTestResultsPieChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}

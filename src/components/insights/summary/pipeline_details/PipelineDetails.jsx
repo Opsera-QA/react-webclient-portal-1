@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import TotalPipelinesExecuted from "components/insights/summary/pipeline_details/charts/TotalPipelinesExecuted";
 import PipelinesPassedWithQualityAndSecurity from "components/insights/summary/pipeline_details/charts/PipelinesPassedWithQualityAndSecurity";
-import PipelinesFailedSecurity from "components/insights/summary/pipeline_details/charts/PipelinesFailedSecurity";
+import PipelinesFailedSecurity from "components/insights/summary/pipeline_details//charts/PipelinesFailedSecurity";
 import PipelinesFailedQuality from "components/insights/summary/pipeline_details/charts/PipelinesFailedQuality";
 import PipelinesFailedDeployment from "components/insights/summary/pipeline_details/charts/PipelinesFailedDeployment";
 import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
 import InsightsPipelineDetailsTable from "components/insights/summary/pipeline_details/InsightsPipelineDetailsTable";
 import PipelinesByProjectTable from "components/insights/summary/PipelinesByProjectTable";
-import PipelinesByProjectDataBlock
-  from "components/insights/summary/pipeline_details/charts/PipelinesByProjectDataBlock";
+import PipelinesByProjectDataBlock from "components/insights/summary/pipeline_details/charts/PipelinesByProjectDataBlock";
+import TotalPipelinesPassedDeployment from 'components/insights/summary/pipeline_details/charts/TotalPipelinesPassedDeployment';
 
 function PipelineDetails({ dashboardData }) {
   const [selectedDataBlock, setSelectedDataBlock] = useState("pipelines_by_project");
@@ -58,6 +58,13 @@ function PipelineDetails({ dashboardData }) {
             tableTitle="Pipelines Failing Deployment Step"
           />
         );
+      case "successful_pipelines_deployment":
+        return(
+          <InsightsPipelineDetailsTable
+            data={selectedDataBlockTableData}
+            tableTitle="Successful Pipelines (Deployments)"
+          />
+        );
       default:
         return null;
     }
@@ -91,6 +98,11 @@ function PipelineDetails({ dashboardData }) {
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
         />
+        <TotalPipelinesPassedDeployment
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+        />
         <PipelinesFailedSecurity
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
@@ -106,6 +118,7 @@ function PipelineDetails({ dashboardData }) {
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
         />
+        
       </DataBlockWrapper>
       {getDynamicPanel()}
     </>

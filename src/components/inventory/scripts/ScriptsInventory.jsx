@@ -11,9 +11,11 @@ import ScriptsView from "components/inventory/scripts/ScriptsView";
 import scriptsActions from "components/inventory/scripts/scripts-actions";
 import ScriptModel from "components/inventory/scripts/script.model";
 import ScriptsFilterModel from "components/inventory/scripts/scripts.filter.model";
+import workflowAuthorizedActions
+  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 
 function ScriptsInventory({ customerAccessRules, handleTabClick }) {
-  const { getAccessToken } = useContext(AuthContext);
+  const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
   const [scriptList, setScriptList] = useState([]);
@@ -63,23 +65,27 @@ function ScriptsInventory({ customerAccessRules, handleTabClick }) {
   const getScripts = async (filterDto = scriptFilterModel, cancelSource = cancelTokenSource) => {
     const response = await scriptsActions.getScripts(getAccessToken, cancelSource, filterDto);
     const scripts = response?.data?.data;
+    const userRoleAccess = await getAccessRoleData();
 
     if (isMounted?.current === true && scripts) {
       const newScriptMetadata = response.data.metadata;
       setScriptMetadata(newScriptMetadata);
+      const newScriptRoleDefinitions = response?.data?.roles;
+      setScriptRoleDefinitions(newScriptRoleDefinitions);
 
       if (Array.isArray(scripts) && scripts.length > 0) {
         let modelWrappedArray = [];
 
-        // TODO: Integrate role definitions into data call
         scripts.forEach((script) => {
-          let newModel = {...new ScriptModel({...script}, newScriptMetadata, false, getAccessToken, cancelTokenSource, loadData)};
+          const deleteAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "delete_script", script.owner, script.roles, newScriptRoleDefinitions);
+          const updateAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "update_script", script.owner, script.roles, newScriptRoleDefinitions);
+          const newModel = {...new ScriptModel({...script}, newScriptMetadata, false, getAccessToken, cancelTokenSource, loadData, updateAllowed, deleteAllowed)};
+
           modelWrappedArray.push(newModel);
         });
         setScriptList([...modelWrappedArray]);
       }
 
-      setScriptRoleDefinitions(response.data.roles);
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.count);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
@@ -90,10 +96,10 @@ function ScriptsInventory({ customerAccessRules, handleTabClick }) {
   const getNavigationTabContainer = () => {
     return (
       <NavigationTabContainer>
-        <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={"parameters"} tabText={"Tools"} />
-        <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={"parameters"} tabText={"Platform"} />
-        <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={"parameters"} tabText={"Parameters"} />
-        <NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Scripts"} />
+        <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={"scripts"} tabText={"Tools"} />
+        <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={"scripts"} tabText={"Platform"} />
+        <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={"scripts"} tabText={"Parameters"} />
+        {/*<NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"scripts"} tabText={"Scripts"} />*/}
       </NavigationTabContainer>
     );
   };

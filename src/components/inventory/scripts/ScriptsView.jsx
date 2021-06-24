@@ -63,7 +63,6 @@ function ScriptsView({isLoading, loadData, scriptList, scriptMetadata, scriptRol
         scriptModel={scriptData}
         setScriptModel={setScriptData}
         scriptModelId={scriptData?.getData("_id")}
-        scriptRoleDefinitions={scriptRoleDefinitions}
       />
     );
   };
