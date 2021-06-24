@@ -77,6 +77,27 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
         setIsLoading(false);
       }
     }
+    else if (gitTasksData.getData("type") === "ecs_cluster_creation"){
+      // call to trigger merge request
+      try{
+        setIsLoading(true);
+        let postBody = {
+          "taskId":gitTasksData.getData("_id")
+        };
+        await gitTasksActions.createECSCluster(postBody, getAccessToken);
+      } catch (error) {
+        console.log(error);
+        if(error?.error?.response?.data?.message){
+          toastContext.showLoadingErrorDialog(error.error.response.data.message);
+        }else{
+          toastContext.showLoadingErrorDialog(error);
+        }
+
+        setIsLoading(false);
+      } finally {
+        setIsLoading(false);
+      }
+    }
     handleClose();
   };
 
