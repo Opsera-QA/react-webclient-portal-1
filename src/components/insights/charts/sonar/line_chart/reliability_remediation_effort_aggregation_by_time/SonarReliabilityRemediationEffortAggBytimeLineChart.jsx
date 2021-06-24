@@ -11,14 +11,14 @@ import ChartTooltip from "../../../ChartTooltip";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import VanityTable from "components/common/table/VanityTable";
-import { getTableTextColumn, getTableDateColumn } from "components/common/table/table-column-helpers-v2";
+import { getTableTextColumn } from "components/common/table/table-column-helpers-v2";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/vanity-table-filter-metadata";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faDraftingCompass, faTable} from "@fortawesome/pro-light-svg-icons";
-import {getTableDateTimeColumn} from "components/common/table/column_definitions/model-table-column-definitions";
+import { faDraftingCompass, faTable } from "@fortawesome/pro-light-svg-icons";
+import { getTableDateTimeColumn } from "components/common/table/column_definitions/model-table-column-definitions";
 
 function SonarReliabilityRemediationEffortAggBytimeLineChart({
   kpiConfiguration,
