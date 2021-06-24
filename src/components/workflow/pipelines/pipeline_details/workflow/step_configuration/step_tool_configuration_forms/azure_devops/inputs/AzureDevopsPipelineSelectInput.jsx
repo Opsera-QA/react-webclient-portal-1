@@ -69,6 +69,14 @@ function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, 
     }
   };
 
+  const formatText = (item) => {
+    if (item["name"] == null) {
+      return `Azure Pipeline ID: ${item}`;
+    }
+
+    return `${item["name"]} (Revision: ${item["revision"]})`;
+  };
+
   return (
       <SelectInputBase
         fieldName={fieldName}
@@ -78,7 +86,7 @@ function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, 
         busy={isLoading}
         errorMessage={errorMessage}
         valueField={valueField}
-        textField={textField}
+        textField={(item) => formatText(item)}
         placeholderText={placeholderText}
         disabled={disabled || isLoading}
       />

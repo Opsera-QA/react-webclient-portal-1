@@ -53,8 +53,7 @@ function AzureDevopsStepConfiguration({ stepTool, closeEditorPanel, parentCallba
         fieldName={"toolConfigId"}
         dataObject={azureDevopsModel}
         setDataObject={setAzureDevopsModel}
-        />
-     
+      />
       <TextInputBase dataObject={azureDevopsModel} setDataObject={setAzureDevopsModel} fieldName={"organizationName"}/>
       <TextInputBase setDataObject={setAzureDevopsModel} dataObject={azureDevopsModel} fieldName={"projectName"} />
       <AzureDevopsPipelineSelectInput
