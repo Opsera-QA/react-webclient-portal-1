@@ -54,9 +54,10 @@ function SonarRatingsDebtRatioSummaryPanel({ dashboardData, kpiConfiguration, se
       isMounted.current = false;
     };
   }, [JSON.stringify(dashboardData)]);
-
+  
   const onRowSelect = (rowData) => {
-    toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.run_count} />);
+    toastContext.clearOverlayPanel();
+    history.push(`/blueprint/${rowData.original.pipelineId}/${rowData.original.run_count}`);
   };
 
   const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
