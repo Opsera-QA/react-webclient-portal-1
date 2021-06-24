@@ -7,8 +7,8 @@ export const validateData = (data) => {
   for (const field of data.getFields()) {
     let fieldErrors = validateField(data, field);
 
-    if (fieldErrors) {
-      errors.push(fieldErrors);
+    if (Array.isArray(fieldErrors) && fieldErrors.length > 0) {
+      errors.push(...fieldErrors);
     }
   }
   if (errors.length < 1) {
