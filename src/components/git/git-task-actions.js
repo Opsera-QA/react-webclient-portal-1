@@ -172,7 +172,7 @@ gitTasksActions.getTaskActivityLogById = async (getAccessToken, cancelTokenSourc
 };
 
 gitTasksActions.createECSCluster = async (postBody, getAccessToken) => {
-  const apiUrl = `/tools/aws/aws/v2/create/ecs`;
+  const apiUrl = `/tools/aws/v2/create/ecs`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
