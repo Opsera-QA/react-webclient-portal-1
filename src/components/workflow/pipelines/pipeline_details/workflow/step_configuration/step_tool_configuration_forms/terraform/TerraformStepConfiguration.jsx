@@ -15,8 +15,8 @@ import terraformStepFormMetadata from "./terraform-stepForm-metadata";
 import TerraformRuntimeArgumentsInput
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformRuntimeArgumentsInput";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import TerraformParameterSelectInput from "./inputs/TerraformParameterSelectInput";
-import TerraformSaveResponseParameters from "./inputs/TerraformSaveResponseParameters";
+import TerraformCustomParametersInput
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/terraform/inputs/TerraformCustomParametersInput";
 
 function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, closeEditorPanel, parentCallback }) {
   const toastContext = useContext(DialogToastContext);
@@ -104,14 +104,11 @@ function TerraformStepConfiguration({ pipelineId, stepTool, stepId, createJob, c
       <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"secretKeyParamName"} />
       <TextInputBase dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} fieldName={"regionParamName"} />
       <TerraformRuntimeArgumentsInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
-      <TerraformSaveResponseParameters
-        dataObject={terraformStepConfigurationDto}
-        setDataObject={setTerraformStepConfigurationDataDto}
+      <TerraformCustomParametersInput
+        model={terraformStepConfigurationDto}
+        setModel={setTerraformStepConfigurationDataDto}
         fieldName={"saveParameters"}
       />
-      {terraformStepConfigurationDto && terraformStepConfigurationDto.getData("saveParameters") && (
-        <TerraformParameterSelectInput dataObject={terraformStepConfigurationDto} setDataObject={setTerraformStepConfigurationDataDto} />
-      )}
     </PipelineStepEditorPanelContainer>
   );
 }
