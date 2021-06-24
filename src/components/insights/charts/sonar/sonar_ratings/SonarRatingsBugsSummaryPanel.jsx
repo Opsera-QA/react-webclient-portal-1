@@ -57,8 +57,7 @@ function SonarRatingsBugsSummaryPanel({ dashboardData, kpiConfiguration, setActi
   }, [JSON.stringify(dashboardData)]);
 
   const onRowSelect = (rowData) => {
-    toastContext.clearOverlayPanel();
-    history.push(`/blueprint/${rowData.original.pipelineId}/${rowData.original.run_count}`);
+    toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.run_count} />);
   };
 
   const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {

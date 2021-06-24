@@ -16,6 +16,7 @@ import chartsActions from "components/insights/charts/charts-actions";
 import SonarDebtRatioMetaData from "components/insights/charts/sonar/sonar_ratings/SonarDebtRatioMetadata";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 import { DialogToastContext } from "contexts/DialogToastContext";
+import BlueprintLogOverlay from "../../../../blueprint/BlueprintLogOverlay";
 
 function SonarRatingsDebtRatioSummaryPanel({ dashboardData, kpiConfiguration, setActiveTab }) {
   const history = useHistory();
@@ -55,8 +56,7 @@ function SonarRatingsDebtRatioSummaryPanel({ dashboardData, kpiConfiguration, se
   }, [JSON.stringify(dashboardData)]);
 
   const onRowSelect = (rowData) => {
-    toastContext.clearOverlayPanel();
-    history.push(`/blueprint/${rowData.original.pipelineId}/${rowData.original.run_count}`);
+    toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.run_count} />);
   };
 
   const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
