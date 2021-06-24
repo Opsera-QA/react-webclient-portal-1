@@ -106,7 +106,7 @@ function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, in
         <div className="w-100 text-muted mb-1">Reliability</div> 
       </div></Col>
         <Col><div className="metric-box p-3 text-center">
-        <div className="box-metric">
+        <div className="box-metric pointer" onClick={() => onRowSelect("debt-ratio")}>
         {metrics[0].maintainability_rating <= 1 && <div className="green">A</div>}
         {1 < metrics[0].maintainability_rating && metrics[0].maintainability_rating <= 2 && <div className="green">B</div>}
         {2 < metrics[0].maintainability_rating && metrics[0].maintainability_rating <= 3 && <div className="yellow">C</div>}
