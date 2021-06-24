@@ -2,7 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import RequiredFieldsMessage from "components/common/fields/editor/RequiredFieldsMessage";
 import LoadingDialog from "components/common/status_notifications/loading";
-import PersistAndCloseButtonContainer from "components/common/buttons/saving/containers/PersistAndCloseButtonContainer";
 import PersistAndCloseVanityButtonContainer
   from "components/common/buttons/saving/containers/PersistAndCloseVanityButtonContainer";
 

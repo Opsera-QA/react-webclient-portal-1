@@ -2,11 +2,14 @@ import ModelBase, {DataState} from "core/data_model/model.base";
 import parametersActions from "components/inventory/parameters/parameters-actions";
 
 export class ParameterModel extends ModelBase {
-  constructor(data, metaData, newModel, setStateFunction, getAccessToken, cancelTokenSource, loadData) {
-    super(data, metaData, newModel, setStateFunction);
+  constructor(data, metaData, newModel, getAccessToken, cancelTokenSource, loadData, canUpdate = false, canDelete = false, setStateFunction) {
+    super(data, metaData, newModel);
     this.getAccessToken = getAccessToken;
     this.cancelTokenSource = cancelTokenSource;
     this.loadData = loadData;
+    this.updateAllowed = canUpdate;
+    this.deleteAllowed = canDelete;
+    this.setStateFunction = setStateFunction;
   }
 
   createModel = async () => {
@@ -20,21 +23,24 @@ export class ParameterModel extends ModelBase {
   deleteModel = async () => {
     const response = await parametersActions.deleteParameterV2(this.getAccessToken, this.cancelTokenSource, this);
     this.dataState = DataState.DELETED;
-    this.updateState();
+    this.unselectModel();
     await this.loadData();
     return response;
   };
 
   getValueFromVault = async (fieldName = "value") => {
     const response = await parametersActions.getParameterValueFromVaultV2(this.getAccessToken, this.cancelTokenSource, this.getData("_id"));
+    const value = response?.data?.data;
 
-    if (response?.data?.data) {
-      this.setData(fieldName, response.data.data, false);
+    if (value) {
+      this.setData(fieldName, value, false);
     }
+
+    return value;
   };
 
   getNewInstance = (newData = this.getNewObjectFields()) => {
-    return new ParameterModel({...newData}, this.metaData, this.newModel, this.setStateFunction, this.getAccessToken, this.cancelTokenSource, this.loadData);
+    return new ParameterModel({...newData}, this.metaData, this.newModel, this.getAccessToken, this.cancelTokenSource, this.loadData, this.updateAllowed, this.deleteAllowed, this.setStateFunction);
   };
 }
 

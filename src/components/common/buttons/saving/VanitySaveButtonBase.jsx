@@ -51,7 +51,7 @@ function VanitySaveButtonBase({model, disable, size, showSuccessToasts, classNam
 
   return (
     <div className={className}>
-      <Button size={size} variant="primary" disabled={isSaving || disable || (!model.isLenient() && !model.isChanged())} onClick={() => persistRecord()}>
+      <Button size={size} variant="primary" disabled={isSaving || disable || model?.canUpdate() !== true || (!model.isLenient() && !model.isChanged())} onClick={() => persistRecord()}>
         <span><IconBase isLoading={isSaving} icon={faSave} fixedWidth className="mr-2"/>{getLabel()}</span>
       </Button>
     </div>

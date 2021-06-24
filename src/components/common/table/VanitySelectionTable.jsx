@@ -1,20 +1,19 @@
 import React, {useContext, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
-import PaginationContainer from "components/common/pagination/PaginationContainer";
 import TableBodyLoadingWrapper from "components/common/table/TableBodyLoadingWrapper";
 import VanitySelectionTableBase from "components/common/table/VanitySelectionTableBase";
 import {persistUpdatedRecord} from "components/common/buttons/saving/saving-helpers-v2";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import UnsavedChangesModal from "components/common/modal/UnsavedChangesModal";
+import VanityPaginationContainer from "components/common/pagination/v2/VanityPaginationContainer";
 
-function VanitySelectionTable({ columns, getNewModel, parentModel, setParentModel, loadData, data, noDataMessage, rowStyling, isLoading, sort, paginationModel, setPaginationModel, tableHeight, rowSelection }) {
+function VanitySelectionTable({ columns, parentModel, setParentModel, parentModelId, loadData, data, noDataMessage, rowStyling, isLoading, sort, paginationModel, tableHeight, rowSelection }) {
   const toastContext = useContext(DialogToastContext);
   const selectedItemRef = useRef({});
 
   useEffect(() => {
-    selectedItemRef.current = {...parentModel};
-  }, [parentModel]);
-
+    selectedItemRef.current = parentModel;
+  }, [parentModelId]);
 
   const onRowSelect = async (grid, row, column, e) => {
     const selectedModel = getModel();
@@ -22,7 +21,7 @@ function VanitySelectionTable({ columns, getNewModel, parentModel, setParentMode
     // Don't change rows if invalid, save before changing rows if valid
     if (selectedModel != null) {
       // We are still on same row
-      if (selectedModel.getData("_id") === row?._id) {
+      if (selectedModel.getData("_id") === row?.getData("_id")) {
         return true;
       }
 
@@ -36,12 +35,8 @@ function VanitySelectionTable({ columns, getNewModel, parentModel, setParentMode
       }
     }
 
-    let newRow = {...row};
-    delete newRow["id"];
-    delete newRow["$height"];
-    const newModel = getNewModel(newRow);
-
-    selectedItemRef.current = {...newModel};
+    setParentModel(row);
+    selectedItemRef.current = row;
     return true;
   };
 
@@ -71,7 +66,7 @@ function VanitySelectionTable({ columns, getNewModel, parentModel, setParentMode
         return false;
       }
 
-      selectedItemRef.current = {...selectedModel};
+      selectedItemRef.current = selectedModel;
       setParentModel({...selectedModel});
       return true;
     }
@@ -96,14 +91,9 @@ function VanitySelectionTable({ columns, getNewModel, parentModel, setParentMode
 
   const getTableBody = () => {
     return (
-      <PaginationContainer
-        loadData={loadData}
-        isLoading={isLoading}
-        filterDto={paginationModel}
-        setFilterDto={setPaginationModel}
-      >
+      <VanityPaginationContainer loadData={loadData} isLoading={isLoading} paginationModel={paginationModel}>
         <VanitySelectionTableBase
-          selectedItemId={parentModel?.getData("_id")}
+          selectedItem={JSON.stringify(parentModel?.getPersistData())}
           rowSelection={rowSelection}
           noDataMessage={noDataMessage}
           data={data}
@@ -115,7 +105,7 @@ function VanitySelectionTable({ columns, getNewModel, parentModel, setParentMode
           onCellEdit={onCellEdit}
           sort={sort}
         />
-      </PaginationContainer>
+      </VanityPaginationContainer>
     );
   };
 
@@ -138,18 +128,16 @@ VanitySelectionTable.propTypes = {
   isLoading: PropTypes.bool,
   sort: PropTypes.string,
   paginationModel: PropTypes.object,
-  setPaginationModel: PropTypes.func,
   loadData: PropTypes.func,
   tableHeight: PropTypes.string,
-  getNewModel: PropTypes.func,
+  parentModelId: PropTypes.string,
   setParentModel: PropTypes.func,
   parentModel: PropTypes.object,
   rowSelection: PropTypes.string
 };
 
-// TODO: This should probably be set to row and just passed in as complex when need be.
 VanitySelectionTable.defaultProps = {
-  rowSelection: "complex"
+  rowSelection: "row"
 };
 
 export default VanitySelectionTable;

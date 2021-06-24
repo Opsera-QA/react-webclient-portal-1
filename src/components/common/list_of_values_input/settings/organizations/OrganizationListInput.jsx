@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import organizationActions from "components/settings/organizations/organization-actions";
-import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
 import ListInputBase from "components/common/inputs/list/ListInputBase";
 import {faSitemap} from "@fortawesome/pro-light-svg-icons";
 
@@ -90,9 +89,9 @@ function OrganizationListInput({ fieldName, dataObject, setDataObject, disabled,
       setDataFunction={setDataFunction}
       setDataObject={setDataObject}
       clearDataFunction={clearDataFunction}
+      isLoading={isLoading}
       textField={"name"}
       valueField={"_id"}
-      busy={isLoading}
       dataObject={dataObject}
       showLabel={showLabel}
       placeholderText={getPlaceholderText()}

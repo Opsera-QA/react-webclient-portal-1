@@ -81,6 +81,15 @@
     height: calc(1.5em + .75rem + 2px);
 }
 
+.object-properties-footer {
+    background-color: #E6E5E3;
+    min-height: 1em;
+}
+
+.object-properties-footer .form-text {
+    margin: 0
+}
+
 /* End Property Input Styling */
 
 /* Group Membership Input Panel */
