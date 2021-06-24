@@ -11,12 +11,14 @@ import ChartTooltip from "../../../ChartTooltip";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 import VanityTable from "components/common/table/VanityTable";
-import LoadingDialog from "components/common/status_notifications/loading";
 import { getTableTextColumn, getTableDateColumn } from "components/common/table/table-column-helpers-v2";
 import { getField } from "components/common/metadata/metadata-helpers";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/vanity-table-filter-metadata";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faDraftingCompass, faTable} from "@fortawesome/pro-light-svg-icons";
+import {getTableDateTimeColumn} from "components/common/table/column_definitions/model-table-column-definitions";
 
 function SonarReliabilityRemediationEffortAggBytimeLineChart({
   kpiConfiguration,
@@ -48,7 +50,7 @@ function SonarReliabilityRemediationEffortAggBytimeLineChart({
     getTableTextColumn(getField(fields, "pipelineName")),
     getTableTextColumn(getField(fields, "run_count")),
     getTableTextColumn(getField(fields, "project")),
-    getTableDateColumn(getField(fields, "date")),
+    getTableDateTimeColumn(getField(fields, "date")),
   ];
 
   useEffect(() => {
@@ -153,12 +155,10 @@ function SonarReliabilityRemediationEffortAggBytimeLineChart({
     toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={row?.pipelineId} runCount={row?.run_count} />);
   };
 
-  const getBody = (projects) => {
-    if (isLoading) {
-      return <LoadingDialog size={"sm"} message={"Loading Data"} />;
-    }
+  const getTable = (projects) => {
     return (
       <VanityTable
+        isLoading={isLoading}
         columns={columns}
         data={projects}
         noDataMessage={"No Insights are available for this chart at this time"}
@@ -171,19 +171,35 @@ function SonarReliabilityRemediationEffortAggBytimeLineChart({
     );
   };
 
-  const onClickHandler = (thisDataPoint) => {
+  const getBody = (thisDataPoint) => {
     let date = thisDataPoint?.data?.xFormatted;
     let projects = getProjectsFromDate(date);
+
+    return (
+      <FilterContainer
+        isLoading={isLoading}
+        showBorder={false}
+        title={`Pipelines`}
+        titleIcon={faDraftingCompass}
+        body={getTable(projects)}
+        className={"px-2 pb-2"}
+      />
+    );
+  };
+
+  const onClickHandler = (thisDataPoint) => {
+    let date = thisDataPoint?.data?.xFormatted;
     toastContext.showOverlayPanel(
       <FullScreenCenterOverlayContainer
         closePanel={closePanel}
         showPanel={true}
-        titleText={"Pipelines run on: " + date}
+        titleText={`Sonar Reliability Remediation for [${date}]`}
         showToasts={true}
+        titleIcon={faTable}
         isLoading={false}
         linkTooltipText={"View Full Blueprint"}
       >
-        <div className={"p-3"}>{getBody(projects)}</div>
+        <div className={"p-3"}>{getBody(thisDataPoint)}</div>
       </FullScreenCenterOverlayContainer>
     );
   };
