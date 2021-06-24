@@ -66,24 +66,25 @@ function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, 
     const secureKey = vaultResults?.data;
     const user = await getUserRecord();
     const result = await azurePipelineActions.getAzurePipelines(getAccessToken, cancelSource, model, secureKey, user._id);
-    // const azurePipelinesArray = result?.data?.message;
-    // remove lines 71 - 79 once dev is updated
-    let azurePipelinesArray;
+    const azurePipelines = result?.data;
 
-    if (Array.isArray(result?.data?.message)){
-      azurePipelinesArray = result.data.message;
-    } else {
-      if (Array.isArray(result?.data?.message?.message?.value)){
-        azurePipelinesArray = result.data.message.message.value;
-      }
-    }
-
-    if (Array.isArray(azurePipelinesArray) && azurePipelinesArray.length > 0) {
+    if (Array.isArray(azurePipelines) && azurePipelines.length > 0) {
       setErrorMessage("");
-      setAzureDevopsList(azurePipelinesArray);
+      setAzureDevopsList(azurePipelines);
     } else {
-      model.setData("azurePipelineId", "");
-      setErrorMessage("No Azure Pipelines Found");
+      let newDataObject = model;
+      newDataObject.setData("azurePipelineId", "");
+      setModel({ ...newDataObject });
+  
+      if(azurePipelines?.message) {
+        toastContext.showErrorDialog(azurePipelines.message);
+      } 
+
+      if (azurePipelines?.status) {
+        azurePipelines.status === 401 ? setErrorMessage("Please check your tool configuration") :
+        azurePipelines.status === 404 ? setErrorMessage("Please check your project and organization names") :
+        setErrorMessage("No Azure Pipelines Found");
+      }
     }
   };
 
