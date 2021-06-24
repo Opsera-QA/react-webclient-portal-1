@@ -1,18 +1,16 @@
 import React, {useContext, useEffect, useState, useRef} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
-import { AuthContext } from "../../../../../../../../../contexts/AuthContext";
-import PipelineActions from "../../../../../../../../workflow/pipeline-actions";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTools } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import {AuthContext} from "contexts/AuthContext";
+import pipelineActions from "components/workflow/pipeline-actions";
 
-function AzureDevopsToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool_prop}) {
-  const toastContext = useContext(DialogToastContext);
+function AzureDevopsToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField}) {
   const { getAccessToken } = useContext(AuthContext);
-  const [azureDevopsList, setAzureDevopsList] = useState([]);
+  const [azureTools, setAzureTools] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [placeholderText, setPlaceholderText] = useState("Select an Azure Devops token");
   const isMounted = useRef(false);
@@ -70,32 +68,22 @@ function AzureDevopsToolSelectInput({ fieldName, dataObject, setDataObject, disa
     return <span>Select a tool to get started.</span>;
   };
 
-
   const fetchAzureDevopsDetails = async (cancelSource = cancelTokenSource) => {
-    setIsLoading(true);
-    try {
-      const results = await PipelineActions.getToolsListV2(getAccessToken, cancelSource, "azure-devops");
-      const azureToolsArray = results?.data?.filter((el) => el.configuration !== undefined);
+    const response = await pipelineActions.getToolsListV2(getAccessToken, cancelSource, "azure-devops");
+    const azureTools = response?.data?.filter((el) => el.configuration !== undefined);
 
-      if (azureToolsArray && Array.isArray(azureToolsArray)) {
-        setAzureDevopsList(azureToolsArray);
-      }
-
-    } catch(error) {
-      console.error(error);
-      toastContext.showLoadingErrorDialog(error);
-    } finally {
-      setIsLoading(false);
+    if (Array.isArray(azureTools)) {
+      setAzureTools(azureTools);
     }
   };
 
   const setDataFunction = async (fieldName, newAzureTool) => {
     let newDataObject = dataObject;
     newDataObject.setData("toolConfigId", newAzureTool?._id);
+    newDataObject.setData("azurePipelineId", "");
     newDataObject.setData("accessToken", newAzureTool?.configuration?.accessToken);
-    setDataObject({ ...newDataObject });
-};
-
+    setDataObject({...newDataObject});
+  };
 
   return (
     <div>
@@ -104,7 +92,7 @@ function AzureDevopsToolSelectInput({ fieldName, dataObject, setDataObject, disa
         fieldName={fieldName}
         dataObject={dataObject}
         setDataObject={setDataObject}
-        selectOptions={azureDevopsList}
+        selectOptions={azureTools}
         busy={isLoading}
         valueField={valueField}
         textField={textField}
@@ -126,7 +114,6 @@ AzureDevopsToolSelectInput.propTypes = {
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  tool_prop: PropTypes.string
 };
 
 AzureDevopsToolSelectInput.defaultProps = {

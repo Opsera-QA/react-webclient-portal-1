@@ -7,7 +7,7 @@ import azurePipelineActions
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_devops/azure-pipeline-actions";
 import {processError} from "utils/helpers";
 
-function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, organization, projectName, textField, valueField, toolConfigId}) {
+function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, organization, projectName, valueField, toolConfigId}) {
   const { getAccessToken, getUserRecord } = useContext(AuthContext);
   const [azurePipelines, setAzurePipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +27,7 @@ function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, 
     setPlaceholderText("Select an Azure DevOps Pipeline");
     setAzurePipelines([]);
 
-    if (organization != null && organization !== "" && projectName != null && projectName !== "") {
+    if (organization != null && organization !== "" && projectName != null && projectName !== "" && toolConfigId != null && toolConfigId !== "") {
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -78,18 +78,18 @@ function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, 
   };
 
   return (
-      <SelectInputBase
-        fieldName={fieldName}
-        dataObject={model}
-        setDataObject={setModel}
-        selectOptions={azurePipelines}
-        busy={isLoading}
-        errorMessage={errorMessage}
-        valueField={valueField}
-        textField={(item) => formatText(item)}
-        placeholderText={placeholderText}
-        disabled={disabled || isLoading}
-      />
+    <SelectInputBase
+      fieldName={fieldName}
+      dataObject={model}
+      setDataObject={setModel}
+      selectOptions={azurePipelines}
+      busy={isLoading}
+      errorMessage={errorMessage}
+      valueField={valueField}
+      textField={(item) => formatText(item)}
+      placeholderText={placeholderText}
+      disabled={disabled || isLoading}
+    />
   );
 }
 
@@ -98,7 +98,6 @@ AzureDevopsPipelineSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
-  textField: PropTypes.string,
   valueField: PropTypes.string,
   organization: PropTypes.string,
   projectName: PropTypes.string,
@@ -107,7 +106,6 @@ AzureDevopsPipelineSelectInput.propTypes = {
 
 AzureDevopsPipelineSelectInput.defaultProps = {
   valueField: "id",
-  textField: "name"
 };
 
 export default AzureDevopsPipelineSelectInput;
