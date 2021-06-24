@@ -61,6 +61,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       label: "Docker Name",
       id: "dockerName",
       isRequired: true,
+      maxLength:256,
       // TODO: This should be the pattern but this is probably fine.
       regexValidator: RegExp("^[a-zA-Z0-9_.-]*$"),
       isLowercase: true,
@@ -71,11 +72,13 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "dockerTagName",
       isRequired: true,
       regexValidator:RegExp("^[a-zA-Z0-9_.-]*$"),
-      formText:"Lowercase alphanumeric characters and underscore, period, and dash are allowed"
+      formText:"Lowercase alphanumeric characters and underscore, period, and dash are allowed",
+      maxLength:256,
     },
     {
       label: "Docker File Path",
       id: "dockerPath",
+      maxLength:256,
     },
     {
       label: "Build Arguments",
@@ -88,20 +91,24 @@ const jenkinsPipelineStepConfigurationMetadata = {
     },
     {
       label:"Output File Name",	
-      id:"outputFileName"	,
+      id:"outputFileName",
+      maxLength:256,
     },
     {	
       label:"Output File Path",	
       id:"outputPath",
+      maxLength:256,
     },
     {	
       label:"Script File Name",	
       id:"inputFileName",
       formText:"File name with extension is expected.",
+      maxLength:256,
     },
     {	
       label:"Specify Script File Path",	
       id:"inputFilePath",
+      maxLength:256,
     },
     {	
       label: "Docker Secrets",	
