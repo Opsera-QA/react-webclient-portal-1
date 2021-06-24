@@ -62,21 +62,16 @@ function ToolEditorPanel({ toolData, handleClose }) {
 
   const getDynamicFields = () => {
     if (toolData?.isNew()) {
-      return (
-        <>
-          <Col lg={6}>
-            <RegistryToolOrganizationInput setDataObject={setToolDataDto} dataObject={toolDataDto}/>
-          </Col>
-          <Col lg={12}>
+      return ( 
+         <Col lg={12} className="mb-4">
             <RoleAccessInput dataObject={toolDataDto} setDataObject={setToolDataDto} fieldName={"roles"}/>
           </Col>
-        </>
       );
     }
 
     return (
       <>
-        <Col lg={6}/>
+        
         <Col lg={6}>
           <RegistryToolLocationInput setDataObject={setToolDataDto} dataObject={toolDataDto}/>
         </Col>
@@ -107,9 +102,7 @@ function ToolEditorPanel({ toolData, handleClose }) {
         <Col lg={6}>
           <RegistryToolIdentifierSelectInput dataObject={toolDataDto} setDataObject={setToolDataDto} />
         </Col>
-        <Col lg={12}>
-          <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"description"} />
-        </Col>
+       
         <Col lg={6}>
           <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"costCenter"} />
         </Col>
@@ -118,6 +111,9 @@ function ToolEditorPanel({ toolData, handleClose }) {
         </Col>
         <Col lg={6}>
           <ToolClassificationSelectInput setDataObject={setToolDataDto} dataObject={toolDataDto} />
+        </Col>
+        <Col lg={12} className="mb-2">
+          <TextInputBase setDataObject={setToolDataDto} dataObject={toolDataDto} fieldName={"description"} />
         </Col>
         {getDynamicFields()} 
           
