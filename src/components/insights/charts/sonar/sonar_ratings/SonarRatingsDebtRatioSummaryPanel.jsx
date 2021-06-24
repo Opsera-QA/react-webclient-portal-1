@@ -72,9 +72,9 @@ function SonarRatingsDebtRatioSummaryPanel({ dashboardData, kpiConfiguration, se
         dashboardTags,
         filterDto
       );
-      console.log("response",response);
+      
       let dataObject = response?.data?.data[0]?.sonarDebtRatioByProject?.data[0].data;
-      console.log("dataobject",dataObject);
+      
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
         let newFilterDto = filterDto;
