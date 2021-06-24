@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 
-function StepToolHelpIcon({type, tool}) {
+function StepToolHelpIcon({type, tool, className, iconClassName}) {
   // TODO: Alphabetize when adding new help panels
   const getToolHelpPanel = () => {
     switch (tool) {
@@ -66,14 +66,18 @@ function StepToolHelpIcon({type, tool}) {
     return (getToolHelpPanel());
   };
 
-  return (
-    <LaunchHelpIcon className={"mr-2 my-auto"}  helpComponent={getHelpComponent()} />
-  );
+  return (<LaunchHelpIcon iconClassName={iconClassName} className={className} helpComponent={getHelpComponent()} />);
 }
 
 StepToolHelpIcon.propTypes = {
   type: PropTypes.string,
   tool: PropTypes.string,
+  className: PropTypes.string,
+  iconClassName: PropTypes.string
+};
+
+StepToolHelpIcon.defaultProps = {
+  className: "mr-2 my-auto"
 };
 
 export default StepToolHelpIcon;
