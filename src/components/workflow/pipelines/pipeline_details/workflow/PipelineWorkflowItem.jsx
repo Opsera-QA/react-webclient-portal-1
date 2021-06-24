@@ -212,7 +212,8 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
         <div className="title-text-6 upper-case-first ml-1 mt-1 d-flex flex-row">
           <div className="text-muted mr-1">{item.name || "Un-configured Step"}</div>
 
-          <div className="flex-grow-1 text-right">
+          <div className="ml-auto">
+            <div className={"ml-auto d-flex"}>
 
             {isLoading && <FontAwesomeIcon icon={faSpinner} spin className="mr-2 green"/>}
 
@@ -360,8 +361,8 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
 
               </div>
             </>}
-            {/*TODO: Add help icon*/}
-            {/*<StepToolHelpIcon tool={toolProperties?.name} />*/}
+              <StepToolHelpIcon iconClassName={"mb-1"} className={"mr-0"} tool={item?.tool?.tool_identifier?.toLowerCase()} />
+            </div>
           </div>
         </div>
 

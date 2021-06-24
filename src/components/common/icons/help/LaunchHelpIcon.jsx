@@ -5,7 +5,8 @@ import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function LaunchHelpIcon({ helpComponent, helpText, className, size }) {
+// TODO: Remove iconClassName if unnecessary after refactoring PipelineWorkflowItem.jsx
+function LaunchHelpIcon({ helpComponent, helpText, className, size, iconClassName }) {
   const toastContext = useContext(DialogToastContext);
 
   const launchHelp = () => {
@@ -31,7 +32,7 @@ function LaunchHelpIcon({ helpComponent, helpText, className, size }) {
             icon={faQuestionCircle}
             size={size}
             fixedWidth
-            className={"pointer"}
+            className={iconClassName ? `${iconClassName} pointer` : "pointer"}
           />
           {getHelpText()}
         </span>
@@ -43,6 +44,7 @@ function LaunchHelpIcon({ helpComponent, helpText, className, size }) {
 LaunchHelpIcon.propTypes = {
   helpComponent: PropTypes.any,
   className: PropTypes.string,
+  iconClassName: PropTypes.string,
   helpText: PropTypes.string,
   size: PropTypes.string
 };
