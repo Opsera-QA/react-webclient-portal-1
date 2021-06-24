@@ -184,13 +184,9 @@ OctopusStepActions.getNexusRepos = async (toolID, getAccessToken) => {
   return [];
 };
 
-OctopusStepActions.getLifecycles = async (id, spaceId, getAccessToken, cancelTokenSource) => {
+OctopusStepActions.getLifecycles = async (getAccessToken, cancelTokenSource, id, spaceId) => {  
   const apiUrl = `/tools/octopus/lifecycle/${id}/${spaceId}`;
-  let response = await baseActions.apiGetCallV2(getAccessToken,cancelTokenSource, apiUrl);
-  if (response && response.status === 200) {
-    return response.data;
-  }
-  return [];
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 OctopusStepActions.getCerts = async (id, spaceId, environmentId, getAccessToken, cancelTokenSource) => {
