@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState, useRef} from "react";
 import PropTypes from "prop-types";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
@@ -9,9 +8,8 @@ import azurePipelineActions
 import {processError} from "utils/helpers";
 
 function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, organization, projectName, textField, valueField, toolConfigId}) {
-  const toastContext = useContext(DialogToastContext);
   const { getAccessToken, getUserRecord } = useContext(AuthContext);
-  const [azureDevopsList, setAzureDevopsList] = useState([]);
+  const [azurePipelines, setAzurePipelines] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const isMounted = useRef(false);
@@ -27,7 +25,7 @@ function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, 
     setCancelTokenSource(source);
     isMounted.current = true;
     setPlaceholderText("Select an Azure DevOps Pipeline");
-    setAzureDevopsList([]);
+    setAzurePipelines([]);
 
     if (organization != null && organization !== "" && projectName != null && projectName !== "") {
       loadData(source).catch((error) => {
@@ -63,13 +61,11 @@ function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, 
   const loadAzurePipelines = async (cancelSource = cancelTokenSource) => {
     const user = await getUserRecord();
     const response = await azurePipelineActions.getAzurePipelines(getAccessToken, cancelSource, model, user._id);
-    const azurePipelines = response?.data;
-
-    console.log("response: " + JSON.stringify(response));
+    const azurePipelines = response?.data?.data;
 
     if (Array.isArray(azurePipelines) && azurePipelines.length > 0) {
       setErrorMessage("");
-      setAzureDevopsList(azurePipelines);
+      setAzurePipelines(azurePipelines);
     }
   };
 
@@ -78,7 +74,7 @@ function AzureDevopsPipelineSelectInput({ fieldName, model, setModel, disabled, 
         fieldName={fieldName}
         dataObject={model}
         setDataObject={setModel}
-        selectOptions={azureDevopsList}
+        selectOptions={azurePipelines}
         busy={isLoading}
         errorMessage={errorMessage}
         valueField={valueField}
