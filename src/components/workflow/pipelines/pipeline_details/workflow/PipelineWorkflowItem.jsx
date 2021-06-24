@@ -29,6 +29,7 @@ import { AuthContext } from "contexts/AuthContext";
 import WorkflowAuthorizedActions from "./workflow-authorized-actions";
 import PipelineStepConfigurationSummaryModal from "./step_configuration/PipelineStepConfigurationSummaryModal";
 import pipelineActions from "components/workflow/pipeline-actions";
+import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 
 const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
@@ -359,6 +360,8 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
 
               </div>
             </>}
+            {/*TODO: Add help icon*/}
+            {/*<StepToolHelpIcon tool={toolProperties?.name} />*/}
           </div>
         </div>
 

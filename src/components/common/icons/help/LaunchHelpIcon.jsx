@@ -5,7 +5,7 @@ import {faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
 import ButtonTooltip from "components/common/tooltip/ButtonTooltip";
 import {DialogToastContext} from "contexts/DialogToastContext";
 
-function LaunchHelpIcon({ helpComponent, helpText, className }) {
+function LaunchHelpIcon({ helpComponent, helpText, className, size }) {
   const toastContext = useContext(DialogToastContext);
 
   const launchHelp = () => {
@@ -29,6 +29,7 @@ function LaunchHelpIcon({ helpComponent, helpText, className }) {
           <FontAwesomeIcon
             onClick={() => {launchHelp();}}
             icon={faQuestionCircle}
+            size={size}
             fixedWidth
             className={"pointer"}
           />
@@ -42,7 +43,8 @@ function LaunchHelpIcon({ helpComponent, helpText, className }) {
 LaunchHelpIcon.propTypes = {
   helpComponent: PropTypes.any,
   className: PropTypes.string,
-  helpText: PropTypes.string
+  helpText: PropTypes.string,
+  size: PropTypes.string
 };
 
 export default LaunchHelpIcon;
