@@ -14,7 +14,8 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label: "Job Name",
       id: "jobName",
-      isRequired: true
+      isRequired: true,
+      maxLength:150
     },
     {
       label: "Tool Job",
@@ -45,12 +46,14 @@ const jenkinsPipelineStepConfigurationMetadata = {
       label: "Rollback Branch Name",
       id: "rollbackBranchName",
       isRequired: true,
-      formText:"An Orphan branch will be created with only the back up specific files."
+      formText:"An Orphan branch will be created with only the back up specific files.",
+      maxLength:50,
     },
     {
       label: "Branch Name",
       id: "gitBranch",
-      isRequired: true
+      isRequired: true,
+      maxLength:50,
     },
     {
       label: "Build/Xml Step Info",
@@ -92,12 +95,12 @@ const jenkinsPipelineStepConfigurationMetadata = {
     {
       label:"Output File Name",	
       id:"outputFileName",
-      maxLength:256,
+      maxLength:50,
     },
     {	
       label:"Output File Path",	
       id:"outputPath",
-      maxLength:256,
+      maxLength:50,
     },
     {	
       label:"Script File Name",	
