@@ -7,8 +7,9 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import regexHelpers from "utils/regexHelpers";
+import InputContainer from "components/common/inputs/InputContainer";
 
-function NameValueInputBase({dataObject, setDataObject, fieldName, disabledFields, type, titleIcon, allowIncompleteItems, titleText, nameMaxLength, valueMaxLength}) {
+function NameValueInputBase({dataObject, setDataObject, fieldName, disabledFields, type, titleIcon, allowIncompleteItems, titleText, nameMaxLength, valueMaxLength, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [properties, setProperties] = useState([]);
@@ -210,23 +211,25 @@ function NameValueInputBase({dataObject, setDataObject, fieldName, disabledField
   }
 
   return (
-    <PropertyInputContainer
-      titleIcon={titleIcon}
-      field={field}
-      addProperty={addProperty}
-      titleText={titleText ? titleText : field?.label}
-      errorMessage={errorMessage}
-      type={type}
-      addAllowed={lastPropertyComplete() || (allowIncompleteItems === true && lastPropertyEdited())}
-    >
-      <div>
-        {getHeaderBar()}
-      </div>
-      <div className="properties-body-alt">
-        {getFieldBody()}
-      </div>
-      {getIncompletePropertyMessage()}
-    </PropertyInputContainer>
+    <InputContainer className={className}>
+      <PropertyInputContainer
+        titleIcon={titleIcon}
+        field={field}
+        addProperty={addProperty}
+        titleText={titleText ? titleText : field?.label}
+        errorMessage={errorMessage}
+        type={type}
+        addAllowed={lastPropertyComplete() || (allowIncompleteItems === true && lastPropertyEdited())}
+      >
+        <div>
+          {getHeaderBar()}
+        </div>
+        <div className="properties-body-alt">
+          {getFieldBody()}
+        </div>
+        {getIncompletePropertyMessage()}
+      </PropertyInputContainer>
+    </InputContainer>
   );
 }
 
@@ -241,6 +244,7 @@ NameValueInputBase.propTypes = {
   titleText: PropTypes.string,
   nameMaxLength: PropTypes.number,
   valueMaxLength: PropTypes.number,
+  className: PropTypes.string
 };
 
 NameValueInputBase.defaultProps = {

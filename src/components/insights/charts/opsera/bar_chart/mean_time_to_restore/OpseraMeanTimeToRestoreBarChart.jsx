@@ -81,7 +81,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
     }
     const getMaxValue = (data) => {
       let countsMax = Math.max.apply(Math,data.map(function(o){return o.count;}));
-      let mttrMax = Math.max.apply(Math,data.map(function(o){return o.Mean_Time_to_Restore;}));
+      let mttrMax = Math.max.apply(Math,data.map(function(o){return o["Mean Time to Restore"];}));
       let max = Math.ceil(Math.max(countsMax, mttrMax));
       return max;
     };
@@ -91,7 +91,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
         const lineColor = accentColor;
         const lineGenerator = line()
           .x(d => xScale(d.data.data._id))
-          .y(d => yScale(d.data.data.Mean_Time_to_Restore));
+          .y(d => yScale(d.data.data["Mean Time to Restore"]));
         return (
           <Fragment>
           <path
@@ -105,7 +105,7 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
             return <circle
               key={bar.key}
               cx={xScale(bar.data.data._id)}
-              cy={yScale(bar.data.data.Mean_Time_to_Restore)}
+              cy={yScale(bar.data.data["Mean Time to Restore"])}
               r={4}
               fill={lineColor}
               stroke={lineColor}
@@ -131,17 +131,17 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
     return (
       <div className="new-chart mb-3 pointer" style={{height: "300px"}}>
         <div style={{float: "right", fontSize: "10px"}}>
-          #- Total Number of Deployments
+          Total Number of Deployments - #
         </div>
         <ResponsiveBar
           data={metrics}
-          {...defaultConfig("Planned Mean Time to Restore (in minutes)", "Date", 
+          {...defaultConfig("Mean Time to Restore (in minutes)", "Date", 
                     false, false, "wholeNumbers", "monthDate2")}
           {...config(getColorByData, getMaxValue(metrics))}
           {...adjustBarWidth(metrics)}
           onClick={(data) => onRowSelect(data)}
           tooltip={({ indexValue, value, data, color }) => <ChartTooltip 
-                    titles={["Date", "Planned Mean Time to Restore", "Number of Deployments"]}
+                    titles={["Date", "Mean Time to Restore", "Number of Deployments"]}
                     values={[new Date(indexValue).toDateString(), `${value} minutes`, data.count ]}
                     style={false}
                     color={color} />}

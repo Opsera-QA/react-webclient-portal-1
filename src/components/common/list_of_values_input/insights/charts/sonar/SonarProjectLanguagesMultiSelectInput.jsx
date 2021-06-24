@@ -20,7 +20,7 @@ function SonarProjectLanguagesMultiSelectInput({
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [testSuites, setTestSuites] = useState([]);
+  const [projectLanguages, setProjectLanguages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const validateAndSetData = (fieldName, value) => {
@@ -52,11 +52,11 @@ function SonarProjectLanguagesMultiSelectInput({
     );
 
     if (response.data != null) {
-      setTestSuites(response?.data?.data[0]?.SonarProjectLanguagesList?.data);
+      setProjectLanguages(response?.data?.data[0]?.SonarProjectLanguagesList?.data);
     }
   };
 
-  if (!isLoading && (testSuites == null || testSuites.length === 0)) {
+  if (!isLoading && (projectLanguages == null || projectLanguages.length === 0)) {
     return (
       <div className="form-text text-muted p-2">
         <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
@@ -71,7 +71,7 @@ function SonarProjectLanguagesMultiSelectInput({
       dataObject={dataObject}
       setDataObject={setDataObject}
       setDataFunction={setDataFunction}
-      selectOptions={testSuites}
+      selectOptions={projectLanguages}
       busy={isLoading}
       valueField={valueField}
       textField={textField}

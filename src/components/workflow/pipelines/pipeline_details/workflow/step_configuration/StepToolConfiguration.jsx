@@ -206,9 +206,10 @@ function StepToolConfiguration({
           <JenkinsStepConfiguration
             stepTool={stepTool}
             plan={pipeline?.workflow?.plan}
-            stepId={stepId}
-            parentCallback={callbackFunction}
+            stepId={stepId}            
             closeEditorPanel={closeEditorPanel}
+            createJob={createJob}
+            pipelineId={pipeline._id}
           />
         );
       case "junit":

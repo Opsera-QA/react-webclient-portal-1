@@ -39,7 +39,7 @@ JenkinsXmlStepInfoSelectInput.propTypes = {
   disabled: PropTypes.bool,
   listOfSteps: PropTypes.any,
   stepId: PropTypes.string,
-  plan: PropTypes.object,
+  plan: PropTypes.any,
   fieldName: PropTypes.string
 };
 

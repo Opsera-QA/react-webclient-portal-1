@@ -1,8 +1,6 @@
 import { AuthContext } from "contexts/AuthContext";
 import React, {useContext, useEffect, useRef, useState} from "react";
-import Model from "core/data_model/model";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import toolFilterMetadata from "components/inventory/tools/tool-filter-metadata";
 import PropTypes from "prop-types";
 import axios from "axios";
 import parametersActions from "components/inventory/parameters/parameters-actions";
@@ -11,15 +9,19 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {faFileCode, faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
+import ParameterModel from "components/inventory/parameters/parameter.model";
+import ParameterFilterModel from "components/inventory/parameters/parameter.filter.model";
+import workflowAuthorizedActions
+  from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 
 function ParametersInventory({ customerAccessRules, handleTabClick }) {
-  const { getAccessToken } = useContext(AuthContext);
+  const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
   const [parameterList, setParameterList] = useState([]);
   const [parameterMetadata, setParameterMetadata] = useState(undefined);
   const [parameterRoleDefinitions, setParameterRoleDefinitions] = useState(undefined);
-  const [parameterFilterModel, setParameterFilterModel] = useState(new Model({ ...toolFilterMetadata.newObjectFields }, toolFilterMetadata, false));
+  const [parameterFilterModel, setParameterFilterModel] = useState(new ParameterFilterModel());
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -62,11 +64,29 @@ function ParametersInventory({ customerAccessRules, handleTabClick }) {
 
   const getParameters = async (filterDto = parameterFilterModel, cancelSource = cancelTokenSource) => {
     const response = await parametersActions.getParameters(getAccessToken, cancelSource, filterDto);
+    const parameters = response?.data?.data;
+    const userRoleAccess = await getAccessRoleData();
 
-    if (isMounted?.current === true && response?.data?.data) {
-      setParameterList([...response.data.data]);
-      setParameterMetadata(response.data.metadata);
-      setParameterRoleDefinitions(response.data.roles);
+    if (isMounted?.current === true && Array.isArray(parameters)) {
+      const newParameterMetadata = response.data.metadata;
+      setParameterMetadata(newParameterMetadata);
+      const roleDefinitions = response?.data?.roles;
+      setParameterRoleDefinitions(roleDefinitions);
+
+      if (Array.isArray(parameters) && parameters.length > 0) {
+        let modelWrappedArray = [];
+
+        parameters.forEach((parameter) => {
+          const deleteAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "delete_parameter", parameter.owner, parameter.roles, roleDefinitions);
+          const updateAllowed = workflowAuthorizedActions.isActionAllowed(userRoleAccess, "update_parameter", parameter.owner, parameter.roles, roleDefinitions);
+          const newModel = {...new ParameterModel({...parameter}, newParameterMetadata, false, getAccessToken, cancelTokenSource, loadData, updateAllowed, deleteAllowed)};
+
+          modelWrappedArray.push(newModel);
+        });
+
+        setParameterList([...modelWrappedArray]);
+      }
+
       let newFilterDto = filterDto;
       newFilterDto.setData("totalCount", response.data.count);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
@@ -96,6 +116,7 @@ function ParametersInventory({ customerAccessRules, handleTabClick }) {
         loadData={loadData}
         parameterList={parameterList}
         setParameterList={setParameterList}
+        parameterFilterModel={parameterFilterModel}
         parameterMetadata={parameterMetadata}
         customerAccessRules={customerAccessRules}
         parameterRoleDefinitions={parameterRoleDefinitions}

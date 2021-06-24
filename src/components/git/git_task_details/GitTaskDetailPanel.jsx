@@ -8,8 +8,7 @@ import CustomTab from "components/common/tabs/CustomTab";
 import {faTable, faKey} from "@fortawesome/pro-light-svg-icons";
 import GitTaskSummaryPanel
   from "components/git/git_task_details/GitTaskSummaryPanel";
-import GitTasksActivityLogsTable
-  from "components/git/git_task_details/activity_logs/GitTasksActivityLogsTable";
+import TaskActivityPanel from "components/git/git_task_details/activity_logs/TaskActivityPanel";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
 import CertManagementPanel from "./configuration_forms/sfdx-cert-gen/CertManagementPanel";
@@ -71,12 +70,7 @@ function GitTaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRol
       case "logs":
         return (
           <DetailPanelContainer>
-            <GitTasksActivityLogsTable
-              gitTasksData={gitTasksData}
-              setGitTasksData={setGitTasksData}
-              loadData={loadData}
-              allLogs={false}
-            />
+            <TaskActivityPanel />
           </DetailPanelContainer>
         );
       case "cert":

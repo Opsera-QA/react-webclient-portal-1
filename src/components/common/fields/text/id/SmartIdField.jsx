@@ -6,7 +6,7 @@ import DetailLinkClipboardIcon from "components/common/icons/link/DetailLinkClip
 import CopyToClipboardIconBase from "components/common/icons/link/CopyToClipboardIconBase";
 
 function SmartIdField({model, fieldName, className, showClipboardButton, showDetailLinkClipboardIcon }) {
-  const [field] = useState(model.getFieldById(fieldName));
+  const [field] = useState(model?.getFieldById(fieldName));
 
   const getClipboardButton = () => {
     if (showClipboardButton !== false) {
@@ -19,6 +19,10 @@ function SmartIdField({model, fieldName, className, showClipboardButton, showDet
       return (<DetailLinkClipboardIcon className={"my-auto ml-3"} model={model} />);
     }
   };
+
+  if (field == null) {
+    return null;
+  }
 
   return (
     <FieldContainer className={className}>

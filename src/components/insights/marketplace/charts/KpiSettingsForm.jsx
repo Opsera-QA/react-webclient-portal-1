@@ -10,6 +10,8 @@ import {
   kpiJenkinsJobUrlFilterMetadata,
   kpiJenkinsBuildNumberFilterMetadata,
   kpiJiraIssueTypeFilterMetadata,
+  kpiJiraIssueComponentsFilterMetadata,
+  kpiJiraIssueLabelsFilterMetadata,
   kpiJiraIssueStartStatusFilterMetadata,
   kpiJiraIssueDoneStatusFilterMetadata,
   kpiSonarProjectKeyFilterMetadata,
@@ -33,6 +35,7 @@ import ManualKpiMultiSelectInputBase from "components/common/list_of_values_inpu
 import SeleniumTestSuitesMultiSelectInput from "components/common/list_of_values_input/insights/charts/selenium/SeleniumTestSuitesMultiSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import SonarProjectLanguagesMultiSelectInput from "components/common/list_of_values_input/insights/charts/sonar/SonarProjectLanguagesMultiSelectInput";
+import SonarProjectsMultiSelectInput from "components/common/list_of_values_input/insights/charts/sonar/SonarProjectsMultiSelectInput";
 
 function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -54,6 +57,12 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
   );
   const [kpiJiraIssueTypeFilter, setKpiJiraIssueTypeFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "jira-issue-type", kpiJiraIssueTypeFilterMetadata)
+  );
+  const [kpiJiraIssueComponentsFilter, setKpiJiraIssueComponentsFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "jira-issue-components", kpiJiraIssueComponentsFilterMetadata)
+  );
+  const [kpiJiraIssueLabelsFilter, setKpiJiraIssueLabelsFilter] = useState(
+    modelHelpers.getDashboardFilterModel(kpiConfiguration, "jira-issue-labels", kpiJiraIssueLabelsFilterMetadata)
   );
   const [kpiJiraIssueStartStatusFilter, setKpiJiraIssueStartStatusFilter] = useState(
     modelHelpers.getDashboardFilterModel(
@@ -180,6 +189,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "automation-percentage",
     "adoption-percentage",
     "automated-test-results",
+    "sfdc-manual-test",
     "sfdc-backups",
     "sfdc-profile-migrations",
     "sfdc-unit-testing",
@@ -188,6 +198,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "sonar-bugs-metric-scorecard",
     "sonar-codesmells-metric-scorecard",
     "sonar-vulnerabilities-metric-scorecard",
+    "sonar-reliability-remediation-agg-by-time",
   ];
 
   const getKpiFilters = (filter) => {
@@ -254,6 +265,28 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
             />
           </div>
         );
+      case "jira-issue-components":
+        return (
+          <div>
+            <MultiTextInputBase
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiJiraIssueComponentsFilter}
+              dataObject={kpiJiraIssueComponentsFilter}
+            />
+          </div>
+        );
+      case "jira-issue-labels":
+        return (
+          <div>
+            <MultiTextInputBase
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiJiraIssueLabelsFilter}
+              dataObject={kpiJiraIssueLabelsFilter}
+            />
+          </div>
+        );
       case "jira-issue-start-status":
         return (
           <div>
@@ -279,7 +312,8 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       case "sonar-project-key":
         return (
           <div>
-            <MultiTextInputBase
+            <SonarProjectsMultiSelectInput
+              placeholderText={"Select Project(s)"}
               type={"kpi_filter"}
               fieldName={"value"}
               setDataObject={setKpiSonarProjectKeyFilter}
@@ -420,6 +454,24 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-type")
       ].value = kpiJiraIssueTypeFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-components")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-components")
+      ].value = kpiJiraIssueComponentsFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-labels")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-labels")
+      ].value = kpiJiraIssueLabelsFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[

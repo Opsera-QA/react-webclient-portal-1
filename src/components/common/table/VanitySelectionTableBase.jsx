@@ -4,7 +4,7 @@ import {Grid} from "dhx-suite-package";
 import "dhx-suite-package/codebase/suite.css";
 import {useWindowSize} from "components/common/hooks/useWindowSize";
 
-function VanitySelectionTableBase({columns, data, onRowSelect, rowStyling, sort, height, onCellEdit, selectedItemId, rowSelection}) {
+function VanitySelectionTableBase({columns, data, onRowSelect, rowStyling, sort, height, onCellEdit, selectedItem, rowSelection}) {
   const containerRef = useRef(null);
   const [grid, setGrid] = useState(null);
   const windowSize = useWindowSize();
@@ -17,28 +17,35 @@ function VanitySelectionTableBase({columns, data, onRowSelect, rowStyling, sort,
     if (grid && Array.isArray(data)) {
       grid.data.parse(data);
 
-      let selection;
-      if (selectedItemId) {
-        selection = grid.data.find((item) => {return item._id === selectedItemId;});
-      }
+      grid.selection.removeCell();
 
-      if (selection) {
-        grid.selection.setCell(selection);
+      if (selectedItem) {
+        const parsedObject = JSON.parse(selectedItem);
+        const selection = grid.data.find((item) => {return item.getData("_id") === parsedObject?._id;});
+
+        if (selection) {
+          grid.selection.setCell(selection);
+        }
       }
     }
   }, [data]);
 
   useEffect(() => {
-    if (grid) {
+    if (grid && selectedItem) {
+      const parsedObject = JSON.parse(selectedItem);
 
-      let selection;
-      if (selectedItemId) {
-        selection = grid.data.find((item) => {return item._id === selectedItemId;});
+      grid.selection.removeCell();
+
+      const selection = grid.data.find((item, index) => {
+        return item.getData("_id") === parsedObject?._id;
+      });
+
+      if (selection) {
+        grid.selection.setCell(selection);
       }
-
-      grid.selection.setCell(selection);
     }
-  }, [selectedItemId]);
+
+  }, [selectedItem]);
 
   // Refresh width on resize
   useEffect(() => {
@@ -105,7 +112,7 @@ VanitySelectionTableBase.propTypes = {
   columns: PropTypes.array,
   data: PropTypes.array,
   onRowSelect: PropTypes.func,
-  selectedItemId: PropTypes.any,
+  selectedItem: PropTypes.any,
   rowStyling: PropTypes.func,
   sort: PropTypes.string,
   height: PropTypes.string,

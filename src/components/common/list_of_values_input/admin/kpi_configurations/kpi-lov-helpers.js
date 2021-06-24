@@ -20,6 +20,8 @@ kpiLovHelpers.filters = [
   { id: { type: "jenkins-job-url", value: "" }, label: "Jenkins Build URL" },
   { id: { type: "jenkins-build-number", value: [] }, label: "Jenkins Build Number" },
   { id: { type: "jira-issue-type", value: [] }, label: "Jira Issues Type" },
+  { id: { type: "jira-issue-components", value: [] }, label: "Jira Issues Components" },
+  { id: { type: "jira-issue-labels", value: [] }, label: "Jira Issues Labels" },
   { id: { type: "jira-issue-start-status", value: [] }, label: "Jira Issue Start Status" },
   { id: { type: "jira-issue-done-status", value: [] }, label: "Jira Issue Done Status" },
   { id: { type: "sonar-project-key", value: [] }, label: "Sonar Project Keys" },

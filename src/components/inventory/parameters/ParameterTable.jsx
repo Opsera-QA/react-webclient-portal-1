@@ -1,21 +1,20 @@
-import React, {useContext, useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {
-  getEditableTextColumn,
-  getTableBooleanIconColumn,
-  getTableTextColumn
-} from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import FilterContainer from "components/common/table/FilterContainer";
 import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 import NewParameterOverlay from "components/inventory/parameters/NewParameterOverlay";
 import VanitySelectionTable from "components/common/table/VanitySelectionTable";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import {AuthContext} from "contexts/AuthContext";
+import {
+  getEditableTextColumn, getTableBooleanIconColumn,
+  getTableTextColumn
+} from "components/common/table/column_definitions/model-table-column-definitions";
+import VanityDataContainer from "components/common/containers/VanityDataContainer";
 
-function ParameterTable({ data, parameterMetadata, setParameterData, parameterData, loadData, isLoading, getNewModel, isMounted, getAccessToken, cancelTokenSource, parameterRoleDefinitions }) {
+function ParameterTable({ data, parameterMetadata, setParameterData, parameterData, loadData, isLoading, isMounted, getAccessToken, cancelTokenSource, parameterRoleDefinitions, parameterFilterModel }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessRoleData } = useContext(AuthContext);
   const [userRoleAccess, setUserRoleAccess] = useState(undefined);
@@ -66,7 +65,6 @@ function ParameterTable({ data, parameterMetadata, setParameterData, parameterDa
         isMounted={isMounted}
         getAccessToken={getAccessToken}
         cancelTokenSource={cancelTokenSource}
-        parameterRoleDefinitions={parameterRoleDefinitions}
       />
     );
   };
@@ -80,10 +78,11 @@ function ParameterTable({ data, parameterMetadata, setParameterData, parameterDa
         columns={columns}
         isLoading={isLoading || parameterMetadata == null}
         loadData={loadData}
-        getNewModel={getNewModel}
         setParentModel={setParameterData}
+        paginationModel={parameterFilterModel}
         tableHeight={"calc(25vh)"}
         parentModel={parameterData}
+        parentModelId={parameterData?.getData("_id")}
         rowSelection={"complex"}
       />
     );
@@ -98,14 +97,13 @@ function ParameterTable({ data, parameterMetadata, setParameterData, parameterDa
   };
 
   return (
-    <FilterContainer
+    <VanityDataContainer
       loadData={loadData}
       addRecordFunction={getAddRecordFunction()}
-      showBorder={false}
       isLoading={isLoading}
       body={getParameterTable()}
+      paginationModel={parameterFilterModel}
       metadata={parameterMetadata}
-      type={"Parameter"}
       titleIcon={faHandshake}
       title={"Parameters"}
       className={"px-2 pb-2"}
@@ -118,12 +116,12 @@ ParameterTable.propTypes = {
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
   parameterMetadata: PropTypes.object,
-  getNewModel: PropTypes.func,
   setParameterData: PropTypes.func,
   isMounted: PropTypes.object,
   getAccessToken: PropTypes.func,
   cancelTokenSource: PropTypes.object,
   parameterRoleDefinitions: PropTypes.object,
+  parameterFilterModel: PropTypes.object,
   parameterData: PropTypes.object
 };
 
