@@ -50,7 +50,7 @@ function PipelinesByProjectDataBlock({ dashboardData, toggleDynamicPanel, select
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", dataObject[0]?.count[0]?.count);
         setTableFilterDto({ ...newFilterDto });
-        setProjectCount(dataObject[0]?.count[0]?.count);
+        setProjectCount(dataObject[0]?.count[0]?.count || 0);
       }
     }
     catch (error) {
