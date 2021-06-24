@@ -16,6 +16,7 @@ function RegistryToolIdentifierSelectInput({ dataObject, setDataObject, disabled
       dataObject={dataObject}
       setDataObject={setDataObject}
       toolRegistryFilter={true}
+      status={"active"}
       fieldName={"tool_identifier"}
       setDataFunction={validateAndSetData}
       disabled={disabled}

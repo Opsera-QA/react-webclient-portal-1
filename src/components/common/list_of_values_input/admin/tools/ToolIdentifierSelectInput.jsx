@@ -1,38 +1,65 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 import toolManagementActions from "components/admin/tools/tool-management-actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import axios from "axios";
 
-function ToolIdentifierSelectInput({ fieldName, dataObject, setDataFunction, setDataObject, disabled, textField, valueField, toolRegistryFilter}) {
+function ToolIdentifierSelectInput({ fieldName, dataObject, setDataFunction, setDataObject, disabled, textField, valueField, enabledInToolRegistry, status}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [toolTypes, setToolTypes] = useState([]);
+  const [toolIdentifiers, setToolIdentifiers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    setToolIdentifiers([]);
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadTools();
+      await loadTools(cancelSource);
     }
     catch (error) {
-      toastContext.showLoadingErrorDialog(error);
+      if (isMounted?.current === true) {
+        console.error(error);
+        toastContext.showLoadingErrorDialog(error);
+      }
     }
     finally {
-      setIsLoading(false);
+      if (isMounted?.current === true ) {
+        setIsLoading(false);
+      }
     }
   };
 
-  const loadTools = async () => {
-    let response = await toolManagementActions.getToolIdentifiers(getAccessToken, toolRegistryFilter);
+  const loadTools = async (cancelSource = cancelTokenSource) => {
+    let response = await toolManagementActions.getToolIdentifiersV2(getAccessToken, cancelSource, status, enabledInToolRegistry);
+    const newToolIdentifiers = response?.data;
 
-    if (response?.data != null) {
-      setToolTypes(response?.data);
+    if (Array.isArray(newToolIdentifiers) && newToolIdentifiers.length > 0) {
+      setToolIdentifiers(newToolIdentifiers);
     }
   };
 
@@ -42,12 +69,12 @@ function ToolIdentifierSelectInput({ fieldName, dataObject, setDataFunction, set
       dataObject={dataObject}
       setDataObject={setDataObject}
       setDataFunction={setDataFunction}
-      selectOptions={toolTypes}
-      groupBy={"tool_type_identifier"}
+      selectOptions={toolIdentifiers}
+      groupBy={"tool_type_name"}
       busy={isLoading}
       valueField={valueField}
       textField={textField}
-      // placeholderText={placeholderText}
+      placeholderText={"Select a Tool Identifier"}
       disabled={disabled || isLoading}
     />
   );
@@ -59,9 +86,10 @@ ToolIdentifierSelectInput.propTypes = {
   setDataObject: PropTypes.func,
   setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
-  toolRegistryFilter: PropTypes.bool,
+  enabledInToolRegistry: PropTypes.bool,
   textField: PropTypes.string,
-  valueField: PropTypes.string
+  valueField: PropTypes.string,
+  status: PropTypes.string,
 };
 
 ToolIdentifierSelectInput.defaultProps = {
