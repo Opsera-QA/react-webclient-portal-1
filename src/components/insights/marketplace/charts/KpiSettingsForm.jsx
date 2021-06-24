@@ -33,6 +33,7 @@ import ManualKpiMultiSelectInputBase from "components/common/list_of_values_inpu
 import SeleniumTestSuitesMultiSelectInput from "components/common/list_of_values_input/insights/charts/selenium/SeleniumTestSuitesMultiSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import SonarProjectLanguagesMultiSelectInput from "components/common/list_of_values_input/insights/charts/sonar/SonarProjectLanguagesMultiSelectInput";
+import SonarProjectsMultiSelectInput from "components/common/list_of_values_input/insights/charts/sonar/SonarProjectsMultiSelectInput";
 
 function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setView, loadChart, setKpis }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -188,6 +189,7 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
     "sonar-bugs-metric-scorecard",
     "sonar-codesmells-metric-scorecard",
     "sonar-vulnerabilities-metric-scorecard",
+    "sonar-reliability-remediation-agg-by-time",
   ];
 
   const getKpiFilters = (filter) => {
@@ -279,7 +281,8 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       case "sonar-project-key":
         return (
           <div>
-            <MultiTextInputBase
+            <SonarProjectsMultiSelectInput
+              placeholderText={"Select Project(s)"}
               type={"kpi_filter"}
               fieldName={"value"}
               setDataObject={setKpiSonarProjectKeyFilter}

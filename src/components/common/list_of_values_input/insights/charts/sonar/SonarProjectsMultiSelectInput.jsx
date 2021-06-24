@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExclamationCircle } from "@fortawesome/free-solid-svg-icons";
@@ -6,8 +6,9 @@ import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInp
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import chartsActions from "components/insights/charts/charts-actions";
+import axios from "axios";
 
-function SonarProjectLanguagesMultiSelectInput({
+function SonarProjectsMultiSelectInput({
   placeholderText,
   valueField,
   textField,
@@ -20,23 +21,37 @@ function SonarProjectLanguagesMultiSelectInput({
   const [field] = useState(dataObject?.getFieldById(fieldName));
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [projectLanguages, setProjectLanguages] = useState([]);
+  const [sonarProjects, setSonarProjects] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const validateAndSetData = (fieldName, value) => {
-    let newDataObject = dataObject;
-    newDataObject.setData(fieldName, value);
-    setDataObject({ ...newDataObject });
-  };
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
   useEffect(() => {
-    loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+
+    isMounted.current = true;
+    setSonarProjects([]);
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadTools();
+      await loadTools(cancelSource);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     } finally {
@@ -44,23 +59,25 @@ function SonarProjectLanguagesMultiSelectInput({
     }
   };
 
-  const loadTools = async () => {
+  const loadTools = async (cancelSource = cancelTokenSource) => {
     const response = await chartsActions.parseConfigurationAndGetChartMetrics(
       getAccessToken,
-      undefined,
-      "getSonarProjectLanguagesList"
+      cancelSource,
+      "getSonarProjectsList"
     );
 
-    if (response.data != null) {
-      setProjectLanguages(response?.data?.data[0]?.SonarProjectLanguagesList?.data);
+    if (isMounted?.current === true && response?.data != null) {
+      const sonarProjectList = response?.data?.data[0]?.SonarProjectsList?.data;
+
+      if (Array.isArray(sonarProjectList) && sonarProjectList.length > 0) setSonarProjects(sonarProjectList);
     }
   };
 
-  if (!isLoading && (projectLanguages == null || projectLanguages.length === 0)) {
+  if (!isLoading && (sonarProjects == null || sonarProjects.length === 0)) {
     return (
       <div className="form-text text-muted p-2">
         <FontAwesomeIcon icon={faExclamationCircle} className="text-muted mr-1" fixedWidth />
-        No Languages available for Sonar.
+        No Projects available for Sonar.
       </div>
     );
   }
@@ -71,18 +88,17 @@ function SonarProjectLanguagesMultiSelectInput({
       dataObject={dataObject}
       setDataObject={setDataObject}
       setDataFunction={setDataFunction}
-      selectOptions={projectLanguages}
+      selectOptions={sonarProjects}
       busy={isLoading}
       valueField={valueField}
       textField={textField}
       placeholderText={placeholderText}
       disabled={disabled || isLoading}
-      onChange={(newValue) => validateAndSetData(field.id, newValue)}
     />
   );
 }
 
-SonarProjectLanguagesMultiSelectInput.propTypes = {
+SonarProjectsMultiSelectInput.propTypes = {
   placeholderText: PropTypes.string,
   fieldName: PropTypes.string,
   textField: PropTypes.string,
@@ -94,9 +110,9 @@ SonarProjectLanguagesMultiSelectInput.propTypes = {
   visible: PropTypes.bool,
 };
 
-SonarProjectLanguagesMultiSelectInput.defaultProps = {
+SonarProjectsMultiSelectInput.defaultProps = {
   textField: "text",
   valueField: "value",
 };
 
-export default SonarProjectLanguagesMultiSelectInput;
+export default SonarProjectsMultiSelectInput;
