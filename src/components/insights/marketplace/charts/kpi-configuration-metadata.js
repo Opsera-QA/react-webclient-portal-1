@@ -135,6 +135,40 @@ export const kpiJiraIssueTypeFilterMetadata = {
   },
 };
 
+export const kpiJiraIssueComponentsFilterMetadata = {
+  type: "Jira Issue Components Filter",
+  fields: [
+    {
+      label: "Type",
+      id: "type",
+    },
+    {
+      label: "Jira Issue Components",
+      id: "value",
+    },
+  ],
+  newObjectFields: {
+    value: [],
+  },
+};
+
+export const kpiJiraIssueLabelsFilterMetadata = {
+  type: "Jira Issue Labels Filter",
+  fields: [
+    {
+      label: "Type",
+      id: "type",
+    },
+    {
+      label: "Jira Issue Labels",
+      id: "value",
+    },
+  ],
+  newObjectFields: {
+    value: [],
+  },
+};
+
 export const kpiJiraIssueStartStatusFilterMetadata = {
   type: "Jira Issue Start Status Filter",
   fields: [
