@@ -5,20 +5,20 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
 function BooleanToggleInput({ fieldName, dataObject, setDataObject, setDataFunction, disabled }) {
-    const [field] = useState(dataObject.getFieldById(fieldName));
+  const [field] = useState(dataObject.getFieldById(fieldName));
 
-  const validateAndSetData = (value) => {
+  const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
-    newDataObject.setData(field.id, value);
+    newDataObject.setData(fieldName, value);
     setDataObject({...newDataObject});
   };
 
   const updateValue = (newValue) => {
     if (setDataFunction) {
-      setDataFunction(field?.id, newValue);
+      setDataFunction(fieldName, newValue);
     }
     else {
-      validateAndSetData(field?.id, newValue);
+      validateAndSetData(fieldName, newValue);
     }
   };
 
