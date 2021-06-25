@@ -9,14 +9,10 @@ function ClusterTemplateSelectInput({dataObject, setDataObject, isLoading, disab
       name: "Networking",
       value: "networking",
     },
-    // {
-    //   name: "EC2 Linux + Networking",
-    //   value: "ec2_linux",
-    // },
-    // {
-    //   name: "EC2 Windows + Networking",
-    //   value: "ec2_windows",
-    // }
+    {
+      name: "EC2",
+      value: "ec2",
+    },
   ];
 
   return (

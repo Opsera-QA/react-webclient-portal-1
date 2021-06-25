@@ -49,6 +49,22 @@ const ec2ClusterCreationTaskConfigurationMetadata = {
       label: "AWS Tool",
       id: "awsToolId",
       isRequired: true
+    },
+    {
+      label: "Security Group",
+      id: "securityGroup"
+    },
+    {
+      label: "Existing VPC",
+      id: "vpcId"
+    },
+    {
+      label: "EC2 Instance Type",
+      id: "instanceType"
+    },
+    {
+      label: "Subnets",
+      id: "subnets"
     }
   ],
   newObjectFields:
@@ -63,7 +79,11 @@ const ec2ClusterCreationTaskConfigurationMetadata = {
       subnet_1: "10.0.0.0/24",
       subnet_2: "10.0.1.0/24",
       subnet_3: "10.0.2.0/24",
-      awsToolId: ""
+      awsToolId: "",
+      securityGroup : "",
+      vpcId : "",
+      instanceType : "",
+      subnets : []
     }
 };
 

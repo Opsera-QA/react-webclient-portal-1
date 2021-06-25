@@ -1,4 +1,4 @@
-import baseActions from "../../../../../../../../utils/actionsBase";
+import baseActions from "../../../../../utils/actionsBase";
 
 const ECSCreationActions = {};
 
@@ -29,7 +29,7 @@ ECSCreationActions.getVPCs = async (dataObject, getAccessToken, cancelTokenSourc
 ECSCreationActions.getSubnets = async (dataObject, getAccessToken, cancelTokenSource) => {
   let urlParams = {
     toolId: dataObject?.getData("awsToolId"),
-    vpcId:dataObject?.getData("vpcCidrBlock"),
+    vpcId:dataObject?.getData("vpcId"),
   };
   const apiUrl = `/tools/aws/v2/subnets`;
   let response = await baseActions.apiPostCallV2(getAccessToken,cancelTokenSource, apiUrl, urlParams);

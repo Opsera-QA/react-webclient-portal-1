@@ -9,10 +9,11 @@ function NetworkingOnlySubForm({ dataObject, setDataObject, disabled }) {
     if (dataObject?.getData("createVpc")) {
       return (
         <>
-            <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"vpcCidrBlock"} />
-            <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"subnet_1"} />
-            <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"subnet_2"} />
-            <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"subnet_3"} />
+          <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"vpcCidrBlock"} />
+          <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"public_subnet_1"} />
+          <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"public_subnet_2"} />
+          <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"private_subnet_1"} />
+          <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"private_subnet_2"} />
         </>
       );
     }

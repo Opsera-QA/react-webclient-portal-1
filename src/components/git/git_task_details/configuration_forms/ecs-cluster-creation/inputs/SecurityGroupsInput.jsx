@@ -6,21 +6,21 @@ import { AuthContext } from "../../../../../../contexts/AuthContext";
 import axios from "axios";
 import ECSCreationActions from "../ecs-creation-actions";
 
-function VPCSelectInput({
-  fieldName,
-  dataObject,
-  setDataObject,
-  disabled,
-  textField,
-  valueField,
-  tool_prop,
-  pipelineId,
-}) {
+function SecurityGroupSelectInput({
+                                   fieldName,
+                                   dataObject,
+                                   setDataObject,
+                                   disabled,
+                                   textField,
+                                   valueField,
+                                   tool_prop,
+                                   pipelineId,
+                                 }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [configurations, setVPCs] = useState([]);
+  const [securityGroup, setSecurityGroups] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a VPC");
+  const [placeholder, setPlaceholder] = useState("Select a Security Group");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -65,21 +65,20 @@ function VPCSelectInput({
 
   const loadTypes = async () => {
     try {
-      const res = await ECSCreationActions.getVPCs(dataObject, getAccessToken, cancelTokenSource);
-      console.log(res.data);
+      const res = await ECSCreationActions.getSecurityGroups(dataObject, getAccessToken, cancelTokenSource);
       if (res && res.status === 200) {
         if (res.data.length === 0) {
-          setPlaceholder("No VPCs Found");
+          setPlaceholder("No Security Groups Found");
           return;
         }
-        setPlaceholder("Select a VPC");
-        setVPCs(res.data);
+        setPlaceholder("Select a Security Group");
+        setSecurityGroups(res.data);
         return;
       }
-      setPlaceholder("No VPCs Found");
-      setVPCs([]);
+      setPlaceholder("No Security Groups Found");
+      setSecurityGroups([]);
     } catch (error) {
-      setPlaceholder("No VPCs Found");
+      setPlaceholder("No Security Groups Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }
@@ -90,17 +89,17 @@ function VPCSelectInput({
         fieldName={fieldName}
         dataObject={dataObject}
         setDataObject={setDataObject}
-        selectOptions={configurations}
+        selectOptions={securityGroup}
+        busy={isLoading}
         textField={textField}
         valueField={valueField}
-        busy={isLoading}
         placeholderText={placeholder}
-        disabled={disabled || isLoading || (!isLoading && (configurations == null || configurations.length === 0))}
+        disabled={disabled || isLoading || (!isLoading && (securityGroup == null || securityGroup.length === 0))}
       />
   );
 }
 
-VPCSelectInput.propTypes = {
+SecurityGroupSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
@@ -111,10 +110,10 @@ VPCSelectInput.propTypes = {
   pipelineId: PropTypes.string,
 };
 
-VPCSelectInput.defaultProps = {
-  fieldName: "vpcId",
-  textField: "name",
-  valueField: "id",
+SecurityGroupSelectInput.defaultProps = {
+  fieldName: "securityGroup",
+  textField: "groupName",
+  valueField: "groupId",
 };
 
-export default VPCSelectInput;
+export default SecurityGroupSelectInput;

@@ -6,21 +6,21 @@ import { AuthContext } from "../../../../../../contexts/AuthContext";
 import axios from "axios";
 import ECSCreationActions from "../ecs-creation-actions";
 
-function VPCSelectInput({
-  fieldName,
-  dataObject,
-  setDataObject,
-  disabled,
-  textField,
-  valueField,
-  tool_prop,
-  pipelineId,
-}) {
+function KeyPairSelectInput({
+                          fieldName,
+                          dataObject,
+                          setDataObject,
+                          disabled,
+                          textField,
+                          valueField,
+                          tool_prop,
+                          pipelineId,
+                        }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [configurations, setVPCs] = useState([]);
+  const [keyPairs, setKeyPairs] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a VPC");
+  const [placeholder, setPlaceholder] = useState("Select a Key Pair");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -65,42 +65,47 @@ function VPCSelectInput({
 
   const loadTypes = async () => {
     try {
-      const res = await ECSCreationActions.getVPCs(dataObject, getAccessToken, cancelTokenSource);
-      console.log(res.data);
+      const res = await ECSCreationActions.getKeyPairs(dataObject, getAccessToken, cancelTokenSource);
       if (res && res.status === 200) {
         if (res.data.length === 0) {
-          setPlaceholder("No VPCs Found");
+          setPlaceholder("No Key Pairs Found");
           return;
         }
-        setPlaceholder("Select a VPC");
-        setVPCs(res.data);
+        setPlaceholder("Select a Key Pair");
+        setKeyPairs(res.data);
         return;
       }
-      setPlaceholder("No VPCs Found");
-      setVPCs([]);
+      setPlaceholder("No Key Pairs Found");
+      setKeyPairs([]);
     } catch (error) {
-      setPlaceholder("No VPCs Found");
+      setPlaceholder("No Key Pairs Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }
+  };
+
+  const setDataFunction = (fieldName, value) => {
+    const newDataObject = dataObject;
+    newDataObject.setData(fieldName, value);
+    setDataObject({...newDataObject});
+    return;
   };
 
   return (
       <SelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
+        setDataFunction={setDataFunction}
         setDataObject={setDataObject}
-        selectOptions={configurations}
-        textField={textField}
-        valueField={valueField}
+        selectOptions={keyPairs}
         busy={isLoading}
         placeholderText={placeholder}
-        disabled={disabled || isLoading || (!isLoading && (configurations == null || configurations.length === 0))}
+        disabled={disabled || isLoading || (!isLoading && (keyPairs == null || keyPairs.length === 0))}
       />
   );
 }
 
-VPCSelectInput.propTypes = {
+KeyPairSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
@@ -111,10 +116,8 @@ VPCSelectInput.propTypes = {
   pipelineId: PropTypes.string,
 };
 
-VPCSelectInput.defaultProps = {
-  fieldName: "vpcId",
-  textField: "name",
-  valueField: "id",
+KeyPairSelectInput.defaultProps = {
+  fieldName: "keyPair"
 };
 
-export default VPCSelectInput;
+export default KeyPairSelectInput;

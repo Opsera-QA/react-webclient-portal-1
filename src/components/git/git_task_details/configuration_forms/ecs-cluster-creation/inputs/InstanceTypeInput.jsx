@@ -6,21 +6,21 @@ import { AuthContext } from "../../../../../../contexts/AuthContext";
 import axios from "axios";
 import ECSCreationActions from "../ecs-creation-actions";
 
-function VPCSelectInput({
-  fieldName,
-  dataObject,
-  setDataObject,
-  disabled,
-  textField,
-  valueField,
-  tool_prop,
-  pipelineId,
-}) {
+function InstanceTypeSelectInput({
+                              fieldName,
+                              dataObject,
+                              setDataObject,
+                              disabled,
+                              textField,
+                              valueField,
+                              imageType,
+                              pipelineId,
+                            }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [configurations, setVPCs] = useState([]);
+  const [instanceTypes, setInstanceTypes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a VPC");
+  const [placeholder, setPlaceholder] = useState("Select a Instance Type");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -45,7 +45,7 @@ function VPCSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [imageType]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -57,29 +57,27 @@ function VPCSelectInput({
         toastContext.showLoadingErrorDialog(error);
       }
     } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
+      setIsLoading(false);
     }
   };
 
   const loadTypes = async () => {
     try {
-      const res = await ECSCreationActions.getVPCs(dataObject, getAccessToken, cancelTokenSource);
-      console.log(res.data);
+      const res = await ECSCreationActions.getEc2ImageTypes(dataObject, getAccessToken, cancelTokenSource);
+      console.log(res);
       if (res && res.status === 200) {
         if (res.data.length === 0) {
-          setPlaceholder("No VPCs Found");
+          setPlaceholder("No Instance Types Found");
           return;
         }
-        setPlaceholder("Select a VPC");
-        setVPCs(res.data);
+        setPlaceholder("Select a Instance Type");
+        setInstanceTypes(res.data);
         return;
       }
-      setPlaceholder("No VPCs Found");
-      setVPCs([]);
+      setPlaceholder("No Instance Types Found");
+      setInstanceTypes([]);
     } catch (error) {
-      setPlaceholder("No VPCs Found");
+      setPlaceholder("No Instance Types Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }
@@ -90,31 +88,31 @@ function VPCSelectInput({
         fieldName={fieldName}
         dataObject={dataObject}
         setDataObject={setDataObject}
-        selectOptions={configurations}
+        selectOptions={instanceTypes}
+        busy={isLoading}
         textField={textField}
         valueField={valueField}
-        busy={isLoading}
         placeholderText={placeholder}
-        disabled={disabled || isLoading || (!isLoading && (configurations == null || configurations.length === 0))}
+        disabled={disabled || isLoading || (!isLoading && (instanceTypes == null || instanceTypes.length === 0))}
       />
   );
 }
 
-VPCSelectInput.propTypes = {
+InstanceTypeSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  tool_prop: PropTypes.string,
+  imageType: PropTypes.string,
   pipelineId: PropTypes.string,
 };
 
-VPCSelectInput.defaultProps = {
-  fieldName: "vpcId",
-  textField: "name",
-  valueField: "id",
+InstanceTypeSelectInput.defaultProps = {
+  fieldName: "instanceType",
+  textField: "key",
+  valueField: "value",
 };
 
-export default VPCSelectInput;
+export default InstanceTypeSelectInput;

@@ -1,26 +1,26 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
 import axios from "axios";
 import ECSCreationActions from "../ecs-creation-actions";
+import MultiSelectInputBase from "../../../../../common/inputs/select/MultiSelectInputBase";
 
-function VPCSelectInput({
-  fieldName,
-  dataObject,
-  setDataObject,
-  disabled,
-  textField,
-  valueField,
-  tool_prop,
-  pipelineId,
-}) {
+function SubnetSelectInput({
+                                   fieldName,
+                                   dataObject,
+                                   setDataObject,
+                                   disabled,
+                                   textField,
+                                   valueField,
+                                    vpc,
+                                   pipelineId,
+                                 }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [configurations, setVPCs] = useState([]);
+  const [subnet, setSubnets] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a VPC");
+  const [placeholder, setPlaceholder] = useState("Select a Subnet");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -45,7 +45,7 @@ function VPCSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [vpc]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -65,56 +65,55 @@ function VPCSelectInput({
 
   const loadTypes = async () => {
     try {
-      const res = await ECSCreationActions.getVPCs(dataObject, getAccessToken, cancelTokenSource);
-      console.log(res.data);
+      const res = await ECSCreationActions.getSubnets(dataObject, getAccessToken, cancelTokenSource);
       if (res && res.status === 200) {
         if (res.data.length === 0) {
-          setPlaceholder("No VPCs Found");
+          setPlaceholder("No Subnets Found");
           return;
         }
-        setPlaceholder("Select a VPC");
-        setVPCs(res.data);
+        setPlaceholder("Select a Subnet");
+        setSubnets(res.data);
         return;
       }
-      setPlaceholder("No VPCs Found");
-      setVPCs([]);
+      setPlaceholder("No Subnets Found");
+      setSubnets([]);
     } catch (error) {
-      setPlaceholder("No VPCs Found");
+      setPlaceholder("No Subnets Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }
   };
 
   return (
-      <SelectInputBase
+      <MultiSelectInputBase
         fieldName={fieldName}
         dataObject={dataObject}
         setDataObject={setDataObject}
-        selectOptions={configurations}
+        selectOptions={subnet}
+        busy={isLoading}
         textField={textField}
         valueField={valueField}
-        busy={isLoading}
         placeholderText={placeholder}
-        disabled={disabled || isLoading || (!isLoading && (configurations == null || configurations.length === 0))}
+        disabled={disabled || isLoading || (!isLoading && (subnet == null || subnet.length === 0))}
       />
   );
 }
 
-VPCSelectInput.propTypes = {
+SubnetSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  tool_prop: PropTypes.string,
+  vpc: PropTypes.string,
   pipelineId: PropTypes.string,
 };
 
-VPCSelectInput.defaultProps = {
-  fieldName: "vpcId",
-  textField: "name",
-  valueField: "id",
+SubnetSelectInput.defaultProps = {
+  fieldName: "subnets",
+  textField: "cidrBlock",
+  valueField: "cidrBlock",
 };
 
-export default VPCSelectInput;
+export default SubnetSelectInput;

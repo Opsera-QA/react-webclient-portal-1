@@ -9,6 +9,7 @@ import AWSToolSelectInput from "./inputs/AWSToolSelectInput";
 import TextInputBase from "../../../../common/inputs/text/TextInputBase";
 import ClusterTemplateSelectInput from "./inputs/ClusterTemplateSelectInput";
 import NetworkingOnlySubForm from "./sub_forms/NetworkingOnlySubForm";
+import EC2SubForm from "./sub_forms/EC2SubForm";
 
 
 function EC2ClusterCreationTaskConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
@@ -28,6 +29,13 @@ function EC2ClusterCreationTaskConfigurationPanel({ gitTasksDataDto, gitTasksCon
       return (
         <Col lg={12}>
           <NetworkingOnlySubForm dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData}/>
+        </Col>
+      );
+    }
+    if(gitTasksConfigurationData?.getData("clusterTemplate") && gitTasksConfigurationData?.getData("clusterTemplate") === "ec2"){
+      return (
+        <Col lg={12}>
+          <EC2SubForm dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData}/>
         </Col>
       );
     }
