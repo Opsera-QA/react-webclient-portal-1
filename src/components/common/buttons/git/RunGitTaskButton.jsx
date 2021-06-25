@@ -93,7 +93,7 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
         }else{
           toastContext.showCreateFailureResultDialog(
             "ECS Cluster",
-            "A service level error has occurred in creation of the ECS Cluster - check the console log for a complete error log"
+            "A service level error has occurred in creation of the ECS Cluster - check the Activity Logs for a complete error log."
           );
         }
         setIsLoading(false);
