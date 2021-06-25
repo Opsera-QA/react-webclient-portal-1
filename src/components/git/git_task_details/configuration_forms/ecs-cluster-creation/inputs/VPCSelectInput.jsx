@@ -63,9 +63,9 @@ function VPCSelectInput({
     }
   };
 
-  const loadTypes = async () => {
+  const loadTypes = async (cancelSource) => {
     try {
-      const res = await ECSCreationActions.getVPCs(dataObject, getAccessToken, cancelTokenSource);
+      const res = await ECSCreationActions.getVPCs(dataObject, getAccessToken, cancelSource);
       console.log(res.data);
       if (res && res.status === 200) {
         if (res.data.length === 0) {

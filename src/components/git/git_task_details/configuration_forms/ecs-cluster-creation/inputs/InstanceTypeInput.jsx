@@ -61,9 +61,9 @@ function InstanceTypeSelectInput({
     }
   };
 
-  const loadTypes = async () => {
+  const loadTypes = async (cancelSource) => { 
     try {
-      const res = await ECSCreationActions.getEc2ImageTypes(dataObject, getAccessToken, cancelTokenSource);
+      const res = await ECSCreationActions.getEc2ImageTypes(dataObject, getAccessToken, cancelSource);
       console.log(res);
       if (res && res.status === 200) {
         if (res.data.length === 0) {

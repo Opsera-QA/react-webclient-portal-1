@@ -21,9 +21,10 @@ function EC2ClusterCreationTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurat
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"clusterName"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"awsToolId"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"clusterTemplate"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"subnet_1"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"subnet_2"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"subnet_3"} />
+        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"public_subnet_1"} />
+        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"public_subnet_2"} />
+        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"private_subnet_cidr_1"} />
+        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"private_subnet_cidr_2"} />
       </div>
     </GitTasksSummaryCardContainer>
   );

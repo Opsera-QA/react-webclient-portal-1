@@ -64,9 +64,9 @@ function PublicSubnetSelectInput({
     }
   };
 
-  const loadTypes = async () => {
+  const loadTypes = async (cancelSource) => {
     try {
-      const res = await ECSCreationActions.getSubnets(dataObject, getAccessToken, cancelTokenSource);
+      const res = await ECSCreationActions.getSubnets(dataObject, getAccessToken, cancelSource);
       if (res && res.status === 200) {
         if (res.data.length === 0) {
           setPlaceholder("No Public Subnets Found");

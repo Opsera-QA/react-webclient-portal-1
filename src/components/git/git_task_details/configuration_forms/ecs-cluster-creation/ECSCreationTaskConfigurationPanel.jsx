@@ -25,7 +25,7 @@ function EC2ClusterCreationTaskConfigurationPanel({ gitTasksDataDto, gitTasksCon
   }
 
   const getDynamicFields = () => {
-    if(gitTasksConfigurationData?.getData("clusterTemplate") && gitTasksConfigurationData?.getData("clusterTemplate") === "networking"){
+    if(gitTasksConfigurationData?.getData("clusterTemplate") && gitTasksConfigurationData?.getData("clusterTemplate") === "fargate"){
       return (
         <Col lg={12}>
           <NetworkingOnlySubForm dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData}/>

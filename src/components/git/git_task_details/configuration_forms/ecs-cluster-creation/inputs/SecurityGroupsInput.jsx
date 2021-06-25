@@ -63,9 +63,9 @@ function SecurityGroupSelectInput({
     }
   };
 
-  const loadTypes = async () => {
+  const loadTypes = async (cancelSource) => {
     try {
-      const res = await ECSCreationActions.getSecurityGroups(dataObject, getAccessToken, cancelTokenSource);
+      const res = await ECSCreationActions.getSecurityGroups(dataObject, getAccessToken, cancelSource);
       if (res && res.status === 200) {
         if (res.data.length === 0) {
           setPlaceholder("No Security Groups Found");

@@ -63,9 +63,9 @@ function KeyPairSelectInput({
     }
   };
 
-  const loadTypes = async () => {
+  const loadTypes = async (cancelSource) => {
     try {
-      const res = await ECSCreationActions.getKeyPairs(dataObject, getAccessToken, cancelTokenSource);
+      const res = await ECSCreationActions.getKeyPairs(dataObject, getAccessToken, cancelSource);
       if (res && res.status === 200) {
         if (res.data.length === 0) {
           setPlaceholder("No Key Pairs Found");
