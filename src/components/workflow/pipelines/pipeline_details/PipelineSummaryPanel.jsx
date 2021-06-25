@@ -604,7 +604,7 @@ function PipelineSummaryPanel({
 
           {pipeline.workflow?.last_run?.completed &&
           <Col sm={12} className="py-2">
-            <span className="text-muted mr-1">Summary:</span> Last complete run of pipline finished on {
+            <span className="text-muted mr-1">Summary:</span> Last complete run of pipeline finished on {
             format(new Date(pipeline.workflow.last_run.completed), "yyyy-MM-dd', 'hh:mm a")} with a status
             of {pipeline.workflow.last_run.status}.
 
