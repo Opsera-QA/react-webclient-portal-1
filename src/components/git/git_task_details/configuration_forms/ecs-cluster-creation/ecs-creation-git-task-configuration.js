@@ -30,10 +30,6 @@ const ec2ClusterCreationTaskConfigurationMetadata = {
       id: "imageType",
     },
     {
-      label: "Private Subnets",
-      id: "privateSubnets",
-    },
-    {
       label: "Public Subnet 1",
       id: "public_subnet_1",
     },
@@ -75,8 +71,13 @@ const ec2ClusterCreationTaskConfigurationMetadata = {
       id: "instanceType"
     },
     {
-      label: "Subnets",
-      id: "subnets"
+      label: "Key Pair",
+      id: "keyPair"
+    },
+    {
+      label: "Private Subnets",
+      id: "privateSubnets",
+      maxItems: 2
     }
   ],
   newObjectFields:
@@ -85,7 +86,6 @@ const ec2ClusterCreationTaskConfigurationMetadata = {
       createVpc: false,
       clusterName: "",
       publicSubnets: [],
-      privateSubnets: [],
       imageType: "",
       clusterTemplate: "",
       public_subnet_1: "10.0.0.0/24",
@@ -94,11 +94,12 @@ const ec2ClusterCreationTaskConfigurationMetadata = {
       private_subnet_cidr_2: "10.194.21.0/24",
       public_subnet_cidr_1 : "10.194.10.0/24",
       public_subnet_cidr_2 : "10.194.11.0/24",
+      privateSubnets: [],
       awsToolId: "",
       securityGroup : "",
       vpcId : "",
       instanceType : "",
-      subnets : []
+      keyPair: ""
     }
 };
 

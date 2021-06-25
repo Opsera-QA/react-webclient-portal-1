@@ -5,6 +5,7 @@ import { AuthContext } from "../../../../../../contexts/AuthContext";
 import axios from "axios";
 import ECSCreationActions from "../ecs-creation-actions";
 import MultiSelectInputBase from "../../../../../common/inputs/select/MultiSelectInputBase";
+import InfoText from "../../../../../common/inputs/info_text/InfoText";
 
 function SubnetSelectInput({
                                    fieldName,
@@ -111,7 +112,7 @@ SubnetSelectInput.propTypes = {
 };
 
 SubnetSelectInput.defaultProps = {
-  fieldName: "subnets",
+  fieldName: "privateSubnets",
   textField: "cidrBlock",
   valueField: "cidrBlock",
 };

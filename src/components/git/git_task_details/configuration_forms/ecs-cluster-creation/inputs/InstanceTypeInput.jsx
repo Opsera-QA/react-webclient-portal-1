@@ -61,17 +61,17 @@ function InstanceTypeSelectInput({
     }
   };
 
-  const loadTypes = async (cancelSource) => { 
+  const loadTypes = async (cancelSource) => {
     try {
       const res = await ECSCreationActions.getEc2ImageTypes(dataObject, getAccessToken, cancelSource);
       console.log(res);
       if (res && res.status === 200) {
-        if (res.data.length === 0) {
+        if (res.data.images.length === 0) {
           setPlaceholder("No Instance Types Found");
           return;
         }
         setPlaceholder("Select a Instance Type");
-        setInstanceTypes(res.data);
+        setInstanceTypes(res.data.images);
         return;
       }
       setPlaceholder("No Instance Types Found");
