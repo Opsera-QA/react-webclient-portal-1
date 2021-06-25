@@ -133,6 +133,8 @@ export const getPipelineStatusIconCss = (value) => {
     case "failure":
     case "failed":
       return ("fa-times-circle red");
+    case "pending":
+      return ("fa-pause-circle yellow");
     case "unknown":
       return ("fa-circle yellow");
     case "rejected":
