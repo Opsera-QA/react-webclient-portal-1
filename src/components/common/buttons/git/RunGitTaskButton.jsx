@@ -2,7 +2,7 @@ import React, {useState, useContext, useRef, useEffect} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlay} from "@fortawesome/pro-light-svg-icons";
+import { faPlay, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
@@ -67,11 +67,11 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
       } catch (error) {
         console.log(error);
         if(error?.error?.response?.data?.message){
-          toastContext.showLoadingErrorDialog(error.error.response.data.message);  
+          toastContext.showLoadingErrorDialog(error.error.response.data.message);
         }else{
           toastContext.showLoadingErrorDialog(error);
         }
-        
+
         setIsLoading(false);
       } finally {
         setIsLoading(false);
@@ -85,20 +85,30 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
           "taskId":gitTasksData.getData("_id")
         };
         await gitTasksActions.createECSCluster(postBody, getAccessToken);
+        toastContext.showCreateSuccessResultDialog("ECS Cluster");
       } catch (error) {
         console.log(error);
         if(error?.error?.response?.data?.message){
-          toastContext.showLoadingErrorDialog(error.error.response.data.message);
+          toastContext.showCreateFailureResultDialog("ECS Cluster" ,error.error.response.data.message);
         }else{
-          toastContext.showLoadingErrorDialog(error);
+          toastContext.showCreateFailureResultDialog(
+            "ECS Cluster",
+            "A service level error has occurred in creation of the ECS Cluster - check the console log for a complete error log"
+          );
         }
-
         setIsLoading(false);
       } finally {
         setIsLoading(false);
       }
     }
     handleClose();
+  };
+
+  const getLabel = () => {
+    if (isLoading) {
+      return ( <span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>Running Task</span>);
+    }
+    return ( <span><FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/>Run Task</span>);
   };
 
 
@@ -109,7 +119,7 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
         disabled={gitTasksData?.getData("status") === "running" || disable || isLoading}
         onClick={() => {handleRunGitTask(true);}}
       >
-        <span><FontAwesomeIcon icon={faPlay} className="mr-1" fixedWidth/>Run Task</span>
+        {getLabel()}
       </Button>
     </div>
   );

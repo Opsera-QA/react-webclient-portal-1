@@ -59,9 +59,11 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
         <Col md={6}>
           <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"}/>
         </Col>
+        {gitTasksData.getData("type") != "ecs_cluster_creation" &&
         <Col md={6}>
-          <TextFieldBase className={"upper-case-first my-2"} dataObject={gitTasksData} fieldName={"tool_identifier"}/>
+          <TextFieldBase className={"upper-case-first my-2"} dataObject={gitTasksData} fieldName={"tool_identifier"} />
         </Col>
+        }
         <Col md={12} className={"pt-1"}>
           <TextFieldBase dataObject={gitTasksData} fieldName={"description"}/>
         </Col>
