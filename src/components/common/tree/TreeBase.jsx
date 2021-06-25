@@ -26,6 +26,15 @@ function TreeBase({ data, onItemClick, setParentWidget }) {
         tree.selection.remove();
         tree.selection.add(selectedId);
       }
+      else {
+        const id = tree.data.getId(0);
+
+        if (id) {
+          tree.selection.add(id);
+          setSelectedId(id);
+          onItemClick(tree.data.getItem(id));
+        }
+      }
     }
   }, [data]);
 
