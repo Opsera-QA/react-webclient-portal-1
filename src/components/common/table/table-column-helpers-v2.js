@@ -53,7 +53,6 @@ export const getEditableTextColumn = (field, maxLength, className, editable = tr
 
 export const getTableDateColumn = (field, className, width = 150) => {
   let header = getColumnHeader(field);
-  header.push({ content: "inputFilter" });
 
   return {
     header: header,
