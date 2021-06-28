@@ -6,11 +6,12 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import DataBlock from "components/common/data_boxes/DataBlock";
+import DataBlockInsights from "components/common/data_boxes/DatablockInsights";
 import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function PipelineFailedDeployment({ dashboardData, toggleDynamicPanel, selectedDataBlock }) {
+function PipelineFailedDeployment({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -100,8 +101,8 @@ function PipelineFailedDeployment({ dashboardData, toggleDynamicPanel, selectedD
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "deployment_failed" ? "selected-data-block" : undefined}>
-        <DataBlock
+      <div className={selectedDataBlock === "deployment_failed" ? "selected-data-block" : undefined} style={style}>
+        <DataBlockInsights
           title={
             !isLoading && metrics[0]?.count[0] ? (
               metrics[0]?.count[0]?.count
@@ -130,6 +131,7 @@ PipelineFailedDeployment.propTypes = {
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
   selectedDataBlock: PropTypes.string,
+  style: PropTypes.object
 };
 
 export default PipelineFailedDeployment;
