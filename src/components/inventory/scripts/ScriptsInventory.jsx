@@ -99,7 +99,7 @@ function ScriptsInventory({ customerAccessRules, handleTabClick }) {
         <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={"scripts"} tabText={"Tools"} />
         <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={"scripts"} tabText={"Platform"} />
         <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={"scripts"} tabText={"Parameters"} />
-        {/*<NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"scripts"} tabText={"Scripts"} />*/}
+        <NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"scripts"} tabText={"Scripts"} />
       </NavigationTabContainer>
     );
   };

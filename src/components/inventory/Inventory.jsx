@@ -10,7 +10,7 @@ const SUPPORTED_VIEWS = [
   "tools",
   "platform",
   "parameters",
-  // "scripts"
+  "scripts"
 ];
 
 function Inventory() {
@@ -44,8 +44,8 @@ function Inventory() {
         return <PlatformInventory handleTabClick={handleTabClick} />;
       case "parameters":
         return <ParametersInventory customerAccessRules={customerAccessRules} handleTabClick={handleTabClick} />;
-      // case "scripts":
-      //   return <ScriptsInventory customerAccessRules={customerAccessRules} handleTabClick={handleTabClick} />;
+      case "scripts":
+        return <ScriptsInventory customerAccessRules={customerAccessRules} handleTabClick={handleTabClick} />;
       default:
         return null;
     }
