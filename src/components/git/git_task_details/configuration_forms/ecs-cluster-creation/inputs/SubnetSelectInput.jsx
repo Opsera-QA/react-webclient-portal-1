@@ -114,7 +114,7 @@ SubnetSelectInput.propTypes = {
 SubnetSelectInput.defaultProps = {
   fieldName: "privateSubnets",
   textField: "cidrBlock",
-  valueField: "cidrBlock",
+  valueField: "subnetId",
 };
 
 export default SubnetSelectInput;
