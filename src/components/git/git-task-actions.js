@@ -176,5 +176,10 @@ gitTasksActions.createECSCluster = async (postBody, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
+gitTasksActions.createECSServoce = async (postBody, getAccessToken) => {
+  const apiUrl = `/tools/aws/v2/create/ecs/service`;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
 
 export default gitTasksActions;

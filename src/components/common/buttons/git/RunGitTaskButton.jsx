@@ -101,6 +101,30 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
         setIsLoading(false);
       }
     }
+    else if (gitTasksData.getData("type") === "ecs_service_creation"){
+      // call to trigger merge request
+      try{
+        setIsLoading(true);
+        let postBody = {
+          "taskId":gitTasksData.getData("_id")
+        };
+        await gitTasksActions.createECSService(postBody, getAccessToken);
+        toastContext.showCreateSuccessResultDialog("ECS Cluster");
+      } catch (error) {
+        console.log(error);
+        if(error?.error?.response?.data?.message){
+          toastContext.showCreateFailureResultDialog("ECS Service" ,error.error.response.data.message);
+        }else{
+          toastContext.showCreateFailureResultDialog(
+            "ECS Service",
+            "A service level error has occurred in creation of the ECS Service - check the Activity Logs for a complete error log."
+          );
+        }
+        setIsLoading(false);
+      } finally {
+        setIsLoading(false);
+      }
+    }
     handleClose();
   };
 
