@@ -70,7 +70,7 @@ function Pipelines() {
   const getPageDescription = () => {
     switch (activeTab) {
     case "catalog":
-      return "Create a new Pipeline from this catalog of templates. Select a template to get started.";
+      return "To begin building your pipeline, choose one of the pipeline templates provided in the Marketplace or Private Catalogs. ";
     case "all":
     case "owner":
     case "sdlc":
@@ -114,10 +114,10 @@ function Pipelines() {
   const getNavigationTabContainer = () => {
     return (
       <NavigationTabContainer>
-        <NavigationTab activeTab={activeTab} tabText={"Catalog"} handleTabClick={handleTabClick} tabName={"catalog"}
-                       toolTipText={"Template Catalog"} icon={faHexagon}/>
         <NavigationTab activeTab={activeTab !== "catalog" ? "all" : activeTab} tabText={"Pipelines"}
                        handleTabClick={handleTabClick} tabName={"all"} toolTipText={"Pipelines"} icon={faDraftingCompass}/>
+        <NavigationTab activeTab={activeTab} tabText={"Catalog"} handleTabClick={handleTabClick} tabName={"catalog"}
+                       toolTipText={"Catalog"} icon={faHexagon}/>
       </NavigationTabContainer>
     );
   };
