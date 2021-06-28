@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
 // TODO: I need to remember to rewrite this
-function DataBlock({ title, subTitle, toolTipText, clickAction, statusColor, 
+function InsightsSynopsisDataBlock({ title, subTitle, toolTipText, clickAction, statusColor,
                    ellipsesContent, footerText, modal, view, className }) {
   const statusColors = {
     success: "#00897b",
@@ -52,7 +52,7 @@ function DataBlock({ title, subTitle, toolTipText, clickAction, statusColor,
   );
 }
 
-DataBlock.propTypes = {
+InsightsSynopsisDataBlock.propTypes = {
   title: PropTypes.string,
   subTitle: PropTypes.string,
   toolTipText: PropTypes.string,
@@ -65,4 +65,4 @@ DataBlock.propTypes = {
   className: PropTypes.string
 };
 
-export default DataBlock;
+export default InsightsSynopsisDataBlock;

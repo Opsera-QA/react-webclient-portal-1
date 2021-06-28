@@ -8,11 +8,8 @@ import PipelinesFailedDeployment from "components/insights/summary/pipeline_deta
 import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
 import InsightsPipelineDetailsTable from "components/insights/summary/pipeline_details/InsightsPipelineDetailsTable";
 import PipelinesByProjectTable from "components/insights/summary/PipelinesByProjectTable";
-import PipelinesByProjectDataBlock from "components/insights/summary/pipeline_details/PipelinesByProjectDataBlock";
 import TotalPipelinesPassedDeployment from 'components/insights/summary/pipeline_details/TotalPipelinesPassedDeployment';
-import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import MetricContainer from "components/common/panels/insights/charts/MetricContainer";
-import "components/insights/summary/pipeline_details/customDatablock.css";
 
 function PipelineDetails({ dashboardData }) {
   const [selectedDataBlock, setSelectedDataBlock] = useState("pipelines_by_project");
@@ -111,8 +108,8 @@ function PipelineDetails({ dashboardData }) {
 
   const getPipelinesFailure = () => {
     return (
-      
-      <DataBlockWrapper padding={0}> 
+
+      <DataBlockWrapper padding={0}>
         <PipelinesFailedQuality
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
@@ -137,11 +134,11 @@ function PipelineDetails({ dashboardData }) {
 
   return (
     <>
-      <div style={{display:"flex", justifyContent: "space-around", flexWrap:"wrap", width:"100%"}}>
-        <MetricContainer addedClass="metricContainer"  title="Pipelines: Success Score">
+      <div className={"d-flex flex-wrap justify-content-around w-100"} >
+        <MetricContainer title="Pipelines: Success Score">
           {getPipelinesSuccess()}
         </MetricContainer>
-        <MetricContainer addedClass="metricContainer"  title="Pipelines: Failure Score">
+        <MetricContainer title="Pipelines: Failure Score">
           {getPipelinesFailure()}
         </MetricContainer>
       </div>
