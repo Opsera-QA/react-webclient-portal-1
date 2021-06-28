@@ -50,7 +50,7 @@ const OctopusFeedMetadata = {
       id: "id"
     }
   ],
-  newModelBase: {
+  newObjectFields: {
     _id: "",
     type: "feed",
     name : "",

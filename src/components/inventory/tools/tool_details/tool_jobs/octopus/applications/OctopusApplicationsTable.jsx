@@ -8,11 +8,14 @@ import { getTableBooleanIconColumn, getTableTextColumn } from "../../../../../..
 import octopusApplicationsMetadata from "../octopus-environment-metadata";
 import ExistingOctopusApplicationModal from "./OctopusApplicationModal";
 import { format } from "date-fns";
+import {getField} from "components/common/metadata/metadata-helpers";
 
+// TODO: Revisit this and wire up new overlay
 function OctopusApplicationsTable({ toolData, loadData, selectedRow, isLoading }) {
-  const [type, setType] = useState(false);
+  const [type, setType] = useState(undefined);
   let fields = octopusApplicationsMetadata.fields;
   const [showCreateOctopusModal, setShowCreateOctopusModal] = useState(false);
+
   const initialState = {
     pageIndex: 0,
     sortBy: [
@@ -23,65 +26,58 @@ function OctopusApplicationsTable({ toolData, loadData, selectedRow, isLoading }
     ]
   };
 
+  const createOctopusApplication = (newType) => {
+    switch (newType) {
+      case "environment":
+      case "account":
+      case "target":
+      case "feed":
+      case "tomcat":
+        setType(newType);
+        setShowCreateOctopusModal(true);
+        break;
+      default:
+        setShowCreateOctopusModal(false);
+        setType(undefined);
+    }    
+  };
+
+  // TODO: What is this for?
   let data = [];
-  if (toolData.getData("actions") && toolData.getData("actions").length > 0) {
+  if (toolData?.getArrayData("actions")?.length > 0) {
     toolData.getData("actions").forEach(function (item) {
       data.push({...item.configuration, updatedAt: format(new Date(item.updatedAt), "yyyy-MM-dd', 'hh:mm a")});
     });
   }
 
-  const createOctopusApplication = (type) => {
-    if (type === "environment") {
-      setShowCreateOctopusModal(true);
-      setType("environment");
-      return;
-    }
-    if (type === "account") {
-      setShowCreateOctopusModal(true);
-      setType("account");
-      return;
-    }
-    if (type === "target") {
-      setShowCreateOctopusModal(true);
-      setType("target");
-      return;
-    }
-    if (type === "feed") {
-      setShowCreateOctopusModal(true);
-      setType("feed");
-      return;
-    }
-  };
-
   const columns = useMemo(
     () => [
-      getTableTextColumn(
-        fields.find((field) => {
-          return field.id === "name";
-        })
-      ),
-      getTableTextColumn(
-        fields.find((field) => {
-          return field.id === "spaceName";
-        })
-      ),
-      getTableTextColumn(
-        fields.find((field) => {
-          return field.id === "type";
-        })
-      ),
-      {
-        Header: "Created On",
-        accessor: "updatedAt"
-      },
-      getTableBooleanIconColumn(
-        fields.find((field) => {
-          return field.id === "active";
-        })
-      ),
+      getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "spaceName")),
+      getTableTextColumn(getField(fields, "type")),
+      getTableTextColumn(getField(fields, "updatedAt")),
+      getTableBooleanIconColumn(getField(fields, "active")),
     ],
     []
   );
+
+  const getModal = () => {
+    if (showCreateOctopusModal) {
+      return (
+        <ExistingOctopusApplicationModal
+          type={type}
+          toolData={toolData}
+          loadData={loadData}
+          setShowModal={setShowCreateOctopusModal}
+          showModal={showCreateOctopusModal}
+        />
+      );
+    }
+  };
+
+  if (toolData == null) {
+    return null;
+  }
 
   return (
     <>
@@ -96,21 +92,20 @@ function OctopusApplicationsTable({ toolData, loadData, selectedRow, isLoading }
               <Dropdown.Item onClick={() => createOctopusApplication("account")}>Account</Dropdown.Item>
               <Dropdown.Item onClick={() => createOctopusApplication("target")}>Target</Dropdown.Item>
               <Dropdown.Item onClick={() => createOctopusApplication("feed")}>External Feed</Dropdown.Item>
+              <Dropdown.Item onClick={() => createOctopusApplication("tomcat")}>Tomcat Manager</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
           <br />
         </div>
       )}
-      <CustomTable columns={columns} data={data} onRowSelect={selectedRow} isLoading={isLoading} initialState={initialState}></CustomTable>
-      {type && (
-        <ExistingOctopusApplicationModal
-          type={type}
-          toolData={toolData}
-          loadData={loadData}
-          setShowModal={setShowCreateOctopusModal}
-          showModal={showCreateOctopusModal}
-        />
-      )}
+      <CustomTable
+        columns={columns}
+        data={data}
+        onRowSelect={selectedRow}
+        isLoading={isLoading}
+        initialState={initialState}
+      />
+      {getModal()}
     </>
   );
 }
