@@ -4,7 +4,6 @@ import {axiosApiService} from "api/apiService";
 import PipelineActivityLogTable
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTable";
 import LoadingDialog from "components/common/status_notifications/loading";
-import ErrorDialog from "components/common/status_notifications/error";
 import InfoDialog from "components/common/status_notifications/info";
 import "../../workflows.css";
 import {useHistory, useParams} from "react-router-dom";
@@ -424,10 +423,10 @@ function PipelineDetailView() {
   const getNavigationTabContainer = () => {
     return (
       <NavigationTabContainer>
-        <NavigationTab activeTab={activeTab} tabText={"Catalog"} handleTabClick={handleTabClick}
-                       tabName={"catalog"} toolTipText={"Template Catalog"} icon={faHexagon}/>
         <NavigationTab activeTab={activeTab} tabText={"Pipelines"}
                        handleTabClick={handleTabClick} tabName={"pipelines"} toolTipText={"Pipelines"} icon={faDraftingCompass}/>
+        <NavigationTab activeTab={activeTab} tabText={"Catalog"} handleTabClick={handleTabClick}
+                       tabName={"catalog"} toolTipText={"Template Catalog"} icon={faHexagon}/>
         <NavigationTab activeTab={"viewer"} tabText={"Pipeline Viewer"}
                        handleTabClick={handleTabClick} tabName={"viewer"} toolTipText={"Pipeline Viewer"} icon={faLayerGroup}/>
       </NavigationTabContainer>

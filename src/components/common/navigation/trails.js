@@ -421,8 +421,8 @@ const breadcrumbs = {
     parent: "pipelines",
     name: "catalog",
     path: paths.pipelines,
-    title: "Pipeline Catalog Library",
-    linkText: "Pipeline Catalog Library",
+    title: "Catalog",
+    linkText: "Catalog",
     icon: faHexagon
   },
   pipelineDetailView: {
