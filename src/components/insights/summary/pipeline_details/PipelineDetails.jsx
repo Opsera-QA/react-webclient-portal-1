@@ -8,8 +8,8 @@ import PipelinesFailedDeployment from "components/insights/summary/pipeline_deta
 import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
 import InsightsPipelineDetailsTable from "components/insights/summary/pipeline_details/InsightsPipelineDetailsTable";
 import PipelinesByProjectTable from "components/insights/summary/PipelinesByProjectTable";
-import PipelinesByProjectDataBlock from "components/insights/summary/pipeline_details/PipelinesByProjectDataBlock";
 import TotalPipelinesPassedDeployment from 'components/insights/summary/pipeline_details/TotalPipelinesPassedDeployment';
+import MetricContainer from "components/common/panels/insights/charts/MetricContainer";
 
 function PipelineDetails({ dashboardData }) {
   const [selectedDataBlock, setSelectedDataBlock] = useState("pipelines_by_project");
@@ -81,45 +81,68 @@ function PipelineDetails({ dashboardData }) {
     }
   };
 
-  return (
-    <>
-      <DataBlockWrapper padding={4}>
-        <PipelinesByProjectDataBlock
-          toggleDynamicPanel={toggleDynamicPanel}
-          selectedDataBlock={selectedDataBlock}
-        />
+  const getPipelinesSuccess = () => {
+    return (
+      <DataBlockWrapper padding={0}>
         <TotalPipelinesExecuted
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
+          style={{maxWidth:"33%"}}
         />
         <PipelinesPassedWithQualityAndSecurity
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
+          style={{maxWidth:"33%"}}
         />
         <TotalPipelinesPassedDeployment
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
+          style={{maxWidth:"33%"}}
+        />
+      </DataBlockWrapper> 
+    );
+  };
+
+  const getPipelinesFailure = () => {
+    return (
+
+      <DataBlockWrapper padding={0}>
+        <PipelinesFailedQuality
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{maxWidth:"33%"}}
         />
         <PipelinesFailedSecurity
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-        />
-        <PipelinesFailedQuality
-          dashboardData={dashboardData}
-          toggleDynamicPanel={toggleDynamicPanel}
-          selectedDataBlock={selectedDataBlock}
+          style={{maxWidth:"33%"}}
         />
         <PipelinesFailedDeployment
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
+          style={{maxWidth:"33%"}}
         />
-        
       </DataBlockWrapper>
+    );
+  };
+
+  return (
+    <>
+      <div className={"d-flex flex-wrap justify-content-around w-100"} >
+        <MetricContainer title="Pipelines: Success Score">
+          {getPipelinesSuccess()}
+        </MetricContainer>
+        <MetricContainer title="Pipelines: Failure Score">
+          {getPipelinesFailure()}
+        </MetricContainer>
+      </div>
+
       {getDynamicPanel()}
     </>
   );

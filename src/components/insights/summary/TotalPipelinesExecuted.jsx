@@ -5,11 +5,11 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-light-svg-icons";
-import DataBlock from "components/common/data_boxes/DataBlock";
+import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel, selectedDataBlock }) {
+function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -102,8 +102,8 @@ function TotalPipelinesExecuted({ dashboardData, toggleDynamicPanel, selectedDat
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "total_pipelines" ? "selected-data-block" : undefined}>
-        <DataBlock
+      <div className={selectedDataBlock === "total_pipelines" ? "selected-data-block" : undefined} style={style}>
+        <InsightsSynopsisDataBlock
           title={
             !isLoading && metrics[0]?.count[0] ? (
               metrics[0]?.count[0]?.count
@@ -131,6 +131,7 @@ TotalPipelinesExecuted.propTypes = {
   selectedDataBlock: PropTypes.string,
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
+  style:PropTypes.object
 };
 
 export default TotalPipelinesExecuted;
