@@ -66,6 +66,7 @@ function SubnetSelectInput({
 
   const loadTypes = async (cancelSource) => {
     try {
+      setSubnets([]);
       const res = await ECSCreationActions.getSubnets(dataObject, getAccessToken, cancelSource);
       if (res && res.status === 200) {
         if (res.data.length === 0) {

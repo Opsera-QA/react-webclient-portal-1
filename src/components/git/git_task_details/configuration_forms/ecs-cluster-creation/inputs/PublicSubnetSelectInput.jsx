@@ -14,7 +14,7 @@ function PublicSubnetSelectInput({
                           disabled,
                           textField,
                           valueField,
-                          tool_prop,
+                          vpc,
                           pipelineId,
                         }) {
   const toastContext = useContext(DialogToastContext);
@@ -46,7 +46,7 @@ function PublicSubnetSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [vpc]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -66,6 +66,7 @@ function PublicSubnetSelectInput({
 
   const loadTypes = async (cancelSource) => {
     try {
+      setPublicSubnets([]);
       const res = await ECSCreationActions.getSubnets(dataObject, getAccessToken, cancelSource);
       if (res && res.status === 200) {
         if (res.data.length === 0) {
@@ -107,7 +108,7 @@ PublicSubnetSelectInput.propTypes = {
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  tool_prop: PropTypes.string,
+  vpc: PropTypes.string,
   pipelineId: PropTypes.string,
 };
 

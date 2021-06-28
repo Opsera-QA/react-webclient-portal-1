@@ -18,6 +18,10 @@ import SFDXCertGenTaskTypeSummaryCard from "./configuration_forms/sfdx-cert-gen/
 import ECSCreationTaskTypeSummaryCard from "./configuration_forms/ecs-cluster-creation/ECSCreationTaskTypeSummaryCard";
 import ec2ClusterCreationTaskConfigurationMetadata
   from "./configuration_forms/ecs-cluster-creation/ecs-creation-git-task-configuration";
+import ECSServiceCreationTaskTypeSummaryCard
+  from "./configuration_forms/ecs-service-creation/ECSServiceCreationTaskTypeSummaryCard";
+import ec2ServiceCreationTaskConfigurationMetadata
+  from "./configuration_forms/ecs-service-creation/ecs-service-creation-git-task-configuration";
 
 
 function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
@@ -78,6 +82,13 @@ function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, load
         return (
           <ECSCreationTaskTypeSummaryCard
             gitTaskConfigurationData={wrapGitTaskType(ec2ClusterCreationTaskConfigurationMetadata)}
+            gitTasksData={gitTasksData}
+          />
+        );
+      case "ecs_service_creation":
+        return (
+          <ECSServiceCreationTaskTypeSummaryCard
+            gitTaskConfigurationData={wrapGitTaskType(ec2ServiceCreationTaskConfigurationMetadata)}
             gitTasksData={gitTasksData}
           />
         );

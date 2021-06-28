@@ -13,7 +13,7 @@ function SecurityGroupSelectInput({
                                    disabled,
                                    textField,
                                    valueField,
-                                   tool_prop,
+                                   awsToolId,
                                    pipelineId,
                                  }) {
   const toastContext = useContext(DialogToastContext);
@@ -45,7 +45,7 @@ function SecurityGroupSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [awsToolId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -106,7 +106,7 @@ SecurityGroupSelectInput.propTypes = {
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  tool_prop: PropTypes.string,
+  awsToolId: PropTypes.string,
   pipelineId: PropTypes.string,
 };
 

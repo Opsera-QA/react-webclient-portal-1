@@ -29,6 +29,7 @@ function EC2SubForm({ dataObject, setDataObject, disabled }) {
             dataObject={dataObject}
             setDataObject={setDataObject}
             disabled={dataObject?.getData("awsToolId").length === 0}
+            awstoolId={dataObject?.getData("awsToolId")}
           />
           <SubnetSelectInput
             dataObject={dataObject}
@@ -49,18 +50,20 @@ function EC2SubForm({ dataObject, setDataObject, disabled }) {
         dataObject={dataObject}
         setDataObject={setDataObject}
         disabled={dataObject?.getData("imageType").length === 0}
-        imageType={dataObject?.getData("imageType")}
+        awstoolId={dataObject?.getData("awsToolId")}
       />
       <KeyPairSelectInput
         dataObject={dataObject}
         setDataObject={setDataObject}
         disabled={dataObject?.getData("awsToolId").length === 0}
+        awstoolId={dataObject?.getData("awsToolId")}
       />
       {getDynamicFields()}
       <SecurityGroupSelectInput
         dataObject={dataObject}
         setDataObject={setDataObject}
         disabled={dataObject?.getData("awsToolId").length === 0}
+        awstoolId={dataObject?.getData("awsToolId")}
       />
     </>
   );

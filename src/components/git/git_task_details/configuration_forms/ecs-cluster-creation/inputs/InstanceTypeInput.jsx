@@ -13,7 +13,7 @@ function InstanceTypeSelectInput({
                               disabled,
                               textField,
                               valueField,
-                              imageType,
+                              awstoolId,
                               pipelineId,
                             }) {
   const toastContext = useContext(DialogToastContext);
@@ -45,7 +45,7 @@ function InstanceTypeSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [imageType]);
+  }, [awstoolId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -63,6 +63,7 @@ function InstanceTypeSelectInput({
 
   const loadTypes = async (cancelSource) => {
     try {
+      setInstanceTypes([]);
       const res = await ECSCreationActions.getEc2ImageTypes(dataObject, getAccessToken, cancelSource);
       console.log(res);
       if (res && res.status === 200) {
@@ -105,7 +106,7 @@ InstanceTypeSelectInput.propTypes = {
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  imageType: PropTypes.string,
+  awstoolId: PropTypes.string,
   pipelineId: PropTypes.string,
 };
 

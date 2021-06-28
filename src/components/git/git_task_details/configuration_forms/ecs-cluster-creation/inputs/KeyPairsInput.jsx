@@ -13,7 +13,7 @@ function KeyPairSelectInput({
                           disabled,
                           textField,
                           valueField,
-                          tool_prop,
+                          awstoolId,
                           pipelineId,
                         }) {
   const toastContext = useContext(DialogToastContext);
@@ -45,7 +45,7 @@ function KeyPairSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [awstoolId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -65,6 +65,7 @@ function KeyPairSelectInput({
 
   const loadTypes = async (cancelSource) => {
     try {
+      setKeyPairs([]);
       const res = await ECSCreationActions.getKeyPairs(dataObject, getAccessToken, cancelSource);
       if (res && res.status === 200) {
         if (res.data.length === 0) {
@@ -112,7 +113,7 @@ KeyPairSelectInput.propTypes = {
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  tool_prop: PropTypes.string,
+  awstoolId: PropTypes.string,
   pipelineId: PropTypes.string,
 };
 

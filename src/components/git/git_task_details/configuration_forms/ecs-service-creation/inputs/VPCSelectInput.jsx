@@ -4,7 +4,7 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
 import axios from "axios";
-import ECSCreationActions from "../ecs-creation-actions";
+import ECSCreationActions from "../ecs-service-creation-actions";
 
 function VPCSelectInput({
   fieldName,
@@ -13,7 +13,7 @@ function VPCSelectInput({
   disabled,
   textField,
   valueField,
-  awstoolId,
+  awsToolId,
   pipelineId,
 }) {
   const toastContext = useContext(DialogToastContext);
@@ -45,7 +45,7 @@ function VPCSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [awstoolId]);
+  }, [awsToolId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -108,7 +108,7 @@ VPCSelectInput.propTypes = {
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  awstoolId: PropTypes.string,
+  awsToolId: PropTypes.string,
   pipelineId: PropTypes.string,
 };
 
