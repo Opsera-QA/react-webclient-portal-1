@@ -117,10 +117,9 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
       }
 
 
-      if (item.tool && typeof (item.tool.tool_identifier) === "string" && Object.keys(toolProperties).length === 0) {
-        await getToolDetails(item.tool.tool_identifier);
+      if (item?.tool && typeof (item?.tool?.tool_identifier) === "string" && item?.tool?.tool_identifier !== "" && Object.keys(toolProperties).length === 0) {
+        await getToolDetails(item?.tool?.tool_identifier);
       }
-
     }
   };
 
