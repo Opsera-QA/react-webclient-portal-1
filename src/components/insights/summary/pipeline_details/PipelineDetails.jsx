@@ -12,7 +12,7 @@ import TotalPipelinesPassedDeployment from 'components/insights/summary/pipeline
 import MetricContainer from "components/common/panels/insights/charts/MetricContainer";
 
 function PipelineDetails({ dashboardData }) {
-  const [selectedDataBlock, setSelectedDataBlock] = useState("pipelines_by_project");
+  const [selectedDataBlock, setSelectedDataBlock] = useState("");
   const [selectedDataBlockTableData, setSelectedDataBlockTableData] = useState([]);
 
   const getDynamicPanel = () => {
