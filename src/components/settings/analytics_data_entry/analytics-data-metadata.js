@@ -29,6 +29,22 @@ export const analyticsDataMetadata = {
       id: "account",
     },
     {
+      label: "Domain Name",
+      id: "data.domain",
+    },
+    {
+      label: "Application Name",
+      id: "data.application",
+    },
+    {
+      label: "From",
+      id: "data.from",
+    },
+    {
+      label: "To",
+      id: "data.to",
+    },
+    {
       label: "Status",
       id: "active",
     },
