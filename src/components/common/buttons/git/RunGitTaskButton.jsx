@@ -109,7 +109,7 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
           "taskId":gitTasksData.getData("_id")
         };
         await gitTasksActions.createECSService(postBody, getAccessToken);
-        toastContext.showCreateSuccessResultDialog("ECS Cluster");
+        toastContext.showCreateSuccessResultDialog("ECS Service");
       } catch (error) {
         console.log(error);
         if(error?.error?.response?.data?.message){
