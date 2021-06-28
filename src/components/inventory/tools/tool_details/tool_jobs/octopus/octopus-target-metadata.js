@@ -172,7 +172,7 @@ fieldsIis: [
     isRequired: true
   },
 ],
-  newModelBase: {
+  newObjectFields: {
     _id: "",
     type: "target",
     awsToolConfigId : "",

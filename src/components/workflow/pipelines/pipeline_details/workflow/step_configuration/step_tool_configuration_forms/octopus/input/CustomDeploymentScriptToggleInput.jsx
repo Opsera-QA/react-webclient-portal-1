@@ -3,24 +3,24 @@ import PropTypes from "prop-types";
 import InputContainer from "components/common/inputs/InputContainer";
 import {Form} from "react-bootstrap";
 
-function RollbackToggleInput({dataObject, setDataObject, fieldName, disabled}) {
-  const [field, setField] = useState(dataObject.getFieldById(fieldName));
+function CustomDeploymentScriptToggleInput({dataObject, setDataObject, fieldName, disabled}) {
+  const [field, setField] = useState(dataObject?.getFieldById(fieldName));
 
   const handleChange = () => {
     let newDataObject = dataObject;
-    let sourceScriptFlag = !dataObject.getData("isRollback");
-    newDataObject.setData("isRollback", sourceScriptFlag);
-    newDataObject.setData("octopusVersion", undefined);
+    let sourceScriptFlag = !dataObject.getData(fieldName);
+    newDataObject.setData(fieldName, sourceScriptFlag);
+    newDataObject.setData("preDeploymentScriptId", "");
+    newDataObject.setData("deploymentScriptId", "");
+    newDataObject.setData("postDeploymentScriptId", "");
     setDataObject({...newDataObject});
   };
 
-  if (dataObject?.getData("octopusPlatformType") && dataObject?.getData("octopusPlatformType") === "Script" &&
-    dataObject?.getData("scriptSource") && dataObject?.getData("scriptSource") === "inline") {
+  if (field == null) {
     return null;
   }
 
   return (
-    <>
     <InputContainer>
       <Form.Check
         type="switch"
@@ -31,15 +31,14 @@ function RollbackToggleInput({dataObject, setDataObject, fieldName, disabled}) {
         onChange={() => handleChange()}
       />
     </InputContainer>
-</>
   );
 }
 
-RollbackToggleInput.propTypes = {
+CustomDeploymentScriptToggleInput.propTypes = {
   dataObject: PropTypes.object,
   fieldName: PropTypes.string,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool
 };
 
-export default RollbackToggleInput;
+export default CustomDeploymentScriptToggleInput;

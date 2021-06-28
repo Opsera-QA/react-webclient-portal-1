@@ -26,6 +26,7 @@ function OctopusLifecycleSelectInput({ fieldName, dataObject, setDataObject, dis
     isMounted.current = true;
 
     if (!disabled) {
+      setOctopusLifecycles([]);
       loadData(source).catch((error) => {
         if (isMounted?.current === true) {
           throw error;
@@ -55,16 +56,18 @@ function OctopusLifecycleSelectInput({ fieldName, dataObject, setDataObject, dis
     }
   };
 
-  const loadTypes = async () => {
+  const loadTypes = async (cancelSource = cancelTokenSource) => {
     try {
-      const res = await OctopusStepActions.getLifecycles(dataObject.getData("octopusToolId"),dataObject.getData("spaceId"), getAccessToken, cancelTokenSource);
-      if (res && res.status === 200) {
-        if (res.data.length === 0) {
+      const res = await OctopusStepActions.getLifecycles(getAccessToken, cancelSource, dataObject.getData("octopusToolId"),dataObject.getData("spaceId"));
+
+      if (res && res?.data?.status === 200) {
+        const data = res.data?.data;
+        if (data.length === 0) {
           setPlaceholder("No Lifecycles Found");
           return;
         }
         setPlaceholder("Select a Lifecycle");
-        setOctopusLifecycles(res.data);
+        setOctopusLifecycles(data);
         return;
       }
       setPlaceholder("No Lifecycles Found");
