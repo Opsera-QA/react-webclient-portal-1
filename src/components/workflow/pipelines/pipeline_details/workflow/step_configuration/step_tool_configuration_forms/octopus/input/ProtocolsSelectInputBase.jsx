@@ -42,7 +42,7 @@ function ProtocolsSelectInputBase({
             id: "host",
             regexValidator: regexHelpers.regexTypes.hostnameRegex,
             maxLength: 255,
-            isRequired: true
+            // isRequired: true
           },
           {
             label: "Binding Port",
