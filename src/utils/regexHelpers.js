@@ -57,6 +57,8 @@ regexHelpers.regexTypes = {
   //only numbers
   numericalField : /^[0-9]*$/,
 
+  // hostnameRegex is valid as per RFC 1123
+  hostnameRegex: /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/,
 };
 
 export default regexHelpers;
