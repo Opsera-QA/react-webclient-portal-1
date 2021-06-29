@@ -54,19 +54,30 @@ function EC2ClusterCreationTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurat
 
   const getFargateFields = () => {
     if (gitTaskConfigurationData.getData("clusterTemplate") === "fargate") {
-      return (
-        <>
-          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"public_subnet_1"} />
-          <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"public_subnet_2"} />
-        </>
-      );
-    }
-    };
+        if (gitTaskConfigurationData.getData("createVpc")) {
+          return (
+            <>
+              <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"vpcCidrBlock"} />
+              <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"public_subnet_cidr_1"} />
+              <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"public_subnet_cidr_2"} />
+              <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"private_subnet_cidr_1"} />
+              <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"private_subnet_cidr_2"} />
+            </>
+          );
+        } else {
+          return (
+            <>
+              <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"public_subnet_1"} />
+              <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"public_subnet_2"} />
+            </>
+          );
+        }
+      }
+  };
 
   return (
     <GitTasksSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
       <div className="mb-2">
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"vpcCidrBlock"} />
         <BooleanField dataObject={gitTaskConfigurationData} fieldName={"createVpc"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"clusterName"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"awsToolId"} />

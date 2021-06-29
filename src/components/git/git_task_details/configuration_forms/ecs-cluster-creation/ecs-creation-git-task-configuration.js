@@ -4,7 +4,7 @@ const ec2ClusterCreationTaskConfigurationMetadata = {
   type: "EC2 Cluster Creation Configuration",
   fields: [
     {
-      label: "CIDR Block",
+      label: "VPC CIDR Block",
       id: "vpcCidrBlock",
       formText: "Sample Format - 10.0.0.0/16"
     },
@@ -84,7 +84,12 @@ const ec2ClusterCreationTaskConfigurationMetadata = {
     {
       label: "Private Subnets",
       id: "privateSubnets",
-      maxItems: 2
+      maxItems: 2,
+      formText : "Both subnets should be from different availability zones",
+    },
+    {
+      label: "Stack ID",
+      id: "stackId"
     }
   ],
   newObjectFields:

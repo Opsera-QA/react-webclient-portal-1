@@ -13,6 +13,7 @@ import axios from "axios";
 import {AuthContext} from "contexts/AuthContext";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+import CheckECSStatusButton from "../CheckECSStatusButton";
 
 function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, gitTaskTypeSummaryCard, loadData, accessRoleData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -74,13 +75,18 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
           <GitTaskRoleAccessInput dataObject={gitTasksData} setDataObject={setGitTasksData} disabled={!actionAllowed("edit_access_roles")} />
         </Col>
       </Row>
-      {gitTasksData.getData("type") != "sfdc-cert-gen" && 
+      {gitTasksData.getData("type") != "sfdc-cert-gen" &&
         <Row className={"mx-0 w-100 my-2"}>
           <div className={"mx-auto"}>
             <div className={"mx-auto"}><GitTaskRunButton gitTasksData={gitTasksData} loadData={loadData} actionAllowed={actionAllowed("run_task")} /></div>
           </div>
         </Row>
       }
+      <Row className={"mx-0 w-100 my-2"}>
+        <div className={"mx-auto"}>
+          <div className={"mx-auto"}><CheckECSStatusButton gitTasksData={gitTasksData} loadData={loadData} /></div>
+        </div>
+      </Row>
       <div className="px-3 mt-3">{gitTaskTypeSummaryCard}</div>
     </SummaryPanelContainer>
   );

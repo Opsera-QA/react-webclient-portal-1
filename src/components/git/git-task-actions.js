@@ -181,5 +181,10 @@ gitTasksActions.createECSServoce = async (postBody, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
+gitTasksActions.checkECSStatus = async (postBody, getAccessToken) => {
+  const apiUrl = `/tools/aws/v2/ecs/status`;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
 
 export default gitTasksActions;

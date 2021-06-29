@@ -85,7 +85,7 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
           "taskId":gitTasksData.getData("_id")
         };
         await gitTasksActions.createECSCluster(postBody, getAccessToken);
-        toastContext.showCreateSuccessResultDialog("ECS Cluster");
+        toastContext.showSuccessDialog("ECS Cluster Creation Triggered Successfully");
       } catch (error) {
         console.log(error);
         if(error?.error?.response?.data?.message){
@@ -109,7 +109,7 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
           "taskId":gitTasksData.getData("_id")
         };
         await gitTasksActions.createECSService(postBody, getAccessToken);
-        toastContext.showCreateSuccessResultDialog("ECS Service");
+        toastContext.showSuccessDialog("ECS Service Creation Triggered Successfully");
       } catch (error) {
         console.log(error);
         if(error?.error?.response?.data?.message){

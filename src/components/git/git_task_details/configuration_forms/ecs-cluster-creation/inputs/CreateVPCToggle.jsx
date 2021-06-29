@@ -10,10 +10,11 @@ function CreateVPCToggleInput({dataObject, setDataObject, fieldName, disabled}) 
     let newDataObject = dataObject;
     let sourceScriptFlag = !dataObject.getData("createVpc");
     newDataObject.setData("createVpc", sourceScriptFlag);
-    newDataObject.setData("vpcCidrBlock", "10.0.0.0/16");
-    newDataObject.setData("subnet_1", "10.0.0.0/24");
-    newDataObject.setData("subnet_2", "10.0.1.0/24");
-    newDataObject.setData("subnet_3", "10.0.2.0/24");
+    if (dataObject?.getData("clusterTemplate") === "fargate") {
+      newDataObject.setData("vpcCidrBlock", "10.0.0.0/40");
+      newDataObject.setData("public_subnet_1", "10.0.0.0/24");
+      newDataObject.setData("public_subnet_2", "10.0.1.0/24");
+  }
     setDataObject({...newDataObject});
   };
 

@@ -10,8 +10,10 @@ function NetworkingOnlySubForm({ dataObject, setDataObject, disabled }) {
       return (
         <>
           <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"vpcCidrBlock"} />
-          <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"public_subnet_1"} />
-          <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"public_subnet_2"} />
+          <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"public_subnet_cidr_1"} />
+          <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"public_subnet_cidr_2"} />
+          <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"private_subnet_cidr_1"} />
+          <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"private_subnet_cidr_2"} />
         </>
       );
     }
