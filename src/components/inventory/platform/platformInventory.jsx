@@ -10,7 +10,7 @@ import ToolRegistryHelpDocumentation
   from "components/common/help/documentation/tool_registry/ToolRegistryHelpDocumentation";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
+import {faFileCode, faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 
