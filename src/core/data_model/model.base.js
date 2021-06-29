@@ -327,6 +327,18 @@ export class ModelBase {
     return this.changeMap;
   }
 
+  // TODO: This is the new getPersistData. It needs to replace the other one.
+  getChangedProperties = () => {
+    this.trimStrings();
+    const changedProperties = {};
+
+    this.changeMap.forEach((value, key) => {
+      changedProperties[key] = this.data[key];
+    });
+
+    return changedProperties;
+  }
+
   getOriginalValue = (fieldName) => {
     return this.changeMap.get(fieldName);
   };

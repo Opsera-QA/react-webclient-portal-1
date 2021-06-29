@@ -31,7 +31,7 @@ scriptsActions.updateScriptV2 = async (getAccessToken, cancelTokenSource, script
   const id = scriptModel.getData("_id");
   const apiUrl = `/registry/script/${id}/update`;
   const postBody = {
-    ...scriptModel.getPersistData()
+    ...scriptModel.getChangedProperties()
   };
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
