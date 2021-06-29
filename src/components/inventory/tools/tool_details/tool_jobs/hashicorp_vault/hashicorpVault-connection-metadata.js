@@ -16,13 +16,18 @@ const HashicorpVaultConnectionMetadata = {
       label: "Vault Key",
       id: "vaultKey",
       isRequired: true
+    },
+    {
+      label: "Vault Path",
+      id: "vaultPath"
     }
   ],
   newObjectFields:
     {
       vaultUri: "",
       vaultToken: "",
-      vaultKey: ""
+      vaultKey: "",
+      vaultPath: ""
     }
 };
 
