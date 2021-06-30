@@ -19,7 +19,8 @@ const HashicorpVaultConnectionMetadata = {
     },
     {
       label: "Vault Path",
-      id: "vaultPath"
+      id: "vaultPath",
+      isRequired: true
     }
   ],
   newObjectFields:
