@@ -1,3 +1,5 @@
+import regexHelpers from "utils/regexHelpers";
+
 const AzureDevopsConnectionMetadata = {
   type: "Azure Devops Tool Configuration",
   idProperty: "_id",
@@ -6,6 +8,13 @@ const AzureDevopsConnectionMetadata = {
       label: "Personal Access Token",
       id: "accessToken",
       isRequired: true
+    },
+    {
+      label: "Organization",
+      id: "organization",
+      isRequired: true,
+      maxLength: 128,
+      regexValidator: regexHelpers.regexTypes.alphanumericPlusSpaces
     }
   ],
   newObjectFields:

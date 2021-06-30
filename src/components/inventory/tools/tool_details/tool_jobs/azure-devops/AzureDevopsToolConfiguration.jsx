@@ -9,6 +9,7 @@ import toolsActions from "components/inventory/tools/tools-actions";
 import {AuthContext} from "contexts/AuthContext";
 import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import modelHelpers from "components/common/model/modelHelpers";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 
 function AzureDevopsToolConfiguration({ toolData }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -39,6 +40,7 @@ function AzureDevopsToolConfiguration({ toolData }) {
       <Row>
         <Col sm={12}>
           <VaultTextInput dataObject={azureDevopsConfigurationDto} setDataObject={setAzureDevopsConfigurationDto} fieldName={"accessToken"}/>
+          <TextInputBase dataObject={azureDevopsConfigurationDto} setDataObject={setAzureDevopsConfigurationDto} fieldName={"organization"} />
         </Col>
       </Row>
     </ToolConfigurationEditorPanelContainer>
