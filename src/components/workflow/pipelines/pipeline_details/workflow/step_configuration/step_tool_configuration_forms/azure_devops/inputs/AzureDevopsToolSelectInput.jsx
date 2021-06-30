@@ -7,6 +7,7 @@ import PipelineActions from "../../../../../../../../workflow/pipeline-actions";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTools } from "@fortawesome/free-solid-svg-icons";
+import TextInputBase from "components/common/inputs/text/TextInputBase";
 import axios from "axios";
 
 function AzureDevopsToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool_prop}) {
@@ -92,6 +93,7 @@ function AzureDevopsToolSelectInput({ fieldName, dataObject, setDataObject, disa
   const setDataFunction = async (fieldName, newAzureTool) => {
     let newDataObject = dataObject;
     newDataObject.setData("toolConfigId", newAzureTool?._id);
+    newDataObject.setData("organizationName", newAzureTool?.configuration?.organization);
     newDataObject.setData("accessToken", newAzureTool?.configuration?.accessToken);
     setDataObject({ ...newDataObject });
 };
@@ -100,6 +102,7 @@ function AzureDevopsToolSelectInput({ fieldName, dataObject, setDataObject, disa
   const clearDataFunction = async () => {
     let newDataObject = dataObject;
     newDataObject.setData("toolConfigId", "");
+    newDataObject.setData("organizationName", "");
     newDataObject.setData("azurePipelineId", "");
     newDataObject.setData("accessToken", "");
     setDataObject({...newDataObject});
@@ -124,6 +127,14 @@ function AzureDevopsToolSelectInput({ fieldName, dataObject, setDataObject, disa
       />
       <small className="text-muted ml-3">
         {getInfoText()}
+      </small>
+      <TextInputBase 
+      disabled={true} 
+      dataObject={dataObject} 
+      setDataObject={setDataObject} 
+      fieldName={"organizationName"}/>
+      <small className="text-muted ml-3">
+      This value is defined in the tool registry setting for the Azure Devops Tool.
       </small>
     </div>
   );
