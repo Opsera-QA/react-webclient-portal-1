@@ -133,6 +133,9 @@ function AzureDevopsToolSelectInput({ fieldName, dataObject, setDataObject, disa
       dataObject={dataObject} 
       setDataObject={setDataObject} 
       fieldName={"organizationName"}/>
+      <small className="text-muted ml-3">
+      This value is defined in the tool registry setting for the Azure Devops Tool.
+      </small>
     </div>
   );
 }
