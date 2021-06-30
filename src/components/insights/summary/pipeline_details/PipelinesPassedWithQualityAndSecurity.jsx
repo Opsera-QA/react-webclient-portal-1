@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useContext, useMemo, useRef } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-light-svg-icons";
-import DataBlock from "components/common/data_boxes/DataBlock";
+import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
 import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function PipelineDetails({ dashboardData, toggleDynamicPanel, selectedDataBlock }) {
+function PipelineDetails({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const fields = BuildDetailsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -101,8 +101,8 @@ function PipelineDetails({ dashboardData, toggleDynamicPanel, selectedDataBlock 
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "successful_pipelines" ? "selected-data-block" : undefined}>
-        <DataBlock
+      <div className={selectedDataBlock === "successful_pipelines" ? "selected-data-block" : undefined} style={style}>
+        <InsightsSynopsisDataBlock
           title={
             !isLoading && metrics[0]?.count[0] ? (
               metrics[0]?.count[0]?.count
@@ -131,6 +131,7 @@ PipelineDetails.propTypes = {
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
   selectedDataBlock: PropTypes.string,
+  style: PropTypes.object
 };
 
 export default PipelineDetails;

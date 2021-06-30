@@ -1,5 +1,6 @@
 import baseActions from "utils/actionsBase";
 import {axiosApiService} from "api/apiService";
+import {axiosApiGetCall} from "api/apiServiceV2";
 
 // TODO: This is getting large. I think it might be wise to separate it into separate files
 //  (pipeline actions being add/get/update/delete, catalog for catalog related,
@@ -87,6 +88,17 @@ pipelineActions.getAllPipelines = async (getAccessToken) => {
 pipelineActions.getAllPipelinesV2 = async (getAccessToken, cancelTokenSource) => {
   let apiUrl = `/pipelines`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+pipelineActions.getAllPipelinesV3 = async (getAccessToken, cancelTokenSource, searchTerm) => {
+  const urlParams = {
+    params: {
+      search: searchTerm,
+    },
+  };
+  
+  let apiUrl = `/pipelines`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 // TODO: Remove when all references are updated

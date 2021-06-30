@@ -5,12 +5,12 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-light-svg-icons";
-import DataBlock from "components/common/data_boxes/DataBlock";
+import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
 import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function PipelineFailedSecurity({ dashboardData, toggleDynamicPanel, selectedDataBlock }) {
+function PipelineFailedSecurity({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const fields = BuildDetailsMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -101,8 +101,8 @@ function PipelineFailedSecurity({ dashboardData, toggleDynamicPanel, selectedDat
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "security_failed" ? "selected-data-block" : undefined}>
-        <DataBlock
+      <div className={selectedDataBlock === "security_failed" ? "selected-data-block" : undefined} style={style}>
+        <InsightsSynopsisDataBlock
           title={
             !isLoading && metrics[0]?.count[0] ? (
               metrics[0]?.count[0]?.count
@@ -131,6 +131,7 @@ PipelineFailedSecurity.propTypes = {
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
   selectedDataBlock: PropTypes.string,
+  style: PropTypes.object
 };
 
 export default PipelineFailedSecurity;

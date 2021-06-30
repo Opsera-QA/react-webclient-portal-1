@@ -29,6 +29,7 @@ import { AuthContext } from "contexts/AuthContext";
 import WorkflowAuthorizedActions from "./workflow-authorized-actions";
 import PipelineStepConfigurationSummaryModal from "./step_configuration/PipelineStepConfigurationSummaryModal";
 import pipelineActions from "components/workflow/pipeline-actions";
+import StepToolHelpIcon from "components/workflow/pipelines/pipeline_details/workflow/StepToolHelpIcon";
 
 const jenkinsTools = ["jmeter", "command-line", "cypress", "junit", "jenkins", "s3", "selenium", "sonar", "teamcity", "twistlock", "xunit", "docker-push", "anchore-scan", "dotnet", "nunit"];
 
@@ -116,10 +117,9 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
       }
 
 
-      if (item.tool && typeof (item.tool.tool_identifier) === "string" && Object.keys(toolProperties).length === 0) {
-        await getToolDetails(item.tool.tool_identifier);
+      if (item?.tool && typeof (item?.tool?.tool_identifier) === "string" && item?.tool?.tool_identifier !== "" && Object.keys(toolProperties).length === 0) {
+        await getToolDetails(item?.tool?.tool_identifier);
       }
-
     }
   };
 
@@ -211,7 +211,8 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
         <div className="title-text-6 upper-case-first ml-1 mt-1 d-flex flex-row">
           <div className="text-muted mr-1">{item.name || "Un-configured Step"}</div>
 
-          <div className="flex-grow-1 text-right">
+          <div className="ml-auto">
+            <div className={"ml-auto d-flex"}>
 
             {isLoading && <FontAwesomeIcon icon={faSpinner} spin className="mr-2 green"/>}
 
@@ -359,6 +360,8 @@ const PipelineWorkflowItem = ({ pipeline, plan, item, index, lastStep, pipelineI
 
               </div>
             </>}
+              <StepToolHelpIcon iconClassName={"mb-1"} className={"mr-0"} tool={item?.tool?.tool_identifier?.toLowerCase()} />
+            </div>
           </div>
         </div>
 

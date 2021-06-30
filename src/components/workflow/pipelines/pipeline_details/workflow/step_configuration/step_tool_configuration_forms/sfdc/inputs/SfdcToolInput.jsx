@@ -24,7 +24,7 @@ function SfdcToolInput({dataObject, setDataObject, disabled}) {
      <PipelineToolInput
        toolType={"sfdc-configurator"}
        toolFriendlyName={"SFDC"}
-       fieldName={"sfdcToolName"}
+       fieldName={"sfdcToolId"}
        configurationRequired={true}
        dataObject={dataObject}
        setDataObject={setDataObject}

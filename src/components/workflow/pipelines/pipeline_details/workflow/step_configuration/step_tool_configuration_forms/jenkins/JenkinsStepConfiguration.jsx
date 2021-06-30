@@ -25,27 +25,24 @@ function JenkinsStepConfiguration({
   stepTool,
   plan,
   stepId,
-  parentCallback,
+  createJob,
   closeEditorPanel,
+  pipelineId
 }) {
   const toastContext = useContext(DialogToastContext);
   const [jenkinsList, setJenkinsList] = useState([]);
   const [thresholdVal, setThresholdValue] = useState("");
   const [thresholdType, setThresholdType] = useState("");
   const [jenkinsStepConfigurationDto, setJenkinsStepConfigurationDto] = useState(undefined);
-  const [jenkinsJobTypeDto, setJenkinsJobTypeDto] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
-
   useEffect(() => {
     isMounted.current = true;
-
     loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
-
     return () => {
       isMounted.current = false;
     };
@@ -59,26 +56,9 @@ function JenkinsStepConfiguration({
         stepTool,
         jenkinsPipelineStepConfigurationMetadata
       );
+      jenkinsConfigurationData.setData('job_type',job_type);
 
       setJenkinsStepConfigurationDto(jenkinsConfigurationData);
-
-      // TODO: This should be metadata
-      if (job_type) {
-        setJenkinsJobTypeDto(
-          new Model(
-            { job_type: job_type },
-            {
-              fields: [
-                {
-                  label: "Jenkins - Job Type",
-                  id: "job_type",
-                },
-              ],
-            },
-            false
-          )
-        );
-      }
 
       if (threshold) {
         setThresholdType(threshold?.type);
@@ -94,20 +74,32 @@ function JenkinsStepConfiguration({
     }
   };
 
-  const callbackFunction = async () => {
-    setIsLoading(true);
 
-    const item = {
-      configuration: jenkinsStepConfigurationDto.getPersistData(),
-      threshold: {
-        type: thresholdType,
-        value: thresholdVal,
-      },
-      job_type: jenkinsJobTypeDto.getData("job_type"),
-    };
+  const handleCreateAndSave = async () => {
+    const toolId = jenkinsStepConfigurationDto.getData("toolConfigId");
+    if (toolId) {
+      // setLoading(true);
 
-    setIsLoading(false);
-    parentCallback(item);
+      const createJobPostBody = {
+        jobId: "",
+        pipelineId: pipelineId,
+        stepId: stepId,
+        buildParams: {
+          stepId: jenkinsStepConfigurationDto.getData("stepIdXML"),
+        },
+      };
+      
+      const toolConfiguration = {
+        configuration: jenkinsStepConfigurationDto.getPersistData(),
+        threshold: {
+          type: thresholdType,
+          value: thresholdVal,
+        },
+        job_type: jenkinsStepConfigurationDto.getData("job_type"),
+      };
+
+      await createJob(toolId, toolConfiguration, stepId, createJobPostBody);
+    }
   };
 
   if (isLoading || jenkinsStepConfigurationDto == null) {
@@ -115,9 +107,10 @@ function JenkinsStepConfiguration({
   }
 
   const loadSfdcConfigurationPanel = () => {
-    const jobType = jenkinsJobTypeDto?.getData("job_type");
+    const jobType = jenkinsStepConfigurationDto?.getData("job_type");
     const toolJobType = jenkinsStepConfigurationDto?.getData("toolJobType");
-    if (["sfdc-ant-profile", "sfdc-ant"].includes(jobType) || toolJobType.includes("SFDC")) {
+      if ((jobType  && (["sfdc-ant-profile", "sfdc-ant"]).some(item=>item === jobType ? jobType :"")) || 
+          (toolJobType  && toolJobType.some(item=>item==="SFDC"))) {
       return (
         <JenkinsSfdcConfigurationPanel
           dataObject={jenkinsStepConfigurationDto}
@@ -128,7 +121,7 @@ function JenkinsStepConfiguration({
   };
 
   const getJobForm = () => {
-    if (jenkinsJobTypeDto?.getData("job_type") === "job") {
+    if (jenkinsStepConfigurationDto?.getData("job_type") === "job") {
       return (
         <div className={"mb-3"}>
           <TextInputBase
@@ -144,7 +137,7 @@ function JenkinsStepConfiguration({
       <div>
         <JenkinsToolJobIdSelectInput
           jenkinsList={jenkinsList}
-          jobType={jenkinsJobTypeDto?.getData("job_type")}
+          
           dataObject={jenkinsStepConfigurationDto}
           setDataObject={setJenkinsStepConfigurationDto}
           toolConfigId={jenkinsStepConfigurationDto?.getData("toolConfigId")}
@@ -159,19 +152,18 @@ function JenkinsStepConfiguration({
         <JenkinsWorkspaceProjectSelectInput
           dataObject={jenkinsStepConfigurationDto}
           setDataObject={setJenkinsStepConfigurationDto}
-          service={jenkinsStepConfigurationDto.getData("service")}
-          gitToolId={jenkinsStepConfigurationDto.getData("gitToolId")}
         />
         <JenkinsRepositorySelectInput
           dataObject={jenkinsStepConfigurationDto}
           setDataObject={setJenkinsStepConfigurationDto}
           service={jenkinsStepConfigurationDto.getData("service")}
           gitToolId={jenkinsStepConfigurationDto.getData("gitToolId")}
+          
         />
         <JenkinsStepConfigurationBranchEditorPanel dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} jenkinsList={jenkinsList} />
         <JenkinsXmlStepInfoSelectInput dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} plan={plan} stepId={stepId} />
         <JenkinsStepConfigurationDockerEditorPanel dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
-        <JenkinsPythonPanel dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
+        <JenkinsPythonPanel dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} plan={plan}  stepId={stepId} />
         <JenkinsGradleMavenScriptFilePathPanel  dataObject={jenkinsStepConfigurationDto} setDataObject={setJenkinsStepConfigurationDto} />
       </div>
     );
@@ -181,7 +173,7 @@ function JenkinsStepConfiguration({
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
       recordDto={jenkinsStepConfigurationDto}
-      persistRecord={callbackFunction}
+      persistRecord={handleCreateAndSave}
       isLoading={isLoading}
     >
       <JenkinsToolConfigIdSelectInput
@@ -192,9 +184,7 @@ function JenkinsStepConfiguration({
       />
       <JenkinsJobTypeSelectInput
         dataObject={jenkinsStepConfigurationDto}
-        setDataObject={setJenkinsStepConfigurationDto}
-        jobTypeObject={jenkinsJobTypeDto}
-        setJobTypeObject={setJenkinsJobTypeDto}
+        setDataObject={setJenkinsStepConfigurationDto}   
       />
       {getJobForm()}
     </PipelineStepEditorPanelContainer>
@@ -205,8 +195,9 @@ JenkinsStepConfiguration.propTypes = {
   stepTool: PropTypes.object,
   plan: PropTypes.array,
   stepId: PropTypes.string,
-  parentCallback: PropTypes.func,
+  createJob: PropTypes.func,
   closeEditorPanel: PropTypes.func,
+  pipelineId: PropTypes.string
 };
 
 export default JenkinsStepConfiguration;

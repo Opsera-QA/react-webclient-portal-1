@@ -7,16 +7,48 @@ export const DataState = {
   DELETED: 3
 };
 
+// TODO: After converting table to use Models instead of raw objects, the removal of these can probably happen
+export const temporaryObjectProperties = [
+  "$height",
+  "id",
+  "__v"
+];
+
 export class ModelBase {
   constructor(data, metaData, newModel, setStateFunction) {
     this.metaData = {...metaData};
     this.data = {...this.getNewObjectFields(), ...data};
     this.newModel = newModel;
+    this.id = data?._id;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
     this.setStateFunction = setStateFunction;
     this.changeMap = new Map();
+    this.initializeObjectProperties({...metaData});
     this.isLoading = false;
+    this.updateAllowed = false;
+    this.deleteAllowed = false;
   }
+
+  initializeObjectProperties = (metaData) => {
+    const fields = metaData?.fields;
+    if (Array.isArray(fields)) {
+      for (const field of fields) {
+        let id = field.id;
+
+        Object.defineProperty(this, id, {
+          get: () => {
+            return this.getData(id);
+          },
+          set: (newValue) => {
+            if (this.getData(id) !== newValue) {
+              this.setData(id, newValue);
+            }
+          },
+        });
+      }
+    }
+  };
+
 
   /**
    * Retrieve nested item from object/array
@@ -75,7 +107,7 @@ export class ModelBase {
   };
 
   getDetailViewLink = () => {
-    console.error("No getDetailViewLink function was wired up");
+    // console.error("No getDetailViewLink function was wired up");
     return null;
   };
 
@@ -187,10 +219,9 @@ export class ModelBase {
     }
     else if (newChangeMap.get(id) === newValue
          || (newChangeMap.get(id) === null && newValue === null)) {
-      // console.log("Fieldname removed from change map: " + id);
       newChangeMap.delete(id);
 
-      if (this.changeMap.size === 0 && this.dataState === DataState.CHANGED) {
+      if (newChangeMap.size === 0 && this.dataState === DataState.CHANGED) {
         this.dataState  = DataState.LOADED;
       }
     }
@@ -205,6 +236,7 @@ export class ModelBase {
 
   // TODO: Only send changemap for updates after getting everything else working
   getPersistData = () => {
+    this.removeTemporaryObjectProperties();
     return this.trimStrings();
   };
 
@@ -228,6 +260,26 @@ export class ModelBase {
     }
 
     return data;
+  };
+
+  removeTemporaryObjectProperties = () => {
+    let data = this.data;
+
+    try {
+      temporaryObjectProperties.forEach((key) => {
+        // console.log(`deleting temp object property ${key}: [${data[key]}]`);
+        delete data[key];
+      });
+
+      this.data = data;
+    }
+    catch (error) {
+      console.error("Could not remove temporary object properties.");
+      return this.data;
+    }
+
+    return data;
+
   };
 
   isNew = () => {
@@ -255,8 +307,36 @@ export class ModelBase {
     }
   };
 
+  unselectModel = () => {
+    if (this.setStateFunction) {
+      this.setStateFunction(undefined);
+    }
+  };
+
+  setSetStateFunction = (setStateFunction) => {
+    if (setStateFunction) {
+      this.setStateFunction = setStateFunction;
+    }
+  };
+
+  getSetStateFunction = () => {
+    return this.setStateFunction;
+  };
+
   getChangeMap = () => {
     return this.changeMap;
+  }
+
+  // TODO: This is the new getPersistData. It needs to replace the other one.
+  getChangedProperties = () => {
+    this.trimStrings();
+    const changedProperties = {};
+
+    this.changeMap.forEach((value, key) => {
+      changedProperties[key] = this.data[key];
+    });
+
+    return changedProperties;
   }
 
   getOriginalValue = (fieldName) => {
@@ -352,7 +432,7 @@ export class ModelBase {
   };
 
   getFieldById = (id) => {
-    return this.metaData?.fields.find(field => {return field.id === id; });
+    return this.metaData?.fields?.find(field => {return field.id === id; });
   };
 
   getDefaultValue = (fieldName) => {
@@ -371,6 +451,14 @@ export class ModelBase {
 
   getNewInstance = (newData = this.getNewObjectFields()) => {
     return new ModelBase({...newData}, this.metaData, this.newModel);
+  };
+
+  canUpdate = () => {
+    return this.updateAllowed === true;
+  };
+
+  canDelete = () => {
+    return this.deleteAllowed === true;
   };
 }
 

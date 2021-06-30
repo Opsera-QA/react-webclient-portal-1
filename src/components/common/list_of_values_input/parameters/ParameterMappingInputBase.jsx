@@ -11,6 +11,7 @@ import parametersActions from "../../../inventory/parameters/parameters-actions"
 import DropdownList from "react-widgets/lib/DropdownList";
 import axios from "axios";
 import ReactJson from "react-json-view";
+import InfoText from "../../inputs/info_text/InfoText";
 
 const SAMPLE_DATA = {
   subnet_list: [
@@ -18,6 +19,7 @@ const SAMPLE_DATA = {
   ]
 };
 
+// TODO: Refactor further.
 function ParameterMappingInputBase({
   dataObject,
   setDataObject,
@@ -140,6 +142,19 @@ function ParameterMappingInputBase({
   };
 
   const addProperty = () => {
+    setErrorMessage("");
+
+    if (properties.length + 1 > field.maxItems) {
+      setErrorMessage(`You have reached the maximum allowed number of ${type}. Please remove one to add another.`);
+      return;
+    }
+
+    for (let item in properties) {
+      if (Object.values(properties[item]).includes(parameterName) || Object.values(properties[item]).includes(outputKey)) {
+        setErrorMessage("Existing parameters can not be added again");
+        return;
+      }
+    }
     setProperties([
       ...properties,
       {
@@ -154,6 +169,7 @@ function ParameterMappingInputBase({
   };
 
   const deleteProperty = (index) => {
+    setErrorMessage("");
     let newPropertyList = properties;
     newPropertyList.splice(index, 1);
     validateAndSetData(newPropertyList);
@@ -166,9 +182,9 @@ function ParameterMappingInputBase({
 
   const getInputRow = () => {
     return (
-      <div className="my-2">
+      <div className="p-2">
         <Row>
-          <Col sm={5} className={"my-1 ml-2"}>
+          <Col sm={5}>
             <DropdownList
               data={parametersList ? parametersList : []}
               valueField={"_id"}
@@ -181,37 +197,38 @@ function ParameterMappingInputBase({
               disabled={isLoading || (!isLoading && (parametersList == null || parametersList.length === 0))}
             />
           </Col>
-          <Col sm={5} className={"mt-1 ml-2"}>
+          <Col sm={5} className={"px-0"}>
             <input
               className="form-control"
               type={"text"}
               placeholder={"Output Key Name"}
               maxLength={nameMaxLength}
-              style={{height: "90%"}}
+              style={{height: "99%"}}
               onChange={(event) => setOutputKey(event.target.value)}
               value={outputKey}
             />
           </Col>
-          <Button
-            size="sm"
-            className="mt-1 ml-2 px-2"
-            style={{height: "99%"}}
-            variant="success"
-            disabled={
-              !allowIncompleteItems &&
-              (!parameterId ||
-                parameterId.length === 0 ||
-                !parameterName ||
-                parameterName.length === 0 ||
-                !outputKey ||
-                outputKey.length === 0)
-            }
-            onClick={() => {
-              addProperty();
-            }}
-          >
-           Add
-          </Button>
+          <Col sm={2}>
+            <Button
+              size="sm"
+              className="input-button w-100"
+              variant="success"
+              disabled={
+                allowIncompleteItems &&
+                (!parameterId ||
+                  parameterId.length === 0 ||
+                  !parameterName ||
+                  parameterName.length === 0 ||
+                  !outputKey ||
+                  outputKey.length === 0)
+              }
+              onClick={() => {
+                addProperty();
+              }}
+            >
+             Add
+            </Button>
+          </Col>
         </Row>
 
       </div>
@@ -242,15 +259,22 @@ function ParameterMappingInputBase({
   };
 
   const getFieldBody = () => {
-    return (
-      <>
-        <div className="flex-fill">
-          {properties.map((property, index) => {
-            return getPropertyRow(property, index);
-          })}
+    if (!Array.isArray(properties) || properties.length === 0) {
+      return (
+        <div className="d-flex h-100 w-100">
+          <div className={"mx-auto mt-5"}>
+            No Parameter Mappings have been added yet.
+          </div>
         </div>
-        <div className="flex-fill">{getInputRow()}</div>
-      </>
+      );
+    }
+
+    return (
+      <div className="flex-fill">
+        {properties.map((property, index) => {
+          return getPropertyRow(property, index);
+        })}
+      </div>
     );
   };
 
@@ -343,8 +367,12 @@ function ParameterMappingInputBase({
           <h6>{getTitleBar()}</h6>
         </div>
         <div>{properties.length > 0 ? getHeaderBar() : null}</div>
-        <div className="properties-body-alt">{getFieldBody()}</div>
+        <div className="properties-body-alt">
+          {getFieldBody()}
+        </div>
       </div>
+      <div className="object-properties-footer">{getInputRow()}</div>
+      <InfoText field={field} errorMessage={errorMessage}/>
     </div>
   );
 }

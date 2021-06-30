@@ -46,6 +46,7 @@ function ToolsTable({ data, loadData, isLoading, className }) {
 
       if (result) {
         if (result?.error == null) {
+            await loadData();
             toastContext.showSuccessDialog("Deletion in Progress, It may take few minutes to complete the process");
         }
         else

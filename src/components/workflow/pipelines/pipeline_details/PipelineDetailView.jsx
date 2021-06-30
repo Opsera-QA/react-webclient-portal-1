@@ -423,10 +423,10 @@ function PipelineDetailView() {
   const getNavigationTabContainer = () => {
     return (
       <NavigationTabContainer>
-        <NavigationTab activeTab={activeTab} tabText={"Catalog"} handleTabClick={handleTabClick}
-                       tabName={"catalog"} toolTipText={"Template Catalog"} icon={faHexagon}/>
         <NavigationTab activeTab={activeTab} tabText={"Pipelines"}
                        handleTabClick={handleTabClick} tabName={"pipelines"} toolTipText={"Pipelines"} icon={faDraftingCompass}/>
+        <NavigationTab activeTab={activeTab} tabText={"Catalog"} handleTabClick={handleTabClick}
+                       tabName={"catalog"} toolTipText={"Template Catalog"} icon={faHexagon}/>
         <NavigationTab activeTab={"viewer"} tabText={"Pipeline Viewer"}
                        handleTabClick={handleTabClick} tabName={"viewer"} toolTipText={"Pipeline Viewer"} icon={faLayerGroup}/>
       </NavigationTabContainer>

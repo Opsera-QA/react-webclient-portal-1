@@ -11,6 +11,7 @@ import {faExclamationCircle} from "@fortawesome/pro-light-svg-icons";
 import DeleteToolMetadata from "./delete-tool-metadata";
 import PropTypes from "prop-types";
 import ApplicationListInput from "./inputs/ApplicationListInput";
+import deleteToolsActions from "components/settings/delete_tools/settings-delete-tools-action.js";
 import ToolsTable from "./ToolsTable";
 function DeleteTools() {
   const toastContext = useContext(DialogToastContext);
@@ -82,10 +83,19 @@ function DeleteTools() {
     );
  };
 
+ const loadApplicationTools = async (cancelSource = cancelTokenSource) => {
+  const response = await deleteToolsActions.getAllApplicationsV2(getAccessToken, cancelSource);
+  if (isMounted?.current === true && response?.data) { 
+    let application = response.data.find(ele => ele._id  === deleteToolDto.getData("applicationId"));
+    // console.log(application);
+    deleteToolDto.setData("toolsList", application?.tools);
+  }
+};
+
  const getToolsTable = () => {
   if(!isLoading && deleteToolDto.getData("applicationId") && deleteToolDto.getData("applicationId").length > 0 &&  deleteToolDto.getData("toolsList") ) {
     return (
-          <ToolsTable data={deleteToolDto.getData("toolsList")} className="p-2 ml-2" />
+          <ToolsTable data={deleteToolDto.getData("toolsList")} loadData={loadApplicationTools} className="p-2 ml-2" />
         );
   }
 };

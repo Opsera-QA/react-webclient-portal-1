@@ -1,18 +1,23 @@
 import React, { useContext, useEffect, useState } from "react";
-import {faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
-import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import ToolInventory from "components/inventory/tools/ToolInventory";
 import PlatformInventory from "components/inventory/platform/platformInventory";
-import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
-import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import {AuthContext} from "contexts/AuthContext";
 import ParametersInventory from "components/inventory/parameters/ParametersInventory";
-import ToolRegistryHelpDocumentation from "../common/help/documentation/tool_registry/ToolRegistryHelpDocumentation";
+import ScriptsInventory from "components/inventory/scripts/ScriptsInventory";
+import {useParams} from "react-router-dom";
+
+const SUPPORTED_VIEWS = [
+  "tools",
+  "platform",
+  "parameters",
+  "scripts"
+];
 
 function Inventory() {
+  const { tab } = useParams();
   const { getUserRecord, setAccessRoles } = useContext(AuthContext);
   const [customerAccessRules, setCustomerAccessRules] = useState({});
-  const [activeTab, setActiveTab] = useState("tools");
+  const [activeTab, setActiveTab] = useState(tab == null || !SUPPORTED_VIEWS.includes(tab) ? "tools" : tab);
 
   useEffect(() => {
     initComponent().catch(error => {
@@ -34,40 +39,22 @@ function Inventory() {
   const getCurrentView = () => {
     switch (activeTab) {
       case "tools":
-        return <ToolInventory customerAccessRules={customerAccessRules} />;
+        return <ToolInventory customerAccessRules={customerAccessRules} handleTabClick={handleTabClick} />;
       case "platform":
-        return <PlatformInventory />;
+        return <PlatformInventory handleTabClick={handleTabClick} />;
       case "parameters":
-        return <ParametersInventory />;
+        return <ParametersInventory customerAccessRules={customerAccessRules} handleTabClick={handleTabClick} />;
+      case "scripts":
+        return <ScriptsInventory customerAccessRules={customerAccessRules} handleTabClick={handleTabClick} />;
       default:
         return null;
     }
   };
 
-  const getNavigationTabContainer = () => {
-    return (
-      <NavigationTabContainer>
-        <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Tools"} />
-        <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Platform"} />
-        <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Parameters"} />
-      </NavigationTabContainer>
-    );
-  };
-
   return (
-    <ScreenContainer
-      navigationTabContainer={getNavigationTabContainer()}
-      breadcrumbDestination={"toolRegistry"}
-      pageDescription={`
-        The Opsera Tool Registry allows you to register, track and configure all of the tools in your organization in
-        one centralized location.
-      `}
-      helpComponent={
-        <ToolRegistryHelpDocumentation />
-      }
-    >
+    <div>
       {getCurrentView()}
-    </ScreenContainer>
+    </div>
   );
 }
 

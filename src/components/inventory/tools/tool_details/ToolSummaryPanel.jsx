@@ -35,9 +35,7 @@ function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessR
         <Col lg={6}>
           <TextFieldBase dataObject={toolData} fieldName={"tool_identifier"} />
         </Col>
-        <Col lg={12} sm={12}>
-          <TextFieldBase dataObject={toolData} fieldName={"description"} />
-        </Col>
+       
         <Col sm={12} lg={6}>
           <TextFieldBase dataObject={toolData} fieldName={"costCenter"}/>
         </Col>
@@ -61,6 +59,9 @@ function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessR
         </Col>
         <Col lg={6}>
           <VaultSummaryPageInputField dataObject={toolData} setDataObject={setToolData} />
+        </Col>
+        <Col lg={12} sm={12}>
+          <TextFieldBase dataObject={toolData} fieldName={"description"} />
         </Col>
       </Row>
     </SummaryPanelContainer>

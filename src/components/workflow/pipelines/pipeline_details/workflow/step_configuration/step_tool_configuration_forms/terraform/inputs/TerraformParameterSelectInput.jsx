@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faFileCode} from "@fortawesome/pro-light-svg-icons";
+import {faHandshake} from "@fortawesome/pro-light-svg-icons";
 import ParameterMappingInputBase
   from "../../../../../../../../common/list_of_values_input/parameters/ParameterMappingInputBase";
 
@@ -8,12 +8,12 @@ function TerraformParameterSelectInput({ dataObject, setDataObject, disabled, fi
 
   return (
     <ParameterMappingInputBase
-      titleIcon={faFileCode}
+      titleIcon={faHandshake}
       dataObject={dataObject}
       setDataObject={setDataObject}
       fieldName={fieldName}
       allowIncompleteItems={true}
-      type={"Parameter Mapping"}
+      type={"Parameter Mappings"}
       regexValidationRequired={false}
       titleText={"Response Parameter Mapping"}
     />

@@ -4,7 +4,7 @@ import {
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
   faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey,
-  faHexagon, faListAlt, faEye, faCodeBranch, faUserChart, faRadar, faTasks
+  faHexagon, faListAlt, faEye, faCodeBranch, faUserChart, faRadar, faServer, faHandshake, faFileCode, faTasks
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
@@ -33,6 +33,30 @@ const breadcrumbs = {
     linkText: "Tool Project Details",
     title: "Tool Project Details",
     icon: faProjectDiagram
+  },
+  platform: {
+    parent: undefined,
+    name: "platform",
+    path: paths.toolRegistry,
+    linkText: "Platform",
+    title: "Platform",
+    icon: faServer
+  },
+  customParameters: {
+    parent: undefined,
+    name: "customParameters",
+    path: paths.toolRegistry,
+    linkText: "Parameters",
+    title: "Parameters",
+    icon: faHandshake
+  },
+  scripts: {
+    parent: undefined,
+    name: "scripts",
+    path: paths.toolRegistry,
+    linkText: "Scripts",
+    title: "Scripts",
+    icon: faFileCode
   },
 
   // Administration
@@ -374,7 +398,7 @@ const breadcrumbs = {
     linkText: "Customer Onboarding",
     icon: faUserPlus
   },
-  
+
   deleteTools: {
     parent: "admin",
     name: "deleteTools",
@@ -397,8 +421,8 @@ const breadcrumbs = {
     parent: "pipelines",
     name: "catalog",
     path: paths.pipelines,
-    title: "Pipeline Catalog Library",
-    linkText: "Pipeline Catalog Library",
+    title: "Catalog",
+    linkText: "Catalog",
     icon: faHexagon
   },
   pipelineDetailView: {
@@ -602,8 +626,8 @@ const breadcrumbs = {
     parent: "gitTasksManagement",
     name: "gitTasksDetailView",
     path: paths.gitTasksDetailView,
-    title: "Opsera Task Details",
-    linkText: "Opsera Task Details",
+    title: "Task Details",
+    linkText: "Task Details",
     icon: faTasks
   },
 

@@ -1,7 +1,6 @@
 import React, {useEffect} from "react";
 import PropTypes from "prop-types";
-import OrganizationMultiSelectInput
-  from "components/common/list_of_values_input/settings/organizations/OrganizationMultiSelectInput";
+import OrganizationListInput from "components/common/list_of_values_input/settings/organizations/OrganizationListInput";
 
 function RegistryToolOrganizationInput({ dataObject, setDataObject, disabled, fieldName, className}) {
 
@@ -18,7 +17,7 @@ function RegistryToolOrganizationInput({ dataObject, setDataObject, disabled, fi
 
 
   return (
-    <OrganizationMultiSelectInput
+    <OrganizationListInput
       className={className}
       disabled={disabled}
       fieldName={fieldName}

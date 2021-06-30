@@ -56,7 +56,7 @@ function PlatformApplicationsListInput({ visible, fieldName, placeholderText, da
   };
 
   const loadApplications = async (cancelSource = cancelTokenSource) => {
-    const response = await deleteToolsActions.getAllApplicationsV2(getAccessToken, cancelSource, "jenkins");
+    const response = await deleteToolsActions.getAllApplicationsV2(getAccessToken, cancelSource);
     if (isMounted?.current === true && response?.data) { 
       setApplications(response?.data);
     }

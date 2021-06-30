@@ -4,13 +4,22 @@ import { Form } from "react-bootstrap";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
-function BooleanToggleInput({ fieldName, dataObject, setDataObject, disabled }) {
-    const [field] = useState(dataObject.getFieldById(fieldName));
+function BooleanToggleInput({ fieldName, dataObject, setDataObject, setDataFunction, disabled }) {
+  const [field] = useState(dataObject.getFieldById(fieldName));
 
-  const validateAndSetData = (value) => {
+  const validateAndSetData = (fieldName, value) => {
     let newDataObject = dataObject;
-    newDataObject.setData(field.id, value);
+    newDataObject.setData(fieldName, value);
     setDataObject({...newDataObject});
+  };
+
+  const updateValue = (newValue) => {
+    if (setDataFunction) {
+      setDataFunction(fieldName, newValue);
+    }
+    else {
+      validateAndSetData(fieldName, newValue);
+    }
   };
 
   return (
@@ -23,7 +32,7 @@ function BooleanToggleInput({ fieldName, dataObject, setDataObject, disabled }) 
         disabled={disabled}
         label={field.label}
         onChange={() => {
-          validateAndSetData(!dataObject.getData(fieldName));
+          updateValue(!dataObject.getData(fieldName));
         }}
       />
       <InfoText field={field} errorMessage={null}/>
@@ -36,7 +45,7 @@ BooleanToggleInput.propTypes = {
   setDataObject: PropTypes.func,
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
-  setData: PropTypes.func
+  setDataFunction: PropTypes.func
 };
 
 export default BooleanToggleInput;

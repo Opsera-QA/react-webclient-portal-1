@@ -23,7 +23,7 @@ function DestSfdcToolInput({dataObject, setDataObject, disabled}) {
      <PipelineToolInput
        toolType={"sfdc-configurator"}
        toolFriendlyName={"SFDC"}
-       fieldName={"sfdcDestToolName"}
+       fieldName={"sfdcDestToolId"}
        configurationRequired={true}
        dataObject={dataObject}
        setDataObject={setDataObject}

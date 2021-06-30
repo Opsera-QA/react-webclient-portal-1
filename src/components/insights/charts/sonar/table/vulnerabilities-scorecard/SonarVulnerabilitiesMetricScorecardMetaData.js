@@ -34,6 +34,10 @@ const SonarVulnerabilitiesMetricScorecardMetaData = {
       label: "Language",
       id: "sonarPrimaryLanguage",
     },
+    {
+      label: "Page Size",
+      id: "pageSize",
+    },
   ],
   newObjectFields: {},
 };

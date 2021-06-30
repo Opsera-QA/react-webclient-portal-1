@@ -8,8 +8,14 @@ import PropTypes from "prop-types";
 import cookieHelpers from "core/cookies/cookie-helpers";
 import ToolViews from "components/inventory/tools/ToolViews";
 import axios from "axios";
+import ToolRegistryHelpDocumentation
+  from "components/common/help/documentation/tool_registry/ToolRegistryHelpDocumentation";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
+import NavigationTab from "components/common/tabs/navigation/NavigationTab";
+import {faFileCode, faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
 
-function ToolInventory({ customerAccessRules }) {
+function ToolInventory({ customerAccessRules, handleTabClick }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
@@ -90,21 +96,45 @@ function ToolInventory({ customerAccessRules }) {
     }
   };
 
+  const getNavigationTabContainer = () => {
+    return (
+      <NavigationTabContainer>
+        <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Tools"} />
+        <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Platform"} />
+        <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Parameters"} />
+        <NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Scripts"} />
+      </NavigationTabContainer>
+    );
+  };
+
   return (
-    <ToolViews
-      isLoading={isLoading}
-      loadData={loadData}
-      saveCookies={saveCookies}
-      data={toolRegistryList}
-      toolFilterDto={toolFilterDto}
-      setToolFilterDto={setToolFilterDto}
-      customerAccessRules={customerAccessRules}
-    />
+    <ScreenContainer
+      navigationTabContainer={getNavigationTabContainer()}
+      breadcrumbDestination={"toolRegistry"}
+      pageDescription={`
+        The Opsera Tool Registry allows you to register, track and configure all of the tools in your organization in
+        one centralized location.
+      `}
+      helpComponent={
+        <ToolRegistryHelpDocumentation />
+      }
+    >
+      <ToolViews
+        isLoading={isLoading}
+        loadData={loadData}
+        saveCookies={saveCookies}
+        data={toolRegistryList}
+        toolFilterDto={toolFilterDto}
+        setToolFilterDto={setToolFilterDto}
+        customerAccessRules={customerAccessRules}
+      />
+    </ScreenContainer>
   );
 }
 
 ToolInventory.propTypes = {
   customerAccessRules: PropTypes.object,
+  handleTabClick: PropTypes.func
 };
 
 export default ToolInventory;

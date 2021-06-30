@@ -1,13 +1,21 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Form, Alert } from "react-bootstrap";
+import { Alert } from "react-bootstrap";
 import { AuthContext } from "contexts/AuthContext";
 import { axiosApiService } from "api/apiService";
 import ErrorDialog from "components/common/status_notifications/error";
-//import LoadingDialog from "../common/loading";
 import DropdownList from "react-widgets/lib/DropdownList";
 import PlatformToolsTable from "./platformToolsTable.jsx";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import ToolRegistryHelpDocumentation
+  from "components/common/help/documentation/tool_registry/ToolRegistryHelpDocumentation";
+import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
+import NavigationTab from "components/common/tabs/navigation/NavigationTab";
+import {faFileCode, faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
+import PropTypes from "prop-types";
+import LoadingDialog from "components/common/status_notifications/loading";
 
-function PlatformInventory () {
+// TODO: Refactor
+function PlatformInventory ({ handleTabClick }) {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
@@ -62,9 +70,16 @@ function PlatformInventory () {
     setKey(selectedOption);
   };
 
-  if (error) {
-    return (<ErrorDialog error={error} />);
-  } else {
+  const getBody = () => {
+    if (error) {
+      return (<ErrorDialog error={error} />);
+    }
+
+    if (isLoading) {
+      return (<LoadingDialog message={"Loading Platform Applications"} size={"sm"} />);
+    }
+
+
     return (
       <div className="h-50 p-2">
         {!isLoading && data && data.length === 0 ?
@@ -81,7 +96,7 @@ function PlatformInventory () {
             {renderForm ?
               <DropdownList
                 className="application-select"
-                data={data} 
+                data={data}
                 valueField='name'
                 busy={isLoading}
                 textField='name'
@@ -91,7 +106,7 @@ function PlatformInventory () {
         }
 
         <div>
-          {key && Object.keys(key).length > 0 ? 
+          {key && Object.keys(key).length > 0 ?
             <>
               {Object.keys(key.tools).length > 0
                 ? <PlatformToolsTable data={key.tools} isLoading={isLoading} />
@@ -101,7 +116,32 @@ function PlatformInventory () {
         </div>
       </div>
     );
-  }
+  };
+
+  const getNavigationTabContainer = () => {
+    return (
+      <NavigationTabContainer>
+        <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={"platform"} tabText={"Tools"} />
+        <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={"platform"} tabText={"Platform"} />
+        <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={"platform"} tabText={"Parameters"} />
+        <NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"platform"} tabText={"Scripts"} />
+      </NavigationTabContainer>
+    );
+  };
+
+
+  return (
+    <ScreenContainer
+      navigationTabContainer={getNavigationTabContainer()}
+      breadcrumbDestination={"platform"}
+    >
+      {getBody()}
+    </ScreenContainer>
+  );
 }
+
+PlatformInventory.propTypes = {
+  handleTabClick: PropTypes.func
+};
 
 export default PlatformInventory;
