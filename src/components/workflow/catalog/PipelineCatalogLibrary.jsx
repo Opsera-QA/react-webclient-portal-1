@@ -87,8 +87,7 @@ function PipelineCatalogLibrary() {
           <>
             <div className={"p-2"}>
               {`
-                Opsera provides pipeline templates for various functions and domains.
-                Listed below are the publicly available pipeline templates from Opsera.
+                These are publicly available pipeline templates provided by Opsera. All users have access to them.
               `}
             </div>
             <PipelineCatalog source={undefined} activeTemplates={activeTemplates} />
@@ -99,9 +98,7 @@ function PipelineCatalogLibrary() {
           <>
             <div className={"p-2"}>
               {`
-                Your organization has a private repository of pipeline catalog templates.
-                Users can share their pipelines, publishing their framework to this catalog so that others can use it.
-                These items are only visible to you and your overall organization.
+                This is your organization’s private catalog of pipeline templates. These are accessible to you and your organization only. To share a pipeline template with your organization, publish it to this catalog in Pipeline Summary.
               `}
             </div>
             <PipelineCatalog source={"customer"} activeTemplates={activeTemplates} />
