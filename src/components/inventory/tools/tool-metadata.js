@@ -31,7 +31,7 @@ const toolMetadata = {
       label: "Description",
       id: "description",
       maxLength: 1000, 
-      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces,
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash,
       formText: "Description can be up to 1000 characters and can consist of letters, apostrophes, numbers, spaces, dashes, colons, underscores, and periods"
     },
     {
