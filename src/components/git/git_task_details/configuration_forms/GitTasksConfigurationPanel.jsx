@@ -6,6 +6,7 @@ import SFDCBranchStructuringTaskTypeConfigurationPanel from "./sfdc-branch-struc
 import BranchToBranchGitTaskConfigurationPanel from "./branch-to-branch/BranchToBranchGitTaskConfigurationPanel";
 import SFDXCertGenTaskTypeConfigurationPanel from "./sfdx-cert-gen/SFDXCertGenTaskTypeConfigurationPanel";
 import ECSCreationTaskConfigurationPanel from "./ecs-cluster-creation/ECSCreationTaskConfigurationPanel";
+import ECSServiceCreationTaskConfigurationPanel from "./ecs-service-creation/ECSServiceCreationTaskConfigurationPanel";
 
 function GitTasksConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   const getConfigurationPanel = () => {
@@ -50,6 +51,15 @@ function GitTasksConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTa
             gitTasksConfigurationData={gitTasksConfigurationData}
           />
         );
+        case "ecs_service_creation":
+        return (
+          <ECSServiceCreationTaskConfigurationPanel
+            gitTasksDataDto={gitTasksDataDto}
+            setGitTasksConfigurationData={setGitTasksConfigurationData}
+            gitTasksConfigurationData={gitTasksConfigurationData}
+          />
+        );
+      case "":
       default:
         return <div className="text-center text-muted p-5">You must select a task type before configuring task details.</div>;
     }
