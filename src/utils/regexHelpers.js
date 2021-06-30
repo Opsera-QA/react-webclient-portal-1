@@ -33,7 +33,7 @@ regexHelpers.regexTypes = {
   // Letters, numbers and spaces allowed
   alphanumericPlusSpaces: /^[A-Za-z0-9 ]*$/,
 
-  // Letters, numbers, dashes, slashes, underscores, and periods allowed
+  // Letters, numbers, dashes, slashes, colons, underscores, and periods allowed
   pathField: /^[A-Za-z0-9\-_:./\\]*$/,
 
   // Letters, numbers, dashes, and periods allowed
@@ -57,6 +57,8 @@ regexHelpers.regexTypes = {
   //only numbers
   numericalField : /^[0-9]*$/,
 
+  // hostnameRegex is valid as per RFC 1123
+  hostnameRegex: /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/,
 };
 
 export default regexHelpers;
