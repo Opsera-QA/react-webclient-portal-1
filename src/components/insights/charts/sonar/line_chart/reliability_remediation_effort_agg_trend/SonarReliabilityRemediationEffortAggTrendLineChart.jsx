@@ -19,6 +19,7 @@ import genericChartFilterMetadata from "components/insights/charts/generic_filte
 import FilterContainer from "components/common/table/FilterContainer";
 import { faDraftingCompass, faTable } from "@fortawesome/pro-light-svg-icons";
 import { getTableDateTimeColumn } from "components/common/table/column_definitions/model-table-column-definitions";
+import InfoDialog from "components/common/status_notifications/info";
 
 function SonarReliabilityRemediationEffortAggTrendLineChart({
   kpiConfiguration,
@@ -92,7 +93,6 @@ function SonarReliabilityRemediationEffortAggTrendLineChart({
           ? response?.data?.data[0]?.sonarTrendOverTime?.data
           : [];
 
-      console.log("dataObject", dataObject);
       assignStandardColors(dataObject);
       shortenLegend(dataObject);
 
@@ -152,7 +152,6 @@ function SonarReliabilityRemediationEffortAggTrendLineChart({
   };
 
   const onClickHandler = (thisDataPoint) => {
-    console.log("thisDataPoint", thisDataPoint);
     let date = thisDataPoint?.data?.xFormatted;
     toastContext.showOverlayPanel(
       <FullScreenCenterOverlayContainer
@@ -175,20 +174,34 @@ function SonarReliabilityRemediationEffortAggTrendLineChart({
     }
 
     return (
-      <div className="new-chart mb-3" style={{ height: "300px" }}>
-        <ResponsiveLine
-          data={metrics}
-          {...defaultConfig("Remediation Effort Required (min)", "Date", false, true, "wholeNumbers", "monthDate")}
-          {...config(getColor)}
-          onClick={(thisDataPoint) => onClickHandler(thisDataPoint)}
-          tooltip={(node) => (
-            <ChartTooltip
-              titles={["Date", "Remediation Effort Required"]}
-              values={[node.point.data.xFormatted, String(node.point.data.yFormatted) + " minutes"]}
+      <>
+        {!isLoading && metrics[0]?.data?.length > 0 && (
+          <div className="new-chart mb-3" style={{ height: "300px" }}>
+            <ResponsiveLine
+              data={metrics}
+              {...defaultConfig("Remediation Effort Required (min)", "Date", false, true, "wholeNumbers", "monthDate")}
+              {...config(getColor)}
+              onClick={(thisDataPoint) => onClickHandler(thisDataPoint)}
+              tooltip={(node) => (
+                <ChartTooltip
+                  titles={["Date", "Remediation Effort Required"]}
+                  values={[node.point.data.xFormatted, String(node.point.data.yFormatted) + " minutes"]}
+                />
+              )}
             />
-          )}
-        />
-      </div>
+          </div>
+        )}
+        {metrics[0]?.data?.length === 0 && (
+          <div className="new-chart mb-3" style={{ height: "300px" }}>
+            <div
+              className="max-content-width p-5 mt-5"
+              style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+            >
+              <InfoDialog message="No Data is available for this chart at this time." />
+            </div>
+          </div>
+        )}
+      </>
     );
   };
   return (
