@@ -157,6 +157,11 @@ toolsActions.updateToolConfiguration = async (toolData, getAccessToken) => {
   const apiUrl = `/registry/${toolData._id}/update`;
   return await baseActions.apiPostCall(getAccessToken, apiUrl, toolData);
 };
+// getAccessToken, sourceToken, apiUrl, postBody
+toolsActions.updateToolConfigurationV2 = async (toolData, getAccessToken, cancelTokenSource) => {
+  const apiUrl = `/registry/${toolData._id}/update`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, toolData);
+};
 
 toolsActions.installJiraApp = async (toolId, getAccessToken) => {
   const apiUrl = `/connectors/jira/${toolId}/app/install`;
@@ -172,6 +177,21 @@ toolsActions.savePasswordToVault = async (toolData, toolConfigurationData, field
     const keyName = `${toolId}-${toolIdentifier}-${fieldName}`;
     const body = { "key": `${keyName}`, "value": value, "toolId": toolId };
     const response = await pipelineActions.saveToolRegistryRecordToVault(body, getAccessToken);
+    return response?.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : {};
+  }
+
+  // Faseeh says all vault values MUST be objects and not strings
+  let currentValue = toolConfigurationData.getData(fieldName);
+  return typeof currentValue === "string" ? {} : currentValue;
+};
+
+toolsActions.savePasswordToVaultV2 = async (toolData, toolConfigurationData, fieldName, value, getAccessToken, cancelTokenSource) => {
+  if (toolConfigurationData.isChanged(fieldName) && value != null && typeof(value) === "string") {
+    const toolId = toolData.getData("_id");
+    const toolIdentifier = toolData.getData("tool_identifier");
+    const keyName = `${toolId}-${toolIdentifier}-${fieldName}`;
+    const body = { "key": `${keyName}`, "value": value, "toolId": toolId };
+    const response = await pipelineActions.saveToolRegistryRecordToVaultV2(body, getAccessToken, cancelTokenSource);
     return response?.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : {};
   }
 
@@ -197,6 +217,12 @@ toolsActions.saveToolConfiguration = async (toolData, configurationItem, getAcce
   let newToolData = toolData.getPersistData();
   newToolData["configuration"] = configurationItem.configuration;
   return await toolsActions.updateToolConfiguration(newToolData, getAccessToken);
+};
+
+toolsActions.saveToolConfigurationV2 = async (toolData, configurationItem, getAccessToken, cancelTokenSource) => {
+  let newToolData = toolData.getPersistData();
+  newToolData["configuration"] = configurationItem.configuration;
+  return await toolsActions.updateToolConfigurationV2(newToolData, getAccessToken, cancelTokenSource);
 };
 
 
