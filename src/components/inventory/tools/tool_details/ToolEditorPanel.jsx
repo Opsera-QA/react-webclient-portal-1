@@ -19,11 +19,12 @@ import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import axios from "axios";
 
 function ToolEditorPanel({ toolData, handleClose }) {
-  const { getAccessToken } = useContext(AuthContext);
+  const { getAccessToken, isSassUser } = useContext(AuthContext);
   const [toolDataDto, setToolDataDto] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -61,28 +62,14 @@ function ToolEditorPanel({ toolData, handleClose }) {
   };
 
   const getDynamicFields = () => {
-    if (toolData?.isNew()) {
+    if (toolData?.isNew() && !isSassUser())  {
       return ( 
          <Col lg={12} className="mb-4">
             <RoleAccessInput dataObject={toolDataDto} setDataObject={setToolDataDto} fieldName={"roles"}/>
           </Col>
       );
     }
-
-    return (
-      <>
-        
-        <Col lg={6}>
-          <RegistryToolLocationInput setDataObject={setToolDataDto} dataObject={toolDataDto}/>
-        </Col>
-        <Col lg={6}>
-          <RegistryToolContactInput setDataObject={setToolDataDto} dataObject={toolDataDto}/>
-        </Col>
-        <Col lg={6}>
-          <RegistryToolApplicationsInput setDataObject={setToolDataDto} dataObject={toolDataDto}/>
-        </Col>
-      </>
-    );
+    return null;
   };
 
   return (

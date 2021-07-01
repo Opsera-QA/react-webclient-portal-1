@@ -28,12 +28,6 @@ function ToolAttributesPanel({ toolData, setActiveTab, customerAccessRules }) {
       settingsTab="attribute_settings"
     >
       <Row>
-      <Col sm={12} lg={6}>
-          <TextFieldBase dataObject={toolData} fieldName={"costCenter"}/>
-        </Col>
-        <Col sm={12} lg={6}>
-          <TagField dataObject={toolData} fieldName={"tags"}/>
-        </Col> 
         <Col sm={12} lg={6}>
           <NameValueFieldBase dataObject={toolData} fieldName={"licensing"} icon={faIdCard}/>
         </Col>
