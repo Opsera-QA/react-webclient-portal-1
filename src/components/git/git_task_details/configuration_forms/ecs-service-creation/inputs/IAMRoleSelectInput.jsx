@@ -6,21 +6,21 @@ import { AuthContext } from "../../../../../../contexts/AuthContext";
 import axios from "axios";
 import ECSCreationActions from "../ecs-service-creation-actions";
 
-function ClusterSelectInput({
-                          fieldName,
-                          dataObject,
-                          setDataObject,
-                          disabled,
-                          textField,
-                          valueField,
-                          requiresCompatibilities,
-                          pipelineId,
-                        }) {
+function IAMRolesSelectInput({
+                                   fieldName,
+                                   dataObject,
+                                   setDataObject,
+                                   disabled,
+                                   textField,
+                                   valueField,
+                                   awsToolId,
+                                   pipelineId,
+                                 }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [clusters, setClusters] = useState([]);
+  const [loadBalancers, setIAMRoless] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a Cluster");
+  const [placeholder, setPlaceholder] = useState("Select an IAM Role");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -45,7 +45,7 @@ function ClusterSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [requiresCompatibilities]);
+  }, [awsToolId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -65,22 +65,22 @@ function ClusterSelectInput({
 
   const loadTypes = async (cancelSource) => {
     try {
-      setClusters([]);
-      const res = await ECSCreationActions.getClusters(dataObject, getAccessToken, cancelSource);
+      setIAMRoless([]);
+      const res = await ECSCreationActions.getIAMRoles(dataObject, getAccessToken, cancelSource);
       console.log(res.data);
       if (res && res.status === 200) {
         if (res.data.length === 0) {
-          setPlaceholder("No Clusters Found");
+          setPlaceholder("No IAM Roles Found");
           return;
         }
-        setPlaceholder("Select a Cluster");
-        setClusters(res.data);
+        setPlaceholder("Select an IAM Role");
+        setIAMRoless(res.data);
         return;
       }
-      setPlaceholder("No Clusters Found");
-      setClusters([]);
+      setPlaceholder("No IAM Roles Found");
+      setIAMRoless([]);
     } catch (error) {
-      setPlaceholder("No Clusters Found");
+      setPlaceholder("No IAM Roles Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }
@@ -91,31 +91,31 @@ function ClusterSelectInput({
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      selectOptions={clusters}
+      selectOptions={loadBalancers}
       textField={textField}
       valueField={valueField}
       busy={isLoading}
       placeholderText={placeholder}
-      disabled={disabled || isLoading || (!isLoading && (clusters == null || clusters.length === 0))}
+      disabled={disabled || isLoading || (!isLoading && (loadBalancers == null || loadBalancers.length === 0))}
     />
   );
 }
 
-ClusterSelectInput.propTypes = {
+IAMRolesSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  requiresCompatibilities: PropTypes.string,
+  awsToolId: PropTypes.string,
   pipelineId: PropTypes.string,
 };
 
-ClusterSelectInput.defaultProps = {
-  fieldName: "ecsClusterName",
-  textField: "clusterName",
-  valueField: "clusterName",
+IAMRolesSelectInput.defaultProps = {
+  fieldName: "ecsServiceExecutionRoleArn",
+  textField: "roleName",
+  valueField: "arn",
 };
 
-export default ClusterSelectInput;
+export default IAMRolesSelectInput;

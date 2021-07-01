@@ -1,26 +1,26 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
 import axios from "axios";
+import MultiSelectInputBase from "../../../../../common/inputs/select/MultiSelectInputBase";
 import ECSCreationActions from "../ecs-service-creation-actions";
 
-function ClusterSelectInput({
-                          fieldName,
-                          dataObject,
-                          setDataObject,
-                          disabled,
-                          textField,
-                          valueField,
-                          requiresCompatibilities,
-                          pipelineId,
-                        }) {
+function SubnetSelectInput({
+                                   fieldName,
+                                   dataObject,
+                                   setDataObject,
+                                   disabled,
+                                   textField,
+                                   valueField,
+                                    vpc,
+                                   pipelineId,
+                                 }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
-  const [clusters, setClusters] = useState([]);
+  const [subnet, setSubnets] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Select a Cluster");
+  const [placeholder, setPlaceholder] = useState("Select a Subnet");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -45,7 +45,7 @@ function ClusterSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [requiresCompatibilities]);
+  }, [vpc]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -65,57 +65,56 @@ function ClusterSelectInput({
 
   const loadTypes = async (cancelSource) => {
     try {
-      setClusters([]);
-      const res = await ECSCreationActions.getClusters(dataObject, getAccessToken, cancelSource);
-      console.log(res.data);
+      setSubnets([]);
+      const res = await ECSCreationActions.getSubnets(dataObject, getAccessToken, cancelSource);
       if (res && res.status === 200) {
         if (res.data.length === 0) {
-          setPlaceholder("No Clusters Found");
+          setPlaceholder("No Subnets Found");
           return;
         }
-        setPlaceholder("Select a Cluster");
-        setClusters(res.data);
+        setPlaceholder("Select a Subnet");
+        setSubnets(res.data);
         return;
       }
-      setPlaceholder("No Clusters Found");
-      setClusters([]);
+      setPlaceholder("No Subnets Found");
+      setSubnets([]);
     } catch (error) {
-      setPlaceholder("No Clusters Found");
+      setPlaceholder("No Subnets Found");
       console.error(error);
       toastContext.showServiceUnavailableDialog();
     }
   };
 
   return (
-    <SelectInputBase
-      fieldName={fieldName}
-      dataObject={dataObject}
-      setDataObject={setDataObject}
-      selectOptions={clusters}
-      textField={textField}
-      valueField={valueField}
-      busy={isLoading}
-      placeholderText={placeholder}
-      disabled={disabled || isLoading || (!isLoading && (clusters == null || clusters.length === 0))}
-    />
+      <MultiSelectInputBase
+        fieldName={fieldName}
+        dataObject={dataObject}
+        setDataObject={setDataObject}
+        selectOptions={subnet}
+        busy={isLoading}
+        textField={textField}
+        valueField={valueField}
+        placeholderText={placeholder}
+        disabled={disabled || isLoading || (!isLoading && (subnet == null || subnet.length === 0))}
+      />
   );
 }
 
-ClusterSelectInput.propTypes = {
+SubnetSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  requiresCompatibilities: PropTypes.string,
+  vpc: PropTypes.string,
   pipelineId: PropTypes.string,
 };
 
-ClusterSelectInput.defaultProps = {
-  fieldName: "ecsClusterName",
-  textField: "clusterName",
-  valueField: "clusterName",
+SubnetSelectInput.defaultProps = {
+  fieldName: "ecsServiceSubnets",
+  textField: "textField",
+  valueField: "subnetId",
 };
 
-export default ClusterSelectInput;
+export default SubnetSelectInput;

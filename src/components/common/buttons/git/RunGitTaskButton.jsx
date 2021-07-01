@@ -84,7 +84,8 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
         let postBody = {
           "taskId":gitTasksData.getData("_id")
         };
-        await gitTasksActions.createECSCluster(postBody, getAccessToken);
+        let result = await gitTasksActions.createECSCluster(postBody, getAccessToken);
+        console.log(result);
         toastContext.showSuccessDialog("ECS Cluster Creation Triggered Successfully");
       } catch (error) {
         console.log(error);
@@ -94,30 +95,6 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
           toastContext.showCreateFailureResultDialog(
             "ECS Cluster",
             "A service level error has occurred in creation of the ECS Cluster - check the Activity Logs for a complete error log."
-          );
-        }
-        setIsLoading(false);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    else if (gitTasksData.getData("type") === "ecs_service_creation"){
-      // call to trigger merge request
-      try{
-        setIsLoading(true);
-        let postBody = {
-          "taskId":gitTasksData.getData("_id")
-        };
-        await gitTasksActions.createECSService(postBody, getAccessToken);
-        toastContext.showSuccessDialog("ECS Service Creation Triggered Successfully");
-      } catch (error) {
-        console.log(error);
-        if(error?.error?.response?.data?.message){
-          toastContext.showCreateFailureResultDialog("ECS Service" ,error.error.response.data.message);
-        }else{
-          toastContext.showCreateFailureResultDialog(
-            "ECS Service",
-            "A service level error has occurred in creation of the ECS Service - check the Activity Logs for a complete error log."
           );
         }
         setIsLoading(false);

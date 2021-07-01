@@ -5,41 +5,36 @@ const ec2ServiceCreationTaskConfigurationMetadata = {
   fields: [
     {
       label: "Cluster Name",
-      id: "clusterName",
+      id: "ecsClusterName",
       isRequired: true
     },
     {
       label: "Service Name",
-      id: "serviceName"
+      id: "ecsServiceName"
     },
     {
       label: "Desired Count",
-      id: "desiredCount",
+      id: "ecsServiceDesiredCount",
       isRequired: true
     },
     {
       label: "Container Port",
-      id: "containerPort",
+      id: "ecsServiceContainerPort",
       isRequired: true
     },
     {
       label: "Required Compatibility",
-      id: "requiresCompatibilities",
-      isRequired: true
-    },
-    {
-      label: "Image URL",
-      id: "imageUrl",
+      id: "ecsServiceRequiresCompatibilities",
       isRequired: true
     },
     {
       label: "Load Balancer ARN",
-      id: "loadBalancerArn",
+      id: "ecsServiceLoadBalancerArn",
       isRequired: true
     },
     {
       label: "Existing VPC",
-      id: "vpcId",
+      id: "ecsServiceVpcId",
       isRequired: true
     },
     {
@@ -47,18 +42,33 @@ const ec2ServiceCreationTaskConfigurationMetadata = {
       id: "awsToolId",
       isRequired: true
     },
+    {
+      label: "Service Log Group",
+      id: "ecsServiceLogGroup",
+    },
+    {
+      label: "Execution Role ARN",
+      id: "ecsServiceExecutionRoleArn",
+    },
+    {
+      label: "Subnets",
+      id: "ecsServiceSubnets",
+    },
   ],
   newObjectFields:
     {
-      clusterName: "",
-      serviceName: "",
-      desiredCount: "",
-      containerPort: "",
-      requiresCompatibilities: "",
-      vpcId : "",
-      imageUrl : "",
-      loadBalancerArn: "",
-      awsToolId: ""
+      ecsClusterName: "",
+      ecsServiceName: "",
+      ecsServiceDesiredCount: "",
+      ecsServiceContainerPort: "",
+      ecsServiceRequiresCompatibilities: "",
+      ecsServiceVpcId : "",
+      ecsServiceImageUrl : "",
+      ecsServiceLoadBalancerArn: "",
+      awsToolId: "",
+      ecsServiceLogGroup: "",
+      ecsServiceExecutionRoleArn: "",
+      ecsServiceSubnets : []
     }
 };
 

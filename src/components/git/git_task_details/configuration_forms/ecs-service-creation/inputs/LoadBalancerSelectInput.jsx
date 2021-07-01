@@ -113,7 +113,7 @@ LoadBalancerSelectInput.propTypes = {
 };
 
 LoadBalancerSelectInput.defaultProps = {
-  fieldName: "loadBalancerArn",
+  fieldName: "ecsServiceLoadBalancerArn",
   textField: "value",
   valueField: "key",
 };

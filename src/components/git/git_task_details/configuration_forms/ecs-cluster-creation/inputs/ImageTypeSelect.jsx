@@ -10,12 +10,8 @@ function ImageTypeSelectInput({dataObject, setDataObject, isLoading, disabled}) 
       value: "windows",
     },
     {
-      name: "Unix",
+      name: "Linux/Unix",
       value: "unix",
-    },
-    {
-      name: "Linux",
-      value: "linux",
     }
   ];
 

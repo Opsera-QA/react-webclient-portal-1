@@ -18,7 +18,7 @@ function ClusterTemplateSelectInput({dataObject, setDataObject, isLoading, disab
   return (
 
     <SelectInputBase
-      fieldName={"requiresCompatibilities"}
+      fieldName={"ecsServiceRequiresCompatibilities"}
       dataObject={dataObject}
       setDataObject={setDataObject}
       selectOptions={ACTION_LIST}

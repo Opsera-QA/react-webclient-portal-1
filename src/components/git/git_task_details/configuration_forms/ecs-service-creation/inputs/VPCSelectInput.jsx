@@ -113,7 +113,7 @@ VPCSelectInput.propTypes = {
 };
 
 VPCSelectInput.defaultProps = {
-  fieldName: "vpcId",
+  fieldName: "ecsServiceVpcId",
   textField: "name",
   valueField: "id",
 };

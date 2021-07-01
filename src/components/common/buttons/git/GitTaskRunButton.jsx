@@ -87,6 +87,10 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAll
     );
   };
 
+  if (gitTasksData?.type === "sfdc-cert-gen" || gitTasksData.getData("type") === "ecs_service_creation") {
+    return null;
+  }
+
   return (
     <div className={className}>
       {/*TODO: Make sure button is not clickable until form is valid*/}
