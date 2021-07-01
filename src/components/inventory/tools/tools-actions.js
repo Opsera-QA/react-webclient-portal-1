@@ -185,13 +185,20 @@ toolsActions.savePasswordToVault = async (toolData, toolConfigurationData, field
   return typeof currentValue === "string" ? {} : currentValue;
 };
 
-toolsActions.savePasswordToVaultV2 = async (toolData, toolConfigurationData, fieldName, value, getAccessToken, cancelTokenSource) => {
+// Note: This is used for three part vault keys (tool ID, identifier, and key)
+toolsActions.saveThreePartToolPasswordToVaultV2 = async (getAccessToken, cancelTokenSource, toolData, toolConfigurationData, fieldName, value) => {
   if (toolConfigurationData.isChanged(fieldName) && value != null && typeof(value) === "string") {
     const toolId = toolData.getData("_id");
-    const toolIdentifier = toolData.getData("tool_identifier");
+    const toolIdentifier = toolData?.getData("tool_identifier");
     const keyName = `${toolId}-${toolIdentifier}-${fieldName}`;
-    const body = { "key": `${keyName}`, "value": value, "toolId": toolId };
-    const response = await pipelineActions.saveToolRegistryRecordToVaultV2(body, getAccessToken, cancelTokenSource);
+    const postBody = {
+      key: keyName,
+      value: value,
+      toolId: toolId
+    };
+
+    const apiUrl = "/vault/tool/";
+    const response = await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
     return response?.status === 200 ? { name: "Vault Secured Key", vaultKey: keyName } : {};
   }
 

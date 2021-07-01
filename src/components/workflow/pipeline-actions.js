@@ -235,7 +235,7 @@ pipelineActions.saveToolRegistryRecordToVault = async (postBody, getAccessToken)
   return response;
 };
 
-pipelineActions.saveToolRegistryRecordToVaultV2 = async (postBody, getAccessToken, cancelTokenSource) => {
+pipelineActions.saveToolRegistryRecordToVaultV2 = async (getAccessToken, cancelTokenSource, postBody) => {
   const apiUrl = "/vault/tool/";   
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };

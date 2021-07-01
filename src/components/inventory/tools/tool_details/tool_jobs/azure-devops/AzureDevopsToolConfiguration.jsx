@@ -45,7 +45,7 @@ function AzureDevopsToolConfiguration({ toolData }) {
 
   const saveAzureDevopsToolConfiguration = async (cancelSource = cancelTokenSource) => {
     let newConfiguration = azureDevopsConfigurationDto.getPersistData();
-    newConfiguration.accessToken = await toolsActions.savePasswordToVaultV2(toolData, azureDevopsConfigurationDto, "accessToken", newConfiguration.accessToken, getAccessToken, cancelSource);
+    newConfiguration.accessToken = await toolsActions.saveThreePartToolPasswordToVaultV2(getAccessToken, cancelSource, toolData, azureDevopsConfigurationDto, "accessToken", newConfiguration.accessToken);
 
     const item = {configuration: newConfiguration};
     return await toolsActions.saveToolConfigurationV2(toolData, item, getAccessToken, cancelSource);
