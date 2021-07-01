@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 
@@ -135,10 +135,14 @@ import {
   getTagsFromKpiConfiguration,
 } from "components/insights/charts/charts-helpers";
 import { Col } from "react-bootstrap";
+import { AuthContext } from "../../../contexts/AuthContext";
 
 // TODO: This is getting rather large. We should break it up into ChartViews based on type. OpseraChartView, JiraChartView etc..
 function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis }) {
   const [kpiConfig, setKpiConfig] = useState(kpiConfiguration);
+  const { featureFlagHideItemInProd } = useContext(AuthContext);
+  const envIsProd = featureFlagHideItemInProd();
+
   // TODO: This is only being used until each chart is updated to use ChartContainer inside.
   //  After everything is refactored,
   //  this should be deleted and we should just return getChart() at bottom of component instead
@@ -579,15 +583,17 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         );
       case "sonar-reliability-remediation-agg-trend":
         return (
-          <Col xl={6} md={12} className="p-2">
-            <SonarReliabilityRemediationEffortAggTrendLineChart
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
+          !envIsProd && (
+            <Col xl={6} md={12} className="p-2">
+              <SonarReliabilityRemediationEffortAggTrendLineChart
+                kpiConfiguration={kpiConfig}
+                setKpiConfiguration={setKpiConfig}
+                dashboardData={dashboardData}
+                setKpis={setKpis}
+                index={index}
+              />
+            </Col>
+          )
         );
       case "sonar-vulnerabilities-by-project":
         return (
