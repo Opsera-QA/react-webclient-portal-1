@@ -9,6 +9,8 @@ import AWSToolSelectInput from "./inputs/AWSToolSelectInput";
 import TextInputBase from "../../../../common/inputs/text/TextInputBase";
 import ClusterTemplateSelectInput from "./inputs/ClusterTemplateSelectInput";
 import VPCSelectInput from "./inputs/VPCSelectInput";
+import ClusterSelectInput from "./inputs/ClusterSelectInput";
+import LoadBalancerSelectInput from "./inputs/LoadBalancerSelectInput";
 
 function ECSServiceCreationTaskConfigurationPanel({
   gitTasksDataDto,
@@ -44,7 +46,15 @@ function ECSServiceCreationTaskConfigurationPanel({
         <ClusterTemplateSelectInput
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
-          fieldName={"clusterTemplate"}
+          fieldName={"requiresCompatibilities"}
+        />
+      </Col>
+      <Col lg={12}>
+        <ClusterSelectInput
+          dataObject={gitTasksConfigurationData}
+          setDataObject={setGitTasksConfigurationData}
+          disabled={gitTasksConfigurationData?.getData("awsToolId").length === 0 || gitTasksConfigurationData?.getData("requiresCompatibilities").length === 0}
+          requiresCompatibilities={gitTasksConfigurationData?.getData("requiresCompatibilities")}
         />
       </Col>
       <Col lg={12}>
@@ -54,13 +64,6 @@ function ECSServiceCreationTaskConfigurationPanel({
         disabled={gitTasksConfigurationData?.getData("awsToolId").length === 0}
         awsToolId={gitTasksConfigurationData?.getData("awsToolId")}
       />
-      </Col>
-      <Col lg={12}>
-        <TextInputBase
-          dataObject={gitTasksConfigurationData}
-          setDataObject={setGitTasksConfigurationData}
-          fieldName={"clusterName"}
-        />
       </Col>
       <Col lg={12}>
         <TextInputBase
@@ -88,6 +91,14 @@ function ECSServiceCreationTaskConfigurationPanel({
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
           fieldName={"imageUrl"}
+        />
+      </Col>
+      <Col lg={12}>
+        <LoadBalancerSelectInput
+          dataObject={gitTasksConfigurationData}
+          setDataObject={setGitTasksConfigurationData}
+          disabled={gitTasksConfigurationData?.getData("awsToolId").length === 0}
+          awsToolId={gitTasksConfigurationData?.getData("awsToolId")}
         />
       </Col>
     </Row>
