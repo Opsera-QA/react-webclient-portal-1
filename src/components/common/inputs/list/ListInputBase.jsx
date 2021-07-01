@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faPlus, faSpinner, faTimes} from "@fortawesome/pro-light-svg-icons";
+import {faPlus, faTimes} from "@fortawesome/pro-light-svg-icons";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
@@ -10,6 +10,7 @@ import InputTitleBar from "components/common/inputs/info_text/InputTitleBar";
 import ComponentLoadingWrapper from "components/common/loading/ComponentLoadingWrapper";
 
 // TODO: Make an actual base version and rename this VanityListInput
+// TODO: Refactor
 function ListInputBase(
   {
     fieldName, dataObject, setDataObject,
@@ -35,7 +36,20 @@ function ListInputBase(
     return () => {
       list?.destructor();
     };
-  }, [selectOptions, isLoading, searchTerm]);
+  }, [selectOptions, isLoading]);
+
+  useEffect(() => {
+    if (list && searchFunction) {
+      if (searchTerm !== "") {
+        list.data.filter((item) => {
+          return searchFunction(item, searchTerm);
+        });
+      }
+      else {
+        list.data.filter();
+      }
+    }
+  }, [searchTerm]);
 
   // TODO: We should probably also handle selection here. Look at when more use cases arise
   useEffect(() => {
