@@ -9,8 +9,6 @@ import RegistryToolLocationInput from "components/inventory/tools/tool_details/i
 import RegistryToolApplicationsInput from "components/inventory/tools/tool_details/input/RegistryToolApplicationsInput";
 import RegistryToolOrganizationInput from "components/inventory/tools/tool_details/input/RegistryToolOrganizationInput";
 import RegistryToolContactInput from "components/inventory/tools/tool_details/input/RegistryToolContactInput";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
-import TagManager from "components/common/inputs/tags/TagManager";
 
 function ToolAttributeEditorPanel({ toolData, setToolData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
