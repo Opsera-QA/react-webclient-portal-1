@@ -41,7 +41,7 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAll
     setIsCanceling(true);
     // TODO: call cancel job api to jenkins integrator
     let newGitTasksData = gitTasksData;
-    newGitTasksData.setData("status", "stopped");
+      newGitTasksData.setData("status", "stopped");
     await gitTaskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newGitTasksData);
     toastContext.showInformationToast("Task has been stopped", 10);
     setIsCanceling(false);
@@ -87,7 +87,7 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAll
     );
   };
 
-  if (gitTasksData?.type === "sfdc-cert-gen" || gitTasksData.getData("type") === "ecs_service_creation") {
+  if (gitTasksData?.type === "sfdc-cert-gen" || gitTasksData.getData("type") === "ecs_service_creation" || gitTasksData.getData("type") === "ecs_cluster_creation") {
     return null;
   }
 
