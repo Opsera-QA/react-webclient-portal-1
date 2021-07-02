@@ -5,7 +5,7 @@ import Model from "core/data_model/model";
 import sfdcPipelineWizardMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-wizard-metadata";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
-import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
+import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard2";
 import LoadingDialog from "components/common/status_notifications/loading";
 import {format} from "date-fns";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";

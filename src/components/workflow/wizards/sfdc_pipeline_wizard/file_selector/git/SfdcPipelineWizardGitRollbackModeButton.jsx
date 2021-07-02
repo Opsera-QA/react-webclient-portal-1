@@ -7,7 +7,7 @@ import IconBase from "components/common/icons/IconBase";
 import {AuthContext} from "contexts/AuthContext";
 import axios from "axios";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
-import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
+import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard2";
 
 function SfdcPipelineWizardGitRollbackModeButton({pipelineWizardModel, setPipelineWizardScreen, size, className, icon}) {
   const { getAccessToken } = useContext(AuthContext);

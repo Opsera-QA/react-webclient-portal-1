@@ -6,7 +6,7 @@ import CenterOverlayContainer from "components/common/overlays/center/CenterOver
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {faFileInvoice} from "@fortawesome/pro-light-svg-icons";
 import {useHistory} from "react-router-dom";
-import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
+import SfdcPipelineWizard2 from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard2";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 
 function GitTaskSfdcPipelineWizardOverlay({ gitTasksData }) {
@@ -48,7 +48,7 @@ function GitTaskSfdcPipelineWizardOverlay({ gitTasksData }) {
       showCloseButton={false}
     >
       <div className={"p-3"}>
-        <SfdcPipelineWizard gitTaskData={gitTasksData} handleClose={closePanel} closePanel={closePanel} />
+        <SfdcPipelineWizard2 gitTaskData={gitTasksData} handleClose={closePanel} closePanel={closePanel} />
       </div>
     </FullScreenCenterOverlayContainer>
   );

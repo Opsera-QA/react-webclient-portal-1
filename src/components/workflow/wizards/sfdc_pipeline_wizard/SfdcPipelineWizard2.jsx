@@ -25,7 +25,7 @@ export const PIPELINE_WIZARD_SCREENS = {
   UNIT_TEST_SELECTOR: "UNIT_TEST_SELECTOR",
 };
 
-const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose, refreshPipelineActivityData, gitTaskData }) => {
+const SfdcPipelineWizard2 = ({ pipeline, handlePipelineWizardRequest, handleClose, refreshPipelineActivityData, gitTaskData }) => {
   const [error, setError] = useState("");
   const [pipelineWizardScreen, setPipelineWizardScreen] = useState(PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN);
   const [pipelineWizardModel, setPipelineWizardModel] = useState(undefined);
@@ -128,7 +128,7 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
   );
 };
 
-SfdcPipelineWizard.propTypes = {
+SfdcPipelineWizard2.propTypes = {
   pipelineId: PropTypes.string,
   pipeline: PropTypes.object,
   handlePipelineWizardRequest: PropTypes.func,
@@ -137,4 +137,4 @@ SfdcPipelineWizard.propTypes = {
   gitTaskData: PropTypes.object,
 };
 
-export default SfdcPipelineWizard;
+export default SfdcPipelineWizard2;

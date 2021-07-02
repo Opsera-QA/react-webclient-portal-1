@@ -13,7 +13,7 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import CancelButton from "components/common/buttons/CancelButton";
-import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
+import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard2";
 import SfdcPipelineWizardGitFilesTable
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardGitFilesTable";
 import SfdcPipelineWizardSubmitGitFilesButton
