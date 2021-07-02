@@ -21,13 +21,6 @@ function PipelineFailedSecurity({
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-//   const [tableFilterDto, setTableFilterDto] = useState(
-//     new Model(
-//       { ...genericChartFilterMetadata.newObjectFields },
-//       genericChartFilterMetadata,
-//       false
-//     )
-//   );
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -53,18 +46,31 @@ function PipelineFailedSecurity({
   const loadData = async ( cancelSource = cancelTokenSource ) => {
     try {
       setIsLoading(true);
+      let dashboardTags =
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
+        ]?.value;
+      let dashboardOrgs =
+        dashboardData?.data?.filters[
+          dashboardData?.data?.filters.findIndex(
+            (obj) => obj.type === "organizations"
+          )
+        ]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "jiraLeadTime"
-        // kpiConfiguration,
-        // dashboardTags
+        "jiraLeadTime",
+        null,
+        dashboardTags,
+        null,
+        null,
+        dashboardOrgs
       );
       let dataObject =
         response?.data && response?.data?.data[0]?.jiraLeadTime.status === 200
           ? response?.data?.data[0]?.jiraLeadTime?.data
           : [];
-
+          
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
       }
@@ -96,18 +102,19 @@ function PipelineFailedSecurity({
             !isLoading && metrics[0]? (
                 metrics[0].data[0].mean
             ) : (
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                fixedWidth
-                className="mr-1"
-              />
+                !isLoading ? 0 : (
+                    <FontAwesomeIcon
+                        icon={faSpinner}
+                        spin
+                        fixedWidth
+                        className="mr-1"
+                    />
+              )
             )
           }
           subTitle="Mean Lead Time (Days)"
           toolTipText="Mean Lead Time (Days)"
           clickAction={() => onDataBlockSelect()}
-        //   statusColor="danger"
         />
       </div>
     );

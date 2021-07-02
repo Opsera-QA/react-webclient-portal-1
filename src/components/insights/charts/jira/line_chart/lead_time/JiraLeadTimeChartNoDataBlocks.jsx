@@ -10,13 +10,11 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { line } from "d3-shape";
 import { defaultConfig, getColor, assignStandardColors, mainPurple, accentColor } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
-// import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
-// import DataBlock from "components/common/data_boxes/DataBlock";
 import {Col, Row, Container} from "react-bootstrap";
-// import {OverlayTrigger, Popover} from "react-bootstrap";
 import InputPopover from "components/common/inputs/info_text/InputPopover";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/pro-solid-svg-icons";
+
 function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);

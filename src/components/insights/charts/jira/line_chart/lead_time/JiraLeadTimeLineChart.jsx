@@ -17,6 +17,7 @@ import {OverlayTrigger, Popover} from "react-bootstrap";
 import InputPopover from "components/common/inputs/info_text/InputPopover";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/pro-solid-svg-icons";
+
 function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
