@@ -16,7 +16,7 @@ import {faCode} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import CancelButton from "components/common/buttons/CancelButton";
 import IconBase from "components/common/icons/IconBase";
-import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard2";
+import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 
 const SfdcPipelineWizardXmlViewer = (
   {
