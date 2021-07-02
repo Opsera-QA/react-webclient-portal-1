@@ -4,7 +4,7 @@ import {faWandMagic} from "@fortawesome/pro-light-svg-icons";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ConfirmResumePipeline from "components/workflow/wizards/ConfirmResumePipeline";
-import SfdcPipelineWizard2 from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard2";
+import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 
 function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, pipeline, handleClose, handlePipelineWizardRequest, refreshPipelineActivityData }) {
@@ -35,7 +35,7 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, p
       return (
       <div>
         {getWarningMessage()}
-        <SfdcPipelineWizard2
+        <SfdcPipelineWizard
           pipelineId={pipelineId}
           pipeline={pipeline}
           handlePipelineWizardRequest={handlePipelineWizardRequest}

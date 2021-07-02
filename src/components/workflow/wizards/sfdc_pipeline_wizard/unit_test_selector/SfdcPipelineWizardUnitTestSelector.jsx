@@ -15,7 +15,7 @@ import filterMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/fil
 import SfdcUnitTestManagementPanel from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/SfdcUnitTestManagementPanel";
 import LoadingDialog from "components/common/status_notifications/loading";
 import CancelButton from "components/common/buttons/CancelButton";
-import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard2";
+import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 import axios from "axios";
 import SfdcPipelineWizardManualTestClassSelector
   from "components/workflow/wizards/sfdc_pipeline_wizard/unit_test_selector/SfdcPipelineWizardManualTestClassSelector";
