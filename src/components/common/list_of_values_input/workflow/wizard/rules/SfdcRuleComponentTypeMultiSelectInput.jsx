@@ -5,7 +5,7 @@ import {AuthContext} from "contexts/AuthContext";
 import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 
-function SfdcRuleComponentTypeMultiSelectInput({fieldName, className, dataObject, setDataObject, disabled, showLabel, postBody, sfdcModified}) {
+function SfdcRuleComponentTypeMultiSelectInput({fieldName, className, dataObject, setDataObject, disabled, showLabel, postBody}) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -32,7 +32,7 @@ function SfdcRuleComponentTypeMultiSelectInput({fieldName, className, dataObject
       source.cancel();
       isMounted.current = false;
     };
-  }, [sfdcModified]);
+  }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -94,7 +94,6 @@ SfdcRuleComponentTypeMultiSelectInput.propTypes = {
   className: PropTypes.string,
   showLabel: PropTypes.bool,
   postBody: PropTypes.object,
-  sfdcModified: PropTypes.array
 };
 
 SfdcRuleComponentTypeMultiSelectInput.defaultProps = {

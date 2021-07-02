@@ -1,7 +1,0 @@
-.destSfdcTableContainer {
-    display: flex;
-}
-
-.destSfdcTableContainer .inline-search-filter {
-    min-width: 100px;
-}

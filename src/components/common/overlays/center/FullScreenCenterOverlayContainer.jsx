@@ -6,14 +6,14 @@ import CloseButton from "components/common/buttons/CloseButton";
 import LoadingDialog from "components/common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 
-function FullScreenCenterOverlayContainer({ children, actionBar, titleText, titleIcon, showPanel, closePanel, isLoading, showToasts, showCloseButton, buttonContainer, pageLink, linkTooltipText }) {
+function FullScreenCenterOverlayContainer({ children, actionBar, titleText, titleIcon, closePanel, isLoading, showToasts, showCloseButton, buttonContainer, pageLink, linkTooltipText }) {
   const toastContext = useContext(DialogToastContext);
 
   useEffect(() => {
     if (showToasts) {
       toastContext.removeInlineMessage();
     }
-  }, [showPanel]);
+  }, [showToasts]);
 
   const getButtons = () => {
     if (buttonContainer) {
@@ -40,10 +40,6 @@ function FullScreenCenterOverlayContainer({ children, actionBar, titleText, titl
 
     return children;
   };
-
-  if (!showPanel) {
-    return null;
-  }
 
   return (
     <div className={`overlay-panel center-overlay-shadow-background`}>

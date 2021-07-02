@@ -6,12 +6,13 @@ import Row from "react-bootstrap/Row";
 import {Button} from "react-bootstrap";
 import {faPlus} from "@fortawesome/pro-light-svg-icons";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
+import IconBase from "components/common/icons/IconBase";
 
-function PropertyInputContainer({ children, titleIcon, titleText, field, errorMessage, addProperty, type, addAllowed, helpComponent, toggleButton }) {
+function PropertyInputContainer({ children, isLoading, titleIcon, titleText, field, errorMessage, addProperty, type, addAllowed, helpComponent, toggleButton }) {
   const getTitleBar = () => {
     return (
       <div className="px-2 pt-2 d-flex justify-content-between">
-        <div><FontAwesomeIcon icon={titleIcon} fixedWidth className="mr-2"/>{titleText}</div>
+        <div><IconBase isLoading={isLoading} icon={titleIcon} className="mr-2"/>{titleText}</div>
         <div>
           <LaunchHelpIcon helpComponent={helpComponent} className={"pt-2 pr-2"} />
           <div>{toggleButton}</div>
@@ -58,7 +59,8 @@ PropertyInputContainer.propTypes = {
   addProperty: PropTypes.func,
   addAllowed: PropTypes.bool,
   helpComponent: PropTypes.any,
-  toggleButton: PropTypes.object
+  toggleButton: PropTypes.object,
+  isLoading: PropTypes.bool
 };
 
 export default PropertyInputContainer;
