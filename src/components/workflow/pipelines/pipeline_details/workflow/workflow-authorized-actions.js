@@ -73,9 +73,7 @@ workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, o
     case "view_step_configuration":
     case "view_pipeline_configuration":
     case "edit_step_details":
-    case "duplicate_pipeline_btn":
     case "view_template_pipeline_btn":
-    case "publish_pipeline_btn":
     case "stop_pipeline_btn":
     case "approve_step_btn":
     case "edit_access_roles":
@@ -91,7 +89,7 @@ workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, o
     }
   }
 
-  if (customerAccessRules.PowerUser || userObjectRole === "manager") {
+  if (userObjectRole === "manager") {
     switch (action) {
     case "view_step_configuration":
     case "edit_step_details":
@@ -106,6 +104,22 @@ workflowAuthorizedActions.workflowItems = (customerAccessRules, action, owner, o
       return true;
     default:
       return false; //all other options are disabled
+    }
+  }
+
+  if (customerAccessRules.PowerUser) {
+    switch (action) {
+      case "view_step_configuration":
+      case "edit_step_details":
+      case "stop_pipeline_btn":
+      case "edit_access_roles":
+      case "approve_step_btn":
+      case "start_pipeline_btn":
+      case "reset_pipeline_btn":
+      case "edit_step_notification":
+        return true;
+      default:
+        return false; //all other options are disabled
     }
   }
 
