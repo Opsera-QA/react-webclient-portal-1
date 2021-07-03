@@ -10,10 +10,7 @@ import ChartContainer from "components/common/panels/insights/charts/ChartContai
 import { line } from "d3-shape";
 import { defaultConfig, getColor, assignStandardColors, mainPurple, accentColor } from '../../../charts-views';
 import ChartTooltip from '../../../ChartTooltip';
-import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
-import DataBlock from "components/common/data_boxes/DataBlock";
 import {Col, Row, Container} from "react-bootstrap";
-import {OverlayTrigger, Popover} from "react-bootstrap";
 import InputPopover from "components/common/inputs/info_text/InputPopover";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus } from "@fortawesome/pro-solid-svg-icons";
@@ -122,7 +119,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
     return (
       <div className="new-chart mb-3" style={{height: "300px", display:"flex"}}>
         <Col><InputPopover tooltipTitle={"Info"} tooltipBody={getPopoverBody()} /></Col>
-        <Col xl={6} md={12} className="p-2">
+        <Col xl={9} md={12} className="p-2">
         <ResponsiveScatterPlot
           data={metrics}
           {...defaultConfig("Elapsed Time (Days)", "Completion Date", 
@@ -138,30 +135,13 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
 
         </Col>
         <Container>
-        <Row>
-        <DataBlockWrapper padding={0}>
-        <DataBlock 
-        title={metrics[0].data[0].mean}
-        subTitle="Mean Lead Time (Days)"
-        toolTipText="Average time (in days) taken for a Jira ticket to transition from creation to completion status"
-      />
-      <DataBlock 
-        title={issueData.length}
-        subTitle="Issues Completed"
-        toolTipText="Total number of issues completed in specified time period"
-      />
-      <DataBlock 
-        title={issueData.filter(function(item) {return item.issueType === "Bug";}).length}
-        subTitle="Bugs Completed"
-        toolTipText="Total number of bugs completed in this time period"
-      />
-      </DataBlockWrapper>
-      <div className="p-3">
-      <FontAwesomeIcon icon={faMinus} color={mainPurple} size="lg"/> Mean Lead Time<br></br>
-      <FontAwesomeIcon icon={faMinus} color={accentColor} size="lg"/> Rolling Mean Lead Time
-      </div>
-      </Row>
-      </Container>
+          <Row>
+            <div className="p-2">
+            <FontAwesomeIcon icon={faMinus} color={mainPurple} size="lg"/> Mean Lead Time<br></br>
+            <FontAwesomeIcon icon={faMinus} color={accentColor} size="lg"/> Rolling Mean Lead Time
+            </div>
+          </Row>
+        </Container>
       </div>
     );
   };
@@ -179,7 +159,7 @@ function JiraLeadTimeLineChart({ kpiConfiguration, setKpiConfiguration, dashboar
         setKpis={setKpis}
         isLoading={isLoading}
       />
-      <ModalLogs header="Jira Lead Time" size="lg" jsonMessage={modalData} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
+      <ModalLogs header="Lead Time" size="lg" jsonMessage={modalData} dataType="bar" show={showModal} setParentVisibility={setShowModal} />
     </>
   );
 }
@@ -195,3 +175,4 @@ JiraLeadTimeLineChart.propTypes = {
 };
 
 export default JiraLeadTimeLineChart;
+ 

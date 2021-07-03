@@ -10,6 +10,8 @@ import InsightsPipelineDetailsTable from "components/insights/summary/pipeline_d
 import PipelinesByProjectTable from "components/insights/summary/PipelinesByProjectTable";
 import TotalPipelinesPassedDeployment from 'components/insights/summary/pipeline_details/TotalPipelinesPassedDeployment';
 import MetricContainer from "components/common/panels/insights/charts/MetricContainer";
+import JiraLeadTimeChartNoDataBlocks from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks"; 
+import JiraLeadTimeDataBlock from "./JiraLeadTimeDataBlock";
 
 function PipelineDetails({ dashboardData }) {
   const [selectedDataBlock, setSelectedDataBlock] = useState("");
@@ -64,6 +66,11 @@ function PipelineDetails({ dashboardData }) {
             data={selectedDataBlockTableData}
             tableTitle="Successful Pipelines (Deployments)"
           />
+        );
+      case "jiraLeadTime":
+        return (
+          //TODO: The kpiconfiguration is missing and could be passed as props but that could mean modify different files
+          <JiraLeadTimeChartNoDataBlocks dashboardData={dashboardData} kpiConfiguration={{kpi_name: "Lead Time", filters: []}}/>
         );
       default:
         return null;
@@ -131,6 +138,18 @@ function PipelineDetails({ dashboardData }) {
       </DataBlockWrapper>
     );
   };
+  const getValueStream = () => {
+    return (
+      <DataBlockWrapper padding={0}>
+        <JiraLeadTimeDataBlock 
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          // style={{maxWidth:"33%"}}
+        />
+      </DataBlockWrapper>
+    );
+  };
 
   return (
     <>
@@ -140,6 +159,9 @@ function PipelineDetails({ dashboardData }) {
         </MetricContainer>
         <MetricContainer title="Pipelines: Failure Score">
           {getPipelinesFailure()}
+        </MetricContainer>
+        <MetricContainer title="Value Stream">
+          {getValueStream()}
         </MetricContainer>
       </div>
 
