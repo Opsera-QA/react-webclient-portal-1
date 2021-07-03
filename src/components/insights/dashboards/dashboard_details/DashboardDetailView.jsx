@@ -2,7 +2,7 @@ import React, {useContext, useState, useEffect, useRef} from "react";
 import Model from "core/data_model/model";
 import {useHistory} from "react-router-dom";
 import {useParams} from "react-router-dom";
-import {faAnalytics} from "@fortawesome/pro-light-svg-icons";
+import {faAnalytics, faUserChart} from "@fortawesome/pro-light-svg-icons";
 import FavoriteInput from "components/common/inputs/boolean/FavoriteInput";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
@@ -154,10 +154,11 @@ function DashboardDetailView() {
   const getNavigationTabContainer = () => {
     return (
       <NavigationTabContainer>
-        <NavigationTab icon={faChartNetwork} tabName={"dashboards"} handleTabClick={handleNavTabClick} activeTab={"dashboards"} tabText={"Dashboards"} />
-        <NavigationTab icon={faChartArea} tabName={"marketplace"} handleTabClick={handleNavTabClick} activeTab={"dashboards"} tabText={"Marketplace"} />
-        <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={"dashboards"} tabText={"Analytics"} />
-        <NavigationTab icon={faRadar} tabName={"synopsis"} handleTabClick={handleNavTabClick} activeTab={activeTab} tabText={"Synopsis"} />
+        <NavigationTab icon={faChartNetwork} tabName={"dashboards"} handleTabClick={handleNavTabClick} activeTab={"dashboardViewer"} tabText={"Dashboards"} />
+        <NavigationTab icon={faChartArea} tabName={"marketplace"} handleTabClick={handleNavTabClick} activeTab={"dashboardViewer"} tabText={"Marketplace"} />
+        <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={"dashboardViewer"} tabText={"Analytics"} />
+        <NavigationTab icon={faRadar} tabName={"synopsis"} handleTabClick={handleNavTabClick} activeTab={"dashboardViewer"} tabText={"Synopsis"} />
+        <NavigationTab icon={faUserChart} tabName={"dashboardViewer"} handleTabClick={handleNavTabClick} activeTab={"dashboardViewer"} tabText={"Dashboard Viewer"} />
       </NavigationTabContainer>
     );
   };
