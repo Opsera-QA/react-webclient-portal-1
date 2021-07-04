@@ -20,6 +20,14 @@ export const getColumnId = (field) => {
   return field ? field.id : "";
 };
 
+export const getOwnerNameField = (maxWidth) => {
+  return {
+    header: [{ text: "Owner Name" }],
+    id: "owner_name",
+    maxWidth: maxWidth,
+  };
+};
+
 export const getTableTextColumnWithoutField = (header, id) => {
   return {
     header: header,
@@ -60,10 +68,14 @@ export const getTableDateColumn = (field, className, width = 150) => {
     width: width,
     // TODO: Figure out why using date-type right aligns stuff. Documentation says it should be left aligned.
     template: function (text, row, col) {
-      return text ? format(new Date(text), "yyyy-MM-dd") : "";
+      try {
+        const newDate = text ? new Date(text) : undefined;
+        return newDate ? format(new Date(text), "yyyy-MM-dd") : "";
+      }
+      catch (error) {
+        return "";
+      }
     },
-    // type: "date",
-    // format: "%Y-%M-%d",
     class: className ? className : ""
   };
 };

@@ -4,7 +4,7 @@ import {
   faBuilding, faChartBar, faClipboardList, faCogs, faDraftingCompass, faEdit, faFileInvoice, faHeartbeat, faLink,
   faSitemap, faStream, faTags, faTimes, faUser, faUserCircle, faUserFriends, faUserPlus, faWrench, faChartNetwork,
   faFlag, faEnvelope, faUserTag, faProjectDiagram, faTally, faTools, faUsers, faChartArea, faHome, faIdCard, faKey,
-  faHexagon, faListAlt, faEye, faCodeBranch, faUserChart, faRadar, faServer, faHandshake, faFileCode, faTasks
+  faHexagon, faListAlt, faEye, faFileArchive, faUserChart, faRadar, faServer, faHandshake, faFileCode, faTasks
 } from "@fortawesome/pro-light-svg-icons";
 
 // TODO: Separate based on module in respective folders: Admin/Inventory/etc.
@@ -151,6 +151,24 @@ const breadcrumbs = {
     linkText: "Template Details",
     icon: faStream
   },
+
+  pipelineStorageManagement: {
+    parent: "admin",
+    name: "pipelineStorageManagement",
+    path: paths.pipelineStorageManagement,
+    title: "Pipeline Storage Management",
+    linkText: "Pipeline Storage Management",
+    icon: faFileArchive
+  },
+  pipelineStorageDetailView: {
+    parent: "pipelineStorageManagement",
+    name: "pipelineStorageDetailView",
+    path: paths.pipelineStorageDetailView,
+    title: "Pipeline Storage Record Details",
+    linkText: "Pipeline Storage Record Details",
+    icon: faFileArchive
+  },
+
 
   toolManagement: {
     parent: "admin",
