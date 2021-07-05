@@ -200,6 +200,30 @@ const octopusStepFormMetadata = {
       {
         label: "Tomcat Manager",
         id: "tomcatManagerId"
+      },      
+      {
+        label: "Deploy the Extracted Package",
+        id: "deployExtractedPackage"
+      },
+      {
+        label: "Deployed Package File Name",
+        id: "deployedPackageFileName"
+      },
+      {
+        label: "Use Custom Deployment Directory",
+        id: "useCustomDeploymentDirectory"
+      },
+      {
+        label: "Deployment Directory",
+        id: "deploymentDirectory"
+      },
+      {
+        label: "Purge",
+        id: "purge"
+      },
+      {
+        label: "Files Excluded from Purge",
+        id: "excludeFromPurge"
       },
     ],
   newObjectFields:
@@ -247,6 +271,12 @@ const octopusStepFormMetadata = {
         postDeploymentScriptId: "",
         tomcatManagerDetails: {},
         tomcatManagerId: "",
+        deployExtractedPackage: false,
+        deployedPackageFileName: "",
+        useCustomDeploymentDirectory: false,
+        deploymentDirectory: "",
+        purge: false,
+        excludeFromPurge: "",
       }
   };
   
