@@ -108,6 +108,7 @@ function StepConfiguration({ plan, stepId, parentCallback, closeEditorPanel }) {
       recordDto={stepConfigurationModel}
       persistRecord={savePipelineStepConfiguration}
       isLoading={isLoading}
+      isStrict={true}
     >
       <div className="text-muted mt-1 mb-3">
         A pipeline step represents a tool and an operation. Each step requires a tool to be selected along with a
@@ -118,8 +119,8 @@ function StepConfiguration({ plan, stepId, parentCallback, closeEditorPanel }) {
       </div>
       <div className="step-settings-body">
         <BooleanToggleInput dataObject={stepConfigurationModel} setDataObject={setStepConfigurationModel} fieldName={"active"}/>
-        <TextInputBase disabled={stepConfigurationModel.getData("active") !== true} dataObject={stepConfigurationModel} setDataObject={setStepConfigurationModel} fieldName={"name"} />
-        <StepConfigurationToolSelectInput disabled={lockTool || stepConfigurationModel.getData("active") !== true} dataObject={stepConfigurationModel} setDataObject={setStepConfigurationModel} />
+        <TextInputBase disabled={stepConfigurationModel?.getData("active") !== true} dataObject={stepConfigurationModel} setDataObject={setStepConfigurationModel} fieldName={"name"} />
+        <StepConfigurationToolSelectInput disabled={lockTool || stepConfigurationModel?.getData("active") !== true} dataObject={stepConfigurationModel} setDataObject={setStepConfigurationModel} />
         <StepConfigurationTagsInput setStepConfigurationModel={setStepConfigurationModel} stepConfigurationModel={stepConfigurationModel} />
       </div>
     </PipelineStepEditorPanelContainer>
