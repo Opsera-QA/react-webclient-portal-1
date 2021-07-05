@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "contexts/AuthContext";
-import Model from "core/data_model/model";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarBackButton from "components/common/actions/buttons/ActionBarBackButton";
-import ActionBarDeleteButton2 from "components/common/actions/buttons/ActionBarDeleteButton2";
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import { meetsRequirements, ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import axios from "axios";
 import PipelineStorageActions from "components/admin/pipeline_storage/pipeline-storage-actions";
 import PipelineStorageDetailPanel
   from "components/admin/pipeline_storage/pipeline_storagei_detail_view/PipelineStorageDetailPanel";
+import ActionBarModelDeleteButton from "components/common/actions/buttons/ActionBarModelDeleteButton";
+import PipelineStorageModel from "components/admin/pipeline_storage/pipelineStorage.model";
 
 function PipelineStorageDetailView() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -31,8 +31,8 @@ function PipelineStorageDetailView() {
 
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
-
     isMounted.current = true;
+
     loadData(source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -80,7 +80,7 @@ function PipelineStorageDetailView() {
 
     if (isMounted?.current === true && record) {
       setPipelineStorageMetadata(metadata);
-      setPipelineStorageData(new Model(record, metadata, false));
+      setPipelineStorageData(new PipelineStorageModel(record, metadata, false, getAccessToken, cancelSource, loadData, false, true, setPipelineStorageData));
     }
   };
 
@@ -88,19 +88,13 @@ function PipelineStorageDetailView() {
     return (
       <ActionBarContainer>
         <div>
-          <ActionBarBackButton path={"/admin/pipeline-storage"} />
+          <ActionBarBackButton path={pipelineStorageData?.getManagementScreenLink()} />
         </div>
         <div>
-          {meetsRequirements(ROLE_LEVELS.OPSERA_ADMINISTRATORS, accessRoleData) && (
-            <ActionBarDeleteButton2 dataObject={pipelineStorageData} relocationPath={"/admin/pipeline-storage"} handleDelete={handleDelete} />
-          )}
+          <ActionBarModelDeleteButton model={pipelineStorageData} />
         </div>
       </ActionBarContainer>
     );
-  };
-
-  const handleDelete = async () => {
-    return await PipelineStorageActions.deletePipelineStorageDataV2(getAccessToken, cancelTokenSource, pipelineStorageData);
   };
 
   return (
