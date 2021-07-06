@@ -244,7 +244,7 @@ function SFDCFileUploadComponent(
     () => [
       getTableTextColumn(getField(fields, "operation")),
       getTableTextColumn(getField(fields, "componentType")),
-      getLimitedTableTextColumn(getField(fields, "committedFile"), 20),
+      getLimitedTableTextColumn(getField(fields, "committedFile"), 80),
     ],
     [fields]
   );
@@ -253,14 +253,15 @@ function SFDCFileUploadComponent(
     if (pipelineWizardModel.getData("csvFileContent") && pipelineWizardModel.getData("csvFileContent").length > 0) {
       return (
         <>
-          <CustomTable
-            className={"no-table-border"}
-            columns={columns}
-            data={pipelineWizardModel.getData("csvFileContent")}
-          />
+          <div style={{height: "300px", maxHeight: "500px", width: "800px", overflowY: "auto", margin: "auto"}}>
+            <CustomTable
+              className={"no-table-border"}
+              columns={columns}
+              data={pipelineWizardModel.getData("csvFileContent")}
+            />
+          </div>
           {buttonContainer()}
         </>
-     
       );
     }
   };
