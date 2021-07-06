@@ -20,7 +20,6 @@ const ec2ServiceCreationTaskConfigurationMetadata = {
     {
       label: "Container Port",
       id: "ecsServiceContainerPort",
-      isRequired: true
     },
     {
       label: "Required Compatibility",

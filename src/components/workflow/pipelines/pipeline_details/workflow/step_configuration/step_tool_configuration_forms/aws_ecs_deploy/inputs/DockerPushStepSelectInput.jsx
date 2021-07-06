@@ -42,7 +42,7 @@ function DockerStepSelectInput({
         let dockerSteps = pipelineSteps.filter((step) => step.tool.tool_identifier.toLowerCase() === "docker-push");
         if (dockerSteps.length === 0) {
           let newDataObject = { ...dataObject };
-          newDataObject.setData("dockerStepId", "");
+          newDataObject.setData("ecsServiceDockerStepId", "");
           setDataObject({ ...newDataObject });
         }
         setDockerList(dockerSteps);
@@ -101,7 +101,7 @@ DockerStepSelectInput.propTypes = {
 DockerStepSelectInput.defaultProps = {
   valueField: "_id",
   textField: "name",
-  fieldName: "dockerStepId",
+  fieldName: "ecsServiceDockerStepId",
 };
 
 export default DockerStepSelectInput;

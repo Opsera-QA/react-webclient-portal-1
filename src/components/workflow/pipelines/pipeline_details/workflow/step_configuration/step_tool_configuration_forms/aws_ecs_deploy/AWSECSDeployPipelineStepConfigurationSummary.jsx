@@ -15,10 +15,13 @@ function AWSECSDeployPipelineStepConfigurationSummaryPanel({ awsECSDeployPipelin
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={awsECSDeployPipelineDataObject} fieldName={"dockerStepId"}/>
+          <TextFieldBase dataObject={awsECSDeployPipelineDataObject} fieldName={"ecsServiceDockerStepId"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={awsECSDeployPipelineDataObject} fieldName={"serviceTaskId"}/>
+          <TextFieldBase dataObject={awsECSDeployPipelineDataObject} fieldName={"ecsServiceTaskId"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={awsECSDeployPipelineDataObject} fieldName={"ecsServiceContainerPort"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>

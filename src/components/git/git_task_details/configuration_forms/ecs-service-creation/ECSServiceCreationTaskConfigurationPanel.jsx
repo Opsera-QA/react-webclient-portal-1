@@ -112,13 +112,6 @@ function ECSServiceCreationTaskConfigurationPanel({
         <TextInputBase
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
-          fieldName={"ecsServiceContainerPort"}
-        />
-      </Col>
-      <Col lg={12}>
-        <TextInputBase
-          dataObject={gitTasksConfigurationData}
-          setDataObject={setGitTasksConfigurationData}
           fieldName={"ecsServiceLogGroup"}
         />
       </Col>

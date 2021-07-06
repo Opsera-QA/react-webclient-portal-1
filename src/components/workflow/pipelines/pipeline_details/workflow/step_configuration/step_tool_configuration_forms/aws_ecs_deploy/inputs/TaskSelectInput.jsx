@@ -111,7 +111,7 @@ TaskSelectInput.propTypes = {
 };
 
 TaskSelectInput.defaultProps = {
-  fieldName: "serviceTaskId",
+  fieldName: "ecsServiceTaskId",
   textField: "name",
   valueField: "_id"
 };

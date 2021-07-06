@@ -3,18 +3,24 @@ const awsECSDeployStepFormMetadata = {
   fields: [
     {
       label: "Docker Step",
-      id: "dockerStepId",
+      id: "ecsServiceDockerStepId",
       isRequired: true
     },
     {
       label: "Service Task",
-      id: "serviceTaskId",
+      id: "ecsServiceTaskId",
+      isRequired: true
+    },
+    {
+      label: "Service Container Port",
+      id: "ecsServiceContainerPort",
       isRequired: true
     }
   ],
   newObjectFields: {
-    dockerStepId: "",
-    serviceTaskId: ""
+    ecsServiceDockerStepId: "",
+    ecsServiceTaskId: "",
+    ecsServiceContainerPort: ""
   }
 };
 

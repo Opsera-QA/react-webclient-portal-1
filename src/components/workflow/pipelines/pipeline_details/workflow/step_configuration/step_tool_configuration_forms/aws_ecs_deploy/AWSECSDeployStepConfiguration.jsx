@@ -12,7 +12,7 @@ import TaskSelectInput from "./inputs/TaskSelectInput";
 
 function AWSECSDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan,stepId }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [azureDevopsModel, setAWSECSDeployModel] = useState(undefined);
+  const [ecsServicesModel, setAWSECSDeployModel] = useState(undefined);
   const [threshold, setThreshold] = useState(undefined);
 
   useEffect(() => {
@@ -22,14 +22,14 @@ function AWSECSDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallb
   const loadData = async () => {
     setIsLoading(true);
     setThreshold(stepTool?.threshold);
-    let azureDevopsConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, awsECSDeployStepFormMetadata);
-    setAWSECSDeployModel(azureDevopsConfigurationData);
+    let ecsServiceConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, awsECSDeployStepFormMetadata);
+    setAWSECSDeployModel(ecsServiceConfigurationData);
     setIsLoading(false);
   };
 
   const callbackFunction = async () => {
     const item = {
-      configuration: azureDevopsModel.getPersistData(),
+      configuration: ecsServicesModel.getPersistData(),
       threshold: {
         type: threshold?.type,
         value: threshold?.value,
@@ -38,26 +38,31 @@ function AWSECSDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallb
     parentCallback(item);
   };
 
-  if (isLoading || azureDevopsModel == null) {
+  if (isLoading || ecsServicesModel == null) {
     return <DetailPanelLoadingDialog />;
   }
 
   return (
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
-      recordDto={azureDevopsModel}
+      recordDto={ecsServicesModel}
       persistRecord={callbackFunction}
       isLoading={isLoading}
     >
       <DockerPushStepSelectInput
-        dataObject={azureDevopsModel}
+        dataObject={ecsServicesModel}
         setDataObject={setAWSECSDeployModel}
         plan={plan}
         stepId={stepId}
       />
       <TaskSelectInput
-        dataObject={azureDevopsModel}
+        dataObject={ecsServicesModel}
         setDataObject={setAWSECSDeployModel}
+      />
+      <TextInputBase
+        dataObject={ecsServicesModel}
+        setDataObject={setAWSECSDeployModel}
+        fieldName={"ecsServiceContainerPort"}
       />
     </PipelineStepEditorPanelContainer>
   );
