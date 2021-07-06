@@ -186,7 +186,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     newPipelineWizardModel.setData("namespacePrefix", existingRecord?.namespacePrefix || "");
     newPipelineWizardModel.setData("includedComponentTypes", existingRecord?.includedComponentTypes || "all");
 
-    const parsedFromDate = parseDate(existingRecord?.fromDate, new Date());
+    const parsedFromDate = parseDate(existingRecord?.fromDate);
     const parsedToDate = parseDate(existingRecord["toDate"], new Date());
 
     if (parsedFromDate) {
