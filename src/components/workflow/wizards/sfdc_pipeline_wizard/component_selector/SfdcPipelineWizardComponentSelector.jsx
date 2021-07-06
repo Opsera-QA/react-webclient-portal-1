@@ -95,15 +95,10 @@ const SfdcPipelineWizardComponentSelector = ({ pipelineWizardModel, setPipelineW
       <div>
          <SFDCFileUploadComponent 
           pipelineWizardModel={pipelineWizardModel}
-          setPipelineWizardModel={setPipelineWizardModel}
-         />
-        <SaveButtonContainer>
-          <SfdcPipelineWizardSubmitComponentTypesButton
-            pipelineWizardModel={pipelineWizardModel}
             setPipelineWizardScreen={setPipelineWizardScreen}
-          />
-          <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
-        </SaveButtonContainer>
+            setPipelineWizardModel={setPipelineWizardModel}
+            handleClose={handleClose}
+         />
       </div>
     );
   };

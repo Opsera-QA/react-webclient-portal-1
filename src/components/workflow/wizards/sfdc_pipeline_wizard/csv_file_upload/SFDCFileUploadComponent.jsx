@@ -22,6 +22,10 @@ import { getField } from "components/common/metadata/metadata-helpers";
 import SfdcPipelineWizardUploadComponentTypesRadioInput from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardUploadComponentTypesRadioInput";
 import CSVMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/csv-metadata.js";
 import IconBase from "components/common/icons/IconBase";
+import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
+import SfdcPipelineWizardSubmitComponentTypesButton
+  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardSubmitComponentTypesButton";
+import CancelButton from "components/common/buttons/CancelButton";
 
 // TODO: This needs to be completely refactored
 // TODO: Make base component and handle data pull, etc. in there
@@ -30,9 +34,9 @@ function SFDCFileUploadComponent(
     pipelineWizardModel,
     callbackFunc,
     fetchAttribute,
-    setFiles,
-    pullComponentsFunction, 
-    setPipelineWizardModel
+    setPipelineWizardModel,
+    setPipelineWizardScreen,
+    handleClose
   }) {
     const fields = CSVMetadata.fields;
   
@@ -224,24 +228,18 @@ function SFDCFileUploadComponent(
     if (xmlContent && xmlContent.length > 0) {
       return (
         <>
-        <SyntaxHighlighter language="xml" style={docco}>
-                        {xmlContent}
-        </SyntaxHighlighter>
-        {/* <Row className="my-2">
-            <Button
-              variant="success"
-              size="sm"
-              className="mr-2"
-              disabled={save || xmlContent.length < 1}
-              onClick={() => {
-                setSave(true);
-                saveData();
-              }}
-            >
-              <IconBase className={"mr-1"} icon={faStepForward} isLoading={save} />
-              Proceed with selected components
-            </Button>
-          </Row> */}
+          <div style={{height: "300px", maxHeight: "500px", width: "800px", overflowY: "auto", margin: "auto"}}>
+            <SyntaxHighlighter language="xml" style={docco}>
+              {xmlContent}
+            </SyntaxHighlighter>
+          </div>
+          <SaveButtonContainer>
+            <SfdcPipelineWizardSubmitComponentTypesButton
+              pipelineWizardModel={pipelineWizardModel}
+              setPipelineWizardScreen={setPipelineWizardScreen}
+            />
+            <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
+          </SaveButtonContainer>
         </>
       );
     }
@@ -259,20 +257,22 @@ function SFDCFileUploadComponent(
   const getCSVView = () => {
     if (csvContent && csvContent.length > 0) {
       return (
-        <table>
-          <tr key={"header"}>
-            {Object.keys(csvContent[0]).map((key, i) => (
-              <th key={i}>{key}</th>
-            ))}
-          </tr>
-          {csvContent.map((item) => (
-            <tr key={item.id}>
-              {Object.values(item).map((val, i) => (
-                <td key={i}>{val}</td>
+        <>
+          <table>
+            <tr key={"header"}>
+              {Object.keys(csvContent[0]).map((key, i) => (
+                <th key={i}>{key}</th>
               ))}
             </tr>
-          ))}
-        </table>
+            {csvContent.map((item) => (
+              <tr key={item.id}>
+                {Object.values(item).map((val, i) => (
+                  <td key={i}>{val}</td>
+                ))}
+              </tr>
+            ))}
+          </table>
+        </>
       // <CustomTable
       //   className={"no-table-border"}
       //   columns={columns}
@@ -386,9 +386,9 @@ function SFDCFileUploadComponent(
             {getFileUploadBody()}
             {getFilesBody()}
             {getValidateButton()}
-            {getXMLView()}
-            {getCSVView()}
           </div>
+          {getXMLView()}
+          {getCSVView()}
         </Container>
       );
     }
@@ -415,7 +415,9 @@ SFDCFileUploadComponent.propTypes = {
   pullComponentsFunction: PropTypes.func,
   setFiles: PropTypes.func,
   pipelineWizardModel: PropTypes.object,
-  setPipelineWizardModel: PropTypes.func
+  setPipelineWizardModel: PropTypes.func,
+  setPipelineWizardScreen : PropTypes.func,
+  handleClose : PropTypes.func,
 };
 
 export default SFDCFileUploadComponent;
