@@ -283,6 +283,7 @@ function SfdcPipelineWizardCsvFileUploadComponent(
             type="file"
             accept=".csv"
             onChange={filesSelected}
+            onClick={ e => e.target.value = null}
           />
         </div>
       );

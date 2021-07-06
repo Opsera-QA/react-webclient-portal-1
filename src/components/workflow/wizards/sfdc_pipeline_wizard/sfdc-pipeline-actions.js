@@ -341,4 +341,22 @@ sfdcPipelineActions.getPackageXmlV2 = async (getAccessToken, cancelTokenSource, 
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+sfdcPipelineActions.setXmlFilecomponentsV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const postBody = {
+    packageXml: pipelineWizardModel?.getData("xmlFileContent")
+  };
+
+  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/set_xml_file_contents`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
+sfdcPipelineActions.setCsvFileComponentsV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
+  const postBody = {
+    selectedFileList: pipelineWizardModel?.getData("csvFileContent")
+  };
+
+  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/set_csv_file_contents`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 export default sfdcPipelineActions;
