@@ -207,7 +207,9 @@ const octopusStepFormMetadata = {
       },
       {
         label: "Deployed Package File Name",
-        id: "deployedPackageFileName"
+        id: "deployedPackageFileName",
+        regexValidator: regexHelpers.regexTypes.fileName,
+        maxLength: 64
       },
       {
         label: "Use Custom Deployment Directory",
@@ -215,7 +217,9 @@ const octopusStepFormMetadata = {
       },
       {
         label: "Deployment Directory",
-        id: "deploymentDirectory"
+        id: "deploymentDirectory",
+        regexValidator: regexHelpers.regexTypes.pathField,
+        maxLength: 100
       },
       {
         label: "Purge",
@@ -223,7 +227,7 @@ const octopusStepFormMetadata = {
       },
       {
         label: "Files Excluded from Purge",
-        id: "excludeFromPurge"
+        id: "excludeFromPurge",        
       },
     ],
   newObjectFields:
