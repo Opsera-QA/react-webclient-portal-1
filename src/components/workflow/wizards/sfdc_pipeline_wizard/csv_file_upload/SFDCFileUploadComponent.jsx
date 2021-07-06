@@ -173,12 +173,13 @@ function SFDCFileUploadComponent(
       setSave(false);
       return;
     }
-    let isValidOpserations = csvobj.every((val) => val.operation === "" || val.operation === "added" || val.operation === "modified" || val.operation === "removed" || val.operation === "renamed" );
+    let validOperations = ["","added", "modified", "removed", "renamed"];
+    let isValidOpserations = csvobj.every((val) => validOperations.includes(val.operation) );
     if(!isValidOpserations) {
        let files = selectedFiles;
        files[0]['invalid'] = true;
        setUnsupportedFiles(files);
-       setErrorMessage('Invalid data operations provided!');
+       setErrorMessage('Invalid file operations provided!');
        setSave(false);
        return;
     }
