@@ -13,6 +13,7 @@ import CancelButton from "components/common/buttons/CancelButton";
 import {Button} from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
 import {faStepForward, faSync} from "@fortawesome/pro-light-svg-icons";
+import {parseDate} from "utils/helpers";
 
 const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, pipeline, gitTaskData, setError }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -184,8 +185,18 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     newPipelineWizardModel.setData("updatedAt", existingRecord?.updatedAt);
     newPipelineWizardModel.setData("namespacePrefix", existingRecord?.namespacePrefix || "");
     newPipelineWizardModel.setData("includedComponentTypes", existingRecord?.includedComponentTypes || "all");
-    newPipelineWizardModel.setData("fromDate", existingRecord?.fromDate || newPipelineWizardModel?.getData("fromDate"));
-    newPipelineWizardModel.setData("toDate", existingRecord?.toDate || new Date());
+
+    const parsedFromDate = parseDate(existingRecord?.fromDate, new Date());
+    const parsedToDate = parseDate(existingRecord["toDate"], new Date());
+
+    if (parsedFromDate) {
+      newPipelineWizardModel.setData("fromDate", parsedFromDate);
+    }
+
+    if (parsedToDate) {
+      newPipelineWizardModel.setData("toDate", parsedToDate);
+    }
+
     setPipelineWizardModel({...newPipelineWizardModel});
     setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR);
   };
