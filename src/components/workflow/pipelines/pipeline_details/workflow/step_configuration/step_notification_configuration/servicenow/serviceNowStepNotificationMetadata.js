@@ -40,6 +40,7 @@ const serviceNowStepNotificationMetadata = {
     event: "all",
     toolId: "",
     serviceNowUserId: "",
+    serviceNowGroupId: "",
     enabled: false,
   }
 };
