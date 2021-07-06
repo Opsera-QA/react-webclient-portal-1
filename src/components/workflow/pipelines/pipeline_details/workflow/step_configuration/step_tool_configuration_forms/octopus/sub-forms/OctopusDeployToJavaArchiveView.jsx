@@ -46,22 +46,6 @@ function OctopusDeployToJavaArchiveView({dataObject, setDataObject, isLoading, d
 
   return (
     <>
-      <OctopusDeployPackageTypeInput
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        fieldName={"deployExtractedPackage"}
-      />
-      <OctopusCustomDeploymentDirectoryDetailsInput
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        fieldName={"useCustomDeploymentDirectory"}
-      />      
-      <CustomDeploymentScriptToggleInput
-        dataObject={dataObject}
-        setDataObject={setDataObject}
-        fieldName={"customDeploymentScriptsEnabled"}
-      />
-      {getCustomScriptsInput()}
       <OctopusFeedSelectInput
         fieldName={"octopusFeedId"}
         dataObject={dataObject}
@@ -77,6 +61,22 @@ function OctopusDeployToJavaArchiveView({dataObject, setDataObject, isLoading, d
             : ""
         }
       />
+      <OctopusDeployPackageTypeInput
+        dataObject={dataObject}
+        setDataObject={setDataObject}
+        fieldName={"deployExtractedPackage"}
+      />
+      <OctopusCustomDeploymentDirectoryDetailsInput
+        dataObject={dataObject}
+        setDataObject={setDataObject}
+        fieldName={"useCustomDeploymentDirectory"}
+      />      
+      <CustomDeploymentScriptToggleInput
+        dataObject={dataObject}
+        setDataObject={setDataObject}
+        fieldName={"customDeploymentScriptsEnabled"}
+      />
+      {getCustomScriptsInput()}      
       <RollbackToggleInput
         dataObject={dataObject}
         setDataObject={setDataObject}
