@@ -132,7 +132,7 @@ AWSToolSelectInput.propTypes = {
 AWSToolSelectInput.defaultProps = {
   valueField: "id",
   textField: "name",
-  fieldName: "awsToolId",
+  fieldName: "toolConfigId",
 };
 
 export default AWSToolSelectInput;

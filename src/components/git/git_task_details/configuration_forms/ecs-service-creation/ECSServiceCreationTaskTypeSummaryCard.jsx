@@ -35,7 +35,7 @@ function ECSServiceCreationTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurat
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"ecsServiceVpcId"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"ecsServiceRequiresCompatibilities"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"ecsServiceLoadBalancerArn"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"awsToolId"} />
+        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"toolConfigId"} />
         {getDynamicFields()}
       </div>
     </GitTasksSummaryCardContainer>

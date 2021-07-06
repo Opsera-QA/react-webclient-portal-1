@@ -39,7 +39,7 @@ const ec2ServiceCreationTaskConfigurationMetadata = {
     },
     {
       label: "AWS Tool",
-      id: "awsToolId",
+      id: "toolConfigId",
       isRequired: true
     },
     {
@@ -65,7 +65,7 @@ const ec2ServiceCreationTaskConfigurationMetadata = {
       ecsServiceVpcId : "",
       ecsServiceImageUrl : "",
       ecsServiceLoadBalancerArn: "",
-      awsToolId: "",
+      toolConfigId: "",
       ecsServiceLogGroup: "",
       ecsServiceExecutionRoleArn: "",
       ecsServiceSubnets : []

@@ -41,8 +41,8 @@ function ECSServiceCreationTaskConfigurationPanel({
           <IAMRoleSelectInput
             dataObject={gitTasksConfigurationData}
             setDataObject={setGitTasksConfigurationData}
-            disabled={gitTasksConfigurationData?.getData("awsToolId").length === 0}
-            awsToolId={gitTasksConfigurationData?.getData("awsToolId")}
+            disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0}
+            toolConfigId={gitTasksConfigurationData?.getData("toolConfigId")}
           />
         </Col>
       <Col lg={12}>
@@ -68,7 +68,7 @@ function ECSServiceCreationTaskConfigurationPanel({
         <AWSToolSelectInput
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
-          fieldName={"awsToolId"}
+          fieldName={"toolConfigId"}
         />
       </Col>
       <Col lg={12}>
@@ -82,7 +82,7 @@ function ECSServiceCreationTaskConfigurationPanel({
         <ClusterSelectInput
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
-          disabled={gitTasksConfigurationData?.getData("awsToolId").length === 0 || gitTasksConfigurationData?.getData("ecsServiceRequiresCompatibilities").length === 0}
+          disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0 || gitTasksConfigurationData?.getData("ecsServiceRequiresCompatibilities").length === 0}
           requiresCompatibilities={gitTasksConfigurationData?.getData("ecsServiceRequiresCompatibilities")}
         />
       </Col>
@@ -90,8 +90,8 @@ function ECSServiceCreationTaskConfigurationPanel({
       <VPCSelectInput
         dataObject={gitTasksConfigurationData}
         setDataObject={setGitTasksConfigurationData}
-        disabled={gitTasksConfigurationData?.getData("awsToolId").length === 0}
-        awsToolId={gitTasksConfigurationData?.getData("awsToolId")}
+        disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0}
+        toolConfigId={gitTasksConfigurationData?.getData("toolConfigId")}
       />
       </Col>
       <Col lg={12}>
@@ -126,8 +126,8 @@ function ECSServiceCreationTaskConfigurationPanel({
         <LoadBalancerSelectInput
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
-          disabled={gitTasksConfigurationData?.getData("awsToolId").length === 0}
-          awsToolId={gitTasksConfigurationData?.getData("awsToolId")}
+          disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0}
+          toolConfigId={gitTasksConfigurationData?.getData("toolConfigId")}
         />
       </Col>
       {getDynamicFields()}

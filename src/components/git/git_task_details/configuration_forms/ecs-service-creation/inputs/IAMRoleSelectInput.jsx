@@ -13,7 +13,7 @@ function IAMRolesSelectInput({
                                    disabled,
                                    textField,
                                    valueField,
-                                   awsToolId,
+                               toolConfigId,
                                    pipelineId,
                                  }) {
   const toastContext = useContext(DialogToastContext);
@@ -45,7 +45,7 @@ function IAMRolesSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [awsToolId]);
+  }, [toolConfigId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -108,7 +108,7 @@ IAMRolesSelectInput.propTypes = {
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  awsToolId: PropTypes.string,
+  toolConfigId: PropTypes.string,
   pipelineId: PropTypes.string,
 };
 
