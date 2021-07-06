@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import StandaloneTextFieldBase from "components/common/fields/text/standalone/StandaloneTextFieldBase";
 
-function OwnerNameField({model, className }) {
+function OwnerNameField({model, fieldName, className }) {
   if (model == null) {
     return null;
   }
@@ -11,7 +11,7 @@ function OwnerNameField({model, className }) {
     <StandaloneTextFieldBase
       className={className}
       label={"Owner"}
-      text={model.getData("owner_name")}
+      text={model?.getData(fieldName)}
     />
   );
 }
@@ -19,6 +19,11 @@ function OwnerNameField({model, className }) {
 OwnerNameField.propTypes = {
   model: PropTypes.object,
   className: PropTypes.string,
+  fieldName: PropTypes.string
+};
+
+OwnerNameField.defaultProps = {
+  fieldName: "owner_name"
 };
 
 export default OwnerNameField;

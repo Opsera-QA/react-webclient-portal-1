@@ -11,6 +11,10 @@ import { faUserCircle } from "@fortawesome/pro-light-svg-icons";
 
 import { renderTooltip } from "utils/helpers";
 
+const EXTERNAL_LINKS = {
+  KNOWLEDGE_BASE: `https://opsera.atlassian.net/l/c/pXJjJAej`
+};
+
 function HeaderNavBar({ hideAuthComponents, userData }) {
   const { setAccessRoles, getAccessToken, featureFlagHideItemInProd, loginUserContext, logoutUserContext } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -111,7 +115,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
             {!accessRoleData && <Button variant="outline-success" onClick={login}>Login</Button>}
             {accessRoleData &&
             <NavDropdown title={fullName} id="basic-nav-dropdown" alignRight>
-              <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/kIA5" target="_blank"
+              <NavDropdown.Item href={EXTERNAL_LINKS.KNOWLEDGE_BASE} target="_blank"
                                 className="nav-drop-down-item" id="kb-button">KnowledgeBase</NavDropdown.Item>
               <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/AQBYAw" target="_blank"
                                 className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>
@@ -153,7 +157,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
 
               <NavDropdown.Divider/>
 
-              <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/kIA5" target="_blank"
+              <NavDropdown.Item href={EXTERNAL_LINKS.KNOWLEDGE_BASE} target="_blank"
                                 className="nav-drop-down-item" id="kb-button">KnowledgeBase</NavDropdown.Item>
               <NavDropdown.Item href="https://opsera.atlassian.net/wiki/x/AQBYAw" target="_blank"
                                 className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>

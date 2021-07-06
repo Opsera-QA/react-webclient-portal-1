@@ -49,7 +49,6 @@ export class ModelBase {
     }
   };
 
-
   /**
    * Retrieve nested item from object/array
    * @param {String} fieldName dot separated
@@ -114,6 +113,11 @@ export class ModelBase {
   getDetailViewTitle = () => {
     console.error("No getDetailViewTitle function was wired up");
   };
+
+  getManagementScreenLink = () => {
+    console.error("No getManagementScreenLink function was wired up");
+  };
+
 
   isLenient = () => {
     return false;

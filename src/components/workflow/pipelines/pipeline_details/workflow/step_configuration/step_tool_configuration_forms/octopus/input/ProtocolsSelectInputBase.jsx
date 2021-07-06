@@ -30,7 +30,8 @@ function ProtocolsSelectInputBase({
         {
             label: "Protocol",
             id: "protocol",
-            maxLength: 5
+            maxLength: 5,
+            isRequired: true
           },
           {
             label: "Thumbprint",
@@ -40,13 +41,15 @@ function ProtocolsSelectInputBase({
             label: "Host",
             id: "host",
             regexValidator: regexHelpers.regexTypes.hostnameRegex,
-            maxLength: 255
+            maxLength: 255,
+            // isRequired: true
           },
           {
             label: "Binding Port",
             id: "port",
             regexValidator: regexHelpers.regexTypes.numericalField,
-            maxLength: 4
+            maxLength: 4,
+            isRequired: true
           },
     ]
   }, true));
@@ -127,7 +130,7 @@ function ProtocolsSelectInputBase({
                   fieldName={"host"}
                 />
         <Button size="sm" className="my-1 ml-2" variant="success" 
-          disabled={!localProperties.getData("protocol") || localProperties.getData("protocol").length === 0}
+          disabled={ localProperties == null || !localProperties.checkCurrentValidity() }
           onClick={() => { addProperty();}}
         >
           Add {type}

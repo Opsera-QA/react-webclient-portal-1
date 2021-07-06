@@ -103,6 +103,9 @@ import AnalyticsDataEntryManagement from "components/settings/analytics_data_ent
 import AnalyticsDataEntryDetailView
   from "components/settings/analytics_data_entry/detail_view/AnalyticsDataEntryDetailView";
 import Blueprint from "components/blueprint/Blueprint";
+import PipelineStorageManagement from "components/admin/pipeline_storage/PipelineStorageManagement";
+import PipelineStorageDetailView
+  from "components/admin/pipeline_storage/pipeline_storagei_detail_view/PipelineStorageDetailView";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -338,6 +341,8 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/admin/templates" exact component={TemplateManagement}/>
                   <SecureRoute path="/admin/templates/details/:templateId" exact component={TemplateDetailView}/>
                   <SecureRoute path="/admin/reports" exact component={Reports_Old}/>
+                  <SecureRoute path="/admin/pipeline-storage" exact component={PipelineStorageManagement}/>
+                  <SecureRoute path="/admin/pipeline-storage/details/:id" exact component={PipelineStorageDetailView}/>
 
                   {/* Site Notification Management */}
                   <SecureRoute path="/admin/site-notifications/table" exact component={SiteNotificationManagement}/>
