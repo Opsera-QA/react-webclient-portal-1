@@ -63,8 +63,8 @@ regexHelpers.regexTypes = {
   // Letters, numbers, dashes, underscores and periods allowed
   fileName: /^[A-Za-z0-9-_.]*$/,
 
-  // Letters, numbers, dashes, underscores, commas, spaces and periods allowed
-  fileList: /^[A-Za-z0-9-_., ]*$/,
+  // Letters, numbers, dashes, underscores, asterisk, periods and new lines allowed
+  fileList: /^[A-Za-z0-9-_.*\n]*$/,
 };
 
 export default regexHelpers;
