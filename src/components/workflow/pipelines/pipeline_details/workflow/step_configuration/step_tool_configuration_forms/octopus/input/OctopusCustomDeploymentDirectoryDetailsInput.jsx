@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import InputContainer from "components/common/inputs/InputContainer";
 import {Form} from "react-bootstrap";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import TextAreaInput from "components/common/inputs/text/TextAreaInput";
 
 function OctopusCustomDeploymentDirectoryDetailsInput({dataObject, setDataObject, fieldName, disabled}) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
@@ -56,11 +57,11 @@ function OctopusCustomDeploymentDirectoryDetailsInput({dataObject, setDataObject
     }
     return (
       <>
-        <TextInputBase
+        <TextAreaInput 
+          dataObject={dataObject}                         
           setDataObject={setDataObject}
-          dataObject={dataObject}
-          fieldName={"excludeFromPurge"}        
-        />
+          fieldName={"excludeFromPurge"} 
+        />        
       </>
     );
   };
