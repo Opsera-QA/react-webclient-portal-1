@@ -12,6 +12,11 @@ const sfdcPipelineWizardMetadata = {
       formText: "Which component types should be included?"
     },
     {
+      label: "Deploy Component Types",
+      id: "uploadComponentTypes",
+      formText: "Which component types should be included?"
+    },
+    {
       label: "Component Types",
       id: "selectedComponentTypes",
     },
@@ -97,6 +102,7 @@ const sfdcPipelineWizardMetadata = {
   ],
   newObjectFields: {
     includedComponentTypes: "all",
+    uploadComponentTypes: "fromSfdc",
     selectedComponentTypes: [],
     fromDate: new Date(new Date().setHours(0,0,0,0)),
     toDate: new Date(),
