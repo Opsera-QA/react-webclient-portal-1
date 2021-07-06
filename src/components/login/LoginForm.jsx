@@ -11,6 +11,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import "@okta/okta-signin-widget/dist/css/okta-sign-in.min.css";
 import { useOktaAuth } from "@okta/okta-react";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import RegisterAccountButton from "components/login/RegisterAccountButton";
 
 const OktaSignIn = require("@okta/okta-signin-widget");
 
@@ -391,16 +392,6 @@ const LoginForm = ({ authClient }) => {
 
 
 const WelcomeMessage = () => {
-  const history = useHistory();
-  const gotoSignUp = () => {
-    //if free trial, go that form, otherwise use normal
-    if (process.env.REACT_APP_STACK === "free-trial") {
-      history.push("/trial/registration");
-    } else {
-      history.push("/signup");
-    }
-  };
-
   return (
     <div className="ml-4">
       <h2 className="mb-3 bd-text-purple-bright">Welcome to Opsera!</h2>
@@ -416,9 +407,7 @@ const WelcomeMessage = () => {
       </div>
 
       <div className="row mx-n2 mt-4">
-        <div className="col-md px-2">
-          <Button variant="warning" className="btn-lg w-100 mb-3" onClick={gotoSignUp}>Register an Account</Button>
-        </div>
+        <RegisterAccountButton />
         {/*<div className="col-md px-2">
         <Button variant="outline-success" className="btn-lg w-100 mb-3" onClick={login}>Log In</Button>
       </div>*/}
