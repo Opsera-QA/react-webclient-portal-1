@@ -26,7 +26,7 @@ function JiraToolProjectSummaryCard({ jiraConfigurationData, jiraProjectData, ch
           <TextFieldBase dataObject={jiraProjectData} fieldName={"description"} />
         </Col>
         <Col lg={6}>
-          <ToolNameField dataObject={jiraConfigurationData} fieldName={ "jiraToolId"} />
+          <ToolNameField model={jiraConfigurationData} fieldName={ "jiraToolId"} />
         </Col>
         <Col lg={6}>
           <JiraProjectNameField dataObject={jiraConfigurationData} fieldName={"jiraProject"} jiraToolId={jiraConfigurationData.getData("jiraToolId")} />

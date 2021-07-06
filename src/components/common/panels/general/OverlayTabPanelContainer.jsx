@@ -16,7 +16,7 @@ function OverlayTabPanelContainer({ tabContainer, currentView }) {
 
 OverlayTabPanelContainer.propTypes = {
   tabContainer: PropTypes.object,
-  currentView: PropTypes.object,
+  currentView: PropTypes.any,
 };
 
 export default OverlayTabPanelContainer;

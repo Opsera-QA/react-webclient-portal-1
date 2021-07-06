@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
@@ -7,22 +7,44 @@ import FieldContainer from "components/common/fields/FieldContainer";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpinner} from "@fortawesome/pro-light-svg-icons";
 import toolsActions from "components/inventory/tools/tools-actions";
+import axios from "axios";
+import ToolLinkIcon from "components/common/icons/inventory/tools/ToolLinkIcon";
 
-function ToolNameField({ dataObject, fieldName, className }) {
-  const [field] = useState(dataObject.getFieldById(fieldName));
+function ToolNameField({ model, fieldName, className, handleClose }) {
+  const [field] = useState(model?.getFieldById(fieldName));
   const toastContext = useContext(DialogToastContext);
   const {getAccessToken} = useContext(AuthContext);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [toolName, setToolName] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [accessAllowed, setAccessAllowed] = useState(false);
 
   useEffect(() => {
-      loadData();
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData(source).catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadToolName();
+      await loadToolName(cancelSource);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     } finally {
@@ -30,40 +52,59 @@ function ToolNameField({ dataObject, fieldName, className }) {
     }
   };
 
-  const loadToolName = async () => {
-    let toolId = dataObject.getData(fieldName);
-    if (toolId !== "") {
-      const response = await toolsActions.getFullToolById(toolId, getAccessToken);
-      if (response?.data) {
-        setToolName(response.data[0].name);
+  const loadToolName = async (cancelSource = cancelTokenSource) => {
+    let toolId = model?.getData(fieldName);
+    if (toolId != null && toolId !== "") {
+      const response = await toolsActions.getToolNameById(getAccessToken, cancelSource, toolId);
+      const toolName = response?.data?.name;
+
+      if (toolName) {
+        setToolName(toolName);
+        setAccessAllowed(response?.data?.accessAllowed === true);
       }
     }
   };
 
   const getToolName = () => {
+    if (model?.getData(fieldName) === "") {
+      return null;
+    }
+
     if (isLoading) {
-      return <span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>{dataObject.getData(fieldName)}</span>;
+      return <span><FontAwesomeIcon icon={faSpinner} spin className="mr-1" fixedWidth/>{model?.getData(fieldName)}</span>;
     }
 
     if (toolName) {
       return toolName;
     }
 
-    return `Tool name could not be found with ID: [${dataObject.getData(fieldName)}]`;
+    return `Tool name could not be found with ID: [${model?.getData(fieldName)}]. The Tool may have been deleted.`;
   };
+
+
+  if (field == null) {
+    return null;
+  }
 
   return (
     <FieldContainer className={className}>
       <Label field={field}/>
       <span>{getToolName()}</span>
+      <ToolLinkIcon
+        className={"ml-3"}
+        toolId={model?.getData(fieldName)}
+        accessAllowed={accessAllowed}
+        handleClose={handleClose}
+      />
     </FieldContainer>
   );
 }
 
 ToolNameField.propTypes = {
-  dataObject: PropTypes.object,
+  model: PropTypes.object,
   fieldName: PropTypes.string,
-  className: PropTypes.string
+  className: PropTypes.string,
+  handleClose: PropTypes.func
 };
 
 export default ToolNameField;
