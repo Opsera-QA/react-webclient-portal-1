@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { useHistory } from "react-router-dom";
 import {
@@ -61,7 +61,6 @@ function PipelineStorageTable({ data, loadData, isLoading, pipelineStoragePagina
       loadData={loadData}
       isLoading={isLoading}
       body={getPipelineStorageTable()}
-      supportSearch={true}
       titleIcon={faFileArchive}
       title={"Pipeline Storage Records"}
       className={"px-2 pb-2"}
