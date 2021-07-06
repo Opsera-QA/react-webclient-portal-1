@@ -111,11 +111,8 @@ function StepConfiguration({ plan, stepId, parentCallback, closeEditorPanel }) {
       isStrict={true}
     >
       <div className="text-muted mt-1 mb-3">
-        A pipeline step represents a tool and an operation. Each step requires a tool to be selected along with a
-        display name. After the tool is selected, the step can be edited by clicking on the cog icon (
-        <FontAwesomeIcon icon={faCog} fixedWidth className="text-muted" />) and then the individual operations for that
-        step can be defined. If the tool requires configuration information, jobs or accounts, you must configure those
-        in the Tool Registry before setting up the step.
+        A pipeline step represents a tool and an operation. Each step requires a tool and a custom Step Name. After tool setup, navigate to Step Configuration by selecting the cog icon (<FontAwesomeIcon icon={faCog} fixedWidth className="text-muted" />) to define operations. If the tool requires configuration information, jobs or accounts, configure them
+        in the Tool Registry before Step Setup.
       </div>
       <div className="step-settings-body">
         <BooleanToggleInput dataObject={stepConfigurationModel} setDataObject={setStepConfigurationModel} fieldName={"active"}/>

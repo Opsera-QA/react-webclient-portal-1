@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
 import AzurePipelineStepConfigurationHelp
   from "../../../../common/help/documentation/pipelines/step_configuration/AzurePipelineStepConfigurationHelp";
+import PipelineStepSetupHelpDocumentation
+  from "../../../../common/help/documentation/pipelines/step_configuration/PipelineStepSetupHelpDocumentation";
 
 function StepToolHelpIcon({type, tool, className, iconClassName}) {
   // TODO: Alphabetize when adding new help panels
@@ -63,7 +65,7 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
     }
 
     if (type === "step") {
-      return null;
+      return <PipelineStepSetupHelpDocumentation/>;
     }
 
     return (getToolHelpPanel());
