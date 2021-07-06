@@ -142,6 +142,11 @@ toolsActions.getToolLovsV2 = async (getAccessToken, cancelTokenSource) => {
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+toolsActions.getToolNameById = async (getAccessToken, cancelTokenSource, toolId) => {
+  const apiUrl = `/registry/configs/${toolId}/name`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 // TODO: Remove when all references are updated to V2
 toolsActions.getRelevantPipelines = async (toolDto, getAccessToken) => {
   const apiUrl = `/registry/${toolDto.getData("_id")}/pipelines`;
