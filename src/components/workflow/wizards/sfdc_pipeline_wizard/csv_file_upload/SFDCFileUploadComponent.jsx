@@ -198,7 +198,6 @@ function SFDCFileUploadComponent(
     reader.onload = async (evt) => {
       /* Parse data */
       const dataString = evt.target.result;
-      console.log(dataString);
       if(isXml) {
         validateXMLObj(dataString);
         return;
