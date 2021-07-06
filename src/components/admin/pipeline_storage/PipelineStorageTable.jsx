@@ -61,7 +61,6 @@ function PipelineStorageTable({ data, loadData, isLoading, pipelineStoragePagina
       loadData={loadData}
       isLoading={isLoading}
       body={getPipelineStorageTable()}
-      supportSearch={true}
       titleIcon={faFileArchive}
       title={"Pipeline Storage Records"}
       className={"px-2 pb-2"}
