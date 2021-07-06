@@ -40,6 +40,25 @@ export function isOpseraPassword(password) {
   return re.test(String(password));
 }
 
+export function parseDate(dateString, defaultValue) {
+  try {
+    if (dateString == null || dateString === "") {
+      return defaultValue;
+    }
+
+    const parsedDate = Date.parse(dateString);
+
+    if (parsedDate) {
+      return parsedDate;
+    }
+
+    return defaultValue;
+  }
+  catch (error) {
+    return defaultValue;
+  }
+}
+
 export function matchesRegex(regex, value) {
   let meetsRegex = false;
 
