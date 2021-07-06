@@ -1611,6 +1611,19 @@ div.data-blocks-ellipses {
     max-height: calc(100vh - 20px - 48px - 63px);
 }
 
+.full-screen-overlay-tab-panel-body-with-buttons {
+    overflow-y: hidden;
+    height: calc(100vh - 20px - 48px - 63px - 45px);
+    max-height: calc(100vh - 20px - 48px - 63px - 45px);
+    border-bottom: 1px solid #dee2e6;
+}
+
+.full-screen-overlay-tab-panel-inner-body-with-buttons {
+    overflow-y: auto;
+    height: calc(100vh - 20px - 48px - 63px - 85px);
+    max-height: calc(100vh - 20px - 48px - 63px - 85px);
+}
+
 .overlay-margin {
     /* height is 100% - 10px x2 top and bottom margins */
     height: calc(100% - 20px);
