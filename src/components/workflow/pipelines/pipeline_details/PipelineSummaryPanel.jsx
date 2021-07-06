@@ -157,8 +157,8 @@ function PipelineSummaryPanel({
     await pipelineActions.publish(pipelineId, getAccessToken);
     setInfoModal({
       show: true,
-      header: "Publish Pipeline to Catalog",
-      message: "You have published a copy of this pipeline in your shared Catalog for others to use.  Overall settings of the pipeline are shared but no tools or activity logs have been duplicated in this process.",
+      header: "Pipeline Published to Private Catalog",
+      message: "You have published a copy of this pipeline template in your organization's private catalog for others in your organization to use.  Overall settings of the pipeline are shared but no tools or activity logs have been duplicated in this process.",
       button: "OK",
     });
   };
