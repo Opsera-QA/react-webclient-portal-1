@@ -15,7 +15,7 @@ function SfdcPipelineWizardUploadComponentTypesRadioInput({ fieldName, pipelineW
             dataObject={pipelineWizardModel}
             setDataObject={setPipelineWizardModel}
             disabled={disabled}
-            value={"fromSfdc"}
+            value={"sfdc"}
             label={<div><strong>From SFDC</strong></div>}
           />
         </Col>
@@ -25,7 +25,7 @@ function SfdcPipelineWizardUploadComponentTypesRadioInput({ fieldName, pipelineW
             dataObject={pipelineWizardModel}
             setDataObject={setPipelineWizardModel}
             disabled={disabled}
-            value={"fromGit"}
+            value={"git"}
             label={<div><strong>From GIT</strong></div>}
           />
         </Col>
@@ -42,7 +42,7 @@ SfdcPipelineWizardUploadComponentTypesRadioInput.propTypes = {
 };
 
 SfdcPipelineWizardUploadComponentTypesRadioInput.defaultProps = {
-  fieldName: "uploadComponentTypes",
+  fieldName: "modifiedFilesOrigin",
 };
 
 export default SfdcPipelineWizardUploadComponentTypesRadioInput;

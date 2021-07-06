@@ -1,4 +1,4 @@
-import React, {useState}  from "react";
+import React, {useState, useEffect}  from "react";
 import PropTypes from "prop-types";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import {Row} from "react-bootstrap";
@@ -23,13 +23,32 @@ import CustomTab from "components/common/tabs/CustomTab";
 
 const SfdcPipelineWizardComponentSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) => {
   const [activeTab, setActiveTab] = useState("component");
-  
+ 
+  useEffect(() => {
+    let newDataObject = {...pipelineWizardModel};
+    newDataObject.setData("fromFileUpload", false);
+    newDataObject.setData("xmlFileContent", "");
+    newDataObject.setData("csvFileContent", []);
+    setPipelineWizardModel({...newDataObject});
+  }, []);
+ 
   if (pipelineWizardModel == null) {
     return null;
   }
 
   const handleTabClick = (tabSelection) => e => {
-    e.preventDefault();    if (activeTab !== tabSelection) {
+    e.preventDefault();  
+    if (tabSelection === "file") {
+      let newDataObject = {...pipelineWizardModel};
+      newDataObject.setData("fromFileUpload", true);
+      setPipelineWizardModel({...newDataObject});
+    }  else {
+      let newDataObject = {...pipelineWizardModel};
+      newDataObject.setData("fromFileUpload", false);
+      setPipelineWizardModel({...newDataObject});
+    }
+    
+    if (activeTab !== tabSelection) {
       setActiveTab(tabSelection);
     }
   };
@@ -94,7 +113,7 @@ const SfdcPipelineWizardComponentSelector = ({ pipelineWizardModel, setPipelineW
     return (
       <div>
          <SFDCFileUploadComponent 
-          pipelineWizardModel={pipelineWizardModel}
+            pipelineWizardModel={pipelineWizardModel}
             setPipelineWizardScreen={setPipelineWizardScreen}
             setPipelineWizardModel={setPipelineWizardModel}
             handleClose={handleClose}

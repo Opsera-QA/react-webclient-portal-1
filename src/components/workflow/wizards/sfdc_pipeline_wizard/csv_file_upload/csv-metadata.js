@@ -3,10 +3,6 @@ const CSVMetadata = {
     type: "CSV Metadata",
     fields: [
       {
-        label: "ID",
-        id: "id",
-      },
-      {
         label: "Operation",
         id: "operation",
       },

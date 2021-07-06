@@ -13,7 +13,7 @@ const sfdcPipelineWizardMetadata = {
     },
     {
       label: "Deploy Component Types",
-      id: "uploadComponentTypes",
+      id: "modifiedFilesOrigin",
       formText: "Which component types should be included?"
     },
     {
@@ -76,10 +76,6 @@ const sfdcPipelineWizardMetadata = {
       id: "isProfiles",
     },
     {
-      label: "Modified Files Origin",
-      id: "modifiedFilesOrigin",
-    },
-    {
       label: "Unit Test Steps",
       id: "unitTestSteps",
     },
@@ -99,10 +95,21 @@ const sfdcPipelineWizardMetadata = {
       label: "Wizard Launched from Git Tasks",
       id: "fromGitTasks",
     },
+    {
+      label: "Component Selection from File Upload",
+      id: "fromFileUpload",
+    },
+    {
+      label: "XML File Content",
+      id: "xmlFileContent",
+    },
+    {
+      label: "CSV File Content",
+      id: "csvFileContent",
+    },
   ],
   newObjectFields: {
     includedComponentTypes: "all",
-    uploadComponentTypes: "fromSfdc",
     selectedComponentTypes: [],
     fromDate: new Date(new Date().setHours(0,0,0,0)),
     toDate: new Date(),
@@ -121,7 +128,10 @@ const sfdcPipelineWizardMetadata = {
     gitTaskId: "",
     xml: "",
     destructiveXml: "",
-    fromGitTasks: false // TODO: Remove if irrelevant
+    xmlFileContent: "",
+    csvFileContent: [],
+    fromGitTasks: false, // TODO: Remove if irrelevant
+    fromFileUpload: false
   }
 };
 

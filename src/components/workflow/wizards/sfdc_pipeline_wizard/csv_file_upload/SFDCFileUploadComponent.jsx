@@ -1,39 +1,23 @@
-import React, {useRef, useState, useEffect, useContext, useMemo} from 'react';
+import React, {useRef, useState, useEffect, useMemo} from 'react';
 import PropTypes, {array} from 'prop-types';
-import {AuthContext} from "contexts/AuthContext";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-  faSpinner,
-  faStepForward,
-} from "@fortawesome/free-solid-svg-icons";
-
-import sfdcPipelineActions from ".././sfdc-pipeline-actions";
 import ErrorDialog from "components/common/status_notifications/error";
 import {csvStringToObj} from "components/common/helpers/string-helpers";
 import './fileupload.css';
 import {Container, Button, Row, Col} from 'react-bootstrap';
-import SelectedObjPanel from './panels/SelectedObjPanel';
-import RejectedObjPanel from './panels/RejectedObjPanel';
-import LoadingDialog from "components/common/status_notifications/loading";import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
-import xml from "react-syntax-highlighter/dist/esm/languages/hljs/xml";
+import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import docco from "react-syntax-highlighter/dist/esm/styles/hljs/docco";
 import { getLimitedTableTextColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import SfdcPipelineWizardUploadComponentTypesRadioInput from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardUploadComponentTypesRadioInput";
 import CSVMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/csv-metadata.js";
-import IconBase from "components/common/icons/IconBase";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
-import SfdcPipelineWizardSubmitComponentTypesButton
-  from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardSubmitComponentTypesButton";
+import SfdcPipelineWizardSubmitFileTypeButton
+  from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardSubmitFileTypeButton";
+import CustomTable from "components/common/table/CustomTable";
 import CancelButton from "components/common/buttons/CancelButton";
-
-// TODO: This needs to be completely refactored
-// TODO: Make base component and handle data pull, etc. in there
 function SFDCFileUploadComponent(
   {
     pipelineWizardModel,
-    callbackFunc,
-    fetchAttribute,
     setPipelineWizardModel,
     setPipelineWizardScreen,
     handleClose
@@ -46,13 +30,11 @@ function SFDCFileUploadComponent(
     const [unsupportedFiles, setUnsupportedFiles] = useState([]);
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
-    const [xmlContent, setXmlContent] = useState("");
-    const [csvContent, setCsvContent] = useState([]);
-    const {getAccessToken} = useContext(AuthContext);
     const [save, setSave] = useState(false);
     const [isXml, setIsXml] = useState(false);
 
   useEffect(() => {
+    resetStoredFileContents();
     let filteredArr = selectedFiles.reduce((acc, current) => {
       const x = acc.find(item => item.name === current.name);
       if (!x) {
@@ -64,6 +46,13 @@ function SFDCFileUploadComponent(
     setValidFiles([...filteredArr]);
 
   }, [selectedFiles]);
+
+  const resetStoredFileContents = () => {
+    let newDataObject = {...pipelineWizardModel};
+    newDataObject.setData("xmlFileContent", "");
+    newDataObject.setData("csvFileContent", []);
+    setPipelineWizardModel({...newDataObject});
+  };
 
   const preventDefault = (e) => {
     e.preventDefault();
@@ -103,8 +92,7 @@ function SFDCFileUploadComponent(
   const handleFiles = (files) => {
     setError(false);
     setIsXml(false);
-    setXmlContent("");
-    setCsvContent([]);
+    resetStoredFileContents();
     setSelectedFiles([]);
     setErrorMessage('');
     setUnsupportedFiles([]);
@@ -124,7 +112,6 @@ function SFDCFileUploadComponent(
   };
 
   const validateFile = (file) => {
-    // const validTypes = ['csv'];
     if(file.type === "text/xml") {
       setIsXml(true);
     }
@@ -132,9 +119,6 @@ function SFDCFileUploadComponent(
     if (file.size > validSize) {
       return false;
     }
-    // if (validTypes.indexOf(file.type) === -1) {
-    //     return false;
-    // }
 
     return true;
   };
@@ -155,8 +139,7 @@ function SFDCFileUploadComponent(
 
   const removeFile = (name) => {
     setError(false);
-    setXmlContent("");
-    setCsvContent([]);
+    resetStoredFileContents();
     setSelectedFiles([]);
     setErrorMessage('');
     setIsXml(false);
@@ -165,8 +148,10 @@ function SFDCFileUploadComponent(
 
   const validateXMLObj = (obj) => {
     setSave(true);
-    setXmlContent(obj);
-    console.log(obj);
+    let newDataObject = {...pipelineWizardModel};
+    newDataObject.setData("xmlFileContent", obj);
+    newDataObject.setData("csvFileContent", []);
+    setPipelineWizardModel({...newDataObject});
     setSave(false);
   };
 
@@ -175,7 +160,7 @@ function SFDCFileUploadComponent(
 
     let csvKeys = obj.length > 0 ? Object.keys(obj[0]) : [];
     let csvobj = obj.length > 0 ? obj : [];
-    let validationKeys = ["componentType", "committedFile"];
+    let validationKeys = ["componentType", "componentName"];
 
     let validKeys = validationKeys.every((val) => csvKeys.includes(val));
    
@@ -188,16 +173,20 @@ function SFDCFileUploadComponent(
       setSave(false);
       return;
     }
-    let isValidOpserations = csvobj.every((val) => val.operation === "added" || val.operation === "modified" || val.operation === "deleted" );
+    let isValidOpserations = csvobj.every((val) => val.operation === "" || val.operation === "added" || val.operation === "modified" || val.operation === "removed" || val.operation === "renamed" );
     if(!isValidOpserations) {
        let files = selectedFiles;
        files[0]['invalid'] = true;
        setUnsupportedFiles(files);
-       setErrorMessage('Invalid Operations Provided!');
+       setErrorMessage('Invalid data operations provided!');
        setSave(false);
        return;
     }
-    setCsvContent(obj);
+    // setCsvContent(obj);
+    let newDataObject = {...pipelineWizardModel};
+    newDataObject.setData("xmlFileContent", "");
+    newDataObject.setData("csvFileContent", obj);
+    setPipelineWizardModel({...newDataObject});
     setSave(false);
   };
 
@@ -225,29 +214,35 @@ function SFDCFileUploadComponent(
   };
 
   const getXMLView = () => {
-    if (xmlContent && xmlContent.length > 0) {
+    if (pipelineWizardModel.getData("xmlFileContent") && pipelineWizardModel.getData("xmlFileContent").length > 0) {
       return (
         <>
           <div style={{height: "300px", maxHeight: "500px", width: "800px", overflowY: "auto", margin: "auto"}}>
             <SyntaxHighlighter language="xml" style={docco}>
-              {xmlContent}
+              {pipelineWizardModel.getData("xmlFileContent")}
             </SyntaxHighlighter>
           </div>
-          <SaveButtonContainer>
-            <SfdcPipelineWizardSubmitComponentTypesButton
-              pipelineWizardModel={pipelineWizardModel}
-              setPipelineWizardScreen={setPipelineWizardScreen}
-            />
-            <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
-          </SaveButtonContainer>
+          {buttonContainer()}
         </>
       );
     }
   };
+  const buttonContainer = () => {
+    return (
+      <SaveButtonContainer>
+        <SfdcPipelineWizardSubmitFileTypeButton
+          pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardScreen={setPipelineWizardScreen}
+          isXml={isXml}
+        />
+        <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
+      </SaveButtonContainer>
+    );
+  };
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "components")),
+      getTableTextColumn(getField(fields, "operation")),
       getTableTextColumn(getField(fields, "componentType")),
       getLimitedTableTextColumn(getField(fields, "committedFile"), 20),
     ],
@@ -255,60 +250,23 @@ function SFDCFileUploadComponent(
   );
 
   const getCSVView = () => {
-    if (csvContent && csvContent.length > 0) {
+    if (pipelineWizardModel.getData("csvFileContent") && pipelineWizardModel.getData("csvFileContent").length > 0) {
       return (
         <>
-          <table>
-            <tr key={"header"}>
-              {Object.keys(csvContent[0]).map((key, i) => (
-                <th key={i}>{key}</th>
-              ))}
-            </tr>
-            {csvContent.map((item) => (
-              <tr key={item.id}>
-                {Object.values(item).map((val, i) => (
-                  <td key={i}>{val}</td>
-                ))}
-              </tr>
-            ))}
-          </table>
+          <CustomTable
+            className={"no-table-border"}
+            columns={columns}
+            data={pipelineWizardModel.getData("csvFileContent")}
+          />
+          {buttonContainer()}
         </>
-      // <CustomTable
-      //   className={"no-table-border"}
-      //   columns={columns}
-      //   data={csvContent}
-      // />
+     
       );
     }
   };
 
-  // this needs to be called once confirmation is done
-  const saveData = async () => {
-    try {
-      let postBody = {
-        recordId: pipelineWizardModel.getData("recordId"),
-        updateAttribute: pipelineWizardModel.getData("isProfiles") === true ? "profilesList" : "selectedFileList",
-        typeOfSelection: fetchAttribute,
-        dataType: pipelineWizardModel.getData("fromGitTasks") === true ? "sync-sfdc-repo" : "sfdc-packageXml",
-        // data: matchedItems, // TODO: the final obj should be added here
-      };
-      //  TODO: this needs to be changed so dont call this yet
-      const result = await sfdcPipelineActions.setListToPipelineStorage(postBody, getAccessToken);
-      // console.log(result);
-
-      setError(false);
-      // make a callback function
-      // console.log("GOTO Next View");
-      await callbackFunc();
-    } catch (err) {
-      console.error("Error setting selected Data: ", err.message);
-      setErrorMessage("Error setting selected Data: ", err);
-      setSave(false);
-    }
-  };
-
   const getFileUploadBody = () => {
-    if (xmlContent.length === 0 && csvContent.length === 0) {
+    if (pipelineWizardModel.getData("xmlFileContent").length === 0 && pipelineWizardModel.getData("csvFileContent").length === 0) {
       return (
         <div className="drop-container"
              onDragOver={dragOver}
@@ -359,7 +317,7 @@ function SFDCFileUploadComponent(
   };
 
   const getValidateButton = () => {
-    if (unsupportedFiles.length === 0 && validFiles.length && xmlContent.length === 0 && csvContent.length === 0) {
+    if (unsupportedFiles.length === 0 && validFiles.length && pipelineWizardModel.getData("xmlFileContent").length === 0 && pipelineWizardModel.getData("csvFileContent").length === 0) {
       return (
         <Button variant="primary" onClick={() => validateFiles()}>Process File</Button>
       );
@@ -410,10 +368,6 @@ function SFDCFileUploadComponent(
 }
 
 SFDCFileUploadComponent.propTypes = {
-  callbackFunc: PropTypes.func,
-  fetchAttribute: PropTypes.string,
-  pullComponentsFunction: PropTypes.func,
-  setFiles: PropTypes.func,
   pipelineWizardModel: PropTypes.object,
   setPipelineWizardModel: PropTypes.func,
   setPipelineWizardScreen : PropTypes.func,
