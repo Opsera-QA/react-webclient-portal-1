@@ -129,7 +129,7 @@ function Pipelines() {
       navigationTabContainer={getNavigationTabContainer()}
       pageDescription={getPageDescription()}
       hasTabContainer={activeTab !== "catalog"}
-      helpComponent={activeTab !== "catalog" ? <undefined/> : <CatalogHelpDocumentation/>}
+      helpComponent={activeTab !== "catalog" ? undefined : <CatalogHelpDocumentation/>}
     >
       {getCurrentView()}
     </ScreenContainer>
