@@ -29,22 +29,22 @@ function ToolAttributesPanel({ toolData, setActiveTab, customerAccessRules }) {
     >
       <Row>
         <Col sm={12} lg={6}>
-          <NameValueFieldBase dataObject={toolData} fieldName={"licensing"} icon={faIdCard}/>
-        </Col>
-        <Col sm={12} lg={6}>
-          <NameValueFieldBase dataObject={toolData} fieldName={"compliance"} icon={faClipboardCheck} />
+          <OrganizationsField dataObject={toolData} fieldName={"organization"} />
         </Col>
         <Col sm={12} lg={6}>
           <NameValueFieldBase dataObject={toolData} fieldName={"location"} icon={faBuilding} />
         </Col>
         <Col sm={12} lg={6}>
+          <ContactField dataObject={toolData} fieldName={"contacts"} />
+        </Col>
+        <Col sm={12} lg={6}>
           <NameValueFieldBase dataObject={toolData} fieldName={"applications"} icon={faBrowser} />
         </Col>
         <Col sm={12} lg={6}>
-          <OrganizationsField dataObject={toolData} fieldName={"organization"} />
+          <NameValueFieldBase dataObject={toolData} fieldName={"licensing"} icon={faIdCard}/>
         </Col>
         <Col sm={12} lg={6}>
-          <ContactField dataObject={toolData} fieldName={"contacts"} />
+          <NameValueFieldBase dataObject={toolData} fieldName={"compliance"} icon={faClipboardCheck} />
         </Col>
       </Row>
     </SummaryPanelContainer>
