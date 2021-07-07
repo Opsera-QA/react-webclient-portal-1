@@ -38,7 +38,8 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    let newPipelineWizardModel = new Model({...sfdcPipelineWizardMetadata.newObjectFields}, sfdcPipelineWizardMetadata, false);
+    const newData = {...sfdcPipelineWizardMetadata.newObjectFields};
+    let newPipelineWizardModel = new Model({...newData}, sfdcPipelineWizardMetadata, false);
     setPipelineWizardModel(newPipelineWizardModel);
     loadData(newPipelineWizardModel, gitTaskData, pipeline?.workflow?.plan).catch((error) => {
       if (isMounted?.current === true) {
@@ -50,7 +51,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
       source.cancel();
       isMounted.current = false;
     };
-  }, []);
+  }, [pipeline]);
 
   const loadData = async (newPipelineWizardModel, gitTaskData, plan) => {
     try {
