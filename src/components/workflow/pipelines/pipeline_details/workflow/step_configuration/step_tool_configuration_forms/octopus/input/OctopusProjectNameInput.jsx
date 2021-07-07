@@ -48,7 +48,7 @@ const OctopusProjectNameInput = ({dataObject, setDataObject, stepTool}) => {
       fieldName={"projectName"}
       disabled={dataObject && dataObject.getData("spaceName").length === 0}
       btnVariant="success"
-      btnText={loading ? 'validating' : 'validate'}
+      btnText={loading ? 'Validating' : 'Validate'}
       btnDisabled={
         (dataObject && dataObject.getData("projectName").length === 0) ||
         (stepTool &&
