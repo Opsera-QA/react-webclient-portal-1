@@ -37,7 +37,6 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-
     const newData = {...sfdcPipelineWizardMetadata.newObjectFields};
     let newPipelineWizardModel = new Model({...newData}, sfdcPipelineWizardMetadata, false);
     setPipelineWizardModel(newPipelineWizardModel);
@@ -300,7 +299,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   const handleTabClick = (tabSelection) => e => {
     e.preventDefault();
     let newDataObject = {...pipelineWizardModel};
-    newDataObject.setData("fromFileUpload", tabSelection === "file");
+    newDataObject.setData("fromFileUpload", tabSelection === "automatic");
     setPipelineWizardModel({...newDataObject});
     setActiveTab(tabSelection);
   };

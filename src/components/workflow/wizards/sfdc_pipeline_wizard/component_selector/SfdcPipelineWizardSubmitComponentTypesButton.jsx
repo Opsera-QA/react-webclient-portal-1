@@ -52,8 +52,8 @@ function SfdcPipelineWizardSubmitComponentTypesButton({pipelineWizardModel, setP
         }
       }
     } catch (error) {
-      console.error("Error Saving Selected Component Types: ", error.message);
-      toastContext.showInlineErrorMessage("Error Saving Selected Component Types: " +  error.message);
+      console.error(error);
+      toastContext.showInlineErrorMessage(error);
     }
     finally {
       setIsSaving(false);
