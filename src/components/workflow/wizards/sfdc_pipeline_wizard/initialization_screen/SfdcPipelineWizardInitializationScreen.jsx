@@ -270,6 +270,9 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
 
     return (
       <div>
+        <div className={"mt-2"}>
+          {`Would you like to start a new Manual Pipeline Wizard instance?`}
+        </div>
         <SaveButtonContainer>
           <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading} onClick={() => createNewPipelineWizardRecord(undefined, true)}>
             <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Run</span>
