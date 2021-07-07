@@ -20,17 +20,16 @@ import OctopusDeploymentTypeInputSelect from "./input/OctopusDeploymentTypeInput
 import OctopusFeedSelectInput from "./input/OctopusFeedSelectInput";
 import OctopusVersionSelectInput from "./input/OctopusVersionSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import ValidateProjectButton from "./input/ValidateProjectButton";
 import RollbackToggleInput from "./input/RollbackToggleInput";
 import OctopusDeploymentVariables from "./input/OctopusDeploymentVariables";
 import OctopusSpecifyDepVarsToggle from "./input/OctopusSpecifyDepVarsToggle";
-import OctopusProtocolInput from "./input/OctopusProtocolInput";
 import OctopusLifecycleSelectInput from "./input/OctopusLifecycleSelectInput";
 import OctopusScriptTypeSelectInput from "./input/OctopusScriptTypeSelectInput";
 import OctopusScriptTypeDetailsView from "./input/OctopusScriptTypeDetailsView";
 import OctopusDeployToTomcatDetailsView from "./sub-forms/OctopusDeployToTomcatDetailsView";
 import OctopusDeployToIisView from "./sub-forms/OctopusDeployToIisView";
 import OctopusDeployToJavaArchiveView from "./sub-forms/OctopusDeployToJavaArchiveView";
+import OctopusProjectNameInput from "./input/OctopusProjectNameInput";
 
 function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -76,10 +75,12 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
 
     let results = await getToolsList("octopus");
 
-    const filteredList = results.filter((el) => el.configuration !== undefined);
-    if (filteredList) {
-      setOctopusList(filteredList);
-    }
+    if(results && Array.isArray(results)) {
+      const filteredList = results.filter((el) => el.configuration !== undefined);
+      if (filteredList) {
+        setOctopusList(filteredList);
+      }
+    }    
     isOctopusSearching(false);
   };
 
@@ -204,30 +205,11 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
             disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("octopusToolId").length === 0}
             tool_prop={octopusStepConfigurationDto ? octopusStepConfigurationDto.getData("octopusToolId") : ""}
           />
-          <Row>
-            <Col lg={8}>
-              <TextInputBase
-                setDataObject={setOctopusStepConfigurationDataDto}
-                dataObject={octopusStepConfigurationDto}
-                fieldName={"projectName"}
-                disabled={octopusStepConfigurationDto && octopusStepConfigurationDto.getData("spaceName").length === 0}
-              />
-            </Col>
-            <Col lg={4}>
-              <ValidateProjectButton
-                toolDataDto={octopusStepConfigurationDto}
-                disable={
-                  (octopusStepConfigurationDto && octopusStepConfigurationDto.getData("projectName").length === 0) ||
-                  (stepTool &&
-                    stepTool.configuration &&
-                    stepTool.configuration.projectId &&
-                    stepTool.configuration.projectName &&
-                    octopusStepConfigurationDto &&
-                    stepTool.configuration.projectName === octopusStepConfigurationDto.getData("projectName"))
-                }
-              />
-            </Col>
-          </Row>
+          <OctopusProjectNameInput 
+            dataObject={octopusStepConfigurationDto}
+            setDataObject={setOctopusStepConfigurationDataDto}
+            stepTool={stepTool}
+          />
           <TextInputBase
             setDataObject={setOctopusStepConfigurationDataDto}
             dataObject={octopusStepConfigurationDto}
@@ -506,6 +488,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
               updateRecord={callbackFunction}
               showSuccessToasts={false}
               lenient={true}
+              className="mr-2"
             />
             <CloseButton isLoading={isLoading} closeEditorCallback={closeEditorPanel} />
           </Row>
