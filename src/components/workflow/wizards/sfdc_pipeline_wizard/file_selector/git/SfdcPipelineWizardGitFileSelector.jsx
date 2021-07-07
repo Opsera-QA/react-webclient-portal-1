@@ -82,7 +82,7 @@ const SfdcPipelineWizardGitFileSelector = ({ pipelineWizardModel, setPipelineWiz
       return;
     }
 
-    const gitResponse = await getModifiedFiles(cancelSource, newFilterDto);
+    const gitResponse = await getGitFiles(cancelSource, newFilterDto);
     
     if (!Array.isArray(gitResponse) && count <= 5 && filePullCompleted === false) {
       await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
@@ -90,7 +90,7 @@ const SfdcPipelineWizardGitFileSelector = ({ pipelineWizardModel, setPipelineWiz
     }
   };
 
-  const getModifiedFiles = async (cancelSource = cancelTokenSource, newFilterDto = gitFilterDto) => {
+  const getGitFiles = async (cancelSource = cancelTokenSource, newFilterDto = gitFilterDto) => {
     const response = await sfdcPipelineActions.getGitFilesV2(getAccessToken, cancelSource, pipelineWizardModel, newFilterDto);
     const data = response?.data;
 
@@ -107,7 +107,7 @@ const SfdcPipelineWizardGitFileSelector = ({ pipelineWizardModel, setPipelineWiz
         newGitFilterDto.setData("totalCount", data.count);
         newGitFilterDto.setData("activeFilters", newGitFilterDto.getActiveFilters());
         setGitFilterDto({ ...newGitFilterDto });
-        setGitFiles(fileArray);
+        setGitFiles([...fileArray]);
         setPipelineWizardModel({...pipelineWizardModel});
       }
     }

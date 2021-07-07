@@ -238,7 +238,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     () => [
       getTableTextColumn(getField(fields, "operation")),
       getTableTextColumn(getField(fields, "componentType")),
-      getLimitedTableTextColumn(getField(fields, "committedFile"), 80),
+      getLimitedTableTextColumn(getField(fields, "componentName"), 80),
     ],
     [fields]
   );

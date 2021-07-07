@@ -14,6 +14,10 @@ const PipelineWizardFileUploadMetadata = {
         label: "Committed File",
         id: "committedFile",
       },
+      {
+        label: "Component Name",
+        id: "componentName",
+      },
     ],
     newObjectFields: {},
   };
