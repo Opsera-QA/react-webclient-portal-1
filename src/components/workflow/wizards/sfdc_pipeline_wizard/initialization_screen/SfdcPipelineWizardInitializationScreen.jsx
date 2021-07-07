@@ -271,11 +271,8 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     return (
       <div>
         <SaveButtonContainer>
-          <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading} onClick={() => createNewPipelineWizardRecord()}>
+          <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading} onClick={() => createNewPipelineWizardRecord(undefined, true)}>
             <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Run</span>
-          </Button>
-          <Button size={"sm"} variant="success" disabled={isLoading} onClick={() => unpackPreviousPipelineRun()}>
-            <span><IconBase icon={faStepForward} fixedWidth className="mr-2"/>Continue With Last Run</span>
           </Button>
           <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
         </SaveButtonContainer>
