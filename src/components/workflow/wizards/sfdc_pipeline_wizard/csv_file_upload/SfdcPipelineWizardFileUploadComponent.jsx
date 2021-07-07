@@ -1,29 +1,23 @@
 import React, {useRef, useState, useEffect, useMemo} from 'react';
-import PropTypes, {array} from 'prop-types';
+import PropTypes from 'prop-types';
 import ErrorDialog from "components/common/status_notifications/error";
 import {csvStringToObj} from "components/common/helpers/string-helpers";
 import './fileupload.css';
-import {Container, Button, Row, Col} from 'react-bootstrap';
+import {Container, Button, Row} from 'react-bootstrap';
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import docco from "react-syntax-highlighter/dist/esm/styles/hljs/docco";
 import { getLimitedTableTextColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import SfdcPipelineWizardUploadComponentTypesRadioInput from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardUploadComponentTypesRadioInput";
-import CSVMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/csv-metadata.js";
+import PipelineWizardFileUploadMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/pipeline-wizard-file-upload-metadata.js";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import SfdcPipelineWizardSubmitFileTypeButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardSubmitFileTypeButton";
 import CustomTable from "components/common/table/CustomTable";
 import CancelButton from "components/common/buttons/CancelButton";
-function SFDCFileUploadComponent(
-  {
-    pipelineWizardModel,
-    setPipelineWizardModel,
-    setPipelineWizardScreen,
-    handleClose
-  }) {
-    const fields = CSVMetadata.fields;
-  
+
+function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) {
+    const fields = PipelineWizardFileUploadMetadata.fields;
     const fileInputRef = useRef();
     const [selectedFiles, setSelectedFiles] = useState([]);
     const [validFiles, setValidFiles] = useState([]);
@@ -277,7 +271,7 @@ function SFDCFileUploadComponent(
              onClick={fileInputClicked}
         >
           <div className="drop-message">
-            <div className="upload-icon"><i className="fa fa-upload" aria-hidden="true"></i></div>
+            <div className="upload-icon"><i className="fa fa-upload" aria-hidden="true" /></div>
             Drop files here or click to select file
           </div>
           <input
@@ -325,23 +319,17 @@ function SFDCFileUploadComponent(
     }
   };
 
-  const getDeployTypeSelection = () => {
-    return (
-      <Row className="my-3">
-        <SfdcPipelineWizardUploadComponentTypesRadioInput
-          pipelineWizardModel={pipelineWizardModel}
-          setPipelineWizardModel={setPipelineWizardModel}
-        />
-      </Row>
-    );
-  };
-  
   const getBody = () => {
     if (pipelineWizardModel.getData("recordId") && pipelineWizardModel.getData("recordId").length > 0) {
       return (
         <Container>
           <div className="d-flex flex-column align-items-center my-4">
-            {getDeployTypeSelection()}
+            <Row className="my-3">
+              <SfdcPipelineWizardUploadComponentTypesRadioInput
+                pipelineWizardModel={pipelineWizardModel}
+                setPipelineWizardModel={setPipelineWizardModel}
+              />
+            </Row>
             {getFileUploadBody()}
             {getFilesBody()}
             {getValidateButton()}
@@ -353,27 +341,33 @@ function SFDCFileUploadComponent(
     }
   };
 
+  const getErrorDialog = () => {
+    if (error) {
+      return (
+        <div className="mt-3">
+          <ErrorDialog error={error}/>
+        </div>
+      );
+    }
+  };
+
   return (
     <div>
       <div className="page-description px-3 py-2">Upload components as a csv file or Upload an XML to use for
         deployment.
       </div>
-      {error &&
-      <div className="mt-3">
-        <ErrorDialog error={error}/>
-      </div>
-      }
+      {getErrorDialog()}
       {getBody()}
     </div>
   );
 }
 
-SFDCFileUploadComponent.propTypes = {
+SfdcPipelineWizardFileUploadComponent.propTypes = {
   pipelineWizardModel: PropTypes.object,
   setPipelineWizardModel: PropTypes.func,
   setPipelineWizardScreen : PropTypes.func,
   handleClose : PropTypes.func,
 };
 
-export default SFDCFileUploadComponent;
+export default SfdcPipelineWizardFileUploadComponent;
 

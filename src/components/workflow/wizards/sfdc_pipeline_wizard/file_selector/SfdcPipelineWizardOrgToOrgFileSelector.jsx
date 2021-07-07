@@ -1,6 +1,5 @@
 import React, {useState, useRef, useEffect, useContext} from 'react';
 import PropTypes from "prop-types";
-import SfdcPipelineWizardCsvFileUploadComponent from 'components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardCsvFileUploadComponent';
 import axios from "axios";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
@@ -27,14 +26,11 @@ import InlineWarning from "components/common/status_notifications/inline/InlineW
 const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [files, setFiles] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [filteredFileCount, setFilteredFileCount] = useState(0);
-  const [isSaving, setIsSaving] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [filePullCompleted, setFilePullCompleted] = useState(false);
-  const [fileUploadFlag, setFileUploadFlag] = useState(false);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -79,33 +75,6 @@ const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipeli
    await sfdcPipelineActions.triggerOrgToOrgFilesPullV2(getAccessToken, cancelSource, pipelineWizardModel);
   };
 
-
-  const getAllModifiedFiles = async () => {
-    const sfdcResponse = await sfdcPipelineActions.getSfdcFilesV2(getAccessToken, cancelTokenSource, pipelineWizardModel, undefined, true);
-    return sfdcResponse?.data?.data;
-  };
-
-  const goToProfileComponentPage = () => {
-    setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.PROFILE_COMPONENT_SELECTOR);
-  };
-
-  // TODO: These functions should be put in the individual areas and tailored specifically for them
-  const generateXML = async () => {
-    try {
-      await sfdcPipelineActions.generateSfdcPackageXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
-
-      setPipelineWizardScreen(
-        pipelineWizardModel.getData("unitTestSteps").length > 0
-          ? PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR
-          : PIPELINE_WIZARD_SCREENS.XML_VIEWER
-      );
-    } catch (error) {
-      console.error(error);
-      toastContext.showInlineErrorMessage(error);
-      setIsSaving(false);
-    }
-  };
-
   const getBody = () => {
     if (isLoading) {
       return <LoadingDialog size={"sm"} message={"Requesting Files"} />;
@@ -119,15 +88,6 @@ const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipeli
           isLoading={isLoading}
           filePullCompleted={filePullCompleted}
         />
-        {fileUploadFlag &&
-        <SfdcPipelineWizardCsvFileUploadComponent
-          pipelineWizardModel={pipelineWizardModel}
-          callbackFunc={pipelineWizardModel.getData("isProfiles") === true ? goToProfileComponentPage : generateXML}
-          pullComponentsFunction={getAllModifiedFiles}
-          setFiles={setFiles}
-          fetchAttribute={"sfdcCommitList"}
-        />
-        }
         <InlineWarning
           className={"ml-2"}
           warningMessage={"Warning: Use of the component or keyword search filter in the tables below will not alter the final filtered file list."}
@@ -140,8 +100,6 @@ const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipeli
               setPipelineWizardModel={setPipelineWizardModel}
               setFilePullCompleted={setFilePullCompleted}
               filePullCompleted={filePullCompleted}
-              setFileUploadFlag={setFileUploadFlag}
-              fileUploadFlag={fileUploadFlag}
             />
           </Col>
           <Col xs={6} className={"pl-1"} style={{minWidth: "675px"}}>
@@ -167,7 +125,7 @@ const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipeli
           setPipelineWizardScreen={setPipelineWizardScreen}
           pipelineWizardModel={pipelineWizardModel}
           filteredFileCount={filteredFileCount}
-          isLoading={isLoading || isSaving}
+          isLoading={isLoading}
         />
         <CancelButton size={"sm"} className={"ml-2"} cancelFunction={handleClose} />
       </SaveButtonContainer>

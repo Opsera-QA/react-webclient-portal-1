@@ -8,9 +8,8 @@ import sfdcTableConstants from "components/workflow/wizards/sfdc_pipeline_wizard
 import FilterContainer from "components/common/table/FilterContainer";
 import { faCode } from "@fortawesome/free-solid-svg-icons";
 import VanityTable from "components/common/table/VanityTable";
-import ToggleUploadButton from "components/common/buttons/toggle/ToggleUploadButton";
 
-const SfdcPipelineWizardOrganizationFilesTableBase = ({ pipelineWizardModel, loadData, data, isLoading, paginationModel, setPaginationModel, title, filePullCompleted, setFileUploadFlag, fileUploadFlag }) => {
+const SfdcPipelineWizardOrganizationFilesTableBase = ({ pipelineWizardModel, loadData, data, isLoading, paginationModel, setPaginationModel, title, filePullCompleted }) => {
   const fields = sfdcTableConstants.fields;
   const noDataFilesPulledMessage = "The Git Files pull has been completed. There is no data for the selected criteria.";
   const noDataFilesNotPulledMessage = "The Git Files list has not been received from SFDC yet. Please click the table's refresh button to resume polling for the files.";
@@ -38,24 +37,6 @@ const SfdcPipelineWizardOrganizationFilesTableBase = ({ pipelineWizardModel, loa
     );
   };
 
-  const getInlineFilters = () => {
-    if (setFileUploadFlag != null) {
-      return (
-        <div className="px-2 d-flex">
-          {/*<div>*/}
-          {/*  <InlineSfdcComponentTypesFilter*/}
-          {/*    componentTypes={pipelineWizardModel.getData("selectedComponentTypes")}*/}
-          {/*    filterDto={paginationModel}*/}
-          {/*    setFilterDto={setPaginationModel}*/}
-          {/*    loadData={loadData}*/}
-          {/*  />*/}
-          {/*</div>*/}
-          <div className={"mx-2"}><ToggleUploadButton toggleUpload={() => {setFileUploadFlag(!fileUploadFlag);}} uploadType={"File CSV"} /></div>
-        </div>
-      );
-    }
-  };
-
   return (
     <FilterContainer
       loadData={loadData}
@@ -67,7 +48,6 @@ const SfdcPipelineWizardOrganizationFilesTableBase = ({ pipelineWizardModel, loa
       body={getFilesTable()}
       supportSearch={true}
       showBorder={false}
-      inlineFilters={getInlineFilters()}
     />
   );
 };

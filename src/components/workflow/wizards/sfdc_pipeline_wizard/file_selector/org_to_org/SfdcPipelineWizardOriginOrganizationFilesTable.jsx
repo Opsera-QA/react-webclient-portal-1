@@ -11,7 +11,7 @@ import InlineWarning from "components/common/status_notifications/inline/InlineW
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
 
-const SfdcPipelineWizardOriginOrganizationFilesTable = ({ pipelineWizardModel, setPipelineWizardModel, setFilteredFileCount, filePullCompleted, setFilePullCompleted, fileUploadFlag, setFileUploadFlag  }) => {
+const SfdcPipelineWizardOriginOrganizationFilesTable = ({ pipelineWizardModel, setPipelineWizardModel, setFilteredFileCount, filePullCompleted, setFilePullCompleted  }) => {
   const {getAccessToken} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [sfdcWarningMessage, setSfdcWarningMessage] = useState("");
@@ -126,8 +126,6 @@ const SfdcPipelineWizardOriginOrganizationFilesTable = ({ pipelineWizardModel, s
         title={"SFDC Files"}
         pipelineWizardModel={pipelineWizardModel}
         filePullCompleted={filePullCompleted}
-        fileUploadFlag={fileUploadFlag}
-        setFileUploadFlag={setFileUploadFlag}
       />
     </>
   );

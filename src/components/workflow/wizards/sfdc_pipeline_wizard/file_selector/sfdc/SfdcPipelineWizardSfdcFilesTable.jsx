@@ -8,14 +8,7 @@ import sfdcTableConstants from "components/workflow/wizards/sfdc_pipeline_wizard
 import FilterContainer from "components/common/table/FilterContainer";
 import InlineSfdcComponentTypesFilter from "components/common/filters/sfdc/sfdc_component/InlineSfdcComponentTypesFilter";
 import VanityTable from "components/common/table/VanityTable";
-import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
-import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
-import SfdcPipelineWizardCsvFileUploadComponent
-  from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardCsvFileUploadComponent";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import ToggleUploadButton from "components/common/buttons/toggle/ToggleUploadButton";
-import {AuthContext} from "contexts/AuthContext";
-import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import SfdcPipelineWizardSfdcRulesInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSfdcRulesInput";
@@ -25,11 +18,6 @@ const SfdcPipelineWizardSfdcFilesTable = ({ pipelineWizardModel, setPipelineWiza
   const fields = sfdcTableConstants.fields;
   const noDataFilesPulledMessage = "The SFDC Files pull has been completed. There is no data for the selected criteria.";
   const noDataFilesNotPulledMessage = "The SFDC Files list has not been received from SFDC yet. Please click the table's refresh button to resume polling for the files.";
-
-  const { getAccessToken } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
-  const [showFileUpload, setShowFileUpload] = useState(false);
-  const [files, setFiles] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -62,61 +50,20 @@ const SfdcPipelineWizardSfdcFilesTable = ({ pipelineWizardModel, setPipelineWiza
 
   const getSfdcInlineFilters = () => {
     return (
-      <div className="px-2 d-flex">
-        <div>
-          <InlineSfdcComponentTypesFilter
-            className={"mx-2"}
-            componentTypes={pipelineWizardModel.getArrayData("selectedComponentTypes")}
-            filterDto={sfdcFilesPaginationModel}
-            setFilterDto={setSfdcFilesPaginationModel}
-            loadData={loadData}
-          />
-        </div>
-        <div className={"mx-2"}><ToggleUploadButton toggleUpload={() => {setShowFileUpload(!showFileUpload);}} uploadType={"File CSV"} /></div>
-      </div>
+      <InlineSfdcComponentTypesFilter
+        className={"mx-2"}
+        componentTypes={pipelineWizardModel.getArrayData("selectedComponentTypes")}
+        filterDto={sfdcFilesPaginationModel}
+        setFilterDto={setSfdcFilesPaginationModel}
+        loadData={loadData}
+      />
     );
-  };
-
-
-  // TODO: Make and Put inside SfdcCsvFileUploadComponent and remove from here. Keep aligned with SfdcPipelineWizardSubmitSfdcFilesButton
-  const generateXml = async () => {
-    try {
-      await sfdcPipelineActions.generateSfdcPackageXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
-      setPipelineWizardScreen(
-        pipelineWizardModel.getData("unitTestSteps").length > 0
-          ? PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR
-          : PIPELINE_WIZARD_SCREENS.XML_VIEWER
-      );
-    } catch (error) {
-      console.error(error);
-      toastContext.showInlineErrorMessage(error);
-    }
-  };
-
-  // TODO: Handle this inside CSV Upload component
-  const getAllModifiedFiles = async () => {
-    const sfdcResponse = await sfdcPipelineActions.getSfdcFilesV2(getAccessToken, cancelTokenSource, pipelineWizardModel, sfdcFilesPaginationModel, true);
-    return sfdcResponse?.data?.data;
-  };
-
-  const goToProfileComponentPage = () => {
-    setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.PROFILE_COMPONENT_SELECTOR);
   };
 
   const getView = () => {
     return (
       <div>
-        {showFileUpload &&
-        <SfdcPipelineWizardCsvFileUploadComponent
-          pipelineWizardModel={pipelineWizardModel}
-          callbackFunc={pipelineWizardModel.getData("isProfiles") === true ? goToProfileComponentPage : generateXml}
-          fetchAttribute={"sfdcCommitList"}
-          pullComponentsFunction={getAllModifiedFiles}
-          setFiles={setFiles}
-        />
-        }
         <VanityTable
-          className={"table-no-border" + (files.length > 0 ? " opacity-half" : " ") }
           columns={columns}
           data={sfdcFiles}
           isLoading={isLoading}

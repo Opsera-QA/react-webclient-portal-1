@@ -17,8 +17,8 @@ import {parseDate} from "utils/helpers";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
-import SFDCFileUploadComponent
-  from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SFDCFileUploadComponent";
+import SfdcPipelineWizardFileUploadComponent
+  from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardFileUploadComponent";
 
 const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, pipeline, gitTaskData, setError }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -305,7 +305,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   const getFileDeploymentBody = () => {
     return (
       <div>
-        <SFDCFileUploadComponent
+        <SfdcPipelineWizardFileUploadComponent
           pipelineWizardModel={pipelineWizardModel}
           setPipelineWizardScreen={setPipelineWizardScreen}
           setPipelineWizardModel={setPipelineWizardModel}

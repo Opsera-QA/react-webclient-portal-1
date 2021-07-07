@@ -1,4 +1,4 @@
-const CSVMetadata = {
+const PipelineWizardFileUploadMetadata = {
     idProperty: "_id",
     type: "CSV Metadata",
     fields: [
@@ -18,5 +18,5 @@ const CSVMetadata = {
     newObjectFields: {},
   };
   
-  export default CSVMetadata;
+  export default PipelineWizardFileUploadMetadata;
   

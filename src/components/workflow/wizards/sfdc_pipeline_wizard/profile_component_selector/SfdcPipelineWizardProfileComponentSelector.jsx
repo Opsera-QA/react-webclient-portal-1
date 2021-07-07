@@ -81,18 +81,6 @@ const SfdcPipelineWizardProfileComponentSelector = ({ pipelineWizardModel, setPi
     }
   };
 
-  // TODO: Make and Put inside ProfileComponentCsvFileUploadComponent and remove from here. Keep aligned with SfdcPipelineWizardSubmitProfileComponentsButton
-  const generateXml = async () => {
-    try {
-      await sfdcPipelineActions.generateSfdcProfileMigrationPackageXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
-      setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.XML_VIEWER);
-    } catch (error) {
-      console.error(error);
-      toastContext.showInlineErrorMessage(error);
-      setIsSaving(false);
-    }
-  };
-
   const getBody = () => {
     if (isLoading) {
       return <LoadingDialog size={"sm"} message={"Requesting Files"} />;
@@ -107,7 +95,6 @@ const SfdcPipelineWizardProfileComponentSelector = ({ pipelineWizardModel, setPi
         pipelineWizardModel={pipelineWizardModel}
         setFilteredFileCount={setFilteredFileCount}
         setPipelineWizardModel={setPipelineWizardModel}
-        generateXml={generateXml}
       />
     );
   };

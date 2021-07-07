@@ -1,41 +1,33 @@
 import React, {useContext, useState, useEffect, useRef, useMemo} from "react";
 import PropTypes from "prop-types";
-import LoadingDialog from "components/common/status_notifications/loading";
 import { AuthContext } from "contexts/AuthContext";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import sfdcComponentFilterMetadata
   from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-component-filter-metadata";
 import axios from "axios";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
-import SfdcPipelineWizardCsvFileUploadComponent
-  from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardCsvFileUploadComponent";
 import {getTableDateTimeColumn, getTableTextColumn} from "components/common/table/table-column-helpers-v2";
 import VanityTable from "components/common/table/VanityTable";
 import sfdcTableConstants from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-table-constants";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import FilterContainer from "components/common/table/FilterContainer";
-import ToggleUploadButton from "components/common/buttons/toggle/ToggleUploadButton";
 import InlineSfdcComponentTypesFilter
   from "components/common/filters/sfdc/sfdc_component/InlineSfdcComponentTypesFilter";
 import SfdcPipelineWizardProfileComponentRulesInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/profile_component_selector/SfdcPipelineWizardProfileComponentRulesInput";
-import SfdcPipelineWizardGitRulesInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardGitRulesInput";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
-const SfdcPipelineWizardProfileComponentTable = ({ pipelineWizardModel, setPipelineWizardModel, generateXml, setFilteredFileCount }) => {
+const SfdcPipelineWizardProfileComponentTable = ({ pipelineWizardModel, setPipelineWizardModel, setFilteredFileCount }) => {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const noDataFilesPulledMessage = "The Profile Component list pull has been completed. There is no data for the selected criteria.";
   const noDataFilesNotPulledMessage = "The Profile Component list has not been received from SFDC yet. Please click the table's refresh button to resume polling for the files.";
   const [isLoading, setIsLoading] = useState(true);
-  const [files, setFiles] = useState([]);
   const [profileComponentList, setProfileComponentList] = useState([]);
   const [filePullCompleted, setFilePullCompleted] = useState(false);
   const [filterDto, setFilterDto] = useState(new Model({ ...sfdcComponentFilterMetadata.newObjectFields }, sfdcComponentFilterMetadata, false));
   let timerIds = [];
-  const [showFileUpload, setShowFileUpload] = useState(false);
   const fields = sfdcTableConstants.fields;
 
   const isMounted = useRef(false);
@@ -111,11 +103,6 @@ const SfdcPipelineWizardProfileComponentTable = ({ pipelineWizardModel, setPipel
     return fileList;
   };
 
-  const getAllModifiedFiles = async () => {
-    const sfdcResponse =  await sfdcPipelineActions.getProfileComponentListV2(getAccessToken, cancelTokenSource, pipelineWizardModel, undefined, true);
-    return sfdcResponse?.data?.data;
-  };
-
   const sfdcColumnsWithCheckBoxCell = useMemo(
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "committedFileId";})),
@@ -129,42 +116,27 @@ const SfdcPipelineWizardProfileComponentTable = ({ pipelineWizardModel, setPipel
 
   const getProfileFilesView = () => {
     return (
-      <div>
-        {showFileUpload &&
-        <SfdcPipelineWizardCsvFileUploadComponent
-          pipelineWizardModel={pipelineWizardModel}
-          callbackFunc={generateXml}
-          fetchAttribute={"profileComponentList"}
-          pullComponentsFunction={getAllModifiedFiles}
-          setFiles={setFiles}
-        />
-        }
-        <VanityTable
-          className={"table-no-border" + (files.length > 0 ? " opacity-half" : " ") }
-          columns={sfdcColumnsWithCheckBoxCell}
-          data={profileComponentList}
-          isLoading={isLoading}
-          loadData={loadData}
-          noDataMessage={filePullCompleted ? noDataFilesPulledMessage : noDataFilesNotPulledMessage}
-          paginationModel={filterDto}
-          setPaginationModel={setFilterDto}
-        />
-      </div>
+      <VanityTable
+        columns={sfdcColumnsWithCheckBoxCell}
+        data={profileComponentList}
+        isLoading={isLoading}
+        loadData={loadData}
+        noDataMessage={filePullCompleted ? noDataFilesPulledMessage : noDataFilesNotPulledMessage}
+        paginationModel={filterDto}
+        setPaginationModel={setFilterDto}
+      />
     );
   };
 
   const getSfdcInlineFilters = () => {
     return (
-      <div className="px-2 d-flex">
-          <InlineSfdcComponentTypesFilter
-            className={"mx-2"}
-            componentTypes={pipelineWizardModel.getData("selectedComponentTypes")}
-            filterDto={filterDto}
-            setFilterDto={setFilterDto}
-            loadData={loadData}
-          />
-        <div className={"mx-2"}><ToggleUploadButton toggleUpload={() => {setShowFileUpload(!showFileUpload);}} uploadType={"File CSV"} /></div>
-      </div>
+      <InlineSfdcComponentTypesFilter
+        className={"mx-2"}
+        componentTypes={pipelineWizardModel.getData("selectedComponentTypes")}
+        filterDto={filterDto}
+        setFilterDto={setFilterDto}
+        loadData={loadData}
+      />
     );
   };
 
@@ -200,7 +172,6 @@ const SfdcPipelineWizardProfileComponentTable = ({ pipelineWizardModel, setPipel
 SfdcPipelineWizardProfileComponentTable.propTypes = {
   pipelineWizardModel: PropTypes.object,
   setPipelineWizardModel: PropTypes.func,
-  generateXml: PropTypes.func,
   setFilteredFileCount: PropTypes.func
 };
 
