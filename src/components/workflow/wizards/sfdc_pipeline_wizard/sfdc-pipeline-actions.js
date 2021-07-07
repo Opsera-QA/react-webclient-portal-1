@@ -11,6 +11,10 @@ sfdcPipelineActions.getComponentTypesV2 = async (getAccessToken, cancelTokenSour
 sfdcPipelineActions.updateSelectedComponentTypesV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
   const postBody = {
     selectedComponentTypes:  pipelineWizardModel?.getData("selectedComponentTypes"),
+    fromDate: pipelineWizardModel.getData("fromDate"),
+    toDate: pipelineWizardModel.getData("toDate"),
+    includedComponentTypes: pipelineWizardModel.getData("includedComponentTypes"),
+    nameSpacePrefix: pipelineWizardModel.getData("namespacePrefix")
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/update_selected_component_types`;
@@ -18,15 +22,8 @@ sfdcPipelineActions.updateSelectedComponentTypesV2 = async (getAccessToken, canc
 };
 
 sfdcPipelineActions.triggerSfdcFilesPullV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
-  const postBody = {
-    fromDate: pipelineWizardModel.getData("fromDate"),
-    toDate: pipelineWizardModel.getData("toDate"),
-    includedComponentTypes: pipelineWizardModel.getData("includedComponentTypes"),
-    nameSpacePrefix: pipelineWizardModel.getData("namespacePrefix")
-  };
-
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/trigger_sfdc_files_pull`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 sfdcPipelineActions.getSfdcFilesV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel, newFilterDto, pullAllComponents = false) => {
@@ -76,15 +73,8 @@ sfdcPipelineActions.generateSfdcProfileMigrationPackageXmlV2 = async (getAccessT
 };
 
 sfdcPipelineActions.triggerGitTaskFilesPullV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel) => {
-  const postBody = {
-    fromDate: pipelineWizardModel.getData("fromDate"),
-    toDate: pipelineWizardModel.getData("toDate"),
-    includedComponentTypes: pipelineWizardModel.getData("includedComponentTypes"),
-    nameSpacePrefix: pipelineWizardModel.getData("namespacePrefix")
-  };
-
-  const apiUrl = `/pipelines/sfdc/wizard/trigger_git_task_files_pull`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/trigger_git_task_files_pull`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
 sfdcPipelineActions.getGitFilesV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel, newFilterDto, pullAllComponents = false) => {
