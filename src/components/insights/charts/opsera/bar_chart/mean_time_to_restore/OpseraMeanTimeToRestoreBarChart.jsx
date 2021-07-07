@@ -135,13 +135,13 @@ function OpseraMeanTimeToRestoreBarChart({ kpiConfiguration, setKpiConfiguration
         </div>
         <ResponsiveBar
           data={metrics}
-          {...defaultConfig("Mean Time to Restore (in minutes)", "Date", 
+          {...defaultConfig("Mean Time to Deploy (in minutes)", "Date", 
                     false, false, "wholeNumbers", "monthDate2")}
           {...config(getColorByData, getMaxValue(metrics))}
           {...adjustBarWidth(metrics)}
           onClick={(data) => onRowSelect(data)}
           tooltip={({ indexValue, value, data, color }) => <ChartTooltip 
-                    titles={["Date", "Mean Time to Restore", "Number of Deployments"]}
+                    titles={["Date", "Mean Time to Deploy", "Number of Deployments"]}
                     values={[new Date(indexValue).toDateString(), `${value} minutes`, data.count ]}
                     style={false}
                     color={color} />}
