@@ -247,12 +247,6 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
       );
     }
 
-    if (creatingNewRecord) {
-      return (
-        <LoadingDialog message={"Starting a new SFDC Pipeline Wizard Instance"} size={"sm"} />
-      );
-    }
-
     if (existingRecord) {
       return (
         <div>
@@ -343,18 +337,32 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     }
   };
 
+  const getMainView = () => {
+    if (creatingNewRecord) {
+      return (
+        <LoadingDialog message={"Starting a new SFDC Pipeline Wizard Instance"} size={"sm"} />
+      );
+    }
+
+    return (
+      <div>
+        <div className="h5">SalesForce Pipeline Run: Initialization</div>
+        <div className={"mt-2"}>
+          Would you like to start a manual Pipeline Wizard run or use the XML/File Upload Process?
+        </div>
+        <div className={"mt-2"}>
+          {getTabContainer()}
+        </div>
+        <div className="my-3">
+          {getView()}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div>
-      <div className="h5">SalesForce Pipeline Run: Initialization</div>
-      <div className={"mt-2"}>
-        Would you like to start a manual Pipeline Wizard run or use the XML/File Upload Process?
-      </div>
-      <div className={"mt-2"}>
-        {getTabContainer()}
-      </div>
-      <div className="my-3">
-        {getView()}
-      </div>
+      {getMainView()}
     </div>
   );
 };
