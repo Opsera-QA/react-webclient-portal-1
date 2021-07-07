@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
 export const ruleFields = [
-  {value: "committedFileId", text: "ID"},
-  {value: "committedFile", text: "Name"},
+  {value: "committedFileId", text: "File ID"},
+  {value: "componentName", text: "Component Name"},
   // {value: "committedTime", text: "Commit Time"}, // TODO: For future release
   {value: "committedBy", text: "Committed By"},
 ];
