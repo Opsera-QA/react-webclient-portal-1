@@ -120,7 +120,7 @@ const SfdcPipelineWizardProfileComponentTable = ({ pipelineWizardModel, setPipel
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "committedFileId";})),
       getTableTextColumn(fields.find(field => { return field.id === "componentType";})),
-      getTableTextColumn(fields.find(field => { return field.id === "committedFile";}), "force-text-wrap"),
+      getTableTextColumn(fields.find(field => { return field.id === "componentName";}), "force-text-wrap"),
       getTableDateTimeColumn(fields.find(field => { return field.id === "committedTime";})),
       getTableTextColumn(fields.find(field => { return field.id === "committedBy";})),
     ],

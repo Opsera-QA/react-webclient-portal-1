@@ -173,7 +173,7 @@ const SfdcPipelineWizardUnitTestSelector = ({ pipelineWizardModel, handleClose, 
     if (pipelineWizardModel.getData("fromGitTasks") === true) {
       setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.GIT_TASKS_FILE_SELECTOR);
     } else if (pipelineWizardModel.getData("fromFileUpload") === true) {
-      setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR);
+      setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN);
     } else if (pipelineWizardModel.getData("isOrgToOrg") === true) {
       setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.ORG_TO_ORG_FILE_SELECTOR);
     } else {

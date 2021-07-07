@@ -113,9 +113,8 @@ const SfdcPipelineWizardXmlViewer = (
 
     if(pipelineWizardModel.getArrayData("unitTestSteps").length > 0) {
       setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR);
-      return;
     } else if (pipelineWizardModel.getData("fromFileUpload") === true) {
-      setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR);
+      setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN);
     } else if (pipelineWizardModel.getData("fromGitTasks") === true) {
       setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.GIT_TASKS_FILE_SELECTOR);
     }  else if (pipelineWizardModel.getData("isOrgToOrg") === true) {

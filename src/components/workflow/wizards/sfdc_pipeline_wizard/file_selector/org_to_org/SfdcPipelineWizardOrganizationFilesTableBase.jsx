@@ -17,7 +17,7 @@ const SfdcPipelineWizardOrganizationFilesTableBase = ({ pipelineWizardModel, loa
 
   const columns = useMemo(
     () => [
-      {...getTableTextColumn(fields.find(field => { return field.id === "committedFile";})), class: "force-text-wrap"},
+      {...getTableTextColumn(fields.find(field => { return field.id === "componentName";})), class: "force-text-wrap"},
       getTableDateTimeColumn(fields.find(field => { return field.id === "committedTime";})),
     ],
     [],

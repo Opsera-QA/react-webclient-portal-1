@@ -4,27 +4,13 @@ import SfdcPipelineWizardRulesInputContainerBase
   from "components/workflow/wizards/sfdc_pipeline_wizard/rules/SfdcPipelineWizardRulesInputContainerBase";
 
 function SfdcPipelineWizardSfdcRulesInput({pipelineWizardModel, setPipelineWizardModel, sfdcFiles, isLoading, filePullCompleted}) {
-
-  // TODO: Add pull data instead
-  const getPostBody = () => {
-    return (
-      {
-        pipelineId: pipelineWizardModel.getData("pipelineId"),
-        stepId: pipelineWizardModel.getData("stepId"),
-        dataType: pipelineWizardModel.getData("fromGitTasks") === true ? "sync-sfdc-repo" : "sfdc-packageXml",
-        gitTaskId: pipelineWizardModel.getData("fromGitTasks") === true ? pipelineWizardModel.getData("gitTaskId") : false,
-        fetchAttribute: "sfdcCommitList",
-      }
-    );
-  };
-
   return (
     <div className={"my-4"}>
       <SfdcPipelineWizardRulesInputContainerBase
-        dataObject={pipelineWizardModel}
-        setDataObject={setPipelineWizardModel}
+        pipelineWizardModel={pipelineWizardModel}
+        setPipelineWizardModel={setPipelineWizardModel}
         fieldName={"sfdcModifiedRuleList"}
-        postBody={getPostBody()}
+        fetchAttribute={"sfdcCommitList"}
         modifiedFiles={sfdcFiles}
         isLoading={isLoading}
         filePullCompleted={filePullCompleted}

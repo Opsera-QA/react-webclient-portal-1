@@ -16,7 +16,7 @@ import sfdcRuleMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/r
 import GitRuleFieldSelectInput
   from "components/common/list_of_values_input/workflow/wizard/rules/GitRuleFieldSelectInput";
 
-function PipelineWizardRuleInput({ruleData, index, addRule, deleteRule, updateRule, postBody, isGitTab}) {
+function PipelineWizardRuleInput({pipelineWizardModel, ruleData, index, addRule, deleteRule, updateRule, fetchAttribute, isGitTab}) {
   const [ruleModel, setRuleModel] = useState(undefined);
   const isMounted = useRef(false);
 
@@ -82,7 +82,8 @@ function PipelineWizardRuleInput({ruleData, index, addRule, deleteRule, updateRu
               dataObject={ruleModel}
               setDataObject={updateData}
               showLabel={false}
-              postBody={postBody}
+              fetchAttribute={fetchAttribute}
+              pipelineWizardModel={pipelineWizardModel}
             />
           </Col>
           <Col xs={2} className={"px-1"}>
@@ -94,8 +95,9 @@ function PipelineWizardRuleInput({ruleData, index, addRule, deleteRule, updateRu
               dataObject={ruleModel}
               setDataObject={updateData}
               showLabel={false}
-              postBody={postBody}
+              fetchAttribute={fetchAttribute}
               componentTypes={ruleModel?.getData("componentTypes")}
+              pipelineWizardModel={pipelineWizardModel}
             />
           </Col>
         </Row>
@@ -114,8 +116,9 @@ PipelineWizardRuleInput.propTypes = {
   addRule: PropTypes.func,
   deleteRule: PropTypes.func,
   updateRule: PropTypes.func,
-  postBody: PropTypes.object,
-  isGitTab: PropTypes.bool
+  fetchAttribute: PropTypes.string,
+  isGitTab: PropTypes.bool,
+  pipelineWizardModel: PropTypes.object
 };
 
 export default PipelineWizardRuleInput;

@@ -12,11 +12,17 @@ import SaveButtonContainer from "components/common/buttons/saving/containers/Sav
 import CancelButton from "components/common/buttons/CancelButton";
 import {Button} from "react-bootstrap";
 import IconBase from "components/common/icons/IconBase";
-import {faStepForward, faSync} from "@fortawesome/pro-light-svg-icons";
+import {faFileCode, faStepForward, faSync} from "@fortawesome/pro-light-svg-icons";
 import {parseDate} from "utils/helpers";
+import CustomTabContainer from "components/common/tabs/CustomTabContainer";
+import CustomTab from "components/common/tabs/CustomTab";
+import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
+import SFDCFileUploadComponent
+  from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SFDCFileUploadComponent";
 
 const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, pipeline, gitTaskData, setError }) => {
   const { getAccessToken } = useContext(AuthContext);
+  const [activeTab, setActiveTab] = useState("manual");
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -142,13 +148,15 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
 
     if (existingRecord) {
       setExistingRecord(existingRecord);
+      newPipelineWizardModel.setData("recordId", existingRecord._id);
+      setPipelineWizardModel({...newPipelineWizardModel});
     }
     else {
       await createNewPipelineWizardRecord(newPipelineWizardModel);
     }
   };
 
-  const createNewPipelineWizardRecord = async (newPipelineWizardModel = pipelineWizardModel) => {
+  const createNewPipelineWizardRecord = async (newPipelineWizardModel = pipelineWizardModel, moveToNextScreen) => {
     try {
       setCreatingNewRecord(true);
       const response = await sfdcPipelineActions.createNewRecordV2(getAccessToken, cancelTokenSource, newPipelineWizardModel);
@@ -159,7 +167,9 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
         setPipelineWizardModel({...newPipelineWizardModel});
       }
 
-      setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR);
+      if (moveToNextScreen === true) {
+        setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR);
+      }
     }
     catch (error) {
       console.error(error);
@@ -224,24 +234,42 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
       );
     }
 
-    return (
-      <div>
+    if (existingRecord) {
+      return (
         <div>
-          {`
+          <div>
+            {`
           An existing run was started on ${format(new Date(existingRecord?.createdAt), "yyyy-MM-dd', 'hh:mm a")} by 
           ${existingRecord?.owner_name || "ERROR PULLING OWNER'S NAME"}.  
           `}
 
+          </div>
+          <div className={"mt-2"}>
+            {`Would you like to start over or resume where they left off?`}
+          </div>
+          <div className={"mt-2"}>
+            {`If you resume where they left off, you will be able to adjust parameters on each screen.`}
+          </div>
+          <div className={"mt-2"}>
+            {`Please note, if someone else is using Pipeline Wizard at the same time, this will lead to unintended side effects.`}
+          </div>
+          <SaveButtonContainer>
+            <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading}
+                    onClick={() => createNewPipelineWizardRecord(undefined, true)}>
+              <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Run</span>
+            </Button>
+            <Button size={"sm"} variant="success" disabled={isLoading} onClick={() => unpackPreviousPipelineRun()}>
+              <span><IconBase icon={faStepForward} fixedWidth className="mr-2"/>Continue With Last Run</span>
+            </Button>
+            <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose}
+                          size={"sm"}/>
+          </SaveButtonContainer>
         </div>
-        <div className={"mt-2"}>
-          {`Would you like to start over or resume where they left off?`}
-        </div>
-        <div className={"mt-2"}>
-          {`If you resume where they left off, you will be able to adjust parameters on each screen.`}
-        </div>
-        <div className={"mt-2"}>
-          {`Please note, if someone else is using Pipeline Wizard at the same time, this will lead to unintended side effects.`}
-        </div>
+      );
+    }
+
+    return (
+      <div>
         <SaveButtonContainer>
           <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading} onClick={() => createNewPipelineWizardRecord()}>
             <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Run</span>
@@ -255,11 +283,58 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     );
   };
 
+  const handleTabClick = (tabSelection) => e => {
+    e.preventDefault();
+    let newDataObject = {...pipelineWizardModel};
+    newDataObject.setData("fromFileUpload", tabSelection === "file");
+    setPipelineWizardModel({...newDataObject});
+    setActiveTab(tabSelection);
+  };
+
+  const getTabContainer = () => {
+    return (
+      <CustomTabContainer>
+        <CustomTab activeTab={activeTab} tabText={"Manual Pipeline Wizard Run"} handleTabClick={handleTabClick} tabName={"manual"}
+                   toolTipText={"Use SFDC Component Selection Deployment"} icon={faSalesforce}  />
+        <CustomTab activeTab={activeTab} tabText={"XML/File Upload Process"} handleTabClick={handleTabClick} tabName={"automatic"}
+                   toolTipText={"Deploy using XML or an Excel file"} icon={faFileCode}  />
+      </CustomTabContainer>
+    );
+  };
+
+  const getFileDeploymentBody = () => {
+    return (
+      <div>
+        <SFDCFileUploadComponent
+          pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardScreen={setPipelineWizardScreen}
+          setPipelineWizardModel={setPipelineWizardModel}
+          handleClose={handleClose}
+        />
+      </div>
+    );
+  };
+
+  const getView = () => {
+    switch (activeTab) {
+      case "manual":
+        return getBody();
+      case "automatic":
+        return getFileDeploymentBody();
+    }
+  };
+
   return (
     <div>
       <div className="h5">SalesForce Pipeline Run: Initialization</div>
+      <div className={"mt-2"}>
+        Would you like to start a manual Pipeline Wizard run or use the XML/File Upload Process?
+      </div>
+      <div className={"mt-2"}>
+        {getTabContainer()}
+      </div>
       <div className="my-3">
-        {getBody()}
+        {getView()}
       </div>
     </div>
   );

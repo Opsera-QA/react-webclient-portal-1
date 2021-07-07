@@ -19,8 +19,6 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import SfdcPipelineWizardSfdcRulesInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSfdcRulesInput";
-import SfdcPipelineWizardGitRulesInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardGitRulesInput";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
 
 const SfdcPipelineWizardSfdcFilesTable = ({ pipelineWizardModel, setPipelineWizardModel, loadData, sfdcFiles, isLoading, setPipelineWizardScreen, sfdcFilesPaginationModel, setSfdcFilesPaginationModel, filePullCompleted }) => {
@@ -55,7 +53,7 @@ const SfdcPipelineWizardSfdcFilesTable = ({ pipelineWizardModel, setPipelineWiza
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "committedFileId";})),
       getTableTextColumn(fields.find(field => { return field.id === "componentType";})),
-      getTableTextColumn(fields.find(field => { return field.id === "committedFile";}), "force-text-wrap"),
+      getTableTextColumn(fields.find(field => { return field.id === "componentName";}), "force-text-wrap"),
       getTableDateTimeColumn(fields.find(field => { return field.id === "committedTime";})),
       getTableTextColumn(fields.find(field => { return field.id === "committedBy";})),
     ],

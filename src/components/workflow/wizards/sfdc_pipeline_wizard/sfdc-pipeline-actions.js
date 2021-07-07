@@ -253,6 +253,17 @@ sfdcPipelineActions.getSfdcComponentListFromPipelineStorageV2 = async (getAccess
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+sfdcPipelineActions.getSfdcComponentListValues = async (getAccessToken, cancelTokenSource, pipelineWizardModel, innerAttribute, fetchAttribute, componentTypes) => {
+  const postBody = {
+    fetchAttribute: fetchAttribute,
+    innerAttribute: innerAttribute,
+    componentTypes: componentTypes
+  };
+
+  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/get_component_values`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 // TODO: Remove all references and update with relevant queries that are more understandable
 sfdcPipelineActions.setListToPipelineStorage = async (postBody, getAccessToken) => {
   const accessToken = await getAccessToken();

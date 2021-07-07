@@ -23,8 +23,6 @@ import SfdcPipelineWizardSubmitSfdcFilesButton
 import SfdcPipelineWizardSfdcRulesInput
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSfdcRulesInput";
 import InlineWarning from "components/common/status_notifications/inline/InlineWarning";
-import SfdcPipelineWizardGitRulesInput
-  from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardGitRulesInput";
 
 const SfdcPipelineWizardOrgToOrgFileSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {
   const { getAccessToken } = useContext(AuthContext);

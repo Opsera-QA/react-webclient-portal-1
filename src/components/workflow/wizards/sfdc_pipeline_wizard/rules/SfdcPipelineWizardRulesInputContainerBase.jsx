@@ -11,7 +11,7 @@ import PipelineWizardRuleInputHelpDocumentation
 import ToggleHelpIcon from "components/common/icons/help/ToggleHelpIcon";
 
 // TODO: On final refactor of SFDC Wizard, utilize model/set models here
-function SfdcPipelineWizardRulesInputContainerBase({dataObject, setDataObject, fieldName, postBody, modifiedFiles, isGitTab, isLoading, filePullCompleted}) {
+function SfdcPipelineWizardRulesInputContainerBase({pipelineWizardModel, setPipelineWizardModel, fieldName, modifiedFiles, isGitTab, isLoading, filePullCompleted, fetchAttribute}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [showHelp, setShowHelp] = useState(false);
   const [rules, setRules] = useState([]);
@@ -28,7 +28,7 @@ function SfdcPipelineWizardRulesInputContainerBase({dataObject, setDataObject, f
   }, [filePullCompleted]);
 
   const loadData = () => {
-    let currentData = dataObject.getData(fieldName);
+    let currentData = pipelineWizardModel?.getData(fieldName);
 
     let items = Array.isArray(currentData) && currentData.length > 0 ? currentData : [];
 
@@ -54,9 +54,9 @@ function SfdcPipelineWizardRulesInputContainerBase({dataObject, setDataObject, f
 
     setRules([...newPropertyList]);
 
-    if (JSON.stringify(newPropertyList) !== JSON.stringify(dataObject.getData(fieldName))) {
-      dataObject.setData(fieldName, [...newPropertyList]);
-      setDataObject({...dataObject});
+    if (JSON.stringify(newPropertyList) !== JSON.stringify(pipelineWizardModel.getData(fieldName))) {
+      pipelineWizardModel.setData(fieldName, [...newPropertyList]);
+      setPipelineWizardModel({...pipelineWizardModel});
     }
   };
 
@@ -97,8 +97,9 @@ function SfdcPipelineWizardRulesInputContainerBase({dataObject, setDataObject, f
                 addRule={addRule}
                 deleteRule={deleteRule}
                 ruleData={ruleData}
+                pipelineWizardModel={pipelineWizardModel}
                 updateRule={updateRule}
-                postBody={postBody}
+                fetchAttribute={fetchAttribute}
                 modifiedFiles={modifiedFiles}
                 isGitTab={isGitTab}
               />
@@ -189,14 +190,14 @@ function SfdcPipelineWizardRulesInputContainerBase({dataObject, setDataObject, f
 }
 
 SfdcPipelineWizardRulesInputContainerBase.propTypes = {
-  dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
+  pipelineWizardModel: PropTypes.object,
+  setPipelineWizardModel: PropTypes.func,
   fieldName: PropTypes.string,
-  postBody: PropTypes.object,
   modifiedFiles: PropTypes.array,
   isGitTab: PropTypes.bool,
   isLoading: PropTypes.bool,
-  filePullCompleted: PropTypes.bool
+  filePullCompleted: PropTypes.bool,
+  fetchAttribute: PropTypes.string
 };
 
 export default SfdcPipelineWizardRulesInputContainerBase;

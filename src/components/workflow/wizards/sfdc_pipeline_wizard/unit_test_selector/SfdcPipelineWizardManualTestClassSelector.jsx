@@ -71,8 +71,7 @@ function SfdcPipelineWizardManualTestClassSelector({ unitTestRecordId, selectedS
       };
 
       console.log("postBody: " + JSON.stringify(postBody));
-      const saveResponse = await sfdcPipelineActions.setListToPipelineStorage(
-        postBody, getAccessToken);
+      const saveResponse = await sfdcPipelineActions.setListToPipelineStorage(postBody, getAccessToken);
 
       console.log("saveResponse: " + JSON.stringify(saveResponse));
       // TODO: add a success toast here
