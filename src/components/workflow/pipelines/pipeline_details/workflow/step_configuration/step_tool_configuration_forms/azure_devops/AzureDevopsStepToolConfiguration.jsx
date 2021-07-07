@@ -8,7 +8,7 @@ import azureDevopsStepFormMetadata
 import modelHelpers from "components/common/model/modelHelpers";
 import AzureDevopsToolSelectInput from "./inputs/AzureDevopsToolSelectInput";
 import AzureDevopsPipelineSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_devops/inputs/AzureDevopsPipelineSelectInput";
-import TextInputBase from "components/common/inputs/text/TextInputBase";
+import AzureDevopsProjectSelectInput from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/azure_devops/inputs/AzureDevopsProjectSelectInput";
 
 function AzureDevopsStepConfiguration({ stepTool, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -54,8 +54,13 @@ function AzureDevopsStepConfiguration({ stepTool, closeEditorPanel, parentCallba
         dataObject={azureDevopsModel}
         setDataObject={setAzureDevopsModel}
       />
-      <TextInputBase dataObject={azureDevopsModel} setDataObject={setAzureDevopsModel} fieldName={"organizationName"}/>
-      <TextInputBase setDataObject={setAzureDevopsModel} dataObject={azureDevopsModel} fieldName={"projectName"} />
+      <AzureDevopsProjectSelectInput
+        organization={azureDevopsModel.getData("organizationName")}
+        toolConfigId={azureDevopsModel.getData("toolConfigId")}
+        model={azureDevopsModel}
+        setModel={setAzureDevopsModel}
+        fieldName={"projectName"}
+      />
       <AzureDevopsPipelineSelectInput
         organization={azureDevopsModel.getData("organizationName")}
         projectName={azureDevopsModel.getData("projectName")}
@@ -64,7 +69,6 @@ function AzureDevopsStepConfiguration({ stepTool, closeEditorPanel, parentCallba
         setModel={setAzureDevopsModel}
         fieldName={"azurePipelineId"}
       />
-      <TextInputBase setDataObject={setAzureDevopsModel} dataObject={azureDevopsModel} fieldName={"pipelineVersion"} />
     </PipelineStepEditorPanelContainer>
   );
 }

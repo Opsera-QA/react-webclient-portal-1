@@ -17,4 +17,18 @@ azurePipelineActions.getAzurePipelines = async (getAccessToken, cancelTokenSourc
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
 };
 
+azurePipelineActions.getAzureProjects = async (getAccessToken, cancelTokenSource, model, userId) => {
+  const vaultAccessToken = model.getData("accessToken");
+  const vaultKey = vaultAccessToken?.vaultKey;
+
+  const postBody = {
+    organizationName: model?.getData("organizationName"),
+    vaultKey: vaultKey,
+    userId: userId
+  };
+
+  const apiURL = `azure/get-projects`;
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
+};
+
 export default azurePipelineActions;
