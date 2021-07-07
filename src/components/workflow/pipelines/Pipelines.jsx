@@ -12,6 +12,7 @@ import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import CustomTab from "components/common/tabs/CustomTab";
 import { faSalesforce } from "@fortawesome/free-brands-svg-icons";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
+import CatalogHelpDocumentation from "../../common/help/documentation/pipelines/catalog/CatalogHelpDocumentation";
 
 const unpackTab = (tab) => {
   if (tab != null) {
@@ -128,6 +129,7 @@ function Pipelines() {
       navigationTabContainer={getNavigationTabContainer()}
       pageDescription={getPageDescription()}
       hasTabContainer={activeTab !== "catalog"}
+      helpComponent={activeTab !== "catalog" ? undefined : <CatalogHelpDocumentation/>}
     >
       {getCurrentView()}
     </ScreenContainer>
