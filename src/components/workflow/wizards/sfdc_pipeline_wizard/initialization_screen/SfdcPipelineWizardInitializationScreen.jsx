@@ -186,15 +186,34 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     let newPipelineWizardModel = {...pipelineWizardModel};
     newPipelineWizardModel.setData("recordId", existingRecord._id);
     newPipelineWizardModel.setData("customerId", existingRecord.customerId);
-    newPipelineWizardModel.setData("selectedComponentTypes", existingRecord?.selectedComponentTypes || []);
-    newPipelineWizardModel.setData("gitModifiedRuleList", existingRecord?.gitModifiedRuleList || []);
-    newPipelineWizardModel.setData("sfdcModifiedRuleList", existingRecord?.sfdcModifiedRuleList || []);
-    newPipelineWizardModel.setData("profileComponentsRuleList", existingRecord?.profileComponentsRuleList || []);
+
+    if (Array.isArray(existingRecord?.selectedComponentTypes)) {
+      newPipelineWizardModel.setData("selectedComponentTypes", existingRecord?.selectedComponentTypes);
+    }
+
+    if (Array.isArray(existingRecord?.sfdcModifiedRuleList)) {
+      newPipelineWizardModel.setData("sfdcModifiedRuleList", existingRecord?.sfdcModifiedRuleList);
+    }
+
+    if (Array.isArray(existingRecord?.gitModifiedRuleList)) {
+      newPipelineWizardModel.setData("gitModifiedRuleList", existingRecord?.gitModifiedRuleList);
+    }
+
+    if (Array.isArray(existingRecord?.profileComponentsRuleList)) {
+      newPipelineWizardModel.setData("profileComponentsRuleList", existingRecord?.profileComponentsRuleList);
+    }
+
     newPipelineWizardModel.setData("owner_name", existingRecord?.owner_name);
     newPipelineWizardModel.setData("createdAt", existingRecord?.createdAt);
     newPipelineWizardModel.setData("updatedAt", existingRecord?.updatedAt);
-    newPipelineWizardModel.setData("namespacePrefix", existingRecord?.namespacePrefix || "");
-    newPipelineWizardModel.setData("includedComponentTypes", existingRecord?.includedComponentTypes || "all");
+
+    if (typeof existingRecord?.namespacePrefix === "string") {
+      newPipelineWizardModel.setData("namespacePrefix", existingRecord?.namespacePrefix);
+    }
+
+    if (typeof existingRecord?.includedComponentTypes === "string") {
+      newPipelineWizardModel.setData("includedComponentTypes", existingRecord?.includedComponentTypes);
+    }
 
     const parsedFromDate = parseDate(existingRecord?.fromDate);
     const parsedToDate = parseDate(existingRecord["toDate"], new Date());
