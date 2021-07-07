@@ -11,9 +11,12 @@ import SFDCViewOverlay from "./git_task_details/configuration_forms/sfdc-org-syn
 import sfdcPipelineActions from "../workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import gitTaskActions from "./git-task-actions";
 import { useHistory } from "react-router-dom";
+import Model from "../../core/data_model/model";
+import gitTasksMetadata from "./git-tasks-metadata";
 
 function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
   let toastContext = useContext(DialogToastContext);
+  const [gitTasksDataCopy, setDataCopy] = useState(gitTasksData);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const isMounted = useRef(false);
@@ -25,13 +28,31 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
   let timerIds = [];
 
   useEffect(() => {
-    console.log(gitTasksData.data);
-    if (gitTasksData?.getData("status") && gitTasksData?.getData("status") === "running") {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    getTaskStatus(source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+
+    if (gitTasksDataCopy?.getData("status") && gitTasksDataCopy?.getData("status") === "running") {
       setTaskFinished(false);
       gitTasksData.setData("running");
       return;
     }
-    setTaskFinished(true);
+
+    return () => {
+      setTaskFinished(true);
+      source.cancel();
+      isMounted.current = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -83,7 +104,11 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
     }
 
     if (!(await checkStatus(taskAtHand)) && taskFinished === false) {
-      await new Promise((resolve) => timerIds.push(setTimeout(resolve, 15000)));
+      let timeout = 15000;
+      if (count > 4) {
+        timeout = timeout * count;
+      }
+      await new Promise((resolve) => timerIds.push(setTimeout(resolve, timeout)));
       return await tasksPolling(cancelSource, count + 1);
     }
   };
@@ -111,6 +136,7 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
         setTaskFinished(true);
       }
     }
+    setDataCopy(new Model(data, gitTasksMetadata, false));
     return data;
   };
 
