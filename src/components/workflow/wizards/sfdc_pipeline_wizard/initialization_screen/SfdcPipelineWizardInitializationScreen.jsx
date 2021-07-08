@@ -308,13 +308,19 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   };
 
   const getTabContainer = () => {
+    if (pipelineWizardModel?.getData("isProfiles") === true) {
+      return null;
+    }
+
     return (
-      <CustomTabContainer>
-        <CustomTab activeTab={activeTab} tabText={"Manual Pipeline Wizard Run"} handleTabClick={handleTabClick} tabName={"manual"}
-                   toolTipText={"Use SFDC Component Selection Deployment"} icon={faSalesforce}  />
-        <CustomTab activeTab={activeTab} tabText={"XML/File Upload Process"} handleTabClick={handleTabClick} tabName={"automatic"}
-                   toolTipText={"Deploy using XML or an Excel file"} icon={faFileCode}  />
-      </CustomTabContainer>
+      <div className={"mt-2"}>
+        <CustomTabContainer>
+          <CustomTab activeTab={activeTab} tabText={"Manual Pipeline Wizard Run"} handleTabClick={handleTabClick} tabName={"manual"}
+                     toolTipText={"Use SFDC Component Selection Deployment"} icon={faSalesforce}  />
+          <CustomTab activeTab={activeTab} tabText={"XML/File Upload Process"} handleTabClick={handleTabClick} tabName={"automatic"}
+                     toolTipText={"Deploy using XML or an Excel file"} icon={faFileCode}  />
+        </CustomTabContainer>
+      </div>
     );
   };
 
@@ -353,9 +359,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
         <div className={"mt-2"}>
           Would you like to start a manual Pipeline Wizard run or use the XML/File Upload Process?
         </div>
-        <div className={"mt-2"}>
-          {getTabContainer()}
-        </div>
+        {getTabContainer()}
         <div className="my-3">
           {getView()}
         </div>

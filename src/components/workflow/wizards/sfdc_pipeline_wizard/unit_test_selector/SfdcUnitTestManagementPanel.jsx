@@ -50,16 +50,10 @@ function SfdcUnitTestManagementPanel({unitTestRecordId, reload, members, setMemb
 
   const updateMembers = async () => {
       try {
-      const saveResponse = await sfdcPipelineActions.updateSelectedUnitTestClassesV2(getAccessToken, cancelTokenSource, unitTestRecordId, members);
-
-      console.log("updateMembers: " + JSON.stringify(saveResponse));
-      // TODO: add a success toast here
-      // toastContext.showUpdateSuccessResultDialog("Test Classes");
+      await sfdcPipelineActions.updateSelectedUnitTestClassesV2(getAccessToken, cancelTokenSource, unitTestRecordId, members);
       setShowUnsavedChangesMessage(false);
-      // await reload();
-
     } catch (error) {
-      console.error("Error getting API Data: ", error);
+      console.error(error);
       toastContext.showLoadingErrorDialog(error);
     }
   };
