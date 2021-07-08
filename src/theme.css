@@ -288,6 +288,11 @@
     background-color: #1578dc;
 }
 
+.badge-opsera {
+    color: #fff;
+    background-color: #352F54;
+}
+
 .clear-value-badge {
     font-weight: normal;
 }
