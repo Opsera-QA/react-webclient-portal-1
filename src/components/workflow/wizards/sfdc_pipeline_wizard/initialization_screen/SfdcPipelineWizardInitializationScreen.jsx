@@ -264,7 +264,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
             {`Would you like to start a new run or continue with the last run?`}
           </div>
           <div className={"mt-2"}>
-            {`If you resume where they left off, you will be able to adjust parameters on each screen.`}
+            {`If you resume where the run initialization left off, you will be able to adjust parameters on each screen.`}
           </div>
           <div className={"mt-2"}>
             {`Please note, if someone else is using Pipeline Wizard at the same time, this will lead to unintended side effects.`}
