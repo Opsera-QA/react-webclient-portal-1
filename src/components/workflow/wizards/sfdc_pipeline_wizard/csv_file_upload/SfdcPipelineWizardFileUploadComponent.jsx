@@ -354,7 +354,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
   return (
     <div>
       <div className="my-2">
-        Upload components as a csv file or Upload an XML to use for deployment.
+        Select components using a CSV file or upload a Package XML file to use for deployment.
       </div>
       {getHelpText()}
       {getErrorDialog()}
