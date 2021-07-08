@@ -255,13 +255,13 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
         <div>
           <div>
             {`
-          An existing run was started on ${format(new Date(existingRecord?.createdAt), "yyyy-MM-dd', 'hh:mm a")} by 
+          An incomplete run was started on ${format(new Date(existingRecord?.createdAt), "yyyy-MM-dd', 'hh:mm a")} by 
           ${existingRecord?.owner_name || "ERROR PULLING OWNER'S NAME"}.  
           `}
 
           </div>
           <div className={"mt-2"}>
-            {`Would you like to start over or resume where they left off?`}
+            {`Would you like to start a new run or continue with the last run?`}
           </div>
           <div className={"mt-2"}>
             {`If you resume where they left off, you will be able to adjust parameters on each screen.`}
@@ -287,7 +287,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     return (
       <div>
         <div className={"mt-2"}>
-          {`Would you like to start a new Manual Pipeline Wizard instance?`}
+          {`Would you like to start a new run?`}
         </div>
         <SaveButtonContainer>
           <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading} onClick={() => createNewPipelineWizardRecord(undefined, true)}>

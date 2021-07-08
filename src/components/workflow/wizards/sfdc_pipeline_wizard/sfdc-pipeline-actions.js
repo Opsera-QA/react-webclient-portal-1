@@ -238,11 +238,6 @@ sfdcPipelineActions.getListFromPipelineStorage = async (postBody, toolFilterDto,
   return response;
 };
 
-sfdcPipelineActions.getSfdcComponentListFromPipelineStorageV2 = async (getAccessToken, cancelTokenSource, postBody) => {
-  const apiUrl = `/pipelines/storage/get/components`;
-  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
-};
-
 sfdcPipelineActions.getSfdcComponentListValues = async (getAccessToken, cancelTokenSource, pipelineWizardModel, innerAttribute, fetchAttribute, componentTypes) => {
   const postBody = {
     fetchAttribute: fetchAttribute,
@@ -333,7 +328,7 @@ sfdcPipelineActions.triggerJenkinsJobV2 = async (getAccessToken, cancelTokenSour
     },
   };
 
-  const apiUrl = `/pipelines/sfdc/set-jobs`;
+  const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel.getData("recordId")}/trigger_jenkins_job`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
