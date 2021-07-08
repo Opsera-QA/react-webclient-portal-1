@@ -246,7 +246,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
   const getBody = () => {
     if (isLoading || pipelineWizardModel == null) {
       return (
-        <LoadingDialog message={"Initializing SFDC Pipeline Start Wizard"} size={"sm"} />
+        <LoadingDialog message={"Initializing SFDC Pipeline Wizard"} size={"sm"} />
       );
     }
 
@@ -255,16 +255,15 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
         <div>
           <div>
             {`
-          An incomplete run was started on ${format(new Date(existingRecord?.createdAt), "yyyy-MM-dd', 'hh:mm a")} by 
-          ${existingRecord?.owner_name || "ERROR PULLING OWNER'S NAME"}.  
+          The SFDC Pipeline Run Wizard was previously initiated on ${format(new Date(existingRecord?.createdAt), "yyyy-MM-dd', 'hh:mm a")} by 
+          ${existingRecord?.owner_name || "ERROR PULLING OWNER'S NAME"}. 
           `}
-
           </div>
           <div className={"mt-2"}>
-            {`Would you like to start a new run or continue with the last run?`}
+            {`Would you like to start a new instance or continue where the last instance left off?`}
           </div>
           <div className={"mt-2"}>
-            {`If you resume where the run initialization left off, you will be able to adjust parameters on each screen.`}
+            {`If you continue, you will be able to adjust all parameters that were previously applied.`}
           </div>
           <div className={"mt-2"}>
             {`Please note, if someone else is using Pipeline Wizard at the same time, this will lead to unintended side effects.`}
@@ -272,10 +271,10 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
           <SaveButtonContainer>
             <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading}
                     onClick={() => createNewPipelineWizardRecord(undefined, true)}>
-              <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Run</span>
+              <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Instance</span>
             </Button>
             <Button size={"sm"} variant="success" disabled={isLoading} onClick={() => unpackPreviousPipelineRun()}>
-              <span><IconBase icon={faStepForward} fixedWidth className="mr-2"/>Continue With Last Run</span>
+              <span><IconBase icon={faStepForward} fixedWidth className="mr-2"/>Continue Where The Last Instance Left Off</span>
             </Button>
             <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose}
                           size={"sm"}/>
@@ -287,11 +286,11 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     return (
       <div>
         <div className={"mt-2"}>
-          {`Would you like to start a new run?`}
+          {`Would you like to start a new SFDC Pipeline Run Wizard Instance?`}
         </div>
         <SaveButtonContainer>
           <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading} onClick={() => createNewPipelineWizardRecord(undefined, true)}>
-            <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Run</span>
+            <span><IconBase icon={faSync} fixedWidth className="mr-2"/>Start A New Instance</span>
           </Button>
           <CancelButton className={"ml-2"} showUnsavedChangesMessage={false} cancelFunction={handleClose} size={"sm"} />
         </SaveButtonContainer>
