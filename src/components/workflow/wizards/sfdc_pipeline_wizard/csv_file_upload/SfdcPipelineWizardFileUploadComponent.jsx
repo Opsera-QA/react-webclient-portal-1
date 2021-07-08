@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import ErrorDialog from "components/common/status_notifications/error";
 import {csvStringToObj} from "components/common/helpers/string-helpers";
 import './fileupload.css';
-import {Container, Button, Row} from 'react-bootstrap';
-import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
-import docco from "react-syntax-highlighter/dist/esm/styles/hljs/docco";
+import {Button} from 'react-bootstrap';
 import { getLimitedTableTextColumn, getTableTextColumn } from "components/common/table/table-column-helpers";
 import { getField } from "components/common/metadata/metadata-helpers";
 import SfdcPipelineWizardUploadComponentTypesRadioInput from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardUploadComponentTypesRadioInput";
@@ -15,6 +13,7 @@ import SfdcPipelineWizardSubmitFileTypeButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/csv_file_upload/SfdcPipelineWizardSubmitFileTypeButton";
 import CustomTable from "components/common/table/CustomTable";
 import CancelButton from "components/common/buttons/CancelButton";
+import XmlFieldBase from "components/common/fields/code/XmlFieldBase";
 
 function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) {
     const fields = PipelineWizardFileUploadMetadata.fields;
@@ -128,10 +127,10 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
   };
 
   const fileType = (fileName) => {
-    return fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length) || fileName;
+    return fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length).toUpperCase() || fileName;
   };
 
-  const removeFile = (name) => {
+  const removeFile = () => {
     setError(false);
     resetStoredFileContents();
     setSelectedFiles([]);
@@ -209,18 +208,10 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
 
   const getXMLView = () => {
     if (pipelineWizardModel.getData("xmlFileContent") && pipelineWizardModel.getData("xmlFileContent").length > 0) {
-      return (
-        <>
-          <div style={{height: "300px", maxHeight: "500px", width: "800px", overflowY: "auto", margin: "auto"}}>
-            <SyntaxHighlighter language="xml" style={docco}>
-              {pipelineWizardModel.getData("xmlFileContent")}
-            </SyntaxHighlighter>
-          </div>
-          {buttonContainer()}
-        </>
-      );
+      return (<XmlFieldBase fieldName={"xmlFileContent"} model={pipelineWizardModel} />);
     }
   };
+  
   const buttonContainer = () => {
     return (
       <SaveButtonContainer>
@@ -243,7 +234,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     [fields]
   );
 
-  const getCSVView = () => {
+  const getCsvView = () => {
     if (pipelineWizardModel.getData("csvFileContent") && pipelineWizardModel.getData("csvFileContent").length > 0) {
       return (
         <>
@@ -291,19 +282,14 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
   const getFilesBody = () => {
     if (Array.isArray(validFiles) && validFiles.length > 0) {
       return (
-        <div className="file-display-container">
+        <div>
           {validFiles.map((data, i) =>
-              <div className="file-status-bar" key={i}>
-                <div>
-                  <div className="file-type-logo" />
-                  <div className="file-type">{fileType(data.name)}</div>
-                  <span className={`file-name ${data.invalid ? 'file-error' : ''}`}>{data.name}</span>
-                  <span className="file-size">({fileSize(data.size)})</span>
-                  {data.invalid && <span className='file-error-message'>({errorMessage})</span>}
-                </div>
-                <div className="file-remove" onClick={() => removeFile(data.name)}>
-                  <i className="fa fa-trash" aria-hidden="true" />
-                </div>
+              <div className="d-flex my-2" key={i}>
+                <div className={"badge badge-opsera mr-2 d-flex"}><div className={"h-100 file-type-badge"}>{fileType(data?.name)}</div></div>
+                <div className={`file-name ${data.invalid ? 'file-error' : ''}`}>{data.name}</div>
+                <div className="file-size ml-2">({fileSize(data.size)})</div>
+                {data.invalid && <span className='file-error-message'>({errorMessage})</span>}
+                <div className="ml-3 danger-red pointer fa fa-trash my-auto" onClick={() => removeFile()} />
               </div>
             )}
         </div>
@@ -314,7 +300,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
   const getValidateButton = () => {
     if (unsupportedFiles.length === 0 && validFiles.length && pipelineWizardModel.getData("xmlFileContent").length === 0 && pipelineWizardModel.getData("csvFileContent").length === 0) {
       return (
-        <Button variant="primary" onClick={() => validateFiles()}>Process File</Button>
+        <Button variant="primary" className={"mt-3"} onClick={() => validateFiles()}>Process File</Button>
       );
     }
   };
@@ -322,21 +308,21 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
   const getBody = () => {
     if (pipelineWizardModel.getData("recordId") && pipelineWizardModel.getData("recordId").length > 0) {
       return (
-        <Container>
-          <div className="d-flex flex-column align-items-center my-4">
-            <Row className="my-3">
+        <div>
+          <div className="my-4 w-100">
+            <div className="my-3">
               <SfdcPipelineWizardUploadComponentTypesRadioInput
                 pipelineWizardModel={pipelineWizardModel}
                 setPipelineWizardModel={setPipelineWizardModel}
               />
-            </Row>
+            </div>
             {getFileUploadBody()}
             {getFilesBody()}
             {getValidateButton()}
           </div>
           {getXMLView()}
-          {getCSVView()}
-        </Container>
+          {getCsvView()}
+        </div>
       );
     }
   };
@@ -353,11 +339,13 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
 
   return (
     <div>
-      <div className="page-description px-3 py-2">Upload components as a csv file or Upload an XML to use for
-        deployment.
+      <div className="my-2">
+        Upload components as a csv file or Upload an XML to use for deployment.
       </div>
       {getErrorDialog()}
-      {getBody()}
+      <div className={"file-display-container"}>
+        {getBody()}
+      </div>
     </div>
   );
 }

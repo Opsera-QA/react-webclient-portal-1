@@ -158,7 +158,10 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
 
   const createNewPipelineWizardRecord = async (newPipelineWizardModel = pipelineWizardModel, moveToNextScreen) => {
     try {
-      setCreatingNewRecord(true);
+      if (moveToNextScreen === true) {
+        setCreatingNewRecord(true);
+      }
+
       const response = await sfdcPipelineActions.createNewRecordV2(getAccessToken, cancelTokenSource, newPipelineWizardModel);
       const newRecord = response?.data;
 

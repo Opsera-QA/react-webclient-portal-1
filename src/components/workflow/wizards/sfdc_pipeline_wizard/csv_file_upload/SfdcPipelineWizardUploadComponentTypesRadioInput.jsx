@@ -2,34 +2,29 @@ import React from "react";
 import PropTypes from "prop-types";
 import RadioButtonInputContainer from "components/common/inputs/radio/RadioButtonInputContainer";
 import RadioButtonOption from "components/common/inputs/radio/RadioButtonOption";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 
 function SfdcPipelineWizardUploadComponentTypesRadioInput({ fieldName, pipelineWizardModel, setPipelineWizardModel, disabled}) {
   return (
     <RadioButtonInputContainer dataObject={pipelineWizardModel} fieldName={fieldName}>
-      <Row className={"py-1"}>
-        <Col sm={12} md={4}>
-          <RadioButtonOption
-            fieldName={fieldName}
-            dataObject={pipelineWizardModel}
-            setDataObject={setPipelineWizardModel}
-            disabled={disabled}
-            value={"sfdc"}
-            label={<div><strong>From SFDC</strong></div>}
-          />
-        </Col>
-        <Col sm={12} md={4}>
-          <RadioButtonOption
-            fieldName={fieldName}
-            dataObject={pipelineWizardModel}
-            setDataObject={setPipelineWizardModel}
-            disabled={disabled}
-            value={"git"}
-            label={<div><strong>From GIT</strong></div>}
-          />
-        </Col>
-      </Row>
+      <div className={"d-flex"}>
+        <RadioButtonOption
+          fieldName={fieldName}
+          dataObject={pipelineWizardModel}
+          setDataObject={setPipelineWizardModel}
+          disabled={disabled}
+          value={"sfdc"}
+          label={<div><strong>From SFDC</strong></div>}
+        />
+        <div className={"mx-3"} />
+        <RadioButtonOption
+          fieldName={fieldName}
+          dataObject={pipelineWizardModel}
+          setDataObject={setPipelineWizardModel}
+          disabled={disabled}
+          value={"git"}
+          label={<div><strong>From Git</strong></div>}
+        />
+      </div>
     </RadioButtonInputContainer>
   );
 }
