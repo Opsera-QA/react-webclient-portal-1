@@ -1,6 +1,5 @@
 import baseActions from "utils/actionsBase";
 import {axiosApiService} from "api/apiService";
-import {axiosApiGetCall} from "api/apiServiceV2";
 
 // TODO: This is getting large. I think it might be wise to separate it into separate files
 //  (pipeline actions being add/get/update/delete, catalog for catalog related,
@@ -22,7 +21,7 @@ pipelineActions.getWorkflowTemplatesV2 = async (getAccessToken, cancelTokenSourc
     },
   };
 
-  let apiUrl = `/pipelines/workflows`;
+  let apiUrl = `/pipelines/workflows/v2`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
