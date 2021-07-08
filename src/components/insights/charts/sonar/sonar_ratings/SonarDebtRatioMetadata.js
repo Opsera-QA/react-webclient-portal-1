@@ -1,10 +1,14 @@
-const SonarBugsMetricScorecardMetaData = {
+const SonarDebtRatioMetaData = {
   idProperty: "_id",
   type: "Sonar Bugs Metric Scorecard",
   fields: [
     {
       label: "Run",
       id: "run_count",
+    },
+    {
+      label: "Page Size",
+      id: "pageSize",
     },
     {
       label: "Pipeline Id",
@@ -20,26 +24,14 @@ const SonarBugsMetricScorecardMetaData = {
     },
     {
       label: "Date",
-      id: "timestamp",
+      id: "date",
     },
     {
-      label: "Bugs",
-      id: "sonarLatestMeasureValue",
-    },
-    {
-      label: "Trend",
-      id: "status",
-    },
-    {
-      label: "Language",
-      id: "sonarPrimaryLanguage",
-    },
-    {
-      label: "Page Size",
-      id: "pageSize",
+      label: "Technical Debt Ratio",
+      id: "technical_debt_ratio",
     },
   ],
   newObjectFields: {},
 };
 
-export default SonarBugsMetricScorecardMetaData;
+export default SonarDebtRatioMetaData;

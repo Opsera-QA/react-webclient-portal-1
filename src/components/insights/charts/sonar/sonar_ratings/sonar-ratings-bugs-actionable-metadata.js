@@ -1,6 +1,6 @@
-const SonarVulnerabilitiesMetricScorecardMetaData = {
+const SonarRatingsBugsActionableMetadata = {
   idProperty: "_id",
-  type: "Sonar Vulnerabilities Metric Scorecard",
+  type: "Sonar Ratings Insights Table Details",
   fields: [
     {
       label: "Run",
@@ -23,23 +23,11 @@ const SonarVulnerabilitiesMetricScorecardMetaData = {
       id: "timestamp",
     },
     {
-      label: "Vulnerabilities",
+      label: "Bugs",
       id: "sonarLatestMeasureValue",
-    },
-    {
-      label: "Trend",
-      id: "status",
-    },
-    {
-      label: "Language",
-      id: "sonarPrimaryLanguage",
-    },
-    {
-      label: "Page Size",
-      id: "pageSize",
     },
   ],
   newObjectFields: {},
 };
 
-export default SonarVulnerabilitiesMetricScorecardMetaData;
+export default SonarRatingsBugsActionableMetadata;
