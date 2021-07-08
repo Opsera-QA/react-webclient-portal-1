@@ -91,7 +91,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
       setError("No SFDC Tool is associated with this Git Task");
     }
 
-    newPipelineWizardModel.setData("fromGitTask", true);
+    newPipelineWizardModel.setData("fromGitTasks", true);
     newPipelineWizardModel.setData("sfdcDestToolId", sfdcDestToolId);
     newPipelineWizardModel.setData("gitTaskId", gitTaskId);
     newPipelineWizardModel.setData("sfdcToolId", sfdcToolId);
