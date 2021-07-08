@@ -115,8 +115,8 @@ function StepConfiguration({ plan, stepId, parentCallback, closeEditorPanel }) {
       </div>
       <div className="step-settings-body">
         <BooleanToggleInput dataObject={stepConfigurationModel} setDataObject={setStepConfigurationModel} fieldName={"active"}/>
-        <TextInputBase disabled={stepConfigurationModel.getData("active") !== true} dataObject={stepConfigurationModel} setDataObject={setStepConfigurationModel} fieldName={"name"} />
-        <StepConfigurationToolSelectInput disabled={lockTool || stepConfigurationModel.getData("active") !== true} dataObject={stepConfigurationModel} setDataObject={setStepConfigurationModel} />
+        <TextInputBase disabled={stepConfigurationModel?.getData("active") !== true} dataObject={stepConfigurationModel} setDataObject={setStepConfigurationModel} fieldName={"name"} />
+        <StepConfigurationToolSelectInput disabled={lockTool || stepConfigurationModel?.getData("active") !== true} dataObject={stepConfigurationModel} setDataObject={setStepConfigurationModel} />
         <StepConfigurationTagsInput setStepConfigurationModel={setStepConfigurationModel} stepConfigurationModel={stepConfigurationModel} />
       </div>
     </PipelineStepEditorPanelContainer>
