@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import DtoTopPagination from "components/common/pagination/DtoTopPagination";
 import DtoBottomPagination from "components/common/pagination/DtoBottomPagination";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 function PaginationContainer({ isLoading, filterDto, setFilterDto, loadData, children, scrollOnLoad }) {
   const getTopPaginator = () => {
@@ -27,6 +28,14 @@ function PaginationContainer({ isLoading, filterDto, setFilterDto, loadData, chi
     );
   };
 
+  const getBody = () => {
+    if (isLoading) {
+      return <LoadingDialog message={"Loading Data"} size={"sm"} />;
+    }
+
+    return (children);
+  };
+
   if (filterDto == null) {
     return children;
   }
@@ -34,7 +43,7 @@ function PaginationContainer({ isLoading, filterDto, setFilterDto, loadData, chi
   return (
     <div className="pagination-container">
       {getTopPaginator()}
-      {children}
+      {getBody()}
       {getBottomPaginator()}
     </div>
   );
