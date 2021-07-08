@@ -337,11 +337,26 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     }
   };
 
+  const getHelpText = () => {
+    return (
+      <div className="my-2">
+        <div>The file must match these requirements:</div>
+        <div>1. Component Qualified API Name should be given under the Component Name column in a CSV Upload file</div>
+        <div>2. Added, Removed, and Modified Operation Types are permitted</div>
+        <div>3. Wildcard entries (*) are not supported in Package XML</div>
+        <div>4. The maximum number of components supported is 10,000</div>
+        <div>5. Upload file can be of .csv/.xml extension only</div>
+        <div>6. The maximum file size supported is 500 KB</div>
+      </div>
+    );
+  };
+
   return (
     <div>
       <div className="my-2">
         Upload components as a csv file or Upload an XML to use for deployment.
       </div>
+      {getHelpText()}
       {getErrorDialog()}
       <div className={"file-display-container"}>
         {getBody()}
