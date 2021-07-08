@@ -11,14 +11,14 @@ import TaskDetailViewer from "components/git/git_task_details/activity_logs/acti
 import ExportPipelineActivityLogButton from "components/common/buttons/export/pipelines/ExportPipelineActivityLogButton";
 import TableBase from "components/common/table/TableBase";
 import TreeAndTableBase from "components/common/table/TreeAndTableBase";
-import PipelineActivityLogTree
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineActivityLogTree";
+import TaskActivityLogTree
+  from "components/git/git_task_details/activity_logs/TaskActivityLogTree";
 import {DialogToastContext} from "contexts/DialogToastContext";
-function GitTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadData, isLoading, pipeline, taskActivityFilterDto, setTaskActivityFilterDto, taskActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
+function GitAllTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadData, isLoading, pipeline, taskActivityFilterDto, setTaskActivityFilterDto, taskActivityTreeData, setCurrentLogTreePage, currentLogTreePage }) {
   const toastContext = useContext(DialogToastContext);
   const isMounted = useRef(false);
   const [currentRunNumber, setCurrentRunNumber] = useState(undefined);
-  const [currentStepName, setCurrentStepName] = useState(undefined);
+  const [currentTaskName, setCurrentTaskName] = useState(undefined);
   const [columns, setColumns] = useState([]);
 
   useEffect(() => {
@@ -55,12 +55,14 @@ function GitTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadData
   };
 
   const getFilteredData = () => {
-    if (currentRunNumber == null) {
+    if (currentTaskName === null || currentTaskName === undefined ) {
       return taskLogData;
     }
-
     return taskLogData.filter((item) => {
-      return item.run_count ? item.run_count === currentRunNumber : item;
+      if (currentRunNumber === "logs") {
+        return item.name === currentTaskName;
+      }
+      return item.name === currentTaskName && (currentRunNumber === null || currentRunNumber === undefined || item.run_count === currentRunNumber);
     });
   };
 
@@ -88,10 +90,10 @@ function GitTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadData
 
   const getTree = () => {
     return (
-      <PipelineActivityLogTree
-        pipelineLogTree={taskActivityTreeData}
+      <TaskActivityLogTree
+        taskLogTree={taskActivityTreeData}
         setCurrentRunNumber={setCurrentRunNumber}
-        setCurrentStepName={setCurrentStepName}
+        setCurrentTaskName={setCurrentTaskName}
         currentLogTreePage={currentLogTreePage}
         setCurrentLogTreePage={setCurrentLogTreePage}
       />
@@ -129,7 +131,7 @@ function GitTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadData
   );
 }
 
-GitTasksActivityLogsTable.propTypes = {
+GitAllTasksActivityLogsTable.propTypes = {
   taskLogData: PropTypes.array,
   isLoading: PropTypes.bool,
   taskActivityFilterDto: PropTypes.object,
@@ -142,4 +144,4 @@ GitTasksActivityLogsTable.propTypes = {
   currentLogTreePage: PropTypes.number
 };
 
-export default GitTasksActivityLogsTable;
+export default GitAllTasksActivityLogsTable;
