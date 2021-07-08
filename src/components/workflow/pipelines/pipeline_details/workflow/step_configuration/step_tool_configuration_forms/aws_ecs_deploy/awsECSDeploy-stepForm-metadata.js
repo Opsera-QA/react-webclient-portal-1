@@ -15,12 +15,23 @@ const awsECSDeployStepFormMetadata = {
       label: "Service Container Port",
       id: "ecsServiceContainerPort",
       isRequired: true
-    }
+    },
+    {
+      label: "Service Name",
+      id: "ecsServiceName",
+      isRequired: true
+    },
+    {
+      label: "Generate Dynamic Service Name?",
+      id: "dynamicServiceName",
+    },
   ],
   newObjectFields: {
     ecsServiceDockerStepId: "",
     ecsServiceTaskId: "",
-    ecsServiceContainerPort: ""
+    ecsServiceContainerPort: "",
+    ecsServiceName: "",
+    dynamicServiceName: false
   }
 };
 

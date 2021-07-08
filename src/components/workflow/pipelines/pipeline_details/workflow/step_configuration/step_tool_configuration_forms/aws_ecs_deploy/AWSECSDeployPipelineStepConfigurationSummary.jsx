@@ -23,6 +23,9 @@ function AWSECSDeployPipelineStepConfigurationSummaryPanel({ awsECSDeployPipelin
         <Col lg={6}>
           <TextFieldBase dataObject={awsECSDeployPipelineDataObject} fieldName={"ecsServiceContainerPort"}/>
         </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={awsECSDeployPipelineDataObject} fieldName={"ecsServiceName"}/>
+        </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
   );

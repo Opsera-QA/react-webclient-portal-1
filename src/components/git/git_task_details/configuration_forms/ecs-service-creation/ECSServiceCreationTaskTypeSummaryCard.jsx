@@ -29,7 +29,6 @@ function ECSServiceCreationTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurat
     <GitTasksSummaryCardContainer gitTasksDataDto={gitTasksData} isLoading={isLoading}>
       <div className="mb-2">
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"ecsClusterName"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"ecsServiceName"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"ecsServiceDesiredCount"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"ecsServiceVpcId"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"ecsServiceRequiresCompatibilities"} />

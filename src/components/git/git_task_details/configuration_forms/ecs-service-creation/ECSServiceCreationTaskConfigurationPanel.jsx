@@ -98,13 +98,6 @@ function ECSServiceCreationTaskConfigurationPanel({
         <TextInputBase
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
-          fieldName={"ecsServiceName"}
-        />
-      </Col>
-      <Col lg={12}>
-        <TextInputBase
-          dataObject={gitTasksConfigurationData}
-          setDataObject={setGitTasksConfigurationData}
           fieldName={"ecsServiceDesiredCount"}
         />
       </Col>

@@ -9,6 +9,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DockerPushStepSelectInput from "./inputs/DockerPushStepSelectInput";
 import TaskSelectInput from "./inputs/TaskSelectInput";
+import DynamicNameToggleInput from "./inputs/DynamicNameToggleInput";
 
 function AWSECSDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan,stepId }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -59,6 +60,17 @@ function AWSECSDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallb
         dataObject={ecsServicesModel}
         setDataObject={setAWSECSDeployModel}
       />
+      <DynamicNameToggleInput
+        dataObject={ecsServicesModel}
+        setDataObject={setAWSECSDeployModel}
+        fieldName={"dynamicServiceName"}
+      />
+      {ecsServicesModel && !ecsServicesModel?.getData("dynamicServiceName") &&
+      (<TextInputBase
+        dataObject={ecsServicesModel}
+        setDataObject={setAWSECSDeployModel}
+        fieldName={"ecsServiceName"}
+      />)}
       <TextInputBase
         dataObject={ecsServicesModel}
         setDataObject={setAWSECSDeployModel}
