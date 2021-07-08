@@ -101,7 +101,7 @@ function AvgDeploymentDuration({ dashboardData, toggleDynamicPanel, selectedData
           title={
             !isLoading && metrics[0] ? (
               getAverage()
-            ) : (
+            ) : !isLoading ? 0 : (
               <FontAwesomeIcon
                 icon={faSpinner}
                 spin

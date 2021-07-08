@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import TotalPipelinesExecuted from "components/insights/summary/TotalPipelinesExecuted";
 import PipelinesPassedWithQualityAndSecurity from "components/insights/summary/pipeline_details/PipelinesPassedWithQualityAndSecurity";
@@ -18,6 +18,11 @@ import AvgDeploymentDuration from "components/insights/summary/pipeline_details/
 function PipelineDetails({ dashboardData }) {
   const [selectedDataBlock, setSelectedDataBlock] = useState("");
   const [selectedDataBlockTableData, setSelectedDataBlockTableData] = useState([]);
+
+  useEffect(()=>{
+    setSelectedDataBlock("");
+    setSelectedDataBlockTableData([]);
+  },[dashboardData]);
 
   const getDynamicPanel = () => {
     switch (selectedDataBlock) {
