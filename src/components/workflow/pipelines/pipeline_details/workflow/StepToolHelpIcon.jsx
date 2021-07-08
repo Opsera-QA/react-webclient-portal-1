@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
+import PipelineStepSetupHelpDocumentation
+  from "components/common/help/documentation/pipelines/step_configuration/PipelineStepSetupHelpDocumentation";
 
 function StepToolHelpIcon({type, tool, className, iconClassName}) {
   // TODO: Alphabetize when adding new help panels
@@ -60,7 +62,7 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
     }
 
     if (type === "step") {
-      return null;
+      return <PipelineStepSetupHelpDocumentation />;
     }
 
     return (getToolHelpPanel());
