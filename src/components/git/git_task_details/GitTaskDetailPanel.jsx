@@ -8,10 +8,9 @@ import CustomTab from "components/common/tabs/CustomTab";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 import GitTaskSummaryPanel
   from "components/git/git_task_details/GitTaskSummaryPanel";
-import GitTasksActivityLogsTable
-  from "components/git/git_task_details/activity_logs/GitTasksActivityLogsTable";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
+import TaskActivityPanel from "components/git/git_task_details/activity_logs/TaskActivityPanel";
 
 function GitTaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleData, runTask }) {
   const [activeTab, setActiveTab] = useState(runTask ? "settings" : "summary");
@@ -59,12 +58,7 @@ function GitTaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRol
       case "logs":
         return (
           <DetailPanelContainer>
-            <GitTasksActivityLogsTable
-              gitTasksData={gitTasksData}
-              setGitTasksData={setGitTasksData}
-              loadData={loadData}
-              allLogs={false}
-            />
+            <TaskActivityPanel />
           </DetailPanelContainer>
         );
       default:

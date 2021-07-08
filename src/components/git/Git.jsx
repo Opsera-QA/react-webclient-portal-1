@@ -5,7 +5,7 @@ import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import GitTasksView from "./GitTasksView";
-import GitTasksActivityLogsTable from "./git_task_details/activity_logs/GitTasksActivityLogsTable";
+import TaskAllActivityPanel from "components/git/git_task_details/activity_logs/TaskAllActivityPanel";
 
 function GitLanding() {
   const { tab } = useParams();
@@ -30,7 +30,7 @@ function GitLanding() {
       case "gitTasks":
         return <GitTasksView />;
       case "activity":
-        return <GitTasksActivityLogsTable allLogs={true} />;
+        return <TaskAllActivityPanel/>;
       default:
         return null;
     }

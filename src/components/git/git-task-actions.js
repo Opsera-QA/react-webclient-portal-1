@@ -91,4 +91,61 @@ gitTasksActions.processSyncRequest = async (postBody, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
+gitTasksActions.getTaskActivityLogs = async (getAccessToken, cancelTokenSource, id, runCountArray, taskActivityFilterDto) => {
+  const search = taskActivityFilterDto?.getData("search");
+  const urlParams = {
+    params: {
+      search: search ? search : undefined,
+      runCountArray: runCountArray,
+      fields: ["run_count", "name", "log_type", "type", "message", "status", "createdAt"]
+    },
+  };
+
+  const apiUrl = `/tools/git/logs/${id}/activity/v2/`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+gitTasksActions.getAllTaskActivityLogs = async (getAccessToken, cancelTokenSource, taskNameArray, taskActivityFilterDto) => {
+  const search = taskActivityFilterDto?.getData("search");
+  const urlParams = {
+    params: {
+      search: search ? search : undefined,
+      taskNameArray: taskNameArray,
+      fields: ["run_count", "name", "log_type", "type", "message", "status", "createdAt"]
+    },
+  };
+
+  const apiUrl = `/tools/git/alllogs/activity/v2/`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+gitTasksActions.getTaskActivityLogTree = async (getAccessToken, cancelTokenSource, id, taskActivityFilterDto) => {
+  const search = taskActivityFilterDto?.getData("search");
+  const urlParams = {
+    params: {
+      search: search ? search : undefined
+    },
+  };
+
+  const apiUrl = `/tools/git/logs/${id}/activity/v2/tree`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+gitTasksActions.getTaskActivityLogTypeTree = async (getAccessToken, cancelTokenSource, taskActivityFilterDto) => {
+  const search = taskActivityFilterDto?.getData("search");
+  const urlParams = {
+    params: {
+      search: search ? search : undefined
+    },
+  };
+
+  const apiUrl = `/tools/git/logs/activity/v2/alltaskstree`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+gitTasksActions.getTaskActivityLogById = async (getAccessToken, cancelTokenSource, id) => {
+  const apiUrl = `/tools/git/logs/activity/v2/${id}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 export default gitTasksActions;
