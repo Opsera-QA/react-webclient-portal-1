@@ -313,13 +313,18 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     }
 
     return (
-      <div className={"mt-2"}>
-        <CustomTabContainer>
-          <CustomTab activeTab={activeTab} tabText={"Manual Pipeline Wizard Run"} handleTabClick={handleTabClick} tabName={"manual"}
-                     toolTipText={"Use SFDC Component Selection Deployment"} icon={faSalesforce}  />
-          <CustomTab activeTab={activeTab} tabText={"XML/File Upload Process"} handleTabClick={handleTabClick} tabName={"automatic"}
-                     toolTipText={"Deploy using XML or an Excel file"} icon={faFileCode}  />
-        </CustomTabContainer>
+      <div>
+        <div className={"mt-2"}>
+          Would you like to start a manual Pipeline Wizard run or use the XML/File Upload Process?
+        </div>
+        <div className={"mt-2"}>
+          <CustomTabContainer>
+            <CustomTab activeTab={activeTab} tabText={"Manual Pipeline Wizard Run"} handleTabClick={handleTabClick} tabName={"manual"}
+                       toolTipText={"Use SFDC Component Selection Deployment"} icon={faSalesforce}  />
+            <CustomTab activeTab={activeTab} tabText={"XML/File Upload Process"} handleTabClick={handleTabClick} tabName={"automatic"}
+                       toolTipText={"Deploy using XML or an Excel file"} icon={faFileCode}  />
+          </CustomTabContainer>
+        </div>
       </div>
     );
   };
@@ -356,9 +361,6 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     return (
       <div>
         <div className="h5">SalesForce Pipeline Run: Initialization</div>
-        <div className={"mt-2"}>
-          Would you like to start a manual Pipeline Wizard run or use the XML/File Upload Process?
-        </div>
         {getTabContainer()}
         <div className="my-3">
           {getView()}
