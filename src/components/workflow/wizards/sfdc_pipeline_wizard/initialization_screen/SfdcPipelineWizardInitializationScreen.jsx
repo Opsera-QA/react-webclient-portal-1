@@ -256,7 +256,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
           <div>
             {`
           The SFDC Pipeline Run Wizard was previously initiated on ${format(new Date(existingRecord?.createdAt), "yyyy-MM-dd', 'hh:mm a")} by 
-          ${existingRecord?.owner_name || "ERROR PULLING OWNER'S NAME"}. 
+          ${existingRecord?.owner_name || "ERROR PULLING OWNER'S NAME"} but was not completed.
           `}
           </div>
           <div className={"mt-2"}>
