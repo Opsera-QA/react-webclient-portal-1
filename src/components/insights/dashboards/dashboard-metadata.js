@@ -1,4 +1,5 @@
 import regexHelpers from "utils/regexHelpers";
+import {capitalizeFirstLetter} from "../../common/helpers/string-helpers";
 
 const dashboardMetadata = {
   idProperty: "_id",
@@ -8,7 +9,7 @@ const dashboardMetadata = {
     return `/insights/dashboards/${record?.getData("_id")}/viewer`;
   },
   detailViewTitle: function (record) {
-    return `Dashboard Details [${record?.getData("name")}]`;
+    return ` ${capitalizeFirstLetter(record?.getData("name"))}`;
   },
   fields: [
     {
