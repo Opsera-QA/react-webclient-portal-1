@@ -266,7 +266,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
             {`If you continue, you will be able to adjust all parameters that were previously applied.`}
           </div>
           <div className={"mt-2"}>
-            {`Please note, if someone else is using Pipeline Wizard at the same time, this will lead to unintended side effects.`}
+            {`Please note, using the SFDC Pipeline Run Wizard at the same time as someone else for the same use case will lead to unintended side effects.`}
           </div>
           <SaveButtonContainer>
             <Button className={"mr-2"} size={"sm"} variant="primary" disabled={isLoading}
