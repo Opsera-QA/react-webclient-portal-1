@@ -2,11 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 
-function InlineSfdcComponentTypesFilter({ componentTypes, filterDto, setFilterDto, className, inline}) {
-  const setData = (fieldName, value) => {
-    let newDataObject = filterDto;
-    newDataObject.setData(fieldName, value.value);    
-    setFilterDto({...newDataObject});
+function InlineSfdcComponentTypesFilter({ componentTypes, fieldName, filterDto, setFilterDto, className, loadData}) {
+  const setDataFunction = (fieldName, value) => {
+    let newFilterDto = filterDto;
+    newFilterDto.setData(fieldName, value);
+    loadData({...newFilterDto});
   };
 
   if (filterDto == null) {
@@ -16,13 +16,13 @@ function InlineSfdcComponentTypesFilter({ componentTypes, filterDto, setFilterDt
   return (
     <FilterSelectInputBase
       className={className}
-      inline={inline}
-      fieldName={"classFilter"}
+      inline={true}
+      fieldName={fieldName}
       placeholderText={"Filter By Component"}
       setDataObject={setFilterDto}
       dataObject={filterDto}
       selectOptions={componentTypes}
-      setDataFunction={setData}
+      setDataFunction={setDataFunction}
     />
   );
 }
@@ -31,8 +31,13 @@ InlineSfdcComponentTypesFilter.propTypes = {
   componentTypes: PropTypes.arrayOf(PropTypes.object),
   filterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
+  fieldName: PropTypes.string,
   className: PropTypes.string,
-  inline: PropTypes.bool
+  loadData: PropTypes.func,
+};
+
+InlineSfdcComponentTypesFilter.defaultProps = {
+  fieldName: "componentFilter"
 };
 
 export default InlineSfdcComponentTypesFilter;

@@ -6,7 +6,7 @@ import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInp
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 
 // TODO: Rename file to match
-function RuleValueMultiSelectInput({ fieldName, dataObject, ruleField, setDataObject, disabled, showLabel, className, postBody, modifiedFiles, componentTypes}) {
+function RuleValueMultiSelectInput({ fieldName, dataObject, ruleField, setDataObject, disabled, showLabel, className, fetchAttribute, modifiedFiles, componentTypes, pipelineWizardModel}) {
   const { getAccessToken } = useContext(AuthContext);
   const [ruleValues, setRuleValues] = useState([]);
   const isMounted = useRef(false);
@@ -55,13 +55,8 @@ function RuleValueMultiSelectInput({ fieldName, dataObject, ruleField, setDataOb
   };
 
   const getRuleValues = async (cancelSource = cancelTokenSource) => {
-    let newPostBody = postBody;
-
     if (ruleField && ruleField !== "") {
-      newPostBody.innerAttribute = ruleField;
-      newPostBody.componentTypes = componentTypes;
-
-      const response = await sfdcPipelineActions.getSfdcComponentListFromPipelineStorageV2(getAccessToken, cancelSource, newPostBody);
+      const response = await sfdcPipelineActions.getSfdcComponentListValues(getAccessToken, cancelSource, pipelineWizardModel, ruleField, fetchAttribute, componentTypes);
       const ruleValues = response?.data;
 
       if (isMounted?.current === true && Array.isArray(ruleValues) && ruleValues.length > 0) {
@@ -104,7 +99,8 @@ RuleValueMultiSelectInput.propTypes = {
   disabled: PropTypes.bool,
   className: PropTypes.string,
   ruleField: PropTypes.string,
-  postBody: PropTypes.object,
+  fetchAttribute: PropTypes.string,
+  pipelineWizardModel: PropTypes.object,
   modifiedFiles: PropTypes.array,
   componentTypes: PropTypes.array
 };

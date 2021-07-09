@@ -42,54 +42,19 @@
 .drop-message {
   text-align: center;
   color: #352f54;
-    font-family: Arial, sans-serif;
+  font-family: Arial, sans-serif;
   font-size: 20px;
 }
 
 .file-display-container {
-  width: 805px;
-}
-
-.file-status-bar {
-  width: 100%;
-  vertical-align: top;
-  margin-top: 10px;
-  margin-bottom: 20px;
-  position: relative;
-  line-height: 50px;
-  height: 50px;
-}
-
-.file-status-bar > div {
-  overflow: hidden;
-}
-
-.file-type {
-  display: inline-block !important;
-  position: absolute;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 13px;
-  margin-top: 25px;
-  padding: 0 4px;
-  border-radius: 2px;
-  box-shadow: 1px 1px 2px #3d3b36;
-  color: #fff;
-  background: #352f54;
-  text-transform: uppercase;
+  min-width: 805px;
 }
 
 .file-name {
-  display: inline-block;
-  vertical-align: top;
-  margin-left: 50px;
   color: #3d3b36;
 }
 
 .file-error {
-  display: inline-block;
-  vertical-align: top;
-  margin-left: 50px;
   color: #9aa9bb;
 }
 
@@ -97,34 +62,14 @@
   color: #dc3545;
 }
 
-.file-type-logo {
-  width: 50px;
-  height: 50px;
-  /*background: url(/img/generic.png) no-repeat center center;*/
-  background-size: 100%;
-  position: absolute;
-}
-
 .file-size {
-  display: inline-block;
-  vertical-align: top;
-  margin-left: 10px;
-  margin-right: 5px;
   color: #444242;
-  font-weight: 700;
-  font-size: 14px;
-}
-
-.file-remove {
-  position: absolute;
-  top: 20px;
-  right: 10px;
-  line-height: 15px;
-  cursor: pointer;
-  color: #dc3545;
-  margin-right: -10px;
 }
 
 .opacity-half {
   opacity: 0.5;
+}
+
+.file-type-badge {
+    margin-top: 2px;
 }

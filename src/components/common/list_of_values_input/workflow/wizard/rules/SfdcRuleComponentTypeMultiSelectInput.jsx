@@ -5,7 +5,7 @@ import {AuthContext} from "contexts/AuthContext";
 import MultiSelectInputBase from "components/common/inputs/select/MultiSelectInputBase";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 
-function SfdcRuleComponentTypeMultiSelectInput({fieldName, className, dataObject, setDataObject, disabled, showLabel, postBody, sfdcModified}) {
+function SfdcRuleComponentTypeMultiSelectInput({fieldName, className, dataObject, setDataObject, disabled, showLabel, fetchAttribute, pipelineWizardModel}) {
   const { getAccessToken } = useContext(AuthContext);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -32,7 +32,7 @@ function SfdcRuleComponentTypeMultiSelectInput({fieldName, className, dataObject
       source.cancel();
       isMounted.current = false;
     };
-  }, [sfdcModified]);
+  }, []);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -53,9 +53,8 @@ function SfdcRuleComponentTypeMultiSelectInput({fieldName, className, dataObject
   };
 
   const getComponentTypes = async (cancelSource = cancelTokenSource) => {
-    let newPostBody = postBody;
-    newPostBody.innerAttribute = "componentType";
-    const response = await sfdcPipelineActions.getSfdcComponentListFromPipelineStorageV2(getAccessToken, cancelSource, newPostBody);
+    const response = await sfdcPipelineActions.getSfdcComponentListValues(getAccessToken, cancelSource, pipelineWizardModel, "componentType", fetchAttribute);
+
     const componentTypes = response?.data;
 
     if (isMounted?.current === true && Array.isArray(componentTypes) && componentTypes.length > 0) {
@@ -93,8 +92,8 @@ SfdcRuleComponentTypeMultiSelectInput.propTypes = {
   disabled: PropTypes.bool,
   className: PropTypes.string,
   showLabel: PropTypes.bool,
-  postBody: PropTypes.object,
-  sfdcModified: PropTypes.array
+  fetchAttribute: PropTypes.string,
+  pipelineWizardModel: PropTypes.object
 };
 
 SfdcRuleComponentTypeMultiSelectInput.defaultProps = {

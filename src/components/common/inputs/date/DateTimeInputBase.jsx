@@ -19,6 +19,7 @@ function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFuncti
     }
   }, [dataObject]);
 
+  // TODO: When creating next date input, ensure fieldName is sent back for more complex functions
   const validateAndSetData = (value) => {
     let newDataObject;
     if (setDataFunction) {
@@ -38,8 +39,8 @@ function DateTimeInputBase({ fieldName, dataObject, setDataObject, setDataFuncti
       <InputLabel field={field}/>
       <DateTimePicker
         date={showDate}
-        min={minDate}
-        max={maxDate}
+        min={new Date(minDate)}
+        max={new Date(maxDate)}
         time={showTime}
         disabled={disabled}
         dropUp={dropUp}

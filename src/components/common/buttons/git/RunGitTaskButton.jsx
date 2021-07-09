@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useRef, useEffect} from 'react';
 import PropTypes from "prop-types";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -6,28 +6,49 @@ import {faPlay} from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
-import SFDCViewOverlay from "components/git/git_task_details/configuration_forms/sfdc-org-sync/SFDCViewOverlay";
+import GitTaskSfdcPipelineWizardOverlay from "components/git/git_task_details/configuration_forms/sfdc-org-sync/GitTaskSfdcPipelineWizardOverlay";
 import gitTasksActions from "components/git/git-task-actions";
+import axios from "axios";
 
 function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadData }) {
   let toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
-  const handleRunGitTask = async() => {    
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
+    loadData().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
+
+  const handleRunGitTask = async () => {
     if (gitTasksData.getData("type") === "sync-sfdc-repo") {  
       // open wizard views
-      toastContext.showOverlayPanel(<SFDCViewOverlay gitTasksData={gitTasksData}/>);
+      toastContext.showOverlayPanel(<GitTaskSfdcPipelineWizardOverlay gitTasksData={gitTasksData}/>);
       // return;
     }    
     else if (gitTasksData.getData("type") === "sync-branch-structure") {    
       // pipeline action call to trigger branch conversion
       try{
         setIsLoading(true);
-        let postBody = {
-          "gitTaskId":gitTasksData.getData("_id")
-        };
-        await sfdcPipelineActions.gitTaskTrigger(postBody, getAccessToken);
+        await sfdcPipelineActions.triggerGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData.getData("_id"));
       } catch (error) {
         toastContext.showLoadingErrorDialog(error);
         setIsLoading(false);

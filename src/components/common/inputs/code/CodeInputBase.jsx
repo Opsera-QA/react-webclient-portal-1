@@ -11,6 +11,7 @@ import "ace-builds/src-noconflict/mode-powershell";
 import "ace-builds/src-noconflict/mode-csharp";
 import "ace-builds/src-noconflict/mode-fsharp";
 import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/mode-xml";
 ace.config.set('basePath', 'ace-builds/');
 
 function CodeInputBase({value, inputId, mode, theme, isLoading, disabled, setDataFunction}) {

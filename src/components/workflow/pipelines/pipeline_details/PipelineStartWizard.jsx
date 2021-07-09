@@ -3,8 +3,9 @@ import PropTypes from "prop-types";
 import {faWandMagic} from "@fortawesome/pro-light-svg-icons";
 import CenterOverlayContainer from "components/common/overlays/center/CenterOverlayContainer";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import ConfirmResumePipeline from "components/workflow/wizards/sfdc_pipeline_wizard/ConfirmResumePipeline";
-import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/sfdcPipelineWizard";
+import ConfirmResumePipeline from "components/workflow/wizards/ConfirmResumePipeline";
+import SfdcPipelineWizard from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
+import FullScreenCenterOverlayContainer from "components/common/overlays/center/FullScreenCenterOverlayContainer";
 
 function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, pipeline, handleClose, handlePipelineWizardRequest, refreshPipelineActivityData }) {
   const toastContext = useContext(DialogToastContext);
@@ -18,7 +19,7 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, p
     if (pipelineOrientation === "middle") {
       return (
         <div className="warning-text pl-4 mt-1">
-          Warning! This pipeline is in an failed or incomplete state and is no longer running.  If you proceed, this will clear
+          Warning! This pipeline is in a failed or incomplete state and is no longer running.  If you proceed, this will clear
           the current state of the pipeline and begin a brand new run.
         </div>
       );
@@ -47,7 +48,7 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, p
   };
 
   return (
-    <CenterOverlayContainer
+    <FullScreenCenterOverlayContainer
       closePanel={closePanel}
       showPanel={true}
       titleText={`Pipeline Start Wizard`}
@@ -57,7 +58,7 @@ function PipelineStartWizard( { pipelineType, pipelineId, pipelineOrientation, p
       showCloseButton={false}
     >
       {getBody()}
-    </CenterOverlayContainer>
+    </FullScreenCenterOverlayContainer>
   );
 
 }

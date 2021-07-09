@@ -13,7 +13,7 @@ import TextInputBase from "components/common/inputs/text/TextInputBase";
 import TagManager from "components/common/inputs/tags/TagManager";
 import { Button } from "react-bootstrap";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import SFDCViewOverlay from "./configuration_forms/sfdc-org-sync/SFDCViewOverlay";
+import GitTaskSfdcPipelineWizardOverlay from "components/git/git_task_details/configuration_forms/sfdc-org-sync/GitTaskSfdcPipelineWizardOverlay";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlay,
@@ -70,7 +70,7 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
   const handleRunTask = () => {
     if (gitTasksData.getData("type") === "sync-sfdc-repo") {  
       // open wizard views
-      toastContext.showOverlayPanel(<SFDCViewOverlay gitTasksData={gitTasksData}/>);
+      toastContext.showOverlayPanel(<GitTaskSfdcPipelineWizardOverlay gitTasksData={gitTasksData}/>);
       return;
     }    
     if (gitTasksData.getData("type") === "sync-branch-structure") {  
