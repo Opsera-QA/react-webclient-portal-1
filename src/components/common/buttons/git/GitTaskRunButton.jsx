@@ -87,7 +87,7 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAll
     );
   };
 
-  if (gitTasksData?.type === "sfdc-cert-gen" || gitTasksData.getData("type") === "ecs_service_creation" || gitTasksData.getData("type") === "ecs_cluster_creation") {
+  if (gitTasksData.getData("type") === "ecs_service_creation" || gitTasksData.getData("type") === "ecs_cluster_creation") {
     return null;
   }
 
