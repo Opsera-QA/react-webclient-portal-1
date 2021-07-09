@@ -122,7 +122,7 @@ function SfdcPipelineWizardGitRollbackModeButton({pipelineWizardModel, setPipeli
   return (
     <div className={className}>
       <div className={"d-flex"}>
-        <Button size={size} variant="outline-success" disabled={isLoading || filteredFileCount?.length > 0} onClick={() => submitFilteredFiles()}>
+        <Button size={size} variant="outline-success" disabled={isLoading || filteredFileCount > 0} onClick={() => submitFilteredFiles()}>
           <span><IconBase icon={icon} fixedWidth className="mr-2"/>{getLabel()}</span>
         </Button>
       </div>
