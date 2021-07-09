@@ -12,6 +12,10 @@ import OpseraDeploymentFreqStatsFailureSummaryPanel
   from "../opsera/OpseraDeploymentFreqStats/OpseraDeploymentFreqStatsFailureSummaryPanel";
 import PipelineByStatusSuccessfulTable from "../opsera/bar_chart/pipeline_by_status/PipelineByStatusSuccessfulTable";
 import PipelineByStatusFailedTable from "../opsera/bar_chart/pipeline_by_status/PipelineByStatusFailedTable";
+import SonarRatingsBugsSummaryPanel from "../sonar/sonar_ratings/SonarRatingsBugsSummaryPanel";
+import SonarRatingsVulnerabilitiesSummaryPanel from "../sonar/sonar_ratings/SonarRatingsVulnerabilitiesSummaryPanel";
+import SonarRatingsDebtRatioSummaryPanel from "../sonar/sonar_ratings/SonarRatingsDebtRatioSummaryPanel";
+
 
 function ChartSummaryPanelWrapper({ dashboardData, kpiConfiguration, chartModel, kpiIdentifier, pipelineName, currentDate, setActiveTab }) {
   const getStepConfigurationSummary = () => {
@@ -142,6 +146,36 @@ function ChartSummaryPanelWrapper({ dashboardData, kpiConfiguration, chartModel,
       case "status-by-pipeline-failed":
         return (
           <PipelineByStatusFailedTable
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            chartModel={chartModel}
+            setActiveTab={setActiveTab}
+            pipelineName={pipelineName}
+          />
+        );
+      case "sonar-ratings-bugs":
+        return (
+          <SonarRatingsBugsSummaryPanel
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            chartModel={chartModel}
+            setActiveTab={setActiveTab}
+            pipelineName={pipelineName}
+          />
+        );
+      case "sonar-ratings-vulnerabilities":
+        return (
+          <SonarRatingsVulnerabilitiesSummaryPanel
+            dashboardData={dashboardData}
+            kpiConfiguration={kpiConfiguration}
+            chartModel={chartModel}
+            setActiveTab={setActiveTab}
+            pipelineName={pipelineName}
+          />
+        );
+      case "sonar-ratings-debt-ratio":
+        return (
+          <SonarRatingsDebtRatioSummaryPanel
             dashboardData={dashboardData}
             kpiConfiguration={kpiConfiguration}
             chartModel={chartModel}
