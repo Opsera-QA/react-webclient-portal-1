@@ -15,12 +15,13 @@ function SfdcPipelineWizardUploadComponentTypesRadioInput({ fieldName, pipelineW
           value={"sfdc"}
           label={<div><strong>From SFDC</strong></div>}
         />
-        <div className={"mx-3"} />
+        <div className={"mx-3"}/>
         <RadioButtonOption
           fieldName={fieldName}
           dataObject={pipelineWizardModel}
           setDataObject={setPipelineWizardModel}
           disabled={disabled}
+          visible={pipelineWizardModel?.getData("fromGitTasks") === false}
           value={"git"}
           label={<div><strong>From Git</strong></div>}
         />

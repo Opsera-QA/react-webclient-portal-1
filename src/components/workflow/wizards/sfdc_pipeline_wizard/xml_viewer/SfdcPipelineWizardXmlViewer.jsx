@@ -203,7 +203,7 @@ const SfdcPipelineWizardXmlViewer = (
             <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-2" />
             Back
           </Button>
-          <Button variant="success" size="sm" onClick={() => {createJenkinsJob();}} disabled={isSaving}>
+          <Button variant="success" size="sm" onClick={() => {createJenkinsJob();}} disabled={isSaving || (pipelineWizardModel.getData("isRollBack") && pipelineWizardModel.getData("destructiveXml")?.length === 0)}>
             <IconBase className={"mr-2"} isLoading={isSaving} icon={faCheck} />
             Proceed
           </Button>

@@ -9,7 +9,7 @@ import axios from "axios";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 
-function SfdcPipelineWizardGitRollbackModeButton({pipelineWizardModel, setPipelineWizardScreen, size, className, icon}) {
+function SfdcPipelineWizardGitRollbackModeButton({pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, size, className, filteredFileCount, icon}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -56,6 +56,52 @@ function SfdcPipelineWizardGitRollbackModeButton({pipelineWizardModel, setPipeli
     }
   };
 
+  const submitFilteredFiles = async () => {
+    try {
+      setIsLoading(true);
+      let newDataObject = {...pipelineWizardModel};
+      newDataObject.setData("isRollBack", true);
+      setPipelineWizardModel({...newDataObject});
+
+      if (pipelineWizardModel.getData("isProfiles") === true) {
+        await saveSelectedProfileFilesList();
+      }
+      else {
+        await sfdcPipelineActions.setGitFileListV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+        await generateXML();
+      }
+    } catch (error) {
+      console.error(error);
+      toastContext.showInlineErrorMessage(error);
+    }
+    finally {
+      if (isMounted?.current === true) {
+        setIsLoading(false);
+      }
+    }
+  };
+  
+  const generateXML = async () => {
+
+    if (pipelineWizardModel.getData("fromGitTasks") === true) {
+      await sfdcPipelineActions.generateGitTaskXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+    }
+    else {
+      await sfdcPipelineActions.generateSfdcPackageXmlV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+    }
+
+    setPipelineWizardScreen(
+      pipelineWizardModel.getData("unitTestSteps").length > 0
+        ? PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR
+        : PIPELINE_WIZARD_SCREENS.XML_VIEWER
+    );
+  };
+
+  const saveSelectedProfileFilesList = async () => {
+    await sfdcPipelineActions.setGitProfileFilesListV2(getAccessToken, cancelTokenSource, pipelineWizardModel);
+    setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.PROFILE_COMPONENT_SELECTOR);
+  };
+
   const loadXmlData = async (cancelSource = cancelTokenSource) => {
     const response = await sfdcPipelineActions.getPackageXmlV2(getAccessToken, cancelSource, pipelineWizardModel);
     const data = response?.data?.destructiveXml;
@@ -76,7 +122,7 @@ function SfdcPipelineWizardGitRollbackModeButton({pipelineWizardModel, setPipeli
   return (
     <div className={className}>
       <div className={"d-flex"}>
-        <Button size={size} variant="outline-success" disabled={isLoading || destructiveXml?.length === 0} onClick={() => setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.XML_VIEWER)}>
+        <Button size={size} variant="outline-success" disabled={isLoading || filteredFileCount?.length > 0} onClick={() => submitFilteredFiles()}>
           <span><IconBase icon={icon} fixedWidth className="mr-2"/>{getLabel()}</span>
         </Button>
       </div>
@@ -86,7 +132,9 @@ function SfdcPipelineWizardGitRollbackModeButton({pipelineWizardModel, setPipeli
 
 SfdcPipelineWizardGitRollbackModeButton.propTypes = {
   pipelineWizardModel: PropTypes.object,
+  setPipelineWizardModel: PropTypes.func,
   setPipelineWizardScreen: PropTypes.func,
+  filteredFileCount: PropTypes.number,
   icon: PropTypes.object,
   size: PropTypes.string,
   className: PropTypes.string,

@@ -9,7 +9,7 @@ import axios from "axios";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
 
-function SfdcPipelineWizardSubmitGitFilesButton({pipelineWizardModel, setPipelineWizardScreen, filteredFileCount, size, className, icon, isLoading}) {
+function SfdcPipelineWizardSubmitGitFilesButton({pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, filteredFileCount, size, className, icon, isLoading}) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isSaving, setIsSaving] = useState(false);
@@ -35,6 +35,10 @@ function SfdcPipelineWizardSubmitGitFilesButton({pipelineWizardModel, setPipelin
   const submitFilteredFiles = async () => {
     try {
       setIsSaving(true);
+      let newDataObject = {...pipelineWizardModel};
+      newDataObject.setData("isRollBack", false);
+      setPipelineWizardModel({...newDataObject});
+
       if (pipelineWizardModel.getData("isProfiles") === true) {
         await saveSelectedProfileFilesList();
       }
@@ -99,6 +103,7 @@ function SfdcPipelineWizardSubmitGitFilesButton({pipelineWizardModel, setPipelin
 
 SfdcPipelineWizardSubmitGitFilesButton.propTypes = {
   pipelineWizardModel: PropTypes.object,
+  setPipelineWizardModel: PropTypes.func,
   setPipelineWizardScreen: PropTypes.func,
   filteredFileCount: PropTypes.number,
   icon: PropTypes.object,

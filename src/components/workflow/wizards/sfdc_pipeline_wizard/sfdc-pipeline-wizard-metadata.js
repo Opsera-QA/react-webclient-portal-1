@@ -12,9 +12,9 @@ const sfdcPipelineWizardMetadata = {
       formText: "Which component types should be included?"
     },
     {
-      label: "Deploy Component Types",
+      label: "Choose Source Org",
       id: "modifiedFilesOrigin",
-      formText: "Which component types should be included?"
+      formText: "Choose the retrieval/deployment of components to happen either from SFDC Org/Git Branch"
     },
     {
       label: "Component Types",
@@ -107,6 +107,10 @@ const sfdcPipelineWizardMetadata = {
       label: "CSV File Content",
       id: "csvFileContent",
     },
+    {
+      label: "RollBack",
+      id: "isRollBack",
+    },
   ],
   newObjectFields: {
     includedComponentTypes: "all",
@@ -131,7 +135,8 @@ const sfdcPipelineWizardMetadata = {
     xmlFileContent: "",
     csvFileContent: [],
     fromGitTasks: false, // TODO: Remove if irrelevant
-    fromFileUpload: false
+    fromFileUpload: false,
+    isRollBack: false
   }
 };
 

@@ -86,7 +86,7 @@ function SfdcPipelineWizardSubmitSfdcFilesButton({pipelineWizardModel, setPipeli
   return (
     <div className={className}>
       <div className={"d-flex"}>
-        <Button size={size} variant="success" disabled={filteredFileCount.length === 0 || isSaving || isLoading} onClick={() => submitFilteredFiles()}>
+        <Button size={size} variant="success" disabled={filteredFileCount === 0 || isSaving || isLoading} onClick={() => submitFilteredFiles()}>
           <span><IconBase isLoading={isSaving} icon={icon} fixedWidth className="mr-2"/>{getLabel()}</span>
         </Button>
       </div>

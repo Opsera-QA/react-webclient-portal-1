@@ -134,11 +134,14 @@ const SfdcPipelineWizardGitFileSelector = ({ pipelineWizardModel, setPipelineWiz
         </Button>
         <SfdcPipelineWizardGitRollbackModeButton
           className={"mr-2"}
+          filteredFileCount={gitFiles.length}
           pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardModel={setPipelineWizardModel}
           setPipelineWizardScreen={setPipelineWizardScreen}
         />
         <SfdcPipelineWizardSubmitGitFilesButton
           pipelineWizardModel={pipelineWizardModel}
+          setPipelineWizardModel={setPipelineWizardModel}
           setPipelineWizardScreen={setPipelineWizardScreen}
           filteredFileCount={gitFiles.length}
           isLoading={isLoading}
