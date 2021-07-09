@@ -20,6 +20,7 @@ import SfdcPipelineWizardSubmitGitFilesButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardSubmitGitFilesButton";
 import SfdcPipelineWizardGitRollbackModeButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/git/SfdcPipelineWizardGitRollbackModeButton";
+import {parseError} from "components/common/helpers/error-helpers";
 
 const SfdcPipelineWizardGitFileSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -96,8 +97,10 @@ const SfdcPipelineWizardGitFileSelector = ({ pipelineWizardModel, setPipelineWiz
     const data = response?.data;
 
     if (isMounted?.current === true && data) {
-      if(data.gitErrorMessage){
-        toastContext.showInlineErrorMessage("Error Pulling Files from SFDC: "+ data.gitErrorMessage);
+
+      if(data?.error){
+        const parsedError = parseError(data?.error);
+        toastContext.showInlineErrorMessage(`Service Error Fetching File List From SFDC: ${parsedError}`);
       }
 
       const fileArray = data.data;

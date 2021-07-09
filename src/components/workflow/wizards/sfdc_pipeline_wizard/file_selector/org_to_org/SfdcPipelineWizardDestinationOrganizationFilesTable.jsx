@@ -9,6 +9,7 @@ import axios from "axios";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
+import {parseError} from "components/common/helpers/error-helpers";
 
 const SfdcPipelineWizardDestinationOrganizationFilesTable = ({ pipelineWizardModel}) => {
   const {getAccessToken} = useContext(AuthContext);
@@ -89,7 +90,8 @@ const SfdcPipelineWizardDestinationOrganizationFilesTable = ({ pipelineWizardMod
 
     if (isMounted?.current === true && data) {
       if (data.error) {
-        toastContext.showInlineErrorMessage("Dest SFDC Fetch Error : " + destSfdcResponse.data.data.destSfdcErrorMessage);
+        const parsedError = parseError(data?.error);
+        toastContext.showInlineErrorMessage(`Service Error Fetching Destination File List From SFDC: ${parsedError}`);
       }
 
       if (Array.isArray(fileList)) {

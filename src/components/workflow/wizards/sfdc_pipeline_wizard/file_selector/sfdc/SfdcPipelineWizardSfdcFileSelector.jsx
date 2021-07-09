@@ -18,6 +18,7 @@ import SfdcPipelineWizardSubmitSfdcFilesButton
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSubmitSfdcFilesButton";
 import SfdcPipelineWizardSfdcFilesTable
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/sfdc/SfdcPipelineWizardSfdcFilesTable";
+import {parseError} from "components/common/helpers/error-helpers";
 
 const SfdcPipelineWizardSfdcFileSelector = ({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose, }) => {
   const { getAccessToken } = useContext(AuthContext);
@@ -86,7 +87,8 @@ const SfdcPipelineWizardSfdcFileSelector = ({ pipelineWizardModel, setPipelineWi
       const files = data.data;
 
       if (data?.error) {
-        toastContext.showInlineErrorMessage("SFDC Fetch Error : " + data.sfdcErrorMessage);
+        const parsedError = parseError(data?.error);
+        toastContext.showInlineErrorMessage(`Service Error Fetching File List From SFDC: ${parsedError}`);
       }
 
       if (data.warning) {
