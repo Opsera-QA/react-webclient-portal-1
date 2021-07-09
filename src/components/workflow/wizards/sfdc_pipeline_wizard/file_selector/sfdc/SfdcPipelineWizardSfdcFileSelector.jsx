@@ -29,6 +29,7 @@ const SfdcPipelineWizardSfdcFileSelector = ({ pipelineWizardModel, setPipelineWi
   const [filePullCompleted, setFilePullCompleted] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [totalFileCount, setTotalFileCount] = useState(0);
   let timerIds = [];
 
   useEffect(() => {
@@ -96,6 +97,7 @@ const SfdcPipelineWizardSfdcFileSelector = ({ pipelineWizardModel, setPipelineWi
         let newSfdcFilterDto = {...newFilterDto};
         newSfdcFilterDto.setData("totalCount", data.count);
         newSfdcFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+        setTotalFileCount(data.count);
         setSfdcFilterDto({...newSfdcFilterDto});
         setPipelineWizardModel({...pipelineWizardModel});
         setSfdcFiles(files);
@@ -141,7 +143,7 @@ const SfdcPipelineWizardSfdcFileSelector = ({ pipelineWizardModel, setPipelineWi
         <SfdcPipelineWizardSubmitSfdcFilesButton
           setPipelineWizardScreen={setPipelineWizardScreen}
           pipelineWizardModel={pipelineWizardModel}
-          filteredFileCount={sfdcFiles.length}
+          filteredFileCount={totalFileCount}
           isLoading={isLoading}
         />
         <CancelButton size={"sm"} className={"ml-2"} cancelFunction={handleClose} />

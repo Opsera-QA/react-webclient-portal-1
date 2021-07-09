@@ -31,6 +31,7 @@ const SfdcPipelineWizardGitFileSelector = ({ pipelineWizardModel, setPipelineWiz
   const [isLoading, setIsLoading] = useState(false);
   const [gitWarningMessage, setGitWarningMessage] = useState("");
   const [filePullCompleted, setFilesPullCompleted] = useState(false);
+  const [totalFileCount, setTotalFileCount] = useState(0);
 
   let timerIds = [];
 
@@ -104,6 +105,7 @@ const SfdcPipelineWizardGitFileSelector = ({ pipelineWizardModel, setPipelineWiz
       if (Array.isArray(fileArray)) {
         setFilesPullCompleted(true);
         let newGitFilterDto = newFilterDto;
+        setTotalFileCount(data.count);
         newGitFilterDto.setData("totalCount", data.count);
         newGitFilterDto.setData("activeFilters", newGitFilterDto.getActiveFilters());
         setGitFilterDto({ ...newGitFilterDto });
@@ -134,7 +136,7 @@ const SfdcPipelineWizardGitFileSelector = ({ pipelineWizardModel, setPipelineWiz
         </Button>
         <SfdcPipelineWizardGitRollbackModeButton
           className={"mr-2"}
-          filteredFileCount={gitFiles.length}
+          filteredFileCount={totalFileCount}
           pipelineWizardModel={pipelineWizardModel}
           setPipelineWizardModel={setPipelineWizardModel}
           setPipelineWizardScreen={setPipelineWizardScreen}
@@ -143,7 +145,7 @@ const SfdcPipelineWizardGitFileSelector = ({ pipelineWizardModel, setPipelineWiz
           pipelineWizardModel={pipelineWizardModel}
           setPipelineWizardModel={setPipelineWizardModel}
           setPipelineWizardScreen={setPipelineWizardScreen}
-          filteredFileCount={gitFiles.length}
+          filteredFileCount={totalFileCount}
           isLoading={isLoading}
         />
         <CancelButton size={"sm"} className={"ml-2"} cancelFunction={handleClose} />
