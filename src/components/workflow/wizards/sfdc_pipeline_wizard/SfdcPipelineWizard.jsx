@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import SfdcPipelineWizardComponentSelector from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardComponentSelector";
 import ErrorDialog from "components/common/status_notifications/error";
@@ -13,6 +13,10 @@ import SfdcPipelineWizardOrgToOrgFileSelector
   from "components/workflow/wizards/sfdc_pipeline_wizard/file_selector/SfdcPipelineWizardOrgToOrgFileSelector";
 import SfdcPipelineWizardInitializationScreen
   from "components/workflow/wizards/sfdc_pipeline_wizard/initialization_screen/SfdcPipelineWizardInitializationScreen";
+import axios from "axios";
+import sfdcPipelineWizardMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-wizard-metadata";
+import Model from "core/data_model/model";
+import LoadingDialog from "components/common/status_notifications/loading";
 
 export const PIPELINE_WIZARD_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
@@ -29,6 +33,28 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
   const [error, setError] = useState("");
   const [pipelineWizardScreen, setPipelineWizardScreen] = useState(PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN);
   const [pipelineWizardModel, setPipelineWizardModel] = useState(undefined);
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
+  useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+    let newPipelineWizardModel = new Model({...sfdcPipelineWizardMetadata.newObjectFields}, sfdcPipelineWizardMetadata, false);
+    
+    // TODO: Figure out why the data keeps state after closing and then remove this
+    newPipelineWizardModel.setData("selectedComponentTypes", []);
+    setPipelineWizardModel({...newPipelineWizardModel});
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, []);
 
   const getBody = () => {
     switch (pipelineWizardScreen) {
@@ -112,6 +138,13 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
         );
     }
   };
+
+
+  if (pipelineWizardModel == null) {
+    return (
+      <LoadingDialog message={"Initializing SFDC Pipeline Wizard"} size={"sm"} />
+    );
+  }
 
   if (error && error !== "") {
     return (

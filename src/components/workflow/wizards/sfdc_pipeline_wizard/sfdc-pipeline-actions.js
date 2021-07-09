@@ -261,6 +261,9 @@ sfdcPipelineActions.findExistingRecordV2 = async (getAccessToken, cancelTokenSou
     pipelineId: pipelineWizardModel.getData("pipelineId"),
     stepId: pipelineWizardModel.getData("stepId"),
     gitTaskId: pipelineWizardModel.getData("fromGitTasks") === true ? pipelineWizardModel.getData("gitTaskId") : false,
+    gitToolId: pipelineWizardModel.getData("gitToolId"),
+    sfdcToolId: pipelineWizardModel.getData("sfdcToolId"),
+    sfdcDestToolId: pipelineWizardModel.getData("sfdcDestToolId"),
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/find_existing_record`;

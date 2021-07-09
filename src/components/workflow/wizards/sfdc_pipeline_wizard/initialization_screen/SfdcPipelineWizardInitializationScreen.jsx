@@ -1,8 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import Model from "core/data_model/model";
-import sfdcPipelineWizardMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-wizard-metadata";
 import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
 import {PIPELINE_WIZARD_SCREENS} from "components/workflow/wizards/sfdc_pipeline_wizard/SfdcPipelineWizard";
@@ -37,10 +35,7 @@ const SfdcPipelineWizardInitializationScreen = ({ pipelineWizardModel, setPipeli
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    const newData = {...sfdcPipelineWizardMetadata.newObjectFields};
-    let newPipelineWizardModel = new Model({...newData}, sfdcPipelineWizardMetadata, false);
-    setPipelineWizardModel(newPipelineWizardModel);
-    loadData(newPipelineWizardModel, gitTaskData, pipeline?.workflow?.plan).catch((error) => {
+    loadData(pipelineWizardModel, gitTaskData, pipeline?.workflow?.plan).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
