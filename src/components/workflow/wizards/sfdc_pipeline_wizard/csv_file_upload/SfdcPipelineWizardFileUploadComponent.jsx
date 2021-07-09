@@ -153,7 +153,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
 
     let csvKeys = obj.length > 0 ? Object.keys(obj[0]) : [];
     let csvobj = obj.length > 0 ? obj : [];
-    let validationKeys = ["componentType", "componentName"];
+    let validationKeys = ["commitAction", "componentType", "componentName"];
 
     let validKeys = validationKeys.every((val) => csvKeys.includes(val));
    
@@ -167,12 +167,12 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
       return;
     }
     let validOperations = ["","added", "modified", "removed", "renamed"];
-    let isValidOpserations = csvobj.every((val) => validOperations.includes(val.operation) );
+    let isValidOpserations = csvobj.every((val) => validOperations.includes(val.commitAction) );
     if(!isValidOpserations) {
        let files = selectedFiles;
        files[0]['invalid'] = true;
        setUnsupportedFiles(files);
-       setErrorMessage('Invalid file operations provided!');
+       setErrorMessage('Invalid Action provided!');
        setSave(false);
        return;
     }
@@ -227,7 +227,7 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "operation")),
+      getTableTextColumn(getField(fields, "commitAction")),
       getTableTextColumn(getField(fields, "componentType")),
       getLimitedTableTextColumn(getField(fields, "componentName"), 80),
     ],
@@ -342,10 +342,10 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
       <div className="my-2">
         <div>The file must match these requirements:</div>
         <div>1. Component Qualified API Name should be given under the Component Name column in a CSV Upload file</div>
-        <div>2. Added, Removed, and Modified Operation Types are permitted</div>
+        <div>2. Added, Removed, and Modified Action Types are permitted (If empty we consider it as Modified)</div>
         <div>3. Wildcard entries (*) are not supported in Package XML</div>
         <div>4. The maximum number of components supported is 10,000</div>
-        <div>5. Upload file can be of .csv/.xml extension only</div>
+        <div>5. Upload file can be of .csv/.xml extension only (single file is allowed) </div>
         <div>6. The maximum file size supported is 500 KB</div>
       </div>
     );

@@ -3,8 +3,8 @@ const PipelineWizardFileUploadMetadata = {
     type: "CSV Metadata",
     fields: [
       {
-        label: "Operation",
-        id: "operation",
+        label: "Action",
+        id: "commitAction",
       },
       {
         label: "Component Type",
