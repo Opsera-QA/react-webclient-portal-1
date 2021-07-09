@@ -1,10 +1,10 @@
-export function isUserInGroup(group, emailAddress) {
+export function isUserInGroup(group, userDistinguishedName) {
   const groupMembers = group?.members;
   let isMember = false;
 
-  if (Array.isArray(groupMembers) && groupMembers.length > 0 && emailAddress) {
+  if (Array.isArray(groupMembers) && groupMembers.length > 0 && userDistinguishedName) {
     groupMembers.forEach((member) => {
-      if (member.emailAddress === emailAddress) {
+      if (member === userDistinguishedName) {
         isMember = true;
       }
     });
@@ -13,12 +13,12 @@ export function isUserInGroup(group, emailAddress) {
   return isMember;
 }
 
-export function findUserGroups(groups, emailAddress) {
+export function findUserGroupsByDistinguishedName(groups, userDistinguishedName) {
   const userGroups = [];
 
-  if (Array.isArray(groups) && groups.length > 0 && emailAddress) {
+  if (Array.isArray(groups) && groups.length > 0 && userDistinguishedName) {
     groups.forEach((group) => {
-      if (isUserInGroup(group, emailAddress) === true) {
+      if (isUserInGroup(group, userDistinguishedName) === true) {
         userGroups.push(group);
       }
     });
