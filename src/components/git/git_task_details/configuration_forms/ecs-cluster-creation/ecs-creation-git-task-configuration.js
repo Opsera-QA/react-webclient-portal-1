@@ -20,7 +20,8 @@ const ec2ClusterCreationTaskConfigurationMetadata = {
       label: "Cluster Name",
       id: "clusterName",
       isRequired: true,
-      maxLength: 50
+      maxLength: 32,
+      regexValidator: /^[A-Za-z0-9-.:]*$/,
     },
     {
       label: "Public Subnets",

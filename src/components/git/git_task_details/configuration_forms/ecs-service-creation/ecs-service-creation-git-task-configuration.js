@@ -15,7 +15,8 @@ const ec2ServiceCreationTaskConfigurationMetadata = {
     {
       label: "Desired Count",
       id: "ecsServiceDesiredCount",
-      isRequired: true
+      isRequired: true,
+      regexValidator: regexHelpers.regexTypes.numericalField
     },
     {
       label: "Container Port",
@@ -44,6 +45,8 @@ const ec2ServiceCreationTaskConfigurationMetadata = {
     {
       label: "Service Log Group",
       id: "ecsServiceLogGroup",
+      maxLength: 32,
+      regexValidator: /^[A-Za-z0-9-.:]*$/,
     },
     {
       label: "Execution Role ARN",

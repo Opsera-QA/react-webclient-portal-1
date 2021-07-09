@@ -1,10 +1,12 @@
+import regexHelpers from "utils/regexHelpers";
+
 const awsECSDeployStepFormMetadata = {
   type: "AWS ECS Deploy Tool Configuration",
   fields: [
     {
       label: "Docker Step",
       id: "ecsServiceDockerStepId",
-      isRequired: true
+      isRequired: true,
     },
     {
       label: "Service Task",
@@ -14,11 +16,14 @@ const awsECSDeployStepFormMetadata = {
     {
       label: "Service Container Port",
       id: "ecsServiceContainerPort",
-      isRequired: true
+      isRequired: true,
+      regexValidator: regexHelpers.regexTypes.numericalField,
     },
     {
       label: "Service Name",
       id: "ecsServiceName",
+      maxLength: 32,
+      regexValidator: /^[A-Za-z0-9-.:]*$/
     },
     {
       label: "Generate Dynamic Service Name?",
@@ -31,7 +36,9 @@ const awsECSDeployStepFormMetadata = {
     {
       label: "Dynamic Name Prefix",
       id: "namePretext",
-      formText: "Enter a prefix to be prepended to the uniquely generated name"
+      formText: "Enter a prefix to be prepended to the uniquely generated name",
+      maxLength: 25,
+      regexValidator: /^[A-Za-z0-9-.:]*$/
     },
   ],
   newObjectFields: {
