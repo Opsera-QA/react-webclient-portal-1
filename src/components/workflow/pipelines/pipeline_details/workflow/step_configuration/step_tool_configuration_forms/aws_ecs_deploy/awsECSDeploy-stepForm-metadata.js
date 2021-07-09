@@ -19,11 +19,15 @@ const awsECSDeployStepFormMetadata = {
     {
       label: "Service Name",
       id: "ecsServiceName",
-      isRequired: true
     },
     {
       label: "Generate Dynamic Service Name?",
       id: "dynamicServiceName",
+    },
+    {
+      label: "Dynamic Name Prefix",
+      id: "namePretext",
+      formText: "Enter a prefix to be prepended to the uniquely generated name"
     },
   ],
   newObjectFields: {
@@ -31,6 +35,7 @@ const awsECSDeployStepFormMetadata = {
     ecsServiceTaskId: "",
     ecsServiceContainerPort: "",
     ecsServiceName: "",
+    namePretext: "",
     dynamicServiceName: false
   }
 };

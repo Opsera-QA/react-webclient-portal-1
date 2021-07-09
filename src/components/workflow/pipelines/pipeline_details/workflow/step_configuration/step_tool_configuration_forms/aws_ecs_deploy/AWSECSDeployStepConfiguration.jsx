@@ -11,7 +11,7 @@ import DockerPushStepSelectInput from "./inputs/DockerPushStepSelectInput";
 import TaskSelectInput from "./inputs/TaskSelectInput";
 import DynamicNameToggleInput from "./inputs/DynamicNameToggleInput";
 
-function AWSECSDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan,stepId }) {
+function AWSECSDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan,stepId, pipelineId }) {
   const [isLoading, setIsLoading] = useState(false);
   const [ecsServicesModel, setAWSECSDeployModel] = useState(undefined);
   const [threshold, setThreshold] = useState(undefined);
@@ -64,6 +64,7 @@ function AWSECSDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallb
         dataObject={ecsServicesModel}
         setDataObject={setAWSECSDeployModel}
         fieldName={"dynamicServiceName"}
+        pipelineId={pipelineId}
       />
       {ecsServicesModel && !ecsServicesModel?.getData("dynamicServiceName") &&
       (<TextInputBase
@@ -86,6 +87,7 @@ AWSECSDeployStepConfiguration.propTypes = {
   parentCallback: PropTypes.func,
   plan: PropTypes.array,
   stepId: PropTypes.string,
+  pipelineId: PropTypes.string
 };
 
 export default AWSECSDeployStepConfiguration;
