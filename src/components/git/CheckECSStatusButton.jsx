@@ -4,9 +4,7 @@ import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faLaptopMedical, faPlay, faSpinner } from "@fortawesome/pro-light-svg-icons";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import sfdcPipelineActions from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import {AuthContext} from "contexts/AuthContext";
-import SFDCViewOverlay from "components/git/git_task_details/configuration_forms/sfdc-org-sync/SFDCViewOverlay";
 import gitTasksActions from "components/git/git-task-actions";
 
 function CheckECSStatus({gitTasksData, handleClose, disable, className, loadData }) {

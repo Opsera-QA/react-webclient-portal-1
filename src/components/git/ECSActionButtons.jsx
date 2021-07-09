@@ -7,8 +7,6 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
 import gitTasksActions from "components/git/git-task-actions";
-import SFDCViewOverlay from "./git_task_details/configuration_forms/sfdc-org-sync/SFDCViewOverlay";
-import sfdcPipelineActions from "../workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-actions";
 import gitTaskActions from "./git-task-actions";
 import { useHistory } from "react-router-dom";
 import Model from "../../core/data_model/model";
