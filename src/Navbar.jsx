@@ -121,7 +121,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
                                 className="nav-drop-down-item" id="request-help-button">Request Help</NavDropdown.Item>
               <NavDropdown.Divider/>
               <NavDropdown.Item href="https://opsera.io/" target="_blank" className="nav-drop-down-item"
-                                id="about-opsera">OpsERA.io</NavDropdown.Item>
+                                id="about-opsera">Opsera.io</NavDropdown.Item>
               <NavDropdown.Item href="" onClick={logout} className="nav-drop-down-item"
                                 id="logout-button">Logout</NavDropdown.Item>
             </NavDropdown>}
@@ -164,7 +164,7 @@ function HeaderNavBar({ hideAuthComponents, userData }) {
               <NavDropdown.Divider/>
 
               <NavDropdown.Item href="https://opsera.io/" target="_blank" className="nav-drop-down-item"
-                                id="about-opsera">OpsERA.io</NavDropdown.Item>
+                                id="about-opsera">Opsera.io</NavDropdown.Item>
               <NavDropdown.Item href="" onClick={logout} className="nav-drop-down-item"
                                 id="logout-button">Logout</NavDropdown.Item>
             </NavDropdown>
