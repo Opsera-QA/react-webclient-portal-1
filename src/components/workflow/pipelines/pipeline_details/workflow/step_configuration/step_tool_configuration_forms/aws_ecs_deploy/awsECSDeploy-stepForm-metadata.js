@@ -25,6 +25,10 @@ const awsECSDeployStepFormMetadata = {
       id: "dynamicServiceName",
     },
     {
+      label: "Delete Existing Resource Before Deployment?",
+      id: "ecsDeleteResource",
+    },
+    {
       label: "Dynamic Name Prefix",
       id: "namePretext",
       formText: "Enter a prefix to be prepended to the uniquely generated name"
@@ -36,7 +40,8 @@ const awsECSDeployStepFormMetadata = {
     ecsServiceContainerPort: "",
     ecsServiceName: "",
     namePretext: "",
-    dynamicServiceName: false
+    dynamicServiceName: false,
+    ecsDeleteResource: false
   }
 };
 

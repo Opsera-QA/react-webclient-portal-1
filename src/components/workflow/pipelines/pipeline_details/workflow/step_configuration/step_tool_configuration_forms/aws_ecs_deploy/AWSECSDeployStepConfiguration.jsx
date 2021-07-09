@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import PipelineStepEditorPanelContainer
-  from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
+import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
-import awsECSDeployStepFormMetadata
-  from "./awsECSDeploy-stepForm-metadata";
+import awsECSDeployStepFormMetadata from "./awsECSDeploy-stepForm-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import DockerPushStepSelectInput from "./inputs/DockerPushStepSelectInput";
 import TaskSelectInput from "./inputs/TaskSelectInput";
 import DynamicNameToggleInput from "./inputs/DynamicNameToggleInput";
+import DeleteResourceToggle from "./inputs/DeleteResourceToggle";
 
-function AWSECSDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan,stepId, pipelineId }) {
+function AWSECSDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan, stepId, pipelineId }) {
   const [isLoading, setIsLoading] = useState(false);
   const [ecsServicesModel, setAWSECSDeployModel] = useState(undefined);
   const [threshold, setThreshold] = useState(undefined);
@@ -23,7 +22,10 @@ function AWSECSDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallb
   const loadData = async () => {
     setIsLoading(true);
     setThreshold(stepTool?.threshold);
-    let ecsServiceConfigurationData = modelHelpers.getPipelineStepConfigurationModel(stepTool, awsECSDeployStepFormMetadata);
+    let ecsServiceConfigurationData = modelHelpers.getPipelineStepConfigurationModel(
+      stepTool,
+      awsECSDeployStepFormMetadata
+    );
     setAWSECSDeployModel(ecsServiceConfigurationData);
     setIsLoading(false);
   };
@@ -56,26 +58,31 @@ function AWSECSDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallb
         plan={plan}
         stepId={stepId}
       />
-      <TaskSelectInput
-        dataObject={ecsServicesModel}
-        setDataObject={setAWSECSDeployModel}
-      />
+      <TaskSelectInput dataObject={ecsServicesModel} setDataObject={setAWSECSDeployModel} />
       <DynamicNameToggleInput
         dataObject={ecsServicesModel}
         setDataObject={setAWSECSDeployModel}
         fieldName={"dynamicServiceName"}
         pipelineId={pipelineId}
       />
-      {ecsServicesModel && !ecsServicesModel?.getData("dynamicServiceName") &&
-      (<TextInputBase
-        dataObject={ecsServicesModel}
-        setDataObject={setAWSECSDeployModel}
-        fieldName={"ecsServiceName"}
-      />)}
+      {ecsServicesModel && !ecsServicesModel?.getData("dynamicServiceName") && (
+        <TextInputBase
+          dataObject={ecsServicesModel}
+          setDataObject={setAWSECSDeployModel}
+          fieldName={"ecsServiceName"}
+        />
+      )}
       <TextInputBase
         dataObject={ecsServicesModel}
         setDataObject={setAWSECSDeployModel}
         fieldName={"ecsServiceContainerPort"}
+      />
+      <DeleteResourceToggle
+        dataObject={ecsServicesModel}
+        setDataObject={setAWSECSDeployModel}
+        fieldName={"ecsDeleteResource"}
+        disabled={true}
+        pipelineId={pipelineId}
       />
     </PipelineStepEditorPanelContainer>
   );
@@ -87,7 +94,7 @@ AWSECSDeployStepConfiguration.propTypes = {
   parentCallback: PropTypes.func,
   plan: PropTypes.array,
   stepId: PropTypes.string,
-  pipelineId: PropTypes.string
+  pipelineId: PropTypes.string,
 };
 
 export default AWSECSDeployStepConfiguration;

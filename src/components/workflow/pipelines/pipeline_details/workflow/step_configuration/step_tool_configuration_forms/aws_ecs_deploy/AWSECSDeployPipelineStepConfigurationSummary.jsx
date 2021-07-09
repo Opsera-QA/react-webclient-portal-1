@@ -5,6 +5,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+import BooleanField from "../../../../../../../common/fields/boolean/BooleanField";
 
 function AWSECSDeployPipelineStepConfigurationSummaryPanel({ awsECSDeployPipelineDataObject, pipelineData, setActiveTab }) {
   if (awsECSDeployPipelineDataObject == null) {
@@ -25,6 +26,12 @@ function AWSECSDeployPipelineStepConfigurationSummaryPanel({ awsECSDeployPipelin
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={awsECSDeployPipelineDataObject} fieldName={"ecsServiceName"}/>
+        </Col>
+        <Col lg={6}>
+          <BooleanField dataObject={awsECSDeployPipelineDataObject} fieldName={"dynamicServiceName"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={awsECSDeployPipelineDataObject} fieldName={"namePretext"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
