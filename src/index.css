@@ -818,3 +818,9 @@ a:hover, .active, .link-text:hover {
     color: blue;
     cursor: pointer;
 }
+
+.stepForm-data-display {
+    background-color: #FFF;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+    z-index: 3000;
+}

@@ -171,4 +171,20 @@ gitTasksActions.getTaskActivityLogById = async (getAccessToken, cancelTokenSourc
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+gitTasksActions.createECSCluster = async (postBody, getAccessToken) => {
+  const apiUrl = `/tools/aws/v2/create/ecs`;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+gitTasksActions.createECSServoce = async (postBody, getAccessToken) => {
+  const apiUrl = `/tools/aws/v2/create/ecs/service`;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+gitTasksActions.checkECSStatus = async (postBody, getAccessToken) => {
+  const apiUrl = `/tools/aws/v2/ecs/status`;
+  return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
+};
+
+
 export default gitTasksActions;

@@ -5,6 +5,9 @@ import SFDCGitTaskEditorPanel from "./sfdc-org-sync/SFDCGitTaskConfigurationPane
 import SFDCBranchStructuringTaskTypeConfigurationPanel from "./sfdc-branch-structure/SFDCBranchStructuringTaskTypeConfigurationPanel";
 import BranchToBranchGitTaskConfigurationPanel from "./branch-to-branch/BranchToBranchGitTaskConfigurationPanel";
 import SFDXCertGenTaskTypeConfigurationPanel from "./sfdx-cert-gen/SFDXCertGenTaskTypeConfigurationPanel";
+import ECSCreationTaskConfigurationPanel from "./ecs-cluster-creation/ECSCreationTaskConfigurationPanel";
+import ECSServiceCreationTaskConfigurationPanel from "./ecs-service-creation/ECSServiceCreationTaskConfigurationPanel";
+
 function GitTasksConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   const getConfigurationPanel = () => {
     switch (gitTasksDataDto.getData("type")) {
@@ -35,6 +38,22 @@ function GitTasksConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTa
       case "sfdc-cert-gen":
         return (
           <SFDXCertGenTaskTypeConfigurationPanel
+            gitTasksDataDto={gitTasksDataDto}
+            setGitTasksConfigurationData={setGitTasksConfigurationData}
+            gitTasksConfigurationData={gitTasksConfigurationData}
+          />
+        );
+      case "ecs_cluster_creation":
+        return (
+          <ECSCreationTaskConfigurationPanel
+            gitTasksDataDto={gitTasksDataDto}
+            setGitTasksConfigurationData={setGitTasksConfigurationData}
+            gitTasksConfigurationData={gitTasksConfigurationData}
+          />
+        );
+        case "ecs_service_creation":
+        return (
+          <ECSServiceCreationTaskConfigurationPanel
             gitTasksDataDto={gitTasksDataDto}
             setGitTasksConfigurationData={setGitTasksConfigurationData}
             gitTasksConfigurationData={gitTasksConfigurationData}
