@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import TotalPipelinesExecuted from "components/insights/summary/TotalPipelinesExecuted";
 import PipelinesPassedWithQualityAndSecurity from "components/insights/summary/pipeline_details/PipelinesPassedWithQualityAndSecurity";
@@ -7,15 +7,22 @@ import PipelinesFailedQuality from "components/insights/summary/pipeline_details
 import PipelinesFailedDeployment from "components/insights/summary/pipeline_details/PipelinesFailedDeployment";
 import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
 import InsightsPipelineDetailsTable from "components/insights/summary/pipeline_details/InsightsPipelineDetailsTable";
+import InsightsPipelineDetailsDurationTable from "components/insights/summary/pipeline_details/InsightsPipelineDetailsDurationTable";
 import PipelinesByProjectTable from "components/insights/summary/PipelinesByProjectTable";
 import TotalPipelinesPassedDeployment from 'components/insights/summary/pipeline_details/TotalPipelinesPassedDeployment';
 import MetricContainer from "components/common/panels/insights/charts/MetricContainer";
 import JiraLeadTimeChartNoDataBlocks from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks"; 
 import JiraLeadTimeDataBlock from "./JiraLeadTimeDataBlock";
+import AvgDeploymentDuration from "components/insights/summary/pipeline_details/AvgDeploymentDuration";
 
 function PipelineDetails({ dashboardData }) {
   const [selectedDataBlock, setSelectedDataBlock] = useState("");
   const [selectedDataBlockTableData, setSelectedDataBlockTableData] = useState([]);
+
+  useEffect(()=>{
+    setSelectedDataBlock("");
+    setSelectedDataBlockTableData([]);
+  },[dashboardData]);
 
   const getDynamicPanel = () => {
     switch (selectedDataBlock) {
@@ -69,8 +76,14 @@ function PipelineDetails({ dashboardData }) {
         );
       case "jiraLeadTime":
         return (
-          //TODO: The kpiconfiguration is missing and could be passed as props but that could mean modify different files
           <JiraLeadTimeChartNoDataBlocks dashboardData={dashboardData} kpiConfiguration={{kpi_name: "Lead Time", filters: []}}/>
+        );
+      case "Average_Deployment_Duration":
+        return (
+          <InsightsPipelineDetailsDurationTable
+            data={selectedDataBlockTableData}
+            tableTitle="Deployment Duration"
+          />
         );
       default:
         return null;
@@ -145,7 +158,19 @@ function PipelineDetails({ dashboardData }) {
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-          // style={{maxWidth:"33%"}}
+          style={{maxWidth:"33%"}}
+        />
+      </DataBlockWrapper>
+    );
+  };
+  const getAverageBlocks = ()=>{
+    return (
+      <DataBlockWrapper padding={0}>
+        <AvgDeploymentDuration 
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{maxWidth:"33%"}}
         />
       </DataBlockWrapper>
     );
@@ -162,6 +187,9 @@ function PipelineDetails({ dashboardData }) {
         </MetricContainer>
         <MetricContainer title="Value Stream">
           {getValueStream()}
+        </MetricContainer>
+        <MetricContainer title="Pipeline: Duration Average">
+          {getAverageBlocks()}
         </MetricContainer>
       </div>
 
