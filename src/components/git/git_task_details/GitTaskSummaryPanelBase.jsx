@@ -62,7 +62,7 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
           <DateFieldBase dataObject={gitTasksData} fieldName={"createdAt"} />
         </Col>
         {gitTasksData.getData("type") != "ecs_cluster_creation" ||
-          (gitTasksData.getData("type") === "ecs_service_creation" && (
+          (gitTasksData.getData("type") !== "ecs_service_creation" && (
             <Col md={6}>
               <TextFieldBase
                 className={"upper-case-first my-2"}
