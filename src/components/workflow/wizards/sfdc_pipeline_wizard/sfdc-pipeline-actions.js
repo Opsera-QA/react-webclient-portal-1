@@ -26,14 +26,13 @@ sfdcPipelineActions.triggerSfdcFilesPullV2 = async (getAccessToken, cancelTokenS
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-sfdcPipelineActions.getSfdcFilesV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel, newFilterDto, pullAllComponents = false) => {
+sfdcPipelineActions.getSfdcFilesV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel, newFilterDto) => {
   const postBody = {
     rules: pipelineWizardModel?.getData("sfdcModifiedRuleList"),
     page: newFilterDto ? newFilterDto.getData("currentPage") : 1,
     size: newFilterDto ? newFilterDto.getData("pageSize") : 3000,
     search: newFilterDto ? newFilterDto.getData("search") : "",
     componentFilter: newFilterDto ? newFilterDto.getData("componentFilter") : "",
-    pullAllComponents: pullAllComponents
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel?.getData("recordId")}/get_sfdc_files_list`;
@@ -77,14 +76,13 @@ sfdcPipelineActions.triggerGitTaskFilesPullV2 = async (getAccessToken, cancelTok
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
-sfdcPipelineActions.getGitFilesV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel, newFilterDto, pullAllComponents = false) => {
+sfdcPipelineActions.getGitFilesV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel, newFilterDto) => {
   const postBody = {
     rules: pipelineWizardModel.getData("gitModifiedRuleList"),
     page: newFilterDto ? newFilterDto.getData("currentPage") : 1,
     size: newFilterDto ? newFilterDto.getData("pageSize") : 3000,
     search: newFilterDto ? newFilterDto.getData("search") : "",
     componentFilter: newFilterDto ? newFilterDto.getData("componentFilter") : "",
-    pullAllComponents: pullAllComponents
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel.getData("recordId")}/get_git_files_list`;
@@ -131,14 +129,13 @@ sfdcPipelineActions.triggerOrgToOrgFilesPullV2 = async (getAccessToken, cancelTo
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-sfdcPipelineActions.getOrganizationDestinationFilesV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel, newFilterDto, pullAllComponents = false) => {
+sfdcPipelineActions.getOrganizationDestinationFilesV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel, newFilterDto) => {
   const postBody = {
     rules: pipelineWizardModel.getData("sfdcModifiedRuleList"),
     page: newFilterDto ? newFilterDto.getData("currentPage") : 1,
     size: newFilterDto ? newFilterDto.getData("pageSize") : 3000,
     search: newFilterDto ? newFilterDto.getData("search") : "",
     componentFilter: newFilterDto ? newFilterDto.getData("componentFilter") : "",
-    pullAllComponents: pullAllComponents
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel.getData("recordId")}/get_organization_destination_files_list`;
@@ -154,14 +151,13 @@ sfdcPipelineActions.triggerProfileComponentListPullV2 = async (getAccessToken, c
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
-sfdcPipelineActions.getProfileComponentListV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel, newFilterDto, pullAllComponents = false) => {
+sfdcPipelineActions.getProfileComponentListV2 = async (getAccessToken, cancelTokenSource, pipelineWizardModel, newFilterDto) => {
   const postBody = {
     rules: pipelineWizardModel.getData("profileComponentsRuleList"),
     page: newFilterDto ? newFilterDto.getData("currentPage") : 1,
     size: newFilterDto ? newFilterDto.getData("pageSize") : 3000,
     search: newFilterDto ? newFilterDto.getData("search") : "",
     componentFilter: newFilterDto ? newFilterDto.getData("componentFilter") : "",
-    pullAllComponents: pullAllComponents
   };
 
   const apiUrl = `/pipelines/sfdc/wizard/${pipelineWizardModel.getData("recordId")}/get_profile_component_list`;
@@ -231,7 +227,7 @@ sfdcPipelineActions.getListFromPipelineStorage = async (postBody, toolFilterDto,
   postBody.search = toolFilterDto ? toolFilterDto.getData("search") : "";
   postBody.classFilter = toolFilterDto ? toolFilterDto.getData("classFilter") : "";
   const accessToken = await getAccessToken();
-  const apiUrl = `/pipelines/storage/get`;   
+  const apiUrl = `/pipelines/storage/get`;
   const response = await axiosApiService(accessToken).post(apiUrl, postBody)
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
@@ -252,16 +248,7 @@ sfdcPipelineActions.getSfdcComponentListValues = async (getAccessToken, cancelTo
 // TODO: Remove all references and update with relevant queries that are more understandable
 sfdcPipelineActions.setListToPipelineStorage = async (postBody, getAccessToken) => {
   const accessToken = await getAccessToken();
-  const apiUrl = `/pipelines/storage/update`;   
-  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
-    .then((result) =>  {return result;})
-    .catch(error => {throw { error };});
-  return response;
-};
-
-sfdcPipelineActions.getProfileComponentList = async (postBody, getAccessToken) => {
-  const accessToken = await getAccessToken();
-  const apiUrl = `/pipelines/sfdc/getprofilecomponentlist`;   
+  const apiUrl = `/pipelines/storage/update`;
   const response = await axiosApiService(accessToken).post(apiUrl, postBody)
     .then((result) =>  {return result;})
     .catch(error => {throw { error };});
