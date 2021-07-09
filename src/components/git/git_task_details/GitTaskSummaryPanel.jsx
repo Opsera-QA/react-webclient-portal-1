@@ -13,6 +13,14 @@ import sfdcGitBranchTaskConfigurationMetadata
   from "components/git/git_task_details/configuration_forms/sfdc-branch-structure/sfdc-git-branch-structuring-task-configuration-metadata";
 import branchToBranchGitTaskConfigurationMetadata from "components/git/git_task_details/configuration_forms/branch-to-branch/branch-to-branch-git-task-configuration";
 import BranchToBranchGitTaskTypeSummaryCard from "components/git/git_task_details/configuration_forms/branch-to-branch/BranchToBranchGitTaskTypeSummaryCard";
+import ECSCreationTaskTypeSummaryCard from "./configuration_forms/ecs-cluster-creation/ECSCreationTaskTypeSummaryCard";
+import ec2ClusterCreationTaskConfigurationMetadata
+  from "./configuration_forms/ecs-cluster-creation/ecs-creation-git-task-configuration";
+import ECSServiceCreationTaskTypeSummaryCard
+  from "./configuration_forms/ecs-service-creation/ECSServiceCreationTaskTypeSummaryCard";
+import ec2ServiceCreationTaskConfigurationMetadata
+  from "./configuration_forms/ecs-service-creation/ecs-service-creation-git-task-configuration";
+
 
 function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
   const isMounted = useRef(false);
@@ -58,6 +66,20 @@ function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, load
         return (
           <BranchToBranchGitTaskTypeSummaryCard
             gitTaskConfigurationData={wrapGitTaskType(branchToBranchGitTaskConfigurationMetadata)}
+            gitTasksData={gitTasksData}
+          />
+        );
+      case "ecs_cluster_creation":
+        return (
+          <ECSCreationTaskTypeSummaryCard
+            gitTaskConfigurationData={wrapGitTaskType(ec2ClusterCreationTaskConfigurationMetadata)}
+            gitTasksData={gitTasksData}
+          />
+        );
+      case "ecs_service_creation":
+        return (
+          <ECSServiceCreationTaskTypeSummaryCard
+            gitTaskConfigurationData={wrapGitTaskType(ec2ServiceCreationTaskConfigurationMetadata)}
             gitTasksData={gitTasksData}
           />
         );
