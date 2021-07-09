@@ -65,8 +65,6 @@ function LdapUserByDomainSelectInput({ model, setModel, fieldName, valueField, t
     if (Array.isArray(users)) {
       let formattedUsers = [];
 
-      console.log("dn: " + JSON.stringify(users[0]?.dn));
-
       users.map((user) => {
         formattedUsers.push({text: `${user.name} (${user.emailAddress})`, value:`${user.emailAddress}`, user: user});
       });
