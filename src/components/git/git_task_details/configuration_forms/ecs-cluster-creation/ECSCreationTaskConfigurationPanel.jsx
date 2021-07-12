@@ -5,7 +5,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import ec2ClusterCreationTaskConfigurationMetadata from "./ecs-creation-git-task-configuration";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import AWSToolSelectInput from "./inputs/AWSToolSelectInput";
+import AwsToolSelectInput from "./inputs/AwsToolSelectInput";
 import TextInputBase from "../../../../common/inputs/text/TextInputBase";
 import ClusterTemplateSelectInput from "./inputs/ClusterTemplateSelectInput";
 import NetworkingOnlySubForm from "./sub_forms/NetworkingOnlySubForm";
@@ -44,7 +44,7 @@ function EC2ClusterCreationTaskConfigurationPanel({ gitTasksDataDto, gitTasksCon
   return (
     <Row>
       <Col lg={12}>
-        <AWSToolSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"awsToolId"} />
+        <AwsToolSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"awsToolId"} />
       </Col>
       <Col lg={12}>
         <ClusterTemplateSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"clusterTemplate"} />

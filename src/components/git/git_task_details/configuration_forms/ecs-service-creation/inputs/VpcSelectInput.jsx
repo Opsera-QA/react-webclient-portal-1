@@ -4,16 +4,16 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import { AuthContext } from "../../../../../../contexts/AuthContext";
 import axios from "axios";
-import ECSCreationActions from "../ecs-creation-actions";
+import ECSCreationActions from "../ecs-service-creation-actions";
 
-function VPCSelectInput({
+function VpcSelectInput({
   fieldName,
   dataObject,
   setDataObject,
   disabled,
   textField,
   valueField,
-  awstoolId,
+                          toolConfigId,
   pipelineId,
 }) {
   const toastContext = useContext(DialogToastContext);
@@ -45,7 +45,7 @@ function VPCSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [awstoolId]);
+  }, [toolConfigId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -101,21 +101,21 @@ function VPCSelectInput({
   );
 }
 
-VPCSelectInput.propTypes = {
+VpcSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  awstoolId: PropTypes.string,
+  toolConfigId: PropTypes.string,
   pipelineId: PropTypes.string,
 };
 
-VPCSelectInput.defaultProps = {
-  fieldName: "vpcId",
+VpcSelectInput.defaultProps = {
+  fieldName: "ecsServiceVpcId",
   textField: "name",
   valueField: "id",
 };
 
-export default VPCSelectInput;
+export default VpcSelectInput;

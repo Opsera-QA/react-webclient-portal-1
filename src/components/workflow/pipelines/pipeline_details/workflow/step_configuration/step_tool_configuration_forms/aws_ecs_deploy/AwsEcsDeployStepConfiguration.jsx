@@ -10,7 +10,7 @@ import TaskSelectInput from "./inputs/TaskSelectInput";
 import DynamicNameToggleInput from "./inputs/DynamicNameToggleInput";
 import DeleteResourceToggle from "./inputs/DeleteResourceToggle";
 
-function AWSECSDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan, stepId, pipelineId }) {
+function AwsEcsDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan, stepId, pipelineId }) {
   const [isLoading, setIsLoading] = useState(false);
   const [ecsServicesModel, setAWSECSDeployModel] = useState(undefined);
   const [threshold, setThreshold] = useState(undefined);
@@ -88,7 +88,7 @@ function AWSECSDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallb
   );
 }
 
-AWSECSDeployStepConfiguration.propTypes = {
+AwsEcsDeployStepConfiguration.propTypes = {
   stepTool: PropTypes.object,
   closeEditorPanel: PropTypes.func,
   parentCallback: PropTypes.func,
@@ -97,4 +97,4 @@ AWSECSDeployStepConfiguration.propTypes = {
   pipelineId: PropTypes.string,
 };
 
-export default AWSECSDeployStepConfiguration;
+export default AwsEcsDeployStepConfiguration;

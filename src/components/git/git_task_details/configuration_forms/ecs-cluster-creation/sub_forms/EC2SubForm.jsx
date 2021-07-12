@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import CreateVPCToggle from "../inputs/CreateVPCToggle";
 import TextInputBase from "../../../../../common/inputs/text/TextInputBase";
-import VPCSelectInput from "../inputs/VPCSelectInput";
+import VpcSelectInput from "../inputs/VpcSelectInput";
 import SubnetSelectInput from "../inputs/SubnetSelectInput";
 import ImageTypeSelectInput from "../inputs/ImageTypeSelect";
 import InstanceTypeSelectInput from "../inputs/InstanceTypeInput";
@@ -25,7 +25,7 @@ function EC2SubForm({ dataObject, setDataObject, disabled }) {
     } else {
       return (
         <>
-          <VPCSelectInput
+          <VpcSelectInput
             dataObject={dataObject}
             setDataObject={setDataObject}
             disabled={dataObject?.getData("awsToolId").length === 0}
@@ -49,8 +49,8 @@ function EC2SubForm({ dataObject, setDataObject, disabled }) {
       <InstanceTypeSelectInput
         dataObject={dataObject}
         setDataObject={setDataObject}
-        disabled={dataObject?.getData("imageType").length === 0}
-        awstoolId={dataObject?.getData("awsToolId")}
+        disabled={dataObject?.getData("awsToolId").length === 0}
+        awstoolId={dataObject?.getData("imageType")}
       />
       <KeyPairSelectInput
         dataObject={dataObject}

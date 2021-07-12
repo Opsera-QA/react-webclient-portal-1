@@ -5,10 +5,10 @@ import modelHelpers from "components/common/model/modelHelpers";
 import ec2ServiceCreationTaskConfigurationMetadata from "./ecs-service-creation-git-task-configuration";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import AWSToolSelectInput from "./inputs/AWSToolSelectInput";
+import AwsToolSelectInput from "./inputs/AwsToolSelectInput";
 import TextInputBase from "../../../../common/inputs/text/TextInputBase";
 import ClusterTemplateSelectInput from "./inputs/ClusterTemplateSelectInput";
-import VPCSelectInput from "./inputs/VPCSelectInput";
+import VpcSelectInput from "./inputs/VpcSelectInput";
 import ClusterSelectInput from "./inputs/ClusterSelectInput";
 import LoadBalancerSelectInput from "./inputs/LoadBalancerSelectInput";
 import NetworkingOnlySubForm from "../ecs-cluster-creation/sub_forms/NetworkingOnlySubForm";
@@ -65,7 +65,7 @@ function ECSServiceCreationTaskConfigurationPanel({
   return (
     <Row>
       <Col lg={12}>
-        <AWSToolSelectInput
+        <AwsToolSelectInput
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
           fieldName={"toolConfigId"}
@@ -87,7 +87,7 @@ function ECSServiceCreationTaskConfigurationPanel({
         />
       </Col>
       <Col lg={12}>
-      <VPCSelectInput
+      <VpcSelectInput
         dataObject={gitTasksConfigurationData}
         setDataObject={setGitTasksConfigurationData}
         disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0}
@@ -112,8 +112,8 @@ function ECSServiceCreationTaskConfigurationPanel({
         <LoadBalancerSelectInput
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
-          disabled={gitTasksConfigurationData?.getData("toolConfigId").length === 0}
-          toolConfigId={gitTasksConfigurationData?.getData("toolConfigId")}
+          disabled={gitTasksConfigurationData?.getData("ecsServiceVpcId").length === 0}
+          vpcId={gitTasksConfigurationData?.getData("ecsServiceVpcId")}
         />
       </Col>
       {getDynamicFields()}

@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faTools } from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 
-function AWSToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool_prop }) {
+function AwsToolSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField, tool_prop }) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [awsList, setAWSList] = useState([]);
@@ -119,7 +119,7 @@ function AWSToolSelectInput({ fieldName, dataObject, setDataObject, disabled, te
   );
 }
 
-AWSToolSelectInput.propTypes = {
+AwsToolSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
@@ -129,10 +129,10 @@ AWSToolSelectInput.propTypes = {
   tool_prop: PropTypes.string,
 };
 
-AWSToolSelectInput.defaultProps = {
+AwsToolSelectInput.defaultProps = {
   valueField: "id",
   textField: "name",
   fieldName: "awsToolId",
 };
 
-export default AWSToolSelectInput;
+export default AwsToolSelectInput;
