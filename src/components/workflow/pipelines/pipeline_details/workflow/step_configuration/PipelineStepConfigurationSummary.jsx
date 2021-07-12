@@ -143,8 +143,8 @@ import azureDevopsStepFormMetadata from "./step_tool_configuration_forms/azure_d
 import KafkaConnectPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/kafka_connect/KafkaConnectPipelineStepConfigurationSummaryPanel";
 import kafkaConnectStepFormMetadata from "./step_tool_configuration_forms/kafka_connect/kafkaConnect-stepForm-metadata";
-import AWSECSDeployPipelineStepConfigurationSummaryPanel
-  from "./step_tool_configuration_forms/aws_ecs_deploy/AWSECSDeployPipelineStepConfigurationSummary";
+import AwsEcsDeployPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/aws_ecs_deploy/AwsEcsSDeployPipelineStepConfigurationSummary";
 import awsECSDeployStepFormMetadata
   from "./step_tool_configuration_forms/aws_ecs_deploy/awsECSDeploy-stepForm-metadata";
 
@@ -426,7 +426,7 @@ function PipelineStepConfigurationSummary({
         );
       case "aws_ecs_deploy":
         return (
-          <AWSECSDeployPipelineStepConfigurationSummaryPanel
+          <AwsEcsDeployPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             awsECSDeployPipelineDataObject={getModelWrappedObject(awsECSDeployStepFormMetadata)}
           />

@@ -51,8 +51,8 @@ import AzureDevopsToolConfiguration
 import AzureDevopsStepConfiguration
   from "./step_tool_configuration_forms/azure_devops/AzureDevopsStepToolConfiguration";
 import KafkaConnectStepConfiguration from "./step_tool_configuration_forms/kafka_connect/KafkaConnectStepConfiguration";
-import AWSECSDeployStepConfiguration
-  from "./step_tool_configuration_forms/aws_ecs_deploy/AWSECSDeployStepConfiguration";
+import AwsEcsDeployStepConfiguration
+  from "./step_tool_configuration_forms/aws_ecs_deploy/AwsEcsDeployStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -716,7 +716,7 @@ function StepToolConfiguration({
         );
       case "aws_ecs_deploy":
         return (
-          <AWSECSDeployStepConfiguration
+          <AwsEcsDeployStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}

@@ -7,7 +7,7 @@ import FieldContainer from "components/common/fields/FieldContainer";
 import FieldLabel from "components/common/fields/FieldLabel";
 import BooleanField from "../../../../common/fields/boolean/BooleanField";
 import TextInputBase from "../../../../common/inputs/text/TextInputBase";
-import VPCSelectInput from "./inputs/VPCSelectInput";
+import VpcSelectInput from "./inputs/VpcSelectInput";
 import SubnetSelectInput from "./inputs/SubnetSelectInput";
 import CodeFieldBase from "../../../../common/fields/code/CodeFieldBase";
 
