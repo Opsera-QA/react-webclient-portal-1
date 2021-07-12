@@ -200,6 +200,36 @@ const octopusStepFormMetadata = {
       {
         label: "Tomcat Manager",
         id: "tomcatManagerId"
+      },      
+      {
+        label: "Deploy the Extracted Package",
+        id: "deployExtractedPackage"
+      },
+      {
+        label: "Deployed Package File Name",
+        id: "deployedPackageFileName",
+        regexValidator: regexHelpers.regexTypes.genericFileName,
+        maxLength: 64
+      },
+      {
+        label: "Use Custom Deployment Directory",
+        id: "useCustomDeploymentDirectory"
+      },
+      {
+        label: "Deployment Directory",
+        id: "deploymentDirectory",
+        regexValidator: regexHelpers.regexTypes.pathField,
+        maxLength: 100
+      },
+      {
+        label: "Purge",
+        id: "purge"
+      },
+      {
+        label: "Files Excluded from Purge",
+        id: "excludeFromPurge",
+        regexValidator: regexHelpers.regexTypes.octopusFileList,
+        formText: "A newline-separated list of file or directory names, relative to the installation directory"
       },
     ],
   newObjectFields:
@@ -247,6 +277,12 @@ const octopusStepFormMetadata = {
         postDeploymentScriptId: "",
         tomcatManagerDetails: {},
         tomcatManagerId: "",
+        deployExtractedPackage: false,
+        deployedPackageFileName: "",
+        useCustomDeploymentDirectory: false,
+        deploymentDirectory: "",
+        purge: false,
+        excludeFromPurge: "",
       }
   };
   
