@@ -208,7 +208,12 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
 
   const getXMLView = () => {
     if (pipelineWizardModel.getData("xmlFileContent") && pipelineWizardModel.getData("xmlFileContent").length > 0) {
-      return (<XmlFieldBase fieldName={"xmlFileContent"} model={pipelineWizardModel} />);
+      return (
+        <>
+          <XmlFieldBase fieldName={"xmlFileContent"} model={pipelineWizardModel}/>
+          {buttonContainer()}
+        </>
+      );
     }
   };
   
