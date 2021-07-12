@@ -85,9 +85,16 @@ pipelineActions.getAllPipelines = async (getAccessToken) => {
   return await baseActions.apiGetCall(getAccessToken, apiUrl, urlParams);
 };
 
+// TODO: Refactor
 pipelineActions.getAllPipelinesV2 = async (getAccessToken, cancelTokenSource) => {
+  const urlParams = {
+    params: {
+      size: 10000,
+    },
+  };
+
   let apiUrl = `/pipelines`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 pipelineActions.getAllPipelinesV3 = async (getAccessToken, cancelTokenSource, searchTerm) => {
