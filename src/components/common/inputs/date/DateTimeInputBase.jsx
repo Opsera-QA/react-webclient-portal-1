@@ -39,8 +39,8 @@ function DateTimeInputBase({ fieldName, dataObject, setDataObject, dropUp, setDa
       <InputLabel field={field}/>
       <DateTimePicker
         date={showDate}
-        min={new Date(minDate)}
-        max={new Date(maxDate)}
+        min={minDate}
+        max={maxDate}
         time={showTime}
         dropUp={dropUp}
         disabled={disabled}
