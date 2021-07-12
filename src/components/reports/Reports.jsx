@@ -8,10 +8,11 @@ import {useHistory, useParams} from "react-router-dom";
 import ToolReports from "components/reports/tools/ToolReports";
 import TagReports from "components/reports/tags/TagReports";
 import PipelineReports from "components/reports/pipelines/PipelineReports";
-import {faAnalytics, faDraftingCompass, faTags, faTools} from "@fortawesome/pro-light-svg-icons";
+import {faAnalytics, faDraftingCompass, faTags, faTools, faUsers} from "@fortawesome/pro-light-svg-icons";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
+import UserReports from "components/reports/users/UserReports";
 
-const reportsTypes = ["tools", "pipelines", "tags"];
+const reportsTypes = ["tools", "pipelines", "tags", "users"];
 
 const extractTab = (tab) => {
   if (tab && reportsTypes.indexOf(tab) > -1) {
@@ -68,6 +69,8 @@ function Reports() {
         return <PipelineReports />;
       case "tags":
         return <TagReports />;
+      case "users":
+        return <UserReports />;
       case "all":
       default:
         return getAllReports();
@@ -87,6 +90,7 @@ function Reports() {
       <div>
         <TagReports />
         <ToolReports />
+        <UserReports />
         {/*TODO: Uncomment when Pipeline Report is added*/}
         {/*<PipelineReports />*/}
       </div>
@@ -99,6 +103,7 @@ function Reports() {
         <NavigationTab activeTab={activeTab} tabText={"All Reports"} handleTabClick={handleTabClick} tabName={"all"} icon={faAnalytics} />
         <NavigationTab activeTab={activeTab} tabText={"Tool Reports"} handleTabClick={handleTabClick} tabName={"tools"} icon={faTools} />
         <NavigationTab activeTab={activeTab} tabText={"Tag Reports"} handleTabClick={handleTabClick} tabName={"tags"} icon={faTags} />
+        <NavigationTab activeTab={activeTab} tabText={"User Reports"} handleTabClick={handleTabClick} tabName={"users"} icon={faUsers} />
         {/* <NavigationTab activeTab={activeTab} tabText={"Pipeline Reports"} handleTabClick={handleTabClick} tabName={"pipelines"} icon={faDraftingCompass} /> */}
         {/*<NavigationTab activeTab={activeTab} tabText={"Dashboard Reports"} handleTabClick={handleTabClick} tabName={"dashboards"} icon={faDraftingCompass} />*/}
       </NavigationTabContainer>
@@ -113,6 +118,8 @@ function Reports() {
         return "pipelineReports";
       case "tags":
         return "tagReports";
+      case "users":
+        return "userReports";
       case "dashboards":
         return "dashboardReports";
       case "all":
