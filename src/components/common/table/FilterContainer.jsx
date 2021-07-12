@@ -101,7 +101,6 @@ FilterContainer.propTypes = {
   supportSearch: PropTypes.bool,
   titleIcon: PropTypes.object,
   title:PropTypes.string,
-  children: PropTypes.any,
   body: PropTypes.object,
   loadData: PropTypes.func,
   addRecordFunction: PropTypes.func,
@@ -110,7 +109,6 @@ FilterContainer.propTypes = {
   saveCookies: PropTypes.func,
   type: PropTypes.string,
   className: PropTypes.string,
-  stackFilters: PropTypes.bool,
   metadata: PropTypes.object,
   exportButton: PropTypes.object,
   showBorder: PropTypes.bool
