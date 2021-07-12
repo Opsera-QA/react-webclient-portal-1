@@ -208,7 +208,7 @@ const octopusStepFormMetadata = {
       {
         label: "Deployed Package File Name",
         id: "deployedPackageFileName",
-        regexValidator: regexHelpers.regexTypes.fileName,
+        regexValidator: regexHelpers.regexTypes.genericFileName,
         maxLength: 64
       },
       {
@@ -228,7 +228,7 @@ const octopusStepFormMetadata = {
       {
         label: "Files Excluded from Purge",
         id: "excludeFromPurge",
-        regexValidator: regexHelpers.regexTypes.fileList,
+        regexValidator: regexHelpers.regexTypes.octopusFileList,
         formText: "A newline-separated list of file or directory names, relative to the installation directory"
       },
     ],

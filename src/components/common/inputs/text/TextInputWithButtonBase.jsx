@@ -93,8 +93,7 @@ function TextInputWithButtonBase({
           {getButton()}                    
         </Col>
       </Row>      
-      <InfoText field={field} errorMessage={errorMessage} />
-      <InfoText errorMessage={errorMsg} successMessage={successMsg} />
+      <InfoText field={field} errorMessage={errorMessage || errorMsg} successMessage={successMsg} />      
     </InputContainer>
   );
 }

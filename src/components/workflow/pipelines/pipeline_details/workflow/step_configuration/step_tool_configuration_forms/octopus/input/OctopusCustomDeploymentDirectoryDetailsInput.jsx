@@ -1,27 +1,17 @@
 import React, {useState} from "react";
 import PropTypes from "prop-types";
-import InputContainer from "components/common/inputs/InputContainer";
-import {Form} from "react-bootstrap";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import TextAreaInput from "components/common/inputs/text/TextAreaInput";
-
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import OctopusCustomDeploymentDirectoryPurgeDetailsInput from "./OctopusCustomDeploymentDirectoryPurgeDetailsInput";
 function OctopusCustomDeploymentDirectoryDetailsInput({dataObject, setDataObject, fieldName, disabled}) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
 
-  const handleChange = () => {
+  const setDataFunction = () => {
     let newDataObject = dataObject;
     let sourceScriptFlag = !dataObject.getData(fieldName);
     newDataObject.setData(fieldName, sourceScriptFlag);
     newDataObject.setData("deploymentDirectory", "");
     newDataObject.setData("purge", false);
-    setDataObject({...newDataObject});
-  };
-
-  const handlePurgeChange = () => {
-    let newDataObject = dataObject;
-    let flag = !dataObject.getData("purge");
-    newDataObject.setData("purge", flag);
-    newDataObject.setData("excludeFromPurge", "");
     setDataObject({...newDataObject});
   };
 
@@ -35,33 +25,12 @@ function OctopusCustomDeploymentDirectoryDetailsInput({dataObject, setDataObject
           setDataObject={setDataObject}
           dataObject={dataObject}
           fieldName={"deploymentDirectory"}        
-        />
-        <InputContainer>
-          <Form.Check
-            type="switch"
-            id="purge"
-            checked={!!dataObject.getData("purge")}
-            disabled={disabled}
-            label="Purge"
-            onChange={() => handlePurgeChange()}
-          />
-        </InputContainer>
-        {getPurgeInputs()}
-      </>
-    );
-  };
-
-  const getPurgeInputs = () => {
-    if(!dataObject.getData("purge")){
-        return null;
-    }
-    return (
-      <>
-        <TextAreaInput 
-          dataObject={dataObject}                         
-          setDataObject={setDataObject}
-          fieldName={"excludeFromPurge"} 
         />        
+        <OctopusCustomDeploymentDirectoryPurgeDetailsInput 
+          dataObject={dataObject}
+          setDataObject={setDataObject}
+          fieldName={"purge"}
+        />
       </>
     );
   };
@@ -71,17 +40,12 @@ function OctopusCustomDeploymentDirectoryDetailsInput({dataObject, setDataObject
   }
 
   return (
-    <>
-      <InputContainer>
-        <Form.Check
-          type="switch"
-          id={field.id}
-          checked={!!dataObject.getData(fieldName)}
-          disabled={disabled}
-          label={field.label}
-          onChange={() => handleChange()}
-        />
-      </InputContainer>
+    <>      
+      <BooleanToggleInput disabled={disabled} fieldName={field.id}
+          dataObject={dataObject}
+          setDataObject={setDataObject}
+          setDataFunction={setDataFunction}
+      />
       {getSupportingInputs()}
     </>
   );

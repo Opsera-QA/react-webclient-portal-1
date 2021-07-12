@@ -61,10 +61,10 @@ regexHelpers.regexTypes = {
   hostnameRegex: /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/,
 
   // Letters, numbers, dashes, underscores and periods allowed
-  fileName: /^[A-Za-z0-9-_.]*$/,
+  genericFileName: /^[A-Za-z0-9-_.]*$/,
 
   // Letters, numbers, dashes, underscores, asterisk, periods and new lines allowed
-  fileList: /^[A-Za-z0-9-_.*\n]*$/,
+  octopusFileList: /^[A-Za-z0-9-_.*\n]*$/,
 };
 
 export default regexHelpers;
