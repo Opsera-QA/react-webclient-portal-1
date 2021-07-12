@@ -13,7 +13,7 @@ function LoadBalancerSelectInput({
                           disabled,
                           textField,
                           valueField,
-                                   toolConfigId,
+                                   vpcId,
                           pipelineId,
                         }) {
   const toastContext = useContext(DialogToastContext);
@@ -45,7 +45,7 @@ function LoadBalancerSelectInput({
       source.cancel();
       isMounted.current = false;
     };
-  }, [toolConfigId]);
+  }, [vpcId]);
 
   const loadData = async (cancelSource = cancelTokenSource) => {
     try {
@@ -108,7 +108,7 @@ LoadBalancerSelectInput.propTypes = {
   disabled: PropTypes.bool,
   textField: PropTypes.string,
   valueField: PropTypes.string,
-  toolConfigId: PropTypes.string,
+  vpcId: PropTypes.string,
   pipelineId: PropTypes.string,
 };
 
