@@ -570,6 +570,47 @@ const breadcrumbs = {
     icon: faTags
   },
 
+  userReports: {
+    parent: "reports",
+    name: "userReports",
+    path: paths.userReports,
+    title: "User Reports",
+    linkText: "User Reports",
+    icon: faUser
+  },
+  groupMembershipReport: {
+    parent: "userReports",
+    name: "groupMembershipReport",
+    path: paths.groupMembershipReport,
+    title: "Group Membership",
+    linkText: "Group Membership",
+    icon: faUsers
+  },
+  pipelineOwnershipReport: {
+    parent: "userReports",
+    name: "pipelineOwnershipReport",
+    path: paths.pipelineOwnershipReport,
+    title: "Pipeline Ownership",
+    linkText: "Pipeline Ownership",
+    icon: faDraftingCompass
+  },
+  toolOwnershipReport: {
+    parent: "userReports",
+    name: "toolOwnershipReport",
+    path: paths.toolOwnershipReport,
+    title: "Tool Ownership",
+    linkText: "Tool Ownership",
+    icon: faTools
+  },
+  taskOwnershipReport: {
+    parent: "userReports",
+    name: "taskOwnershipReport",
+    path: paths.taskOwnershipReport,
+    title: "Task Ownership",
+    linkText: "Task Ownership",
+    icon: faTasks
+  },
+
   pipelineReports: {
     parent: "reports",
     name: "pipelineReports",

@@ -87,6 +87,7 @@ import ToolProjectsView from "components/inventory/tools/tool_details/projects/T
 import { axiosApiService } from "api/apiService";
 import TagsUsedInPipelineReport from "components/reports/tags/pipelines/TagsUsedInPipelineReport";
 import TagsUsedInToolsReport from "components/reports/tags/tools/TagsUsedInToolsReport";
+import UserGroupMembershipReport from "components/reports/users/groups/UserGroupMembershipReport";
 import AccountRegistration from "components/user/account_registration/AccountRegistration";
 import SiteNotificationManager from "components/admin/site_notifications/manager/SiteNotificationManager";
 import ToolCountsReport from "components/reports/tools/counts/ToolCountsReport";
@@ -309,6 +310,7 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/reports/tags/tags-used-in-tools" exact component={TagsUsedInToolsReport}/>
                   <SecureRoute path="/reports/tags/tags-used-in-dashboards" exact component={TagsUsedInDashboardsReport}/>
                   <SecureRoute path="/reports/tools/detailed-tool-report" exact component={DetailedToolReport}/>
+                  <SecureRoute path="/reports/users/group-membership" exact component={UserGroupMembershipReport}/>
 
                   { /*Notifications */}
                   <SecureRoute path="/notifications" exact component={Notifications}/>
