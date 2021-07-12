@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import LaunchHelpIcon from "components/common/icons/help/LaunchHelpIcon";
+import AzurePipelineStepConfigurationHelpDocumentation
+  from "components/common/help/documentation/pipelines/step_configuration/AzurePipelineStepConfigurationHelpDocumentation";
 import PipelineStepSetupHelpDocumentation
   from "components/common/help/documentation/pipelines/step_configuration/PipelineStepSetupHelpDocumentation";
 
@@ -9,6 +11,7 @@ function StepToolHelpIcon({type, tool, className, iconClassName}) {
   const getToolHelpPanel = () => {
     switch (tool) {
       case "azure-devops":
+        return <AzurePipelineStepConfigurationHelpDocumentation />;
       case "jenkins":
       case "junit":
       case "xunit":
