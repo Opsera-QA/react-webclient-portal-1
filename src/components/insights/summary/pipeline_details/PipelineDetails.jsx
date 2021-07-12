@@ -14,6 +14,7 @@ import MetricContainer from "components/common/panels/insights/charts/MetricCont
 import JiraLeadTimeChartNoDataBlocks from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks"; 
 import JiraLeadTimeDataBlock from "./JiraLeadTimeDataBlock";
 import AvgDeploymentDuration from "components/insights/summary/pipeline_details/AvgDeploymentDuration";
+import AvgBuildDuration from "components/insights/summary/pipeline_details/AvgBuildDuration";
 
 function PipelineDetails({ dashboardData }) {
   const [selectedDataBlock, setSelectedDataBlock] = useState("");
@@ -85,6 +86,14 @@ function PipelineDetails({ dashboardData }) {
             tableTitle="Deployment Duration"
           />
         );
+      case "Average_Build_Duration":{
+        return (
+          <InsightsPipelineDetailsDurationTable
+            data={selectedDataBlockTableData}
+            tableTitle="Build Duration"
+          />
+        );
+      }
       default:
         return null;
     }
@@ -167,6 +176,12 @@ function PipelineDetails({ dashboardData }) {
     return (
       <DataBlockWrapper padding={0}>
         <AvgDeploymentDuration 
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{maxWidth:"33%"}}
+        />
+        <AvgBuildDuration 
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
