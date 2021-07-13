@@ -74,11 +74,12 @@ function PipelineCatalog({source, activeTemplates}) {
 
   const loadWorkflowTemplates = async (filterModel = catalogFilterModel, cancelSource = cancelTokenSource) => {
     const response = await pipelineActions.getWorkflowTemplatesV2(getAccessToken, cancelSource, filterModel, source);
+    const workflowTemplates = response?.data?.data;
 
-    if (isMounted?.current === true && response?.data) {
-      setWorkflowTemplates(response.data);
+    if (isMounted?.current === true && Array.isArray(workflowTemplates)) {
+      setWorkflowTemplates(workflowTemplates);
       let newFilterDto = filterModel;
-      newFilterDto.setData("totalCount", response.data.length);
+      newFilterDto.setData("totalCount", response?.data?.count);
       newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
       setCatalogFilterModel({ ...newFilterDto });
     }
@@ -112,19 +113,19 @@ function PipelineCatalog({source, activeTemplates}) {
 
   return (
     <div style={{minWidth: "660px"}}>
-    <FilterContainer
-      loadData={loadData}
-      filterDto={catalogFilterModel}
-      setFilterDto={setCatalogFilterModel}
-      supportSearch={true}
-      isLoading={isLoading}
-      body={getPipelineCardView()}
-      dropdownFilters={getDropdownFilters()}
-      inlineFilters={getInlineFilters()}
-      titleIcon={faOctagon}
-      title={"Pipeline Templates"}
-      className={"pb-2"}
-    />
+      <FilterContainer
+        loadData={loadData}
+        filterDto={catalogFilterModel}
+        setFilterDto={setCatalogFilterModel}
+        supportSearch={true}
+        isLoading={isLoading}
+        body={getPipelineCardView()}
+        dropdownFilters={getDropdownFilters()}
+        inlineFilters={getInlineFilters()}
+        titleIcon={faOctagon}
+        title={"Pipeline Templates"}
+        className={"pb-2"}
+      />
     </div>
   );
 }
