@@ -9,13 +9,14 @@ import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSyno
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function AvgDeploymentDuration({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
+function AvgBuildDuration({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [dataForDynamicPanel , setDataForDynamicPanel] = useState([]);
   const [tableFilterDto, setTableFilterDto] = useState(
     new Model(
       { ...genericChartFilterMetadata.newObjectFields },
@@ -50,14 +51,13 @@ function AvgDeploymentDuration({ dashboardData, toggleDynamicPanel, selectedData
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-        getAccessToken,
-        cancelSource,
-        "opseraRecentCDStatus",
-        null,
-        dashboardTags,
-        filterDto
+        getAccessToken, 
+        cancelSource, 
+        "opseraBuildDuration", 
+        null, 
+        dashboardTags
       );
-      let dataObject = response?.data?.data[0]?.opseraRecentCDStatus?.data;
+      let dataObject = response?.data?.data[0]?.opseraBuildDuration?.data || [];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
@@ -80,7 +80,7 @@ function AvgDeploymentDuration({ dashboardData, toggleDynamicPanel, selectedData
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("Average_Deployment_Duration", metrics);
+    toggleDynamicPanel("Average_Build_Duration", metrics);
   };
 
   const getAverage = ()=>{
@@ -93,7 +93,7 @@ function AvgDeploymentDuration({ dashboardData, toggleDynamicPanel, selectedData
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "Average_Deployment_Duration" ? "selected-data-block" : undefined} style={style}>
+      <div className={selectedDataBlock === "Average_Build_Duration" ? "selected-data-block" : undefined} style={style}>
         <InsightsSynopsisDataBlock
           title={
             !isLoading && metrics[0] ? (
@@ -107,8 +107,8 @@ function AvgDeploymentDuration({ dashboardData, toggleDynamicPanel, selectedData
               />
             )
           }
-          subTitle="Average Deployment Duration (Mins)"
-          toolTipText="Average Deployment Duration (Mins)"
+          subTitle="Average Build Duration (Mins)"
+          toolTipText="Average Build Duration (Mins)"
           clickAction={() => onDataBlockSelect()}
         />
       </div>
@@ -118,11 +118,11 @@ function AvgDeploymentDuration({ dashboardData, toggleDynamicPanel, selectedData
   return getChartBody();
 }
 
-AvgDeploymentDuration.propTypes = {
+AvgBuildDuration.propTypes = {
   selectedDataBlock: PropTypes.string,
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
   style:PropTypes.object
 };
 
-export default AvgDeploymentDuration;
+export default AvgBuildDuration;
