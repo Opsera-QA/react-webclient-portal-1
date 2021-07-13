@@ -113,8 +113,8 @@ function PipelineFailedDeployment({ dashboardData, toggleDynamicPanel, selectedD
               />
             )
           }
-          subTitle="Pipelines Failing Deployment Step"
-          toolTipText="Pipelines Failing Deployment Step"
+          subTitle="Failed Pipelines (Deployments)"
+          toolTipText="Failed Pipelines (Deployments)"
           clickAction={() => onDataBlockSelect()}
           statusColor="danger"
         />
