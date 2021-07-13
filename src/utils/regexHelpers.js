@@ -27,6 +27,9 @@ regexHelpers.regexTypes = {
   // Letters, numbers, dashes, apostrophes, colons, underscores, @, and periods allowed
   email: /^[A-Za-z0-9'\-_.@]*$/,
 
+  // Letters
+  alphabetic: /^[A-Za-z]*$/,
+
   // Letters, numbers
   alphanumeric: /^[A-Za-z0-9]*$/,
 
