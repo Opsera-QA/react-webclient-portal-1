@@ -14,6 +14,10 @@ import MetricContainer from "components/common/panels/insights/charts/MetricCont
 import JiraLeadTimeChartNoDataBlocks from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks";
 import JiraLeadTimeDataBlock from "./JiraLeadTimeDataBlock";
 import AvgDeploymentDuration from "components/insights/summary/pipeline_details/AvgDeploymentDuration";
+import ServiceNowMTTRDataBlock from "./ServiceNowMTTRDataBlock";
+import ServiceNowMeanTimeToResolutionBarChart from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionBarChart";
+import ServiceNowMTTADataBlock from "./ServiceNowMTTADataBlock";
+import ServiceNowMeanTimeToAcknowledgeBarChart from "components/insights/charts/servicenow/bar_chart/mean_time_to_acknowledge/ServiceNowMeanTimeToAcknowledgeBarChart";
 
 function PipelineDetails({ dashboardData }) {
   const [selectedDataBlock, setSelectedDataBlock] = useState("");
@@ -72,6 +76,20 @@ function PipelineDetails({ dashboardData }) {
       case "Average_Deployment_Duration":
         return (
           <InsightsPipelineDetailsDurationTable data={selectedDataBlockTableData} tableTitle="Deployment Duration" />
+        );
+      case "serviceNowMTTR":
+        return (
+          <ServiceNowMeanTimeToResolutionBarChart
+            dashboardData={dashboardData}
+            kpiConfiguration={{ kpi_name: "Service Now Mean Time to Resolution", filters: [] }}
+          />
+        );
+      case "serviceNowMTTA":
+        return (
+          <ServiceNowMeanTimeToAcknowledgeBarChart
+            dashboardData={dashboardData}
+            kpiConfiguration={{ kpi_name: "Service Now Mean Time to Acknowledgement", filters: [] }}
+          />
         );
       default:
         return null;
@@ -161,6 +179,24 @@ function PipelineDetails({ dashboardData }) {
       </DataBlockWrapper>
     );
   };
+  const getIncidents = () => {
+    return (
+      <DataBlockWrapper>
+        <ServiceNowMTTRDataBlock
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{ maxWidth: "33%" }}
+        />
+        <ServiceNowMTTADataBlock
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{ maxWidth: "33%" }}
+        />
+      </DataBlockWrapper>
+    );
+  };
 
   return (
     <>
@@ -169,6 +205,7 @@ function PipelineDetails({ dashboardData }) {
         <MetricContainer title="Pipelines: Failure Score">{getPipelinesFailure()}</MetricContainer>
         <MetricContainer title="Value Stream">{getValueStream()}</MetricContainer>
         <MetricContainer title="Pipeline: Duration Average">{getAverageBlocks()}</MetricContainer>
+        <MetricContainer title="Incidents">{getIncidents()}</MetricContainer>
       </div>
 
       {getDynamicPanel()}

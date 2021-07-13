@@ -114,54 +114,6 @@ function ServiceNowMeanTimeToResolutionBarChart({
       return max;
     };
 
-    // const MeanLineLayer = ({ bars, xScale, yScale }) => {
-    //   const lineColor = accentColor;
-    //   const lineGenerator = line()
-    //     .x((d) => xScale(d.data.data._id))
-    //     .y((d) => yScale(d.data.data["mttr"]));
-    //   return (
-    //     <Fragment>
-    //       <path
-    //         d={lineGenerator(bars)}
-    //         fill="none"
-    //         stroke={lineColor}
-    //         strokeWidth="3"
-    //         style={{ pointerEvents: "none" }}
-    //       />
-    //       {bars.map((bar) => {
-    //         return (
-    //           <circle
-    //             key={bar.key}
-    //             cx={xScale(bar.data.data._id)}
-    //             cy={yScale(bar.data.data["mttr"])}
-    //             r={4}
-    //             fill={lineColor}
-    //             stroke={lineColor}
-    //             style={{ pointerEvents: "none" }}
-    //           />
-    //         );
-    //       })}
-    //     </Fragment>
-    //   );
-    // };
-
-    // const onRowSelect = (data) => {
-    // const chartModel = new Model(
-    //   { ...MeanTimeToResolutionSummaryPanelMetadata.newObjectFields },
-    //   MeanTimeToResolutionSummaryPanelMetadata,
-    //   false
-    // );
-    // toastContext.showOverlayPanel(
-    //   <ChartDetailsOverlay
-    //     dashboardData={dashboardData}
-    //     kpiConfiguration={kpiConfiguration}
-    //     chartModel={chartModel}
-    //     kpiIdentifier={"mean-time-to-restore"}
-    //     currentDate={data.data._id}
-    //   />
-    // );
-    // };
-
     return (
       <div className="new-chart mb-3 pointer" style={{ height: "300px" }}>
         <div style={{ float: "right", fontSize: "10px" }}>Total Number of Incidents - #</div>
