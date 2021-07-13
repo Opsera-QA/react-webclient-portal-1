@@ -17,6 +17,7 @@ import axios from "axios";
 import sfdcPipelineWizardMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/sfdc-pipeline-wizard-metadata";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
+import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
 
 export const PIPELINE_WIZARD_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
@@ -139,6 +140,20 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
     }
   };
 
+  const getHelpComponent = () => {
+    switch (pipelineWizardScreen) {
+      case PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+      case PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR:
+      case PIPELINE_WIZARD_SCREENS.STANDARD_FILE_SELECTOR:
+      case PIPELINE_WIZARD_SCREENS.GIT_TASKS_FILE_SELECTOR:
+      case PIPELINE_WIZARD_SCREENS.ORG_TO_ORG_FILE_SELECTOR:
+      case PIPELINE_WIZARD_SCREENS.PROFILE_COMPONENT_SELECTOR:
+      case PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR:
+      case PIPELINE_WIZARD_SCREENS.XML_VIEWER:
+      default:
+        return null;
+    }
+  };
 
   if (pipelineWizardModel == null) {
     return (
@@ -155,9 +170,9 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
   }
 
   return (
-    <div className={"m-3"}>
+    <OverlayPanelBodyContainer className={"mx-3"} helpComponent={getHelpComponent()}>
       {getBody()}
-    </div>
+    </OverlayPanelBodyContainer>
   );
 };
 
