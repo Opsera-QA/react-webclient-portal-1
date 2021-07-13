@@ -67,5 +67,3 @@ ToolAttributeEditorPanel.propTypes = {
 };
 
 export default ToolAttributeEditorPanel;
-
-
