@@ -9,18 +9,10 @@ const ec2ServiceCreationTaskConfigurationMetadata = {
       isRequired: true
     },
     {
-      label: "Service Name",
-      id: "ecsServiceName"
-    },
-    {
       label: "Desired Count",
       id: "ecsServiceDesiredCount",
       isRequired: true,
       regexValidator: regexHelpers.regexTypes.numericalField
-    },
-    {
-      label: "Container Port",
-      id: "ecsServiceContainerPort",
     },
     {
       label: "Required Compatibility",
@@ -60,12 +52,9 @@ const ec2ServiceCreationTaskConfigurationMetadata = {
   newObjectFields:
     {
       ecsClusterName: "",
-      ecsServiceName: "",
       ecsServiceDesiredCount: "",
-      ecsServiceContainerPort: "",
       ecsServiceRequiresCompatibilities: "",
       ecsServiceVpcId : "",
-      ecsServiceImageUrl : "",
       ecsServiceLoadBalancerArn: "",
       toolConfigId: "",
       ecsServiceLogGroup: "",
