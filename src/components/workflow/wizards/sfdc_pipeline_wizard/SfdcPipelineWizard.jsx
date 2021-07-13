@@ -170,7 +170,7 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
   }
 
   return (
-    <OverlayPanelBodyContainer className={"mx-3"} helpComponent={getHelpComponent()}>
+    <OverlayPanelBodyContainer className={"mx-3 mb-3"} helpComponent={getHelpComponent()}>
       {getBody()}
     </OverlayPanelBodyContainer>
   );
