@@ -115,8 +115,8 @@ function PipelineFailedSecurity({ dashboardData, toggleDynamicPanel, selectedDat
               />
             )
           }
-          subTitle="Pipelines Failing Security Step"
-          toolTipText="Pipelines Failing Security Step"
+          subTitle="Failed Pipelines (Security)"
+          toolTipText="Failed Pipelines (Security)"
           clickAction={() => onDataBlockSelect()}
           statusColor="danger"
         />
