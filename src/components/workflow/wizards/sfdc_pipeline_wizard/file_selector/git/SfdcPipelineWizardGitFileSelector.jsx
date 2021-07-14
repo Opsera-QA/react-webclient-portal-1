@@ -137,13 +137,6 @@ const SfdcPipelineWizardGitFileSelector = ({ pipelineWizardModel, setPipelineWiz
         <Button variant="secondary" size="sm" className="mr-2" onClick={() => {setPipelineWizardScreen(PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR);}}>
           <FontAwesomeIcon icon={faStepBackward} fixedWidth className="mr-1"/>Back
         </Button>
-        <SfdcPipelineWizardGitRollbackModeButton
-          className={"mr-2"}
-          filteredFileCount={totalFileCount}
-          pipelineWizardModel={pipelineWizardModel}
-          setPipelineWizardModel={setPipelineWizardModel}
-          setPipelineWizardScreen={setPipelineWizardScreen}
-        />
         <SfdcPipelineWizardSubmitGitFilesButton
           pipelineWizardModel={pipelineWizardModel}
           setPipelineWizardModel={setPipelineWizardModel}
