@@ -1,5 +1,4 @@
 import Model from "core/data_model/model";
-import {kpiDateFilterMetadata} from "components/insights/marketplace/charts/kpi-configuration-metadata";
 
 const modelHelpers = {};
 
@@ -10,6 +9,15 @@ modelHelpers.getToolConfigurationModel = (toolConfiguration, metaData) => {
   }
   return new Model(toolConfiguration, metaData, false);
 };
+
+modelHelpers.parseObjectIntoModel = (object, metaData) => {
+  if (Object.entries(object).length === 0) {
+    return new Model({...metaData.newObjectFields}, metaData, true);
+  }
+
+  return new Model(object, metaData, false);
+};
+
 
 modelHelpers.getPipelineStepConfigurationModel = (pipelineStepConfiguration, pipelineStepMetadata) => {
   let configuration = pipelineStepConfiguration?.configuration;
