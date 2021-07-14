@@ -14,6 +14,7 @@ import InsightsPipelineDetailsDurationTable from "components/insights/summary/pi
 import PipelinesByProjectTable from "components/insights/summary/PipelinesByProjectTable";
 import TotalPipelinesPassedDeployment from "components/insights/summary/pipeline_details/TotalPipelinesPassedDeployment";
 import AvgDeploymentDuration from "components/insights/summary/pipeline_details/AvgDeploymentDuration";
+import AvgBuildDuration from "components/insights/summary/pipeline_details/AvgBuildDuration";
 
 // JIRA
 import JiraLeadTimeChartNoDataBlocks from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks";
@@ -41,7 +42,12 @@ function PipelineDetails({ dashboardData }) {
       case "pipelines_by_project":
         return <PipelinesByProjectTable dashboardData={selectedDataBlockTableData} />;
       case "total_pipelines":
-        return <InsightsPipelineDetailsTable data={selectedDataBlockTableData} tableTitle="Pipelines Executed" />;
+        return (
+          <InsightsPipelineDetailsTable
+            data={selectedDataBlockTableData}
+            tableTitle="Total Number of Pipelines Executed"
+          />
+        );
       case "successful_pipelines":
         return (
           <InsightsPipelineDetailsTable
@@ -51,21 +57,15 @@ function PipelineDetails({ dashboardData }) {
         );
       case "security_failed":
         return (
-          <InsightsPipelineDetailsTable
-            data={selectedDataBlockTableData}
-            tableTitle="Pipelines Failing Security Step"
-          />
+          <InsightsPipelineDetailsTable data={selectedDataBlockTableData} tableTitle="Failed Pipelines (Security)" />
         );
       case "quality_failed":
         return (
-          <InsightsPipelineDetailsTable data={selectedDataBlockTableData} tableTitle="Pipelines Failing Quality Step" />
+          <InsightsPipelineDetailsTable data={selectedDataBlockTableData} tableTitle="Failed Pipelines (Quality)" />
         );
       case "deployment_failed":
         return (
-          <InsightsPipelineDetailsTable
-            data={selectedDataBlockTableData}
-            tableTitle="Pipelines Failing Deployment Step"
-          />
+          <InsightsPipelineDetailsTable data={selectedDataBlockTableData} tableTitle="Failed Pipelines (Deployments)" />
         );
       case "successful_pipelines_deployment":
         return (
@@ -106,6 +106,9 @@ function PipelineDetails({ dashboardData }) {
             kpiConfiguration={{ kpi_name: "Service Now Mean Time Between Failures", filters: [] }}
           />
         );
+      case "Average_Build_Duration": {
+        return <InsightsPipelineDetailsDurationTable data={selectedDataBlockTableData} tableTitle="Build Duration" />;
+      }
       default:
         return null;
     }
@@ -210,6 +213,12 @@ function PipelineDetails({ dashboardData }) {
           style={{ maxWidth: "33%" }}
         />
         <ServiceNowMTBFDataBlock
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{ maxWidth: "33%" }}
+        />
+        <AvgBuildDuration
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}

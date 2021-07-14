@@ -31,7 +31,7 @@ const BuildDetailsMetadata = {
         id: "timestamp",
       },
       {
-        label: "Duration",
+        label: "Duration (in minutes)",
         id: "duration",
       },
     ],

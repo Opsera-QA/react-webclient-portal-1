@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, useMemo, useRef } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { AuthContext } from "contexts/AuthContext";
 import axios from "axios";
@@ -9,13 +9,14 @@ import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSyno
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function PipelineFailedDeployment({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
+function AvgBuildDuration({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [dataForDynamicPanel , setDataForDynamicPanel] = useState([]);
   const [tableFilterDto, setTableFilterDto] = useState(
     new Model(
       { ...genericChartFilterMetadata.newObjectFields },
@@ -45,48 +46,33 @@ function PipelineFailedDeployment({ dashboardData, toggleDynamicPanel, selectedD
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadData = async (
-    cancelSource = cancelTokenSource,
-    filterDto = tableFilterDto
-  ) => {
+  const loadData = async (cancelSource = cancelTokenSource, filterDto = tableFilterDto) => {
     try {
       setIsLoading(true);
-      let dashboardTags =
-        dashboardData?.data?.filters[
-          dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")
-        ]?.value;
-      let dashboardOrgs =
-        dashboardData?.data?.filters[
-          dashboardData?.data?.filters.findIndex(
-            (obj) => obj.type === "organizations"
-          )
-        ]?.value;
+      let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
-        getAccessToken,
-        cancelSource,
-        "summaryPipelinesFailedDeployment",
-        null,
-        dashboardTags,
-        filterDto,
-        null,
-        dashboardOrgs
+        getAccessToken, 
+        cancelSource, 
+        "opseraBuildDuration", 
+        null, 
+        dashboardTags
       );
-      let dataObject = response?.data
-        ? response?.data?.data[0]
-        : [{ data: [], count: [{ count: 0 }] }];
-      let newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", dataObject[0]?.count[0]?.count);
-      setTableFilterDto({ ...newFilterDto });
+      let dataObject = response?.data?.data[0]?.opseraBuildDuration?.data || [];
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+        let newFilterDto = filterDto;
+        newFilterDto.setData("totalCount", response?.data?.data[0]?.opseraRecentCDStatus?.count);
+        setTableFilterDto({...newFilterDto});
       }
-    } catch (error) {
+    }
+    catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         setError(error);
       }
-    } finally {
+    }
+    finally {
       if (isMounted?.current === true) {
         setIsLoading(false);
       }
@@ -94,17 +80,25 @@ function PipelineFailedDeployment({ dashboardData, toggleDynamicPanel, selectedD
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("deployment_failed", metrics[0]?.data);
+    toggleDynamicPanel("Average_Build_Duration", metrics);
+  };
+
+  const getAverage = ()=>{
+    let sum = 0;
+    for(let pipeline of metrics){
+        sum += pipeline.duration;
+    }
+    return (sum / metrics.length).toFixed(2);
   };
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "deployment_failed" ? "selected-data-block" : undefined} style={style}>
+      <div className={selectedDataBlock === "Average_Build_Duration" ? "selected-data-block" : undefined} style={style}>
         <InsightsSynopsisDataBlock
           title={
-            !isLoading && metrics[0]?.count[0] ? (
-              metrics[0]?.count[0]?.count
-            ) : (
+            !isLoading && metrics[0] ? (
+              getAverage()
+            ) : !isLoading ? 0 : (
               <FontAwesomeIcon
                 icon={faSpinner}
                 spin
@@ -113,10 +107,9 @@ function PipelineFailedDeployment({ dashboardData, toggleDynamicPanel, selectedD
               />
             )
           }
-          subTitle="Failed Pipelines (Deployments)"
-          toolTipText="Failed Pipelines (Deployments)"
+          subTitle="Average Build Duration (Mins)"
+          toolTipText="Average Build Duration (Mins)"
           clickAction={() => onDataBlockSelect()}
-          statusColor="danger"
         />
       </div>
     );
@@ -125,11 +118,11 @@ function PipelineFailedDeployment({ dashboardData, toggleDynamicPanel, selectedD
   return getChartBody();
 }
 
-PipelineFailedDeployment.propTypes = {
+AvgBuildDuration.propTypes = {
+  selectedDataBlock: PropTypes.string,
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
-  selectedDataBlock: PropTypes.string,
-  style: PropTypes.object
+  style:PropTypes.object
 };
 
-export default PipelineFailedDeployment;
+export default AvgBuildDuration;

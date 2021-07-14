@@ -84,14 +84,11 @@ function AvgDeploymentDuration({ dashboardData, toggleDynamicPanel, selectedData
   };
 
   const getAverage = ()=>{
-      if(metrics.length > 0){
-        let sum = 0;
-        for(let pipeline of metrics){
-            sum += pipeline.duration;
-        }
-        return (sum / metrics.length).toFixed(2);
-      }
-      return 0;
+    let sum = 0;
+    for(let pipeline of metrics){
+        sum += pipeline.duration;
+    }
+    return (sum / metrics.length).toFixed(2);
   };
 
   const getChartBody = () => {

@@ -115,8 +115,8 @@ function PipelineFailedQuality({ dashboardData, toggleDynamicPanel, selectedData
               />
             )
           }
-          subTitle="Pipelines Failing Quality Step"
-          toolTipText="Pipelines Failing Quality Step"
+          subTitle="Failed Pipelines (Quality)"
+          toolTipText="Failed Pipelines (Quality)"
           clickAction={() => onDataBlockSelect()}
           statusColor="danger"
         />
