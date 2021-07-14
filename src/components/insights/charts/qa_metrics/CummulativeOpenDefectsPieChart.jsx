@@ -102,13 +102,13 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
               <div className="box-metric">
                 <div>{metrics[0]?.passedTests}</div>
               </div>
-              <div className="w-100 text-muted mb-1">Total Valid Defects Open</div>
+              <div className="w-100 text-muted mb-1">Total Valid Defects Closed</div>
             </div></Col>
             <Col><div className="metric-box text-center">
               <div className="box-metric">
                 <div>{metrics[0]?.failedTests}</div>
               </div>
-              <div className="w-100 text-muted mb-1">Total Valid Defects Closed</div>
+              <div className="w-100 text-muted mb-1">Total Valid Defects Open</div>
             </div></Col>
           </Row>
         </Container>
