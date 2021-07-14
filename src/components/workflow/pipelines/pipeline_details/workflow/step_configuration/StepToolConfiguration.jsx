@@ -55,6 +55,8 @@ import KafkaConnectStepConfiguration from "./step_tool_configuration_forms/kafka
 import JenkinsStepConfiguration from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/jenkins/JenkinsStepConfiguration-old";
 import AwsEcsDeployStepConfiguration
   from "./step_tool_configuration_forms/aws_ecs_deploy/AwsEcsDeployStepConfiguration";
+import AwsLambdaDeployStepConfiguration
+  from "./step_tool_configuration_forms/aws_lambda_publish/AwsLambdaDeployStepConfiguration";
 
 function StepToolConfiguration({
   pipeline,
@@ -727,6 +729,22 @@ function StepToolConfiguration({
       case "aws_ecs_deploy":
         return (
           <AwsEcsDeployStepConfiguration
+            pipelineId={pipeline._id}
+            plan={pipeline.workflow.plan}
+            stepId={stepId}
+            stepTool={stepTool}
+            parentCallback={callbackFunction}
+            callbackSaveToVault={saveToVault}
+            getToolsList={getToolsList}
+            createJob={createJob}
+            setToast={setToast}
+            setShowToast={setShowToast}
+            closeEditorPanel={closeEditorPanel}
+          />
+        );
+      case "aws_lambda":
+        return (
+          <AwsLambdaDeployStepConfiguration
             pipelineId={pipeline._id}
             plan={pipeline.workflow.plan}
             stepId={stepId}
