@@ -1,11 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function InfoText({ field, errorMessage, customMessage }) {
+function InfoText({ field, errorMessage, customMessage, successMessage }) {
   if (errorMessage != null && errorMessage !== "") {
     return (
       <small className="red form-text">
         <div>{errorMessage}</div>
+      </small>
+    );
+  }
+
+  if(successMessage != null && successMessage !== "") {
+    return (
+      <small className="green form-text">
+        <div>{successMessage}</div>
       </small>
     );
   }
@@ -32,7 +40,8 @@ function InfoText({ field, errorMessage, customMessage }) {
 InfoText.propTypes = {
   field: PropTypes.object,
   errorMessage: PropTypes.string,
-  customMessage: PropTypes.string
+  customMessage: PropTypes.string,
+  successMessage: PropTypes.string,
 };
 
 export default InfoText;
