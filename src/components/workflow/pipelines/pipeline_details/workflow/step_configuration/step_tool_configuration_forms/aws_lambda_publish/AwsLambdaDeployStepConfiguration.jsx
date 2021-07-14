@@ -6,6 +6,7 @@ import awsLambdaStepFormMetadata from "./awsLambda-stepForm-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import TaskSelectInput from "./inputs/TaskSelectInput";
 import S3StepSelectInput from "./inputs/S3PushStepSelectInput";
+import ActionTypeSelectInput from "./inputs/ActionTypeSelectInput";
 
 function AwsLambdaDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan, stepId, pipelineId }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -49,6 +50,10 @@ function AwsLambdaDeployStepConfiguration({ stepTool, closeEditorPanel, parentCa
       persistRecord={callbackFunction}
       isLoading={isLoading}
     >
+      <ActionTypeSelectInput
+        dataObject={ecsServicesModel}
+        setDataObject={setAWSECSDeployModel}
+      />
       <S3StepSelectInput
         dataObject={ecsServicesModel}
         setDataObject={setAWSECSDeployModel}

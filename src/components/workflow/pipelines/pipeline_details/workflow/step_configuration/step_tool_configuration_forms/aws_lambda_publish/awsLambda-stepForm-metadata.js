@@ -13,10 +13,16 @@ const awsLambdaStepFormMetadata = {
       id: "lambdaTasks",
       isRequired: true
     },
+    {
+      label: "Action",
+      id: "awsLambdaAction",
+      isRequired: true
+    },
   ],
   newObjectFields: {
     s3StepId: "",
-    lambdaTasks: []
+    lambdaTasks: [],
+    awsLambdaAction: "create"
   }
 };
 
