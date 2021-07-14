@@ -43,7 +43,13 @@ function ParametersEditorPanel({ parameterModel, setParameterModel, parameterMod
       <Row>
         <Col md={12} lg={parameterModel?.isNew() ? 4 : 5}>
           <TextInputBase disabled={!parameterModel?.isNew()} setDataObject={setParameterModel} dataObject={parameterModel} fieldName={"name"}/>
-          <ParameterValueTextInput disabled={parameterModel?.canUpdate() !== true} setDataObject={setParameterModel} dataObject={parameterModel} fieldName={"value"}/>
+          <ParameterValueTextInput
+            disabled={parameterModel?.canUpdate() !== true}
+            setDataObject={setParameterModel}
+            dataObject={parameterModel}
+            fieldName={"value"}
+            parameterId={parameterModel?.getData("_id")}
+          />
           <BooleanToggleInput setDataObject={setParameterModel} dataObject={parameterModel} fieldName={"vaultEnabled"} disabled={!parameterModel?.isNew()}/>
         </Col>
         <Col md={12} lg={parameterModel?.isNew() ? 8 : 7} className={"my-2"}>

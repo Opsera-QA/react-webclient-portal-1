@@ -5,7 +5,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
 // TODO: Use new VisibleVaultTextInput when complete
-function ParameterValueTextInput({fieldName, dataObject, setDataObject, disabled}) {
+function ParameterValueTextInput({fieldName, dataObject, parameterId, setDataObject, disabled}) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -25,7 +25,7 @@ function ParameterValueTextInput({fieldName, dataObject, setDataObject, disabled
     return () => {
       isMounted.current = false;
     };
-  }, []);
+  }, [parameterId]);
 
   const validateAndSetData = (value) => {
     let newDataObject = dataObject;
@@ -76,7 +76,8 @@ ParameterValueTextInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  parameterId: PropTypes.string
 };
 
 export default ParameterValueTextInput;
