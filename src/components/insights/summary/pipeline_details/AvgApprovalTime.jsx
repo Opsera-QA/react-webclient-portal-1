@@ -107,7 +107,7 @@ function AvgApprovalTimeDataBlock({ dashboardData, toggleDynamicPanel, selectedD
           title={
             !isLoading && metrics[0]?.count[0] ? (
             //   metrics[0]?.count[0]?.count
-                0
+                "-"
             ) : (
               <FontAwesomeIcon
                 icon={faSpinner}
@@ -117,9 +117,10 @@ function AvgApprovalTimeDataBlock({ dashboardData, toggleDynamicPanel, selectedD
               />
             )
           }
-          subTitle="Total Number of Pipelines Executed"
-          toolTipText="Total Number of Pipelines Executed"
-          clickAction={() => onDataBlockSelect()}
+          subTitle="Average Approval Time"
+          toolTipText="Average Approval Time"
+        //   clickAction={() => onDataBlockSelect()}
+          disable={true}
         />
       </div>
     );

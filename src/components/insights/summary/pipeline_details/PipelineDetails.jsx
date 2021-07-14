@@ -96,11 +96,7 @@ function PipelineDetails({ dashboardData }) {
             kpiConfiguration={{ kpi_name: "Service Now Mean Time to Resolution", filters: [] }}
           />
         );
-<<<<<<< HEAD
-      case "serviceNowMTTA":
-=======
       case "Average_Build_Duration":
->>>>>>> 0f4cd04f8 (created AvgApprovalTime data block)
         return (
           <ServiceNowMeanTimeToAcknowledgeBarChart
             dashboardData={dashboardData}
@@ -114,14 +110,11 @@ function PipelineDetails({ dashboardData }) {
             kpiConfiguration={{ kpi_name: "Service Now Mean Time Between Failures", filters: [] }}
           />
         );
-<<<<<<< HEAD
-=======
       case "average_approval_time":
         return(
           //TODO THIS WILL BE CREATED IN ANOTHER TICKET
           null
         )
->>>>>>> 0f4cd04f8 (created AvgApprovalTime data block)
       default:
         return null;
     }
