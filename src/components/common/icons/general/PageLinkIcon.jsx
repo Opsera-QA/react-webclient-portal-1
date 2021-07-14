@@ -5,7 +5,7 @@ import {faExternalLink} from "@fortawesome/pro-light-svg-icons";
 import {useHistory} from "react-router-dom";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function PageLinkIcon({ pageLink, openInNewWindow, handleClose, className, linkTooltipText }) {
+function PageLinkIcon({ pageLink, openInNewWindow, handleClose, className, linkTooltipText, externalLink }) {
   let history = useHistory();
 
   const handleLink = () => {
@@ -13,8 +13,11 @@ function PageLinkIcon({ pageLink, openInNewWindow, handleClose, className, linkT
       handleClose();
     }
 
-    if (openInNewWindow) {
+    if (openInNewWindow === true) {
       window.open(pageLink);
+    }
+    else if (externalLink === true) {
+      //TODO: Add external link logic
     }
     else {
       history.push(pageLink);
@@ -44,7 +47,8 @@ PageLinkIcon.propTypes = {
   handleClose: PropTypes.func,
   className: PropTypes.string,
   openInNewWindow: PropTypes.bool,
-  linkTooltipText: PropTypes.string
+  linkTooltipText: PropTypes.string,
+  externalLink: PropTypes.bool
 };
 
 export default PageLinkIcon;
