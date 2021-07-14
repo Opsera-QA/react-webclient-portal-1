@@ -27,6 +27,7 @@ const SfdcPipelineWizardGitFilesTable = ({ pipelineWizardModel, setPipelineWizar
       getTableTextColumn(getField(fields, "committedFile")),
       getTableDateTimeColumn(getField(fields, "committedTime")),
       getTableTextColumn(getField(fields, "committedBy")),
+      getTableTextColumn(getField(fields, "commitID")),
     ],
     [],
   );
