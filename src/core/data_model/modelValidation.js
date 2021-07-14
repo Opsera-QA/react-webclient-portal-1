@@ -1,4 +1,4 @@
-import {isAlphaNumeric, isDomain, isOpseraPassword, isWebsite, matchesRegex, validateEmail} from "../../utils/helpers";
+import {isAlphaNumeric, isDomain, isOpseraPassword, isWebsite, matchesRegex, validateEmail, hasSpaces} from "utils/helpers";
 
 // TODO: We need to rework this
 export const validateData = (data) => {
@@ -49,6 +49,12 @@ export const fieldValidation = (value, data, field) => {
     if (!validateEmail(value))
     {
       errorMessages.push("The email address given is not valid.");
+    }
+  }
+
+  if (field.spacesAllowed === false) {
+    if (hasSpaces(value)) {
+      errorMessages.push(field.label + " is not allowed to contain spaces.");
     }
   }
 
