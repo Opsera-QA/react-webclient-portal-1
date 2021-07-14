@@ -12,8 +12,12 @@ import opseraRecentCdStatusMetadata
 import {getField} from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 
 function OpseraRecentCDStatusTable({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+  
+  const toastContext = useContext(DialogToastContext);
   const fields = opseraRecentCdStatusMetadata.fields;
   const {getAccessToken} = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -78,6 +82,10 @@ function OpseraRecentCDStatusTable({ kpiConfiguration, setKpiConfiguration, dash
     }
   };
 
+  const onRowSelect = (rowData) => {    
+    toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={rowData?.original?._id?.id} runCount={rowData?.original?.run_count} />);    
+  };
+
   const noDataMessage = "No Data is available for this chart at this time";
   const columns = useMemo(
     () => [
@@ -101,6 +109,7 @@ function OpseraRecentCDStatusTable({ kpiConfiguration, setKpiConfiguration, dash
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
+        onRowSelect={onRowSelect}
       />
     );
   };
