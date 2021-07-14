@@ -8,6 +8,7 @@ import "dhx-suite-package/codebase/suite.css";
 import "react-widgets/dist/css/react-widgets.css";
 import "./theme.css";
 import "./field.css";
+import "./container.css";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 
