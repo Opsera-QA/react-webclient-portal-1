@@ -86,12 +86,17 @@ function SonarReliabilityRemediationEffortAggTrendLineChart({
         cancelSource,
         "sonarTrendOverTime",
         kpiConfiguration,
-        dashboardTags
+        dashboardTags,
+        filterDto
       );
       const dataObject =
         response?.data && response?.data?.data[0]?.sonarTrendOverTime?.status === 200
           ? response?.data?.data[0]?.sonarTrendOverTime?.data
           : [];
+
+      let newFilterDto = filterDto;
+      newFilterDto.setData("totalCount", response?.data?.data[0].sonarTrendOverTime?.data[0]?.data[0]?.count);
+      setFilterDto({ ...newFilterDto });
 
       assignStandardColors(dataObject);
       shortenLegend(dataObject);
