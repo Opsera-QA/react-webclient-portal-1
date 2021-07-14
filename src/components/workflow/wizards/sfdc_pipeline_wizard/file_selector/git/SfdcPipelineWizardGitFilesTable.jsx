@@ -26,11 +26,11 @@ const SfdcPipelineWizardGitFilesTable = ({ pipelineWizardModel, setPipelineWizar
       getTableTextColumn(getField(fields, "componentName")),
       getTableTextColumn(getField(fields, "committedFile")),
       getTableDateTimeColumn(getField(fields, "committedTime")),
-      getTableTextColumn(getField(fields, "committedBy")),
+      getTableTextColumn(getField(fields, "commitID")),
     ],
     [],
   );
-
+console.log(gitFiles);
   const getGitInlineFilters = () => {
     return (
       <InlineSfdcComponentTypesFilter
