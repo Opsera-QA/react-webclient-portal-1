@@ -218,12 +218,6 @@ function PipelineDetails({ dashboardData }) {
           selectedDataBlock={selectedDataBlock}
           style={{ maxWidth: "33%" }}
         />
-        <AvgBuildDuration
-          dashboardData={dashboardData}
-          toggleDynamicPanel={toggleDynamicPanel}
-          selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
-        />
       </DataBlockWrapper>
     );
   };
