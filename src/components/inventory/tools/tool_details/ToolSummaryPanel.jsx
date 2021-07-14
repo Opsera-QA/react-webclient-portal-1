@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { Row, Col } from "react-bootstrap";
 import PropTypes from "prop-types";
+import { AuthContext } from "contexts/AuthContext";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import DateFieldBase from "components/common/fields/date/DateFieldBase";
@@ -8,8 +9,10 @@ import RegistryToolRoleAccessInput from "components/inventory/tools/tool_details
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import VaultSummaryPageInputField from "./input/VaultSummaryPageInputField";
+import TagField from "components/common/fields/multiple_items/TagField";
 
 function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessRules }) {
+  const { isSassUser } = useContext(AuthContext);
   useEffect(() => {
   }, [JSON.stringify(customerAccessRules)]);
 
@@ -26,16 +29,25 @@ function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessR
           <TextFieldBase dataObject={toolData} fieldName={"name"} />
         </Col>
         <Col lg={6}>
+          <TextFieldBase dataObject={toolData} fieldName={"tool_identifier"} />
+        </Col>
+        <Col sm={12} lg={6}>
+          <TextFieldBase dataObject={toolData} fieldName={"costCenter"}/>
+        </Col>
+        <Col sm={12} lg={6}>
+          <TagField dataObject={toolData} fieldName={"tags"}/>
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={toolData} fieldName={"classification"} />
+        </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={toolData} fieldName={"tool_type_identifier"} />
+        </Col>
+        <Col lg={6}>
           <TextFieldBase dataObject={toolData} fieldName={"_id"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={toolData} fieldName={"owner_name"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={toolData} fieldName={"tool_identifier"} />
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={toolData} fieldName={"tool_type_identifier"} />
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={toolData} fieldName={"account"} />
@@ -43,17 +55,15 @@ function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessR
         <Col lg={6}>
           <DateFieldBase dataObject={toolData} fieldName={"createdAt"} />
         </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={toolData} fieldName={"classification"} />
-        </Col>
-        <Col lg={12}>
-          <TextFieldBase dataObject={toolData} fieldName={"description"} />
-        </Col>
+        {!isSassUser() && (
         <Col lg={6}>
           <RegistryToolRoleAccessInput dataObject={toolData} setDataObject={setToolData} disabled={!authorizedAction("edit_access_roles", toolData?.data)} />
-        </Col>
+        </Col>) }
         <Col lg={6}>
           <VaultSummaryPageInputField dataObject={toolData} setDataObject={setToolData} />
+        </Col>
+        <Col lg={12} sm={12}>
+          <TextFieldBase dataObject={toolData} fieldName={"description"} />
         </Col>
       </Row>
     </SummaryPanelContainer>
