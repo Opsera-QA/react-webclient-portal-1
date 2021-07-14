@@ -62,6 +62,12 @@ regexHelpers.regexTypes = {
 
   // hostnameRegex is valid as per RFC 1123
   hostnameRegex: /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\-]*[A-Za-z0-9])$/,
+
+  // Letters, numbers, dashes, underscores and periods allowed
+  genericFileName: /^[A-Za-z0-9-_.]*$/,
+
+  // Letters, numbers, dashes, underscores, asterisk, periods and new lines allowed
+  octopusFileList: /^[A-Za-z0-9-_.*\n]*$/,
 };
 
 export default regexHelpers;
