@@ -4,14 +4,14 @@ const modelHelpers = {};
 
 // TODO: Rename getConfigurationModel
 modelHelpers.getToolConfigurationModel = (toolConfiguration, metaData) => {
-  if (Object.entries(toolConfiguration).length === 0) {
+  if (toolConfiguration == null || Object.entries(toolConfiguration).length === 0) {
     return new Model({...metaData.newObjectFields}, metaData, true);
   }
   return new Model(toolConfiguration, metaData, false);
 };
 
 modelHelpers.parseObjectIntoModel = (object, metaData) => {
-  if (Object.entries(object).length === 0) {
+  if (object == null || Object.entries(object).length === 0) {
     return new Model({...metaData.newObjectFields}, metaData, true);
   }
 

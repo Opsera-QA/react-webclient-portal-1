@@ -12,8 +12,6 @@ import VaultSummaryPageInputField from "./input/VaultSummaryPageInputField";
 import TagField from "components/common/fields/multiple_items/TagField";
 
 function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessRules }) {
-  const { isSassUser } = useContext(AuthContext);
-
   useEffect(() => {
   }, [JSON.stringify(customerAccessRules)]);
 
@@ -56,10 +54,9 @@ function ToolSummaryPanel({ toolData, setToolData, setActiveTab, customerAccessR
         <Col lg={6}>
           <DateFieldBase dataObject={toolData} fieldName={"createdAt"} />
         </Col>
-        {!isSassUser() && (
         <Col lg={6}>
           <RegistryToolRoleAccessInput dataObject={toolData} setDataObject={setToolData} disabled={!authorizedAction("edit_access_roles", toolData?.data)} />
-        </Col>) }
+        </Col>
         <Col lg={6}>
           <VaultSummaryPageInputField dataObject={toolData} setDataObject={setToolData} />
         </Col>

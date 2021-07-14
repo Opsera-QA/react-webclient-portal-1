@@ -1,6 +1,6 @@
 import React  from "react";
 import PropTypes from "prop-types";
-import {faCogs, faQuestionCircle} from "@fortawesome/pro-light-svg-icons";
+import {faQuestionCircle, faTimes} from "@fortawesome/pro-light-svg-icons";
 import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
 
 function ActionBarToggleHelpButton({ toggleHelp, helpIsShown }) {
@@ -12,7 +12,7 @@ function ActionBarToggleHelpButton({ toggleHelp, helpIsShown }) {
     <ActionBarButton
       action={toggleHelpPanel}
       iconClasses={"dark-grey"}
-      icon={helpIsShown ? faCogs : faQuestionCircle}
+      icon={helpIsShown ? faTimes : faQuestionCircle}
       popoverText={helpIsShown ? "Hide Help" : `Show Help`}
     />
   );

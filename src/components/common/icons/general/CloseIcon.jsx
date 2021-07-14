@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/pro-light-svg-icons";
 
-function CloseIcon({ handleClose, className }) {
+function CloseIcon({ handleClose, className, size }) {
 
   if (handleClose == null) {
     return null;
@@ -14,6 +14,7 @@ function CloseIcon({ handleClose, className }) {
       <FontAwesomeIcon
         onClick={() => {handleClose();}}
         icon={faTimes}
+        size={size}
         fixedWidth
         className={"pointer"}
       />
@@ -23,7 +24,8 @@ function CloseIcon({ handleClose, className }) {
 
 CloseIcon.propTypes = {
   handleClose: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
+  size: PropTypes.string
 };
 
 export default CloseIcon;
