@@ -15,6 +15,7 @@ import PipelinesByProjectTable from "components/insights/summary/PipelinesByProj
 import TotalPipelinesPassedDeployment from "components/insights/summary/pipeline_details/TotalPipelinesPassedDeployment";
 import AvgDeploymentDuration from "components/insights/summary/pipeline_details/AvgDeploymentDuration";
 import AvgBuildDuration from "components/insights/summary/pipeline_details/AvgBuildDuration";
+import AvgApprovalTimeDataBlock from "components/insights/summary/pipeline_details/AvgApprovalTime";
 
 // JIRA
 import JiraLeadTimeChartNoDataBlocks from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks";
@@ -85,9 +86,6 @@ function PipelineDetails({ dashboardData }) {
         return (
           <InsightsPipelineDetailsDurationTable data={selectedDataBlockTableData} tableTitle="Deployment Duration" />
         );
-      case "Average_Build_Duration": {
-        return <InsightsPipelineDetailsDurationTable data={selectedDataBlockTableData} tableTitle="Build Duration" />;
-      }
       case "serviceNowMTTR":
         return (
           <ServiceNowMeanTimeToResolutionBarChart
@@ -95,7 +93,7 @@ function PipelineDetails({ dashboardData }) {
             kpiConfiguration={{ kpi_name: "Service Now Mean Time to Resolution", filters: [] }}
           />
         );
-      case "serviceNowMTTA":
+      case "Average_Build_Duration":
         return (
           <ServiceNowMeanTimeToAcknowledgeBarChart
             dashboardData={dashboardData}
@@ -108,6 +106,11 @@ function PipelineDetails({ dashboardData }) {
             dashboardData={dashboardData}
             kpiConfiguration={{ kpi_name: "Service Now Mean Time Between Failures", filters: [] }}
           />
+        );
+      case "average_approval_time":
+        return(
+          //TODO THIS WILL BE CREATED IN ANOTHER TICKET
+          null
         );
       default:
         return null;
@@ -217,6 +220,12 @@ function PipelineDetails({ dashboardData }) {
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
           style={{ maxWidth: "33%" }}
+        />
+        <AvgApprovalTimeDataBlock 
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{maxWidth:"33%"}}
         />
       </DataBlockWrapper>
     );
