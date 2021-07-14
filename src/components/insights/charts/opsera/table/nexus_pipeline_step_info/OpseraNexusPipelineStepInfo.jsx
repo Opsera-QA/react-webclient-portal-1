@@ -11,8 +11,12 @@ import opseraNexusPipelineStepInfoMetadata from "components/insights/charts/opse
 import { getField } from "components/common/metadata/metadata-helpers";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import BlueprintLogOverlay from "components/blueprint/BlueprintLogOverlay";
 
 function OpseraNexusPipelineStepInfo({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
+
+  const toastContext = useContext(DialogToastContext);
   const fields = opseraNexusPipelineStepInfoMetadata.fields;
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
@@ -78,6 +82,11 @@ function OpseraNexusPipelineStepInfo({ kpiConfiguration, setKpiConfiguration, da
     }
   };
 
+  const onRowSelect = (rowData) => {    
+    console.log(rowData);
+    toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={rowData?.original?.pipelineId} runCount={rowData?.original?.runCount} />);
+  };
+
   const noDataMessage = "No Data is available for this chart at this time";
   const columns = useMemo(
     () => [
@@ -101,6 +110,7 @@ function OpseraNexusPipelineStepInfo({ kpiConfiguration, setKpiConfiguration, da
         setPaginationDto={setTableFilterDto}
         loadData={loadData}
         scrollOnLoad={false}
+        onRowSelect={onRowSelect}
       />
     );
   };
