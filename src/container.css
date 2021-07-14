@@ -1,36 +1,20 @@
-/* Metric Container Styling */
-.metric-container {
-    width: 100%;
-    margin: 1em;
+/* Help Documentation Container Styling */
+.help-documentation-container .header {
+    /*background-color: #f2c364;*/
+    background-color: #fbe3b3;
+    color: #3D3B36;
+    min-height: 40px;
 }
 
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
-    .metric-container {
-        max-width: 100%;
-    }
+.help-documentation-container .help-body {
+    background-color: #fbe3b3;
+    min-height: 195px;
+    overflow-y: auto;
+    overflow-x: hidden
 }
 
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
-    .metric-container {
-        max-width: 100%;
-        width: 100%;
-    }
+.help-documentation-container {
+    background-color: #E6E5E3;
+    min-height: 1em;
 }
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-    .metric-container {
-        max-width: 45%;
-        /* width: 100%; */
-    }
-}
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-    .metric-container {
-        max-width: 30%;
-    }
-}
-
-/* End Metric Container Styling */
+/* End Help Documentation Container Styling */
