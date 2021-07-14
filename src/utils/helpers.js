@@ -40,6 +40,11 @@ export function isOpseraPassword(password) {
   return re.test(String(password));
 }
 
+export function hasSpaces(value) {
+  const re = new RegExp("\\s+");
+  return re.test(String(value));
+}
+
 export function parseDate(dateString, defaultValue) {
   try {
     if (dateString == null || dateString === "") {
