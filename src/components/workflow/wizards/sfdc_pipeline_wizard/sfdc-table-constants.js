@@ -29,6 +29,10 @@ sfdcTableConstants.fields = [
   {
     label: "SFDC Component Id",
     id: "committedFileId"
+  },
+  {
+    label: "Commit Id",
+    id: "commitID"
   }
 ];
 
