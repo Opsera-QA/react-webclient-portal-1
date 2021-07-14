@@ -110,7 +110,6 @@ function ServiceNowMeanTimeToResolutionBarChart({
         })
       );
       let max = Math.ceil(Math.max(countsMax, mttrMax));
-      console.log("max", max);
       return max;
     };
 

@@ -111,7 +111,6 @@ function ServiceNowMeanTimeBetweenFailuresBarChart({
         })
       );
       let max = Math.ceil(Math.max(countsMax, mtbfMax));
-      console.log("max", max);
       return max;
     };
 
