@@ -17,6 +17,7 @@ export const notificationTypes = [
   {name: "Generate Certificate for SFDX", value: "sfdc-cert-gen"},
   {name: "Create AWS ECS Cluster", value: "ecs_cluster_creation"},
   {name: "Create AWS ECS Service", value: "ecs_service_creation"},
+  {name: "Create AWS Lambda Function", value: "lambda_function_creation"},
 ];
 
 function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction, placeholderText }) {

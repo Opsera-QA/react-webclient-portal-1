@@ -7,6 +7,7 @@ import BranchToBranchGitTaskConfigurationPanel from "./branch-to-branch/BranchTo
 import SFDXCertGenTaskTypeConfigurationPanel from "./sfdx-cert-gen/SFDXCertGenTaskTypeConfigurationPanel";
 import ECSCreationTaskConfigurationPanel from "./ecs-cluster-creation/ECSCreationTaskConfigurationPanel";
 import ECSServiceCreationTaskConfigurationPanel from "./ecs-service-creation/ECSServiceCreationTaskConfigurationPanel";
+import AwsLambdaConfigurationPanel from "./aws-lambda-creation/AwsLambdaConfigurationPanel";
 
 function GitTasksConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTasksConfigurationData, setGitTasksConfigurationData }) {
   const getConfigurationPanel = () => {
@@ -54,6 +55,14 @@ function GitTasksConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTa
         case "ecs_service_creation":
         return (
           <ECSServiceCreationTaskConfigurationPanel
+            gitTasksDataDto={gitTasksDataDto}
+            setGitTasksConfigurationData={setGitTasksConfigurationData}
+            gitTasksConfigurationData={gitTasksConfigurationData}
+          />
+        );
+      case "lambda_function_creation":
+        return (
+          <AwsLambdaConfigurationPanel
             gitTasksDataDto={gitTasksDataDto}
             setGitTasksConfigurationData={setGitTasksConfigurationData}
             gitTasksConfigurationData={gitTasksConfigurationData}
