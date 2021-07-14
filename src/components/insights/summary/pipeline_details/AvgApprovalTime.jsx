@@ -119,7 +119,7 @@ function AvgApprovalTimeDataBlock({ dashboardData, toggleDynamicPanel, selectedD
           }
           subTitle="Average Approval Time"
           toolTipText="Average Approval Time"
-        //   clickAction={() => onDataBlockSelect()}
+          clickAction={() => onDataBlockSelect()}
           disable={disable}
         />
       </div>

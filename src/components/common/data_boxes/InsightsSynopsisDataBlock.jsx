@@ -32,7 +32,7 @@ function InsightsSynopsisDataBlock({ title, subTitle, toolTipText, clickAction, 
       <TooltipWrapper innerText={toolTipText}>
         <Card className={getCardClassNames()}
               style={ disable? { ...cardStyle, opacity:".5", background:"#ededed" } : cardStyle}
-              onClick={clickAction}>
+              onClick={ disable? null : clickAction}>
           <Card.Body className="data-blocks-body">
             <div className="data-blocks-status"
                 style={{backgroundColor: statusColors[statusColor]}}>      
