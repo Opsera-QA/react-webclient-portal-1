@@ -4,7 +4,7 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 
-function OverlayPanelBodyContainer({ children, className, helpComponent, isLoading }) {
+function OverlayPanelBodyContainer({ children, className, helpComponent, isLoading, hideCloseButton }) {
   const [helpIsShown, setHelpIsShown] = useState(false);
 
   if (isLoading) {
@@ -23,6 +23,10 @@ function OverlayPanelBodyContainer({ children, className, helpComponent, isLoadi
   };
 
   const getActionBar = () => {
+    if (helpIsShown === true && hideCloseButton === true) {
+      return null;
+    }
+
     return (
       <div className={"mr-1"}>
         <ActionBarContainer>
@@ -60,7 +64,8 @@ OverlayPanelBodyContainer.propTypes = {
   children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   isLoading: PropTypes.bool,
   helpComponent: PropTypes.object,
-  className: PropTypes.string
+  className: PropTypes.string,
+  hideCloseButton: PropTypes.bool,
 };
 
 export default OverlayPanelBodyContainer;
