@@ -64,6 +64,7 @@ function AvgApprovalTimeDataBlock({ dashboardData, toggleDynamicPanel, selectedD
           )
         ]?.value;
 
+      // TODO: this query will change in a future ticket
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,

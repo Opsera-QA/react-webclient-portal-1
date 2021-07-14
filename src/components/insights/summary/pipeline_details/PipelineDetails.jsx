@@ -86,9 +86,6 @@ function PipelineDetails({ dashboardData }) {
         return (
           <InsightsPipelineDetailsDurationTable data={selectedDataBlockTableData} tableTitle="Deployment Duration" />
         );
-      case "Average_Build_Duration": {
-        return <InsightsPipelineDetailsDurationTable data={selectedDataBlockTableData} tableTitle="Build Duration" />;
-      }
       case "serviceNowMTTR":
         return (
           <ServiceNowMeanTimeToResolutionBarChart
@@ -114,7 +111,7 @@ function PipelineDetails({ dashboardData }) {
         return(
           //TODO THIS WILL BE CREATED IN ANOTHER TICKET
           null
-        )
+        );
       default:
         return null;
     }
