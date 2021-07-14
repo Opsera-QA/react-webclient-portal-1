@@ -88,8 +88,8 @@ function ServiceNowMTTRDataBlock({ dashboardData, toggleDynamicPanel, selectedDa
               <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1" />
             )
           }
-          subTitle="Mean Time to Resolution (Minutes)"
-          toolTipText="Mean Time to Resolution (Minutes)"
+          subTitle="Mean Time to Resolution (Hours)"
+          toolTipText="Mean Time to Resolution (Hours)"
           clickAction={() => onDataBlockSelect()}
         />
       </div>

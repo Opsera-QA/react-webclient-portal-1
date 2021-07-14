@@ -88,8 +88,8 @@ function ServiceNowMTBFDataBlock({ dashboardData, toggleDynamicPanel, selectedDa
               <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1" />
             )
           }
-          subTitle="Mean Time Between Failures (Minutes)"
-          toolTipText="Mean Time Between Failures (Minutes)"
+          subTitle="Mean Time Between Failures (Hours)"
+          toolTipText="Mean Time Between Failures (Hours)"
           clickAction={() => onDataBlockSelect()}
         />
       </div>

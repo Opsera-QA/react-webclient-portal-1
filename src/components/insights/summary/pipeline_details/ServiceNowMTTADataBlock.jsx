@@ -88,8 +88,8 @@ function ServiceNowMTTADataBlock({ dashboardData, toggleDynamicPanel, selectedDa
               <FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1" />
             )
           }
-          subTitle="Mean Time to Acknowledge (Minutes)"
-          toolTipText="Mean Time to Acknowledge (Minutes)"
+          subTitle="Mean Time to Acknowledge (Hours)"
+          toolTipText="Mean Time to Acknowledge (Hours)"
           clickAction={() => onDataBlockSelect()}
         />
       </div>
