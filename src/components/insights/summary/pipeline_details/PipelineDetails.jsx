@@ -1,23 +1,31 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
+import MetricContainer from "components/common/panels/insights/charts/MetricContainer";
+
+// Opsera Pipeline
 import TotalPipelinesExecuted from "components/insights/summary/TotalPipelinesExecuted";
 import PipelinesPassedWithQualityAndSecurity from "components/insights/summary/pipeline_details/PipelinesPassedWithQualityAndSecurity";
 import PipelinesFailedSecurity from "components/insights/summary/pipeline_details/PipelinesFailedSecurity";
 import PipelinesFailedQuality from "components/insights/summary/pipeline_details/PipelinesFailedQuality";
 import PipelinesFailedDeployment from "components/insights/summary/pipeline_details/PipelinesFailedDeployment";
-import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
 import InsightsPipelineDetailsTable from "components/insights/summary/pipeline_details/InsightsPipelineDetailsTable";
 import InsightsPipelineDetailsDurationTable from "components/insights/summary/pipeline_details/InsightsPipelineDetailsDurationTable";
 import PipelinesByProjectTable from "components/insights/summary/PipelinesByProjectTable";
 import TotalPipelinesPassedDeployment from "components/insights/summary/pipeline_details/TotalPipelinesPassedDeployment";
-import MetricContainer from "components/common/panels/insights/charts/MetricContainer";
+import AvgDeploymentDuration from "components/insights/summary/pipeline_details/AvgDeploymentDuration";
+
+// JIRA
 import JiraLeadTimeChartNoDataBlocks from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks";
 import JiraLeadTimeDataBlock from "./JiraLeadTimeDataBlock";
-import AvgDeploymentDuration from "components/insights/summary/pipeline_details/AvgDeploymentDuration";
+
+// Service Now
 import ServiceNowMTTRDataBlock from "./ServiceNowMTTRDataBlock";
 import ServiceNowMeanTimeToResolutionBarChart from "components/insights/charts/servicenow/bar_chart/mean_time_to_resolution/ServiceNowMeanTimeToResolutionBarChart";
 import ServiceNowMTTADataBlock from "./ServiceNowMTTADataBlock";
 import ServiceNowMeanTimeToAcknowledgeBarChart from "components/insights/charts/servicenow/bar_chart/mean_time_to_acknowledge/ServiceNowMeanTimeToAcknowledgeBarChart";
+import ServiceNowMTBFDataBlock from "./ServiceNowMTBFDataBlock";
+import ServiceNowMeanTimeBetweenFailuresBarChart from "components/insights/charts/servicenow/bar_chart/mean_time_between_failures/ServiceNowMeanTimeBetweenFailuresBarChart";
 
 function PipelineDetails({ dashboardData }) {
   const [selectedDataBlock, setSelectedDataBlock] = useState("");
@@ -89,6 +97,13 @@ function PipelineDetails({ dashboardData }) {
           <ServiceNowMeanTimeToAcknowledgeBarChart
             dashboardData={dashboardData}
             kpiConfiguration={{ kpi_name: "Service Now Mean Time to Acknowledgement", filters: [] }}
+          />
+        );
+      case "serviceNowMTBF":
+        return (
+          <ServiceNowMeanTimeBetweenFailuresBarChart
+            dashboardData={dashboardData}
+            kpiConfiguration={{ kpi_name: "Service Now Mean Time Between Failures", filters: [] }}
           />
         );
       default:
@@ -189,6 +204,12 @@ function PipelineDetails({ dashboardData }) {
           style={{ maxWidth: "33%" }}
         />
         <ServiceNowMTTADataBlock
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{ maxWidth: "33%" }}
+        />
+        <ServiceNowMTBFDataBlock
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
