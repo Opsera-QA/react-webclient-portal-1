@@ -26,11 +26,12 @@ function InsightsSynopsisDataBlock({ title, subTitle, toolTipText, clickAction, 
     return classNames;
   };
 
+  let cardStyle = { height: view !== "small" ? "100px" : "auto", maxWidth: "250px"};
   return (
     <>
       <TooltipWrapper innerText={toolTipText}>
         <Card className={getCardClassNames()}
-              style={ disable? { height: view !== "small" ? "100px" : "auto", maxWidth: "250px", opacity:".5", background:"#ededed" } : { height: view !== "small" ? "100px" : "auto", maxWidth: "250px"}}
+              style={ disable? { ...cardStyle, opacity:".5", background:"#ededed" } : cardStyle}
               onClick={clickAction}>
           <Card.Body className="data-blocks-body">
             <div className="data-blocks-status"

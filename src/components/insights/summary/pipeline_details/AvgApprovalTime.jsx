@@ -9,7 +9,7 @@ import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSyno
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function AvgApprovalTimeDataBlock({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
+function AvgApprovalTimeDataBlock({ dashboardData, toggleDynamicPanel, selectedDataBlock, style, disable }) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
@@ -120,7 +120,7 @@ function AvgApprovalTimeDataBlock({ dashboardData, toggleDynamicPanel, selectedD
           subTitle="Average Approval Time"
           toolTipText="Average Approval Time"
         //   clickAction={() => onDataBlockSelect()}
-          disable={true}
+          disable={disable}
         />
       </div>
     );
@@ -133,7 +133,8 @@ AvgApprovalTimeDataBlock.propTypes = {
   selectedDataBlock: PropTypes.string,
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
-  style:PropTypes.object
+  style:PropTypes.object,
+  disable:PropTypes.bool
 };
 
 export default AvgApprovalTimeDataBlock;
