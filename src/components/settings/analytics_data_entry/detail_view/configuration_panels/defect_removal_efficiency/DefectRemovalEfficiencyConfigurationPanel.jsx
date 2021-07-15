@@ -16,8 +16,7 @@ function DefectRemovalEfficiencyConfigurationPanel({ analyticsDataEntryModel, kp
   useEffect(() => {loadData();}, []);
 
   const loadData = async () => {
-    const configurationData = modelHelpers.getToolConfigurationModel(analyticsDataEntryModel.getData("data"), defectRemovalEfficiencyConfigurationMetadata);
-    console.log("configurationData: " + JSON.stringify(configurationData));
+    const configurationData = modelHelpers.getToolConfigurationModel(analyticsDataEntryModel.getData("data"), defectRemovalEfficiencyConfigurationMetadata);    
     setKpiConfigurationData({...configurationData});
   };
 
