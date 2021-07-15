@@ -84,10 +84,10 @@ function PipelineDetails({ dashboardData }) {
         );
       case "Average_Deployment_Duration":
         return (
-          <InsightsPipelineDetailsDurationTable data={selectedDataBlockTableData} tableTitle="Deployment Duration" />
+          <InsightsPipelineDetailsDurationTable data={selectedDataBlockTableData} tableTitle="Average Deployment Duration (Mins)" />
         );
       case "Average_Build_Duration": {
-        return <InsightsPipelineDetailsDurationTable data={selectedDataBlockTableData} tableTitle="Build Duration" />;
+        return <InsightsPipelineDetailsDurationTable data={selectedDataBlockTableData} tableTitle="Average Build Duration (Mins)" />;
       }
       case "average_approval_time":
         return (
