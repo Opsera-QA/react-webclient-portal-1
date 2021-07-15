@@ -22,7 +22,7 @@ pipelineActions.getWorkflowTemplatesV2 = async (getAccessToken, cancelTokenSourc
     },
   };
 
-  let apiUrl = `/pipelines/workflows`;
+  let apiUrl = `/pipelines/workflows/v2`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
