@@ -1,13 +1,18 @@
 import React from "react";
 import PropTypes from "prop-types";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
+import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
+import VaultTextInput from "components/common/inputs/text/VaultTextInput";
 import OctopusFeedSelectInput from "../input/OctopusFeedSelectInput";
 import RollbackToggleInput from "../input/RollbackToggleInput";
 import OctopusVersionSelectInput from "../input/OctopusVersionSelectInput";
 import OctopusSpecifyDepVarsToggle from "../input/OctopusSpecifyDepVarsToggle";
 import OctopusDeploymentVariables from "../input/OctopusDeploymentVariables";
 import OctopusMultiProtocolInput from "../input/OctopusMultiProtocolInput";
-
+import IisAuthenticationSelectInput from "../input/IisAuthenticationSelectInput";
+import IisDotNetClrVersionSelectInput from "../input/IisDotNetClrVersionSelectInput";
+import IisPoolIdentityTypeSelectInput from "../input/IisPoolIdentityTypeSelectInput";
+import OctopusCustomDeploymentDirectoryDetailsInput from "../input/OctopusCustomDeploymentDirectoryDetailsInput";
 function OctopusDeployToIisView({dataObject, setDataObject, isLoading, disabled, platformType, pipelineId}) {
 
   return (
@@ -22,21 +27,36 @@ function OctopusDeployToIisView({dataObject, setDataObject, isLoading, disabled,
         dataObject={dataObject}
         fieldName={"applicationPoolName"}
       />
+      <IisAuthenticationSelectInput
+        dataObject={dataObject}
+        setDataObject={setDataObject}
+      />
       <OctopusMultiProtocolInput
         dataObject={dataObject}
         setDataObject={setDataObject}
         fieldName={"bindings"}
-      />
-      {/* <OctopusProtocolInput 
+      />  
+      <IisDotNetClrVersionSelectInput
         dataObject={dataObject}
         setDataObject={setDataObject}
-        fieldName={"protocol"}
       />
-      <TextInputBase
-        setDataObject={setDataObject}
+      <IisPoolIdentityTypeSelectInput
         dataObject={dataObject}
-        fieldName={"port"}
-      /> */}                
+        setDataObject={setDataObject}
+      />
+      {dataObject.getData("applicationPoolIdentityType") &&
+        dataObject.getData("applicationPoolIdentityType").toLowerCase() === "custom_user" && (
+        <>
+          <TextInputBase dataObject={dataObject} setDataObject={setDataObject} fieldName={"applicationPoolIdentityUsername"} />
+          <VaultTextInput dataObject={dataObject} setDataObject={setDataObject} fieldName={"applicationPoolIdentityPassword"} />
+          <BooleanToggleInput dataObject={dataObject} setDataObject={setDataObject} fieldName={"startApplicationPool"} />
+        </>
+      )}
+       <OctopusCustomDeploymentDirectoryDetailsInput
+        dataObject={dataObject}
+        setDataObject={setDataObject}
+        fieldName={"useCustomDeploymentDirectory"}
+      /> 
       <OctopusFeedSelectInput
         fieldName={"octopusFeedId"}
         dataObject={dataObject}
