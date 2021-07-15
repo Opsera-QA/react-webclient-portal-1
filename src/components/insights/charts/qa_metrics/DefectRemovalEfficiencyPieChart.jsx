@@ -8,8 +8,8 @@ import axios from "axios";
 import chartsActions from "components/insights/charts/charts-actions";
 import ChartContainer from "components/common/panels/insights/charts/ChartContainer";
 import {
-  defaultConfig, getColorByData, getColor, assignStandardColors,
-  shortenPieChartLegend, mainColor, getColorById,
+  defaultConfig, getColorByData, assignStandardColors,
+  shortenPieChartLegend
 } from "../charts-views";
 import { Col, Container, Row } from "react-bootstrap";
 
@@ -47,8 +47,7 @@ function DefectRemovalEfficiencyPieChart({ kpiConfiguration, setKpiConfiguration
     try {
       setIsLoading(true);
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
-      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "defectRemovalEfficiency", kpiConfiguration, dashboardTags);
-      console.log({response});
+      const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "defectRemovalEfficiency", kpiConfiguration, dashboardTags);      
       let dataObject = response?.data ? response?.data?.data[0]?.defectRemovalEfficiencyData?.data : [];
       assignStandardColors(dataObject[0]?.pairs);
       shortenPieChartLegend(dataObject[0]?.pairs);
@@ -84,7 +83,15 @@ function DefectRemovalEfficiencyPieChart({ kpiConfiguration, setKpiConfiguration
               <div className="box-metric">
                 <div>{metrics[0]?.testingPhaseDefects}</div>
               </div>
-              <div className="w-100 text-muted mb-1">Total Number of Tests Available</div>
+              <div className="w-100 text-muted mb-1">Defects in Testing Phase</div>
+            </div></Col>
+            <Col><div className="metric-box text-center">
+              <div className="box-metric">
+                { metrics[0]?.dre ?
+                  <div className ={metrics[0]?.dre >= 90 ? 'green' : 'red'}>{metrics[0]?.dre+ "%"}</div>
+                  : <div>{"N/A"}</div>}
+              </div>
+              <div className="w-100 text-muted mb-1">Defect Removal Efficiency</div>
             </div></Col>
           </Row>
           <Row className="p-1">
@@ -92,16 +99,19 @@ function DefectRemovalEfficiencyPieChart({ kpiConfiguration, setKpiConfiguration
               <div className="box-metric">
                 <div>{metrics[0]?.uatDefects}</div>
               </div>
-              <div className="w-100 text-muted mb-1">Total Number of Tests executed</div>
+              <div className="w-100 text-muted mb-1">Defects in UAT</div>
+            </div></Col>
+            <Col><div className="metric-box text-center">
+              <div className="box-metric">
+                <div>{metrics[0]?.postProductionDefects}</div>
+              </div>
+              <div className="w-100 text-muted mb-1">Defects in Post Production</div>
             </div></Col>
           </Row>
           <Row className="p-1">
-            <Col><div className="metric-box text-center">
-              <div className="box-metric">
-                <div className="green">{metrics[0]?.dre+ "%"}</div>
-              </div>
-              <div className="w-100 text-muted mb-1">Pass Rate</div>
-            </div></Col>
+            <Col className="text-center">            
+                <small><span className="font-weight-bold">Goal:</span> Defect Removal Efficiency &gt; 90%</small>
+            </Col>
           </Row>
         </Container>
         <ResponsivePie
