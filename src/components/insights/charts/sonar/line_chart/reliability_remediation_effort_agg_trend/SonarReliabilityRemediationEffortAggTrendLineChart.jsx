@@ -122,7 +122,7 @@ function SonarReliabilityRemediationEffortAggTrendLineChart({
   };
 
   const onRowSelect = (grid, row) => {
-    toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={row?.pipelineId} runCount={row?.run_count} />);
+    toastContext.showOverlayPanel(<BlueprintLogOverlay pipelineId={row?.pipelineId} runCount={row?.runCount} />);
   };
 
   const getTable = (projects) => {
