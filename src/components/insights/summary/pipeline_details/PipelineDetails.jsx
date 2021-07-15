@@ -86,6 +86,15 @@ function PipelineDetails({ dashboardData }) {
         return (
           <InsightsPipelineDetailsDurationTable data={selectedDataBlockTableData} tableTitle="Deployment Duration" />
         );
+      case "Average_Build_Duration": {
+        return <InsightsPipelineDetailsDurationTable data={selectedDataBlockTableData} tableTitle="Build Duration" />;
+      }
+      case "average_approval_time":
+        return (
+          //TODO THIS WILL BE CREATED IN ANOTHER TICKET
+          null
+        );
+      // Incidents: Service now
       case "serviceNowMTTR":
         return (
           <ServiceNowMeanTimeToResolutionBarChart
@@ -93,7 +102,7 @@ function PipelineDetails({ dashboardData }) {
             kpiConfiguration={{ kpi_name: "Service Now Mean Time to Resolution", filters: [] }}
           />
         );
-      case "Average_Build_Duration":
+      case "serviceNowMTTA":
         return (
           <ServiceNowMeanTimeToAcknowledgeBarChart
             dashboardData={dashboardData}
@@ -106,11 +115,6 @@ function PipelineDetails({ dashboardData }) {
             dashboardData={dashboardData}
             kpiConfiguration={{ kpi_name: "Service Now Mean Time Between Failures", filters: [] }}
           />
-        );
-      case "average_approval_time":
-        return(
-          //TODO THIS WILL BE CREATED IN ANOTHER TICKET
-          null
         );
       default:
         return null;
@@ -197,9 +201,22 @@ function PipelineDetails({ dashboardData }) {
           selectedDataBlock={selectedDataBlock}
           style={{ maxWidth: "33%" }}
         />
+        <AvgBuildDuration
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{ maxWidth: "33%" }}
+        />
+        <AvgApprovalTimeDataBlock
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{ maxWidth: "33%" }}
+        />
       </DataBlockWrapper>
     );
   };
+
   const getIncidents = () => {
     return (
       <DataBlockWrapper>
@@ -220,12 +237,6 @@ function PipelineDetails({ dashboardData }) {
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
           style={{ maxWidth: "33%" }}
-        />
-        <AvgApprovalTimeDataBlock 
-          dashboardData={dashboardData}
-          toggleDynamicPanel={toggleDynamicPanel}
-          selectedDataBlock={selectedDataBlock}
-          style={{maxWidth:"33%"}}
         />
       </DataBlockWrapper>
     );
