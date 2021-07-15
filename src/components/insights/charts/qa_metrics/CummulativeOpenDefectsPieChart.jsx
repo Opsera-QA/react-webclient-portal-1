@@ -91,7 +91,7 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
             <Col><div className="metric-box text-center">
               <div className="box-metric">
                 { metrics[0]?.cumulativeDefects ?
-                  <div className ="red">{metrics[0]?.cumulativeDefects+ "%"}</div>
+                  <div className ={metrics[0]?.cumulativeDefects < 10 ? 'green' : 'red'}>{metrics[0]?.cumulativeDefects+ "%"}</div>
                   : <div>{"N/A"}</div>}
               </div>
               <div className="w-100 text-muted mb-1">Cumulative Open Defects</div>
@@ -110,6 +110,11 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
               </div>
               <div className="w-100 text-muted mb-1">Total Valid Defects Open</div>
             </div></Col>
+          </Row>
+          <Row className="p-1">
+            <Col className="text-center">
+              <small><span className="font-weight-bold">Goal:</span> Cumulative Open Defects &lt; 10%</small>
+            </Col>
           </Row>
         </Container>
         <ResponsivePie
