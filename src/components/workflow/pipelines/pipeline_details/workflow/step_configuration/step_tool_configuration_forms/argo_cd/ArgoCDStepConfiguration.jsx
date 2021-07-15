@@ -246,6 +246,7 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
       newDataObject.setData("gitFilePath", "");
       newDataObject.setData("gitWorkspace", "");
       newDataObject.setData("bitbucketWorkspace", "");
+      newDataObject.setData("bitbucketWorkspaceName", "");
       setGitYAMLStepConfigurationDataDto({ ...newDataObject });
       await fetchSCMDetails(gitYAMLStepConfigurationDto.data);
       return;
@@ -301,7 +302,7 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
       }
       return;
     }
-    if (fieldName === "bitbucketWorkspace") {
+    if (fieldName === "bitbucketWorkspaceName") {
       let newDataObject = gitYAMLStepConfigurationDto;
       newDataObject.setData("bitbucketWorkspace", value.key);
       newDataObject.setData("bitbucketWorkspaceName", value.name);
@@ -309,7 +310,7 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
       await searchRepositories(
         gitYAMLStepConfigurationDto.getData("type"),
         gitYAMLStepConfigurationDto.getData("gitToolId"),
-        value
+        value.key
       );
       return;
     }
