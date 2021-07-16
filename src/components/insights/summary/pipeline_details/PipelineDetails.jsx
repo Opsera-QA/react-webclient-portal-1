@@ -160,18 +160,18 @@ function PipelineDetails({ dashboardData }) {
       </DataBlockWrapper>
     );
   };
-  const getValueStream = () => {
-    return (
-      <DataBlockWrapper padding={0}>
-        <JiraLeadTimeDataBlock 
-          dashboardData={dashboardData}
-          toggleDynamicPanel={toggleDynamicPanel}
-          selectedDataBlock={selectedDataBlock}
-          style={{maxWidth:"33%"}}
-        />
-      </DataBlockWrapper>
-    );
-  };
+  // const getValueStream = () => {
+  //   return (
+  //     <DataBlockWrapper padding={0}>
+  //       <JiraLeadTimeDataBlock 
+  //         dashboardData={dashboardData}
+  //         toggleDynamicPanel={toggleDynamicPanel}
+  //         selectedDataBlock={selectedDataBlock}
+  //         style={{maxWidth:"33%"}}
+  //       />
+  //     </DataBlockWrapper>
+  //   );
+  // };
   const getAverageBlocks = ()=>{
     return (
       <DataBlockWrapper padding={0}>
@@ -200,9 +200,9 @@ function PipelineDetails({ dashboardData }) {
         <MetricContainer title="Pipelines: Failure Score">
           {getPipelinesFailure()}
         </MetricContainer>
-        <MetricContainer title="Value Stream">
+        {/* <MetricContainer title="Value Stream">
           {getValueStream()}
-        </MetricContainer>
+        </MetricContainer> */}
         <MetricContainer title="Pipeline: Duration Average">
           {getAverageBlocks()}
         </MetricContainer>
