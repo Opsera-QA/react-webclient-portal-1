@@ -91,7 +91,7 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
             <Col><div className="metric-box text-center">
               <div className="box-metric">
                 { metrics[0]?.firstPassYield ?
-                  <div className="green">{metrics[0]?.firstPassYield+ "%"}</div>
+                  <div className ={metrics[0]?.firstPassYield >= 75 ? 'green' : 'red'}>{metrics[0]?.firstPassYield+ "%"}</div>
                   : <div>{"N/A"}</div>}
               </div>
               <div className="w-100 text-muted mb-1">First Pass Yield</div>
@@ -110,6 +110,11 @@ function ManualQaTestPieChart({ kpiConfiguration, setKpiConfiguration, dashboard
               </div>
               <div className="w-100 text-muted mb-1">Total Test Cases Failed in First Run</div>
             </div></Col>
+          </Row>
+          <Row className="p-1">
+            <Col className="text-center">
+              <small><span className="font-weight-bold">Goal:</span> First Pass Yield &gt; 75%</small>
+            </Col>
           </Row>
         </Container>
         <ResponsivePie
