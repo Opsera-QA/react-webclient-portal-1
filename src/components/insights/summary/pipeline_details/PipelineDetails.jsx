@@ -79,7 +79,7 @@ function PipelineDetails({ dashboardData }) {
         return (
           <JiraLeadTimeChartNoDataBlocks
             dashboardData={dashboardData}
-            kpiConfiguration={{ kpi_name: "Lead Time", filters: [] }}
+            kpiConfiguration={{ kpi_name: "Mean Lead Time (Days)", filters: [] }}
           />
         );
       case "Average_Deployment_Duration":
