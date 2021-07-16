@@ -14,7 +14,7 @@ function AzurePipelineStepConfigurationHelpDocumentation() {
       closePanel={closePanel}
       showPanel={true}
       titleText={"Step Configuration Help"}>
-      <div className={"my-1"}>In Azure Pipeline Step Configuration, you are simply selecting values provided in the
+      <div className={"mt-2 mb-1"}>In Azure Pipeline Step Configuration, you are simply selecting values provided in the
         following drop down fields. Organization Name, Project Name/ID and Pipeline ID are fetched from a pipeline that
         has already been configured in the Azure DevOps portal.
       </div>
