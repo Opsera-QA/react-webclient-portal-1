@@ -91,7 +91,7 @@ function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, d
             <Col><div className="metric-box text-center">
               <div className="box-metric">
                 { metrics[0]?.automationRate ?
-                  <div className ="green">{metrics[0]?.automationRate+ "%"}</div>
+                  <div className ={metrics[0]?.automationRate >= 90 ? 'green' : 'red'}>{metrics[0]?.automationRate+ "%"}</div>
                   : <div>{"N/A"}</div>}
               </div>
               <div className="w-100 text-muted mb-1">Automation Percentage</div>
@@ -110,6 +110,11 @@ function AutomationPercentagePieChart({ kpiConfiguration, setKpiConfiguration, d
               </div>
               <div className="w-100 text-muted mb-1">Regression Test Cases Manual</div>
             </div></Col>
+          </Row>
+          <Row className="p-1">
+            <Col className="text-center">
+              <small><span className="font-weight-bold">Goal:</span> Automation Percentage &gt; 90%</small>
+            </Col>
           </Row>
         </Container>
         <ResponsivePie
