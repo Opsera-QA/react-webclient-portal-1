@@ -7,10 +7,16 @@ const awsLambdaStepFormMetadata = {
       label: "Lambda Task Mapping",
       id: "lambdaTasks",
       isRequired: true
+    },
+    {
+      label: "Action",
+      id: "lambdaAction",
+      isRequired: true
     }
   ],
   newObjectFields: {
     lambdaTasks: [],
+    lambdaAction: ""
   }
 };
 

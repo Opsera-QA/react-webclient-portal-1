@@ -18,6 +18,9 @@ function AwsLambdaPipelineStepConfigurationSummaryPanel({ awsECSDeployPipelineDa
         <Col lg={6}>
           <JsonField dataObject={awsECSDeployPipelineDataObject} fieldName={"lambdaTasks"}/>
         </Col>
+        <Col lg={6}>
+          <TextFieldBase dataObject={awsECSDeployPipelineDataObject} fieldName={"lambdaAction"}/>
+        </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
   );

@@ -352,7 +352,7 @@ function MultiTaskSelectInputBase({
   }
 
   return (
-    <div className="object-properties-input">
+    <div className="object-properties-input py-2">
       <div className="content-container">
         <div className="property-header">
           <h6>{getTitleBar()}</h6>

@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import awsLambdaStepFormMetadata from "./awsLambda-stepForm-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
 import MultiTaskSelectInputBase from "./inputs/MultiTaskSelectInput";
+import AwsLambdaActionSelectInput from "./inputs/ActionTypeSelectInput";
 
 function AwsLambdaDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan, stepId, pipelineId }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -49,6 +50,10 @@ function AwsLambdaDeployStepConfiguration({ stepTool, closeEditorPanel, parentCa
       persistRecord={callbackFunction}
       isLoading={isLoading}
     >
+      <AwsLambdaActionSelectInput
+        dataObject={lambdaModel}
+        setDataObject={setLambdaModel}
+      />
       <MultiTaskSelectInputBase
         titleIcon={faBracketsCurly}
         dataObject={lambdaModel}
