@@ -212,6 +212,7 @@ function PipelineDetails({ dashboardData }) {
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
           style={{ maxWidth: "33%" }}
+          disable={true}
         />
       </DataBlockWrapper>
     );
@@ -219,7 +220,7 @@ function PipelineDetails({ dashboardData }) {
 
   const getIncidents = () => {
     return (
-      <DataBlockWrapper>
+      <DataBlockWrapper padding={0}>
         <ServiceNowMTTRDataBlock
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
