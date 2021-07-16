@@ -18,6 +18,10 @@ const sfdcRuleMetadata = {
       isRequired: true
     },
     {
+      label: "Field Filter",
+      id: "fieldFilter",
+    },
+    {
       label: "Values",
       id: "values",
       isRequired: true
@@ -27,6 +31,7 @@ const sfdcRuleMetadata = {
     type: "include",
     componentTypes: [],
     field: "",
+    fieldFilter: "equals",
     values: [],
   }
 };
