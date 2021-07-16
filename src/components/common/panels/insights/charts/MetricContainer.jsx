@@ -18,11 +18,11 @@ function MetricContainer({ isLoading, children, title }) {
   };
 
   return (
-    <div className="content-container content-card-1">
+    <div className={`metric-container content-container content-card-1`}>
       <div className="px-2 content-block-header-inverse title-text-header-2">
         {getTitleBar()}
       </div>
-      <div className={"new-chart m-2 shaded-panel"}>
+      <div style={{padding: 0}} className={"new-chart m-2 shaded-panel"}>
         {children}
       </div>
     </div>
@@ -33,7 +33,7 @@ function MetricContainer({ isLoading, children, title }) {
 MetricContainer.propTypes = {
   isLoading: PropTypes.bool,
   children: PropTypes.any,
-  title: PropTypes.string
+  title: PropTypes.string,
 };
 
 export default MetricContainer;
