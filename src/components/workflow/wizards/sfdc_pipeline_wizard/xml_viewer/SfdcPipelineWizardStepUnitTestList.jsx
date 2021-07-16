@@ -118,7 +118,7 @@ const SfdcPipelineWizardStepUnitTestList = ({ pipelineWizardModel, unitTestStep 
       isLoading={isLoading}
       icon={faSalesforce}
       disabled={isLoading}
-      noDataMessage={"No Component Types Found"}
+      noDataMessage={"No Unit Test Classes Selected"}
     />
   );
 };
