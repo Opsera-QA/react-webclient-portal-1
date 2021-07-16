@@ -6,21 +6,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare, faCaretSquareDown, faCaretSquareUp, faCopy } from "@fortawesome/pro-light-svg-icons";
 import PipelineWorkflowItem from "./PipelineWorkflowItem";
 import "../../../workflows.css";
+import "./step_configuration/helpers/step-validation-helper";
+import StepValidationHelper from "./step_configuration/helpers/step-validation-helper";
 
 
 function PipelineWorkflowItemList({
-  pipeline,
-  lastStep,
-  editWorkflow,
-  pipelineId,
-  parentCallbackEditItem,
-  parentHandleViewSourceActivityLog,
-  quietSavePlan,
-  fetchPlan,
-  customerAccessRules,
-  parentWorkflowStatus,
-  refreshCount,
-}) {
+                                    pipeline,
+                                    lastStep,
+                                    editWorkflow,
+                                    pipelineId,
+                                    parentCallbackEditItem,
+                                    parentHandleViewSourceActivityLog,
+                                    quietSavePlan,
+                                    fetchPlan,
+                                    customerAccessRules,
+                                    parentWorkflowStatus,
+                                    refreshCount,
+                                  }) {
   const [isSaving, setIsSaving] = useState(false);
   const [pipelineSteps, setPipelineSteps] = useState(pipeline.workflow.plan);
 
@@ -128,31 +130,35 @@ function PipelineWorkflowItemList({
     const item_id = item._id;
     let classString = "step-" + item_id;
 
-    if (item.tool === undefined || item.tool.configuration === undefined) {
-      //set to warning state
-      classString += " workflow-step-warning";
-    } else if (!item.active) {
-      classString += " workflow-step-disabled";
-    } else if (typeof (last_step) !== "undefined") {
-      if (last_step.success && typeof (last_step.success) !== "undefined" && last_step.success.step_id === item_id) {
-        classString += " workflow-step-success";
-      } else if (last_step.running && typeof (last_step.running) !== "undefined" && last_step.running.step_id === item_id) {
-        if (last_step.running.paused) {
-          classString += " workflow-step-warning";
-        } else if (last_step.running.status === "stopped") {
-          classString += " workflow-step-stopped";
-        } else {
-          classString += " workflow-step-running";
-        }
-      } else if (last_step.failed && typeof (last_step.failed) !== "undefined" && last_step.failed.step_id === item_id) {
-        classString += " workflow-step-failure";
+    const isStepValid = StepValidationHelper.isValidConfiguration(item.tool);
+
+    let stepStatusClass = item.tool === undefined ? "workflow-step-warning"
+      : item.tool.configuration === undefined ? "workflow-step-warning"
+        : !isStepValid ? "workflow-step-warning"
+          : !item.active ? "workflow-step-disabled"
+            : "";
+
+    //if operations have occurred and the step is still valid
+    if (typeof (last_step) !== "undefined" && isStepValid) {
+      const { success, running, failed } = last_step;
+
+      if (success && success.step_id === item_id) {
+        stepStatusClass = "workflow-step-success";
+      }
+
+      if (running && running.step_id === item_id) {
+        stepStatusClass = running.paused ? "workflow-step-warning"
+          : running.status === "stopped" ? "workflow-step-stopped"
+            : "workflow-step-running";
+      }
+
+      if (failed && failed.step_id === item_id) {
+        stepStatusClass = "workflow-step-failure";
       }
     }
 
-    return classString;
+    return classString += " " + stepStatusClass;
   };
-
-
   return (
     <>
       {pipelineSteps && pipelineSteps.map((item, index) => (
@@ -172,7 +178,7 @@ function PipelineWorkflowItemList({
               deleteStep={deleteStep}
               refreshCount={refreshCount}
               parentHandleViewSourceActivityLog={parentHandleViewSourceActivityLog}
-              parentWorkflowStatus={parentWorkflowStatus}/>
+              parentWorkflowStatus={parentWorkflowStatus} />
           </div>
 
           {editWorkflow ? <>
@@ -186,7 +192,7 @@ function PipelineWorkflowItemList({
                                    className={index === 0 ? "fa-disabled" : "pointer dark-grey"}
                                    onClick={() => {
                                      handleMoveStep(item._id, index, "up");
-                                   }}/>
+                                   }} />
                 </OverlayTrigger>
 
                 <OverlayTrigger
@@ -199,7 +205,7 @@ function PipelineWorkflowItemList({
                                    className="green pointer ml-2 mr-1"
                                    onClick={() => {
                                      handleAddStep(item._id, index);
-                                   }}/>
+                                   }} />
                 </OverlayTrigger>
 
                 <OverlayTrigger
@@ -212,7 +218,7 @@ function PipelineWorkflowItemList({
                                    className="yellow pointer ml-1 mr-2"
                                    onClick={() => {
                                      handleCopyStep(item, index);
-                                   }}/>
+                                   }} />
                 </OverlayTrigger>
 
                 <OverlayTrigger
@@ -224,13 +230,13 @@ function PipelineWorkflowItemList({
                                    className={index === pipelineSteps.length - 1 ? "fa-disabled" : "pointer dark-grey"}
                                    onClick={() => {
                                      handleMoveStep(item._id, index, "down");
-                                   }}/>
+                                   }} />
                 </OverlayTrigger>
               </div>
             </> :
             <>
               <SteppedLineTo from={"step-" + item._id} to={"step-" + index} delay={100} orientation="v" zIndex={-1}
-                             borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="bottom"/>
+                             borderColor="#0f3e84" borderWidth={2} fromAnchor="bottom" toAnchor="bottom" />
               <div style={{ height: "40px" }} className={"step-" + index}>&nbsp;</div>
             </>
           }
