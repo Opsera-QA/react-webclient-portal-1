@@ -18,7 +18,21 @@ function ToolDetailView() {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [toolData, setToolData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
+  const [customerAccessRules, setCustomerAccessRules] = useState({});
+
+  useEffect(() => {
+    initComponent().catch(error => {
+      throw { error };
+    });
+  }, []);
+
+  const initComponent = async () => {
+    const userRecord = await getUserRecord(); //RBAC Logic
+    const rules = await setAccessRoles(userRecord);
+    setCustomerAccessRules(rules);
+  };
+
 
   useEffect(() => {
     getTool();

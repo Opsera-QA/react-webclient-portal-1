@@ -126,7 +126,7 @@ function FreeTrialNav({ accessRole, featureFlagHideItemInProd, featureFlagHideIt
 
           {accessRole.OpseraAdministrator && <>
             <div className="mt-4 mb-2 sub-header">Administration</div>
-            <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
+            <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
               <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
               className="menu-text">Tool Registry</span></NavLink>
 
@@ -203,7 +203,7 @@ function OpseraAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFlag
           </>}*/}
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
-          <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
+          <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
             className="menu-text">Tool Registry</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
@@ -271,7 +271,7 @@ function SaasUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHideIte
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
+          <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
             className="menu-text">Tool Registry</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
@@ -336,7 +336,7 @@ function AccountAdminUserNav({ accessRole, featureFlagHideItemInProd, featureFla
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
+          <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
             className="menu-text">Tool Registry</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
@@ -400,7 +400,7 @@ function AccountPowerUserNav({ accessRole, featureFlagHideItemInProd, featureFla
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
+          <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
             className="menu-text">Tool Registry</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">
@@ -465,7 +465,7 @@ function DefaultUserNav({ accessRole, featureFlagHideItemInProd, featureFlagHide
 
           <div className="mt-3 mb-2 sub-header">Operations</div>
 
-          <NavLink className="nav-link" activeClassName="chosen" to="/inventory/tools">
+          <NavLink className="nav-link" activeClassName="chosen" to="/inventory">
             <FontAwesomeIcon size="lg" icon={faClipboardList} fixedWidth/> <span
             className="menu-text">Tool Registry</span></NavLink>
           <NavLink className="nav-link" activeClassName="chosen" to="/logs">

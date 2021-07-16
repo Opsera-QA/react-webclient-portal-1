@@ -6,15 +6,13 @@ import axios from "axios";
 import parametersActions from "components/inventory/parameters/parameters-actions";
 import ParametersView from "components/inventory/parameters/ParametersView";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
-import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faFileCode, faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
 import ParameterModel from "components/inventory/parameters/parameter.model";
 import ParameterFilterModel from "components/inventory/parameters/parameter.filter.model";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 
-function ParametersInventory({ customerAccessRules, handleTabClick }) {
+function ParametersInventory() {
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
@@ -94,21 +92,9 @@ function ParametersInventory({ customerAccessRules, handleTabClick }) {
     }
   };
 
-  const getNavigationTabContainer = () => {
-    return (
-      <NavigationTabContainer>
-        <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={"parameters"} tabText={"Tools"} />
-        <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={"parameters"} tabText={"Platform"} />
-        <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={"parameters"} tabText={"Parameters"} />
-        <NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"parameters"} tabText={"Scripts"} />
-      </NavigationTabContainer>
-    );
-  };
-
-
   return (
     <ScreenContainer
-      navigationTabContainer={getNavigationTabContainer()}
+      navigationTabContainer={<InventorySubNavigationBar currentTab={"parameters"} />}
       breadcrumbDestination={"customParameters"}
     >
       <ParametersView
@@ -118,16 +104,12 @@ function ParametersInventory({ customerAccessRules, handleTabClick }) {
         setParameterList={setParameterList}
         parameterFilterModel={parameterFilterModel}
         parameterMetadata={parameterMetadata}
-        customerAccessRules={customerAccessRules}
         parameterRoleDefinitions={parameterRoleDefinitions}
       />
     </ScreenContainer>
   );
 }
 
-ParametersInventory.propTypes = {
-  customerAccessRules: PropTypes.object,
-  handleTabClick: PropTypes.func
-};
+ParametersInventory.propTypes = {};
 
 export default ParametersInventory;

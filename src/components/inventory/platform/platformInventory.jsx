@@ -6,21 +6,15 @@ import ErrorDialog from "components/common/status_notifications/error";
 import DropdownList from "react-widgets/lib/DropdownList";
 import PlatformToolsTable from "./platformToolsTable.jsx";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import ToolRegistryHelpDocumentation
-  from "components/common/help/documentation/tool_registry/ToolRegistryHelpDocumentation";
-import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
-import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faFileCode, faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
-import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
+import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 
 // TODO: Refactor
-function PlatformInventory ({ handleTabClick }) {
+function PlatformInventory () {
   const contextType = useContext(AuthContext);
   const [error, setErrors] = useState(false);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  
   const [key, setKey] = useState({});
   const [renderForm, setRenderForm] = useState(false);
 
@@ -118,21 +112,9 @@ function PlatformInventory ({ handleTabClick }) {
     );
   };
 
-  const getNavigationTabContainer = () => {
-    return (
-      <NavigationTabContainer>
-        <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={"platform"} tabText={"Tools"} />
-        <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={"platform"} tabText={"Platform"} />
-        <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={"platform"} tabText={"Parameters"} />
-        <NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"platform"} tabText={"Scripts"} />
-      </NavigationTabContainer>
-    );
-  };
-
-
   return (
     <ScreenContainer
-      navigationTabContainer={getNavigationTabContainer()}
+      navigationTabContainer={<InventorySubNavigationBar currentTab={"platform"} />}
       breadcrumbDestination={"platform"}
     >
       {getBody()}
@@ -140,8 +122,6 @@ function PlatformInventory ({ handleTabClick }) {
   );
 }
 
-PlatformInventory.propTypes = {
-  handleTabClick: PropTypes.func
-};
+PlatformInventory.propTypes = {};
 
 export default PlatformInventory;

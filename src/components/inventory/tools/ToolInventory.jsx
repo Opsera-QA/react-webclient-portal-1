@@ -11,18 +11,17 @@ import axios from "axios";
 import ToolRegistryHelpDocumentation
   from "components/common/help/documentation/tool_registry/ToolRegistryHelpDocumentation";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
-import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faFileCode, faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
+import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 
-function ToolInventory({ customerAccessRules, handleTabClick }) {
-  const { getAccessToken } = useContext(AuthContext);
+function ToolInventory() {
+  const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
   const [toolRegistryList, setToolRegistryList] = useState([]);
   const [toolFilterDto, setToolFilterDto] = useState(new Model({ ...toolFilterMetadata.newObjectFields }, toolFilterMetadata, false));
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [customerAccessRules, setCustomerAccessRules] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -66,6 +65,8 @@ function ToolInventory({ customerAccessRules, handleTabClick }) {
   const loadData = async (filterDto = toolFilterDto, cancelSource = cancelTokenSource) => {
     try {
       setLoading(true);
+      const accessRoleData = await getAccessRoleData();
+      setCustomerAccessRules(accessRoleData);
       await getToolRegistryList(filterDto, cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
@@ -96,20 +97,9 @@ function ToolInventory({ customerAccessRules, handleTabClick }) {
     }
   };
 
-  const getNavigationTabContainer = () => {
-    return (
-      <NavigationTabContainer>
-        <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Tools"} />
-        <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Platform"} />
-        <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Parameters"} />
-        <NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"tools"} tabText={"Scripts"} />
-      </NavigationTabContainer>
-    );
-  };
-
   return (
     <ScreenContainer
-      navigationTabContainer={getNavigationTabContainer()}
+      navigationTabContainer={<InventorySubNavigationBar currentTab={"tools"} />}
       breadcrumbDestination={"toolRegistry"}
       pageDescription={`
         The Opsera Tool Registry allows you to register, track and configure all of the tools in your organization in
