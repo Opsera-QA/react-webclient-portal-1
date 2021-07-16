@@ -4,25 +4,13 @@ const awsLambdaStepFormMetadata = {
   type: "AWS ECS Deploy Tool Configuration",
   fields: [
     {
-      label: "S3 Push Step",
-      id: "s3StepId",
-      isRequired: true,
-    },
-    {
-      label: "Service Task",
+      label: "Lambda Task Mapping",
       id: "lambdaTasks",
       isRequired: true
-    },
-    {
-      label: "Action",
-      id: "awsLambdaAction",
-      isRequired: true
-    },
+    }
   ],
   newObjectFields: {
-    s3StepId: "",
     lambdaTasks: [],
-    awsLambdaAction: "create"
   }
 };
 

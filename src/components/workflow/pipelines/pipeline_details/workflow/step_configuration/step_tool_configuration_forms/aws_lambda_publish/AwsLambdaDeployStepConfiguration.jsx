@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { faBracketsCurly, faInfoCircle, faSync, faTimes, faHandshake} from "@fortawesome/pro-light-svg-icons";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
 import PipelineStepEditorPanelContainer from "components/common/panels/detail_panel_container/PipelineStepEditorPanelContainer";
 import PropTypes from "prop-types";
 import awsLambdaStepFormMetadata from "./awsLambda-stepForm-metadata";
 import modelHelpers from "components/common/model/modelHelpers";
-import TaskSelectInput from "./inputs/TaskSelectInput";
-import S3StepSelectInput from "./inputs/S3PushStepSelectInput";
-import ActionTypeSelectInput from "./inputs/ActionTypeSelectInput";
+import MultiTaskSelectInputBase from "./inputs/MultiTaskSelectInput";
 
 function AwsLambdaDeployStepConfiguration({ stepTool, closeEditorPanel, parentCallback, plan, stepId, pipelineId }) {
   const [isLoading, setIsLoading] = useState(false);
-  const [ecsServicesModel, setAWSECSDeployModel] = useState(undefined);
+  const [lambdaModel, setLambdaModel] = useState(undefined);
   const [threshold, setThreshold] = useState(undefined);
 
   useEffect(() => {
@@ -24,13 +23,13 @@ function AwsLambdaDeployStepConfiguration({ stepTool, closeEditorPanel, parentCa
       stepTool,
       awsLambdaStepFormMetadata
     );
-    setAWSECSDeployModel(ecsServiceConfigurationData);
+    setLambdaModel(ecsServiceConfigurationData);
     setIsLoading(false);
   };
 
   const callbackFunction = async () => {
     const item = {
-      configuration: ecsServicesModel.getPersistData(),
+      configuration: lambdaModel.getPersistData(),
       threshold: {
         type: threshold?.type,
         value: threshold?.value,
@@ -39,28 +38,29 @@ function AwsLambdaDeployStepConfiguration({ stepTool, closeEditorPanel, parentCa
     parentCallback(item);
   };
 
-  if (isLoading || ecsServicesModel == null) {
+  if (isLoading || lambdaModel == null) {
     return <DetailPanelLoadingDialog />;
   }
 
   return (
     <PipelineStepEditorPanelContainer
       handleClose={closeEditorPanel}
-      recordDto={ecsServicesModel}
+      recordDto={lambdaModel}
       persistRecord={callbackFunction}
       isLoading={isLoading}
     >
-      <ActionTypeSelectInput
-        dataObject={ecsServicesModel}
-        setDataObject={setAWSECSDeployModel}
-      />
-      <S3StepSelectInput
-        dataObject={ecsServicesModel}
-        setDataObject={setAWSECSDeployModel}
+      <MultiTaskSelectInputBase
+        titleIcon={faBracketsCurly}
+        dataObject={lambdaModel}
+        setDataObject={setLambdaModel}
+        fieldName={"lambdaTasks"}
+        allowIncompleteItems={true}
+        type={"Lambda Function"}
+        regexValidationRequired={false}
+        titleText={"Lambda Function <-> S3 Push Mapping"}
         plan={plan}
-        stepId={stepId}
+        stepIdParent={stepId}
       />
-      <TaskSelectInput dataObject={ecsServicesModel} setDataObject={setAWSECSDeployModel} />
     </PipelineStepEditorPanelContainer>
   );
 }

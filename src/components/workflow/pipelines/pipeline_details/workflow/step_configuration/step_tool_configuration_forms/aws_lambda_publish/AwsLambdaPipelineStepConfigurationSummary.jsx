@@ -5,6 +5,7 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import LoadingDialog from "components/common/status_notifications/loading";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
+import JsonField from "components/common/fields/json/JsonField";
 
 function AwsLambdaPipelineStepConfigurationSummaryPanel({ awsECSDeployPipelineDataObject, pipelineData, setActiveTab }) {
   if (awsECSDeployPipelineDataObject == null) {
@@ -15,13 +16,7 @@ function AwsLambdaPipelineStepConfigurationSummaryPanel({ awsECSDeployPipelineDa
     <PipelineStepSummaryPanelContainer setActiveTab={setActiveTab} pipelineData={pipelineData}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={awsECSDeployPipelineDataObject} fieldName={"s3StepId"}/>
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={awsECSDeployPipelineDataObject} fieldName={"lambdaTasks"}/>
-        </Col>
-        <Col lg={6}>
-          <TextFieldBase dataObject={awsECSDeployPipelineDataObject} fieldName={"awsLambdaAction"}/>
+          <JsonField dataObject={awsECSDeployPipelineDataObject} fieldName={"lambdaTasks"}/>
         </Col>
       </Row>
     </PipelineStepSummaryPanelContainer>
