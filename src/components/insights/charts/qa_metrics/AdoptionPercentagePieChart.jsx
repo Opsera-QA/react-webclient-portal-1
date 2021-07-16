@@ -91,7 +91,7 @@ function AdoptionPercentagePieChart({ kpiConfiguration, setKpiConfiguration, das
             <Col><div className="metric-box text-center">
               <div className="box-metric">
                 { metrics[0]?.adoptionRate ?
-                  <div className ="green">{metrics[0]?.adoptionRate+ "%"}</div>
+                  <div className ="red">{metrics[0]?.adoptionRate+ "%"}</div>
                   : <div>{"N/A"}</div>}
               </div>
               <div className="w-100 text-muted mb-1">Adoption Rate</div>
@@ -104,6 +104,11 @@ function AdoptionPercentagePieChart({ kpiConfiguration, setKpiConfiguration, das
               </div>
               <div className="w-100 text-muted mb-1">No of Automated Test Cases Executed Manually</div>
             </div></Col>
+          </Row>
+          <Row className="p-1">
+                      <Col className="text-center">
+                        <small><span className="font-weight-bold">Goal:</span> Adoption Percentage = 100%</small>
+                      </Col>
           </Row>
         </Container>
         <ResponsivePie
