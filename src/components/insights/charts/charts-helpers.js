@@ -97,6 +97,19 @@ export function getJiraIssueLabelsFromKpiConfiguration(kpiConfiguration) {
   return null;
 }
 
+export function getJiraIssueStatusFromKpiConfiguration(kpiConfiguration) {
+  if (
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-status")]
+      ?.value &&
+    kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-status")]
+      ?.value.length > 0
+  ) {
+    return kpiConfiguration.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-status")]
+      .value;
+  }
+  return null;
+}
+
 export function getJiraIssueStartStatusFromKpiConfiguration(kpiConfiguration) {
   if (
     kpiConfiguration?.filters[kpiConfiguration.filters.findIndex((obj) => obj.type === "jira-issue-start-status")]
