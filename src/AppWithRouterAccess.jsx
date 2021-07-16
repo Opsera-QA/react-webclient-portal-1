@@ -107,6 +107,10 @@ import DeleteTools from "components/settings/delete_tools/DeleteTools";
 import PipelineStorageManagement from "components/admin/pipeline_storage/PipelineStorageManagement";
 import PipelineStorageDetailView
   from "components/admin/pipeline_storage/pipeline_storagei_detail_view/PipelineStorageDetailView";
+import ParametersInventory from "components/inventory/parameters/ParametersInventory";
+import ToolInventory from "components/inventory/tools/ToolInventory";
+import ScriptsInventory from "components/inventory/scripts/ScriptsInventory";
+import PlatformInventory from "components/inventory/platform/platformInventory";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -291,10 +295,16 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/user/:tab?" exact component={UserSettings}/>
                   <SecureRoute path="/user/access-tokens/details/:tokenId?" exact component={AccessTokenDetailView}/>
 
-                  <SecureRoute path="/inventory/:tab" exact component={Inventory}/>
+                  <SecureRoute path="/inventory" exact component={Inventory}/>
+                  <SecureRoute path="/inventory/tools" exact component={ToolInventory}/>
+                  <SecureRoute path="/inventory/platform" exact component={PlatformInventory}/>
+                  <SecureRoute path="/inventory/parameters" exact component={ParametersInventory}/>
+                  <SecureRoute path="/inventory/scripts" exact component={ScriptsInventory}/>
                   <SecureRoute path="/inventory/tools/details/:id/:tab?" exact component={ToolDetailView}/>
                   <SecureRoute path="/inventory/tools/details/:id/projects/:projectId" exact
                                component={ToolProjectsView}/>
+
+
                   <SecureRoute path="/dashboard" component={Dashboard}/>
                   <SecureRoute path="/tools/:id?" component={ApiConnector}/>
                   <SecureRoute path="/platform" component={Platform}/>

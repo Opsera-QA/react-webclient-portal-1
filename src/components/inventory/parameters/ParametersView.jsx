@@ -75,11 +75,9 @@ function ParametersView({isLoading, loadData, parameterList, parameterMetadata, 
 ParametersView.propTypes = {
   parameterList: PropTypes.array,
   isLoading: PropTypes.bool,
-  createNewRecord: PropTypes.func,
   loadData: PropTypes.func,
   parameterMetadata: PropTypes.object,
   parameterFilterModel: PropTypes.object,
-  setParameterList: PropTypes.func,
   parameterRoleDefinitions: PropTypes.object
 };
 

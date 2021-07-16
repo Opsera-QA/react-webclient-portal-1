@@ -4,17 +4,15 @@ import { DialogToastContext } from "contexts/DialogToastContext";
 import PropTypes from "prop-types";
 import axios from "axios";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
-import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faFileCode, faHandshake, faServer, faTools} from "@fortawesome/pro-light-svg-icons";
 import ScriptsView from "components/inventory/scripts/ScriptsView";
 import scriptsActions from "components/inventory/scripts/scripts-actions";
 import ScriptModel from "components/inventory/scripts/script.model";
 import ScriptsFilterModel from "components/inventory/scripts/scripts.filter.model";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+import InventorySubNavigationBar from "components/inventory/InventorySubNavigationBar";
 
-function ScriptsInventory({ customerAccessRules, handleTabClick }) {
+function ScriptsInventory() {
   const { getAccessToken, getAccessRoleData } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setLoading] = useState(false);
@@ -24,6 +22,7 @@ function ScriptsInventory({ customerAccessRules, handleTabClick }) {
   const [scriptFilterModel, setParameterFilterModel] = useState(new ScriptsFilterModel());
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [customerAccessRules, setCustomerAccessRules] = useState(undefined);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -49,6 +48,8 @@ function ScriptsInventory({ customerAccessRules, handleTabClick }) {
   const loadData = async (filterDto = scriptFilterModel, cancelSource = cancelTokenSource) => {
     try {
       setLoading(true);
+      const accessRoleData = await getAccessRoleData();
+      setCustomerAccessRules(accessRoleData);
       await getScripts(filterDto, cancelSource);
     } catch (error) {
       if (isMounted?.current === true) {
@@ -93,21 +94,9 @@ function ScriptsInventory({ customerAccessRules, handleTabClick }) {
     }
   };
 
-  const getNavigationTabContainer = () => {
-    return (
-      <NavigationTabContainer>
-        <NavigationTab icon={faTools} tabName={"tools"} handleTabClick={handleTabClick} activeTab={"scripts"} tabText={"Tools"} />
-        <NavigationTab icon={faServer} tabName={"platform"} handleTabClick={handleTabClick} activeTab={"scripts"} tabText={"Platform"} />
-        <NavigationTab icon={faHandshake} tabName={"parameters"} handleTabClick={handleTabClick} activeTab={"scripts"} tabText={"Parameters"} />
-        <NavigationTab icon={faFileCode} tabName={"scripts"} handleTabClick={handleTabClick} activeTab={"scripts"} tabText={"Scripts"} />
-      </NavigationTabContainer>
-    );
-  };
-
-
   return (
     <ScreenContainer
-      navigationTabContainer={getNavigationTabContainer()}
+      navigationTabContainer={<InventorySubNavigationBar currentTab={"scripts"} />}
       breadcrumbDestination={"scripts"}
     >
       <ScriptsView
@@ -124,9 +113,6 @@ function ScriptsInventory({ customerAccessRules, handleTabClick }) {
   );
 }
 
-ScriptsInventory.propTypes = {
-  customerAccessRules: PropTypes.object,
-  handleTabClick: PropTypes.func
-};
+ScriptsInventory.propTypes = {};
 
 export default ScriptsInventory;
