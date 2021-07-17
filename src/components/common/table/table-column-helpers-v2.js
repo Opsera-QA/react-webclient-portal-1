@@ -20,9 +20,9 @@ export const getColumnId = (field) => {
   return field ? field.id : "";
 };
 
-export const getOwnerNameField = (maxWidth) => {
+export const getOwnerNameField = (maxWidth, headerText = "Owner Name") => {
   return {
-    header: [{ text: "Owner Name" }],
+    header: [{ text: headerText }],
     id: "owner_name",
     maxWidth: maxWidth,
   };
