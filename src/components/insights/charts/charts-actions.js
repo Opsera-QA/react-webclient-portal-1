@@ -8,6 +8,7 @@ import {
   getJiraIssueTypeFromKpiConfiguration,
   getJiraIssueComponentsFromKpiConfiguration,
   getJiraIssueLabelsFromKpiConfiguration,
+  getJiraIssueStatusFromKpiConfiguration,
   getJiraIssueStartStatusFromKpiConfiguration,
   getJiraIssueDoneStatusFromKpiConfiguration,
   getSonarProjectKeyFromKpiConfiguration,
@@ -91,6 +92,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
   const jiraIssueType = getJiraIssueTypeFromKpiConfiguration(kpiConfiguration);
   const jiraIssueComponents = getJiraIssueComponentsFromKpiConfiguration(kpiConfiguration);
   const jiraIssueLabels = getJiraIssueLabelsFromKpiConfiguration(kpiConfiguration);
+  const jiraIssueStatus = getJiraIssueStatusFromKpiConfiguration(kpiConfiguration);
   const jiraIssueStartStatus = getJiraIssueStartStatusFromKpiConfiguration(kpiConfiguration);
   const jiraIssueDoneStatus = getJiraIssueDoneStatusFromKpiConfiguration(kpiConfiguration);
   const sonarProjectKey = getSonarProjectKeyFromKpiConfiguration(kpiConfiguration);
@@ -113,6 +115,7 @@ chartsActions.parseConfigurationAndGetChartMetrics = async (
     jiraIssueType: jiraIssueType,
     jiraIssueComponents: jiraIssueComponents,
     jiraIssueLabels: jiraIssueLabels,
+    jiraIssueStatus: jiraIssueStatus,
     jiraIssueStartStatus: jiraIssueStartStatus,
     jiraIssueDoneStatus: jiraIssueDoneStatus,
     sonarProjectKey: sonarProjectKey,
