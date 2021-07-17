@@ -63,6 +63,13 @@ export const getTableTextColumn = (field, className) => {
   };
 };
 
+export const getOwnerNameField = (headerText = "Owner Name") => {
+  return {
+    Header: headerText,
+    accessor: "owner_name",
+  };
+};
+
 export const getLimitedTableTextColumn = (field, maxLength, className) => {
   return {
     Header: getTableHeader(field),
