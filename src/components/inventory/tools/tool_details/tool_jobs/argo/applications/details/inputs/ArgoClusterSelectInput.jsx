@@ -56,12 +56,11 @@ function ArgoClusterSelectInput({ argoToolId, visible, fieldName, dataObject, se
 
   const loadClusters = async (argoToolId, cancelSource = cancelTokenSource) => {
     // const response = await pipelineActions.getToolsListV2(getAccessToken, cancelSource, "jenkins");
-    const clusters = await argoActions.getArgoClustersV2(argoToolId, getAccessToken, cancelSource);
+    const response = await argoActions.getArgoClustersV2(getAccessToken, cancelSource, argoToolId);
+    const clusters = response?.data?.data;
 
-    if (isMounted?.current === true && clusters?.data) {
-      if (clusters.status === 200 && clusters.data && clusters.data.data && clusters.data.data.length > 0) {
-        setClusters(clusters.data.data);
-      }
+    if (isMounted?.current === true && response?.status === 200 && Array.isArray(clusters)) {
+      setClusters(clusters);
     }
   };
 
@@ -76,8 +75,15 @@ function ArgoClusterSelectInput({ argoToolId, visible, fieldName, dataObject, se
     }
   };
 
-  if (!visible) {
-    return <></>;
+  const formatText = (item) => {
+    const name = item?.name !== "" ? item?.name : "No Cluster Name";
+    const serverUrl = item?.server;
+
+    return (`${name}: ${serverUrl}`);
+  };
+
+  if (visible === false) {
+    return null;
   }
 
   return (
@@ -90,7 +96,7 @@ function ArgoClusterSelectInput({ argoToolId, visible, fieldName, dataObject, se
         selectOptions={clusters}
         busy={isLoading}
         valueField="server"
-        textField="server"
+        textField={formatText}
         clearDataFunction={clearDataFunction}
         disabled={disabled || isLoading || argoToolId === "" || clusters?.length === 0}
       />
@@ -109,10 +115,6 @@ ArgoClusterSelectInput.propTypes = {
   visible: PropTypes.bool,
   className: PropTypes.string,
   clearDataFunction: PropTypes.func
-};
-
-ArgoClusterSelectInput.defaultProps = {
-  visible: true,
 };
 
 export default ArgoClusterSelectInput;

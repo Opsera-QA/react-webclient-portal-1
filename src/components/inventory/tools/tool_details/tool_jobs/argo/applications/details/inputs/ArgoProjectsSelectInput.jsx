@@ -8,7 +8,7 @@ import {AuthContext} from "contexts/AuthContext";
 import argoActions from "../../../argo-actions";
 import axios from "axios";
 
-function ArgoProjectsSelectInput({ argoToolId, visible, fieldName, dataObject, setDataObject, setDataFunction, clearDataFunction, disabled, className}) {
+function ArgoProjectsSelectInput({ argoToolId, visible, fieldName, dataObject, setDataObject, disabled, className}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);    
   const [projects, setProjects] = useState([]);
@@ -25,7 +25,7 @@ function ArgoProjectsSelectInput({ argoToolId, visible, fieldName, dataObject, s
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(argoToolId,source).catch((error) => {
+    loadData(argoToolId, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -40,10 +40,11 @@ function ArgoProjectsSelectInput({ argoToolId, visible, fieldName, dataObject, s
   const loadData = async (argoToolId, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
-      await loadProjects(argoToolId, cancelSource);
+      await loadProjects(cancelSource, argoToolId);
     }
     catch (error) {
       if (isMounted?.current === true) {
+        console.error(error);
         toastContext.showErrorDialog("Tool information is missing or unavailable! Please ensure the required credentials are registered and up to date in Tool Registry.");
       }
     }
@@ -54,13 +55,12 @@ function ArgoProjectsSelectInput({ argoToolId, visible, fieldName, dataObject, s
     }
   };
 
-  const loadProjects = async (argoToolId, cancelSource = cancelTokenSource) => {
-    const projects = await argoActions.getArgoProjectsV2(argoToolId, getAccessToken, cancelSource);
+  const loadProjects = async (cancelSource = cancelTokenSource, argoToolId) => {
+    const response = await argoActions.getArgoProjectsV2(getAccessToken, cancelSource, argoToolId);
+    const projects = response?.data?.data;
 
-    if (isMounted?.current === true && projects?.data) {
-      if (projects.status === 200 && projects.data && projects.data.data && projects.data.data.length > 0) {
-        setProjects(projects.data.data);
-      }
+    if (isMounted?.current === true && Array.isArray(projects)) {
+      setProjects(projects);
     }
   };
 
@@ -75,8 +75,15 @@ function ArgoProjectsSelectInput({ argoToolId, visible, fieldName, dataObject, s
     }
   };
 
-  if (!visible) {
-    return <></>;
+  const setDataFunction = (fieldName, value) => {
+    let newDataObject = dataObject;
+    newDataObject.setData("projectName", value.name);
+    newDataObject.setData("namespace", value.namespace);
+    setDataObject({ ...newDataObject });
+  };
+
+  if (visible === false) {
+    return null;
   }
 
   return (
@@ -90,7 +97,6 @@ function ArgoProjectsSelectInput({ argoToolId, visible, fieldName, dataObject, s
         busy={isLoading}
         valueField="name"
         textField="name"
-        clearDataFunction={clearDataFunction}
         disabled={disabled || isLoading || argoToolId === "" || projects?.length === 0}
       />
       {getNoProjectsMessage()}
@@ -103,15 +109,9 @@ ArgoProjectsSelectInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   className: PropTypes.string,
-  clearDataFunction: PropTypes.func
-};
-
-ArgoProjectsSelectInput.defaultProps = {
-  visible: true,
 };
 
 export default ArgoProjectsSelectInput;

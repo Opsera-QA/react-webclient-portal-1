@@ -1,50 +1,54 @@
-import React, { useState } from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import ArgoApplicationsTable from "./ArgoApplicationsTable";
-import ExistingArgoApplicationModal from "./ArgoApplicationModal";
-
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
-import argoApplicationsMetadata from "../argo-application-metadata";
-import Model from "core/data_model/model";
+import ArgoApplicationOverlay
+  from "components/inventory/tools/tool_details/tool_jobs/argo/applications/ArgoApplicationOverlay";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
-function ArgoApplications({ toolData, loadData, isLoading }) {
-  const [argoApplicationData, setArgoApplicationData] = useState(undefined);
-  const [showCreateArgoApplicationModal, setShowCreateArgoApplicationModal] = useState(false);
-  const [applcationID, setApplicationID] = useState(undefined);
+function ArgoApplications({ toolData, loadData, isLoading, toolActions }) {
+  const toastContext = useContext(DialogToastContext);
+  const [argoApplications, setArgoApplications] = useState([]);
 
-  const selectedJobRow = (rowData) => {
-    let newDataObject = toolData.getData("actions")[rowData.index];
-    setApplicationID(newDataObject._id);
-    setArgoApplicationData(
-      new Model(toolData.getData("actions")[rowData.index].configuration, argoApplicationsMetadata, false)
+  useEffect(() => {
+    unpackApplications(toolActions);
+  }, [toolActions]);
+
+  const unpackApplications = (toolActions) => {
+    const newApplicationList = [];
+
+    if (Array.isArray(toolActions)) {
+      toolActions.forEach((toolAction, index) => {
+        let application = toolAction?.configuration;
+        application = {...application, applicationId: toolAction?._id};
+        application = {...application, index: index};
+        newApplicationList?.push(application);
+      });
+    }
+
+    setArgoApplications(newApplicationList);
+  };
+
+  const onRowSelect = (grid, row) => {
+    let selectedRow = toolData?.getArrayData("actions")[row?.index];
+    toastContext.showOverlayPanel(
+      <ArgoApplicationOverlay
+        argoDataObject={selectedRow?.configuration}
+        applicationId={selectedRow?._id}
+        toolData={toolData}
+        loadData={loadData}
+      />
     );
-    setShowCreateArgoApplicationModal(true);
   };
 
   return (
-    <>
-      <div>
-        <ArgoApplicationsTable
-          isLoading={isLoading}
-          toolData={toolData}
-          loadData={loadData}
-          selectedRow={(rowData) => selectedJobRow(rowData)}
-          argoApplicationData={argoApplicationData}
-        />
-      </div>
-      {argoApplicationData != null ? (
-        <ExistingArgoApplicationModal
-          toolData={toolData}
-          loadData={loadData}
-          setShowModal={setShowCreateArgoApplicationModal}
-          argoApplicationDataObj={argoApplicationData}
-          showModal={showCreateArgoApplicationModal}
-          appID={applcationID}
-        />
-      ) : (
-        ""
-      )}
-    </>
+    <ArgoApplicationsTable
+      isLoading={isLoading}
+      toolData={toolData}
+      loadData={loadData}
+      onRowSelect={onRowSelect}
+      argoApplications={argoApplications}
+    />
   );
 }
 
@@ -52,5 +56,6 @@ ArgoApplications.propTypes = {
   toolData: PropTypes.object,
   loadData: PropTypes.func,
   isLoading: PropTypes.bool,
+  toolActions: PropTypes.array
 };
 export default ArgoApplications;

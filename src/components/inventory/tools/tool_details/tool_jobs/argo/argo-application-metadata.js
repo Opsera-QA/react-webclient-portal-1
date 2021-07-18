@@ -1,13 +1,16 @@
+import regexHelpers from "utils/regexHelpers";
 
-// TODO: Shrey, this might need to be completely different or there might need to be multiple sets of metadata.
-// If you need help wiring anything up, please message me.
 const argoApplicationsMetadata = {
   type: "Argo Application",
   fields: [
     {
       label: "Name",
       id: "applicationName",
-      isRequired: true
+      isRequired: true,
+      lowercase: true,
+      spacesAllowed: false,
+      formText: "Application Name can only be lowercase letters with no spaces.",
+      maxLength: 63
     },
     {
       label: "Cluster",
@@ -17,26 +20,26 @@ const argoApplicationsMetadata = {
     {
       label: "Git Path",
       id: "gitPath",
-      isRequired: true
+      isRequired: true,
+      regexValidator: regexHelpers.regexTypes.pathField,
+      maxLength: 256
     },
     {
       label: "Git URL",
       id: "gitUrl",
-      // isRequired: true
+      isRequired: true,
+      maxLength: 256,
     },
     {
       label: "Namespace",
       id: "namespace",
-      isRequired: true
+      isRequired: true,
+      maxLength: 28,
+      // regexValidator: regexHelpers.regexTypes.generalText,
     },
     {
       label: "Project Name",
       id: "projectName",
-      isRequired: true
-    },
-    {
-      label: "toolId",
-      id: "toolId",
       isRequired: true
     },
     {
@@ -46,18 +49,19 @@ const argoApplicationsMetadata = {
     {
       label: "Branch Name",
       id: "branchName",
-      isRequired: true
+      isRequired: true,
+      maxLength: 28,
+      regexValidator: regexHelpers.regexTypes.generalText,
     }
-],
-  newModelBase: {
+  ],
+  newObjectFields: {
     _id: "",
-    applicationName : "",
-    cluster : "",
-    gitPath : "",
-    gitUrl : "",
-    namespace : "",
-    projectName : "",
-    toolId : "",
+    applicationName: "",
+    cluster: "",
+    gitPath: "",
+    gitUrl: "",
+    namespace: "",
+    projectName: "",
     branchName: "",
     active: true,
   }

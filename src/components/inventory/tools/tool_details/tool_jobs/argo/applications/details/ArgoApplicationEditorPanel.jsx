@@ -1,39 +1,54 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, {useEffect, useContext, useState, useRef} from "react";
 import { Col, Button } from "react-bootstrap";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
-import { AuthContext } from "../../../../../../../../contexts/AuthContext";
-import Loading from "../../../../../../../common/status_notifications/loading";
 import Row from "react-bootstrap/Row";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import DtoSelectInput from "../../../../../../../common/input/dto_input/dto-select-input";
-import { DialogToastContext } from "../../../../../../../../contexts/DialogToastContext";
 import argoActions from "../../argo-actions";
 import Modal from "components/common/modal/modal";
-import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ArgoClusterSelectInput from "./inputs/ArgoClusterSelectInput";
 import ArgoProjectsSelectInput from "./inputs/ArgoProjectsSelectInput";
+import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import {faTrash} from "@fortawesome/pro-light-svg-icons";
+import LoadingDialog from "components/common/status_notifications/loading";
+import axios from "axios";
 
-function ArgoApplicationEditorPanel({ argoApplicationData, toolData, appID, handleClose }) {
+function ArgoApplicationEditorPanel({ argoApplicationData, toolData, applicationId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [argoApplicationDataDto, setArgoApplicationDataDto] = useState(undefined);
+  const [argoApplicationModel, setArgoApplicationModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  
+  const isMounted = useRef(false);
+  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+
   useEffect(() => {
+    if (cancelTokenSource) {
+      cancelTokenSource.cancel();
+    }
+
+    const source = axios.CancelToken.source();
+    setCancelTokenSource(source);
+    isMounted.current = true;
+
     if(argoApplicationData) {
       loadData();
     }
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
   }, [argoApplicationData]);
 
-  const loadData = async () => {
+  const loadData = () => {
     try {
       setIsLoading(true);
-      setArgoApplicationDataDto(argoApplicationData);     
+      setArgoApplicationModel(argoApplicationData);
     } catch (error) {
       toastContext.showLoadingErrorDialog(error);
     } finally {
@@ -42,106 +57,104 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, appID, hand
   };
 
   const createApplication = async () => {
-    return await argoActions.createArgoApplication(argoApplicationDataDto, getAccessToken);
+    return await argoActions.createArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, argoApplicationModel);
   };
 
   const updateApplication = async () => {
-    return await argoActions.updateArgoApplication(argoApplicationDataDto, getAccessToken, appID);
+    return await argoActions.updateArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, applicationId, argoApplicationModel);
   };
 
   const deleteApplication = async () => {
-    await argoActions.deleteArgoApplication(toolData._id, getAccessToken, appID);
+    await argoActions.deleteArgoApplicationV2(getAccessToken, cancelTokenSource, toolData?._id, applicationId);
     handleClose();
   };
 
-  const handleProjectChange = (fieldName, value) => {
-    let newDataObject = argoApplicationDataDto;
-    newDataObject.setData("projectName", value.name);
-    newDataObject.setData("toolId", toolData._id);
-    newDataObject.setData("namespace", value.namespace);
-    setArgoApplicationDataDto({ ...newDataObject });
+  const getDeleteButton = () => {
+    // TODO: Switch to isNew check
+    if (applicationId) {
+      return (
+        <div className="mr-auto mt-3 px-3">
+          <Button variant="outline-primary" size="sm" onClick={() => setShowDeleteModal(true)}>
+            <FontAwesomeIcon icon={faTrash} className="danger-red"/> Delete Application
+          </Button>
+        </div>
+      );
+    }
   };
 
-  if (isLoading || argoApplicationDataDto == null) {
-    return <Loading size="sm" />;
+  if (isLoading || argoApplicationModel == null) {
+    return <LoadingDialog size="sm" message={"Loading Data"} />;
   }
 
   return (
-    <>
-      <div className="scroll-y full-height">
+    <EditorPanelContainer
+      recordDto={argoApplicationModel}
+      createRecord={createApplication}
+      updateRecord={updateApplication}
+      setRecordDto={setArgoApplicationModel}
+      isLoading={isLoading}
+      extraButtons={getDeleteButton()}
+      handleClose={handleClose}
+    >
+      <div className="scroll-y">
         <Row>
           <Col lg={12}>
             <TextInputBase
-              setDataObject={setArgoApplicationDataDto}
-              dataObject={argoApplicationDataDto}
+              setDataObject={setArgoApplicationModel}
+              dataObject={argoApplicationModel}
               fieldName={"applicationName"}
+              disabled={!argoApplicationData?.isNew()}
             />
           </Col>
           <Col lg={12}>
             <ArgoProjectsSelectInput
-              setDataFunction={handleProjectChange}
               argoToolId={toolData._id}
-              setDataObject={setArgoApplicationDataDto}
-              dataObject={argoApplicationDataDto}
+              setDataObject={setArgoApplicationModel}
+              dataObject={argoApplicationModel}
               fieldName={"projectName"}
+              disabled={!argoApplicationData?.isNew()}
             />
           </Col>
           <Col lg={12}>
             <ArgoClusterSelectInput
               fieldName={"cluster"}
               argoToolId={toolData._id}
-              dataObject={argoApplicationDataDto}
-              setDataObject={setArgoApplicationDataDto}
+              dataObject={argoApplicationModel}
+              setDataObject={setArgoApplicationModel}
+              disabled={!argoApplicationData?.isNew()}
             />
           </Col>
           <Col lg={12}>
             <TextInputBase
-              dataObject={argoApplicationDataDto}
+              dataObject={argoApplicationModel}
               fieldName={"gitPath"}
-              setDataObject={setArgoApplicationDataDto}
+              setDataObject={setArgoApplicationModel}
+              disabled={!argoApplicationData?.isNew()}
             />
           </Col>
           <Col lg={12}>
             <TextInputBase
-              dataObject={argoApplicationDataDto}
+              dataObject={argoApplicationModel}
               fieldName={"gitUrl"}
-              setDataObject={setArgoApplicationDataDto}
+              setDataObject={setArgoApplicationModel}
+              disabled={!argoApplicationData?.isNew()}
             />
           </Col>
           <Col lg={12}>
             <TextInputBase
-              dataObject={argoApplicationDataDto}
+              dataObject={argoApplicationModel}
               fieldName={"branchName"}
-              setDataObject={setArgoApplicationDataDto}
+              setDataObject={setArgoApplicationModel}
+              disabled={!argoApplicationData?.isNew()}
             />
           </Col>
           <Col lg={12}>
             <ActivityToggleInput
-              setDataObject={setArgoApplicationDataDto}
+              setDataObject={setArgoApplicationModel}
               fieldName={"active"}
-              dataObject={argoApplicationDataDto}
+              dataObject={argoApplicationModel}
             />
           </Col>
-        </Row>
-        <Row>
-          {appID && (
-            <div className="mr-auto mt-3 px-3">
-              <Button variant="outline-primary" size="sm" onClick={() => setShowDeleteModal(true)}>
-                <FontAwesomeIcon icon={faTrash} className="danger-red" /> Delete Application
-              </Button>
-              <br />
-            </div>
-          )}
-          <div className="ml-auto mt-3 px-3">
-            <SaveButtonBase
-              updateRecord={appID ? updateApplication : createApplication}
-              setRecordDto={setArgoApplicationDataDto}
-              setData={setArgoApplicationDataDto}
-              createRecord={createApplication}
-              recordDto={argoApplicationDataDto}
-              handleClose={handleClose}
-            />
-          </div>
         </Row>
       </div>
       {showDeleteModal ? (
@@ -153,7 +166,7 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, appID, hand
           handleConfirmModal={() => deleteApplication()}
         />
       ) : null}
-    </>
+    </EditorPanelContainer>
   );
 }
 
@@ -161,7 +174,7 @@ ArgoApplicationEditorPanel.propTypes = {
   argoApplicationData: PropTypes.object,
   toolData: PropTypes.object,
   loadData: PropTypes.func,
-  appID: PropTypes.string,
+  applicationId: PropTypes.string,
   handleClose: PropTypes.func
 };
 
