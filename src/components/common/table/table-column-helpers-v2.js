@@ -1,11 +1,13 @@
 import { format } from "date-fns";
 import React from "react";
 import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date-helpers";
-import {truncateString} from "components/common/helpers/string-helpers";
+import {capitalizeFirstLetter, truncateString} from "components/common/helpers/string-helpers";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {
   getScriptLanguageDisplayText,
 } from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faSearchPlus} from "@fortawesome/pro-light-svg-icons";
 
 export const FILTER_TYPES = {
   SEARCH_FILTER: "inputFilter",
@@ -195,10 +197,6 @@ export const getTableBooleanIconColumn = (field, className, width = 60) => {
     align: "center",
     width: width,
     template: function (text, row, col) {
-      if (text == null) {
-        return "";
-      }
-
       const iconCss = text === true ? "fa-check-circle green" : "fa-times-circle red";
       return (
         `<i class="fa ${iconCss} cell-icon vertical-align-item"></i>`

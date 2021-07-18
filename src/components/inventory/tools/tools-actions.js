@@ -91,6 +91,26 @@ toolsActions.getRoleLimitedToolRegistryListV2 = async (getAccessToken, cancelTok
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+toolsActions.getToolAccessWithEmail = async (getAccessToken, cancelTokenSource, email) => {
+  // let sortOption = toolFilterDto.getData("sortOption");
+  //
+  // let urlParams = {
+  //   params: {
+  //     sort: sortOption ? sortOption.value : undefined,
+  //     page: toolFilterDto.getData("currentPage"),
+  //     size: toolFilterDto.getData("pageSize"),
+  //     tag: toolFilterDto.getFilterValue("tag"),
+  //     status: toolFilterDto.getFilterValue("status"),
+  //     tool: toolFilterDto.getFilterValue("toolIdentifier"),
+  //     search: toolFilterDto.getFilterValue("search"),
+  //     owner: toolFilterDto.getFilterValue("owner")
+  //   }
+  // };
+
+  const apiUrl = `/registry/configs/user/${email}`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 toolsActions.getFullRoleLimitedToolRegistryList = async (getAccessToken) => {
   let urlParams = {
     params: {
@@ -144,6 +164,27 @@ toolsActions.getToolLovsV2 = async (getAccessToken, cancelTokenSource) => {
 
 toolsActions.getToolNameById = async (getAccessToken, cancelTokenSource, toolId) => {
   const apiUrl = `/registry/configs/${toolId}/name`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
+toolsActions.getToolLogs = async (getAccessToken, cancelTokenSource, toolId, toolLogFilterModel, fields) => {
+  const apiUrl = `/registry/tools/${toolId}/logs/v2`;
+
+  let urlParams = {
+    params: {
+      page: toolLogFilterModel?.getData("currentPage"),
+      size: toolLogFilterModel?.getData("pageSize"),
+      search: toolLogFilterModel?.getFilterValue("search"),
+      fields: fields,
+    }
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
+toolsActions.getToolLogById = async (getAccessToken, cancelTokenSource, logId) => {
+  const apiUrl = `/registry/logs/v2/${logId}`;
+
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
