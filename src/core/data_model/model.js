@@ -1,4 +1,5 @@
 import {validateData, validateField} from "core/data_model/modelValidation";
+import _ from "lodash";
 
 export const DataState = {
   LOADED: 0,
@@ -10,7 +11,7 @@ export const DataState = {
 export class Model {
 
   constructor(data, metaData, newModel) {
-    this.metaData = {...metaData};
+    this.metaData = _.cloneDeep(metaData);
     this.data = {...this.getNewObjectFields(), ...data};
     this.newModel = newModel;
     this.dataState = newModel ? DataState.NEW : DataState.LOADED;
@@ -238,7 +239,8 @@ export class Model {
   }
 
   getOriginalValue = (fieldName) => {
-    return this.changeMap.get(fieldName);
+    const originalValue = this.changeMap.get(fieldName);
+    return originalValue ? originalValue : this.data[fieldName];
   };
 
   isDeleted = () => {
@@ -344,7 +346,7 @@ export class Model {
   };
 
   clone = () => {
-    return new Model(JSON.parse(JSON.stringify(this.data)), this.metaData, this.newModel);
+    return _.cloneDeep(this);
   };
 }
 

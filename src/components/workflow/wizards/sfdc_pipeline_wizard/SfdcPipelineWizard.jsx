@@ -45,9 +45,14 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-    let newPipelineWizardModel = new Model({...sfdcPipelineWizardMetadata.newObjectFields}, sfdcPipelineWizardMetadata, false);
-    
-    // TODO: Figure out why the data keeps state after closing and then remove this
+    let newPipelineWizardModel = new Model(sfdcPipelineWizardMetadata.newObjectFields, sfdcPipelineWizardMetadata, false);
+    // TODO: THe way objects are referenced is causing issues with this. I THINK creating an sfdcPipelineWizard model
+    //  with the metadata inside will resolve the issue with it getting instantiated and staying the same
+    //  but I need to do further testing to ensure. At that time remove this.
+    newPipelineWizardModel.setData("fromDate", new Date(new Date().setHours(0,0,0,0)));
+    newPipelineWizardModel.setData("toDate", new Date());
+    // TODO: This should be fixed now so setting this to empty array is probably not necessary. I need to do further testing
+    //  after which I will remove this line
     newPipelineWizardModel.setData("selectedComponentTypes", []);
     setPipelineWizardModel({...newPipelineWizardModel});
 
