@@ -52,6 +52,19 @@ pipelineActions.getPipelinesV2 = async (getAccessToken, cancelTokenSource, pipel
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
+pipelineActions.getPipelinesAccessByEmailV2 = async (getAccessToken, cancelTokenSource, pipelineFilterDto, email) => {
+  const apiUrl = `/pipelines/user/${email}`;
+  const urlParams = {
+    params: {
+      size: pipelineFilterDto.getData("pageSize"),
+      page: pipelineFilterDto.getData("currentPage"),
+      search: pipelineFilterDto.getFilterValue("search"),
+    },
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 // TODO: Remove when all references are updated to V2
 pipelineActions.getPipelineSummaries = async (pipelineIds, getAccessToken) => {
   let apiUrl = `/pipelines/summary`;

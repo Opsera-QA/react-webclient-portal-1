@@ -50,6 +50,19 @@ gitTasksActions.getGitTaskByIdV2 = async (getAccessToken, cancelTokenSource, id)
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
+gitTasksActions.getGitTaskAccessForUserEmail = async (getAccessToken, cancelTokenSource, taskFilterModel, email) => {
+  const apiUrl = `/tasks/user/${email}`;
+  const urlParams = {
+    params: {
+      size: taskFilterModel.getData("pageSize"),
+      page: taskFilterModel.getData("currentPage"),
+      search: taskFilterModel.getFilterValue("search"),
+    },
+  };
+
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
+};
+
 gitTasksActions.getGitTaskActivityLogs = async (gitTasksDataDto, gitTasksActivityFilterDto, getAccessToken) => {
   let sortOption = gitTasksActivityFilterDto.getData("sortOption");
   let urlParams = {
