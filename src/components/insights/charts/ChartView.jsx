@@ -124,6 +124,7 @@ import AutomationPercentagePieChart from "./qa_metrics/AutomationPercentagePieCh
 import AdoptionPercentagePieChart from "./qa_metrics/AdoptionPercentagePieChart";
 import AutomatedTestResultsPieChart from "./qa_metrics/AutomatedTestResultsPieChart";
 import SFDCManualTestResultsPieChart from "./qa_metrics/SFDCManualTestResultsPieChart";
+import DefectRemovalEfficiencyPieChart from "./qa_metrics/DefectRemovalEfficiencyPieChart";
 
 // SFDC KPIs
 import SFDCBackups from "components/insights/charts/sfdc/SFDCBackups";
@@ -1367,6 +1368,18 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
         return (
           <Col xl={6} md={12} className="p-2">
             <ServiceNowMeanTimeBetweenFailuresBarChart
+              kpiConfiguration={kpiConfig}
+              setKpiConfiguration={setKpiConfig}
+              dashboardData={dashboardData}
+              setKpis={setKpis}
+              index={index}
+            />
+          </Col>
+        );
+      case "defect-removal-efficiency":
+        return (
+          <Col md={12} className="p-2">
+            <DefectRemovalEfficiencyPieChart
               kpiConfiguration={kpiConfig}
               setKpiConfiguration={setKpiConfig}
               dashboardData={dashboardData}
