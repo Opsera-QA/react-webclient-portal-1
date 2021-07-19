@@ -27,7 +27,12 @@ const getToolActivityColumn = (field, className, width = 120) => {
     width: width,
     template: function (text, row, col) {
       if (text == null) {
-        return "";
+        return (`
+          <span>
+            <i class="fal fa-question-circle cell-icon vertical-align-item"></i>
+            <span class="ml-1">Unknown Status</span>
+          </span>
+        `);
       }
       const icon = text === "success" ? "fa-check-circle green" : "fa-times-circle red";
 
