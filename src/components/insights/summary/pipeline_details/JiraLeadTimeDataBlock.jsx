@@ -6,25 +6,21 @@ import chartsActions from "components/insights/charts/charts-actions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/pro-light-svg-icons";
 import InsightsSynopsisDataBlock from "components/common/data_boxes/InsightsSynopsisDataBlock";
-import BuildDetailsMetadata from "components/insights/summary/build-details-metadata";
 import Model from "core/data_model/model";
 import genericChartFilterMetadata from "components/insights/charts/generic_filters/genericChartFilterMetadata";
 
-function PipelineDetails({ dashboardData, toggleDynamicPanel, selectedDataBlock, style }) {
-  const fields = BuildDetailsMetadata.fields;
+function PipelineFailedSecurity({
+  dashboardData,
+  toggleDynamicPanel,
+  selectedDataBlock,
+  style,
+}) {
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [tableFilterDto, setTableFilterDto] = useState(
-    new Model(
-      { ...genericChartFilterMetadata.newObjectFields },
-      genericChartFilterMetadata,
-      false
-    )
-  );
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -47,10 +43,7 @@ function PipelineDetails({ dashboardData, toggleDynamicPanel, selectedDataBlock,
     };
   }, [JSON.stringify(dashboardData)]);
 
-  const loadData = async (
-    cancelSource = cancelTokenSource,
-    filterDto = tableFilterDto
-  ) => {
+  const loadData = async ( cancelSource = cancelTokenSource ) => {
     try {
       setIsLoading(true);
       let dashboardTags =
@@ -66,20 +59,18 @@ function PipelineDetails({ dashboardData, toggleDynamicPanel, selectedDataBlock,
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(
         getAccessToken,
         cancelSource,
-        "summaryPipelinesPassedWithQualityAndSecurity",
+        "jiraLeadTime",
         null,
         dashboardTags,
-        filterDto,
+        null,
         null,
         dashboardOrgs
       );
-      let dataObject = response?.data
-        ? response?.data?.data[0]
-        : [{ data: [], count: [{ count: 0 }] }];
-      let newFilterDto = filterDto;
-      newFilterDto.setData("totalCount", dataObject[0]?.count[0]?.count);
-      setTableFilterDto({ ...newFilterDto });
-
+      let dataObject =
+        response?.data && response?.data?.data[0]?.jiraLeadTime.status === 200
+          ? response?.data?.data[0]?.jiraLeadTime?.data
+          : [];
+          
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
       }
@@ -96,29 +87,34 @@ function PipelineDetails({ dashboardData, toggleDynamicPanel, selectedDataBlock,
   };
 
   const onDataBlockSelect = () => {
-    toggleDynamicPanel("successful_pipelines", metrics[0]?.data);
+    toggleDynamicPanel("jiraLeadTime", metrics[0]?.data);
   };
 
   const getChartBody = () => {
     return (
-      <div className={selectedDataBlock === "successful_pipelines" ? "selected-data-block" : undefined} style={style}>
+      <div
+        className={
+          selectedDataBlock === "jiraLeadTime" ? "selected-data-block" : undefined }
+        style={style}
+      >
         <InsightsSynopsisDataBlock
           title={
-            !isLoading && metrics[0]?.count[0] ? (
-              metrics[0]?.count[0]?.count
+            !isLoading && metrics[0]? (
+                metrics[0].data[0].mean
             ) : (
-              <FontAwesomeIcon
-                icon={faSpinner}
-                spin
-                fixedWidth
-                className="mr-1"
-              />
+                !isLoading ? 0 : (
+                    <FontAwesomeIcon
+                        icon={faSpinner}
+                        spin
+                        fixedWidth
+                        className="mr-1"
+                    />
+              )
             )
           }
-          subTitle="Successful Pipelines (Security and Quality)"
-          toolTipText="Successful Pipelines (Security and Quality)"
+          subTitle="Mean Lead Time (Days)"
+          toolTipText="Mean Lead Time (Days)"
           clickAction={() => onDataBlockSelect()}
-          statusColor="success"
         />
       </div>
     );
@@ -127,11 +123,11 @@ function PipelineDetails({ dashboardData, toggleDynamicPanel, selectedDataBlock,
   return getChartBody();
 }
 
-PipelineDetails.propTypes = {
+PipelineFailedSecurity.propTypes = {
   dashboardData: PropTypes.object,
   toggleDynamicPanel: PropTypes.func,
   selectedDataBlock: PropTypes.string,
-  style: PropTypes.object
+  style: PropTypes.object,
 };
 
-export default PipelineDetails;
+export default PipelineFailedSecurity;

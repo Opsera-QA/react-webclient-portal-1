@@ -1,19 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import TotalPipelinesExecuted from "components/insights/summary/pipeline_details/charts/TotalPipelinesExecuted";
 import PipelinesPassedWithQualityAndSecurity from "components/insights/summary/pipeline_details/charts/PipelinesPassedWithQualityAndSecurity";
-import PipelinesFailedSecurity from "components/insights/summary/pipeline_details//charts/PipelinesFailedSecurity";
+import PipelinesFailedSecurity from "components/insights/summary/pipeline_details/charts/PipelinesFailedSecurity";
 import PipelinesFailedQuality from "components/insights/summary/pipeline_details/charts/PipelinesFailedQuality";
 import PipelinesFailedDeployment from "components/insights/summary/pipeline_details/charts/PipelinesFailedDeployment";
 import DataBlockWrapper from "components/common/data_boxes/DataBlockWrapper";
 import InsightsPipelineDetailsTable from "components/insights/summary/pipeline_details/InsightsPipelineDetailsTable";
+import InsightsPipelineDetailsDurationTable from "components/insights/summary/pipeline_details/InsightsPipelineDetailsDurationTable";
 import PipelinesByProjectTable from "components/insights/summary/PipelinesByProjectTable";
-import PipelinesByProjectDataBlock from "components/insights/summary/pipeline_details/charts/PipelinesByProjectDataBlock";
 import TotalPipelinesPassedDeployment from 'components/insights/summary/pipeline_details/charts/TotalPipelinesPassedDeployment';
+import MetricContainer from "components/common/panels/insights/charts/MetricContainer";
+import JiraLeadTimeChartNoDataBlocks from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks"; 
+import JiraLeadTimeDataBlock from "./JiraLeadTimeDataBlock";
+import AvgDeploymentDuration from "components/insights/summary/pipeline_details/AvgDeploymentDuration";
+import AvgBuildDuration from "components/insights/summary/pipeline_details/AvgBuildDuration";
 
 function PipelineDetails({ dashboardData }) {
-  const [selectedDataBlock, setSelectedDataBlock] = useState("pipelines_by_project");
+  const [selectedDataBlock, setSelectedDataBlock] = useState("");
   const [selectedDataBlockTableData, setSelectedDataBlockTableData] = useState([]);
+
+  useEffect(()=>{
+    setSelectedDataBlock("");
+    setSelectedDataBlockTableData([]);
+  },[dashboardData]);
 
   const getDynamicPanel = () => {
     switch (selectedDataBlock) {
@@ -27,7 +37,7 @@ function PipelineDetails({ dashboardData }) {
         return (
           <InsightsPipelineDetailsTable
             data={selectedDataBlockTableData}
-            tableTitle="Pipelines Executed"
+            tableTitle="Total Number of Pipelines Executed"
           />
         );
       case "successful_pipelines":
@@ -41,21 +51,21 @@ function PipelineDetails({ dashboardData }) {
         return (
           <InsightsPipelineDetailsTable
             data={selectedDataBlockTableData}
-            tableTitle="Pipelines Failing Security Step"
+            tableTitle="Failed Pipelines (Security)"
           />
         );
       case "quality_failed":
         return (
           <InsightsPipelineDetailsTable
             data={selectedDataBlockTableData}
-            tableTitle="Pipelines Failing Quality Step"
+            tableTitle="Failed Pipelines (Quality)"
           />
         );
       case "deployment_failed":
         return (
           <InsightsPipelineDetailsTable
             data={selectedDataBlockTableData}
-            tableTitle="Pipelines Failing Deployment Step"
+            tableTitle="Failed Pipelines (Deployments)"
           />
         );
       case "successful_pipelines_deployment":
@@ -65,6 +75,25 @@ function PipelineDetails({ dashboardData }) {
             tableTitle="Successful Pipelines (Deployments)"
           />
         );
+      case "jiraLeadTime":
+        return (
+          <JiraLeadTimeChartNoDataBlocks dashboardData={dashboardData} kpiConfiguration={{kpi_name: "Lead Time", filters: []}}/>
+        );
+      case "Average_Deployment_Duration":
+        return (
+          <InsightsPipelineDetailsDurationTable
+            data={selectedDataBlockTableData}
+            tableTitle="Deployment Duration"
+          />
+        );
+      case "Average_Build_Duration":{
+        return (
+          <InsightsPipelineDetailsDurationTable
+            data={selectedDataBlockTableData}
+            tableTitle="Build Duration"
+          />
+        );
+      }
       default:
         return null;
     }
@@ -81,45 +110,104 @@ function PipelineDetails({ dashboardData }) {
     }
   };
 
-  return (
-    <>
-      <DataBlockWrapper padding={4}>
-        <PipelinesByProjectDataBlock
-          toggleDynamicPanel={toggleDynamicPanel}
-          selectedDataBlock={selectedDataBlock}
-        />
+  const getPipelinesSuccess = () => {
+    return (
+      <DataBlockWrapper padding={0}>
         <TotalPipelinesExecuted
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
+          style={{maxWidth:"33%"}}
         />
         <PipelinesPassedWithQualityAndSecurity
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
+          style={{maxWidth:"33%"}}
         />
         <TotalPipelinesPassedDeployment
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
+          style={{maxWidth:"33%"}}
+        />
+      </DataBlockWrapper> 
+    );
+  };
+
+  const getPipelinesFailure = () => {
+    return (
+
+      <DataBlockWrapper padding={0}>
+        <PipelinesFailedQuality
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{maxWidth:"33%"}}
         />
         <PipelinesFailedSecurity
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
-        />
-        <PipelinesFailedQuality
-          dashboardData={dashboardData}
-          toggleDynamicPanel={toggleDynamicPanel}
-          selectedDataBlock={selectedDataBlock}
+          style={{maxWidth:"33%"}}
         />
         <PipelinesFailedDeployment
           dashboardData={dashboardData}
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
+          style={{maxWidth:"33%"}}
         />
-        
       </DataBlockWrapper>
+    );
+  };
+  // const getValueStream = () => {
+  //   return (
+  //     <DataBlockWrapper padding={0}>
+  //       <JiraLeadTimeDataBlock 
+  //         dashboardData={dashboardData}
+  //         toggleDynamicPanel={toggleDynamicPanel}
+  //         selectedDataBlock={selectedDataBlock}
+  //         style={{maxWidth:"33%"}}
+  //       />
+  //     </DataBlockWrapper>
+  //   );
+  // };
+  const getAverageBlocks = ()=>{
+    return (
+      <DataBlockWrapper padding={0}>
+        <AvgDeploymentDuration 
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{maxWidth:"33%"}}
+        />
+        <AvgBuildDuration 
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{maxWidth:"33%"}}
+        />
+      </DataBlockWrapper>
+    );
+  };
+
+  return (
+    <>
+      <div className={"d-flex flex-wrap justify-content-around w-100"} >
+        <MetricContainer title="Pipelines: Success Score">
+          {getPipelinesSuccess()}
+        </MetricContainer>
+        <MetricContainer title="Pipelines: Failure Score">
+          {getPipelinesFailure()}
+        </MetricContainer>
+        {/* <MetricContainer title="Value Stream">
+          {getValueStream()}
+        </MetricContainer> */}
+        <MetricContainer title="Pipeline: Duration Average">
+          {getAverageBlocks()}
+        </MetricContainer>
+      </div>
+
       {getDynamicPanel()}
     </>
   );
