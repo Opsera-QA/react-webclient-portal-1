@@ -97,6 +97,26 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
     return (
       <div className="new-chart mb-3" style={{height: "300px"}}>
         <Container>
+          <Row className="p-3">
+            <Col><div className="metric-box p-3 text-center">
+              <div className="box-metric">
+                <div className="green pointer" onClick={() => onRowSelect("successful")}>{metrics[0].totalSuccess}</div>
+              </div>
+              <div className="w-100 text-muted mb-1">Successful Deployments</div>
+            </div></Col>
+            <Col><div className="metric-box p-3 text-center">
+              <div className="box-metric">
+                <div className="red pointer" onClick={() => onRowSelect("failed")}>{metrics[0].totalFailed}</div>
+              </div>
+              <div className="w-100 text-muted mb-1">Failed Deployments</div>
+            </div></Col>
+            <Col><div className="metric-box p-3 text-center">
+              <div className="box-metric">
+                <div>{metrics[0].successPercentage + "%"}</div>
+              </div>
+              <div className="w-100 text-muted mb-1">Success Rate</div>
+            </div></Col>
+          </Row>
           <Row className="p-1">
             <Col><div className="metric-box p-3 text-center">
               <div className="box-metric">
@@ -129,26 +149,6 @@ function OpseraPipelineDeploymentFrequencyStats({ kpiConfiguration, setKpiConfig
                   />
                 </OverlayTrigger>
               <div className="w-100 text-muted mb-1">Min Deployments</div>
-            </div></Col>
-          </Row>
-          <Row className="p-3">
-            <Col><div className="metric-box p-3 text-center">
-              <div className="box-metric">
-                <div className="green pointer" onClick={() => onRowSelect("successful")}>{metrics[0].totalSuccess}</div>
-              </div>
-              <div className="w-100 text-muted mb-1">Successful Deployments</div>
-            </div></Col>
-            <Col><div className="metric-box p-3 text-center">
-              <div className="box-metric">
-                <div className="red pointer" onClick={() => onRowSelect("failed")}>{metrics[0].totalFailed}</div>
-              </div>
-              <div className="w-100 text-muted mb-1">Failed Deployments</div>
-            </div></Col>
-            <Col><div className="metric-box p-3 text-center">
-              <div className="box-metric">
-                <div>{metrics[0].successPercentage + "%"}</div>
-              </div>
-              <div className="w-100 text-muted mb-1">Success Rate</div>
             </div></Col>
           </Row>
         </Container>
