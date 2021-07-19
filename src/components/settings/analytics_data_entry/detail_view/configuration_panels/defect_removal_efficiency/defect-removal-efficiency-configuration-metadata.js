@@ -40,10 +40,11 @@ const defectRemovalEfficiencyConfigurationMetadata = {
         maxLength: 20
       },
       {
-        label: "Number of Defects in Testing Phase (Unit Testing + System Testing)",
+        label: "Number of Defects in Testing Phase",
         id: "testing_phase_defects_count",
         maxLength: 5,
-        isRequired: true
+        isRequired: true,
+        formText: "Number of Defects in Testing Phase (Unit Testing + System Testing) must be 0 or a positive whole number"        
       },
       {
         label: "Number of Defects in UAT",
