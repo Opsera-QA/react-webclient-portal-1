@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
 import Model from "core/data_model/model";
 import ldapSettingsMetadata
@@ -9,18 +9,32 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import SyncLdapButton from "components/common/buttons/ldap/SyncLdapButton";
 import DateTimeField from "components/common/fields/date/DateTimeField";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
+import axios from "axios";
 
-function LdapSettingsPanel({ userData, loadData, showSyncButton }) {
-  const [userLdapDto, setUserLdapDto] = useState(undefined);
+function LdapSettingsPanel({ userData, ldapData, loadData, showSyncButton }) {
+  const [userLdapModel, setUserLdapModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
+  const isMounted = useRef(false);
 
   useEffect(() => {
-    initialize();
-  }, []);
+    const source = axios.CancelToken.source();
+    isMounted.current = true;
+
+    initialize().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
+
+    return () => {
+      source.cancel();
+      isMounted.current = false;
+    };
+  }, [JSON.stringify(ldapData)]);
 
   const initialize = async () => {
     setIsLoading(true);
-    setUserLdapDto(new Model(userData.getData("ldap"), ldapSettingsMetadata, false));
+    setUserLdapModel(new Model(ldapData, ldapSettingsMetadata, false));
     setIsLoading(false);
   };
 
@@ -37,7 +51,7 @@ function LdapSettingsPanel({ userData, loadData, showSyncButton }) {
     }
   };
 
-  if (isLoading) {
+  if (isLoading || userLdapModel == null) {
     return <></>;
   }
 
@@ -45,22 +59,22 @@ function LdapSettingsPanel({ userData, loadData, showSyncButton }) {
     <EditorPanelContainer showRequiredFieldsMessage={false}>
       <Row>
         <Col lg={6}>
-          <TextFieldBase dataObject={userLdapDto} fieldName={"organization"}/>
+          <TextFieldBase dataObject={userLdapModel} fieldName={"organization"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={userLdapDto} fieldName={"orgAccountOwnerEmail"}/>
+          <TextFieldBase dataObject={userLdapModel} fieldName={"orgAccountOwnerEmail"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={userLdapDto} fieldName={"account"}/>
+          <TextFieldBase dataObject={userLdapModel} fieldName={"account"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={userLdapDto} fieldName={"domain"}/>
+          <TextFieldBase dataObject={userLdapModel} fieldName={"domain"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={userLdapDto} fieldName={"division"}/>
+          <TextFieldBase dataObject={userLdapModel} fieldName={"division"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={userLdapDto} fieldName={"type"} />
+          <TextFieldBase dataObject={userLdapModel} fieldName={"type"} />
         </Col>
       </Row>
       {getSyncButton()}
@@ -70,6 +84,7 @@ function LdapSettingsPanel({ userData, loadData, showSyncButton }) {
 
 LdapSettingsPanel.propTypes = {
   userData: PropTypes.object,
+  ldapData: PropTypes.object,
   loadData: PropTypes.func,
   showSyncButton: PropTypes.bool
 };
