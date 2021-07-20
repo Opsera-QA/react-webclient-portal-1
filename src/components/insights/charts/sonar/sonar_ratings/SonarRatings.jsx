@@ -11,6 +11,7 @@ import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar
 import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "../../../../../contexts/DialogToastContext";
 
+//TODO: Charts should have some sort of name that says they're a chart like SonarRatingsChart for clarity and easy of global search
 function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
   const {getAccessToken} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
