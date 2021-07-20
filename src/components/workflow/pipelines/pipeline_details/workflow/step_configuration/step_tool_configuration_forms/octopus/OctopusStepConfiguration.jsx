@@ -97,7 +97,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
     if (response.status === 200 ) {
       return { name: name, vaultKey: keyName };
     } else {
-      octopusConfig.setData("applicationPoolIdentityPassword", "");
+      octopusConfig.setData("applicationPoolIdentityPassword", {});
       setOctopusStepConfigurationDataDto({...octopusConfig});
       let errorMessage = "ERROR: Something has gone wrong saving secure data to your vault.  Please try again or report the issue to OpsERA.";
       toastContext.showErrorDialog(errorMessage);
@@ -130,7 +130,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
         typeof(octopusConfig.getData("applicationPoolIdentityPassword")) === "string" &&
         octopusConfig.getData("applicationPoolIdentityPassword")?.length === 0) {
         octopusConfig.setData("applicationPoolIdentityUsername", "");
-        octopusConfig.setData("applicationPoolIdentityPassword", "");
+        octopusConfig.setData("applicationPoolIdentityPassword", {});
         setOctopusStepConfigurationDataDto({...octopusConfig});
       }
 
