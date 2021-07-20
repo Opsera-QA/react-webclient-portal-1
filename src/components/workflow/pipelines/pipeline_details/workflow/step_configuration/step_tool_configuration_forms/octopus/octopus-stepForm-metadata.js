@@ -312,7 +312,7 @@ const octopusStepFormMetadata = {
         dotNetClrVersion: "",
         applicationPoolIdentityType: "",
         applicationPoolIdentityUsername: "",
-        applicationPoolIdentityPassword :  "",
+        applicationPoolIdentityPassword : {},
         startApplicationPool : false,
       }
   };
