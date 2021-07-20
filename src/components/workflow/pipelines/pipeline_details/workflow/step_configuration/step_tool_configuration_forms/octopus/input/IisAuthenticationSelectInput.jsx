@@ -5,6 +5,7 @@ import MultiSelectInputBase from "../../../../../../../../common/inputs/select/M
 const authenticationType = [
   {name: "Anonymous Authentication", value: "EnableAnonymousAuthentication"},
   {name: "Basic Authentication", value: "EnableBasicAuthentication"},
+  {name: "Windows Authentication", value: "EnableWindowsAuthentication"},
 ];
 
 function IisAuthenticationSelectInput({ fieldName, dataObject, setDataObject, disabled, textField, valueField}) {
