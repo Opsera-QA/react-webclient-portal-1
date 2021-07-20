@@ -31,6 +31,7 @@ import {capitalizeFirstLetter, truncateString} from "components/common/helpers/s
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import CustomBadge from "components/common/badges/CustomBadge";
+import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
 
 const getTableHeader = (field) => {
   return field ? field.label : "";
@@ -667,6 +668,27 @@ export const getCountColumnWithoutField = (header, accessor, className) => {
     accessor: accessor,
     Cell: function getCount(row) {
       return row.value.length;
+    },
+    class: className ? className :  "no-wrap-inline"
+  };
+};
+
+export const getRoleAccessLevelColumn = (header, accessor, className) => {
+  return {
+    Header: header,
+    accessor: accessor,
+    Cell: function getRoleAccessLevel(row) {
+      const roles = row?.data[row?.row?.index]?.roles;
+
+      if (!Array.isArray(roles) || roles.length === 0) {
+        return ACCESS_ROLES_FORMATTED_LABELS.NO_ACCESS_RULES;
+      }
+
+      if (row?.value == null) {
+        return ACCESS_ROLES_FORMATTED_LABELS.NO_ROLES_ASSIGNED;
+      }
+
+      return ACCESS_ROLES_FORMATTED_LABELS[row.value];
     },
     class: className ? className :  "no-wrap-inline"
   };
