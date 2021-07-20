@@ -15,6 +15,7 @@ function ActionBarToggleHelpButton({ toggleHelp, helpIsShown, size }) {
       icon={helpIsShown ? faTimes : faQuestionCircle}
       popoverText={helpIsShown ? "Hide Help" : `Show Help`}
       size={size}
+      className={helpIsShown ? "mr-1" : ""}
     />
   );
 }
