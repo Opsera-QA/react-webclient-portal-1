@@ -22,6 +22,9 @@ import ECSServiceCreationTaskTypeSummaryCard
   from "./configuration_forms/ecs-service-creation/ECSServiceCreationTaskTypeSummaryCard";
 import ec2ServiceCreationTaskConfigurationMetadata
   from "./configuration_forms/ecs-service-creation/ecs-service-creation-git-task-configuration";
+import AwsLambdaTaskTypeSummaryCard from "./configuration_forms/aws-lambda-creation/AwsLambdaSummaryPanel";
+import awsLambdaFunctionTaskConfigurationMetadata
+  from "./configuration_forms/aws-lambda-creation/aws-lambda-metadata";
 
 
 function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
@@ -89,6 +92,13 @@ function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, load
         return (
           <ECSServiceCreationTaskTypeSummaryCard
             gitTaskConfigurationData={wrapGitTaskType(ec2ServiceCreationTaskConfigurationMetadata)}
+            gitTasksData={gitTasksData}
+          />
+        );
+      case "lambda_function_creation":
+        return (
+          <AwsLambdaTaskTypeSummaryCard
+            gitTaskConfigurationData={wrapGitTaskType(awsLambdaFunctionTaskConfigurationMetadata)}
             gitTasksData={gitTasksData}
           />
         );

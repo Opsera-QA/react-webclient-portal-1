@@ -147,6 +147,9 @@ import AwsEcsDeployPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/aws_ecs_deploy/AwsEcsSDeployPipelineStepConfigurationSummary";
 import awsECSDeployStepFormMetadata
   from "./step_tool_configuration_forms/aws_ecs_deploy/awsECSDeploy-stepForm-metadata";
+import AwsLambdaPipelineStepConfigurationSummaryPanel
+  from "./step_tool_configuration_forms/aws_lambda_publish/AwsLambdaPipelineStepConfigurationSummary";
+import awsLambdaStepFormMetadata from "./step_tool_configuration_forms/aws_lambda_publish/awsLambda-stepForm-metadata";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -429,6 +432,13 @@ function PipelineStepConfigurationSummary({
           <AwsEcsDeployPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             awsECSDeployPipelineDataObject={getModelWrappedObject(awsECSDeployStepFormMetadata)}
+          />
+        );
+      case "aws_lambda":
+        return (
+          <AwsLambdaPipelineStepConfigurationSummaryPanel
+            pipelineData={pipelineData}
+            awsECSDeployPipelineDataObject={getModelWrappedObject(awsLambdaStepFormMetadata)}
           />
         );
       default:
