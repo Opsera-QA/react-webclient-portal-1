@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
 import {faTag, faExclamationCircle, faSpinner} from "@fortawesome/pro-light-svg-icons";
@@ -10,12 +10,21 @@ import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIc
 import CustomBadge from "components/common/badges/CustomBadge";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
+import GenericChartSettingsHelpDocumentation
+  from "components/common/help/documentation/insights/charts/GenericChartSettingsHelpDocumentation";
+import {AuthContext} from "contexts/AuthContext";
 
 function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, index, chart, isLoading, error, loadChart, setKpis, tableChart, chartHelpComponent, settingsHelpComponent }) {
   const [view, setView] = useState("chart");
   const [helpIsShown, setHelpIsShown] = useState(false);
+  const { featureFlagHideItemInProd } = useContext(AuthContext);
 
   const getHelpToggle = () => {
+    // TODO: Remove feature flag after verification
+    if (featureFlagHideItemInProd()) {
+      return null;
+    }
+
     if ((view === "chart" && chartHelpComponent) || (view === "settings" && settingsHelpComponent)) {
       return (
         <ActionBarToggleHelpButton
@@ -53,8 +62,8 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
           {kpiConfiguration?.kpi_name}
         </div>
         <div className={"d-flex"}>
-          <div className={"mr-2"}>{getHelpToggle()}</div>
-          <ToggleSettingsIcon visible={!helpIsShown} activeTab={view} setActiveTab={setView}/>
+          {getHelpToggle()}
+          <ToggleSettingsIcon className={"ml-2"} visible={!helpIsShown} activeTab={view} setActiveTab={setView}/>
         </div>
       </div>
     );
@@ -63,7 +72,15 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
   // TODO: Make ErrorChartContainer
   const getChartBody = () => {
     if (view === "settings") {
-      return(
+      if (helpIsShown) {
+        return (
+          <div className={"m-2"}>
+            {settingsHelpComponent}
+          </div>
+        );
+      }
+
+      return (
         <KpiSettingsForm
           kpiConfiguration={kpiConfiguration}
           setKpiConfiguration={setKpiConfiguration}
@@ -83,11 +100,11 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
     }
 
     if (helpIsShown) {
-      if (view === "settings") {
-        return (settingsHelpComponent);
-      }
-
-      return (chartHelpComponent);
+      return (
+        <div className={"m-2"}>
+          {chartHelpComponent}
+        </div>
+      );
     }
 
     // TODO: Rework when all are updated
@@ -106,7 +123,7 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
     }
 
     return (
-      <div>
+      <div className={tableChart === true ? "shaded-panel" : "new-chart m-2 shaded-panel"}>
         {chart}
       </div>
     );
@@ -134,14 +151,13 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
       <div className="px-2 content-block-header-inverse title-text-header-2">
         {getTitleBar()}
       </div>
-      <div className={tableChart === true ? "shaded-panel" : "new-chart m-2 shaded-panel"}>
+      <div>
         {getChartBody()}
       </div>
       {getTagBadges()}
     </div>
   );
 }
-
 
 ChartContainer.propTypes = {
   chart: PropTypes.object,
@@ -156,6 +172,10 @@ ChartContainer.propTypes = {
   tableChart: PropTypes.bool,
   chartHelpComponent: PropTypes.object,
   settingsHelpComponent: PropTypes.object
+};
+
+ChartContainer.defaultProps = {
+  settingsHelpComponent: <GenericChartSettingsHelpDocumentation />
 };
 
 export default ChartContainer;

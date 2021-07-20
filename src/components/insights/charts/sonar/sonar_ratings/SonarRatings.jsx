@@ -10,6 +10,8 @@ import Model from "../../../../../core/data_model/model";
 import SonarRatingsBugsActionableMetadata from "components/insights/charts/sonar/sonar_ratings/sonar-ratings-bugs-actionable-metadata";
 import ChartDetailsOverlay from "../../detail_overlay/ChartDetailsOverlay";
 import { DialogToastContext } from "../../../../../contexts/DialogToastContext";
+import SonarRatingsChartHelpDocumentation
+  from "components/common/help/documentation/insights/charts/SonarRatingsChartHelpDocumentation";
 
 //TODO: Charts should have some sort of name that says they're a chart like SonarRatingsChart for clarity and easy of global search
 function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, index, setKpis }) {
@@ -156,6 +158,7 @@ function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, in
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
+        chartHelpComponent={<SonarRatingsChartHelpDocumentation />}
       />
       <ModalLogs
         header="Build Duration"
