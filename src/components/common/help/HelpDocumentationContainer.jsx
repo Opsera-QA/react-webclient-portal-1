@@ -1,23 +1,26 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {faBookAlt} from "@fortawesome/pro-light-svg-icons";
-import IconBase from "components/common/icons/IconBase";
 import PageLinkIcon from "components/common/icons/general/PageLinkIcon";
 import CloseIcon from "components/common/icons/general/CloseIcon";
+import IconBase from "components/common/icons/IconBase";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function HelpDocumentationContainer({ children, isLoading, titleText, helpComponent, confluenceLink, closeHelpPanel }) {
+function HelpDocumentationContainer({ children, isLoading, helpTopic, confluenceLink, closeHelpPanel, externalLinkText, bodyClassName }) {
   const getTitleBar = () => {
     return (
       <div className="pt-2 px-2 d-flex justify-content-between my-auto">
-        <div className={"d-flex"}><IconBase isLoading={isLoading} icon={faBookAlt} className="mr-2"/>Opsera Help: {titleText}</div>
+        <div className={"d-flex"}>
+          <IconBase isLoading={isLoading} className="mr-2"/>
+          <span>{helpTopic} Help</span>
+        </div>
         <div className={"d-flex"}>
           <PageLinkIcon
             pageLink={confluenceLink}
             externalLink={true}
-            helpComponent={helpComponent}
             className={"pr-2"}
+            linkTooltipText={externalLinkText}
           />
-          <CloseIcon handleClose={closeHelpPanel} size={"lg"} />
+          <CloseIcon tooltipText={"Close Help"} handleClose={closeHelpPanel} size={"lg"} />
         </div>
       </div>
     );
@@ -25,10 +28,10 @@ function HelpDocumentationContainer({ children, isLoading, titleText, helpCompon
 
   return (
     <div className="help-documentation-container">
-      <div className="header h6 mb-0">
+      <div className="header h6 pb-2 mb-0">
         {getTitleBar()}
       </div>
-      <div className={"help-body"}>
+      <div className={`help-body ${bodyClassName}`}>
         {children}
       </div>
     </div>
@@ -36,13 +39,18 @@ function HelpDocumentationContainer({ children, isLoading, titleText, helpCompon
 }
 
 HelpDocumentationContainer.propTypes = {
-  titleText: PropTypes.string,
+  helpTopic: PropTypes.string,
   children: PropTypes.any,
-  helpComponent: PropTypes.any,
-  toggleButton: PropTypes.object,
   isLoading: PropTypes.bool,
   closeHelpPanel: PropTypes.func,
-  confluenceLink: PropTypes.string
+  confluenceLink: PropTypes.string,
+  externalLinkText: PropTypes.string,
+  bodyClassName: PropTypes.string
+};
+
+HelpDocumentationContainer.defaultProps = {
+  externalLinkText: "View Detailed Help Documentation",
+  bodyClassName: "p-3"
 };
 
 export default HelpDocumentationContainer;

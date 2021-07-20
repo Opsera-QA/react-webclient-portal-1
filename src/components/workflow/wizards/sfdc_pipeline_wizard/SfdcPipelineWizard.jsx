@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import SfdcPipelineWizardComponentSelector from "components/workflow/wizards/sfdc_pipeline_wizard/component_selector/SfdcPipelineWizardComponentSelector";
 import ErrorDialog from "components/common/status_notifications/error";
@@ -18,6 +18,17 @@ import sfdcPipelineWizardMetadata from "components/workflow/wizards/sfdc_pipelin
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import OverlayPanelBodyContainer from "components/common/panels/detail_panel_container/OverlayPanelBodyContainer";
+import SfdcWizardInitializationHelpDocumentation
+  from "components/common/help/documentation/pipelines/wizard/SfdcWizardInitializationHelpDocumentation";
+import SfdcWizardComponentTypeSelectionHelpDocumentation
+  from "components/common/help/documentation/pipelines/wizard/SfdcWizardComponentTypeSelectionHelpDocumentation";
+import {AuthContext} from "contexts/AuthContext";
+import SfdcWizardUnitTestSelectionViewHelpDocumentation
+  from "components/common/help/documentation/pipelines/wizard/SfdcWizardUnitTestSelectionViewHelpDocumentation";
+import SfdcWizardFileSelectionHelpDocumentation
+  from "components/common/help/documentation/pipelines/wizard/SfdcWizardFileSelectionHelpDocumentation";
+import SfdcWizardXmlViewerHelpDocumentation
+  from "components/common/help/documentation/pipelines/wizard/SfdcWizardXmlViewerHelpDocumentation";
 
 export const PIPELINE_WIZARD_SCREENS = {
   INITIALIZATION_SCREEN: "INITIALIZATION_SCREEN",
@@ -36,6 +47,8 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
   const [pipelineWizardModel, setPipelineWizardModel] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
+  const [helpIsShown, setHelpIsShown] = useState(false);
+  const { featureFlagHideItemInProd } = useContext(AuthContext);
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -146,15 +159,45 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
   };
 
   const getHelpComponent = () => {
+    // TODO: Remove feature flag after verification
+    if (featureFlagHideItemInProd()) {
+      return null;
+    }
+
     switch (pipelineWizardScreen) {
       case PIPELINE_WIZARD_SCREENS.INITIALIZATION_SCREEN:
+        return (
+          <SfdcWizardInitializationHelpDocumentation
+            closeHelpPanel={() => setHelpIsShown(false)}
+          />
+        );
       case PIPELINE_WIZARD_SCREENS.COMPONENT_SELECTOR:
+        return (
+          <SfdcWizardComponentTypeSelectionHelpDocumentation
+            closeHelpPanel={() => setHelpIsShown(false)}
+          />
+        );
       case PIPELINE_WIZARD_SCREENS.STANDARD_FILE_SELECTOR:
       case PIPELINE_WIZARD_SCREENS.GIT_TASKS_FILE_SELECTOR:
       case PIPELINE_WIZARD_SCREENS.ORG_TO_ORG_FILE_SELECTOR:
       case PIPELINE_WIZARD_SCREENS.PROFILE_COMPONENT_SELECTOR:
+        return (
+          <SfdcWizardFileSelectionHelpDocumentation
+            closeHelpPanel={() => setHelpIsShown(false)}
+          />
+        );
       case PIPELINE_WIZARD_SCREENS.UNIT_TEST_SELECTOR:
+        return (
+          <SfdcWizardUnitTestSelectionViewHelpDocumentation
+            closeHelpPanel={() => setHelpIsShown(false)}
+          />
+        );
       case PIPELINE_WIZARD_SCREENS.XML_VIEWER:
+        return (
+          <SfdcWizardXmlViewerHelpDocumentation
+            closeHelpPanel={() => setHelpIsShown(false)}
+          />
+        );
       default:
         return null;
     }
@@ -175,7 +218,14 @@ const SfdcPipelineWizard = ({ pipeline, handlePipelineWizardRequest, handleClose
   }
 
   return (
-    <OverlayPanelBodyContainer className={"mx-3 mb-3"} helpComponent={getHelpComponent()}>
+    <OverlayPanelBodyContainer
+      className={"m-3"}
+      helpComponent={getHelpComponent()}
+      helpIsShown={helpIsShown}
+      setHelpIsShown={setHelpIsShown}
+      hideCloseButton={true}
+      isLoading={pipelineWizardModel?.getData("recordId")?.length === ""}
+    >
       {getBody()}
     </OverlayPanelBodyContainer>
   );

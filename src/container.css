@@ -3,7 +3,6 @@
     /*background-color: #f2c364;*/
     background-color: #F6D179;
     color: #3D3B36;
-    min-height: 40px;
 }
 
 .help-documentation-container .help-body {
@@ -13,10 +12,6 @@
     overflow-x: hidden
 }
 
-.help-documentation-container {
-    background-color: #E6E5E3;
-    min-height: 1em;
-}
 /* End Help Documentation Container Styling */
 
 /* Metric Container Styling */
