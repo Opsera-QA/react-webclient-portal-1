@@ -1,12 +1,10 @@
-import React, {useState} from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
 
-function OverlayPanelBodyContainer({ children, className, helpComponent, isLoading, hideCloseButton }) {
-  const [helpIsShown, setHelpIsShown] = useState(false);
-
+function OverlayPanelBodyContainer({ children, className, helpIsShown, setHelpIsShown, helpComponent, isLoading, hideCloseButton }) {
   if (isLoading) {
     return (<LoadingDialog size="sm" message={"Loading Data"}/>);
   }
@@ -66,6 +64,8 @@ OverlayPanelBodyContainer.propTypes = {
   helpComponent: PropTypes.object,
   className: PropTypes.string,
   hideCloseButton: PropTypes.bool,
+  helpIsShown: PropTypes.bool,
+  setHelpIsShown: PropTypes.func
 };
 
 export default OverlayPanelBodyContainer;

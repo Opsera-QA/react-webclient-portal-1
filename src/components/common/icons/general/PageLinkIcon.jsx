@@ -13,11 +13,12 @@ function PageLinkIcon({ pageLink, openInNewWindow, handleClose, className, linkT
       handleClose();
     }
 
+    // TODO: Leaving this as separate for external link until I find out if we want to do anything on React end
     if (openInNewWindow === true) {
       window.open(pageLink);
     }
     else if (externalLink === true) {
-      //TODO: Add external link logic
+      window.open(pageLink);
     }
     else {
       history.push(pageLink);
@@ -48,7 +49,7 @@ PageLinkIcon.propTypes = {
   className: PropTypes.string,
   openInNewWindow: PropTypes.bool,
   linkTooltipText: PropTypes.string,
-  externalLink: PropTypes.bool
+  externalLink: PropTypes.bool,
 };
 
 export default PageLinkIcon;

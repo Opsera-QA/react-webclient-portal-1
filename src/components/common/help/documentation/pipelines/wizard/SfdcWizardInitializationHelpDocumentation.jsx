@@ -1,11 +1,14 @@
-import React, { useContext } from "react";
-import {DialogToastContext} from "../../../../../../contexts/DialogToastContext";
+import React from "react";
+import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
+import PropTypes from "prop-types";
 
-
-function SfdcWizardInitializationHelpDocumentation() {
+function SfdcWizardInitializationHelpDocumentation({closeHelpPanel}) {
   return (
-    <div className={"mt-3"}>
-      <h5>SalesForce Pipeline Run: Initialization Help</h5>
+    <HelpDocumentationContainer
+      helpTopic={"SalesForce Pipeline Run: Initialization"}
+      closeHelpPanel={closeHelpPanel}
+      confluenceLink={`https://opsera.atlassian.net/l/c/XbSETC14`}
+    >
       <b>Manual Pipeline Wizard Run</b>
       <ul>
         <li>To continue with any parameters selected within the past 24 hours, select <b>Continue Where The Last Instance Left Off</b>.</li>
@@ -26,8 +29,12 @@ function SfdcWizardInitializationHelpDocumentation() {
         <li>Select the Source Org: <b>From SFDC</b> or <b>From GIT</b>.</li>
         <li>Select <b>Process File</b> and a table with data will be generated. Confirm that the information is accurate then select <b>Proceed with Selected File</b>.</li>
       </ul>
-    </div>
+    </HelpDocumentationContainer>
   );
 }
+
+SfdcWizardInitializationHelpDocumentation.propTypes = {
+  closeHelpPanel: PropTypes.func
+};
 
 export default React.memo(SfdcWizardInitializationHelpDocumentation);
