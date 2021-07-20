@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import {faCogs, faTag, faExclamationCircle, faSpinner} from "@fortawesome/pro-light-svg-icons";
+import {faTag, faExclamationCircle, faSpinner} from "@fortawesome/pro-light-svg-icons";
 import "components/analytics/charts/charts.css";
 import KpiSettingsForm from "components/insights/marketplace/charts/KpiSettingsForm";
 import {getChartIconFromKpiConfiguration} from "components/insights/charts/charts-helpers";
@@ -9,33 +9,55 @@ import InfoDialog from "components/common/status_notifications/info";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon.jsx";
 import CustomBadge from "components/common/badges/CustomBadge";
 import CustomBadgeContainer from "components/common/badges/CustomBadgeContainer";
+import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 
-function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, index, chart, isLoading, error, loadChart, setKpis, tableChart }) {
+function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, index, chart, isLoading, error, loadChart, setKpis, tableChart, chartHelpComponent, settingsHelpComponent }) {
   const [view, setView] = useState("chart");
-  // const changeView = () => {
-  //   setView(view === "chart" ? "settings" : "chart");
-  // }
+  const [helpIsShown, setHelpIsShown] = useState(false);
+
+  const getHelpToggle = () => {
+    if ((view === "chart" && chartHelpComponent) || (view === "settings" && settingsHelpComponent)) {
+      return (
+        <ActionBarToggleHelpButton
+          helpIsShown={helpIsShown}
+          toggleHelp={() => setHelpIsShown(!helpIsShown)}
+          size={"1x"}
+        />
+      );
+    }
+  };
 
   const getTitleBar = () => {
     if (isLoading) {
       return (<span><FontAwesomeIcon icon={faSpinner} spin fixedWidth className="mr-1"/>Loading Chart</span>);
     }
-    else if (error) {
+
+    if (error) {
       return (
         <div className="d-flex justify-content-between">
-          <span><FontAwesomeIcon icon={faExclamationCircle} spin fixedWidth className="mr-1"/>Error Loading Chart!</span>
-          <div><ToggleSettingsIcon activeTab={view} setActiveTab={setView}/></div>
+          <span>
+            <FontAwesomeIcon icon={faExclamationCircle} spin fixedWidth className="mr-1"/>
+            Error Loading Chart!
+          </span>
+          <div>
+            <ToggleSettingsIcon activeTab={view} setActiveTab={setView}/>
           </div>
-);
-    }
-    else {
-      return (
-        <div className="d-flex justify-content-between">
-          <div><FontAwesomeIcon icon={getChartIconFromKpiConfiguration(kpiConfiguration)} fixedWidth className="mr-1"/>{kpiConfiguration?.kpi_name}</div>
-          <div><ToggleSettingsIcon activeTab={view} setActiveTab={setView}/></div>
         </div>
       );
     }
+
+    return (
+      <div className="d-flex justify-content-between">
+        <div>
+          <FontAwesomeIcon icon={getChartIconFromKpiConfiguration(kpiConfiguration)} fixedWidth className="mr-1"/>
+          {kpiConfiguration?.kpi_name}
+        </div>
+        <div className={"d-flex"}>
+          <div className={"mr-2"}>{getHelpToggle()}</div>
+          <ToggleSettingsIcon visible={!helpIsShown} activeTab={view} setActiveTab={setView}/>
+        </div>
+      </div>
+    );
   };
 
   // TODO: Make ErrorChartContainer
@@ -58,6 +80,14 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
       return (
         <span>There was an error loading this chart: {error.message}. Please check logs for more details.</span>
       );
+    }
+
+    if (helpIsShown) {
+      if (view === "settings") {
+        return (settingsHelpComponent);
+      }
+
+      return (chartHelpComponent);
     }
 
     // TODO: Rework when all are updated
@@ -123,7 +153,9 @@ ChartContainer.propTypes = {
   setKpiConfiguration: PropTypes.func,
   setKpis: PropTypes.func,
   loadChart: PropTypes.func,
-  tableChart: PropTypes.bool
+  tableChart: PropTypes.bool,
+  chartHelpComponent: PropTypes.object,
+  settingsHelpComponent: PropTypes.object
 };
 
 export default ChartContainer;

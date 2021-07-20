@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import {faQuestionCircle, faTimes} from "@fortawesome/pro-light-svg-icons";
 import ActionBarButton from "components/common/actions/buttons/ActionBarButton";
 
-function ActionBarToggleHelpButton({ toggleHelp, helpIsShown }) {
+function ActionBarToggleHelpButton({ toggleHelp, helpIsShown, size }) {
   const toggleHelpPanel = () => {
     toggleHelp();
   };
@@ -14,13 +14,15 @@ function ActionBarToggleHelpButton({ toggleHelp, helpIsShown }) {
       iconClasses={"dark-grey"}
       icon={helpIsShown ? faTimes : faQuestionCircle}
       popoverText={helpIsShown ? "Hide Help" : `Show Help`}
+      size={size}
     />
   );
 }
 
 ActionBarToggleHelpButton.propTypes = {
   toggleHelp: PropTypes.func,
-  helpIsShown: PropTypes.bool
+  helpIsShown: PropTypes.bool,
+  size: PropTypes.string
 };
 
 export default ActionBarToggleHelpButton;
