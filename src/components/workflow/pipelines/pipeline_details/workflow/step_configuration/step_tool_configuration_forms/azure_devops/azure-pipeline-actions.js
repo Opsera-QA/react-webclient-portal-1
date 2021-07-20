@@ -13,7 +13,7 @@ azurePipelineActions.getAzurePipelines = async (getAccessToken, cancelTokenSourc
     userId: userId
   };
 
-  const apiURL = `azure/get-pipelines`;
+  const apiURL = `azure-devops/get-pipelines`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
 };
 
@@ -27,7 +27,7 @@ azurePipelineActions.getAzureProjects = async (getAccessToken, cancelTokenSource
     userId: userId
   };
 
-  const apiURL = `azure/get-projects`;
+  const apiURL = `azure-devops/get-projects`;
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiURL, postBody);
 };
 
