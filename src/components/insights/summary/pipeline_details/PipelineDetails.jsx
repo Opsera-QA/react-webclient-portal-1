@@ -84,14 +84,14 @@ function PipelineDetails({ dashboardData }) {
         return (
           <InsightsPipelineDetailsDurationTable
             data={selectedDataBlockTableData}
-            tableTitle="Deployment Duration"
+            tableTitle="Average Deployment Duration (Mins)"
           />
         );
       case "Average_Build_Duration":{
         return (
           <InsightsPipelineDetailsDurationTable
             data={selectedDataBlockTableData}
-            tableTitle="Build Duration"
+            tableTitle="Average Build Duration (Mins)"
           />
         );
       }
