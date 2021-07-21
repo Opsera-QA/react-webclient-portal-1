@@ -83,12 +83,13 @@ function JiraIssuesByPriorityBarChart({ kpiConfiguration, setKpiConfiguration, d
               {...adjustBarWidth(metrics)}
               onClick={() => setShowModal(true)}
               tooltip={({ indexValue, id, data }) => <ChartTooltip 
-                  titles={["Project", "Issue Type", "Number of Lowest Priority Issues",
+                  titles={["Project", "Issue Type", 
                             "Number. of Low Priority Issues", "Number of Medium Priority Issues",
-                            "Number of High Priority Issues", "Number of Highest Priority Issues",
-                            "Number of Blocker Issues"]}
-                  values={[indexValue, id, data[id + "-Lowest"], data[id + "-Low"],
-                           data[id + "-Medium"], data[id + "-High"], data[id + "-Highest"], data[id + "-Blocker"]]} 
+                            "Number of High Priority Issues", 
+                            "Number of Urgent Issues", "Number of Blocker Issues"]}
+                  values={[indexValue, id, data[id + "-Low"] ? data[id + "-Low"] : 0,
+                           data[id + "-Medium"] ? data[id + "-Medium"] : 0, data[id + "-High"] ? data[id + "-High"] : 0, 
+                           data[id + "-Urgent"] ? data[id + "-Urgent"] : 0, data[id + "-Blocker"] ? data[id + "-Blocker"] : 0]} 
                   style={false} />}
             />
         </div>

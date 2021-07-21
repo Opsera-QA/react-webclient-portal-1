@@ -1,7 +1,7 @@
-export default () => ({
-  keys: ["To Do", "In Development", "In Progress", "Peer Review", "Testing", "Done", "Selected for Development", "Production Deployment"],
-  indexBy: "_id",
+export default (keys) => ({
+  keys: keys,
+  indexBy: "project",
   colorBy: "id",
   layout: "horizontal",
-  colors:({ id, data }) => data[`${id}_color`]
+  // colors:({ id, data }) => data[`${id}_color`]
 });
