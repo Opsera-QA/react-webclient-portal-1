@@ -610,6 +610,14 @@ const breadcrumbs = {
     linkText: "Task Ownership",
     icon: faTasks
   },
+  consolidatedUserReport: {
+    parent: "userReports",
+    name: "consolidatedUserReport",
+    path: paths.consolidatedUserReport,
+    title: "User Report",
+    linkText: "User Report",
+    icon: faUser
+  },
 
   pipelineReports: {
     parent: "reports",
