@@ -22,7 +22,7 @@ function ConsolidatedUserReportToolAccessTable({ data, isLoading, paginationMode
       getTableTextColumn(fields.find(field => { return field.id === "name";})),
       getRoleAccessLevelColumn(fields.find(field => { return field.id === "role_access_level";})),
       getTableTextColumn(fields.find(field => { return field.id === "_id";})),
-      // getStaticInfoColumn()
+      getStaticInfoColumn()
     ],
     [],
   );
