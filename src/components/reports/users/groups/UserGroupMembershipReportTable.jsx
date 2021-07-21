@@ -39,7 +39,7 @@ function UserGroupMembershipReportTable({ groups, isLoading, loadData, userDisti
   };
 
   const getGroupMembershipTable = () => {
-    if (!groups && !isLoading) {
+    if (!Array.isArray(groups) && !isLoading) {
       return (
         <div className="px-2 max-content-width" style={{ minWidth: "505px" }}>
           <InformationDialog message="Could not load groups." />
@@ -52,7 +52,7 @@ function UserGroupMembershipReportTable({ groups, isLoading, loadData, userDisti
         columns={columns}
         data={relevantGroups}
         onRowSelect={onRowSelect}
-        noDataMessage={"No groups are associated with the selected user."}
+        noDataMessage={"This user is not a member of any group."}
         isLoading={isLoading}
       />
     );

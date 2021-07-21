@@ -58,6 +58,7 @@ pipelineActions.getPipelinesAccessByEmailV2 = async (getAccessToken, cancelToken
       size: pipelineFilterDto.getData("pageSize"),
       page: pipelineFilterDto.getData("currentPage"),
       search: pipelineFilterDto.getFilterValue("search"),
+      fields: ["name", "roles", "owner"]
     },
   };
 

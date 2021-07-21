@@ -6,25 +6,14 @@ import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pip
 import {useHistory} from "react-router-dom";
 import {faSearch} from "@fortawesome/pro-light-svg-icons";
 
-
-function LimitedFieldsTable({ data, isLoading, paginationModel, setPaginationModel, loadData, type }) {
+function ConsolidatedUserReportPipelineAccessTable({ data, isLoading, paginationModel, setPaginationModel, loadData }) {
   let history = useHistory();
   const fields = pipelineMetadata.fields;
 
   const onRowSelect = (rowData) => {
-    if (type === "pipeline") {
-      history.push(`/workflow/details/${rowData.original._id}/summary`);
-    }
-
-    if (type === "tool") {
-      history.push(`/inventory/tools/details/${rowData.original._id}`);
-    }
-
-    if (type === "task") {
-      history.push(`/inventory/tools/details/${rowData.original._id}`);
-    }
+    history.push(`/workflow/details/${rowData.original._id}/summary`);
   };
- 
+
   const initialState = {
     pageIndex: 0,
   };
@@ -32,33 +21,16 @@ function LimitedFieldsTable({ data, isLoading, paginationModel, setPaginationMod
   const columns = useMemo(
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "name";})),
+      getTableTextColumn(fields.find(field => { return field.id === "role_access_level";})),
       getStaticIconColumn(faSearch)
     ],
     [],
   );
-
-  const limitedTaskColumns = useMemo(
-    () => [
-      getTableTextColumn(fields.find(field => { return field.id === "name";})),
-      getTableTextColumn(fields.find(field => { return field.id === "type";})),
-      getTableTextColumn(fields.find(field => { return field.id === "_id";})),
-      getStaticIconColumn(faSearch)
-    ],
-    [],
-  );
-
-  const getColumns = () => {
-    if (type === "task") {
-      return limitedTaskColumns;
-    }
-
-    return columns;
-  };
 
   return (
     <CustomTable
       className="table-no-border"
-      columns={getColumns()}
+      columns={columns}
       onRowSelect={onRowSelect}
       paginationDto={paginationModel}
       loadData={loadData}
@@ -70,13 +42,12 @@ function LimitedFieldsTable({ data, isLoading, paginationModel, setPaginationMod
   );
 }
 
-LimitedFieldsTable.propTypes = {
+ConsolidatedUserReportPipelineAccessTable.propTypes = {
   data: PropTypes.array,
   isLoading: PropTypes.bool,
   setPaginationModel: PropTypes.func,
   paginationModel: PropTypes.object,
   loadData: PropTypes.func,
-  type: PropTypes.string,
 };
 
-export default LimitedFieldsTable;
+export default ConsolidatedUserReportPipelineAccessTable;

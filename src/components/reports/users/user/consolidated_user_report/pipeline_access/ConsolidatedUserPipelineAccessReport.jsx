@@ -3,25 +3,23 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import pipelineFilterMetadata from "components/workflow/pipelines/pipeline_details/workflow/pipeline-filter-metadata";
-import LimitedFieldsTable from "components/reports/users/user/LimitedFieldsTable";
-import InformationDialog from "components/common/status_notifications/info";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import pipelineActions from "components/workflow/pipeline-actions";
 import Model from "core/data_model/model";
-import PipelineCardView from "components/workflow/pipelines/PipelineCardView";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import pipelineSummaryMetadata
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
-  import accountsActions from "components/admin/accounts/accounts-actions";
+import ConsolidatedUserReportPipelineAccessTable
+  from "components/reports/users/user/consolidated_user_report/pipeline_access/ConsolidatedUserReportPipelineAccessTable";
 
-function ConsolidatedUserReportPipelineOwnershipTable({ selectedUser }) {
+function ConsolidatedUserPipelineAccessReport({ selectedUser }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [pipelineFilterDto, setPipelineFilterDto] = useState(new Model({ ...pipelineFilterMetadata.newObjectFields }, pipelineFilterMetadata, false));
+  const [pipelineFilterDto, setPipelineFilterDto] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [pipelines, setPipelines] = useState([]);
@@ -37,11 +35,8 @@ function ConsolidatedUserReportPipelineOwnershipTable({ selectedUser }) {
 
     setPipelines([]);
 
-    let newFilterDto = pipelineFilterDto;
-    newFilterDto.resetData();
-    setPipelineFilterDto(newFilterDto);
-
-    loadData(source).catch((error) => {
+    let newFilterDto = new Model({ ...pipelineFilterMetadata.newObjectFields }, pipelineFilterMetadata, false);
+    loadData(newFilterDto, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -53,40 +48,24 @@ function ConsolidatedUserReportPipelineOwnershipTable({ selectedUser }) {
     };
   }, [selectedUser]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (newFilterDto = pipelineFilterDto, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
 
-      if (isMounted?.current === true && selectedUser){
-        const userId = await getUserId();
-        const owner = {
-          value: userId, 
-          text: `${selectedUser?.name} (${selectedUser.emailAddress})`
-        };
+      if (isMounted?.current === true && selectedUser) {
+        const response = await pipelineActions.getPipelinesAccessByEmailV2(getAccessToken, cancelSource, pipelineFilterDto, selectedUser?.emailAddress);
+        const pipelines = response?.data?.data;
 
-        if (owner?.value) {
-          let newPipelineFilterDto = pipelineFilterDto;
-          newPipelineFilterDto.setData("viewType", "list");
-          newPipelineFilterDto.setData("owner", owner);
-          setPipelineFilterDto(newPipelineFilterDto);
-
-          const response = await pipelineActions.getPipelinesV2(getAccessToken, cancelSource, pipelineFilterDto);
-
-          if (Array.isArray(response?.data?.response)) {
-            setPipelines(response.data.response);
-
-            let newFilterDto = pipelineFilterDto;
-            newFilterDto.setData("totalCount", response.data.count);
-            newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-      
-            setPipelineFilterDto({...newFilterDto});
-          }
+        if (Array.isArray(pipelines)) {
+          setPipelines(pipelines);
+          newFilterDto.setData("totalCount", response?.data?.count);
+          newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
+          setPipelineFilterDto({...newFilterDto});
         }
-    }
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
-        console.log(error.error);
         toastContext.showLoadingErrorDialog(error);
       }
     } finally {
@@ -96,57 +75,29 @@ function ConsolidatedUserReportPipelineOwnershipTable({ selectedUser }) {
     }
   };
 
-  const getUserId = async () => {
-    const response = await accountsActions.getAccountUsers(getAccessToken);
-    const users = response?.data;
-    
-    if (!users) {
-      return undefined;
-    }
-
-    for (let i = 0; i < users.length; i++) {
-      const user = users[i];
-      if (user.email === selectedUser.emailAddress) {
-        return user._id;
-      }
-    }
-  };
-
   const getView = () => {
     if (isLoading) {
       return (<LoadingDialog size="md" message="Loading pipelines..."/>);
     }
 
-    if (pipelineFilterDto?.getData("viewType") === "list") {
-      return (showList());
-    }
-
     return (
-      <PipelineCardView
+      <ConsolidatedUserReportPipelineAccessTable
         isLoading={isLoading}
-        loadData={loadData}
+        paginationModel={pipelineFilterDto}
+        setPaginationModel={setPipelineFilterDto}
         data={pipelines}
-        pipelineFilterDto={pipelineFilterDto}
-        setPipelineFilterDto={setPipelineFilterDto}
+        loadData={loadData}
+        type={"pipeline"}
       />
     );
   };
 
-  const showList = () => {
-    return (
-        <LimitedFieldsTable
-          isLoading={isLoading}
-          paginationModel={pipelineFilterDto}
-          setPaginationModel={setPipelineFilterDto}
-          data={pipelines}
-          loadData={loadData}
-          type={"pipeline"}
-        />
-    );
-  };
-
   const getPipelinesBody = () => {
-    if (pipelines && pipelines.length === 0 && !isLoading) {
+    if (isLoading) {
+      return (<LoadingDialog size="md" message="Loading pipelines..."/>);
+    }
+
+    if (!Array.isArray(pipelines) || pipelines.length === 0) {
       const activeFilters = pipelineFilterDto?.getActiveFilters();
       if (activeFilters && activeFilters.length > 0) {
         return (
@@ -165,16 +116,6 @@ function ConsolidatedUserReportPipelineOwnershipTable({ selectedUser }) {
 
     return (getView());
   };
-
-  if (!pipelines && !isLoading || !Array.isArray(pipelines)) {
-    return (
-      <div className="px-2 max-content-width" >
-        <div className="my-5">
-          <InformationDialog message="Could not load pipelines."/>
-        </div>
-      </div>
-    );
-  }
 
   if (!selectedUser) {
     return null;
@@ -198,8 +139,8 @@ function ConsolidatedUserReportPipelineOwnershipTable({ selectedUser }) {
   );
 }
 
-ConsolidatedUserReportPipelineOwnershipTable.propTypes = {
+ConsolidatedUserPipelineAccessReport.propTypes = {
   selectedUser: PropTypes.object,
 };
 
-export default ConsolidatedUserReportPipelineOwnershipTable;
+export default ConsolidatedUserPipelineAccessReport;

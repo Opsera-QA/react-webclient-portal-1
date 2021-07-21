@@ -28,6 +28,10 @@ const toolMetadata = {
       id: "account",
     },
     {
+      label: "Role Access Level",
+      id: "role_access_level",
+    },
+    {
       label: "Description",
       id: "description",
       maxLength: 1000, 

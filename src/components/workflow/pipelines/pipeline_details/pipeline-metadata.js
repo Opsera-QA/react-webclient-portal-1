@@ -22,6 +22,10 @@ const pipelineMetadata = {
       id: "workflow.run_count",
     },
     {
+      label: "Role Access Level",
+      id: "role_access_level",
+    },
+    {
       label: "Last Run",
       id: "last_run",
     },

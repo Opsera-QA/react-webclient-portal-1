@@ -28,19 +28,19 @@ export const ACCESS_ROLES = {
 };
 
 export const ACCESS_ROLES_FORMATTED_LABELS = {
-  OPSERA_ADMINISTRATOR: "Opsera Administrator",
-  ADMINISTRATOR: "Site Administrator",
-  SAAS_USER: "User",
-  POWER_USER: "Power User",
-  OWNER: "Owner",
-  SECOPS: "Secops",
-  MANAGER: "Manager",
-  USER: "User",
-  UNAUTHORIZED: "UNAUTHORIZED",
-  NO_ACCESS_RULES: "No Access Rules On Item",
-  NO_ROLES_ASSIGNED: "No Role Assigned to User",
-  FREE_TRIAL_USER: "User",
-  READ_ONLY: "Read Only Access",
+  opsera_administrator: "Opsera Administrator",
+  administrator: "Site Administrator",
+  saas_user: "User",
+  power_user: "Power User",
+  owner: "Owner",
+  secops: "Secops",
+  manager: "Manager",
+  user: "User",
+  unauthorized: "UNAUTHORIZED",
+  no_access_rules: "No Access Rules On Item",
+  no_roles_assigned: "No Role Assigned to User",
+  free_trial_user: "User",
+  read_only: "Read Only Access",
 };
 
 export const meetsRequirements = (requirement, accessRoleData) => {

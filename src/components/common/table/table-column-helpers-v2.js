@@ -1,13 +1,10 @@
 import { format } from "date-fns";
 import React from "react";
 import {convertFutureDateToDhmsFromNowString} from "components/common/helpers/date-helpers";
-import {capitalizeFirstLetter, truncateString} from "components/common/helpers/string-helpers";
-import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import {
   getScriptLanguageDisplayText,
 } from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSearchPlus} from "@fortawesome/pro-light-svg-icons";
+import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
 
 export const FILTER_TYPES = {
   SEARCH_FILTER: "inputFilter",
@@ -234,5 +231,46 @@ export const getScriptLanguageColumn = (field, className, showFilter) => {
       return getScriptLanguageDisplayText(value);
     },
     class: className ? className : undefined
+  };
+};
+
+export const getRoleAccessLevelColumn = (field, className, width = 150) => {
+  return {
+    header: getColumnHeader(field),
+    id: getColumnId(field),
+    width: width,
+    // TODO: Figure out why using date-type right aligns stuff. Documentation says it should be left aligned.
+    template: function (text, row, col) {
+      const roles = row?.roles;
+
+      if (!Array.isArray(roles) || roles.length === 0) {
+        return `${ACCESS_ROLES_FORMATTED_LABELS.no_access_rules}`;
+      }
+
+      if (text == null) {
+        return `${ACCESS_ROLES_FORMATTED_LABELS.no_roles_assigned}`;
+      }
+
+      const accessLevel = ACCESS_ROLES_FORMATTED_LABELS[text];
+
+      if (accessLevel) {
+        return `${accessLevel}`;
+      }
+
+      return "ROLE ACCESS LEVEL UNKNOWN";
+    },
+    class: className ? className : ""
+  };
+};
+
+export const getStaticInfoColumn = (accessor = "_id", className) => {
+  return {
+    Header: [{ text: "" }],
+    id: accessor,
+    width: 10,
+    template: function () {
+      return `<i class="fa fa-search-plus cell-icon vertical-align-item"></i>`;
+    },
+    class: className
   };
 };

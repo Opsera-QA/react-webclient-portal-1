@@ -91,24 +91,18 @@ toolsActions.getRoleLimitedToolRegistryListV2 = async (getAccessToken, cancelTok
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-toolsActions.getToolAccessWithEmail = async (getAccessToken, cancelTokenSource, email) => {
-  // let sortOption = toolFilterDto.getData("sortOption");
-  //
-  // let urlParams = {
-  //   params: {
-  //     sort: sortOption ? sortOption.value : undefined,
-  //     page: toolFilterDto.getData("currentPage"),
-  //     size: toolFilterDto.getData("pageSize"),
-  //     tag: toolFilterDto.getFilterValue("tag"),
-  //     status: toolFilterDto.getFilterValue("status"),
-  //     tool: toolFilterDto.getFilterValue("toolIdentifier"),
-  //     search: toolFilterDto.getFilterValue("search"),
-  //     owner: toolFilterDto.getFilterValue("owner")
-  //   }
-  // };
+toolsActions.getToolAccessWithEmail = async (getAccessToken, cancelTokenSource, toolFilterModel, email) => {
+  const urlParams = {
+    params: {
+      page: toolFilterModel.getData("currentPage"),
+      size: toolFilterModel.getData("pageSize"),
+      search: toolFilterModel.getFilterValue("search"),
+      fields: ["name", "roles", "owner"]
+    }
+  };
 
   const apiUrl = `/registry/configs/user/${email}`;
-  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
 toolsActions.getFullRoleLimitedToolRegistryList = async (getAccessToken) => {

@@ -91,7 +91,7 @@ import UserGroupMembershipReport from "components/reports/users/groups/UserGroup
 import UserPipelineOwnershipReport from "components/reports/users/pipelines/UserPipelineOwnershipReport";
 import UserToolOwnershipReport from "components/reports/users/tools/UserToolOwnershipReport";
 import UserTaskOwnershipReport from "components/reports/users/tasks/UserTaskOwnershipReport";
-import ConsolidatedUserReport from "components/reports/users/user/ConsolidatedUserReport";
+import ConsolidatedUserReport from "components/reports/users/user/consolidated_user_report/ConsolidatedUserReport";
 import AccountRegistration from "components/user/account_registration/AccountRegistration";
 import SiteNotificationManager from "components/admin/site_notifications/manager/SiteNotificationManager";
 import ToolCountsReport from "components/reports/tools/counts/ToolCountsReport";

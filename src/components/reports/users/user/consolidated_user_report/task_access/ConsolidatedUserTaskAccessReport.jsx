@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import LoadingDialog from "components/common/status_notifications/loading";
 import InfoDialog from "components/common/status_notifications/info";
 import taskFilterMetadata from "components/git/git-tasks-filter-metadata";
-import LimitedFieldsTable from "components/reports/users/user/LimitedFieldsTable";
+import ConsolidatedUserReportTaskAccessTable from "components/reports/users/user/consolidated_user_report/task_access/ConsolidatedUserReportTaskAccessTable";
 import InformationDialog from "components/common/status_notifications/info";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -13,13 +13,12 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faTasks} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import taskMetadata from "components/git/git-tasks-metadata";
-import accountsActions from "components/admin/accounts/accounts-actions";
 
-function ConsolidatedUserReportTaskOwnershipTable({ selectedUser }) {
+function ConsolidatedUserTaskAccessReport({ selectedUser }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [taskFilterDto, setTaskFilterDto] = useState(new Model({ ...taskFilterMetadata.newObjectFields }, taskFilterMetadata, false));
+  const [taskFilterDto, setTaskFilterDto] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [tasks, setTasks] = useState([]);
@@ -35,11 +34,8 @@ function ConsolidatedUserReportTaskOwnershipTable({ selectedUser }) {
 
     setTasks([]);
 
-    let newFilterDto = taskFilterDto;
-    newFilterDto.resetData();
-    setTaskFilterDto(newFilterDto);
-
-    loadData(source).catch((error) => {
+    let newFilterDto = new Model({ ...taskFilterMetadata.newObjectFields }, taskFilterMetadata, false);
+    loadData(newFilterDto, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -51,37 +47,26 @@ function ConsolidatedUserReportTaskOwnershipTable({ selectedUser }) {
     };
   }, [selectedUser]);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async (newFilterDto = taskFilterDto, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
 
-      if (isMounted?.current === true && selectedUser){
-        const userId = await getUserId();
-        const owner = {
-          value: userId, 
-          text: `${selectedUser?.name} (${selectedUser.emailAddress})`
-        };
+      if (isMounted?.current === true && selectedUser) {
+        const response = await gitTasksActions.getGitTaskAccessForUserEmail(getAccessToken, cancelSource, newFilterDto, selectedUser?.emailAddress);
+        const newTaskList = response?.data?.data;
 
-        if (owner?.value) {
-          const response = await gitTasksActions.getGitTasksListV2(getAccessToken, cancelSource, taskFilterDto);
-          const newTaskList = response?.data?.data.filter(task => task?.owner === owner.value);
+        if (Array.isArray(newTaskList)) {
+          setTasks(newTaskList);
+          newFilterDto.setData("totalCount", newTaskList.length);
+          newFilterDto.setData("pageSize", 25);
+          newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
 
-          if (Array.isArray(newTaskList)) {
-            setTasks(newTaskList);
-
-            let newFilterDto = taskFilterDto;
-            newFilterDto.setData("totalCount", newTaskList.length);
-            newFilterDto.setData("pageSize", 25);
-            newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-      
-            setTaskFilterDto({...newFilterDto});
-          }
+          setTaskFilterDto({...newFilterDto});
         }
-    }
+      }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
-        console.log(error.error);
         toastContext.showLoadingErrorDialog(error);
       }
     } finally {
@@ -91,41 +76,25 @@ function ConsolidatedUserReportTaskOwnershipTable({ selectedUser }) {
     }
   };
 
-  const getUserId = async () => {
-    const response = await accountsActions.getAccountUsers(getAccessToken);
-    const users = response?.data;
-    
-    if (!users) {
-      return undefined;
-    }
-
-    for (let i = 0; i < users.length; i++) {
-      const user = users[i];
-      if (user.email === selectedUser.emailAddress) {
-        return user._id;
-      }
-    }
-  };
-
   const getView = () => {
-    if (isLoading) {
-      return (<LoadingDialog size="md" message="Loading tasks..."/>);
-    }
 
     return (
-      <LimitedFieldsTable
+      <ConsolidatedUserReportTaskAccessTable
         isLoading={isLoading}
         paginationModel={taskFilterDto}
         setPaginationModel={setTaskFilterDto}
         data={tasks}
         loadData={loadData}
-        type={"task"}
       />
     );
   };
 
   const getTasksBody = () => {
-    if (tasks && tasks.length === 0 && !isLoading) {
+    if (isLoading) {
+      return (<LoadingDialog size="md" message="Loading tasks..."/>);
+    }
+
+    if (!Array.isArray(tasks) || tasks.length === 0) {
       const activeFilters = taskFilterDto?.getActiveFilters();
       if (activeFilters && activeFilters.length > 0) {
         return (
@@ -177,8 +146,8 @@ function ConsolidatedUserReportTaskOwnershipTable({ selectedUser }) {
   );
 }
 
-ConsolidatedUserReportTaskOwnershipTable.propTypes = {
+ConsolidatedUserTaskAccessReport.propTypes = {
   selectedUser: PropTypes.object,
 };
 
-export default ConsolidatedUserReportTaskOwnershipTable;
+export default ConsolidatedUserTaskAccessReport;
