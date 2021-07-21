@@ -6,6 +6,7 @@ const ec2ClusterCreationTaskConfigurationMetadata = {
     {
       label: "VPC CIDR Block",
       id: "vpcCidrBlock",
+      regexValidator: /^[A-Za-z0-9-.:/]*$/,
       formText: "Sample Format - 10.0.0.0/16"
     },
     {
@@ -34,31 +35,37 @@ const ec2ClusterCreationTaskConfigurationMetadata = {
     {
       label: "Public Subnet 1",
       id: "public_subnet_1",
+      regexValidator: /^[A-Za-z0-9-.:/]*$/,
       formText : "Sample Format - 10.0.0.0/24"
     },
     {
       label: "Public Subnet 2",
       id: "public_subnet_2",
+      regexValidator: /^[A-Za-z0-9-.:/]*$/,
       formText : "Sample Format - 10.0.0.0/24"
     },
     {
       label: "Private Subnet CIDR 1",
       id: "private_subnet_cidr_1",
+      regexValidator: /^[A-Za-z0-9-.:/]*$/,
       formText : "Sample Format - 10.194.20.0/24",
     },
     {
       label: "Private Subnet CIDR 2",
       id: "private_subnet_cidr_2",
+      regexValidator: /^[A-Za-z0-9-.:/]*$/,
       formText : "Sample Format - 10.194.21.0/24",
     },
     {
       label: "Public Subnet CIDR 1",
       id: "public_subnet_cidr_1",
+      regexValidator: /^[A-Za-z0-9-.:/]*$/,
       formText : "Sample Format - 10.194.10.0/24",
     },
     {
       label: "Public Subnet CIDR 2",
       id: "public_subnet_cidr_2",
+      regexValidator: /^[A-Za-z0-9-.:/]*$/,
       formText : "Sample Format - 10.194.11.0/24",
     },
     {
@@ -86,7 +93,7 @@ const ec2ClusterCreationTaskConfigurationMetadata = {
       label: "Private Subnets",
       id: "privateSubnets",
       maxItems: 2,
-      formText : "Both subnets should be from different availability zones",
+      formText : "Both subnets should be from different availability zones. Maximum 2 subnets permitted.",
     },
     {
       label: "Stack ID",

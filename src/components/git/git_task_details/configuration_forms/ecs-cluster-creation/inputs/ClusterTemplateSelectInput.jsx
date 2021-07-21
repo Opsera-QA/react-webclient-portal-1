@@ -6,7 +6,7 @@ function ClusterTemplateSelectInput({dataObject, setDataObject, isLoading, disab
 
   const ACTION_LIST = [
     {
-      name: "Networking",
+      name: "Networking/Fargate",
       value: "fargate",
     },
     {
