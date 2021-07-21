@@ -67,7 +67,6 @@ function IAMRolesSelectInput({
     try {
       setIAMRoless([]);
       const res = await ECSCreationActions.getIAMRoles(dataObject, getAccessToken, cancelSource);
-      console.log(res.data);
       if (res && res.status === 200) {
         if (res.data.length === 0) {
           setPlaceholder("No IAM Roles Found");

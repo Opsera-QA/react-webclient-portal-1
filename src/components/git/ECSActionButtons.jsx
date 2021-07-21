@@ -85,9 +85,7 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
     } catch (error) {
       toastContext.showInlineErrorMessage(error);
     } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
+      setIsLoading(false);
     }
   };
 
@@ -124,7 +122,6 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
   const getTaskStatus = async (cancelSource = cancelTokenSource) => {
     const response = await gitTasksActions.getGitTaskByIdV2(getAccessToken, cancelSource, gitTasksData.getData("_id"));
     const data = response?.data?.data[0];
-    console.log(data);
     if (isMounted?.current === true && data) {
       if (data?.error) {
         toastContext.showInlineErrorMessage("Error in fetching Task Status. Use the manual status check button.");
@@ -168,8 +165,9 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
 
   const handleCancelRunTask = async (automatic) => {
     setIsCanceling(true);
-    gitTasksData.setData("status", "stopped");
-    await gitTaskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
+    let gitTaskDataCopy = gitTasksData;
+    gitTaskDataCopy.setData("status", "stopped");
+    await gitTaskActions.updateGitTaskV2(getAccessToken, axios.CancelToken.source(), gitTaskDataCopy);
     setTaskFinished(true);
     isMounted.current = false;
     if (automatic) {
@@ -179,8 +177,9 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
     } else {
       toastContext.showInformationToast("Task has been cancelled", 10);
     }
+    gitTasksData.setData("status", "stopped");
     setIsCanceling(false);
-    history.push(`/task/details/${gitTasksData.getData("_id")}`);
+    window.location.reload();
   };
 
   const handleCheckStatus = async () => {
@@ -262,7 +261,6 @@ function ECSActionButtons({ gitTasksData, handleClose, disable, className }) {
       gitTasksData?.data?.configuration?.stackId?.length === 0 ||
       gitTasksData?.run_count === 0
     ) {
-      console.log("here");
       return null;
     }
 

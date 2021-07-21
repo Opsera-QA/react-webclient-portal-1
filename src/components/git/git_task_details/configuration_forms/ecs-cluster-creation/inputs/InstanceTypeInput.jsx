@@ -65,7 +65,6 @@ function InstanceTypeSelectInput({
     try {
       setInstanceTypes([]);
       const res = await ECSCreationActions.getEc2ImageTypes(dataObject, getAccessToken, cancelSource);
-      console.log(res);
       if (res && res.status === 200) {
         if (res.data.images.length === 0) {
           setPlaceholder("No Instance Types Found");
