@@ -85,7 +85,6 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
           "taskId":gitTasksData.getData("_id")
         };
         let result = await gitTasksActions.createECSCluster(postBody, getAccessToken);
-        console.log(result);
         toastContext.showSuccessDialog("ECS Cluster Creation Triggered Successfully");
       } catch (error) {
         console.log(error);

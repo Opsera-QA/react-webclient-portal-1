@@ -42,7 +42,6 @@ function CheckECSStatus({gitTasksData, handleClose, disable, className, loadData
   }
 
   if (!gitTasksData?.data?.configuration?.stackId || gitTasksData?.data?.configuration?.stackId?.length === 0 || gitTasksData?.run_count === 0) {
-    console.log("here");
     return null;
   }
 
