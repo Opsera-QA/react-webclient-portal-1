@@ -15,10 +15,10 @@ import accountsActions from "components/admin/accounts/accounts-actions";
 import axios from "axios";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import LdapUserByDomainSelectInput from "components/common/list_of_values_input/users/LdapUserByDomainSelectInput";
-import ConsolidatedUserReportGroupMembershipTable from "components/reports/users/user/ConsolidatedUserReportGroupMembershipTable";
-import ConsolidatedUserReportPipelineOwnershipTable from "components/reports/users/user/ConsolidatedUserReportPipelineOwnershipTable";
-import ConsolidatedUserReportToolOwnershipTable from "components/reports/users/user/ConsolidatedUserReportToolOwnershipTable";
-import ConsolidatedUserReportTaskOwnershipTable from "components/reports/users/user/ConsolidatedUserReportTaskOwnershipTable";
+import ConsolidatedUserReportGroupMembershipTable from "components/reports/users/user/consolidated_user_report/group_membership/ConsolidatedUserReportGroupMembershipTable";
+import ConsolidatedUserPipelineAccessReport from "components/reports/users/user/consolidated_user_report/pipeline_access/ConsolidatedUserPipelineAccessReport";
+import ConsolidatedUserToolAccessReport from "components/reports/users/user/consolidated_user_report/tool_access/ConsolidatedUserToolAccessReport";
+import ConsolidatedUserTaskAccessReport from "components/reports/users/user/consolidated_user_report/task_access/ConsolidatedUserTaskAccessReport";
 
 function ConsolidatedUserReport() {
   const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
@@ -155,27 +155,25 @@ function ConsolidatedUserReport() {
       </Row>
       <Row className={"mb-3 mx-0"}>
         <Col className={"mx-0"} md={12} lg={6}>
-          <ConsolidatedUserReportToolOwnershipTable
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
+          <ConsolidatedUserToolAccessReport
             selectedUser={selectedUser}
           />
         </Col>
         <Col className={"mx-0"} md={12} lg={6}>
-          <ConsolidatedUserReportPipelineOwnershipTable
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
-            selectedUser={selectedUser}
-          />
+          {/*<ConsolidatedUserPipelineAccessReport*/}
+          {/*  isLoading={isLoading}*/}
+          {/*  setIsLoading={setIsLoading}*/}
+          {/*  selectedUser={selectedUser}*/}
+          {/*/>*/}
         </Col>
       </Row>
       <Row className={"mb-3 mx-0"}>
         <Col className={"mx-0"} md={12} lg={12}>
-        <ConsolidatedUserReportTaskOwnershipTable
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
-            selectedUser={selectedUser}
-          />
+        {/*<ConsolidatedUserTaskAccessReport*/}
+        {/*    isLoading={isLoading}*/}
+        {/*    setIsLoading={setIsLoading}*/}
+        {/*    selectedUser={selectedUser}*/}
+        {/*  />*/}
         </Col>
       </Row>
     </ScreenContainer>

@@ -33,6 +33,10 @@ const gitTasksMetadata = {
       id: "owner_name",
     },
     {
+      label: "Role Access Level",
+      id: "role_access_level",
+    },
+    {
       label: "Type",
       id: "type",
       isRequired: true,

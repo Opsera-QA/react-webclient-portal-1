@@ -10,10 +10,9 @@ function UserReports() {
       <BreadcrumbPageLink breadcrumbDestination={"toolOwnershipReport"}/>
       <BreadcrumbPageLink breadcrumbDestination={"taskOwnershipReport"}/>
       <BreadcrumbPageLink breadcrumbDestination={"consolidatedUserReport"}/>
-      {/* <BreadcrumbPageLink breadcrumbDestination={"detailedToolReport"}/> */}
     </Row>
   );
 }
-// group membership (LDAP), pipeline ownership, tool ownership, tasks ownership.
+
 export default UserReports;
 

@@ -662,22 +662,28 @@ export const getCountColumnWithoutField = (header, accessor, className) => {
   };
 };
 
-export const getRoleAccessLevelColumn = (header, accessor, className) => {
+export const getRoleAccessLevelColumn = (field, className) => {
   return {
-    Header: header,
-    accessor: accessor,
+    Header: getTableHeader(field),
+    accessor: getTableAccessor(field),
     Cell: function getRoleAccessLevel(row) {
       const roles = row?.data[row?.row?.index]?.roles;
 
       if (!Array.isArray(roles) || roles.length === 0) {
-        return ACCESS_ROLES_FORMATTED_LABELS.NO_ACCESS_RULES;
+        return `${ACCESS_ROLES_FORMATTED_LABELS.no_access_rules}`;
       }
 
       if (row?.value == null) {
-        return ACCESS_ROLES_FORMATTED_LABELS.NO_ROLES_ASSIGNED;
+        return `${ACCESS_ROLES_FORMATTED_LABELS.no_roles_assigned}`;
       }
 
-      return ACCESS_ROLES_FORMATTED_LABELS[row.value];
+      const accessLevel = ACCESS_ROLES_FORMATTED_LABELS[row.value];
+
+      if (accessLevel) {
+        return `${accessLevel}`;
+      }
+
+      return "ROLE ACCESS LEVEL UNKNOWN";
     },
     class: className ? className :  "no-wrap-inline"
   };
@@ -726,6 +732,17 @@ export const getStaticIconColumn = (icon, accessor = "row", className) => {
     accessor: accessor,
     Cell: function StaticIcon(){
       return <FontAwesomeIcon icon={icon} />;
+    },
+    class: className ? className : undefined
+  };
+};
+
+export const getStaticInfoColumn = (icon, accessor = "row", className) => {
+  return {
+    Header: "",
+    accessor: accessor,
+    Cell: function StaticIcon(){
+      return <FontAwesomeIcon icon={faSearchPlus} />;
     },
     class: className ? className : undefined
   };
