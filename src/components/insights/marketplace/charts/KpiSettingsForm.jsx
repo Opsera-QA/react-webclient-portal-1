@@ -12,6 +12,7 @@ import {
   kpiJiraIssueTypeFilterMetadata,
   kpiJiraIssueComponentsFilterMetadata,
   kpiJiraIssueLabelsFilterMetadata,
+  kpiJiraIssueStatusFilterMetadata,
   kpiJiraIssueStartStatusFilterMetadata,
   kpiJiraIssueDoneStatusFilterMetadata,
   kpiSonarProjectKeyFilterMetadata,
@@ -63,6 +64,13 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
   );
   const [kpiJiraIssueLabelsFilter, setKpiJiraIssueLabelsFilter] = useState(
     modelHelpers.getDashboardFilterModel(kpiConfiguration, "jira-issue-labels", kpiJiraIssueLabelsFilterMetadata)
+  );
+  const [kpiJiraIssueStatusFilter, setKpiJiraIssueStatusFilter] = useState(
+    modelHelpers.getDashboardFilterModel(
+      kpiConfiguration,
+      "jira-issue-status",
+      kpiJiraIssueStatusFilterMetadata
+    )
   );
   const [kpiJiraIssueStartStatusFilter, setKpiJiraIssueStartStatusFilter] = useState(
     modelHelpers.getDashboardFilterModel(
@@ -287,6 +295,17 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
             />
           </div>
         );
+      case "jira-issue-status":
+        return (
+          <div>
+            <MultiTextInputBase
+              type={"kpi_filter"}
+              fieldName={"value"}
+              setDataObject={setKpiJiraIssueStatusFilter}
+              dataObject={kpiJiraIssueStatusFilter}
+            />
+          </div>
+        );
       case "jira-issue-start-status":
         return (
           <div>
@@ -472,6 +491,15 @@ function KpiSettingsForm({ kpiConfiguration, setKpiConfiguration, dashboardData,
       newKpiSettings.getData("filters")[
         newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-labels")
       ].value = kpiJiraIssueLabelsFilter.getData("value");
+    }
+    if (
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-status")
+      ]
+    ) {
+      newKpiSettings.getData("filters")[
+        newKpiSettings.getData("filters").findIndex((obj) => obj.type === "jira-issue-status")
+      ].value = kpiJiraIssueStatusFilter.getData("value");
     }
     if (
       newKpiSettings.getData("filters")[

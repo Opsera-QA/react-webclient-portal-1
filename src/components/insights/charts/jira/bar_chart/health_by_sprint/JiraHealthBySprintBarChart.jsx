@@ -20,6 +20,7 @@ function JiraHealthBySprintBarChart( { kpiConfiguration, setKpiConfiguration, da
   const { getAccessToken } = useContext(AuthContext);
   const [error, setError] = useState(undefined);
   const [metrics, setMetrics] = useState([]);
+  const [keys, setKeys] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const isMounted = useRef(false);
@@ -52,10 +53,12 @@ function JiraHealthBySprintBarChart( { kpiConfiguration, setKpiConfiguration, da
       let dashboardTags = dashboardData?.data?.filters[dashboardData?.data?.filters.findIndex((obj) => obj.type === "tags")]?.value;
       const response = await chartsActions.parseConfigurationAndGetChartMetrics(getAccessToken, cancelSource, "jiraSprintHealth", kpiConfiguration, dashboardTags);
       let dataObject = response?.data ? response?.data?.data[0]?.jiraSprintHealth?.data : [];
-      assignHealthColors(dataObject);
+      let keys = response?.data ? response?.data?.data[0]?.jiraSprintHealth?.keys : [];
+      // assignHealthColors(keys);
 
       if (isMounted?.current === true && dataObject) {
         setMetrics(dataObject);
+        setKeys(keys);
       }
     }
     catch (error) {
@@ -82,7 +85,7 @@ function JiraHealthBySprintBarChart( { kpiConfiguration, setKpiConfiguration, da
           data={metrics}
           {...defaultConfig("Project", "Number of Issues", 
                   false, false, "cutoffString", "wholeNumbers")}
-          {...config(getColorByData)}
+          {...config(keys)}
           {...adjustBarWidth(metrics)}
           onClick={() => setShowModal(true)}
           tooltip={({ indexValue, value, id }) => <ChartTooltip 

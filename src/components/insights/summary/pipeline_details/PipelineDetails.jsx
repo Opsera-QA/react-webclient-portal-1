@@ -15,6 +15,7 @@ import PipelinesByProjectTable from "components/insights/summary/PipelinesByProj
 import TotalPipelinesPassedDeployment from "components/insights/summary/pipeline_details/charts/TotalPipelinesPassedDeployment";
 import AvgDeploymentDuration from "components/insights/summary/pipeline_details/AvgDeploymentDuration";
 import AvgBuildDuration from "components/insights/summary/pipeline_details/AvgBuildDuration";
+import AvgApprovalTimeDataBlock from "components/insights/summary/pipeline_details/AvgApprovalTime";
 
 // JIRA
 import JiraLeadTimeChartNoDataBlocks from "components/insights/charts/jira/line_chart/lead_time/JiraLeadTimeChartNoDataBlocks";
@@ -83,12 +84,11 @@ function PipelineDetails({ dashboardData }) {
         );
       case "Average_Deployment_Duration":
         return (
-          <InsightsPipelineDetailsDurationTable data={selectedDataBlockTableData} tableTitle="Deployment Duration" />
+          <InsightsPipelineDetailsDurationTable
+            data={selectedDataBlockTableData}
+            tableTitle="Average Deployment Duration (Mins)"
+          />
         );
-      case "Average_Build_Duration": {
-        return <InsightsPipelineDetailsDurationTable data={selectedDataBlockTableData} tableTitle="Build Duration" />;
-      }
-      // Incidents: Service now
       case "serviceNowMTTR":
         return (
           <ServiceNowMeanTimeToResolutionBarChart
@@ -225,6 +225,13 @@ function PipelineDetails({ dashboardData }) {
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
           style={{ maxWidth: "33%" }}
+        />
+        <AvgApprovalTimeDataBlock
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{ maxWidth: "33%" }}
+          disable={true}
         />
       </DataBlockWrapper>
     );
