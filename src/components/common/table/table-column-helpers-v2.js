@@ -263,14 +263,18 @@ export const getRoleAccessLevelColumn = (field, className, width = 150) => {
   };
 };
 
-export const getStaticInfoColumn = (accessor = "_id", className) => {
+export const getStaticInfoColumn = (className) => {
   return {
-    Header: [{ text: "" }],
-    id: accessor,
-    width: 10,
+    header: "Info",
+    id: "fake",
     template: function () {
-      return `<i class="fa fa-search-plus cell-icon vertical-align-item"></i>`;
+      return (`
+        <span>
+          <i class="fal fa-search-plus cell-icon vertical-align-item"></i>
+        </span>
+      `);
     },
+    maxWidth: 50,
     class: className
   };
 };
