@@ -15,6 +15,7 @@ import JiraLeadTimeChartNoDataBlocks from "components/insights/charts/jira/line_
 import JiraLeadTimeDataBlock from "./JiraLeadTimeDataBlock";
 import AvgDeploymentDuration from "components/insights/summary/pipeline_details/AvgDeploymentDuration";
 import AvgBuildDuration from "components/insights/summary/pipeline_details/AvgBuildDuration";
+import AvgApprovalTimeDataBlock from "components/insights/summary/pipeline_details/AvgApprovalTime";
 
 function PipelineDetails({ dashboardData }) {
   const [selectedDataBlock, setSelectedDataBlock] = useState("");
@@ -186,6 +187,13 @@ function PipelineDetails({ dashboardData }) {
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
           style={{maxWidth:"33%"}}
+        />
+        <AvgApprovalTimeDataBlock
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{ maxWidth: "33%" }}
+          disable={true}
         />
       </DataBlockWrapper>
     );
