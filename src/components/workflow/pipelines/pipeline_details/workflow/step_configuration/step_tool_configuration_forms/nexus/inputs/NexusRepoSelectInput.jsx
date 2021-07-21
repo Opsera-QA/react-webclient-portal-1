@@ -10,6 +10,7 @@ function NexusRepoSelectInput({visible, dataObject, setDataObject, setDataFuncti
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [nexusRepositoriesList, setNexusRepositoriesList] = useState([]);
+  const [fullNexusRepositoriesList, setFullNexusRepositoriesList] = useState([]);
   const isMounted = useRef(false);
   const [isLoading, setIsLoading] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -38,6 +39,10 @@ function NexusRepoSelectInput({visible, dataObject, setDataObject, setDataFuncti
     };
   }, [nexusToolConfigId]);
 
+  useEffect(() => {
+    setNexusRepositoriesList(fullNexusRepositoriesList.filter(repo => repo.format === dataObject.getData("repositoryFormat")));
+  }, [dataObject.getData("repositoryFormat")]);
+
   const loadRepos = async (nexusToolConfigId, cancelSource = cancelTokenSource) => {
     try{
       setIsLoading(true);
@@ -62,7 +67,8 @@ function NexusRepoSelectInput({visible, dataObject, setDataObject, setDataFuncti
             });
           });
         }
-        setNexusRepositoriesList(nexusRepositories);
+        setFullNexusRepositoriesList(nexusRepositories);
+        setNexusRepositoriesList(nexusRepositories.filter(repo => repo.format === dataObject.getData("repositoryFormat")));
       }
     } catch (error) {
       if (isMounted?.current === true) {

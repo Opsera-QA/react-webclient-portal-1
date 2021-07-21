@@ -16,6 +16,8 @@ import SaveButtonBase from "components/common/buttons/saving/SaveButtonBase";
 import BooleanToggleInput from "components/common/inputs/boolean/BooleanToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import NexusRepoSelectInput from "./inputs/NexusRepoSelectInput";
+import NexusRepoFormatSelectInput from "./inputs/NexusRepoFormatSelectInput";
+import NexusJenkinsToolInput from "./inputs/NexusJenkinsToolInput";
 
 const NEXUS_STEP_TYPES = [
   {
@@ -28,7 +30,7 @@ const NEXUS_STEP_TYPES = [
   // },
 ];
 
-function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList }) {
+function NexusStepConfiguration({ pipelineId, stepTool, plan, stepId, parentCallback, createJob, getToolsList }) {
   const [isLoading, setIsLoading] = useState(false);
   const [listOfSteps, setListOfSteps] = useState([]);
 
@@ -99,6 +101,35 @@ function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToo
         new Model({ ...nexusStepFormMetadata.newModelBase }, nexusStepFormMetadata, false)
       );
     }
+  };
+
+  const handleCreateAndSave = async () => {
+    // console.log("saving and creating job for toolID: ", toolId);    
+      // setLoading(true);
+    let newDataObject = nexusStepConfigurationDto;
+    const packageId = nexusStepConfigurationDto.getData("groupName") + ":" + nexusStepConfigurationDto.getData("artifactName");
+    newDataObject.setData("packageId", packageId);
+    setNexusStepConfigurationDataDto({...newDataObject});
+
+    const toolId = nexusStepConfigurationDto.getData("toolConfigId");
+    const createJobPostBody = {
+      jobId: "",
+      pipelineId: pipelineId,
+      stepId: stepId
+    };
+    console.log("createJobPostBody: ", createJobPostBody);
+
+    const toolConfiguration = {
+      configuration: nexusStepConfigurationDto.getPersistData(),
+      threshold: {
+        type: thresholdType,
+        value: thresholdVal,
+      },
+      job_type: "NEXUS_DOCKER_PUSH",
+    };
+    console.log("item: ", toolConfiguration);
+
+    await createJob(toolId, toolConfiguration, stepId, createJobPostBody);
   };
 
   const callbackFunction = async () => {
@@ -212,6 +243,11 @@ function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToo
             selectOptions={NEXUS_STEP_TYPES ? NEXUS_STEP_TYPES : []}
             fieldName={"type"}
           />
+          <NexusRepoFormatSelectInput 
+            nexusToolConfigId={nexusStepConfigurationDto.getData("nexusToolConfigId")}
+            setDataObject={setNexusStepConfigurationDataDto}            
+            dataObject={nexusStepConfigurationDto}
+          />
           <NexusRepoSelectInput
             nexusToolConfigId={nexusStepConfigurationDto.getData("nexusToolConfigId")}
             setDataObject={setNexusStepConfigurationDataDto}
@@ -219,19 +255,38 @@ function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToo
             dataObject={nexusStepConfigurationDto}
           />
           {nexusStepConfigurationDto.getData("type") !== "" &&
-            <>
-              <TextInputBase
-                setDataFunction={handleGroupNameChange}
-                setDataObject={setNexusStepConfigurationDataDto}
-                dataObject={nexusStepConfigurationDto}
-                fieldName={"groupName"}
-              />
-              <TextInputBase
-                setDataFunction={handleArtifactNameChange}
-                setDataObject={setNexusStepConfigurationDataDto}
-                dataObject={nexusStepConfigurationDto}
-                fieldName={"artifactName"}
-              />
+            <>              
+              { nexusStepConfigurationDto.getData("repositoryFormat") !== "" && 
+                nexusStepConfigurationDto.getData("repositoryFormat") === "docker" ? (
+                  <>
+                    <NexusJenkinsToolInput 
+                      setDataObject={setNexusStepConfigurationDataDto}
+                      dataObject={nexusStepConfigurationDto}                    
+                    />
+                    <TextInputBase
+                      setDataFunction={handleGroupNameChange}
+                      setDataObject={setNexusStepConfigurationDataDto}
+                      dataObject={nexusStepConfigurationDto}
+                      fieldName={"dockerPort"}
+                    />                  
+                  </>
+                ) : (
+                  <>
+                    <TextInputBase
+                      setDataFunction={handleGroupNameChange}
+                      setDataObject={setNexusStepConfigurationDataDto}
+                      dataObject={nexusStepConfigurationDto}
+                      fieldName={"groupName"}
+                    />
+                    <TextInputBase
+                      setDataFunction={handleArtifactNameChange}
+                      setDataObject={setNexusStepConfigurationDataDto}
+                      dataObject={nexusStepConfigurationDto}
+                      fieldName={"artifactName"}
+                    />
+                  </>
+                )              
+              }              
               {nexusStepConfigurationDto.getData("type") === "push" &&
                 <DtoSelectInput
                   setDataObject={setNexusStepConfigurationDataDto}
@@ -249,7 +304,13 @@ function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToo
             }
         </>
       }
-      <SaveButtonBase disable={nexusStepConfigurationDto.getData("type") === "push" && nexusStepConfigurationDto.getData("artifactStepId").length === 0} recordDto={nexusStepConfigurationDto} setRecordDto={setNexusStepConfigurationDataDto} createRecord={callbackFunction} updateRecord={callbackFunction} />
+      { nexusStepConfigurationDto.getData("repositoryFormat") !== "" && 
+        nexusStepConfigurationDto.getData("repositoryFormat") === "docker" ? (
+          <SaveButtonBase disable={nexusStepConfigurationDto.getData("type") === "push" && nexusStepConfigurationDto.getData("artifactStepId").length === 0} recordDto={nexusStepConfigurationDto} setRecordDto={setNexusStepConfigurationDataDto} createRecord={handleCreateAndSave} updateRecord={handleCreateAndSave} />
+        ) : (
+          <SaveButtonBase disable={nexusStepConfigurationDto.getData("type") === "push" && nexusStepConfigurationDto.getData("artifactStepId").length === 0} recordDto={nexusStepConfigurationDto} setRecordDto={setNexusStepConfigurationDataDto} createRecord={callbackFunction} updateRecord={callbackFunction} />
+        )
+      }
       <small className="form-text text-muted mt-2 text-right">* Required Fields</small>
     </>
   );
@@ -262,6 +323,8 @@ NexusStepConfiguration.propTypes = {
   parentCallback: PropTypes.func,
   callbackSaveToVault: PropTypes.func,
   getToolsList: PropTypes.func,
+  createJob: PropTypes.func,
+  pipelineId: PropTypes.string,
 };
 
 export default NexusStepConfiguration;
