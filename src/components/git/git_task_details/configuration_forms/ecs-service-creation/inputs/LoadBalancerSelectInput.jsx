@@ -67,7 +67,6 @@ function LoadBalancerSelectInput({
     try {
       setLoadBalancers([]);
       const res = await ECSCreationActions.getLoadBalancers(dataObject, getAccessToken, cancelSource);
-      console.log(res.data);
       if (res && res.status === 200) {
         if (res.data.length === 0) {
           setPlaceholder("No Load Balancers Found");
