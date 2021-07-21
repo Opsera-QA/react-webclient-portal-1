@@ -730,3 +730,14 @@ export const getCheckBoxColumn = (handleChange) => {
     },
   };
 };
+
+export const getStaticIconColumn = (icon, accessor = "row", className) => {
+  return {
+    Header: "",
+    accessor: accessor,
+    Cell: function StaticIcon(){
+      return <FontAwesomeIcon icon={icon} />;
+    },
+    class: className ? className : undefined
+  };
+};

@@ -88,6 +88,10 @@ import { axiosApiService } from "api/apiService";
 import TagsUsedInPipelineReport from "components/reports/tags/pipelines/TagsUsedInPipelineReport";
 import TagsUsedInToolsReport from "components/reports/tags/tools/TagsUsedInToolsReport";
 import UserGroupMembershipReport from "components/reports/users/groups/UserGroupMembershipReport";
+import UserPipelineOwnershipReport from "components/reports/users/pipelines/UserPipelineOwnershipReport";
+import UserToolOwnershipReport from "components/reports/users/tools/UserToolOwnershipReport";
+import UserTaskOwnershipReport from "components/reports/users/tasks/UserTaskOwnershipReport";
+import ConsolidatedUserReport from "components/reports/users/user/ConsolidatedUserReport";
 import AccountRegistration from "components/user/account_registration/AccountRegistration";
 import SiteNotificationManager from "components/admin/site_notifications/manager/SiteNotificationManager";
 import ToolCountsReport from "components/reports/tools/counts/ToolCountsReport";
@@ -321,6 +325,10 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/reports/tags/tags-used-in-dashboards" exact component={TagsUsedInDashboardsReport}/>
                   <SecureRoute path="/reports/tools/detailed-tool-report" exact component={DetailedToolReport}/>
                   <SecureRoute path="/reports/users/group-membership" exact component={UserGroupMembershipReport}/>
+                  <SecureRoute path="/reports/users/pipeline-ownership" exact component={UserPipelineOwnershipReport}/>
+                  <SecureRoute path="/reports/users/tool-ownership" exact component={UserToolOwnershipReport}/>
+                  <SecureRoute path="/reports/users/task-ownership" exact component={UserTaskOwnershipReport}/>
+                  <SecureRoute path="/reports/users/user-report" exact component={ConsolidatedUserReport}/>
 
                   { /*Notifications */}
                   <SecureRoute path="/notifications" exact component={Notifications}/>

@@ -96,6 +96,7 @@ paths.groupMembershipReport = paths.userReports + "/group-membership";
 paths.pipelineOwnershipReport = paths.userReports + "/pipeline-ownership";
 paths.toolOwnershipReport = paths.userReports + "/tool-ownership";
 paths.taskOwnershipReport = paths.userReports + "/task-ownership";
+paths.consolidatedUserReport = paths.userReports + "/user-report";
 paths.pipelineReports = paths.reports + "/pipelines";
 
 //Inventory (Tool Registry) paths
