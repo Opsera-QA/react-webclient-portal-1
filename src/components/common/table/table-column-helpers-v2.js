@@ -267,7 +267,7 @@ export const getStaticInfoColumn = (className) => {
   return {
     header: "Info",
     id: "fake",
-    template: function (text, row, col) {
+    template: function () {
       return (`
         <span>
           <i class="fal fa-search-plus cell-icon vertical-align-item"></i>
