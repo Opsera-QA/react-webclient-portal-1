@@ -8,7 +8,7 @@ import {useHistory, useParams} from "react-router-dom";
 import ToolReports from "components/reports/tools/ToolReports";
 import TagReports from "components/reports/tags/TagReports";
 import PipelineReports from "components/reports/pipelines/PipelineReports";
-import {faAnalytics, faDraftingCompass, faTags, faTools, faUsers} from "@fortawesome/pro-light-svg-icons";
+import {faAnalytics, faTags, faTools, faUsers} from "@fortawesome/pro-light-svg-icons";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import UserReports from "components/reports/users/UserReports";
 
@@ -26,7 +26,7 @@ function Reports() {
   const {tab} = useParams();
   let history = useHistory();
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
+  const { getUserRecord, setAccessRoles, featureFlagHideItemInProd } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState(extractTab(tab));
@@ -90,7 +90,7 @@ function Reports() {
       <div>
         <TagReports />
         <ToolReports />
-        <UserReports />
+        {!featureFlagHideItemInProd() && <UserReports />}
         {/*TODO: Uncomment when Pipeline Report is added*/}
         {/*<PipelineReports />*/}
       </div>
@@ -103,7 +103,7 @@ function Reports() {
         <NavigationTab activeTab={activeTab} tabText={"All Reports"} handleTabClick={handleTabClick} tabName={"all"} icon={faAnalytics} />
         <NavigationTab activeTab={activeTab} tabText={"Tool Reports"} handleTabClick={handleTabClick} tabName={"tools"} icon={faTools} />
         <NavigationTab activeTab={activeTab} tabText={"Tag Reports"} handleTabClick={handleTabClick} tabName={"tags"} icon={faTags} />
-        {/*<NavigationTab activeTab={activeTab} tabText={"User Reports"} handleTabClick={handleTabClick} tabName={"users"} icon={faUsers} />*/}
+        {!featureFlagHideItemInProd() && <NavigationTab activeTab={activeTab} tabText={"User Reports"} handleTabClick={handleTabClick} tabName={"users"} icon={faUsers} />}
         {/* <NavigationTab activeTab={activeTab} tabText={"Pipeline Reports"} handleTabClick={handleTabClick} tabName={"pipelines"} icon={faDraftingCompass} /> */}
         {/*<NavigationTab activeTab={activeTab} tabText={"Dashboard Reports"} handleTabClick={handleTabClick} tabName={"dashboards"} icon={faDraftingCompass} />*/}
       </NavigationTabContainer>
