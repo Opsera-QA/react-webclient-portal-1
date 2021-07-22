@@ -529,6 +529,8 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
+            closeEditorPanel={closeEditorPanel}
+            createJob={createJob}
             getToolsList={getToolsList}
             setToast={setToast}
             setShowToast={setShowToast}
