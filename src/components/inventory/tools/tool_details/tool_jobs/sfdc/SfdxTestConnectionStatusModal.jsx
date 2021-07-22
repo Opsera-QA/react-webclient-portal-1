@@ -49,8 +49,7 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
     setModalLoading(true);
     try {
       const tool_logs = await toolsActions.getToolConnectionLog(getAccessToken, toolData);
-      
-      const testRes = tool_logs.data.data.filter(rec => rec.action === 'test_configuration' && rec.run_count === jenkinsBuildNumber && rec.job_name === jenkinsJobName.toLowerCase());
+      const testRes = tool_logs?.data?.data.filter(rec => rec.action === 'test_configuration' && rec.run_count?.toString() === jenkinsBuildNumber && rec.job_name === jenkinsJobName?.toLowerCase());
 
       if(testRes.length !== 1 && count < 5 ){
         await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
