@@ -2,13 +2,13 @@ import React, {useEffect, useState, useContext} from "react";
 import {Button, Modal, Row, Col} from "react-bootstrap";
 import PropTypes from "prop-types";
 import DetailPanelLoadingDialog from "components/common/loading/DetailPanelLoadingDialog";
-import { axiosApiService } from "api/apiService";
 import {AuthContext} from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRepeat, faCircle, faCheckCircle } from "@fortawesome/pro-light-svg-icons";
 import toolsActions from "components/inventory/tools/tools-actions";
 import Moment from "moment";
+import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
 import momentLocalizer from "react-widgets-moment";
 
 function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenkinsBuildNumber, setJenkinsBuildNumber, jenkinsJobName, setJenkinsJobName, setLoading}) {
@@ -49,8 +49,7 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
     setModalLoading(true);
     try {
       const tool_logs = await toolsActions.getToolConnectionLog(getAccessToken, toolData);
-      
-      const testRes = tool_logs.data.data.filter(rec => rec.action === 'test_configuration' && rec.run_count === jenkinsBuildNumber && rec.job_name === jenkinsJobName.toLowerCase());
+      const testRes = tool_logs?.data?.data.filter(rec => rec.action === 'test_configuration' && rec.run_count?.toString() === jenkinsBuildNumber && rec.job_name === jenkinsJobName?.toLowerCase());
 
       if(testRes.length !== 1 && count < 5 ){
         await new Promise(resolve => timerIds.push(setTimeout(resolve, 15000)));
@@ -76,13 +75,14 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
           <div className="content-block m-3 full-height">
             <div className="p-3">
                 {modalLoading ? <DetailPanelLoadingDialog type={"Connection Results"} /> : testResponse.length > 0 ? (                    
+                 <SummaryPanelContainer>
                     <Row>
                       <Col lg={12}>
                         <label className="mb-0 mr-2 text-muted"><span>Message:</span></label>
                         <span>{testResponse[0].message}</span>
                       </Col>
                       <Col lg={12}>
-                        <label className="mb-0 mr-2 text-muted"><span>Created At:</span></label>
+                        <label className="mb-0 mr-2 text-muted"><span>Validated At:</span></label>
                         <span>{Moment(testResponse[0].createdAt).format("MMMM Do YYYY, h:mm:ss a")}</span>
                       </Col>
                       <Col lg={12}>
@@ -90,8 +90,9 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
                         <span>{testResponse[0].status === "success" ? <FontAwesomeIcon icon={faCheckCircle} className="cell-icon green fa-md" /> : <FontAwesomeIcon icon={faCheckCircle} className="cell-icon red fa-md" /> } {testResponse[0].status}</span>
                       </Col>
                     </Row>
+                  </SummaryPanelContainer>
                 ) : (
-                  <>
+                  <SummaryPanelContainer>
                     <Row>
                       <Col lg={12} className={"mb-2"}>
                         <span>We are unable to fetch the status of the test connection. Please try again.</span>
@@ -102,7 +103,7 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
                         </Button>
                       </Col>                      
                     </Row>
-                  </>
+                  </SummaryPanelContainer>
                 ) }
             </div>
             <div className="text-muted small m-2">Note: The connectivity check may take some time to get the results, you can also check results on logs tab.</div>
