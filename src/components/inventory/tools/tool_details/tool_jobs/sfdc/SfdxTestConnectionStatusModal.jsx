@@ -92,7 +92,7 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
                     </Row>
                   </SummaryPanelContainer>
                 ) : (
-                  <>
+                  <SummaryPanelContainer>
                     <Row>
                       <Col lg={12} className={"mb-2"}>
                         <span>We are unable to fetch the status of the test connection. Please try again.</span>
@@ -103,7 +103,7 @@ function SfdxTestConnectionStatusModal({setShowModal, showModal, toolData, jenki
                         </Button>
                       </Col>                      
                     </Row>
-                  </>
+                  </SummaryPanelContainer>
                 ) }
             </div>
             <div className="text-muted small m-2">Note: The connectivity check may take some time to get the results, you can also check results on logs tab.</div>
