@@ -13,7 +13,7 @@ const NEXUS_REPO_TYPES = [
   }
 ];
 
-const NexusRepoFormatSelectInput = ({visible, dataObject, setDataObject, disabled, nexusToolConfigId}) => {
+const NexusRepoFormatSelectInput = ({dataObject, setDataObject, disabled}) => {
   
   const setDataFunction = (fieldName, selectedOption) => {
     let newDataObject = {...dataObject};
@@ -51,14 +51,10 @@ const NexusRepoFormatSelectInput = ({visible, dataObject, setDataObject, disable
   };
 
   const getPlaceholderText = () => {
-    if (nexusToolConfigId === "") {
+    if (dataObject.getData("nexusToolConfigId") === "") {
       return "A Nexus Tool must be selected before selecting Repos";
     }    
   };
-
-  if (!visible) {
-    return <></>;
-  }
 
   return (
     <SelectInputBase
@@ -71,21 +67,19 @@ const NexusRepoFormatSelectInput = ({visible, dataObject, setDataObject, disable
       valueField="value"
       textField="name"
       placeholderText={getPlaceholderText()}
-      disabled={disabled || nexusToolConfigId === ""}
+      disabled={disabled || dataObject.getData("nexusToolConfigId") === ""}
     />
   );
 };
 
 NexusRepoFormatSelectInput.propTypes = {
   dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,  
-  nexusToolConfigId: PropTypes.string,
-  disabled: PropTypes.bool,
-  visible: PropTypes.bool
+  setDataObject: PropTypes.func,    
+  disabled: PropTypes.bool,  
 };
 
 NexusRepoFormatSelectInput.defaultProps = {
-  visible: true
+  disabled: false
 };
 
 export default NexusRepoFormatSelectInput;

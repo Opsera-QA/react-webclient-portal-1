@@ -5,11 +5,15 @@ const nexusStepFormMetadata = {
   fields: [
     {
       label: "Group Name",
-      id: "groupName",      
+      id: "groupName",
+      regexValidator: regexHelpers.regexTypes.generalText,
+      maxLength: 50,
     },
     {
       label: "Artifact Name",
-      id: "artifactName",      
+      id: "artifactName",
+      regexValidator: regexHelpers.regexTypes.generalText,
+      maxLength: 50,
     },
     {
       label: "Nexus Step Type",
