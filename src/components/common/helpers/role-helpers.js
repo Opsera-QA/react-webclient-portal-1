@@ -29,7 +29,7 @@ export const ACCESS_ROLES = {
 
 export const ACCESS_ROLES_FORMATTED_LABELS = {
   opsera_administrator: "Opsera Administrator",
-  administrator: "Site Administrator",
+  administrator: "Administrator",
   saas_user: "User",
   power_user: "Power User",
   owner: "Owner",

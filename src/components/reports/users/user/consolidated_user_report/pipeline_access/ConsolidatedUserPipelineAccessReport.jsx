@@ -1,7 +1,5 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
-import LoadingDialog from "components/common/status_notifications/loading";
-import InfoDialog from "components/common/status_notifications/info";
 import pipelineFilterMetadata from "components/workflow/pipelines/pipeline_details/workflow/pipeline-filter-metadata";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -15,11 +13,11 @@ import pipelineSummaryMetadata
 import ConsolidatedUserReportPipelineAccessTable
   from "components/reports/users/user/consolidated_user_report/pipeline_access/ConsolidatedUserReportPipelineAccessTable";
 
-function ConsolidatedUserPipelineAccessReport({ selectedUser }) {
-  const { getAccessToken } = useContext(AuthContext);
+function ConsolidatedUserPipelineAccessReport({ userEmailAddress }) {
+  const {getAccessToken} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
-  const [pipelineFilterDto, setPipelineFilterDto] = useState(undefined);
+  const [pipelineFilterModel, setPipelineFilterModel] = useState(undefined);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [pipelines, setPipelines] = useState([]);
@@ -34,8 +32,7 @@ function ConsolidatedUserPipelineAccessReport({ selectedUser }) {
     isMounted.current = true;
 
     setPipelines([]);
-
-    let newFilterDto = new Model({ ...pipelineFilterMetadata.newObjectFields }, pipelineFilterMetadata, false);
+    let newFilterDto = new Model({...pipelineFilterMetadata.newObjectFields}, pipelineFilterMetadata, false);
     loadData(newFilterDto, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
@@ -46,21 +43,20 @@ function ConsolidatedUserPipelineAccessReport({ selectedUser }) {
       source.cancel();
       isMounted.current = false;
     };
-  }, [selectedUser]);
+  }, [userEmailAddress]);
 
-  const loadData = async (newFilterDto = pipelineFilterDto, cancelSource = cancelTokenSource) => {
+  const loadData = async (newFilterDto = pipelineFilterModel, cancelSource = cancelTokenSource) => {
     try {
-      setIsLoading(true);
-
-      if (isMounted?.current === true && selectedUser) {
-        const response = await pipelineActions.getPipelinesAccessByEmailV2(getAccessToken, cancelSource, pipelineFilterDto, selectedUser?.emailAddress);
+      if (isMounted?.current === true && userEmailAddress) {
+        setIsLoading(true);
+        const response = await pipelineActions.getPipelinesAccessByEmailV2(getAccessToken, cancelSource, newFilterDto, userEmailAddress);
         const pipelines = response?.data?.data;
 
         if (Array.isArray(pipelines)) {
           setPipelines(pipelines);
           newFilterDto.setData("totalCount", response?.data?.count);
           newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-          setPipelineFilterDto({...newFilterDto});
+          setPipelineFilterModel({...newFilterDto});
         }
       }
     } catch (error) {
@@ -75,72 +71,42 @@ function ConsolidatedUserPipelineAccessReport({ selectedUser }) {
     }
   };
 
-  const getView = () => {
-    if (isLoading) {
-      return (<LoadingDialog size="md" message="Loading pipelines..."/>);
-    }
-
+  const getPipelineAccessTable = () => {
     return (
       <ConsolidatedUserReportPipelineAccessTable
         isLoading={isLoading}
-        paginationModel={pipelineFilterDto}
-        setPaginationModel={setPipelineFilterDto}
+        paginationModel={pipelineFilterModel}
+        setPaginationModel={setPipelineFilterModel}
         data={pipelines}
         loadData={loadData}
-        type={"pipeline"}
       />
     );
   };
 
-  const getPipelinesBody = () => {
-    if (isLoading) {
-      return (<LoadingDialog size="md" message="Loading pipelines..."/>);
-    }
-
-    if (!Array.isArray(pipelines) || pipelines.length === 0) {
-      const activeFilters = pipelineFilterDto?.getActiveFilters();
-      if (activeFilters && activeFilters.length > 0) {
-        return (
-          <div className="px-2 max-content-width mx-auto" >
-            <div className="my-5"><InfoDialog message="No pipelines meeting the filter requirements were found."/></div>
-          </div>
-        );
-      }
-
-      return (
-        <div className="px-2 max-content-width" >
-          <div className="my-5"><InfoDialog message="No pipelines are available for this view at this time."/></div>
-        </div>
-      );
-    }
-
-    return (getView());
-  };
-
-  if (!selectedUser) {
+  if (!userEmailAddress) {
     return null;
   }
 
   return (
-      <FilterContainer
-        style={{minWidth: "505px"}}
-        loadData={loadData}
-        filterDto={pipelineFilterDto}
-        setFilterDto={setPipelineFilterDto}
-        supportSearch={true}
-        supportViewToggle={true}
-        isLoading={isLoading}
-        metadata={pipelineSummaryMetadata}
-        type={"Pipeline"}
-        body={getPipelinesBody()}
-        titleIcon={faDraftingCompass}
-        title={"Pipelines"}
-      />
+    <FilterContainer
+      style={{minWidth: "505px"}}
+      loadData={loadData}
+      filterDto={pipelineFilterModel}
+      setFilterDto={setPipelineFilterModel}
+      supportSearch={true}
+      showBorder={false}
+      isLoading={isLoading}
+      metadata={pipelineSummaryMetadata}
+      type={"Pipeline"}
+      body={getPipelineAccessTable()}
+      titleIcon={faDraftingCompass}
+      title={"Pipelines"}
+    />
   );
 }
 
 ConsolidatedUserPipelineAccessReport.propTypes = {
-  selectedUser: PropTypes.object,
+  userEmailAddress: PropTypes.string,
 };
 
 export default ConsolidatedUserPipelineAccessReport;

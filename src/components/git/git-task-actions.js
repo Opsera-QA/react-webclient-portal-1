@@ -51,12 +51,15 @@ gitTasksActions.getGitTaskByIdV2 = async (getAccessToken, cancelTokenSource, id)
 };
 
 gitTasksActions.getGitTaskAccessForUserEmail = async (getAccessToken, cancelTokenSource, taskFilterModel, email) => {
+  const sortOption = taskFilterModel?.getData("sortOption");
   const apiUrl = `/tasks/user/${email}`;
   const urlParams = {
     params: {
+      sort: sortOption?.value,
       size: taskFilterModel.getData("pageSize"),
       page: taskFilterModel.getData("currentPage"),
       search: taskFilterModel.getFilterValue("search"),
+      fields: ["name", "type", "owner", "roles"]
     },
   };
 
