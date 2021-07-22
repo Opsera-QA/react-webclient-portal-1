@@ -45,7 +45,7 @@ function UserToolOwnershipReportTable({ toolList, isLoading, paginationModel, se
   const getNoDataMessage = () => {
     const activeFilters = paginationModel?.getActiveFilters();
 
-    if (paginationModel?.getData("owner")?.value == null) {
+    if (paginationModel?.getFilterValue("owner")) {
       return "Please Select a user to get started";
     }
 

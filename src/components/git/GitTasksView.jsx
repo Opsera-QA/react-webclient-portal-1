@@ -6,9 +6,8 @@ import gitTasksFilterMetadata from "./git-tasks-filter-metadata";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
-import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faTasksAlt} from "@fortawesome/pro-light-svg-icons";
+import {faTasks} from "@fortawesome/pro-light-svg-icons";
 import StatusFilter from "components/common/filters/status/StatusFilter";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import NewGitTaskOverlay from "components/git/NewGitTaskOverlay";
@@ -75,7 +74,7 @@ function GitTasksView() {
       const response = await gitTasksActions.getGitTasksListV2(getAccessToken, cancelSource, filterDto);
       const taskList = response?.data?.data;
 
-      if (isMounted.current === true && taskList) {
+      if (isMounted.current === true && Array.isArray(taskList)) {
         setGitTasksList(taskList);
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", response?.data?.count);
@@ -123,8 +122,8 @@ function GitTasksView() {
       isLoading={isLoading}
       body={getBody()}
       dropdownFilters={getDropdownFilters()}
-      titleIcon={faTasksAlt}
-      title={"Opsera Tasks"}
+      titleIcon={faTasks}
+      title={"Tasks"}
       className={"px-2 pb-2"}
     />
   );

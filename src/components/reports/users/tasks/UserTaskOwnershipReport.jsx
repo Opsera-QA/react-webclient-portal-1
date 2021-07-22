@@ -1,6 +1,4 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
-import LoadingDialog from "components/common/status_notifications/loading";
-import userReportsMetadata from "components/reports/users/user-reports-metadata";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import Row from "react-bootstrap/Row";
@@ -9,19 +7,22 @@ import Model from "core/data_model/model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import UserTaskOwnershipReportTable from "components/reports/users/tasks/UserTaskOwnershipReportTable";
-import LdapUserSelectInput from "components/common/list_of_values_input/users/LdapUserSelectInput";
 import axios from "axios";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
+import OwnershipReportLdapUserSelectInput
+  from "components/common/list_of_values_input/reports/user_reports/OwnershipReportLdapUserSelectInput";
+import taskFilterMetadata from "components/git/git-tasks-filter-metadata";
+import gitTasksActions from "components/git/git-task-actions";
 
 function UserTaskOwnershipReport() {
-  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
+  const { getAccessRoleData, getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [tasks, setTasks] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [taskOwnershipModel, setTaskOwnershipModel] = useState(new Model({ ...userReportsMetadata }, userReportsMetadata, false));
-  const [selectedUser, setSelectedUser] = useState(undefined);
+  const [taskFilterDto, setTaskFilterDto] = useState(new Model({ ...taskFilterMetadata.newObjectFields }, taskFilterMetadata, false));
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -32,11 +33,11 @@ function UserTaskOwnershipReport() {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
-        if (isMounted?.current === true) {
-          throw error;
-        }
-      });
+    loadRoles().catch((error) => {
+      if (isMounted?.current === true) {
+        throw error;
+      }
+    });
 
     return () => {
       source.cancel();
@@ -44,14 +45,26 @@ function UserTaskOwnershipReport() {
     };
   }, []);
 
-  const loadData = async () => {
-    try {
-      const user = await getUserRecord();
-      const userRoleAccess = await setAccessRoles(user);
+  const loadRoles = async () => {
+    const userRoleAccess = await getAccessRoleData();
+    if (isMounted?.current === true && userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+    }
+  };
 
-      if (isMounted?.current === true && userRoleAccess) {
+  const loadData = async (newFilterModel = taskFilterDto, cancelSource = cancelTokenSource) => {
+    try {
+      if (isMounted?.current === true) {
         setIsLoading(true);
-        setAccessRoleData(userRoleAccess);
+        const response = await gitTasksActions.getGitTasksListV2(getAccessToken, cancelSource, newFilterModel);
+        const tools = response?.data?.data;
+
+        if (Array.isArray(tools)) {
+          setTasks(tools);
+          newFilterModel.setData("totalCount", response?.data?.count);
+          newFilterModel.setData("activeFilters", newFilterModel.getActiveFilters());
+          setTaskFilterDto({...newFilterModel});
+        }
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -65,50 +78,30 @@ function UserTaskOwnershipReport() {
     }
   };
 
-  const setDataFunction = (fieldName, value) => {
-    const newTaskOwnershipModel = taskOwnershipModel;
-    const user = value?.user;
-
-    newTaskOwnershipModel.setData("user", user);
-
-    if (user) {
-      newTaskOwnershipModel.setData("_id", user?._id);
-      newTaskOwnershipModel.setData("name", `${user?.firstName} ${user.lastName}` );
-      newTaskOwnershipModel.setData("firstName", user?.firstName);
-      newTaskOwnershipModel.setData("lastName", user?.lastName);
-      newTaskOwnershipModel.setData("emailAddress", user?.email);
-    }
-
-    setTaskOwnershipModel({...newTaskOwnershipModel});
-    setSelectedUser(taskOwnershipModel.getData("user"));
-  };
-
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
   return (
     <ScreenContainer
       breadcrumbDestination={"taskOwnershipReport"}
       accessRoleData={accessRoleData}
+      isLoading={!accessRoleData}
       navigationTabContainer={<ReportsSubNavigationBar currentTab={"userReportViewer"} />}
       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
       pageDescription={"View tasks owned by selected user"}
     >
-      <Row className={"mb-3 mx-0"}>
-        <Col className={"mx-0"}>
-          <LdapUserSelectInput
-            fieldName={"name"}
-            model={taskOwnershipModel}
-            setModel={setTaskOwnershipModel}
-            setDataFunction={setDataFunction}
-            busy={isLoading}
+      <Row className={"mb-2 mx-0"}>
+        <Col className={"px-2"}>
+          <OwnershipReportLdapUserSelectInput
+            loadData={loadData}
+            model={taskFilterDto}
           />
         </Col>
       </Row>
-        <UserTaskOwnershipReportTable
-          selectedUser={selectedUser}
-        />
+      <UserTaskOwnershipReportTable
+        paginationModel={taskFilterDto}
+        setPaginationModel={setTaskFilterDto}
+        loadData={loadData}
+        isLoading={isLoading}
+        taskList={tasks}
+      />
     </ScreenContainer>
   );
 }
