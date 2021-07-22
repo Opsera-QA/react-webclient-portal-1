@@ -6,7 +6,7 @@ import axios from "axios";
 import nexusStepActions from "../nexus-step-actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function NexusRepoSelectInput({visible, dataObject, setDataObject, setDataFunction, disabled, nexusToolConfigId}) {
+function NexusRepoSelectInput({visible, dataObject, setDataObject, disabled, nexusToolConfigId}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [nexusRepositoriesList, setNexusRepositoriesList] = useState([]);
@@ -92,8 +92,22 @@ function NexusRepoSelectInput({visible, dataObject, setDataObject, setDataFuncti
     }
 
     if (!isLoading && nexusToolConfigId !== "" && nexusRepositoriesList.length === 0) {
-      return "No Repositories found for selected Nexus account.";
+      return "No Repositories found for selected configuration.";
     }
+  };
+
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newDataObject = dataObject;
+    newDataObject.setData("repositoryGroup", selectedOption.format);
+    newDataObject.setData("repositoryName", selectedOption.name);
+    setDataObject({...newDataObject});
+  };
+
+  const clearDataFunction = (fieldName, selectedOption) => {
+    let newDataObject = dataObject;
+    newDataObject.setData("repositoryGroup", "");
+    newDataObject.setData("repositoryName", "");
+    setDataObject({...newDataObject});
   };
 
   if (!visible) {
@@ -106,6 +120,7 @@ function NexusRepoSelectInput({visible, dataObject, setDataObject, setDataFuncti
       dataObject={dataObject}
       setDataObject={setDataObject}
       setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
       selectOptions={nexusRepositoriesList}
       busy={isLoading}
       valueField="name"
@@ -118,8 +133,7 @@ function NexusRepoSelectInput({visible, dataObject, setDataObject, setDataFuncti
 
 NexusRepoSelectInput.propTypes = {
   dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
-  setDataFunction: PropTypes.func,
+  setDataObject: PropTypes.func,  
   nexusToolConfigId: PropTypes.string,
   disabled: PropTypes.bool,
   visible: PropTypes.bool
