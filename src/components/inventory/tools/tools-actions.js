@@ -92,8 +92,11 @@ toolsActions.getRoleLimitedToolRegistryListV2 = async (getAccessToken, cancelTok
 };
 
 toolsActions.getToolAccessWithEmail = async (getAccessToken, cancelTokenSource, toolFilterModel, email) => {
+  const sortOption = toolFilterModel?.getData("sortOption");
+  const apiUrl = `/registry/configs/user/${email}`;
   const urlParams = {
     params: {
+      sort: sortOption?.value,
       page: toolFilterModel.getData("currentPage"),
       size: toolFilterModel.getData("pageSize"),
       search: toolFilterModel.getFilterValue("search"),
@@ -101,7 +104,6 @@ toolsActions.getToolAccessWithEmail = async (getAccessToken, cancelTokenSource, 
     }
   };
 
-  const apiUrl = `/registry/configs/user/${email}`;
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 

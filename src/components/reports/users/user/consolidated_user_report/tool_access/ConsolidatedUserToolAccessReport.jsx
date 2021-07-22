@@ -1,6 +1,5 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
-import InfoDialog from "components/common/status_notifications/info";
 import toolFilterMetadata from "components/inventory/tools/tool-filter-metadata";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -13,7 +12,7 @@ import toolMetadata from "components/inventory/tools/tool-metadata";
 import ConsolidatedUserReportToolAccessTable
   from "components/reports/users/user/consolidated_user_report/tool_access/ConsolidatedUserReportToolAccessTable";
 
-function ConsolidatedUserToolAccessReport({ selectedUser }) {
+function ConsolidatedUserToolAccessReport({ userEmailAddress }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
@@ -44,29 +43,20 @@ function ConsolidatedUserToolAccessReport({ selectedUser }) {
       source.cancel();
       isMounted.current = false;
     };
-  }, [selectedUser]);
+  }, [userEmailAddress]);
 
   const loadData = async (newFilterModel = toolFilterModel, cancelSource = cancelTokenSource) => {
     try {
-      setIsLoading(true);
-
-      if (isMounted?.current === true && selectedUser) {
-        let newToolFilterDto = newFilterModel;
-        newToolFilterDto.setData("pageSize", 25);
-        setToolFilterModel(newToolFilterDto);
-
-        const response = await toolsActions.getToolAccessWithEmail(getAccessToken, cancelSource, toolFilterModel, selectedUser?.emailAddress);
+      if (isMounted?.current === true && userEmailAddress) {
+        setIsLoading(true);
+        const response = await toolsActions.getToolAccessWithEmail(getAccessToken, cancelSource, newFilterModel, userEmailAddress);
         const tools = response?.data?.data;
-
-        console.log("tools[0]: " + JSON.stringify(tools[0]));
 
         if (Array.isArray(tools)) {
           setTools(tools);
-
-          let newFilterDto = toolFilterModel;
-          newFilterDto.setData("totalCount", response?.data?.count);
-          newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
-          setToolFilterModel({...newFilterDto});
+          newFilterModel.setData("totalCount", response?.data?.count);
+          newFilterModel.setData("activeFilters", newFilterModel.getActiveFilters());
+          setToolFilterModel({...newFilterModel});
         }
       }
     } catch (error) {
@@ -81,7 +71,7 @@ function ConsolidatedUserToolAccessReport({ selectedUser }) {
     }
   };
 
-  const getView = () => {
+  const getToolAccessTable = () => {
     return (
       <ConsolidatedUserReportToolAccessTable
         isLoading={isLoading}
@@ -93,28 +83,7 @@ function ConsolidatedUserToolAccessReport({ selectedUser }) {
     );
   };
 
-  const getToolsBody = () => {
-    if (tools && tools.length === 0 && !isLoading) {
-      const activeFilters = toolFilterModel?.getActiveFilters();
-      if (activeFilters && activeFilters.length > 0) {
-        return (
-          <div className="px-2 max-content-width mx-auto" >
-            <div className="my-5"><InfoDialog message="No tools meeting the filter requirements were found."/></div>
-          </div>
-        );
-      }
-
-      return (
-        <div className="px-2 max-content-width" >
-          <div className="my-5"><InfoDialog message="No tools are available for this view at this time."/></div>
-        </div>
-      );
-    }
-
-    return (getView());
-  };
-
-  if (!selectedUser) {
+  if (!userEmailAddress) {
     return null;
   }
 
@@ -125,11 +94,11 @@ function ConsolidatedUserToolAccessReport({ selectedUser }) {
       filterDto={toolFilterModel}
       setFilterDto={setToolFilterModel}
       supportSearch={true}
-      supportViewToggle={true}
+      showBorder={false}
       isLoading={isLoading}
       metadata={toolMetadata}
       type={"Tools"}
-      body={getToolsBody()}
+      body={getToolAccessTable()}
       titleIcon={faTools}
       title={"Tools"}
     />
@@ -137,7 +106,7 @@ function ConsolidatedUserToolAccessReport({ selectedUser }) {
 }
 
 ConsolidatedUserToolAccessReport.propTypes = {
-  selectedUser: PropTypes.object,
+  userEmailAddress: PropTypes.string,
 };
 
 export default ConsolidatedUserToolAccessReport;

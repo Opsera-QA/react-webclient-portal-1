@@ -54,11 +54,13 @@ pipelineActions.getPipelinesV2 = async (getAccessToken, cancelTokenSource, pipel
 
 pipelineActions.getPipelinesAccessByEmailV2 = async (getAccessToken, cancelTokenSource, pipelineFilterDto, email) => {
   const apiUrl = `/pipelines/user/${email}`;
+  const sortOption = pipelineFilterDto?.getData("sortOption");
   const urlParams = {
     params: {
-      size: pipelineFilterDto.getData("pageSize"),
-      page: pipelineFilterDto.getData("currentPage"),
-      search: pipelineFilterDto.getFilterValue("search"),
+      sort: sortOption?.value,
+      size: pipelineFilterDto?.getData("pageSize"),
+      page: pipelineFilterDto?.getData("currentPage"),
+      search: pipelineFilterDto?.getFilterValue("search"),
       fields: ["name", "roles", "owner"]
     },
   };

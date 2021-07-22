@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, {useState, useEffect, useRef, useContext} from "react";
 import LoadingDialog from "components/common/status_notifications/loading";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import Row from "react-bootstrap/Row";
@@ -7,86 +7,59 @@ import NavigationTabContainer from "components/common/tabs/navigation/Navigation
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import { faAnalytics, faTags, faTools, faUsers } from "@fortawesome/pro-light-svg-icons";
 import { useHistory } from "react-router-dom";
-import { AuthContext } from "contexts/AuthContext";
-import { DialogToastContext } from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import userReportsMetadata from "components/reports/users/user-reports-metadata";
-import accountsActions from "components/admin/accounts/accounts-actions";
-import axios from "axios";
 import { ROLE_LEVELS } from "components/common/helpers/role-helpers";
 import LdapUserByDomainSelectInput from "components/common/list_of_values_input/users/LdapUserByDomainSelectInput";
-import ConsolidatedUserReportGroupMembershipTable from "components/reports/users/user/consolidated_user_report/group_membership/ConsolidatedUserReportGroupMembershipTable";
-import ConsolidatedUserPipelineAccessReport from "components/reports/users/user/consolidated_user_report/pipeline_access/ConsolidatedUserPipelineAccessReport";
 import ConsolidatedUserToolAccessReport from "components/reports/users/user/consolidated_user_report/tool_access/ConsolidatedUserToolAccessReport";
-import ConsolidatedUserTaskAccessReport from "components/reports/users/user/consolidated_user_report/task_access/ConsolidatedUserTaskAccessReport";
+import ConsolidatedUserGroupMembershipReport
+  from "components/reports/users/user/consolidated_user_report/group_membership/ConsolidatedUserGroupMembershipReport";
+import {AuthContext} from "contexts/AuthContext";
+import {DialogToastContext} from "contexts/DialogToastContext";
+import InformationDialog from "components/common/status_notifications/info";
+import ConsolidatedUserPipelineAccessReport
+  from "components/reports/users/user/consolidated_user_report/pipeline_access/ConsolidatedUserPipelineAccessReport";
+import ConsolidatedUserTaskAccessReport
+  from "components/reports/users/user/consolidated_user_report/task_access/ConsolidatedUserTaskAccessReport";
 
 function ConsolidatedUserReport() {
-  const { getUserRecord, getAccessToken, setAccessRoles } = useContext(AuthContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
+  const { getAccessRoleData } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [isLoading, setIsLoading] = useState(true);
-  const [groupMembershipModel, setGroupMembershipModel] = useState(new Model({ ...userReportsMetadata }, userReportsMetadata, false));
+  const [accessRoleData, setAccessRoleData] = useState(undefined);
+  const [ldapUserModel, setLdapUserModel] = useState(new Model({ ...userReportsMetadata }, userReportsMetadata, false));
   const isMounted = useRef(false);
-  const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [groupList, setGroupList] = useState([]);
-  const [domain, setDomain] = useState("");
-  const [selectedUser, setSelectedUser] = useState(undefined);
   const history = useHistory();
 
   useEffect(() => {
-    if (cancelTokenSource) {
-      cancelTokenSource.cancel();
-    }
-
-    const source = axios.CancelToken.source();
-    setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
     });
 
     return () => {
-      source.cancel();
       isMounted.current = false;
     };
   }, []);
 
-  const loadData = async (cancelSource = cancelTokenSource) => {
+  const loadData = async () => {
     try {
-      const user = await getUserRecord();
-      const { ldap } = user;
-      const userRoleAccess = await setAccessRoles(user);
-
+      const userRoleAccess = await getAccessRoleData();
       if (isMounted?.current === true && userRoleAccess) {
-        setIsLoading(true);
         setAccessRoleData(userRoleAccess);
-        setDomain(ldap?.domain);
-
-        if (ldap.domain != null) {
-          const groupResponse = await accountsActions.getLdapGroupsWithDomainV2(getAccessToken, cancelSource, ldap.domain);
-
-          if (Array.isArray(groupResponse?.data)) {
-            setGroupList(groupResponse?.data);
-          }
-        }
       }
     } catch (error) {
       if (isMounted?.current === true) {
         console.error(error);
         toastContext.showLoadingErrorDialog(error);
       }
-    } finally {
-      if (isMounted?.current === true) {
-        setIsLoading(false);
-      }
     }
   };
 
   const setDataFunction = (fieldName, value) => {
-    let newDataObject = groupMembershipModel;
+    let newDataObject = ldapUserModel;
     const user = value?.user;
 
     newDataObject.setData("user", user);
@@ -100,8 +73,7 @@ function ConsolidatedUserReport() {
       newDataObject.setData("dn", user?.dn);
     }
 
-    setGroupMembershipModel({ ...newDataObject });
-    setSelectedUser(groupMembershipModel.getData("user"));
+    setLdapUserModel({ ...newDataObject });
   };
 
   const handleTabClick = (tabSelection) => (e) => {
@@ -124,6 +96,47 @@ function ConsolidatedUserReport() {
     return <LoadingDialog size="sm" />;
   }
 
+  const getBody = () => {
+    if (ldapUserModel == null || ldapUserModel?.getData("user") == null) {
+      return (
+        <div className={"m-3"}>
+          <InformationDialog message={"Please select a user to get started"} />
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        <Row className={"mb-3 mx-0"}>
+          <Col className={"mx-0"} md={12} lg={12}>
+            <ConsolidatedUserGroupMembershipReport
+              ldapUserDistinguishedName={ldapUserModel?.getData("dn")}
+            />
+          </Col>
+        </Row>
+        <Row className={"mb-3 mx-0"}>
+          <Col className={"mx-0"} md={12} lg={6}>
+            <ConsolidatedUserToolAccessReport
+              userEmailAddress={ldapUserModel?.getData("emailAddress")}
+            />
+          </Col>
+          <Col className={"mx-0"} md={12} lg={6}>
+            <ConsolidatedUserPipelineAccessReport
+              userEmailAddress={ldapUserModel?.getData("emailAddress")}
+            />
+          </Col>
+        </Row>
+        <Row className={"mb-3 mx-0"}>
+          <Col className={"mx-0"} md={12} lg={12}>
+            <ConsolidatedUserTaskAccessReport
+              userEmailAddress={ldapUserModel?.getData("emailAddress")}
+              />
+          </Col>
+        </Row>
+      </div>
+    );
+  };
+
   return (
     <ScreenContainer
       breadcrumbDestination={"consolidatedUserReport"}
@@ -135,47 +148,14 @@ function ConsolidatedUserReport() {
       <Row className={"mb-3 mx-0"}>
         <Col className={"mx-0"}>
           <LdapUserByDomainSelectInput
-            model={groupMembershipModel}
-            setModel={setGroupMembershipModel}
+            model={ldapUserModel}
+            setModel={setLdapUserModel}
             setDataFunction={setDataFunction}
             fieldName={"name"}
           />
         </Col>
       </Row>
-      <Row className={"mb-3 mx-0"}>
-        <Col className={"mx-0"} md={12} lg={12}>
-          <ConsolidatedUserReportGroupMembershipTable
-            groups={groupList}
-            isLoading={isLoading}
-            loadData={loadData}
-            domain={domain}
-            userDistinguishedName={groupMembershipModel?.getData("dn")}
-          />
-        </Col>
-      </Row>
-      <Row className={"mb-3 mx-0"}>
-        <Col className={"mx-0"} md={12} lg={6}>
-          <ConsolidatedUserToolAccessReport
-            selectedUser={selectedUser}
-          />
-        </Col>
-        <Col className={"mx-0"} md={12} lg={6}>
-          {/*<ConsolidatedUserPipelineAccessReport*/}
-          {/*  isLoading={isLoading}*/}
-          {/*  setIsLoading={setIsLoading}*/}
-          {/*  selectedUser={selectedUser}*/}
-          {/*/>*/}
-        </Col>
-      </Row>
-      <Row className={"mb-3 mx-0"}>
-        <Col className={"mx-0"} md={12} lg={12}>
-        {/*<ConsolidatedUserTaskAccessReport*/}
-        {/*    isLoading={isLoading}*/}
-        {/*    setIsLoading={setIsLoading}*/}
-        {/*    selectedUser={selectedUser}*/}
-        {/*  />*/}
-        </Col>
-      </Row>
+      {getBody()}
     </ScreenContainer>
   );
 }

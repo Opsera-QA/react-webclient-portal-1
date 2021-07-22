@@ -1,37 +1,51 @@
 import React, {useMemo} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import {getTableTextColumn, getStaticIconColumn} from "components/common/table/table-column-helpers";
+import {
+  getTableTextColumn,
+  getStaticInfoColumn, getRoleAccessLevelColumn
+} from "components/common/table/table-column-helpers-v2";
 import {useHistory} from "react-router-dom";
-import {faSearch} from "@fortawesome/pro-light-svg-icons";
 import gitTasksMetadata from "components/git/git-tasks-metadata";
+import VanityTable from "components/common/table/VanityTable";
 
 function ConsolidatedUserReportTaskAccessTable({ data, isLoading, paginationModel, setPaginationModel, loadData }) {
   let history = useHistory();
   const fields = gitTasksMetadata.fields;
 
-  const onRowSelect = (rowData) => {
-    history.push(`/inventory/tools/details/${rowData.original._id}`);
+  const onRowSelect = (grid, row) => {
+    history.push(`/git/details/${row?._id}`);
   };
 
   const columns = useMemo(
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "name";})),
       getTableTextColumn(fields.find(field => { return field.id === "type";})),
-      getTableTextColumn(fields.find(field => { return field.id === "_id";})),
-      getStaticIconColumn(faSearch)
+      getRoleAccessLevelColumn(fields.find(field => { return field.id === "role_access_level";})),
+      // getTableTextColumn(fields.find(field => { return field.id === "_id";})),
+      getStaticInfoColumn()
     ],
     [],
   );
 
+  const getNoDataMessage = () => {
+    const activeFilters = paginationModel?.getActiveFilters();
+    if (activeFilters && activeFilters.length > 0) {
+      return "No tasks meeting the filter requirements were found.";
+    }
+
+    return "No tasks found for this user account.";
+  };
+
   return (
-    <CustomTable
-      className="table-no-border"
+    <VanityTable
       columns={columns}
       onRowSelect={onRowSelect}
-      paginationDto={paginationModel}
+      paginationModel={paginationModel}
+      noDataMessage={getNoDataMessage()}
       loadData={loadData}
-      setPaginationDto={setPaginationModel}
+      setPaginationModel={setPaginationModel}
+      tableHeight={"250px"}
       data={data}
       isLoading={isLoading}
     />

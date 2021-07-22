@@ -13,19 +13,28 @@ function ConsolidatedUserReportToolAccessTable({ data, isLoading, paginationMode
   let history = useHistory();
   const fields = toolMetadata.fields;
 
-  const onRowSelect = (rowData) => {
-    history.push(`/inventory/tools/details/${rowData.original._id}`);
+  const onRowSelect = (grid, row) => {
+    history.push(`/inventory/tools/details/${row?._id}`);
   };
  
   const columns = useMemo(
     () => [
       getTableTextColumn(fields.find(field => { return field.id === "name";})),
       getRoleAccessLevelColumn(fields.find(field => { return field.id === "role_access_level";})),
-      getTableTextColumn(fields.find(field => { return field.id === "_id";})),
-      // getStaticInfoColumn()
+      // getTableTextColumn(fields.find(field => { return field.id === "_id";})),
+      getStaticInfoColumn()
     ],
     [],
   );
+
+  const getNoDataMessage = () => {
+    const activeFilters = paginationModel?.getActiveFilters();
+    if (activeFilters && activeFilters.length > 0) {
+      return "No tools meeting the filter requirements were found.";
+    }
+
+    return "No tools found for this user account.";
+  };
 
   return (
     <VanityTable
@@ -33,6 +42,8 @@ function ConsolidatedUserReportToolAccessTable({ data, isLoading, paginationMode
       onRowSelect={onRowSelect}
       paginationModel={paginationModel}
       loadData={loadData}
+      noDataMessage={getNoDataMessage()}
+      tableHeight={"250px"}
       setPaginationModel={setPaginationModel}
       data={data}
       isLoading={isLoading}

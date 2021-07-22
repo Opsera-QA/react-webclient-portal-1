@@ -54,7 +54,13 @@ export class FilterModelBase {
   };
 
   getActiveFilters = () => {
-    console.error("No getActiveFilters function was wired up.");
+    let activeFilters = [];
+
+    if (this.canSearch() && this.getData("search") != null && this.getData("search") !== "") {
+      activeFilters.push({filterId: "search", text: `Keywords: ${this.getData("search")}`});
+    }
+
+    return activeFilters;
   };
 
   canSearch = () => {

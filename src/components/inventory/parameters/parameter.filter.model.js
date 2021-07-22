@@ -40,16 +40,6 @@ export class ParameterFilterModel extends FilterModelBase {
     this.loadData = loadData;
   }
 
-  getActiveFilters = () => {
-    let activeFilters = [];
-
-    if (this.getData("search") != null && this.getData("search") !== "") {
-      activeFilters.push({filterId: "search", text: `Keywords: ${this.getData("search")}`});
-    }
-
-    return activeFilters;
-  };
-
   canSearch = () => {
     return true;
   }

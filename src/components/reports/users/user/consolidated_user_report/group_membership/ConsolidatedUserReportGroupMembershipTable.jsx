@@ -4,11 +4,11 @@ import PropTypes from "prop-types";
 import {ldapGroupMetaData} from "components/settings/ldap_groups/ldap-groups-metadata";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faUserFriends, faSearch} from "@fortawesome/pro-light-svg-icons";
-import {getTableTextColumn, getStaticIconColumn} from "components/common/table/table-column-helpers";
+import {getTableTextColumn, getStaticInfoColumn} from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import InformationDialog from "components/common/status_notifications/info";
 import {findUserGroupsByDistinguishedName} from "components/settings/ldap_groups/group-helpers";
-import CustomTable from "components/common/table/CustomTable";
+import VanityTable from "components/common/table/VanityTable";
 
 function UserGroupMembershipReportTable({ groups, isLoading, loadData, userDistinguishedName, domain }) {
   const history = useHistory();
@@ -29,7 +29,7 @@ function UserGroupMembershipReportTable({ groups, isLoading, loadData, userDisti
       getTableTextColumn(getField(fields, "name")),
       getTableTextColumn(getField(fields, "groupType")),
       getTableTextColumn(getField(fields, "memberCount")),
-      getStaticIconColumn(faSearch)
+      getStaticInfoColumn()
     ],
     []
   );
@@ -48,14 +48,14 @@ function UserGroupMembershipReportTable({ groups, isLoading, loadData, userDisti
     }
   
     return (
-      <CustomTable 
-        className="table-no-border"
+      <VanityTable
         columns={columns}
         data={relevantGroups}
         onRowSelect={onRowSelect}
         noDataMessage={"No groups are associated with the selected user."}
         isLoading={isLoading}
         loadData={loadData}
+        tableHeight={"250px"}
       />
     );
   };
@@ -73,7 +73,6 @@ function UserGroupMembershipReportTable({ groups, isLoading, loadData, userDisti
     metaData={ldapGroupMetaData}
     titleIcon={faUserFriends}
     title={"Group Membership"}
-    className={"px-2 pb-2"}
   />
   );
 }

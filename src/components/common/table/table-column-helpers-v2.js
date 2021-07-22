@@ -234,7 +234,7 @@ export const getScriptLanguageColumn = (field, className, showFilter) => {
   };
 };
 
-export const getRoleAccessLevelColumn = (field, className, width = 150) => {
+export const getRoleAccessLevelColumn = (field, className, width = 200) => {
   return {
     header: getColumnHeader(field),
     id: getColumnId(field),
