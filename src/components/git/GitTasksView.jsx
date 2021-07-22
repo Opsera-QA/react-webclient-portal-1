@@ -8,7 +8,7 @@ import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faCodeMerge} from "@fortawesome/pro-light-svg-icons";
+import {faTasksAlt} from "@fortawesome/pro-light-svg-icons";
 import StatusFilter from "components/common/filters/status/StatusFilter";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import NewGitTaskOverlay from "components/git/NewGitTaskOverlay";
@@ -19,7 +19,7 @@ function GitTasksView() {
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const [gitTasksList, setNotificationsList] = useState([]);
+  const [gitTasksList, setGitTasksList] = useState([]);
   const [gitTasksFilterDto, setGitTasksFilterDto] = useState(new Model({...gitTasksFilterMetadata.newObjectFields}, gitTasksFilterMetadata, false));
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -73,10 +73,10 @@ function GitTasksView() {
 
   const getGitTasksList = async (filterDto = gitTasksFilterDto, cancelSource = cancelTokenSource) => {
       const response = await gitTasksActions.getGitTasksListV2(getAccessToken, cancelSource, filterDto);
-      const notificationsList = response?.data?.data;
+      const taskList  = response?.data?.data;
 
-      if (isMounted.current === true && notificationsList) {
-        setNotificationsList(notificationsList);
+      if (isMounted.current === true && taskList ) {
+        setGitTasksList(taskList );
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", response?.data?.count);
         newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());
@@ -123,8 +123,8 @@ function GitTasksView() {
       isLoading={isLoading}
       body={getBody()}
       dropdownFilters={getDropdownFilters()}
-      titleIcon={faCodeMerge}
-      title={"Git Tasks"}
+      titleIcon={faTasksAlt}
+      title={"Tasks"}
       className={"px-2 pb-2"}
     />
   );

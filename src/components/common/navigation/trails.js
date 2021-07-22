@@ -685,17 +685,17 @@ const breadcrumbs = {
     parent: undefined,
     name: "gitTasksManagement",
     path: paths.gitTasks,
-    title: "Git Task Management",
-    linkText: "Git Task Management",
-    icon: faCodeBranch
+    title: "Opsera Task Management",
+    linkText: "Opsera Task Management",
+    icon: faTasks
   },
   gitTasksDetailView: {
     parent: "gitTasksManagement",
     name: "gitTasksDetailView",
     path: paths.gitTasksDetailView,
-    title: "Git Task Details",
-    linkText: "Git Task Details",
-    icon: faCodeBranch
+    title: "Opsera Task Details",
+    linkText: "Opsera Task Details",
+    icon: faTasks
   },
 
   //General

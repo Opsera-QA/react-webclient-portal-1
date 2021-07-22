@@ -45,7 +45,7 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAll
     await gitTaskActions.updateGitTaskV2(getAccessToken, cancelTokenSource, newGitTasksData);
     toastContext.showInformationToast("Task has been stopped", 10);
     setIsCanceling(false);
-    history.push(`/git`);
+    history.push(`/task`);
   };
 
   const handleClose = () => {

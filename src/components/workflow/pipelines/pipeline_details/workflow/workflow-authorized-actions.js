@@ -339,7 +339,14 @@ workflowAuthorizedActions.gitItems = (customerAccessRules, action, owner, object
 
   //if no objectRole data passed, then allow actions
   if (objectRoles && objectRoles.length === 0) {
-    return true;
+    switch (action) {
+      case "delete_admin_task":
+      case "create_cert_task":
+      case "sfdc_cert_gen":
+        return false;
+      default:
+        return true;
+    }
   }
 
   const userObjectRole = calculateUserObjectRole(customerAccessRules.Email, customerAccessRules.Groups, objectRoles);
@@ -366,6 +373,9 @@ workflowAuthorizedActions.gitItems = (customerAccessRules, action, owner, object
       case "edit_access_roles":
       case "create_task":
       case "run_task":
+      case "sfdc_cert_gen":
+      case "create_cert_task":
+      case "delete_admin_task":
         return true;
       default:
         return false; //all other options are disabled

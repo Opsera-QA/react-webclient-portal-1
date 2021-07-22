@@ -35,7 +35,7 @@ function GitTaskSfdcPipelineWizardOverlay({ gitTasksData }) {
   const closePanel = () => {
     toastContext.removeInlineMessage();
     toastContext.clearOverlayPanel();
-    history.push(`/git`);
+    history.push(`/task`);
   };
 
   return (

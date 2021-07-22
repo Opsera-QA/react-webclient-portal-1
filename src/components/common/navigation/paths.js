@@ -108,7 +108,7 @@ paths.notificationManagement = "notifications";
 paths.notificationDetailView = paths.notificationDetailView + "/details";
 
 //GIT Tasks
-paths.gitTasks = "git";
+paths.gitTasks = "task";
 paths.gitTasksDetailView = paths.gitTasksDetailView + "/details";
 
 export default paths;
