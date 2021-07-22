@@ -15,12 +15,20 @@ function ClusterTemplateSelectInput({dataObject, setDataObject, isLoading, disab
     },
   ];
 
+  const setDataFunction = (fieldName, value) => {
+    let newDataObject = dataObject;
+    newDataObject.setData("ecsServiceRequiresCompatibilities", value.value);
+    newDataObject.setData("ecsClusterName", "");
+    setDataObject({...newDataObject});
+  };
+
   return (
 
     <SelectInputBase
       fieldName={"ecsServiceRequiresCompatibilities"}
       dataObject={dataObject}
       setDataObject={setDataObject}
+      setDataFunction={setDataFunction}
       selectOptions={ACTION_LIST}
       valueField={"value"}
       textField={"name"}

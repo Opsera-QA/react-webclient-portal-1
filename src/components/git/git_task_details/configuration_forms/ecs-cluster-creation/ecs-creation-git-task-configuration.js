@@ -11,7 +11,8 @@ const ec2ClusterCreationTaskConfigurationMetadata = {
     },
     {
       label: "Cluster Template",
-      id: "clusterTemplate"
+      id: "clusterTemplate",
+      isRequired: true
     },
     {
       label: "Create VPC?",
