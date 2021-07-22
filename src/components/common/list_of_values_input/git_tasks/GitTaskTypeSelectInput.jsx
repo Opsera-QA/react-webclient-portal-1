@@ -1,27 +1,26 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
-import { AuthContext } from "contexts/AuthContext";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import PropTypes from "prop-types";
+import SelectInputBase from "components/common/inputs/select/SelectInputBase";
+import { AuthContext } from "../../../../contexts/AuthContext";
 import Model from "core/data_model/model";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import axios from "axios";
 import gitTasksActions from "components/git/git-task-actions";
 import gitTasksFilterMetadata from "components/git/git-tasks-filter-metadata";
-import PropTypes from "prop-types";
-import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 
-export const notificationTypes = [
+export let taskTypes = [
   {name: "SFDC Org sync", value: "sync-sfdc-repo"},
   {name: "SFDC Branch Structuring", value: "sync-branch-structure"},
-  {name: "GIT to GIT Sync", value: "sync-git-branches"},
-  {name: "Generate Certificate for SFDX", value: "sfdc-cert-gen"},
-  {name: "Create AWS ECS Cluster", value: "ecs_cluster_creation"},
-  {name: "Create AWS ECS Service", value: "ecs_service_creation"},
-  {name: "Create AWS Lambda Function", value: "lambda_function_creation"},
+  {name: "GIT to GIT Sync", value: "sync-git-branches"}
 ];
-
+// TODO: Remove the disabled items from here when done
 function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled, setDataFunction, placeholderText }) {
-  const [isLoading, setIsLoading] = useState(true);
+  const { featureFlagHideItemInProd } = useContext(AuthContext);
+  const envIsProd = featureFlagHideItemInProd();
+
+  const [isLoading, setIsLoading] = useState(false);
   const toastContext = useContext(DialogToastContext);
   const { getUserRecord, setAccessRoles, getAccessToken, getAccessRoleData } = useContext(AuthContext);
   const [gitTasksFilterDto, setGitTasksFilterDto] = useState(new Model({...gitTasksFilterMetadata.newObjectFields}, gitTasksFilterMetadata, false)); 
@@ -37,19 +36,29 @@ function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled
     const source = axios.CancelToken.source();
     setCancelTokenSource(source);
     isMounted.current = true;
-
-    getTasksList(gitTasksFilterDto, source).catch((error) => {
-      if (isMounted?.current === true) {
-        throw error;
-      }
-    });
+    if (!envIsProd) {
+      taskTypes = [
+        { name: "SFDC Org sync", value: "sync-sfdc-repo"},
+        { name: "Generate Certificate for SFDX", value: "sfdc-cert-gen"},
+        { name: "SFDC Branch Structuring", value: "sync-branch-structure"},
+        { name: "GIT to GIT Sync", value: "sync-git-branches"},
+        { name: "Create AWS ECS Cluster", value: "ecs_cluster_creation" },
+        { name: "Create AWS ECS Service", value: "ecs_service_creation" },
+        {name: "Create AWS Lambda Function", value: "lambda_function_creation"},
+      ];
+      getTasksList(gitTasksFilterDto, source).catch((error) => {
+        if (isMounted?.current === true) {
+          throw error;
+        }
+      });
+    }
 
     return () => {
       source.cancel();
       isMounted.current = false;
     };
   }, []);
-
+  
   const getTasksList = async (filterDto = gitTasksFilterDto, cancelSource = cancelTokenSource) => {
     try {
       setIsLoading(true);
@@ -79,8 +88,10 @@ function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled
   };
 
   const checkDisabledTaskType = () => {
-    if( !canCreate || gitTasksFilterDto.getData("totalCount") > 0) return ["sfdc-cert-gen"];
-    else return [];
+    if (!envIsProd) {
+      if( !canCreate || gitTasksFilterDto.getData("totalCount") > 0) return ["sfdc-cert-gen"];
+      else return [];  
+    } else return [];
   };
 
   return (
@@ -88,11 +99,11 @@ function GitTaskTypeSelectInput({ fieldName, dataObject, setDataObject, disabled
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      selectOptions={notificationTypes}
+      selectOptions={taskTypes}
       setDataFunction={setDataFunction}
       placeholderText={placeholderText}
       valueField="value"
-      textField="name"
+      textField="name" 
       busy={isLoading}
       disabled={isLoading || checkDisabledTaskType()}
     />
