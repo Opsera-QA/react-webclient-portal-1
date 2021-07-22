@@ -668,19 +668,20 @@ export const getRoleAccessLevelColumn = (field, className) => {
     accessor: getTableAccessor(field),
     Cell: function getRoleAccessLevel(row) {
       const roles = row?.data[row?.row?.index]?.roles;
+      const text = row?.value;
 
-      if (!Array.isArray(roles) || roles.length === 0) {
-        return `${ACCESS_ROLES_FORMATTED_LABELS.no_access_rules}`;
-      }
-
-      if (row?.value == null) {
+      if (text == null) {
         return `${ACCESS_ROLES_FORMATTED_LABELS.no_roles_assigned}`;
       }
 
-      const accessLevel = ACCESS_ROLES_FORMATTED_LABELS[row.value];
+      const accessLevel = ACCESS_ROLES_FORMATTED_LABELS[text];
 
       if (accessLevel) {
         return `${accessLevel}`;
+      }
+
+      if (!Array.isArray(roles) || roles.length === 0) {
+        return `${ACCESS_ROLES_FORMATTED_LABELS.no_access_rules}`;
       }
 
       return "ROLE ACCESS LEVEL UNKNOWN";

@@ -1,6 +1,5 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
-import taskFilterMetadata from "components/git/git-tasks-filter-metadata";
 import ConsolidatedUserReportTaskAccessTable from "components/reports/users/user/consolidated_user_report/task_access/ConsolidatedUserReportTaskAccessTable";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
@@ -10,6 +9,7 @@ import FilterContainer from "components/common/table/FilterContainer";
 import {faTasks} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import taskMetadata from "components/git/git-tasks-metadata";
+import genericFilterMetadata from "components/common/filters/generic-filter-metadata";
 
 function ConsolidatedUserTaskAccessReport({ userEmailAddress }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -31,7 +31,7 @@ function ConsolidatedUserTaskAccessReport({ userEmailAddress }) {
 
     setTasks([]);
 
-    let newFilterDto = new Model({ ...taskFilterMetadata.newObjectFields }, taskFilterMetadata, false);
+    let newFilterDto = new Model({ ...genericFilterMetadata.newObjectFields }, genericFilterMetadata, false);
     loadData(newFilterDto, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;

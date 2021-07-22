@@ -1,6 +1,5 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
 import PropTypes from "prop-types";
-import pipelineFilterMetadata from "components/workflow/pipelines/pipeline_details/workflow/pipeline-filter-metadata";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import pipelineActions from "components/workflow/pipeline-actions";
@@ -12,6 +11,7 @@ import pipelineSummaryMetadata
   from "components/workflow/pipelines/pipeline_details/pipeline_activity/pipeline-summary-metadata";
 import ConsolidatedUserReportPipelineAccessTable
   from "components/reports/users/user/consolidated_user_report/pipeline_access/ConsolidatedUserReportPipelineAccessTable";
+import genericFilterMetadata from "components/common/filters/generic-filter-metadata";
 
 function ConsolidatedUserPipelineAccessReport({ userEmailAddress }) {
   const {getAccessToken} = useContext(AuthContext);
@@ -32,7 +32,7 @@ function ConsolidatedUserPipelineAccessReport({ userEmailAddress }) {
     isMounted.current = true;
 
     setPipelines([]);
-    let newFilterDto = new Model({...pipelineFilterMetadata.newObjectFields}, pipelineFilterMetadata, false);
+    let newFilterDto = new Model({...genericFilterMetadata.newObjectFields}, genericFilterMetadata, false);
     loadData(newFilterDto, source).catch((error) => {
       if (isMounted?.current === true) {
         throw error;
