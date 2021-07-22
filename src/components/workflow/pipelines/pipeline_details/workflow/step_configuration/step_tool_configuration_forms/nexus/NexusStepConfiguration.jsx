@@ -94,7 +94,7 @@ function NexusStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdito
       pipelineId: pipelineId,
       stepId: stepId
     };
-    console.log("createJobPostBody: ", createJobPostBody);
+    // console.log("createJobPostBody: ", createJobPostBody);
 
     const toolConfiguration = {
       configuration: nexusStepConfigurationDto.getPersistData(),
@@ -104,7 +104,7 @@ function NexusStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdito
       },
       job_type: "NEXUS_DOCKER_PUSH",
     };
-    console.log("item: ", toolConfiguration);
+    // console.log("item: ", toolConfiguration);
 
     await createJob(toolId, toolConfiguration, stepId, createJobPostBody);
   };
