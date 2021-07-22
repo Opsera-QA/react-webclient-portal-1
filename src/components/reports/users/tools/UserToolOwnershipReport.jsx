@@ -33,7 +33,7 @@ function UserToolOwnershipReport() {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData().catch((error) => {
+    loadRoles().catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
@@ -45,14 +45,14 @@ function UserToolOwnershipReport() {
     };
   }, []);
 
-  const loadData = async () => {
+  const loadRoles = async () => {
     const userRoleAccess = await getAccessRoleData();
     if (isMounted?.current === true && userRoleAccess) {
       setAccessRoleData(userRoleAccess);
     }
   };
 
-  const loadTools = async (newFilterModel = toolFilterModel, cancelSource = cancelTokenSource) => {
+  const loadData = async (newFilterModel = toolFilterModel, cancelSource = cancelTokenSource) => {
     try {
       if (isMounted?.current === true) {
         setIsLoading(true);
@@ -91,7 +91,7 @@ function UserToolOwnershipReport() {
         <Col className={"px-2"}>
           <OwnershipReportLdapUserSelectInput
             model={toolFilterModel}
-            loadData={loadTools}
+            loadData={loadData}
           />
         </Col>
       </Row>
