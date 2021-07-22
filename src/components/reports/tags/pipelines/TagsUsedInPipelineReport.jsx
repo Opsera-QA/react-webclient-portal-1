@@ -8,12 +8,9 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import tagsUsedInPipelineMetadata from "components/reports/tags/pipelines/tags-used-in-pipeline-metadata";
 import TagArrayUsedInPipelinesField from "components/common/fields/tags/TagArrayUsedInPipelinesField";
-import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
-import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faAnalytics, faDraftingCompass, faTags, faTools} from "@fortawesome/pro-light-svg-icons";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
-import {useHistory} from "react-router-dom";
 import TagManager from "components/common/inputs/tags/TagManager";
+import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 
 function TagsUsedInPipelineReport() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -21,7 +18,6 @@ function TagsUsedInPipelineReport() {
   const { getUserRecord, setAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
-  let history = useHistory();
 
   useEffect(() => {
     loadData();
@@ -50,23 +46,6 @@ function TagsUsedInPipelineReport() {
     }
   };
 
-  const handleTabClick = (tabSelection) => e => {
-    e.preventDefault();
-    history.push(`/reports/${tabSelection}`);
-  };
-
-  const getNavigationTabContainer = () => {
-    return (
-      <NavigationTabContainer>
-        <NavigationTab activeTab={"tags"} tabText={"All Reports"} handleTabClick={handleTabClick} tabName={"all"} icon={faAnalytics} />
-        <NavigationTab activeTab={"tags"} tabText={"Tool Reports"} handleTabClick={handleTabClick} tabName={"tools"} icon={faTools} />
-        <NavigationTab activeTab={"tags"} tabText={"Tag Reports"} handleTabClick={handleTabClick} tabName={"tags"} icon={faTags} />
-        {/* <NavigationTab activeTab={"tags"} tabText={"Pipeline Reports"} handleTabClick={handleTabClick} tabName={"pipelines"} icon={faDraftingCompass} /> */}
-        {/* <NavigationTab activeTab={"tags"} tabText={"Dashboard Reports"} handleTabClick={handleTabClick} tabName={"dashboards"} icon={faDraftingCompass} /> */}
-      </NavigationTabContainer>
-    );
-  };
-
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -77,7 +56,7 @@ function TagsUsedInPipelineReport() {
       isLoading={isLoading}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
-      navigationTabContainer={getNavigationTabContainer()}
+      navigationTabContainer={<ReportsSubNavigationBar currentTab={"tagReportViewer"} />}
       pageDescription={"View which Pipelines are in use by a specific Tag combination"}
     >
       <Row className={"mb-3 mx-0"}>

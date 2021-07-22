@@ -2,18 +2,16 @@ import React, {useContext, useState, useEffect, useRef} from "react";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
-import ToolReports from "components/reports/tools/ToolReports";
-import TagReports from "components/reports/tags/TagReports";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
-import UserReports from "components/reports/users/UserReports";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
+import UserReports from "components/reports/users/UserReports";
 
-function Reports() {
+function UserReportsScreen() {
+  const { getAccessRoleData, isSassUser } = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
-  const [isLoading, setIsLoading] = useState(true);
   const isMounted = useRef(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     isMounted.current = true;
@@ -43,38 +41,29 @@ function Reports() {
   };
 
   const getRoles = async () => {
-    const user = await getUserRecord();
-    const userRoleAccess = await setAccessRoles(user);
+    const userRoleAccess = await getAccessRoleData();
     if (userRoleAccess) {
       setAccessRoleData(userRoleAccess);
     }
   };
 
-  const getAllReports = () => {
-    return (
-      <div>
-        <TagReports />
-        <ToolReports />
-        <UserReports />
-        {/*TODO: Uncomment when Pipeline Report is added*/}
-        {/*<PipelineReports />*/}
-      </div>
-    );
-  };
+  if (isSassUser() !== false) {
+    return null;
+  }
 
   return (
     <ScreenContainer
-      navigationTabContainer={<ReportsSubNavigationBar currentTab={"all"} />}
-      breadcrumbDestination={"reports"}
+      navigationTabContainer={<ReportsSubNavigationBar currentTab={"userReports"} />}
+      breadcrumbDestination={"userReports"}
       pageDescription={"View reports from this dashboard."}
       accessRoleData={accessRoleData}
-      roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
+      roleRequirement={ROLE_LEVELS.POWER_USERS}
       isLoading={isLoading}
     >
-      {getAllReports()}
+      <UserReports />
     </ScreenContainer>
   );
 }
 
-export default Reports;
+export default UserReportsScreen;
 

@@ -8,12 +8,9 @@ import {DialogToastContext} from "contexts/DialogToastContext";
 import Model from "core/data_model/model";
 import tagsUsedInDashboardMetadata from "components/reports/tags/dashboards/tags-used-in-dashboard-metadata";
 import TagArrayUsedInDashboardsField from "components/common/fields/tags/TagArrayUsedInDashboardsField";
-import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
-import NavigationTab from "components/common/tabs/navigation/NavigationTab";
-import {faAnalytics, faDraftingCompass, faTags, faTools} from "@fortawesome/pro-light-svg-icons";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
-import {useHistory} from "react-router-dom";
 import TagManager from "components/common/inputs/tags/TagManager";
+import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 
 function TagsUsedInDashboardsReport() {
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -21,7 +18,6 @@ function TagsUsedInDashboardsReport() {
   const { getUserRecord, setAccessRoles } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
-  let history = useHistory();
 
   useEffect(() => {
     loadData();
@@ -49,22 +45,6 @@ function TagsUsedInDashboardsReport() {
     }
   };
 
-  const handleTabClick = (tabSelection) => e => {
-    e.preventDefault();
-    history.push(`/reports/${tabSelection}`);
-  };
-
-  const getNavigationTabContainer = () => {
-    return (
-      <NavigationTabContainer>
-        <NavigationTab activeTab={"tags"} tabText={"All Reports"} handleTabClick={handleTabClick} tabName={"all"} icon={faAnalytics} />
-        <NavigationTab activeTab={"tags"} tabText={"Tool Reports"} handleTabClick={handleTabClick} tabName={"tools"} icon={faTools} />
-        <NavigationTab activeTab={"tags"} tabText={"Tag Reports"} handleTabClick={handleTabClick} tabName={"tags"} icon={faTags} />
-        {/* <NavigationTab activeTab={"tags"} tabText={"Pipeline Reports"} handleTabClick={handleTabClick} tabName={"pipelines"} icon={faDraftingCompass} /> */}
-      </NavigationTabContainer>
-    );
-  };
-
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -73,9 +53,9 @@ function TagsUsedInDashboardsReport() {
     <ScreenContainer
       breadcrumbDestination={"tagsUsedInDashboardsReport"}
       isLoading={isLoading}
-      navigationTabContainer={getNavigationTabContainer()}
       roleRequirement={ROLE_LEVELS.POWER_USERS_AND_SASS}
       accessRoleData={accessRoleData}
+      navigationTabContainer={<ReportsSubNavigationBar currentTab={"tagReportViewer"} />}
       pageDescription={"View which Dashboards are in use by a specific Tag combination"}
     >
       <Row className={"mb-3 mx-0"}>
