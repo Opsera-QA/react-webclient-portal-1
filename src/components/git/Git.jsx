@@ -40,7 +40,7 @@ function GitLanding() {
     <ScreenContainer
       breadcrumbDestination={"gitTasksManagement"}
       pageDescription={`
-        Create and Manage Git Related Tasks.
+        Create and Manage Opsera Related Tasks.
       `}
       navigationTabContainer={getNavigationTabContainer()}
     >

@@ -8,7 +8,7 @@ import Model from "core/data_model/model";
 import LoadingDialog from "components/common/status_notifications/loading";
 import AccessDeniedDialog from "components/common/status_notifications/accessDeniedInfo";
 import FilterContainer from "components/common/table/FilterContainer";
-import {faCodeMerge} from "@fortawesome/pro-light-svg-icons";
+import {faTasksAlt} from "@fortawesome/pro-light-svg-icons";
 import StatusFilter from "components/common/filters/status/StatusFilter";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import NewGitTaskOverlay from "components/git/NewGitTaskOverlay";
@@ -123,8 +123,8 @@ function GitTasksView() {
       isLoading={isLoading}
       body={getBody()}
       dropdownFilters={getDropdownFilters()}
-      titleIcon={faCodeMerge}
-      title={"Git Tasks"}
+      titleIcon={faTasksAlt}
+      title={"Tasks"}
       className={"px-2 pb-2"}
     />
   );
