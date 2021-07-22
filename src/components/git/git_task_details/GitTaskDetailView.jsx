@@ -86,10 +86,10 @@ function GitTaskDetailView() {
     return (
       <ActionBarContainer>
         <div>
-          <ActionBarBackButton path={"/git"} />
+          <ActionBarBackButton path={"/task"} />
         </div>
         <div>
-          {canDelete && <ActionBarDeleteButton2 relocationPath={"/git/"} handleDelete={deleteGitTask} dataObject={gitTasksData} />}
+          {canDelete && <ActionBarDeleteButton2 relocationPath={"/task/"} handleDelete={deleteGitTask} dataObject={gitTasksData} />}
         </div>
       </ActionBarContainer>
     );

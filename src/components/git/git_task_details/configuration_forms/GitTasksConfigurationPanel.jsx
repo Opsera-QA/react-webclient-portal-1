@@ -52,7 +52,7 @@ function GitTasksConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTa
         );
       case "":
       default:
-        return <div className="text-center text-muted p-5">You must select a notification type before configuring notification type details.</div>;
+        return <div className="text-center text-muted p-5">You must select a task type before configuring task details.</div>;
     }
   };
 
