@@ -22,7 +22,7 @@ function UserTaskOwnershipReport() {
   const [tasks, setTasks] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [taskFilterDto, setTaskFilterDto] = useState(new Model({ ...taskFilterMetadata.newObjectFields }, taskFilterMetadata, false));
+  const [taskFilterModel, setTaskFilterModel] = useState(new Model({ ...taskFilterMetadata.newObjectFields }, taskFilterMetadata, false));
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -52,18 +52,23 @@ function UserTaskOwnershipReport() {
     }
   };
 
-  const loadData = async (newFilterModel = taskFilterDto, cancelSource = cancelTokenSource) => {
+  const loadData = async (newFilterModel = taskFilterModel, cancelSource = cancelTokenSource) => {
     try {
       if (isMounted?.current === true) {
+        if (newFilterModel.getFilterValue("owner") == null) {
+          setTasks([]);
+          return;
+        }
+
         setIsLoading(true);
         const response = await gitTasksActions.getGitTasksListV2(getAccessToken, cancelSource, newFilterModel);
-        const tools = response?.data?.data;
+        const tasks = response?.data?.data;
 
-        if (Array.isArray(tools)) {
-          setTasks(tools);
+        if (Array.isArray(tasks)) {
+          setTasks(tasks);
           newFilterModel.setData("totalCount", response?.data?.count);
           newFilterModel.setData("activeFilters", newFilterModel.getActiveFilters());
-          setTaskFilterDto({...newFilterModel});
+          setTaskFilterModel({...newFilterModel});
         }
       }
     } catch (error) {
@@ -91,13 +96,13 @@ function UserTaskOwnershipReport() {
         <Col className={"px-2"}>
           <OwnershipReportLdapUserSelectInput
             loadData={loadData}
-            model={taskFilterDto}
+            model={taskFilterModel}
           />
         </Col>
       </Row>
       <UserTaskOwnershipReportTable
-        paginationModel={taskFilterDto}
-        setPaginationModel={setTaskFilterDto}
+        paginationModel={taskFilterModel}
+        setPaginationModel={setTaskFilterModel}
         loadData={loadData}
         isLoading={isLoading}
         taskList={tasks}

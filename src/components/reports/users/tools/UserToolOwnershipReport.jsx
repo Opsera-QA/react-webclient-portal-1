@@ -55,6 +55,11 @@ function UserToolOwnershipReport() {
   const loadData = async (newFilterModel = toolFilterModel, cancelSource = cancelTokenSource) => {
     try {
       if (isMounted?.current === true) {
+        if (newFilterModel.getFilterValue("owner") == null) {
+          setTools([]);
+          return;
+        }
+
         setIsLoading(true);
         const response = await toolsActions.getRoleLimitedToolRegistryListV2(getAccessToken, cancelSource, newFilterModel);
         const tools = response?.data?.data;

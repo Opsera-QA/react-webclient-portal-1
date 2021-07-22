@@ -46,8 +46,8 @@ function UserTaskOwnershipReportTable({ paginationModel, setPaginationModel, loa
   const getNoDataMessage = () => {
     const activeFilters = paginationModel?.getActiveFilters();
 
-    if (paginationModel?.getFilterValue("owner")) {
-      return "Please Select a user to get started";
+    if (!paginationModel?.getFilterValue("owner")) {
+      return "Please select a user to get started";
     }
 
     if (activeFilters && activeFilters.length > 0) {

@@ -37,7 +37,8 @@ gitTasksActions.getGitTasksListV2 = async (getAccessToken, cancelTokenSource, gi
       type: gitTasksDataDto.getFilterValue("type"),
       status: gitTasksDataDto.getFilterValue("status"),
       tool: gitTasksDataDto.getFilterValue("toolIdentifier"),
-      search: gitTasksDataDto.getFilterValue("search")
+      search: gitTasksDataDto.getFilterValue("search"),
+      owner: gitTasksDataDto.getFilterValue("owner")
     }
   };
 

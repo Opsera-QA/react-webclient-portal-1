@@ -1,28 +1,28 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
-import LoadingDialog from "components/common/status_notifications/loading";
 import UserPipelineOwnershipReportTable from "components/reports/users/pipelines/UserPipelineOwnershipReportTable";
-import userReportsMetadata from "components/reports/users/user-reports-metadata";
 import { AuthContext } from "contexts/AuthContext";
-import { DialogToastContext } from "contexts/DialogToastContext";
-import { useHistory } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Model from "core/data_model/model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
-import LdapUserSelectInput from "components/common/list_of_values_input/users/LdapUserSelectInput";
 import axios from "axios";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
+import OwnershipReportLdapUserSelectInput
+  from "components/common/list_of_values_input/reports/user_reports/OwnershipReportLdapUserSelectInput";
+import Model from "core/data_model/model";
+import pipelineFilterMetadata from "components/workflow/pipelines/pipeline_details/workflow/pipeline-filter-metadata";
+import pipelineActions from "components/workflow/pipeline-actions";
+import {DialogToastContext} from "contexts/DialogToastContext";
 
 function UserPipelineOwnershipReport() {
-  const { getUserRecord, setAccessRoles } = useContext(AuthContext);
-  const toastContext = useContext(DialogToastContext);
+  const { getAccessRoleData, getAccessToken } = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const toastContext = useContext(DialogToastContext);
+  const [pipelines, setPipelines] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [pipelineOwnershipModel, setPipelineOwnershipModel] = useState(new Model({ ...userReportsMetadata }, userReportsMetadata, false));
-  const [selectedUser, setSelectedUser] = useState(undefined);
+  const [pipelineFilterModel, setPipelineFilterModel] = useState(new Model({ ...pipelineFilterMetadata.newObjectFields }, pipelineFilterMetadata, false));
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -33,7 +33,7 @@ function UserPipelineOwnershipReport() {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
+    loadRoles().catch((error) => {
       if (isMounted?.current === true) {
         throw error;
       }
@@ -45,14 +45,31 @@ function UserPipelineOwnershipReport() {
     };
   }, []);
 
-  const loadData = async () => {
-    try {
-      const user = await getUserRecord();
-      const userRoleAccess = await setAccessRoles(user);
+  const loadRoles = async () => {
+    const userRoleAccess = await getAccessRoleData();
+    if (isMounted?.current === true && userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+    }
+  };
 
-      if (isMounted?.current === true && userRoleAccess) {
+  const loadData = async (newFilterModel = pipelineFilterModel, cancelSource = cancelTokenSource) => {
+    try {
+      if (isMounted?.current === true) {
+        if (newFilterModel.getFilterValue("owner") == null) {
+          setPipelines([]);
+          return;
+        }
+
         setIsLoading(true);
-        setAccessRoleData(userRoleAccess);
+        const response = await pipelineActions.getPipelinesV2(getAccessToken, cancelSource, newFilterModel);
+        const pipelines = response?.data?.response;
+
+        if (Array.isArray(response?.data?.response)) {
+          setPipelines(pipelines);
+          newFilterModel.setData("totalCount", response.data.count);
+          newFilterModel.setData("activeFilters", newFilterModel.getActiveFilters());
+          setPipelineFilterModel({...newFilterModel});
+        }
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -66,49 +83,29 @@ function UserPipelineOwnershipReport() {
     }
   };
 
-  const setDataFunction = (fieldName, value) => {
-    const newPipelineOwnershipModel = pipelineOwnershipModel;
-    const user = value?.user;
-
-    newPipelineOwnershipModel.setData("user", user);
-
-    if (user) {
-      newPipelineOwnershipModel.setData("_id", user?._id);
-      newPipelineOwnershipModel.setData("name", `${user?.firstName} ${user.lastName}` );
-      newPipelineOwnershipModel.setData("firstName", user?.firstName);
-      newPipelineOwnershipModel.setData("lastName", user?.lastName);
-      newPipelineOwnershipModel.setData("emailAddress", user?.email);
-    }
-
-    setPipelineOwnershipModel({...newPipelineOwnershipModel});
-    setSelectedUser(pipelineOwnershipModel.getData("user"));
-  };
-
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
   return (
     <ScreenContainer
       breadcrumbDestination={"pipelineOwnershipReport"}
       accessRoleData={accessRoleData}
+      isLoading={!accessRoleData}
       navigationTabContainer={<ReportsSubNavigationBar currentTab={"userReportViewer"} />}
       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
       pageDescription={"View pipelines owned by selected user"}
     >
       <Row className={"mb-3 mx-0"}>
         <Col className={"mx-0"}>
-          <LdapUserSelectInput
-            fieldName={"name"}
-            model={pipelineOwnershipModel}
-            setModel={setPipelineOwnershipModel}
-            setDataFunction={setDataFunction}
-            busy={isLoading}
+          <OwnershipReportLdapUserSelectInput
+            model={pipelineFilterModel}
+            loadData={loadData}
           />
         </Col>
       </Row>
       <UserPipelineOwnershipReportTable
-        selectedUser={selectedUser}
+        pipelineList={pipelines}
+        setPaginationModel={setPipelineFilterModel}
+        paginationModel={pipelineFilterModel}
+        loadData={loadData}
+        isLoading={isLoading}
       />
     </ScreenContainer>
   );
