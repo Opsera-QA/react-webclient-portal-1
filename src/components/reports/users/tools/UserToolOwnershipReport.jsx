@@ -5,8 +5,6 @@ import NavigationTabContainer from "components/common/tabs/navigation/Navigation
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
-import { faAnalytics, faTags, faTools, faUsers } from "@fortawesome/pro-light-svg-icons";
-import { useHistory } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Model from "core/data_model/model";
@@ -15,6 +13,7 @@ import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import LdapUserSelectInput from "components/common/list_of_values_input/users/LdapUserSelectInput";
 import UserToolOwnershipReportTable from "components/reports/users/tools/UserToolOwnershipReportTable";
 import axios from "axios";
+import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 
 function UserToolOwnershipReport() {
   const { getUserRecord,  setAccessRoles } = useContext(AuthContext);
@@ -25,7 +24,6 @@ function UserToolOwnershipReport() {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [toolOwnershipModel, setToolOwnershipModel] = useState(new Model({ ...userReportsMetadata }, userReportsMetadata, false));
   const [selectedUser, setSelectedUser] = useState(undefined);
-  const history = useHistory();
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -69,10 +67,6 @@ function UserToolOwnershipReport() {
     }
   };
 
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
   const setDataFunction = (fieldName, value) => {
     const newToolOwnershipModel = toolOwnershipModel;
     const user = value?.user;
@@ -91,50 +85,34 @@ function UserToolOwnershipReport() {
     setSelectedUser(toolOwnershipModel.getData("user"));
   };
 
-  const handleTabClick = (tabSelection) => (e) => {
-    e.preventDefault();
-    history.push(`/reports/${tabSelection}`);
-  };
+  if (!accessRoleData) {
+    return (<LoadingDialog size="sm"/>);
+  }
 
-  const getNavigationTabContainer = () => {
-    return (
-      <NavigationTabContainer>
-        <NavigationTab activeTab={"users"} tabText={"All Reports"} handleTabClick={handleTabClick} tabName={"all"} icon={faAnalytics} />
-        <NavigationTab activeTab={"users"} tabText={"Tool Reports"} handleTabClick={handleTabClick} tabName={"tools"} icon={faTools} />
-        <NavigationTab activeTab={"users"} tabText={"Tag Reports"} handleTabClick={handleTabClick} tabName={"tags"} icon={faTags} />
-        <NavigationTab activeTab={"users"} tabText={"User Reports"} handleTabClick={handleTabClick} tabName={"users"} icon={faUsers} />
-      </NavigationTabContainer>
-    );
-  };
-
-    if (!accessRoleData) {
-      return (<LoadingDialog size="sm"/>);
-    }
-
-    return (
-      <ScreenContainer
-        breadcrumbDestination={"taskOwnershipReport"}
-        accessRoleData={accessRoleData}
-        navigationTabContainer={getNavigationTabContainer()}
-        roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
-        pageDescription={"View tasks owned by selected user"}
-      >
-        <Row className={"mb-3 mx-0"}>
-          <Col className={"mx-0"}>
-            <LdapUserSelectInput
-              fieldName={"name"}
-              model={toolOwnershipModel}
-              setModel={setToolOwnershipModel}
-              setDataFunction={setDataFunction}
-              busy={isLoading}
-            />
-          </Col>
-        </Row>
-          <UserToolOwnershipReportTable
-            selectedUser={selectedUser}
+  return (
+    <ScreenContainer
+      breadcrumbDestination={"taskOwnershipReport"}
+      accessRoleData={accessRoleData}
+      navigationTabContainer={<ReportsSubNavigationBar currentTab={"userReportViewer"}/>}
+      roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
+      pageDescription={"View tasks owned by selected user"}
+    >
+      <Row className={"mb-3 mx-0"}>
+        <Col className={"mx-0"}>
+          <LdapUserSelectInput
+            fieldName={"name"}
+            model={toolOwnershipModel}
+            setModel={setToolOwnershipModel}
+            setDataFunction={setDataFunction}
+            busy={isLoading}
           />
-      </ScreenContainer>
-    );
+        </Col>
+      </Row>
+      <UserToolOwnershipReportTable
+        selectedUser={selectedUser}
+      />
+    </ScreenContainer>
+  );
 }
 
 export default UserToolOwnershipReport;

@@ -16,6 +16,7 @@ import axios from "axios";
 import UserGroupMembershipReportTable from "components/reports/users/groups/UserGroupMembershipReportTable";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
 import LdapUserByDomainSelectInput from "components/common/list_of_values_input/users/LdapUserByDomainSelectInput";
+import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 
 function UserGroupMembershipReport() {
   const {getUserRecord, getAccessToken, setAccessRoles} = useContext(AuthContext);
@@ -27,7 +28,6 @@ function UserGroupMembershipReport() {
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
   const [groupList, setGroupList] = useState([]);
   const [domain, setDomain] = useState("");
-  const history = useHistory();
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -99,22 +99,6 @@ function UserGroupMembershipReport() {
     setGroupMembershipModel({...newDataObject});
   };
 
-  const handleTabClick = (tabSelection) => e => {
-    e.preventDefault();
-    history.push(`/reports/${tabSelection}`);
-  };
-
-  const getNavigationTabContainer = () => {
-    return (
-      <NavigationTabContainer>
-        <NavigationTab activeTab={"users"} tabText={"All Reports"} handleTabClick={handleTabClick} tabName={"all"} icon={faAnalytics} />
-        <NavigationTab activeTab={"users"} tabText={"Tool Reports"} handleTabClick={handleTabClick} tabName={"tools"} icon={faTools} />
-        <NavigationTab activeTab={"users"} tabText={"Tag Reports"} handleTabClick={handleTabClick} tabName={"tags"} icon={faTags} />
-        <NavigationTab activeTab={"users"} tabText={"User Reports"} handleTabClick={handleTabClick} tabName={"users"} icon={faUsers} />
-      </NavigationTabContainer>
-    );
-  };
-
   if (!accessRoleData) {
     return (<LoadingDialog size="sm"/>);
   }
@@ -124,7 +108,7 @@ function UserGroupMembershipReport() {
       breadcrumbDestination={"groupMembershipReport"}
       accessRoleData={accessRoleData}
       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
-      navigationTabContainer={getNavigationTabContainer()}
+      navigationTabContainer={<ReportsSubNavigationBar currentTab={"userReportViewer"} />}
       pageDescription={"View the Group Membership of a selected User"}
     >
       <Row className={"mb-3 mx-0"}>

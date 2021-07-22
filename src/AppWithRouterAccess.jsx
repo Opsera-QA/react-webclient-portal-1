@@ -115,6 +115,10 @@ import ParametersInventory from "components/inventory/parameters/ParametersInven
 import ToolInventory from "components/inventory/tools/ToolInventory";
 import ScriptsInventory from "components/inventory/scripts/ScriptsInventory";
 import PlatformInventory from "components/inventory/platform/platformInventory";
+import TagReportsScreen from "components/reports/tags/TagReportsScreen";
+import PipelineReportsScreen from "components/reports/pipelines/PipelineReportsScreen";
+import ToolReportsScreen from "components/reports/tools/ToolReportsScreen";
+import UserReportsScreen from "components/reports/users/UserReportsScreen";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -317,13 +321,23 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/update" component={Update}/>
 
                   {/* Reports */}
-                  <SecureRoute path="/reports/:tab?" exact component={Reports}/>
+                  <SecureRoute path="/reports" exact component={Reports}/>
+                  <SecureRoute path="/reports/tags" exact component={TagReportsScreen}/>
+                  <SecureRoute path="/reports/tools" exact component={ToolReportsScreen}/>
+                  <SecureRoute path="/reports/pipelines" exact component={PipelineReportsScreen}/>
+                  <SecureRoute path="/reports/users" exact component={UserReportsScreen}/>
+
+                  {/* Tool Reports */}
                   <SecureRoute path="/reports/tools/tools-used-in-pipeline" exact component={ToolsUsedInPipelineReport}/>
                   <SecureRoute path="/reports/tools/tool-counts" exact component={ToolCountsReport}/>
+                  <SecureRoute path="/reports/tools/detailed-tool-report" exact component={DetailedToolReport}/>
+
+                  {/* Tag Reports */}
                   <SecureRoute path="/reports/tags/tags-used-in-pipeline" exact component={TagsUsedInPipelineReport}/>
                   <SecureRoute path="/reports/tags/tags-used-in-tools" exact component={TagsUsedInToolsReport}/>
                   <SecureRoute path="/reports/tags/tags-used-in-dashboards" exact component={TagsUsedInDashboardsReport}/>
-                  <SecureRoute path="/reports/tools/detailed-tool-report" exact component={DetailedToolReport}/>
+
+                  {/* User Reports*/}
                   <SecureRoute path="/reports/users/group-membership" exact component={UserGroupMembershipReport}/>
                   <SecureRoute path="/reports/users/pipeline-ownership" exact component={UserPipelineOwnershipReport}/>
                   <SecureRoute path="/reports/users/tool-ownership" exact component={UserToolOwnershipReport}/>
