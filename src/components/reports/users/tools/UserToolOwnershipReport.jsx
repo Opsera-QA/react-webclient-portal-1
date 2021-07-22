@@ -1,8 +1,4 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
-import LoadingDialog from "components/common/status_notifications/loading";
-import userReportsMetadata from "components/reports/users/user-reports-metadata";
-import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
-import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import { AuthContext } from "contexts/AuthContext";
 import { DialogToastContext } from "contexts/DialogToastContext";
 import Row from "react-bootstrap/Row";
@@ -10,20 +6,23 @@ import Col from "react-bootstrap/Col";
 import Model from "core/data_model/model";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import {ROLE_LEVELS} from "components/common/helpers/role-helpers";
-import LdapUserSelectInput from "components/common/list_of_values_input/users/LdapUserSelectInput";
 import UserToolOwnershipReportTable from "components/reports/users/tools/UserToolOwnershipReportTable";
 import axios from "axios";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
+import toolsActions from "components/inventory/tools/tools-actions";
+import toolFilterMetadata from "components/inventory/tools/tool-filter-metadata";
+import OwnershipReportLdapUserSelectInput
+  from "components/common/list_of_values_input/reports/user_reports/OwnershipReportLdapUserSelectInput";
 
 function UserToolOwnershipReport() {
-  const { getUserRecord,  setAccessRoles } = useContext(AuthContext);
+  const { getAccessRoleData, getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [tools, setTools] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [toolOwnershipModel, setToolOwnershipModel] = useState(new Model({ ...userReportsMetadata }, userReportsMetadata, false));
-  const [selectedUser, setSelectedUser] = useState(undefined);
+  const [toolFilterModel, setToolFilterModel] = useState(new Model({ ...toolFilterMetadata.newObjectFields }, toolFilterMetadata, false));
 
   useEffect(() => {
     if (cancelTokenSource) {
@@ -34,7 +33,7 @@ function UserToolOwnershipReport() {
     setCancelTokenSource(source);
     isMounted.current = true;
 
-    loadData(source).catch((error) => {
+    loadData().catch((error) => {
         if (isMounted?.current === true) {
           throw error;
         }
@@ -47,13 +46,25 @@ function UserToolOwnershipReport() {
   }, []);
 
   const loadData = async () => {
-    try {
-      const user = await getUserRecord();
-      const userRoleAccess = await setAccessRoles(user);
+    const userRoleAccess = await getAccessRoleData();
+    if (isMounted?.current === true && userRoleAccess) {
+      setAccessRoleData(userRoleAccess);
+    }
+  };
 
-      if (isMounted?.current === true && userRoleAccess) {
+  const loadTools = async (newFilterModel = toolFilterModel, cancelSource = cancelTokenSource) => {
+    try {
+      if (isMounted?.current === true) {
         setIsLoading(true);
-        setAccessRoleData(userRoleAccess);
+        const response = await toolsActions.getRoleLimitedToolRegistryListV2(getAccessToken, cancelSource, newFilterModel);
+        const tools = response?.data?.data;
+
+        if (Array.isArray(tools)) {
+          setTools(tools);
+          newFilterModel.setData("totalCount", response?.data?.count);
+          newFilterModel.setData("activeFilters", newFilterModel.getActiveFilters());
+          setToolFilterModel({...newFilterModel});
+        }
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -67,49 +78,29 @@ function UserToolOwnershipReport() {
     }
   };
 
-  const setDataFunction = (fieldName, value) => {
-    const newToolOwnershipModel = toolOwnershipModel;
-    const user = value?.user;
-
-    newToolOwnershipModel.setData("user", user);
-
-    if (user) {
-      newToolOwnershipModel.setData("_id", user?._id);
-      newToolOwnershipModel.setData("name", `${user?.firstName} ${user.lastName}` );
-      newToolOwnershipModel.setData("firstName", user?.firstName);
-      newToolOwnershipModel.setData("lastName", user?.lastName);
-      newToolOwnershipModel.setData("emailAddress", user?.email);
-    }
-
-    setToolOwnershipModel({...newToolOwnershipModel});
-    setSelectedUser(toolOwnershipModel.getData("user"));
-  };
-
-  if (!accessRoleData) {
-    return (<LoadingDialog size="sm"/>);
-  }
-
   return (
     <ScreenContainer
-      breadcrumbDestination={"taskOwnershipReport"}
+      breadcrumbDestination={"toolOwnershipReport"}
       accessRoleData={accessRoleData}
+      isLoading={!accessRoleData}
       navigationTabContainer={<ReportsSubNavigationBar currentTab={"userReportViewer"}/>}
       roleRequirement={ROLE_LEVELS.ADMINISTRATORS}
-      pageDescription={"View tasks owned by selected user"}
+      pageDescription={"View tools owned by a selected user"}
     >
-      <Row className={"mb-3 mx-0"}>
-        <Col className={"mx-0"}>
-          <LdapUserSelectInput
-            fieldName={"name"}
-            model={toolOwnershipModel}
-            setModel={setToolOwnershipModel}
-            setDataFunction={setDataFunction}
-            busy={isLoading}
+      <Row className={"mx-0 mb-2"}>
+        <Col className={"px-2"}>
+          <OwnershipReportLdapUserSelectInput
+            model={toolFilterModel}
+            loadData={loadTools}
           />
         </Col>
       </Row>
       <UserToolOwnershipReportTable
-        selectedUser={selectedUser}
+        paginationModel={toolFilterModel}
+        setPaginationModel={setToolFilterModel}
+        toolList={tools}
+        loadData={loadData}
+        isLoading={isLoading}
       />
     </ScreenContainer>
   );

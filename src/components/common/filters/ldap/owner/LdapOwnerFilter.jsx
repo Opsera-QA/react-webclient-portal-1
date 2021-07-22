@@ -6,11 +6,9 @@ import accountsActions from "components/admin/accounts/accounts-actions";
 import FilterSelectInputBase from "components/common/filters/input/FilterSelectInputBase";
 import axios from "axios";
 
-function LdapOwnerFilter({ filterDto, setFilterDto, className }) {
-  const { getAccessToken, getUserRecord, setAccessRoles } = useContext(AuthContext);
+function LdapOwnerFilter({ filterDto, setFilterDto, setDataFunction, className }) {
+  const { getAccessToken, getUserRecord, setAccessRoles, isSassUser } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
-  const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const [user, setUser] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
   const [userOptions, setUserOptions] = useState([]);
   const isMounted = useRef(false);
@@ -42,18 +40,12 @@ function LdapOwnerFilter({ filterDto, setFilterDto, className }) {
       setIsLoading(true);
       const user = await getUserRecord();
       const {ldap} = user;
-      setUser(user);
       const userRoleAccess = await setAccessRoles(user);
 
-      if (isMounted.current === true && userRoleAccess) {
-        setAccessRoleData(userRoleAccess);
-
-        if (userRoleAccess?.Type !== "sass-user" && ldap?.domain != null) {
-          await getUsers(cancelSource);
-        }
+      if (isMounted.current === true && userRoleAccess?.Type !== "sass-user" && ldap?.domain != null) {
+        await getUsers(cancelSource);
       }
-    }
-    catch (error) {
+    } catch (error) {
       if (isMounted.current === true) {
         toastContext.showErrorDialog(error,"Could not load users.");
         console.error(error);
@@ -82,7 +74,7 @@ function LdapOwnerFilter({ filterDto, setFilterDto, className }) {
     }
   };
 
-  if (user == null || user.ldap?.domain == null || accessRoleData == null || accessRoleData?.Type === "sass-user") {
+  if (isSassUser() !== false) {
     return null;
   }
 
@@ -95,6 +87,7 @@ function LdapOwnerFilter({ filterDto, setFilterDto, className }) {
         setDataObject={setFilterDto}
         dataObject={filterDto}
         selectOptions={userOptions}
+        setDataFunction={setDataFunction}
       />
     </div>
   );
@@ -103,7 +96,8 @@ function LdapOwnerFilter({ filterDto, setFilterDto, className }) {
 LdapOwnerFilter.propTypes = {
   filterDto: PropTypes.object,
   setFilterDto: PropTypes.func,
-  className: PropTypes.string
+  className: PropTypes.string,
+  setDataFunction: PropTypes.func
 };
 
 export default LdapOwnerFilter;
