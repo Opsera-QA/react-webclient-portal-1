@@ -50,7 +50,7 @@ function UserTaskOwnershipReportTable({ paginationModel, setPaginationModel, loa
       return "Please select a user to get started";
     }
 
-    if (activeFilters && activeFilters.length > 0) {
+    if (activeFilters && activeFilters.length > 1) {
       return "No tasks meeting the filter requirements were found.";
     }
 
