@@ -5,6 +5,11 @@ import {
   getScriptLanguageDisplayText,
 } from "components/common/list_of_values_input/inventory/scripts/ScriptLanguageSelectInput";
 import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-helpers";
+import PipelineTypesField from "components/common/form_fields/pipelines/PipelineTypesField";
+import Model from "core/data_model/model";
+import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
+import {faBracketsCurly, faDraftingCompass, faMicrochip} from "@fortawesome/pro-light-svg-icons";
+import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
 
 export const FILTER_TYPES = {
   SEARCH_FILTER: "inputFilter",
@@ -187,6 +192,38 @@ export const getChartPipelineStatusColumn = (field, className, width = 120) => {
   };
 };
 
+// TODO: Get salesforce css to work
+const getPipelineTypeColumnCss = (type) => {
+  if (!type) {
+    return "fal fa-drafting-compass";
+  }
+
+  switch (type[0]) {
+    case "sfdc":
+      return "fa fa-salesforce";
+    case "ai-ml":
+      return ("fal fa-microchip");
+    case "sdlc":
+      return ("fal fa-brackets-curly");
+    default:
+      return ("fal fa-drafting-compass");
+  }
+};
+
+export const getPipelineTypeColumn = (field, className) => {
+  return {
+    header: getColumnHeader(field),
+    id: getColumnId(field),
+    template: function (text, row, col) {
+      const iconCss = getPipelineTypeColumnCss(text);
+      return (
+        `<i class="${iconCss} cell-icon vertical-align-item"></i>`
+      );
+    },
+    class: className ? className : "cell-center"
+  };
+};
+
 export const getTableBooleanIconColumn = (field, className, width = 60) => {
   return {
     header: getColumnHeader(field),
@@ -196,7 +233,7 @@ export const getTableBooleanIconColumn = (field, className, width = 60) => {
     template: function (text, row, col) {
       const iconCss = text === true ? "fa-check-circle green" : "fa-times-circle red";
       return (
-        `<i class="fa ${iconCss} cell-icon vertical-align-item"></i>`
+        `<i class="fal ${iconCss} cell-icon vertical-align-item"></i>`
       );
     },
     htmlEnable: true,

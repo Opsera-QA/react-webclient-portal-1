@@ -1,6 +1,5 @@
 import React, {useMemo} from "react";
 import PropTypes from "prop-types";
-import CustomTable from "components/common/table/CustomTable";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
@@ -51,7 +50,7 @@ function UserPipelineOwnershipReport({ pipelineList, isLoading, paginationModel,
       return "Please select a user to get started";
     }
 
-    if (activeFilters && activeFilters.length > 0) {
+    if (activeFilters && activeFilters.length > 1) {
       return "No pipelines meeting the filter requirements were found.";
     }
 
