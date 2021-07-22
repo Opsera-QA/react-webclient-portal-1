@@ -93,7 +93,6 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     for (let i = 0; i < files.length; i++) {
       if (validateFile(files[i])) {
         setSelectedFiles([files[i]]);
-
       } else {
         files[i]['invalid'] = true;
         setSelectedFiles([files[i]]);
@@ -162,12 +161,12 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
       let files = selectedFiles;
       files[0]['invalid'] = true;
       setUnsupportedFiles(files);
-      setErrorMessage('Invalid CSV Provided!');
+      setErrorMessage('Invalid CSV Headers!');
       setSave(false);
       return;
     }
     let validOperations = ["","added", "modified", "removed", "renamed"];
-    let isValidOpserations = csvobj.every((val) => validOperations.includes(val.commitAction) );
+    let isValidOpserations = csvobj.every((val) => validOperations.includes(val.commitAction?.toLowerCase()) );
     if(!isValidOpserations) {
        let files = selectedFiles;
        files[0]['invalid'] = true;
