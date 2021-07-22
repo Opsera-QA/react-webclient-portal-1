@@ -239,13 +239,8 @@ export const getRoleAccessLevelColumn = (field, className, width = 200) => {
     header: getColumnHeader(field),
     id: getColumnId(field),
     width: width,
-    // TODO: Figure out why using date-type right aligns stuff. Documentation says it should be left aligned.
     template: function (text, row, col) {
       const roles = row?.roles;
-
-      if (!Array.isArray(roles) || roles.length === 0) {
-        return `${ACCESS_ROLES_FORMATTED_LABELS.no_access_rules}`;
-      }
 
       if (text == null) {
         return `${ACCESS_ROLES_FORMATTED_LABELS.no_roles_assigned}`;
@@ -255,6 +250,10 @@ export const getRoleAccessLevelColumn = (field, className, width = 200) => {
 
       if (accessLevel) {
         return `${accessLevel}`;
+      }
+
+      if (!Array.isArray(roles) || roles.length === 0) {
+        return `${ACCESS_ROLES_FORMATTED_LABELS.no_access_rules}`;
       }
 
       return "ROLE ACCESS LEVEL UNKNOWN";
