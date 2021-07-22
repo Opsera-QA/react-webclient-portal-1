@@ -6,6 +6,7 @@ import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pip
 import {getPipelineTypeColumn, getTableDateColumn, getTablePipelineStatusColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
 import {getField} from "components/common/metadata/metadata-helpers";
 import { useHistory } from "react-router-dom";
+import CustomTable from "components/common/table/CustomTable";
 
 function UserPipelineOwnershipReport({ pipelineList, isLoading, paginationModel, setPaginationModel, loadData }) {
   const fields = pipelineMetadata.fields;
