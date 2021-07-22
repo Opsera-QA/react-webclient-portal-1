@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { faTable, faCodeBranch } from "@fortawesome/pro-light-svg-icons";
+import { faTable, faTasks } from "@fortawesome/pro-light-svg-icons";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
 import NavigationTab from "components/common/tabs/navigation/NavigationTab";
@@ -19,7 +19,7 @@ function GitLanding() {
   const getNavigationTabContainer = () => {
     return (
       <NavigationTabContainer>
-        <NavigationTab tabName={"opseraTasks"} icon={faCodeBranch} tabText={"Opsera Tasks"} handleTabClick={handleTabClick} activeTab={activeTab} />
+        <NavigationTab tabName={"opseraTasks"} icon={faTasks} tabText={"Opsera Tasks"} handleTabClick={handleTabClick} activeTab={activeTab} />
         <NavigationTab tabName={"activity"} icon={faTable} tabText={"Activity Logs"} handleTabClick={handleTabClick} activeTab={activeTab} />
       </NavigationTabContainer>
     );

@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import GitTaskTypeSelectInput from "components/common/list_of_values_input/git_tasks/GitTaskTypeSelectInput";
 import SFDCGitTaskEditorPanel from "./sfdc-org-sync/SFDCGitTaskConfigurationPanel";
+import SFDXCertGenTaskTypeConfigurationPanel from "./sfdx-cert-gen/SFDXCertGenTaskTypeConfigurationPanel";
 import SFDCBranchStructuringTaskTypeConfigurationPanel from "./sfdc-branch-structure/SFDCBranchStructuringTaskTypeConfigurationPanel";
 import BranchToBranchGitTaskConfigurationPanel from "./branch-to-branch/BranchToBranchGitTaskConfigurationPanel";
 import ECSCreationTaskConfigurationPanel from "./ecs-cluster-creation/ECSCreationTaskConfigurationPanel";
@@ -13,6 +14,14 @@ function GitTasksConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTa
       case "sync-sfdc-repo":
         return (
           <SFDCGitTaskEditorPanel 
+            gitTasksDataDto={gitTasksDataDto}
+            setGitTasksConfigurationData={setGitTasksConfigurationData}
+            gitTasksConfigurationData={gitTasksConfigurationData}
+          />
+        );
+      case "sfdc-cert-gen":
+        return (
+          <SFDXCertGenTaskTypeConfigurationPanel
             gitTasksDataDto={gitTasksDataDto}
             setGitTasksConfigurationData={setGitTasksConfigurationData}
             gitTasksConfigurationData={gitTasksConfigurationData}

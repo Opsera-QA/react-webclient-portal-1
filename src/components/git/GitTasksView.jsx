@@ -19,7 +19,7 @@ function GitTasksView() {
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(true);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
-  const [gitTasksList, setNotificationsList] = useState([]);
+  const [gitTasksList, setGitTasksList] = useState([]);
   const [gitTasksFilterDto, setGitTasksFilterDto] = useState(new Model({...gitTasksFilterMetadata.newObjectFields}, gitTasksFilterMetadata, false));
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -73,10 +73,10 @@ function GitTasksView() {
 
   const getGitTasksList = async (filterDto = gitTasksFilterDto, cancelSource = cancelTokenSource) => {
       const response = await gitTasksActions.getGitTasksListV2(getAccessToken, cancelSource, filterDto);
-      const notificationsList = response?.data?.data;
+      const taskList  = response?.data?.data;
 
-      if (isMounted.current === true && notificationsList) {
-        setNotificationsList(notificationsList);
+      if (isMounted.current === true && taskList ) {
+        setGitTasksList(taskList );
         let newFilterDto = filterDto;
         newFilterDto.setData("totalCount", response?.data?.count);
         newFilterDto.setData("activeFilters", newFilterDto.getActiveFilters());

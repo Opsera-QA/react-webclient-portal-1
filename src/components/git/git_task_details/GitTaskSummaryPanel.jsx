@@ -20,7 +20,8 @@ import ECSServiceCreationTaskTypeSummaryCard
   from "./configuration_forms/ecs-service-creation/ECSServiceCreationTaskTypeSummaryCard";
 import ec2ServiceCreationTaskConfigurationMetadata
   from "./configuration_forms/ecs-service-creation/ecs-service-creation-git-task-configuration";
-
+import sfdxCertGenTaskConfigurationMetadata from "components/git/git_task_details/configuration_forms/sfdx-cert-gen/sfdx-cert-gen-task-configuration-metadata";
+import SFDXCertGenTaskTypeSummaryCard from "./configuration_forms/sfdx-cert-gen/SFDXCertGenTaskTypeSummaryCard";
 
 function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, loadData, accessRoleData }) {
   const isMounted = useRef(false);
@@ -55,6 +56,13 @@ function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, load
             gitTasksData={gitTasksData}
           />
         );
+      case "sfdc-cert-gen":
+        return (
+          <SFDXCertGenTaskTypeSummaryCard
+            gitTaskConfigurationData={wrapGitTaskType(sfdxCertGenTaskConfigurationMetadata)}
+            gitTasksData={gitTasksData}
+          />
+        );    
       case "sync-branch-structure":
         return (
           <SFDCBranchStructuringTaskTypeSummaryCard
@@ -84,7 +92,7 @@ function GitTaskSummaryPanel({ gitTasksData, setGitTasksData, setActiveTab, load
           />
         );
       default:
-        return (<div>No Task type associated with this git</div>);
+        return (<div>No type is associated with this Task</div>);
     }
   };
 

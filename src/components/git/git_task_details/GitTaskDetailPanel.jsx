@@ -5,11 +5,12 @@ import GitTaskEditorPanel from "./GitTaskEditorPanel";
 import CustomTabContainer from "components/common/tabs/CustomTabContainer";
 import DetailTabPanelContainer from "components/common/panels/detail_view/DetailTabPanelContainer";
 import CustomTab from "components/common/tabs/CustomTab";
-import {faTable} from "@fortawesome/pro-light-svg-icons";
+import {faTable, faKey} from "@fortawesome/pro-light-svg-icons";
 import GitTaskSummaryPanel
   from "components/git/git_task_details/GitTaskSummaryPanel";
 import DetailPanelContainer from "components/common/panels/detail_panel_container/DetailPanelContainer";
 import SummaryToggleTab from "components/common/tabs/detail_view/SummaryToggleTab";
+import CertManagementPanel from "./configuration_forms/sfdx-cert-gen/CertManagementPanel";
 import TaskActivityPanel from "components/git/git_task_details/activity_logs/TaskActivityPanel";
 
 function GitTaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRoleData, runTask }) {
@@ -24,10 +25,21 @@ function GitTaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRol
     setActiveTab("summary");
   };
 
+  const getDynamicTabs = () => {
+    switch (gitTasksData?.getData("type")) {
+      case "sfdc-cert-gen":
+      return (
+        <CustomTab icon={faKey} tabName={"cert"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Certificate Management"}/>
+      );
+      default: return <></>;
+    }
+  };
+
   const getTabContainer = () => {
     return (
       <CustomTabContainer>
         <SummaryToggleTab handleTabClick={handleTabClick} activeTab={activeTab} />
+        {getDynamicTabs()}
         <CustomTab icon={faTable} tabName={"logs"} handleTabClick={handleTabClick} activeTab={activeTab} tabText={"Activity Logs"}/>
       </CustomTabContainer>
     );
@@ -61,6 +73,14 @@ function GitTaskDetailPanel({ gitTasksData, setGitTasksData, loadData, accessRol
             <TaskActivityPanel />
           </DetailPanelContainer>
         );
+      case "cert":
+        return (
+          <CertManagementPanel
+            gitTasksData={gitTasksData}
+            setGitTasksData={setGitTasksData}
+            loadData={loadData}
+          />
+        );  
       default:
         return null;
     }
