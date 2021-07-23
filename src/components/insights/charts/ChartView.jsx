@@ -1335,42 +1335,42 @@ function ChartView({ kpiConfiguration, dashboardData, index, loadChart, setKpis 
           </Col>
         );
       // Service Now
-      case "servicenow-mean-time-to-resolution":
-        return (
-          <Col xl={6} md={12} className="p-2">
-            <ServiceNowMeanTimeToResolutionBarChart
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
-        );
-      case "servicenow-mean-time-to-acknowledge":
-        return (
-          <Col xl={6} md={12} className="p-2">
-            <ServiceNowMeanTimeToAcknowledgeBarChart
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
-        );
-      case "servicenow-mean-time-between-failures":
-        return (
-          <Col xl={6} md={12} className="p-2">
-            <ServiceNowMeanTimeBetweenFailuresBarChart
-              kpiConfiguration={kpiConfig}
-              setKpiConfiguration={setKpiConfig}
-              dashboardData={dashboardData}
-              setKpis={setKpis}
-              index={index}
-            />
-          </Col>
-        );
+      // case "servicenow-mean-time-to-resolution":
+      //   return (
+      //     <Col xl={6} md={12} className="p-2">
+      //       <ServiceNowMeanTimeToResolutionBarChart
+      //         kpiConfiguration={kpiConfig}
+      //         setKpiConfiguration={setKpiConfig}
+      //         dashboardData={dashboardData}
+      //         setKpis={setKpis}
+      //         index={index}
+      //       />
+      //     </Col>
+      //   );
+      // case "servicenow-mean-time-to-acknowledge":
+      //   return (
+      //     <Col xl={6} md={12} className="p-2">
+      //       <ServiceNowMeanTimeToAcknowledgeBarChart
+      //         kpiConfiguration={kpiConfig}
+      //         setKpiConfiguration={setKpiConfig}
+      //         dashboardData={dashboardData}
+      //         setKpis={setKpis}
+      //         index={index}
+      //       />
+      //     </Col>
+      //   );
+      // case "servicenow-mean-time-between-failures":
+      //   return (
+      //     <Col xl={6} md={12} className="p-2">
+      //       <ServiceNowMeanTimeBetweenFailuresBarChart
+      //         kpiConfiguration={kpiConfig}
+      //         setKpiConfiguration={setKpiConfig}
+      //         dashboardData={dashboardData}
+      //         setKpis={setKpis}
+      //         index={index}
+      //       />
+      //     </Col>
+      //   );
       case "defect-removal-efficiency":
         return (
           <Col md={12} className="p-2">
