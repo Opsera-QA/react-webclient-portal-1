@@ -24,7 +24,7 @@ StepValidationHelper.isValidConfiguration = (stepConfig) => {
         return configuration.toolConfigId && configuration.jobType ? true : false;
 
       case "nexus":
-        return configuration.nexusToolConfigId && configuration.type && configuration.repositoryName && configuration.groupName ? true : false;
+        return configuration.nexusToolConfigId && configuration.type && configuration.repositoryName ? true : false;
 
       case "octopus":
         return configuration.octopusToolId && configuration.spaceName ? true : false;
