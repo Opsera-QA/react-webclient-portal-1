@@ -25,7 +25,7 @@ const NexusToolSelectInput = ({dataObject, setDataObject, disabled, getToolsList
     newDataObject.setData("toolJobType", "");
     newDataObject.setData("jobName", "");
     newDataObject.setData("agentLabels", "");
-    newDataObject.setData("port", "");
+    newDataObject.setData("dockerPort", "");
     newDataObject.setData("groupName", "");
     newDataObject.setData("artifactName", "");
     setDataObject({...newDataObject});
@@ -42,7 +42,7 @@ const NexusToolSelectInput = ({dataObject, setDataObject, disabled, getToolsList
     newDataObject.setData("toolJobType", "");
     newDataObject.setData("jobName", "");
     newDataObject.setData("agentLabels", "");
-    newDataObject.setData("port", "");
+    newDataObject.setData("dockerPort", "");
     newDataObject.setData("groupName", "");
     newDataObject.setData("artifactName", "");
     setDataObject({...newDataObject});
