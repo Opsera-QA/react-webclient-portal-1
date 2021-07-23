@@ -6,10 +6,11 @@ import axios from "axios";
 import nexusStepActions from "../nexus-step-actions";
 import SelectInputBase from "components/common/inputs/select/SelectInputBase";
 
-function NexusRepoSelectInput({visible, dataObject, setDataObject, setDataFunction, disabled, nexusToolConfigId}) {
+function NexusRepoSelectInput({visible, dataObject, setDataObject, disabled, nexusToolConfigId}) {
   const toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [nexusRepositoriesList, setNexusRepositoriesList] = useState([]);
+  const [fullNexusRepositoriesList, setFullNexusRepositoriesList] = useState([]);
   const isMounted = useRef(false);
   const [isLoading, setIsLoading] = useState(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
@@ -38,6 +39,10 @@ function NexusRepoSelectInput({visible, dataObject, setDataObject, setDataFuncti
     };
   }, [nexusToolConfigId]);
 
+  useEffect(() => {
+    setNexusRepositoriesList(fullNexusRepositoriesList.filter(repo => repo.format === dataObject.getData("repositoryFormat")));
+  }, [dataObject.getData("repositoryFormat")]);
+
   const loadRepos = async (nexusToolConfigId, cancelSource = cancelTokenSource) => {
     try{
       setIsLoading(true);
@@ -62,7 +67,8 @@ function NexusRepoSelectInput({visible, dataObject, setDataObject, setDataFuncti
             });
           });
         }
-        setNexusRepositoriesList(nexusRepositories);
+        setFullNexusRepositoriesList(nexusRepositories);
+        setNexusRepositoriesList(nexusRepositories.filter(repo => repo.format === dataObject.getData("repositoryFormat")));
       }
     } catch (error) {
       if (isMounted?.current === true) {
@@ -86,8 +92,22 @@ function NexusRepoSelectInput({visible, dataObject, setDataObject, setDataFuncti
     }
 
     if (!isLoading && nexusToolConfigId !== "" && nexusRepositoriesList.length === 0) {
-      return "No Repositories found for selected Nexus account.";
+      return "No Repositories found for selected configuration.";
     }
+  };
+
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newDataObject = dataObject;
+    newDataObject.setData("repositoryGroup", selectedOption.format);
+    newDataObject.setData("repositoryName", selectedOption.name);
+    setDataObject({...newDataObject});
+  };
+
+  const clearDataFunction = (fieldName, selectedOption) => {
+    let newDataObject = dataObject;
+    newDataObject.setData("repositoryGroup", "");
+    newDataObject.setData("repositoryName", "");
+    setDataObject({...newDataObject});
   };
 
   if (!visible) {
@@ -100,6 +120,7 @@ function NexusRepoSelectInput({visible, dataObject, setDataObject, setDataFuncti
       dataObject={dataObject}
       setDataObject={setDataObject}
       setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
       selectOptions={nexusRepositoriesList}
       busy={isLoading}
       valueField="name"
@@ -112,8 +133,7 @@ function NexusRepoSelectInput({visible, dataObject, setDataObject, setDataFuncti
 
 NexusRepoSelectInput.propTypes = {
   dataObject: PropTypes.object,
-  setDataObject: PropTypes.func,
-  setDataFunction: PropTypes.func,
+  setDataObject: PropTypes.func,  
   nexusToolConfigId: PropTypes.string,
   disabled: PropTypes.bool,
   visible: PropTypes.bool
