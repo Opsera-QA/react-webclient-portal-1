@@ -246,7 +246,7 @@ function PipelineDetails({ dashboardData }) {
           {getValueStream()}
         </MetricContainer> */}
         <MetricContainer title="Pipeline: Duration Average">{getAverageBlocks()}</MetricContainer>
-        <MetricContainer title="Incidents">{getIncidents()}</MetricContainer>
+        {/* <MetricContainer title="Incidents">{getIncidents()}</MetricContainer> */}
       </div>
 
       {getDynamicPanel()}
