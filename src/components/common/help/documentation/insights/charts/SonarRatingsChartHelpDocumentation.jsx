@@ -1,10 +1,13 @@
 import React from "react";
 import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
+import PropTypes from "prop-types";
 
-function SonarRatingsChartHelpDocumentation() {
+function SonarRatingsChartHelpDocumentation({closeHelpPanel}) {
   return (
     <HelpDocumentationContainer
-      helpTopic={"Sonar Ratings"}>
+      closeHelpPanel={closeHelpPanel}
+      helpTopic={"Sonar Ratings"}
+    >
       <div>This chart consists of various security metrics, such as bugs, vulnerabilities and code smells.</div>
       <div className={"ml-2"}>
         <div className={"mt-2"}><b>Bugs</b> - Cumulative number of bugs from most recent scans, of associated pipelines from applied tags,
@@ -42,5 +45,9 @@ function SonarRatingsChartHelpDocumentation() {
     </HelpDocumentationContainer>
   );
 }
+
+SonarRatingsChartHelpDocumentation.propTypes = {
+  closeHelpPanel: PropTypes.func,
+};
 
 export default React.memo(SonarRatingsChartHelpDocumentation);
