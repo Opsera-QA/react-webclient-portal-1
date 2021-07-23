@@ -14,6 +14,9 @@ import SfdcPipelineWizardSubmitFileTypeButton
 import CustomTable from "components/common/table/CustomTable";
 import CancelButton from "components/common/buttons/CancelButton";
 import XmlFieldBase from "components/common/fields/code/XmlFieldBase";
+import PageLink from "components/common/links/PageLink";
+import {faExternalLink} from "@fortawesome/pro-light-svg-icons";
+import ExternalPageLink from "components/common/links/ExternalPageLink";
 
 function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelineWizardModel, setPipelineWizardScreen, handleClose }) {
     const fields = PipelineWizardFileUploadMetadata.fields;
@@ -359,6 +362,12 @@ function SfdcPipelineWizardFileUploadComponent({ pipelineWizardModel, setPipelin
     <div>
       <div className="my-2">
         Select components using a CSV file or upload a Package XML file to use for deployment.
+      </div>
+      <div>
+        <ExternalPageLink
+          linkText={"Please click here to view detailed Help Documentation for the File Upload process."}
+          link={`https://opsera.atlassian.net/l/c/Pbsm94Ch`}
+        />
       </div>
       {getHelpText()}
       {getErrorDialog()}
