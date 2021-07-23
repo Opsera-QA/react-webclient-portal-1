@@ -12,7 +12,7 @@ export const ruleFieldFilters = [
 function SfdcPipelineWizardRuleFieldFilterSelectInput({fieldName, className, model, setModel, disabled, showLabel}) {
   const setDataFunction = (fieldName, newValue) => {
     let newDataObject = {...model};
-    newDataObject.setData(fieldName, newValue["value"]);
+    newDataObject.setData(fieldName, newValue?.value);
     newDataObject.setData("values", []);
     setModel({...newDataObject});
   };
