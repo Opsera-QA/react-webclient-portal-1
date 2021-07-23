@@ -12,7 +12,7 @@ export const ruleFields = [
 function SfdcRuleFieldSelectInput({fieldName, className, dataObject, setDataObject, disabled, showLabel}) {
   const setDataFunction = (fieldName, newValue) => {
     let newDataObject = {...dataObject};
-    newDataObject.setData(fieldName, newValue["value"]);
+    newDataObject.setData(fieldName, newValue?.value);
     newDataObject.setData("values", []);
     setDataObject({...newDataObject});
   };
