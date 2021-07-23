@@ -101,13 +101,13 @@ function ECSServiceCreationTaskConfigurationPanel({
           fieldName={"ecsServiceDesiredCount"}
         />
       </Col>
-      <Col lg={12}>
-        <TextInputBase
-          dataObject={gitTasksConfigurationData}
-          setDataObject={setGitTasksConfigurationData}
-          fieldName={"ecsServiceLogGroup"}
-        />
-      </Col>
+      {/*<Col lg={12}>*/}
+      {/*  <TextInputBase*/}
+      {/*    dataObject={gitTasksConfigurationData}*/}
+      {/*    setDataObject={setGitTasksConfigurationData}*/}
+      {/*    fieldName={"ecsServiceLogGroup"}*/}
+      {/*  />*/}
+      {/*</Col>*/}
       <Col lg={12}>
         <LoadBalancerSelectInput
           dataObject={gitTasksConfigurationData}

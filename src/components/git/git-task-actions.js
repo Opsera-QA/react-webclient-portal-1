@@ -203,5 +203,13 @@ gitTasksActions.checkECSStatus = async (postBody, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, postBody);
 };
 
+gitTasksActions.logClusterCancellation = async (getAccessToken, cancelTokenSource, gitTasksDataDto) => {
+  const apiUrl = `/tools/aws/v2/cancel/ecs`;
+  let postBody = {
+    taskId: gitTasksDataDto.getData("_id"),
+  };
+  return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
+};
+
 
 export default gitTasksActions;

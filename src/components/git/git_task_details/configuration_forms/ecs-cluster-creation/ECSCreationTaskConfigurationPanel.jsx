@@ -47,7 +47,7 @@ function EC2ClusterCreationTaskConfigurationPanel({ gitTasksDataDto, gitTasksCon
         <AwsToolSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"awsToolId"} />
       </Col>
       <Col lg={12}>
-        <ClusterTemplateSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"clusterTemplate"} />
+        <ClusterTemplateSelectInput dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"clusterTemplate"} disabled={gitTasksDataDto.getData("configuration")?.stackId && gitTasksDataDto.getData("configuration")?.stackId.length > 0}/>
       </Col>
       <Col lg={12}>
         <TextInputBase dataObject={gitTasksConfigurationData} setDataObject={setGitTasksConfigurationData} fieldName={"clusterName"} />

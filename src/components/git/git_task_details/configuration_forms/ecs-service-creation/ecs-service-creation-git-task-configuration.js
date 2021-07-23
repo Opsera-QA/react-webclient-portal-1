@@ -12,7 +12,7 @@ const ec2ServiceCreationTaskConfigurationMetadata = {
       label: "Desired Count",
       id: "ecsServiceDesiredCount",
       isRequired: true,
-      regexValidator: regexHelpers.regexTypes.numericalField
+      regexValidator: /^[1-9][0-9]*$/
     },
     {
       label: "Required Compatibility",
