@@ -15,6 +15,9 @@ import Model from "core/data_model/model";
 import sfdcRuleMetadata from "components/workflow/wizards/sfdc_pipeline_wizard/rules/sfdc-rule-metadata";
 import GitRuleFieldSelectInput
   from "components/common/list_of_values_input/workflow/wizard/rules/GitRuleFieldSelectInput";
+import SfdcPipelineWizardRuleFieldFilterSelectInput
+  from "components/workflow/wizards/sfdc_pipeline_wizard/rules/SfdcPipelineWizardRuleFieldFilterSelectInput";
+import MultiTextInputBase from "components/common/inputs/text/MultiTextInputBase";
 
 function PipelineWizardRuleInput({pipelineWizardModel, ruleData, index, addRule, deleteRule, updateRule, fetchAttribute, isGitTab}) {
   const [ruleModel, setRuleModel] = useState(undefined);
@@ -37,7 +40,7 @@ function PipelineWizardRuleInput({pipelineWizardModel, ruleData, index, addRule,
 
   const updateData = (newModel) => {
     setRuleModel(newModel);
-    updateRule(index, newModel.getPersistData());
+    updateRule(index, newModel?.getPersistData());
   };
 
   // TODO: When finalizing this design everywhere make own component
@@ -66,18 +69,47 @@ function PipelineWizardRuleInput({pipelineWizardModel, ruleData, index, addRule,
     return (<SfdcRuleFieldSelectInput dataObject={ruleModel} setDataObject={updateData} showLabel={false} />);
   };
 
+  const getRuleValueInput = () => {
+    switch (ruleModel.getData("fieldFilter")) {
+      case "startsWith":
+      case "endsWith":
+      case "contains":
+        return (
+          <MultiTextInputBase
+            dataObject={ruleModel}
+            setDataObject={updateData}
+            fieldName={"values"}
+            showLabel={false}
+          />
+        );
+      case "equals":
+      default:
+        return (
+          <RuleValueMultiSelectInput
+            ruleField={ruleModel?.getData("field")}
+            dataObject={ruleModel}
+            setDataObject={updateData}
+            showLabel={false}
+            fetchAttribute={fetchAttribute}
+            componentTypes={ruleModel?.getData("componentTypes")}
+            pipelineWizardModel={pipelineWizardModel}
+          />
+        );
+    }
+  };
+
   if (ruleModel == null) {
     return null;
   }
 
   return (
     <Row className="d-flex mx-2 justify-content-between" key={index}>
-      <Col sm={11} className={"px-0"}>
+      <Col sm={12} className={"px-0"}>
         <Row className={"mx-0"}>
           <Col xs={1} className={"pr-1 pl-0"}>
             <RuleTypeSelectInput dataObject={ruleModel} setDataObject={updateData} showLabel={false} />
           </Col>
-          <Col xs={4} className={"px-0"}>
+          <Col xs={3} className={"px-0"}>
             <SfdcRuleComponentTypeMultiSelectInput
               dataObject={ruleModel}
               setDataObject={updateData}
@@ -89,22 +121,21 @@ function PipelineWizardRuleInput({pipelineWizardModel, ruleData, index, addRule,
           <Col xs={2} className={"px-1"}>
             {getRulesFieldComponent()}
           </Col>
-          <Col xs={5} className={"px-0"}>
-            <RuleValueMultiSelectInput
-              ruleField={ruleModel?.getData("field")}
-              dataObject={ruleModel}
-              setDataObject={updateData}
+          <Col xs={2} className={"pl-0 pr-1"}>
+            <SfdcPipelineWizardRuleFieldFilterSelectInput
+              setModel={updateData}
+              model={ruleModel}
               showLabel={false}
-              fetchAttribute={fetchAttribute}
-              componentTypes={ruleModel?.getData("componentTypes")}
-              pipelineWizardModel={pipelineWizardModel}
             />
           </Col>
+          <Col xs={3} className={"px-0"}>
+            {getRuleValueInput()}
+          </Col>
+          <Col xs={1} className={"my-auto d-flex"}>
+            {getAddRuleButton(index)}
+            {getDeleteRuleButton(index)}
+          </Col>
         </Row>
-      </Col>
-      <Col xs={1} className={"my-auto d-flex"}>
-        {getAddRuleButton(index)}
-        {getDeleteRuleButton(index)}
       </Col>
     </Row>
   );
