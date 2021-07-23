@@ -71,7 +71,7 @@ function MultiTextInputBase({ fieldName, dataObject, setDataObject, groupBy, dis
         <Multiselect
           data={selectOptions}
           busy={busy}
-          allowCreate={true}
+          allowCreate={"onFilter"}
           onCreate={(value) => handleCreate(value)}
           filter="contains"
           groupBy={groupBy}
