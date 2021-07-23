@@ -21,13 +21,13 @@ const SfdcPipelineWizardGitFilesTable = ({ pipelineWizardModel, setPipelineWizar
 
   const columns = useMemo(
     () => [
-      getTableTextColumn(getField(fields, "commitAction")),
+      getTableTextColumn(getField(fields, "commitAction"), undefined, 120),
       getTableTextColumn(getField(fields, "componentType")),
       getTableTextColumn(getField(fields, "componentName")),
       getTableTextColumn(getField(fields, "committedFile")),
       getTableDateTimeColumn(getField(fields, "committedTime")),
       getTableTextColumn(getField(fields, "committedBy")),
-      getTableTextColumn(getField(fields, "commitID")),
+      getTableTextColumn(getField(fields, "commitID"), undefined, 300),
     ],
     [],
   );
