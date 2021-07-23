@@ -8,7 +8,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InputContainer from "components/common/inputs/InputContainer";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
-function MultiTextInputBase({ fieldName, dataObject, setDataObject, groupBy, disabled, selectOptions, placeholderText, setDataFunction, busy, showClearValueButton, clearDataFunction, className}) {
+function MultiTextInputBase({ fieldName, dataObject, setDataObject, groupBy, disabled, selectOptions, placeholderText, setDataFunction, busy, showClearValueButton, clearDataFunction, className, showLabel}) {
   const [errorMessage, setErrorMessage] = useState("");
   const [field] = useState(dataObject.getFieldById(fieldName));
 
@@ -66,7 +66,7 @@ function MultiTextInputBase({ fieldName, dataObject, setDataObject, groupBy, dis
 
   return (
     <InputContainer className={className ? className : undefined}>
-      <InputLabel field={field} inputPopover={getClearDataIcon()} />
+      <InputLabel field={field} inputPopover={getClearDataIcon()} showLabel={showLabel} />
       <div className={"custom-multiselect-input"}>
         <Multiselect
           data={selectOptions}
@@ -105,6 +105,7 @@ MultiTextInputBase.propTypes = {
     PropTypes.array
   ]),
   className: PropTypes.string,
+  showLabel: PropTypes.bool
 };
 
 MultiTextInputBase.defaultProps = {
