@@ -158,7 +158,7 @@ function SonarRatings({ kpiConfiguration, setKpiConfiguration, dashboardData, in
         error={error}
         setKpis={setKpis}
         isLoading={isLoading}
-        chartHelpComponent={<SonarRatingsChartHelpDocumentation />}
+        chartHelpComponent={(closeHelpPanel) => <SonarRatingsChartHelpDocumentation closeHelpPanel={closeHelpPanel} />}
       />
       <ModalLogs
         header="Build Duration"

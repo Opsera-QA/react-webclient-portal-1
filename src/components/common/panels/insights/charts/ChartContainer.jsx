@@ -19,17 +19,22 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
   const [helpIsShown, setHelpIsShown] = useState(false);
   const { featureFlagHideItemInProd } = useContext(AuthContext);
 
+  const closeHelpPanel = () => {
+    setHelpIsShown(false);
+  };
+
   const getHelpToggle = () => {
     // TODO: Remove feature flag after verification
     if (featureFlagHideItemInProd()) {
       return null;
     }
 
-    if ((view === "chart" && chartHelpComponent) || (view === "settings" && settingsHelpComponent)) {
+    if ((view === "chart" && chartHelpComponent) || (view === "settings" && settingsHelpComponent) && !helpIsShown) {
       return (
         <ActionBarToggleHelpButton
           helpIsShown={helpIsShown}
           toggleHelp={() => setHelpIsShown(!helpIsShown)}
+          visible={!helpIsShown}
           size={"1x"}
         />
       );
@@ -75,7 +80,7 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
       if (helpIsShown) {
         return (
           <div className={"m-2"}>
-            {settingsHelpComponent}
+            {settingsHelpComponent(closeHelpPanel)}
           </div>
         );
       }
@@ -102,7 +107,7 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
     if (helpIsShown) {
       return (
         <div className={"m-2"}>
-          {chartHelpComponent}
+          {chartHelpComponent(closeHelpPanel)}
         </div>
       );
     }
@@ -170,12 +175,13 @@ ChartContainer.propTypes = {
   setKpis: PropTypes.func,
   loadChart: PropTypes.func,
   tableChart: PropTypes.bool,
-  chartHelpComponent: PropTypes.object,
-  settingsHelpComponent: PropTypes.object
+  chartHelpComponent: PropTypes.any,
+  settingsHelpComponent: PropTypes.any
 };
 
 ChartContainer.defaultProps = {
-  settingsHelpComponent: <GenericChartSettingsHelpDocumentation />
+  // eslint-disable-next-line react/display-name
+  settingsHelpComponent: (closeHelpPanel) => <GenericChartSettingsHelpDocumentation closeHelpPanel={closeHelpPanel} />
 };
 
 export default ChartContainer;
