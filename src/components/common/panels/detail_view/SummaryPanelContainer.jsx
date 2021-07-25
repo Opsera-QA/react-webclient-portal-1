@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import ActionBarEditorToggleButton from "components/common/actions/buttons/ActionBarEditorToggleButton";
 
-function SummaryPanelContainer({ setActiveTab, editingAllowed, children, settingsTab }) {
+function SummaryPanelContainer({ setActiveTab, editingAllowed, children, settingsTab, className }) {
   const getSettingsToggle = () => {
     if (editingAllowed && setActiveTab) {
       return (
@@ -16,7 +16,7 @@ function SummaryPanelContainer({ setActiveTab, editingAllowed, children, setting
   return (
     <div className="scroll-y">
       {getSettingsToggle()}
-      <div className="p-3">
+      <div className={className}>
         {children}
       </div>
     </div>
@@ -27,11 +27,13 @@ SummaryPanelContainer.propTypes = {
   setActiveTab: PropTypes.func,
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   editingAllowed: PropTypes.bool,
-  settingsTab: PropTypes.string
+  settingsTab: PropTypes.string,
+  className: PropTypes.string
 };
 
 SummaryPanelContainer.defaultProps = {
-  editingAllowed: true
+  editingAllowed: true,
+  className: "p-3"
 };
 
 export default SummaryPanelContainer;
