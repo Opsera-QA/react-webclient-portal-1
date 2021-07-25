@@ -29,7 +29,7 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
       return null;
     }
 
-    if ((view === "chart" && chartHelpComponent) || (view === "settings" && settingsHelpComponent) && !helpIsShown) {
+    if ((view !== "chart" || chartHelpComponent) && !helpIsShown) {
       return (
         <ActionBarToggleHelpButton
           helpIsShown={helpIsShown}
@@ -39,6 +39,16 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
         />
       );
     }
+  };
+
+  const getSettingsHelpComponent = () => {
+    if (settingsHelpComponent) {
+      settingsHelpComponent(closeHelpPanel);
+    }
+
+    return (
+      <GenericChartSettingsHelpDocumentation closeHelpPanel={closeHelpPanel} />
+    );
   };
 
   const getTitleBar = () => {
@@ -80,7 +90,7 @@ function ChartContainer({ kpiConfiguration, setKpiConfiguration, dashboardData, 
       if (helpIsShown) {
         return (
           <div className={"m-2"}>
-            {settingsHelpComponent(closeHelpPanel)}
+            {getSettingsHelpComponent()}
           </div>
         );
       }
@@ -175,13 +185,8 @@ ChartContainer.propTypes = {
   setKpis: PropTypes.func,
   loadChart: PropTypes.func,
   tableChart: PropTypes.bool,
-  chartHelpComponent: PropTypes.any,
-  settingsHelpComponent: PropTypes.any
-};
-
-ChartContainer.defaultProps = {
-  // eslint-disable-next-line react/display-name
-  settingsHelpComponent: (closeHelpPanel) => <GenericChartSettingsHelpDocumentation closeHelpPanel={closeHelpPanel} />
+  chartHelpComponent: PropTypes.func,
+  settingsHelpComponent: PropTypes.func
 };
 
 export default ChartContainer;
