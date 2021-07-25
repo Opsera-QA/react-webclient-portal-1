@@ -1,56 +1,55 @@
-// TODO: If this is going to be used elsewhere, bring it up to a common ancestor's metadata-file
-export const jobTypes = [
-  {
-    label: "Build",
-    value: "BUILD"
-  },
-  {
-    label: "SFDC Jobs",
-    value: "SFDC"
-  },
-  {
-    label: "Code Scan",
-    value: "CODE SCAN"
-  },
-  {
-    label: "Unit Test",
-    value: "UNIT TESTING"
-  },
-  {
-    label: "Functional Test",
-    value: "FUNCTIONAL TESTING"
-  },
-  {
-    label: "Performance Test",
-    value: "PERFORMANCE TESTING"
-  },
-  {
-    label: "Shell Script",
-    value: "SHELL SCRIPT"
-  },
-  {
-    label: "Cypress Unit Test",
-    value: "CYPRESS UNIT TESTING"
-  },
-  {
-    label: "NUnit Unit Test",
-    value: "NUNIT_UNIT_TESTING"
-  },
-  {
-    label: "Docker Push",
-    value: "DOCKER PUSH"
-  },
-  {
-    label: "Artifactory Docker Push",
-    value: "ARTIFACTORY_DOCKER_PUSH"
-  },
-  {
-    label: "Push to Git",
-    value: "SFDC PUSH ARTIFACTS"
-  },
-  {
-    label: "Powershell Script",
-    value: "POWERSHELL SCRIPT"
-  },
+import regexHelpers from "utils/regexHelpers";
 
-];
+const JenkinsJobMetadata = {
+  idProperty: "_id",
+  type: "Jenkins Job",
+  fields: [
+    {
+      label: "ID",
+      id: "_id",
+    },
+    {
+      label: "Name",
+      id: "name",
+      isRequired: true,
+      maxLength: 50,
+      regexValidator: regexHelpers.regexTypes["generalTextWithSpaces"],
+      formText:
+        "Names can be up to 50 characters and can consist of letters, apostrophes, numbers, spaces, dashes, colons, underscores, and periods",
+    },
+    {
+      label: "Configuration",
+      id: "configuration",
+    },
+    {
+      label: "Description",
+      id: "description",
+      maxLength: 1000,
+      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces,
+      formText:
+        "Description can be up to 1000 characters and can consist of letters, apostrophes, numbers, spaces, dashes, colons, underscores, and periods",
+    },
+    {
+      label: "Job Type",
+      id: "type",
+    },
+    {
+      label: "Job Type",
+      id: "jobType",
+    },
+    {
+      label: "Active",
+      id: "active",
+    },
+  ],
+  newObjectFields: {
+    name: "",
+    description: "",
+    type: ["BUILD"],
+    configuration: {},
+    jobType: "BUILD",
+    active: true
+  },
+};
+
+export default JenkinsJobMetadata;

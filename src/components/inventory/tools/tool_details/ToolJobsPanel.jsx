@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import JenkinsJobs from "./tool_jobs/jenkins/jobs/JenkinsJobs.jsx";
+import JenkinsJobsPanel from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/JenkinsJobsPanel.jsx";
 import PropTypes from "prop-types";
 
 function ToolJobsPanel({ toolData, loadData, isLoading }) {
 
-  const getJobsPanel = (toolIdentifier, loadData) => {
+  const getJobsPanel = (toolIdentifier, loadData,setToolData) => {
     switch (toolIdentifier) {
     case "jenkins":
-      return <JenkinsJobs isLoading={isLoading} toolData={toolData} loadData={loadData}/>;
+      return <JenkinsJobsPanel isLoading={isLoading} toolData={toolData} loadData={loadData} setToolData={setToolData} />;
     default:
       return <div className="text-center p-5 text-muted mt-5">Jobs management is not currently available for this
         tool.</div>;
@@ -31,7 +31,8 @@ function ToolJobsPanel({ toolData, loadData, isLoading }) {
 ToolJobsPanel.propTypes = {
   toolData: PropTypes.object,
   loadData: PropTypes.func,
-  isLoading: PropTypes.bool
+  isLoading: PropTypes.bool,
+  setToolData:PropTypes.func
 };
 
 

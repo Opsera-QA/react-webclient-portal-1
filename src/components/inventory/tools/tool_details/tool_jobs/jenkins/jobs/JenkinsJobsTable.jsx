@@ -1,73 +1,105 @@
-import React, {useMemo, useState} from "react";
+import React, {useMemo, useContext, useRef, useEffect} from "react";
 import PropTypes from "prop-types";
 import CustomTable from "components/common/table/CustomTable";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faTimesCircle, faCheckCircle, faPlus} from "@fortawesome/free-solid-svg-icons";
-import {Button} from "react-bootstrap";
-import NewJenkinsJobModal from "./NewJenkinsJobModal";
+import NewJenkinsJobOverlay from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/NewJenkinsJobOverlay";
+import { DialogToastContext } from "contexts/DialogToastContext";
+import {
+  getTableBooleanIconColumn,
+  getTableTextColumn
+} from "components/common/table/table-column-helpers";
+import {getField} from "components/common/metadata/metadata-helpers";
+import JenkinsJobMetadata from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/jenkins-job-metadata";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faAbacus} from "@fortawesome/pro-light-svg-icons";
+import {getColumnHeader, getColumnId} from "components/common/table/column_definitions/model-table-column-definitions";
 
-function JenkinsJobsTable({ toolData, loadData, selectedRow, isLoading }) {
-  const [showCreateJobModal, setShowCreateJobModal] = useState(false);
+export const getJenkinsJobTypeColumn = (field, className) => {
+  let header = getColumnHeader(field);
+
+  return {
+    header: header,
+    id: getColumnId(field),
+    width: 200,
+    template: function (value) {
+      return value[0];
+    },
+    class: className
+  };
+};
+
+export const getJobTypeColumn = (field, className) => {
+  return {
+    Header: "Type",
+    accessor: "type",
+    Cell: function formatCell(row) {
+      return row.value[0];
+    },
+    className: className
+  };
+};
+
+function JenkinsJobsTable({ toolData, loadData, onRowSelect, isLoading }) {
+  const fields = JenkinsJobMetadata.fields;
+  const toastContext = useContext(DialogToastContext);
+  const isMounted = useRef(false);
+
+  useEffect(()=>{
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  },[]);
 
   const createJenkinsJob = () => {
-    setShowCreateJobModal(true);
+    toastContext.showOverlayPanel(
+      <NewJenkinsJobOverlay
+        toolData={toolData}
+        loadData={loadData}
+        isMounted={isMounted}
+      />
+    );
   };
 
   const columns = useMemo(
     () => [
-      {
-        Header: "Name",
-        accessor: "name",
-      },
-      {
-        Header: "Description",
-        accessor: "description",
-      },
-      {
-        Header: "Type",
-        accessor: "type",
-        Cell: function formatCell(row) {
-          return row.value[0];
-        },
-      },     
-      {
-        Header: "Active",
-        accessor: "active",
-        Cell: function formatCell(row) {
-          return row.value ?  <FontAwesomeIcon icon={faCheckCircle} className="green ml-3" /> :  <FontAwesomeIcon icon={faTimesCircle} className="red ml-3" />;
-        },
-      },   
+      getTableTextColumn(getField(fields, "name")),
+      getTableTextColumn(getField(fields, "description")),
+      getJobTypeColumn(getField(fields, "type")),
+      getTableBooleanIconColumn(getField(fields, "active"))
     ],
     []
   );
 
+  const getJenkinsJobsTable = () => {
+    return (
+      <CustomTable
+        columns={columns}
+        data={[...toolData.getData("jobs")]}
+        onRowSelect={onRowSelect}
+        loadData={loadData}
+        isLoading={isLoading}
+      />
+    );
+  };
+
   return (
-    <>
-      <NewJenkinsJobModal toolData={toolData} loadData={loadData} setShowModal={setShowCreateJobModal} showModal={showCreateJobModal} />
-      <div className="my-1 text-right">
-        <Button variant="primary" size="sm"
-                onClick={() => createJenkinsJob()}>
-          <FontAwesomeIcon icon={faPlus} className="mr-1"/> Create Job
-        </Button>
-        <br/>
-      </div>
-      <div className="table-content-block">
-        <CustomTable
-          columns={columns}
-          data={toolData.getData("jobs")}
-          onRowSelect={selectedRow}
-          isLoading={isLoading}
-        >
-        </CustomTable>
-      </div>
-    </>
+    <FilterContainer
+      showBorder={false}
+      loadData={loadData}
+      addRecordFunction={createJenkinsJob}
+      body={getJenkinsJobsTable()}
+      isLoading={isLoading}
+      metadata={JenkinsJobMetadata}
+      titleIcon={faAbacus}
+      title={"Jobs"}
+    />
   );
 }
 
 JenkinsJobsTable.propTypes = {
   toolData: PropTypes.object,
   loadData: PropTypes.func,
-  selectedRow: PropTypes.func,
+  onRowSelect: PropTypes.func,
   isLoading: PropTypes.bool
 };
 
