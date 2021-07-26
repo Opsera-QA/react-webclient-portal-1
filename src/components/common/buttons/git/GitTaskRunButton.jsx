@@ -12,7 +12,7 @@ import axios from "axios";
 import GitRunTaskModal from "components/git/git_task_details/GitRunTaskModal";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 
-function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAllowed }) {
+function GitTaskRunButton({gitTasksData, setGitTasksData, disable, className, loadData, actionAllowed }) {
   const [isCanceling, setIsCanceling] = useState(false);
   const [taskStarting, setTaskStarting] = useState(false);
   const {getAccessToken} = useContext(AuthContext);
@@ -99,6 +99,7 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAll
         showModal={showModal}
         handleClose={handleClose}
         gitTasksData={gitTasksData}
+        setGitTasksData={setGitTasksData}
         loadData={loadData}
         />
     </div>
@@ -107,6 +108,7 @@ function GitTaskRunButton({gitTasksData, disable, className, loadData, actionAll
 
 GitTaskRunButton.propTypes = {
   gitTasksData: PropTypes.object,
+  setGitTasksData: PropTypes.func,
   loadData: PropTypes.func,
   disable: PropTypes.bool,
   className: PropTypes.string,

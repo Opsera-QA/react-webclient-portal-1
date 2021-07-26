@@ -10,7 +10,7 @@ import GitTaskSfdcPipelineWizardOverlay from "components/git/git_task_details/co
 import gitTasksActions from "components/git/git-task-actions";
 import axios from "axios";
 
-function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadData }) {
+function RunGitTaskButton({gitTasksData, setGitTasksData, gitTasksConfigurationDataDto, handleClose, disable, className, loadData }) {
   let toastContext = useContext(DialogToastContext);
   const { getAccessToken } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -38,11 +38,31 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
     };
   }, []);
 
+  const checkValidity = () => {
+    if (gitTasksData.getData("type") === "sync-sfdc-repo") { 
+      const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
+      if(gitTasksConfigurationDataDto.checkCurrentValidity() && configuration?.hasUpstreamBranch && configuration?.upstreamBranch?.length < 1 ) {
+        return true;
+      }
+    } else {
+      return !gitTasksConfigurationDataDto.checkCurrentValidity();
+    }
+  };
+
   const handleRunGitTask = async () => {
     if (gitTasksData.getData("type") === "sync-sfdc-repo") {  
-      // open wizard views
-      toastContext.showOverlayPanel(<GitTaskSfdcPipelineWizardOverlay gitTasksData={gitTasksData}/>);
-      // return;
+       try {
+        setIsLoading(true);
+        const configuration = gitTasksConfigurationDataDto ? gitTasksConfigurationDataDto.getPersistData() : {};
+        gitTasksData.setData("configuration", configuration);
+        await gitTasksActions.updateGitTaskV2(getAccessToken, cancelTokenSource, gitTasksData);
+      } catch (error) {
+        toastContext.showLoadingErrorDialog(error);
+        setIsLoading(false);
+      } finally {
+        toastContext.showOverlayPanel(<GitTaskSfdcPipelineWizardOverlay gitTasksData={gitTasksData}/>);  
+        setIsLoading(false);
+      }
     }    
     else if (gitTasksData.getData("type") === "sync-branch-structure") {    
       // pipeline action call to trigger branch conversion
@@ -116,7 +136,7 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
     <div className={className}>
       <Button
         variant={"success"}
-        disabled={gitTasksData?.getData("status") === "running" || disable || isLoading}
+        disabled={gitTasksData?.getData("status") === "running" || disable || isLoading || checkValidity() }
         onClick={() => {handleRunGitTask(true);}}
       >
         {getLabel()}
@@ -127,6 +147,8 @@ function RunGitTaskButton({gitTasksData, handleClose, disable, className, loadDa
 
 RunGitTaskButton.propTypes = {
   gitTasksData: PropTypes.object,
+  setGitTasksData: PropTypes.func,
+  gitTasksConfigurationDataDto: PropTypes.object,
   loadData: PropTypes.func,
   disable: PropTypes.bool,
   className: PropTypes.string,

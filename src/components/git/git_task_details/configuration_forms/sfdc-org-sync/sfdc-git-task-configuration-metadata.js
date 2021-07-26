@@ -106,6 +106,22 @@ const sfdcGitTaskConfigurationMetadata = {
       maxLength: 255,
       regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash
     },
+    {
+      label: "Create a new branch?",
+      id: "newBranch",
+      formText: "Creates a new branch and synch the changes.",
+    },
+    {
+      label: "Use an upstream branch?",
+      id: "hasUpstreamBranch",
+      formText: "Configure an upstream/source branch. The Files will be overwritten when pushing the artifacts. If no upstream branch is configured, then the new branch is created as an Orphan branch, having only the artifact files and no commit history.",
+    },
+    {
+      label: "Upstream Branch",
+      id: "upstreamBranch",
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash,
+      maxLength: 50
+    },
   ],
   newObjectFields:
     {
@@ -133,6 +149,9 @@ const sfdcGitTaskConfigurationMetadata = {
     sfdcToolId: "",
     sfdcToolName: "",
     accountUsername: "",
+    newBranch: false,
+    hasUpstreamBranch: false,
+    upstreamBranch: ""
     }
 };
 
