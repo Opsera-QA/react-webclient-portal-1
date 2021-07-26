@@ -11,8 +11,8 @@ import axios from "axios";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 import OwnershipReportLdapUserSelectInput
   from "components/common/list_of_values_input/reports/user_reports/OwnershipReportLdapUserSelectInput";
-import taskFilterMetadata from "components/git/git-tasks-filter-metadata";
 import gitTasksActions from "components/git/git-task-actions";
+import reportsFilterMetadata from "components/reports/reports-filter-metadata";
 
 function UserTaskOwnershipReport() {
   const { getAccessRoleData, getAccessToken } = useContext(AuthContext);
@@ -22,7 +22,7 @@ function UserTaskOwnershipReport() {
   const [tasks, setTasks] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [taskFilterModel, setTaskFilterModel] = useState(new Model({ ...taskFilterMetadata.newObjectFields }, taskFilterMetadata, false));
+  const [taskFilterModel, setTaskFilterModel] = useState(new Model({ ...reportsFilterMetadata.newObjectFields }, reportsFilterMetadata, false));
 
   useEffect(() => {
     if (cancelTokenSource) {

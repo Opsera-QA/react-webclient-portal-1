@@ -10,9 +10,9 @@ import UserToolOwnershipReportTable from "components/reports/users/tools/UserToo
 import axios from "axios";
 import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar";
 import toolsActions from "components/inventory/tools/tools-actions";
-import toolFilterMetadata from "components/inventory/tools/tool-filter-metadata";
 import OwnershipReportLdapUserSelectInput
   from "components/common/list_of_values_input/reports/user_reports/OwnershipReportLdapUserSelectInput";
+import reportsFilterMetadata from "components/reports/reports-filter-metadata";
 
 function UserToolOwnershipReport() {
   const { getAccessRoleData, getAccessToken } = useContext(AuthContext);
@@ -22,7 +22,7 @@ function UserToolOwnershipReport() {
   const [tools, setTools] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [toolFilterModel, setToolFilterModel] = useState(new Model({ ...toolFilterMetadata.newObjectFields }, toolFilterMetadata, false));
+  const [toolFilterModel, setToolFilterModel] = useState(new Model({ ...reportsFilterMetadata.newObjectFields }, reportsFilterMetadata, false));
 
   useEffect(() => {
     if (cancelTokenSource) {

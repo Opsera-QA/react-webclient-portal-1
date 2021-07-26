@@ -3,10 +3,16 @@ import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faDraftingCompass} from "@fortawesome/pro-light-svg-icons";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
-import {getPipelineTypeColumn, getTableDateColumn, getTablePipelineStatusColumn, getTableTextColumn} from "components/common/table/table-column-helpers";
+import {
+  getPipelineRunCountColumn,
+  getPipelineTypeColumn,
+  getTableDateColumn, getTableIdColumn,
+  getTablePipelineStatusColumn,
+  getTableTextColumn
+} from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import { useHistory } from "react-router-dom";
-import CustomTable from "components/common/table/CustomTable";
+import VanityTable from "components/common/table/VanityTable";
 
 function UserPipelineOwnershipReport({ pipelineList, isLoading, paginationModel, setPaginationModel, loadData }) {
   const fields = pipelineMetadata.fields;
@@ -15,26 +21,26 @@ function UserPipelineOwnershipReport({ pipelineList, isLoading, paginationModel,
   const columns = useMemo(
     () => [
       getPipelineTypeColumn(getField(fields, "type")),
-      getTableTextColumn(getField(fields, "_id")),
+      getTableIdColumn(),
       getTableTextColumn(getField(fields, "name")),
-      getTablePipelineStatusColumn(getField(fields, "workflow")),
-      getTableTextColumn(getField(fields, "workflow.run_count")),
+      // getTablePipelineStatusColumn(getField(fields, "workflow")),
+      getPipelineRunCountColumn(getField(fields, "workflow.run_count")),
       getTableDateColumn(getField(fields, "createdAt")),
       getTableDateColumn(getField(fields, "updatedAt")),
     ],
     [],
   );
 
-  const onRowSelect = (rowData) => {
-    history.push(`/workflow/details/${rowData.original._id}/summary`);
+  const onRowSelect = (row) => {
+    history.push(`/workflow/details/${row?._id}/summary`);
   };
 
   const getPipelinesTable = () => {
     return (
-      <CustomTable
+      <VanityTable
         isLoading={isLoading}
-        paginationDto={paginationModel}
-        setPaginationDto={setPaginationModel}
+        paginationModel={paginationModel}
+        setPaginationModel={setPaginationModel}
         data={pipelineList}
         columns={columns}
         loadData={loadData}
@@ -65,6 +71,7 @@ function UserPipelineOwnershipReport({ pipelineList, isLoading, paginationModel,
       filterDto={paginationModel}
       setFilterDto={setPaginationModel}
       supportSearch={true}
+      showBorder={false}
       isLoading={isLoading}
       metadata={pipelineMetadata}
       type={"Pipeline"}

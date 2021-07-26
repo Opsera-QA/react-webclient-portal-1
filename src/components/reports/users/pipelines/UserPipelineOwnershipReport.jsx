@@ -10,9 +10,9 @@ import ReportsSubNavigationBar from "components/reports/ReportsSubNavigationBar"
 import OwnershipReportLdapUserSelectInput
   from "components/common/list_of_values_input/reports/user_reports/OwnershipReportLdapUserSelectInput";
 import Model from "core/data_model/model";
-import pipelineFilterMetadata from "components/workflow/pipelines/pipeline_details/workflow/pipeline-filter-metadata";
 import pipelineActions from "components/workflow/pipeline-actions";
 import {DialogToastContext} from "contexts/DialogToastContext";
+import reportsFilterMetadata from "components/reports/reports-filter-metadata";
 
 function UserPipelineOwnershipReport() {
   const { getAccessRoleData, getAccessToken } = useContext(AuthContext);
@@ -22,7 +22,7 @@ function UserPipelineOwnershipReport() {
   const [pipelines, setPipelines] = useState([]);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
-  const [pipelineFilterModel, setPipelineFilterModel] = useState(new Model({ ...pipelineFilterMetadata.newObjectFields }, pipelineFilterMetadata, false));
+  const [pipelineFilterModel, setPipelineFilterModel] = useState(new Model({ ...reportsFilterMetadata.newObjectFields }, reportsFilterMetadata, false));
 
   useEffect(() => {
     if (cancelTokenSource) {
