@@ -8,7 +8,6 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import ModalBase from "components/common/modal/ModalBase";
 import CloseButton from "components/common/buttons/CloseButton";
 import RunGitTaskButton from "components/common/buttons/git/RunGitTaskButton";
-
 import SFDCGitBranchInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCGitBranchInput";
 import SFDCNewBranchBoolInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCNewBranchBoolInput";
 import SFDCHasUpstreamBoolInput from "components/git/git_task_details/configuration_forms/sfdc-org-sync/inputs/SFDCHasUpstreamBoolInput";
