@@ -64,13 +64,6 @@ function EC2ClusterCreationTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurat
               <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"private_subnet_cidr_2"} />
             </>
           );
-        } else {
-          return (
-            <>
-              <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"public_subnet_1"} />
-              <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"public_subnet_2"} />
-            </>
-          );
         }
       }
   };
