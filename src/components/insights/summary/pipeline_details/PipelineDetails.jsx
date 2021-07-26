@@ -201,6 +201,13 @@ function PipelineDetails({ dashboardData }) {
           selectedDataBlock={selectedDataBlock}
           style={{ maxWidth: "33%" }}
         />
+        <AvgApprovalTimeDataBlock
+          dashboardData={dashboardData}
+          toggleDynamicPanel={toggleDynamicPanel}
+          selectedDataBlock={selectedDataBlock}
+          style={{ maxWidth: "33%" }}
+          disable={true}
+        />
       </DataBlockWrapper>
     );
   };
@@ -225,13 +232,6 @@ function PipelineDetails({ dashboardData }) {
           toggleDynamicPanel={toggleDynamicPanel}
           selectedDataBlock={selectedDataBlock}
           style={{ maxWidth: "33%" }}
-        />
-        <AvgApprovalTimeDataBlock
-          dashboardData={dashboardData}
-          toggleDynamicPanel={toggleDynamicPanel}
-          selectedDataBlock={selectedDataBlock}
-          style={{ maxWidth: "33%" }}
-          disable={true}
         />
       </DataBlockWrapper>
     );
