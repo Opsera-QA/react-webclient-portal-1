@@ -7,11 +7,13 @@ const ec2ClusterCreationTaskConfigurationMetadata = {
       label: "VPC CIDR Block",
       id: "vpcCidrBlock",
       regexValidator: /^[A-Za-z0-9-.:/]*$/,
-      formText: "Sample Format - 10.0.0.0/16"
+      formText: "Sample Format - 10.0.0.0/16",
+      maxLength: 30
     },
     {
       label: "Cluster Template",
-      id: "clusterTemplate"
+      id: "clusterTemplate",
+      isRequired: true
     },
     {
       label: "Create VPC?",
@@ -36,37 +38,43 @@ const ec2ClusterCreationTaskConfigurationMetadata = {
       label: "Public Subnet 1",
       id: "public_subnet_1",
       regexValidator: /^[A-Za-z0-9-.:/]*$/,
-      formText : "Sample Format - 10.0.0.0/24"
+      formText : "Sample Format - 10.0.0.0/24",
+      maxLength: 30
     },
     {
       label: "Public Subnet 2",
       id: "public_subnet_2",
       regexValidator: /^[A-Za-z0-9-.:/]*$/,
-      formText : "Sample Format - 10.0.0.0/24"
+      formText : "Sample Format - 10.0.0.0/24",
+      maxLength: 30
     },
     {
       label: "Private Subnet CIDR 1",
       id: "private_subnet_cidr_1",
       regexValidator: /^[A-Za-z0-9-.:/]*$/,
       formText : "Sample Format - 10.194.20.0/24",
+      maxLength: 30
     },
     {
       label: "Private Subnet CIDR 2",
       id: "private_subnet_cidr_2",
       regexValidator: /^[A-Za-z0-9-.:/]*$/,
       formText : "Sample Format - 10.194.21.0/24",
+      maxLength: 30
     },
     {
       label: "Public Subnet CIDR 1",
       id: "public_subnet_cidr_1",
       regexValidator: /^[A-Za-z0-9-.:/]*$/,
       formText : "Sample Format - 10.194.10.0/24",
+      maxLength: 30
     },
     {
       label: "Public Subnet CIDR 2",
       id: "public_subnet_cidr_2",
       regexValidator: /^[A-Za-z0-9-.:/]*$/,
       formText : "Sample Format - 10.194.11.0/24",
+      maxLength: 30
     },
     {
       label: "AWS Tool",
