@@ -231,6 +231,31 @@ const octopusStepFormMetadata = {
         regexValidator: regexHelpers.regexTypes.octopusFileList,
         formText: "A newline-separated list of file or directory names, relative to the installation directory"
       },
+      {
+        label: "IIS Authentication",
+        id: "iisAuthentication",
+      },
+      {
+        label: ".Net CLR Version",
+        id: "dotNetClrVersion",
+      },
+      {
+        label: "IIS Authentication Type",
+        id: "applicationPoolIdentityType",
+      },
+      {
+        label: "Application Pool Identity Username",
+        id: "applicationPoolIdentityUsername",
+        maxLength: 50
+      },
+      {
+        label: "Application Pool Identity Password",
+        id: "applicationPoolIdentityPassword",
+      },
+      {
+        label: "Start Application Pool",
+        id: "startApplicationPool",
+      },
     ],
   newObjectFields:
       {
@@ -283,6 +308,12 @@ const octopusStepFormMetadata = {
         deploymentDirectory: "",
         purge: false,
         excludeFromPurge: "",
+        iisAuthentication: [],
+        dotNetClrVersion: "",
+        applicationPoolIdentityType: "",
+        applicationPoolIdentityUsername: "",
+        applicationPoolIdentityPassword :  {},
+        startApplicationPool : false,
       }
   };
   
