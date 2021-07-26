@@ -31,7 +31,7 @@ import OctopusDeployToIisView from "./sub-forms/OctopusDeployToIisView";
 import OctopusDeployToJavaArchiveView from "./sub-forms/OctopusDeployToJavaArchiveView";
 import OctopusProjectNameInput from "./input/OctopusProjectNameInput";
 
-function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToolsList, closeEditorPanel, pipelineId }) {
+function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, callbackSaveToVault, getToolsList, closeEditorPanel, pipelineId }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [isLoading, setIsLoading] = useState(false);
@@ -84,7 +84,29 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
     isOctopusSearching(false);
   };
 
+  const saveToVault = async (pipelineId, stepId, key, name, value) => {
+    
+    let octopusConfig = {...octopusStepConfigurationDto};
+
+    const keyName = `${pipelineId}-${stepId}-${key}`;
+    const body = {
+      "key": keyName,
+      "value": JSON.stringify(value)
+    };
+    const response = await callbackSaveToVault(body);    
+    if (response.status === 200 ) {
+      return { name: name, vaultKey: keyName };
+    } else {
+      octopusConfig.setData("applicationPoolIdentityPassword", {});
+      setOctopusStepConfigurationDataDto({...octopusConfig});
+      let errorMessage = "ERROR: Something has gone wrong saving secure data to your vault.  Please try again or report the issue to OpsERA.";
+      toastContext.showErrorDialog(errorMessage);
+      return "";
+    }
+  };
+
   const callbackFunction = async () => {
+    let octopusConfig = {...octopusStepConfigurationDto};
     const item = {
       configuration: octopusStepConfigurationDto.getPersistData(),
       threshold: {
@@ -94,6 +116,24 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, getT
     };
     let validateDepVariables = await validateDeploymentVariables();
     let validateCondVariables = await validateConditionalVariables();
+    
+    if( octopusConfig.getData("applicationPoolIdentityType") &&
+        octopusConfig.getData("applicationPoolIdentityType").toLowerCase() === "custom_user" && 
+        octopusConfig.getData("applicationPoolIdentityUsername")?.length > 0 &&
+        typeof(octopusConfig.getData("applicationPoolIdentityPassword")) === "string" &&
+        octopusConfig.getData("applicationPoolIdentityPassword")?.length !== 0) {
+          let poolIdentityPassword = await saveToVault(pipelineId, stepId, "applicationPoolIdentityPassword", "Vault Secured Key", octopusConfig.getData("applicationPoolIdentityPassword"));
+          // console.log(poolIdentityPassword);
+          octopusConfig.setData("applicationPoolIdentityPassword", poolIdentityPassword);
+          setOctopusStepConfigurationDataDto({...octopusConfig});
+      } else if (
+        typeof(octopusConfig.getData("applicationPoolIdentityPassword")) === "string" &&
+        octopusConfig.getData("applicationPoolIdentityPassword")?.length === 0) {
+        octopusConfig.setData("applicationPoolIdentityUsername", "");
+        octopusConfig.setData("applicationPoolIdentityPassword", {});
+        setOctopusStepConfigurationDataDto({...octopusConfig});
+      }
+
     if (validateDepVariables && validateCondVariables) {
       await createDeploymentEnvironments();
       parentCallback(item);
