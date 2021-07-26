@@ -3,7 +3,7 @@ import baseActions from "utils/actionsBase";
 const argoActions = {};
 
 argoActions.createArgoApplicationV2 = async (getAccessToken, cancelTokenSource, toolId, argoApplicationModel) => {
-  const apiUrl = `registry/tools/${toolId}/argo/v2/create`;
+  const apiUrl = `/tools/${toolId}/argo/v2/create`;
   const postBody = {
     ...argoApplicationModel.getPersistData(),
   };
@@ -13,18 +13,16 @@ argoActions.createArgoApplicationV2 = async (getAccessToken, cancelTokenSource, 
 
 
 argoActions.updateArgoApplicationV2 = async (getAccessToken, cancelTokenSource, toolId, applicationId, argoApplicationModel) => {
-  const apiUrl = `registry/tools/${toolId}/argo/v2/${applicationId}/update`;
+  const apiUrl = `/tools/${toolId}/argo/v2/${applicationId}/update`;
   const postBody = {
     ...argoApplicationModel.getPersistData(),
   };
-
-  console.log("apiUrl: " + JSON.stringify(apiUrl));
 
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
 argoActions.deleteArgoApplicationV2 = async (getAccessToken, cancelTokenSource, toolId, applicationId) => {
-  const apiUrl = `registry/tools/${toolId}/argo/v2/${applicationId}`;
+  const apiUrl = `/tools/${toolId}/argo/v2/${applicationId}`;
   return await baseActions.apiDeleteCallV2(getAccessToken, cancelTokenSource, apiUrl);
 };
 
