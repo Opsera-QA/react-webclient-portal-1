@@ -107,7 +107,7 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
       disable={
         !gitTasksDataDto.checkCurrentValidity()
         || (gitTasksConfigurationDataDto == null || !gitTasksConfigurationDataDto.checkCurrentValidity()) ||
-        gitTasksDataDto && gitTasksDataDto.getData("status") && gitTasksDataDto.getData("status") === "running"
+        (gitTasksDataDto && gitTasksDataDto.getData("status") && gitTasksDataDto.getData("status") === "running")
       }
     >
       {runTask === true &&
