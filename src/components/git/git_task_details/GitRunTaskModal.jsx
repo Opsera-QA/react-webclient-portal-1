@@ -97,11 +97,11 @@ function GitRunTaskModal({ showModal, handleClose, gitTasksData, setGitTasksData
                     <TextInputBase fieldName={"gitBranch"}
                     dataObject={dataObj} setDataObject={setDataObj} visible={dataObj?.getData("newBranch")} />
                   </Col>
-                  <Col lg={12}>
+                  {/* <Col lg={12}>
                     <SFDCHasUpstreamBoolInput dataObject={dataObj} setDataObject={setDataObj} />
-                  </Col>
+                  </Col> */}
                   <Col lg={12}>
-                    <SFDCGitUpstreamBranchInput dataObject={dataObj} setDataObject={setDataObj} visible={dataObj?.getData("hasUpstreamBranch")} />
+                    <SFDCGitUpstreamBranchInput dataObject={dataObj} setDataObject={setDataObj} />
                   </Col>
                 </>
               }
