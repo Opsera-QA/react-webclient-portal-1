@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faTasks} from "@fortawesome/pro-light-svg-icons";
 import taskMetadata from "components/git/git-tasks-metadata";
-import {getTableBooleanIconColumn, getTableDateColumn, getTableTextColumn, getPipelineActivityStatusColumn} from "components/common/table/table-column-helpers";
+import {getTableBooleanIconColumn, getTableDateColumn, getTableTextColumn, getPipelineActivityStatusColumn} from "components/common/table/table-column-helpers-v2";
 import {getField} from "components/common/metadata/metadata-helpers";
 import { useHistory } from "react-router-dom";
 import VanityTable from "components/common/table/VanityTable";

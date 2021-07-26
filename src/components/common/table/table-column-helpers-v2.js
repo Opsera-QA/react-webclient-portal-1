@@ -8,8 +8,19 @@ import {ACCESS_ROLES_FORMATTED_LABELS} from "components/common/helpers/role-help
 import PipelineTypesField from "components/common/form_fields/pipelines/PipelineTypesField";
 import Model from "core/data_model/model";
 import pipelineMetadata from "components/workflow/pipelines/pipeline_details/pipeline-metadata";
-import {faBracketsCurly, faDraftingCompass, faMicrochip} from "@fortawesome/pro-light-svg-icons";
+import {
+  faBracketsCurly, faCheckCircle,
+  faDraftingCompass,
+  faExclamationCircle,
+  faMicrochip, faPause, faSpinner, faStop,
+  faTimesCircle
+} from "@fortawesome/pro-light-svg-icons";
 import {faSalesforce} from "@fortawesome/free-brands-svg-icons";
+import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
+import pipelineHelpers from "components/workflow/pipelineHelpers";
+import PipelineStatus from "components/workflow/pipelines/PipelineStatus";
+import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export const FILTER_TYPES = {
   SEARCH_FILTER: "inputFilter",
@@ -51,6 +62,15 @@ export const getTableTextColumn = (field, className, maxWidth = undefined, filte
     id: getColumnId(field),
     class: className ? className : undefined,
     maxWidth: maxWidth
+  };
+};
+
+export const getTableIdColumn = (headerText = "ID", className) => {
+  return {
+    header:  [{ text: headerText }],
+    id: "_id",
+    class: className,
+    maxWidth: 200
   };
 };
 
@@ -117,20 +137,21 @@ export const getTableDateAndTimeUntilValueColumn = (header, id, fakeColumn = "fa
   };
 };
 
-export const getPipelineActivityStatusColumn = (field, className, showFilter) => {
+export const getPipelineActivityStatusColumn = (field, className) => {
   let header = getColumnHeader(field);
-
-  if (showFilter) {
-    header.push({ content: "selectFilter" });
-  }
 
   return {
     header: header,
     id: getColumnId(field),
     width: 105,
-    template: function (text, row, col) {
-      if (text == null) {
-        return "";
+    template: function (text) {
+      if (text == null || text === "") {
+        return (
+          `<span>
+          <i class="fal fa-question-circle cell-icon vertical-align-item"></i>
+          <span class="ml-1">Unknown</span>
+        </span>`
+        );
       }
 
       return (
@@ -176,15 +197,20 @@ export const getChartPipelineStatusColumn = (field, className, width = 120) => {
     header: getColumnHeader(field),
     id: getColumnId(field),
     width: width,
-    template: function (text, row, col) {
-      if (text == null) {
-        return "";
+    template: function (text) {
+      if (text == null || text === "") {
+        return (
+          `<span>
+          <i class="fal fa-question-circle cell-icon vertical-align-item"></i>
+          <span class="ml-1">Unknown</span>
+        </span>`
+        );
       }
 
       return (
         `<span>
           <i class="fal ${getPipelineStatusIconCss(text)} cell-icon vertical-align-item"></i>
-          <span class="ml-1">${text}</span>
+          <span class="ml-1">${capitalizeFirstLetter(text)}</span>
         </span>`
       );
     },
@@ -195,12 +221,12 @@ export const getChartPipelineStatusColumn = (field, className, width = 120) => {
 // TODO: Get salesforce css to work
 const getPipelineTypeColumnCss = (type) => {
   if (!type) {
-    return "fal fa-drafting-compass";
+    return ("fal fa-drafting-compass");
   }
 
   switch (type[0]) {
     case "sfdc":
-      return "fa fa-salesforce";
+      return ("fab fa-salesforce");
     case "ai-ml":
       return ("fal fa-microchip");
     case "sdlc":
@@ -210,17 +236,88 @@ const getPipelineTypeColumnCss = (type) => {
   }
 };
 
+// TODO: Move all pipeline related columns to their own helper file
 export const getPipelineTypeColumn = (field, className) => {
   return {
     header: getColumnHeader(field),
     id: getColumnId(field),
-    template: function (text, row, col) {
+    template: function (text) {
       const iconCss = getPipelineTypeColumnCss(text);
       return (
         `<i class="${iconCss} cell-icon vertical-align-item"></i>`
       );
     },
-    class: className ? className : "cell-center"
+    maxWidth: 50,
+    class: className
+  };
+};
+
+export const getPipelineRunCountColumn = (field, className) => {
+  return {
+    header: getColumnHeader(field),
+    id: getColumnId(field),
+    maxWidth: 100,
+    template: function (text, row) {
+      return `${row?.workflow?.run_count}`;
+    },
+    class: className
+  };
+};
+
+export const getTablePipelineStatusColumn = (field, className) => {
+  return {
+    header: getColumnHeader(field),
+    id: getColumnId(field),
+    // eslint-disable-next-line react/display-name
+    template: function (text) {
+      let pipelineStatus = pipelineHelpers.getPipelineStatus(text);
+
+      switch (pipelineStatus) {
+        case "failed":
+          return (`
+            <span class="red">
+              <i class="fal fa-times-circle cell-icon vertical-align-item"></i>
+              <span class="ml-1">${capitalizeFirstLetter(text)}</span>
+            </span>
+          `);
+        case "error":
+          return (`
+            <span class="red">
+              <i class="fal fa-exclamation-circle cell-icon vertical-align-item"></i>
+              <span class="ml-1">${capitalizeFirstLetter(text)}</span>
+            </span>
+          `);
+        case "running":
+          return (`
+            <span class="green">
+              <i class="fal fa-spinner cell-icon vertical-align-item"></i>
+              <span class="ml-1">${capitalizeFirstLetter(text)}</span>
+            </span>
+          `);
+        case "paused":
+          return (`
+            <span class="yellow">
+              <i class="fal fa-pause cell-icon vertical-align-item"></i>
+              <span class="ml-1">${capitalizeFirstLetter(text)}</span>
+            </span>
+          `);
+        case "success":
+          return (`
+            <span class="green">
+              <i class="fal fa-check-circle cell-icon vertical-align-item"></i>
+              <span class="ml-1">${capitalizeFirstLetter(text)}</span>
+            </span>
+          `);
+        default:
+          return (`
+            <span>
+              <i class="fal fa-stop cell-icon vertical-align-item"></i>
+              <span class="ml-1">Stopped</span>
+            </span>
+          `);
+      }
+    },
+    class: className ? className :  "text-left"
   };
 };
 
