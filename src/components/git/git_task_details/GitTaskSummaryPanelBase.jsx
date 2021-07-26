@@ -94,7 +94,7 @@ function GitTaskSummaryPanelBase({ gitTasksData, setGitTasksData, setActiveTab, 
       {gitTasksData.getData("type") != "sfdc-cert-gen" && 
         <Row className={"mx-0 w-100 my-2"}>
           <div className={"mx-auto"}>
-            <div className={"mx-auto"}><GitTaskRunButton gitTasksData={gitTasksData} loadData={loadData} actionAllowed={actionAllowed("run_task")} /></div>
+            <div className={"mx-auto"}><GitTaskRunButton gitTasksData={gitTasksData} setGitTasksData={setGitTasksData} loadData={loadData} actionAllowed={actionAllowed("run_task")} /></div>
           </div>
         </Row>
       }

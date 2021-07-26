@@ -102,7 +102,7 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
       createRecord={createGitTask}
       updateRecord={updateGitTask}
       setRecordDto={setGitTasksDataDto}
-      extraButtons={getExtraButtons()}
+      // extraButtons={getExtraButtons()}
       lenient={true}
       disable={
         !gitTasksDataDto.checkCurrentValidity()
