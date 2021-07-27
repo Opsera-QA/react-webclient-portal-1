@@ -4,7 +4,7 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
-function FileInputBase({ fieldName, dataObject, setDataObject, disabled, inputPopover }) {
+function FileInputBase({ fieldName, dataObject, setDataObject, disabled }) {
   const [field] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -17,7 +17,7 @@ function FileInputBase({ fieldName, dataObject, setDataObject, disabled, inputPo
 
   return (
     <InputContainer>
-      <InputLabel field={field} inputPopover={inputPopover} />
+      <InputLabel field={field} />
       <input
         type={"file"}
         disabled={disabled}

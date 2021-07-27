@@ -112,15 +112,9 @@ function ManualKpiMultiSelectInputBase({ fieldName, dataObject, type, setDataObj
     }
   };
 
-  const getClearDataIcon = () => {
+  const getClearDataFunction = () => {
     if (dataObject.getData(field.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
-      return (
-        <TooltipWrapper innerText={"Clear this Value"}>
-          <span onClick={() => clearValue()} className="my-auto badge badge-danger clear-value-badge pointer">
-            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>Clear Value
-          </span>
-        </TooltipWrapper>
-      );
+      return (clearValue);
     }
   };
 
@@ -130,7 +124,7 @@ function ManualKpiMultiSelectInputBase({ fieldName, dataObject, type, setDataObj
 
   return (
     <InputContainer className={className ? className : undefined}>
-      <InputLabel field={field} inputPopover={getClearDataIcon()} />
+      <InputLabel field={field} clearDataFunction={getClearDataFunction()} />
       <div className={"custom-multiselect-input"}>
         <Multiselect
           data={selectOptions}

@@ -12,7 +12,7 @@ function TextInputWithButtonBase({
   setDataObject,
   disabled,
   type,
-  inputPopover,
+  extraActionButtons,
   inputClasses,
   btnVariant,
   btnText,
@@ -78,7 +78,7 @@ function TextInputWithButtonBase({
 
   return (
     <InputContainer>
-      <InputLabel field={field} inputPopover={inputPopover} />
+      <InputLabel field={field} extraActionButtons={extraActionButtons} />
       <Row>
         <Col lg={8}>
           <input
@@ -103,7 +103,7 @@ TextInputWithButtonBase.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  inputPopover: PropTypes.object,
+  extraActionButtons: PropTypes.any,
   inputClasses: PropTypes.string,
   disabled: PropTypes.bool,
   btnVariant: PropTypes.string,

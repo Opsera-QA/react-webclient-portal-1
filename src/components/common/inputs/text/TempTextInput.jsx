@@ -5,7 +5,7 @@ import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
 // TODO: This is temporary for this sprint. It's a test of more dynamic validation for password/email fields, but should probably have the useEffect in the main textInputBase
-function TempTextInput({ fieldName, dataObject, setDataObject, disabled, type, inputPopover, inputClasses }) {
+function TempTextInput({ fieldName, dataObject, setDataObject, disabled, type, inputClasses, extraActionButtons }) {
   const [field, setField] = useState(dataObject.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -38,7 +38,7 @@ function TempTextInput({ fieldName, dataObject, setDataObject, disabled, type, i
 
   return (
     <InputContainer>
-      <InputLabel field={field} inputPopover={inputPopover} />
+      <InputLabel field={field} extraActionButtons={extraActionButtons} />
       <input
         type={type}
         disabled={disabled}
@@ -56,7 +56,7 @@ TempTextInput.propTypes = {
   fieldName: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  inputPopover: PropTypes.object,
+  extraActionButtons: PropTypes.any,
   inputClasses: PropTypes.string,
   disabled: PropTypes.bool
 };

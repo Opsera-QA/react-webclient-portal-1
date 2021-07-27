@@ -79,15 +79,9 @@ function TempSelectInputBase(
     }
   };
 
-  const getClearDataIcon = () => {
+  const getClearDataFunction = () => {
     if (dataObject?.getData(field?.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
-      return (
-        <TooltipWrapper innerText={"Clear this Value"}>
-          <span onClick={() => clearValue()} className="my-auto badge badge-danger clear-value-badge pointer">
-            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>Clear Value
-          </span>
-        </TooltipWrapper>
-      );
+      return (clearValue);
     }
   };
 
@@ -105,7 +99,7 @@ function TempSelectInputBase(
 
   return (
     <InputContainer>
-      <InputLabel showLabel={showLabel} field={field} inputPopover={getClearDataIcon()} />
+      <InputLabel showLabel={showLabel} field={field} clearDataFunction={getClearDataFunction()} />
       <div className={"w-100"} id="select-input" ref={el => (containerRef.current = el)} />
       <InfoText field={field} errorMessage={errorMessage} />
     </InputContainer>

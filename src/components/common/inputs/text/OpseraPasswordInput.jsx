@@ -31,7 +31,7 @@ function OpseraPasswordInput({fieldName, dataObject, setDataObject, disabled}) {
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      inputPopover={getInputPopover()}
+      extraActionButtons={getInputPopover()}
       type={"password"}
       inputClasses={getCorrectPasswordIndicator()}
       disabled={disabled}
