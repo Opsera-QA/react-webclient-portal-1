@@ -34,13 +34,14 @@ pipelineActivityActions.getPipelineActivityLogsV2 = async (getAccessToken, cance
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, urlParams);
 };
 
-pipelineActivityActions.getPipelineActivityLogsV3 = async (getAccessToken, cancelTokenSource, id, runCountArray, pipelineActivityFilterDto) => {
+pipelineActivityActions.getPipelineActivityLogsV3 = async (getAccessToken, cancelTokenSource, id, runCountArray, pipelineActivityFilterDto, otherLogsQuery) => {
   const search = pipelineActivityFilterDto?.getData("search");
   const urlParams = {
     params: {
-      search: search ? search : undefined,
+      search: search,
       runCountArray: runCountArray,
-      fields: ["run_count", "step_name", "action", "message", "status", "createdAt"]
+      fields: ["run_count", "step_name", "action", "message", "status", "createdAt"],
+      showOtherLogs: otherLogsQuery === true ? true : undefined
     },
   };
 

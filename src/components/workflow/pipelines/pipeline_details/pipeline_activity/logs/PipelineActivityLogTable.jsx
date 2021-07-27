@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useMemo, useRef, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 import { faClipboardList } from "@fortawesome/pro-light-svg-icons";
 import {
@@ -58,6 +58,12 @@ function PipelineActivityLogTable({ pipelineLogData, pipelineActivityMetadata, l
   const getFilteredData = () => {
     if (currentRunNumber == null) {
       return pipelineLogData;
+    }
+
+    if (currentRunNumber === "other_logs_query") {
+      return pipelineLogData.filter((item) => {
+        return item.run_count == null;
+      });
     }
 
     return pipelineLogData.filter((item) => {
