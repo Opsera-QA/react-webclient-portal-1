@@ -18,7 +18,7 @@ function AwsLambdaTaskTypeSummaryCard({ gitTasksData, gitTaskConfigurationData, 
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"runtime"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"handler"} />
         <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"functionArn"} />
-        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"toolId"} />
+        <TextFieldBase dataObject={gitTaskConfigurationData} fieldName={"awsToolConfigId"} />
       </div>
     </GitTasksSummaryCardContainer>
   );

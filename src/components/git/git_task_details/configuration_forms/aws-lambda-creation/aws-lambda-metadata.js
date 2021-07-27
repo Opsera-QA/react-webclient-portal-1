@@ -30,7 +30,7 @@ const awsLambdaFunctionTaskConfigurationMetadata = {
     },
     {
       label: "AWS Tool",
-      id: "toolId",
+      id: "awsToolConfigId",
       isRequired: true
     }
   ],
@@ -41,7 +41,7 @@ const awsLambdaFunctionTaskConfigurationMetadata = {
       runtime: "",
       handler : "",
       functionArn: "",
-      toolId: ""
+      awsToolConfigId: ""
     }
 };
 
