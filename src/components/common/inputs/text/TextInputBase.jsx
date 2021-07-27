@@ -4,7 +4,11 @@ import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 
-function TextInputBase({ fieldName, dataObject, setDataObject, disabled, type, inputPopover, inputClasses }) {
+function TextInputBase(
+  {
+    fieldName, dataObject, setDataObject, disabled, type,
+    showLabel, inputClasses, linkTooltipText, detailViewLink, infoOverlay
+  }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -35,7 +39,13 @@ function TextInputBase({ fieldName, dataObject, setDataObject, disabled, type, i
 
   return (
     <InputContainer>
-      <InputLabel field={field} inputPopover={inputPopover} />
+      <InputLabel
+        showLabel={showLabel}
+        field={field}
+        linkTooltipText={linkTooltipText}
+        detailViewLink={detailViewLink}
+        infoOverlay={infoOverlay}
+      />
       <input
         type={type}
         disabled={disabled}
@@ -55,7 +65,11 @@ TextInputBase.propTypes = {
   setDataObject: PropTypes.func,
   inputPopover: PropTypes.object,
   inputClasses: PropTypes.string,
-  disabled: PropTypes.bool
+  disabled: PropTypes.bool,
+  showLabel: PropTypes.bool,
+  linkTooltipText: PropTypes.string,
+  detailViewLink: PropTypes.string,
+  infoOverlay: PropTypes.any
 };
 
 export default TextInputBase;

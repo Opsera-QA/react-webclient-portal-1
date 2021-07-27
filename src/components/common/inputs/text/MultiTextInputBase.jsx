@@ -48,15 +48,9 @@ function MultiTextInputBase({ fieldName, dataObject, setDataObject, groupBy, dis
     }
   };
 
-  const getClearDataIcon = () => {
+  const getClearDataFunction = () => {
     if (dataObject.getData(field.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
-      return (
-        <TooltipWrapper innerText={"Clear this Value"}>
-          <span onClick={() => clearValue()} className="my-auto badge badge-danger clear-value-badge pointer">
-            <FontAwesomeIcon icon={faTimes} fixedWidth className="mr-1"/>Clear Value
-          </span>
-        </TooltipWrapper>
-      );
+      return (clearValue);
     }
   };
 
@@ -66,7 +60,7 @@ function MultiTextInputBase({ fieldName, dataObject, setDataObject, groupBy, dis
 
   return (
     <InputContainer className={className ? className : undefined}>
-      <InputLabel field={field} inputPopover={getClearDataIcon()} showLabel={showLabel} />
+      <InputLabel field={field} clearDataFunction={getClearDataFunction()} showLabel={showLabel} />
       <div className={"custom-multiselect-input"}>
         <Multiselect
           data={selectOptions}

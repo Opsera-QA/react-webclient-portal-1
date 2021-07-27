@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faLink} from "@fortawesome/pro-light-svg-icons";
 import {useHistory} from "react-router-dom";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
@@ -46,7 +45,6 @@ DetailViewLinkIcon.propTypes = {
   className: PropTypes.string,
   openInNewWindow: PropTypes.bool,
   linkTooltipText: PropTypes.string,
-  externalLink: PropTypes.bool,
   size: PropTypes.string,
   placement: PropTypes.string
 };

@@ -4,7 +4,6 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import InfoText from "components/common/inputs/info_text/InfoText";
 import InputContainer from "components/common/inputs/InputContainer";
-import ClearDataIcon from "components/common/icons/field/ClearDataIcon";
 
 function SelectInputBase(
   {
@@ -13,7 +12,7 @@ function SelectInputBase(
     setDataFunction, busy, disabled, clearDataFunction,
     showClearValueButton, errorMessage, getCurrentValue,
     showLabel, className, onSearch, requireClearDataConfirmation,
-    clearDataDetails
+    clearDataDetails, linkTooltipText, detailViewLink, infoOverlay
 }) {
   const [field] = useState(dataObject?.getFieldById(fieldName));
 
@@ -41,15 +40,10 @@ function SelectInputBase(
     }
   };
 
-  const getClearDataIcon = () => {
+  const getClearDataFunction = () => {
     if (dataObject?.getData(field?.id) !== "" && !disabled && showClearValueButton && (setDataFunction == null || clearDataFunction)) {
-      return (
-        <ClearDataIcon
-          furtherDetails={clearDataDetails}
-          requireConfirmation={requireClearDataConfirmation}
-          clearValueFunction={clearValue}
-        />
-      );
+      console.log("returning clear data function");
+      return clearValue;
     }
   };
 
@@ -67,7 +61,16 @@ function SelectInputBase(
 
   return (
     <InputContainer className={className}>
-      <InputLabel showLabel={showLabel} field={field} inputPopover={getClearDataIcon()} />
+      <InputLabel
+        showLabel={showLabel}
+        field={field}
+        clearDataFunction={getClearDataFunction()}
+        requireClearDataConfirmation={requireClearDataConfirmation}
+        linkTooltipText={linkTooltipText}
+        detailViewLink={detailViewLink}
+        clearDataDetails={clearDataDetails}
+        infoOverlay={infoOverlay}
+      />
       <DropdownList
         data={selectOptions}
         valueField={valueField}
@@ -115,7 +118,10 @@ SelectInputBase.propTypes = {
   className: PropTypes.string,
   onSearch: PropTypes.func,
   requireClearDataConfirmation: PropTypes.bool,
-  clearDataDetails: PropTypes.any
+  clearDataDetails: PropTypes.any,
+  linkTooltipText: PropTypes.string,
+  detailViewLink: PropTypes.string,
+  infoOverlay: PropTypes.any
 };
 
 SelectInputBase.defaultProps = {
