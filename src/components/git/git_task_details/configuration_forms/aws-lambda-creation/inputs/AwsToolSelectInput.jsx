@@ -132,7 +132,7 @@ AwsToolSelectInput.propTypes = {
 AwsToolSelectInput.defaultProps = {
   valueField: "id",
   textField: "name",
-  fieldName: "toolId",
+  fieldName: "awsToolConfigId",
 };
 
 export default AwsToolSelectInput;

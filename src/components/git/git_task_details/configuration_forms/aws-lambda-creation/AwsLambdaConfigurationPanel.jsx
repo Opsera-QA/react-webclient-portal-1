@@ -33,7 +33,7 @@ function AwsLambdaConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationDat
         <AwsToolSelectInput
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
-          fieldName={"toolId"}
+          fieldName={"awsToolConfigId"}
         />
       </Col>
       <Col lg={12}>
@@ -54,16 +54,16 @@ function AwsLambdaConfigurationPanel({ gitTasksDataDto, gitTasksConfigurationDat
         <IAMRoleSelectInput
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
-          disabled={gitTasksConfigurationData?.getData("toolId").length === 0}
-          toolConfigId={gitTasksConfigurationData?.getData("toolId")}
+          disabled={gitTasksConfigurationData?.getData("awsToolConfigId").length === 0}
+          toolConfigId={gitTasksConfigurationData?.getData("awsToolConfigId")}
         />
       </Col>
       <Col lg={12}>
         <LanguageSelectInput
           dataObject={gitTasksConfigurationData}
           setDataObject={setGitTasksConfigurationData}
-          disabled={gitTasksConfigurationData?.getData("toolId").length === 0}
-          toolConfigId={gitTasksConfigurationData?.getData("toolId")}
+          disabled={gitTasksConfigurationData?.getData("awsToolConfigId").length === 0}
+          toolConfigId={gitTasksConfigurationData?.getData("awsToolConfigId")}
         />
       </Col>
     </Row>
