@@ -49,8 +49,4 @@ DetailViewLinkIcon.propTypes = {
   placement: PropTypes.string
 };
 
-DetailViewLinkIcon.defaultProps = {
-  size: "2x"
-};
-
 export default DetailViewLinkIcon;
