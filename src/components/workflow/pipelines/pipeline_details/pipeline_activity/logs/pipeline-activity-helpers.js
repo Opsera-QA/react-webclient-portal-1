@@ -4,6 +4,19 @@ pipelineActivityHelpers.constructTree = (pipelineLogData) => {
   let newTree = [];
 
   if (Array.isArray(pipelineLogData) && pipelineLogData.length > 0) {
+    newTree.push({
+      id: "other_logs",
+      runNumber: "other_logs_query",
+      stepName: null,
+      value: "Secondary Logs",
+      items: [],
+      icon: {
+        "folder": "fal fa-layer-group opsera-primary",
+        "openFolder": "fal fa-layer-group opsera-yellow",
+        "file": "fal fa-layer-group opsera-primary"
+      }
+    });
+
     pipelineLogData.forEach((log) => {
       if (!log.run_count || log.step_name === "start pipeline") {
         return;

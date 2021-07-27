@@ -259,7 +259,7 @@ function PipelineDetailView() {
       // create run count query based on tree -- tree is 0 index based
       const startIndex = 20 * currentLogTreePage;
       let runCountArray = [];
-
+      let otherLogsQuery = false;
 
       if (!silentLoading) {
         setLogsIsLoading(true);
@@ -268,16 +268,19 @@ function PipelineDetailView() {
       for (let i = startIndex; i < startIndex + 20 && i < pipelineTree.length; i++) {
         let runCount = pipelineTree[i].runNumber;
 
-        if (runCount) {
+        if (runCount === "other_logs_query") {
+          otherLogsQuery = true;
+        }
+        else if (runCount) {
           runCountArray.push(runCount);
         }
       }
 
-      const response = await pipelineActivityActions.getPipelineActivityLogsV3(getAccessToken, cancelSource, id, runCountArray, filterDto);
+      const response = await pipelineActivityActions.getPipelineActivityLogsV3(getAccessToken, cancelSource, id, runCountArray, filterDto, otherLogsQuery);
       const pipelineActivityData = response?.data?.data;
 
-      if (pipelineActivityData) {
-        setActivityData(pipelineActivityData);
+      if (Array.isArray(pipelineActivityData)) {
+        setActivityData([...pipelineActivityData]);
         setPipelineActivityMetadata(response?.data?.metadata);
 
         // TODO: Remove pagination.
