@@ -5,7 +5,7 @@ import {useHistory} from "react-router-dom";
 import TooltipWrapper from "components/common/tooltip/TooltipWrapper";
 import IconBase from "components/common/icons/IconBase";
 
-function DetailViewLinkIcon({ pageLink, openInNewWindow, handleClose, className, linkTooltipText, size, placement }) {
+function DetailViewLinkIcon({ pageLink, openInNewWindow, handleClose, className, linkTooltipText, size, placement, icon }) {
   let history = useHistory();
 
   const handleLink = () => {
@@ -29,7 +29,7 @@ function DetailViewLinkIcon({ pageLink, openInNewWindow, handleClose, className,
     <TooltipWrapper innerText={linkTooltipText} placement={placement}>
       <span className={className} onClick={() => {handleLink();}}>
         <IconBase
-          icon={faLink}
+          icon={icon}
           fixedWidth
           iconSize={size}
           className={"pointer"}
@@ -46,7 +46,12 @@ DetailViewLinkIcon.propTypes = {
   openInNewWindow: PropTypes.bool,
   linkTooltipText: PropTypes.string,
   size: PropTypes.string,
-  placement: PropTypes.string
+  placement: PropTypes.string,
+  icon: PropTypes.object,
+};
+
+DetailViewLinkIcon.defaultProps = {
+  icon: faLink
 };
 
 export default DetailViewLinkIcon;
