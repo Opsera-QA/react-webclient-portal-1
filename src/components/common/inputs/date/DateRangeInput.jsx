@@ -20,11 +20,11 @@ function DateRangeInput({ fieldName, dataObject, setDataObject }) {
   });
   const [errorMessage, setErrorMessage] = useState("");
   const loadData = () => {
-    if (dataObject.getData("value")) {
+    if (dataObject.getData(fieldName)) {
       setDate({
-        startDate: new Date(dataObject.getData("value").startDate),
-        endDate: new Date(dataObject.getData("value").endDate),
-        key: dataObject.getData("value").key,
+        startDate: new Date(dataObject.getData(fieldName).startDate),
+        endDate: new Date(dataObject.getData(fieldName).endDate),
+        key: dataObject.getData(fieldName).key,
       });
     }
   };
