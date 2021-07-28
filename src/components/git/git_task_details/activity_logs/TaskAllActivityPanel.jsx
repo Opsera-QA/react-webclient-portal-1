@@ -10,6 +10,10 @@ import taskActivityHelpers
   from "components/git/git_task_details/activity_logs/task-activity-helpers";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import gitTaskActions from "components/git/git-task-actions";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import TasksSubNavigationBar from "components/git/TasksSubNavigationBar";
+import FilterContainer from "components/common/table/FilterContainer";
+import {faTasks} from "@fortawesome/pro-light-svg-icons";
 
 function TaskAllActivityPanel() {
   const [loading, setLoading] = useState(false);
@@ -146,20 +150,26 @@ function TaskAllActivityPanel() {
   };
 
 
-    return (
-        <div>
-            <GitAllTasksActivityLogsTable
-                taskLogData={activityData}
-                isLoading={logsIsLoading}
-                loadData={pullLogData}
-                taskActivityFilterDto={taskActivityFilterDto}
-                setTaskActivityFilterDto={setTaskActivityFilterDto}
-                taskActivityMetadata={taskActivityMetadata}
-                taskActivityTreeData={taskActivityTreeData}
-                setCurrentLogTreePage={setCurrentLogTreePage}
-          />
-        </div>
-    );
+  return (
+    <ScreenContainer
+      breadcrumbDestination={"gitTasksManagement"}
+      pageDescription={`
+        Create and Manage Opsera Related Tasks.
+      `}
+      navigationTabContainer={<TasksSubNavigationBar currentTab={"activity"}/>}
+    >
+      <GitAllTasksActivityLogsTable
+        taskLogData={activityData}
+        isLoading={logsIsLoading}
+        loadData={pullLogData}
+        taskActivityFilterDto={taskActivityFilterDto}
+        setTaskActivityFilterDto={setTaskActivityFilterDto}
+        taskActivityMetadata={taskActivityMetadata}
+        taskActivityTreeData={taskActivityTreeData}
+        setCurrentLogTreePage={setCurrentLogTreePage}
+      />
+    </ScreenContainer>
+  );
 }
 
 TaskAllActivityPanel.propTypes = {

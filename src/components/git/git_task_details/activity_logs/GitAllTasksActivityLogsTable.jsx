@@ -114,20 +114,24 @@ function GitAllTasksActivityLogsTable({ taskLogData, taskActivityMetadata, loadD
   };
 
   return (
-    <div className={"mr-2"}>
-      <FilterContainer
-        showBorder={false}
-        loadData={loadData}
-        filterDto={taskActivityFilterDto}
-        setFilterDto={setTaskActivityFilterDto}
-        isLoading={isLoading}
-        title={"Activity Logs"}
-        titleIcon={faClipboardList}
-        body={getTaskActivityTable()}
-        supportSearch={true}
-        exportButton={<ExportPipelineActivityLogButton className={"ml-2"} isLoading={isLoading} activityLogData={taskLogData} />}
-      />
-    </div>
+    <FilterContainer
+      showBorder={false}
+      loadData={loadData}
+      filterDto={taskActivityFilterDto}
+      setFilterDto={setTaskActivityFilterDto}
+      isLoading={isLoading}
+      title={"Activity Logs"}
+      className={"px-2 pb-2"}
+      titleIcon={faClipboardList}
+      body={getTaskActivityTable()}
+      supportSearch={true}
+      exportButton={
+        <ExportPipelineActivityLogButton
+          className={"ml-2"}
+          isLoading={isLoading}
+          activityLogData={taskLogData}/>
+      }
+    />
   );
 }
 

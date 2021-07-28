@@ -97,7 +97,6 @@ import SiteNotificationManager from "components/admin/site_notifications/manager
 import ToolCountsReport from "components/reports/tools/counts/ToolCountsReport";
 import UserSettings from "components/user/user_settings/UserSettings";
 import AccessTokenDetailView from "components/user/user_settings/access_tokens/details/AccessTokenDetailView";
-import GitComponent from "components/git/Git";
 import DetailedToolReport from "./components/reports/tools/detailedReport/DetailedToolReport";
 import GitTaskDetailView from "components/git/git_task_details/GitTaskDetailView";
 import TagsUsedInDashboardsReport from "components/reports/tags/dashboards/TagsUsedInDashboardReport";
@@ -119,6 +118,8 @@ import TagReportsScreen from "components/reports/tags/TagReportsScreen";
 import PipelineReportsScreen from "components/reports/pipelines/PipelineReportsScreen";
 import ToolReportsScreen from "components/reports/tools/ToolReportsScreen";
 import UserReportsScreen from "components/reports/users/UserReportsScreen";
+import GitTasksView from "components/git/GitTasksView";
+import TaskAllActivityPanel from "components/git/git_task_details/activity_logs/TaskAllActivityPanel";
 
 const AppWithRouterAccess = () => {
   const [hideSideBar, setHideSideBar] = useState(false);
@@ -355,8 +356,9 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace}/>
                   <SecureRoute path="/insights/synopsis" component={InsightsSummary}/>
 
-                  {/* git tasks */}
-                  <SecureRoute path="/task" exact component={GitComponent}/>
+                  {/* tasks */}
+                  <SecureRoute path="/task" exact component={GitTasksView}/>
+                  <SecureRoute path="/task/activity" exact component={TaskAllActivityPanel}/>
                   <SecureRoute path="/task/details/:id" exact component={GitTaskDetailView}/>
 
                   {/* Administration Pages */}

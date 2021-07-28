@@ -12,6 +12,8 @@ import StatusFilter from "components/common/filters/status/StatusFilter";
 import TagFilter from "components/common/filters/tags/tag/TagFilter";
 import NewGitTaskOverlay from "components/git/NewGitTaskOverlay";
 import axios from "axios";
+import ScreenContainer from "components/common/panels/general/ScreenContainer";
+import TasksSubNavigationBar from "components/git/TasksSubNavigationBar";
 
 function GitTasksView() {
   const { getUserRecord, setAccessRoles, getAccessToken } = useContext(AuthContext);
@@ -113,19 +115,27 @@ function GitTasksView() {
   }
 
   return (
-    <FilterContainer
-      loadData={loadData}
-      filterDto={gitTasksFilterDto}
-      setFilterDto={setGitTasksFilterDto}
-      addRecordFunction={createNewNotification}
-      supportSearch={true}
-      isLoading={isLoading}
-      body={getBody()}
-      dropdownFilters={getDropdownFilters()}
-      titleIcon={faTasks}
-      title={"Tasks"}
-      className={"px-2 pb-2"}
-    />
+    <ScreenContainer
+      breadcrumbDestination={"gitTasksManagement"}
+      pageDescription={`
+        Create and Manage Opsera Related Tasks.
+      `}
+      navigationTabContainer={<TasksSubNavigationBar currentTab={"tasks"}/>}
+    >
+      <FilterContainer
+        loadData={loadData}
+        filterDto={gitTasksFilterDto}
+        setFilterDto={setGitTasksFilterDto}
+        addRecordFunction={createNewNotification}
+        supportSearch={true}
+        isLoading={isLoading}
+        body={getBody()}
+        dropdownFilters={getDropdownFilters()}
+        titleIcon={faTasks}
+        title={"Tasks"}
+        className={"px-2 pb-2"}
+      />
+    </ScreenContainer>
   );
 }
 
