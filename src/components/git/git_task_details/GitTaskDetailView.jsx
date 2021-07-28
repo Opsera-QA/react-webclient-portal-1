@@ -14,6 +14,7 @@ import gitTasksActions from "components/git/git-task-actions";
 import gitTasksMetadata from "components/git/git-tasks-metadata";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
+import TasksSubNavigationBar from "components/git/TasksSubNavigationBar";
 
 function GitTaskDetailView() {
   const location = useLocation();
@@ -105,6 +106,7 @@ function GitTaskDetailView() {
       dataObject={gitTasksData}
       isLoading={isLoading}
       accessRoleData={accessRoleData}
+      navigationTabContainer={<TasksSubNavigationBar currentTab={"taskViewer"} />}
       objectRoles={gitTasksData?.getData("roles")}
       actionBar={getActionBar()}
       detailPanel={

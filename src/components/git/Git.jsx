@@ -7,6 +7,7 @@ import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import GitTasksView from "./GitTasksView";
 import TaskAllActivityPanel from "components/git/git_task_details/activity_logs/TaskAllActivityPanel";
 
+// TODO: Delete. Leaving in for now in case there's conflicts with current development
 function GitLanding() {
   const { tab } = useParams();
   const [activeTab, setActiveTab] = useState(tab ? tab : "opseraTasks");
