@@ -1,4 +1,5 @@
 import {isAlphaNumeric, isDomain, isOpseraPassword, isWebsite, matchesRegex, validateEmail, hasSpaces} from "utils/helpers";
+import regexDefinitions from "utils/regexDefinitions";
 
 // TODO: We need to rework this
 export const validateData = (data) => {
@@ -94,6 +95,30 @@ export const fieldValidation = (value, data, field) => {
   if (field.regexValidatorV2 != null && value !== "" && !matchesRegex(field.regexValidatorV2, value))
   {
     errorMessages.push(field.regexErrorText);
+  }
+
+  if (field.regexDefinitionName != null && value !== "")
+  {
+    const definitionName = field.regexDefinitionName;
+    const regexDefinition = regexDefinitions[definitionName];
+    const regex = regexDefinition?.regex;
+    const errorFormText = regexDefinition?.errorFormText;
+
+    if (regexDefinition == null) {
+      console.error(`Regex Definition [${field.regexDefinitionName}] not found!`);
+    }
+    else if (regex == null) {
+      console.error(`No Regex Assigned To Definition [${field.regexDefinitionName}]!`);
+    }
+    else if (!matchesRegex(regex, value)) {
+      if (errorFormText == null) {
+        console.error(`No Regex Error Form Text Assigned To Definition [${field.regexDefinitionName}]! Returning default error.`);
+        errorMessages.push("Does not meet field requirements.");
+      }
+      else {
+        errorMessages.push(`${field.label} validation error! ${errorFormText}`);
+      }
+    }
   }
 
   if (field.maxItems != null && value.length > field.maxItems)

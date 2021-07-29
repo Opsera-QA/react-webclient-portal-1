@@ -35,7 +35,7 @@ const argoApplicationsMetadata = {
       id: "namespace",
       isRequired: true,
       maxLength: 28,
-      // regexValidator: regexHelpers.regexTypes.generalText,
+      // regexDefinitionName: "generalText",
     },
     {
       label: "Project Name",
@@ -51,7 +51,7 @@ const argoApplicationsMetadata = {
       id: "branchName",
       isRequired: true,
       maxLength: 28,
-      regexValidator: regexHelpers.regexTypes.generalText,
+      regexDefinitionName: "generalText",
     }
   ],
   newObjectFields: {
