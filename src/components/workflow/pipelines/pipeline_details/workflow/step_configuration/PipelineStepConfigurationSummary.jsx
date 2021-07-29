@@ -102,9 +102,8 @@ import SeleniumPipelineStepConfigurationSummaryPanel
 import seleniumPipelineStepConfigurationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/selenium/seleniumPipelineStepConfigurationMetadata";
 import TwistlockPipelineStepConfigurationSummaryPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/TwistlockPipelineStepConfigurationSummaryPanel";
-import twistlockPipelineStepConfigurationMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/twistlockPipelineStepConfigurationMetadata";
+  from "./step_tool_configuration_forms/twistlock/TwistlockPipelineStepConfigurationSummaryPanel";
+import twistlockPipelineStepFormMetadata from "./step_tool_configuration_forms/twistlock/twistlock-stepForm-metadata";  
 import S3PipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/s3/S3PipelineStepConfigurationSummaryPanel";
 import s3PipelineStepConfigurationMetadata
@@ -147,6 +146,8 @@ import AwsEcsDeployPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/aws_ecs_deploy/AwsEcsSDeployPipelineStepConfigurationSummary";
 import awsECSDeployStepFormMetadata
   from "./step_tool_configuration_forms/aws_ecs_deploy/awsECSDeploy-stepForm-metadata";
+import coverityStepFormMetadata from "./step_tool_configuration_forms/coverity/coverity-stepForm-metadata";
+import CoverityPipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/coverity/CoverityPipelineStepConfigurationSummaryPanel";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -358,7 +359,7 @@ function PipelineStepConfigurationSummary({
         return (
           <TwistlockPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            twistlockDataObject={getModelWrappedObject(twistlockPipelineStepConfigurationMetadata)}
+            twistlockDataObject={getModelWrappedObject(twistlockPipelineStepFormMetadata)}
           />
         );
       case "s3":
@@ -430,6 +431,13 @@ function PipelineStepConfigurationSummary({
             pipelineData={pipelineData}
             awsECSDeployPipelineDataObject={getModelWrappedObject(awsECSDeployStepFormMetadata)}
           />
+        );
+      case "coverity":
+          return (
+            <CoverityPipelineStepConfigurationSummaryPanel
+              pipelineData={pipelineData}
+              coverityPipelineDataObject={getModelWrappedObject(coverityStepFormMetadata)}
+            />
         );
       default:
         return (

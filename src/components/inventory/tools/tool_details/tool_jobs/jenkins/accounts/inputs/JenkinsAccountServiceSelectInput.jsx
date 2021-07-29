@@ -6,6 +6,7 @@ const TOOL_TYPES = [
   { value: "gitlab", label: "Gitlab" },
   { value: "github", label: "Github" },
   { value: "bitbucket", label: "Bitbucket" },
+  { value: "coverity", label: "Coverity"},
 ];
 
 function JenkinsAccountServiceSelectInput({ fieldName, dataObject, setDataObject, disabled }) {
@@ -26,7 +27,7 @@ function JenkinsAccountServiceSelectInput({ fieldName, dataObject, setDataObject
       fieldName={fieldName}
       dataObject={dataObject}
       setDataObject={setDataObject}
-      placeholderText={"Select an SCM Service Type"}
+      placeholderText={"Select Service Type"}
       selectOptions={TOOL_TYPES}
       valueField="value"
       textField="label"
