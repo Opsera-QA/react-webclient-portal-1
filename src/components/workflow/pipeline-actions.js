@@ -519,4 +519,22 @@ pipelineActions.deleteJenkinsJob = async (deleteObj, getAccessToken) => {
   return await baseActions.apiPostCall(getAccessToken, apiUrl, deleteObj);
 };
 
+pipelineActions.createCoverityJob = async (toolId, postBody, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/registry/action/${toolId}/createCoverityJob`;
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
+pipelineActions.createTwistlockJob = async (toolId, postBody, getAccessToken) => {
+  const accessToken = await getAccessToken();
+  const apiUrl = `/registry/action/${toolId}/createTwistlockJob`;
+  const response = await axiosApiService(accessToken).post(apiUrl, postBody)
+    .then((result) =>  {return result;})
+    .catch(error => {throw { error };});
+  return response;
+};
+
 export default pipelineActions;
