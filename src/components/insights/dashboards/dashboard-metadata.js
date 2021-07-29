@@ -107,11 +107,20 @@ export const dashboardFiltersMetadata = {
     {
       label: "Organizations",
       id: "organizations"
+    },
+    {
+      label: "Date",
+      id: "date"
     }
   ],
   newObjectFields: {
     value: [],
-    organizations: []
+    organizations: [],
+    date: {
+      startDate: null,
+      endDate: null,
+      key: "selection",
+    }
   },
 };
 
