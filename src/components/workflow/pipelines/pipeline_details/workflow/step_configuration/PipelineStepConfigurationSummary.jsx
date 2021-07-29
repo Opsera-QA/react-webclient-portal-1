@@ -102,9 +102,8 @@ import SeleniumPipelineStepConfigurationSummaryPanel
 import seleniumPipelineStepConfigurationMetadata
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/selenium/seleniumPipelineStepConfigurationMetadata";
 import TwistlockPipelineStepConfigurationSummaryPanel
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/TwistlockPipelineStepConfigurationSummaryPanel";
-import twistlockPipelineStepConfigurationMetadata
-  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/twistlock/twistlockPipelineStepConfigurationMetadata";
+  from "./step_tool_configuration_forms/twistlock/TwistlockPipelineStepConfigurationSummaryPanel";
+import twistlockPipelineStepFormMetadata from "./step_tool_configuration_forms/twistlock/twistlock-stepForm-metadata";  
 import S3PipelineStepConfigurationSummaryPanel
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/s3/S3PipelineStepConfigurationSummaryPanel";
 import s3PipelineStepConfigurationMetadata
@@ -363,7 +362,7 @@ function PipelineStepConfigurationSummary({
         return (
           <TwistlockPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
-            twistlockDataObject={getModelWrappedObject(twistlockPipelineStepConfigurationMetadata)}
+            twistlockDataObject={getModelWrappedObject(twistlockPipelineStepFormMetadata)}
           />
         );
       case "s3":

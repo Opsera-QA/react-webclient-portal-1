@@ -27,6 +27,7 @@ import AzureDevopsToolConfiguration from "./tool_jobs/azure-devops/AzureDevopsTo
 import HashicorpVaultToolConfiguration from "./tool_jobs/hashicorp_vault/HashicorpVaultToolConfiguration";
 import KafkaConnectToolConfiguration from "./tool_jobs/kafka_connect/KafkaConnectToolConfiguration";
 import CoverityToolConfiguration from "./tool_jobs/coverity/CoverityToolConfiguration";
+import TwistlockToolConfiguration from "./tool_jobs/twistlock/TwistlockToolConfiguration";
 
 function ToolConfigurationPanel({ toolData }) {
   const getConfiguration = () => {
@@ -84,7 +85,8 @@ function ToolConfigurationPanel({ toolData }) {
         return <KafkaConnectToolConfiguration toolData={toolData} />;
       case "coverity":
         return <CoverityToolConfiguration toolData={toolData} />;
-
+      case "twistlock":
+        return <TwistlockToolConfiguration toolData={toolData} />;
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>;
     }
