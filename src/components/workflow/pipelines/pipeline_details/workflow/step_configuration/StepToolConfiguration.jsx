@@ -255,6 +255,72 @@ function StepToolConfiguration({
     }
   };
 
+  const createTwistlockJob = async (
+    toolId,
+    toolConfiguration,
+    stepId,
+    createJobPostBody
+  ) => {
+    const { workflow } = pipeline;
+
+    try {
+      const stepIndex = workflow.plan.findIndex((x) => x._id === stepId);
+
+      workflow.plan[stepIndex].tool.configuration =
+        toolConfiguration.configuration;
+      workflow.plan[stepIndex].tool.threshold = toolConfiguration.threshold;
+      workflow.plan[stepIndex].tool.job_type = toolConfiguration.job_type;
+
+      await PipelineActions.updatePipeline(
+        pipeline._id,
+        { workflow: workflow },
+        getAccessToken
+      );
+
+
+      // TODO: replace code below with this once all the different job types are registered in the new Node service
+      //const createJobResponse = await pipelineActions.processStepJob(pipeline._id, stepId);
+
+      const createJobResponse = await PipelineActions.createTwistlockJob(
+        toolId,
+        createJobPostBody,
+        getAccessToken,
+      );
+
+      if (createJobResponse && createJobResponse.data.status === 200) {
+        const { message } = createJobResponse.data;
+
+        if (
+          message &&
+          typeof message.jobName === "string" &&
+          message.jobName.length > 0
+        ) {
+          workflow.plan[stepIndex].tool.configuration.jobName = message.jobName;
+
+          await PipelineActions.updatePipeline(
+            pipeline._id,
+            { workflow: workflow },
+            getAccessToken
+          );
+        }
+
+        await reloadParentPipeline();
+
+        closeEditorPanel();
+      } else {
+
+        const errorMsg = `Service Unavailable. Error reported by services creating the job for toolId: ${toolId}.  Please see browser logs for details.`;
+        console.error(createJobResponse.data);
+        toastContext.showCreateFailureResultDialog(errorMsg);
+      }
+    } catch (error) {
+
+      const errorMsg = `Error Creating and Saving Job Configuration for toolId: ${toolId} on $pipeline: ${pipeline._id}.  Please see browser logs for details.`;
+      console.error(error);
+      toastContext.showCreateFailureResultDialog(errorMsg);
+    }
+  };
+
 
     const getToolsList = async (service) => {
     try {
@@ -398,7 +464,7 @@ function StepToolConfiguration({
             stepTool={stepTool}
             parentCallback={callbackFunction}
             callbackSaveToVault={saveToVault}
-            createJob={createJob}
+            createJob={createTwistlockJob}
             setToast={setToast}
             setShowToast={setShowToast}
           />
