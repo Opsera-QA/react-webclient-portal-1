@@ -26,13 +26,14 @@ import ServiceNowToolConfiguration from  "./tool_jobs/service_now/ServiceNowTool
 import AzureDevopsToolConfiguration from "./tool_jobs/azure-devops/AzureDevopsToolConfiguration";
 import HashicorpVaultToolConfiguration from "./tool_jobs/hashicorp_vault/HashicorpVaultToolConfiguration";
 import KafkaConnectToolConfiguration from "./tool_jobs/kafka_connect/KafkaConnectToolConfiguration";
+import CoverityToolConfiguration from "./tool_jobs/coverity/CoverityToolConfiguration";
 
 function ToolConfigurationPanel({ toolData }) {
   const getConfiguration = () => {
     if (toolData == null) {
       return <></>;
     }
-
+    
     switch (toolData.getData("tool_identifier")) {
       case "jenkins":
         return <JenkinsToolConfiguration toolData={toolData} />;
@@ -81,6 +82,9 @@ function ToolConfigurationPanel({ toolData }) {
         return <HashicorpVaultToolConfiguration toolData={toolData} />;
       case "kafka_connect":
         return <KafkaConnectToolConfiguration toolData={toolData} />;
+      case "coverity":
+        return <CoverityToolConfiguration toolData={toolData} />;
+
       default:
         return <div className="text-center p-5 text-muted mt-5">Configuration is not currently available for this tool.</div>;
     }
