@@ -10,7 +10,7 @@ import CoverityGitRepositoryInput from "./inputs/CoverityGitRepositoryInput";
 import CoverityGitBranchInput from "./inputs/CoverityGitBranchInput";
 import CoverityAccountInput from "./inputs/CoverityAccountInput";
 import CoverityJenkinsAccountInput from "./inputs/CoverityJenkinsAccountInput";
-import JenkinsToolConfigIdSelectInput from "../jenkins/inputs/JenkinsToolConfigIdSelectInput";
+import JenkinsToolConfigIdSelectInput from "../coverity/inputs/JenkinsToolConfigIdSelectInput";
 import CoverityToolSelectInput from "./inputs/CoverityToolSelectInput";
 
 function CoverityStepConfiguration({ pipelineId, stepTool, stepId,createJob, closeEditorPanel, parentCallback }) {
