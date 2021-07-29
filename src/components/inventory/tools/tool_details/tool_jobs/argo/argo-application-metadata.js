@@ -27,7 +27,9 @@ const argoApplicationsMetadata = {
     {
       label: "Namespace",
       id: "namespace",
-      isRequired: true
+      isRequired: true,
+      maxLength: 28,
+      // regexDefinitionName: "generalText",
     },
     {
       label: "Project Name",
@@ -46,7 +48,9 @@ const argoApplicationsMetadata = {
     {
       label: "Branch Name",
       id: "branchName",
-      isRequired: true
+      isRequired: true,
+      maxLength: 28,
+      regexDefinitionName: "generalText",
     }
 ],
   newModelBase: {

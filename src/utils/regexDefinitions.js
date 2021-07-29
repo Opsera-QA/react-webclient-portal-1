@@ -4,7 +4,7 @@ const regexDefinitions = {};
 regexDefinitions.generalText = {
   regex: /^[A-Za-z0-9-_.:]*$/,
   formText: "Letters, numbers dashes, colons, underscores, and periods are allowed",
-  errorFormText: "Only letters, numbers dashes, colons, underscores, and periods are allowed"
+  errorFormText: "Only letters, numbers, dashes, colons, underscores, and periods are allowed"
 };
 
 regexDefinitions.generalTextWithSpaces = {

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import regexDefinitions from "utils/regexDefinitions";
 
 function InfoText({ field, errorMessage, customMessage, successMessage }) {
   if (errorMessage != null && errorMessage !== "") {
@@ -18,16 +19,24 @@ function InfoText({ field, errorMessage, customMessage, successMessage }) {
     );
   }
 
-  if (field?.formText == null && customMessage == null) {
-    return null;
-  }
-
   if (field.formText != null && field.formText !== "") {
     return (
       <small className="text-muted form-text">
         <div>{field?.formText}</div>
       </small>
     );
+  }
+
+  if (field?.regexDefinitionName != null && regexDefinitions[field?.regexDefinitionName] !== null) {
+    return (
+      <small className="text-muted form-text">
+        <div>{regexDefinitions[field?.regexDefinitionName]?.formText}</div>
+      </small>
+    );
+  }
+
+  if (customMessage == null) {
+    return null;
   }
 
   return (
