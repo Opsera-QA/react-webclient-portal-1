@@ -1,3 +1,5 @@
+import regexHelpers from "utils/regexHelpers";
+
 const coverityStepFormMetadata = {
   type: "Coverity Tool Configuration",
   fields: [
@@ -14,11 +16,16 @@ const coverityStepFormMetadata = {
     {
       label:"Coverity Project Name",
       id:"projectName",
-      isRequired: true
+      isRequired: true,
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash,
+      maxLength: 95,
     },
     {
       label:"Coverity Stream Name",
-      id:"streamName"
+      id:"streamName",
+      isRequired: true,
+      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash,
+      maxLength: 95,
     },
     {
       label: "Select Account",
