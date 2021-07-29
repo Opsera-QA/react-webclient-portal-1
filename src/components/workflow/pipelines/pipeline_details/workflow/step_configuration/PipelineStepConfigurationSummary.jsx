@@ -147,6 +147,8 @@ import AwsEcsDeployPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/aws_ecs_deploy/AwsEcsSDeployPipelineStepConfigurationSummary";
 import awsECSDeployStepFormMetadata
   from "./step_tool_configuration_forms/aws_ecs_deploy/awsECSDeploy-stepForm-metadata";
+import coverityStepFormMetadata from "./step_tool_configuration_forms/coverity/coverity-stepForm-metadata";
+import CoverityPipelineStepConfigurationSummaryPanel from "./step_tool_configuration_forms/coverity/CoverityPipelineStepConfigurationSummaryPanel";
 
 function PipelineStepConfigurationSummary({
   pipelineData,
@@ -430,6 +432,13 @@ function PipelineStepConfigurationSummary({
             pipelineData={pipelineData}
             awsECSDeployPipelineDataObject={getModelWrappedObject(awsECSDeployStepFormMetadata)}
           />
+        );
+      case "coverity":
+          return (
+            <CoverityPipelineStepConfigurationSummaryPanel
+              pipelineData={pipelineData}
+              coverityPipelineDataObject={getModelWrappedObject(coverityStepFormMetadata)}
+            />
         );
       default:
         return (
