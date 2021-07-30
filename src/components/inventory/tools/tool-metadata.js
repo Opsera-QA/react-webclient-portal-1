@@ -1,4 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
 import regexDefinitions from "utils/regexDefinitions";
 
 const toolMetadata = {
@@ -21,7 +20,7 @@ const toolMetadata = {
       id: "name",
       isRequired: true,
       maxLength: 50,
-      regexValidator: regexHelpers.regexTypes["generalTextWithSpaces"],
+      regexDefinitionName: "generalTextWithSpaces",
       formText: "Names can be up to 50 characters and can consist of letters, apostrophes, numbers, spaces, dashes, colons, underscores, and periods"
     },
     {
@@ -35,8 +34,8 @@ const toolMetadata = {
     {
       label: "Description",
       id: "description",
-      maxLength: 1000, 
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash,
+      maxLength: 1000,
+      regexDefinitionName: "generalTextWithSpacesSlash",
       formText: "Description can be up to 1000 characters and can consist of letters, apostrophes, numbers, spaces, dashes, colons, underscores, and periods"
     },
     {
@@ -112,7 +111,7 @@ const toolMetadata = {
     {
       label: "Cost Center",
       id: "costCenter",
-      inputMaskRegex: regexDefinitions["generalText"]?.regex,
+      inputMaskRegex: regexDefinitions.generalText?.regex,
       maxLength: 25
     },
     {

@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const sfdxCertGenTaskConfigurationMetadata = {
   type: "SFDX Certificate Generation Task Configuration",
   fields: [
@@ -8,14 +6,14 @@ const sfdxCertGenTaskConfigurationMetadata = {
       id: "toolConfigId",
       isRequired: true,
       maxLength: 24,
-      regexValidator: regexHelpers.regexTypes.mongoId
+      regexDefinitionName: "mongoId",
     },
     {
       label: "Jenkins Tool Name",
       id: "toolName",
       isRequired: true,
       maxLength: 250,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexDefinitionName: "generalTextWithSpaces",
     },  
     {
       label: "Auto Scaling",
@@ -24,63 +22,63 @@ const sfdxCertGenTaskConfigurationMetadata = {
     {
       label: "Agent Label",
       id: "agentLabels",
-      regexValidator: regexHelpers.regexTypes.generalTextWithoutSpacesPeriod,
+      regexDefinitionName: "generalTextWithoutSpacesPeriod",
       maxLength: 50
     },  
     {
       label: "Jenkins Job Name",
       id: "jobName",
       maxLength: 100,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexDefinitionName: "generalTextWithSpaces",
     },
     {
       label: "Country Name (2 letter code)",
       id: "countryName",
       isRequired: true,
       maxLength: 2,
-      regexValidator: regexHelpers.regexTypes.alphanumeric
+      regexDefinitionName: "alphanumeric",
     },
     {
       label: "State or Province Name",
       isRequired: true,
       id: "state",
       maxLength: 100,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexDefinitionName: "generalTextWithSpaces",
     },
     {
       label: "Locality Name",
       isRequired: true,
       id: "locality",
       maxLength: 100,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexDefinitionName: "generalTextWithSpaces",
     },
     {
       label: "Organization Name",
       isRequired: true,
       id: "organization",
       maxLength: 100,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexDefinitionName: "generalTextWithSpaces",
     },
     {
       label: "Organizational Unit Name (eg, section)",
       isRequired: true,
       id: "unitName",
       maxLength: 100,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexDefinitionName: "generalTextWithSpaces",
     },
     {
       label: "Common Name (eg, fully qualified host name)",
       id: "commonName",
       isRequired: true,
       maxLength: 100,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+      regexDefinitionName: "generalTextWithSpaces",
     },
     {
       label: "Email Address",
       isRequired: true,
       id: "email",
       maxLength: 100,
-      regexValidator: regexHelpers.regexTypes.email
+      regexDefinitionName: "email",
     },
     {
       label: "Expiry Date",

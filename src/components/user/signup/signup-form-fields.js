@@ -1,18 +1,16 @@
-import regexHelpers from "utils/regexHelpers";
-
 const defaultSignupFormFields = {
   fields: [
     {
       label: "First Name",
       id: "firstName",
-      regexValidator: regexHelpers.regexTypes.nameField,
+      regexDefinitionName: "nameField",
       isRequired: true,
       maxLength: 50
     },
     {
       label: "Last Name",
       id: "lastName",
-      regexValidator: regexHelpers.regexTypes.nameField,
+      regexDefinitionName: "nameField",
       isRequired: true,
       maxLength: 50
     },
@@ -26,28 +24,28 @@ const defaultSignupFormFields = {
     {
       label: "Company",
       id: "organizationName",
-      regexValidator: regexHelpers.regexTypes.nameField,
+      regexDefinitionName: "nameField",
       isRequired: true,
       maxLength: 50
     },
     {
       label: "Street",
       id: "street",
-      regexValidator: regexHelpers.regexTypes.nameField,
+      regexDefinitionName: "nameField",
       isRequired: true,
       maxLength: 150
     },
     {
       label: "City",
       id: "city",
-      regexValidator: regexHelpers.regexTypes.nameField,
+      regexDefinitionName: "nameField",
       isRequired: true,
       maxLength: 50
     },
     {
       label: "State",
       id: "state",
-      regexValidator: regexHelpers.regexTypes.nameField,
+      regexDefinitionName: "nameField",
       isRequired: true,
       maxLength: 50
     },
@@ -55,7 +53,7 @@ const defaultSignupFormFields = {
       label: "Zip",
       id: "zip",
       isRequired: true,
-      regexValidator: regexHelpers.regexTypes.limitedTextWithSpaces,
+      regexDefinitionName: "limitedTextWithSpaces",
       maxLength: 12
     },
     {

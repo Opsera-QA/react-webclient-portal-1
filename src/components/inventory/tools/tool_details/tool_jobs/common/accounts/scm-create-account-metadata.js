@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const scmCreateAccountMetadata = {
     type: "Account Credential",
     fields: [
@@ -17,14 +15,14 @@ const scmCreateAccountMetadata = {
         label: "Workspace/Project",
         id: "workspaceName",
         maxLength: 255,
-        regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+        regexDefinitionName: "generalTextWithSpaces",
       },
       {
         label: "Repository",
         id: "repository",
         isRequired: true,
         maxLength: 255,
-        regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+        regexDefinitionName: "generalTextWithSpaces",
       },
       {
         label: "Account Name",
@@ -71,14 +69,14 @@ const scmCreateAccountMetadata = {
         label: "Workspace/Project",
         id: "workspaceName",
         maxLength: 255,
-        regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+        regexDefinitionName: "generalTextWithSpaces",
       },
       {
         label: "Repository",
         id: "repository",
         isRequired: true,
         maxLength: 255,
-        regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+        regexDefinitionName: "generalTextWithSpaces",
       },
       {
         label: "Password",
@@ -115,14 +113,14 @@ const scmCreateAccountMetadata = {
         label: "Workspace/Project",
         id: "workspaceName",
         maxLength: 255,
-        regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+        regexDefinitionName: "generalTextWithSpaces",
       },
       {
         label: "Repository",
         id: "repository",
         isRequired: true,
         maxLength: 255,
-        regexValidator: regexHelpers.regexTypes.generalTextWithSpaces
+        regexDefinitionName: "generalTextWithSpaces",
       },
       {
         label: "Account Name",

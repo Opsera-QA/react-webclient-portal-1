@@ -1,4 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
 import {capitalizeFirstLetter} from "../../common/helpers/string-helpers";
 
 const dashboardMetadata = {

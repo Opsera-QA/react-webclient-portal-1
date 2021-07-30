@@ -17,7 +17,7 @@ import { faClipboardList } from "@fortawesome/free-solid-svg-icons";
 import { AuthContext } from "contexts/AuthContext";
 import ContainerScan from "./ContainerScan";
 import LoadingDialog from "../common/status_notifications/loading";
-import regexHelpers from "utils/regexHelpers";
+import regexDefinitions from "utils/regexDefinitions";
 
 function Application(props) {
   const { data, saving, gotoInventory, token, user, reset, setAppDetails, appid, setState, isEKS } = useContext(NewAppContext);
@@ -77,8 +77,8 @@ function Application(props) {
   };
 
   const handleAppNameChange = ({ target: { name, value } }) => {
-
-    const regex = RegExp(regexHelpers.regexTypes.domainField);
+    const domainFieldRegex = regexDefinitions.domainField.regex;
+    const regex = RegExp(domainFieldRegex);
     const trimmedValue = value.trim().toLowerCase();
     setAppName(trimmedValue);
     if (trimmedValue.length > 20) {

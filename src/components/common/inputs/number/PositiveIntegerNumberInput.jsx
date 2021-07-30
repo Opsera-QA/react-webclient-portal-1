@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import regexHelpers from "utils/regexHelpers";
 import {matchesRegex} from "utils/helpers";
 import simpleNumberLocalizer from "react-widgets-simple-number";
 import InputContainer from "components/common/inputs/InputContainer";
 import InputLabel from "components/common/inputs/info_text/InputLabel";
 import NumberPicker from "react-widgets/lib/NumberPicker";
 import InfoText from "components/common/inputs/info_text/InfoText";
+import regexDefinitions from "utils/regexDefinitions";
 
 function PositiveIntegerNumberInput({ fieldName, className, dataObject, setDataObject, disabled, placeholderText, showLabel, minimum, maximum }) {
   const [field, setField] = useState(dataObject?.getFieldById(fieldName));
@@ -18,13 +18,14 @@ function PositiveIntegerNumberInput({ fieldName, className, dataObject, setDataO
 
   const validateAndSetData = (newValue) => {
     let parsedValue = Math.trunc(newValue);
+    const numericalFieldRegex = regexDefinitions.numericalField.regex;
 
     if (typeof parsedValue !== "number") {
       setErrorMessage("Not a Number");
       parsedValue = dataObject.getData(fieldName);
     }
 
-    if (!matchesRegex(regexHelpers.regexTypes.numericalField, parsedValue)) {
+    if (!matchesRegex(numericalFieldRegex, parsedValue)) {
       setErrorMessage("Only Integers or 0 Allowed");
       parsedValue = dataObject.getData(fieldName);
     }
