@@ -41,13 +41,13 @@ const gitTasksMetadata = {
       id: "type",
       isRequired: true,
       maxLength: 50,
-      regexValidator: regexHelpers.regexTypes.generalText
+      regexDefinitionName: "generalText",
     },
     {
       label: "Tool",
       id: "tool_identifier",
       maxLength: 10,
-      regexValidator: regexHelpers.regexTypes.generalText
+      regexDefinitionName: "generalText",
     },
     {
       label: "Active",
@@ -69,7 +69,7 @@ const gitTasksMetadata = {
       label: "LDAP Account",
       id: "account",
       maxLength: 50,
-      regexValidator: regexHelpers.regexTypes.generalText
+      regexDefinitionName: "generalText",
     },
     {
       label: "Created",

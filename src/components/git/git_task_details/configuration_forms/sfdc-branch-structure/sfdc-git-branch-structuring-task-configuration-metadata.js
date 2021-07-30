@@ -63,7 +63,7 @@ const sfdcGitBranchTaskConfigurationMetadata = {
       id: "conversionType",
       isRequired: true,
       maxLength: 50,
-      regexValidator: regexHelpers.regexTypes.generalText
+      regexDefinitionName: "generalText",
     },
     {
       id: "gitUrl",

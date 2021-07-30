@@ -2,10 +2,6 @@ const regexHelpers = {};
 
 // TODO: Make corresponding form texts that automatically apply based on these
 regexHelpers.regexTypes = {
-  // TODO: #1 will be standard across most of the text fields, so once it's wired up it will not need to be included in metadata
-  // Letters, numbers, dashes, colons, underscores, and periods allowed
-  generalText: /^[A-Za-z0-9-_.:]*$/,
-
   // Letters, numbers, spaces, dashes, apostrophes, colons, underscores, and periods allowed
   generalTextWithSpaces: /^[A-Za-z0-9'\-_.: ]*$/,
 
