@@ -74,19 +74,8 @@ function GitTasksConfigurationPanel({ gitTasksDataDto, setGitTasksDataDto, gitTa
     }
   };
 
-  const handleGitTaskTypeChange = (fieldName, value) => {
-    let newDataObject = gitTasksDataDto;
-    newDataObject.setData("type", value.value);
-    newDataObject.setData("configuration", {});
-    setGitTasksConfigurationData(undefined);
-    setGitTasksDataDto({...newDataObject});
-  };
-
   return (
     <div>
-      <div>
-        <GitTaskTypeSelectInput setDataFunction={handleGitTaskTypeChange} dataObject={gitTasksDataDto} setDataObject={setGitTasksDataDto} />
-      </div>
       {getConfigurationPanel()}
     </div>
   );
