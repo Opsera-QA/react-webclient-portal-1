@@ -91,7 +91,7 @@ function OctopusStepConfiguration({ stepTool, plan, stepId, parentCallback, call
     const keyName = `${pipelineId}-${stepId}-${key}`;
     const body = {
       "key": keyName,
-      "value": JSON.stringify(value)
+      "value": value
     };
     const response = await callbackSaveToVault(body);    
     if (response.status === 200 ) {
