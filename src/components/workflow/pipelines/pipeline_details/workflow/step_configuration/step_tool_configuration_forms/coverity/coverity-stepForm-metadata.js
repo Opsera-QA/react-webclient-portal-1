@@ -86,6 +86,10 @@ const coverityStepFormMetadata = {
       id: "gitCredential",
       isRequired: true
     },
+    {
+      label: "Delete workspace before building",
+      id: "workspaceDeleteFlag",
+    },
   ],
   newObjectFields: {
     coverityToolId: "",
@@ -107,7 +111,7 @@ const coverityStepFormMetadata = {
     toolJobType: ["CODE SCAN"],
     workspaceDeleteFlag:false,
     jobName:"" ,
-    coverityCredntialId :""  
+    coverityCredntialId :""
   }
 };
 
