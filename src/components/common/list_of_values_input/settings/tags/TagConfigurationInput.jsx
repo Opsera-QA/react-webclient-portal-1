@@ -10,6 +10,7 @@ import {Combobox} from "react-widgets";
 import adminTagsActions from "components/settings/tags/admin-tags-actions";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
 import {AuthContext} from "contexts/AuthContext";
+import regexDefinitions from "utils/regexDefinitions";
 
 function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -99,7 +100,7 @@ function TagConfigurationInput({ fieldName, dataObject, setDataObject, disabled}
   const updateProperty = (row, innerField, newValue) => {
     let newPropertyList = properties;
     let index = newPropertyList.indexOf(row);
-    let format = regexHelpers.regexTypes["generalText"];
+    let format = regexDefinitions["generalText"]?.regex;
     let meetsRegex = format.test(newValue);
 
     if (newValue !== '' && !meetsRegex) {

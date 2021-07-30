@@ -1,4 +1,5 @@
 import regexHelpers from "utils/regexHelpers";
+import regexDefinitions from "utils/regexDefinitions";
 
 const toolMetadata = {
   idProperty: "_id",
@@ -111,7 +112,7 @@ const toolMetadata = {
     {
       label: "Cost Center",
       id: "costCenter",
-      inputMaskRegex: regexHelpers.regexTypes["generalText"],
+      inputMaskRegex: regexDefinitions["generalText"]?.regex,
       maxLength: 25
     },
     {
