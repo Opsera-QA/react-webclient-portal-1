@@ -114,7 +114,7 @@ function CoverityConnectToolSelectInput({ fieldName, dataObject, setDataObject, 
         placeholderText={placeholder}
         disabled={disabled || isCoveritySearching || (coverityList == null || coverityList.length === 0)}
       />
-      <small className="text-muted ml-3">{getInfoText()}</small>
+      <small className="text-muted">{getInfoText()}</small>
     </div>
   );
 }
