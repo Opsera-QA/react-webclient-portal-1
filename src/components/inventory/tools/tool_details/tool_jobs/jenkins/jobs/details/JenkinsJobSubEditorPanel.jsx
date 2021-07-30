@@ -16,6 +16,9 @@ import JenkinsJobsBuildMetadata
 import axios from "axios";
 import JenkinsShellScriptJobMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/shell_script/jenkins-shell-script-metadata";
+import Col from "react-bootstrap/Col";
+import JenkinsGenericJobEditorPanel
+  from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/generic/JenkinsPythonJobEditorPanel";
 
 export const getMetadataForJenkinsJobType = (jenkinsJobType) => {
   switch (jenkinsJobType) {
@@ -35,7 +38,7 @@ export const getMetadataForJenkinsJobType = (jenkinsJobType) => {
   }
 };
 
-function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobConfigurationModel, jenkinsJobType, jenkinsJobConfiguration }) {
+function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobConfigurationModel, jenkinsJobType, jenkinsJobConfiguration, autoScalingEnabled }) {
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -62,6 +65,7 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             model={jenkinsJobConfigurationModel}
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
+            autoScalingEnabled={autoScalingEnabled}
           />
         );
       case "SFDC":
@@ -70,6 +74,7 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             model={jenkinsJobConfigurationModel}
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
+            autoScalingEnabled={autoScalingEnabled}
           />
         );
       case "UNIT TESTING":
@@ -79,6 +84,7 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             model={jenkinsJobConfigurationModel}
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
+            autoScalingEnabled={autoScalingEnabled}
           />
         );
       case "SHELL SCRIPT":
@@ -87,6 +93,7 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             model={jenkinsJobConfigurationModel}
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
+            autoScalingEnabled={autoScalingEnabled}
           />
         );
       case "DOCKER PUSH":
@@ -96,6 +103,7 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
             setModel={setJenkinsJobConfigurationModel}
             jenkinsJobConfiguration={jenkinsJobConfiguration}
             type="DOCKER PUSH"
+            autoScalingEnabled={autoScalingEnabled}
           />
         );
       case "ARTIFACTORY_DOCKER_PUSH":
@@ -108,7 +116,14 @@ function JenkinsJobSubEditorPanel({ jenkinsJobConfigurationModel, setJenkinsJobC
           />
         );
       default:
-        return null;
+        return (
+          <JenkinsGenericJobEditorPanel
+            model={jenkinsJobConfigurationModel}
+            setModel={setJenkinsJobConfigurationModel}
+            jenkinsJobConfiguration={jenkinsJobConfiguration}
+            autoScalingEnabled={autoScalingEnabled}
+          />
+        );
     }
   };
 
@@ -122,7 +137,8 @@ JenkinsJobSubEditorPanel.propTypes = {
   jenkinsJobConfigurationModel: PropTypes.object,
   setJenkinsJobConfigurationModel: PropTypes.func,
   jenkinsJobConfiguration: PropTypes.object,
-  jenkinsJobType: PropTypes.string
+  jenkinsJobType: PropTypes.string,
+  autoScalingEnabled: PropTypes.bool
 };
 
 export default JenkinsJobSubEditorPanel;

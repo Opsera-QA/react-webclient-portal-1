@@ -8,7 +8,7 @@ import modelHelpers from "components/common/model/modelHelpers";
 import JenkinsJobsBuildMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/build/jenkins-jobs-build-metadata";
 
-function JenkinsBuildJobEditorPanel({ jenkinsJobConfiguration, model, setModel }) {
+function JenkinsBuildJobEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled }) {
   useEffect(() => {
     unpackJobConfiguration();
   }, [jenkinsJobConfiguration]);
@@ -41,6 +41,30 @@ function JenkinsBuildJobEditorPanel({ jenkinsJobConfiguration, model, setModel }
     }
   };
 
+  const getAutoScalingField = () => {
+    if (autoScalingEnabled === true && model) {
+      if (model?.getData("buildType") === "python") {
+        return (
+          <Col lg={6}>
+            <JenkinsJobsPythonAgentLabelSelectInput
+              model={model}
+              setModel={setModel}
+            />
+          </Col>
+        );
+      }
+
+      return (
+        <Col lg={6}>
+          <JenkinsJobsGenericAgentTypeSelectInput
+            model={model}
+            setModel={setModel}
+          />
+        </Col>
+      );
+    }
+  };
+
   if (!model) {
     return <></>;
   }
@@ -55,6 +79,7 @@ function JenkinsBuildJobEditorPanel({ jenkinsJobConfiguration, model, setModel }
         />
       </Col>
       {getDynamicBuildTypeFields()}
+      {getAutoScalingField()}
     </Row>
   );
 }
@@ -63,6 +88,7 @@ JenkinsBuildJobEditorPanel.propTypes = {
   jenkinsJobConfiguration: PropTypes.object,
   model: PropTypes.object,
   setModel: PropTypes.func,
+  autoScalingEnabled: PropTypes.bool,
 };
 
 export default JenkinsBuildJobEditorPanel;

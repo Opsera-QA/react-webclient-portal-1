@@ -33,7 +33,7 @@ const JenkinsBuildJobMetadata = {
     mavenTask:"",
     buildType:"",
     gradleTask:"",
-    agentLabels:""
+    agentLabels: "",
   },
 };
 

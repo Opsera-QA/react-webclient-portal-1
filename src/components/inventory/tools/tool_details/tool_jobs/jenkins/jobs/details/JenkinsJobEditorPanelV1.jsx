@@ -24,6 +24,7 @@ import Modal from "../../../../../../../common/modal/modal";
 import {DialogToastContext} from "../../../../../../../../contexts/DialogToastContext";
 import JenkinsJobTypeArtifactoryDockerPush from "../job-type-artifactory-docker-push";
 
+// TODO: Remove after prod verification for a few weeks
 function JenkinsJobEditorPanelV1({ toolData, jobData, loadData, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext  = useContext(DialogToastContext);
