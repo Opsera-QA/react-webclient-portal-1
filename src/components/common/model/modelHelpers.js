@@ -1,4 +1,5 @@
 import Model from "core/data_model/model";
+import ModelBase from "core/data_model/model.base";
 
 const modelHelpers = {};
 
@@ -18,6 +19,13 @@ modelHelpers.parseObjectIntoModel = (object, metaData) => {
   return new Model(object, metaData, false);
 };
 
+modelHelpers.parseObjectIntoModelBase = (object, metaData) => {
+  if (object == null || Object.entries(object).length === 0) {
+    return new ModelBase({...metaData.newObjectFields}, metaData, true);
+  }
+
+  return new ModelBase(object, metaData, false);
+};
 
 modelHelpers.getPipelineStepConfigurationModel = (pipelineStepConfiguration, pipelineStepMetadata) => {
   let configuration = pipelineStepConfiguration?.configuration;
