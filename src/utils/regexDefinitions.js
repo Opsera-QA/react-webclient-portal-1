@@ -3,7 +3,7 @@ const regexDefinitions = {};
 
 regexDefinitions.generalText = {
   regex: /^[A-Za-z0-9-_.:]*$/,
-  formText: "Letters, numbers dashes, colons, underscores, and periods are allowed",
+  formText: "Letters, numbers, dashes, colons, underscores, and periods are allowed",
   errorFormText: "Only letters, numbers, dashes, colons, underscores, and periods are allowed"
 };
 
@@ -39,12 +39,6 @@ regexDefinitions.limitedTextWithSpaces = {
 
 regexDefinitions.limitedText = {
   regex:  /^[A-Za-z0-9-_. ]*$/,
-  formText: "Letters, numbers, dashes, underscores, and periods are allowed",
-  errorFormText: "Only letters, numbers, dashes, underscores, and periods are allowed",
-};
-
-regexDefinitions.limitedText = {
-  regex:  /^[A-Za-z0-9-_.]*$/,
   formText: "Letters, numbers, dashes, underscores, and periods are allowed",
   errorFormText: "Only letters, numbers, dashes, underscores, and periods are allowed",
 };

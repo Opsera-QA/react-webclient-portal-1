@@ -27,7 +27,7 @@ const octopusStepFormMetadata = {
         label: "Project Name",
         id: "projectName",
         isRequired: true,
-        regexValidator: regexHelpers.regexTypes.generalText,
+        regexDefinitionName: "generalText",
         maxLength: 100
       },
       {
@@ -53,7 +53,7 @@ const octopusStepFormMetadata = {
         label: "Project Description",
         id: "projectDescription",
         isRequired: true,
-        regexValidator: regexHelpers.regexTypes.generalText,
+        regexDefinitionName: "generalText",
         maxLength: 100
       },
       {
@@ -64,7 +64,7 @@ const octopusStepFormMetadata = {
       {
         label: "Namespace",
         id: "namespace",
-        regexValidator: regexHelpers.regexTypes.generalText,
+        regexDefinitionName: "generalText",
         maxLength: 100
       },
       {

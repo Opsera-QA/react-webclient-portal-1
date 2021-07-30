@@ -6,13 +6,13 @@ const nexusStepFormMetadata = {
     {
       label: "Group Name",
       id: "groupName",
-      regexValidator: regexHelpers.regexTypes.generalText,
+      regexDefinitionName: "generalText",
       maxLength: 50,
     },
     {
       label: "Artifact Name",
       id: "artifactName",
-      regexValidator: regexHelpers.regexTypes.generalText,
+      regexDefinitionName: "generalText",
       maxLength: 50,
     },
     {
