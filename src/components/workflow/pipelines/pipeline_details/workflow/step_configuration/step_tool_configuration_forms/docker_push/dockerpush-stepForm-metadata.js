@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const dockerPushStepFormMetadata = {
     type: "Docker Push Tool Configuration",
     fields: [
@@ -74,7 +72,7 @@ const dockerPushStepFormMetadata = {
         label: "ECR Repository",
         id: "ecrRepoName",
         isRequired: true.valueOf,
-        regexValidator: regexHelpers.regexTypes.ecrRepoField,
+        regexDefinitionName: "ecrRepoField",
         maxLength: 200,
         minLength: 2,
         fieldText: "The name must start and end with a letter and can only contain lowercase letters, numbers, hyphens, underscores, and forward slashes."

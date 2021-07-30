@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const gitTasksMetadata = {
   idProperty: "_id",
   type: "Task",
@@ -20,13 +18,13 @@ const gitTasksMetadata = {
       id: "name",
       isRequired: true,
       maxLength: 25,
-      regexValidator: regexHelpers.regexTypes.limitedTextWithSpaces
+      regexDefinitionName: "limitedTextWithSpaces",
     },
     {
       label: "Description",
       id: "description",
       maxLength: 255,
-      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
+      regexDefinitionName: "expandedTextAndSymbolsWithSpaces"
     },
     {
       label: "Owner",

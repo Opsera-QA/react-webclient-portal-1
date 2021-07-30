@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const accountRegistrationMetadata = {
   idProperty: "name",
   type: "Account Registration",
@@ -8,14 +6,14 @@ const accountRegistrationMetadata = {
       label: "First Name",
       id: "firstName",
       isRequired: true,
-      regexValidator: regexHelpers.regexTypes.nameField,
+      regexDefinitionName: "nameField",
       maxLength: 50
     },
     {
       label: "Last Name",
       id: "lastName",
       isRequired: true,
-      regexValidator: regexHelpers.regexTypes.nameField,
+      regexDefinitionName: "nameField",
       maxLength: 50
     },
     {

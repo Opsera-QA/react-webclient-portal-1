@@ -8,15 +8,15 @@ regexDefinitions.generalText = {
 };
 
 regexDefinitions.generalTextWithSpaces = {
-  regex: /^[A-Za-z0-9'-_.: ]*$/,
+  regex: /^[A-Za-z0-9'\-_.: ]*$/,
   formText: "Spaces, letters, numbers dashes, colons, underscores, and periods are allowed",
   errorFormText: "Only spaces, letters, numbers dashes, colons, underscores, and periods are allowed"
 };
 
-regexDefinitions.generalNameRegex = {
+regexDefinitions.nameField = {
   regex: /^[a-zA-Z0-9-_.]*$/,
-  formText: "Letters, numbers, dashes, and periods are allowed",
-  errorFormText: "Only letters, numbers, dashes, and periods are allowed",
+  formText: "Letters, numbers, dashes, underscores, and periods are allowed",
+  errorFormText: "Only letters, numbers, dashes, underscores, and periods are allowed",
 };
 
 regexDefinitions.generalTextWithSpacesSlash = {

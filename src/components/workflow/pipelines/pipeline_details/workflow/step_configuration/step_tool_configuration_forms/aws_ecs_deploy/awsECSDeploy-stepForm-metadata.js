@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const awsECSDeployStepFormMetadata = {
   type: "AWS ECS Deploy Tool Configuration",
   fields: [
@@ -17,7 +15,7 @@ const awsECSDeployStepFormMetadata = {
       label: "Service Container Port",
       id: "ecsServiceContainerPort",
       isRequired: true,
-      regexValidator: regexHelpers.regexTypes.numericalField,
+      regexDefinitionName: "numericalField",
     },
     {
       label: "Service Name",

@@ -6,8 +6,8 @@ import {faBracketsCurly, faExclamationTriangle, faTimes} from "@fortawesome/pro-
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
-import regexHelpers from "utils/regexHelpers";
 import InputContainer from "components/common/inputs/InputContainer";
+import regexDefinitions from "utils/regexDefinitions";
 
 function NameValueInputBase({dataObject, setDataObject, fieldName, disabledFields, type, titleIcon, allowIncompleteItems, titleText, nameMaxLength, valueMaxLength, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -80,7 +80,7 @@ function NameValueInputBase({dataObject, setDataObject, fieldName, disabledField
   const updateProperty = (row, innerField, newValue) => {
     let newPropertyList = properties;
     let index = newPropertyList.indexOf(row);
-    let format = regexHelpers.regexTypes["generalTextWithSpaces"];
+    let format = regexDefinitions?.generalTextWithSpaces?.regex;
     let meetsRegex = format.test(newValue);
 
     if (newValue !== '' && !meetsRegex) {

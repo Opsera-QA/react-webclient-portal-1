@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const octopusStepFormMetadata = {
     type: "Octopus API Configuration",
     idProperty: "_id",
@@ -107,13 +105,13 @@ const octopusStepFormMetadata = {
       {
         label: "XML Configuration Transformed Variable Value",
         id: "xmlConfigTransformVariableValue",
-        regexValidator: regexHelpers.regexTypes.pathField,
+        regexDefinitionName: "pathField",
         maxLength: 100
       },
       {
         label: "Structured Configuration Variables Path",
         id: "structuredConfigVariablesPath",
-        regexValidator: regexHelpers.regexTypes.pathField,
+        regexDefinitionName: "pathField",
         maxLength: 100
       },
       {
@@ -127,7 +125,7 @@ const octopusStepFormMetadata = {
       {
         label: "Physical Path",
         id: "octopusPhysicalPath",
-        regexValidator: regexHelpers.regexTypes.pathField,
+        regexDefinitionName: "pathField",
         maxLength: 100
       },
       {
@@ -145,7 +143,7 @@ const octopusStepFormMetadata = {
       {
         label: "Binding Port",
         id: "port",
-        regexValidator: regexHelpers.regexTypes.numericalField,
+        regexDefinitionName: "numericalField",
         maxLength: 50
       },
       {
@@ -208,7 +206,7 @@ const octopusStepFormMetadata = {
       {
         label: "Deployed Package File Name",
         id: "deployedPackageFileName",
-        regexValidator: regexHelpers.regexTypes.genericFileName,
+        regexDefinitionName: "genericFileName",
         maxLength: 64
       },
       {
@@ -218,7 +216,7 @@ const octopusStepFormMetadata = {
       {
         label: "Deployment Directory",
         id: "deploymentDirectory",
-        regexValidator: regexHelpers.regexTypes.pathField,
+        regexDefinitionName: "pathField",
         maxLength: 100
       },
       {
@@ -228,7 +226,7 @@ const octopusStepFormMetadata = {
       {
         label: "Files Excluded from Purge",
         id: "excludeFromPurge",
-        regexValidator: regexHelpers.regexTypes.octopusFileList,
+        regexDefinitionName: "octopusFileList",
         formText: "A newline-separated list of file or directory names, relative to the installation directory"
       },
       {

@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const sfdcConnectionMetadata = {
   type: "SFDC Tool Configuration",
   idProperty: "_id",
@@ -42,7 +40,7 @@ const sfdcConnectionMetadata = {
     {
       label: "Build Type",
       id: "buildType",
-      regexValidator: regexHelpers.regexTypes.generalTextWithoutSpacesPeriod,
+      regexDefinitionName: "generalTextWithoutSpacesPeriod",
       maxLength: 10
     },
     {
@@ -53,7 +51,7 @@ const sfdcConnectionMetadata = {
       label: "Jenkins Tool",
       id: "jenkinsToolId",
       maxLength: 24,
-      regexValidator: regexHelpers.regexTypes.mongoId
+      regexDefinitionName: "mongoId",
     },
   ],
   newObjectFields:

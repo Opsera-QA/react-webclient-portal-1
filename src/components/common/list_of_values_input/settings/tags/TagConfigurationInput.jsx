@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import regexHelpers from "utils/regexHelpers";
 import {Button} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBracketsCurly, faExclamationTriangle, faTimes} from "@fortawesome/pro-light-svg-icons";

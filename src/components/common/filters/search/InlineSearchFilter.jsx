@@ -3,9 +3,9 @@ import PropTypes from "prop-types";
 import {Button, InputGroup} from "react-bootstrap";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSearch, faSpinner} from "@fortawesome/pro-light-svg-icons";
-import regexHelpers from "utils/regexHelpers";
 import Model from "core/data_model/model";
 import {useHistory} from "react-router-dom";
+import regexDefinitions from "utils/regexDefinitions";
 
 function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, fieldName, supportSearch, className, isLoading, metadata}) {
   let history = useHistory();
@@ -26,8 +26,9 @@ function InlineSearchFilter({ filterDto, setFilterDto, loadData, disabled, field
     try {
       let newFilterDto = {...filterDto};
       const searchString = newFilterDto.getData(fieldName);
+      const mongoIdRegex = regexDefinitions.mongoId?.regex;
 
-      if (metadata?.detailView != null && searchString.match(regexHelpers.regexTypes.mongoId)) {
+      if (metadata?.detailView != null && searchString.match(mongoIdRegex)) {
         const model = new Model({_id: searchString}, metadata, true);
         const link = model.getDetailViewLink();
 
