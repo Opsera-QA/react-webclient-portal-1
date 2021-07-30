@@ -79,7 +79,8 @@ const coverityStepFormMetadata = {
     },
     {
       label: "Coverity Credentials",
-      id: "coverityCredntialId"
+      id: "coverityCredntialId",
+      isRequired: true
     },
     {
       label: "Select SCM Account",
