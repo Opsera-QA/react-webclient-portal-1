@@ -12,6 +12,7 @@ import CoverityAccountInput from "./inputs/CoverityAccountInput";
 import CoverityJenkinsAccountInput from "./inputs/CoverityJenkinsAccountInput";
 import JenkinsToolConfigIdSelectInput from "../jenkins/inputs/JenkinsToolConfigIdSelectInput";
 import CoverityToolSelectInput from "./inputs/CoverityToolSelectInput";
+import WorkspaceDeleteToggleInput from "./inputs/WorkspaceDeleteToggleInput";
 
 function CoverityStepConfiguration({ pipelineId, stepTool, stepId,createJob, closeEditorPanel, parentCallback }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -99,7 +100,7 @@ function CoverityStepConfiguration({ pipelineId, stepTool, stepId,createJob, clo
       <CoverityBitbucketWorkspaceInput dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} />
       <CoverityGitRepositoryInput dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} />
       <CoverityGitBranchInput  dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} />
-
+      <WorkspaceDeleteToggleInput dataObject={coverityStepConfigurationDto} setDataObject={setCoverityStepConfigurationDataDto} fieldName={"workspaceDeleteFlag"} />
     </PipelineStepEditorPanelContainer>
   );
 }
