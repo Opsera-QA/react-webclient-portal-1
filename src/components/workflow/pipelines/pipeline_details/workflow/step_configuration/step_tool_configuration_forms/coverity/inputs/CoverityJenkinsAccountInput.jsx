@@ -28,7 +28,7 @@ function CoverityJenkinsAccountInput({dataObject, setDataObject, disabled, class
        dataObject={dataObject}
        setDataObject={setDataObject}
        setDataFunction={setJenkinsAccount}
-       disabled={disabled || dataObject?.getData("toolJobId") === ""}
+       disabled={disabled}
      />
   );
 }
