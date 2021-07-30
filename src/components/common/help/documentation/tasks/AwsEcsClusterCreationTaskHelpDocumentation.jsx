@@ -1,9 +1,10 @@
 import React from "react";
 import HelpDocumentationContainer from "components/common/help/HelpDocumentationContainer";
+import PropTypes from "prop-types";
 
-function AwsEcsClusterCreationTaskHelpDocumentation() {
+function AwsEcsClusterCreationTaskHelpDocumentation({closeHelpPanel}) {
   return (
-    <HelpDocumentationContainer helpTopic={"AWS ECS Cluster"}>
+    <HelpDocumentationContainer helpTopic={"AWS ECS Cluster"} closeHelpPanel={closeHelpPanel}>
       <div className={"ml-2 mt-2"}>When creating an AWS ECS Cluster, it is important to know the correct values to enter. The chance for failure is high unless the user is experienced with AWS infrastructure creation. Template creation is a prerequisite to creating the cluster. Once the template has been created, you must select <b>Run Task</b> for the first cluster to be created. Select the following values:
           <div className={"mt-2"}>
             <ul>
@@ -35,5 +36,10 @@ function AwsEcsClusterCreationTaskHelpDocumentation() {
     </HelpDocumentationContainer>
   );
 }
+
+AwsEcsClusterCreationTaskHelpDocumentation.propTypes = {
+  closeHelpPanel: PropTypes.func,
+};
+
 
 export default React.memo(AwsEcsClusterCreationTaskHelpDocumentation);
