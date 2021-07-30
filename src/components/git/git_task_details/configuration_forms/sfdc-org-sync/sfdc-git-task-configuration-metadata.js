@@ -118,7 +118,7 @@ const sfdcGitTaskConfigurationMetadata = {
     {
       label: "Upstream Branch",
       id: "upstreamBranch",
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash,
+      regexDefinitionName: "generalTextWithSpacesSlash",
       maxLength: 50
     },
   ],

@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const JenkinsJobMetadata = {
   idProperty: "_id",
   type: "Jenkins Job",
@@ -13,7 +11,7 @@ const JenkinsJobMetadata = {
       id: "name",
       isRequired: true,
       maxLength: 50,
-      regexValidator: regexHelpers.regexTypes["generalTextWithSpaces"],
+      regexDefinitionName: "generalTextWithSpaces",
       formText:
         "Names can be up to 50 characters and can consist of letters, apostrophes, numbers, spaces, dashes, colons, underscores, and periods",
     },
@@ -25,7 +23,7 @@ const JenkinsJobMetadata = {
       label: "Description",
       id: "description",
       maxLength: 1000,
-      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces,
+      regexDefinitionName: "expandedTextAndSymbolsWithSpaces",
       formText:
         "Description can be up to 1000 characters and can consist of letters, apostrophes, numbers, spaces, dashes, colons, underscores, and periods",
     },

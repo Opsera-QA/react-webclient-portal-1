@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const awsLambdaFunctionTaskConfigurationMetadata = {
   type: "AWS Lambda Function Configuration",
   fields: [
