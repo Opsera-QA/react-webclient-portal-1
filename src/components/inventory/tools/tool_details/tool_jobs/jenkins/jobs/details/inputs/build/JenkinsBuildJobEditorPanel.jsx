@@ -2,11 +2,16 @@ import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import JenkinsJobsBuildTypeSelectInput from "./JenkinsJobsBuildTypeSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
 import JenkinsJobsBuildMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/build/jenkins-jobs-build-metadata";
+import JenkinsJobsPythonAgentLabelSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/jobs/python/JenkinsJobsPythonAgentLabelSelectInput";
+import JenkinsJobsGenericAgentTypeSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/jobs/JenkinsJobsGenericAgentTypeSelectInput";
+import JenkinsJobsBuildTypeSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/jobs/build/JenkinsJobsBuildTypeSelectInput";
 
 function JenkinsBuildJobEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled }) {
   useEffect(() => {

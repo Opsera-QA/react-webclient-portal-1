@@ -2,12 +2,13 @@ import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import JenkinsJobsSfdcTypeSelectInput from "./JenkinsJobsSfdcTypeSelectInput";
 import modelHelpers from "components/common/model/modelHelpers";
 import JenkinsSfdcJobMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/sfdc/jenkins-sfdc-build-metadata";
 import JenkinsJobsGenericAgentTypeSelectInput
   from "components/common/list_of_values_input/tools/jenkins/jobs/JenkinsJobsGenericAgentTypeSelectInput";
+import JenkinsJobsSfdcTypeSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/jobs/sfdc/JenkinsJobsSfdcTypeSelectInput";
 
 function JenkinsSfdcJobEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled }) {
   useEffect(() => {
