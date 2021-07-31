@@ -85,12 +85,6 @@ regexDefinitions.domainField = {
   errorFormText: "This field must begin and end with an alphanumeric character. Alphanumeric and Dashes are allowed otherwise.",
 };
 
-regexDefinitions.domainField = {
-  regex:  /^[0-9a-fA-F]{24}$/,
-  formText: "This field must be an ID",
-  errorFormText: "This field must be an ID",
-};
-
 regexDefinitions.mongoId = {
   regex: /^[0-9a-fA-F]{24}$/,
   formText: "This field must be an ID",
