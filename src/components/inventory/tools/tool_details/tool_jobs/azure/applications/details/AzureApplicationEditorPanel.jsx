@@ -16,6 +16,8 @@ import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
 import VaultTextInput from "../../../../../../../common/inputs/text/VaultTextInput";
 import toolsActions from "../../../../../tools-actions";
+import DeleteButtonWithInlineConfirmation
+  from "../../../../../../../common/buttons/delete/DeleteButtonWithInlineConfirmation";
 
 function AzureApplicationEditorPanel({ azureApplicationData, toolData, applicationId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -78,19 +80,6 @@ console.log(azureApplicationData);
     handleClose();
   };
 
-  const getDeleteButton = () => {
-    // TODO: Switch to isNew check
-    if (applicationId) {
-      return (
-        <div className="mr-auto mt-3 px-3">
-          <Button variant="outline-primary" size="sm" onClick={() => setShowDeleteModal(true)}>
-            <FontAwesomeIcon icon={faTrash} className="danger-red"/> Delete Application Credential
-          </Button>
-        </div>
-      );
-    }
-  };
-
   if (isLoading || azureApplicationModel == null) {
     return <LoadingDialog size="sm" message={"Loading Data"} />;
   }
@@ -102,7 +91,12 @@ console.log(azureApplicationData);
       updateRecord={updateApplication}
       setRecordDto={setAzureApplicationModel}
       isLoading={isLoading}
-      extraButtons={getDeleteButton()}
+      extraButtons={
+        <DeleteButtonWithInlineConfirmation
+          dataObject={azureApplicationModel}
+          deleteRecord={deleteApplication}
+        />
+      }
       handleClose={handleClose}
     >
       <div className="scroll-y">
@@ -145,15 +139,6 @@ console.log(azureApplicationData);
           </Col>
         </Row>
       </div>
-      {showDeleteModal ? (
-        <Modal
-          header="Confirm Delete"
-          message="Warning! Credential cannot be recovered once this Credential is deleted. Do you still want to proceed?"
-          button="Confirm"
-          handleCancelModal={() => setShowDeleteModal(false)}
-          handleConfirmModal={() => deleteApplication()}
-        />
-      ) : null}
     </EditorPanelContainer>
   );
 }

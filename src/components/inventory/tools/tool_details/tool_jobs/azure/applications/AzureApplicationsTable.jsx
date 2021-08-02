@@ -1,6 +1,6 @@
 import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
-import azureApplicationsMetadata from "../azure-application-metadata";
+import azureApplicationsMetadata from "../applications/azure-application-metadata";
 import {getField} from "components/common/metadata/metadata-helpers";
 import FilterContainer from "components/common/table/FilterContainer";
 import {faBrowser} from "@fortawesome/pro-light-svg-icons";

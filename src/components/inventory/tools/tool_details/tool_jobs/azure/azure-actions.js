@@ -15,7 +15,7 @@ azureActions.createAzureCredential = async (getAccessToken, cancelTokenSource, t
 azureActions.updateAzureCredential = async (getAccessToken, cancelTokenSource, toolId, applicationId, azureApplicationModel) => {
   const apiUrl = `/tools/${toolId}/azure/${applicationId}/update`;
   const postBody = {
-    ...azureApplicationModel.getPersistData(),
+    ...azureApplicationModel
   };
   return await baseActions.apiPostCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };

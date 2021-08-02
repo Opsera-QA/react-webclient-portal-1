@@ -30,7 +30,7 @@ function AzureApplications({ toolData, loadData, isLoading, toolApplications }) 
   };
 
   const onRowSelect = (grid, row) => {
-    let selectedRow = toolData?.getArrayData("actions")[row?.index];
+    let selectedRow = toolData?.getArrayData("applications")[row?.index];
     toastContext.showOverlayPanel(
       <AzureApplicationOverlay
         azureDataObject={selectedRow?.configuration}

@@ -25,7 +25,6 @@ const azureApplicationsMetadata = {
     {
       label: "Active",
       id: "active",
-      isRequired: true,
     },
   ],
   newObjectFields: {
