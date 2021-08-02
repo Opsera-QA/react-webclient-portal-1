@@ -76,6 +76,7 @@
     "build:kube-test": "env-cmd -f .env.kube-test react-scripts build && mv build build-kube-test",
     "build:kube-prod": "env-cmd -f .env.kube-prod react-scripts build && mv build build-kube-prod",
     "build:honeywell": "env-cmd -f .env.honeywell react-scripts build && mv build build-honeywell",
+    "build:honeywell-sandbox": "env-cmd -f .env.honeywell-sandbox react-scripts build && mv build build-honeywell-sandbox",
     "build:production": "react-scripts build",
     "build": "react-scripts build",
     "test": "react-scripts test",
