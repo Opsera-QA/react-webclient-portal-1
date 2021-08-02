@@ -67,7 +67,6 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
             }
           />
         </Col>
-
         <Col md={6}>
           <RadioButtonOption
             fieldName={fieldName}
@@ -94,6 +93,49 @@ function AccessTokenScopeRadioInput({ fieldName, dataObject, setDataObject, disa
               <span>
                 <div><strong>Tool Registry (Read Only)</strong></div>
                 Grants read access only to the Tool Registry API for getting tool details or relevant log activity.  No actions are supported.
+              </span>
+            }
+          />
+        </Col>
+        <Col md={6}>
+          <RadioButtonOption
+            fieldName={fieldName}
+            dataObject={dataObject}
+            setDataObject={setDataObject}
+            value={"tasks"}
+            label={
+              <span>
+                <div><strong>Tasks Access</strong></div>
+                Grants access to the Opsera Tasks API for specifically running tasks based on the role access permitted for this user in that task.
+                Site wide roles and individual task access rules are enforced.
+              </span>
+            }
+          />
+        </Col>
+        <Col md={6}>
+          <RadioButtonOption
+            fieldName={fieldName}
+            dataObject={dataObject}
+            setDataObject={setDataObject}
+            value={"tasks-readonly"}
+            label={
+              <span>
+                <div><strong>Tasks Access (Read Only)</strong></div>
+                Grants read access only to the Opsera Tasks API for getting log activity on tasks. No actions are supported.
+              </span>
+            }
+          />
+        </Col>
+        <Col md={6}>
+          <RadioButtonOption
+            fieldName={fieldName}
+            dataObject={dataObject}
+            setDataObject={setDataObject}
+            value={"security-logs"}
+            label={
+              <span>
+                <div><strong>Security Logs (Read Only)</strong></div>
+                Grants read access only to the Opsera Platform user activity logs.  No actions are supported with this token.
               </span>
             }
           />
