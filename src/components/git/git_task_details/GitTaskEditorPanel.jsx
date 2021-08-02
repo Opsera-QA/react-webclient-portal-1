@@ -23,7 +23,7 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import GitTaskTypeSelectInput from "components/common/list_of_values_input/git_tasks/GitTaskTypeSelectInput";
-
+import './style.css';
 function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }) {
   const { getAccessToken, isSassUser} = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
@@ -127,7 +127,7 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
   const getDynamicFields = () => {
     if (gitTasksDataDto?.isNew() && !isSassUser()) {
       return (
-        <Col lg={12} className="mb-4">
+        <Col lg={12} className="mb-4 task_editor">
           <RoleAccessInput dataObject={gitTasksDataDto} setDataObject={setGitTasksDataDto} fieldName={"roles"}/>
         </Col>
       );
