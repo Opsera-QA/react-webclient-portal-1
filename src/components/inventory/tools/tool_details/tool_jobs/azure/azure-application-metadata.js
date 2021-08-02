@@ -1,4 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
 
 const azureApplicationsMetadata = {
   type: "Azure Application Credential",
