@@ -10,11 +10,17 @@ const awsLambdaStepFormMetadata = {
       label: "Action",
       id: "lambdaAction",
       isRequired: true
+    },
+    {
+      label: "AWS Tool",
+      id: "awsToolConfigId",
+      isRequired: true
     }
   ],
   newObjectFields: {
     lambdaTasks: [],
-    lambdaAction: ""
+    lambdaAction: "",
+    awsToolConfigId: ""
   }
 };
 
