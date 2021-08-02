@@ -19,7 +19,7 @@ function InfoText({ field, errorMessage, customMessage, successMessage }) {
     );
   }
 
-  if (field.formText != null && field.formText !== "") {
+  if (field?.formText != null && field?.formText !== "") {
     return (
       <small className="text-muted form-text">
         <div>{field?.formText}</div>
