@@ -172,7 +172,7 @@ function SfdcPipelineWizardRulesInputContainerBase({pipelineWizardModel, setPipe
     <>
       <PropertyInputContainer
         titleIcon={faFilter}
-        field={""}
+        field={null}
         isLoading={!filePullCompleted || isLoading}
         titleText={"File Selection Rule Filter"}
         errorMessage={errorMessage}
