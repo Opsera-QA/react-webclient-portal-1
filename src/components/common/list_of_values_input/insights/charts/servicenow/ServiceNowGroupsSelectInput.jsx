@@ -74,15 +74,15 @@ function ServiceNowAssignmentGroupSelectInput({
 
   const getPlaceholderText = () => {
     if (isLoading) {
-      return "Loading Groups";
+      return "Loading Assignment Groups";
     }
 
     if (serviceNowId === "") {
-      return "A ServiceNow Tool must be selected before selecting a Group";
+      return "A ServiceNow Tool must be selected before selecting a Assignment Group";
     }
 
     if (!isLoading && serviceNowId !== "" && groups.length === 0) {
-      return "No Groups found for selected ServiceNow account.";
+      return "No Assignment Groups found for selected ServiceNow account.";
     }
   };
 
@@ -98,7 +98,7 @@ function ServiceNowAssignmentGroupSelectInput({
       textField={textField}
       placeholderText={getPlaceholderText()}
       disabled={disabled || isLoading || serviceNowId === "" || groups.length === 0}
-      onChange={(newValue) => console.log("newValue", newValue)}
+      //onChange={(newValue) => console.log("newValue", newValue)}
     />
   );
 }
