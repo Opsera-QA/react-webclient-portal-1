@@ -77,8 +77,7 @@
 }
 
 .object-properties-input .no-data-message {
-    height: 55px;
-    margin: auto;
+    padding: 2%;
 }
 
 .object-properties-input .rw-widget-input {
