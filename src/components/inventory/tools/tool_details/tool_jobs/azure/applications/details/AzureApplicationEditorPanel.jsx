@@ -92,10 +92,11 @@ console.log(azureApplicationData);
       setRecordDto={setAzureApplicationModel}
       isLoading={isLoading}
       extraButtons={
+        applicationId ?
         <DeleteButtonWithInlineConfirmation
           dataObject={azureApplicationModel}
           deleteRecord={deleteApplication}
-        />
+        /> : undefined
       }
       handleClose={handleClose}
     >
