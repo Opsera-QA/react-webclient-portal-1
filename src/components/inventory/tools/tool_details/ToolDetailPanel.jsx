@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 
 import PropTypes from "prop-types";
 import ToolJobsPanel from "./ToolJobsPanel";
-import ToolLogsPanel from "./ToolLogsPanel";
+import ToolLogsPanel from "components/inventory/tools/tool_details/logs/ToolLogsPanel";
 import ToolEditorPanel from "./ToolEditorPanel";
 import ToolConfigurationPanel from "./ToolConfigurationPanel";
 import ToolAccountsPanel from "./ToolAccountsPanel";
