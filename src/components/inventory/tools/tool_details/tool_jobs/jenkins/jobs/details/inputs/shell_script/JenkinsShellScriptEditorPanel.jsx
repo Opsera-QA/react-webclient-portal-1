@@ -18,7 +18,7 @@ function JenkinsShellScriptEditorPanel({ jenkinsJobConfiguration, model, setMode
   }, [jenkinsJobConfiguration]);
 
   const unpackJobConfiguration = () => {
-    const parsedModel = modelHelpers.parseObjectIntoModelBase(jenkinsJobConfiguration, JenkinsShellScriptJobMetadata);
+    const parsedModel = modelHelpers.parseObjectIntoModel(jenkinsJobConfiguration, JenkinsShellScriptJobMetadata);
     setModel({...parsedModel});
   };
 

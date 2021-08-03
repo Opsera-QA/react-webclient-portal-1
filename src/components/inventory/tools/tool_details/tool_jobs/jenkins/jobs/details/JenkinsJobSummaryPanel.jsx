@@ -5,8 +5,10 @@ import JenkinsBuildJobSummaryPanel from "./inputs/build/JenkinsBuildJobSummaryPa
 import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import JenkinsUnitTestingJobSummaryPanel from "./inputs/unit_testing/JenkinsUnitTestingJobSummaryPanel";
 import SummaryPanelContainer from "components/common/panels/detail_view/SummaryPanelContainer";
+import CloseButton from "components/common/buttons/CloseButton";
+import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 
-function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobTypeData, setActiveTab }) {
+function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobTypeData, setActiveTab, handleClose }) {
   const getDynamicJobTypeSummaryPanel = () => {
     switch (jenkinsJobData?.getData("jobType")) {
       case "BUILD":
@@ -14,14 +16,29 @@ function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobTypeData, setActiveT
       case "UNIT TESTING":
       case "FUNCTIONAL TESTING":
         return <JenkinsUnitTestingJobSummaryPanel dataObject={jenkinsJobTypeData}/>;
-      case "SFDC":
       case "SHELL SCRIPT":
       case "DOCKER PUSH":
       case "ARTIFACTORY_DOCKER_PUSH":
         return (
-          <Col lg={6}>
-            <TextFieldBase dataObject={jenkinsJobTypeData} fieldName={"buildType"}/>
-          </Col>
+          <>
+            <Col lg={6}>
+              <TextFieldBase dataObject={jenkinsJobTypeData} fieldName={"buildType"}/>
+            </Col>
+            <Col lg={6}>
+              <TextFieldBase dataObject={jenkinsJobTypeData} fieldName={"agentLabels"}/>
+            </Col>
+          </>
+        );
+      case "SFDC":
+        return (
+          <>
+            <Col lg={6}>
+              <TextFieldBase dataObject={jenkinsJobTypeData} fieldName={"jobType"}/>
+            </Col>
+            <Col lg={6}>
+              <TextFieldBase dataObject={jenkinsJobTypeData} fieldName={"agentLabels"}/>
+            </Col>
+          </>
         );
       default:
         return null;
@@ -46,6 +63,9 @@ function JenkinsJobSummaryPanel({ jenkinsJobData, jenkinsJobTypeData, setActiveT
         </Col>
         {getDynamicJobTypeSummaryPanel()}
       </Row>
+      <SaveButtonContainer>
+        <CloseButton size={"sm"} showUnsavedChangesMessage={false} closeEditorCallback={handleClose} />
+      </SaveButtonContainer>
     </SummaryPanelContainer>
   );
 }
@@ -56,6 +76,7 @@ JenkinsJobSummaryPanel.propTypes = {
   setActiveTab: PropTypes.func,
   toolData: PropTypes.object,
   loadData: PropTypes.func,
+  handleClose: PropTypes.func,
 };
 
 export default JenkinsJobSummaryPanel;

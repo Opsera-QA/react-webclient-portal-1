@@ -40,12 +40,18 @@ function JenkinsJobEditorPanel({ handleClose, jenkinsJobModel, setJenkinsJobMode
   }, []);
 
   const updateJob = async () => {
-    const found = toolData
-      ?.getData("jobs")
-      .some((job) => job.name === jenkinsJobConfigurationModel?.getData("name"));
+    const currentJobs = toolData?.getArrayData("jobs");
+    const name = jenkinsJobModel?.getData("name");
+    let count = 0;
 
-    if (found) {
-      throw { error: "Name already exists" };
+    currentJobs.forEach((job) => {
+      if (job.name === name) {
+        count++;
+      }
+    });
+
+    if (count > 1) {
+      throw { error: "Name must be unique across all Jobs tied to this tool" };
     }
 
     const configuration = {...jenkinsJobConfigurationModel.getPersistData()};
@@ -56,11 +62,11 @@ function JenkinsJobEditorPanel({ handleClose, jenkinsJobModel, setJenkinsJobMode
 
   const createJob = async () => {
     const found = toolData
-      ?.getData("jobs")
-      .some((job) => job.name === jenkinsJobConfigurationModel?.getData("name"));
+      ?.getArrayData("jobs")
+      .some((job) => job.name === jenkinsJobModel?.getData("name"));
 
     if (found) {
-      throw { error: "Name already exists" };
+      throw { error: "Name must be unique across all Jobs tied to this tool" };
     }
 
     const configuration = {...jenkinsJobConfigurationModel.getPersistData()};
@@ -74,8 +80,8 @@ function JenkinsJobEditorPanel({ handleClose, jenkinsJobModel, setJenkinsJobMode
       return (
         <WarningDialog
           warningMessage={`
-          Editing this template doesn't update the pipeline configuration, 
-          please update the job from pipeline step before running the pipeline.
+          Editing this template doesn't update the pipeline configuration. 
+          Please update the job inside any relevant pipeline step before running the pipeline.
           `}
         />
       );
@@ -94,6 +100,7 @@ function JenkinsJobEditorPanel({ handleClose, jenkinsJobModel, setJenkinsJobMode
         jenkinsJobTypeData={jenkinsJobConfigurationModel}
         setActiveTab={setActiveTab}
         loadData={loadData}
+        handleClose={handleClose}
       />
     );
   }
