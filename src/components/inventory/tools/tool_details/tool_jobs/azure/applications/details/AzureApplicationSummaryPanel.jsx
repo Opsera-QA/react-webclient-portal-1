@@ -5,9 +5,9 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 
 
 // TODO: Implement
-function ArgoApplicationSummaryPanel({ argoApplicationData } ) {
+function AzureApplicationSummaryPanel({ azureApplicationData } ) {
 
-  if (argoApplicationData == null) {
+  if (azureApplicationData == null) {
     return <LoadingDialog size="sm" />;
   }
 
@@ -16,7 +16,7 @@ function ArgoApplicationSummaryPanel({ argoApplicationData } ) {
       <div className="mb-3 flat-top-content-block p-3 detail-view-summary">
         <Row>
           <Col lg={6}>
-            <TextFieldBase dataObject={argoApplicationData} fieldName={""} />
+            <TextFieldBase dataObject={azureApplicationData} fieldName={""} />
           </Col>
         </Row>
       </div>
@@ -24,9 +24,9 @@ function ArgoApplicationSummaryPanel({ argoApplicationData } ) {
   );
 }
 
-ArgoApplicationSummaryPanel.propTypes = {
-  argoApplicationData: PropTypes.object,
+AzureApplicationSummaryPanel.propTypes = {
+  azureApplicationData: PropTypes.object,
 };
 
 
-export default ArgoApplicationSummaryPanel;
+export default AzureApplicationSummaryPanel;
