@@ -53,7 +53,7 @@ function UsersMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
   const loadData = async () => {
     if (isMounted?.current === true) {
       setIsLoading(true);
-      let modelData = typeof toolTypeData !== "undefined" ? toolTypeData.getPersistData() : usersTagsMetadata.newModelBase;
+      let modelData = typeof toolTypeData !== "undefined" ? toolTypeData.getPersistData() : usersTagsMetadata.newObjectFields;
       setUsersMappingDto(new Model(modelData, usersTagsMetadata, false));
       setIsLoading(false);
     }

@@ -27,7 +27,7 @@ const anchoreScanStepConfigurationMetadata = {
       isRequired: true
     }
   ],
-  newModelBase: {
+  newObjectFields: {
     anchoreToolConfigId: "",
     anchoreUrl: "",
     dockerImageUrl: "",

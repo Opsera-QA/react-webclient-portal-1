@@ -52,7 +52,7 @@ function StepConfiguration({ plan, stepId, parentCallback, closeEditorPanel }) {
       const stepIndex = pipelineHelpers.getStepIndexFromPlan(plan, stepId);
 
       if (stepIndex == null || stepIndex === -1) {
-        setStepConfigurationModel(new Model({...stepConfigurationMetadata.newModelBase}, stepConfigurationMetadata, true));
+        setStepConfigurationModel(new Model({...stepConfigurationMetadata.newObjectFields}, stepConfigurationMetadata, true));
         return;
       }
 

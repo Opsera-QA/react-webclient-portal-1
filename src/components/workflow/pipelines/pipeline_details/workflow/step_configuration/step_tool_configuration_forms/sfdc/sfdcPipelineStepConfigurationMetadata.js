@@ -61,7 +61,7 @@ const sfdcPipelineStepConfigurationMetadata = {
       isRequired: true
     },
   ],
-  newModelBase: {
+  newObjectFields: {
     jobType: "CREATE PACKAGE XML", //hardcoded, every step wil have a hardcoded jobType is what i know needs to check with Todd.
 
     toolConfigId: "",

@@ -22,7 +22,7 @@ const anchoreIntegratorStepConfigurationMetadata = {
       isRequired: true
     }
   ],
-  newModelBase: {
+  newObjectFields: {
     anchoreToolConfigId: "",
     anchoreUrl: "",
     accountUsername: "",

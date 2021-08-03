@@ -333,7 +333,7 @@ const commandLineStepFormMetadata = {
       id: "useTerraformOutput"
     }
   ],
-  newModelBase: {
+  newObjectFields: {
 
     type: "",
 

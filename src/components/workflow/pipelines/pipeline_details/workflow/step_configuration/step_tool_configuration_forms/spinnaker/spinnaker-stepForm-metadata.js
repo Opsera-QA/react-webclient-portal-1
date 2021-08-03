@@ -22,7 +22,7 @@ const spinnakerStepFormMetadata = {
       isRequired: true
     }
   ],
-  newModelBase: {
+  newObjectFields: {
     spinnakerId: "",
     toolURL: "",
     applicationName: "",

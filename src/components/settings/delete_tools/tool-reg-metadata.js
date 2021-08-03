@@ -14,7 +14,7 @@ const ToolRegMetadata = {
         id: "createdAt",
       }
     ],
-    newModelBase: {
+  newObjectFields: {
       _id: "",
       name: "",
       createdAt: ""

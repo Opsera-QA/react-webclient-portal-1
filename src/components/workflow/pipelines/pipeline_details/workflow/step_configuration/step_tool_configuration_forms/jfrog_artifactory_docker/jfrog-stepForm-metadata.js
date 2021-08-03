@@ -47,7 +47,7 @@ const jfrogStepFormMetadata = {
       id: "toolJobName"
     }
   ],
-  newModelBase: {
+  newObjectFields: {
     jobType: "",
     jobName: "",
     toolJobId: "",

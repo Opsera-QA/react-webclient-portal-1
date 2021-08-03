@@ -22,7 +22,7 @@ const ToolMetadata = {
         id: "toolURL",
       },
     ],
-    newModelBase: {
+  newObjectFields: {
       _id: "",
       name: "",
       toolStatus: "",

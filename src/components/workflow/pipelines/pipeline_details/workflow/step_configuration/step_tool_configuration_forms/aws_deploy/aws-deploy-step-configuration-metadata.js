@@ -8,7 +8,7 @@ const awsDeployPipelineStepConfigurationMetadata = {
       formText: "A platform-specific script, which will be executed as .cmd file on Windows or as a shellscript in Unix-like environments"
     },
   ],
-  newModelBase: {
+  newObjectFields: {
     buildScript: "",
   }
 };

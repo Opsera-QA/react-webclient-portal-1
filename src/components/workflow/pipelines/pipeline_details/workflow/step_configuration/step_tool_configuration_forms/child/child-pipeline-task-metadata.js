@@ -42,7 +42,7 @@ const childPipelineTaskMetadata = {
       id: "api_response.body.pipelineId"
     }
   ],
-  newModelBase: {
+  newObjectFields: {
   }
 };
 

@@ -71,7 +71,7 @@ function SpinnakerStepConfiguration({ stepTool, plan, stepId, parentCallback, ge
       }
     } else {
       setSpinnakerStepConfigurationDataDto(
-        new Model({ ...spinnakerStepFormMetadata.newModelBase }, spinnakerStepFormMetadata, false)
+        new Model({ ...spinnakerStepFormMetadata.newObjectFields }, spinnakerStepFormMetadata, false)
       );
     }
   };

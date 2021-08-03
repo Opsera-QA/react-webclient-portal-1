@@ -169,7 +169,7 @@ const ebsStepFormMetadata = {
     }
   ],
 
-  newModelBase:
+  newObjectFields:
     {
       awsToolConfigId: "",
       bucketName: "",

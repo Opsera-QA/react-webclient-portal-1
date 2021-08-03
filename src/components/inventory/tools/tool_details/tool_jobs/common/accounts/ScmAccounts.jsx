@@ -21,7 +21,7 @@ function ScmAccounts({ toolData, loadData, isLoading }) {
 
 
   const createAccount = () => {
-    let scmAccountModel = new Model({...scmCreateAccountMetadata.newModelBase}, scmCreateAccountMetadata, true);
+    let scmAccountModel = new Model({...scmCreateAccountMetadata.newObjectFields}, scmCreateAccountMetadata, true);
     scmAccountModel.setData("toolId", toolData.getData("_id"));
     scmAccountModel.setData("service", toolData.getData("tool_identifier"));
     toastContext.showOverlayPanel(

@@ -75,7 +75,7 @@ const nexusStepFormMetadata = {
       id: "jobName"
     },    
   ],
-  newModelBase: {
+  newObjectFields: {
     groupName: "",
     artifactName: "",
     type: "",

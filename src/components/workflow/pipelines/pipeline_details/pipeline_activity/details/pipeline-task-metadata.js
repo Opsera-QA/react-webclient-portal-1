@@ -38,7 +38,7 @@ const pipelineTaskMetadata = {
       id: "step_name"
     }
   ],
-  newModelBase: {
+  newObjectFields: {
   }
 };
 

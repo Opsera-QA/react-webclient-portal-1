@@ -65,7 +65,7 @@ function EBSStepConfiguration({ stepTool, plan, stepId, parentCallback, getTools
       }
     } else {
       setEBSStepConfigurationDataDto(
-        new Model({ ...EBSStepFormMetadata.newModelBase }, EBSStepFormMetadata, false)
+        new Model({ ...EBSStepFormMetadata.newObjectFields }, EBSStepFormMetadata, false)
       );
     }
 
