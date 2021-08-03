@@ -136,14 +136,6 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
         </Col>
       );
     }
-    return null;
-  };
-  const handleGitTaskTypeChange = (fieldName, value) => {
-    let newDataObject = gitTasksDataDto;
-    newDataObject.setData("type", value.value);
-    newDataObject.setData("configuration", {});
-    setGitTasksConfigurationDataDto(undefined);
-    setGitTasksDataDto({...newDataObject});
   };
 
   const getBody = () => {
@@ -155,7 +147,11 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
             <TextInputBase setDataObject={setGitTasksDataDto} dataObject={gitTasksDataDto} fieldName={"name"}/>
           </Col>
           <Col lg={6}>
-          <GitTaskTypeSelectInput setDataFunction={handleGitTaskTypeChange} dataObject={gitTasksDataDto} setDataObject={setGitTasksDataDto} />
+          <GitTaskTypeSelectInput
+            setGitTasksConfigurationDataDto={setGitTasksConfigurationDataDto}
+            dataObject={gitTasksDataDto}
+            setDataObject={setGitTasksDataDto}
+          />
           </Col>
           {/* <Col lg={6}>
           <ActivityToggleInput dataObject={gitTasksDataDto} setDataObject={setGitTasksDataDto} fieldName={"active"}/>
