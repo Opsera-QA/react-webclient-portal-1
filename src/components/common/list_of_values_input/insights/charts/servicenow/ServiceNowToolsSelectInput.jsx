@@ -12,7 +12,6 @@ function ServiceNowToolsSelectInput({
   fieldName,
   dataObject,
   setDataObject,
-  setDataFunction,
   disabled,
 }) {
   const { getAccessToken } = useContext(AuthContext);
@@ -66,6 +65,14 @@ function ServiceNowToolsSelectInput({
     }
   };
 
+  const setDataFunction = (fieldName, selectedOption) => {
+    let newModel = {...dataObject};
+    newModel.setData(fieldName, selectedOption?._id);
+    // TODO: Harsha, you need to set the value here.
+    // newModel.setData("", "");
+    setDataObject({...newModel});
+  };
+
   return (
     <SelectInputBase
       fieldName={fieldName}
@@ -78,7 +85,6 @@ function ServiceNowToolsSelectInput({
       textField={textField}
       placeholderText={placeholderText}
       disabled={disabled}
-      onChange={(newValue) => console.log("newValue", newValue)}
     />
   );
 }
@@ -89,7 +95,6 @@ ServiceNowToolsSelectInput.propTypes = {
   valueField: PropTypes.string,
   dataObject: PropTypes.object,
   setDataObject: PropTypes.func,
-  setDataFunction: PropTypes.func,
   disabled: PropTypes.bool,
   visible: PropTypes.bool,
   placeholderText: PropTypes.string,

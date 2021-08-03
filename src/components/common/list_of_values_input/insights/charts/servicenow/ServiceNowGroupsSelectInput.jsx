@@ -98,7 +98,6 @@ function ServiceNowAssignmentGroupSelectInput({
       textField={textField}
       placeholderText={getPlaceholderText()}
       disabled={disabled || isLoading || serviceNowId === "" || groups.length === 0}
-      //onChange={(newValue) => console.log("newValue", newValue)}
     />
   );
 }
