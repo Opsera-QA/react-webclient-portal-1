@@ -68,7 +68,15 @@ function ServiceNowToolsSelectInput({
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...dataObject};
     newModel.setData(fieldName, selectedOption?._id);
-    // TODO: Harsha, you need to set the value here.
+    // TODO: Harsha, you need to set the fieldName for the group input here.
+    // newModel.setData("", "");
+    setDataObject({...newModel});
+  };
+
+  const clearDataFunction = () => {
+    let newModel = {...dataObject};
+    newModel.setData(fieldName, "");
+    // TODO: Harsha, you need to set the fieldName for the group input here.
     // newModel.setData("", "");
     setDataObject({...newModel});
   };
@@ -80,6 +88,7 @@ function ServiceNowToolsSelectInput({
       setDataObject={setDataObject}
       selectOptions={tools}
       setDataFunction={setDataFunction}
+      clearDataFunction={clearDataFunction}
       busy={isLoading}
       valueField={valueField}
       textField={textField}
