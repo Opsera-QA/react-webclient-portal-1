@@ -63,7 +63,10 @@ const LoginForm = ({ authClient }) => {
             authClient.tokenManager.setTokens(tokens);
             setLoading(false);
             //history.push("/");
-            //TODO disabling that could solve the redirect issue if the new design works.
+
+            if (history.location.pathname === "/logout") {
+              history.push("/");
+            }
           })
           .catch(function(err) {
             console.log("Error on getWithoutPrompt, trying fallback", err);
