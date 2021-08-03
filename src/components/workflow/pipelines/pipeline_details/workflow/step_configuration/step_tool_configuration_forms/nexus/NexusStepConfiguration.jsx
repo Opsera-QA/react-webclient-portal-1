@@ -66,7 +66,7 @@ function NexusStepConfiguration({ pipelineId, stepTool, plan, stepId, closeEdito
       }
     } else {
       setNexusStepConfigurationDataDto(
-        new Model({ ...nexusStepFormMetadata.newModelBase }, nexusStepFormMetadata, false)
+        new Model({ ...nexusStepFormMetadata.newObjectFields }, nexusStepFormMetadata, false)
       );
     }
   };

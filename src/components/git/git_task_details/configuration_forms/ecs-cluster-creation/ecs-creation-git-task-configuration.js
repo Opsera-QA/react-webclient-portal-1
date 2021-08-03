@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const ec2ClusterCreationTaskConfigurationMetadata = {
   type: "EC2 Cluster Creation Configuration",
   fields: [

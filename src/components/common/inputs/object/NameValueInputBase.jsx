@@ -6,8 +6,8 @@ import {faBracketsCurly, faExclamationTriangle, faTimes} from "@fortawesome/pro-
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import PropertyInputContainer from "components/common/inputs/object/PropertyInputContainer";
-import regexHelpers from "utils/regexHelpers";
 import InputContainer from "components/common/inputs/InputContainer";
+import regexDefinitions from "utils/regexDefinitions";
 
 function NameValueInputBase({dataObject, setDataObject, fieldName, disabledFields, type, titleIcon, allowIncompleteItems, titleText, nameMaxLength, valueMaxLength, className}) {
   const [field] = useState(dataObject.getFieldById(fieldName));
@@ -80,7 +80,7 @@ function NameValueInputBase({dataObject, setDataObject, fieldName, disabledField
   const updateProperty = (row, innerField, newValue) => {
     let newPropertyList = properties;
     let index = newPropertyList.indexOf(row);
-    let format = regexHelpers.regexTypes["generalTextWithSpaces"];
+    let format = regexDefinitions?.generalTextWithSpaces?.regex;
     let meetsRegex = format.test(newValue);
 
     if (newValue !== '' && !meetsRegex) {
@@ -96,7 +96,7 @@ function NameValueInputBase({dataObject, setDataObject, fieldName, disabledField
 
   const getPropertyRow = (property, index) => {
     return (
-      <div className="d-flex my-2 justify-content-between" key={index}>
+      <div className="d-flex py-2 justify-content-between" key={index}>
         <Col sm={11}>
           <Row>
             <Col sm={6} className={"pl-1 pr-0"}>
@@ -142,7 +142,11 @@ function NameValueInputBase({dataObject, setDataObject, fieldName, disabledField
     return (
       <div className="flex-fill">
         {properties.map((property, index) => {
-          return getPropertyRow(property, index);
+          return (
+            <div key={index} className={index % 2 === 0 ? "odd-row" : "even-row"}>
+              {getPropertyRow(property, index)}
+            </div>
+          );
         })}
       </div>
     );
@@ -221,10 +225,10 @@ function NameValueInputBase({dataObject, setDataObject, fieldName, disabledField
         type={type}
         addAllowed={lastPropertyComplete() || (allowIncompleteItems === true && lastPropertyEdited())}
       >
-        <div>
+        <div className={"filter-bg-white"}>
           {getHeaderBar()}
         </div>
-        <div className="properties-body-alt">
+        <div>
           {getFieldBody()}
         </div>
         {getIncompletePropertyMessage()}

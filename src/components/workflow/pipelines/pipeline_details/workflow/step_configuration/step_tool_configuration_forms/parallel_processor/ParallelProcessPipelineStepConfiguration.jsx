@@ -32,7 +32,7 @@ function ParallelProcessPipelineStepConfiguration({ stepTool, pipelineId, parent
       setParallelPipelineStepConfigurationDataDto(new Model(configuration, parallelProcessorPipelineStepConfigurationMetadata, false));
     } else {
       setParallelPipelineStepConfigurationDataDto(
-        new Model({ ...parallelProcessorPipelineStepConfigurationMetadata.newModelBase }, parallelProcessorPipelineStepConfigurationMetadata, false)
+        new Model({ ...parallelProcessorPipelineStepConfigurationMetadata.newObjectFields }, parallelProcessorPipelineStepConfigurationMetadata, false)
       );
     }
     if (typeof threshold !== "undefined") {

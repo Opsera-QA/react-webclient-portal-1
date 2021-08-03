@@ -6,9 +6,14 @@ const JenkinsDockerPushJobMetadata = {
       id: "buildType",
       isRequired: true,
     },
+    {
+      label: "Agent Label",
+      id: "agentLabels",
+    },
   ],
   newObjectFields: {
     buildType: "docker",
+    agentLabels: "generic-linux",
   },
 };
 

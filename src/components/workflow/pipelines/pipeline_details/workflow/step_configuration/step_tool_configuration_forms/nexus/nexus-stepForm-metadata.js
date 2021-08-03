@@ -1,18 +1,16 @@
-import regexHelpers from "utils/regexHelpers";
-
 const nexusStepFormMetadata = {
   type: "Nexus Tool Configuration",
   fields: [
     {
       label: "Group Name",
       id: "groupName",
-      regexValidator: regexHelpers.regexTypes.generalText,
+      regexDefinitionName: "generalText",
       maxLength: 50,
     },
     {
       label: "Artifact Name",
       id: "artifactName",
-      regexValidator: regexHelpers.regexTypes.generalText,
+      regexDefinitionName: "generalText",
       maxLength: 50,
     },
     {
@@ -53,8 +51,8 @@ const nexusStepFormMetadata = {
     },
     {
       label: "Port",
-      id: "dockerPort",      
-      regexValidator: regexHelpers.regexTypes.numericalField,
+      id: "dockerPort",
+      regexDefinitionName: "numericalField",
       maxLength: 4,
     },
     {
@@ -77,7 +75,7 @@ const nexusStepFormMetadata = {
       id: "jobName"
     },    
   ],
-  newModelBase: {
+  newObjectFields: {
     groupName: "",
     artifactName: "",
     type: "",

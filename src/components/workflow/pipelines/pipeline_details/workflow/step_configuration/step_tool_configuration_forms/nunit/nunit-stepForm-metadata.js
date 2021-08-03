@@ -121,7 +121,7 @@ const nunitStepFormMetadata = {
       id: "workspaceDeleteFlag",
     },
   ],
-  newModelBase: {
+  newObjectFields: {
 
     type: "",
 

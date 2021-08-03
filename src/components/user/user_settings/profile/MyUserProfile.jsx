@@ -106,7 +106,7 @@ function MyUserProfile() {
         <tr>
           <td>Organization & Account</td>
           <td>
-            <LdapSettingsPanel userData={userModel} />
+            <LdapSettingsPanel userData={userModel} ldapData={user?.ldap} />
           </td>
         </tr>
       );

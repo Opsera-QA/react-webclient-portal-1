@@ -12,7 +12,7 @@ const conditionalOperationStepConfigurationMetadata = {
       isRequired: true
     },
   ],
-  newModelBase: {
+  newObjectFields: {
     pipelineId: "",
     conditions: []
   }

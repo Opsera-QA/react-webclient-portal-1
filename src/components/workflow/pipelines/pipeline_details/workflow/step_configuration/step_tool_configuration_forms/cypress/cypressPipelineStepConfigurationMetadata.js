@@ -82,7 +82,7 @@ const cypressPipelineStepConfigurationMetadata = {
       id: "agentLabels",
     },
   ],
-  newModelBase: {
+  newObjectFields: {
     jobType: "", //hardcoded, every step wil have a hardcoded jobType is what i know needs to check with Todd.
     toolConfigId: "",
     jenkinsUrl: "",

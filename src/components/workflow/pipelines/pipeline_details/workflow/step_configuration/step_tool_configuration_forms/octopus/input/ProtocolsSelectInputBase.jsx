@@ -9,7 +9,6 @@ import Col from "react-bootstrap/Col";
 import OctopusProtocolInput from "./OctopusProtocolInput";
 import OctopusCertificateInputSelect from "./OctopusCertificateInputSelect";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
-import regexHelpers from "utils/regexHelpers";
 
 function ProtocolsSelectInputBase({
   dataObject, 
@@ -40,14 +39,14 @@ function ProtocolsSelectInputBase({
           {
             label: "Host",
             id: "host",
-            regexValidator: regexHelpers.regexTypes.hostnameRegex,
+            regexDefinitionName: "hostnameRegex",
             maxLength: 255,
             // isRequired: true
           },
           {
             label: "Binding Port",
             id: "port",
-            regexValidator: regexHelpers.regexTypes.numericalField,
+            regexDefinitionName: "numericalField",
             maxLength: 4,
             isRequired: true
           },

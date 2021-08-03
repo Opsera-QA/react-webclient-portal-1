@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const coverityStepFormMetadata = {
   type: "Coverity Tool Configuration",
   fields: [
@@ -17,14 +15,14 @@ const coverityStepFormMetadata = {
       label:"Coverity Project Name",
       id:"projectName",
       isRequired: true,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash,
+      regexDefinitionName: "generalTextWithSpacesSlash",
       maxLength: 95,
     },
     {
       label:"Coverity Stream Name",
       id:"streamName",
       isRequired: true,
-      regexValidator: regexHelpers.regexTypes.generalTextWithSpacesSlash,
+      regexDefinitionName: "generalTextWithSpacesSlash",
       maxLength: 95,
     },
     {
@@ -79,12 +77,17 @@ const coverityStepFormMetadata = {
     },
     {
       label: "Coverity Credentials",
-      id: "coverityCredntialId"
+      id: "coverityCredntialId",
+      isRequired: true
     },
     {
       label: "Select SCM Account",
       id: "gitCredential",
       isRequired: true
+    },
+    {
+      label: "Delete workspace before building",
+      id: "workspaceDeleteFlag",
     },
   ],
   newObjectFields: {
@@ -107,7 +110,7 @@ const coverityStepFormMetadata = {
     toolJobType: ["CODE SCAN"],
     workspaceDeleteFlag:false,
     jobName:"" ,
-    coverityCredntialId :""  
+    coverityCredntialId :""
   }
 };
 

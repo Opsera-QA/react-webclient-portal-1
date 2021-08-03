@@ -7,7 +7,7 @@ import axios from "axios";
 import workflowAuthorizedActions
   from "components/workflow/pipelines/pipeline_details/workflow/workflow-authorized-actions";
 import GitRoleAccessHelpDocumentation
-  from "components/common/help/documentation/git_tasks/GitRoleAccessHelpDocumentation";
+  from "components/common/help/documentation/tasks/GitRoleAccessHelpDocumentation";
 
 function GitTaskRoleAccessInput({fieldName, dataObject, setDataObject, disabled, visible}) {
   const { getAccessToken, getAccessRoleData, isSassUser } = useContext(AuthContext);

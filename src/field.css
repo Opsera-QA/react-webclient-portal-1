@@ -72,12 +72,12 @@
     min-height: 195px;
 }
 
-.object-properties-input .rules-input {
+.object-properties-input .rules-input, .object-properties-input .roles-input {
     min-height: 55px;
 }
 
 .object-properties-input .no-data-message {
-    padding: 12.5%;
+    padding: 2%;
 }
 
 .object-properties-input .rw-widget-input {

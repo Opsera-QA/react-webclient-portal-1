@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 export const ldapOrganizationAccountMetaData = {
   idProperty: "name",
   type: "Organization Account",
@@ -60,7 +58,7 @@ export const ldapOrganizationAccountMetaData = {
     {
       label: "Custom Tenant Login Domain",
       id: "idpBaseUrl",
-      regexValidator: regexHelpers.regexTypes.domainNameField
+      regexDefinitionName: "domainNameField",
     },
     {
       label: "IdP Return Attributes",

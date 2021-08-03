@@ -869,7 +869,7 @@ a.nav-link {
 
 .new-user-header {
     padding: .3em 1em;
-    background-color: #46415C;
+    background-color: #46415C !important;
     border-color: #46415C;
     color: #fff;
     margin-top: 0;
@@ -1653,6 +1653,7 @@ div.data-blocks-ellipses {
 .overlay-panel-body {
     overflow-y: auto;
     /* full-height - (10px x 2 top + bottom margins - title height) */
+    min-height: 500px;
     height: calc(100% - 48px);
     max-height: calc(100% - 48px);
 }

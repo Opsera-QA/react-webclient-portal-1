@@ -34,7 +34,7 @@ function ConditionalOperationPipelineStepConfiguration({ stepTool, pipelineId, p
       setConditionalOperationPipelineStepConfigurationDataDto(new Model(configuration, conditionalOperationStepConfigurationMetadata, false));
     } else {
       setConditionalOperationPipelineStepConfigurationDataDto(
-        new Model({ ...conditionalOperationStepConfigurationMetadata.newModelBase }, conditionalOperationStepConfigurationMetadata, false)
+        new Model({ ...conditionalOperationStepConfigurationMetadata.newObjectFields }, conditionalOperationStepConfigurationMetadata, false)
       );
     }
     if (typeof threshold !== "undefined") {

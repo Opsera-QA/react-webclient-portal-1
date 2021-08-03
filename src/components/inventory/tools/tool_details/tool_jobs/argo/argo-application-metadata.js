@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const argoApplicationsMetadata = {
   type: "Argo Application",
   fields: [
@@ -21,7 +19,7 @@ const argoApplicationsMetadata = {
       label: "Git Path",
       id: "gitPath",
       isRequired: true,
-      regexValidator: regexHelpers.regexTypes.pathField,
+      regexDefinitionName: "pathField",
       maxLength: 256
     },
     {

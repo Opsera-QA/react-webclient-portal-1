@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const sfdcComponentSelectorMetadata = {
   idProperty: "_id",
   type: "Sfdc Component Selector",
@@ -14,7 +12,7 @@ const sfdcComponentSelectorMetadata = {
       id: "name",
       isRequired: true,
       maxLength: 25,
-      regexValidator: regexHelpers.regexTypes.limitedTextWithSpaces
+      regexDefinitionName: "limitedTextWithSpaces",
     },
   ],
   newObjectFields: {

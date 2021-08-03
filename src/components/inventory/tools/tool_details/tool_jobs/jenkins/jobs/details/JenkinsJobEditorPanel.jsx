@@ -137,6 +137,7 @@ function JenkinsJobEditorPanel({ handleClose, jenkinsJobModel, setJenkinsJobMode
         setJenkinsJobConfigurationModel={setJenkinsJobConfigurationModel}
         jenkinsJobConfigurationModel={jenkinsJobConfigurationModel}
         jenkinsJobType={jenkinsJobModel?.getData("jobType")}
+        autoScalingEnabled={toolData?.configuration?.autoScaleEnable}
       />
     </EditorPanelContainer>
   );

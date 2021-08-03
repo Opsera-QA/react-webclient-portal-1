@@ -14,11 +14,17 @@ const JenkinsUnitTestJobMetadata = {
         label: "Maven Task",
         id: "mavenTask",
       },
+      {
+        label: "Agent Label",
+        id: "agentLabels",
+        formText: "Currently, the only supported Agent Label is Ubuntu Agent",
+      },
     ],
     newObjectFields: {
       jobType: "",
       gradleTask:"",
       mavenTask:"",
+      agentLabels: "generic-linux",
     },
   };
   

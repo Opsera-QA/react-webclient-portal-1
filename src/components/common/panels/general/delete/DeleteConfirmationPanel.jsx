@@ -1,19 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Row, Col, Button, Modal } from "react-bootstrap";
 import {faTrash} from "@fortawesome/pro-light-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import DeleteButton from "components/common/buttons/delete/DeleteButton";
 import SaveButtonContainer from "components/common/buttons/saving/containers/SaveButtonContainer";
 import TitleBar from "components/common/fields/TitleBar";
 import CancelButton from "components/common/buttons/CancelButton";
 
-function DeleteConfirmationPanel({ dataObject, showDeleteConfirmationPanel, setShowDeleteConfirmationPanel, handleDelete }) {
-  const handleClose = () => {
-    setShowDeleteConfirmationPanel(false);
-  };
-
-  if (showDeleteConfirmationPanel !== true) {
+function DeleteConfirmationPanel({ dataObject, showDeleteConfirmationPanel, handleClose, handleDelete }) {
+  if (dataObject == null || showDeleteConfirmationPanel !== true) {
     return null;
   }
 
@@ -39,7 +33,7 @@ function DeleteConfirmationPanel({ dataObject, showDeleteConfirmationPanel, setS
 DeleteConfirmationPanel.propTypes = {
   dataObject: PropTypes.object,
   showDeleteConfirmationPanel: PropTypes.bool,
-  setShowDeleteConfirmationPanel: PropTypes.func,
+  handleClose: PropTypes.func,
   handleDelete: PropTypes.func,
 };
 

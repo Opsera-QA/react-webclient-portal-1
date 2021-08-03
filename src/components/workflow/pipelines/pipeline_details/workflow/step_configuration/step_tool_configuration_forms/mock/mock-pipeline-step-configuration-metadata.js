@@ -10,7 +10,7 @@ const mockPipelineStepConfigurationMetadata = {
       id: "mockTextTwo",
     },
   ],
-  newModelBase: {
+  newObjectFields: {
     mockTextOne: "",
     mockTextTwo: ""
   }

@@ -1,8 +1,6 @@
 import React, {useContext, useState, useEffect, useRef} from "react";
 import Model from "core/data_model/model";
-import {useHistory} from "react-router-dom";
 import {useParams} from "react-router-dom";
-import {faAnalytics, faUserChart} from "@fortawesome/pro-light-svg-icons";
 import FavoriteInput from "components/common/inputs/boolean/FavoriteInput";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import {AuthContext} from "contexts/AuthContext";
@@ -14,21 +12,18 @@ import ActionBarShowJsonButton from "components/common/actions/buttons/ActionBar
 import DetailScreenContainer from "components/common/panels/detail_view_container/DetailScreenContainer";
 import DashboardEditorPanel from "components/insights/dashboards/dashboard_details/DashboardEditorPanel";
 import DashboardViewer from "components/insights/dashboards/dashboard_details/DashboardViewer";
-import NavigationTabContainer from "components/common/tabs/navigation/NavigationTabContainer";
-import NavigationTab from "components/common/tabs/navigation/NavigationTab";
 import TitleActionBarContainer from "components/common/actions/TitleActionBarContainer.jsx";
 import ToggleSettingsIcon from "components/common/icons/details/ToggleSettingsIcon.jsx";
-import {faChartNetwork, faChartArea, faRadar} from "@fortawesome/pro-light-svg-icons";
 import axios from "axios";
 import PublishDashboardToPrivateCatalogIcon
   from "components/common/icons/dashboards/PublishDashboardToPrivateCatalogIcon";
 import PublishDashboardToPublicMarketplaceIcon
   from "components/common/icons/dashboards/PublishDashboardToPublicMarketplaceIcon";
+import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 
 function DashboardDetailView() {
   const {tab, id} = useParams();
   const [activeTab, setActiveTab] = useState(tab  === "settings" ? tab : "viewer");
-  const history = useHistory();
   const toastContext = useContext(DialogToastContext);
   const [dashboardData, setDashboardData] = useState(undefined);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
@@ -125,51 +120,13 @@ function DashboardDetailView() {
     );
   };
 
-  const handleNavTabClick = (tabSelection) => async e => {
-    e.preventDefault();
-
-    if (tabSelection === "analytics") {
-      history.push(`/insights/analytics`);
-      return;
-    }
-
-    if (tabSelection === "marketplace") {
-      history.push(`/insights/marketplace`);
-      return;
-    }
-
-    if (tabSelection === "dashboards") {
-      history.push(`/insights`);
-      return;
-    }
-
-    if (tabSelection === "synopsis") {
-      history.push(`/insights/synopsis`);
-      return;
-    }
-
-    setActiveTab(tabSelection);
-  };
-
-  const getNavigationTabContainer = () => {
-    return (
-      <NavigationTabContainer>
-        <NavigationTab icon={faChartNetwork} tabName={"dashboards"} handleTabClick={handleNavTabClick} activeTab={"dashboardViewer"} tabText={"Dashboards"} />
-        <NavigationTab icon={faChartArea} tabName={"marketplace"} handleTabClick={handleNavTabClick} activeTab={"dashboardViewer"} tabText={"Marketplace"} />
-        <NavigationTab icon={faAnalytics} tabName={"analytics"} handleTabClick={handleNavTabClick} activeTab={"dashboardViewer"} tabText={"Analytics"} />
-        <NavigationTab icon={faRadar} tabName={"synopsis"} handleTabClick={handleNavTabClick} activeTab={"dashboardViewer"} tabText={"Synopsis"} />
-        <NavigationTab icon={faUserChart} tabName={"dashboardViewer"} handleTabClick={handleNavTabClick} activeTab={"dashboardViewer"} tabText={"Dashboard Viewer"} />
-      </NavigationTabContainer>
-    );
-  };
-
   if (activeTab === "settings") {
     return (
       <DetailScreenContainer
         breadcrumbDestination={"dashboardDetails"}
         metadata={dashboardMetadata}
         dataObject={dashboardData}
-        navigationTabContainer={getNavigationTabContainer()}
+        navigationTabContainer={<InsightsSubNavigationBar currentTab={"dashboardViewer"} />}
         isLoading={isLoading}
         actionBar={getActionBar()}
         detailPanel={<DashboardEditorPanel dashboardData={dashboardData} setDashboardData={setDashboardData} handleClose={handleClose}/>}
@@ -180,7 +137,7 @@ function DashboardDetailView() {
   return (
     <DetailScreenContainer
       dataObject={dashboardData}
-      navigationTabContainer={getNavigationTabContainer()}
+      navigationTabContainer={<InsightsSubNavigationBar currentTab={"dashboardViewer"} />}
       breadcrumbDestination={"dashboardDetails"}
       isLoading={isLoading}
       metadata={dashboardMetadata}

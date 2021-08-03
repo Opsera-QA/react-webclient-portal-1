@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const gitTasksMetadata = {
   idProperty: "_id",
   type: "Task",
@@ -20,13 +18,13 @@ const gitTasksMetadata = {
       id: "name",
       isRequired: true,
       maxLength: 25,
-      regexValidator: regexHelpers.regexTypes.limitedTextWithSpaces
+      regexDefinitionName: "limitedTextWithSpaces",
     },
     {
       label: "Description",
       id: "description",
       maxLength: 255,
-      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
+      regexDefinitionName: "expandedTextAndSymbolsWithSpaces"
     },
     {
       label: "Owner",
@@ -41,13 +39,13 @@ const gitTasksMetadata = {
       id: "type",
       isRequired: true,
       maxLength: 50,
-      regexValidator: regexHelpers.regexTypes.generalText
+      regexDefinitionName: "generalText",
     },
     {
       label: "Tool",
       id: "tool_identifier",
       maxLength: 10,
-      regexValidator: regexHelpers.regexTypes.generalText
+      regexDefinitionName: "generalText",
     },
     {
       label: "Active",
@@ -69,7 +67,7 @@ const gitTasksMetadata = {
       label: "LDAP Account",
       id: "account",
       maxLength: 50,
-      regexValidator: regexHelpers.regexTypes.generalText
+      regexDefinitionName: "generalText",
     },
     {
       label: "Created",

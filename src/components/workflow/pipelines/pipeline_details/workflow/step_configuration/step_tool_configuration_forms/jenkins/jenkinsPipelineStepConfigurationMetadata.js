@@ -171,7 +171,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id:"job_type",
     }
   ],
-  newModelBase: {
+  newObjectFields: {
     jobType: "",
     toolConfigId: "",
     jenkinsUrl: "",

@@ -23,9 +23,11 @@ import ActionBarContainer from "components/common/actions/ActionBarContainer";
 import ActionBarToggleHelpButton from "components/common/actions/buttons/ActionBarToggleHelpButton";
 import RoleAccessInput from "components/common/inputs/roles/RoleAccessInput";
 import GitTaskTypeSelectInput from "components/common/list_of_values_input/git_tasks/GitTaskTypeSelectInput";
-import './style.css';
+
+import AwsEcsClusterCreationTaskHelpDocumentation
+  from "components/common/help/documentation/tasks/AwsEcsClusterCreationTaskHelpDocumentation";
 function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClose }) {
-  const { getAccessToken, isSassUser} = useContext(AuthContext);
+  const { getAccessToken, isSassUser, featureFlagHideItemInProd } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [gitTasksDataDto, setGitTasksDataDto] = useState(undefined);
   const [gitTasksConfigurationDataDto, setGitTasksConfigurationDataDto] = useState(undefined);
@@ -112,22 +114,24 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
   };
 
   const getHelpDocumentation = () => {
-      switch (gitTasksDataDto.getData("type")) {
-        case "sync-sfdc-repo":
-        case "sync-branch-structure":
-        case "sync-git-branches":
-        case "sfdc-cert-gen":
-        case "ecs_cluster_creation":
-        case "ecs_service_creation":
-        case "lambda_function_creation":
-        default:
-      }
+    switch (gitTasksDataDto?.getData("type")) {
+      case "ecs_cluster_creation":
+        return <AwsEcsClusterCreationTaskHelpDocumentation closeHelpPanel={() => setHelpIsShown(false)} />;
+      case "sync-sfdc-repo":
+      case "sync-branch-structure":
+      case "sync-git-branches":
+      case "sfdc-cert-gen":
+      case "ecs_service_creation":
+      case "lambda_function_creation":
+      default:
+        return null;
+    }
   };
 
   const getDynamicFields = () => {
     if (gitTasksDataDto?.isNew() && !isSassUser()) {
       return (
-        <Col lg={12} className="mb-4 task_editor">
+        <Col lg={12} className="mb-4">
           <RoleAccessInput dataObject={gitTasksDataDto} setDataObject={setGitTasksDataDto} fieldName={"roles"}/>
         </Col>
       );
@@ -143,21 +147,8 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
   };
 
   const getBody = () => {
-    // if (helpIsShown) {
-    //   return getHelpDocumentation();
-    // }
-
     return (
       <>
-        {/*<ActionBarContainer>*/}
-        {/*  <div />*/}
-        {/*  <div>*/}
-        {/*    <ActionBarToggleHelpButton*/}
-        {/*      toggleHelp={() => setHelpIsShown(true)}*/}
-        {/*      helpIsShown={helpIsShown}*/}
-        {/*    />*/}
-        {/*  </div>*/}
-        {/*</ActionBarContainer>*/}
         {getRunTaskText()}
         <Row>
           <Col lg={6}>
@@ -194,24 +185,46 @@ function GitTaskEditorPanel({ gitTasksData, setGitTasksData, runTask, handleClos
     return (<LoadingDialog size="sm"/>);
   }
 
+  // TODO: Remove feature flag when approved
+  if (helpIsShown && featureFlagHideItemInProd() === false) {
+    return (
+      <div className={"p-2"}>
+        {getHelpDocumentation()}
+      </div>
+    );
+  }
+
   return (
-    <EditorPanelContainer
-      handleClose={handleClose}
-      recordDto={gitTasksDataDto}
-      createRecord={createGitTask}
-      updateRecord={updateGitTask}
-      setRecordDto={setGitTasksDataDto}
-      showBooleanToggle={true}
-      // extraButtons={getExtraButtons()}
-      lenient={true}
-      disable={
-        !gitTasksDataDto.checkCurrentValidity()
-        || (gitTasksConfigurationDataDto == null || !gitTasksConfigurationDataDto.checkCurrentValidity()) ||
-        gitTasksDataDto?.getData("status") === "running"
-      }
-    >
-      {getBody()}
-    </EditorPanelContainer>
+    <div>
+      <ActionBarContainer>
+        <div/>
+        <div>
+          <ActionBarToggleHelpButton
+            toggleHelp={() => setHelpIsShown(true)}
+            helpIsShown={helpIsShown}
+            visible={getHelpDocumentation() !== null}
+            className={"mr-1"}
+          />
+        </div>
+      </ActionBarContainer>
+      <EditorPanelContainer
+        handleClose={handleClose}
+        recordDto={gitTasksDataDto}
+        createRecord={createGitTask}
+        updateRecord={updateGitTask}
+        setRecordDto={setGitTasksDataDto}
+        showBooleanToggle={true}
+        // extraButtons={getExtraButtons()}
+        lenient={true}
+        disable={
+          !gitTasksDataDto.checkCurrentValidity()
+          || (gitTasksConfigurationDataDto == null || !gitTasksConfigurationDataDto.checkCurrentValidity()) ||
+          gitTasksDataDto?.getData("status") === "running"
+        }
+      >
+        {getBody()}
+      </EditorPanelContainer>
+    </div>
   );
 }
 

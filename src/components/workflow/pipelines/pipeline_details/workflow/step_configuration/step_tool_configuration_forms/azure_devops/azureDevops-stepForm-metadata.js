@@ -29,6 +29,7 @@ const azureDevopsStepFormMetadata = {
     {
       label: "Pipeline Version",
       id: "pipelineVersion",
+      regexDefinitionName: "numericalField",
     },
   ],
   newObjectFields: {

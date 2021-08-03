@@ -25,8 +25,8 @@ import ApprovalGatePipelineStepConfigurationSummaryPanel
 import SpinnakerPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/spinnaker/SpinnakerPipelineStepConfigurationSummaryPanel";
 import spinnakerStepFormMetadata from "./step_tool_configuration_forms/spinnaker/spinnaker-stepForm-metadata";
-import ArgoCDPipelineStepConfigurationSummaryPanel
-  from "./step_tool_configuration_forms/argo_cd/ArgoCDPipelineStepConfigurationSummaryPanel";
+import ArgoCdPipelineStepConfigurationSummaryPanel
+  from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/step_tool_configuration_forms/argo_cd/ArgoCdPipelineStepConfigurationSummaryPanel";
 import ArgoCDStepFormMetadata from "./step_tool_configuration_forms/argo_cd/argocd-stepForm-metadata";
 import OctopusPipelineStepConfigurationSummaryPanel
   from "./step_tool_configuration_forms/octopus/OctopusPipelineStepConfigurationSummaryPanel";
@@ -185,7 +185,7 @@ function PipelineStepConfigurationSummary({
         );
       case "argo":
         return (
-          <ArgoCDPipelineStepConfigurationSummaryPanel
+          <ArgoCdPipelineStepConfigurationSummaryPanel
             pipelineData={pipelineData}
             argoCdPipelineDataObject={getModelWrappedObject(ArgoCDStepFormMetadata)}
           />

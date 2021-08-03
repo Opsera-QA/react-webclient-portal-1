@@ -29,7 +29,7 @@ function DeleteButton({deleteRecord, dataObject, disabled, size, icon, className
 
   const getLabel = () => {
     if (isDeleting) {
-      return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>Deleting</span>);
+      return (<span><FontAwesomeIcon icon={faSpinner} spin className="mr-2" fixedWidth/>{`Deleting ${dataObject.getType()}`}</span>);
     }
 
     return (<span><FontAwesomeIcon icon={icon} fixedWidth className="mr-2"/>{`Delete ${dataObject.getType()}`}</span>);

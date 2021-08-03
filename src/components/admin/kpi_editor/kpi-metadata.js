@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const kpiMetaData = {
   idProperty: "name",
   type: "KPI Configuration",
@@ -16,13 +14,13 @@ const kpiMetaData = {
       id: "name",
       isRequired: true,
       maxLength: 50,
-      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
+      regexDefinitionName: "expandedTextAndSymbolsWithSpaces"
     },
     {
       label: "Description",
       id: "description",
-      maxLength: 1000, 
-      regexValidator: regexHelpers.regexTypes.expandedTextAndSymbolsWithSpaces
+      maxLength: 1000,
+      regexDefinitionName: "expandedTextAndSymbolsWithSpaces"
     },
     {
       label: "Identifier",

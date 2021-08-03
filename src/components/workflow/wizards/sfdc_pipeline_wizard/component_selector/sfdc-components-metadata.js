@@ -1,5 +1,3 @@
-import regexHelpers from "utils/regexHelpers";
-
 const sfdcComponentsMetadata = {
   idProperty: "_id",
   type: "Sfdc Component Selections",

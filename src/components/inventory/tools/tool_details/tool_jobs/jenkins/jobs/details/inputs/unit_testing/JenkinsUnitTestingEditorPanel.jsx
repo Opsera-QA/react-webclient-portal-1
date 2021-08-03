@@ -2,13 +2,16 @@ import React, {useEffect} from "react";
 import PropTypes from "prop-types";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import JenkinsJobsUnitTestingTypeSelectInput from "./JenkinsJobsUnitTestingTypeSelectInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import modelHelpers from "components/common/model/modelHelpers";
 import JenkinsUnitTestJobMetadata
   from "components/inventory/tools/tool_details/tool_jobs/jenkins/jobs/details/inputs/unit_testing/jenkins-unit-test-metadata";
+import JenkinsJobsGenericAgentTypeSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/jobs/JenkinsJobsGenericAgentTypeSelectInput";
+import JenkinsJobsUnitTestingTypeSelectInput
+  from "components/common/list_of_values_input/tools/jenkins/jobs/unit_testing/JenkinsJobsUnitTestingTypeSelectInput";
 
-function JenkinsUnitTestingEditorPanel({ jenkinsJobConfiguration, model, setModel }) {
+function JenkinsUnitTestingEditorPanel({ jenkinsJobConfiguration, model, setModel, autoScalingEnabled }) {
   useEffect(() => {
     unpackJobConfiguration();
   }, [jenkinsJobConfiguration]);
@@ -35,6 +38,20 @@ function JenkinsUnitTestingEditorPanel({ jenkinsJobConfiguration, model, setMode
     }
   };
 
+  const getAutoScalingField = () => {
+    if (autoScalingEnabled === true) {
+      return (
+        <Col lg={6}>
+          <JenkinsJobsGenericAgentTypeSelectInput
+            model={model}
+            setModel={setModel}
+          />
+        </Col>
+      );
+    }
+  };
+
+
   if (!model) {
     return <></>;
   }
@@ -49,6 +66,7 @@ function JenkinsUnitTestingEditorPanel({ jenkinsJobConfiguration, model, setMode
         />
       </Col>
       {getDynamicBuildTypeFields()}
+      {getAutoScalingField()}
     </Row>
   );
 }
@@ -57,6 +75,7 @@ JenkinsUnitTestingEditorPanel.propTypes = {
   jenkinsJobConfiguration: PropTypes.object,
   model: PropTypes.object,
   setModel: PropTypes.func,
+  autoScalingEnabled: PropTypes.bool
 };
 
 export default JenkinsUnitTestingEditorPanel;

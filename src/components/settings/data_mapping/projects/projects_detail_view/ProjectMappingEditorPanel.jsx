@@ -56,7 +56,7 @@ function ProjectMappingEditor({ toolTypeData, setToolTypeData, handleClose }) {
   const loadData = async () => {
     if (isMounted?.current === true) {
       setIsLoading(true);
-      let modelData = typeof toolTypeData !== "undefined" ? toolTypeData.getPersistData() : projectTagsMetadata.newModelBase;
+      let modelData = typeof toolTypeData !== "undefined" ? toolTypeData.getPersistData() : projectTagsMetadata.newObjectFields;
       setProjectMappingDto(new Model(modelData, projectTagsMetadata, false));
       setIsLoading(false);
     }
