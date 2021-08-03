@@ -1,4 +1,4 @@
-import React, {useContext, useMemo, useState} from "react";
+import React, {useContext, useMemo} from "react";
 import PropTypes from "prop-types";
 import {
   getTableDateTimeColumn,
@@ -9,13 +9,9 @@ import {getField} from "components/common/metadata/metadata-helpers";
 import toolLogsMetadata from "components/inventory/tools/tool_details/tool-logs-metadata";
 import {faTable} from "@fortawesome/pro-light-svg-icons";
 import FilterContainer from "components/common/table/FilterContainer";
-import {Button, Modal} from "react-bootstrap";
-import ReactJson from "react-json-view";
 import {getColumnHeader, getColumnId} from "components/common/table/table-column-helpers-v2";
 import {capitalizeFirstLetter} from "components/common/helpers/string-helpers";
 import VanityTable from "components/common/table/VanityTable";
-import PipelineTaskDetailViewer
-  from "components/workflow/pipelines/pipeline_details/pipeline_activity/logs/PipelineTaskDetailViewer";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ToolLogDetailsOverlay from "components/inventory/tools/tool_details/logs/ToolLogDetailsOverlay";
 
@@ -97,7 +93,7 @@ function ToolLogsTable({ toolLogs, toolLogFilterModel, setToolLogFilterModel, lo
     );
   };
 
-  const onRowSelect = (treeGrid, row, column, e) => {
+  const onRowSelect = (treeGrid, row) => {
     if (row?.action !== "automation task") {
       toastContext.showOverlayPanel(
         <ToolLogDetailsOverlay
