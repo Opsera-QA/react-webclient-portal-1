@@ -68,7 +68,7 @@ import LdapDepartmentDetailView
 import Reports from "./components/reports/Reports";
 import Reports_Old from "./components/reports/Reports_Old";
 import Marketplace from "components/insights/marketplace/Marketplace";
-import InsightsSummary from "components/insights/summary/InsightsSummary";
+import InsightsSynopsis from "components/insights/summary/InsightsSynopsis";
 import AnalyticsProfileSettings from "./components/settings/analytics/analyticsProfileSettings";
 import SiteNotificationManagement from "./components/admin/site_notifications/SiteNotificationManagement";
 import SiteNotificationDetailView
@@ -354,7 +354,7 @@ const AppWithRouterAccess = () => {
                   <SecureRoute path="/insights" exact component={Insights}/>
                   <SecureRoute path="/insights/dashboards/:id/:tab?" exact component={DashboardDetailView}/>
                   <SecureRoute path="/insights/marketplace/:dashboardId?" component={Marketplace}/>
-                  <SecureRoute path="/insights/synopsis" component={InsightsSummary}/>
+                  <SecureRoute path="/insights/synopsis" component={InsightsSynopsis}/>
 
                   {/* tasks */}
                   <SecureRoute path="/task" exact component={GitTasksView}/>

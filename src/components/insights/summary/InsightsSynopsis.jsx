@@ -6,7 +6,7 @@ import axios from "axios";
 import {DialogToastContext} from "contexts/DialogToastContext";
 import ScreenContainer from "components/common/panels/general/ScreenContainer";
 import ActionBarContainer from "components/common/actions/ActionBarContainer";
-import PipelineDetails from "components/insights/summary/pipeline_details/PipelineDetails";
+import InsightsSynopsisDetails from "components/insights/summary/pipeline_details/InsightsSynopsisDetails";
 import DashboardFiltersInput from "components/insights/dashboards/DashboardFiltersInput";
 import DashboardFilterOrganizationInput from "components/insights/dashboards/DashboardFilterOrganizationInput";
 import dashboardMetadata from "components/insights/dashboards/dashboard-metadata";
@@ -14,7 +14,7 @@ import {dashboardFiltersMetadata} from "components/insights/dashboards/dashboard
 import modelHelpers from "components/common/model/modelHelpers";
 import InsightsSubNavigationBar from "components/insights/InsightsSubNavigationBar";
 
-function InsightsSummary() {
+function InsightsSynopsis() {
   const {getUserRecord, setAccessRoles} = useContext(AuthContext);
   const [accessRoleData, setAccessRoleData] = useState(undefined);
   const [isLoading, setIsLoading] = useState(true);
@@ -72,30 +72,27 @@ function InsightsSummary() {
     }
   };
 
-  const getInsightsSummaryView = () => {
+  const getSynopsisActionBarContainer = () => {
       return (
-        <div>
-        <ActionBarContainer>      
-        <div className="d-flex">
-          <DashboardFiltersInput
-            dataObject={dashboardFilterTagsModel}
-            setDataObject={setDashboardFilterTagsModel}
-            loadData={loadData}
-            className={"mx-2"}
-            dashboardData={dashboardData}
-          />
-          <DashboardFilterOrganizationInput
-          className={"mx-2"}
-          dataObject={dashboardFilterTagsModel}
-          setDataObject={setDashboardFilterTagsModel}
-          dashboardData={dashboardData}
-          fieldName={"organizations"}
-          loadData={loadData}
-        />
-        </div>
+        <ActionBarContainer>
+          <div className="d-flex">
+            <DashboardFiltersInput
+              dataObject={dashboardFilterTagsModel}
+              setDataObject={setDashboardFilterTagsModel}
+              loadData={loadData}
+              className={"mx-2"}
+              dashboardData={dashboardData}
+            />
+            <DashboardFilterOrganizationInput
+              className={"mx-2"}
+              dataObject={dashboardFilterTagsModel}
+              setDataObject={setDashboardFilterTagsModel}
+              dashboardData={dashboardData}
+              fieldName={"organizations"}
+              loadData={loadData}
+            />
+          </div>
         </ActionBarContainer>
-        <PipelineDetails dashboardData={dashboardData} setDashboardData={setDashboardData}/>
-        </div>
       );
   };
 
@@ -113,11 +110,12 @@ function InsightsSummary() {
       `}
       breadcrumbDestination={"insightsSummary"}
     >
-      {getInsightsSummaryView()}
+      {getSynopsisActionBarContainer()}
+      <InsightsSynopsisDetails dashboardData={dashboardData} setDashboardData={setDashboardData}/>
     </ScreenContainer>
   );
 
 }
 
 
-export default InsightsSummary;
+export default InsightsSynopsis;
