@@ -1,11 +1,9 @@
 import React, {useEffect, useContext, useState, useRef} from "react";
-import { Col, Button } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import PropTypes from "prop-types";
 import "components/inventory/tools/tools.css";
 import Row from "react-bootstrap/Row";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import argoActions from "../../argo-actions";
-import Modal from "components/common/modal/modal";
 import ActivityToggleInput from "components/common/inputs/boolean/ActivityToggleInput";
 import TextInputBase from "components/common/inputs/text/TextInputBase";
 import ArgoClusterSelectInput from "./inputs/ArgoClusterSelectInput";
@@ -13,16 +11,15 @@ import ArgoProjectsSelectInput from "./inputs/ArgoProjectsSelectInput";
 import EditorPanelContainer from "components/common/panels/detail_panel_container/EditorPanelContainer";
 import {AuthContext} from "contexts/AuthContext";
 import {DialogToastContext} from "contexts/DialogToastContext";
-import {faTrash} from "@fortawesome/pro-light-svg-icons";
 import LoadingDialog from "components/common/status_notifications/loading";
 import axios from "axios";
+import DeleteButtonWithInlineConfirmation from "components/common/buttons/delete/DeleteButtonWithInlineConfirmation";
 
 function ArgoApplicationEditorPanel({ argoApplicationData, toolData, applicationId, handleClose }) {
   const { getAccessToken } = useContext(AuthContext);
   const toastContext = useContext(DialogToastContext);
   const [argoApplicationModel, setArgoApplicationModel] = useState(undefined);
   const [isLoading, setIsLoading] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const isMounted = useRef(false);
   const [cancelTokenSource, setCancelTokenSource] = useState(undefined);
 
@@ -69,19 +66,6 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
     handleClose();
   };
 
-  const getDeleteButton = () => {
-    // TODO: Switch to isNew check
-    if (applicationId) {
-      return (
-        <div className="mr-auto mt-3 px-3">
-          <Button variant="outline-primary" size="sm" onClick={() => setShowDeleteModal(true)}>
-            <FontAwesomeIcon icon={faTrash} className="danger-red"/> Delete Application
-          </Button>
-        </div>
-      );
-    }
-  };
-
   if (isLoading || argoApplicationModel == null) {
     return <LoadingDialog size="sm" message={"Loading Data"} />;
   }
@@ -93,7 +77,12 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
       updateRecord={updateApplication}
       setRecordDto={setArgoApplicationModel}
       isLoading={isLoading}
-      extraButtons={getDeleteButton()}
+      extraButtons={
+        <DeleteButtonWithInlineConfirmation
+          dataObject={argoApplicationModel}
+          deleteRecord={deleteApplication}
+        />
+      }
       handleClose={handleClose}
     >
       <div className="scroll-y">
@@ -157,15 +146,6 @@ function ArgoApplicationEditorPanel({ argoApplicationData, toolData, application
           </Col>
         </Row>
       </div>
-      {showDeleteModal ? (
-        <Modal
-          header="Confirm Application Delete"
-          message="Warning! Application cannot be recovered once this Application is deleted. Do you still want to proceed?"
-          button="Confirm"
-          handleCancelModal={() => setShowDeleteModal(false)}
-          handleConfirmModal={() => deleteApplication()}
-        />
-      ) : null}
     </EditorPanelContainer>
   );
 }
