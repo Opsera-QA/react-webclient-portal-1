@@ -68,7 +68,7 @@ const octopusStepFormMetadata = {
       {
         label: "Artifact Step",
         id: "ecrPushStepId",
-        isRequired: true
+        // isRequired: true
       },
       {
         label: "Deployment ID",
