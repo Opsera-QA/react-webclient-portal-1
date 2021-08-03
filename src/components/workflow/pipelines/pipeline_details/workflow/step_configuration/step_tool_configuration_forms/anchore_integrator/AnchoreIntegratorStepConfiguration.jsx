@@ -74,7 +74,7 @@ function AnchoreIntegratorStepConfiguration({ stepTool, plan, stepId, parentCall
       }
     } else {
       setAnchoreStepConfigurationDataDto(
-        new Model({ ...anchoreIntegratorStepConfigurationMetadata.newModelBase }, anchoreIntegratorStepConfigurationMetadata, false)
+        new Model({ ...anchoreIntegratorStepConfigurationMetadata.newObjectFields }, anchoreIntegratorStepConfigurationMetadata, false)
       );
     }
   };

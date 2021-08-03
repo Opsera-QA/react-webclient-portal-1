@@ -26,7 +26,7 @@ const s3PipelineStepConfigurationMetadata = {
       isRequired: true
     },
   ],
-  newModelBase: {
+  newObjectFields: {
     jobType: "SEND S3",
     awsToolConfigId: "",
     buildStepId: "",

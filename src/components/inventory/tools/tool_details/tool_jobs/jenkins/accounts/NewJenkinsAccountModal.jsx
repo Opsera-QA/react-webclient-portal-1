@@ -13,7 +13,7 @@ function NewJenkinsAccountModal({ toolData, setShowModal, showModal, loadData, j
     if (jenkinsAccountDataDto !== undefined) {
       setJenkinsAccountData(new Model(jenkinsAccountDataDto.getPersistData(), jenkinsCreateAccountMetadata, false));
     } else {
-      setJenkinsAccountData(new Model(jenkinsCreateAccountMetadata.newModelBase, jenkinsCreateAccountMetadata, true));
+      setJenkinsAccountData(new Model(jenkinsCreateAccountMetadata.newObjectFields, jenkinsCreateAccountMetadata, true));
     }
   }, [showModal]);
 

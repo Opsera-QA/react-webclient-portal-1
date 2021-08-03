@@ -96,7 +96,7 @@ function NexusStepConfiguration({ stepTool, plan, stepId, parentCallback, getToo
       }
     } else {
       setNexusStepConfigurationDataDto(
-        new Model({ ...nexusStepFormMetadata.newModelBase }, nexusStepFormMetadata, false)
+        new Model({ ...nexusStepFormMetadata.newObjectFields }, nexusStepFormMetadata, false)
       );
     }
   };

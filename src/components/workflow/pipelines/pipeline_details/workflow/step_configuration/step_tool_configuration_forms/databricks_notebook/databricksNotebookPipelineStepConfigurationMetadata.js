@@ -18,7 +18,7 @@ const databricksNotebookPipelineStepConfigurationMetadata = {
       isRequired: true
     },
   ],
-  newModelBase: {
+  newObjectFields: {
     endpointUrl: "",
     dataPackage: {},
     authToken: ""

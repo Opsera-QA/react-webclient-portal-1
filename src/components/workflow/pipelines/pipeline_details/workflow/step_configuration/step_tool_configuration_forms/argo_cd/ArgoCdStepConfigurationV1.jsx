@@ -78,7 +78,7 @@ function ArgoCDStepConfiguration({ stepTool, plan, stepId, parentCallback, getTo
       }
     } else {
       setGitYAMLStepConfigurationDataDto(
-        new Model({ ...gitYAMLStepFormMetadata.newModelBase }, gitYAMLStepFormMetadata, false)
+        new Model({ ...gitYAMLStepFormMetadata.newObjectFields }, gitYAMLStepFormMetadata, false)
       );
     }
 

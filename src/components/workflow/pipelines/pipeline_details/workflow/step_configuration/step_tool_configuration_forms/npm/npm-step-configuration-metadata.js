@@ -14,7 +14,7 @@ const npmPipelineStepConfigurationMetadata = {
       isRequired: true
     }
   ],
-  newModelBase: {
+  newObjectFields: {
     commands: "",
     path: ""
   }

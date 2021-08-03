@@ -152,7 +152,7 @@ const dotnetStepFormMetadata = {
       id: "commandLineArgs"
     }
   ],
-  newModelBase: {
+  newObjectFields: {
 
     type: "",
 

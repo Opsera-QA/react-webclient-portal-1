@@ -55,7 +55,7 @@ const elasticBeanstalkDeployPipelineStepConfigurationMetadata = {
       id: "regions",
     },
   ],
-  newModelBase: {
+  newObjectFields: {
     awsToolConfigId: "",
     accessKey: "",
     secretKey: "",

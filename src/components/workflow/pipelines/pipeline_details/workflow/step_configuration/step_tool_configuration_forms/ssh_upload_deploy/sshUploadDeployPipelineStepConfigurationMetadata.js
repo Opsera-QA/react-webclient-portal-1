@@ -40,7 +40,7 @@ const sshUploadDeployPipelineStepConfigurationMetadata = {
       isRequired: true
     },
   ],
-  newModelBase: {
+  newObjectFields: {
     // accessKey: "",
     // secretKey: "",
     sshKey: {}, //file stream to value

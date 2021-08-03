@@ -128,7 +128,7 @@ const powershellStepFormMetadata = {
       id: "workspaceDeleteFlag",
     },
   ],
-  newModelBase: {
+  newObjectFields: {
 
     type: "",
 

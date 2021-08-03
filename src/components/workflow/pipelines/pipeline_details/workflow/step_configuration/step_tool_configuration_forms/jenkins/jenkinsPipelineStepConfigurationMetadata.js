@@ -92,7 +92,7 @@ const jenkinsPipelineStepConfigurationMetadata = {
       id: "useTerraformOutput"
     }
   ],
-  newModelBase: {
+  newObjectFields: {
     jobType: "",
     toolConfigId: "",
     jenkinsUrl: "",

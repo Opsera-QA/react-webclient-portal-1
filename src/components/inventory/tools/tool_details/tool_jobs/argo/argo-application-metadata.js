@@ -22,7 +22,7 @@ const argoApplicationsMetadata = {
     {
       label: "Git URL",
       id: "gitUrl",
-      // isRequired: true
+      isRequired: true
     },
     {
       label: "Namespace",
@@ -53,8 +53,7 @@ const argoApplicationsMetadata = {
       regexDefinitionName: "generalText",
     }
 ],
-  newModelBase: {
-    _id: "",
+  newObjectFields: {
     applicationName : "",
     cluster : "",
     gitPath : "",

@@ -9,7 +9,7 @@ export const JenkinsJobTypeMeta = {
       { label: "Maven Task", id: "mavenTask" },
       { label: "Command Line Args", id: "commandLineArgs" },
     ],
-    newModelBase: {
+    newObjectFields: {
       buildType: "",
       dockerName: "",
       dockerTagName: "",
@@ -28,7 +28,7 @@ export const JenkinsJobTypeMeta = {
       { label: "Maven Task", id: "mavenTask" },
       { label: "Command Line Args", id: "commandLineArgs" },
     ],
-    newModelBase: {
+    newObjectFields: {
       buildType: "",
       dockerName: "",
       dockerTagName: "",
@@ -47,7 +47,7 @@ export const JenkinsJobTypeMeta = {
       { label: "Maven Task", id: "mavenTask" },
       { label: "Command Line Args", id: "commandLineArgs" },
     ],
-    newModelBase: {
+    newObjectFields: {
       buildType: "",
       dockerName: "",
       dockerTagName: "",
@@ -66,7 +66,7 @@ export const JenkinsJobTypeMeta = {
       { label: "Maven Task", id: "mavenTask" },
       { label: "Command Line Args", id: "commandLineArgs" },
     ],
-    newModelBase: {
+    newObjectFields: {
       buildType: "",
       dockerName: "",
       dockerTagName: "",
@@ -80,7 +80,7 @@ export const JenkinsJobTypeMeta = {
     fields: [
       { label: "Build Type", id: "buildType" },
     ],
-    newModelBase: {
+    newObjectFields: {
       buildType: "",
       dockerName: "",
       dockerTagName: "",
@@ -92,7 +92,7 @@ export const JenkinsJobTypeMeta = {
   ARTIFACTORY_DOCKER_PUSH: {
     type: "DOCKER PUSH",
     fields: [{ label: "Build Type", id: "buildType" }],
-    newModelBase: {
+    newObjectFields: {
       buildArgs: "",
       buildType: "",
     },
@@ -100,7 +100,7 @@ export const JenkinsJobTypeMeta = {
   SFDC: {
     type: "DOCKER PUSH",
     fields: [{ label: "Build Type", id: "buildType" }],
-    newModelBase: {
+    newObjectFields: {
       buildType: "",
     },
   },

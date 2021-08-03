@@ -13,7 +13,7 @@ function ExistingArgoApplicationModal({ loadData, toolData, argoApplicationDataO
     if (argoApplicationDataObj !== undefined) {
       setArgoApplicationData(argoApplicationDataObj);
     } else
-      setArgoApplicationData(new Model({ ...argoApplicationsMetadata.newModelBase }, argoApplicationsMetadata, true));
+      setArgoApplicationData(new Model({ ...argoApplicationsMetadata.newObjectFields }, argoApplicationsMetadata, true));
   }, [showModal]);
 
   const handleClose = () => {

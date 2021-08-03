@@ -30,7 +30,7 @@ function ChildPipelineStepConfiguration({ stepTool, pipelineId, parentCallback, 
       setChildPipelineStepConfigurationDataDto(new Model(configuration, childPipelineStepConfigurationMetadata, false));
     } else {
       setChildPipelineStepConfigurationDataDto(
-        new Model({ ...childPipelineStepConfigurationMetadata.newModelBase }, childPipelineStepConfigurationMetadata, false)
+        new Model({ ...childPipelineStepConfigurationMetadata.newObjectFields }, childPipelineStepConfigurationMetadata, false)
       );
     }
     if (typeof threshold !== "undefined") {
