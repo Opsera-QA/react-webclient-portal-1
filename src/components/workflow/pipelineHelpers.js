@@ -220,7 +220,6 @@ pipelineHelpers.formatStepOptions = (plan, stepId) => {
     0,
     plan.findIndex((element) => element._id === stepId),
   );
-  STEP_OPTIONS.unshift({ _id: "", name: "Select One", isDisabled: "yes" });
   console.log(STEP_OPTIONS);
   return STEP_OPTIONS;
 };

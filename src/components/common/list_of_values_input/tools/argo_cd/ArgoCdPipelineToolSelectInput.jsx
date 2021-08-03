@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import PipelineToolInputBase from "components/common/list_of_values_input/workflow/PipelineToolInputBase";
 
-function ArgoCdPipelineToolInput({className, fieldName, model, setModel, disabled}) {
+function ArgoCdPipelineToolSelectInput({className, fieldName, model, setModel, disabled}) {
   const setDataFunction = (fieldName, selectedOption) => {
     let newModel = {...model};
     newModel.setData("toolConfigId", selectedOption?._id);
@@ -18,8 +18,8 @@ function ArgoCdPipelineToolInput({className, fieldName, model, setModel, disable
        fieldName={fieldName}
        placeholderText={"Select Argo CD Tool"}
        configurationRequired={true}
-       dataObject={model}
-       setDataObject={setModel}
+       model={model}
+       setModel={setModel}
        setDataFunction={setDataFunction}
        disabled={disabled}
        className={className}
@@ -27,7 +27,7 @@ function ArgoCdPipelineToolInput({className, fieldName, model, setModel, disable
   );
 }
 
-ArgoCdPipelineToolInput.propTypes = {
+ArgoCdPipelineToolSelectInput.propTypes = {
   model: PropTypes.object,
   setModel: PropTypes.func,
   disabled: PropTypes.bool,
@@ -35,8 +35,8 @@ ArgoCdPipelineToolInput.propTypes = {
   fieldName: PropTypes.string
 };
 
-ArgoCdPipelineToolInput.defaultProps = {
+ArgoCdPipelineToolSelectInput.defaultProps = {
   fieldName: "toolConfigId",
 };
 
-export default ArgoCdPipelineToolInput;
+export default ArgoCdPipelineToolSelectInput;

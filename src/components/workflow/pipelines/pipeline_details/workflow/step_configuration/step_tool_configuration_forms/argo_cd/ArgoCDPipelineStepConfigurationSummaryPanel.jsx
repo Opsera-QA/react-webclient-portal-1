@@ -5,8 +5,9 @@ import TextFieldBase from "components/common/fields/text/TextFieldBase";
 import PipelineStepSummaryPanelContainer
   from "components/workflow/pipelines/pipeline_details/workflow/step_configuration/PipelineStepSummaryPanelContainer";
 import LoadingDialog from "components/common/status_notifications/loading";
+import ToolNameField from "components/common/fields/inventory/ToolNameField";
 
-function ArgoCDPipelineStepConfigurationSummaryPanel({ argoCdPipelineDataObject, pipelineData, setActiveTab }) {
+function ArgoCdPipelineStepConfigurationSummaryPanel({ argoCdPipelineDataObject, pipelineData, setActiveTab }) {
 
   if (argoCdPipelineDataObject == null) {
     return <LoadingDialog size="sm" />;
@@ -19,7 +20,7 @@ function ArgoCDPipelineStepConfigurationSummaryPanel({ argoCdPipelineDataObject,
           <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"type"}/>
         </Col>
         <Col lg={6}>
-          <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"gitToolId"}/>
+          <ToolNameField dataObject={argoCdPipelineDataObject} fieldName={"gitToolId"}/>
         </Col>
         <Col lg={6}>
           <TextFieldBase dataObject={argoCdPipelineDataObject} fieldName={"gitRepository"}/>
@@ -68,10 +69,10 @@ function ArgoCDPipelineStepConfigurationSummaryPanel({ argoCdPipelineDataObject,
   );
 }
 
-ArgoCDPipelineStepConfigurationSummaryPanel.propTypes = {
+ArgoCdPipelineStepConfigurationSummaryPanel.propTypes = {
   argoCdPipelineDataObject: PropTypes.object,
   pipelineData: PropTypes.object,
   setActiveTab: PropTypes.func
 };
 
-export default ArgoCDPipelineStepConfigurationSummaryPanel;
+export default ArgoCdPipelineStepConfigurationSummaryPanel;
