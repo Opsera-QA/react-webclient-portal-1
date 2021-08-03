@@ -32,7 +32,6 @@ function AzureApplicationOverlay({ loadData, toolData, azureDataObject, applicat
   }, [azureDataObject]);
 
   const initializeModel = () => {
-    console.log(azureDataObject);
     setAzureApplicationData(modelHelpers.parseObjectIntoModel(azureDataObject, azureApplicationsMetadata));
   };
 
