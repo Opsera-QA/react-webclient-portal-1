@@ -9,6 +9,7 @@ import Col from "react-bootstrap/Col";
 import PipelineWizardRuleInputHelpDocumentation
   from "components/common/help/documentation/pipelines/wizard/PipelineWizardRuleInputHelpDocumentation";
 import ToggleHelpIcon from "components/common/icons/help/ToggleHelpIcon";
+import IconBase from "components/common/icons/IconBase";
 
 // TODO: On final refactor of SFDC Wizard, utilize model/set models here
 function SfdcPipelineWizardRulesInputContainerBase({pipelineWizardModel, setPipelineWizardModel, fieldName, modifiedFiles, isGitTab, isLoading, filePullCompleted, fetchAttribute}) {
@@ -53,11 +54,8 @@ function SfdcPipelineWizardRulesInputContainerBase({pipelineWizardModel, setPipe
     }
 
     setRules([...newPropertyList]);
-
-    if (JSON.stringify(newPropertyList) !== JSON.stringify(pipelineWizardModel.getData(fieldName))) {
-      pipelineWizardModel.setData(fieldName, [...newPropertyList]);
-      setPipelineWizardModel({...pipelineWizardModel});
-    }
+    pipelineWizardModel.setData(fieldName, [...newPropertyList]);
+    setPipelineWizardModel({...pipelineWizardModel});
   };
 
   const updateRule = (index, rule) => {
@@ -113,23 +111,21 @@ function SfdcPipelineWizardRulesInputContainerBase({pipelineWizardModel, setPipe
   const getHeaderBar = () => {
     return (
       <Row className="d-flex mx-1 py-1 justify-content-between">
-        <Col sm={11} className={"my-auto"}>
-          <Row className={"mx-0"}>
-            <Col xs={1} className={"pr-1 pl-0"}>
-              Type
-            </Col>
-            <Col xs={4} className={"px-0"}>
-              Component Filter
-            </Col>
-            <Col xs={2} className={"px-1"}>
-              Field
-            </Col>
-            <Col xs={5} className={"px-0"}>
-              Value
-            </Col>
-          </Row>
+        <Col xs={1} className={"pr-1 pl-0 my-auto"}>
+          Type
         </Col>
-        <Col sm={1} />
+        <Col xs={3} className={"px-0 my-auto"}>
+          Component Type
+        </Col>
+        <Col xs={2} className={"px-1 my-auto"}>
+          Field
+        </Col>
+        <Col xs={2} className={"px-1 my-auto"}>
+          Filter
+        </Col>
+        <Col xs={4} className={"px-0 my-auto"}>
+          Value
+        </Col>
       </Row>
     );
   };
@@ -155,7 +151,7 @@ function SfdcPipelineWizardRulesInputContainerBase({pipelineWizardModel, setPipe
     if (!filePullCompleted) {
       return (
         <div className="rules-input">
-          <div className="text-center text-muted pt-3">Waiting on File Pull to Complete</div>
+          <div className="text-center text-muted pt-3"><IconBase className={"mr-2"} isLoading={!filePullCompleted} />Waiting on File Pull to Complete</div>
         </div>
       );
     }
