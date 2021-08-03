@@ -50,4 +50,9 @@ argoActions.getArgoProjectsV2 = async (getAccessToken, cancelTokenSource, toolId
   return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl, postBody);
 };
 
+argoActions.getArgoApplicationsV2 = async (getAccessToken, cancelTokenSource, toolId) => {
+  const apiUrl = `/tools/${toolId}/argo/v2/applications`;
+  return await baseActions.apiGetCallV2(getAccessToken, cancelTokenSource, apiUrl);
+};
+
 export default argoActions;
